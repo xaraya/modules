@@ -43,10 +43,12 @@ function netquery_init()
     xarRegisterMask('AddNetquery','All','netquery','All','All','ACCESS_ADD');
     xarRegisterMask('DeleteNetquery','All','netquery','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminNetquery','All','netquery','All','All','ACCESS_ADMIN');
-    create_flagstable();
     create_whoistable();
     create_lgroutertable();
+    create_flagstable();
     create_portstable();
+    create_geocctable();
+    create_geoiptable();
     return true;
 }
 function netquery_upgrade($oldversion)
@@ -78,9 +80,11 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'looking_glass_enabled', 1);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
-            create_flagstable();
             create_lgroutertable();
+            create_flagstable();
             create_portstable();
+            create_geocctable();
+            create_geoiptable();
             drop_exectable();
             break;
         case '1.1.0':
@@ -105,8 +109,10 @@ function netquery_upgrade($oldversion)
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
             create_portstable();
-            drop_exectable();
+            create_geocctable();
+            create_geoiptable();
             drop_lgrequesttable();
+            drop_exectable();
             break;
         case '1.2.0':
             xarModSetVar('netquery', 'querytype_default', 'whois');
@@ -129,8 +135,10 @@ function netquery_upgrade($oldversion)
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
             create_portstable();
-            drop_exectable();
+            create_geocctable();
+            create_geoiptable();
             drop_lgrequesttable();
+            drop_exectable();
             break;
         case '1.3.0':
         case '1.3.1':
@@ -152,8 +160,10 @@ function netquery_upgrade($oldversion)
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
-            drop_exectable();
+            create_geocctable();
+            create_geoiptable();
             drop_lgrequesttable();
+            drop_exectable();
             break;
         case '2.0.0':
         case '2.1.0':
@@ -174,8 +184,10 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'tracexec_remote_t', 'target');
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
-            drop_exectable();
+            create_geocctable();
+            create_geoiptable();
             drop_lgrequesttable();
+            drop_exectable();
             break;
         case '2.3.0':
         case '2.3.5':
@@ -190,10 +202,15 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'traceexec_local', $traceexec);
             xarModSetVar('netquery', 'traceexec_remote', 'http://noc.thunderworx.net/cgi-bin/public/ping.pl');
             xarModSetVar('netquery', 'tracexec_remote_t', 'target');
-            drop_exectable();
+            create_geocctable();
+            create_geoiptable();
             drop_lgrequesttable();
+            drop_exectable();
             break;
+        case '2.4.0':
         default:
+            create_geocctable();
+            create_geoiptable();
             break;
     }
     return true;
@@ -231,10 +248,12 @@ function netquery_delete()
     if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
     xarRemoveMasks('netquery');
     xarRemoveInstances('netquery');
+    drop_geoiptable();
+    drop_geocctable();
     drop_portstable();
+    drop_flagstable();
     drop_lgroutertable();
     drop_whoistable();
-    drop_flagstable();
     return true;
 }
 ?>

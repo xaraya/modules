@@ -52,6 +52,15 @@ function netquery_adminapi_configapi()
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));
+    if (file_exists('modules/netquery/xaradmin/xageoip.php')) {
+        $data['xaglink'] = Array('url'   => xarModURL('netquery', 'admin', 'xageoip'),
+                                 'title' => xarML('Install new GeoIP data table'),
+                                 'label' => xarML('Install GeoIP Data'));
+    } else {
+        $data['xaglink'] = Array('url'   => 'http://www.virtech.org/tools/',
+                                 'title' => xarML('Get GeoIP data installer option'),
+                                 'label' => xarML('Get GeoIP Data'));
+    }
     $data['flvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'flview'),
                              'title' => xarML('Edit service/exploit category flags'),
                              'label' => xarML('Edit Category Flags'));
@@ -67,9 +76,15 @@ function netquery_adminapi_configapi()
     $data['p99link'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview', array('pflag' => '99')),
                              'title' => '<font color="red">'.xarML($data['portsubmits'].' New for Reflagging').'</font>',
                              'label' => xarML('None for Reflagging'));
-    $data['xaplink'] = Array('url'   => xarModURL('netquery', 'admin', 'xaports'),
-                             'title' => xarML('Build port services/exploits table'),
-                             'label' => xarML('Build New Table'));
+    if (file_exists('modules/netquery/xaradmin/xaports.php')) {
+        $data['xaplink'] = Array('url'   => xarModURL('netquery', 'admin', 'xaports'),
+                                 'title' => xarML('Install new ports data table'),
+                                 'label' => xarML('Install Ports Data'));
+    } else {
+        $data['xaplink'] = Array('url'   => 'http://www.virtech.org/tools/',
+                                 'title' => xarML('Get ports data installer option'),
+                                 'label' => xarML('Get Ports Data'));
+    }
     $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));

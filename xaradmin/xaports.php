@@ -2,31 +2,37 @@
 function netquery_admin_xaports()
 {
     if (!xarSecurityCheck('EditRole')) return;
-    if (!xarVarFetch('step', 'int:1:10', $step, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'display', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('step', 'int:1:100', $step, '1', XARVAR_NOT_REQUIRED)) return;
     $data = array();
     $data['step'] = $step;
-    $data['phase'] = $phase;
-    $stepphase = $step.'-'.$phase;
-    switch ($stepphase) {
-        case '1-display':
+    switch ($step) {
+        case '1':
         default:
             $data['body'] = '<br /><br />The first step in building a new table is to delete the existing ports table along with the related flags table.';
             $data['body'] .= ' Unless it has been backed up, all of the data contained in both tables will be lost.';
             $data['body'] .= '<br /><br />Do you wish to proceed?:';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => '1', 'phase' => 'update')).'">Yes</a>]';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => 99)).'">Yes</a>]';
             $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">No</a>]<br /><br />';
+            return $data;
             break;
-        case '1-update':
+        case '99':
             $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $FlagsTable = $xartable['netquery_flags'];
-            $PortsTable = $xartable['netquery_ports'];
+//          $xartable =& xarDBGetTables();
+//          $FlagsTable = $xartable['netquery_flags'];
+//          $PortsTable = $xartable['netquery_ports'];
+            $FlagsTable = xarDBGetSiteTablePrefix() . '_netquery_flags';
+            $PortsTable = xarDBGetSiteTablePrefix() . '_netquery_ports';
             xarDBLoadTableMaintenanceAPI();
             $query = xarDBDropTable($FlagsTable);
             $result = &$dbconn->Execute($query);
+            if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+              xarErrorHandled();
+            }
             $query = xarDBDropTable($PortsTable);
             $result = &$dbconn->Execute($query);
+            if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+              xarErrorHandled();
+            }
             $flagfields = array(
                  'flag_id'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
                 ,'flagnum'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
@@ -1806,24 +1812,20 @@ array(1734, 1024, 'tcp', 'RAT', 'Remote Administration Tool - RAT [no 2]', 1));
                 $bindvars = array((int)$port_id, (int)$port, (string)$protocol, (string)$service, (string)$comment, (int)$flag);
                 $result =& $dbconn->Execute($query,$bindvars);
             }
-            xarResponseRedirect(xarModURL('netquery', 'admin', 'xaports', array('step' => '2', 'phase' => 'display')));
+            xarResponseRedirect(xarModURL('netquery', 'admin', 'xaports', array('step' => '2')));
             return true;
-            exit;
             break;
-        case '2-display':
+        case '2':
             $data['body'] = '<br /><br />A new ports table has been created and populated with services and exploits data up to port number 1024.';
             $data['body'] .= '<br /><br />Do you wish to populate higher ports?:';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => '2', 'phase' => 'update')).'">Yes</a>]';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports2', array('step' => '2')).'">Yes</a>]';
             $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">No</a>]<br /><br />';
+            return $data;
             break;
-        case '2-update':
-            xarResponseRedirect(xarModURL('netquery', 'admin', 'xaports2', array('step' => '3', 'phase' => 'update')));
-            return true;
-            exit;
-            break;
-        case '3-display':
+        case '3':
             $data['body'] = '<br /><br />Process completed. The new ports table has now been populated with services and exploits data up to port number 65535.';
             $data['body'] .= '<br /><br />Please click <a href="'.xarModURL('netquery', 'admin', 'config').'">HERE</a> to return to Netquery\'s main admin panel.<br /><br />';
+            return $data;
             break;
     }
     return $data;

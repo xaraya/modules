@@ -53,6 +53,7 @@ function netquery_userapi_mainapi()
     $data['traceexec_remote_t'] = xarModGetVar('netquery', 'traceexec_remote_t');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
     $data['browserinfo'] = xarModAPIFunc('netquery', 'user', 'getsniff');
+    $data['geoip'] = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $data['browserinfo']->property('ip')));
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['lgrouters'] = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => '2'));
     $data['lgdefault'] = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => 'default'));

@@ -121,14 +121,15 @@ major features:</p><ul>
 <li>HTTP HEAD and GET requests,</li>
 <li>ICMP pings (local and/or remote),</li>
 <li>traceroutes (local and/or remote),</li>
-<li>looking glass router interrogation, and</li>
+<li>looking glass router interrogation,</li>
+<li>GeoIP and ports data installer module options,</li>
 <li>user submissions with admin notice &amp; approval.</li></ul>
 
-<p>The administrator can enable or disable each feature individually and can configure local execution
-and/or a remote server script for the ping and traceroute features. The administrator can also edit
-all of the data tables used by the whois, port services and looking glass features and can allow site
-users to submit port services and exploits information for acceptance.  Major data tables can be
-downloaded and updated independently of the module itself.</p>
+<p>Netquery is fully configurable. The administrator can enable or disable each feature individually
+and can select local execution and/or a remote server script for the ping and traceroute features.
+The administrator can also edit all of the data tables used by the whois, port services and looking
+glass features and can allow site users to submit port services and exploits information for acceptance.
+Optional GeoIP and ports data tables can be downloaded and installed independently of the module core.</p>
 
 <h3>Availability, Information &amp; Testing</h3>
 
@@ -155,9 +156,9 @@ Windows thinks they should be renamed accordingly. One of those cases where two 
 do not make a right.)</p>
 
 <p>(2) Only the Netquery standalone download contains basic administrator login authentication of its own.
-(The CMS editions rely upon module security provided by the CMS.) If you want to control user access for
-the standalone edition, authentication add-ons are readily available from open source PHP script sites,
-including <a href="http://www.hotscripts.com/PHP/Scripts_and_Programs/User_Authentication/">HotScripts</a>
+(The CMS editions rely upon module security provided by the CMS.) If you want to control user access for the
+standalone edition, authentication add-ons are readily available from open source PHP script sites, including
+<a href="http://www.hotscripts.com/PHP/Scripts_and_Programs/User_Authentication/?RID=N282832">HotScripts</a>
 and the <a href="http://php.resourceindex.com/Complete_Scripts/User_Management/">PHP Resource Index</a>.</p>
 
 
@@ -218,8 +219,8 @@ reconfigured to suit your needs and preferences.</p>
     <tr>
         <td class="item">4. Choose Your Options</td>
         <td class="item-desc">From Netquery's admin menu, select and configure options you want to make available.
-        If you wish to display services and exploits data for port checks, be sure to select the "Build New Table"
-        option for that feature and follow the on-screen instructions.</td>
+        If you have included the optional GeoIP and/or ports services and exploits data packages, be sure to select
+        the "Install Data" options for those features and follow the on-screen instructions.</td>
     </tr>
     <tr><td class="item-heading" colspan="2">Installation of Content Management System (CMS) Editions</td></tr>
     <tr>
@@ -235,8 +236,8 @@ reconfigured to suit your needs and preferences.</p>
     <tr>
         <td class="item">3. Choose Your Options</td>
         <td class="item-desc">From Netquery's admin menu, select and configure options you want to make available.
-        If you wish to display services and exploits data for port checks, be sure to select the "Build New Table"
-        option for that feature and follow the on-screen instructions.</td>
+        If you have included the optional GeoIP and/or ports services and exploits data packages, be sure to select
+        the "Install Data" options for those features and follow the on-screen instructions.</td>
     </tr>
     <tr><td class="item-heading" colspan="2">Netquery Options Configuration</td></tr>
     <tr>
@@ -358,7 +359,7 @@ reconfigured to suit your needs and preferences.</p>
         - Netquery's local ping and traceroute options and the use of Windows nslookup for email
           validation require read/execute permission for your server OS executables.<br />
         - The Netquery Log option requires write permission for the specified path/filename.<br />
-        - The port services data table is not installed automatically. Select "Build New Table" to install it.<br />
+        - The GeoIP and ports data tables are not installed automatically. Select the "Install Data" options as indicated.<br />
         - Port services flag #99 is reserved for user submissions pending admin reflagging.<br />
         - Deleting all whois pairs from the database table will produce an error. Disable the
           whois feature option instead.<br />
@@ -404,10 +405,9 @@ they may be accessed ONLY via the [Allow User Submissions ~ ## New for Reflaggin
 Netquery admin panel.  For comparison and variants checking, a popup list of other entries for the same
 port is available while reflagging and editing new submissions.</p>
 
-<p>Ports table updates are available from <a href="http://www.virtech.org/tools/" target="_blank">VIRtech
-Tools</a> and will work with Netquery v2.x and later. Please note that the Build New Table option involves
-replacing all data in both the port services table and its related category flags table.  Unless it has
-been backed up, all of the previously entered data will be lost.</p>
+<p>GeoIP and ports data installer options are available from <a href="http://www.virtech.org/tools/" target="_blank">VIRtech
+Tools</a>. Please note that data installation replaces all existing data in the affected tables.  Unless it has
+been backed up, any previously entered data will be lost.</p>
 
 <p>Because Netquery's looking glass configuration provides both default and individual router settings
 it is important to understand their order of operational precedence.  For entered items (username,

@@ -1,6 +1,7 @@
 <xar:sec mask="OverviewNetquery" catch="false">
-  <xar:if condition="$vars['blockquery'] eq 'clientinfo'" >
-    &para; <xar:mlstring>IP</xar:mlstring> : #$host#<br />
+  <xar:if condition="$vars['blockquery'] eq 'clientinfo'">
+    <xar:if condition="!empty($geoip.cn)">&para; #$geoip.cn#<br /></xar:if>
+    &para; <xar:mlstring>IP</xar:mlstring> : #$browserinfo->property("ip")#<br />
     &para; <xar:mlstring>OS</xar:mlstring> : #$browserinfo->property("platform")# #$browserinfo->property("os")#<br />
     &para; <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("long_name")# #$browserinfo->property("version")#<br />
     &para; <xar:mlstring>User Agent</xar:mlstring> : #$browserinfo->property("ua")#<br />

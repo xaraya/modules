@@ -29,3 +29,7 @@ Version 2.4 2005-03-10
    - switched exec table items to module config vars
    - added admin selection for default whois TLD
    - added client info to main interface and blocks
+Version 3.0 2005-03-20
+   - added GeoIP address country data lookup
+   - made GeoIP and ports data installer option packages
+   - Converted Netquery to handle separate modular options 

@@ -7,7 +7,8 @@
 <span class="xar-mod-title">#$maintitle#</span>
 <xar:if condition="$clientinfo_enabled">
     <xar:mlstring>Client Info</xar:mlstring><br />
-    <xar:mlstring>IP</xar:mlstring>: #$host# -
+    <xar:if condition="!empty($geoip.cn)">#$geoip.cn# - </xar:if>
+    <xar:mlstring>IP</xar:mlstring>: #$browserinfo->property("ip")# -
     <xar:mlstring>OS</xar:mlstring>: #$browserinfo->property("platform")# #$browserinfo->property("os")# -
     <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("browser")# #$browserinfo->property("version")#
 </xar:if>

@@ -2,16 +2,11 @@
 function netquery_admin_xaports2()
 {
     if (!xarSecurityCheck('EditRole')) return;
-    if (!xarVarFetch('step', 'int:1:10', $step, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'display', XARVAR_NOT_REQUIRED)) return;
-    $data = array();
-    $data['step'] = $step;
-    $data['phase'] = $phase;
-    $stepphase = $step.'-'.$phase;
+    if (!xarVarFetch('step', 'int:1:10', $step, '0', XARVAR_NOT_REQUIRED)) return;
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $PortsTable = $xartable['netquery_ports'];
-    xarDBLoadTableMaintenanceAPI();
+//  $xartable =& xarDBGetTables();
+//  $PortsTable = $xartable['netquery_ports'];
+    $PortsTable = xarDBGetSiteTablePrefix() . '_netquery_ports';
 $portitems =array(
 array(1735, 1025, 'tcp', 'blackjack', 'network blackjack', 0),
 array(1736, 1025, 'tcp', 'FraggleRock', 'Fraggle Rock', 1),
@@ -9086,8 +9081,7 @@ array(10799, 65535, 'tcp', 'Sins', 'Sins', 1));
         $bindvars = array((int)$port_id, (int)$port, (string)$protocol, (string)$service, (string)$comment, (int)$flag);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-    xarResponseRedirect(xarModURL('netquery', 'admin', 'xaports', array('step' => '3', $phase => 'display')));
+    xarResponseRedirect(xarModURL('netquery', 'admin', 'xaports', array('step' => '3')));
     return $true;
-    exit;
 }
 ?>

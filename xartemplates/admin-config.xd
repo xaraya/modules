@@ -66,6 +66,9 @@
         <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" />
       </xar:if>
       <xar:mlstring>Enable Client Info (Main Interface)</xar:mlstring>
+      <xar:if condition="!empty($xaglink)">
+        ~ <a href="#$xaglink.url#">#$xaglink.label#</a>
+      </xar:if>
     </td>
   </tr>
   <tr align="left">
@@ -169,7 +172,9 @@
       </xar:if>
       <xar:mlstring>Enable Port Check</xar:mlstring>
       ~ <a href="#$ptvlink.url#">#$ptvlink.label#</a>
-      ~ <a href="#$xaplink.url#">#$xaplink.label#</a>
+      <xar:if condition="!empty($xaplink)">
+        ~ <a href="#$xaplink.url#">#$xaplink.label#</a>
+      </xar:if>
     </td>
   </tr>
   <tr>

@@ -8,74 +8,22 @@ function drop_exectable()
     $query = xarDBDropTable($ExecTable);
     if (empty($query)) return;
     $result = &$dbconn->Execute($query);
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+      xarErrorHandled();
     }
     return;
 }
-function drop_flagstable()
+function drop_lgrequesttable()
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $FlagsTable = $xartable['netquery_flags'];
+    $LGRequestTable = $xartable['netquery_lgrequest'];
     xarDBLoadTableMaintenanceAPI();
-    $query = xarDBDropTable($FlagsTable);
+    $query = xarDBDropTable($LGRequestTable);
     if (empty($query)) return;
     $result = &$dbconn->Execute($query);
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-    }
-    return;
-}
-function create_flagstable()
-{
-    $portsurl = xarModURL('netquery', 'admin', 'xaports')."#";
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $FlagsTable = $xartable['netquery_flags'];
-    xarDBLoadTableMaintenanceAPI();
-    $flagfields = array(
-         'flag_id'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
-        ,'flagnum'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
-        ,'keyword'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
-        ,'fontclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
-        ,'backclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
-        ,'lookup_1' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'')
-        ,'lookup_2' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>''));
-    $query = xarDBCreateTable($FlagsTable,$flagfields);
-    if (empty($query)) return;
-    $result =& $dbconn->Execute($query);
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-    $flagitems =array(
-        array(1, 0, 'service', 'black', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=port+service+', ''),
-        array(2, 1, 'trojan', 'red', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=trojan+', ''),
-        array(3, 2, 'backdoor', 'purple', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=backdoor+', ''),
-        array(4, 3, 'worm', 'brown', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=worm+', ''),
-        array(5, 4, 'game', 'blue', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=game+', ''),
-        array(6, 5, 'reserved1', 'yellow', 'white', $portsurl, ''),
-        array(7, 6, 'reserved2', 'yellow', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=dummy2+', ''),
-        array(8, 99, 'pending', 'green', 'white', '', ''));
-    foreach ($flagitems as $flagitem) {
-        list($id,$flagnum,$keyword,$fontclr,$backclr,$lookup_1, $lookup_2) = $flagitem;
-        $query = "INSERT INTO $FlagsTable
-                (flag_id, flagnum, keyword, fontclr, backclr, lookup_1, lookup_2)
-                VALUES (?,?,?,?,?,?,?)";
-        $bindvars = array((int)$id, (int)$flagnum, (string)$keyword, (string)$fontclr, (string)$backclr, (string)$lookup_1,(string)$lookup_2);
-        $result =& $dbconn->Execute($query,$bindvars);
-    }
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+      xarErrorHandled();
     }
     return;
 }
@@ -143,22 +91,6 @@ function create_whoistable()
         $bindvars = array((int)$id, (string)$ext, (string)$server);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-    }
-    return;
-}
-function drop_lgrequesttable()
-{
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $LGRequestTable = $xartable['netquery_lgrequest'];
-    xarDBLoadTableMaintenanceAPI();
-    $query = xarDBDropTable($LGRequestTable);
-    if (empty($query)) return;
-    $result = &$dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $query);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
@@ -260,6 +192,161 @@ function create_lgroutertable()
     }
     return;
 }
+function drop_geocctable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $GeoccTable = $xartable['netquery_geocc'];
+    xarDBLoadTableMaintenanceAPI();
+    $query = xarDBDropTable($GeoccTable);
+    if (empty($query)) return;
+    $result = &$dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
+function create_geocctable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $GeoccTable = $xartable['netquery_geocc'];
+    xarDBLoadTableMaintenanceAPI();
+    $geoccfields = array(
+         'ci' => array('type'=>'integer','size'=>'tiny','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+        ,'cc' => array('type'=>'char','size'=>2,'null'=>FALSE,'default'=>'')
+        ,'cn' => array('type'=>'varchar','size'=>50,'null'=>FALSE,'default'=>''));
+    $query = xarDBCreateTable($GeoccTable,$geoccfields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+    $geoccitem = array(1, 'XX', '<a href="http://virtech.org/tools/">No GeoIP</a>');
+    list($ci,$cc,$cn) = $geoccitem;
+    $query = "INSERT INTO $GeoccTable
+            (ci, cc, cn)
+            VALUES (?,?,?)";
+    $bindvars = array((int)$ci, (string)$cc, (string)$cn);
+    $result =& $dbconn->Execute($query,$bindvars);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
+function drop_geoiptable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $GeoipTable = $xartable['netquery_geoip'];
+    xarDBLoadTableMaintenanceAPI();
+    $query = xarDBDropTable($GeoipTable);
+    if (empty($query)) return;
+    $result = &$dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
+function create_geoiptable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $GeoipTable = $xartable['netquery_geoip'];
+    xarDBLoadTableMaintenanceAPI();
+    $geoipfields = array(
+         'start' => array('type'=>'integer','size'=>10,'unsigned'=>TRUE,'null'=>FALSE,'default'=>'0')
+        ,'end'   => array('type'=>'integer','size'=>10,'unsigned'=>TRUE,'null'=>FALSE,'default'=>'0')
+        ,'ci'    => array('type'=>'integer','size'=>'tiny','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'));
+    $query = xarDBCreateTable($GeoipTable,$geoipfields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+    $geoipitem = array(0, 1, 1);
+    list($start,$end,$ci) = $geoipitem;
+    $query = "INSERT INTO $GeoipTable
+            (start, end, ci)
+            VALUES (?,?,?)";
+    $bindvars = array($start, $end, (int)$ci);
+    $result =& $dbconn->Execute($query,$bindvars);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
+function drop_flagstable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $FlagsTable = $xartable['netquery_flags'];
+    xarDBLoadTableMaintenanceAPI();
+    $query = xarDBDropTable($FlagsTable);
+    if (empty($query)) return;
+    $result = &$dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
+function create_flagstable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $FlagsTable = $xartable['netquery_flags'];
+    xarDBLoadTableMaintenanceAPI();
+    $flagfields = array(
+         'flag_id'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+        ,'flagnum'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+        ,'keyword'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
+        ,'fontclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
+        ,'backclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
+        ,'lookup_1' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'')
+        ,'lookup_2' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>''));
+    $query = xarDBCreateTable($FlagsTable,$flagfields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+    $flagitems =array(
+        array(1, 0, 'service', 'black', 'white', 'http://www.virtech.org/tools/#', ''),
+        array(2, 99, 'pending', 'green', 'white', '', ''));
+    foreach ($flagitems as $flagitem) {
+        list($id,$flagnum,$keyword,$fontclr,$backclr,$lookup_1, $lookup_2) = $flagitem;
+        $query = "INSERT INTO $FlagsTable
+                (flag_id, flagnum, keyword, fontclr, backclr, lookup_1, lookup_2)
+                VALUES (?,?,?,?,?,?,?)";
+        $bindvars = array((int)$id, (int)$flagnum, (string)$keyword, (string)$fontclr, (string)$backclr, (string)$lookup_1,(string)$lookup_2);
+        $result =& $dbconn->Execute($query,$bindvars);
+    }
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
 function drop_portstable()
 {
     $dbconn =& xarDBGetConn();
@@ -298,8 +385,8 @@ function create_portstable()
             new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-    $port = array(1, 80, 'tcp', 'Example', 'Admin [Build New Table] for more', 5);
-    list($port_id, $port, $protocol, $service, $comment, $pflag) = $port;
+    $portitem = array(1, 0, 'xxx', 'Unknown', 'Port services data not installed', 0);
+    list($port_id, $port, $protocol, $service, $comment, $pflag) = $portitem;
     $query = "INSERT INTO $PortsTable (
               port_id, port, protocol, service, comment, flag)
               VALUES (?,?,?,?,?,?)";

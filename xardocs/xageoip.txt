@@ -1,0 +1,13 @@
+
+The GeoIP data option package works with Netquery v3.x and later.
+Get the option installer package from http://www.virtech.org/tools/
+and upload the data installer files (xageoip.php and xageoip2.php)
+to your site. Then select the Install GeoIP Data Table option in
+the Netquery administrator's main configuration panel.
+
+Please note that installing the new data replaces both the geoip ranges
+table and its related country codes table.  Unless it has been backed
+up, any data previously entered in those tables will be lost.
+
+Data for the GeoIP table and updates are adapted and optimised from
+the free CSV download provided by MaxMind (www.maxmind.com).

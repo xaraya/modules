@@ -25,17 +25,16 @@ function netquery_netquickblock_display($blockinfo)
     if (!isset($vars['blockquery'])) {
         $vars['blockquery'] = 'whois';
     }
-    if (!isset($browserinfo)) $browserinfo = xarModAPIFunc('netquery','user','getsniff');
-    $links = array();
+    $browserinfo = xarModAPIFunc('netquery','user','getsniff');
+    $geoip = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $browserinfo->property('ip')));
     $links = xarModAPIFunc('netquery','user','getlinks');
     $whois_default = xarModGetVar('netquery', 'whois_default');
-    $host = $_SERVER['REMOTE_ADDR'];
     $email = 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $httpurl = 'http://'.$_SERVER['SERVER_NAME'];
     $blockinfo['content'] = array('browserinfo'   => $browserinfo,
+                                  'geoip'         => $geoip,
                                   'links'         => $links,
                                   'whois_default' => $whois_default,
-                                  'host'          => $host,
                                   'email'         => $email,
                                   'httpurl'       => $httpurl,
                                   'vars'          => $vars);

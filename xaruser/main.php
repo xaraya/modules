@@ -83,10 +83,10 @@ function netquery_user_main()
                 }
                 @fclose($sock);
             }
-            if (eregi("RIPE.NET", $readbuf))
-                $nextServer = "whois.ripe.net";
-            else if (eregi("whois.apnic.net", $readbuf))
+            if (eregi("whois.apnic.net", $readbuf))
                 $nextServer = "whois.apnic.net";
+            else if (eregi("RIPE.NET", $readbuf))
+                $nextServer = "whois.ripe.net";
             else if (eregi("whois.registro.br", $readbuf))
                 $nextServer = "whois.registro.br";
             else if (eregi("nic.ad.jp", $readbuf)) {
@@ -117,10 +117,15 @@ function netquery_user_main()
         $target = $data['host'];
         $msg = ('<p><b>DNS Lookup Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         $msg .= $target.' resolved to ';
-        if (eregi("[a-zA-Z]", $target))
-            $msg .= gethostbyname($target);
-        else
-            $msg .= gethostbyaddr($target);
+        if (eregi("[a-zA-Z]", $target)) {
+          $ipaddr = gethostbyname($target);
+          $geoipc = xarModAPIFunc('netquery', 'user', 'getgeoip', (array('ip' => $ipaddr)));
+          $msg .= $ipaddr." [".$geoipc['cn']."]";
+        } else {
+          $geoipc = xarModAPIFunc('netquery', 'user', 'getgeoip', (array('ip' => $target)));
+          $ipname = gethostbyaddr($target);
+          $msg .= $ipname." [".$geoipc['cn']."]";
+        }
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
     }
@@ -255,6 +260,7 @@ function netquery_user_main()
         $fp_Send      = $data['httpreq'] . " $url_Req HTTP/1.0\n";
         $fp_Send     .= "Host: $url_Host\n";
         $fp_Send     .= "User-Agent: Netquery/1.2 PHP/" . phpversion() . "\n";
+        $target = $url_Host;
         $msg = ('<p><b>HTTP Request Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p><pre>');
         if (! $sock = @fsockopen($url_Host, $url_Port, $errnum, $error, 10)) {
             unset($sock);
@@ -277,7 +283,7 @@ function netquery_user_main()
         $tpoints = $data['maxp'];
         $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if ($data['winsys']) {$PN=$data['pingexec_local'].' -n '.$tpoints.' '.$target;}
-        else {$PN=$data['pingexec_local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
+        else {$PN=$data['pingexec_local'].' -c'.$tpoints.' '.$target;}
         exec($PN, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
             $png .= $response[$i].'<br />';
@@ -379,12 +385,17 @@ function netquery_user_main()
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
     }
-    if ($data['capture_log_enabled'] && $data['capture_log_filepath'])
+    if ($data['querytype'] != 'none' && $data['capture_log_enabled'] && $data['capture_log_filepath'])
     {
+        $geoip = $data['geoip'];
         $datetime = date($data['capture_log_dtformat']);
         $fp = @fopen($data['capture_log_filepath'], 'a');
         if ($fp) {
-            $string = $datetime." - User IP: ".$_SERVER[REMOTE_ADDR]." - Target: ".$target." \n";
+            $string = $datetime." - User: ".$data['browserinfo']->property('ip')." [";
+            if (!empty($geoip['cn'])) $string .= $geoip['cn'].", ";
+            $string .= $data['browserinfo']->property('platform')." ".$data['browserinfo']->property('os').", ";
+            $string .= $data['browserinfo']->property('browser')." ".$data['browserinfo']->property('version')."]";
+            $string .= " - Target: ".$target." \n";
             $write = fputs($fp, $string);
             @fclose($fp);
         }
