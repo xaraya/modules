@@ -127,12 +127,22 @@ passed 2.13
 failed=0
 test="Function declarations use one true brace"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[[:space:]]*function .*[(].*[)].*{.*' $i`
+    # <rabbitt> - CHECKME:
+    # This doesn't work when you have things like:
+    # $javascript = "function foo(){";
+    # besides, generally speaking, it's not bad to enforce
+    # [WS]*FUNCTION [NAME]([PARAM1[, ...]])
+    # or written another way:
+    # function name($param1, $paramN)
+    # preserved original below:
+    # result=`grep -n '^[[:space:]]*function .*[(].*[)].*{.*' $i`
+
+    result=`grep -nE '^[[:space:]]*function[^{]+{' $i`
     if [ $? -ne 1 ] ; then
         failed 2.18 "in $i" $result
     fi
 done
-passed 2.18 
+passed 2.18
 
 # Class declations use the one true brace convention
 failed=0
