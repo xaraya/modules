@@ -53,13 +53,12 @@ function subitems_userapi_ddobjectlink_get($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Check for no rows found, and if so, close the result set and return an exception
+    // Check for no rows found, and if so, close the result set and return a dummy item
     if ($result->EOF) {
         $result->Close();
-        $msg = xarML('This item does not exists');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
-            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
-        return;
+        // some modules (e.g. roles) may have itemtype 0 and 1, which means that hooks
+        // get called for the wrong itemtype
+        return array('objectid' => 0);
     }
     // Obtain the item information from the result set
     list($objectid, $module,$itemtype,$template) = $result->fields;

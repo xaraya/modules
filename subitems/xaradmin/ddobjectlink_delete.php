@@ -19,6 +19,8 @@ function subitems_admin_ddobjectlink_delete($args)
    }
    $data = xarModAPIFunc('subitems','admin','menu');
    $item = xarModAPIFunc('subitems','user','ddobjectlink_get',array('objectid' => $objectid));
+    // nothing to see here
+   if (empty($item) || empty($item['objectid'])) return xarML('This item does not exist');
 
     $data = array_merge($item,$data);
     $objectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',

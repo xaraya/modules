@@ -8,6 +8,8 @@ function subitems_admin_ddobjectlink_edit($args)
     if(!xarVarFetch('confirm','str:0',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',array('objectid' => $objectid))) return;
+    // nothing to see here
+    if (empty($ddobjectlink['objectid'])) return xarML('This item does not exist');
 
     if($confirm)	{
     	$result_array = xarVarBatchFetch(

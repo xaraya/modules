@@ -17,6 +17,8 @@ function subitems_user_hook_item_modify($args)
 
     // a object should be linked to this hook
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return;
+    // nothing to see here
+    if (empty($ddobjectlink['objectid'])) return '';
     $objectid = $ddobjectlink['objectid'];
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
