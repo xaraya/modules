@@ -18,8 +18,10 @@
  */
 function tinymce_admin_modifyconfig()
 {
-    $data = xarModAPIFunc('tinymce', 'admin', 'menu');
     if (!xarSecurityCheck('AdminTinyMCE')) return;
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
+  //  $data = xarModAPIFunc('tinymce', 'admin', 'menu');
+
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
     $data['tinytheme'] = xarModGetVar('tinymce', 'tinytheme');
@@ -31,7 +33,12 @@ function tinymce_admin_modifyconfig()
     $data['tinyask'] = xarModGetVar('tinymce', 'tinyask');
     $data['tinyextended'] = xarModGetVar('tinymce', 'tinyextended');
     $data['tinyexstyle'] = xarModGetVar('tinymce', 'tinyexstyle');
-    $data['tinybuttons'] = xarModGetVar('tinymce', 'tinybuttons');     
+    $data['tinybuttons'] = xarModGetVar('tinymce', 'tinybuttons');
+    $data['tinybuttons2'] = xarModGetVar('tinymce', 'tinybuttons2');
+    $data['tinybuttons3'] = xarModGetVar('tinymce', 'tinybuttons3');
+    $data['tinybuild1'] = xarModGetVar('tinymce', 'tinybuild1');
+    $data['tinybuild2'] = xarModGetVar('tinymce', 'tinybuild2');
+    $data['tinybuild3'] = xarModGetVar('tinymce', 'tinybuild3');
     $data['tinybuttonsremove'] = xarModGetVar('tinymce', 'tinybuttonsremove');                    
     $data['tinytoolbar'] = xarModGetVar('tinymce', 'tinytoolbar');
     $data['tinywidth'] = xarModGetVar('tinymce', 'tinywidth');
@@ -39,7 +46,19 @@ function tinymce_admin_modifyconfig()
     $data['tinyundolevel'] = xarModGetVar('tinymce', 'tinyundolevel');
     $data['defaulteditor'] = xarModGetVar('base','editor');
     $data['tinydirection'] = xarModGetVar('tinymce','tinydirection');    
-    $data['tinyencode'] = xarModGetVar('tinymce','tinyencode');   
+    $data['tinyencode'] = xarModGetVar('tinymce','tinyencode');
+    $data['tinyplugins'] = xarModGetVar('tinymce','tinyplugins');
+    $data['tinydate']=xarModGetVar('tinymce', 'tinydate');
+    $data['tinytime']=xarModGetVar('tinymce', 'tinytime');
+    $data['tinybr']=xarModGetVar('tinymce', 'tinybr');
+    if (strpos($data['tinyplugins'], 'insertdatetime')) {
+        $data['dateplug']=1;
+    } else {
+        $data['dateplug']=0;
+    }
+    if (!isset($data['tab'])) {
+        $data['tab']='basic';
+    }
      //get list of valid themes
     $tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
     $themelist=array();

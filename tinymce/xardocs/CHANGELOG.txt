@@ -1,4 +1,12 @@
-* Version 0.1.0 30 Sept 04
+* Version 0.1.2 5 Oct 04
+- Upgrade to TinyMCE 1.3.4
+- Add provision for plugins
+- Add provision to define buttons in the editor
+- Add configurable linefeed to <br /> option
+- Add provision to add buttons to all rows
+- Redo interface to Tabbed areas to simplify configuration and clarify use of Advanced options
+
+* Version 0.1.1 30 Sept 04
 - Upgrade to TinyMCE 1.33
 - Addition of Arabic language pack
 - Configuration for text direction
