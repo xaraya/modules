@@ -249,6 +249,13 @@ function categories_navigationblock_display($blockinfo)
 
     $data = array();
     $data['cids'] = $cids;
+    // pass information about current module, item type and item id (if any) to template
+    $data['module'] = $modname;
+    $data['itemtype'] = $itemtype;
+    $data['itemid'] = $itemid;
+    // pass information about current function to template
+    $data['type'] = $type;
+    $data['func'] = $func;
 
     $blockinfo['content'] = '';
 

@@ -225,6 +225,13 @@ function categories_userapi_navigation($args)
     $data = array();
     $data['cids'] = $cids;
     $data['istree'] = $istree;
+    // pass information about current module, item type and item id (if any) to template
+    $data['module'] = $modname;
+    $data['itemtype'] = $itemtype;
+    $data['itemid'] = $itemid;
+    // pass information about current function to template
+    $data['type'] = $type;
+    $data['func'] = $func;
 
     switch ($layout) {
 
