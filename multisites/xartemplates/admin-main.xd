@@ -44,13 +44,13 @@
         Configuration</xar:mlstring>, you can use this option to set up necessary 
         scripts and directories for a subsite. At this time, the option creates 
         the required directory tree and config.system.php file for your subsite. It
-        also creates appropriate configuration variables for the site.<br>
+        also creates appropriate configuration variables for the site.<br/>
       </li>
       <li> <xar:mlstring>View Sites - This option lists the Master site and all
-        subsites. At this time, that is all it does :-)<br>
+        subsites. At this time, that is all it does :-)<br/>
         </xar:mlstring></li>
       <li> <xar:mlstring>Admin Config - The admin configuration sets the
-        number of sites listed per page in the View Sites option.<br>
+        number of sites listed per page in the View Sites option.<br/>
         </xar:mlstring></li>
       <li>Master Config - Choose this option first to set up the basic configuration
         requirements to run multisites. This option changes your master config.system.php
