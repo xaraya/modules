@@ -10,15 +10,23 @@ function cachesecurity_admin_view($args)
     if (!xarVarFetch('sync','str:1:',$sync,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('autosync','bool',$autosync,null,XARVAR_NOT_REQUIRED)) return;
 
+    //Till the hooks are properly done i will leave autosync as false;
+    xarConfigSetVar('CacheSecurity.AutoSync', false);
+    /*
     if ($autosync === false || $autosync === true) {
         xarConfigSetVar('CacheSecurity.AutoSync', $autosync);
     } else {
         $autosync = xarConfigGetVar('CacheSecurity.AutoSync');
     }
+    */
     
     if (!empty($sync)) {
         if (!xarSecConfirmAuthKey()) return;
-        set_time_limit(300); //5 mins is enough?
+        //This will make this run in the background even if the user
+        //aborts it.
+        ignore_user_abort(true);
+        //Run it till necessary
+        set_time_limit(0);
         if (!xarModAPIFunc('cachesecurity','admin','sync'.$sync)) return;
     }
 

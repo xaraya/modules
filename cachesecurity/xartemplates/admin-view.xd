@@ -167,9 +167,14 @@
                                 <xar:mlstring>Off</xar:mlstring>
                             </div>
                         </td>
+                          <td>
+                              <xar:mlstring>Yet not implemented.</xar:mlstring>
+                          </td>
+                        <!--
                           <td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('authid'=>$authid, 'autosync' => 'true'))#">
                               <xar:mlstring>Turn On</xar:mlstring>
                           </a></td>
+                        -->
                         <td><xar:mlstring>Turns on the automatic synchronization of the cache security system.</xar:mlstring></td>
                     </tr>
                    </xar:if>
