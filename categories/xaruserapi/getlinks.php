@@ -96,7 +96,10 @@ function categories_userapi_getlinks($args)
 
 function categories_userapi_getlinks_sortbycount($a, $b)
 {
-    return (count($a) <=> count($b));
+    $ca = count($a);
+    $cb = count($b);
+    if ($ca == $cb) return 0;
+    return ($ca > $cb ? 1 : -1);
 }
 
 ?>
