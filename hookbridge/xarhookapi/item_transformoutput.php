@@ -31,7 +31,7 @@ function hookbridge_hookapi_item_transformoutput ( $args )
     // Argument check
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid Parameter Count in #(3), #(1)api_#(2)', 'hook', 'transformoutput', 'hookbridge');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
