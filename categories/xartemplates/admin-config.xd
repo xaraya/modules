@@ -1,4 +1,4 @@
-<xar:base-include-javascript module="base" filename="formcheck" position="head" />
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script language="JavaScript">
 <!--
 	// Enter name of mandatory fields
