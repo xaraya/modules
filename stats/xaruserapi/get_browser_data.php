@@ -12,6 +12,13 @@ function stats_userapi_get_browser_data($args)
 												  'getbybrowser',
 												  $args);
 	$browsers = array();
+
+	if (empty($brdata)) {
+        $msg = xarML('No browser data available');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'NO_BROWSER_DATA',
+            new DefaultUserException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+        return;
+    } 	
 	foreach($brdata as $browser){
 		switch ($browser['agent']) {
 			case 'Microsoft Internet Explorer': //TODO: is this really only on MAC??
@@ -50,9 +57,14 @@ function stats_userapi_get_browser_data($args)
                 $brname = xarML('Galeon');
                 break;
             case 'Phoenix':
+            case 'Firefox':
+                $brname = 'Mozilla Firefox';
+                // fallthrough => no break;
             case 'Mozilla Firebird':
 				$brpic = 'px.png';
-                $brname = xarML('Mozilla Firebird');
+                if (empty($brname)) {
+                	$brname = xarML('Mozilla Firebird');
+                }
                 break;
 			case 'Konqueror':
 				$brpic = 'konqueror.png';
