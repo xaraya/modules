@@ -141,7 +141,11 @@ function ratings_user_display($args)
     } // No check for low
 
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
-    $data['authid'] = xarSecGenAuthKey('ratings');
+    
+    // set an authid, but only if the current user can rate the item
+    if (xarSecurityCheck('CommentRatings', 0, 'Item', "$modname:$itemtype:$objectid")) {
+        $data['authid'] = xarSecGenAuthKey('ratings');
+    }
     return $data;
 }
 
