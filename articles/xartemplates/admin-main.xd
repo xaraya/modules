@@ -95,11 +95,6 @@ columns and items, show category links + ## of comments (+ performance impact)</
 <p><xar:mlstring>overall enable/disable in 'base' admin + specific enable/disable in 'articles'
 admin + use of module aliases</xar:mlstring></p>
 
-<p><xar:mlstring>Note : since the 'core cleanup' is only half-finished, many of the
-xarConfigSetVar() calls won't do anything useful at the moment.
-So you need to manually edit config.site.xml and set the
-Core.EnableShortURLsSupport variable to 'true' to enable short URLs...</xar:mlstring></p>
-
 <p><xar:mlstring>Module aliases seem to be disabled at the moment - uncomment the line in
 includes/xarServer.php if you want to try it out</xar:mlstring></p>
 

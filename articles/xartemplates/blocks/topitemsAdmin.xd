@@ -71,7 +71,7 @@
 
 		<div style="clear: both; padding-top: 10px;">
 		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Check this to have the block title dynamically generated off of the current content.')#"><label for="dynamictitle#$blockid#"><xar:mlstring>Dynamic Block Title</xar:mlstring></label>:</span>
+			<span class="help" title="#xarML('Check this to have the block title dynamically generated from the current content.')#"><label for="dynamictitle#$blockid#"><xar:mlstring>Dynamic Block Title</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
 			<xar:if condition="empty($dynamictitle)">
@@ -127,7 +127,7 @@
 		
 		<div style="clear: both; padding-top: 10px;">
 		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Choose the status (IE Approved, Front Page) for the featured items.')#"><label for="status#$blockid#"><xar:mlstring>Status</xar:mlstring></label>:</span>
+			<span class="help" title="#xarML('Choose the status (e.g. Approved, Front Page) for the featured items.')#"><label for="status#$blockid#"><xar:mlstring>Status</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
 			<select name="status" id="status#$blockid#" size="1">

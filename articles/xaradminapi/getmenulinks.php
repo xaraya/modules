@@ -51,7 +51,7 @@ function articles_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('articles',
                                                   'admin',
                                                   'modifyconfig'),
-                              'title' => xarML('Modify the article module configuration'),
+                              'title' => xarML('Modify the articles module configuration'),
                               'label' => xarML('Modify Config'));
     }
 
