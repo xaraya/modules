@@ -21,13 +21,13 @@ function multisites_admin_delete($args)
         return;
     }
       // Check if the Master site has been set up
-	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
-	$lIsMaster=xarConfigGetVar('System.MS.Master');
+    $lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+    $lIsMaster=xarConfigGetVar('System.MS.Master');
     $masterurl=xarModGetVar('multisites','masterurl');
     $servervar=xarModGetVar('multisites','servervar');
     $currenthost=$_SERVER[$servervar];
 
- 	if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
+     if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
        // This is the master.
 
        $data['authid']     = xarSecGenAuthKey();

@@ -63,12 +63,12 @@ global $HTTP_SERVER_VARS;
     // Copy the master site existing config file to the data/var directory (for use later and backup)
     // First make the directory tree starting with a 'master' directory and 'var' subdirectory
     //Only do this if this is the first run and setting the Master Site
-	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
-	$lIsMaster=xarConfigGetVar('System.MS.Master');
-	$masterurl = $_SERVER[$servervar];
-	//set the masterurl
-	xarModSetVar('multisites','masterurl',$masterurl);
-	//Get the 'cleaned' name for site directory creation
+    $lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+    $lIsMaster=xarConfigGetVar('System.MS.Master');
+    $masterurl = $_SERVER[$servervar];
+    //set the masterurl
+    xarModSetVar('multisites','masterurl',$masterurl);
+    //Get the 'cleaned' name for site directory creation
     $sitedir = xarModAPIFunc('multisites','admin','cleandn', array('sitedn' => $masterurl));
         if (!$sitedir) {
             $msg = xarML("Could not clean #(1)", $mssite);

@@ -2,7 +2,7 @@
 //Recursively delete everything in a directory!!!
 function multisites_adminapi_recdeldir($args)
 {
-	extract($args);
+    extract($args);
     if (!isset($sitedirpath)) {
             $msg = xarML("Could not remove #(1)", $sitedirpath);
             xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-REMOVING DIRECTORY', new DefaultUserException($msg));

@@ -107,8 +107,8 @@ function multisites_admin_createsite($args)
                                 array('name'         => 'System.MS.MultiSites',
                                       'value'        => 1,
                                       'msprefix'     => $msPrefix,
-				                      'masterprefix' => $masterprefix,
-				                      'msdb'         => $siteDB,
+                                      'masterprefix' => $masterprefix,
+                                      'msdb'         => $siteDB,
                                       'masterdb'     => $masterdb,
                                       'newdbtype'    => $newdbtype));
     if (!$setmultisitevar) {
@@ -124,8 +124,8 @@ function multisites_admin_createsite($args)
                                 array('name'         => 'Site.DB.TablePrefix',
                                       'value'        => $msPrefix,
                                       'msprefix'     => $msPrefix,
-						              'masterprefix' => $masterprefix,
-						              'msdb'         => $siteDB,
+                                      'masterprefix' => $masterprefix,
+                                      'msdb'         => $siteDB,
                                       'masterdb'     => $masterdb,
                                       'newdbtype'    => $newdbtype));
 
@@ -142,8 +142,8 @@ function multisites_admin_createsite($args)
                                 array('name'         => 'System.DB.TablePrefix',
                                       'value'        => $sharedTables,
                                       'msprefix'     => $msPrefix,
-						              'masterprefix' => $masterprefix,
-						              'msdb'         => $siteDB,
+                                      'masterprefix' => $masterprefix,
+                                      'msdb'         => $siteDB,
                                       'masterdb'     => $masterdb,
                                       'newdbtype'    => $newdbtype));
     if (!$setmultisiteshare) {

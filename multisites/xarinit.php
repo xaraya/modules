@@ -18,12 +18,12 @@
 
 function multisites_init()
 {
-	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
-	$lIsMaster=xarConfigGetVar('System.MS.Master');
- 	if (($lIsMultisites==1) and ($lIsMaster!=2)){ //jojodee: allow 'sub' masters only to initialize - not implemented yet
-		// this XARAYA is the master, since this var has been created by the master (the DN used to initialize the module), in the new config.php
-		// forbidden to initialize this module or forbidden to create it a second time.
-		return false;
+    $lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+    $lIsMaster=xarConfigGetVar('System.MS.Master');
+     if (($lIsMultisites==1) and ($lIsMaster!=2)){ //jojodee: allow 'sub' masters only to initialize - not implemented yet
+        // this XARAYA is the master, since this var has been created by the master (the DN used to initialize the module), in the new config.php
+        // forbidden to initialize this module or forbidden to create it a second time.
+        return false;
    }
    // Setup a database table to hold subsites (may or may not need this in the end???)
     $dbconn =& xarDBGetConn();

@@ -13,7 +13,7 @@
 
 function multisites_admin_updateconfig($args)
 {
-	global $HTTP_SERVER_VARS;
+    global $HTTP_SERVER_VARS;
 
     extract($args);
 

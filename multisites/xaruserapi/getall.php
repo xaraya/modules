@@ -72,7 +72,7 @@ function multisites_userapi_getall($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($msid, $mssite, $msprefix, $msdb, $msshare, $msstatus) = $result->fields;
-    	if(xarSecurityCheck('ReadMultisites')) {
+        if(xarSecurityCheck('ReadMultisites')) {
         $items[] = array('msid'     => $msid,
                        'mssite'   => $mssite,
                        'msprefix' => $msprefix,

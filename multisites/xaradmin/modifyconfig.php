@@ -26,17 +26,17 @@ function multisites_admin_modifyconfig()
            return;
     }
 
-	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
-	$lIsMaster=xarConfigGetVar('System.MS.Master');
+    $lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+    $lIsMaster=xarConfigGetVar('System.MS.Master');
     $masterurl=xarModGetVar('multisites','masterurl');
     $servervar=xarModGetVar('multisites','servervar');
     $currenthost=$_SERVER[$servervar];
- 	if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
+     if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
     // The master multisite has been configured and this is the master - continue
 
         $data['modifysite']=1;
 
-	} else {
+    } else {
         $data['modifysite']=0;
     }
         $data['authid'] = xarSecGenAuthKey();
