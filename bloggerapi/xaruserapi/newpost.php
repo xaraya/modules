@@ -68,7 +68,7 @@ function bloggerapi_userapi_newpost($msg)
                                                                   'cids' => $cids,'bodytype'=>$bodytype, 'bodytext'=>$bodytext,
                                                                   'language'=>$language,
                                                                   'status' => $status,
-                                                                  'pubdate' => $pubbDate));
+                                                                  'pubdate' => $pubDate));
         xarLogMessage("Created article $postid in category $category with status $status ($publish) ");
         if (!$postid) {
             xarExceptionFree();
