@@ -18,7 +18,8 @@
 function referer_admin_view()
 { 
     // Get parameters
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('sort', 'int:1:', $sort, '1', XARVAR_NOT_REQUIRED)) return; 
     // Initialise the variable that will hold the items
     $data['items'] = array(); 
     // Specify some labels for display
@@ -33,12 +34,23 @@ function referer_admin_view()
     // Security Check
     if (!xarSecurityCheck('EditReferer')) return; 
     // The user API function is called.
-    $items = xarModAPIFunc('referer',
-        'user',
-        'getall',
-        array('startnum' => $startnum,
-            'numitems' => xarModGetVar('referer',
-                'itemsperpage'))); 
+    if ($sort == 1){
+        $items = xarModAPIFunc('referer',
+            'user',
+            'getall',
+            array('startnum' => $startnum,
+                'numitems' => xarModGetVar('referer',
+                    'itemsperpage'))); 
+        $data['sort'] = 1;
+    } else {
+        $items = xarModAPIFunc('referer',
+            'user',
+            'getallbytime',
+            array('startnum' => $startnum,
+                'numitems' => xarModGetVar('referer',
+                    'itemsperpage'))); 
+        $data['sort'] = 2;
+    }
     // Check for exceptions
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
      
@@ -57,8 +69,6 @@ function referer_admin_view()
     $authid = xarSecGenAuthKey();
     $data['javascript'] = "return xar_base_confirmLink(this, '" . xarML('Delete all referer data') . " ?')";
     $data['deleteurl'] = xarModUrl('referer', 'admin', 'delete', array('authid' => $authid));
-
     return $data;
-} 
-
+}
 ?>

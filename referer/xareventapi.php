@@ -48,31 +48,32 @@ function referer_eventapi_OnServerRequest()
         $query = "SELECT count(xar_rid) as c
                   FROM $referertable
                   WHERE xar_url = '" . $HTTP_REFERER . "'";
-        $result = &$dbconn->Execute($query);
-
+        $result =& $dbconn->Execute($query, array($HTTP_REFERER));
         $row = $result->fields;
         $count = $row[0];
-
         if ($count == 1) {
             $query = "UPDATE $referertable
-                      SET xar_frequency = xar_frequency + 1
-                      WHERE xar_url = '" . $HTTP_REFERER . "'";
+                          SET xar_frequency = xar_frequency + 1
+                          SET xar_time = ?
+                          WHERE xar_url = ?";
+            $result =& $dbconn->Execute($query, array(time(), $HTTP_REFERER));
+             
         } else {
             // Get next ID in table
             $nextId = $dbconn->GenId($referertable);
             $query = "INSERT INTO $referertable(
                                        xar_rid,
                                        xar_url,
-                                       xar_frequency)
-                           VALUES(
-                                       $nextId,
-                                       '" . xarVarPrepForStore($HTTP_REFERER) . "',
-                                       1)";
+                                       xar_frequency,
+                                       xar_time)
+                                VALUES(
+                                       ?,
+                                       ?,
+                                       ?,
+                                       ?)";
+            $result =& $dbconn->Execute($query, array($nextId, $HTTP_REFERER, 1, time()));
         }
-
-        $result = &$dbconn->Execute($query);
-        if (!$result) return;
+    if (!$result) return;
     }
 }
-
 ?>

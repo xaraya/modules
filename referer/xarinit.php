@@ -14,16 +14,12 @@
 */
 
 xarDBLoadTableMaintenanceAPI();
-
 function referer_init()
 {
-
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $referertable = $xartable['referer'];
-
     // *_user_data
     $query = xarDBCreateTable($referertable,
                              array('xar_rid'         => array('type'        => 'integer',
@@ -38,10 +34,13 @@ function referer_init()
                                    'xar_frequency'   => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '1',
-                                                              'increment'   => false)));
+                                                              'increment'   => false),
+                                   'xar_time'        => array('type'        =>'integer', 
+                                                              'unsigned'    =>TRUE, 
+                                                              'null'        =>FALSE,
+                                                              'default'     =>'0')));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
     // Register Masks
     xarRegisterMask('OverviewReferer','All','referer','All','All','ACCESS_READ');
     xarRegisterMask('ReadReferer','All','referer','All','All','ACCESS_READ');
@@ -49,44 +48,51 @@ function referer_init()
     xarRegisterMask('AddReferer','All','referer','All','All','ACCESS_ADD');
     xarRegisterMask('DeleteReferer','All','referer','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminReferer','All','referer','All','All','ACCESS_ADMIN');
-
     xarModSetVar('referer', 'max', '1000');
     xarModSetVar('referer', 'itemsperpage', '100');
-
-
     return true;
 }
-
-function referer_activate()
+/**
+ * upgrade xarbb from an earlier version
+ */
+function referer_upgrade($oldversion)
 {
-
-
+    // Upgrade dependent on old version number
+    switch ($oldversion) {
+        // TODO: version numbers - normalise.
+        case '1.0.0':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+             xarDBLoadTableMaintenanceAPI();
+            $query = xarDBAlterTable($xartable['referer'],
+                              array('command' => 'add',
+                                    'field'   => 'xar_time',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            break;
+    }
     return true;
 }
 
 function referer_delete()
 {
-
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
-    $referertable = $xartable['referer'];
-
     // Drop the table
     $query = "DROP TABLE $xartable[referer]";
-
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
     // Remove Masks and Instances
     xarRemoveMasks('referer');
     xarRemoveInstances('referer');
-
     xarModDelVar('referer', 'max');
     xarModDelVar('referer', 'itemsperpage');
-
     return true;
 }
-
 ?>

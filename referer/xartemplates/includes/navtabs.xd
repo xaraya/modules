@@ -1,0 +1,55 @@
+<xar:if condition="xarTplAddStyleLink('referer', 'navtabs')">
+	<div id="navhelp" class="help" title="#xarML('Click on tab to perform desired action')#">
+		<xar:mlstring>
+			Action
+		</xar:mlstring>
+		: 
+		<div id="tabnav">
+			<ul id="navlist">
+				<xar:if condition="$sort eq 1"> 
+					<li id="active">
+						<a href="#xarModUrl('referer', 'admin', 'view')#">
+							<xar:mlstring>
+							    Sort by Frequency
+							</xar:mlstring>
+						</a>
+					</li>
+				<xar:else />
+					<li>
+						<a href="#xarModUrl('referer', 'admin', 'view')#">
+							<xar:mlstring>
+							    Sort by Frequency
+							</xar:mlstring>
+						</a>
+					</li>
+				</xar:if>
+				<xar:if condition="$sort eq 2"> 
+					<li id="active">
+						<a href="#xarModUrl('referer', 'admin', 'view', array('sort' => 2))#">
+							<xar:mlstring>
+							    Sort by Most Recent
+							</xar:mlstring>
+						</a>
+					</li>
+				<xar:else />
+					<li>
+						<a href="#xarModUrl('referer', 'admin', 'view', array('sort' => 2))#">
+							<xar:mlstring>
+							    Sort by Most Recent
+							</xar:mlstring>
+						</a>
+					</li>
+				</xar:if>
+				<li>
+					<a href="#$deleteurl#" onClick="#$javascript#">
+						<xar:mlstring>
+							Delete Referers
+						</xar:mlstring>
+					</a>
+				</li>
+			</ul>
+			<div class="tabnav-hairline"><!-- &nbsp; --></div>
+		</div>
+	</div>
+</xar:if>
+<br /><br />

@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Referers';
 $modversion['id']             = '90';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '1.0.1';
 $modversion['description']    = 'Referer Tracking.  Statistics extension';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

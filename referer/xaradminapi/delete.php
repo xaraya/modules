@@ -11,7 +11,6 @@
  * @subpackage Referer Module
  * @author John Cox et al. 
  */
-
 function referer_adminapi_delete()
 { 
     // Security Check
@@ -28,5 +27,4 @@ function referer_adminapi_delete()
     // Let the calling process know that we have finished successfully
     return true;
 } 
-
 ?>

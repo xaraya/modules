@@ -11,7 +11,7 @@
  * @subpackage Referer Module
  * @author John Cox et al. 
  */
-function referer_userapi_getall($args)
+function referer_userapi_getallbytime($args)
 { 
     // Get arguments
     extract($args); 
@@ -51,7 +51,7 @@ function referer_userapi_getall($args)
                    xar_frequency
             FROM $referertable
             WHERE xar_url != 'Bookmark' 
-            ORDER BY xar_frequency
+            ORDER BY xar_time
             DESC";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1); 
     // Check for an error

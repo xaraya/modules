@@ -11,15 +11,6 @@
  * @subpackage Referer Module
  * @author John Cox et al. 
  */
-
-/**
- * utility function to count the number of items held by this module
- * 
- * @author the Example module development team 
- * @returns integer
- * @return number of items held by this module
- * @raise DATABASE_ERROR
- */
 function referer_userapi_countitems()
 { 
     // Security Check
@@ -27,19 +18,15 @@ function referer_userapi_countitems()
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $referertable = $xartable['referer']; 
     // Get item
     $query = "SELECT COUNT(1)
             FROM $referertable";
     $result = &$dbconn->Execute($query);
-
     if (!$result) return; 
     // Obtain the number of items
     list($numitems) = $result->fields;
     $result->Close();
-
     return $numitems;
 } 
-
 ?>

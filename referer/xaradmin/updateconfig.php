@@ -24,16 +24,10 @@ function referer_admin_updateconfig()
     if (!xarSecConfirmAuthKey()) return; 
     // Security Check
     if (!xarSecurityCheck('AdminReferer')) return; 
-    // update the data
-    if (empty($itemsperpage)) {
-        $itemsperpage = 100;
-    } 
-
     xarModSetVar('referer', 'itemsperpage', $itemsperpage); 
     // lets update status and display updated configuration
     xarResponseRedirect(xarModURL('referer', 'admin', 'modifyconfig')); 
     // Return
     return true;
 } 
-
 ?>
