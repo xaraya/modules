@@ -149,6 +149,13 @@ function ratings_userapi_rate($args)
             xarSessionSetVar('ratings:'.$modname.':'.$itemtype.':'.$objectid,time());
         }
     }
+    // CHECKME: find some cleaner way to update the page cache if necessary
+    if (function_exists('xarPageFlushCached') &&
+        !empty($GLOBALS['xarPage_cacheDisplay']) &&
+        xarModGetVar('xarcachemanager','FlushOnNewRating')) {
+        $modinfo = xarModGetInfo($modid);
+        xarPageFlushCached("$modinfo[name]-user-");
+    }    
     return $newrating;
 }
 
