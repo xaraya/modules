@@ -20,14 +20,26 @@
       <label for="startmodule#$blockid#"><xar:mlstring>Show categories</xar:mlstring></label>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
+      <xar:set name="$optgroup">0</xar:set>
       <select name="startmodule" id="startmodule#$blockid#">
         <xar:loop name="$modules">
-        <xar:if condition="$startmodule eq $loop:item['id']">
-            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-        <xar:else />
-            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
-        </xar:if>
+            <xar:if condition="!empty($loop:item.label)">
+                <xar:if condition="!empty($optgroup)">
+                    </optgroup>
+                </xar:if>
+                <optgroup label="Module: #$loop:item.label#">
+                <xar:set name="$optgroup">1</xar:set>
+            <xar:else/>
+                <xar:if condition="$startmodule eq $loop:item.id">
+                    <option value="#$loop:item.id#" selected="selected">#$loop:item.name#</option>
+                <xar:else />
+                    <option value="#$loop:item.id#">#$loop:item.name#</option>
+                </xar:if>
+            </xar:if>
         </xar:loop>
+        <xar:if condition="!empty($optgroup)">
+            </optgroup>
+        </xar:if>
         </select>
     </span>
 </div>
@@ -41,6 +53,19 @@
         <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" checked="checked" />
     <xar:else />
         <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" />
+    </xar:if>
+    </span>
+</div>
+
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+     <label for="dynamictitle#$blockid#"><xar:mlstring>Dynamic title (linked to content)</xar:mlstring></label>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+    <xar:if condition="!empty($dynamictitle)">
+        <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" />
     </xar:if>
     </span>
 </div>

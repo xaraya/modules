@@ -113,29 +113,36 @@ function categories_navigationblock_display($blockinfo)
         $mastercids = $rootcids;
     } else {
         // Get number of categories for this module + item type
-        if (!empty($itemtype)) {
-            $numcats = (int) xarModGetVar($modname, 'number_of_categories.'.$itemtype);
-        } else {
-            $numcats = (int) xarModGetVar($modname, 'number_of_categories');
-        }
-        if (empty($numcats) || !is_numeric($numcats)) {
+
+        $numcats = xarModAPIfunc(
+            'categories', 'user', 'countcatbases',
+            array(
+                'module'=>$modname,
+                'itemtype'=>(empty($itemtype) ? NULL : $itemtype)
+            )
+        );
+
+        if (empty($numcats)) {
             // no categories to show here -> return empty output
             return;
         }
 
         // Get master cids for this module + item type
-        if (!empty($itemtype)) {
-            $cidlist = xarModGetVar($modname,'mastercids.'.$itemtype);
-        } else {
-            $cidlist = xarModGetVar($modname,'mastercids');
-        }
-        if (empty($cidlist)) {
+        $mastercids = xarModAPIfunc(
+            'categories', 'user', 'getallcatbases',
+            array(
+                'module' => $modname,
+                'format' => 'cids',
+                'order' => 'cid',
+                'itemtype' => (empty($itemtype) ? NULL : $itemtype)
+            )
+        );
+
+        if (empty($mastercids)) {
             // no categories to show here -> return empty output
             return;
-        } else {
-            $mastercids = explode(';',$cidlist);
-            sort($mastercids,SORT_NUMERIC);
         }
+
         if (!empty($startmodule)) {
             $rootcids = $mastercids;
         }
@@ -625,27 +632,30 @@ function categories_navigationblock_display($blockinfo)
 
         case 1: // tree
         default:
+
             $template = 'tree';
-            // Get current title
-            if (empty($title) && empty($module)) {
-                if (xarVarIsCached('Blocks.categories','title')) {
-                    $title = xarVarGetCached('Blocks.categories','title');
+            // Get current title (if dynamic)
+            if (!empty($dynamictitle)) {
+                if (empty($title) && empty($module)) {
+                    if (xarVarIsCached('Blocks.categories','title')) {
+                        $title = xarVarGetCached('Blocks.categories','title');
+                    }
                 }
-            }
-            if (empty($title) && !empty($itemtype)) {
-                // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
-                                         // don't throw an exception if this function doesn't exist
-                                         array(), 0);
-                if (isset($mytypes) && !empty($mytypes[$itemtype])) {
-                    $title = $mytypes[$itemtype]['label'];
+                if (empty($title) && !empty($itemtype)) {
+                    // Get the list of all item types for this module (if any)
+                    $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                                             // don't throw an exception if this function doesn't exist
+                                             array(), 0);
+                    if (isset($mytypes) && !empty($mytypes[$itemtype])) {
+                        $title = $mytypes[$itemtype]['label'];
+                    }
                 }
+                if (empty($title)) {
+                    $modinfo = xarModGetInfo($modid);
+                    $title = ucwords($modinfo['displayname']);
+                }
+                $blockinfo['title'] = xarML('Browse in #(1)', $title);
             }
-            if (empty($title)) {
-                $modinfo = xarModGetInfo($modid);
-                $title = ucwords($modinfo['displayname']);
-            }
-            $blockinfo['title'] = xarML('Browse in #(1)',$title);
 
             $data['cattrees'] = array();
 
@@ -875,6 +885,9 @@ function categories_navigationblock_modify($blockinfo)
     if (empty($vars['showempty'])) {
         $vars['showempty'] = 0;
     }
+    if (empty($vars['dynamictitle'])) {
+        $vars['dynamictitle'] = 0;
+    }
 
     $vars['catcounts'] = array(array('id' => 0,
                                    'name' => 'None'),
@@ -900,116 +913,69 @@ function categories_navigationblock_modify($blockinfo)
     $vars['modules'][] = array('id' => '',
                                'name' => xarML('Adapt dynamically to current page'));
 
-    // get the list of hooked modules
-    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
-                                   array('hookModName' => 'categories'));
-    if (isset($hookedmodules) && is_array($hookedmodules)) {
-        foreach ($hookedmodules as $modname => $value) {
-            // try to get master cids for this module
-            $cidlist = xarModGetVar($modname, 'mastercids');
-            if (!empty($cidlist)) {
-                $mastercids = explode(';',$cidlist);
-                sort($mastercids,SORT_NUMERIC);
-                $catlist = xarModAPIFunc('categories','user','getcatinfo',
-                                         array('cids' => $mastercids));
-                if (empty($catlist)) $catlist = array();
+    // List contains:
+    // 0. option group for the module
+    // 1. module [base1|base2]
+    // 2.    module [base1]    (for itemtype 0)
+    //       module [base2]
+    // 3.    module:itemtype [base3|base4]
+    // 4.       itemtype [base3]
+    //          itemtype [base4]
 
-                $modlabel = xarML('#(1) module',ucwords($modname));
-                $name = $modlabel . ' [';
+    $allcatbases = xarModAPIfunc(
+        'categories', 'user', 'getallcatbases',
+        array('order'=>'module', 'format'=>'tree')
+    );
+
+    foreach($allcatbases as $modulecatbases) {
+        // Module label for the option group in the list.
+        $modlabel = xarML('#(1)', ucwords($modulecatbases['module']));
+
+        $vars['modules'][] = array(
+            'label' => $modlabel
+        );
+
+        $indent = '&nbsp;&nbsp;&nbsp;';
+
+        foreach($modulecatbases['itemtypes'] as $thisitemtype => $itemtypecatbase) {
+            if (!empty($itemtypecatbase['catbases'])) {
+                $catlist = '[';
                 $join = '';
-                foreach ($catlist as $cat) {
-                    $name .= $join . $cat['name'];
+                foreach($itemtypecatbase['catbases'] as $itemtypecatbases) {
+                    $catlist .= $join . $itemtypecatbases['category']['name'];
                     $join = ' | ';
                 }
-                $name .= ']';
-                // start from all base categories
-                $vars['modules'][] = array('id' => "$modname.0.0",
-                                           'name' => $name);
-                if (count($catlist) > 1) {
-                    // start from one particular base category
-                    foreach ($catlist as $cat) {
-                        $name = '&nbsp;&nbsp;&nbsp;' . $modlabel . ' [' . $cat['name'] . ']';
-                        $vars['modules'][] = array('id' => "$modname.0.$cat[cid]",
-                                                   'name' => $name);
-                    }
-                }
-            }
-            // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     array(), 0);
-            if (!isset($mytypes)) $mytypes = array();
-            // we have hooks for individual item types here
-            if (!isset($value[0])) {
-                foreach ($value as $itemtype => $val) {
-                    // try to get master cids for this module + itemtype
-                    $cidlist = xarModGetVar($modname, "mastercids.$itemtype");
-                    if (empty($cidlist)) continue;
-                    $mastercids = explode(';',$cidlist);
-                    sort($mastercids,SORT_NUMERIC);
-                    $catlist = xarModAPIFunc('categories','user','getcatinfo',
-                                             array('cids' => $mastercids));
-                    if (empty($catlist)) continue;
+                $catlist .= ']';
 
-                    if (isset($mytypes[$itemtype])) {
-                        $modlabel = xarML('#(1) type',$mytypes[$itemtype]['label']);
-                    } else {
-                        $modlabel = xarML('#(1) module #(2)',ucwords($modname),$itemtype);
-                    }
-                    $modlabel = '&nbsp;&nbsp;&nbsp;' . $modlabel;
-                    $name = $modlabel . ' [';
-                    $join = '';
-                    foreach ($catlist as $cat) {
-                        $name .= $join . $cat['name'];
-                        $join = ' | ';
-                    }
-                    $name .= ']';
-                    // start from all base categories
-                    $vars['modules'][] = array('id' => "$modname.$itemtype.0",
-                                               'name' => $name);
-                    if (count($catlist) > 1) {
-                        // start from one particular base category
-                        foreach ($catlist as $cat) {
-                            $name = '&nbsp;&nbsp;&nbsp;' . $modlabel . ' [' . $cat['name'] . ']';
-                            $vars['modules'][] = array('id' => "$modname.$itemtype.$cat[cid]",
-                                                       'name' => $name);
-                        }
-                    }
+                //if (empty($itemtypecatbase['itemtype']['label'])) {
+                if ($thisitemtype == 0) {
+                    // Default module cats at top level.
+                    $indent_level = 0;
+                    $itemtypelabel = '';
+                } else {
+                    // Item types at one level deeper
+                    $indent_level = 1;
+                    $itemtypelabel = ' -&gt; ' . xarML('#(1)', $itemtypecatbase['itemtype']['label']);
                 }
-            } else {
-                foreach ($mytypes as $itemtype => $info) {
-                    // try to get master cids for this module + itemtype
-                    $cidlist = xarModGetVar($modname, "mastercids.$itemtype");
-                    if (empty($cidlist)) continue;
-                    $mastercids = explode(';',$cidlist);
-                    sort($mastercids,SORT_NUMERIC);
-                    $catlist = xarModAPIFunc('categories','user','getcatinfo',
-                                             array('cids' => $mastercids));
-                    if (empty($catlist)) continue;
 
-                    if (isset($mytypes[$itemtype])) {
-                        $modlabel = xarML('#(1) type',$mytypes[$itemtype]['label']);
-                    } else {
-                        $modlabel = xarML('#(1) module #(2)',ucwords($modname),$itemtype);
-                    }
-                    $modlabel = '&nbsp;&nbsp;&nbsp;' . $modlabel;
-                    $name = $modlabel . ' [';
-                    $join = '';
-                    foreach ($catlist as $cat) {
-                        $name .= $join . $cat['name'];
-                        $join = ' | ';
-                    }
-                    $name .= ']';
-                    // start from all base categories
-                    $vars['modules'][] = array('id' => "$modname.$itemtype.0",
-                                               'name' => $name);
-                    if (count($catlist) > 1) {
-                        // start from one particular base category
-                        foreach ($catlist as $cat) {
-                            $name = '&nbsp;&nbsp;&nbsp;' . $modlabel . ' [' . $cat['name'] . ']';
-                            $vars['modules'][] = array('id' => "$modname.$itemtype.$cat[cid]",
-                                                       'name' => $name);
-                        }
+                // Module-Itemtype [all cats]
+                $vars['modules'][] = array(
+                    'id' => $modulecatbases['module'] . '.' . $thisitemtype . '.0',
+                    'name' => str_repeat($indent, $indent_level) . $modlabel . $itemtypelabel . ' ' . $catlist
+                );
+
+                // Individual categories a level deeper.
+                $indent_level += 1;
+
+                // Individual base categories where there are more than one.
+                if (count($itemtypecatbase['catbases']) > 1) {
+                    foreach($itemtypecatbase['catbases'] as $itemtypecatbases) {
+                        $catlist = '[' . $itemtypecatbases['category']['name'] . ']';
+                        if ($thisitemtype == 0) {$itemtypelabel = $modlabel;}
+                        $vars['modules'][] = array(
+                            'id' => $modulecatbases['module'] . '.' . $thisitemtype . '.' . $itemtypecatbases['category']['cid'],
+                            'name' => str_repeat($indent, $indent_level) . $itemtypelabel . ' ' . $catlist
+                        );
                     }
                 }
             }
@@ -1018,7 +984,7 @@ function categories_navigationblock_modify($blockinfo)
 
     $vars['blockid'] = $blockinfo['bid'];
     // Return output
-    return xarTplBlock('categories','nav-admin',$vars);
+    return xarTplBlock('categories', 'nav-admin', $vars);
 }
 
 /**
@@ -1027,11 +993,12 @@ function categories_navigationblock_modify($blockinfo)
 function categories_navigationblock_update($blockinfo)
 {
     $vars = array();
-    if(!xarVarFetch('layout',       'isset', $vars['layout'],        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('showcatcount', 'isset', $vars['showcatcount'],  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('showchildren', 'isset', $vars['showchildren'],  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('showempty', 'isset', $vars['showempty'],  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('startmodule',  'isset', $vars['startmodule'],   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('layout',       'isset', $vars['layout'],       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('showcatcount', 'isset', $vars['showcatcount'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('showchildren', 'isset', $vars['showchildren'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('showempty',    'isset', $vars['showempty'],    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('startmodule',  'isset', $vars['startmodule'],  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('dynamictitle', 'isset', $vars['dynamictitle'], NULL, XARVAR_DONT_SET)) {return;}
 
     $blockinfo['content'] = serialize($vars);
 
