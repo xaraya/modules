@@ -4,7 +4,7 @@
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
     <div style="padding: 1px;" class="xar-norm-outline">
         <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <img src="#xarTplGetImage('admin.gif')#" alt="official icon" width="96" height="96" />
         </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>What is it?</xar:mlstring>
