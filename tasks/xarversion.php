@@ -26,7 +26,7 @@ $modversion['contact'] = 'http://www.ivory-tower.net/';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
 $modversion['securityschema'] = array('tasks::' => ' name:: ID');
-									// LOOK AT GROUP LEVEL INSTEAD?
+                                    // LOOK AT GROUP LEVEL INSTEAD?
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 ?>

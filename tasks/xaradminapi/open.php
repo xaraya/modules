@@ -13,11 +13,11 @@ function tasks_adminapi_open($args)
     }
 
     $task = xarModAPIFunc('tasks',
-						'user',
-						'get',
-						array('id' => $id));
-			
-	if ($task == false) {
+                        'user',
+                        'get',
+                        array('id' => $id));
+            
+    if ($task == false) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . xarML("No such item"));
         return $output->GetOutput();
     }
@@ -26,7 +26,7 @@ function tasks_adminapi_open($args)
 //         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . _TASKS_NOAUTH);
 //         return false;
 //     }
-			
+            
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -34,14 +34,14 @@ function tasks_adminapi_open($args)
 
     $sql = "UPDATE $taskstable
               SET xar_status = 0,
-			  		xar_date_changed = '" . time() . "'
-			WHERE xar_id = $id";
+                      xar_date_changed = '" . time() . "'
+            WHERE xar_id = $id";
 
     $res =& $dbconn->Execute($sql);
     if (!$res) return;
 
     $returnid = (xarModGetVar('tasks','returnfrommigrate') ? $id : $task['parentid']);
-	return $task['parentid'];
+    return $task['parentid'];
 }
 
 ?>

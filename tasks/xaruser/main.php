@@ -5,8 +5,8 @@
  */
 function tasks_user_main()
 {
-	xarResponseRedirect(xarModURL('tasks','user','view'));
-	return true;
+    xarResponseRedirect(xarModURL('tasks','user','view'));
+    return true;
 }
 
 ?>

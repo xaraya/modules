@@ -7,18 +7,18 @@
 function tasks_admin_updateconfig()
 {
     list($dateformat,
-		$showoptions,
-		$returnfromadd,
-		$returnfromedit,
-		$returnfromsurface,
-		$returnfrommigrate,
-		$maxdisplaydepth) = xarVarCleanFromInput('dateformat',
-												'showoptions',
-												'returnfromadd',
-												'returnfromedit',
-												'returnfromsurface',
-												'returnfrommigrate',
-												'maxdisplaydepth');
+        $showoptions,
+        $returnfromadd,
+        $returnfromedit,
+        $returnfromsurface,
+        $returnfrommigrate,
+        $maxdisplaydepth) = xarVarCleanFromInput('dateformat',
+                                                'showoptions',
+                                                'returnfromadd',
+                                                'returnfromedit',
+                                                'returnfromsurface',
+                                                'returnfrommigrate',
+                                                'maxdisplaydepth');
 
     xarModSetVar('tasks', 'dateformat', $dateformat);
     xarModSetVar('tasks', 'showoptions', $showoptions);
