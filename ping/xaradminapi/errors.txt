@@ -1,0 +1,2 @@
+[27-Mar-2004 18:47:24] PHP Parse error:  parse error in c:\cygwin\home\phpdev\www\dev\stable\html\modules\ping\xaradminapi\createhook.php on line 104
+[27-Mar-2004 18:48:44] PHP Parse error:  parse error in c:\cygwin\home\phpdev\www\dev\stable\html\modules\ping\xaradminapi\createhook.php on line 127

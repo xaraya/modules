@@ -1,0 +1,40 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ping Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Edit Ping Url</xar:mlstring></h2>
+<form method="post" action="#xarModURL('ping', 'admin', 'modify')#" method="post" enctype="application/x-www-form-urlencoded" >
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" value="#$authid#" />
+	<input type="hidden" name="phase" value="update" />
+    <input type="hidden" name="id" id="id" value="#$id#" />
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px; width:98%;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Method of the ping.')#"><label for="allowhtml"><xar:mlstring>RSS Method</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+	<xar:if condition="$method">
+	   <input type="checkbox" name="method" id="method" checked="checked" />
+	<xar:else />
+	   <input type="checkbox" name="method" id="method" />
+	</xar:if>
+	</span>
+	</div> 
+
+	#$hooks#
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="submit" value="#$submitlabel#"/>
+	</span>
+	</div>
+
+</form>
+</div>

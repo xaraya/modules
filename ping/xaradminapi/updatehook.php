@@ -62,88 +62,65 @@ function ping_adminapi_updatehook($args)
     } else {
         $itemtype = 0;
     }
-/*
-    if (!isset($extrainfo['ping_update']) || (!is_numeric($extrainfo['status']) && $extrainfo['status'] < 2 || $extrainfo['status'] > 3)) {
 
-        // Don't want to send a ping if our status from the articles don't show that it is published, or if the ping_update is not there.
-        return $extrainfo;
+    if (!empty($extrainfo['itemid'])) {
+        $itemid = $extrainfo['itemid'];
     } else {
-*/
-        // Need to get the correct itemtype so we send the correct URL to update
-        //if ($modname == 'articles') {
-            $data['viewlink'] = xarModURL('articles','user','view', array('ptid' => $extrainfo['itemtype']));
-            $data['rsslink']  = xarModURL('articles','user','view', array('ptid' => $extrainfo['itemtype'], 'theme' => 'rss'));
-        //} else {
-            // need a better implementation
-        //    $data['viewlink'] = $extrainfo['ping_url'];
-        //}
-        $data['sitename'] = xarModGetVar('themes', 'SiteName');
-        // Init the RPC Server
-        include_once 'modules/xmlrpcserver/xarincludes/xmlrpc.inc';
-        include_once 'modules/xmlrpcserver/xarincludes/xmlrpcs.inc';
-        // Send out the pings
-        // Credit to Drupal for some inspiration here.
-        xarLogMessage("ping: weblogUpdates.ping");
-        $client         = new xmlrpc_client("/RPC2", "rpc.weblogs.com", 80);
-        $message        = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['viewlink'])));
-        $result         = $client->send($message);
-        if (!$result || $result->faultCode()) {
-            $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            // we *must* return $extrainfo for now, or the next hook will fail
-            //return false;
-            return $extrainfo;
+        $itemid = $objectid;
+    }
+
+    $itemlinks = xarModAPIFunc($modname,'user','getitemlinks',
+                               array('itemtype' => $itemtype,
+                                     'itemids' => array($itemid)),
+                               0);
+
+    if (isset($itemlinks[$itemid]) && !empty($itemlinks[$itemid]['url'])) {
+        // normally we should have url, title and label here
+        foreach ($itemlinks[$itemid] as $field => $value) {
+            $item[$field] = $value;
         }
-        unset($client);
-        $client         = new xmlrpc_client("/RPC2", "api.my.yahoo.com", 80);
-        $message        = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['viewlink'])));
-        $result         = $client->send($message);
-        if (!$result || $result->faultCode()) {
-            $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            // we *must* return $extrainfo for now, or the next hook will fail
-            //return false;
-            return $extrainfo;
-        }
-        unset($client);
-        $client         = new xmlrpc_client("/rpc/ping", "rpc.technorati.com", 80);
-        $message        = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['viewlink'])));
-        $result         = $client->send($message);
-        if (!$result || $result->faultCode()) {
-            $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            // we *must* return $extrainfo for now, or the next hook will fail
-            //return false;
-            return $extrainfo;
-        }
-        unset($client);
-        if (xarThemeIsAvailable('rss')){
-            $client         = new xmlrpc_client("/RPC2", "rssrpc.weblogs.com", 80);
-            $message        = new xmlrpcmsg("rssUpdate", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['rsslink'])));
+    } else {
+        $item['url'] = xarModURL($modname,'user','display',
+                                 array('itemtype'   => $itemtype,
+                                       'itemid'     => $itemid));
+    }
+
+    $rsslink = xarModURL($modname,'user','display',
+                                 array('itemtype'   => $itemtype,
+                                       'itemid'     => $itemid,
+                                       'theme'      => 'rss'));
+
+    $links = xarModAPIFunc('ping',
+                           'user',
+                           'getall');
+
+    $sitename = xarModGetVar('themes', 'SiteName');
+    // Init the RPC Server
+    include_once 'modules/xmlrpcserver/xarincludes/xmlrpc.inc';
+    include_once 'modules/xmlrpcserver/xarincludes/xmlrpcs.inc';
+
+    foreach ($links as $link) {
+        $url = parse_url($link['url']);
+        if (empty($link['method'])){
+            $client         = new xmlrpc_client($url['path'], $url['host'], 80);
+            $message        = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval($sitename), new xmlrpcval($item['url'])));
             $result         = $client->send($message);
             if (!$result || $result->faultCode()) {
-                $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                // we *must* return $extrainfo for now, or the next hook will fail
-                //return false;
                 return $extrainfo;
             }
             unset($client);
-        }
-        if (xarThemeIsAvailable('rss')){
-            $client             = new xmlrpc_client("/", "ping.blo.gs", 80);
-            $message            = new xmlrpcmsg("weblogUpdates.extendedPing", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['viewlink']), new xmlrpcval($data['viewlink']), new xmlrpcval($data['rsslink'])));
-            $result         = $client->send($message);
-            if (!$result || $result->faultCode()) {
-                $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                // we *must* return $extrainfo for now, or the next hook will fail
-                //return false;
-                return $extrainfo;
+        } else {
+            if (xarThemeIsAvailable('rss')){
+                $client         = new xmlrpc_client($url['path'], $url['host'], 80);
+                $message        = new xmlrpcmsg("rssUpdate", array(new xmlrpcval($sitename), new xmlrpcval($rsslink)));
+                $result         = $client->send($message);
+                if (!$result || $result->faultCode()) {
+                    return $extrainfo;
+                }
             }
             unset($client);
         }
-    //}
+    }
 
     // Return the extra info
     return $extrainfo;

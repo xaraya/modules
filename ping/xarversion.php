@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Ping';
 $modversion['id']             = '810';
-$modversion['version']        = '1.0.1';
+$modversion['version']        = '1.0.3';
 $modversion['description']    = 'Pings various weblog tracking sites to notify them of recently added content';
 $modversion['credits']        = '';
 $modversion['help']           = '';
