@@ -10,32 +10,32 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<p>
-			  <xar:mlstring>The XML-RPC validator API is a XML-RPC API used to validate a XML-RPC installation
-			  on conformance to the specification. It implements the necessary methods on the server
-			  so test clients can validate whether the server conforms to the specification.</xar:mlstring>
-			</p>
-			<p><xar:mlstring>In Xaraya the webservices module is responsible for providing the xmlrpc transport
-			  needed for this API functionality. This module will not function without
-			  the webservices module activated.</xar:mlstring>
-			</p>
+            <p>
+              <xar:mlstring>The XML-RPC validator API is a XML-RPC API used to validate a XML-RPC installation
+              on conformance to the specification. It implements the necessary methods on the server
+              so test clients can validate whether the server conforms to the specification.</xar:mlstring>
+            </p>
+            <p><xar:mlstring>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+              needed for this API functionality. This module will not function without
+              the webservices module activated.</xar:mlstring>
+            </p>
 
-			<p>
-			  <xar:mlstring>You can find a validation service at </xar:mlstring>
-			  <a href="http://validator.xmlrpc.com">
-				 http://validator.xmlrpc.com.
-			  </a> 
-			  <xar:mlstring>You can use this to validate whether the Xaraya XML-RPC server conforms to the standard.</xar:mlstring>
-			</p>
-		</div>
+            <p>
+              <xar:mlstring>You can find a validation service at </xar:mlstring>
+              <a href="http://validator.xmlrpc.com">
+                 http://validator.xmlrpc.com.
+              </a> 
+              <xar:mlstring>You can use this to validate whether the Xaraya XML-RPC server conforms to the standard.</xar:mlstring>
+            </p>
+        </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<b>
-			<xar:mlstring>There are no included blocks.</xar:mlstring>
+            <b>
+            <xar:mlstring>There are no included blocks.</xar:mlstring>
             </b>
         </div>
         <br />
