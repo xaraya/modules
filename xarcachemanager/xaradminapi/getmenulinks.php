@@ -39,6 +39,11 @@ function xarcachemanager_adminapi_getmenulinks()
         }
         $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                   'admin',
+                                                  'stats'),
+                             'title' => xarML('View cache statistics'),
+                             'label' => xarML('View Statistics'));
+        $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
+                                                  'admin',
                                                   'modifyconfig'),
                              'title' => xarML('Modify the xarCache configuration'),
                              'label' => xarML('Modify Config'));

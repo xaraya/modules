@@ -1,0 +1,152 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+</xar:if>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Cache Statistics</xar:mlstring></h2>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Select
+                </xar:mlstring>
+                : 
+            </dt>
+            <xar:if condition="empty($tab) or $tab eq 'overview'">
+                <dd class="active">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">
+                        <xar:mlstring>Overview</xar:mlstring>
+                    </a>
+                </dd>    
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">    
+                        <xar:mlstring>Overview</xar:mlstring>
+                    </a>
+                </dd>    
+            </xar:if>
+            <xar:if condition="$tab eq 'page'">
+                <dd class="active">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">
+                        <xar:mlstring>Page</xar:mlstring>
+                    </a>
+                </dd>    
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">    
+                        <xar:mlstring>Page</xar:mlstring>
+                    </a>
+                </dd>    
+            </xar:if>
+            <xar:if condition="$tab eq 'block'">
+                <dd class="active">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">
+                        <xar:mlstring>Block</xar:mlstring>
+                    </a>
+                </dd>    
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">    
+                        <xar:mlstring>Block</xar:mlstring>
+                    </a>
+                </dd>    
+            </xar:if>
+            <xar:if condition="$tab eq 'query'">
+                <dd class="active">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">
+                        <xar:mlstring>Query</xar:mlstring>
+                    </a>
+                </dd>    
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">    
+                        <xar:mlstring>Query</xar:mlstring>
+                    </a>
+                </dd>    
+            </xar:if>
+            <xar:if condition="$tab eq 'autocache'">
+                <dd class="active">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">
+                        <xar:mlstring>Auto-Cache</xar:mlstring>
+                    </a>
+                </dd>    
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">    
+                        <xar:mlstring>Auto-Cache</xar:mlstring>
+                    </a>
+                </dd>    
+            </xar:if>
+        </dl>
+    </div>
+    
+    
+    <div style="border: 1px solid #ccc; text-align: left; width: 100%; border-top: none; padding-left: 5px;">
+    <xar:comment> ------------------- Begin Overview Statistics --------------------- </xar:comment>
+    <br />
+    <xar:if condition="empty($tab) or $tab eq 'overview'">
+
+        <xar:mlstring>to be defined</xar:mlstring>
+
+    <xar:comment> ----------------- Begin Page Statistics ------------------- </xar:comment>
+    <xar:elseif condition="$tab eq 'page'" />
+
+        <xar:mlstring>to be defined</xar:mlstring>
+
+    <xar:comment> ----------------- Begin Block Statistics ------------------- </xar:comment>
+    <xar:elseif condition="$tab eq 'block'" />
+
+        <xar:mlstring>to be defined</xar:mlstring>
+
+    <xar:comment> ----------------- Begin Query Statistics ------------------- </xar:comment>
+    <xar:elseif condition="$tab eq 'query'" />
+
+        <xar:mlstring>to be defined</xar:mlstring>
+
+    <xar:comment> ----------------- Begin Auto-Cache Statistics ------------------- </xar:comment>
+    <xar:elseif condition="$tab eq 'autocache'" />
+
+        <h2><xar:mlstring>Auto-Cache Statistics</xar:mlstring></h2>
+        <form method="post" action="#xarModURL('xarcachemanager', 'admin', 'stats')#">
+          <input type="hidden" name="tab" id="tab" value="autocache" />
+          <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+          <input type="submit" name="reset" value="#xarML('Reset')#" />
+        </form>
+        <table border="1" cellpadding="4" cellspacing="0">
+        <tr>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'ratio'))#"><xar:mlstring>Ratio</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'hit'))#"><xar:mlstring>Hit</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'miss'))#"><xar:mlstring>Miss</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'total'))#"><xar:mlstring>Total</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'first'))#"><xar:mlstring>First Seen</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'last'))#"><xar:mlstring>Last Seen</xar:mlstring></a></th>
+        </tr>
+        <tr>
+          <th colspan="6"><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'page'))#"><xar:mlstring>Page</xar:mlstring></a></th>
+        </tr>
+        <xar:foreach in="$autocachestats" key="$page" value="$count">
+        <tr class="xar-alt">
+          <td>#$count['ratio']#%</td>
+          <td>#$count['hit']#</td>
+          <td>#$count['miss']#</td>
+          <td>#$count['total']#</td>
+          <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$count['first'])#</td>
+          <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$count['last'])#</td>
+        </tr>
+        <tr>
+          <td colspan="6">#$page#</td>
+        </tr>
+        </xar:foreach>
+        <tr>
+          <th>#$autocachetotal['ratio']#%</th>
+          <th>#$autocachetotal['hit']#</th>
+          <th>#$autocachetotal['miss']#</th>
+          <th>#$autocachetotal['total']#</th>
+          <th>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachetotal['first'])#</th>
+          <th>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachetotal['last'])#</th>
+        </tr>
+        </table>
+
+    </xar:if>
+    </div>
+
+</div>

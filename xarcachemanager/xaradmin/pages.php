@@ -261,34 +261,6 @@ function xarcachemanager_admin_pages($args)
         }
     }
 
-    // Get some statistics from the auto-cache stats file
-    $data['autocachestats'] = array();
-    $data['autocachefirstseen'] = array();
-    $data['autocachelastseen'] = array();
-    if (file_exists($outputCacheDir . '/autocache.stats') &&
-        filesize($outputCacheDir . '/autocache.stats') > 0) {
-        $stats = file($outputCacheDir . '/autocache.stats');
-
-        $data['autocachetotal'] = array('HIT' => 0,
-                                        'MISS' => 0,
-                                        'Ratio' => 0);
-        foreach ($stats as $entry) {
-            if (empty($entry)) continue;
-            list($url,$hit,$miss,$first,$last) = explode(' ',$entry);
-            $last = trim($last);
-            $data['autocachestats'][$url] = array('HIT' => $hit,
-                                                  'MISS' => $miss,
-                                                  'Ratio' => sprintf("%.1f",100.0 * $hit / ($hit + $miss)));
-            $data['autocachefirstseen'][$url] = $first;
-            $data['autocachelastseen'][$url] = $last;
-            $data['autocachetotal']['HIT'] += $hit;
-            $data['autocachetotal']['MISS'] += $miss;
-        }
-        unset($stats);
-        ksort($data['autocachestats']);
-        $data['autocachetotal']['Ratio'] = sprintf("%.1f",100.0 * $data['autocachetotal']['HIT'] / ($data['autocachetotal']['HIT'] + $data['autocachetotal']['MISS']));
-    }
-
     // Get some page caching configurations
     //$data['pages'] = xarModAPIfunc('xarcachemanager', 'admin', 'getpages');
     $data['pages'] = array('todo' => 'something ?');

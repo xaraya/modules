@@ -142,7 +142,7 @@
   <td>
     <xar:if condition="!empty($settings['AutoCacheKeepStats'])">
       <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" checked="checked" />
-      [ <a href="#xarServerGetCurrentURL()##viewstats"><xar:mlstring>view stats</xar:mlstring></a> ]
+      [ <a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache'))#"><xar:mlstring>view stats</xar:mlstring></a> ]
     <xar:else/>
       <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" />
     </xar:if>
@@ -219,39 +219,6 @@
 </xar:foreach>
 </ol>
 </xar:if>
-</xar:if>
-
-<a name="viewstats"></a>
-<xar:if condition="!empty($autocachestats)">
-<h2><xar:mlstring>Auto-Cache Statistics</xar:mlstring> [ <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>up</xar:mlstring></a> ]</h2>
-<table border="1" cellpadding="4" cellspacing="0">
-<tr>
-  <xar:foreach in="$autocachetotal" key="$status">
-    <th>#$status#</th>
-  </xar:foreach>
-  <th><xar:mlstring>Page</xar:mlstring></th>
-  <th><xar:mlstring>First Seen</xar:mlstring></th>
-  <th><xar:mlstring>Last Seen</xar:mlstring></th>
-</tr>
-<xar:foreach in="$autocachestats" key="$page" value="$count">
-<tr>
-  <xar:foreach in="$autocachetotal" key="$status">
-    <td>#$count[$status]#</td>
-  </xar:foreach>
-  <td>#$page#</td>
-  <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachefirstseen[$page])#</td>
-  <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachelastseen[$page])#</td>
-</tr>
-</xar:foreach>
-<tr>
-  <xar:foreach in="$autocachetotal" key="$status">
-    <th>#$autocachetotal[$status]#</th>
-  </xar:foreach>
-  <th><xar:mlstring>Total</xar:mlstring></th>
-  <th>&nbsp;</th>
-  <th>&nbsp;</th>
-</tr>
-</table>
 </xar:if>
 
 </xar:if>
