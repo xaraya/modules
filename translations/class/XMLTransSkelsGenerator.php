@@ -75,7 +75,6 @@ class XMLTranslationsSkelsGenerator {
         $context = $GLOBALS['MLS']->getContextByType($ctxType);
         if ($context->getDir() != "") $this->fileName .= $context->getDir() . "/";
         $this->fileName .= $ctxName . ".xml";
-
         $this->fp = fopen($this->fileName.'.swp', 'w');
 
         // XML files are always encoded in utf-8

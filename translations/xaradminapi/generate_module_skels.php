@@ -91,6 +91,7 @@ function translations_adminapi_generate_module_skels($args)
 */
     }
 
+/*
     $tplnames = array();
     if (file_exists("modules/$moddir/xartemplates")) {
         $dd = opendir("modules/$moddir/xartemplates");
@@ -154,22 +155,46 @@ function translations_adminapi_generate_module_skels($args)
         }
         closedir($dd);
     }
+*/
+    $allowedcontexts = array("templates", "templateincludes", "templateblocks");
 
-    $alloweddirs = array("admin", "adminapi", "user", "userapi");
+    foreach($allowedcontexts as $allowedcontext) {
+        ${$allowedcontext . "names"} = array();
+        $thiscontext = $GLOBALS['MLS']->getContextByName($allowedcontext);
+        $alloweddir = $thiscontext->getDir();
+        if (file_exists("modules/$moddir/xar$alloweddir")) {
+            $dd = opendir("modules/$moddir/xar$alloweddir");
+            while ($filename = readdir($dd)) {
+                if (!preg_match('/^([a-z\-_]+)\.xd$/i', $filename, $matches)) continue;
+                ${$allowedcontext . "names"}[] = $matches[1];
 
-    foreach($alloweddirs as $alloweddir) {
-        ${$alloweddir . "names"} = array();
+                $parser = new TPLParser();
+                $parser->parse("modules/$moddir/xar$alloweddir/$filename");
+
+                $transEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransEntries();
+                $transKeyEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransKeyEntries();
+            }
+            closedir($dd);
+        }
+    }
+
+    $allowedcontexts = array("blocks", "admin", "adminapi", "user", "userapi");
+
+    foreach($allowedcontexts as $allowedcontext) {
+        ${$allowedcontext . "names"} = array();
+        $thiscontext = $GLOBALS['MLS']->getContextByName($allowedcontext);
+        $alloweddir = $thiscontext->getDir();
         if (file_exists("modules/$moddir/xar$alloweddir")) {
             $dd = opendir("modules/$moddir/xar$alloweddir");
             while ($filename = readdir($dd)) {
                 if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
-                ${$alloweddir . "names"}[] = $matches[1];
+                ${$allowedcontext . "names"}[] = $matches[1];
 
                 $parser = new PHPParser();
                 $parser->parse("modules/$moddir/xar$alloweddir/$filename");
 
-                $transEntriesCollection[$alloweddir.'::'.$matches[1]] = $parser->getTransEntries();
-                $transKeyEntriesCollection[$alloweddir.'::'.$matches[1]] = $parser->getTransKeyEntries();
+                $transEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransEntries();
+                $transKeyEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransKeyEntries();
             }
             closedir($dd);
         }
@@ -182,7 +207,22 @@ function translations_adminapi_generate_module_skels($args)
     // Load previously made translations
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
+
 // TODO: <marc> it seesm to me that if a file does not exist it should be created, rather than dies
+    $contexts = $GLOBALS['MLS']->getContexts();
+    if ($backend->bindDomain(XARMLS_DNTYPE_MODULE,$modname)) {
+        foreach ($contexts as $context) {
+            if ($context->getDir() == "") {
+                $names = $subnames;
+            }
+            else{
+                $names = ${$context->getName() . "names"};
+            }
+            foreach($names as $name)
+            if (!$backend->loadContext($context->getType(),$name)) return;
+        }
+    }
+
     // Load KEYS
     $filename = "modules/$moddir/KEYS";
     $KEYS = array();
