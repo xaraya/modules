@@ -28,10 +28,10 @@ function ping_adminapi_update($args)
     $pingtable = $xartable['ping'];
     // Update the link
     $query = "UPDATE $pingtable
-            SET xar_url     = '" . xarVarPrepForStore($url) . "',
-                xar_method  = '" . xarVarPrepForStore($method) . "'
-            WHERE xar_id    = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+            SET xar_url     = ?,
+                xar_method  = ?
+            WHERE xar_id    = ?";
+    $result =& $dbconn->Execute($query, array($url, $method, (int)$id));
     if (!$result) return;
     // Let the calling process know that we have finished successfully
     xarModCallHooks('item', 'update', $id, '');

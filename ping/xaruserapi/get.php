@@ -24,8 +24,8 @@ function ping_userapi_get($args)
                      xar_url,
                      xar_method
             FROM $pingtable
-            WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_id = ?";
+    $result =& $dbconn->Execute($query, array((int)$id));
     if (!$result) return;
     list($id, $url, $method) = $result->fields;
     $result->Close();

@@ -28,11 +28,9 @@ function ping_adminapi_create($args)
               xar_id,
               xar_url,
               xar_method)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($url) . "',
-              '" . xarVarPrepForStore($method) . "')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?,?,?)";
+    $bindvars = array((int)$nextId, $url, $method);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted
     $id = $dbconn->PO_Insert_ID($pingtable, 'xar_id');

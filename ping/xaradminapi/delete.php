@@ -30,8 +30,8 @@ function ping_adminapi_delete($args)
     $pingtable = $xartable['ping'];
     // Delete the item
     $query = "DELETE FROM $pingtable
-              WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+              WHERE xar_id = ?";
+    $result =& $dbconn->Execute($query, array((int)$id));
     if (!$result) return;
     // Let any hooks know that we have deleted a link
     xarModCallHooks('item', 'delete', $id, '');
