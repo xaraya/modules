@@ -28,8 +28,8 @@ The methods you can add in your extended class are mostly named after
 the WebDAV specific request methods (using upper case names). Methods
 you may implement are:
 
-* GET()				  get a resource from the server  
-* HEAD()				get resource headers only from the server  
+* GET()                  get a resource from the server  
+* HEAD()                get resource headers only from the server  
 * PUT()         create or modify a resource on the server
 * COPY()        copy a resource on the server
 * MOVE()        move a resource on the server
@@ -86,15 +86,15 @@ bool PROPINFO($options, &$files)
                    (which implies the default "DAV:" namespace) or
                    an array with the two elements "name" and "xmlns"
                    for the properties name and XML namespace
-									                        
+                                                            
   &$files - storage array for property results with the following elements:
 
           "files" -> array of found properties forresources. elements are:
 
                "path" -> path of the resource
                "props" -> properties array
-							            each property array element is either a string 
-												  (which implies the default "DAV:" namespace) or
+                                        each property array element is either a string 
+                                                  (which implies the default "DAV:" namespace) or
                           an array with the two elements "name" and "xmlns"
                           for the properties name and XML namespace
             
@@ -106,8 +106,8 @@ bool PROPINFO($options, &$files)
                           - getcontentlength: integer                
                           - getlastmodified:  unix-timestamp
 
-													You may want to add support for these "DAV:"
-													properties, too:											
+                                                    You may want to add support for these "DAV:"
+                                                    properties, too:                                            
 
                           - getcontenttype:   mime-type
                           - displayname:      string
@@ -149,7 +149,7 @@ string GET(&$options)
                        (where 'end' can be empty to indicate a request
                        up to the actual end of the resource) or a
                        'last' element to access the last n bytes of
-											 a resource without knowing its actual size in
+                                             a resource without knowing its actual size in
                        advance
                        
   Return-value: true bei Erfolg, false wenn not found
@@ -170,7 +170,7 @@ string PUT($options)
 
   return-value: string 
                 HTTP status, possible values are:
-								* 201 Created    -> the resource did not exist before
+                                * 201 Created    -> the resource did not exist before
                                     and has been successfully created  
                 * 204 No Content -> a previously existing resource has 
                                     successfully been modified
