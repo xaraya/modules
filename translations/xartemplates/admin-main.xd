@@ -6,8 +6,8 @@
 
 <h4><xar:mlstring>Overview</xar:mlstring></h4>
 <p>
-  The Xaraya MLS is a tool to automate the translation process for Xaraya.
-  The process roughly consists of two parts:
+  <xar:mlstring>The Xaraya MLS is a tool to automate the translation process for Xaraya.
+  The process roughly consists of two parts:</xar:mlstring>
   <ol>
     <li><a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Translating</xar:mlstring></a>
     <li><a href="&xar-modurl-translations-admin-generate_trans_info;"><xar:mlstring>Generating &amp; Packaging</xar:mlstring></a>
@@ -16,20 +16,20 @@
 
 <h4><xar:mlstring>The translating process</xar:mlstring></h4>
 <p>
-  The translating proces consists of the following steps:
+  <xar:mlstring>The translating proces consists of the following steps:</xar:mlstring>
   <ol>
-    <li>Choosing the language (locale) to work on</li>
-    <li>Choosing what to translate</li>
-    <li>Generating / updating skeletons for the chosen locale and subsystem</li>
-    <li>Translating the terms found in the elements for the subsystem</li>
+    <li><xar:mlstring>Choosing the language (locale) to work on</xar:mlstring></li>
+    <li><xar:mlstring>Choosing what to translate</xar:mlstring></li>
+    <li><xar:mlstring>Generating / updating skeletons for the chosen locale and subsystem</xar:mlstring></li>
+    <li><xar:mlstring>Translating the terms found in the elements for the subsystem</xar:mlstring></li>
   </ol>
 </p>
 
 <h4><xar:mlstring>The generating &amp; packaging process</xar:mlstring></h4>
 <p>
-  The generating and packaging process consists of the following steps:
+  <xar:mlstring>The generating and packaging process consists of the following steps:</xar:mlstring>
   <ol>
-    <li>Generating the translation, giving an overview of the translated items</li>
-    <li>Packaging the generated translation in a downloadable archive</li>
+    <li><xar:mlstring>Generating the translation, giving an overview of the translated items</xar:mlstring></li>
+    <li><xar:mlstring>Packaging the generated translation in a downloadable archive</xar:mlstring></li>
   </ol>
 </p>
