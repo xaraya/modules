@@ -13,6 +13,7 @@
  * @author John Cox
 */
 
+include_once 'includes/xarDate.php';
 //Load Table Maintainance API
 xarDBLoadTableMaintenanceAPI();
 
@@ -270,12 +271,46 @@ function xarbb_upgrade($oldversion)
             //or use the first post reply time - (or maybe user reg date?) - use first post for now.
             $dotopicstable=xarbb_updatetopicstable();
             if (!$dotopicstable)  return;
-
+            return xarbb_upgrade('1.0.1');
             break;
         case '1.0.1':
-            // Upgrade Path TODO
-            // Time Fields
-            // Still need to do this:(
+            //<jojodee> Start of upgrade function and conversion of date fields
+            //<jojodee> TODO: is working, still requires some additional error checking/except. messages
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $topicstable = $xartable['xbbtopics'];
+
+             xarDBLoadTableMaintenanceAPI();
+
+            $query = xarDBAlterTable($topicstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_ntftime',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            $query = xarDBAlterTable($topicstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_nttime',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            $converttopicstable=xarbb_convertdates();
+            if (!$converttopicstable)  return;
+
+            $coyptopicdates=xarbb_copydates();
+            if (!$coyptopicdates)  return;
+
+            return xarbb_upgrade('1.0.2');
             break;
         case '1.0.2':
             $dbconn =& xarDBGetConn();
@@ -294,9 +329,11 @@ function xarbb_upgrade($oldversion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return; 
+            return xarbb_upgrade('1.0.3');
             break;
         case '1.0.3':
             xarModSetVar('xarbb', 'allowhtml', 1);
+            return xarbb_upgrade('1.0.4');
             break;
         case '1.0.4':
             $dbconn =& xarDBGetConn();
@@ -314,6 +351,7 @@ function xarbb_upgrade($oldversion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return; 
+            return xarbb_upgrade('1.0.5');
             break;
         case '1.0.5':
                 $forums = xarModAPIFunc('xarbb','user','getallforums');
@@ -409,12 +447,119 @@ function xarbb_updatetopicstable()
                              SET xar_tftime = '" . $newpostdate . "'
                              WHERE xar_tid = " . $eachtopic['tid'];
                    $result =& $dbconn->Execute($query);
-                   $result->Close();
                    if (!$result) return;
+                   $result->Close();
                }
            }
        }
 
  return true;
+}
+/**
+ * Copy fields from temp fields to new fields
+ * Due to change from datetime to integer field types for topic table dates in 1.0.2
+*/
+function xarbb_copydates()
+{
+       $dbconn =& xarDBGetConn();
+       $xartable =& xarDBGetTables();
+       $xbbtopicstable = $xartable['xbbtopics'];
+      
+       $query= "SELECT COUNT(1)
+                    FROM $xbbtopicstable";
+       $result =& $dbconn->Execute($query);
+       if (!$result) return;
+
+       for (; !$result->EOF; $result->MoveNext()) {
+
+           $docopy = "UPDATE $xbbtopicstable
+                      SET xar_ttime    = xar_nttime,
+                          xar_tftime   = xar_ntftime";
+           $doupdate =& $dbconn->Execute($docopy);
+           if (!$doupdate) return;
+       }
+
+       //Drop the temp fields
+       $query="ALTER TABLE $xbbtopicstable DROP xar_nttime";
+       // Pass to ADODB, and send exception if the result isn't valid.
+       $result = &$dbconn->Execute($query);
+       if (!$result) return;
+
+       $query="ALTER TABLE $xbbtopicstable DROP xar_ntftime";
+      // Pass to ADODB, and send exception if the result isn't valid.
+       $result = &$dbconn->Execute($query);
+       if (!$result) return;
+
+       $result->close();
+ return true;
+}
+/**
+ * Convert topic table ttime and tftime datetime fields to integer and copy to temporary fields
+ * Due to change from datetime to integer field types for topic table dates in 1.0.2
+*/
+function xarbb_convertdates()
+{
+       $dbconn =& xarDBGetConn();
+       $xartable =& xarDBGetTables();
+       $xbbtopicstable = $xartable['xbbtopics'];
+      
+       $tottopics = "SELECT xar_tid,xar_ttime,xar_tftime,xar_nttime,xar_ntftime
+                     FROM $xbbtopicstable";
+       $result =& $dbconn->Execute($tottopics);
+       if (!$result) return;
+
+       for (; !$result->EOF; $result->MoveNext()) {
+          list($tid,$ttime, $tftime, $nttime, $ntftime) = $result->fields;
+          // Covert the first field data
+          $thisdate = new xarDate();
+          $thisdate->DBtoTS($ttime);
+          $newttime=$thisdate->timestamp;
+          $anotherdate = new xarDate();
+          $anotherdate->DBtoTS($tftime);
+          $newtftime=$anotherdate->timestamp;
+          //Copy to temp fields
+          $docopy = "UPDATE $xbbtopicstable
+                      SET xar_nttime = $newttime,
+                          xar_ntftime= $newtftime
+                     WHERE xar_tid   = $tid";
+           $doupdate =& $dbconn->Execute($docopy);
+           if(!$doupdate) return;
+       }
+       //Drop both the original fields now we have them copied, and recreate them clean
+       $query="ALTER TABLE $xbbtopicstable DROP xar_ttime";
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+        $query="ALTER TABLE $xbbtopicstable DROP xar_tftime";
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+
+        $query = xarDBAlterTable($xbbtopicstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_tftime',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+        $query = xarDBAlterTable($xbbtopicstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_ttime',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+           $result->Close();
+
+return true;
 }
 ?>
