@@ -225,8 +225,8 @@ function censor_admin_view()
     $data['items'] = array();
 
     // Specify some labels for display
-    $data['keywordlabel'] = xarVarPrepForDisplay(xarMLByKey('Key Word'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarMLByKey('Options'));
+    $data['keywordlabel'] = xarVarPrepForDisplay(xarML('Key Word'));
+    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     $data['authid'] = xarSecGenAuthKey();
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
