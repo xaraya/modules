@@ -63,13 +63,13 @@ function xarbb_adminapi_createhook($args)
         return $extrainfo;
     }
     // Do we need to process further?
-    if (isset($extrainfo['xarbb_forum']) && is_int($extrainfo['xarbb_forum'])) {
+    if (!xarVarFetch('xarbb_forum', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
+
+     if (empty($fid) && isset($extrainfo['xarbb_forum'])) {
         $fid = $extrainfo['xarbb_forum'];
-    } else {
-        if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
     }
     if (empty($fid)) {
-        // We are not attaching this to a forum, so no need to go further.
+        // no forum
         return $extrainfo;
     }
 
@@ -120,7 +120,7 @@ function xarbb_adminapi_createhook($args)
     $tpostfull .= '</a>';
 */
     $tposter = xarUserGetVar('uid');
-    $tstatus = '';
+    $tstatus = 0;
 
     if (!xarModAPIFunc('xarbb',
                        'user',

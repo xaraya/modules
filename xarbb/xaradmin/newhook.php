@@ -59,14 +59,24 @@ function xarbb_admin_newhook($args)
                                    'user',
                                    'getallforums');
 
+
+
     if (isset($extrainfo['xarbb_forum'])) {
-        $data['default'] = $extrainfo['xarbb_forum'];
+        $xarbb_forum = $extrainfo['xarbb_forum'];
     } else {
-        if (!xarVarFetch('xarbb_forum', 'id', $data['default'], NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('xarbb_forum', 'id', $xarbb_forum, NULL, XARVAR_DONT_SET)) return;
     }
-    if (empty($forum)) {
-        $data['default'] = '';
+
+    if (empty($xarbb_forum)) {
+        $xarbb_forum = '';
     }
-    return $data;
+    
+    $default=$xarbb_forum;
+    
+    return xarTplModule('xarbb','admin','newhook',
+                        array('xarbb_forum' => $xarbb_forum,
+                              'default' => $xarbb_forum,
+                              'items' =>$data['items']));
 }
+
 ?>
