@@ -23,8 +23,7 @@ function figlet_userapi_transform($args)
     // Argument check
     if ((!isset($objectid)) ||
         (!isset($extrainfo))) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'create', 'figlet');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
