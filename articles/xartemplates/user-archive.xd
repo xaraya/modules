@@ -15,8 +15,14 @@
 </xar:foreach>
 </ul>
 
-<form method="post" action="#$curlink#">
 <table border="0" cellpadding="3" width="100%">
+<form method="post" action="#$curlink#">
+<tr>
+    <xar:foreach in="$catsel" value="$sel">
+        <td>#$sel#</td>
+    </xar:foreach>
+</tr>
+</form>
 <tr>
     <xar:foreach in="$catlist" value="$cat">
        <xar:if condition="empty($cat['link'])">
@@ -43,13 +49,7 @@
     </xar:if>
 </tr>
 </xar:foreach>
-<tr>
-    <xar:foreach in="$catsel" value="$sel">
-        <td align="center">#$sel#</td>
-    </xar:foreach>
-</tr>
 </table>
-</form>
 
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
 <div style="text-align: left; padding: 10px">

@@ -28,6 +28,8 @@ function articles_user_search($args)
          $end,
      // search button was pressed
          $search,
+     // select by article status
+         $status,
      // yes, this is the query
          $q,
      // (to be) replaced by "this text" and +text kind of queries
@@ -45,6 +47,7 @@ function articles_user_search($args)
                                         'start',
                                         'end',
                                         'search',
+                                        'status',
                                         'q',
                                         'bool',
                                         'sort',
@@ -77,8 +80,29 @@ function articles_user_search($args)
     // Get publication types
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
+    if (xarSecurityCheck('AdminArticles',0)) {
+        $isadmin = true;
+    } else {
+        $isadmin = false;
+    }
+
     // frontpage or approved status
-    $status = array(3,2);
+    if (!$isadmin || !isset($status)) {
+        $status = array(3,2);
+    } elseif (is_string($status)) {
+        if (strpos($status,' ')) {
+            $status = explode(' ',$status);
+        } elseif (strpos($status,'+')) {
+            $status = explode('+',$status);
+        } else {
+            $status = array($status);
+        }
+    }
+    if (count($status) != 2 || !in_array(2,$status) || !in_array(3,$status)) {
+        $statusline = implode('+',$status);
+    } else {
+        $statusline = null;
+    }
 
     if (!isset($sort)) {
         $sort = null;
@@ -184,6 +208,14 @@ function articles_user_search($args)
         $data['q'] = isset($q) ? xarVarPrepForDisplay($q) : null;
         $data['author'] = isset($author) ? xarVarPrepForDisplay($author) : null;
     }
+    if ($isadmin) {
+        $data['statuslist'] = array(
+                                    array('id' => 0, 'name' => xarML('Submitted'), 'checked' => in_array(0,$status)),
+                                    array('id' => 1, 'name' => xarML('Rejected'), 'checked' => in_array(1,$status)),
+                                    array('id' => 2, 'name' => xarML('Approved'), 'checked' => in_array(2,$status)),
+                                    array('id' => 3, 'name' => xarML('Front Page'), 'checked' => in_array(3,$status)),
+                                   );
+    }
 
     $data['publications'] = array();
     foreach ($pubtypes as $pubid => $pubtype) {
@@ -239,7 +271,7 @@ function articles_user_search($args)
         $startdate = strtotime($startdate);
         // adjust for the user's timezone offset
         $startdate -= xarMLS_userOffset() * 3600;
-        if ($startdate > $now) {
+        if ($startdate > $now && !$isadmin) {
             $startdate = $now;
         }
     }
@@ -252,12 +284,12 @@ function articles_user_search($args)
         $enddate = strtotime($enddate);
         // adjust for the user's timezone offset
         $enddate -= xarMLS_userOffset() * 3600;
-        if ($enddate > $now) {
+        if ($enddate > $now && !$isadmin) {
             $enddate = $now;
         }
     }
 
-    if (!empty($q) || (!empty($author) && isset($authorid)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate < $now || !empty($catid)) {
+    if (!empty($q) || (!empty($author) && isset($authorid)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
         $count = 0;
         $catinfo = array();
         // TODO: allow combination of searches ?
@@ -377,10 +409,11 @@ function articles_user_search($args)
                                         xarModURL('articles', 'user', 'search',
                                                   array('ptid' => $curptid,
                                                         'catid' => $catid,
-                                                        'q' => urlencode($q),
-                                                        'author' => urlencode($author),
+                                                        'q' => isset($q) ? urlencode($q) : null,
+                                                        'author' => isset($author) ? urlencode($author) : null,
                                                         'start' => $startdate,
-                                                        'end' => ($enddate < $now) ? $enddate : null,
+                                                        'end' => ($enddate != $now) ? $enddate : null,
+                                                        'status' => $statusline,
                                                         'sort' => $sort,
                                                         'startnum' => '%%')),
                                         $numitems);
@@ -396,10 +429,11 @@ function articles_user_search($args)
                                          'search',
                                          array('ptid' => $curptid,
                                                'catid' => $catid,
-                                               'q' => urlencode($q),
-                                               'author' => urlencode($author),
+                                               'q' => isset($q) ? urlencode($q) : null,
+                                               'author' => isset($author) ? urlencode($author) : null,
                                                'start' => $startdate,
-                                               'end' => ($enddate < $now) ? $enddate : null,
+                                               'end' => ($enddate != $now) ? $enddate : null,
+                                               'status' => $statusline,
                                                'sort' => $othersort));
                     if (!isset($othersort)) {
                         $othersort = 'date';
