@@ -356,7 +356,7 @@ function comments_adminapi_delete_object_nodes( $args ) {
     $args = array('modid'    => $modid, 
                   'objectid' => $objectid, 
                   'itemtype' => $itemtype);
-    $root_node = xarModAPIFunch('comments','user','get_node_root', $args);
+    $root_node = xarModAPIFunc('comments','user','get_node_root', $args);
 
     // Delete the entire branch in the tree for this objectid
     return xarModAPIFunc('comments','admin','delete_branch',
