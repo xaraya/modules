@@ -24,3 +24,4 @@ function bkview_userapi_geticon($args)
     }
     return $icon;
 }
+?>
