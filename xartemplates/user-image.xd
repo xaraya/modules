@@ -1,1 +1,1 @@
-<img src="http://#$replace#" alt="#$replace#" />
+<img src="#$replace#" class="notasmiley" alt="#xarML('BBCode Image')#" />
