@@ -29,7 +29,8 @@ function release_userapi_getmoduleids($args)
                      xar_desc,
                      xar_type,
                      xar_certified,
-                     xar_approved
+                     xar_approved,
+                     xar_rstate
             FROM $releasetable
             WHERE xar_type = 'module'
             ORDER BY xar_rid";
@@ -39,7 +40,7 @@ function release_userapi_getmoduleids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $name, $desc, $type, $certified, $approved) = $result->fields;
+        list($rid, $uid, $name, $desc, $type, $certified, $approved,$rstate) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
@@ -47,7 +48,8 @@ function release_userapi_getmoduleids($args)
                                    'desc'       => $desc,
                                    'type'       => $type,
                                    'certified'  => $certified,
-                                   'approved'   => $approved);
+                                   'approved'   => $approved,
+                                   'rstate'     => $rstate);
         }
     }
 

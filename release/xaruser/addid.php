@@ -10,13 +10,20 @@ function release_user_addid()
     if (empty($phase)){
         $phase = 'add';
     }
+    $stateoptions=array();
+    $stateoptions[0] = xarML('Planning');
+    $stateoptions[1] = xarML('Alpha');
+    $stateoptions[2] = xarML('Beta');
+    $stateoptions[3] = xarML('Production/Stable');
+    $stateoptions[4] = xarML('Mature');
+    $stateoptions[5] = xarML('Inactive');
+    $data['stateoptions']=$stateoptions;
 
     if (xarUserIsLoggedIn()){
         switch(strtolower($phase)) {
 
             case 'add':
             default:
-
                 $data['uid'] = xarUserGetVar('uid');
                 $data['authid'] = xarSecGenAuthKey();
 
@@ -38,11 +45,13 @@ function release_user_addid()
                      $name,
                      $desc,
                      $idtype,
+                     $rstate,
                      $cids) = xarVarCleanFromInput('rid',
                                                    'uid',
                                                    'name',
                                                    'desc',
                                                    'idtype',
+                                                   'rstate',
                                                    'modify_cids');
                 
                 // Get the UID of the person submitting the module
@@ -52,16 +61,25 @@ function release_user_addid()
                 if (!xarSecConfirmAuthKey()) return;
 
                 // The user API function is called. 
-                if (!xarModAPIFunc('release',
-                                   'user',
-                                   'createid',
+                $newrid =  xarModAPIFunc('release',
+                                         'user',
+                                         'createid',
                                     array('rid' => $rid,
                                           'uid' => $uid,
                                           'name' => $name,
                                           'desc' => $desc,
                                           'certified' => '1',
                                           'type' => $idtype,
-                                          'cids' => $cids))) return;
+                                          'rstate'=> $rstate,
+                                          'cids' => $cids));
+                if ($newrid==false) {
+                    if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
+                        return; // throw back
+                    }
+                    $data['message']=xarML('Sorry, that ID is not available');
+                    xarExceptionFree();
+                    return $data;
+                }
 
                 xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
 

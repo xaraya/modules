@@ -8,35 +8,37 @@
     <table width="100%" border="0" cellspacing="0" cellpadding="3" align="center" class="xar-norm">
       <tr>
         <td align="left" valign="top" class="xar-normal">
-          <span class="xar-title">
-            <h3>#$name#</h3>
-          </span>
-          <span class="xar-sub">
-            #$type# <xar:mlstring> Author</xar:mlstring>: 
-                    <a href="#$contacturl#">#$realname#</a>
-            <xar:mlstring>on</xar:mlstring>
-            #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
-			&nbsp;&nbsp;::&nbsp;&nbsp;<b>Version:</b>&nbsp;&nbsp; #$version#<br />
-          </span>
-<h3>Description of #$type#:</h3>&nbsp;&nbsp; #$desc#
-<h3>Additional Notes:</h3>&nbsp;&nbsp; #$notes#
-<h3>Changelog:</h3>&nbsp;&nbsp; #$changelog#
-<xar:if condition="!empty($enotes)">
-	<h3>Editor Notes:</h3>&nbsp;&nbsp;<i> #$enotes# </i></p>
-</xar:if>
-
-<xar:if condition="!empty($demolink)">
-<h3>Demo Link:</h3>&nbsp;&nbsp; <a href="#$demolink#">#$demolink#</a><br />
-</xar:if>
-<h3>Download Link:</h3>&nbsp;&nbsp; <a href="#$dllink#">#$dllink#</a><br />
-<xar:if condition="$price eq 2">
-<h3>Price:</h3>&nbsp;&nbsp; #$priceterms#<br />
-</xar:if>
-<h3>Certified:</h3>&nbsp;&nbsp; #$certifiedstatus#<br />
+             <span class="xar-title">
+                 <h3>#$name#</h3>
+             </span>
+             <span class="xar-sub">
+                 #$type# <xar:mlstring> Author</xar:mlstring>:
+                 <a href="#$contacturl#">#$realname#</a>
+                 <xar:mlstring>on</xar:mlstring>
+                 #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
+	 	 	     &nbsp;&nbsp;::&nbsp;&nbsp;<b>Version:</b>&nbsp;&nbsp; #$version#<br />
+             </span>
+             <h3>Description of #$type#:</h3>&nbsp;&nbsp; #$desc#
+             <h3>Additional Notes:</h3>&nbsp;&nbsp; #$notes#
+             <h3>Changelog:</h3>&nbsp;&nbsp; #$changelog#
+             <xar:if condition="!empty($enotes)">
+	             <h3>Editor Notes:</h3>&nbsp;&nbsp;<i> #$enotes# </i></p>
+             </xar:if>
+             <xar:if condition="!empty($demolink)">
+                 <h3>Demo Link:</h3>&nbsp;&nbsp; <a href="#$demolink#">#$demolink#</a><br />
+             </xar:if>
+             <h3>Download Link:</h3>&nbsp;&nbsp; <a href="#$dllink#">#$dllink#</a><br />
+             <xar:if condition="$price eq 2">
+                 <h3>Price:</h3>&nbsp;&nbsp; #$priceterms#<br />
+             </xar:if>
+             <h3>Certified:</h3>&nbsp;&nbsp; #$certifiedstatus#<br />
+	         <h3>Status:</h3>&nbsp;&nbsp; #$stateoption#<br />
+         </td>
+      </tr>
+    </table>
     </td>
-  </tr>
+</tr>
 </table>
-</td></tr></table>
 </td></tr></table>
 
 #$hooks#

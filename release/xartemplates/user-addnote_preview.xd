@@ -44,7 +44,7 @@
 					<xar:mlstring>Download Link</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					#$dllink#
+					<a href="#$dllink#">#$dllink#</a>
 				</td>
 			</tr>
 			<xar:if condition="$pricecheck eq '2'">
@@ -77,6 +77,15 @@
 				</td>
 			</tr>
 			</xar:if>
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Extension State</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$extstate#
+				</td>
+			</tr>
+
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>ChangeLog</xar:mlstring>
@@ -128,6 +137,21 @@
 					<input type="text" name="demolink" value="#$demolink#" size="30" maxlength="100" />
 				</td>
 			</tr>
+				<tr>
+					<td align="left" valign="top" class="xar-norm">
+                    <label for="rstate" class="help" title="#xarML('Current development status of your extension')#">
+                       <xar:mlstring>Extension Status:</xar:mlstring>
+                     </label>
+                   </td>
+					<td align="left" valign="top" class="xar-norm">
+	               <select name="rstate" id="rstate" size="1">
+               	   <xar:foreach in="$stateoptions" value="$v" key="$k">
+ 		    			              <option name="rstate.#$k#" value="#$k#">#$v#</option>
+
+		           </xar:foreach>
+	               </select>
+	               </td>
+	            </tr>
 			</xar:if>
 			<xar:if condition="$supportcheck eq '2'">
 			<tr>

@@ -42,7 +42,21 @@ function release_admin_modifynote()
 
             if ($id == false) return;
 
+            $stateoptions=array();
+            $stateoptions[0] = xarML('Planning');
+            $stateoptions[1] = xarML('Alpha');
+            $stateoptions[2] = xarML('Beta');
+            $stateoptions[3] = xarML('Production/Stable');
+            $stateoptions[4] = xarML('Mature');
+            $stateoptions[5] = xarML('Inactive');
 
+            foreach ($stateoptions as $key => $value) {
+                if ($key==$data['rstate']) {
+                    $rstatesel=$stateoptions[$key];
+                }
+            }
+            $data['rstatesel']=$rstatesel;
+            $data['stateoptions']=$stateoptions;
             $data['name'] = $id['name'];
             $data['username'] = $user['name'];
             $data['changelogf'] = nl2br($data['changelog']);
@@ -67,7 +81,8 @@ function release_admin_modifynote()
                  $enotes,
                  $certified,
                  $approved,
-                 $notes) = xarVarCleanFromInput('rid',
+                 $notes,
+                 $rstate) = xarVarCleanFromInput('rid',
                                                 'name',
                                                 'version',
                                                 'pricecheck',
@@ -81,12 +96,13 @@ function release_admin_modifynote()
                                                 'enotes',
                                                 'certified',
                                                 'approved',
-                                                'notes');
-            
+                                                'notes',
+                                                'rstate');
+
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 
-            // The user API function is called. 
+            // The user API function is called.
             if (!xarModAPIFunc('release',
                                'admin',
                                'updatenote',
@@ -104,7 +120,8 @@ function release_admin_modifynote()
                                       'notes'       => $notes,
                                       'enotes'      => $enotes,
                                       'certified'   => $certified,
-                                      'approved'    => $approved))) return;
+                                      'approved'    => $approved,
+                                      'rstate'      => $rstate))) return;
 
 
             xarResponseRedirect(xarModURL('release', 'admin', 'viewnotes'));

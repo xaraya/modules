@@ -2,7 +2,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
   <h2><xar:mlstring>View Release Information</xar:mlstring></h2>
-  <b><xar:mlstring>Sort By</xar:mlstring>:</b>
+  <b><xar:mlstring>Filter By</xar:mlstring>:</b>
   <br /><br />
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
@@ -23,12 +23,22 @@
 		  </td>
 		  <td width="30%">
 			  <xar:mlstring>Support</xar:mlstring>:<br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Supported</a> <br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Not Supported</a> 
+			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '2'))#">Supported</a> <br />
+			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '1'))#">Not Supported</a> 
 		  </td>
 	  </tr>
   </table>
-  <br /><br />
+
+ <xar:if condition="isset($phase)">
+<xar:set name="displayphase">ucfirst($phasedesc)</xar:set>
+  <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
+  <xar:ml>
+      <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
+      <xar:mlvar>#$displayphase#</xar:mlvar>
+  </xar:ml>
+  </div>
+</xar:if>
+
   <xar:if condition="!empty($message)">
 	  <b>#$message#</b>
   <xar:else />

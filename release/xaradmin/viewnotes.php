@@ -2,6 +2,7 @@
 
 function release_admin_viewnotes()
 {
+
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
@@ -13,7 +14,7 @@ function release_admin_viewnotes()
                                        'phase',
                                        'filter',
                                        'type');
-    
+
     $uid = xarUserGetVar('uid');
     $data['items'] = array();
 
@@ -37,7 +38,7 @@ function release_admin_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            $phasedesc =xarML('Pending');
             break;
 
         case 'viewall':
@@ -54,7 +55,7 @@ function release_admin_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            $phasedesc =xarML('All Approved');
             break;
 
         case 'certified':
@@ -71,7 +72,11 @@ function release_admin_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            if ($filter == 1) {
+               $phasedesc =xarML('Non-Certified');
+            }else{
+               $phasedesc =xarML('Certified');
+            }
             break;
 
         case 'price':
@@ -87,6 +92,11 @@ function release_admin_viewnotes()
             
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
+            }
+            if ($filter == 1) {
+               $phasedesc =xarML('Free');
+            }else{
+               $phasedesc =xarML('Commercial');
             }
 
             break;
@@ -104,6 +114,11 @@ function release_admin_viewnotes()
             
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
+            }
+             if ($filter == 1) {
+               $phasedesc =xarML('Not Supported');
+            }else{
+               $phasedesc =xarML('Supported');
             }
 
             break;
@@ -169,12 +184,15 @@ function release_admin_viewnotes()
         $items[$i]['notes'] = nl2br($item['notes']);
     }
 
-
+    $data['phase'] = $phasedesc;
     // Add the array of items to the template variables
     $data['items'] = $items;
 
-    // TODO : add a pager (once it exists in BL)
-    $data['pager'] = '';
+     $data['phasedesc']=$phasedesc;
+     $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase,'filter'=>$filter)),
+        xarModURL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
+        xarModGetUserVar('release', 'itemsperpage', $uid));
 
     // Return the template variables defined in this function
     return $data;

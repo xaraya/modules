@@ -18,7 +18,6 @@ function release_user_viewids()
     if (!isset($idtypes)) {
        $idtypes=1;
     }
-
     if ($phase == 'modules') {
         $idtypes=3;
     }elseif ($phase =='themes') {
@@ -93,7 +92,14 @@ function release_user_viewids()
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-
+    //Add common definition of the extension state array
+    $stateoptions=array();
+    $stateoptions[0] = xarML('Planning');
+    $stateoptions[1] = xarML('Alpha');
+    $stateoptions[2] = xarML('Beta');
+    $stateoptions[3] = xarML('Production/Stable');
+    $stateoptions[4] = xarML('Mature');
+    $stateoptions[5] = xarML('Inactive');
 
 
     // Check individual permissions for Edit / Delete
@@ -194,13 +200,20 @@ function release_user_viewids()
                                            'user',
                                            'countdocs',
                                            array('rid' => $item['rid']));
+
+        //Get some info for the extensions state
+       foreach ($stateoptions as $key => $value) {
+           if ($key==$items[$i]['rstate']) {
+              $items[$i]['extstate']=$stateoptions[$key];
+           }
+       }
+
     }
      $data['phase']=$phase;
      $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
         xarModURL('release', 'user', 'viewids', array('startnum' => '%%','phase'=>$phase)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
-
 
     // Add the array of items to the template variables
     $data['items'] = $items;

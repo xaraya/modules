@@ -2,15 +2,36 @@
 
 function release_admin_viewids()
 {
+	if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
+    $phase = xarVarCleanFromInput('phase');
 
-    $data = array();
+    $uid = xarUserGetVar('uid');
+
+   if (!isset($idtypes)) {
+       $idtypes=1;
+    }
+
+    if ($phase == 'modules') {
+        $idtypes=3;
+    }elseif ($phase =='themes') {
+        $idtypes=2;
+    }else{
+     $idtypes=1;
+    }
 
     // The user API function is called. 
     $items = xarModAPIFunc('release',
                            'user',
-                           'getallids');
+                             'getallids',
+                       array('idtypes' => $idtypes,
+                             'startnum' => $startnum,
+                             'numitems' => xarModGetUserVar('release',
+                                                            'itemsperpage',$uid),
+                              ));
 
     if (empty($items)) {
         $msg = xarML('There are no items to display in the release module');
@@ -46,6 +67,12 @@ function release_admin_viewids()
         $items[$i]['deletetitle'] = xarML('Delete');
 
     }
+    //Add the pager
+     $data['phase']=$phase;
+     $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
+        xarModURL('release', 'admin', 'viewids', array('startnum' => '%%','phase'=>$phase)),
+        xarModGetUserVar('release', 'itemsperpage', $uid));
 
     // Add the array of items to the template variables
     $data['items'] = $items;

@@ -20,19 +20,21 @@
   </form>
   </span>
 </div>
-<xar:if condition="isset($phase)">
-<xar:set name="displayphase">ucfirst($phase)</xar:set>
-  <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
-  <xar:ml>
-      <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
-      <xar:mlvar>#$displayphase#</xar:mlvar>
-  </xar:ml>
-  </div>
+<xar:if condition="!isset($phase) or empty($phase)">
+    <xar:set name="displayphase"><xar:mlstring>All</xar:mlstring></xar:set>
+<xar:else />
+    <xar:set name="displayphase">ucfirst($phase)</xar:set>
+    <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
+        <xar:ml>
+            <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
+            <xar:mlvar>#$displayphase#</xar:mlvar>
+        </xar:ml>
+    </div>
 </xar:if>
-  <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
+<div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
     <div class="xar-accent">
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
-      <tr>    
+      <tr>
 		    <th width="5%">
 			    <xar:mlstring>ID</xar:mlstring>
 		    </th>
@@ -45,10 +47,16 @@
 		    <th width="5%">
 			    <xar:mlstring>Release</xar:mlstring>
 		    </th>
-		    <th width="10%">
+<xar:comment>jojodee: Taking out docs link here until docs actually works
+             Putting in State instead for now
+            <th width="10%">
 			    <xar:mlstring>Docs</xar:mlstring>
 		    </th>
-		    <th width="5%">
+</xar:comment>
+            <th width="10%">
+			    <xar:mlstring>State</xar:mlstring>
+		    </th>
+            <th width="5%">
 			    <xar:mlstring>Comments</xar:mlstring>
 		    </th>
 		    <th width="5%">
@@ -82,12 +90,18 @@
 			          <a href="#$loop:item['addurl']#">#$loop:item['addtitle']#</a>
 		          </xar:if>
 		        </td>
+<xar:comment>jojodee: Taking out docs link here until docs actually works
+             Putting in State instead for now
 		        <td width="10%" class="#$rowclass#">
 		          <xar:if condition="empty($loop:item['adddocs'])">
 			          			        #$loop:item['docs']#  #$loop:item['adddocstitle']#
 		          <xar:else />
 			          			        #$loop:item['docs']# | <a href="#$loop:item['adddocs']#">#$loop:item['adddocstitle']#</a>
 		          </xar:if>
+		        </td>
+</xar:comment>
+		        <td width="10%" class="#$rowclass#">
+			        #$loop:item['extstate']#
 		        </td>
 		        <td width="5%" class="#$rowclass#">
 			        #$loop:item['comments']#

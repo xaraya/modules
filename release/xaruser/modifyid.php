@@ -26,7 +26,7 @@ function release_user_modifyid()
 
             if ($data == false) return;
             // The user API function is called.
-           
+
             $uid = xarUserGetVar('uid');
 
             if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
@@ -34,7 +34,21 @@ function release_user_modifyid()
             } else {
                 $message = xarML('You are not allowed to add a release notification to this module');               
             }
+            $stateoptions=array();
+            $stateoptions[0] = xarML('Planning');
+            $stateoptions[1] = xarML('Alpha');
+            $stateoptions[2] = xarML('Beta');
+            $stateoptions[3] = xarML('Production/Stable');
+            $stateoptions[4] = xarML('Mature');
+            $stateoptions[5] = xarML('Inactive');
 
+            foreach ($stateoptions as $key => $value) {
+                if ($key==$data['rstate']) {
+                    $rstatesel=$stateoptions[$key];
+                }
+            }
+            $data['rstatesel']=$rstatesel;
+            $data['stateoptions']=$stateoptions;
             $item['module'] = 'release';
             $hooks = xarModCallHooks('item', 'modify', $rid, $item);
             if (empty($hooks['categories'])) {
@@ -56,12 +70,14 @@ function release_user_modifyid()
                  $desc,
                  $certified,
                  $idtype,
+                 $rstate,
                  $cids) = xarVarCleanFromInput('rid',
                                                'uid',
                                                'name',
                                                'desc',
                                                'certified',
                                                'idtype',
+                                               'rstate',
                                                'modify_cids');
             
             // Confirm authorisation code
@@ -77,6 +93,7 @@ function release_user_modifyid()
                                       'desc' => $desc,
                                       'certified' => $certified,
                                       'type' => $idtype,
+                                      'rstate' => $rstate,
                                       'cids' => $cids))) return;
 
             xarResponseRedirect(xarModURL('release', 'user', 'viewids'));

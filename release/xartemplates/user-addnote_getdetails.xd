@@ -76,7 +76,24 @@
 					<input type="text" name="supportlink" value="" size="30" maxlength="100" />
 				</td>
 			</tr>
-			</xar:if>
+            </xar:if>
+
+				<tr>
+					<td align="left" valign="top" class="xar-norm">
+                    <label for="rstate" class="help" title="#xarML('Current development status of your extension')#">
+                       <xar:mlstring>Extension Status:</xar:mlstring>
+                     </label>
+                   </td>
+					<td align="left" valign="top" class="xar-norm">
+	               <select name="rstate" id="rstate" size="1">
+               	   <xar:foreach in="$stateoptions" value="$v" key="$k">
+ 		    			              <option name="rstate.#$k#" value="#$k#">#$v#</option>
+
+		           </xar:foreach>
+	               </select>
+	               </td>
+	            </tr>
+
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
@@ -93,6 +110,7 @@
 					<textarea name="notes" cols="60" rows="5" class="xar-normal"></textarea>
 				</td>
 			</tr>
+
 		</table>			
 		<br /><br />
 		<input type="submit" value="Continue"  tabindex="6" />

@@ -40,7 +40,8 @@ function release_userapi_getallnotes($args)
                      rnotes.xar_time,
                      rnotes.xar_enotes,
                      rnotes.xar_certified,
-                     rnotes.xar_approved
+                     rnotes.xar_approved,
+                     rnotes.xar_rstate
             FROM $releasenotes as rnotes,$releaseids as rids";
     if (!empty($approved)) {
         $query .= " WHERE rnotes.xar_rid=rids.xar_rid AND rnotes.xar_approved = '" . xarVarPrepForStore($approved). "'";
@@ -67,7 +68,7 @@ function release_userapi_getallnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $rname, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved) = $result->fields;
+        list($rnid, $rid, $rname, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved,$rstate) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
@@ -85,7 +86,8 @@ function release_userapi_getallnotes($args)
                                    'time'       => $time,
                                    'enotes'     => $enotes,
                                    'certified'  => $certified,
-                                   'approved'   => $approved);
+                                   'approved'   => $approved,
+                                   'rstate'     => $rstate);
         }
     }
 

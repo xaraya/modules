@@ -10,6 +10,15 @@ function release_user_addnotes()
     if (empty($phase)){
         $phase = 'getmodule';
     }
+             //Set the stateoptions array for rstate field
+                $stateoptions=array();
+                $stateoptions[0] = xarML('Planning');
+                $stateoptions[1] = xarML('Alpha');
+                $stateoptions[2] = xarML('Beta');
+                $stateoptions[3] = xarML('Production/Stable');
+                $stateoptions[4] = xarML('Mature');
+                $stateoptions[5] = xarML('Inactive');
+                $data['stateoptions']=$stateoptions;
 
     switch(strtolower($phase)) {
         case 'getmodule':
@@ -67,6 +76,7 @@ function release_user_addnotes()
 
            //if (!xarSecConfirmAuthKey()) return;
 
+
             xarTplSetPageTitle(xarVarPrepForDisplay($name));
 
            $authid = xarSecGenAuthKey();
@@ -74,7 +84,7 @@ function release_user_addnotes()
                                                                              'name'     => $name,
                                                                              'authid'   => $authid));
             break;
-        
+
         case 'getdetails':
 
             list($rid,
@@ -100,7 +110,8 @@ function release_user_addnotes()
                                                                               'version'     => $version,
                                                                               'pricecheck'  => $pricecheck,
                                                                               'supportcheck' => $supportcheck,
-                                                                              'democheck'    => $democheck));
+                                                                              'democheck'    => $democheck,
+                                                                              'stateoptions' => $stateoptions));
 
             break;
         
@@ -117,7 +128,8 @@ function release_user_addnotes()
                  $demolink,
                  $supportlink,
                  $changelog,
-                 $notes) = xarVarCleanFromInput('rid',
+                 $notes,
+                 $rstate) = xarVarCleanFromInput('rid',
                                                 'name',
                                                 'version',
                                                 'pricecheck',
@@ -128,9 +140,16 @@ function release_user_addnotes()
                                                 'demolink',
                                                 'supportlink',
                                                 'changelog',
-                                                'notes');
+                                                'notes',
+                                                'rstate');
             
            //if (!xarSecConfirmAuthKey()) return;
+           //Get some info for the extensions state
+           foreach ($stateoptions as $key => $value) {
+               if ($key==$rstate) {
+                   $extstate=$stateoptions[$key];
+               }
+           }
 
            $notesf = nl2br($notes);
            $changelogf = nl2br($changelog);
@@ -152,7 +171,10 @@ function release_user_addnotes()
                                                                               'changelog'   => $changelog,
                                                                               'changelogf'  => $changelogf,
                                                                               'notesf'      => $notesf,
-                                                                              'notes'       => $notes));
+                                                                              'notes'       => $notes,
+                                                                              'rstate'      => $rstate,
+                                                                              'stateoptions'=> $stateoptions,
+                                                                              'extstate'     => $extstate));
 
 
 
@@ -171,7 +193,8 @@ function release_user_addnotes()
                  $demolink,
                  $supportlink,
                  $changelog,
-                 $notes) = xarVarCleanFromInput('rid',
+                 $notes,
+                 $rstate) = xarVarCleanFromInput('rid',
                                                 'name',
                                                 'version',
                                                 'pricecheck',
@@ -182,7 +205,8 @@ function release_user_addnotes()
                                                 'demolink',
                                                 'supportlink',
                                                 'changelog',
-                                                'notes');
+                                                'notes',
+                                                'rstate');
             
            //if (!xarSecConfirmAuthKey()) return;
             // The user API function is called.
@@ -206,7 +230,8 @@ function release_user_addnotes()
                                       'supportlink' => $supportlink,
                                       'changelog'   => $changelog,
                                       'type'        => $data['type'],
-                                      'notes'       => $notes))) return;
+                                      'notes'       => $notes,
+                                      'rstate'      => $rstate))) return;
 
             xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Thank You')));
 

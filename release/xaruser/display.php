@@ -27,6 +27,14 @@ function release_user_display()
         $phase = 'view';
     }
 
+    $stateoptions=array();
+    $stateoptions[0] = xarML('Planning');
+    $stateoptions[1] = xarML('Alpha');
+    $stateoptions[2] = xarML('Beta');
+    $stateoptions[3] = xarML('Production/Stable');
+    $stateoptions[4] = xarML('Mature');
+    $stateoptions[5] = xarML('Inactive');
+
     switch(strtolower($phase)) {
 
         case 'view':
@@ -52,7 +60,6 @@ function release_user_display()
             } else {
                 $data['hooks'] = $hooks;
             }
-
             $data['version'] = 0;
             $data['docs'] = 0;
             $data['general'] = 2;
@@ -60,12 +67,12 @@ function release_user_display()
         
         case 'version':
             // The user API function is called.
-            $data['items'] = array();
+            $items = array();
             $items = xarModAPIFunc('release',
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('roles',
+                                        'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
                                         'rid' => $rid));
 
@@ -88,7 +95,7 @@ function release_user_display()
                 $items[$i]['displaylink'] =  xarModURL('release',
                                                   'user',
                                                   'displaynote',
-                                                   array('rid' => $item['rid']));
+                                                   array('rnid' => $items[$i]['rnid']));
 
                 $getuser = xarModAPIFunc('roles',
                                          'user',
@@ -104,13 +111,13 @@ function release_user_display()
                 $items[$i]['realname'] = $getuser['name'];
                 $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
 
-                if ($item['certified'] == 2){
+                if ($items[$i]['certified'] == 2){
                     $items[$i]['certifiedstatus'] = xarML('Yes');
                 } else {
-                    $items[$i]['certifiedstatus'] = xarML('No');
+                   $items[$i]['certifiedstatus'] = xarML('No');
                 }
-                $items[$i]['changelog'] = nl2br($item['changelog']);
-                $items[$i]['notes'] = nl2br($item['notes']);
+                $items[$i]['changelog'] = nl2br($items[$i]['changelog']);
+                $items[$i]['notes'] = nl2br($items[$i]['notes']);
 
                 $items[$i]['comments'] = xarModAPIFunc('comments',
                                                        'user',
@@ -126,7 +133,7 @@ function release_user_display()
                     $items[$i]['comments'] .= ' ';
                 }
 
-                $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
+               $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
                                                        'user',
                                                        'get',
                                                        array('modname' => 'release',
@@ -140,14 +147,24 @@ function release_user_display()
                     $items[$i]['hitcount'] .= ' ';
                 }
 
+                //Get the status update of each release
+                foreach ($stateoptions as $key => $value) {
+                    if ($key==$items[$i]['rstate']) {
+                       $rstatesel=$stateoptions[$key];
+                    }
+                }
+                $items[$i]['rstatesel']=$rstatesel;
+
+
             }
-            
+
+
             $data['version'] = 2;
             $data['items'] = $items;
-
+            $data['general'] = 2;
             break;
 
-        
+
         case 'docsmodule':
             $data['mtype'] = 'mgeneral';
             // The user API function is called. 
@@ -197,9 +214,9 @@ function release_user_display()
             if (empty($items)){
                 $data['message'] = xarML('There is no general theme documentation defined');
             }
-
+             $numitems=count($items);
             // Check individual permissions for Edit / Delete
-            for ($i = 0; $i < count($items); $i++) {
+            for ($i = 0; $i < $numitems; $i++) {
                 $item = $items[$i];
 
                 $uid = xarUserGetVar('uid');
@@ -216,7 +233,6 @@ function release_user_display()
             $data['version'] = 0;
             $data['docs'] = 2;
             $data['general'] = 0;
-
             break;
 
         case 'docsblockgroups':
@@ -289,7 +305,7 @@ function release_user_display()
             $data['version'] = 0;
             $data['docs'] = 2;
             $data['general'] = 0;
-
+  return $data;
             break;
 
         case 'docshooks':
@@ -329,18 +345,29 @@ function release_user_display()
             break;
 
     }
+      foreach ($stateoptions as $key => $value) {
+         if ($key==$id['rstate']) {
+             $rstatesel=$stateoptions[$key];
+         }
+    }
+
+     $data['rstatesel']=$rstatesel;
+     $data['stateoptions']=$stateoptions;
 
 // Version History
 // View Docs
 // Comment on docs
+    $time=time();
+    $data['time']=$time;
     $data['desc'] = nl2br($id['desc']);
     $data['name'] = $id['name'];
     $data['type'] = $id['type'];
     $data['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $data['realname'] = $getuser['name'];
     $data['rid'] = $rid;
+    $data['startnum']=$startnum;
 
-    return $data;
+return $data;
 }
 
 ?>

@@ -52,7 +52,12 @@ function release_init()
                                    'xar_approved'    => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '0',
-                                                              'increment'   => false)));
+                                                              'increment'   => false),
+                                    'xar_rstate'    => array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
+                                                              'increment'   => false)
+                                                              ));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -129,7 +134,12 @@ function release_init()
                                    'xar_approved'       => array('type'        => 'integer',
                                                                  'null'        => false,
                                                                  'default'     => '0',
-                                                                 'increment'   => false)));
+                                                                 'increment'   => false),
+                                    'xar_rstate'        =>  array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
+                                                              'increment'   => false)
+                                                                 ));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -323,8 +333,40 @@ function release_upgrade($oldversion)
             xarRegisterMask('DeleteRelease','All','release','All','All','ACCESS_DELETE');
             xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
             xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
-        break;
+            return release_upgrade('0.0.10');
         case '0.0.10':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $releasetable = $xartable['release_id'];
+            $releasenotes = $xartable['release_notes'];
+           //Add new rstate field to release table
+            $query = xarDBAlterTable($releasetable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_rstate',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+           //Now add new rstate field to release notes table -sigh
+            $query = xarDBAlterTable($releasenotes,
+                              array('command' => 'add',
+                                    'field'   => 'xar_rstate',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+
+        break;
+        case '0.0.11':
     }
     return true;
 }

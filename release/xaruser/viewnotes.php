@@ -143,8 +143,8 @@ function release_user_viewnotes()
         $items[$i]['realname'] = $getuser['name'];
         $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($getid['desc']));
         $items[$i]['notes'] = nl2br(xarVarPrepHTMLDisplay($item['notes']));
-
     }
+
 
     $phase=strtolower($phase);
     $data['phase'] = $phasedesc;

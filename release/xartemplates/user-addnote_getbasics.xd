@@ -59,6 +59,8 @@
 					Yes&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="supportcheck" value="2" />&nbsp;&nbsp; No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="supportcheck" value="1" />
 				</td>
 			</tr>
+
+
 		</table>			
 		<br /><br />
 		<input type="submit" value="Continue"  tabindex="6" />

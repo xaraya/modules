@@ -1,15 +1,23 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
+<xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
+<xar:set name="retryID">xarModURL('release','user','viewids')</xar:set>
 <h2><xar:mlstring>Reserve an ID</xar:mlstring></h2>
 <xar:if condition="!empty($message)">
+ <div style="margin-top:20px; margin-bottom:20px;">
+ <span style="float:left; text-align:center; width:90%;">
 	#$message#
+	<a href="javascript:history.back(-1)"><xar:mlstring>Return to try again</xar:mlstring></a>,
+    <xar:mlstring>or </xar:mlstring><a href="#$retryID#"><xar:mlstring>check current IDs</xar:mlstring></a>.
+ </span>
+ </div>
 <xar:else />
 
 	<div align="center">
 		<form action="#xarModURL('release', 'user', 'addid')#" method="post" enctype="application/x-www-form-urlencoded">
 			<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<input type="hidden" name="phase" id="phase" value="update" />	
+			<input type="hidden" name="phase" id="phase" value="update" />
 			<table border="0" cellpadding="2" cellspacing="0" width="100%">
 				<tr>
 					<td align="left" valign="top" class="xar-norm">
@@ -17,7 +25,7 @@
 					</td>
 					<td align="left" valign="top" class="xar-norm">
 						<input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
-					</td>
+            		</td>
 				</tr>
 				<tr>
 					<td align="left" valign="top" class="xar-norm">
@@ -32,13 +40,13 @@
 						<label for="desc"><xar:mlstring>Description</xar:mlstring></label>
 					</td>
 					<td align="left" valign="top" class="xar-norm">
-						<textarea name="desc" id="desc" tabindex="4" rows="10" cols="50" /></textarea> 
+						<textarea name="desc" id="desc" tabindex="4" rows="10" cols="50" /></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td align="left" valign="top" class="xar-norm">
 						<label for="idtype"><xar:mlstring>Type</xar:mlstring></label>
-					</td>
+                    </td>
 					<td align="left" valign="top" class="xar-norm">
 						<select name="idtype" id="idtype">
 							<option name="module"><xar:mlstring>Module</xar:mlstring></option>
@@ -46,12 +54,27 @@
 						</select>
 					</td>
 				</tr>
+				<tr>
+					<td align="left" valign="top" class="xar-norm">
+                    <label for="rstate" class="help" title="#xarML('Current development status of your extension')#">
+                       <xar:mlstring>Extension Status:</xar:mlstring>
+                     </label>
+                   </td>
+					<td align="left" valign="top" class="xar-norm">
+	               <select name="rstate" id="rstate" size="1">
+               	   <xar:foreach in="$stateoptions" value="$v" key="$k">
+ 		    			              <option name="rstate.#$k#" value="#$k#">#$v#</option>
+
+		           </xar:foreach>
+	               </select>
+	               </td>
+	            </tr>
     			<tr>
 				    <td align="left" valign="top" class="xar-norm" colspan="2">
                         #$cathook#
 				    </td>
 			    </tr>
-			</table>			
+			</table>
 			<br />
 			<input type="submit" value="Create ID"  tabindex="6" />
 		</form>

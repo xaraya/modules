@@ -50,12 +50,26 @@ function release_user_displaynote()
     } else {
         $item['certifiedstatus'] = xarML('No');
     }
+    $stateoptions=array();
+    $stateoptions[0] = xarML('Planning');
+    $stateoptions[1] = xarML('Alpha');
+    $stateoptions[2] = xarML('Beta');
+    $stateoptions[3] = xarML('Production/Stable');
+    $stateoptions[4] = xarML('Mature');
+    $stateoptions[5] = xarML('Inactive');
 
+    foreach ($stateoptions as $key => $value) {
+     if ($key==$item['rstate']) {
+       $stateoption=$stateoptions[$key];
+     }
+    }
+    $item['stateoption']=$stateoption;
     $item['desc'] = nl2br($id['desc']);
     $item['name'] = $id['name'];
     $item['type'] = $id['type'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $item['realname'] = $getuser['name'];
+
 
     return $item;
 }

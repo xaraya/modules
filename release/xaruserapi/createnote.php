@@ -49,7 +49,8 @@ function release_userapi_createnote($args)
                      xar_time,
                      xar_certified,
                      xar_approved,
-                     xar_type
+                     xar_type,
+                     xar_rstate
               )
             VALUES (
               $nextId,
@@ -67,7 +68,8 @@ function release_userapi_createnote($args)
               $time,
               '" . xarVarPrepForStore($certified) . "',
               '" . xarVarPrepForStore($approved) . "',
-              '" . xarVarPrepForStore($type) . "')";
+              '" . xarVarPrepForStore($type) . "',
+              '" . xarVarPrepForStore($rstate) ."')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

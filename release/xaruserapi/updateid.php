@@ -52,7 +52,8 @@ function release_userapi_updateid($args)
                 xar_type = '" . xarVarPrepForStore($type) . "',
                 xar_desc = '" . xarVarPrepForStore($desc) . "',
                 xar_certified = '" . xarVarPrepForStore($certified) . "',
-                xar_approved = '" . xarVarPrepForStore($approved) . "'
+                xar_approved = '" . xarVarPrepForStore($approved) . "',
+                xar_rstate = '" . xarVarPrepForStore($rstate) . "'
             WHERE xar_rid = " . xarVarPrepForStore($rid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;

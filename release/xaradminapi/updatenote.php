@@ -50,14 +50,18 @@ function release_adminapi_updatenote($args)
                 xar_notes = '" . xarVarPrepForStore($notes) . "',
                 xar_enotes = '" . xarVarPrepForStore($enotes) . "',
                 xar_certified = '" . xarVarPrepForStore($certified) . "',
-                xar_approved = '" . xarVarPrepForStore($approved) . "'
+                xar_approved = '" . xarVarPrepForStore($approved) . "',
+                xar_rstate = '" . xarVarPrepForStore($rstate) . "'
             WHERE xar_rnid = " . xarVarPrepForStore($rnid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     // Let the calling process know that we have finished successfully
     // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'update', $rnid, 'rnid');
+    $args['module'] = 'release';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $rnid;
+    xarModCallHooks('item', 'update', $rnid, $args);
 
     // Return the id of the newly created user to the calling process
     return $rnid;

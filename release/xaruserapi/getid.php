@@ -24,13 +24,14 @@ function release_userapi_getid($args)
                      xar_desc,
                      xar_type,
                      xar_certified,
-                     xar_approved
+                     xar_approved,
+                     xar_rstate
             FROM $releasetable
             WHERE xar_rid = " . xarVarPrepForStore($rid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    list($rid, $uid, $name, $desc, $type, $certified, $approved) = $result->fields;
+    list($rid, $uid, $name, $desc, $type, $certified, $approved, $rstate) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -43,7 +44,8 @@ function release_userapi_getid($args)
                          'desc'       => $desc,
                          'type'       => $type,
                          'certified'  => $certified,
-                         'approved'   => $approved);
+                         'approved'   => $approved,
+                         'rstate'     => $rstate);
 
     return $releaseinfo;
 }

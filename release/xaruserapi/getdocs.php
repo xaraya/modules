@@ -31,7 +31,7 @@ function release_userapi_getdocs($args)
                      xar_time,
                      xar_approved
             FROM $releasedocstable
-                         
+
                      /*";
     if (!empty($apporved)) {
         $query .= " WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
@@ -40,11 +40,12 @@ function release_userapi_getdocs($args)
     } elseif(empty($type)) {
         $query .= " WHERE xar_approved = '" . xarVarPrepForStore($approved) . "'";
     } else {
-        $query .= "*/ WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
+        $query .= "*/ 
+        WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
                     AND xar_type = '" . xarVarPrepForStore($type) . "'";
     }
 
-    $query .= "ORDER BY xar_rdid";
+    $query .= " ORDER BY xar_rdid";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
@@ -66,7 +67,7 @@ function release_userapi_getdocs($args)
     $result->Close();
 
     // Return the users
-    return $releasedocs;
+return $releasedocs;
 
 }
 

@@ -56,7 +56,8 @@ function release_userapi_createid($args)
               xar_desc,
               xar_type,
               xar_certified,
-              xar_approved
+              xar_approved,
+              xar_rstate
               )
             VALUES (
               '" . xarVarPrepForStore($rid) . "',
@@ -65,7 +66,8 @@ function release_userapi_createid($args)
               '" . xarVarPrepForStore($desc) . "',
               '" . xarVarPrepForStore($type) . "',
               '" . xarVarPrepForStore($certified) . "',
-              '" . xarVarPrepForStore($approved) . "')";
+              '" . xarVarPrepForStore($approved) . "',
+              '" . xarVarPrepForStore($rstate)."')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
