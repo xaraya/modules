@@ -177,15 +177,20 @@ function pubsub_upgrade($oldversion)
 		    $pubsubregtable = $xarTables['pubsub_reg'];
 			$pubsubtemplatetable = $prefix.'_pubsub_template';
 
+            xarDBLoadTableMaintenanceAPI();
+
 			// Drop the template table
-			$dbconn->Execute("DROP TABLE ".$pubsubtemplatetable);
-			xarExceptionFree();						
+            $query = xarDBDropTable($pubsubtemplatetable);
+            $result =& $dbconn->Execute($query);
 			
 			// Add a column to the register table
-		    $sql= "ALTER TABLE $pubsubregtable 
-		           ADD COLUMN xar_subdate INTEGER NOT NULL";
-		    $result =& $dbconn->Execute($sql);
-		    if (!$result) return;
+            $query = xarDBAlterTable($pubsubregtable,
+                                     array('command' => 'add',
+                                           'field' => 'xar_subdate',
+                                           'type' => 'integer',
+                                           'null' => false));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
 
 			$sql = "UPDATE $pubsubregtable
 					   SET xar_subdate = ".time()."";
