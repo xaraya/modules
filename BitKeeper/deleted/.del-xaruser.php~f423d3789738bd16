@@ -24,6 +24,10 @@ function tasks_user_main()
 	return true;
 }
 
+/**
+ * View a list of tasks
+ *
+ */
 function tasks_user_view($args)
 {
     $data=array();
@@ -178,6 +182,10 @@ function tasks_user_view($args)
 	return $data;
 }
 
+/**
+ * Display one task
+ *
+ */
 function tasks_user_display($args)
 {
     $data=array();
@@ -313,6 +321,10 @@ function tasks_user_display($args)
     return $data;
 }
 
+/**
+ * Construct the menu
+ *
+ */
 function tasks_menu()
 {
 // 	$output = new pnHTML();
@@ -352,6 +364,10 @@ function tasks_menu()
 
 }
 
+/**
+ * Give feedback
+ *
+ */
 function tasks_feedback()
 {
 	$feedback = xarGetStatusMsg();

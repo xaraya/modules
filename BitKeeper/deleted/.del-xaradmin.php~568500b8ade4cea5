@@ -98,6 +98,10 @@ function tasks_admin_new($args)
 */
 }
 
+/**
+ * Create a task
+ *
+ */
 function tasks_admin_create($args)
 {
 	list($parentid,
@@ -203,6 +207,10 @@ function tasks_admin_modify($args)
 	return $data;
 }
 
+/**
+ * Update task
+ *
+ */
 function tasks_admin_update($args)
 {
 	list($id,
@@ -267,6 +275,10 @@ function tasks_admin_update($args)
     return true;
 }
 
+/**
+ * Close a task
+ *
+ */
 function tasks_admin_close($args)
 {
 	$id = xarVarCleanFromInput('id');
@@ -289,6 +301,10 @@ function tasks_admin_close($args)
     return true;
 }
 
+/**
+ * Open a task
+ *
+ */
 function tasks_admin_open($args)
 {
 	$id = xarVarCleanFromInput('id');
@@ -311,6 +327,10 @@ function tasks_admin_open($args)
     return true;
 }
 
+/**
+ * Approve a task
+ *
+ */
 function tasks_admin_approve($args)
 {
 	$id = xarVarCleanFromInput('id');
@@ -333,6 +353,10 @@ function tasks_admin_approve($args)
     return true;
 }
 
+/**
+ * Publish a task
+ *
+ */
 function tasks_admin_publish($args)
 {
 	$id = xarVarCleanFromInput('id');
@@ -355,6 +379,10 @@ function tasks_admin_publish($args)
     return true;
 }
 
+/**
+ * Accept a task
+ *
+ */
 function tasks_admin_accept($args)
 {
 	$id = xarVarCleanFromInput('id');
@@ -377,6 +405,10 @@ function tasks_admin_accept($args)
     return true;
 }
 
+/**
+ * Modify configuration
+ *
+ */
 function tasks_admin_modifyconfig()
 {
     $data=array();
@@ -419,6 +451,11 @@ function tasks_admin_modifyconfig()
     return $data;
 }
 
+/**
+ * Update configuration
+ *
+ */
+
 function tasks_admin_updateconfig()
 {
     list($dateformat,
@@ -443,11 +480,15 @@ function tasks_admin_updateconfig()
     xarModSetVar('tasks', 'returnfrommigrate', $returnfrommigrate);
     xarModSetVar('tasks', 'maxdisplaydepth', $maxdisplaydepth);
 
-    xarRedirect(xarModURL('tasks', 'admin', 'modifyconfig'));
+    xarResponseRedirect(xarModURL('tasks', 'admin', 'modifyconfig'));
 
     return true;
 }
 
+/**
+ * Migrate a task
+ *
+ */
 function tasks_admin_migrate($args)
 {
     list($taskcheck,
@@ -496,6 +537,10 @@ function tasks_admin_migrate($args)
     return true;
 }
 
+/**
+ * Show a gantt chart
+ *
+ */
 function tasks_admin_gantt($args)
 {
 	list($parentid,

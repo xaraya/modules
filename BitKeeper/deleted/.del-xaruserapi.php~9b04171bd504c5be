@@ -188,6 +188,10 @@ function tasks_userapi_getall($args)
     return $tasks;
 }
 
+/**
+ * Get one task
+ *
+ */
 function tasks_userapi_get($args)
 {
     extract($args);
@@ -299,6 +303,10 @@ function tasks_userapi_get($args)
     return $task;
 }
 
+/**
+ * Count the items
+ *
+ */
 function tasks_userapi_countitems($args)
 {
 	extract($args);
@@ -335,6 +343,10 @@ function tasks_userapi_countitems($args)
     return $numtasks;
 }
 
+/**
+ * Get the root task
+ *
+ */
 function tasks_userapi_getroot($args)
 {
 	extract($args);
@@ -366,6 +378,10 @@ function tasks_userapi_getroot($args)
     return $parentid;
 }
 
+/**
+ * Get status options
+ *
+ */
 function tasks_userapi_getstatusoptions() {
 	$statusoptions = array();    
 	$statusoptions[] = array('id'=>0,'name'=>xarML('Open'));
@@ -373,6 +389,10 @@ function tasks_userapi_getstatusoptions() {
     return $statusoptions;
 }
 
+/**
+ * Get task priorities
+ *
+ */
 function tasks_userapi_getpriorities() {
 	$priorities = array();
 	for($x=0;$x<=9;$x++) {
@@ -381,7 +401,10 @@ function tasks_userapi_getpriorities() {
     return $priorities;
 }
 
-
+/**
+ * Get the date formats supported
+ *
+ */
 function tasks_userapi_dateformatlist() {
 	$dateformatlist = array(xarML('Please choose a Date/Time Format'),
 							'%m/%d/%Y',

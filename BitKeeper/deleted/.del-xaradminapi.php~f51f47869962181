@@ -95,6 +95,10 @@ function tasks_adminapi_create($args)
 	return $returnid;
 }
 
+/**
+ * Update a task
+ *
+ */
 function tasks_adminapi_update($args)
 {
     extract($args);
@@ -138,6 +142,10 @@ function tasks_adminapi_update($args)
 	return $returnid;
 }
 
+/**
+ * Close a task
+ *
+ */
 function tasks_adminapi_close($args)
 {
     extract($args);
@@ -179,6 +187,10 @@ function tasks_adminapi_close($args)
 	return $task['parentid'];
 }
 
+/**
+ * Open a task
+ *
+ */
 function tasks_adminapi_open($args)
 {
     extract($args);
@@ -220,6 +232,10 @@ function tasks_adminapi_open($args)
 	return $task['parentid'];
 }
 
+/**
+ * Approve a task
+ *
+ */
 function tasks_adminapi_approve($args)
 {
     extract($args);
@@ -262,6 +278,10 @@ function tasks_adminapi_approve($args)
 	return $returnid;
 }
 
+/**
+ * Publish a task
+ *
+ */
 function tasks_adminapi_publish($args)
 {
     extract($args);
@@ -306,6 +326,10 @@ function tasks_adminapi_publish($args)
 	return $returnid;
 }
 
+/**
+ * Accept a task
+ *
+ */
 function tasks_adminapi_accept($args)
 {
     extract($args);
@@ -349,6 +373,10 @@ function tasks_adminapi_accept($args)
 	return $returnid;
 }
 
+/**
+ * Migrate a task
+ *
+ */
 function tasks_adminapi_migrate($args)
 {
     extract($args);
@@ -483,6 +511,10 @@ function tasks_adminapi_migrate($args)
     return $parentid;
 }
 
+/**
+ * Get menu links
+ *
+ */
 function tasks_adminapi_getmenulinks() 
 {
 
