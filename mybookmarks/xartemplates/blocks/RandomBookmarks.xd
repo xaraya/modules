@@ -1,7 +1,8 @@
-<div xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd">
+<div align="center">
 <xar:if condition="!empty($noquote)">
-    <center>#$nobookmarks#</center>
+   #$nobookmarks#
 <xar:else/>
-       <br /><center> <a href='#$bm_url#' target="_blank">#$bm_name#</a></center><br />
+       <br /><a href='#$bm_url#'>#$bm_name#</a><br />
     <br />
 </xar:if>
+</div>

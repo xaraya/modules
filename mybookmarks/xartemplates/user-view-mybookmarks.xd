@@ -1,11 +1,7 @@
+<xar:template file="user-header" type="module"/>
+    <xar:set name="$count">count($objects_props)</xar:set>
 
-
-<xar:template xmlns:xar="dd" xmlns:html="http://www.w3.org/TR/xhtml1/strict" xmlns="http://www.w3.org/TR/xhtml1/strict" file="user-header" type="module"/>
-
-
-    <xar:set xmlns:xar="dd" xmlns:html="http://www.w3.org/TR/xhtml1/strict" xmlns="http://www.w3.org/TR/xhtml1/strict" name="$count">count($objects_props)</xar:set>
-
-    <table xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:html="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" width="100%" border="1" cellspacing="0" cellpadding="4">
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <xar:foreach in="$objects_props" key="$name">
             <th align="center"><xar:data-label property="$objects_props[$name]"/></th>

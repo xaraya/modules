@@ -1,13 +1,11 @@
+<xar:template file="admin-header" type="module"/>
 
-
-<xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="admin-header" type="module"/>
-
-<xar:if xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" condition="!empty($preview)">
+<xar:if condition="!empty($preview)">
    #$preview#
 </xar:if>
 
 
-<form xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" method="post" action="#$action#">
+<form method="post" action="#$action#">
 
     <xar:if condition="isset($related)">
     <div>#$related#</div>
@@ -19,9 +17,6 @@
     <table>
         <xar:data-form object="$object"/>
     </table>
-
-    
-    
 
         <input type="submit" value="Modify"/>
         <input type="submit" name="preview" value="Preview"/>

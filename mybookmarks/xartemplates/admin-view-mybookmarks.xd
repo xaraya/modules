@@ -1,8 +1,6 @@
+<xar:template file="admin-header" type="module"/>
 
-
-<xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="admin-header" type="module"/>
-
-    <table xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" width="100%" border="1" cellspacing="0" cellpadding="4">
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <xar:foreach in="$objects_props" key="$name">
             <th align="center"><xar:data-label property="$objects_props[$name]"/></th>
