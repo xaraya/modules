@@ -57,7 +57,11 @@ function xarcachemanager_admin_flushcache($args)
         if ($flushkey == '-') {
             $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
-            xarOutputFlushCached($flushkey);
+            if (!empty($flushkey) && !strpos('-', $flushkey)) {
+                xarOutputFlushCached('', "$outputCacheDir/$flushkey");
+            } else {
+                xarOutputFlushCached($flushkey);
+            }
             $data['notice'] = xarML("Cached #(1) files have been successfully flushed.", $flushkey);
         }
         
