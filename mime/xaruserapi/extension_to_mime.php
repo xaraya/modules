@@ -34,10 +34,13 @@ function mime_userapi_extension_to_mime( $args ) {
         // seperator, hence no extension. So we fallback
         // to analyze_file()
         if (count($parts) > 1) {
+            
+            include("modules/mime/xarincludes/mime.magic.php");
+            
             $extension = $parts[count($parts) - 1];
             $type = xarModAPIFunc('mime','user','array_search_r',
                                    array('needle'   => $extension,
-                                         'haystack' => unserialize(xarModGetVar('mime','mime.magic'))));
+                                         'haystack' => $mime_list));
         } 
         
         if (count($parts) <= 1 || (!$type || !is_array($type))) {

@@ -17,8 +17,6 @@ function mime_userapi_analyze_file( $args )
 {
     extract($args);
     
-    $mime_list = unserialize(xarModGetVar('mime','mime.magic'));
-
     if (!isset($fileName)) {
         $msg = xarML('Unable to retrieve mime type. No filename supplied!');
         xarExeptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -31,6 +29,8 @@ function mime_userapi_analyze_file( $args )
         return FALSE;
     } else {
         $fileSize = filesize($fileName);
+        
+        include ("modules/mime/xarincludes/mime.magic.php");
         
         foreach($mime_list as $mime_type => $mime_info) {
             
@@ -64,18 +64,6 @@ function mime_userapi_analyze_file( $args )
                     return FALSE;
                 }
 
-                // FIXME: need to figure out how to get the stored, octal,
-                // representation of the needle back into ascii values easily
-                // and with minimal overhead - this works for now though
-                for ($i = 0, $check = array(); $i < strlen($value); $i++) {
-                    $check[] = decoct(ord($value{$i}));
-                }
-                $value = '';
-                
-                foreach ($check as $char) {
-                    $value .= '\\' . $char;
-                }
-                
                 if ($needle == $value) {
                     fclose($fp);
                     return $mime_type;
