@@ -1,13 +1,17 @@
 <?php
-// File: $Id: s.xarinit.php 1.11 02/12/01 00:41:43+00:00 miko@miko.homelinux.org $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: mikespub
-// Purpose of file:  Initialisation functions for example
-// ----------------------------------------------------------------------
+/**
+ * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
+ *
+ * Dynamic Example initialization functions
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage dyn_example
+ * @author Example module development team 
+ */
 
 /**
  * initialise the example module
@@ -175,6 +179,13 @@ function dyn_example_init()
 
     $xartable =& xarDBGetTables();
 
+    // Register blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName' => 'dyn_example',
+                             'blockType' => 'first'))) return;
+
 /*
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
@@ -259,13 +270,21 @@ function dyn_example_upgrade($oldversion)
             if (empty($propertyid)) return;
 
             // At the end of the successful completion of this function we
-            // recurse the upgrade to handle any other upgrades that need
-            // to be done.  This allows us to upgrade from any version to
-            // the current version with ease
-            return dyn_example_upgrade(1.0);
-        case '1.0':
-            // Code to upgrade from version 1.0 goes here
-            break;
+            // fall through to the next upgrade
+
+        case '1.0.0':
+            // Code to upgrade from version 1.0.0 goes here
+
+            // Register blocks
+            if (!xarModAPIFunc('blocks',
+                               'admin',
+                               'register_block_type',
+                               array('modName' => 'dyn_example',
+                                     'blockType' => 'first'))) return;
+
+            // At the end of the successful completion of this function we
+            // fall through to the next upgrade
+
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
@@ -302,6 +321,13 @@ function dyn_example_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
     xarModDelVar('dyn_example','usersettings');
+
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName' => 'dyn_example',
+                             'blockType' => 'first'))) return;
 
     // Remove Masks and Instances
     xarRemoveMasks('dyn_example');
