@@ -1,6 +1,7 @@
 <?php
 
-class Image_Properties {
+class Image_Properties 
+{
 
     var $fileName;
     var $fileLocation;
@@ -13,7 +14,8 @@ class Image_Properties {
     var $mime;
     var $_tmpFile;
     
-    function __constructor($fileLocation, $thumbsdir = NULL) {
+    function __constructor($fileLocation, $thumbsdir = NULL) 
+    {
         $this->fileLocation = $fileLocation;
         $this->fileName = basename($fileLocation);
         
@@ -38,11 +40,13 @@ class Image_Properties {
 
     }
 
-    function Image_Properties($fileLocation, $thumbsdir = NULL) {
+    function Image_Properties($fileLocation, $thumbsdir = NULL) 
+    {
         return $this->__constructor($fileLocation, $thumbsdir);
     }
 
-    function _getMimeType($mimeType) {
+    function _getMimeType($mimeType) 
+    {
         if (is_numeric($mimeType)) {
             switch ($mimeType) {
                 case 1:  return array('text' => 'image/gif', 'id' => 1);
@@ -68,17 +72,20 @@ class Image_Properties {
         }
     }        
 
-    function getMime() {
+    function getMime() 
+    {
         return $this->mime;
     }
 
-    function setMime($mimeType) {
+    function setMime($mimeType) 
+    {
         $old_mime = $this->mime;
         $this->mime = $mimeType;
         return $old_mime;
     }
 
-    function Constrain($toSide = NULL) {
+    function Constrain($toSide = NULL) 
+    {
         if ($toSide == NULL) {
             return FALSE;
         } else {
@@ -94,41 +101,49 @@ class Image_Properties {
         return true;
     }
     
-    function getHeight( ) {
+    function getHeight( ) 
+    {
         return $this->height;
     }
    
-    function setHeight($height) {
+    function setHeight($height) 
+    {
         $new_hpercent = @($height / $this->_oheight);
         $this->_percent['height'] = $new_hpercent * 100;
         $this->height = ceil($height);
         return $this->height;
     }
 
-    function getWidth( ) {
+    function getWidth( ) 
+    {
         return $this->width;
     }
 
-    function setWidth($width) {
+    function setWidth($width) 
+    {
         $new_wpercent = @($width / $this->_owidth);
         $this->_percent['width'] = $new_wpercent * 100;
         $this->width = ceil($width);
         return $this->width;
     }
 
-    function getWidth2HeightRatio() {
+    function getWidth2HeightRatio() 
+    {
         return $this->_owidth / $this->_oheight;
     }
 
-    function getHeight2WidthRatio() {
+    function getHeight2WidthRatio() 
+    {
         return @($this->_oheight / $this->_owidth);
     }
 
-    function getPercent() {
+    function getPercent() 
+    {
         return $this->_percent;
     }
 
-    function setPercent( $args ) {
+    function setPercent( $args ) 
+    {
         if (!is_array($args) && is_numeric($args)) {
             return $this->_setPercent($args);
         }
@@ -161,7 +176,8 @@ class Image_Properties {
         }
     }
 
-    function _setPercent($percent) {
+    function _setPercent($percent) 
+    {
         $this->setHeight($this->_oheight * ($percent / 100));
         $this->_percent['height'] = $percent;
 
@@ -170,7 +186,8 @@ class Image_Properties {
         return TRUE;
     }
 
-    function _setWxHPercent($wpercent, $hpercent) {
+    function _setWxHPercent($wpercent, $hpercent) 
+    {
         $this->setHeight($this->_oheight * ($hpercent / 100));
         $this->_percent['height'] = $hpercent;
 
@@ -179,17 +196,20 @@ class Image_Properties {
         return TRUE;
     }
 
-    function _setWPercent($wpercent) {
+    function _setWPercent($wpercent) 
+    {
         $this->_percent['width'] = $wpercent;
         return $this->setWidth($this->_owidth * ($wpercent / 100));
     }
 
-    function _setHPercent($hpercent) {
+    function _setHPercent($hpercent) 
+    {
         $this->_percent['height'] = $hpercent;
         return $this->setHeight($this->_oheight * ($hpercent / 100));
     }
     
-    function save() {
+    function save() 
+    {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             if (@copy($this->_tmpFile, $this->fileLocation)) {
                 return TRUE;
@@ -200,7 +220,8 @@ class Image_Properties {
         return TRUE;
     }
     
-    function saveDerivative() {
+    function saveDerivative() 
+    {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             // remove any file name extension from the file name 
             $fileParts = explode('.', $this->fileName);
@@ -224,7 +245,8 @@ class Image_Properties {
         }
     }
     
-    function getDerivative() {
+    function getDerivative() 
+    {
         
         // remove any file name extension from the file name 
         $fileParts = explode('.', $this->fileName);

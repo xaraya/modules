@@ -2,13 +2,16 @@
 
 include_once('image_properties.php');
 
-class Image_GD extends Image_Properties {
+class Image_GD extends Image_Properties 
+{
 
-    function __constructor($fileLocation, $thumbsdir=NULL) {
+    function __constructor($fileLocation, $thumbsdir=NULL) 
+    {
         parent::__constructor($fileLocation, $thumbsdir);
     }
 
-    function Image_GD($fileLocation, $thumbsdir=NULL) {
+    function Image_GD($fileLocation, $thumbsdir=NULL) 
+    {
         return $this->__constructor($fileLocation, $thumbsdir);
     }
     
@@ -19,7 +22,8 @@ class Image_GD extends Image_Properties {
      *    Jeff Knight of New York PHP
      **
      */
-    function resize() {
+    function resize() 
+    {
         
         // If the original height and widht are the same
         // as the new height and width, return true
@@ -47,7 +51,8 @@ class Image_GD extends Image_Properties {
         return TRUE;
     }
     
-    function &_open() { 
+    function &_open() 
+    { 
         
         $origImage = NULL;
         
@@ -79,15 +84,18 @@ class Image_GD extends Image_Properties {
     
     }
     
-    function rotate() {
+    function rotate() 
+    {
     
     }
     
-    function scale() {
+    function scale() 
+    {
     
     }
     
-    function crop() {
+    function crop() 
+    {
     
     }
 

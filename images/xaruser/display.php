@@ -10,7 +10,8 @@
  *  @throws   BAD_PARAM                 missing or invalid parameter
  */
  
-function images_user_display( $args ) {
+function images_user_display( $args ) 
+{
     
     extract ($args);
     
@@ -112,4 +113,4 @@ function images_user_display( $args ) {
     exit();   
 }
 
-?>   
+?>
