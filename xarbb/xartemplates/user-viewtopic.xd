@@ -1,0 +1,231 @@
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000;">
+  <tr>
+    <td>
+		<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" />
+    </td>
+  </tr>
+</table>
+<br />
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+  <tr>
+    <td class="xar-accent">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="45%"><b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="5" width="100%">
+  <tr>
+    <td width="60%">
+      <table cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+        <tr>
+          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>New Topic</xar:mlstring></a></td>
+          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#"><xar:mlstring>Post Reply</xar:mlstring></a></td>
+        </tr>
+      </table>
+    </td>
+    <td width="40%" align="right" valign="bottom">
+<!-- Need the forum picker API.
+      <form method="POST">
+        <table border="0" cellpadding="3" cellspacing="0">
+          <tr>
+            <td align="right"><b><font face="Verdana" size="2">Forums : </b></td>
+            <td align="center">
+              <select>
+                <option>Forum Title One</option>
+                <option>Forum Title Two</option>
+
+                <option>Forum Title Three</option>
+                <option>Forum Title Four</option>
+                <option>Forum Title Five</option>
+              </select>
+            </td>
+            <td>
+            <input type="image" name="I1" src="images/go.gif" width="34" height="25"></td>
+
+          </tr>
+        </table>
+      </form> -->
+    </td>
+  </tr>
+</table>
+<xar:if condition="!empty($pager)">
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+  <tr>
+    <td class="xar-accent">
+      <table border="0" cellpadding="4" cellspacing="0" width="100%">
+        <tr>
+          <td width="45%"><b>#$pager#</b></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</xar:if>
+<br />
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+  <tr>
+    <td width="100" align="center" class="xar-accent">&nbsp;</td>
+    <td class="xar-accent">
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <tr>
+          <td width="50%"><b><xar:mlstring>Posted</xar:mlstring>:</b> #$ttime#&nbsp;&nbsp;</td>
+          <td width="50%" align="right">&nbsp;</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+  <tr>
+    <td width="150" class="xar-accent" valign="top" align="center">
+      <table border="0" cellpadding="3" cellspacing="0" width="100%">
+        <tr>
+          <td width="100%" align="center"><b>#$postername#</b></td>
+        </tr>
+		<xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
+        <tr>
+          <td width="100%" align="center"><xar:data-output property="$properties['avatar']" /></td>
+        </tr>
+        <tr>
+          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br /> #$posterdate#</td>
+        </tr>
+        <tr>
+          <td width="100%" align="center"><xar:mlstring>Topics Started</xar:mlstring>: #$usertopics#</td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+		#$transformedtext#<br /><br />
+		<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
+	</td>
+  </tr>
+  <tr>
+    <td width="100" class="xar-accent">&nbsp;</td>
+    <td class="xar-accent">
+
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <tr>
+          <td width="50%">&nbsp;</td>
+          <td width="50%" align="right">
+				<xar:if condition="xarModIsAvailable('bbcode')">
+					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
+					</xar:if>
+					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a> |
+					<a href="TODO"><xar:mlstring>Delete</xar:mlstring></a>
+			</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+<xar:foreach in="$items" value="$item">
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+  <tr>
+    <td width="100" align="center" class="xar-accent">&nbsp;</td>
+    <td class="xar-accent">
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <tr>
+          <td width="50%"><b><xar:mlstring>Posted</xar:mlstring>:</b> #$item['xar_date']#&nbsp;&nbsp;</td>
+          <td width="50%" align="right">&nbsp;</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+  <tr>
+    <td width="150" class="xar-accent" valign="top" align="center">
+      <table border="0" cellpadding="3" cellspacing="0" width="100%">
+        <tr>
+          <td width="100%" align="center"><b>#$item['xar_author']#</b></td>
+        </tr>
+		<xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
+        <tr>
+          <td width="100%" align="center"><xar:data-output property="$properties['avatar']" /></td>
+        </tr>
+        <tr>
+          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br /> #$item['commenterdate']#</td>
+        </tr>
+        <tr>
+          <td width="100%" align="center"><xar:mlstring>Topics Started</xar:mlstring>: #$item['usertopics']#</td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+		#$item['xar_text']#<br /><br />
+		<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
+	</td>
+  </tr>
+  <tr>
+    <td width="100" class="xar-accent">&nbsp;</td>
+    <td class="xar-accent">
+
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <tr>
+          <td width="50%">&nbsp;</td>
+          <td width="50%" align="right">
+				<xar:if condition="xarModIsAvailable('bbcode')">
+					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
+					</xar:if>
+					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a> |
+					<a href="TODO"><xar:mlstring>Delete</xar:mlstring></a>
+			</td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+</xar:foreach>
+<br />
+<xar:if condition="!empty($pager)">
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+  <tr>
+    <td class="xar-accent">
+      <table border="0" cellpadding="4" cellspacing="0" width="100%">
+        <tr>
+          <td width="45%"><b>#$pager#</b></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</xar:if>
+<table border="0" cellpadding="0" cellspacing="5" width="100%">
+  <tr>
+    <td width="60%">
+      <table cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+        <tr>
+          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>New Topic</xar:mlstring></a></td>
+          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#"><xar:mlstring>Post Reply</xar:mlstring></a></td>
+        </tr>
+      </table>
+    </td>
+    <td width="40%" align="right" valign="bottom">
+<!-- Need the forum picker API.
+      <form method="POST">
+        <table border="0" cellpadding="3" cellspacing="0">
+          <tr>
+            <td align="right"><b><font face="Verdana" size="2">Forums : </b></td>
+            <td align="center">
+              <select>
+                <option>Forum Title One</option>
+                <option>Forum Title Two</option>
+
+                <option>Forum Title Three</option>
+                <option>Forum Title Four</option>
+                <option>Forum Title Five</option>
+              </select>
+            </td>
+            <td>
+            <input type="image" name="I1" src="images/go.gif" width="34" height="25"></td>
+
+          </tr>
+        </table>
+      </form> -->
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,16 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarBB Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify xarBB Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<form method="post" action="#xarModURL('xarbb', 'admin', 'modifyconfig', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<p><xar:mlstring>Hot Topic</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="hottopic" id="hottopic" value="#xarModGetVar('xarbb', 'hottopic')#" size="2" maxlength="3" /></p>
+<p><xar:mlstring>Red Hot Topic</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="redhottopic" id="redhottopic" value="#xarModGetVar('xarbb', 'redhottopic')#" size="2" maxlength="4" /></p>
+
+#$hooks#
+
+<p><input type="submit" value="Update Configuration" align="middle" tabindex="3" /></p>
+</form>
+</div>
+</div>

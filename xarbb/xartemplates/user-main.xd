@@ -1,0 +1,37 @@
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000;">
+  <tr>
+    <td>
+		<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" />
+    </td>
+  </tr>
+</table>
+<br />
+<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
+  <tr>
+    <td align="center" colspan="2" class="xar-accent"><b><xar:mlstring>Forum name and description</xar:mlstring></b></td>
+    <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Topics</xar:mlstring></b></td>
+    <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Posts</xar:mlstring></b></td>
+    <td width="35%" align="center" class="xar-accent"><b><xar:mlstring>Last Post</xar:mlstring></b></td>
+  </tr>
+	<xar:loop name="$items">
+	<xar:if condition="(($loop:index + 1) % 2)">
+  <tr>
+    <td width="21">&nbsp;</td>
+    <td><b><a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $loop:item['fid'], 'catid' => $catid))#">#$loop:item['fname']#</a></b><br />#$loop:item['fdesc']#</td>
+    <td width="75" align="center">#$loop:item['ftopics']#</td>
+    <td width="75" align="center">#$loop:item['fposts']#</td>
+    <td width="35%" align="center">#$loop:item['fpostid']#<br />
+			<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a></td>
+  </tr>
+  <xar:else />
+  <tr>
+    <td width="21">&nbsp;</td>
+    <td><b><a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $loop:item['fid'], 'catid' => $catid))#">#$loop:item['fname']#</a></b><br />#$loop:item['fdesc']#</td>
+    <td width="75" align="center" class="xar-accent">#$loop:item['ftopics']#</td>
+    <td width="75" align="center" class="xar-accent">#$loop:item['fposts']#</td>
+    <td width="35%" align="center" class="xar-accent">#$loop:item['fpostid']#<br />
+			<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a></td>
+  </tr>
+  </xar:if>
+</xar:loop>
+</table>

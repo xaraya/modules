@@ -1,0 +1,45 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Add a New Topic</xar:mlstring></h2>
+<xar:if condition="!empty($warning)">
+	#$warning#
+	<br /><br />
+</xar:if>
+<form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="fid" id="fid" value="#$fid#" />
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Subject</xar:mlstring>
+                        </td>
+                        <td>
+                            <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" size="32" maxlength="100" tabindex="1" />
+						</td>
+					</tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Form Controls</xar:mlstring>
+                        </td>
+                        <td>
+							#$formhooks['formdisplay']#
+						</td>
+					<tr align="left" valign="middle">
+						<td>
+							<xar:mlstring>Message Body</xar:mlstring>
+						</td>
+						<td>
+							<textarea name="tpost" rows="10" cols="50" tabindex="2">#$tpost#</textarea>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<input type="submit" value="New Topic" align="middle" tabindex="3" />
+</form>
+</div>

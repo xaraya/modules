@@ -1,0 +1,39 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Add a New Forum</xar:mlstring></h2>
+<xar:if condition="!empty($warning)">
+	#$warning#
+	<br /><br />
+</xar:if>
+
+<form method="post" action="#xarModURL('xarbb', 'admin', 'new', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Forum Name</xar:mlstring>
+                        </td>
+                        <td>
+                            <input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" tabindex="1" />
+						</td>
+					</tr>
+					<tr align="left" valign="middle">
+						<td>
+							<xar:mlstring>Forum Description</xar:mlstring>
+						</td>
+						<td>
+							<textarea name="fdesc" rows="10" cols="50" tabindex="2">#$fdesc#</textarea>
+						</td>
+					</tr>
+					#$hooks#
+				</table>
+			</td>
+		</tr>
+	</table>
+	<input type="submit" value="Create Forum" align="middle" tabindex="3" />
+</form>
+</div>
