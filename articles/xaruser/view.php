@@ -502,6 +502,12 @@ function articles_user_view()
                         $article['date'] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",$article[$field]));
                     }
                     break;
+                case 'urltitle':
+                    if (!empty($article[$field])) {
+                        $array = array('type' => 'urltitle', 'value' => $article[$field]);
+                        $article[$field] = xarModAPIFunc('dynamicdata','user','showoutput',$array);
+                    }
+                    break;
             }
         }
 

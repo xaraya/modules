@@ -273,6 +273,14 @@ function articles_user_display($args)
                     $data['redirect'] = '';
                 }
                 break;
+            case 'urltitle':
+                if (!empty($article[$field])) {
+                    $array = array('type' => 'urltitle', 'value' => $article[$field]);
+                    $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',$array);
+                } else {
+                    $data[$field] = '';
+                }
+                break;
         // TEST ONLY
             case 'webpage':
                 if (empty($value['validation'])) {

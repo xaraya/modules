@@ -20,6 +20,7 @@ function articles_userapi_getpubfieldformats($args)
         'textarea_large'  => xarML('Large Text Area'),
         'textupload'      => xarML('Text Upload'),
         'url'             => xarML('URL'),
+        'urltitle'        => xarML('URL + Title'),
         'image'           => xarML('Image'),
         'imagelist'       => xarML('Image List'),
 // TODO: define how to fill this in (cfr. status)

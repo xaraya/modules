@@ -39,10 +39,16 @@ function articles_user_redirect($args)
         if (empty($value['label'])) {
             continue;
         }
-        if ($value['format'] == 'url' && !empty($article[$field])) {
+        if ($value['format'] == 'url' && !empty($article[$field]) && $article[$field] != 'http://') {
 // TODO: add some verifications here !
             xarResponseRedirect($article[$field]);
             return true;
+        } elseif ($value['format'] == 'urltitle' && !empty($article[$field]) && substr($article[$field],0,2) == 'a:') {
+            $array = unserialize($article[$field]);
+            if (!empty($array['link']) && $array['link'] != 'http://') {
+                xarResponseRedirect($array['link']);
+                return true;
+            }
         }
     }
 

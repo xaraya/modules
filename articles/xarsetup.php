@@ -77,7 +77,7 @@
                          'format' => 'textarea_large',
                          'input'  => 1),
         'body' => array('label'  => xarML('Related Link'),
-                         'format' => 'url',
+                         'format' => 'urltitle',
                          'input'  => 1),
         'notes' => array('label'  => xarML('Image'),
                          'format' => 'image',

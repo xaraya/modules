@@ -53,13 +53,17 @@
     </xar:if>
   </td>
 </tr>
-<xar:if condition="!empty($redirect)">
+<xar:if condition="!empty($body) or !empty($redirect)">
 <tr>
   <td align="right">
     <xar:mlstring>Related Link:</xar:mlstring>
   </td>
   <td align="left">
-    <a href="#$redirect#">homepage</a>
+    <xar:if condition="!empty($redirect)">
+        <a href="#$redirect#">#$body#</a>
+    <xar:else/>
+        #$body#
+    </xar:if>
     &nbsp;
   </td>
 </tr>
