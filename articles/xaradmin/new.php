@@ -75,12 +75,14 @@ function articles_admin_new($args)
     }
     $data['preview'] = $preview;
 
-    // preset some variables for hook modules
-    $article['module'] = 'articles';
-    $article['itemid'] = 0;
-    $article['itemtype'] = $ptid;
+    if (!empty($ptid)) {
+        // preset some variables for hook modules
+        $article['module'] = 'articles';
+        $article['itemid'] = 0;
+        $article['itemtype'] = $ptid;
 
-    $hooks = xarModCallHooks('item','new','',$article);
+        $hooks = xarModCallHooks('item','new','',$article);
+    }
     if (empty($hooks)) {
         $hooks = '';
     }
