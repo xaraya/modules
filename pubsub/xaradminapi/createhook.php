@@ -33,14 +33,14 @@ function pubsub_adminapi_createhook($args)
     if (empty($objectid)) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      'object ID', 'createhook', 'pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      'extrainfo', 'createhook', 'pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

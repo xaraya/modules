@@ -32,7 +32,7 @@ function pubsub_adminapi_runjob($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'runjob', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -80,7 +80,7 @@ function pubsub_adminapi_runjob($args)
     if (empty($modinfo['name'])) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     'module', 'runjob', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     } else {
@@ -113,7 +113,7 @@ function pubsub_adminapi_runjob($args)
         if ($result->EOF) {
             $msg = xarML('Invalid #(1) template',
                          'Pubsub');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                      new SystemException($msg));
             return;
         }
@@ -123,7 +123,7 @@ function pubsub_adminapi_runjob($args)
         if (empty($compiled)) {
             $msg = xarML('Invalid #(1) template',
                          'Pubsub');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                      new SystemException($msg));
             return;
         }
@@ -216,7 +216,7 @@ function pubsub_adminapi_runjob($args)
                             'status' => 'error'));
         $msg = xarML('Invalid #(1) action',
                      'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                  new SystemException($msg));
         return;
     }

@@ -43,7 +43,7 @@ function pubsub_user_remove($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
         join(', ',$invalid), 'remove', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -76,7 +76,7 @@ function pubsub_user_subscribed($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'user', 'subscribed', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

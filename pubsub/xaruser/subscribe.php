@@ -60,7 +60,7 @@ function pubsub_user_subscribe()
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
         join(', ',$invalid), 'subscribe', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -87,7 +87,7 @@ function pubsub_user_subscribe()
                               'userid' => $userid))) {
         $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                      'adduser', 'subscribe', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
     }
 
