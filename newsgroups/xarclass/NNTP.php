@@ -837,8 +837,12 @@ class Net_NNTP extends Net_NNTP_Protocol
 	    if (!preg_match('/([\S]+)\:\s*(.*)\s*/', $field, $matches)) {
 		// Fail...
 	    }
-	    $name = $matches[1];
-	    $value = $matches[2];
+        if (isset($matches[1])){
+	        $name = $matches[1];
+        } else {
+            $name = '';
+        }
+	    $value = isset($matches[2]);
 	    unset($matches);
 
 	    // Add header to $return array
