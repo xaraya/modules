@@ -203,28 +203,21 @@ function pubsub_delete()
     // Get database information
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-    include ('includes/xarTableDDL.php');
+    //Load Table Maintainance API
+    xarDBLoadTableMaintenanceAPI();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['pubsub_events']);
-
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (empty($query)) return; // throw back
 
     $query = xarDBDropTable($xartable['pubsub_reg']);
+    if (empty($query)) return; // throw back
 
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-    
     $query = xarDBDropTable($xartable['pubsub_process']);
-
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (empty($query)) return; // throw back
 
     $query = xarDBDropTable($xartable['pubsub_template']);
-
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if (empty($query)) return; // throw back
 
     // Deletion successful
     return true;
