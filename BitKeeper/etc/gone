@@ -25,6 +25,17 @@ BK|New_pnadmin/html/modules/admin/docs/Attic/Intructions.txt|19700101030959|0104
 BK|New_pnadmin/html/modules/admin/docs/old_admin_docs/Attic/changelog.txt|19700101030959|01046|fdcdeb4ce98a4e92
 BK|New_pnadmin/html/modules/admin/docs/old_admin_docs/Attic/credits.txt|19700101030959|01047|7fb20a4c9c3dc8e0
 BK|New_pnadmin/html/modules/admin/docs/old_admin_docs/Attic/install.txt|19700101030959|01048|88b54866514d0ccd
+BK|PostContact/admin_functions/add_city.php|19700101030959|00964|e243cab28b98c4c1
+BK|PostContact/admin_functions/add_country.php|19700101030959|00965|5f33ea1a237469b5
+BK|PostContact/admin_functions/add_department.php|19700101030959|00966|386a0a05a9d82d39
+BK|PostContact/admin_functions/add_locationtype.php|19700101030959|00967|a59d20cd52bafa38
+BK|PostContact/admin_functions/add_title.php|19700101030959|00968|e2ebb81c9757447e
+BK|PostContact/admin_functions/companyinfo.php|19700101030959|00969|bb9c4485c23c82a
+BK|PostContact/admin_functions/newcontact.php|19700101030959|00970|27acface2a474880
+BK|PostContact/lang/deu/global.php|19700101030959|00997|58d877e83bc48b9a
+BK|PostContact/lang/eng/global.php|19700101030959|00998|50d11648f73af581
+BK|PostContact/lang/swe/global.php|19700101030959|00999|e43fdcc972ea515b
+BK|PostContact/sql/contact_sql.php|19700101030959|01003|7d64bc34f26bd986
 BK|articles/pnlang/eng/Attic/first.php|19700101030959|00366|986e494885f026e5
 BK|articles/pnlang/x_brazilian_portuguese/Attic/admin.php|19700101030959|00370|307a75fa2a0ca465
 BK|articles/pnlang/x_brazilian_portuguese/Attic/first.php|19700101030959|00371|9018f896ec54fc8d
