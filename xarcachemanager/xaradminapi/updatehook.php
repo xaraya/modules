@@ -14,12 +14,24 @@
 function xarcachemanager_adminapi_updatehook($args)
 {
     extract($args);
-    
-    if (!file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.touch')) {
+
+    $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
+
+    if (!file_exists($outputCacheDir . 'cache.touch')) {
         // caching is not enabled and xarCache will not be available
         return;
     }
-    
+
+    if (!function_exists('xarPageFlushCached')) {
+        // caching is on, but the function isn't available
+        // load xarCache to make it so
+        include 'includes/xarCache.php';
+        if (xarCache_init(array('cacheDir' => $outputCacheDir)) == false) {
+            // somethings wrong, caching should be off now
+            return;
+        }
+    }
+
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'updatehook', 'xarcachemanager');
