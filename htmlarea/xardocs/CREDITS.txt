@@ -1,0 +1,4 @@
+The htmlarea module for Xaraya is a wrapper around the popular HTMLArea javascript editor.
+HTMLArea is distributed by interactivetools under a modified version of the BSD license.
+
+For more information about HTMLArea look up http://www.interactivetools.com/
