@@ -378,11 +378,13 @@ function articles_user_archive($args)
  * sorting functions for archive
  */
 
-function articles_user_sortbycat0 ($a,$b) {
+function articles_user_sortbycat0 ($a,$b)
+{
     return strcmp($a['cats'][0]['list'],$b['cats'][0]['list']);
 }
 
-function articles_user_sortbycat01 ($a,$b) {
+function articles_user_sortbycat01 ($a,$b)
+{
     if ($a['cats'][0]['list'] == $b['cats'][0]['list']) {
         return strcmp($a['cats'][1]['list'],$b['cats'][1]['list']);
     } else {
@@ -390,7 +392,8 @@ function articles_user_sortbycat01 ($a,$b) {
     }
 }
 
-function articles_user_sortbycat10 ($a,$b) {
+function articles_user_sortbycat10 ($a,$b)
+{
     if ($a['cats'][1]['list'] == $b['cats'][1]['list']) {
         return strcmp($a['cats'][0]['list'],$b['cats'][0]['list']);
     } else {
@@ -398,7 +401,8 @@ function articles_user_sortbycat10 ($a,$b) {
     }
 }
 
-function articles_user_sortbytitle ($a,$b) {
+function articles_user_sortbytitle ($a,$b)
+{
     return strcmp($a['title'],$b['title']);
 }
 

@@ -101,3 +101,4 @@ function articles_admin_updateconfig()
     return true;
 }
 
+?>
