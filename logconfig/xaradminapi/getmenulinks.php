@@ -56,4 +56,5 @@ function logconfig_adminapi_getmenulinks()
 
     return $menulinks;
 }
+
 ?>
