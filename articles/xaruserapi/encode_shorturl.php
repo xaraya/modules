@@ -16,6 +16,11 @@ function articles_userapi_encode_shorturl($args)
         return;
     }
 
+    // check if we want to encode URLs using their titles rather then their ID
+	// TODO: get this from a modvar or something
+    $encodeUsingTitle = false;
+
+
     // Coming from categories etc.
     if (!empty($objectid)) {
         $aid = $objectid;
@@ -119,16 +124,35 @@ function articles_userapi_encode_shorturl($args)
             $path = '/' . $module . '/';
         }
     } elseif ($func == 'display' && isset($aid)) {
-        if (isset($ptid) && isset($pubtypes[$ptid])) {
+        if (isset($ptid) && isset($pubtypes[$ptid])) 
+        {
+        
             $alias = xarModGetAlias($pubtypes[$ptid]['name']);
             if ($module == $alias) {
                 // OK, we can use a 'fake' module name here
-                $path = '/' . $pubtypes[$ptid]['name'] . "/$aid";
+                $path = '/' . $pubtypes[$ptid]['name'] . "/";
             } else {
-                $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . "/$aid";
+                $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . "/";
             }
+            
+            // Check to see if we want to encode using Title
+            if( $encodeUsingTitle )
+            {
+                $path .= encodeUsingTitle($aid);
+            } else {
+                $path .= $aid;
+            }
+            
         } else {
-            $path = '/' . $module . "/$aid";
+        
+            $path = '/' . $module . "/";
+            // Check to see if we want to encode using Title
+            if( $encodeUsingTitle )
+            {
+                $path .= encodeUsingTitle($aid);
+            } else {
+                $path .= "$aid";
+            }
         }
         // TODO: do we want to include categories in the display URL too someday ?
     } elseif ($func == 'redirect' && isset($aid)) {
@@ -261,4 +285,16 @@ function articles_userapi_encode_shorturl($args)
     return $path;
 }
 
+function encodeUsingTitle( $aid )
+{
+    $searchArgs['aid'] = $aid;
+    $article = xarModAPIFunc('articles','user','get', $searchArgs);
+    // TODO: Check to see if there are more then one articles with this title
+    // if there are more then one article with the same title, fall back on something
+    // else -- like using $aid
+    
+    $path = rawurlencode($article['title']);
+    
+    return $path;
+}
 ?>

@@ -14,6 +14,10 @@ function articles_userapi_decode_shorturl($params)
 
     $module = 'articles';
 
+    // check if we want to try decoding URLs using titles rather then ID
+	// TODO: get this from a modvar or something
+    $decodeUsingTitle = false;
+
     // Check if we're dealing with an alias here
     if ($params[0] != $module) {
         $alias = xarModGetAlias($params[0]);
@@ -90,6 +94,7 @@ function articles_userapi_decode_shorturl($params)
         // perhaps someday...
 
     } else {
+
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         foreach ($pubtypes as $id => $pubtype) {
             if ($params[1] == $pubtype['name']) {
@@ -121,6 +126,13 @@ function articles_userapi_decode_shorturl($params)
                             return array('redirect', $args);
                         }
                     } else {
+
+                        // Decode using title
+                        if( $decodeUsingTitle )
+                        {
+                            return decodeUsingTitle( $params, $id );
+                        }
+
                         return array('view', $args);
                     }
                 } else {
@@ -128,11 +140,47 @@ function articles_userapi_decode_shorturl($params)
                 }
             }
         }
+        
+        // Decode using title
+        if( $decodeUsingTitle )
+        {
+            return decodeUsingTitle( $params );
+        }
     }
 
     // default : return nothing -> no short URL
     // (e.g. for multiple category selections)
+}
 
+function decodeUsingTitle( $params, $ptid = '' )
+{
+    // The $params passed in does not match on all legal URL characters and
+    // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"
+    // So lets parse the path info manually here.
+    //
+    // TODO: fix this so that it still allows theme overides, ie &theme=print
+    // TODO: fix xarServer.php, line 421 to properly deal with this 
+    // xarServer.php[421] :: preg_match_all('|/([a-z0-9_ .+-]+)|i', $path, $matches);
+    
+    $pathInfo = xarServerGetVar('PATH_INFO');
+    preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
+    $params = $matches[1];                        
+
+    if( isset($ptid) and !empty($ptid) )
+    {
+        $searchArgs['pubtypeid'] = $ptid;
+        $searchArgs['title']     = urldecode($params[2]);
+    } else {
+        $searchArgs['title']     = urldecode($params[1]);
+    }
+    
+    $article = xarModAPIFunc('articles','user','get', $searchArgs);
+    if( !empty($article) )
+    {
+        $aid = $article['aid'];
+        $args['aid'] = $aid;
+        return array('display', $args);
+    }
 }
 
 ?>
