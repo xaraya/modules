@@ -5,13 +5,14 @@
  * AuthLDAP Administrative Display Functions
  * 
  * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage authldap
- * @author Chris Dudley <miko@xaraya.com> | Richard Cave <rcave@xaraya.com>
-*/
+ * @author Chris Dudley <miko@xaraya.com> 
+ * @author Richard Cave <rcave@xaraya.com>
+ */
 
 /**
  * This is a standard function to modify the configuration parameters of the
@@ -38,12 +39,8 @@ function authldap_admin_modifyconfig()
     // Port number
     $data['portnumbervalue'] = xarVarPrepForDisplay($ldap->port_number);
 
-    // Allow anonymous bind to server (true/false)
-    if ($ldap->anonymous_bind == 'true') {    
-        $data['anonymousbindvalue'] = xarVarPrepForDisplay('checked="checked"');
-    } else {
-        $data['anonymousbindvalue'] = "";
-    }
+    // Allow anonymous bind to server (true/false)    
+    $data['anonymousbindvalue'] = xarVarPrepForDisplay($ldap->anonymous_bind);
 
     // Bind DN (default is 'o=dept')
     $data['binddnvalue'] = xarVarPrepForDisplay($ldap->bind_dn);
@@ -52,11 +49,7 @@ function authldap_admin_modifyconfig()
     $data['uidfieldvalue'] = xarVarPrepForDisplay($ldap->uid_field);
 
     // Search user dn (true/false)
-    if ($ldap->search_user_dn == 'true') {    
-        $data['searchuserdnvalue'] = xarVarPrepForDisplay('checked="checked"');
-    } else {
-        $data['searchuserdnvalue'] = "";
-    }
+    $data['searchuserdnvalue'] = xarVarPrepForDisplay($ldap->search_user_dn);
 
     // Admin Login
     $data['adminidvalue'] = xarVarPrepForDisplay($ldap->admin_login);
@@ -68,18 +61,11 @@ function authldap_admin_modifyconfig()
     $data['adminpasswdvalue'] = xarVarPrepForDisplay($adminpasswd);
 
     // Use TLS - LDAP Protocol 3 only
-    if ($ldap->tls == 'true') {
-        $data['tls'] = xarVarPrepForDisplay('checked="checked"');
-    } else {
-        $data['tls'] = "";
-    }
+    $data['tls'] = xarVarPrepForDisplay($ldap->tls);
 
-    // Add user to xar_roles
-    if (xarModGetVar('authldap','add_user') == 'true') {    
-        $data['adduservalue'] = xarVarPrepForDisplay('checked="checked"');
-    } else {
-        $data['adduservalue'] = "";
-    }
+
+    // Add user to xar_roles  
+    $data['adduservalue'] = xarModGetVar('authldap','add_user');
     
     // Username
     $data['adduserunamevalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','add_user_uname'));
@@ -87,42 +73,31 @@ function authldap_admin_modifyconfig()
     // User email
     $data['adduseremailvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','add_user_email'));
 
-    // Failover to local authentication of LDAP fails
-    if (xarModGetVar('authldap','failover') == 'true') {    
-        $data['failovervalue'] = xarVarPrepForDisplay('checked="checked"');
-    } else {
-        $data['failovervalue'] = "";
-    }
+    // Failover to local authentication of LDAP fails 
+    $data['failovervalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','failover'));
 
-    // Store user's LDAP password in Xaraya database?
-    if (xarModGetVar('authldap','store_user_password') == 'true') {    
-        $data['storepasswordvalue'] = xarVarPrepForDisplay('checked="checked"');
-    } else {
-        $data['storepasswordvalue'] = "";
-    }
-    
+    // Store user's LDAP password in Xaraya database?  
+    $data['storepasswordvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','store_user_password'));
+
     // Get groups
-    $data['defaultgroup'] = xarModGetVar('authldap', 'defaultgroup');
+    $data['defaultgroup'] = xarVarPrepForDisplay(xarModGetVar('authldap', 'defaultgroup'));
 
     // Get default users group
     if (!isset($data['defaultgroup'])) {
         // See if Users role exists
-        if( xarFindRole("Users"))
+        if( xarFindRole('Users'))
             $data['defaultgroup'] = 'Users';
     } 
 
     // Get the list of groups
     if (!$groupRoles = xarGetGroups()) return; // throw back
 
-    $i=0;
+    $i = 0;
     while (list($key,$group) = each($groupRoles)) {
         $groups[$i]['name'] = xarVarPrepForDisplay($group['name']);
         $i++;
     }
     $data['groups'] = $groups;
-
-    // Submit button
-    $data['submitbutton'] = xarVarPrepForDisplay(xarML('Submit'));
        
     // everything else happens in Template for now
     return $data;
