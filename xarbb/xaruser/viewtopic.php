@@ -22,6 +22,7 @@ function xarbb_user_viewtopic()
     if(!xarVarFetch('tid', 'id', $tid)) return;
 
     //$tid = xarVarCleanFromInput('tid');
+    $allowhtml = xarModGetVar('xarbb', 'allowhtml');
 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
@@ -37,13 +38,16 @@ function xarbb_user_viewtopic()
     // The user API function is called and returns all forum and topic data
     //<jojodee> Do we need to call this again?
     $data=$topic; //to cover us for any use of $data
-  
-    //   $data = xarModAPIFunc('xarbb',
-    //                          'user',
-    //                          'gettopic',
-    //                          array('tid' => $tid));
 
     $data['pager'] = '';
+
+    if ($allowhtml){
+        $data['tpost'] = xarVarPrepHTMLDisplay($data['tpost']);
+        $data['ttitle'] = xarVarPrepHTMLDisplay($data['ttitle']);
+    } else {
+        $data['tpost'] = xarVarPrepForDisplay($data['tpost']);
+        $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
+    }
 
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
@@ -104,9 +108,14 @@ function xarbb_user_viewtopic()
                                                             $tid,
                                                             array($comment['xar_text'],
                                                                   $comment['xar_title']));
+        if ($allowhtml){
+            $comments[$i]['xar_text']=xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
+            $comments[$i]['xar_title']=xarVarPrepHTMLDisplay($comments[$i]['xar_title']);
+        } else {
+            $comments[$i]['xar_text']=xarVarPrepForDisplay($comments[$i]['xar_text']);
+            $comments[$i]['xar_title']=xarVarPrepForDisplay($comments[$i]['xar_title']);
+        }
 
-        $comments[$i]['xar_text']=xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
-        $comments[$i]['xar_title']=xarVarPrepHTMLDisplay($comments[$i]['xar_title']);
         // The user API function is called
         $comments[$i]['usertopics'] = xarModAPIFunc('xarbb',
                                                     'user',

@@ -30,15 +30,16 @@ function xarbb_userapi_updatetopic($args)
     	$invalid[] = "tid";
 
     // params in arg
-    $params = array("fid" => "xar_fid",
-    				"ttitle" => "xar_ttitle",
-                    "tpost" => "xar_tpost",
-                    "tposter" => "xar_tposter",
-                    "time" => "xar_ttime",
-                    "tposter" => "xar_tposter",
-                    "treplies" => "xar_treplies",
-                    "treplier" => "xar_treplier",
-                    "tftime"   => "xar_tftime");
+    $params = array("fid"       => "xar_fid",
+    				"ttitle"    => "xar_ttitle",
+                    "tpost"     => "xar_tpost",
+                    "tposter"   => "xar_tposter",
+                    "time"      => "xar_ttime",
+                    "tposter"   => "xar_tposter",
+                    "treplies"  => "xar_treplies",
+                    "treplier"  => "xar_treplier",
+                    "tftime"    => "xar_tftime",
+                    "tstatus"   => "xar_tstatus");
     foreach($params as $vvar => $dummy)	{
     	if(isset($$vvar))	{
 			$set = true;

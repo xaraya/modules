@@ -141,12 +141,38 @@
 			</td>
 			<td class="xar-norm" width="78%">
 				<xar:sec mask="ModxarBB" catch="false">
-					<select name="tstatus" id="tstatus" size="1">
-						<option value="0" selected="selected"><xar:mlstring>Normal</xar:mlstring></option>
-						<option value="1"><xar:mlstring>Announcement</xar:mlstring></option>
-						<option value="2"><xar:mlstring>Sticky</xar:mlstring></option>
-						<option value="3"><xar:mlstring>Locked</xar:mlstring></option>
-					</select>
+					<xar:if condition="!isset($tstatus)">
+						<select name="tstatus" id="tstatus" size="1">
+							<option value="0" selected="selected"><xar:mlstring>Normal</xar:mlstring></option>
+							<option value="1"><xar:mlstring>Announcement</xar:mlstring></option>
+							<option value="2"><xar:mlstring>Sticky</xar:mlstring></option>
+							<option value="3"><xar:mlstring>Locked</xar:mlstring></option>
+						</select>
+					<xar:else />
+						<select name="tstatus" id="tstatus" size="1">
+							<xar:if condition="$tstatus eq 0">
+								<option value="0" selected="selected"><xar:mlstring>Normal</xar:mlstring></option>
+								<option value="1"><xar:mlstring>Announcement</xar:mlstring></option>
+								<option value="2"><xar:mlstring>Sticky</xar:mlstring></option>
+								<option value="3"><xar:mlstring>Locked</xar:mlstring></option>
+							<xar:elseif condition="$tstatus eq 1" />
+								<option value="0"><xar:mlstring>Normal</xar:mlstring></option>
+								<option value="1" selected="selected"><xar:mlstring>Announcement</xar:mlstring></option>
+								<option value="2"><xar:mlstring>Sticky</xar:mlstring></option>
+								<option value="3"><xar:mlstring>Locked</xar:mlstring></option>
+							<xar:elseif condition="$tstatus eq 2" />
+								<option value="0"><xar:mlstring>Normal</xar:mlstring></option>
+								<option value="1"><xar:mlstring>Announcement</xar:mlstring></option>
+								<option value="2" selected="selected"><xar:mlstring>Sticky</xar:mlstring></option>
+								<option value="3"><xar:mlstring>Locked</xar:mlstring></option>
+							<xar:elseif condition="$tstatus eq 3" />
+								<option value="0"><xar:mlstring>Normal</xar:mlstring></option>
+								<option value="1"><xar:mlstring>Announcement</xar:mlstring></option>
+								<option value="2"><xar:mlstring>Sticky</xar:mlstring></option>
+								<option value="3" selected="selected"><xar:mlstring>Locked</xar:mlstring></option>
+							</xar:if>
+						</select>
+					</xar:if>
 				</xar:sec>
 			</td>
 		</tr>
@@ -184,10 +210,3 @@
 		</td>
 	</tr>
 </table>
-
-<xar:if condition="!empty($warning)">
-	#$warning#
-	<br /><br />
-</xar:if>
-
-{TOPIC_REVIEW_BOX}

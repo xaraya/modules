@@ -117,6 +117,7 @@ function xarbb_user_newtopic()
                      xarUserGetVar('uname'),
                      $modified_date);
                      $tpost .= "\n"; //Have to take this out with xarbb and html now handling paras.
+                     
                 if (!xarModAPIFunc('xarbb',
                                'user',
                                'updatetopic',

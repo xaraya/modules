@@ -116,7 +116,11 @@ function xarbb_user_viewforum()
                 break;
             // Sticky topic
             case '2':
-
+                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky.gif') . '" alt="'.xarML('Sticky').'" />';
+                } else {
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky_new.gif') . '" alt="'.xarML('New Sticky Topic').'" />';
+                }
                 break;
             // Locked
             case '3':
@@ -173,6 +177,8 @@ function xarbb_user_viewforum()
 
     // Add the array of items to the template variables
     $data['fid'] = $fid;
+    //var_dump($topics); return;
+    usort($topics, 'sort_by_sticky');
     $data['items'] = $topics;
     $data['fname'] = $forums['fname'];
 
@@ -217,5 +223,35 @@ function xarbb_user_viewforum()
     // Return the template variables defined in this function
     return $data;
 }
-
+ function ignoreme($a)
+ {
+     return ($a['tstatus'] == 0 || $a['tstatus'] == 3) ? true : false;
+ }
+ function sort_by_sticky($a,$b)
+ {
+     // ok, this should sort them all by status and ignore 0 and 3 tstatus
+     if(!ignoreme($a)) {
+         if($a['tstatus'] > $b['tstatus']) {
+             return -1;
+         } elseif($a['tstatus'] < $b['tstatus']) {
+             return 1;
+         } else {
+             return 0;
+         }
+     }
+     return -1;
+ }
+/*
+function sort_by_sticky($a,$b)
+{
+// ok, this should sort them all by status
+    if($a['tstatus'] > $b['tstatus']) {
+        return -1;
+    } elseif($a['tstatus'] < $b['tstatus']) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+*/
 ?>

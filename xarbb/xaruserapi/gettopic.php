@@ -66,18 +66,6 @@ function xarbb_userapi_gettopic($args)
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} AND xar_tid = " . xarVarPrepForStore($tid);
-
-   /* // Get links
-    $query = "SELECT xar_tid,
-                     xar_fid,
-                     xar_ttitle,
-                     xar_tpost,
-                     xar_tposter,
-                     xar_ttime,
-                     xar_treplies,
-                     xar_tstatus
-            FROM $xbbtopicstable
-            WHERE xar_tid = " . xarVarPrepForStore($tid);   */
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -88,7 +76,7 @@ function xarbb_userapi_gettopic($args)
         return;
     }
 
-    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
+    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus,
     	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
 

@@ -89,6 +89,7 @@ function xarbb_user_newreply()
     $data['receipt']    = $receipt;
     $data['package']    = $package;
     $data['header']     = $header;
+    $data['authid']     = xarSecGenAuthkey();
 
     return $data;
 }
