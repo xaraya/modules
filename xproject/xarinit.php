@@ -262,8 +262,8 @@ function xproject_delete()
     xarModDelVar('xproject', 'ITEMS_PER_PAGE');
         xarModDelVar('xproject', 'prioritymax');
 
-    xarBlockTypeUnregister('xproject', 'first');
-    xarBlockTypeUnregister('xproject', 'others');
+    //xarBlockTypeUnregister('xproject', 'first');
+    //xarBlockTypeUnregister('xproject', 'others');
 
     return true;
 }
