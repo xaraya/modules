@@ -73,7 +73,7 @@ function categories_admin_updatecat()
         }
 
         // call transform input hooks
-        $description[$cid] = xarModCallHooks('item', 'transform-input', 0, $description[$cid], 
+        $description[$cid] = xarModCallHooks('item', 'transform-input', 0, array($description[$cid]), 
                                              'categories', 0); 
 
         // Pass to API
