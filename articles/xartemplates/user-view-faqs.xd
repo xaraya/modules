@@ -1,51 +1,97 @@
 <xar:template file="publinks" type="module" />
-<a name="titles"></a>
+<a name="titles">
+</a>
 <xar:if condition="!empty($ptid) or !empty($catid)">
     <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" />
 </xar:if>
-
 <xar:if condition="!empty($titles) and count($titles) gt 0">
-<ul>
-<xar:foreach in="$titles" key="$aid" value="$title">
-<li><a href="#xarServerGetCurrentURL()###$aid#">#$title#</a> </li>
-</xar:foreach>
-</ul>
+    <ul>
+        <xar:foreach in="$titles" key="$aid" value="$title">
+            <li>
+                <a href="#xarServerGetCurrentURL()###$aid#">
+                    #$title#
+                </a>
+            </li>
+        </xar:foreach>
+    </ul>
 </xar:if>
-
 <xar:if condition="!empty($numcols) and $number gt 0">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-    <xar:foreach in="$columns" key="$col">
-        <td style="vertical-align: top;text-align: center;width: #$colwidth#%;">
-        <xar:foreach in="$columns[$col]" key="$row">
-            #$columns[$col][$row]#
-        </xar:foreach>
-        </td>
-    </xar:foreach>
-    </tr>
+        <tr>
+            <xar:foreach in="$columns" key="$col">
+                <td style="vertical-align: top;text-align: center;width: #$colwidth#%;">
+                    <xar:foreach in="$columns[$col]" key="$row">
+                        #$columns[$col][$row]# 
+                    </xar:foreach>
+                </td>
+            </xar:foreach>
+        </tr>
     </table>
-<xar:elseif condition="!empty($number)" />
+    <xar:elseif condition="!empty($number)" />
     <xar:foreach in="$columns" key="$col">
         <xar:foreach in="$columns[$col]" key="$row">
-            #$columns[$col][$row]#
+            #$columns[$col][$row]# 
         </xar:foreach>
     </xar:foreach>
 </xar:if>
-#$output#
+#$output# 
 <xar:if condition="!empty($showcols)">
     <xar:if condition="$showcols eq 1">
-        <a href="#xarModURL('articles','user','view',array('numcols' => 1))#"><xar:mlstring>single-column display</xar:mlstring></a>
-    <xar:else />
-        <a href="#xarModURL('articles','user','view')#"><xar:ml><xar:mlstring>#(1)-column display</xar:mlstring><xar:mlvar>#$showcols#</xar:mlvar></xar:ml></a>
+        <a href="#xarModURL('articles','user','view',array('numcols' => 1))#">
+            <xar:mlstring>
+                single-column display
+            </xar:mlstring>
+        </a>
+        <xar:else />
+        <a href="#xarModURL('articles','user','view')#">
+            <xar:ml>
+                <xar:mlstring>
+                    #(1)-column display
+                </xar:mlstring>
+                <xar:mlvar>
+                    #$showcols#
+                </xar:mlvar>
+            </xar:ml>
+        </a>
     </xar:if>
 </xar:if>
-<div style="text-align: center;">#$pager#</div>
-
+<div style="text-align: center;">
+    #$pager#
+</div>
 <xar:if condition="!empty($showprevnext)">
     <xar:categories-navigation layout="prevnext" />
 </xar:if>
-
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
+    <ul style="margin:0;padding:0;">
+        <xar:if condition="!empty($maplink)">
+            <li style="display:inline;padding:0 .5em;">
+                <a href="#$maplink#">
+                    #$maplabel# 
+                </a>
+            </li>
+        </xar:if>
+        <xar:if condition="!empty($submitlink)">
+            <li style="display:inline;padding:0 .5em;">
+                <a href="#$submitlink#" title="Submit Article">
+                    <xar:mlstring>
+                        Contribute 
+                    </xar:mlstring>
+                </a>
+            </li>
+        </xar:if>
+        <xar:if condition="!empty($archivelink)">
+            <li style="display:inline;padding:0 .5em;">
+                <a href="#$archivelink#">
+                    #$archivelabel# 
+                </a>
+            </li>
+        </xar:if>
+    </ul>
+</xar:if>
+
+<xar:comment>
+<!-- old way - see suggested formatting above -->
+    <xar:if condition="!empty($maplink) or !empty($archivelink)">
 <div style="text-align: left; padding: 10px">
     <xar:if condition="!empty($maplink)">
     <span style="text-align: left; padding: 50px">
@@ -64,3 +110,4 @@
     </xar:if>
 </div>
 </xar:if>
+</xar:comment>
