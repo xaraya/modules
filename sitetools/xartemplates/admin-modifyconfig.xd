@@ -178,8 +178,8 @@
                <option value="complete">#$bkoption1#</option>
                <option value="standard">#$bkoption2#</option>
                <option value="structure" selected="selected">#$bkoption3#</option>
-            </xar:if> </select>
-                </select>
+            </xar:if> 
+        </select>
 
  	   </span>
     </div>
