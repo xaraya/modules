@@ -1,0 +1,21 @@
+<xar:if condition="is_array($tree)">
+    <ul class="xar-navigator-branch">
+        <xar:foreach in="$tree" value="$node">
+
+        <xar:set name="$url">
+            xarModURL('articles', 'user', 'view', array('cids' => array($node['cid'])))
+        </xar:set>
+
+        <xar:if condition="count($node['children']) gt 0">
+            <li class="xar-navigator-branch-child">
+                <a href="#$url#">#$node['name']#</a>
+                #xarModAPIFunc('navigator', 'user', 'menu_branch_descend', array('tree' => $node['children']))#
+            </li>
+        <xar:else />
+            <li class="xar-navigator-branch-child">
+                <a href="#$url#">#$node['name']#</a>
+            </li>
+        </xar:if>
+        </xar:foreach>
+    </ul>
+</xar:if>

@@ -61,7 +61,7 @@ function navigator_userapi_handle_menu_tag( $args )
         xarExceptionSet(XAR_USER_EXCEPTION, xarML('Missing Attribute'), new DefaultUserException($msg));
         return '';
     } else {
-        if (!eregi('^(list|images)$', $type)) {
+        if (!eregi('^(list|images|branch)$', $type)) {
             $msg =  xarML('Incorrect \'#(1)\' attribute value [\'#(2)\'] for tag <xar:navigation-menu>.', 'type', $type);
             $msg .= xarML('Attribute must be either "list" or "images" - ');
             $msg .= $errorAddendum;

@@ -41,6 +41,9 @@ function navigator_userapi_nested_tree_create( $args )
                 $tmpTree[$index]['npid'] = $npid;
             } elseif ($current < $previous) {
                 $npid = $tmpTree[$index - 1]['npid'];
+                while ($tmpTree[$npid]['indent'] != $current) {
+                    $npid = $tmpTree[$npid]['npid'];
+                }
                 $tmpTree[$index]['npid'] = $tmpTree[$npid]['npid'];
             } else {
                 $tmpTree[$index]['npid'] = $npid;

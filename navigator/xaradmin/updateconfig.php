@@ -54,7 +54,6 @@ function navigator_admin_updateconfig()
         $secDef = 0;
     }
 
-    // die("ok - made it here...");
     xarModSetVar('navigator', 'style.matrix', (isset($matrix) && $matrix) ? 1 : 0);
     xarModSetVar('navigator', 'categories.roots', $rootcids);
 
