@@ -67,7 +67,7 @@ function xarpages_userapi_gettypes($args)
         // Only return the system page types if specifically requested.
         if ($name[0] != '@' || !empty($include_system)) {
             $types[$$key] = array(
-                'ptid' => $ptid,
+                'ptid' => (int)$ptid,
                 'name' => $name,
                 'desc' => $desc
             );

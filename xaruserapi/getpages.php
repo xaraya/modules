@@ -167,7 +167,11 @@ function xarpages_userapi_getpages($args)
             if ($key == 'pid') {
                 $parent_key = (int)$parent_pid;
             } else {
-                $parent_key = $id2key[$parent_pid];
+                if (isset($id2key[$parent_pid])) {
+                    $parent_key = $id2key[$parent_pid];
+                } else {
+                    $parent_key = 0;
+                }
             }
 
             $pages[$$key] = array(
@@ -175,6 +179,7 @@ function xarpages_userapi_getpages($args)
                 'name' => $name,
                 'desc' => $desc,
                 'itemtype' => (int)$itemtype,
+                'ptid' => (int)$itemtype,
                 'parent' => $parent_key,
                 'parent_pid' => (int)$parent_pid,
                 'left' => (int)$left,

@@ -15,6 +15,9 @@ function xarpages_admin_modifypage()
 
     $data = array();
 
+    // TODO: move this.
+    $data['batch'] = 0;
+
     if (!empty($pid)) {
         // Editing an existing page.
 
@@ -24,6 +27,8 @@ function xarpages_admin_modifypage()
             'xarpages', 'user', 'getpage',
             array('pid' => $pid)
         );
+
+        $data['ptid'] = $data['page']['pagetype']['ptid'];
 
         // We need all pages, but with the current page tree pruned.
         $pages = xarModAPIFunc(
@@ -56,6 +61,10 @@ function xarpages_admin_modifypage()
         $data['insertpoint'] = $insertpoint;
         $data['position'] = $position;
 
+        $data['func'] = 'create';
+        $data['pid'] = NULL;
+        $data['ptid'] = $ptid;
+
         if (empty($ptid)) {
             // The page type has not yet been chosen.
             // Get a list of page types.
@@ -64,6 +73,9 @@ function xarpages_admin_modifypage()
                 array('key' => 'ptid')
             );
             $data['pagetypes'] = $pagetypes;
+
+            // Return to the template immediately so the page type can be selected.
+            return $data;
         } else {
             // We have a page type, now let the user create a page.
             // TODO: if there are any templates for this page type, present
@@ -112,10 +124,6 @@ function xarpages_admin_modifypage()
                 $data['page']['template'] = $template['template'];
             }
         }
-
-        $data['func'] = 'create';
-        $data['pid'] = NULL;
-        $data['ptid'] = $ptid;
     }
 
     // Clear out any empty hooks, and truncate the remainder.
@@ -134,8 +142,8 @@ function xarpages_admin_modifypage()
     foreach ($pages['pages'] as $key => $page) {
         $pages['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
     }
-
     $data['pages'] = $pages['pages'];
+
     $modinfo = xarModGetInfo(xarModGetIDFromName('xarpages')); 
 
     // Get lists of files in the various custom APIs.

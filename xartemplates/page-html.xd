@@ -10,11 +10,17 @@
     </xar:loop>
 </div>
 
-<div>
-    See Also:
-    <xar:loop name="$current_page.children">
-        &gt;&gt; <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item))#">#$loop:item#</a>
-    </xar:loop>
-</div>
+<xar:if condition="isset($current_page.children)">
+    <div>
+        See Also:
+        <xar:loop name="$current_page.children">
+            &gt;&gt; <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item))#">#$loop:item#</a>
+        </xar:loop>
+    </div>
+</xar:if>
 
-<div>#$current_page.dd.body#</div>
+<xar:if condition="isset($current_page.dd.body)">
+    <div>#$current_page.dd.body#</div>
+<xar:else />
+    <div><xar:mlstring>Please create a DD item 'body'</xar:mlstring></div>
+</xar:if>
