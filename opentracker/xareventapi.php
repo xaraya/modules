@@ -13,7 +13,7 @@ require_once(dirname(__FILE__) . '/xarOpenTracker.php');
 
 function _opentracker_exit_urls($buffer)
 {
-	return preg_replace(
+  return preg_replace(
     "#<a href=(\"|')(http(s)*?://)([^\"']+)(\"|')#ime",
     '"<a href=\"".((substr_count(strtolower(\'\\2\\4\'), strtolower(xarServerGetBaseURL())) == 0) ? xarModUrl("opentracker", "user", "exit", array("proto"=>base64_encode(\'\\2\'), "url" => base64_encode(\'\\4\') ) ) : "\\2\\4" )."\""',
     $buffer
@@ -22,21 +22,21 @@ function _opentracker_exit_urls($buffer)
 
 function opentracker_eventapi_OnServerRequest()
 {
-	// start output-buffering
-	ob_start('_opentracker_exit_urls');
-	
-	header('P3P: CP="NOI NID ADMa OUR IND UNI COM NAV"');
-	xarOpenTracker::log(
-	  array(
-	    'document' => $GLOBALS['xarTpl_pageTitle'],
-	    'client_id' => 1,
-	    'add_data' => array(
-	    	'xar_uname' => xarUserGetVar('uname'),
-	    	'xar_uid' => xarUserGetVar('uid')
-	    	)
-	  )
-	);
-	return true;
+  // start output-buffering
+  ob_start('_opentracker_exit_urls');
+
+  header('P3P: CP="NOI NID ADMa OUR IND UNI COM NAV"');
+  xarOpenTracker::log(
+    array(
+      'document' => $GLOBALS['xarTpl_pageTitle'],
+      'client_id' => 1,
+      'add_data' => array(
+        'xar_uname' => xarUserGetVar('uname'),
+        'xar_uid' => xarUserGetVar('uid')
+        )
+    )
+  );
+  return true;
 }
 
 ?>
