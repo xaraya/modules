@@ -22,18 +22,18 @@ function __overlibPrepForJS($s)
     // remove linefeeds/carriage returns as this will
     $s = preg_replace('/[\r|\n]/i','',$s); 
     // escape single quotes and single quote entities
-	$squotes = array("'","&#39;");
+    $squotes = array("'","&#39;");
     $s = str_replace($squotes,"\'",$s); 
     // convert double quotes to html entity
-	$s = str_replace('"','&quot;',$s); 
-	// ok, now we need to break really long lines
-	// correct interpretation of special characters
-	// we only want to break at spaces to allow for
-	$tmp = explode(' ',$s);
+    $s = str_replace('"','&quot;',$s); 
+    // ok, now we need to break really long lines
+    // correct interpretation of special characters
+    // we only want to break at spaces to allow for
+    $tmp = explode(' ',$s);
     // we don't need these so free up some memory
     unset($s,$squotes);
     // return the new string
-	return join("'+' ",$tmp);
+    return join("'+' ",$tmp);
 }
 
 function overlib_userapi_bl_open($args=array())
@@ -98,8 +98,8 @@ function overlib_userapi_bl_open($args=array())
     if (!empty($hauto)) { $retval .= ",HAUTO"; }
     if (!empty($vauto)) { $retval .= ",VAUTO"; }
     $retval .= ');"; ';
-	
-	return $retval;
+    
+    return $retval;
 
     
 }
