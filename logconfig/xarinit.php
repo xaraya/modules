@@ -10,7 +10,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage logconfig
- * @author Example module development team 
+ * @author Example module development team
  */
 
 /**
@@ -37,12 +37,12 @@ function logconfig_init()
     $ids = array();
     $dir = "modules/logconfig/loggers/";
     $itemsnum = 0;
- 
+
     if (is_dir($dir)) {
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
-                if (substr($file, -4) == '.xml') 
-		        {
+                if (substr($file, -4) == '.xml')
+                {
                     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => "modules/logconfig/loggers/$file"));
                     if (empty($objectid)) return;
@@ -105,7 +105,7 @@ function logconfig_delete()
             xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
         }
     }
-    
+
     xarModDelVar('logconfig','objectids');
     xarModDelVar('logconfig','itemstypenumber');
 
