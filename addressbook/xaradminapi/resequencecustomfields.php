@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: resequencecustomfields.php,v 1.4 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: resequencecustomfields.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook admin resequenceCustomFields
  *
@@ -20,7 +20,7 @@
  * @param none
  * @return bool
  */
-function addressbook_adminapi_resequenceCustomfields() 
+function addressbook_adminapi_resequenceCustomfields()
 {
 
     /**
@@ -45,9 +45,10 @@ function addressbook_adminapi_resequenceCustomfields()
         $result->MoveNext();
         if ($curseq != $seq) {
             $query = "UPDATE $cus_table
-                         SET position=" . xarVarPrepForStore($seq) . "
-                       WHERE nr=" . xarVarPrepForStore($id);
-            $result =& $dbconn->Execute($query);
+                         SET position= ?
+                       WHERE nr= ?";
+            $bindvars=array($seq,$id);
+            $result =& $dbconn->Execute($query,$bindvars);
             if (!$result) return FALSE;
         }
         $seq++;

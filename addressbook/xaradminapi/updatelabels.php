@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updatelabels.php,v 1.8 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: updatelabels.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook admin function
  *
@@ -21,7 +21,7 @@
  * @return bool
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function addressbook_adminapi_updatelabels($args) 
+function addressbook_adminapi_updatelabels($args)
 {
 
     // var defines
@@ -74,9 +74,10 @@ function addressbook_adminapi_updatelabels($args)
 
     $updates = array();
     foreach($modID as $k=>$id) {
-    array_push($updates,"UPDATE $labelTable
-                            SET name ='".xarVarPrepForStore($modName[$k])."'
-                          WHERE nr = $id");
+    array_push($updates,array('sql'=>"UPDATE $labelTable
+                                         SET name = ?
+                                       WHERE nr = ?"
+                              ,'bindvars'=>array($modName[$k],$id)));
     }
 
     if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'labels','updates'=>$updates))) {

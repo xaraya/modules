@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: additems.php,v 1.5 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: additems.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook admin addItems
  *
@@ -58,15 +58,13 @@ function addressbook_adminapi_addItems($args)
         $table = $xarTables[$tablename];
 
         $nextID = $dbconn->GenID($table);
-
-
-        $name = xarVarPrepForStore($name);
+        $bindvars = array ($nextID,$name);
 
         $sql = "INSERT INTO $table
                             (nr,name)
-                     VALUES ($nextID,'$name')";
+                     VALUES (?,?)";
 
-        $result =& $dbconn->Execute($sql);
+        $result =& $dbconn->Execute($sql,$bindvars);
         if (!$result) $returncode = FALSE;
     }
 

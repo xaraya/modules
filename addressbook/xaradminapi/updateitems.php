@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateitems.php,v 1.7 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: updateitems.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook adminapi updateItems()
  *
@@ -22,7 +22,7 @@
  * @param args['updates'] array of strings
  * @return true
  */
- function addressbook_adminapi_updateItems($args) 
+ function addressbook_adminapi_updateItems($args)
 {
 
     $returnCode = TRUE;
@@ -53,8 +53,7 @@
     } else {
         $dbconn =& xarDBGetConn();
         foreach($updates as $update) {
-
-            $result =& $dbconn->Execute($update);
+            $result =& $dbconn->Execute($update['sql'],$update['bindvars']);
             if (!$result) $returnCode = FALSE;
         }
     }

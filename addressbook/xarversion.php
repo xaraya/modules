@@ -16,8 +16,8 @@
 
 $modversion['name']         = 'AddressBook';
 $modversion['id']           = '66417';
-$modversion['version']      = '1.2.5';
-$modversion['displayname']    = xarML('Address Book');
+$modversion['version']      = '1.2.6';
+$modversion['displayname']  = xarML('Address Book');
 $modversion['description']  = 'Xaraya Address Book';
 $modversion['credits']      = '';
 $modversion['help']         = '';
@@ -28,7 +28,7 @@ $modversion['author']       = 'Garrett Hunter';
 $modversion['contact']      = 'Garrett Hunter <garret@blacktower.com>';
 $modversion['admin']        = 1;
 $modversion['user']         = 1;
-$modversion['securityschema']   = array('AddressBook::' => '::');
+$modversion['securityschema'] = array('AddressBook::' => '::');
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 ?>

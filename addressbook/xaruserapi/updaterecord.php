@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updaterecord.php,v 1.5 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: updaterecord.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
  *
  * AddressBook user updateRecord
  *
@@ -20,26 +20,26 @@
  * @param mixed
  *
  */
-function addressbook_userapi_updaterecord($args) 
+function addressbook_userapi_updaterecord($args)
 {
     extract($args);
 
-    $lname = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$lname);
-    $fname = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$fname);
-    $title = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$title);
-    $company = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$company);
-    $zip = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$zip);
-    $city = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$city);
-    $address_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_1);
-    $address_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_2);
-    $state = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$state);
-    $country = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$country);
-    $contact_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_1);
-    $contact_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_2);
-    $contact_3 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_3);
-    $contact_4 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_4);
-    $contact_5 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_5);
-    $note = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$note);
+    $lname      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$lname);
+    $fname      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$fname);
+    $title      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$title);
+    $company    = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$company);
+    $zip        = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$zip);
+    $city       = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$city);
+    $address_1  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_1);
+    $address_2  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_2);
+    $state      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$state);
+    $country    = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$country);
+    $contact_1  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_1);
+    $contact_2  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_2);
+    $contact_3  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_3);
+    $contact_4  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_4);
+    $contact_5  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_5);
+    $note       = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$note);
     if (!isset($private)) { $private=0; }
     $last_updt = time();
     // custom field values
@@ -81,64 +81,106 @@ function addressbook_userapi_updaterecord($args)
     $address_table = $xarTables['addressbook_address'];
 
     $sql = "UPDATE $address_table
-            SET cat_id=".xarVarPrepForStore($cat_id).",
-            prefix=".xarVarPrepForStore($prfx).",
-            lname='".xarVarPrepForStore($lname)."',
-            fname='".xarVarPrepForStore($fname)."',
-            sortname='".xarVarPrepForStore($sortvalue)."',
-            title='".xarVarPrepForStore($title)."',
-            company='".xarVarPrepForStore($company)."',
-            sortcompany='".xarVarPrepForStore($sortvalue2)."',
-            img='".xarVarPrepForStore($img)."',
-            zip='".xarVarPrepForStore($zip)."',
-            city='".xarVarPrepForStore($city)."',
-            address_1='".xarVarPrepForStore($address_1)."',
-            address_2='".xarVarPrepForStore($address_2)."',
-            state='".xarVarPrepForStore($state)."',
-            country='".xarVarPrepForStore($country)."',
-            contact_1='".xarVarPrepForStore($contact_1)."',
-            contact_2='".xarVarPrepForStore($contact_2)."',
-            contact_3='".xarVarPrepForStore($contact_3)."',
-            contact_4='".xarVarPrepForStore($contact_4)."',
-            contact_5='".xarVarPrepForStore($contact_5)."',
-            c_label_1=".xarVarPrepForStore($c_label_1).",
-            c_label_2=".xarVarPrepForStore($c_label_2).",
-            c_label_3=".xarVarPrepForStore($c_label_3).",
-            c_label_4=".xarVarPrepForStore($c_label_4).",
-            c_label_5=".xarVarPrepForStore($c_label_5).",
-            c_main=".xarVarPrepForStore($c_main).",";
+               SET  cat_id      = ?
+                   ,prefix      = ?
+                   ,lname       = ?
+                   ,fname       = ?
+                   ,sortname    = ?
+                   ,title       = ?
+                   ,company     = ?
+                   ,sortcompany = ?
+                   ,img         = ?
+                   ,zip         = ?
+                   ,city        = ?
+                   ,address_1   = ?
+                   ,address_2   = ?
+                   ,state       = ?
+                   ,country     = ?
+                   ,contact_1   = ?
+                   ,contact_2   = ?
+                   ,contact_3   = ?
+                   ,contact_4   = ?
+                   ,contact_5   = ?
+                   ,c_label_1   = ?
+                   ,c_label_2   = ?
+                   ,c_label_3   = ?
+                   ,c_label_4   = ?
+                   ,c_label_5   = ?
+                   ,c_main      = ?";
+
+    if (isset($custUserData)) {
+        foreach($custUserData as $userData) {
+            $sql .= ",".$userData['colName']." = ?";
+        }
+    }
+
+          $sql .= ",note        = ?
+                   ,private     = ?
+                   ,last_updt   = ?
+             WHERE nr = ?";
+
+    $bindvars = array ($cat_id
+                      ,$prfx
+                      ,$lname
+                      ,$fname
+                      ,$sortvalue
+                      ,$title
+                      ,$company
+                      ,$sortvalue2
+                      ,$img
+                      ,$zip
+                      ,$city
+                      ,$address_1
+                      ,$address_2
+                      ,$state
+                      ,$country
+                      ,$contact_1
+                      ,$contact_2
+                      ,$contact_3
+                      ,$contact_4
+                      ,$contact_5
+                      ,$c_label_1
+                      ,$c_label_2
+                      ,$c_label_3
+                      ,$c_label_4
+                      ,$c_label_5
+                      ,$c_main);
 
     if (isset($custUserData)) {
         foreach($custUserData as $userData) {
             if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
-                $sql .= $userData['colName']."='".xarVarPrepForStore($userData['userData'])."',";
+                array_push ($bindvars, $userData['userData']);
 
             } elseif ($userData['type']=='date default NULL') {
-                $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData']))."',";
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData'])));
 
             } elseif ($userData['type']=='int default NULL') {
-                $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
             } elseif ($userData['type']=='int(1) default NULL') {
-                $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
             } elseif ($userData['type']=='decimal(10,2) default NULL') {
-                $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
             } elseif ((!strstr($userData['type'],_AB_CUST_TEST_LB) &&
                        !strstr($userData['type'],_AB_CUST_TEST_HR)) &&
                       (empty($userData['userData']) || $userData['userData'] == '')) {
-                $sql .= $userData['colName'].'=NULL,';
+                array_push ($bindvars, 'NULL');
             }
-        }
-    }
+        } // END foreach
+    } // END if
 
-    $sql .= "note='".xarVarPrepForStore($note)."',
-            private=".xarVarPrepForStore($private).",
-            last_updt=".xarVarPrepForStore($last_updt)."
-            WHERE nr=$id";
+    array_push ($bindvars, $note);
+    array_push ($bindvars, $private);
+    array_push ($bindvars, $last_updt);
 
-    $result =& $dbconn->Execute($sql);
+    //WHERE clause
+    array_push ($bindvars, $id);
+
+    //end bindvars
+
+    $result =& $dbconn->Execute($sql, $bindvars);
     if($dbconn->ErrorNo() != 0) { return false; }
 
     $result->Close();

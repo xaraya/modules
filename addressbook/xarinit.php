@@ -95,23 +95,20 @@ function addressbook_init()
     /**
      * insert default values for Label table
      */
-    $insertRows = array(
-                    xarVarPrepForStore(_AB_WORK)
-                   ,xarVarPrepForStore(_AB_FAX)
-                   ,xarVarPrepForStore(_AB_MOBILE)
-                   ,xarVarPrepForStore(_AB_HOME)
-                   ,xarVarPrepForStore(_AB_EMAIL)
-                   ,xarVarPrepForStore(_AB_URL)
-                   ,xarVarPrepForStore(_AB_OTHER)
+    $insertRows = array(_AB_WORK
+                       ,_AB_FAX
+                       ,_AB_MOBILE
+                       ,_AB_HOME
+                       ,_AB_EMAIL
+                       ,_AB_URL
+                       ,_AB_OTHER
                    );
-
     foreach ($insertRows as $row) {
         $nextId = $dbconn->GenId($abLabelsTable);
-        $query = sprintf ("INSERT INTO %s (nr,name) VALUES (%d,'%s')"
-                         ,$abLabelsTable
-                         ,$nextId
-                         ,$row);
-        $result =& $dbconn->Execute($query);
+        $query = sprintf ("INSERT INTO %s (nr,name) VALUES (?, ?)"
+                         ,$abLabelsTable);
+        $bindvars = array ($nextId,$row);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
     }
 
@@ -132,19 +129,17 @@ function addressbook_init()
     /**
      * insert default values
      */
-    $insertRows = array(
-                    xarVarPrepForStore(_AB_BUSINESS)
-                   ,xarVarPrepForStore(_AB_PERSONAL)
-                   ,xarVarPrepForStore(_AB_QUICKLIST)
-                   );
+    $insertRows = array(_AB_BUSINESS
+                       ,_AB_PERSONAL
+                       ,_AB_QUICKLIST
+                       );
 
     foreach ($insertRows as $row) {
         $nextId = $dbconn->GenId($abCategoriesTable);
-        $query = sprintf ("INSERT INTO %s (nr,name) VALUES (%d,'%s')"
-                         ,$abCategoriesTable
-                         ,$nextId
-                         ,$row);
-        $result =& $dbconn->Execute($query);
+        $query = sprintf ("INSERT INTO %s (nr,name) VALUES (?, ?)"
+                         ,$abCategoriesTable);
+        $bindvars = array ($nextId,$row);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
     }
 
@@ -169,20 +164,18 @@ function addressbook_init()
      * intentionally numbered from 1 to 4 as they cannot be removed from
      * the application.
      */
-    $insertRows = array(xarVarPrepForStore(_AB_CUSTOM_1)
-                       ,xarVarPrepForStore(_AB_CUSTOM_2)
-                       ,xarVarPrepForStore(_AB_CUSTOM_3)
-                       ,xarVarPrepForStore(_AB_CUSTOM_4)
+    $insertRows = array(_AB_CUSTOM_1
+                       ,_AB_CUSTOM_2
+                       ,_AB_CUSTOM_3
+                       ,_AB_CUSTOM_4
                        );
 
     $nextId = 1;
     foreach ($insertRows as $row) {
-        $query = sprintf ("INSERT INTO %s (nr,label,type,position) VALUES (%d,'%s','varchar(60) default NULL',%d)"
-                         ,$abCustomfieldsTable
-                         ,$nextId
-                         ,$row
-                         ,$nextId);
-        $result =& $dbconn->Execute($query);
+        $query = sprintf ("INSERT INTO %s (nr,label,type,position) VALUES (?,?,'varchar(60) default NULL',?)"
+                         ,$abCustomfieldsTable);
+        $bindvars = array ($nextId,$row,$nextId);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
         $nextId++;
     }
@@ -204,18 +197,16 @@ function addressbook_init()
     /**
      * insert default values
      */
-    $insertRows = array(
-                    xarVarPrepForStore(_AB_MR)
-                   ,xarVarPrepForStore(_AB_MRS)
+    $insertRows = array(_AB_MR
+                       ,_AB_MRS
                    );
 
     foreach ($insertRows as $row) {
         $nextId = $dbconn->GenId($abPrefixesTable);
-        $query = sprintf ("INSERT INTO %s (nr,name) VALUES (%d,'%s')"
-                         ,$abPrefixesTable
-                         ,$nextId
-                         ,$row);
-        $result =& $dbconn->Execute($query);
+        $query = sprintf ("INSERT INTO %s (nr,name) VALUES (?,?)"
+                         ,$abPrefixesTable);
+        $bindvars = array ($nextId,$row);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
     }
 
@@ -280,7 +271,7 @@ function addressbook_init()
  * upgrade the module from an old version
  * This function can be called multiple times
  */
-function addressbook_upgrade($oldversion) 
+function addressbook_upgrade($oldversion)
 {
 
     //FIXME: until we figure out module globals
@@ -323,9 +314,11 @@ function addressbook_upgrade($oldversion)
             if (!$result) return;
 
         case '1.2.1':
-        case '1.3.0':
-        case '1.4.0':
-
+        case '1.2.2':
+        case '1.2.3':
+        case '1.2.4':
+        case '1.2.5':
+           // No data changes
             break;
     }
 
@@ -337,7 +330,7 @@ function addressbook_upgrade($oldversion)
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function addressbook_delete() 
+function addressbook_delete()
 {
 
     //FIXME: until we figure out module globals

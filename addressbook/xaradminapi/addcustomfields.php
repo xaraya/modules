@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: addcustomfields.php,v 1.5 2004/01/24 18:36:21 garrett Exp $
+ * File: $Id: addcustomfields.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook admin addCustomFields
  *
@@ -47,7 +47,7 @@ function addressbook_adminapi_addCustomfields($args)
     } else {
         $dbconn =& xarDBGetConn();
         foreach($inserts as $insert) {
-            $result =& $dbconn->Execute($insert);
+            $result =& $dbconn->Execute($insert['sql'],$insert['bindvars']);
             if (!$result) $returnCode = FALSE;
 
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updatecustomfields.php,v 1.9 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: updatecustomfields.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -22,7 +22,7 @@
  * @raise _AB_GLOBALPROTECTERROR, _AB_GRANTERROR, _AB_SORTERROR_1,
  *        _AB_SORTERROR_2, _AB_SPECIAL_CHARS_ERROR
  */
-function addressbook_adminapi_updatecustomfields($args) 
+function addressbook_adminapi_updatecustomfields($args)
 {
 
     /**
@@ -95,12 +95,14 @@ function addressbook_adminapi_updatecustomfields($args)
         $updates = array();
 
         foreach($modID as $k=>$id) {
-            array_push($updates,"UPDATE $cus_table
-                                    SET label='".xarVarPrepForStore($modName[$k])."',
-                                        type='".xarVarPrepForStore($modType[$k])."'
-                                  WHERE nr=$id");
+            array_push($updates,array ('sql'=>"UPDATE $cus_table
+                                                  SET label=?, type=?
+                                                WHERE nr=?"
+                                        ,'bindvars'=>array($modName[$k],$modType[$k],$id )));
+
             if (($modType[$k] != 'smallint default NULL') && ($modType[$k] != 'tinyint default NULL')) {
-                array_push($updates,"ALTER TABLE $adr_table CHANGE custom_".$id." custom_".$id." ".xarVarPrepForStore($modType[$k]));
+                //TODO: Not sure how to lost xarVarPrep... in this instance. $modType contains the composite ALTER parameters e.g. 'varchar(60) default NULL'
+                array_push($updates,array('sql'=>"ALTER TABLE $adr_table CHANGE custom_".$id." custom_".$id." ".xarVarPrepForStore($modType[$k]),'bindvars'=>array()));
             }
         }
 
@@ -137,11 +139,12 @@ function addressbook_adminapi_updatecustomfields($args)
             $nextID++;
             $result->Close();
             $inserts = array();
-            array_push($inserts,"INSERT INTO $cus_table (nr,label,type,position)
-                                  VALUES ($nextID,'".xarVarPrepForStore($newname)."','".xarVarPrepForStore($newtype)."',9999999999)");
-            if (($newtype != 'smallint default NULL') && ($newtype != 'tinyint default NULL')) {
-                array_push($inserts,"ALTER TABLE $adr_table ADD custom_".$nextID." ".xarVarPrepForStore($newtype));
-            }
+            array_push($inserts,array ('sql'=>"INSERT INTO $cus_table (nr,label,type,position)
+                                               VALUES (?,?,?,9999999999)"
+                                      ,'bindvars'=>array ($nextID,$newname,$newtype)));
+
+            //TODO: Not sure how to lost xarVarPrep... in this instance. $modType contains the composite ALTER parameters e.g. 'varchar(60) default NULL'
+            array_push($inserts,array('sql'=>"ALTER TABLE $adr_table ADD custom_".$nextID." ".xarVarPrepForStore($newtype),'bindvars'=>array()));
 
             if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addcustomfields',array('inserts'=>$inserts))) {
                 xarErrorSet(XAR_USER_EXCEPTION,

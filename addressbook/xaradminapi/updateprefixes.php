@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateprefixes.php,v 1.8 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: updateprefixes.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -21,7 +21,7 @@
  * @return bool
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function addressbook_adminapi_updateprefixes($args) 
+function addressbook_adminapi_updateprefixes($args)
 {
 
     // var defines
@@ -74,9 +74,10 @@ function addressbook_adminapi_updateprefixes($args)
 
     $updates = array();
     foreach($modID as $k=>$id) {
-    array_push($updates,"UPDATE $preTable
-                            SET name ='".xarVarPrepForStore($modName[$k])."'
-                          WHERE nr = $id");
+    array_push($updates,array('sql' => "UPDATE $preTable
+                                         SET name = ?
+                                       WHERE nr = ?"
+                             ,'bindvars' => array($modName[$k], $id)));
     }
 
     if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'prefixes','updates'=>$updates))) {

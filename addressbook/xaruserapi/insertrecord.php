@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertrecord.php,v 1.6 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: insertrecord.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
  *
  * AddressBook user insertRecord
  *
@@ -19,7 +19,7 @@
  *
  * @param mixed
  */
-function addressbook_userapi_insertrecord($args) 
+function addressbook_userapi_insertrecord($args)
 {
     extract($args);
 
@@ -82,113 +82,147 @@ function addressbook_userapi_insertrecord($args)
     $nextID = $dbconn->GenID($address_table);
 
     $sql = "INSERT INTO $address_table (
-            nr,
-            cat_id,
-            prefix,
-            lname,
-            fname,
-            sortname,
-            title,
-            company,
-            sortcompany,
-            img,
-            zip,
-            city,
-            address_1,
-            address_2,
-            state,
-            country,
-            contact_1,
-            contact_2,
-            contact_3,
-            contact_4,
-            contact_5,
-            c_label_1,
-            c_label_2,
-            c_label_3,
-            c_label_4,
-            c_label_5,
-            c_main,";
+                                        nr
+                                       ,cat_id
+                                       ,prefix
+                                       ,lname
+                                       ,fname
+                                       ,sortname
+                                       ,title
+                                       ,company
+                                       ,sortcompany
+                                       ,img
+                                       ,zip
+                                       ,city
+                                       ,address_1
+                                       ,address_2
+                                       ,state
+                                       ,country
+                                       ,contact_1
+                                       ,contact_2
+                                       ,contact_3
+                                       ,contact_4
+                                       ,contact_5
+                                       ,c_label_1
+                                       ,c_label_2
+                                       ,c_label_3
+                                       ,c_label_4
+                                       ,c_label_5
+                                       ,c_main";
 
-// mising comma before 'array' was not flagged by compiler. is that normal PHP behaviour?
-//            $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo'array('flag'=>_AB_CUST_UDCOLNAMESONLY));
             if (isset($custUserData)) {
                 $custColNames = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',
                                            array('flag'=>_AB_CUST_UDCOLNAMESONLY,'custUserData'=>$custUserData));
                 foreach($custColNames as $colName) {
-                    $sql .= $colName.",";
+                    $sql .= ",".$colName;
                 }
             }
 
-            $sql.="note,
-            user_id,
-            private,
-            last_updt)
-            VALUES (
-            $nextID,
-            ".xarVarPrepForStore($cat_id).",
-            ".xarVarPrepForStore($prfx).",
-            '".xarVarPrepForStore($lname)."',
-            '".xarVarPrepForStore($fname)."',
-            '".xarVarPrepForStore($sortvalue)."',
-            '".xarVarPrepForStore($title)."',
-            '".xarVarPrepForStore($company)."',
-            '".xarVarPrepForStore($sortvalue2)."',
-            '".xarVarPrepForStore($img)."',
-            '".xarVarPrepForStore($zip)."',
-            '".xarVarPrepForStore($city)."',
-            '".xarVarPrepForStore($address_1)."',
-            '".xarVarPrepForStore($address_2)."',
-            '".xarVarPrepForStore($state)."',
-            '".xarVarPrepForStore($country)."',
-            '".xarVarPrepForStore($contact_1)."',
-            '".xarVarPrepForStore($contact_2)."',
-            '".xarVarPrepForStore($contact_3)."',
-            '".xarVarPrepForStore($contact_4)."',
-            '".xarVarPrepForStore($contact_5)."',
-            ".xarVarPrepForStore($c_label_1).",
-            ".xarVarPrepForStore($c_label_2).",
-            ".xarVarPrepForStore($c_label_3).",
-            ".xarVarPrepForStore($c_label_4).",
-            ".xarVarPrepForStore($c_label_5).",
-            ".xarVarPrepForStore($c_main).",";
+                                $sql.=",note
+                                       ,user_id
+                                       ,private
+                                       ,last_updt)
+                    VALUES (
+                            ?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?
+                           ,?";
 
             if (isset($custUserData)) {
                 foreach($custUserData as $userData) {
-                    if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
-                        $sql .= "'".xarVarPrepForStore($userData['userData'])."',";
+                    $sql .= ",?";
+                }
+            }
 
-                    } elseif ($userData['type']=='date default NULL') {
-                        $sql .= "'".xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData']))."',";
+                    $sql.=",?
+                           ,?
+                           ,?
+                           ,?)";
 
-                    } elseif ($userData['type']=='int default NULL') {
-                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+    $bindvars = array ($nextID
+                      ,$cat_id
+                      ,$prfx
+                      ,$lname
+                      ,$fname
+                      ,$sortvalue
+                      ,$title
+                      ,$company
+                      ,$sortvalue2
+                      ,$img
+                      ,$zip
+                      ,$city
+                      ,$address_1
+                      ,$address_2
+                      ,$state
+                      ,$country
+                      ,$contact_1
+                      ,$contact_2
+                      ,$contact_3
+                      ,$contact_4
+                      ,$contact_5
+                      ,$c_label_1
+                      ,$c_label_2
+                      ,$c_label_3
+                      ,$c_label_4
+                      ,$c_label_5
+                      ,$c_main);
 
-                    } elseif ($userData['type']=='int(1) default NULL') {
-                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+    if (isset($custUserData)) {
+        foreach($custUserData as $userData) {
+            if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
+                array_push ($bindvars, $userData['userData']);
 
-                    } elseif ($userData['type']=='decimal(10,2) default NULL') {
-                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+            } elseif ($userData['type']=='date default NULL') {
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData'])));
 
-                    } elseif ((!strstr($userData['type'],_AB_CUST_TEST_LB) &&
-                               !strstr($userData['type'],_AB_CUST_TEST_HR)) &&
-                              (empty($userData['userData']) || $userData['userData'] == '')) {
-                        $sql .= $userData['colName'].'=NULL,';
-                    }
-// check was not stringent enough??
-//                } elseif ((empty($userData['userData'])) || ($userData['userData'] == '')) {
-//                    $sql .= 'NULL,';
-//                }
-                } // END foreach
-            } // END if
+            } elseif ($userData['type']=='int default NULL') {
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
-    $sql.="'".xarVarPrepForStore($note)."',
-            ".xarVarPrepForStore($user_id).",
-            ".xarVarPrepForStore($private).",
-            ".xarVarPrepForStore($last_updt).")";
+            } elseif ($userData['type']=='int(1) default NULL') {
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
+            } elseif ($userData['type']=='decimal(10,2) default NULL') {
+                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
-    $result =& $dbconn->Execute($sql);
+            } elseif ((!strstr($userData['type'],_AB_CUST_TEST_LB) &&
+                       !strstr($userData['type'],_AB_CUST_TEST_HR)) &&
+                      (empty($userData['userData']) || $userData['userData'] == '')) {
+                array_push ($bindvars, 'NULL');
+            }
+        } // END foreach
+    } // END if
+
+    array_push ($bindvars, $note);
+    array_push ($bindvars, $user_id);
+    array_push ($bindvars, $private);
+    array_push ($bindvars, $last_updt);
+
+    //end bindvars
+
+    $result =& $dbconn->Execute($sql,$bindvars);
     if($dbconn->ErrorNo() != 0) { return false; }
 
     $result->Close();

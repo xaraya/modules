@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: inccustomfields.php,v 1.5 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: inccustomfields.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
  *
  * AddressBook admin incCustomFields
  *
@@ -20,7 +20,7 @@
  * @param passed in from updatecustomfields api
  * @return bool
  */
-function addressbook_adminapi_incCustomfields($args) 
+function addressbook_adminapi_incCustomfields($args)
 {
 
     $returnCode = TRUE;
@@ -54,8 +54,9 @@ function addressbook_adminapi_incCustomfields($args)
         // Get info on current position of field
         $sql = "SELECT position
                   FROM $cus_table
-                 WHERE nr=" . (int)xarVarPrepForStore($id);
-        $result =& $dbconn->Execute($sql);
+                 WHERE nr= ?";
+        $bindvars=array((int)$id);
+        $result =& $dbconn->Execute($sql,$bindvars);
 
         if (!$result) {
             $returnCode = FALSE;
@@ -71,9 +72,10 @@ function addressbook_adminapi_incCustomfields($args)
             $sql = "SELECT nr,
                            position
                       FROM $cus_table
-                     WHERE position < " . xarVarPrepForStore($seq) . "
+                     WHERE position < ?
                      ORDER BY position DESC";
-            $result =& $dbconn->SelectLimit($sql, 1);
+            $bindvars = array ($seq);
+            $result =& $dbconn->SelectLimit($sql, 1, -1, $bindvars);
 
             if (!$result) {
                 $returnCode = FALSE;
