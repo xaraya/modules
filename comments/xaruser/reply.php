@@ -1,0 +1,165 @@
+<?php
+
+/**
+ * processes comment replies and then redirects back to the
+ * appropriate module/objectid (aka page)
+ *
+ * @author   Carl P. Corliss (aka rabbitt)
+ * @access   public
+ * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
+ */
+
+function comments_user_reply() {
+
+    if (!xarSecurityCheck('Comments-Post'))
+        return;
+
+    $header                       = xarRequestGetVar('header');
+    $package                      = xarRequestGetVar('package');
+    $receipt                      = xarRequestGetVar('receipt');
+    $receipt['post_url']          = xarModURL('comments','user','reply');
+    $header['input-title']        = xarML('Post a reply');
+
+    if (!isset($package['postanon'])) {
+        $package['postanon'] = 0;
+    }
+    xarVarValidate('checkbox', $package['postanon']);
+    if (!isset($header['itemtype'])) {
+        $header['itemtype'] = 0;
+    }
+
+    if (empty($receipt['action'])) {
+        $receipt['action'] = 'reply';
+    }
+
+    switch (strtolower($receipt['action'])) {
+        case 'submit':
+            if (empty($package['title'])) {
+                $msg = xarML('Missing [#(1)] field on new #(2)','title','comment');
+                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
+                return;
+            }
+
+            if (empty($package['text'])) {
+                $msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
+                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
+                return;
+            }
+            xarModAPIFunc('comments','user','add',
+                                        array('modid'    => $header['modid'],
+                                              'itemtype' => $header['itemtype'],
+                                              'objectid' => $header['objectid'],
+                                              'pid'      => $header['pid'],
+                                              'comment'  => $package['text'],
+                                              'title'    => $package['title'],
+                                              'postanon' => $package['postanon']));
+
+            xarResponseRedirect($receipt['returnurl']['decoded']);
+            return true;
+        case 'reply':
+
+            $comments = xarModAPIFunc('comments','user','get_one',
+                                       array('cid' => $header['pid']));
+
+            if (eregi('^(re\:|re\([0-9]+\))',$comments[0]['xar_title'])) {
+                if (eregi('^re\:',$comments[0]['xar_title'])) {
+                    $new_title = preg_replace("'re\:'i",
+                                              'Re(1):',
+                                              $comments[0]['xar_title'],
+                                              1
+                                             );
+                } else {
+                    preg_match("/^re\(([0-9]+)?/i",$comments[0]['xar_title'], $matches);
+                    $new_title = preg_replace("'re\([0-9]+\)\:'i",
+                                              'Re('.($matches[1] + 1).'):',
+                                              $comments[0]['xar_title'],
+                                              1
+                                             );
+                }
+            } else {
+                $new_title = 'Re: '.$comments[0]['xar_title'];
+            }
+
+            $header['modid'] = $comments[0]['xar_modid'];
+            $header['itemtype'] = $comments[0]['xar_itemtype'];
+            $header['objectid'] = $comments[0]['xar_objectid'];
+
+            // get the title and link of the original object
+            $modinfo = xarModGetInfo($header['modid']);
+            $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                                       array('itemtype' => $header['itemtype'],
+                                             'itemids' => array($header['objectid'])),
+                                       // don't throw an exception if this function doesn't exist
+                                       0);
+            if (!empty($itemlinks) && !empty($itemlinks[$header['objectid']])) {
+                $url = $itemlinks[$header['objectid']]['url'];
+                $header['objectlink'] = $itemlinks[$header['objectid']]['url'];
+                $header['objecttitle'] = $itemlinks[$header['objectid']]['label'];
+            } else {
+                $url = xarModURL($modinfo['name'],'user','main');
+            }
+            if (empty($receipt['returnurl'])) {
+                $receipt['returnurl'] = array('encoded' => rawurlencode($url),
+                                              'decoded' => $url);
+            }
+
+            list($comments[0]['xar_text'],
+                 $comments[0]['xar_title']) =
+                        xarModCallHooks('item',
+                                        'transform',
+                                         $header['pid'],
+                                         array($comments[0]['xar_text'],
+                                               $comments[0]['xar_title']));
+
+
+            $package['comments']             = $comments;
+            $package['new_title']            = $new_title;
+            $receipt['action']               = 'reply';
+            $output['header']                = $header;
+            $output['package']               = $package;
+            $output['receipt']               = $receipt;
+
+            break;
+        case 'preview':
+        default:
+            list($package['transformed-text'],
+                 $package['transformed-title']) = xarModCallHooks('item',
+                                                      'transform',
+                                                      $header['pid'],
+                                                      array($package['text'],
+                                                            $package['title']));
+
+            $comments[0]['xar_text']     = $package['text'];
+            $comments[0]['xar_title']    = $package['title'];
+            $comments[0]['xar_modid']    = $header['modid'];
+            $comments[0]['xar_itemtype'] = $header['itemtype'];
+            $comments[0]['xar_objectid'] = $header['objectid'];
+            $comments[0]['xar_pid']      = $header['pid'];
+            $comments[0]['xar_author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+            $comments[0]['xar_cid']      = 0;
+            $comments[0]['xar_postanon'] = $package['postanon'];
+            $comments[0]['xar_date']     = xarLocaleFormatDate("%d %b %Y %H:%M:%S %Z",time());
+            $comments[0]['xar_hostname'] = 'somewhere';
+
+            $package['comments']         = $comments;
+            $package['new_title']        = $package['title'];
+            $receipt['action']           = 'reply';
+
+            break;
+
+    }
+
+    $hooks = comments_user_formhooks();
+
+    $output['hooks']              = $hooks;
+    $output['header']             = $header;
+    $output['package']            = $package;
+    $output['package']['date']    = time();
+    $output['package']['uid']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uid') : 2);
+    $output['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
+    $output['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+    $output['receipt']            = $receipt;
+    return $output;
+}
+
+?>
