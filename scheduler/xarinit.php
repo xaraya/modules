@@ -39,14 +39,14 @@ function scheduler_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                                array('modName' => 'scheduler',
                                      'blockType' => 'trigger'))) return;
             // fall through to the next upgrade
 
-        case 2.0.0:
+        case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
     }
