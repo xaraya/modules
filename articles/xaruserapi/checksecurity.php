@@ -89,8 +89,7 @@ function articles_userapi_checksecurity($args)
     if (isset($article['pubtypeid'])) {
         if (!isset($ptid)) {
             $ptid = $article['pubtypeid'];
-        } elseif ($ptid != $article['pubtypeid']) {
-// Note : but what about re-classifying articles ?
+        } elseif ($ptid != $article['pubtypeid'] && $mask != 'EditArticles') {
             return false;
         }
     }
