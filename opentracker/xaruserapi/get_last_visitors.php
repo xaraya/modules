@@ -31,22 +31,29 @@ function opentracker_userapi_get_last_visitors($args) {
     
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables(); 
+    $accesslogtable = $xartable['accesslog'];
+    $rolestable = $xartable['roles']; 
+    $bindvars = array();
+    $bindvars[] = $modname;
     
-    $query =     'SELECT DISTINCT(AL.xar_uid) FROM '.$xartable['accesslog'].
-                ' AL, '.$xartable['roles'].' R'.
-                ' WHERE R.xar_uid = AL.xar_uid AND AL.xar_modname = \''.xarVarPrepForStore($modname) .'\'';
+    
+     $query = "SELECT DISTINCT(AL.xar_uid) FROM $accesslogtable AL, $rolestable R
+               WHERE R.xar_uid = AL.xar_uid AND AL.xar_modname = ?";
     if (isset($modtype))
-        $query .= ' AND AL.xar_modtype = \''.xarVarPrepForStore($modtype).'\'';
+        $query .= " AND AL.xar_modtype = ?";
+        $bindvars[] = $modtype;
     if (isset($modfunc))
-        $query .= ' AND AL.xar_modfunc = \''.xarVarPrepForStore($modfunc).'\'';
+        $query .= " AND AL.xar_modfunc = ?";
+        $bindvars[] = $modfunc;
     if (isset($instanceid))
-        $query .= ' AND AL.xar_instanceid = \''.xarVarPrepForStore($instanceid).'\'';
+        $query .= " AND AL.xar_instanceid = ?";
+        $bindvars[] = $instanceid;
     if (!$include_anonymous)
         $query .= ' AND R.xar_uname <> \'anonymous\'';
     
     $query .= ' ORDER BY AL.timestamp';
     
-    $result = $dbconn->SelectLimit($query, $num_users); 
+    $result =& $dbconn->SelectLimit($query, $num_users, $bindvars); 
 
     if (!$result) return; 
     $items = array();

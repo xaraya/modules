@@ -41,6 +41,7 @@ function opentracker_user_main($args)
     
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables(); 
+    $accesslogtable = $xartable['accesslog'];
     
     // Prevent caching
     header('Expires: Sat, 22 Apr 1978 02:19:00 GMT');
@@ -92,18 +93,13 @@ switch ($period) {
 switch ($period)
 {
     case 'total' :
-    $query =       
-           sprintf(
-            'SELECT MIN(timestamp) AS first_access,
-                    MAX(timestamp) AS last_access
-             FROM %s
-             WHERE client_id = %d',
     
-            $xartable['accesslog'],
-            xarVarPrepForStore($clientID)
-        );
+    $query =  "SELECT MIN(timestamp) AS first_access,
+                      MAX(timestamp) AS last_access
+               FROM $accesslogtable
+               WHERE client_id = ?";
 
-    $result = &$dbconn->Execute($query); 
+    $result = & $dbconn->Execute($query,array($clientID)); 
     if (!$result) return; 
     list($firstAccess, $lastAccess) = $result->fields; 
 
