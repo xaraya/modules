@@ -18,8 +18,8 @@ function release_userapi_getmoduleids($args)
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_id'];
 

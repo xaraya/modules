@@ -19,8 +19,8 @@ xarDBLoadTableMaintenanceAPI();
 function release_init()
 {
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_id'];
 
@@ -183,8 +183,8 @@ function release_upgrade($oldversion)
     switch($oldversion) {
         case 0.04:
 
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $releaseidtable = $xartable['release_notes'];
 
             // Add a column to the table
@@ -218,8 +218,8 @@ function release_delete()
 {
 
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_id'];
 

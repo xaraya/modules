@@ -36,8 +36,8 @@ function release_userapi_updateid($args)
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     if (empty($approved)){
         $approved = '1';

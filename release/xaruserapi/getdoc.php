@@ -12,8 +12,8 @@ function release_userapi_getdoc($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_docs'];
 
