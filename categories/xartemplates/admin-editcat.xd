@@ -43,7 +43,9 @@
              </td>
         </tr>
         <xar:if condition="!empty($hooks)">
+          <tr><td colspan="2">
             #$hooks#
+          </td></tr>
         </xar:if>
     </table>
 </xar:for>

@@ -1,9 +1,10 @@
-    <tr align="left" valign="middle">
-        <td><xar:mlstring>Categories</xar:mlstring></td>
-        <td>
-<xar:loop name="$items">
-            #$loop:item['select']#&nbsp;&nbsp;
-</xar:loop>
-        </td>
-    </tr>
+<div class="xar-title"><span><xar:mlstring>Categories</xar:mlstring></span></div>
+
+<div>
+    <xar:loop name="$items">
+      <span style="margin-right: 2em;">
+        #$loop:item['select']#
+      </span>
+    </xar:loop>
+</div>
 
