@@ -118,7 +118,8 @@ function categories_userapi_navigation($args)
         return '';
     } else {
         $mastercids = explode(';',$cidlist);
-        sort($mastercids,SORT_NUMERIC);
+        // preserve order of root categories
+        //sort($mastercids,SORT_NUMERIC);
     }
 
     // See if we need to show a count per category
