@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *
+ */
 function release_userapi_createid($args)
 {
     // Get arguments
@@ -15,11 +17,12 @@ function release_userapi_createid($args)
                         new SystemException($msg));
         return false;
     }
+    /* Get rid of leading and trailing spaces in the name */
+    $regname = trim(strtolower($regname));
 
-    $regname = strtolower($regname);
     // Argument check
     if (!ereg("^[a-z0-9][a-z0-9_-]*[a-z0-9]$", $regname)) {
-        $msg = xarML('Wrong symbols in registered name.');
+        $msg = xarML('Registered name may only contain alphanumeric characters, included underscore or hypen, and no spaces.');
         xarExceptionSet(XAR_USER_EXCEPTION,
                         'BAD_PARAM',
                         new SystemException($msg));
@@ -40,7 +43,7 @@ function release_userapi_createid($args)
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
-        $msg = xarML('Sorry, requested regname/type pair already registered earlier.');
+        $msg = xarML('Sorry, requested name for that extension type is already registered.');
         xarExceptionSet(XAR_USER_EXCEPTION,
                         'BAD_PARAM',
                         new SystemException($msg));
@@ -50,21 +53,30 @@ function release_userapi_createid($args)
     if (empty($approved)){
         $approved = 1;
     }
-
+    $allrids=array();
     // Get all IDs
-    $query = "SELECT xar_rid FROM $releasetable ORDER BY xar_rid";
-    $result =& $dbconn->Execute($query);
+    $query2 = "SELECT xar_rid FROM $releasetable ORDER BY xar_rid";
+
+    $result =& $dbconn->Execute($query2);
     if (!$result) return;
-    $rid = 0;
     for (; !$result->EOF; $result->MoveNext()) {
-        $nextid = $result->fields[0];
-        $rid++;
-        if ($rid == $nextid) continue;
-        break;
+        list($rid) = $result->fields;
+            $allrids[] = array('rid'=> $rid);
     }
     $result->Close();
+    //jojodee - we want to get all the rids that exist and may not be sequential,
+    // and allocate first free number to the next rid available for the extension
 
-    if ($rid == 0) return;
+    $totalrids=count($allrids);
+    $i=0;
+    $nextid=1;  //We want to start from ID=1 not 0
+    for ($i = 0; $i < $totalrids; $i++)
+    {
+  	if ($nextid == ($allrids[$i]['rid'])) {
+          $nextid++;
+       }
+    }
+  if ($nextid == 0) return;
 
     $query = "INSERT INTO $releasetable (
               xar_rid,
@@ -79,7 +91,7 @@ function release_userapi_createid($args)
               xar_rstate
               )
             VALUES (
-              '" . xarVarPrepForStore($rid) . "',
+              '" . xarVarPrepForStore($nextid) . "',
               '" . xarVarPrepForStore($uid) . "',
               '" . xarVarPrepForStore($regname) . "',
               '" . xarVarPrepForStore($displname) . "',
@@ -94,10 +106,11 @@ function release_userapi_createid($args)
     if (!$result) return;
 
     // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'create', $rid, 'rid');
-
+    xarModCallHooks('item', 'create', $nextid, 'rid');
+   $rid=$nextid;
     // Return the id of the newly created user to the calling process
-    return $rid;
+  return $rid;
+
 }
 
 ?>
