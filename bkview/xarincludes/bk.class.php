@@ -482,4 +482,22 @@ function bkRangeToText($range='') {
   return $text;
 }
 
+function bkAgeToRangeCode($age) 
+{
+    // Converts an age as output by :AGE: dspec to range code 
+    // useable by bk prs (bit lame that prs doesn't do that itself)
+    // First part: multiplier
+    // Second part: unit:
+    //    h - hours
+    //    w - weeks
+    //    d - days
+    //    m - months
+    //    y - years
+
+    $ageCode='-1h';
+    $parts = explode(' ',$age);
+    $ageCode = "-". $parts[0] .$parts[1][0];
+    return $ageCode;
+}
+
 ?>

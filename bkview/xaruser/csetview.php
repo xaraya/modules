@@ -23,6 +23,7 @@ function bkview_user_csetview($args)
     xarVarFetch('showmerge','int:0:1',$showmerge,0);
     xarVarFetch('sort','str::',$sort,0);
     xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED);
+    xarVarFetch('taggedonly','int:0:1',$taggedonly,0,XARVAR_NOT_REQUIRED);
 
     extract($args);
     $data=array();
@@ -31,7 +32,11 @@ function bkview_user_csetview($args)
     if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
     
     $repo = new bkRepo($item['repopath']);
-    $formatstring = "':TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}'";
+    $formatstring = "'";
+    if($taggedonly) $formatstring .= "\$if(:TAG:){";
+    $formatstring .= ":TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
+    if($taggedonly) $formatstring .= "}";
+    $formatstring .= "'";
     $list = $repo->bkChangeSets($revs,$range,$formatstring,$showmerge,$sort,$user);
 
     $counter=1;
@@ -43,21 +48,34 @@ function bkview_user_csetview($args)
         $comments=nl2br(xarVarPrepForDisplay($comments));
         $csets[$counter]['tag']=$tag;
         $csets[$counter]['age']=$age;
+        $csets[$counter]['age_code'] =  bkAgeToRangeCode($age);
         $csets[$counter]['author']=$author;
         $csets[$counter]['rev']=$rev;
-        $csets[$counter]['comments']=$comments;
+        $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
+        $csets[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $counter++;
     }
 
     // Pass data to BL compiler
     $rangetext = bkRangeToText($range);
-    if($user == '') {
-        $data['pageinfo']=xarML("Changeset summaries #(1)",$rangetext);
+    if($taggedonly) {
+        if($user =='') {
+            $data['pageinfo'] = xarML("Tagged changesets #(1)",$rangetext);
+        } else {
+            $data['pageinfo'] = xarML("Tagged changesets #(1) by #(2)", $rangetext, $user);
+            $data['user'] = $user;
+        }
     } else {
-        $data['pageinfo']=xarML("Changeset summaries #(1) by #(2)",$rangetext,$user);
-        $data['user'] = $user;
+        if($user == '') {
+            $data['pageinfo']=xarML("Changeset summaries #(1)",$rangetext);
+        } else {
+            $data['pageinfo']=xarML("Changeset summaries #(1) by #(2)",$rangetext,$user);
+            $data['user'] = $user;
+        }
     }
-    $data['csets']=$csets;
+    $data['taggedonly'] = $taggedonly;
+    $data['range'] = $range;
+    $data['csets'] = $csets;
     $data['name_value'] = $item['reponame'];
     $data['repoid']=$repoid;
     return $data;

@@ -10,8 +10,12 @@
 
   <xar:loop name="$csets">
     <tr class="csets" align="top">
-      <td class="csets" nowrap>#$loop:item['age']#</td>
-       <td class="csets">#$loop:item['author']#</td>
+      <td class="csets" nowrap>
+        <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#&amp;taggedonly=#$taggedonly#">#$loop:item['age']#</a>
+      </td>
+       <td class="csets">
+        <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$loop:item['author']#&amp;taggedonly=#$taggedonly#">#$loop:item['author']#</a>
+       </td>
          <xar:if condition="!empty($loop:item['tag'])">
            <td class="bktagged">
 	     <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#">#$loop:item['rev']#</a>
