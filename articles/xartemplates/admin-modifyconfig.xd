@@ -1,5 +1,5 @@
 <div class="xar-mod-head">
-    <span class="xar-mod-title"> 
+    <span class="xar-mod-title">
         <xar:mlstring>
             Articles Administration 
         </xar:mlstring>
@@ -187,7 +187,7 @@
                             <xar:if condition="$usetitleforurl">
                                 <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" checked="checked" />
                             <xar:else/>
-                                <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" checked="checked" />
+                                <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" />
                             </xar:if>
                         </td>
                     </tr>
