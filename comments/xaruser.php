@@ -47,6 +47,8 @@ function comments_user_display($args) {
     if (!xarSecurityCheck('Comments-Read',0))
         return;
 
+// FIXME: simplify all this header, package, receipt stuff
+
     $header   = xarRequestGetVar('header');
     $package  = xarRequestGetVar('package');
     $receipt  = xarRequestGetVar('receipt');
@@ -62,13 +64,37 @@ function comments_user_display($args) {
 
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];
-    } elseif (empty($args['modid']) && !isset($header['modid'])) {
-        $header['modid'] = xarModGetIDFromName(xarModGetName());
+    } elseif (isset($header['modid'])) {
+        $args['modid'] = $header['modid'];
+    } else {
+        xarVarFetch('modid','isset',$modid,NULL,XARVAR_NOT_REQUIRED);
+        if (empty($modid)) {
+            $modid = xarModGetIDFromName(xarModGetName());
+        }
+        $args['modid'] = $modid;
+        $header['modid'] = $modid;
     }
 
     if (isset($args['objectid'])) {
         $header['objectid'] = $args['objectid'];
+    } elseif (isset($header['objectid'])) {
+        $args['objectid'] = $header['objectid'];
+    } else {
+        xarVarFetch('objectid','isset',$objectid,NULL,XARVAR_NOT_REQUIRED);
+        $args['objectid'] = $objectid;
+        $header['objectid'] = $objectid;
     }
+
+    if (isset($args['selected_cid'])) {
+        $header['selected_cid'] = $args['selected_cid'];
+    } elseif (isset($header['selected_cid'])) {
+        $args['selected_cid'] = $header['selected_cid'];
+    } else {
+        xarVarFetch('selected_cid','isset',$selected_cid,NULL,XARVAR_NOT_REQUIRED);
+        $args['selected_cid'] = $selected_cid;
+        $header['selected_cid'] = $selected_cid;
+    }
+
 
     if (!isset($receipt['returnurl']['raw'])) {
         if (empty($args['extrainfo'])) {
@@ -755,5 +781,252 @@ function comments_userapi_expand( ) {
     xarResponseRedirect($url);
 }
 
+// FIXME: why is this written as a hook/GUI function instead of a block function ?
+function comments_user_displayall($args) {
+
+    $modarray = array();
+    if (empty($args['modid'])) {
+        $args['modid'] = xarVarCleanFromInput('modid');
+        if (!$args['modid']) {
+            $modarray[] = 'all';
+        }  else      {
+            $modarray = $args['modid'];
+        }
+    }   else {     
+        $modarray=$args['modid'];
+    }        
+
+   
+    if (empty($args['order'])) {
+        $args['order'] = xarVarCleanFromInput('order');
+        if (!$args['order']) {
+            $args['order']='DESC';
+        }
+    }
+    if (empty($args['howmany'])) {
+            $args['howmany'] = xarVarCleanFromInput('howmany');
+            if (!$args['howmany']) {
+                $args['howmany']='20';
+            }
+    }
+    if (empty($args['first'])) {
+            $args['first'] = xarVarCleanFromInput('first');
+            if (!$args['first']) {
+                $args['first']='1';
+            }
+    }
+    if (empty($args['block_is_calling'])) {
+        $args['block_is_calling']=0;              
+    } 
+    if (empty($args['truncate'])) {
+            $args['truncate']='';              
+    }
+    if (empty($args['addmodule'])) {
+                $args['addmodule']='off';              
+    }
+    if (empty($args['addobject'])) {
+                    $args['addobject']=1;              
+    }
+    if (empty($args['addcomment'])) {
+                    $args['addcomment']=20;              
+    }
+    if (empty($args['adddate'])) {
+            $args['adddate']='on';              
+    }
+    if (empty($args['adddaysep'])) {
+                $args['adddaysep']='on';              
+    }
+    if (empty($args['addauthor'])) {
+                $args['addauthor']=1;              
+    }
+    if (empty($args['addprevious'])) {
+                $args['addprevious']=0;              
+    }
+
+    $args['returnurl'] = '';
+/*
+    // TODO: not sure all of this is necessary but let's keep it for now --Andrea
+    // As this function is also used as a hook function we need to
+    // check the extrainfo
+    if (empty($args['returnurl']) && empty($args['extrainfo'])) {
+        $args['returnurl'] = xarVarCleanFromInput('returnurl');
+        if (!$args['returnurl']) {
+            $modinfo = xarModGetInfo($args['modid']);
+            $args['returnurl'] = xarModURL($modinfo['name'],'user','main');
+            $args['extrainfo'] = $args['returnurl'];
+        }
+    } else {
+        $args['returnurl'] = $args['extrainfo'];
+    }
+*/
+
+    // get the list of modules+itemtypes that comments is hooked to
+    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+                                   array('hookModName' => 'comments'));
+
+    // initialize list of module and pubtype names    
+    $modlist = array();
+    $modname = array();
+    $modurl = array();
+    $modview = array();
+    $modlist['all'] = xarML('All');
+    if (isset($hookedmodules) && is_array($hookedmodules)) {
+        foreach ($hookedmodules as $module => $value) {
+            $modid = xarModGetIDFromName($module);
+            $modname[$modid] = $module;
+            $modurl[$modid] = xarModURL($module,'user','display');
+            $modview[$modid] = xarModURL($module,'user','view');
+            // we have hooks for individual item types here
+            if (!isset($value[0])) {
+                // Get the list of all item types for this module (if any)
+                $mytypes = xarModAPIFunc($module,'user','getitemtypes',
+                                         // don't throw an exception if this function doesn't exist
+                                         array(), 0);
+                foreach ($value as $itemtype => $val) {
+                    if (isset($mytypes[$itemtype])) {
+                        $type = $mytypes[$itemtype]['label'];
+                    } else {
+                        $type = xarML('type #(1)',$itemtype);
+                    }
+                    $modlist["$module.$itemtype"] = ucwords($module) . ' - ' . $type;
+                }
+            } else {
+                $modlist[$module] = ucwords($module);
+            }
+        }
+    }
+
+    $args['modarray']=$modarray;
+
+    // check is supported modules are hooked and are requested
+    $supported=array();
+    if ( isset($modname['151'])  )  {
+        foreach ($modarray as $mod)    {
+            if (substr($mod,0,8)=='articles' || $mod=='all') {
+                $supported['articles']=1;
+                break;
+            }
+        }
+    }
+    
+    if ( isset($modname['23'])  )  {
+        foreach ($modarray as $mod)    {
+            if ($mod=='polls' || $mod=='all') {
+                $supported['polls']=1;
+                break;
+            }
+        }
+    }
+        
+    $args['supported']=$supported;
+    $comments = xarModAPIFunc('comments','user','get_multipleall',$args);
+    $settings = xarModAPIFunc('comments','user','getoptions');
+
+    if (!empty($args['order'])) {
+        $settings['order']=$args['order'];        
+    }
+
+    $hoursnow=strftime("%H","now");
+    $timenow=time("now");   
+
+    // add url and truncate comments if requested
+    for ($i=0;$i<sizeof($comments);$i++) {   
+        
+        $comments[$i]['modname']=$modname[$comments[$i]['xar_modid']];
+        $comments[$i]['modurl']=$modurl[$comments[$i]['xar_modid']];
+        $comments[$i]['modview']=$modview[$comments[$i]['xar_modid']];
+// TODO: use getitemlinks() here
+        // provide object url when supported
+        if ($comments[$i]['xar_modid'] == '151' )   {
+            $comments[$i]['objurl']=$comments[$i]['modurl'].'&aid='.$comments[$i]['xar_objectid'];
+        }  
+        elseif ($comments[$i]['xar_modid'] == '23' ) {
+            $comments[$i]['objurl']=$comments[$i]['modurl'].'&pid='.$comments[$i]['xar_objectid'];
+        }
+        else {
+            $comments[$i]['objurl']=$comments[$i]['modurl'];
+        }
+
+        $comments[$i]['returnurl'] = urlencode(xarModURL($comments[$i]['modname'],'user','main'));
+        if ($args['truncate']) {             
+            if ( strlen($comments[$i]['xar_subject']) >$args['truncate']+3 )  {
+                $comments[$i]['xar_subject']=substr($comments[$i]['xar_subject'],0,$args['truncate']).'...';
+            }
+            if ( !empty($comments[$i]['xar_title']) && strlen($comments[$i]['xar_title']) >$args['truncate']-3 ) {
+                $comments[$i]['xar_title']=substr($comments[$i]['xar_title'],0,$args['truncate']).'...';
+            }
+        }        
+        $dateprev = '';
+        if ($args['adddaysep']=='on') {
+        // find out whether to change day separator        
+            $msgunixtime=strtotime($comments[$i]['xar_datetime']);
+            $msgdate=strftime("%b %d, %Y",$msgunixtime);
+            $msgday=strftime("%A",$msgunixtime);                        
+
+            $comments[$i]['daychange']=0;
+            
+            $hoursdiff=($timenow - $msgunixtime)/3600;                      
+            if($hoursdiff<$hoursnow && $msgdate!=$dateprev) {
+                $comments[$i]['daychange']=xarML('Today');
+                $dateprev=$msgdate;
+            }
+            elseif($hoursdiff>=$hoursnow && $hoursdiff<$hoursnow+24 && ($msgdate!=$dateprev) ) {
+                $comments[$i]['daychange']=xarML('Yesterday');
+                $dateprev=$msgdate;
+            }
+            elseif($hoursdiff>=$hoursnow+24 && $hoursdiff<$hoursnow+48 && $msgdate!=$dateprev) {
+                $comments[$i]['daychange']=xarML('Two days ago');
+                $dateprev=$msgdate;
+            }
+            elseif ($hoursdiff>=$hoursnow+48 && $hoursdiff<$hoursnow+144 && $msgdate!=$dateprev) {
+                $comments[$i]['daychange']=xarML("$msgday");
+                $dateprev=$msgdate;
+            }
+            elseif ($hoursdiff>=$hoursnow+144 && $msgdate!=$dateprev) {
+                $comments[$i]['daychange']=$msgdate;
+                $dateprev=$msgdate;
+            }
+        }                      
+    }                                     
+    // prepare for output
+    $templateargs['order']          =$args['order'];
+    $templateargs['howmany']        =$args['howmany'];
+    $templateargs['first']          =$args['first'];
+    $templateargs['adddate']        =$args['adddate'];
+    $templateargs['adddaysep']      =$args['adddaysep'];
+    $templateargs['addauthor']      =$args['addauthor'];
+    $templateargs['addmodule']      =$args['addmodule'];    
+    $templateargs['addcomment']     =$args['addcomment'];
+    $templateargs['addobject']      =$args['addobject'];
+    $templateargs['addprevious']    =$args['addprevious'];
+    $templateargs['supported']      =$args['supported'];
+    $templateargs['modarray']       =$modarray;
+    $templateargs['modid']          =$modarray;
+    $templateargs['modlist']        =$modlist;
+    $templateargs['decoded_returnurl'] = rawurldecode(xarModURL('comments','user','displayall'));
+    $templateargs['decoded_nexturl'] = xarModURL('comments','user','displayall',array(
+                                                                            'first'=>$args['first']+$args['howmany'],
+                                                                            'howmany'=>$args['howmany'],
+                                                                            'modid'=>$modarray                                                                            
+                                                                            )
+                                                            );
+    $templateargs['commentlist']    =$comments;
+    $templateargs['order']          =$settings['order'];
+    
+    if ($args['block_is_calling']==0 )   {         
+        $output=xarTplModule('comments', 'user','displayall', $templateargs);    
+    } else {                          
+        $templateargs['olderurl']=xarModURL('comments','user','displayall', 
+                                            array(
+                                                'first'=>   $args['first']+$args['howmany'],
+                                                'howmany'=> $args['howmany'],
+                                                'modid'=>$args['modid'] 
+                                                )
+                                            );
+        $output=xarTplBlock('comments', 'latestcommentsblock', $templateargs );    
+    }
+    
+    return $output;
+}
 
 ?>

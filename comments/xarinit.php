@@ -202,6 +202,12 @@ function comments_init() {
                     'All','All:All:All','ACCESS_ADMIN',     'Administrate Comments');
 
 
+    // Register blocks
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                       array('modName'  => 'comments',
+                             'blockType'=> 'latestcomments'))) return;
+    // TODO: define blocks mask & instances here, or re-use some common one ?
+
     // Initialisation successful
     return true;
 }
@@ -239,6 +245,11 @@ function comments_delete()
     xarRemoveMasks('comments');
     xarRemoveInstances('comments');
 
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
+                       array('modName'  => 'comments',
+                             'blockType'=> 'latestcomments'))) return;
+
     // Deletion successful
     return true;
 
@@ -253,14 +264,19 @@ function comments_upgrade($oldversion)
     switch($oldversion) {
         case 1.0:
             // Code to upgrade from version 1.0 goes here
-            break;
+            // Register blocks
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                               array('modName'  => 'comments',
+                                     'blockType'=> 'latestcomments'))) return;
+            // fall through to the next upgrade
         case 2.0:
             // Code to upgrade from version 2.0 goes here
-            break;
+            // fall through to the next upgrade
         case 2.5:
             // Code to upgrade from version 2.5 goes here
             break;
     }
+    return true;
 }
 
 ?>
