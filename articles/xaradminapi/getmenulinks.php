@@ -37,6 +37,12 @@ function articles_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('articles',
                                                    'admin',
+                                                   'importpictures'),
+                              'title' => xarML('Create a simple picture gallery with articles'),
+                              'label' => xarML('Import Pictures'));
+
+        $menulinks[] = Array('url'   => xarModURL('articles',
+                                                   'admin',
                                                    'importpages'),
                               'title' => xarML('Import existing HTML pages'),
                               'label' => xarML('Import Webpages'));
