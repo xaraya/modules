@@ -35,10 +35,10 @@ function changelog_adminapi_delete($args)
             $itemtype = 0;
         }
         $query .= " WHERE xar_moduleid = ? 
-                      AND xar_itemtype = ?
+                      AND xar_itemtype = ?";
 
         $bindvars[] = (int) $modid;
-		$bindvars[] = (int) $itemtype;
+        $bindvars[] = (int) $itemtype;
 
         if (!empty($itemid)) {
             $query .= " AND xar_itemid = ?";
