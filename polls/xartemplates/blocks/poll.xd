@@ -53,7 +53,7 @@
 </xar:if>
 
 <div style="text-align:center;margin: auto;"><br />
-        <xar:if condition="$previewresults or $voted">
+        <xar:if condition="$previewresults or empty($canvote)">
             <a href="#$resultsurl#"><xar:mlstring>Results</xar:mlstring></a><br />
         </xar:if>
         <a href="&xar-modurl-polls-user-list;"><xar:mlstring>Previous Polls</xar:mlstring></a></div>
