@@ -56,14 +56,18 @@ function comments_userapi_modify($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-
-
     // Let's leave a link for the changelog module if it is hooked to track comments
+    /* jojodee: good idea. I'll move it direct to comments template and then can add it to
+                any others we like as well, like xarbb.
     if (xarModIsHooked('changelog', 'comments', 0)){
         $url = xarModUrl('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $cid));
         $text .= "\n<p>\n";
         $text .= '<a href="' . $url . '" title="' . xarML('See Changes') .'">';
+        $text .= '</a>';
+        $text .= "\n</p>\n"; //let's keep the begin and end tags together around the wrapped content
     }
+    */
+
     if  (($useeditstamp ==1 ) ||
                      (($useeditstamp == 2 ) && (xarUserGetVar('uid')<>$adminid))) {
     $text .= "\n<p>\n";
@@ -71,11 +75,9 @@ function comments_userapi_modify($args)
                    xarUserGetVar('name'),
                    xarUserGetVar('uname'),
                    $modified_date);
+    $text .= "\n</p>\n"; //let's keep the begin and end tags together around the wrapped content
     }
-    if (xarModIsHooked('changelog', 'comments', 0)){
-        $text .= '</a>';
-    }
-    $text .= "\n</p>\n"; //ah, that's why it's here - some content ;)
+
 
 
     $sql =  "UPDATE $xartable[comments]

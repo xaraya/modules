@@ -1,5 +1,5 @@
 <xar:loop name="$package['comments']">
-    <div class="xar-accent-outline xar-cm-comment" style="margin-left: #$loop:item['depth']*20#px;">        
+    <div class="xar-accent-outline xar-cm-comment" style="margin-left: #$loop:item['depth']*20#px;">
         <div class="xar-norm">
             <a name="#$loop:item['xar_cid']#"></a> 
             <xar:if condition="!isset($receipt['action']) or ($receipt['action'] ne 'reply' and $receipt['action'] ne 'modify')">
@@ -55,6 +55,19 @@
             <xar:else />
                 <h4>#$loop:item['xar_title']#</h4>
             </xar:if>
+            <!-- show changelog -->
+            <xar:sec mask="Comments-Moderator" catch="false">
+            <xar:if condition="xarModIsHooked('changelog','comments')">
+            <span class="xar-sub" style="float:right;">
+                <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['xar_cid']))#" title="#xarML('View Changes')#">
+                    <xar:mlstring>
+                        View changes
+                    </xar:mlstring>
+                </a>
+            </span>
+            </xar:if>
+            </xar:sec>
+            <!-- end changelog -->
             <span class="xar-sub"> 
                 <xar:mlstring>
                     Posted by:
@@ -79,8 +92,9 @@
                 <xar:mlstring>
                     on 
                 </xar:mlstring>
-                #$loop:item['xar_date']# 
-            </span> 
+                #$loop:item['xar_date']#
+            </span>
+
         </div>
         <div class="xar-cm-comment xar-accent">
             <xar:if condition="isset($package['transformed-text'])">
