@@ -37,9 +37,9 @@ function polls_adminapi_updateopt($args)
     $prefix = xarConfigGetVar('prefix');
 
     $sql = "UPDATE $pollsinfotable
-            SET ".$prefix."_optname = '" . xarVarPrepForStore($option) . "'
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
-              AND ".$prefix."_optnum = " . xarVarPrepForStore($opt);
+            SET ".$prefix."_optname = ?
+            WHERE ".$prefix."_pid = ?
+              AND ".$prefix."_optnum = ?";
     $bindvars = array($option, (int)$pid, $opt);
     $result = $dbconn->Execute($sql, $bindvars);
 

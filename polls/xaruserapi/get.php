@@ -10,7 +10,10 @@ function polls_userapi_get($args)
 {
     // Get arguments from argument array
     extract($args);
-
+ // Optional arguments.
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -21,7 +24,7 @@ function polls_userapi_get($args)
     // Selection check
     if (!empty($pid)) {
         $extra = "WHERE ".$prefix."_pid = ?";
-        $bindvars[]=$pid;
+        $bindvars[]=(int)$pid;
     } else {
         $extra = "WHERE ".$prefix."_modid = " . xarModGetIDFromName('polls');
         $extra .= " ORDER BY ".$prefix."_pid DESC";
@@ -42,7 +45,11 @@ function polls_userapi_get($args)
             FROM $pollstable
             $extra";
 
-    $result = $dbconn->SelectLimit($sql, 1, $bindvars);
+    if (!empty($pid)) {
+         $result = $dbconn->SelectLimit($sql, 1, $startnum-1, $bindvars);
+    }else {
+         $result = $dbconn->SelectLimit($sql, 1);
+    }
 
     // Error check
     if (!$result) {
