@@ -10,7 +10,7 @@
 
 <xar:set name="$width">'100%'</xar:set>
 
-    <script language="javascript">
+    <script type="text/javascript">
     <!--
     function submitIt() {
         var f = document.newticket;
