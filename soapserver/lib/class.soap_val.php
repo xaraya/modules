@@ -1,4 +1,4 @@
- <?php
+<?php
  /**
  * for creating serializable abstractions of native PHP types
  * NOTE: this is only really used when WSDL is not available.
@@ -52,4 +52,4 @@
  
  
  
- ?>
+?>

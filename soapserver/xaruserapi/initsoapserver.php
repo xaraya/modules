@@ -1,4 +1,4 @@
- <?php
+<?php
  /**
   * File: $Id$
   *
@@ -43,4 +43,4 @@
      return $server;
  }
  
- ?>
+?>

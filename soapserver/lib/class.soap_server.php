@@ -1,4 +1,4 @@
- <?php
+<?php
  
  
  
@@ -535,4 +535,4 @@
              'bindingType'=>'http://schemas.xmlsoap.org/wsdl/soap/');
      }
  }
- ?>
+?>

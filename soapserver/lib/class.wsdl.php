@@ -1,4 +1,4 @@
- <?php
+<?php
  /**
  * parses a WSDL file, allows access to it's data, other utility methods
  * 
@@ -858,4 +858,4 @@
  	} 
  } 
  
- ?>
+?>

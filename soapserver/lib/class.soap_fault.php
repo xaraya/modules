@@ -1,4 +1,4 @@
- <?php
+<?php
  /**
  * soap_fault class, allows for creation of faults
  * mainly used for returning faults from deployed functions
@@ -54,4 +54,4 @@
  		return $return_msg;
  	}
  }
- ?>
+?>
