@@ -15,7 +15,7 @@ fi
 
 # Only run this script on *this* server (the xaraya one)
 THISHOST=`bk gethost`
-if [ $THISHOST != sasquatch.pulpcontent.com ]
+if [ $THISHOST != newton.xaraya.com ]
 then exit 0
 fi
 
