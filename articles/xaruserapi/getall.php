@@ -271,17 +271,16 @@ function articles_userapi_getall($args)
             $item[$field] = $value;
         }
         // check security - don't generate an exception here
-        // TODO: security check by category - see below
-        if (xarSecurityCheck('ViewArticles',0,'Article',"$item[pubtypeid]:All:$item[authorid]:$item[aid]")) {
-            $articles[] = $item;
-
-            if (!empty($required['dynamicdata'])) {
-                $pubtype = $item['pubtypeid'];
-                if (!isset($itemids_per_type[$pubtype])) {
-                    $itemids_per_type[$pubtype] = array();
-                }
-                $itemids_per_type[$pubtype][] = $item['aid'];
+        if (empty($required['cids']) && !xarSecurityCheck('ViewArticles',0,'Article',"$item[pubtypeid]:All:$item[authorid]:$item[aid]")) {
+            continue;
+        }
+        $articles[] = $item;
+        if (!empty($required['dynamicdata'])) {
+            $pubtype = $item['pubtypeid'];
+            if (!isset($itemids_per_type[$pubtype])) {
+                $itemids_per_type[$pubtype] = array();
             }
+            $itemids_per_type[$pubtype][] = $item['aid'];
         }
     }
     $result->Close();
@@ -305,10 +304,26 @@ function articles_userapi_getall($args)
                                    'modid' => xarModGetIDFromName('articles')));
 
         // Inserting the corresponding Category ID in the Article Description
+        $delete = array();
         foreach ($articles as $key => $article) {
-            if (isset($cids[$article['aid']])) {
+            if (isset($cids[$article['aid']]) && count($cids[$article['aid']]) > 0) {
                 $articles[$key]['cids'] = $cids[$article['aid']];
-        // TODO: security check by category
+                foreach ($cids[$article['aid']] as $cid) {
+                    if (!xarSecurityCheck('ViewArticles',0,'Article',"$article[pubtypeid]:$cid:$article[authorid]:$article[aid]")) {
+                        $delete[$key] = 1;
+                        break;
+                    }
+                }
+            } else {
+                if (!xarSecurityCheck('ViewArticles',0,'Article',"$article[pubtypeid]:All:$article[authorid]:$article[aid]")) {
+                    $delete[$key] = 1;
+                    break;
+                }
+            }
+        }
+        if (count($delete) > 0) {
+            foreach ($delete as $key => $val) {
+                unset($articles[$key]);
             }
         }
     }
