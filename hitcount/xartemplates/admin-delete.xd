@@ -17,7 +17,7 @@
     <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
 
-    <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#" align="middle" />
+    <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
 </form></div>
 </div>
 </div>
