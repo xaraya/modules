@@ -83,7 +83,7 @@ function metaweblogapi_userapi_newpost($args)
                                                                   'pubdate' => $pubDate));
         xarLogMessage("Created article $postid with status $status ($publish) ");
         if (!$postid) {
-            xarExceptionFree();
+            xarErrorFree();
             $err = xarML("Failed to create new post #(1) (permission problem?)",$postid);
         }
     }
