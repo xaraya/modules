@@ -8,14 +8,14 @@
             <xar:loop name="$articlelist">
               <value>
                 <struct>
-                  <xar:if condition="!empty($loop:item['categories'])">
+                  <xar:if condition="!empty($loop:item.categories)">
                       <member>
                         <name>categories</name>
                         <value>
                           <array>
                             <data>
-                              <xar:loop id="mwlcats" name="$loop:item['categories']">
-                                <value><string>#$loop:mwlcats:item['name']#</string></value>
+                              <xar:loop id="mwlcats" name="$loop:item.categories">
+                                <value><string>#$loop:mwlcats:item.name#</string></value>
                               </xar:loop>
                             </data>
                           </array>
@@ -25,39 +25,39 @@
                   <member>
                     <name>dateCreated</name>
                     <value>
-                      <dateTime.iso8601>#$loop:item['dateCreated']#</dateTime.iso8601>
+                      <dateTime.iso8601>#$loop:item.dateCreated#</dateTime.iso8601>
                     </value>
                   </member>
                   <member>
                     <name>description</name>
-                    <value><string>#$loop:item['content']#</string></value>
+                    <value><string>#$loop:item.content#</string></value>
                   </member>
                   <member>
                     <name>postid</name>
                     <value>
-                      <string>#$loop:item['postid']#</string>
+                      <string>#$loop:item.postid#</string>
                     </value>
                   </member>
                   <member>
                     <name>title</name>
-                    <value><string>#$loop:item['title']#</string></value>
+                    <value><string>#$loop:item.title#</string></value>
                   </member>
                   <member>
                     <name>userid</name>
                     <value>
-                      <string>#$loop:item['authorid']#</string>
+                      <string>#$loop:item.authorid#</string>
                     </value>
                   </member>
                   <member>
                     <name>link</name>
                     <value>
-                      <string>#$loop:item['link']#</string>
+                      <string>#$loop:item.link#</string>
                     </value>
                   </member>
                   <member>
                     <name>permaLink</name>
                     <value>
-                      <string>#$loop:item['link']#</string>
+                      <string>#$loop:item.link#</string>
                     </value>
                   </member>
                 </struct>

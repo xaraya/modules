@@ -5,20 +5,20 @@
         <struct>
           <xar:loop name="$categories">
             <member>
-              <name>#$loop:item['description']#</name>
+              <name>#$loop:item.description#</name>
               <value>
                 <struct>
                   <member>
                     <name>description</name>
-                    <value><string>#$loop:item['description']#</string></value>
+                    <value><string>#$loop:item.description#</string></value>
                   </member>
                   <member>
                     <name>htmlUrl</name>
-                    <value><string>#$loop:item['htmlUrl']#</string></value>
+                    <value><string>#$loop:item.htmlUrl#</string></value>
                   </member>
                   <member>
                     <name>rssUrl</name>
-                    <value><string>#$loop:item['rssUrl']#</string></value>
+                    <value><string>#$loop:item.rssUrl#</string></value>
                   </member>
                 </struct>
               </value>

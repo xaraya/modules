@@ -9,7 +9,7 @@
               <array>
                 <data>
                   <xar:loop name="$categories">
-                    <value><string>#$loop:item['name']#</string></value>
+                    <value><string>#$loop:item.name#</string></value>
                   </xar:loop>
                 </data>
               </array>
