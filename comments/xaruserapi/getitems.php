@@ -80,7 +80,7 @@ function comments_userapi_getitems($args)
     $bindvars[] = $modid; $bindvars[] = $itemtype;
     if (isset($itemids) && count($itemids) > 0) {
         $bindmarkers = '?' . str_repeat(',?', count($itemids)-1);
-        array_merge($bindvars, $itemids);
+        $bindvars = array_merge($bindvars, $itemids);
         $query .= " AND $ctable[objectid] IN ($bindmarkers)";
     }
     $query .= " GROUP BY $ctable[objectid]
