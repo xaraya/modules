@@ -30,7 +30,7 @@ function xarcachemanager_schedulerapi_prefetch($args)
         $wait = 2;
     }
     // avoid the current page just in case...
-    $avoid = xarServerGetCurrentURL();
+    $avoid = xarServerGetCurrentURL(array(), false);
 
     $level = 0;
     $seen = array();
