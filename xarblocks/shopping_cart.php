@@ -57,54 +57,60 @@ function commerce_shopping_cartblock_display($blockinfo)
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
 
-//$box_content='';
-$box_price_string='';
-  // include needed files
-  require_once(DIR_FS_INC . 'xtc_format_price.inc.php');
-  require_once(DIR_FS_INC . 'xtc_draw_separator.inc.php');
-  require_once(DIR_FS_INC . 'xtc_recalculate_price.inc.php');
+    include_once 'modules/commerce/xarclasses/shopping_cart.php';
 
+    $cart = xarSessionGetVar('cart');
+    if (!is_object($cart)) {
+        $cart = new shoppingCart();
+    }
 
-
-  if ($_SESSION['cart']->count_contents() > 0) {
-    $products = $_SESSION['cart']->get_products();
     $products_in_cart=array();
-    $qty=0;
-    for ($i=0, $n=sizeof($products); $i<$n; $i++) {
-    $qty+=$products[$i]['quantity'];
-      $products_in_cart[]=array(
-                                'QTY'=>$products[$i]['quantity'],
-                                'LINK'=>xarModURL('commerce','user','product_info',array('products_id' => $products[$i]['id'])),
-                                'NAME'=>$products[$i]['name']);
-
+    if ($cart->count_contents() > 0) {
+        $products = $cart->get_products();
+        $qty=0;
+        for ($i=0, $n=sizeof($products); $i<$n; $i++) {
+            $qty += $products[$i]['quantity'];
+            $products_in_cart[]=array(
+                                    'qty'=>$products[$i]['quantity'],
+                                    'link'=>xarModURL('commerce','user','product_info',array('products_id' => $products[$i]['id'])),
+                                    'name'=>$products[$i]['name']);
+        }
+        $data['products'] = $qty;
+        $data['empty'] = 'false';
     }
-  $box_smarty->assign('PRODUCTS',$qty);
-  $box_smarty->assign('empty','false');
-  } else {
-  // cart empty
-  $box_smarty->assign('empty','true');
-  }
-
-
-  if ($_SESSION['cart']->count_contents() > 0) {
-    $total_price =xtc_format_price($_SESSION['cart']->show_total(), $price_special = 0, $calculate_currencies = false);
-    if ($_SESSION['customers_status']['customers_status_ot_discount_flag'] == '1' && $_SESSION['customers_status']['customers_status_ot_discount'] != '0.00' ) {
-      $box_smarty->assign('TOTAL',xtc_format_price(($total_price), $price_special = 1, $calculate_currencies = false));
-      $box_smarty->assign('DISCOUNT',xtc_format_price(xtc_recalculate_price(($total_price*(-1)), $_SESSION['customers_status']['customers_status_ot_discount']), $price_special = 1, $calculate_currencies = false));
-    } else {
-      $box_smarty->assign('TOTAL',xtc_format_price(($total_price), $price_special = 1, $calculate_currencies = false));
+    else {
+        // cart empty
+        $data['empty'] = 'true';
     }
 
-  }
+
+    if ($cart->count_contents() > 0) {
+        $total_price = xarModAPIFunc('commerce','user','format_price',
+                                            array('price_string' => $cart->show_total(),
+                                            'price_special' => $price_special = 0, 'calculate_surrencies' => $calculate_currencies = false));
+        if ($_SESSION['customers_status']['customers_status_ot_discount_flag'] == '1' && $_SESSION['customers_status']['customers_status_ot_discount'] != '0.00' ) {
+            $data['total'] = xarModAPIFunc('commerce','user','format_price',
+                                                array('price_string' => $total_price,
+                                                'price_special' => $price_special = 1, 'calculate_surrencies' => $calculate_currencies = false));
+            $data['discount'] = xarModAPIFunc('commerce','user','format_price',
+                                                array('price_string' => xarModAPIFunc('commerce','user','recalculate_price', array('price' => $total_price*(-1))),
+                                                'price_special' => $_SESSION['customers_status']['customers_status_ot_discount'],
+                                                'calculate_currencies' => $price_special = 1, 'show_currencies' => $calculate_currencies = false));
+        }
+        else {
+            $data['total'] = xarModAPIFunc('commerce','user','format_price',
+                                                array('price_string' => $total_price,
+                                                'price_special' => $price_special = 1, 'calculate_surrencies' => $calculate_currencies = false));
+        }
+    }
 
 
-    $box_smarty->assign('LINK_CART',xarModURL('commerce','user','shopping_cart', '', 'SSL'));
-    $box_smarty->assign('products',$products_in_cart);
+    $data['link_cart'] = xarModURL('commerce','user','shopping_cart');
+    $data['products'] = $products_in_cart;
 /*
-    $box_smarty->caching = 0;
-    $box_smarty->assign('language', $_SESSION['language']);
     $box_shopping_cart= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_cart.html');
 */
+$data['empty'] = true;
     $blockinfo['content'] = $data;
     return $blockinfo;
 }

@@ -14,7 +14,7 @@
 /**
  * Initialise the block
  */
-function commerce_admincommerceblock_init()
+function commerce_adminblock_init()
 {
     return array(
         'content_text' => '',
@@ -31,7 +31,7 @@ function commerce_admincommerceblock_init()
 /**
  * Get information on the block ($blockinfo array)
  */
-function commerce_admincommerceblock_info()
+function commerce_adminblock_info()
 {
     return array(
         'text_type' => 'Content',
@@ -51,58 +51,56 @@ function commerce_admincommerceblock_info()
  * @param $blockinfo array
  * @returns $blockinfo array
  */
-function commerce_admincommerceblock_display($blockinfo)
+function commerce_adminblock_display($blockinfo)
 {
     // Security Check
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
-//$box_content='';
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    xarModAPILoad('commerce');
+    $xartables = xarDBGetTables();
 
+    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
+    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
+    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+    $language_id = $currentlang['id'];
 
-  $orders_contents = '';
-  $orders_status_query = new xenQuery("select orders_status_name, orders_status_id from " . TABLE_ORDERS_STATUS . " where language_id = '" . $_SESSION['languages_id'] . "'");
-      $q = new xenQuery();
-      if(!$q->run()) return;
-  while ($orders_status = $q->output()) {
-    $orders_pending_query = new xenQuery("select count(*) as count from " . TABLE_ORDERS . " where orders_status = '" . $orders_status['orders_status_id'] . "'");
-      $q = new xenQuery();
-      if(!$q->run()) return;
-    $orders_pending = $q->output();
-    $orders_contents .= '<a href="' . xarModURL('commerce','user',(FILENAME_ORDERS, 'selected_box=customers&status=' . $orders_status['orders_status_id']) . '">' . $orders_status['orders_status_name'] . '</a>: ' . $orders_pending['count'] . '<br>';
-  }
-  $orders_contents = substr($orders_contents, 0, -4);
+$box_content='';
 
-  $customers_query = new xenQuery("select count(*) as count from " . TABLE_CUSTOMERS);
-      $q = new xenQuery();
-      if(!$q->run()) return;
-  $customers = $q->output();
-  $products_query = new xenQuery("select count(*) as count from " . TABLE_PRODUCTS . " where products_status = '1'");
-      $q = new xenQuery();
-      if(!$q->run()) return;
-  $products = $q->output();
-  $reviews_query = new xenQuery("select count(*) as count from " . TABLE_REVIEWS);
-      $q = new xenQuery();
-      if(!$q->run()) return;
-  $reviews = $q->output();
-  $admin_image = '<a href="' . xarModURL('commerce','user',(FILENAME_START,'').'">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES.'admin_button.gif') .'</a>';
-  if ($cPath != '' && $product_info['products_id'] != '') {
-    $admin_link='<a href="' . xarModURL('commerce','user',(FILENAME_EDIT_PRODUCTS, 'cPath=' . $cPath . '&pID=' . $product_info['products_id']) . '&action=new_product' . '" target="_blank">' . xtc_image(xarTplGetImage('icons/edit_product.gif') . '</a>';
-  }
+    if(!xarVarFetch('cPath',  'int',  $data['cPath'], 0, XARVAR_NOT_REQUIRED)) {return;}
+    $orders_contents = '';
 
-  $box_content= '<b>' . BOX_TITLE_STATISTICS . '</b><br>' . $orders_contents . '<br>' .
-                                         BOX_ENTRY_CUSTOMERS . ' ' . $customers['count'] . '<br>' .
-                                         BOX_ENTRY_PRODUCTS . ' ' . $products['count'] . '<br>' .
-                                         BOX_ENTRY_REVIEWS . ' ' . $reviews['count'] .'<br>' .
-                                         $admin_image . '<br>' .$admin_link;
+    $q = new xenQuery('SELECT',$xartables['commerce_orders_status'],array('orders_status_name', 'orders_status_id'));
+    $q->eq('language_id',$language_id);
+    if(!$q->run()) return;
+    $order_status = array();
+    foreach ($q->output() as $orders) {
+        $q = new xenQuery('SELECT',$xartables['commerce_orders'],'count(*) AS count');
+        $q->eq('orders_status',$orders['orders_status_id']);
+        if(!$q->run()) return;
+        $orders_pending = $q->row();
+        $row['name'] = $orders['orders_status_name'];
+        $row['id'] = $orders['orders_status_id'];
+        $row['count'] = $orders_pending['count'];
+        $order_status[] = $row;
+    }
+    $data['order_status'] = $order_status;
 
+    $q = new xenQuery('SELECT',$xartables['commerce_customers'],'count(*) AS count');
+    if(!$q->run()) return;
+    $data['customers'] = $q->row();
 
-    $box_smarty->assign('BOX_TITLE', BOX_HEADING_ADMIN);
-    $box_smarty->assign('BOX_CONTENT', $box_content);
+    $q = new xenQuery('SELECT',$xartables['commerce_products'],'count(*) AS count');
+    $q->eq('products_status',1);
+    if(!$q->run()) return;
+    $data['products'] = $q->row();
 
-    $box_smarty->caching = 0;
-    $box_smarty->assign('language', $_SESSION['language']);
-    $box_admin= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_admin.html');
-    $blockinfo['content'] = $data;
+    $q = new xenQuery('SELECT',$xartables['commerce_reviews'],'count(*) AS count');
+    if(!$q->run()) return;
+    $data['reviews'] = $q->row();
+
+    $box_content= $data;
+    $blockinfo['content'] = $box_content;
     return $blockinfo;
 }
 ?>

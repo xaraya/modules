@@ -71,7 +71,7 @@ function commerce_order_historyblock_display($blockinfo)
 
       $product_ids = '';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($orders = $q->output()) {
         $product_ids .= $orders['products_id'] . ',';
       }
@@ -80,7 +80,7 @@ function commerce_order_historyblock_display($blockinfo)
       $customer_orders_string = '<table border="0" width="100%" cellspacing="0" cellpadding="1">';
       $products_query = new xenQuery("select products_id, products_name from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id in (" . $product_ids . ") and language_id = '" . $_SESSION['languages_id'] . "' order by products_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products = $q->output()) {
         $customer_orders_string .= '  <tr>' .
                                    '    <td class="infoBoxContents"><a href="' . xarModURL('commerce','user','product_info',array('products_id' => $products['products_id'])) . '">' . $products['products_name'] . '</a></td>' .

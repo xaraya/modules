@@ -84,7 +84,7 @@ function commerce_reviewsblock_display($blockinfo)
     // display random review box
     $review_query = new xenQuery("select substring(reviews_text, 1, 60) as reviews_text from " . TABLE_REVIEWS_DESCRIPTION . " where reviews_id = '" . $random_product['reviews_id'] . "' and languages_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $review = $q->output();
 
     $review = htmlspecialchars($review['reviews_text']);

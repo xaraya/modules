@@ -65,7 +65,7 @@ function commerce_product_notificationsblock_display($blockinfo)
     if (isset($_SESSION['customer_id'])) {
       $check_query = new xenQuery("select count(*) as count from " . TABLE_PRODUCTS_NOTIFICATIONS . " where products_id = '" . (int)$_GET['products_id'] . "' and customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check = $q->output();
 
       $notification_exists = (($check['count'] > 0) ? true : false);
