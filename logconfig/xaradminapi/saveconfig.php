@@ -13,31 +13,27 @@ function logconfig_adminapi_saveconfig()
 
     if (file_exists($filename) && !is_writable($filename)) {
         if (!chmod($filename, 0666)) {
-            $msg = xarML('Cannot change the mode of file (#(1)) so it can be writeable', $filename);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNWRITABLE_FILE', $msg);
-            echo $msg; die();
+            $msg = xarML('Cannot change the mode of file "#(1)" so it can be writeable', $filename);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',$msg);
             return;
         }
     }
     
     if (!$fp = @fopen($filename, "w")) {
-            $msg = xarML('Cannot open file (#(1))', $filename);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_OPEN_FILE', $msg);
-            echo $msg; die();
-            return;
+        $msg = xarML('Cannot open file "#(1)', $filename);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',$msg);
+        return;
     }
     
     if (fwrite($fp, "<?php \n" . $content . " \n?>") === FALSE) {
-        $msg = xarML('Cannot write to file (#(1))', $filename);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNWRITABLE_FILE', $msg);
-        echo $msg; die();
+        $msg = xarML('Cannot write to file "#(1)"', $filename);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',$msg);
         return;
     } 
     
     if (!fclose($fp)) {
-        $msg = xarML('Cannot close file (#(1))', $filename);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNCLOSED_FILE', $msg);
-        echo $msg; die();
+        $msg = xarML('Cannot close file "#(1)"', $filename);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',$msg);
         return;
     }
 
