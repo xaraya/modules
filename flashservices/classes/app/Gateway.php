@@ -30,7 +30,7 @@ class Gateway
     var $amfin; // The input stream object
     var $amfout; // The output stream object
     var $service_browser_header = "DescribeService"; // The amf header used by the service browser
-	var $credentials_header = "Credentials"; // The amf header used to set credentials
+	  var $credentials_header = "Credentials"; // The amf header used to set credentials
     var $callback_header = "/onResult"; // The string flash expects from a successful method call
     var $amf_header = "Content-type: application/x-amf"; // The value of the HTTP content header expected by Flash
 
@@ -64,19 +64,19 @@ class Gateway
             $this->_saveRawDataToFile ($this->debugdir."input.amf", $GLOBALS["HTTP_RAW_POST_DATA"]);
         }
         
-		$inputStream = new AMFInputStream($GLOBALS["HTTP_RAW_POST_DATA"]); // wrap the raw data with the input stream
-		$deserializer = new AMFDeserializer($inputStream); // deserialize the data
+		    $inputStream = new AMFInputStream($GLOBALS["HTTP_RAW_POST_DATA"]); // wrap the raw data with the input stream
+		    $deserializer = new AMFDeserializer($inputStream); // deserialize the data
         $amfin = $deserializer->getAMFObject(); // grab the deserialized object
         $amfout = new AMFObject(); // create a new amfobject to store the output
         
-		$headercount = $amfin->numHeader(); // count the number of header
+		    $headercount = $amfin->numHeader(); // count the number of header
         for ($i=0; $i<$headercount; $i++) { // loop over the headers
             $header = $amfin->getHeaderAt($i); // get the current header
             if ($header['key'] == $this->service_browser_header) { // is this the service browser header
                 $this->exec->addHeaderFilter($header); // tell the executive that
             } else if($header['key'] == $this->credentials_header){
-				$this->exec->addHeaderFilter($header); // tell the executive that
-			}
+				        $this->exec->addHeaderFilter($header); // tell the executive that
+			      }
         }
  		
         $bodycount = $amfin->numBody(); // get the body count
@@ -96,7 +96,7 @@ class Gateway
         if ($debug){
             $this->_saveRawDataToFile($this->debugdir."results.amf", $outstream->flush());
         }
-		header($this->amf_header); // define the proper header
+		    header($this->amf_header); // define the proper header
         print($outstream->flush()); // flush the binary data
     }
 	/**
@@ -105,7 +105,7 @@ class Gateway
 	 * @param dir    The directory to store debugging files.
 	 */
     function setDebugDirectory($dir)
-	{ 
+	  { 
         $this->debugdir = $dir;
     }
     
@@ -200,7 +200,8 @@ class Gateway
      *
      * @param    content    The content to append to the data file.
      */
-    function debug($content) {
+    function debug($content)
+    {
         $this->_appendRawDataToFile($this->debugdir."processing.txt",$content."\n");
     }
 }

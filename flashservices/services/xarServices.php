@@ -1,12 +1,14 @@
 <?php 
 
-class xarServices { 
+class xarServices
+{ 
 	var $module;
 	var $func; 
 	var $type;
 	var $methodTable;
 	
-	function xarServices() { 
+	function xarServices()
+	{ 
 		$this->methodTable = array( 
 			'xarModApiService' => array( 
 				'description' => "Calls the Xaraya Mod Api Function", 
@@ -23,7 +25,8 @@ class xarServices {
 	
 	/*********************************************************************\	
 	\*********************************************************************/
-	function xarModApiService($module, $type, $func, $args = array()) { 
+	function xarModApiService($module, $type, $func, $args = array())
+	{ 
 		//we need to change the working directory so that xarModApiFunc will 
 		//be able to find the correct file. 
 		$curdir = getcwd();
@@ -50,7 +53,8 @@ class xarServices {
 	
 	/*********************************************************************\	
 	\*********************************************************************/
-	function xarModFuncService($module, $type, $func, $args = array()) { 
+	function xarModFuncService($module, $type, $func, $args = array())
+	{ 
 		$curdir = getcwd();
 		$curdir = preg_replace('/\\\\/', '/', $curdir);
 		$dir = preg_replace('/\/modules\/.*$/', '/', $curdir);
