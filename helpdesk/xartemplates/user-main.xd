@@ -16,6 +16,8 @@ to submit any questions or problems.</p>
 return to this page and 'View Tickets' to see a response to your inquiries.</p>
 
 <xar:if condition="!xarUserIsLoggedIn()">
+ <xar:comment>
+ <!-- This is just not ready yet -->
  Display box for user to view ticket status by email address and ticket number!
  <span>
     <form action="" method="GET">
@@ -24,6 +26,7 @@ return to this page and 'View Tickets' to see a response to your inquiries.</p>
         <input type="submit" name="submit" value="submit" /> <br />
     </form>
  </span>
+</xar:comment>
 </xar:if>
 </div>
 

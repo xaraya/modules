@@ -72,14 +72,17 @@ function helpdesk_user_display($args)
 
     /* Get the path to the Cats. */
     $cidlist =  xarModGetVar('helpdesk','mastercids.1');
-    $mastercids = explode(';',$cidlist);
+
     $cats = array();
-    foreach($data['categories'] as $category){
-        $cats[] = xarModAPIFunc('helpdesk', 'user', 'cats', 
-                                array('cids' => $mastercids,
-                                      'tcid' => $category['cid'])
-                               );
-    }    
+    if(sizeOf($cidlist) > 0 && !empty($cidlist)){
+	$mastercids = explode(';',$cidlist);
+	foreach($data['categories'] as $category){
+	    $cats[] = xarModAPIFunc('helpdesk', 'user', 'cats', 
+				    array('cids' => $mastercids,
+					  'tcid' => $category['cid'])
+				   );
+	}    
+    }
     $data['cats'] = $cats;  
     
     // Get Comments for the Ticket    
