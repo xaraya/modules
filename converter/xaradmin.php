@@ -75,7 +75,7 @@ function converter_admin_pntheme()
         return;
     }
 
-    $theme_dir = "themes/$theme/";
+    $theme_dir = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/";
 
     // The API function is called
     $output = xarModAPIFunc('converter',
@@ -161,7 +161,7 @@ function converter_admin_phpnuketheme()
         return;
     }
 
-    $theme_dir = "themes/$theme/";
+    $theme_dir = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/";
 
     // The API function is called
     $output = xarModAPIFunc('converter',

@@ -26,14 +26,14 @@ function converter_adminapi_pntheme($args)
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
+    $theme_file = $theme_dir.'theme.php';
     if (!file_exists($theme_file)) {
         $msg = xarML('Theme file does not exist.');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
-    $theme_file = $theme_dir.'theme.php';
+//    $theme_file = $theme_dir.'theme.php';
 
     $file = join('', file($theme_file));
     $file = str_replace("\"\n", "'\n", $file);
@@ -48,7 +48,7 @@ function converter_adminapi_pntheme($args)
     $file = str_replace('pnSecAuthAction(0, \'Stories::Story\', "$info[aid]:$info[cattitle]:$info[sid]", ACCESS_DELETE)', '', $file);
     $file = str_replace('pnSecAuthAction(0, \'Stories::Story\', "$info[aid]:$info[cattitle]:$info[sid]", ACCESS_EDIT)', '', $file);
     $file = str_replace('_SEARCH', '<xar:mlstring>Search</xar:mlstring>', $file);
-    $file = str_replace('../themes', 'themes', $file);
+    $file = str_replace('../themes', "#xarConfigGetVar('Site.BL.ThemesDirectory')#", $file);
     $file = str_replace('user.php', 'index.php?module=roles&func=account', $file);
     $file = str_replace('_READS', '#$counter# <xar:mlstring>Reads</xar:mlstring>', $file);
     $file = str_replace('_POSTEDBY', '<xar:mlstring>Posted By</xar:mlstring>', $file);
@@ -242,7 +242,7 @@ function converter_adminapi_pnuketheme($args)
     $file = str_replace('\n', '\'."\n".\'', $file);
     $file = str_replace(".''", '', $file);
     $file = str_replace('$thename', $theme, $file);
-    $file = str_replace('../themes', 'themes', $file);
+    $file = str_replace('../themes', "#xarConfigGetVar('Site.BL.ThemesDirectory')#", $file);
     $file = str_replace('_SEARCH', '<xar:mlstring>Search</xar:mlstring>', $file);
 
     // Dirty little hack to create a new function in the temp file.
@@ -285,7 +285,7 @@ function converter_adminapi_pnuketheme($args)
     fwrite($fp, $output);
     fwrite($fp, "\n".'<xar:module main="true" />'."\n");
 
-    if (file_exists('themes/$theme/header.html')){
+    if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory').'/$theme/header.html')){
     return 'file exists';
     }
 
@@ -494,10 +494,10 @@ function converter_adminapi_simulateheader($theme)
     echo '<xar:blockgroup name="header" id="header" /> '."\n";
     echo '<base href="&xar-baseurl;index.php" /> '."\n";
     echo "<style type=\"text/css\">";
-    echo "@import url(\"&xar-baseurl;themes/$theme/style/style.css\"); ";
+    echo "@import url(\"&xar-baseurl;#xarConfigGetVar('Site.BL.ThemesDirectory')#/$theme/style/style.css\"); ";
     echo "</style>\n";
     echo "<style type=\"text/css\">";
-    echo "@import url(\"&xar-baseurl;themes/$theme/style/xarstyle.css\"); ";
+    echo "@import url(\"&xar-baseurl;#xarConfigGetVar('Site.BL.ThemesDirectory')#/$theme/style/xarstyle.css\"); ";
     echo "</style>\n";
     echo '#$tpl:headJavaScript#'."\n\n";
 }
@@ -714,8 +714,8 @@ function footmsg()
 
 function converter_adminapi_themeheadersimulate($theme) {
 
-    if (file_exists("themes/$theme/header.html")) {
-        $tmpl_file = "themes/$theme/header.html";
+    if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/header.html")) {
+        $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/header.html";
         $thefile = implode("", file($tmpl_file));
         $thefile = addslashes($thefile);
         $thefile = "\$r_file=\"".$thefile."\";";
@@ -725,8 +725,8 @@ function converter_adminapi_themeheadersimulate($theme) {
     
     echo '<xar:blockgroup name="left" id="left" />';
 
-    if (file_exists("themes/$theme/left_center.html")) {
-        $tmpl_file = "themes/$theme/left_center.html";
+    if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/left_center.html")) {
+        $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/left_center.html";
         $thefile = implode("", file($tmpl_file));
         $thefile = addslashes($thefile);
         $thefile = "\$r_file=\"".$thefile."\";";
@@ -737,8 +737,8 @@ function converter_adminapi_themeheadersimulate($theme) {
 
 function converter_adminapi_themefootersimulate($theme) {
 
-    if (file_exists("themes/$theme/center_right.html")) {
-        $tmpl_file = "themes/$theme/center_right.html";
+    if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html")) {
+        $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html";
         $thefile = implode("", file($tmpl_file));
         $thefile = addslashes($thefile);
         $thefile = "\$r_file=\"".$thefile."\";";
@@ -748,8 +748,8 @@ function converter_adminapi_themefootersimulate($theme) {
 
     echo '<xar:blockgroup name="right" id="right" />';
 
-    if (file_exists("themes/$theme/footer.html")) {
-        $tmpl_file = "themes/$theme/footer.html";
+    if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/footer.html")) {
+        $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/footer.html";
         $thefile = implode("", file($tmpl_file));
         $thefile = addslashes($thefile);
         $thefile = "\$r_file=\"".$thefile."\";";
@@ -760,8 +760,8 @@ function converter_adminapi_themefootersimulate($theme) {
 
 function converter_adminapi_themeblocksimulate($theme, $title, $content) {
 
-    if (file_exists("themes/$theme/center_right.html")) {
-        $tmpl_file = "themes/$theme/blocks.html";
+    if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html")) {
+        $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/blocks.html";
         $thefile = implode("", file($tmpl_file));
         $thefile = addslashes($thefile);
         $thefile = "\$r_file=\"".$thefile."\";";
