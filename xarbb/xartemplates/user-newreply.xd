@@ -119,7 +119,7 @@
                     <xar:if condition="isset($package['text'])">
                         <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2">#xarVarPrepForDisplay($package['text'])#</textarea>
                         <xar:else />
-                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2" </textarea>
+                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2"></textarea>
                     </xar:if>
                 </td>
             </tr>
