@@ -13,7 +13,7 @@
 			<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded"  value="#$receipt['returnurl']['encoded']#" />
 			<input type="radio"  name="receipt[action]" id="receipt-action-reparent" value="reparent" />&nbsp;<label for="receipt-action-reparent"><xar:mlstring>Attach child comments to parent</xar:mlstring></label><br />
 			<input type="radio"  name="receipt[action]" id="receipt-action-thread" value="thread" />&nbsp;<label for="receipt-action-thread"><xar:mlstring>Delete this comment and all children</xar:mlstring></label><br />
-			<input type="submit" name="submit" id="receipt-action-delete" value="#xarML('Delete')#" />
+			<input type="submit" name="submit" id="receipt-action-delete" value="Delete" />
 			<input type="button" value="#xarML('Cancel')#" onClick="javascript:history.go(-1);" />
 		</div>
     </form>
