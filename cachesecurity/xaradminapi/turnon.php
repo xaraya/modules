@@ -11,7 +11,7 @@ function cachesecurity_adminapi_turnon()
 
     if (!$issynchronized) {
         $msg = xarML('Trying to turn security caching on without it being synchronized! Please, you need to get the cache synchronized first.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));
         return;
     }
 
