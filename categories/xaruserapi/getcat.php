@@ -114,7 +114,7 @@ function categories_userapi_getcat($args)
         if ($getchildren)
         {
             $SQLquery .= "(P1.xar_left BETWEEN ? AND ?)";
-            $bindvars[] = $return_child_left; $bindvars[] = $cat['right']
+            $bindvars[] = $return_child_left; $bindvars[] = $cat['right'];
         }
 
         if ($getparents && $getchildren)
