@@ -28,16 +28,16 @@ function bkview_admin_update($args)
     xarVarFetch('reponame','str::',$reponame);
     xarVarFetch('repopath','str::',$repopath);
     extract($args);
-	
+    
     if (!xarSecConfirmAuthKey()) return;
-	
+    
     if(!xarModAPIFunc('bkview','admin','update',array('repoid' => $repoid,
                                                       'reponame' => $reponame,
                                                       'repopath' => $repopath))) {
-		return; // throw back
-	}
-	xarSessionSetVar('statusmsg', xarMLByKey('_BKVIEW_UPDATED'));
-	xarResponseRedirect(xarModURL('bkview', 'admin', 'view'));
-	return true;
+        return; // throw back
+    }
+    xarSessionSetVar('statusmsg', xarMLByKey('_BKVIEW_UPDATED'));
+    xarResponseRedirect(xarModURL('bkview', 'admin', 'view'));
+    return true;
 }
 ?>

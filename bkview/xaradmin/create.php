@@ -24,15 +24,15 @@ function bkview_admin_create($args)
 {
     xarVarFetch('reponame','str::',$reponame);
     xarVarFetch('repopath','str::',$repopath);
-	extract($args);
-	
+    extract($args);
+    
     if (!xarSecConfirmAuthKey()) return;
-	
+    
     $repoid = xarModAPIFunc('bkview','admin','create',array('reponame' => $reponame,'repopath' => $repopath));
-	if (!isset($repoid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-	
-	xarSessionSetVar('statusmsg', xarML('Repository registered'));
-	xarResponseRedirect(xarModURL('bkview', 'admin', 'view'));
-	return true;
+    if (!isset($repoid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    
+    xarSessionSetVar('statusmsg', xarML('Repository registered'));
+    xarResponseRedirect(xarModURL('bkview', 'admin', 'view'));
+    return true;
 }
 ?>

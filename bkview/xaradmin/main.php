@@ -18,12 +18,12 @@
  */
 function bkview_admin_main()
 {
-	// Security check, in admin at least edit is necessary
-	if (!xarSecurityCheck('AdminAllRepositories')) return;
+    // Security check, in admin at least edit is necessary
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
     
-	$data['welcome'] = xarML('Welcome to the administration part of the bkview module...');
+    $data['welcome'] = xarML('Welcome to the administration part of the bkview module...');
     $data['pageinfo']= xarML('BkView overview');
-	return $data;
+    return $data;
 }
 
 ?>

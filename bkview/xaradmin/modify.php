@@ -23,28 +23,28 @@
 function bkview_admin_modify($args)
 {
     xarVarFetch('repoid','id',$repoid,NULL);
-   	extract($args);
+       extract($args);
 
-	$item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
-	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-	
-	// Security check
-	if (!xarSecurityCheck('AdminAllRepositories')) return;
-	
-	$item['module'] = 'bkview';
-	$hooks = xarModCallHooks('item','modify',$repoid,$item);
-	if (empty($hooks)) {
+    $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    
+    // Security check
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
+    
+    $item['module'] = 'bkview';
+    $hooks = xarModCallHooks('item','modify',$repoid,$item);
+    if (empty($hooks)) {
             $hooks = '';
         } elseif (is_array($hooks)) {
             $hooks = join('',$hooks);
-	}
-	
-	// Return the template variables defined in this function
-	$data['authid']= xarSecGenAuthKey();
-	$data['submitbutton'] = xarVarPrepForDisplay(xarML('Update repository'));
-	$data['hooks'] = $hooks;
+    }
+    
+    // Return the template variables defined in this function
+    $data['authid']= xarSecGenAuthKey();
+    $data['submitbutton'] = xarVarPrepForDisplay(xarML('Update repository'));
+    $data['hooks'] = $hooks;
     $data['repoid'] = $repoid;
-	$data['reponame'] = $item['reponame'];
+    $data['reponame'] = $item['reponame'];
     $data['repopath'] = $item['repopath'];
     $data['pageinfo'] = xarML('Modify repository');
     return $data;

@@ -25,37 +25,37 @@
  */
 function bkview_adminapi_delete($args)
 {
-	extract($args);
-	
-	if (!isset($repoid) || !is_numeric($repoid)) {
-		$msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'item ID', 'admin', 'delete', 'Bkview');
-		xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-		return;
-	}
+    extract($args);
     
-	$item = xarModAPIFunc('bkview',	'user','get',array('repoid' => $repoid));
-	
-	// Check for exceptions
-	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-	
-	if (!xarSecurityCheck('AdminAllRepositories')) return;
-	
-	$dbconn =& xarDBGetConn();
-	$xartable =& xarDBGetTables();
-	
-	$bkviewtable = $xartable['bkview'];
+    if (!isset($repoid) || !is_numeric($repoid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                     'item ID', 'admin', 'delete', 'Bkview');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
+    
+    $item = xarModAPIFunc('bkview',    'user','get',array('repoid' => $repoid));
+    
+    // Check for exceptions
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
+    
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    
+    $bkviewtable = $xartable['bkview'];
 
-	$sql = "DELETE FROM $bkviewtable WHERE xar_repoid = ?";
-	if(!$dbconn->Execute($sql,array($repoid))) return;
+    $sql = "DELETE FROM $bkviewtable WHERE xar_repoid = ?";
+    if(!$dbconn->Execute($sql,array($repoid))) return;
 
-	// Let any hooks know that we have deleted an item.  As this is a
-	// delete hook we're not passing any extra info
-	$item['module'] = 'bkview';
-	$item['itemid'] = $repoid;
-	xarModCallHooks('item', 'delete', $repoid, $item);
-	
-	// Let the calling process know that we have finished successfully
-	return true;
+    // Let any hooks know that we have deleted an item.  As this is a
+    // delete hook we're not passing any extra info
+    $item['module'] = 'bkview';
+    $item['itemid'] = $repoid;
+    xarModCallHooks('item', 'delete', $repoid, $item);
+    
+    // Let the calling process know that we have finished successfully
+    return true;
 }
 ?>
