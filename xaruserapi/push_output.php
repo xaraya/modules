@@ -20,7 +20,6 @@ function reports_userapi_push_output($args)
     xarLogMessage("FOP: $command");
     $lastline = exec($command, $outlines, $returnvalue);
     $outlines = join("\n",$outlines);
-     xarLogMessage("FOP: " .$outlines);
     if( (!file_exists($output)) || (filesize($output) == 0)) {
         // Something went wrong, produce the output of the command as exception
         $outtext = xarML("The #(1) document was not correctly generated, perhaps the log below gives some insight on what went wrong:\n", strtoupper($format));
@@ -38,7 +37,7 @@ function reports_userapi_push_output($args)
             $contenttype = "plain/text";
             break;
         case 'svg':
-            $contenttype = "image/svg";
+            $contenttype = "image/svg+xml";
             break;
         default:
             // force download?
