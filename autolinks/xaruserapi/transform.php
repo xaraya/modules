@@ -42,7 +42,7 @@ function autolinks_userapi_transform($args)
     } else {
         $transformed = xarModAPIFunc(
             'autolinks', 'user', '_transform',
-            array($text)
+            array($extrainfo)
         );
     }
 
