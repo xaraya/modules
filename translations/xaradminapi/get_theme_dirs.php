@@ -57,14 +57,14 @@ function translations_adminapi_get_theme_dirs($args)
             if ($filename == 'blocks' || $filename == 'pages' || $filename == 'includes') {
                 searchFiles("themes/$themedir/$filename", $prefix);
             } elseif ($filename == 'modules') {
-            	  searchFiles("themes/$themedir/modules", $prefix, 1);
+                searchFiles("themes/$themedir/modules", $prefix, 1);
                 $dd2 = opendir("themes/$themedir/modules");
                 while ($moddir = readdir($dd2)) {
-                	  if (($moddir == '.') || ($moddir == '..') || ($moddir == 'SCCS')) continue;
+                    if (($moddir == '.') || ($moddir == '..') || ($moddir == 'SCCS')) continue;
                     if (is_dir("themes/$themedir/modules/$moddir")) {
-                    	  $force = 0;
-                    	  $filesBlock = false;
-                    	  $filesIncl = false;
+                        $force = 0;
+                        $filesBlock = false;
+                        $filesIncl = false;
                         if (is_dir("themes/$themedir/modules/$moddir/blocks")) {
                             $filesBlock = searchFiles("themes/$themedir/modules/$moddir/blocks", $prefix);
                         }
