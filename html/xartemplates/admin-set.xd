@@ -2,7 +2,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body"><h2><xar:mlstring>Set HTML Tag Attributes</xar:mlstring></h2>
 	<div style="margin: auto;">
-	<form method="post" action="#xarModURL('html','admin','updateset')#" method="post" enctype="application/x-www-form-urlencoded" />
+	<form method="post" action="#xarModURL('html','admin','updateset')#" method="post" enctype="application/x-www-form-urlencoded">
 		<xar:loop name="$items">
 		<xar:set name="$allowed">#$loop:item['allowed']#</xar:set>
 

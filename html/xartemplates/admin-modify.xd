@@ -3,7 +3,7 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Edit HTML Tag</xar:mlstring></h2>
 <div align="center">
-<form method="post" action="#xarModURL('html', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('html', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="#$authid#" />
 	<input type="hidden" name="cid" id="cid" value="#$cid#" />
     <table border="0" cellspacing="0" cellpadding="2">
