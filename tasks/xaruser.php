@@ -494,11 +494,7 @@ function tasks_menu()
 {
 	$output = new pnHTML();
 
-	list($filter,
-		$id,
-		$module,
-		$type,
-		$func) = pnVarCleanFromInput('filter',
+	list($filter,$id,$module,$type,	$func) = pnVarCleanFromInput('filter',
 									'id',
 									'module',
 									'type',
@@ -534,21 +530,9 @@ function tasks_menu()
 
 function tasks_feedback()
 {
-	$output = new pnHTML();
-	
-	$output->SetInputMode(_PNH_VERBATIMINPUT);
-	$feedback = pnGetStatusMsg();
-	if(!empty($feedback)) {
-		$output->Linebreak();
-		$output->TableStart();
-		$output->Text('<tr><td align=center>');
-		$output->BoldText(_TASKS_FEEDBACK);
-		$output->Text('</td></tr>');
-		$output->Text('<tr><td>' . $feedback . '</td></tr>');
-		$output->TableEnd();
-		$output->Linebreak();
-	}
-	return $output->GetOutput();
+	$feedback = xarGetStatusMsg();
+    if(empty($feedback)) $feedback="";
+	return $feedback;
 }
 
 function tasks_dateformatlist() {

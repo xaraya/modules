@@ -1,0 +1,46 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Add new task</xar:mlstring></span>
+</div>
+
+<form action="&xar-modurl-tasks-admin-create;" method="post" enctype="application/x-www-form-urlencoded">
+  <input type="hidden" name="parentid" id="parentid" value="#$parentid#">
+  <input type="hidden" name="modname" id="modname" value="#$modname#">
+  <input type="hidden" name="objectid" id="objectid" value="#$objectid#">
+  <table border="0" width="100%">
+    <tbody>
+      <tr align="left" valign="middle">
+        <td><xar:mlstring>Task name</xar:mlstring></td>
+        <td>
+          <input type="text" name="name" id="name" value="" size="50" maxlength="255" tabindex="1">
+        </td>
+      </tr>
+      <tr align="left" valign="middle">
+        <td><xar:mlstring>Status</xar:mlstring></td>
+        <td>
+          <select name="status" id="status" size="1" tabindex="2">
+            <xar:loop name="$statusoptions">
+              <option value="#$id#">#$name#</option>
+            </xar:loop>
+           </select>
+         </td>
+       </tr>
+       <tr align="left" valign="middle">
+        <td><xar:mlstring>Priority</xar:mlstring></td>
+        <td>
+          <select name="priority" id="priority" size="1" tabindex="3">
+            <xar:loop name="$prioritydropdown">
+              <option value="#$id#">#$name#</option>
+            </xar:loop>
+          </select>
+        </td>
+      </tr>
+      <tr align="left" valign="middle">
+        <td><xar:mlstring>Description</xar:mlstring></td>
+        <td>
+          <textarea name="description" id="description" wrap="soft" rows="8" cols="65" tabindex="4"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="submit" value="#$submitbutton#" align="center" tabindex="5">
+</form>        

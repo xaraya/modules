@@ -41,93 +41,55 @@ function tasks_admin_view()
  */
 function tasks_admin_new($args)
 {
-	list($module,
-		$type,
-		$func) = pnVarCleanFromInput('module',
+    $data=array();
+	list($module,$type,	$func) = xarVarCleanFromInput('module',
 									'type',
 									'func');
 
 	extract($args);
 	
-	$output = new pnHTML();
-	
-    if (!pnModLoad('tasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks','user','view'));
+	if (!xarModLoad('tasks', 'user')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarResponseRedirect(xarModURL('tasks','user','view'));
 		return;
     }
 	
   // DISPLAY ONLY IF COMMENT AUTH FOR BASETASKID, OR MOD AUTH FOR NO BASETASKID
-    if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
-        pnRedirect(pnModURL('tasks','user','view'));
-		return;
-    }
+//     if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_ADD)) {
+//         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
+//         pnRedirect(pnModURL('tasks','user','view'));
+// 		return;
+//     }
 
-	$output->SetInputMode(_PNH_VERBATIMINPUT);
-	if($module == "tasks" && $type == "admin" && $func == "new") {
-	    $output->Text(tasks_menu());
-	}
+// NEED TO INVESTIGATEN THIS
+// 	if($module == "tasks" && $type == "admin" && $func == "new") {
+// 	    $output->Text(tasks_menu());
+// 	}
 
 	$statusoptions = array();    
-	$statusoptions[] = array('id'=>0,'name'=>'Open');
-	$statusoptions[] = array('id'=>1,'name'=>'Closed');
+	$statusoptions[] = array('id'=>0,'name'=>xarML('Open'));
+	$statusoptions[] = array('id'=>1,'name'=>xarML('Closed'));
+    $data['statusoptions']=$statusoptions;
 
 	$prioritydropdown = array();
 	for($x=0;$x<=9;$x++) {
 		$prioritydropdown[] = array('id' => $x, 'name' => $x);
 	}
+    $data['prioritydropdown']=$prioritydropdown;
 	
-	$output->SetInputMode(_PNH_VERBATIMINPUT);
-	if($module == "tasks" && $type == "admin" && $func == "new") {
-		$output->Text(tasks_feedback());
-	}
+    // NEED TO INVESTIGATE THIS
+// 	if($module == "tasks" && $type == "admin" && $func == "new") {
+// 		$output->Text(tasks_feedback());
+// 	}
+    //$data['feedback']=tasks_feedback();
 
-    $output->Title(_TASKS_ADDTASK);
+    $data['parentid']= $parentid;
+    $data['modname']= $modname;
+    $data['objectid']= $objectid;
 
-    $output->FormStart(pnModURL('tasks', 'admin', 'create'));
+    $data['submitbutton']=xarML('Add task');
 
-    $output->FormHidden('parentid', $parentid);
-    $output->FormHidden('modname', $modname);
-    $output->FormHidden('objectid', $objectid);
-
-    $output->TableStart();
-
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_TASKNAME));
-    $row[] = $output->FormText('name', '', 50, 255);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_TASKSTATUS));
-    $row[] = $output->FormSelectMultiple('status', $statusoptions, 0, 1);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_TASKPRIORITY));
-    $row[] = $output->FormSelectMultiple('priority', $prioritydropdown, 0, 1);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_TASKDESCRIPTION));
-    $row[] = $output->FormTextarea('description', '', 8, 65);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $output->TableEnd();
-
-    $output->Linebreak(2);
-    $output->FormSubmit(_TASKS_TASKADD);
-    $output->FormEnd();
-
-    return $output->GetOutput();
+    return $data;
 /*
 // EXTRANEOUS	
     $sendmailoptions = array();    
