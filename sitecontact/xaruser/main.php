@@ -23,7 +23,7 @@ function sitecontact_user_main()
     if(!xarVarFetch('message', 'isset', $message,  NULL, XARVAR_DONT_SET)) {return;}
 
     // Security Check
-	if(!xarSecurityCheck('ViewSiteContact')) return;
+    if(!xarSecurityCheck('ViewSiteContact')) return;
 
     // Generate a onetime authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();

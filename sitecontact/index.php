@@ -14,12 +14,12 @@ $ModName = basename( dirname( __FILE__ ) );
 modules_get_language();
 
 if (!$user){
-    	$username="";
-    	
-    	}else{
-    	getusrinfo($user);
-	
-	}
+        $username="";
+        
+        }else{
+        getusrinfo($user);
+    
+    }
 
 global $textcolor1,$textcolor2, $user, $cookie, $adminmail, $nukeurl, $sitename, $user, $pntable, $dbconn, $multilingual, $currentlang, $bgcolor2 ;
 include("header.php");
@@ -38,20 +38,20 @@ echo "</tr>";
 
 echo "<tr><td width=\"120\" align=\"right\">"._CONTACTSUBJECT."*</td>";
 echo "<td align=\"right\"><select name=\"subjectrequest\">";
-echo " 	  <option value=\"General\" selected=\"selected\">General suggestion</option>";
-//echo " 	  <option value=\"Contribution request\" selected=\"Upgrade to contributor status\">Upgrade to contributor status</option>";
-echo " 	  <option value=\"Service\">Service request</option>";
+echo "       <option value=\"General\" selected=\"selected\">General suggestion</option>";
+//echo "       <option value=\"Contribution request\" selected=\"Upgrade to contributor status\">Upgrade to contributor status</option>";
+echo "       <option value=\"Service\">Service request</option>";
 echo "    <option value=\"Information\">Information request</option>";
-//echo " 	  <option value=\"Billing\">Billing</option>";
-//echo " 	  <option value=\"Link Request\">Link Request</option>";
-echo " 	  <option value=\"General Assistance\">General Assistance</option>";
-//echo " 	  <option value=\"WebSite\">Website Issues</option>";
-//echo " 	  <option value=\"Advertising\">Advertising</option>";
-//echo " 	  <option value=\"Lost Password Request\">Lost Password Request</option>";
-//echo " 	  <option value=\"General Issue\">General Issue</option>";
-echo " 	  <option value=\"Thanks, $sitename\">Thanks, $sitename !!</option>";
+//echo "       <option value=\"Billing\">Billing</option>";
+//echo "       <option value=\"Link Request\">Link Request</option>";
+echo "       <option value=\"General Assistance\">General Assistance</option>";
+//echo "       <option value=\"WebSite\">Website Issues</option>";
+//echo "       <option value=\"Advertising\">Advertising</option>";
+//echo "       <option value=\"Lost Password Request\">Lost Password Request</option>";
+//echo "       <option value=\"General Issue\">General Issue</option>";
+echo "       <option value=\"Thanks, $sitename\">Thanks, $sitename !!</option>";
 echo " <option value=\"Abuse / Spam Report\">Abuse / Spam Report</option>";
-echo " 	    <option value=\"Complaint\">Complaint</option>";
+echo "         <option value=\"Complaint\">Complaint</option>";
 echo "</select>";
 echo "</td></tr>";
 
@@ -59,8 +59,8 @@ echo "</td></tr>";
 // echo "<tr><td width=\"120\" align=\"right\">"._CONTACTDEPARTMENT."*</td>";
 // echo "<td align=\"right\"><select name=\"subject\">";
 // echo " 
-// echo " 				  <option value=\"Sales\" selected=\"selected\">Sales</option>";
-// echo " 				  <option value=\"Billing\">Billing</option>";
+// echo "                   <option value=\"Sales\" selected=\"selected\">Sales</option>";
+// echo "                   <option value=\"Billing\">Billing</option>";
 // echo "                   <option value=\"Support\">Support</option>";
 // echo "                   <option value=\"Billing\">Billing</option>";
 // echo "                   <option value=\"Billing\">Management</option>";

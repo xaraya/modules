@@ -34,7 +34,7 @@ function sitecontact_user_contactus()
     if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
-//	if(!xarSecurityCheck('ReadSiteContact')) return;
+//    if(!xarSecurityCheck('ReadSiteContact')) return;
     $notetouser = xarModGetVar('sitecontact','notetouser');
     if (!isset($notetouser)){
         $notetouser = xarModGetVar('sitecontact','defaultnote');
@@ -89,15 +89,15 @@ function sitecontact_user_contactus()
     $message .="\n\n";
     $message .=xarML('You submitted the following information:');
     $message .="\n\n";
-	$message .= xarML('Name:').'           '.$username;
+    $message .= xarML('Name:').'           '.$username;
     $message .="\n";
-	$message .= xarML('Email:').'           '.$useremail;
+    $message .= xarML('Email:').'           '.$useremail;
     $message .="\n";
-	$message .= xarML('Organization:').' '.$company;
+    $message .= xarML('Organization:').' '.$company;
     $message .="\n";
-	$message .= xarML('Subject:').'        '.$requesttext;
+    $message .= xarML('Subject:').'        '.$requesttext;
     $message .="\n\n";
-	$message .= xarML('Comments:')."\n".$usermessage;
+    $message .= xarML('Comments:')."\n".$usermessage;
     $message .="\n";
     $message .=('____________________________________________________________');
     $message .="\n\n";
@@ -110,15 +110,15 @@ function sitecontact_user_contactus()
     $htmlmessage .='<br /><br />';
     $htmlmessage .=xarML('You submitted the following information:');
     $htmlmessage .='<br />';
-	$htmlmessage .= xarML('Name:').' '.$username;
+    $htmlmessage .= xarML('Name:').' '.$username;
     $htmlmessage .='<br />';
-	$htmlmessage .= xarML('Email:').' '.$useremail;
+    $htmlmessage .= xarML('Email:').' '.$useremail;
     $htmlmessage .='<br />';
-	$htmlmessage .= xarML('Organization:').' '.$company;
+    $htmlmessage .= xarML('Organization:').' '.$company;
     $htmlmessage .='<br />';
-	$htmlmessage .= xarML('Subject: ').$requesttext;
+    $htmlmessage .= xarML('Subject: ').$requesttext;
     $htmlmessage .='<br /><br />';
-	$htmlmessage .= xarML('Comments:').'<br />'.$usermessage;
+    $htmlmessage .= xarML('Comments:').'<br />'.$usermessage;
     $htmlmessage .='<br /><br />';
     $htmlmessage .=('____________________________________________________________');
     $htmlmessage .='<br /><br />';
@@ -139,17 +139,17 @@ function sitecontact_user_contactus()
     //now do admin email
     $adminmessage=xarML('Submitted By:').' '.$username;
     $adminmessage  .="\n";
-	$adminmessage  .= ('____________________________________________________________');
+    $adminmessage  .= ('____________________________________________________________');
     $adminmessage  .="\n";
-	$adminmessage  .= xarML('Name:').' '.$username;
+    $adminmessage  .= xarML('Name:').' '.$username;
     $adminmessage  .="\n";
-	$adminmessage  .= xarML('Email:').' '.$useremail;
+    $adminmessage  .= xarML('Email:').' '.$useremail;
     $adminmessage  .="\n";
-	$adminmessage  .= xarML('Organization:').' '.$company;
+    $adminmessage  .= xarML('Organization:').' '.$company;
     $adminmessage  .="\n";
-	$adminmessage  .= xarML('Subject: ').$requesttext;
+    $adminmessage  .= xarML('Subject: ').$requesttext;
     $adminmessage  .="\n\n";
-	$adminmessage  .= xarML('Comments:')."\n".$usermessage;
+    $adminmessage  .= xarML('Comments:')."\n".$usermessage;
     $adminmessage  .="\n";
     $adminmessage  .=('____________________________________________________________');
     $adminmessage  .="\n\n";
