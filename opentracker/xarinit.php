@@ -47,7 +47,7 @@
     if (!$result) return;
 	
     $index = array(
-        'name'      => 'xar_uid',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ac_uid',
         'fields'    => array('xar_uid'),
         'unique'    => false
     );
@@ -56,7 +56,7 @@
     if (!$result) return;
 
     $index = array(
-        'name'      => 'xar_modname',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ac_modname',
         'fields'    => array('xar_modname'),
         'unique'    => false
     );
@@ -65,7 +65,7 @@
     if (!$result) return;
 
     $index = array(
-        'name'      => 'full_xar_mod',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ac_fullmod',
         'fields'    => array('xar_modname', 'xar_modtype', 'xar_modfunc', 'xar_instanceid'),
         'unique'    => false
     );
@@ -74,7 +74,7 @@
     if (!$result) return;
 
     $index = array(
-        'name'      => 'entry_document',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ac_entrydoc',
         'fields'    => array('entry_document'),
         'unique'    => false
     );
@@ -84,7 +84,7 @@
 
     //KEY accesslog_id (accesslog_id),
     $index = array(
-        'name'      => 'accesslog_id',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ac_id',
         'fields'    => array('accesslog_id'),
         'unique'    => false
     );
@@ -94,7 +94,7 @@
     
     //KEY client_time  (client_id, timestamp),
     $index = array(
-        'name'      => 'client_time',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ac_clienttime',
         'fields'    => array('client_id', 'timestamp'),
         'unique'    => false
     );
@@ -104,7 +104,7 @@
 
     //KEY document_id  (document_id)
     $index = array(
-        'name'      => 'document_id',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ac_docid',
         'fields'    => array('document_id'),
         'unique'    => false
     );
@@ -127,7 +127,7 @@
 
     //KEY accesslog_id (accesslog_id)
     $index = array(
-        'name'      => 'accesslog_id',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_ad_id',
         'fields'    => array('accesslog_id'),
         'unique'    => false
     );
@@ -224,7 +224,7 @@
 
     //KEY client_time     (client_id, timestamp),
     $index = array(
-        'name'      => 'client_time',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_v_clienttime',
         'fields'    => array('client_id', 'timestamp'),
         'unique'    => false
     );
@@ -234,7 +234,7 @@
 
     //KEY os_ua           (operating_system_id, user_agent_id),
     $index = array(
-        'name'      => 'os_ua',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_v_osua',
         'fields'    => array('operating_system_id', 'user_agent_id'),
         'unique'    => false
     );
@@ -244,7 +244,7 @@
 
  	//KEY host_id         (host_id),
     $index = array(
-        'name'      => 'host_id',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_v_hostid',
         'fields'    => array('host_id'),
         'unique'    => false
     );
@@ -254,7 +254,7 @@
 
  	//KEY referer_id      (referer_id)
     $index = array(
-        'name'      => 'referer_id',
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_pot_v_refid',
         'fields'    => array('referer_id'),
         'unique'    => false
     );
