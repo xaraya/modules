@@ -1,41 +1,41 @@
-<xar:set name="$updatebutton"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
-<xar:set name="$adocachel"><xar:mlstring>ADOdb Cache Path:</xar:mlstring></xar:set>
-<xar:set name="$rsscachel"><xar:mlstring>RSS Cache Path:</xar:mlstring></xar:set>
-<xar:set name="$templcachel"><xar:mlstring>Template Cache Path:</xar:mlstring></xar:set>
-<xar:set name="$backuppathl"><xar:mlstring>Backup Path:<br />Must be writeable chmod 777</xar:mlstring></xar:set>
-<xar:set name="$timestampl"><xar:mlstring>Use timestamp in backup filename:</xar:mlstring></xar:set>
-<xar:set name="$lineopl"><xar:mlstring>Line termination type:</xar:mlstring></xar:set>
-<xar:set name="$cacheoptions"><xar:mlstring>Cache Options</xar:mlstring></xar:set>
-<xar:set name="$backupoptions"><xar:mlstring>Backup Options</xar:mlstring></xar:set>
-<xar:set name="$updatenote"><xar:mlstring>The default cache paths are entered below.<br />
+<xar:set name="updatebutton"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
+<xar:set name="adocachel"><xar:mlstring>ADOdb Cache Path:</xar:mlstring></xar:set>
+<xar:set name="rsscachel"><xar:mlstring>RSS Cache Path:</xar:mlstring></xar:set>
+<xar:set name="templcachel"><xar:mlstring>Template Cache Path:</xar:mlstring></xar:set>
+<xar:set name="backuppathl"><xar:mlstring>Backup Path:<br />Must be writeable chmod 777</xar:mlstring></xar:set>
+<xar:set name="timestampl"><xar:mlstring>Use timestamp in backup filename:</xar:mlstring></xar:set>
+<xar:set name="lineopl"><xar:mlstring>Line termination type:</xar:mlstring></xar:set>
+<xar:set name="cacheoptions"><xar:mlstring>Cache Options</xar:mlstring></xar:set>
+<xar:set name="backupoptions"><xar:mlstring>Backup Options</xar:mlstring></xar:set>
+<xar:set name="updatenote"><xar:mlstring>The default cache paths are entered below.<br />
                 Change them only if you have changed default cache directory paths.<br />
                 Note there is no trailing slash in the path names.</xar:mlstring></xar:set>
-<xar:set name="$backupnote"><xar:mlstring>Check the following carefully, and correct them if necessary.</xar:mlstring></xar:set>
-<xar:set name="$defado"><xar:mlstring>Default ADOdb Cache path is </xar:mlstring></xar:set>
-<xar:set name="$defrss"><xar:mlstring>Default RSS Cache path is </xar:mlstring></xar:set>
-<xar:set name="$deftem"><xar:mlstring>Default Template Cache path is </xar:mlstring></xar:set>
-<xar:set name="$bkup"><xar:mlstring>Relative path from your root document directory to the backup directory on your server, where backup files will be created. It must be writeable chmod 777. No trailing slash.</xar:mlstring></xar:set>
-<xar:set name="$tshelp"><xar:mlstring>If checked a time stamp will be added to the backup file name.</xar:mlstring></xar:set>
-<xar:set name="$lineoption1"><xar:mlstring>*nix (default)</xar:mlstring></xar:set>
-<xar:set name="$lineoption2"><xar:mlstring>Windows</xar:mlstring></xar:set>
-<xar:set name="$lineoption3"><xar:mlstring>Macintosh</xar:mlstring></xar:set>
-<xar:set name="$linehelp"><xar:mlstring>Line terminator - dependent on your database server environment. The *nix option should be fine for most systems. Older systems may require specific selection.</xar:mlstring></xar:set>
-<xar:set name="$colnumhelp"><xar:mlstring>Number of columns used to list database tables</xar:mlstring></xar:set>
-<xar:set name="$colnumberlabel"><xar:mlstring>No. of columns in database table display:</xar:mlstring></xar:set>
-<xar:set name="$defaultbktypel"><xar:mlstring>Default Backup Type used with Scheduler:</xar:mlstring></xar:set>
-<xar:set name="$bkdefaulthelp"><xar:mlstring>This is the default backup type, used by default with the Scheduler module.</xar:mlstring></xar:set>
-<xar:set name="$bkoption1"><xar:mlstring>*Full backup - complete inserts (default)</xar:mlstring></xar:set>
-<xar:set name="$bkoption2"><xar:mlstring>Full backup - standard inserts</xar:mlstring></xar:set>
-<xar:set name="$bkoption3"><xar:mlstring>Structure only</xar:mlstring></xar:set>
+<xar:set name="backupnote"><xar:mlstring>Check the following carefully, and correct them if necessary.</xar:mlstring></xar:set>
+<xar:set name="defado"><xar:mlstring>Default ADOdb Cache path is </xar:mlstring></xar:set>
+<xar:set name="defrss"><xar:mlstring>Default RSS Cache path is </xar:mlstring></xar:set>
+<xar:set name="deftem"><xar:mlstring>Default Template Cache path is </xar:mlstring></xar:set>
+<xar:set name="bkup"><xar:mlstring>Relative path from your root document directory to the backup directory on your server, where backup files will be created. It must be writeable chmod 777. No trailing slash.</xar:mlstring></xar:set>
+<xar:set name="tshelp"><xar:mlstring>If checked a time stamp will be added to the backup file name.</xar:mlstring></xar:set>
+<xar:set name="lineoption1"><xar:mlstring>*nix (default)</xar:mlstring></xar:set>
+<xar:set name="lineoption2"><xar:mlstring>Windows</xar:mlstring></xar:set>
+<xar:set name="lineoption3"><xar:mlstring>Macintosh</xar:mlstring></xar:set>
+<xar:set name="linehelp"><xar:mlstring>Line terminator - dependent on your database server environment. The *nix option should be fine for most systems. Older systems may require specific selection.</xar:mlstring></xar:set>
+<xar:set name="colnumhelp"><xar:mlstring>Number of columns used to list database tables</xar:mlstring></xar:set>
+<xar:set name="colnumberlabel"><xar:mlstring>No. of columns in database table display:</xar:mlstring></xar:set>
+<xar:set name="defaultbktypel"><xar:mlstring>Default Backup Type used with Scheduler:</xar:mlstring></xar:set>
+<xar:set name="bkdefaulthelp"><xar:mlstring>This is the default backup type, used by default with the Scheduler module.</xar:mlstring></xar:set>
+<xar:set name="bkoption1"><xar:mlstring>*Full backup - complete inserts (default)</xar:mlstring></xar:set>
+<xar:set name="bkoption2"><xar:mlstring>Full backup - standard inserts</xar:mlstring></xar:set>
+<xar:set name="bkoption3"><xar:mlstring>Structure only</xar:mlstring></xar:set>
 
-<xar:set name="$schedulingoptions"><xar:mlstring>Scheduling Options</xar:mlstring></xar:set>
-<xar:set name="$schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
-<xar:set name="$schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
-<xar:set name="$schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
+<xar:set name="schedulingoptions"><xar:mlstring>Scheduling Options</xar:mlstring></xar:set>
+<xar:set name="schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
+<xar:set name="schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
+<xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-<div style="margin: auto;">
+<div style="margin: auto; width: 98%; ">
 
     <span style="float: left; width: 98%; text-align: right;">
        <form action="#xarModURL('sitetools', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
@@ -47,7 +47,7 @@
            #$updatenote#
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
+    <div style="clear: both; width: 98%; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$defado# #$defadopath#">
             <label for="adopath">#$adocachel#</label>
@@ -57,7 +57,7 @@
             <input type="text" name="adopath" id="adopath" size="40" maxlength="128" value="#$adopath#" />
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
+    <div style="clear: both; width: 98%;padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$defrss# #$defrsspath#">
             <label for="rsspath">#$rsscachel#</label>
@@ -67,7 +67,7 @@
             <input type="text" name="rsspath" id="rsspath" size="40" maxlength="128" value="#$rsspath#" />
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
+    <div style="clear: both; width: 98%;padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$deftem# #$deftemplpath#">
             <label for="templpath">#$templcachel#</label>
@@ -77,10 +77,10 @@
             <input type="text" name="templpath" id="templpath" size="40" maxlength="128" value="#$templpath#" />
         </span>
     </div>
-    <div style="clear:both; padding-top:20px; text-align:center">
+    <div style="clear:both; width: 98%;padding-top:20px; text-align:center">
         <span class="xar-title" >#$backupoptions#</span>
      </div>
-    <div style="clear: both; padding-top: 5px;">
+    <div style="clear: both; width: 98%;padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$bkup#">
             <label for="backuppath">#$backuppathl#</label>
@@ -90,7 +90,7 @@
             <input type="text" name="backuppath" id="backuppath" size="60" maxlength="128" value="#$backuppath#" />
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
+    <div style="clear: both; width: 98%; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$tshelp#">
             <label for="backuppath">#$timestampl#</label>
@@ -104,7 +104,7 @@
             </xar:if>
         </span>
     </div>
-   <div style="clear: both; padding-top: 5px;">
+   <div style="clear: both; width: 98%; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$colnumhelp#">
             <label for="colnumber">#$colnumberlabel#</label>
@@ -116,7 +116,7 @@
     </div>
 
 <!-- Later if required
-   <div style="clear: both; padding-top: 5px;">
+   <div style="clear: both; width: 98%; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$linehelp#">
             <label for="lineoption">#$lineopl#</label>
@@ -140,7 +140,7 @@
         </span>
      </div> 
 -->
-     <div style="clear: both; padding-top: 5px;">
+     <div style="clear: both; width: 98%; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$bkdefaulthelp#">
             <label for="defaultbktype">#$defaultbktypel#</label>
@@ -166,7 +166,7 @@
  	   </span>
     </div>
 
-    <div style="clear:both; padding-top:20px; text-align:center">
+    <div style="clear:both; width: 98%; padding-top:20px; text-align:center">
         <span class="xar-title" >#$schedulingoptions#</span>
     </div>
     <xar:foreach in="$schedule" key="$what" value="$descr">
@@ -190,13 +190,13 @@
         </span>
     </div>
     </xar:foreach>
-    <div style="clear: both; padding-top: 5px;">
+    <div style="clear: both; width: 98%; padding-top: 5px;">
         <span style="float: left; padding-bottom: 10px; padding-top: 10px; width: 98%; text-align: center;">
             #$schedulingnote#
         </span>
     </div>
 
-    <span style="float: left; padding-top: 20px; width: 98%; text-align: center;">
+    <span style="float: left; padding-top: 20px; width: 98%; ">
         <input type="submit" value="#$updatebutton#"  />
     </span>
   </form>

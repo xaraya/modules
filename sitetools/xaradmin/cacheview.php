@@ -1,6 +1,6 @@
 <?php
 /*
- * File: $Id:
+ * File: $Id$
  *
  * View cache files
  *
@@ -42,7 +42,7 @@ function sitetools_admin_cacheview($args)
     if (empty($action)) {
         // No action set yet - display cache file list and await action
          $data['showfiles']=false;
-       // Generate a one-time authorisation code for this operation
+        // Generate a one-time authorisation code for this operation
         $data['items']='';
         $cachelist=array();
         $cachenames=array();
@@ -69,37 +69,37 @@ function sitetools_admin_cacheview($args)
                                    'templn'=>$templn,
                                    'fullnurl'=>$fullnurl);
             }
-       }
+        }
  //      var=$scriptcache;
  //      if ($var == true) unlink $scriptcache;
+        asort($cachenames);
         $data['items']=$cachenames;
+        // Return the template variables defined in this function
 
-         // Return the template variables defined in this function
+        return $data;
 
-      return $data;
-
-   } elseif ($action=='show'){
-       $data['showfiles']= true;
-       $hashfile=$cachedir.'/'.$hashn.'.php';
-       $newfile=array();
-       $filetxt=array();
-       $newfile = file($hashfile);
-       $i=0;
-      foreach ($newfile as $line_num => $line) {
-         ++$i;
-         $filetxt[]=array('lineno' =>(int)$i,
+    } elseif ($action=='show'){
+        $data['showfiles']= true;
+        $hashfile=$cachedir.'/'.$hashn.'.php';
+        $newfile=array();
+        $filetxt=array();
+        $newfile = file($hashfile);
+        $i=0;
+        foreach ($newfile as $line_num => $line) {
+            ++$i;
+            $filetxt[]=array('lineno' =>(int)$i,
                           'linetxt'=>htmlspecialchars($line));
-      }
-      $data['templn']=$templn;
-      $data['hashfile']=$hashfile;
-      $data['items']=$filetxt;
-  return $data;
-   }
+        }
+        $data['templn']=$templn;
+        $data['hashfile']=$hashfile;
+        $data['items']=$filetxt;
+        return $data;
+    }
 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
-   xarResponseRedirect(xarModURL('sitetools', 'admin', 'cacheview'));
+    xarResponseRedirect(xarModURL('sitetools', 'admin', 'cacheview'));
     // Return
-  return true;
+    return true;
 }
 ?>

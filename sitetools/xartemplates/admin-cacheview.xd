@@ -1,11 +1,11 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>SiteTools Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Cache Files</xar:mlstring></h2>
-<div style="margin: auto; width:100%;">
+<div style="margin: auto; width:98%;">
 <xar:set name="$goback"><xar:mlstring>Go back</xar:mlstring></xar:set>
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <xar:set name="$cacheurltxt"><xar:mlstring>Click to browse this file</xar:mlstring></xar:set>
 <xar:if condition="$showfiles eq false">
-	<table width="100%" border="1" cellspacing="0" cellpadding="4">
+	<table width="98%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <th><xar:mlstring>Cache File</xar:mlstring></th>
         <th><xar:mlstring>Template Name</xar:mlstring></th>
