@@ -45,53 +45,53 @@ function hookbridge_admin_config( $args )
     $data = hookbridge_adminpriv_commondata($args);
     $data['itemtype'] = $itemtype;
 
-	$itemtypes = $data['common']['itemtype_array'];
+    $itemtypes = $data['common']['itemtype_array'];
 
-	if( array_key_exists( $itemtype, $itemtypes ) )
-	{
-		// Get info for this item type
-		$itvar  = $itemtypes[$itemtype]['var'];
-		$itname = $itemtypes[$itemtype]['name'];
-		
-		$tplNameExtension = $itvar.'hook';
-		
-		$data['hookenabled']      = xarModGetVar('hookbridge', 'hookenabled_'.$itvar );
-		$data['hookfunctions']    = unserialize(xarModGetVar('hookbridge', 'hookfunctions_'.$itvar ));
+    if( array_key_exists( $itemtype, $itemtypes ) )
+    {
+        // Get info for this item type
+        $itvar  = $itemtypes[$itemtype]['var'];
+        $itname = $itemtypes[$itemtype]['name'];
+        
+        $tplNameExtension = $itvar.'hook';
+        
+        $data['hookenabled']      = xarModGetVar('hookbridge', 'hookenabled_'.$itvar );
+        $data['hookfunctions']    = unserialize(xarModGetVar('hookbridge', 'hookfunctions_'.$itvar ));
 
-		$data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
+        $data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
 
-		// Check if the user submitted a config form. If so, save the results.
-		if ( isset( $authid ) && !empty($authid)  ) 
-		{
-			if (!xarSecConfirmAuthKey()) return;
+        // Check if the user submitted a config form. If so, save the results.
+        if ( isset( $authid ) && !empty($authid)  ) 
+        {
+            if (!xarSecConfirmAuthKey()) return;
 
-			if (!xarVarFetch('hookenabled',   'str',   $hookenabled,   '', XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('hookfunctions', 'array', $hookfunctions, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('hookenabled',   'str',   $hookenabled,   '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('hookfunctions', 'array', $hookfunctions, '', XARVAR_NOT_REQUIRED)) return;
 
-			if ( empty( $hookenabled ) or !is_numeric( $hookenabled ) ) 
-			{
-				$hookenabled = 0;
-			}
+            if ( empty( $hookenabled ) or !is_numeric( $hookenabled ) ) 
+            {
+                $hookenabled = 0;
+            }
 
-			xarModSetVar('hookbridge', 'hookenabled_'.$itvar,   $hookenabled );
-			xarModSetVar('hookbridge', 'hookfunctions_'.$itvar, serialize($hookfunctions) );
+            xarModSetVar('hookbridge', 'hookenabled_'.$itvar,   $hookenabled );
+            xarModSetVar('hookbridge', 'hookfunctions_'.$itvar, serialize($hookfunctions) );
 
-	        // Set a status message
-	        xarSessionSetVar('hookbridge_statusmsg', xarML( 'Updated the '.$itname.' settings!' ) );
+            // Set a status message
+            xarSessionSetVar('hookbridge_statusmsg', xarML( 'Updated the '.$itname.' settings!' ) );
 
-			// Config saved, bounce back to hookbridge config screen
-			return xarResponseRedirect(
-				xarModURL('hookbridge','admin','config',array(
-																'itemtype' => $itemtype )
-															  ));
-		}
+            // Config saved, bounce back to hookbridge config screen
+            return xarResponseRedirect(
+                xarModURL('hookbridge','admin','config',array(
+                                                                'itemtype' => $itemtype )
+                                                              ));
+        }
 
-	} else {
-		$tplNameExtension = 'mainconfig';
-		xarModAPIFunc('hookbridge', 'admin', 'config_main', $args);
-		
-		$data['hookbridge_functionpath'] = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
-	}
+    } else {
+        $tplNameExtension = 'mainconfig';
+        xarModAPIFunc('hookbridge', 'admin', 'config_main', $args);
+        
+        $data['hookbridge_functionpath'] = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
+    }
 
     return xarTplModule(
         'hookbridge'
