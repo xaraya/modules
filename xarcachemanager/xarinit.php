@@ -299,8 +299,8 @@ function xarcachemanager_upgrade($oldversion)
             $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
             $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
             $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
-            if(isset($cachingConfiguration['Page.CacheGroups'])) {
-            	$cachegroups = $cachingConfiguration['Page.CacheGroups'];
+            if (isset($cachingConfiguration['Page.CacheGroups'])) {
+                $cachegroups = $cachingConfiguration['Page.CacheGroups'];
             }
             @unlink($cachingConfigFile);
             $handle = fopen($defaultConfigFile, "rb");
@@ -315,8 +315,8 @@ function xarcachemanager_upgrade($oldversion)
             $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
             $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
             $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
-            if(isset($cachegroups)) {
-            	$cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
+            if (isset($cachegroups)) {
+                $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
             }
 
             $fp = fopen ($cachingConfigFile, 'wb');
@@ -333,12 +333,12 @@ function xarcachemanager_upgrade($oldversion)
                                              array('UNIQUE'));
             // switch to the file bashed block caching enabler
             if (xarModGetVar('xarcachemanager', 'CacheBlockOutput')) {
-            	$outputCacheDir = $varCacheDir . '/output/';
-            	if(!file_exists($outputCacheDir . 'cache.blocklevel')) {
-            		touch($outputCacheDir . 'cache.blocklevel');
-        		}
-        		xarModDelVar('xarcachemanager', 'CacheBlockOutput');
-        	}
+                $outputCacheDir = $varCacheDir . '/output/';
+                if(!file_exists($outputCacheDir . 'cache.blocklevel')) {
+                    touch($outputCacheDir . 'cache.blocklevel');
+                }
+                xarModDelVar('xarcachemanager', 'CacheBlockOutput');
+            }
         case '0.3.1':
             // Code to upgrade from the 0.3.1 version (base block level caching)
             // Bring the config file up to current version
@@ -351,24 +351,24 @@ function xarcachemanager_upgrade($oldversion)
             $expireheader = $cachingConfiguration['Page.ExpireHeader'];
             $cachegroups = $cachingConfiguration['Page.CacheGroups'];
             $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
-            if(isset($cachingConfiguration['Page.SessionLess'])) {
+            if (isset($cachingConfiguration['Page.SessionLess'])) {
                 $sessionlessarray = $cachingConfiguration['Page.SessionLess'];
                 $sessionlesslist = "'" . join("','", $sessionlessarray) . "'";
             }
-            if(isset($cachingConfiguration['AutoCache.Period'])) {
+            if (isset($cachingConfiguration['AutoCache.Period'])) {
                 $autocacheperiod = $cachingConfiguration['AutoCache.Period'];
             }
-            if(isset($cachingConfiguration['AutoCache.Period'])) {
+            if (isset($cachingConfiguration['AutoCache.Period'])) {
                 $autocachethreshold = $cachingConfiguration['AutoCache.Threshold'];
             }
-            if(isset($cachingConfiguration['AutoCache.Period'])) {
+            if (isset($cachingConfiguration['AutoCache.Period'])) {
                 $autocachemaxpages = $cachingConfiguration['AutoCache.MaxPages'];
             }
-            if(isset($cachingConfiguration['Page.SessionLess'])) {
+            if (isset($cachingConfiguration['Page.SessionLess'])) {
                 $includearray = $cachingConfiguration['AutoCache.Include'];
                 $includelist = "'" . join("','", $includearray) . "'";
             }
-            if(isset($cachingConfiguration['Page.SessionLess'])) {
+            if (isset($cachingConfiguration['Page.SessionLess'])) {
                 $excludearray = $cachingConfiguration['AutoCache.Exclude'];
                 $excludelist = "'" . join("','", $excludearray) . "'";
             }
@@ -387,22 +387,22 @@ function xarcachemanager_upgrade($oldversion)
             $cachingConfig = preg_replace('/\[\'Page.ExpireHeader\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ExpireHeader'] = $expireheader;", $cachingConfig);
             $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
             $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
-            if(isset($sessionlesslist)) {
+            if (isset($sessionlesslist)) {
                 $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($sessionlesslist);", $cachingConfig);
             }
-            if(isset($autocacheperiod)) {
+            if (isset($autocacheperiod)) {
                 $cachingConfig = preg_replace('/\[\'AutoCache.Period\'\]\s*=\s*(.*?);/', "['AutoCache.Period'] = $autocacheperiod;", $cachingConfig);
             }
-            if(isset($autocachethreshold)) {
+            if (isset($autocachethreshold)) {
                 $cachingConfig = preg_replace('/\[\'AutoCache.Threshold\'\]\s*=\s*(.*?);/', "['AutoCache.Threshold'] = $autocachethreshold;", $cachingConfig);
             }
-            if(isset($autocachemaxpages)) {
+            if (isset($autocachemaxpages)) {
                 $cachingConfig = preg_replace('/\[\'AutoCache.MaxPages\'\]\s*=\s*(.*?);/', "['AutoCache.MaxPages'] = $autocachemaxpages;", $cachingConfig);
             }
-            if(isset($includelist)) {
+            if (isset($includelist)) {
                 $cachingConfig = preg_replace('/\[\'AutoCache.Include\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Include'] = array($includelist);", $cachingConfig);
             }
-            if(isset($excludelist)) {
+            if (isset($excludelist)) {
                 $cachingConfig = preg_replace('/\[\'AutoCache.Exclude\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Exclude'] = array($excludelist);", $cachingConfig);
             }
 
@@ -513,7 +513,6 @@ function xarcachemanager_delete()
     xarModDelVar('xarcachemanager','FlushOnNewComment');
     xarModDelVar('xarcachemanager','FlushOnNewRating');
     xarModDelVar('xarcachemanager','FlushOnNewPollvote');
-
 
     // Remove Masks and Instances
     xarRemoveMasks('xarcachemanager');
