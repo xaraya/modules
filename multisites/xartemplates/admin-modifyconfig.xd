@@ -61,7 +61,7 @@
             </ol>
     </div>
 </xar:if>
-    <form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" />
+    <form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 	    
     <table border="0" width="100%" align="center">

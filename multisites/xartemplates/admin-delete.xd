@@ -15,7 +15,7 @@
 <div class="xar-mod-body" align="left">
 <xar:mlstring>This option will delete the following site from your multisite database, the site directory in the Master Data directory if chosen as an option below, and the ability to browse to that site.</xar:mlstring>
 </div>
-<form method="post" action="&xar-modurl-multisites-admin-removesite;" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="&xar-modurl-multisites-admin-removesite;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 
         <table border="0" width="100%" align="center">

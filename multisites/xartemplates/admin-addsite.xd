@@ -21,7 +21,7 @@
           <li><xar:mlstring>Put your master config.system.php file back in the /var directory.</xar:mlstring></li>
           <li><xar:mlstring>Then return here to finalize creation of the subsite.</xar:mlstring></li><br />
 </div>
-<form method="post" action="&xar-modurl-multisites-admin-createsite;" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="&xar-modurl-multisites-admin-createsite;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 
         <table border="0" width="100%" align="center">
