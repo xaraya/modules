@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Run some sanity checks for php sourcefiles
+
+STARTDIR=`bk root`
+cd $STARTDIR
+for i in `bk sfiles -gU  | grep ".php"`; do
+ bk get -qS $i
+ php -q -l -f $i
+done
