@@ -10,11 +10,8 @@ function xarbb_userapi_getforum($args)
 {
     extract($args);
 
-    if (empty($fid) && empty($fname)) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'userapi', 'get', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+    if (empty($fid) && empty($fname)) { $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
