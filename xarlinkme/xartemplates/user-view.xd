@@ -13,11 +13,11 @@
             #$linkme1# </span>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
-	    <br /><br />
-		  #$linkme2#
-		<br /><br />
-  		  #$linkme3#<br /><br />
-	    </div>
+        <br /><br />
+          #$linkme2#
+        <br /><br />
+            #$linkme3#<br /><br />
+        </div>
 
     <!-- Loop over all the items given by the function. Since $data['items']
          is preset to an empty array, we don't need to use an if/else
@@ -41,8 +41,8 @@
            <a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><br />
             <p align="center">
             <textarea rows="6" name="L2" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><!-- end link --></textarea></p>
-	        <hr />
-	      </div>
+            <hr />
+          </div>
 
 </div>
 <br />
