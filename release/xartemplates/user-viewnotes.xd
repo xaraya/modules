@@ -15,7 +15,7 @@
 	&nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="supported"  />
 	<xar:mlstring>Supported</xar:mlstring>
 
-&nbsp;&nbsp;<input type="submit" value="<xar:mlstring>Refresh</xar:mlstring>" align="middle" tabindex="6" />
+&nbsp;&nbsp;<input type="submit" value="Refresh" align="middle" tabindex="6" />
 </form>
 <br /><br />
 

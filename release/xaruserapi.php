@@ -224,6 +224,10 @@ function release_userapi_updateid($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
+    if (empty($approved)){
+        $approved = '1';
+    }
+
     $releasetable = $xartable['release_id'];
 
     // Update the link
@@ -516,7 +520,9 @@ function release_userapi_getdocs($args)
                      xar_type,
                      xar_time,
                      xar_approved
-            FROM $releasedocstable";
+            FROM $releasedocstable
+                         
+                     /*";
     if (!empty($apporved)) {
         $query .= " WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
                     AND xar_approved = '" . xarVarPrepForStore($approved) . "'
@@ -524,7 +530,7 @@ function release_userapi_getdocs($args)
     } elseif(empty($type)) {
         $query .= " WHERE xar_approved = '" . xarVarPrepForStore($approved) . "'";
     } else {
-        $query .= " WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
+        $query .= "*/ WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
                     AND xar_type = '" . xarVarPrepForStore($type) . "'";
     }
 

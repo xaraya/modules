@@ -51,7 +51,7 @@ function release_user_viewids()
         $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
-                                  array('uid' => $uid));
+                                  array('uid' => $item['uid']));
 
         // Author Name and Contact URL
         $items[$i]['author'] = $getuser['name'];
@@ -128,6 +128,7 @@ function release_user_viewids()
                                                    'user',
                                                    'get',
                                                    array('modname' => 'release',
+                                                         'itemtype' => '1',
                                                          'objectid' => $item['rid']));
             
             if (!$items[$i]['hitcount']) {
@@ -152,7 +153,9 @@ function release_user_display()
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     list($rid,
+         $startnum,
          $phase) = xarVarCleanFromInput('rid',
+                                        'startnum',
                                         'phase');
 
     // The user API function is called. 
@@ -178,10 +181,11 @@ function release_user_display()
             $hooks = xarModCallHooks('item',
                                      'display',
                                      $id['rid'],
+                                     array('itemtype' => '1',
                                      xarModURL('release',
                                                'user',
                                                'display',
-                                               array('rid' => $rid)));
+                                               array('rid' => $rid))));
             if (empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
@@ -251,7 +255,7 @@ function release_user_display()
                 $items[$i]['comments'] = xarModAPIFunc('comments',
                                                        'user',
                                                        'get_count',
-                                                       array('modid' => xarModGetIDFromName('xarbb'),
+                                                       array('modid' => xarModGetIDFromName('release'),
                                                              'objectid' => $item['rnid']));
                 
                 if (!$items[$i]['comments']) {
@@ -265,7 +269,7 @@ function release_user_display()
                 $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
                                                        'user',
                                                        'get',
-                                                       array('modname' => 'xarbb',
+                                                       array('modname' => 'release',
                                                              'objectid' => $item['rnid']));
                 
                 if (!$items[$i]['hitcount']) {
@@ -531,9 +535,6 @@ function release_user_modifyid()
                                                  'certified',
                                                  'idtype');
             
-            // Get the UID of the person submitting the module
-            $uid = xarUserGetVar('uid');
-
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 
@@ -1009,6 +1010,7 @@ function release_user_viewnotes()
                                                'user',
                                                'get',
                                                array('modname' => 'release',
+                                                     'itemtype' => '2',
                                                      'objectid' => $item['rnid']));
         
         if (!$items[$i]['hitcount']) {
@@ -1137,10 +1139,11 @@ function release_user_displaynote()
     $hooks = xarModCallHooks('item',
                              'display',
                              $item['rnid'],
-                             xarModURL('release',
-                                       'user',
-                                       'displaynote',
-                                       array('rnid' => $rnid)));
+                             array('itemtype' => '2',
+                                     xarModURL('release',
+                                               'user',
+                                               'displaynote',
+                                               array('rnid' => $rnid))));
     if (empty($hooks)) {
         $item['hooks'] = '';
     } elseif (is_array($hooks)) {
@@ -1455,6 +1458,59 @@ function release_user_adddocs()
     }   
     
     return $data;
+}
+
+function release_user_getdoc()
+{
+    // Security Check
+    if(!xarSecurityCheck('OverviewRelease')) return;
+
+    $rdid = xarVarCleanFromInput('rdid');
+
+    // The user API function is called.
+    $item = xarModAPIFunc('release',
+                          'user',
+                          'getdoc',
+                          array('rdid' => $rdid));
+
+    if ($item == false) return;
+
+    // The user API function is called. 
+    $id = xarModAPIFunc('release',
+                         'user',
+                         'getid',
+                          array('rid' => $item['rid']));
+
+
+    $getuser = xarModAPIFunc('roles',
+                             'user',
+                             'get',
+                              array('uid' => $id['uid']));
+
+
+    $hooks = xarModCallHooks('item',
+                             'display',
+                             $item['rdid'],
+                             array('itemtype' => '3',
+                                     xarModURL('release',
+                                               'user',
+                                               'getdoc',
+                                               array('rdid' => $rdid))));
+    if (empty($hooks)) {
+        $item['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $item['hooks'] = join('',$hooks);
+    } else {
+        $item['hooks'] = $hooks;
+    }
+
+    $item['desc'] = nl2br($id['desc']);
+    $item['name'] = $id['name'];
+    $item['type'] = $id['type'];
+    $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
+    $item['realname'] = $getuser['name'];
+
+    return $item;
 }
 
 function release_user_rssviewdocs()

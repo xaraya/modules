@@ -61,6 +61,6 @@
 			</tr>
 		</table>			
 		<br /><br />
-		<input type="submit" value="<xar:mlstring>Continue</xar:mlstring>" align="middle" tabindex="6" />
+		<input type="submit" value="Continue" align="middle" tabindex="6" />
 	</form>
 </div>
