@@ -22,7 +22,8 @@ function categories_userapi_getchildren($args)
     $xartable =& xarDBGetTables();
 
     $categoriestable = $xartable['categories'];
-
+    $bindvars = array();
+    // TODO: simplify API by always using array of cids, optionally with one element
     $SQLquery = "SELECT xar_cid,
                         xar_name,
                         xar_description,
@@ -32,20 +33,26 @@ function categories_userapi_getchildren($args)
                         xar_right
                    FROM $categoriestable ";
     if (isset($cid)) {
-        $SQLquery .= "WHERE xar_parent =".xarVarPrepForStore($cid);
+        $SQLquery .= "WHERE xar_parent =?";
+        $bindvars[] = $cid;
         if (!empty($return_itself)) {
-            $SQLquery .= " OR xar_cid =".xarVarPrepForStore($cid);
+            $SQLquery .= " OR xar_cid =?";
+            $bindvars[] = $cid;
         }
     } else {
+        $bindmarkers = '?' . str_repeat(',?',count($cids)-1);
         $allcids = join(', ',$cids);
-        $SQLquery .= "WHERE xar_parent IN (".xarVarPrepForStore($allcids).")";
+        $SQLquery .= "WHERE xar_parent IN ($bindmarkers)";
+        $bindvars = $cids;
         if (!empty($return_itself)) {
-            $SQLquery .= " OR xar_cid IN (".xarVarPrepForStore($allcids).")";
+            $SQLquery .= " OR xar_cid IN ($bindmarkers)";
+            // bindvars could already hold the $cids
+            $bindvars = array_merge($bindvars, $cids);
         }
     }
     $SQLquery .= " ORDER BY xar_left";
 
-    $result = $dbconn->Execute($SQLquery);
+    $result = $dbconn->Execute($SQLquery,$bindvars);
     if (!$result) return;
 
     $info = array();

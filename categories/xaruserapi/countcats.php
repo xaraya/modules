@@ -23,14 +23,16 @@ function categories_userapi_countcats($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
-
+    $bindvars = array();
+    
     // Get number of categories
     if (!empty($left) && is_numeric($left) &&
         !empty($right) && is_numeric($right)) {
         $sql = "SELECT COUNT(xar_cid) AS childnum
                   FROM $categoriestable
                  WHERE xar_left
-               BETWEEN ".$left." AND ".$right;
+               BETWEEN ? AND ?";
+        $bindvars[] = $left; $bindvars[] = $right;
     } elseif (!empty($cid) && is_numeric($cid)) {
         $sql = "SELECT COUNT(P2.xar_cid) AS childnum
                   FROM $categoriestable AS P1,
@@ -39,8 +41,8 @@ function categories_userapi_countcats($args)
                     >= P1.xar_left
                    AND P2.xar_left
                     <= P1.xar_right
-                   AND P1.xar_cid
-                        = ".xarVarPrepForStore($cid);
+                   AND P1.xar_cid = ?";
+        $bindvars[] = $cid;
 /* this is terribly slow, at least for MySQL 3.23.49-nt
                BETWEEN P1.xar_left AND
                        P1.xar_right
@@ -52,7 +54,7 @@ function categories_userapi_countcats($args)
                   FROM $categoriestable";
     }
 
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql,$bindvars);
     if (!$result) return;
 
     $num = $result->fields[0];

@@ -42,8 +42,8 @@ function categories_adminapi_removehook($args)
 
     // Delete the link
     $sql = "DELETE FROM $categorieslinkagetable
-            WHERE xar_modid = " . xarVarPrepForStore($modid);
-    $dbconn->Execute($sql);
+            WHERE xar_modid = ?";
+    $dbconn->Execute($sql,array($modid));
 
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('Database error for #(1) function #(2)() in module #(3)','admin', 'removehook', 'categories');

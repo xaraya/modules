@@ -56,6 +56,7 @@ function categories_adminapi_unlink($args)
     $categorieslinkagetable = $xartable['categories_linkage'];
 
     // Delete the link
+    $bindvars = array();
     $query = "DELETE FROM $categorieslinkagetable";
 
     if (!empty($modid)) {
@@ -69,14 +70,15 @@ function categories_adminapi_unlink($args)
         if (empty($itemtype) || !is_numeric($itemtype)) {
             $itemtype = 0;
         }
-        $query .= " WHERE xar_modid = '" . xarVarPrepForStore($modid) . "'
-                      AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
+        $query .= " WHERE xar_modid = ? AND xar_itemtype = ?";
+        $bindvars[] = $modid; $bindvars[] = $itemtype;
         if (!empty($iid)) {
-            $query .= " AND xar_iid = '" . xarVarPrepForStore($iid) . "'";
+            $query .= " AND xar_iid = ?";
+            $bindvars[] =  $iid;
         }
     }
 
-    $result = $dbconn->Execute($query);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     return true;

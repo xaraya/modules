@@ -22,16 +22,17 @@ function categories_userapi_getmodules($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories_linkage'];
-
+    $bindvars = array();
     // Get items
     $sql = "SELECT xar_modid, xar_itemtype, COUNT(*), COUNT(DISTINCT xar_iid), COUNT(DISTINCT xar_cid)
             FROM $categoriestable";
     if (!empty($cid)) {
-        $sql .= " WHERE xar_cid = " . xarVarPrepForStore($cid);
+        $sql .= " WHERE xar_cid = ?";
+        $bindvars[] = $cid;
     }
     $sql .= " GROUP BY xar_modid, xar_itemtype";
 
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql,$bindvars);
     if (!$result) return;
 
     $modlist = array();

@@ -79,7 +79,7 @@ function categories_userapi_getancestors($args)
                         AND P2.xar_left
                          <= P1.xar_right';
 
-        // xarVarPrepForStore() only helps us if the cid is enclosed
+        // xar VarPrepForStore() only helps us if the cid is enclosed
         // in single quotes, i.e. is a string. We have already checked
         // it is numeric further up, so we don't need a further check.
         

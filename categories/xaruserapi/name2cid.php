@@ -14,13 +14,11 @@ function categories_userapi_name2cid ($args)
     }
     // for DMOZ-like URLs where the description contains the full path
     if (!empty($usedescr)) {
-        $query = "SELECT xar_parent, xar_cid FROM $categoriestable WHERE xar_description = '"
-                 . xarVarPrepForStore($name) . "'";
+        $query = "SELECT xar_parent, xar_cid FROM $categoriestable WHERE xar_description = ?";
     } else {
-        $query = "SELECT xar_parent, xar_cid FROM $categoriestable WHERE xar_name = '"
-                 . xarVarPrepForStore($name) . "'";
+        $query = "SELECT xar_parent, xar_cid FROM $categoriestable WHERE xar_name = ?";
     }
-    $result = $dbconn->Execute($query);
+    $result = $dbconn->Execute($query,array($name));
     if (!$result) return;
     list($parent,$cid) = $result->fields;
     $result->Close();

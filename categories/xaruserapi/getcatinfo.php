@@ -21,6 +21,7 @@ function categories_userapi_getcatinfo($args)
 
     $categoriestable = $xartable['categories'];
 
+    // TODO: simplify api by always using cids, if one cat, only 1 element in the array
     $SQLquery = "SELECT xar_cid,
                         xar_name,
                         xar_description,
@@ -30,13 +31,15 @@ function categories_userapi_getcatinfo($args)
                         xar_right
                    FROM $categoriestable ";
     if (isset($cid)) {
-        $SQLquery .= "WHERE xar_cid =".xarVarPrepForStore($cid);
+        $SQLquery .= "WHERE xar_cid = ?";
+        $bindvars = array($cid);
     } else {
-        $allcids = join(', ',$cids);
-        $SQLquery .= "WHERE xar_cid IN (".xarVarPrepForStore($allcids).")";
+        $bindmarkers = '?' . str_repeat(',?',count($cids)-1);
+        $SQLquery .= "WHERE xar_cid IN ($bindmarkers)";
+        $bindvars = $cids;
     }
 
-    $result = $dbconn->Execute($SQLquery);
+    $result = $dbconn->Execute($SQLquery,$bindvars);
     if (!$result) return;
 
     if ($result->EOF) {

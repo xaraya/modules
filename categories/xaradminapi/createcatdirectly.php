@@ -26,6 +26,10 @@ function categories_adminapi_createcatdirectly($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
+    $bindvars = array();
+    $bindvars[1] = array();
+    $bindvars[2] = array();
+    $bindvars[3] = array();
 
     // Get next ID in table
     $nextId = $dbconn->GenId($categoriestable);
@@ -33,13 +37,13 @@ function categories_adminapi_createcatdirectly($args)
     /* Opening space for the new node */
     $SQLquery[1] = "UPDATE $categoriestable
                     SET xar_right = xar_right + 2
-                    WHERE xar_right >= "
-                    .xarVarPrepForStore($point_of_insertion);
+                    WHERE xar_right >= ?";
+    $bindvars[1][] = $point_of_insertion;
 
     $SQLquery[2] = "UPDATE $categoriestable
                     SET xar_left = xar_left + 2
-                    WHERE xar_left >= "
-                    .xarVarPrepForStore($point_of_insertion);
+                    WHERE xar_left >= ?"
+    $bindvars[2][] = $point_of_insertion;
     // Both can be transformed into just one SQL-statement, but i dont know if every database is SQL-92 compliant(?)
 
     $nextID = $dbconn->GenId($categoriestable);
@@ -52,18 +56,12 @@ function categories_adminapi_createcatdirectly($args)
                                 xar_parent,
                                 xar_left,
                                 xar_right)
-                         VALUES ("
-                                 .$nextID.","
-                                 ."'".xarVarPrepForStore($name)."',"
-                                 ."'".xarVarPrepForStore($description)."',"
-                                 ."'".xarVarPrepForStore($image)."',"
-                                 ."'".xarVarPrepForStore($parent)."',"
-                                 .xarVarPrepForStore($point_of_insertion).","
-                                 .xarVarPrepForStore($point_of_insertion+1).")";
+                         VALUES (?,?,?,?,?,?,?)";
+    $bindvars[3] = array($nextID, $name, $description, $image, $parent, $point_of_insertion, $point_of_insertion + 1);
 
     for ($i=1;$i<4;$i++)
     {
-        $result = $dbconn->Execute($SQLquery[$i]);
+        $result = $dbconn->Execute($SQLquery[$i],$bindvars[$i]);
         if (!$result) return;
     }
 

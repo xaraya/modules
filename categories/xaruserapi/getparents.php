@@ -47,10 +47,10 @@ function categories_userapi_getparents($args)
                 BETWEEN P1.xar_left AND
                         P1.xar_right";
 */
-    $SQLquery .= " AND P2.xar_cid = ".xarVarPrepForStore($cid);
+    $SQLquery .= " AND P2.xar_cid = ?";
     $SQLquery .= " ORDER BY P1.xar_left";
 
-    $result = $dbconn->Execute($SQLquery);
+    $result = $dbconn->Execute($SQLquery,array($cid));
     if (!$result) return;
 
     while (!$result->EOF) {

@@ -55,7 +55,7 @@ function categories_adminapi_linkcat($args)
          }
     }
 
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
@@ -80,13 +80,12 @@ function categories_adminapi_linkcat($args)
                 }
             }
             // Delete old links
+            $bindmarkers = '?' . str_repeat(',?',count($args['iids'])-1);
             $sql = "DELETE FROM $categorieslinkagetable
                     WHERE xar_modid = $args[modid] AND
                           xar_itemtype = $itemtype AND
-                          xar_iid IN ("
-                  . join (" ,", $args['iids'])
-                  . ")";
-            $result = $dbconn->Execute($sql);
+                          xar_iid IN ($bindmarkers)";
+            $result = $dbconn->Execute($sql,$args['iids']);
             if (!$result) return;
         } else {
             // Security check

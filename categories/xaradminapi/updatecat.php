@@ -116,6 +116,7 @@ function categories_adminapi_updatecat($args)
               $between_string = $point_of_insertion." AND ".($cat['left'] - 1);
           }
 
+          // TODO: besided portability, also check performance here
           $SQLquery = "UPDATE $categoriestable SET
                        xar_left = CASE
                         WHEN xar_left BETWEEN ".$cat['left']." AND ".$cat['right']."
@@ -147,9 +148,9 @@ function categories_adminapi_updatecat($args)
           }
           // Update parent id
           $SQLquery = "UPDATE $categoriestable
-                       SET xar_parent = $parent_id
-                       WHERE xar_cid = $cid";
-        $result = $dbconn->Execute($SQLquery);
+                       SET xar_parent = ?
+                       WHERE xar_cid = ?";
+        $result = $dbconn->Execute($SQLquery,array($parent_id, $cid));
         if (!$result) return;
 
        } // else (distace == 0) not necessary to move
