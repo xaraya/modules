@@ -15,7 +15,7 @@ function netquery_adminapi_getexec($args)
     $ExecTable = $xartable['netquery_exec'];
     $query = "SELECT * FROM $ExecTable WHERE exec_type = ?";
     $bindvars=array($exec_type);
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     list($exec_id, $exec_type, $exec_local, $exec_winsys, $exec_remote, $exec_remote_t) = $result->fields;
     if(!xarSecurityCheck('OverviewNetquery')) return;
