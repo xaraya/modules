@@ -23,7 +23,7 @@ function changelog_adminapi_createhook($args)
                        new SystemException($msg));
         return;
     }
-    if (!isset($extrainfo)) {
+    if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();
     }
 
@@ -67,7 +67,31 @@ function changelog_adminapi_createhook($args)
     $date = time();
     $status = 'created';
     $remark = '';
-    $content = serialize($extrainfo);
+
+    if (!empty($itemtype)) {
+        $getlist = xarModGetVar('changelog',$modname.'.'.$itemtype);
+    }
+    if (!isset($getlist)) {
+        $getlist = xarModGetVar('changelog',$modname);
+    }
+    if (!empty($getlist)) {
+        $fieldlist = split(',',$getlist);
+    }
+    $fields = array();
+    foreach ($extrainfo as $field => $value) {
+        // skip some common uninteresting fields
+        if ($field == 'module' || $field == 'itemtype' || $field == 'itemid' ||
+            $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
+            continue;
+        }
+        // skip fields we don't want here
+        if (!empty($fieldlist) && !in_array($field,$fieldlist)) {
+            continue;
+        }
+        $fields[$field] = $value;
+    }
+    $content = serialize($fields);
+    $fields = array();
 
     // Get a new changelog ID
     $nextId = $dbconn->GenId($changelogtable);

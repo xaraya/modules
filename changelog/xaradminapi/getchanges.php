@@ -6,6 +6,8 @@
  * @param $args['modid'] module id
  * @param $args['itemtype'] item type
  * @param $args['itemid'] item id
+ * @param $args['numitems'] number of entries to retrieve (optional)
+ * @param $args['startnum'] starting number (optional)
  * @returns array
  * @return array of changes
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -57,7 +59,14 @@ function changelog_adminapi_getchanges($args)
                 AND $changelogtable.xar_itemid = " . xarVarPrepForStore($itemid) . "
               ORDER BY $changelogtable.xar_logid DESC";
 
-    $result =& $dbconn->Execute($query);
+    if (isset($numitems) && is_numeric($numitems)) {
+        if (empty($startnum)) {
+            $startnum = 1;
+        }
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    } else {
+        $result =& $dbconn->Execute($query);
+    }
     if (!$result) return;
 
     $changes = array();

@@ -1,10 +1,6 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Overview of versions</xar:mlstring></h2><br />
+<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Differences between versions #(1) and #(2) of #(3)</xar:mlstring><xar:mlvar>#$oldversion#</xar:mlvar><xar:mlvar>#$newversion#</xar:mlvar><xar:mlvar>#$numversions#</xar:mlvar></xar:ml></h2><br />
 <div style="margin: auto;">
-<form method="POST" action="&xar-modurl-changelog-admin-showdiff;">
-<input type="hidden" name="modid" value="#$modid#" />
-<input type="hidden" name="itemtype" value="#$itemtype#" />
-<input type="hidden" name="itemid" value="#$itemid#" />
 <xar:if condition="!empty($itemlink)">
 <a href="#$itemlink#">#$itemtitle# &quot;#$itemlabel#&quot;</a>
 <br /><br />
@@ -24,7 +20,6 @@
     <tr>
         <td class="xar-norm">
             <xar:if condition="!empty($change['link'])">
-                <input type="checkbox" name="logids[]" value="#$logid#" />
                 <a href="#$change['link']#">#$change['version']#</a>
             <xar:else />
                 #$change['version']#
@@ -41,22 +36,27 @@
 </xar:foreach>
 </table>
 <br />
-<xar:if condition="!empty($prevversion)">
-<a href="#$prevversion#"><xar:mlstring>Show first version</xar:mlstring></a>
+<a href="#$link#"><xar:mlstring>Back to overview</xar:mlstring></a>
+-
 <xar:if condition="!empty($prevdiff)">
-[<a href="#$prevdiff#"><xar:mlstring>diff</xar:mlstring></a>]
-</xar:if>
+<a href="#$prevdiff#"><xar:mlstring>Show previous diff</xar:mlstring></a>
 </xar:if>
 -
-<xar:if condition="!empty($nextversion)">
-<a href="#$nextversion#"><xar:mlstring>Show last version</xar:mlstring></a>
 <xar:if condition="!empty($nextdiff)">
-[<a href="#$nextdiff#"><xar:mlstring>diff</xar:mlstring></a>]
-</xar:if>
+<a href="#$nextdiff#"><xar:mlstring>Show next diff</xar:mlstring></a>
 </xar:if>
 <br /><br />
-<input type="submit" value=" Diff " />
-</form>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+    <tr>
+        <th colspan="2"><xar:mlstring>Field Changes</xar:mlstring></th>
+    </tr>
+    <xar:foreach in="$fields" key="$field" value="$value">
+    <tr>
+        <td>#$field#</td>
+        <td class="xar-norm">#$value# </td>
+    </tr>
+    </xar:foreach>
+</table>
 <br />
 </div>
 </div>

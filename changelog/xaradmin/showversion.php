@@ -35,8 +35,7 @@ function changelog_admin_showversion($args)
     if (!empty($data['remark'])) {
         $data['remark'] = xarVarPrepForDisplay($data['remark']);
     }
-// TODO: adapt to local/user time !
-    $data['date'] = strftime('%a, %d %B %Y %H:%M:%S %Z', $data['date']);
+    $data['date'] = xarLocaleFormatDate($data['date']);
 
     $data['link'] = xarModURL('changelog','admin','showlog',
                               array('modid' => $modid,
@@ -44,19 +43,98 @@ function changelog_admin_showversion($args)
                                     'itemid' => $itemid));
 
     $data['fields'] = array();
+
+    $modinfo = xarModGetInfo($modid);
+    if (empty($modinfo['name'])) {
+        return $data;
+    }
+    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                               array('itemtype' => $itemtype,
+                                     'itemids' => array($itemid)),
+                               0);
+    if (isset($itemlinks[$itemid])) {
+        $data['itemlink'] = $itemlinks[$itemid]['url'];
+        $data['itemtitle'] = $itemlinks[$itemid]['title'];
+        $data['itemlabel'] = $itemlinks[$itemid]['label'];
+    }
+
     if (!empty($data['content'])) {
         $fields = unserialize($data['content']);
         $data['content'] = '';
+
+        if (!empty($itemtype)) {
+            $getlist = xarModGetVar('changelog',$modinfo['name'].'.'.$itemtype);
+        }
+        if (!isset($getlist)) {
+            $getlist = xarModGetVar('changelog',$modinfo['name']);
+        }
+        if (!empty($getlist)) {
+            $fieldlist = split(',',$getlist);
+        }
+        ksort($fields);
         foreach ($fields as $field => $value) {
+            // skip some common uninteresting fields
             if ($field == 'module' || $field == 'itemtype' || $field == 'itemid' ||
-                $field == 'mask' || $field == 'pass') {
+                $field == 'mask' || $field == 'pass' || $field == 'changelog_remark') {
+                continue;
+            }
+            // skip fields we don't want here
+            if (!empty($fieldlist) && !in_array($field,$fieldlist)) {
                 continue;
             }
             if (is_array($value) || is_object($value)) {
                 $value = serialize($value);
             }
-            $data['fields'][$field] = xarVarPrepForDisplay($value);
+            $data['fields'][$field] = nl2br(xarVarPrepForDisplay($value));
         }
+    }
+
+    // get all changes
+    $changes = xarModAPIFunc('changelog','admin','getchanges',
+                             array('modid' => $modid,
+                                   'itemtype' => $itemtype,
+                                   'itemid' => $itemid));
+    $numchanges = count($changes);
+    $data['numversions'] = $numchanges;
+    $nextid = 0;
+    $previd = 0;
+    $lastid = 0;
+    $version = array();
+    foreach (array_keys($changes) as $id) {
+        $version[$id] = $numchanges;
+        $numchanges--;
+        if ($id == $logid) {
+            $nextid = $lastid;
+        } elseif ($lastid == $logid) {
+            $previd = $id;
+        }
+        $lastid = $id;
+    }
+
+    $data['version'] = $version[$logid];
+    if (!empty($nextid)) {
+        $data['nextversion'] = xarModURL('changelog','admin','showversion',
+                                         array('modid' => $modid,
+                                               'itemtype' => $itemtype,
+                                               'itemid' => $itemid,
+                                               'logid' => $nextid));
+        $data['nextdiff'] = xarModURL('changelog','admin','showdiff',
+                                         array('modid' => $modid,
+                                               'itemtype' => $itemtype,
+                                               'itemid' => $itemid,
+                                               'logids' => $logid.'-'.$nextid));
+    }
+    if (!empty($previd)) {
+        $data['prevversion'] = xarModURL('changelog','admin','showversion',
+                                         array('modid' => $modid,
+                                               'itemtype' => $itemtype,
+                                               'itemid' => $itemid,
+                                               'logid' => $previd));
+        $data['prevdiff'] = xarModURL('changelog','admin','showdiff',
+                                         array('modid' => $modid,
+                                               'itemtype' => $itemtype,
+                                               'itemid' => $itemid,
+                                               'logids' => $previd.'-'.$logid));
     }
     return $data;
 }

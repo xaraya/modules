@@ -26,6 +26,7 @@ function changelog_admin_showlog($args)
         $data['showhost'] = 0;
     }
     $numchanges = count($data['changes']);
+    $data['numversions'] = $numchanges;
     foreach (array_keys($data['changes']) as $logid) {
         $data['changes'][$logid]['profile'] = xarModURL('roles','user','display',
                                                         array('uid' => $data['changes'][$logid]['editor']));
@@ -42,8 +43,7 @@ function changelog_admin_showlog($args)
         if (!empty($data['changes'][$logid]['remark'])) {
             $data['changes'][$logid]['remark'] = xarVarPrepForDisplay($data['changes'][$logid]['remark']);
         }
-    // TODO: adapt to local/user time !
-        $data['changes'][$logid]['date'] = strftime('%a, %d %B %Y %H:%M:%S %Z', $data['changes'][$logid]['date']);
+        $data['changes'][$logid]['date'] = xarLocaleFormatDate($data['changes'][$logid]['date']);
         // descending order of changes here
         $data['changes'][$logid]['version'] = $numchanges;
         $numchanges--;
@@ -51,6 +51,56 @@ function changelog_admin_showlog($args)
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
     $data['itemid'] = $itemid;
+
+    $logidlist = array_keys($data['changes']);
+
+    if (count($logidlist) > 0) {
+        $firstid = $logidlist[count($logidlist)-1];
+        $data['prevversion'] = xarModURL('changelog','admin','showversion',
+                                         array('modid' => $modid,
+                                               'itemtype' => $itemtype,
+                                               'itemid' => $itemid,
+                                               'logid' => $firstid));
+        if (count($logidlist) > 1) {
+            $previd = $logidlist[count($logidlist)-2];
+            $data['prevdiff'] = xarModURL('changelog','admin','showdiff',
+                                          array('modid' => $modid,
+                                                'itemtype' => $itemtype,
+                                                'itemid' => $itemid,
+                                                'logids' => $firstid.'-'.$previd));
+        }
+    }
+    if (count($logidlist) > 1) {
+        $lastid = $logidlist[0];
+        $data['nextversion'] = xarModURL('changelog','admin','showversion',
+                                         array('modid' => $modid,
+                                               'itemtype' => $itemtype,
+                                               'itemid' => $itemid,
+                                               'logid' => $lastid));
+        if (count($logidlist) > 2) {
+            $nextid = $logidlist[1];
+            $data['nextdiff'] = xarModURL('changelog','admin','showdiff',
+                                          array('modid' => $modid,
+                                                'itemtype' => $itemtype,
+                                                'itemid' => $itemid,
+                                                'logids' => $nextid.'-'.$lastid));
+        }
+    }
+
+    $modinfo = xarModGetInfo($modid);
+    if (empty($modinfo['name'])) {
+        return $data;
+    }
+    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                               array('itemtype' => $itemtype,
+                                     'itemids' => array($itemid)),
+                               0);
+    if (isset($itemlinks[$itemid])) {
+        $data['itemlink'] = $itemlinks[$itemid]['url'];
+        $data['itemtitle'] = $itemlinks[$itemid]['title'];
+        $data['itemlabel'] = $itemlinks[$itemid]['label'];
+    }
+
     return $data;
 }
 

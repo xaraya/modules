@@ -127,6 +127,10 @@ function changelog_init()
                            'changelog', 'admin', 'removehook')) {
         return false;
     }
+    if (!xarModRegisterHook('item', 'display', 'GUI',
+                           'changelog', 'user', 'displayhook')) {
+        return false;
+    }
 
 /* // TODO: show items you created/edited someday ?
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
@@ -161,6 +165,10 @@ function changelog_upgrade($oldversion)
     switch ($oldversion) {
         case 1.0: 
             // Code to upgrade from version 1.0 goes here
+            if (!xarModRegisterHook('item', 'display', 'GUI',
+                                    'changelog', 'user', 'displayhook')) {
+                return false;
+            }
             break;
         case 2.0: 
             // Code to upgrade from version 2.0 goes here
@@ -220,6 +228,10 @@ function changelog_delete()
     // (set object ID to the module name !)
     if (!xarModUnregisterHook('module', 'remove', 'API',
                            'changelog', 'admin', 'removehook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'display', 'GUI',
+                           'changelog', 'user', 'displayhook')) {
         return false;
     }
 /* // TODO: show items you created/edited someday ?
