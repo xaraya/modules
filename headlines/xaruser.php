@@ -124,9 +124,12 @@ function headlines_user_main()
         
 
         } else {
-            $msg = xarML('There is a problem with a feed.');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-            return;
+            $links[$i]['chantitle'] = xarVarPrepForDisplay($feedfile);
+            $links[$i]['chandesc'] = xarML('There is a problem with this feed : #(1)', xarVarPrepForDisplay($info['warning']));
+            $links[$i]['chanlink'] = '';
+            $links[$i]['viewlink'] = '';
+            $links[$i]['importlink'] = '';
+            $links[$i]['comments'] = '';
         }
     }
 
