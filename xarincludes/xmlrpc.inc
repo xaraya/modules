@@ -386,6 +386,7 @@ function xmlrpc_cd($parser, $data)
 function xmlrpc_dh($parser, $data)
 {
     global $_xh, $xmlrpc_backslash;
+/*
     if (substr($data, 0, 1) == "&" && substr($data, -1, 1) == ";") {
         if ($_xh[$parser]['lv']==1) {  
             $_xh[$parser]['qt']=1; 
@@ -395,6 +396,7 @@ function xmlrpc_dh($parser, $data)
                               str_replace("\"", "\\\"", 
                               str_replace(chr(92), $xmlrpc_backslash, $data)));
     }
+*/
 }
 
 class xmlrpc_client 
