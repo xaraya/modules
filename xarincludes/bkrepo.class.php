@@ -180,9 +180,8 @@ class bkRepo
         //echo "<pre>$cmd"."</pre><br/>";
         $csetlist = $this->_run($cmd);
 
-        $csets=array();
+        $csets=array(); $tags = array();
         while (list($key,$val) = each($csetlist)) {
-            $tags = array();
             if(substr($val,0,1) != '|') {
                 // We have a tagline
                 $tags[] = str_replace('S ','',$val);
