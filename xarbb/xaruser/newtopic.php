@@ -196,7 +196,9 @@ function xarbb_user_newtopic()
                                          'topics'   => 1,
                                          'move'     => 'positive',
                                          'replies'  => 1,
-                                         'fposter'  => $tposter))) return;
+                                         'fposter'  => $tposter,
+                                         'tid'      => $tid,
+                                         'ttitle'   => $ttitle))) return;
              }
 
             $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));

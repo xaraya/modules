@@ -50,12 +50,17 @@ function xarbb_userapi_updateforumview($args)
 
     $xbbforumstable = $xartable['xbbforums'];
     $time = time();
+    $options = array();
+    $options['tid'] = $tid;
+    $options['ttitle'] = $ttitle;
+    $options = serialize($options);
 
 // TODO: shouldn't xar_fpostid contain the last post id someday ?
 
     // Update the forum
     $query = "UPDATE $xbbforumstable
-            SET xar_fpostid     = ?,";
+            SET xar_fpostid     = ?,
+                xar_foptions    = ?,";
     if (!empty($topics)) {
         if ($move == 'positive') {
             $query .= " xar_ftopics = (xar_ftopics + $topics),";
@@ -72,7 +77,7 @@ function xarbb_userapi_updateforumview($args)
     }
     $query .= "   xar_fposter   = ?
             WHERE xar_fid       = ?";
-    $result =& $dbconn->Execute($query, array($time, $fposter, $fid));
+    $result =& $dbconn->Execute($query, array($time, $options, $fposter, $fid));
     if (!$result) return;
     // Let the calling process know that we have finished successfully
     return true;

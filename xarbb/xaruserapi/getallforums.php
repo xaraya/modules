@@ -34,9 +34,7 @@ function xarbb_userapi_getallforums($args)
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $xbbforumstable = $xartable['xbbforums'];
-
     // Get links
     //<jojodee> Make sure we only get forums itemtype=1 else duplicates bug #2335 revisited
     //Fix for older xarbb versions
@@ -47,7 +45,8 @@ function xarbb_userapi_getallforums($args)
                    xar_fposts,
                    xar_fposter,
                    xar_fpostid,
-                   xar_fstatus
+                   xar_fstatus,
+                   xar_foptions
             FROM $xbbforumstable";
     if (!empty($catid) && xarModIsHooked('categories','xarbb',1)) {
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
@@ -72,7 +71,7 @@ function xarbb_userapi_getallforums($args)
 
     $forums = array();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus) = $result->fields;
+        list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions) = $result->fields;
         if (xarSecurityCheck('ViewxarBB', 0,'Forum',"$fid:All")) {
             $forums[] = array('fid'     => $fid,
                               'fname'   => $fname,
@@ -81,13 +80,11 @@ function xarbb_userapi_getallforums($args)
                               'fposts'  => $fposts,
                               'fposter' => $fposter,
                               'fpostid' => $fpostid,
-                              'fstatus' => $fstatus);
+                              'fstatus' => $fstatus,
+                              'foptions'=> $foptions);
         }
     }
-
     $result->Close();
-
     return $forums;
 }
-
 ?>

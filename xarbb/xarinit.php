@@ -44,7 +44,8 @@ function xarbb_init()
     'xar_fposts'       => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_fposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment' => false, 'primary_key' => false),
     'xar_fpostid'      => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
-    'xar_fstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny')
+    'xar_fstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny'),
+    'xar_foptions'      => array('type'=>'text')
     //'xar_fpostid'      => array('type'=>'datetime','null'=>false,'default'=>'1970-01-01 00:00')
     );
 
@@ -503,7 +504,21 @@ function xarbb_upgrade($oldversion)
             }
             $result->Close();
             // fall through to next upgrade
+        case '1.1.3':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $xbbforumstable = $xartable['xbbforums'];
 
+            xarDBLoadTableMaintenanceAPI();
+            // Update the topics table with a first post date tfpost field
+            $query = xarDBAlterTable($xbbforumstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_foptions',
+                                    'type'    => 'text'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            // fall through to next upgrade
         default:
             break;
     }

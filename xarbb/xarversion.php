@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'xarBB';
 $modversion['id'] = '300';
-$modversion['version'] = '1.1.3';
+$modversion['version'] = '1.1.4';
 $modversion['displayname']    = xarML('xarBB');
 $modversion['description'] = 'A lightweight BB for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';

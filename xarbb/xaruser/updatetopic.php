@@ -75,7 +75,9 @@ function xarbb_user_updatetopic()
                            array('fid'      => $data['fid'],
                                  'replies'  => 1,
                                  'move'     => 'positive',
-                                 'fposter'  => $poster))) return;
+                                 'fposter'  => $poster,
+                                 'tid'      => $tid,
+                                 'ttitle'   => $data['ttitle']))) return;
     }
 
     $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));

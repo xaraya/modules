@@ -180,7 +180,12 @@ function xarbb_user__getforuminfo($args)
                                  'user',
                                  'get',
                                  array('uid' => $forum['fposter']));
+
         $forums[$i]['name'] = $getname['name'];
+
+        if (!empty($forum['foptions'])){
+            $forums[$i]['foptions'] = unserialize($forum['foptions']);
+        }
 
         // Forum Options
         // Check to see if forum is locked
