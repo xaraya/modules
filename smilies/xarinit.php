@@ -42,51 +42,54 @@ function smilies_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $smilies = array("':D','happy.gif','Happy'",
-                    "':-D','happy.gif','Happy'",
-                    "':grin:','happy.gif','Happy'",
-                    "':\)','smile.gif','Smile'",
-                    "':-\)','smile.gif','Smile'",
-                    "':smile:','smile.gif','Smile'",
-                    "':\(','frown.gif','Frown'",
-                    "':-\(','frown.gif','Frown'",
-                    "':frown:','frown.gif','Frown'",
-                    "':sad:','frown.gif','Frown'",
-                    "':o','surprised.gif','Surprised'",
-                    "':0','surprised.gif','Surprised'",
-                    "':-o','surprised.gif','Surprised'",
-                    "':-0','surprised.gif','Surprised'",
-                    "':eek:','surprised.gif','Surprised'",
-                    "':\?','confused.gif','Confused'",
-                    "':-\?','confused.gif','Confused'",
-                    "'8\)','cool.gif','Cool'",
-                    "'8-\)','cool.gif','Cool'",
-                    "':cool:','cool.gif','Cool'",
-                    "':lol:','lol.gif','LOL!'",
-                    "':x','mad.gif','Mad'",
-                    "':-x','mad.gif','Mad'",
-                    "':mad:','mad.gif','Mad'",
-                    "':p','razz.gif','Razz'",
-                    "':-p','razz.gif','Razz'",
-                    "':razz:','razz.gif','Razz'",
-                    "':oops:','redface.gif','Embarassed'",
-                    "':cry:','cry.gif','Sad'",
-                    "':>','evil.gif','Evil'",
-                    "':->','evil.gif','Evil'",
-                    "':evil:','evil.gif','Evil'",
-                    "':roll:','rolleyes.gif','WhateeeEver!'",
-                    "';\)','wink.gif','Wink'",
-                    "';-\)','wink.gif','Wink'",
-                    "':wink:','wink.gif','Wink'");
+    $smilies = array(
+                    array(':D','happy.gif','Happy'),
+                    array(':-D','happy.gif','Happy'),
+                    array(':grin:','happy.gif','Happy'),
+                    array(':\)','smile.gif','Smile'),
+                    array(':-\)','smile.gif','Smile'),
+                    array(':smile:','smile.gif','Smile'),
+                    array(':\(','frown.gif','Frown'),
+                    array(':-\(','frown.gif','Frown'),
+                    array(':frown:','frown.gif','Frown'),
+                    array(':sad:','frown.gif','Frown'),
+                    array(':o','surprised.gif','Surprised'),
+                    array(':0','surprised.gif','Surprised'),
+                    array(':-o','surprised.gif','Surprised'),
+                    array(':-0','surprised.gif','Surprised'),
+                    array(':eek:','surprised.gif','Surprised'),
+                    array(':\?','confused.gif','Confused'),
+                    array(':-\?','confused.gif','Confused'),
+                    array('8\)','cool.gif','Cool'),
+                    array('8-\)','cool.gif','Cool'),
+                    array(':cool:','cool.gif','Cool'),
+                    array(':lol:','lol.gif','LOL!'),
+                    array(':x','mad.gif','Mad'),
+                    array(':-x','mad.gif','Mad'),
+                    array(':mad:','mad.gif','Mad'),
+                    array(':p','razz.gif','Razz'),
+                    array(':-p','razz.gif','Razz'),
+                    array(':razz:','razz.gif','Razz'),
+                    array(':oops:','redface.gif','Embarassed'),
+                    array(':cry:','cry.gif','Sad'),
+                    array(':>','evil.gif','Evil'),
+                    array(':->','evil.gif','Evil'),
+                    array(':evil:','evil.gif','Evil'),
+                    array(':roll:','rolleyes.gif','WhateeeEver!'),
+                    array(';\)','wink.gif','Wink'),
+                    array(';-\)','wink.gif','Wink'),
+                    array(':wink:','wink.gif','Wink'));
 
     foreach ($smilies as $smilie) {
-        // Get next ID in table
+        list($code, $icon,$emotion) = $smilie;
         $nextId = $dbconn->GenId($smiliestable);
-        $query = "INSERT INTO $smiliestable VALUES ($nextId,$smilie)";
-        $result =& $dbconn->Execute($query);
+        $query = "INSERT INTO $smiliestable
+                (xar_sid, xar_code, xar_icon, xar_emotion)
+                VALUES (?,?,?,?)";
+        $bindvars = array($nextId, $code, $icon, $emotion);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
-    }
-
+     }
     // Set up module variables
     xarModSetVar('smilies', 'itemsperpage', 20);
 
