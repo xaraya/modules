@@ -15,7 +15,8 @@
  * The main ( default ) administration view.
  */
 
-function mybookmarks_admin_main() {
+function mybookmarks_admin_main() 
+{
 
     if (!xarSecurityCheck( 'Editmybookmarks')) return;
 
@@ -48,7 +49,8 @@ function mybookmarks_admin_main() {
  * 'adminpanels - configurations - configure overview'.
  */
 
-function mybookmarks_admin_view($args) {
+function mybookmarks_admin_view($args) 
+{
 
     list( $itemtype ) = xarVarCleanFromInput('itemtype' );
 
@@ -76,7 +78,8 @@ function mybookmarks_admin_view($args) {
  *      'menu'      => Array with information about the module menu
  *      'statusmsg' => Status message if set
  */
-function mybookmarks_admin_common( $title = 'Undefined' ) {
+function mybookmarks_admin_common( $title = 'Undefined' ) 
+{
 
     $common = array();
 
@@ -109,7 +112,8 @@ function mybookmarks_admin_common( $title = 'Undefined' ) {
  * function.
  *
  */
-function mybookmarks_admin_new( $args ) {
+function mybookmarks_admin_new( $args ) 
+{
 
     list( $authid, $preview, $itemtype, $cancel ) =
         xarVarCleanFromInput( 'authid', 'preview', 'itemtype', 'cancel' );
@@ -193,7 +197,8 @@ function mybookmarks_admin_new( $args ) {
  * function.
  *
  */
-function mybookmarks_admin_modify( $args ) {
+function mybookmarks_admin_modify( $args ) 
+{
 
     list( $itemtype, $itemid, $cancel, $authid, $preview ) =
         xarVarCleanFromInput('itemtype', 'itemid', 'cancel', 'authid', 'preview' );
@@ -276,7 +281,8 @@ function mybookmarks_admin_modify( $args ) {
  * function.
  *
  */
-function mybookmarks_admin_delete( $args ) {
+function mybookmarks_admin_delete( $args ) 
+{
 
     list( $authid, $confirm, $itemtype, $cancel, $itemid ) =
         xarVarCleanFromInput( 'authid', 'confirm', 'itemtype', 'cancel', 'itemid' );
@@ -357,7 +363,8 @@ function mybookmarks_admin_delete( $args ) {
 /**
  * Administration for the mybookmarks module.
  */
-function mybookmarks_admin_config( $args ) {
+function mybookmarks_admin_config( $args ) 
+{
 
     list( $cancel, $itemtype ) = xarVarCleanFromInput( 'cancel', 'itemtype' );
     extract( $args );
@@ -395,7 +402,8 @@ function mybookmarks_admin_config( $args ) {
 /**
  * Administration for the mybookmarks module.
  */
-function mybookmarks_adminpriv_config( $args ) {
+function mybookmarks_adminpriv_config( $args ) 
+{
 
     $data = mybookmarks_admin_common( 'Module Configuration' );
 
@@ -467,7 +475,8 @@ function mybookmarks_adminpriv_config( $args ) {
 /**
  * Create a little submenu for the configuration screen.
  */
-function mybookmarks_adminpriv_configmenu() {
+function mybookmarks_adminpriv_configmenu() 
+{
 
     /*
      * Build the configuration submenu

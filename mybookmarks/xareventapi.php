@@ -13,7 +13,8 @@
 
 /**
  * This function is called whenever the module is loaded.
-function mybookmarks_eventapi_OnServerRequest() {
+function mybookmarks_eventapi_OnServerRequest() 
+{
 
 }
  */

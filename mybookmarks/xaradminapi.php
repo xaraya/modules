@@ -16,7 +16,8 @@
  * @return  array containing the menulinks for the main menu items
  */
 
-function mybookmarks_adminapi_getmenulinks ( $args ) {
+function mybookmarks_adminapi_getmenulinks ( $args ) 
+{
 
     if (xarSecurityCheck('Viewmybookmarks')) {
 

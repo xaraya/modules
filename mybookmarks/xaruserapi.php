@@ -21,7 +21,8 @@
  * @return  array containing the menulinks for the main menu items
  */
 
-function mybookmarks_userapi_getmenulinks ( $args ) {
+function mybookmarks_userapi_getmenulinks ( $args ) 
+{
 
 
     // First we need to do a security check to ensure that we only return menu items
@@ -76,7 +77,8 @@ function mybookmarks_userapi_getmenulinks ( $args ) {
  * o
  *
  */
-function mybookmarks_userapi_encode_shorturl( $args ) {
+function mybookmarks_userapi_encode_shorturl( $args ) 
+{
 
     $func       = NULL;
     $module     = NULL;
@@ -188,7 +190,8 @@ function mybookmarks_userapi_encode_shorturl( $args ) {
  * o
  *
  */
-function mybookmarks_userapi_decode_shorturl( $params ) {
+function mybookmarks_userapi_decode_shorturl( $params ) 
+{
 
 
     if ( $params[0] != 'mybookmarks' )
@@ -232,7 +235,8 @@ function mybookmarks_userapi_decode_shorturl( $params ) {
  * @param array( 'itemtype' => <itemtype> )
  * @return number of items
  */
-function mybookmarks_userapi_count( $args ) {
+function mybookmarks_userapi_count( $args ) 
+{
 
     extract( $args );
 
@@ -262,7 +266,8 @@ function mybookmarks_userapi_count( $args ) {
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
  */
-function mybookmarks_userapi_getall( $args ) {
+function mybookmarks_userapi_getall( $args ) 
+{
 
     extract( $args );
 
@@ -319,7 +324,8 @@ function mybookmarks_userapi_getall( $args ) {
  * @param $args['fields'] array with all the fields to return
  * @param $args['fields'] array with all the fields to return
  */
-function mybookmarks_userapi_get( $args ) {
+function mybookmarks_userapi_get( $args ) 
+{
 
     extract( $args );
 
@@ -348,7 +354,8 @@ function mybookmarks_userapi_get( $args ) {
  * @param $args['item'] item
  * @param $args['itemtype'] itemtyp
  */
-function mybookmarks_userapi_gettitle( $args ) {
+function mybookmarks_userapi_gettitle( $args ) 
+{
 
     extract( $args );
 
@@ -387,7 +394,8 @@ function mybookmarks_userapi_gettitle( $args ) {
  * @returns array
  * @return array containing the itemlink(s) for the item(s).
  */
-function mybookmarks_userapi_getitemlinks ( $args ) {
+function mybookmarks_userapi_getitemlinks ( $args ) 
+{
 
     extract($args);
 

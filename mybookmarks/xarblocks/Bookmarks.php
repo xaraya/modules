@@ -13,7 +13,8 @@
 */
 
 
-function mybookmarks_bookmarksblock_init() {
+function mybookmarks_bookmarksblock_init() 
+{
   $mod = xarRequestGetVar('module');
     if($mod == "roles")
     {
@@ -35,7 +36,8 @@ function mybookmarks_bookmarksblock_init() {
  * @throws  no exceptions
  * @todo    nothing
 */
-function mybookmarks_bookmarksblock_info() {
+function mybookmarks_bookmarksblock_info() 
+{
     // Values
     return array('text_type' => 'mybookmarks',
                  'module' => 'mybookmarks',

@@ -15,7 +15,8 @@
 /**
  * Modify a mybookmarks object
  */
-function mybookmarks_mybookmarksapi_modify( $args ) {
+function mybookmarks_mybookmarksapi_modify( $args ) 
+{
 
     if (!xarSecurityCheck( 'Editmybookmarks')) return;
 
@@ -93,7 +94,8 @@ function mybookmarks_mybookmarksapi_modify( $args ) {
 /**
 * Update a mybookmarks object
 */
-function mybookmarks_mybookmarksapi_update( $args ) {
+function mybookmarks_mybookmarksapi_update( $args ) 
+{
 
     if (!xarSecurityCheck( 'Editmybookmarks')) return;
 
@@ -167,7 +169,8 @@ function mybookmarks_mybookmarksapi_update( $args ) {
  * Delete a mybookmarks object.
  *
  */
-function mybookmarks_mybookmarksapi_delete( $args ) {
+function mybookmarks_mybookmarksapi_delete( $args ) 
+{
 
     if (!xarSecurityCheck( 'Editmybookmarks')) return;
 
@@ -229,7 +232,8 @@ function mybookmarks_mybookmarksapi_delete( $args ) {
  * Confirm the deletion of a mybookmarks object.
  *
  */
-function mybookmarks_mybookmarksapi_confirmdelete( $args ) {
+function mybookmarks_mybookmarksapi_confirmdelete( $args ) 
+{
 
     if (!xarSecurityCheck( 'Editmybookmarks')) return;
 
@@ -282,7 +286,8 @@ function mybookmarks_mybookmarksapi_confirmdelete( $args ) {
  * Create a mybookmarks object
  *
  */
-function mybookmarks_mybookmarksapi_new( $args ) {
+function mybookmarks_mybookmarksapi_new( $args ) 
+{
 
     if (!xarSecurityCheck( 'Addmybookmarks')) return;
 
@@ -354,7 +359,8 @@ function mybookmarks_mybookmarksapi_new( $args ) {
  * Create a mybookmarks object
  *
  */
-function mybookmarks_mybookmarksapi_create( $args ) {
+function mybookmarks_mybookmarksapi_create( $args ) 
+{
 
     if (!xarSecurityCheck( 'Addmybookmarks')) return;
 
@@ -420,7 +426,8 @@ function mybookmarks_mybookmarksapi_create( $args ) {
 /**
  * // TODO // add description
  */
-function mybookmarks_mybookmarksapi_display( $args ) {
+function mybookmarks_mybookmarksapi_display( $args ) 
+{
 
     // Security check
     if (!xarSecurityCheck( 'Viewmybookmarks')) return;
@@ -499,7 +506,8 @@ function mybookmarks_mybookmarksapi_display( $args ) {
  *
  * // TODO // explain that the function is called from admin and user * interface.
  */
-function mybookmarks_mybookmarksapi_view( $args ) {
+function mybookmarks_mybookmarksapi_view( $args ) 
+{
 
     if (!xarSecurityCheck( 'Viewmybookmarks')) return;
      $uid = xarUserGetVar('uid');
@@ -571,7 +579,8 @@ function mybookmarks_mybookmarksapi_view( $args ) {
 /**
  * Administration for the mybookmarks module.
  */
-function mybookmarks_mybookmarksapi_config( $args ) {
+function mybookmarks_mybookmarksapi_config( $args ) 
+{
 
     $data = mybookmarks_admin_common( 'Bookmarks Configuration' );
 

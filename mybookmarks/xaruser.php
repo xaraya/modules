@@ -11,7 +11,8 @@
  * @version     $Id$
  */
 
-function mybookmarks_user_main() {
+function mybookmarks_user_main() 
+{
 
     // Security Check
     // It is important to do this as early as possible to avoid potential
@@ -37,7 +38,8 @@ function mybookmarks_user_main() {
  *      'menu'      => Array with information about the module menu
  *      'statusmsg' => Status message if set
  */
-function mybookmarks_user_common( $title = 'Undefined' ) {
+function mybookmarks_user_common( $title = 'Undefined' ) 
+{
 
     $common = array();
 
@@ -70,7 +72,8 @@ function mybookmarks_user_common( $title = 'Undefined' ) {
  *
  *
  */
-function mybookmarks_user_display( $args ) {
+function mybookmarks_user_display( $args ) 
+{
 
     $itemtype = xarVarCleanFromInput( 'itemtype' );
     extract( $args );
@@ -106,7 +109,8 @@ function mybookmarks_user_display( $args ) {
  * userpriv_viewtable().
  *
  */
-function mybookmarks_user_view( $args ) {
+function mybookmarks_user_view( $args ) 
+{
     if(!xarSecurityCheck( 'Addmybookmarks',0,$data= "You need to login before you can add or view your Bookmarks")) return $data;
 
     $itemtype = xarVarCleanFromInput( 'itemtype' );
