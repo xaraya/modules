@@ -23,7 +23,7 @@ function contact_userapi_get($args)
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item ID', 'user', 'get', 'contact');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -87,7 +87,7 @@ function contact_userapi_get($args)
     if ($result->EOF) {
         $result->Close();
         $msg = xarML('This item does not exists');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }

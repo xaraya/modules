@@ -71,7 +71,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -95,7 +95,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -124,7 +124,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -152,7 +152,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -182,7 +182,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -211,7 +211,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -262,7 +262,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -309,7 +309,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -349,7 +349,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -375,7 +375,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -403,7 +403,7 @@ function contact_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -421,7 +421,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -433,7 +433,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -445,7 +445,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -457,7 +457,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -471,7 +471,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -484,7 +484,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -496,7 +496,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -508,7 +508,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -519,7 +519,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -530,7 +530,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -541,7 +541,7 @@ function contact_init()
     // Check for db errors
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return NULL;
     }
@@ -700,7 +700,7 @@ function contact_upgrade($oldversion)
             // appropriate exception
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarMLByKey('DATABASE_ERROR', $query);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }
@@ -762,7 +762,7 @@ function contact_upgrade($oldversion)
 
             $result = $dbconn->Execute( $query );
             if ( $result == false ) {
-                xarExceptionSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
+                xarErrorSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
                    new SystemException($query));
                 return false;   
             }
@@ -793,7 +793,7 @@ function contact_upgrade($oldversion)
                 $sqlInsert = "INSERT INTO ".$table." (".$fields.") VALUES (".$values.")";
                 $dbconn->Execute( $sqlInsert );
                 if ($dbconn->ErrorNo() != 0) {
-                    xarExceptionSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
+                    xarErrorSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
                         new SystemException($sqlInsert));
                     return false;
                 }

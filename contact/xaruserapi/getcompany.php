@@ -44,7 +44,7 @@ function contact_userapi_getcompany($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'admin', 'getcompany', 'contact');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -54,7 +54,7 @@ function contact_userapi_getcompany($args)
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
   //  if (!xarSecAuthAction(0, 'contact::', '::', ACCESS_OVERVIEW)) {
-  //      xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+  //      xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
  //       return;
  //   }
      if (!xarSecurityCheck('ContactRead')) return;

@@ -196,7 +196,7 @@ function contact_admin_create_contact($args)
             }else{
                  $msg = xarML('You can only upload file types of gif, png, jpeg or jpg.',
                               'module');
-                               xarExceptionSet(XAR_USER_EXCEPTION,'error class decriptor',new DefaultUserException($msg));
+                               xarErrorSet(XAR_USER_EXCEPTION,'error class decriptor',new DefaultUserException($msg));
                  return;
                  }
       }else{

@@ -32,13 +32,13 @@ function contact_user_sendemail($args)
     // Check arguments
     if (empty($subject)) {
         $msg = xarML('No Subject Provided for Email');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     if (empty($message)) {
         $msg = xarML('No Message Provided for Email');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -50,7 +50,7 @@ function contact_user_sendemail($args)
     if(strlen($femail) > 0) {
         if(!preg_match("'^[a-z0-9_.=-]+@(?:[a-z0-9-]+\.)+([a-z]{2,3})\$'i", $femail)){
             $msg = xarML('Error in your Email Address');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }
     }
