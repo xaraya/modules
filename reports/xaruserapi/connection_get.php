@@ -20,8 +20,8 @@ function reports_userapi_connection_get($args)
 	$cols = &$xartables['report_connections_column'];
     
 	$sql = "SELECT $cols[id],$cols[name],$cols[description],$cols[server],$cols[type],$cols[database],$cols[user],$cols[password] "
-		."FROM $tab WHERE $cols[id]='".xarVarPrepForStore($conn_id)."'";
-	$res= $dbconn->Execute($sql);
+		."FROM $tab WHERE $cols[id]=?";
+	$res= $dbconn->Execute($sql,array($conn_id));
 	if ($res) {
 		$row = $res->fields;
         return  array (

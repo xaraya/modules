@@ -13,15 +13,13 @@ function reports_adminapi_update_report($args)
 	$tab = $xartables['reports'];
 	$cols = &$xartables['reports_column'];
 
-	$sql = "UPDATE $tab SET "
-		."$cols[name]='".xarVarPrepForStore($rep_name)."',"
-    ."$cols[description]='".xarVarPrepForStore($rep_desc)."',"
-    ."$cols[conn_id]='".xarVarPrepForStore($rep_conn)."',"
-    ."$cols[xmlfile]='".xarVarPrepForStore($rep_xmlfile)."' "
-		."WHERE $cols[id]='".xarVarPrepForStore($rep_id)."'";
+	$sql = "UPDATE $tab SET 
+		$cols[name]=?, $cols[description]=?,
+        $cols[conn_id]=?, $cols[xmlfile]=?
+		WHERE $cols[id]=?";
 
-
-	if($dbconn->Execute($sql)) {
+    $bindvars = array($rep_name, $rep_desc, $rep_conn, $rep_xmlfile, $rep_id);
+	if($dbconn->Execute($sql,$bindvars)) {
 		return true;
 	} else {
 		return false;

@@ -13,8 +13,8 @@ function reports_adminapi_delete_connection($args)
 	$tab = $xartables['report_connections'];
 	$cols = &$xartables['report_connections_column'];
 
-	$sql = "DELETE FROM $tab WHERE $cols[id] = '".xarVarPrepForStore($conn_id)."'";
-	if($dbconn->Execute($sql)) {
+	$sql = "DELETE FROM $tab WHERE $cols[id] = ?";
+	if($dbconn->Execute($sql,array($conn_id))) {
 		return true;
 	} else {
 		return false;

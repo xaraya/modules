@@ -14,8 +14,8 @@ function reports_userapi_report_get($args)
 	$cols = &$xartables['reports_column'];
     
 	$sql = "SELECT $cols[id],$cols[name],$cols[description],$cols[conn_id],$cols[xmlfile] "
-		."FROM $tab WHERE $cols[id]='".xarVarPrepForStore($rep_id)."'";
-	$res= $dbconn->Execute($sql);
+		."FROM $tab WHERE $cols[id]=?";
+	$res= $dbconn->Execute($sql,array($rep_id));
 	if ($res) {
 		$row = $res->fields;
         return  array (

@@ -14,11 +14,11 @@ function &reports_userapi_getconnectionobject($args)
         if($connection['type'] == "access" || 
            $connection['type'] == "odbc" || 
            $connection['type'] == "odbc_mssql"){
-            $repconn->PConnect($connection['database'], $connection['user'],$connection['password'],'En');
+            $repconn->Connect($connection['database'], $connection['user'],$connection['password'],'En');
         } else if($connection['type'] == "ibase") {
-            $repconn->PConnect($connection['server'].":".$connection['database'],$connection['user'],$connection['password']);
+            $repconn->Connect($connection['server'].":".$connection['database'],$connection['user'],$connection['password']);
         }else {
-            $repconn->PConnect($connection['server'],$connection['user'],$connection['password'],$connection['database'],'En');
+            $repconn->Connect($connection['server'],$connection['user'],$connection['password'],$connection['database'],'En');
         }
         return $repconn;
     }
