@@ -6,7 +6,7 @@
  * Initialise the xarpages module.
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2004 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -113,6 +113,88 @@ function xarpages_init()
     xarModSetVar('xarpages', 'errorpage', 0);
     xarModSetVar('xarpages', 'notfoundpage', 0);
     xarModSetVar('xarpages', 'SupportShortURLs', 0);
+
+    // Privileges.
+
+    // Set up component 'Page'.
+    // Each page will have a page name and a unique page type name.
+    $instances = array (
+        array (
+            'header' => 'Page Name',
+            'query' => 'SELECT DISTINCT xar_name FROM ' . $pagestable . ' ORDER BY xar_left',
+            'limit' => 50
+        ),
+        array (
+            'header' => 'Page Type',
+            'query' => 'SELECT xar_name FROM ' . $typestable . ' WHERE xar_name NOT LIKE \'@%\' ORDER BY xar_name',
+            'limit' => 50
+        )
+    );
+    xarDefineInstance(
+        'xarpages', 'Page', $instances, 0, 'All', 'All', 'All',
+        xarML('Security component for xarpages page')
+    );
+
+    // Masks for the component 'Page'.
+    // Each mask defines something the user is able to do.
+    // The masks are linked to the instances at runtime when security checks
+    // are made:
+    // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
+    // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
+    xarRegisterMask(
+        'ReadPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_READ',
+        xarML('Read or view a page')
+    );
+    xarRegisterMask(
+        'ModeratePage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_MODERATE',
+        xarML('Change content of a page')
+    );
+    xarRegisterMask(
+        'EditPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_EDIT',
+        xarML('Move and rename a page')
+    );
+    xarRegisterMask(
+        'AddPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_ADD',
+        xarML('Add new pages')
+    );
+    xarRegisterMask(
+        'DeletePage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_DELETE',
+        xarML('Remove pages')
+    );
+
+    // Set up component 'Pagetype'.
+    // Each pagetype a unique page name.
+    $instances = array (
+        array (
+            'header' => 'Page Type',
+            'query' => 'SELECT xar_name FROM ' . $typestable . ' WHERE xar_name NOT LIKE \'@%\' ORDER BY xar_name',
+            'limit' => 50
+        )
+    );
+    xarDefineInstance(
+        'xarpages', 'Pagetype', $instances, 0, 'All', 'All', 'All',
+        xarML('Security component for xarpages page type')
+    );
+
+    // Masks for the component 'Page'.
+    // Each mask defines something the user is able to do.
+    // The masks are linked to the instances at runtime when security checks
+    // are made:
+    // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
+    // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
+    xarRegisterMask(
+        'ModeratePagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_MODERATE',
+        xarML('Overview of page types')
+    );
+    xarRegisterMask(
+        'EditPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_EDIT',
+        xarML('Modify page type description and hooks')
+    );
+    // Since creation of templates are involved here, we go straight to admin level.
+    xarRegisterMask(
+        'AdminPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_ADMIN',
+        xarML('Administer page types')
+    );
 
     // TODO: Create some default types and DD objects.
     // This would probably best be done via an import after

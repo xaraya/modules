@@ -41,11 +41,6 @@ function xarpages_admin_modifypage()
                 'itemid' => $data['page']['pid']
             )
         );
-        if (empty($hooks)) {
-            $data['hooks'] = '';
-        } elseif (is_array($hooks)) {
-            $data['hooks'] = trim(join('', $hooks));
-        }
     } else {
         // Adding a new page
 
@@ -71,20 +66,24 @@ function xarpages_admin_modifypage()
             $data['pagetypes'] = $pagetypes;
         } else {
             // We have a page type, now let the user create a page.
+            // TODO: if there are any templates for this page type, present
+            // the user with a selection to chose from. For now, just take the
+            // the first template (if any) available.
+            $templates = xarModAPIfunc(
+                'xarpages', 'user', 'getpages',
+                array('itemtype' => $ptid, 'status' => 'TEMPLATE')
+            );
+            if (count($templates) > 0) {
+                $template = reset($templates);
+            }
 
             // Get all pages.
             $pages = xarModAPIFunc('xarpages', 'user', 'getpagestree');
 
-            $info = array();
-            $info['module'] = 'xarpages';
-            $info['itemtype'] = $ptid;
-            $info['itemid'] = '';
-            $hooks = xarModCallHooks('item', 'new', '', $info);
-            if (empty($hooks)) {
-                $data['hooks'] = '';
-            } elseif (is_array($hooks)) {
-                $data['hooks'] = trim(join('', $hooks));
-            }
+            $hooks = xarModCallHooks(
+                'item', 'new', '',
+                array('module' => 'xarpages', 'itemtype' => $ptid, 'itemid' => '')
+            );
 
             // Default data for the page form.
             $data['page'] = array(
@@ -95,15 +94,39 @@ function xarpages_admin_modifypage()
                 'encode_url' => '',
                 'decode_url' => '',
                 'function' => '',
+                'theme' => '',
                 'status' => 'ACTIVE',
+                'alias' => 0,
+                'template' => '',
                 'pagetype' => xarModAPIfunc('xarpages', 'user', 'gettype', array('ptid' => $ptid))
             );
+
+            // If we have a template, then set a few values up to initialise the new page form.
+            if (!empty($template)) {
+                $data['page']['name'] = $template['name'];
+                $data['page']['desc'] = $template['desc'];
+                $data['page']['encode_url'] = $template['encode_url'];
+                $data['page']['decode_url'] = $template['decode_url'];
+                $data['page']['function'] = $template['function'];
+                $data['page']['theme'] = $template['theme'];
+                $data['page']['template'] = $template['template'];
+            }
         }
 
         $data['func'] = 'create';
         $data['pid'] = NULL;
         $data['ptid'] = $ptid;
     }
+
+    // Clear out any empty hooks, and truncate the remainder.
+    foreach($hooks as $key => $hook) {
+        if (trim($hook) == '') {
+            unset($hook[$key]);
+        } else {
+            $hooks[$key] = trim($hook);
+        }
+    }
+    $data['hooks'] =& $hooks;
 
     // Implode the names for each page into a path for display.
     foreach ($pages['pages'] as $key => $page) {
@@ -136,6 +159,10 @@ function xarpages_admin_modifypage()
     // is often needed, especially in respect of images.
     // Start with the default templates.
     $template_list = array();
+
+    // The template will be prefixed by 'page-' and then the name of the page type.
+    $template_prefix = 'page-' . $data['page']['pagetype']['name'] . '-';
+
     $templates = xarModAPIfunc(
         'dynamicdata', 'admin', 'browse',
         array(
@@ -144,8 +171,8 @@ function xarpages_admin_modifypage()
         )
     );
     foreach($templates as $template) {
-        if (preg_match('/^page-/', $template)) {
-            $root = preg_replace(array('/^page-/', '/[.]xd$/'), '', $template);
+        if (preg_match('/^' . $template_prefix . '/', $template)) {
+            $root = preg_replace(array('/^' . $template_prefix . '/', '/[.]xd$/'), '', $template);
             $template_list[$root] = 'xarpages: ' . $root;
         }
     }
@@ -161,8 +188,8 @@ function xarpages_admin_modifypage()
             )
         );
         foreach($templates as $template) {
-            if (preg_match('/^page-/', $template)) {
-                $root = preg_replace(array('/^page-/', '/[.]xt$/'), '', $template);
+            if (preg_match('/^' . $template_prefix . '/', $template)) {
+                $root = preg_replace(array('/^' . $template_prefix . '/', '/[.]xt$/'), '', $template);
                 $template_list[$root] = $theme['name'] . ': ' . $root;
             }
         }

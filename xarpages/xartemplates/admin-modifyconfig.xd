@@ -35,10 +35,6 @@
                         <input type="checkbox" name="shorturl" id="shorturl" value="1" />
                     </xar:if>        
                 </p>
-
-                <p class="param">
-                    <label for="shorturl"><xar:mlstring>TODO: default template (where specified template fails)</xar:mlstring></label>
-                </p>
             </fieldset>
 
             <fieldset class="formelements xar-norm">
@@ -91,6 +87,17 @@
                     </select>
                 </p>
             </fieldset>
+
+            <xar:if condition="!empty($confighooks)">
+                <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong><xar:mlstring>Config Hooks</xar:mlstring></strong>
+                    </legend>
+                    <xar:loop name="$confighooks">
+                        #$loop:item#
+                    </xar:loop>
+                </fieldset>
+            </xar:if>
 
             <p>
                 <input type="submit" value="#xarML('Submit')#"  />

@@ -1,8 +1,11 @@
 <?php
 
 /**
- * Update question group.
+ * Update page type.
+ * @todo warn user if there is no 'page-{name}' fallback template available.
+ * @todo the page type name must be unique - check this when updating and creating.
  */
+
 function xarpages_admin_modifytype()
 {
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
@@ -24,7 +27,8 @@ function xarpages_admin_modifytype()
 
         if (empty($type)) {
             // TODO: raise an error message.
-            echo "NO PAGE TYPE";
+            $msg = xarML('Page type "#(1)" not found.', $ptid);
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
 
@@ -61,18 +65,25 @@ function xarpages_admin_modifytype()
         );
     }
 
-    // Format the hooks if required.
-    if (empty($modifyhooks)) {
-        $data['modifyhooks'] = '';
-    } elseif (is_array($modifyhooks)) {
-        $data['modifyhooks'] = trim(join('', $modifyhooks));
+    // Clear out any empty hooks, trim the remainder.
+    foreach($modifyhooks as $key => $modifyhook) {
+        if (trim($modifyhook) == '') {
+            unset($modifyhook[$key]);
+        } else {
+            $modifyhooks[$key] = trim($modifyhook);
+        }
     }
+    $data['modifyhooks'] =& $modifyhooks;
 
-    if (empty($confighooks)) {
-        $data['confighooks'] = '';
-    } elseif (is_array($modifyhooks)) {
-        $data['confighooks'] = trim(join('', $confighooks));
+    // Clear out any empty hooks, trim the remainder.
+    foreach($confighooks as $key => $confighook) {
+        if (trim($confighook) == '') {
+            unset($confighook[$key]);
+        } else {
+            $confighooks[$key] = trim($confighook);
+        }
     }
+    $data['confighooks'] =& $confighooks;
 
     // Pass the page type to the template.
     $data['type'] = $type;

@@ -38,7 +38,9 @@
                     <legend>
                         <strong><xar:mlstring>Modify Hooks (applies to all page types)</xar:mlstring></strong>
                     </legend>
-                    <div>#$modifyhooks#</div>
+                    <xar:loop name="$modifyhooks">
+                        #$loop:item#
+                    </xar:loop>
                 </fieldset>
             </xar:if>
 
@@ -47,7 +49,9 @@
                     <legend>
                         <strong><xar:mlstring>Config Hooks (applies to all pages of this type)</xar:mlstring></strong>
                     </legend>
-                    <div>#$confighooks#</div>
+                    <xar:loop name="$confighooks">
+                        #$loop:item#
+                    </xar:loop>
                 </fieldset>
             </xar:if>
 

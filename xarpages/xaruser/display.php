@@ -162,17 +162,11 @@ function xarpages_user_display($args)
     // fallback mechanism to alternative template names (it does shorter template names, but
     // not alternative).
 
-    // If no template has been defined for this page, or inherited by this page,
-    // then set it to 'default'. This should normally be an error page of some sort.
-    if ($rolled['template'] == '') {
-        $rolled['template'] = 'default';
-    }
-
     // Render the module template.
     // Use rolled-up page here so templates are inherited, i.e. so that setting a
     // template on a branch will apply to all pages within that branch, except
     // where sub-branches are explicitly over-ridden.
-    $content = xarTplModule('xarpages', 'page', $rolled['template'], $data);
+    $content = xarTplModule('xarpages', 'page', $rolled['pagetype']['name'], $data, $rolled['template']);
 
     return "$content";
 }

@@ -206,7 +206,9 @@
                         <legend>
                             <strong><xar:mlstring>Hooks</xar:mlstring></strong>
                         </legend>
-                        <div>#$hooks#</div>
+                        <xar:loop name="$hooks">
+                            #$loop:item#
+                        </xar:loop>
                     </fieldset>
                 </xar:if>
 
