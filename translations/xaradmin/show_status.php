@@ -12,7 +12,7 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function count_entries(&$entries)
+function &count_entries(&$entries)
 {
     $counts['numEntries']         = 0;
     $counts['numEmptyEntries']    = 0;

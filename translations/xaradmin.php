@@ -92,7 +92,7 @@ function translations_create_choose_a_theme_druidbar($currentStep)
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep + 1);
 }
 
-function translations_create_opbar($currentOp)
+function &translations_create_opbar($currentOp)
 {
     $dnType = xarSessionGetVar('translations_dnType');
     $dnName = xarSessionGetVar('translations_dnName');
