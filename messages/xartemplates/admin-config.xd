@@ -1,36 +1,24 @@
-<xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="admin-header" type="module"/>
-
-<form xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" method="post" action="#$action#">
-
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <h3>Configure Module</h3>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Messages Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+</div>
+<form method="post" action="#$action#">
+    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+    <h3>Configure Module </h3>
     <table width="100%">
         <tr>
             <td><label for="supportshorturls">Short URL Support</label></td>
-            <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
-                <xar:data-input type="checkbox" name="supportshorturls" value="$supportshorturls"/>
+            <td>
+                                    <xar:data-input type="checkbox" name="supportshorturls" value="$supportshorturls"/>
             </td>
         </tr>
     </table>
-
-    <div>
-        <xar:if condition="!empty($hooks)">
-        <table width="100%">
-        <xar:foreach in="$hooks" key="$hookmodule">
-        <tr>
-            <td>#$hookmodule#</td>
-            <td>#$hooks[$hookmodule]#</td>
-        </tr>
-        </xar:foreach>
-        </table>
-        </xar:if>
-    </div>
-
     <span>
         <br/>
         <input type="submit" value="Modify"/>
         <input type="submit" name="cancel" value="Cancel"/>
     </span>
-
 </form>
+
 

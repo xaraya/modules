@@ -1,4 +1,7 @@
 <?php
+/**
+ * Administration for the mybookmarks module.
+ */
 function messages_admin_config( $args ) {
 
     list( $cancel, $itemtype ) = xarVarCleanFromInput( 'cancel', 'itemtype' );
@@ -24,7 +27,7 @@ function messages_admin_config( $args ) {
         case 1:
             return xarModAPIFunc(
                 'messages'
-                ,'admin'
+                ,'messages'
                 ,'config'
                 ,$args );
 
@@ -33,8 +36,13 @@ function messages_admin_config( $args ) {
             return messages_adminpriv_config( $args );
     }
 }
+
+/**
+ * Administration for the mybookmarks module.
+ */
 function messages_adminpriv_config( $args ) {
-    $data = messages_admin_common( 'Module Configuration' );
+
+//    $data = messages_admin_common( 'Module Configuration' );
 
     list( $itemtype, $authid ) = xarVarCleanFromInput( 'itemtype', 'authid' );
     extract( $args );
@@ -59,20 +67,6 @@ function messages_adminpriv_config( $args ) {
             ,$supportshorturls );
 
 
-        /*
-         * call the hook 'module:updateconfig:GUI'
-         */
-        $args = array(
-            'module'        =>  'messages'
-            ,'itemtype'     =>  0
-            );
-        $data['hooks'] = xarModCallHooks(
-            'module'
-            ,'updateconfig'
-            ,'messages'
-            ,$args
-            ,'messages' );
-
 
         /*
          * Set a status message
@@ -95,21 +89,6 @@ function messages_adminpriv_config( $args ) {
     } // Save the changes
 
 
-    /*
-     * call the hook 'module:modifyconfig:GUI'
-     */
-    $args = array(
-        'module'        =>  'messages'
-        ,'itemtype'     =>  0
-        );
-    $data['hooks'] = xarModCallHooks(
-        'module'
-        ,'modifyconfig'
-        ,'messages'
-        ,$args
-        ,'messages' );
-
-
 
     $data['common']['menu_label'] = 'Configure';
     $data['common']['menu']       = messages_adminpriv_configmenu();
@@ -129,6 +108,7 @@ function messages_adminpriv_config( $args ) {
     return $data;
 
 }
+
 function messages_adminpriv_configmenu() {
 
     /*

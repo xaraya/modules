@@ -16,12 +16,12 @@ function messages_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('messages',
                                                    'admin',
-                                                   'modifyconfig'),
+                                                   'config'),
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('Modify the configuration for the module'),
                               'label' => xarML('Modify Config'));
-  
+
 
     // If we return nothing, then we need to tell PHP this, in order to avoid an ugly
     // E_ALL error.
