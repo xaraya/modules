@@ -71,8 +71,12 @@ function uploads_init()
     'xar_ulhash'=>array('type'=>'varchar','size'=>254,'null'=>FALSE),
     'xar_ulapp'=>array('type'=>'integer','size'=>3,'null'=>FALSE,'default'=>'0'),
     'xar_ulbid'=>array('type'=>'integer','size'=>32,'null'=>FALSE,'default'=>'0'),
-    'xar_ultype'=>array('type'=>'char','size'=>1,'null'=>FALSE)
+    'xar_ultype'=>array('type'=>'char','size'=>1,'null'=>FALSE),
+    'xar_ulmime'=>array('type' => 'varchar','size' => 128,'null' => false,'default' => 'application/octet-stream')
     );
+        
+
+
         
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
