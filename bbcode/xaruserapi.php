@@ -78,9 +78,6 @@ function bbcode_encode($message, $is_html_disabled)
     // This is important; bbencode_quote(), bbencode_list(), and bbencode_code() all depend on it.
     $message = " " . $message;
 
-    // [CODE] and [/CODE] for posting code (HTML, PHP, C etc etc) in your posts.
-    $message = bbcode_encode_code($message, $is_html_disabled);
-
     // change newlines to <br />'s
     $dotransform = xarModGetVar('bbcode', 'dolinebreak');
     if ($dotransform == 1){
@@ -95,169 +92,190 @@ function bbcode_encode($message, $is_html_disabled)
 
     
     // First: If there isn't a "[" and a "]" in the message, don't bother.
-    if (! (strpos($message, "[") && strpos($message, "]")) )
-    {
+    if (! (strpos($message, "[") && strpos($message, "]"))){
         // Remove padding, return.
         $message = substr($message, 1);
         return $message;    
     }
 
-    // [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.    
-    $message = bbcode_encode_quote($message);
+    $advancedbbcode = xarModGetVar('bbcode', 'useadvanced');
+    if ($advancedbbcode) {
 
+        $codes = xarModAPIFunc('bbcode',
+                               'user',
+                               'getall');
 
+        foreach ($codes as $code) {
+            if (strpos(strtolower($message), $code['tag'])) {
+                $message = xarModAPIFunc('bbcode',
+                                         'user',
+                                         $code['name'],
+                                         array('message' => $message));
+            }
+        }
 
-    // [list] and [list=x] for (un)ordered lists.
-    $message = bbcode_encode_list($message);
+        // Remove our padding from the string..
+        $message = substr($message, 1);
+        return $message;
 
-    // [u] and [/u] for underline text.
-    $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
+    } else {
 
-    // [o] and [/o] for overline text.
-    $message = preg_replace("/\[o\](.*?)\[\/o\]/si", "<span style='text-decoration: overline;'>\\1</span>", $message);
+        // [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.    
+        $message = bbcode_encode_quote($message);
+        $message = bbcode_encode_code($message, $is_html_disabled);
+        $message = bbcode_encode_list($message);
 
-    // [lt] and [/lt] for line through text.
-    $message = preg_replace("/\[lt\](.*?)\[\/lt\]/si", "<span style='text-decoration: line-through;'>\\1</span>", $message);
+        // [u] and [/u] for underline text.
+        $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
 
-    // [b] and [/b] for bolding text.
-    $message = preg_replace("/\[b\](.*?)\[\/b\]/si", "<span style='font-weight: bold;'>\\1</span>", $message);
+        // [b] and [/b] for bolding text.
+        $message = preg_replace("/\[b\](.*?)\[\/b\]/si", "<span style='font-weight: bold;'>\\1</span>", $message);
 
-    // [sc] and [/sc] for small caps.
-    $message = preg_replace("/\[sc\](.*?)\[\/b\]/si", "<span style='font-variant: small-caps;'>\\1</span>", $message);
+        // [i] and [/i] for italicizing text.
+        $message = preg_replace("/\[i\](.*?)\[\/i\]/si", "<span style='font-style: italic;'>\\1</span>", $message);
 
-    // [i] and [/i] for italicizing text.
-    $message = preg_replace("/\[i\](.*?)\[\/i\]/si", "<span style='font-style: italic;'>\\1</span>", $message);
+        // [color=xxx] [/color] for text color
+        $message = preg_replace("/\[color\=([a-zA-Z0-9_-]+)\](.*?)\[\/color\]/si", "<span style='color: \\1;'>\\2</span>", $message);
 
-    // [p] and [/p] for paragraphs
-    $message = preg_replace("/\[p\](.*?)\[\/p\]/si", "<p>\\1</p>", $message);
+        // [size=xxx] [/size] for text size
+        $message = preg_replace("/\[size\=([a-zA-Z0-9.-]+)\](.*?)\[\/size\]/si", "<span style='font-size: \\1;'>\\2</span>", $message);
 
-    // [sub] and [/sub] for subscripts
-    $message = preg_replace("/\[sub\](.*?)\[\/sub\]/si", "<sub>\\1</sub>", $message);
+        // [img]image_url_here[/img] code..
+        $message = preg_replace("#\[img\](http://)?(.*?)\[/img\]#si", "<img src=\"http://\\2\" />", $message);
+        //$message = preg_replace("/\[img\](.*?)\[\/img\]/si", "<img src=\"\\1\" border=\"0\" />", $message);
 
-    // [sup] and [/sup] for superscripts
-    $message = preg_replace("/\[sup\](.*?)\[\/sup\]/si", "<sup>\\1</sup>", $message);
+        // Patterns and replacements for URL and email tags..
+        $patterns = array();
+        $replacements = array();
 
-    // [color=xxx] [/color] for text color
-    $message = preg_replace("/\[color\=([a-zA-Z0-9_-]+)\](.*?)\[\/color\]/si", "<span style='color: \\1;'>\\2</span>", $message);
+        // [url]xxxx://www.phpbb.com[/url] code..
+        $patterns[0] = "#\[url\]([a-z]+?://){1}(.*?)\[/url\]#si";
+        $replacements[0] = '<a href="\1\2">\1\2</a>';
 
-    // [size=xxx] [/size] for text size
-    $message = preg_replace("/\[size\=([a-zA-Z0-9.-]+)\](.*?)\[\/size\]/si", "<span style='font-size: \\1;'>\\2</span>", $message);
+        // [url]www.phpbb.com[/url] code.. (no xxxx:// prefix).
+        $patterns[1] = "#\[url\](.*?)\[/url\]#si";
+        $replacements[1] = '<a href="http://\1">\1</a>';
 
-    // [img]image_url_here[/img] code..
-    $message = preg_replace("#\[img\](http://)?(.*?)\[/img\]#si", "<img src=\"http://\\2\" />", $message);
-    //$message = preg_replace("/\[img\](.*?)\[\/img\]/si", "<img src=\"\\1\" border=\"0\" />", $message);
+        // [url=xxxx://www.phpbb.com]phpBB[/url] code..
+        $patterns[2] = "#\[url=([a-z]+?://){1}(.*?)\](.*?)\[/url\]#si";
+        $replacements[2] = '<a href="\1\2">\3</a>';
 
-    // Patterns and replacements for URL and email tags..
-    $patterns = array();
-    $replacements = array();
+        // [url=www.phpbb.com]phpBB[/url] code.. (no xxxx:// prefix).
+        $patterns[3] = "#\[url=(.*?)\](.*?)\[/url\]#si";
+        $replacements[3] = '<a href="http://\1">\2</a>';
 
-    // [url]xxxx://www.phpbb.com[/url] code..
-    $patterns[0] = "#\[url\]([a-z]+?://){1}(.*?)\[/url\]#si";
-    $replacements[0] = '<a href="\1\2">\1\2</a>';
+        // [email]user@domain.tld[/email] code..
+        $patterns[4] = "#\[email\](.*?)\[/email\]#si";
+        $replacements[4] = '<a href="mailto:\1">\1</a>';
 
-    // [url]www.phpbb.com[/url] code.. (no xxxx:// prefix).
-    $patterns[1] = "#\[url\](.*?)\[/url\]#si";
-    $replacements[1] = '<a href="http://\1">\1</a>';
+        // [google]string[/google] code..
+        $patterns[5] = "#\[google\](.*?)\[/google\]#si";
+        $replacements[5] = '<a href="http://www.google.com/search?q=\\1">\\1</a>';
 
-    // [url=xxxx://www.phpbb.com]phpBB[/url] code..
-    $patterns[2] = "#\[url=([a-z]+?://){1}(.*?)\](.*?)\[/url\]#si";
-    $replacements[2] = '<a href="\1\2">\3</a>';
+        // [yahoo]string[/yahoo] code..
+        $patterns[6] = "#\[yahoo\](.*?)\[/yahoo\]#si";
+        $replacements[6] = '<a href="http://search.yahoo.com/search?p=\\1">\\1</a>';
 
-    // [url=www.phpbb.com]phpBB[/url] code.. (no xxxx:// prefix).
-    $patterns[3] = "#\[url=(.*?)\](.*?)\[/url\]#si";
-    $replacements[3] = '<a href="http://\1">\2</a>';
+        // [msn]string[/msn] code..
+        $patterns[7] = "#\[msn\](.*?)\[/msn\]#si";
+        $replacements[7] = '<a href="http://search.msn.com/results.asp?q=\\1">\\1</a>';
 
-    // [email]user@domain.tld[/email] code..
-    $patterns[4] = "#\[email\](.*?)\[/email\]#si";
-    $replacements[4] = '<a href="mailto:\1">\1</a>';
+        // [dictionary]string[/dictionary] code..
+        $patterns[8] = "#\[dictionary\](.*?)\[/dictionary\]#si";
+        $replacements[8] = '<a href="http://dictionary.reference.com/search?q=\\1">\\1</a>';
 
-    $message = preg_replace($patterns, $replacements, $message);
+        // [wiki]string[/wiki] code..
+        $patterns[9] = "#\[wiki\](.*?)\[/wiki\]#si";
+        $replacements[9] = '<a href="http://www.wikipedia.org/wiki/\\1">\\1</a>';
 
-    // Remove our padding from the string..
-    $message = substr($message, 1);
-    return $message;
+        // [thesaurus]string[/thesaurus] code..
+        $patterns[10] = "#\[thesaurus\](.*?)\[/thesaurus\]#si";
+        $replacements[10] = '<a href="http://thesaurus.reference.com/search?q=\\1">\\1</a>';
 
-} // bbcode_encode()
+        $message = preg_replace($patterns, $replacements, $message);
+
+        // Remove our padding from the string..
+        $message = substr($message, 1);
+        return $message;
+    }
+} 
 
 /* completely reworked bbcode quote function to improve performance.
 * Credit for the algorithm goes to Ara Anjargolian <ara@jargol.com>
 */
 function bbcode_encode_quote($message) 
 {
-  $tags_found = array();
-  //Create an associative array, including the character
-  //offset of each end/start tag in the message.
-  for($j = 0; ($j = strpos($message, '[', $j)); $j++) {
-    if(strcasecmp(substr($message, $j, 7), '[quote]') == 0)
-      $tags_found[$j] = 's';
-    elseif(strcasecmp(substr($message, $j, 8), '[/quote]') == 0)
-      $tags_found[$j] = 'e';
-  }
+    $tags_found = array();
+    //Create an associative array, including the character
+    //offset of each end/start tag in the message.
+    for($j = 0; ($j = strpos($message, '[', $j)); $j++) {
+        if(strcasecmp(substr($message, $j, 7), '[quote]') == 0)
+            $tags_found[$j] = 's';
+        elseif(strcasecmp(substr($message, $j, 8), '[/quote]') == 0)
+            $tags_found[$j] = 'e';
+    }
 
-  /*
-  This will be faster, but no stripos() until PHP 5.0 :-( 
-  for($j = 0; ($j = stripos($message, '[quote]', $j)); $j++) 
-    $tags_found[$j] = 's';
-  for($j = 0; ($j = stripos($message, '[/quote]', $j)); $j++) 
-    $tags_found[$j] = 'e';
-  ksort($tags_found);
-  */
+      /*
+      This will be faster, but no stripos() until PHP 5.0 :-( 
+      for($j = 0; ($j = stripos($message, '[quote]', $j)); $j++) 
+        $tags_found[$j] = 's';
+      for($j = 0; ($j = stripos($message, '[/quote]', $j)); $j++) 
+        $tags_found[$j] = 'e';
+      ksort($tags_found);
+      */
   
-  //If no tags found, return.
-  if(empty($tags_found)) {
-    return $message;
-  }
-  $stack = array();
-  $is_well_formed = TRUE;
-
-  foreach($tags_found as $k => $v) {
-    //If we have a start tag, hold on to it in the stack
-    if($v == 's') {
-      array_push($stack, $k);
+    //If no tags found, return.
+    if(empty($tags_found)) {
+        return $message;
     }
-    //If we have an end tag
-    else{
-      //If we have a pending start tag, we have a matach
-      if(!empty($stack)) {
-    array_pop($stack);
 
-      }
-      //If we don't have a pending start tag, mark string
-      //as malformed and remove extranneous end tag from our list.
-      else {
-    $is_well_formed = FALSE;
-    unset($tags_found[$k]); //This is safe because 'foreach' operates on a copy
-      }
+    $stack = array();
+    $is_well_formed = TRUE;
+    foreach($tags_found as $k => $v) {
+        //If we have a start tag, hold on to it in the stack
+        if($v == 's') {
+            array_push($stack, $k);
+        }
+        //If we have an end tag
+        else{
+        //If we have a pending start tag, we have a matach
+            if(!empty($stack)) {
+                array_pop($stack);
+            }
+            //If we don't have a pending start tag, mark string
+            //as malformed and remove extranneous end tag from our list.
+            else {
+                $is_well_formed = FALSE;
+                unset($tags_found[$k]); //This is safe because 'foreach' operates on a copy
+            }
+        }
     }
-  }
   
-  //Fast Path: is we know our string is well formed, then we can do a batch replace
-  if($is_well_formed && empty($stack)) {
-    //No str_ireplace until PHP 5.0 :-(
-    $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $message);
-    $message = preg_replace('/\[\/quote\]/i', '</div></blockquote>', $message);
+    //Fast Path: is we know our string is well formed, then we can do a batch replace
+    if($is_well_formed && empty($stack)) {
+        //No str_ireplace until PHP 5.0 :-(
+        $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $message);
+        $message = preg_replace('/\[\/quote\]/i', '</div></blockquote>', $message);
+        return $message;
+    }
+
+    //Get rid of extra start tags, if any
+    foreach($stack as $v) {
+        unset($tags_found[$v]);
+    }
+
+    //Now rebuild the string using $tags_found
+    $new_offset = 0;
+    foreach($tags_found as $k => $v) {
+        if($v == 's') {
+            $message = & substr_replace($message, '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $k + $new_offset, 7);
+            $new_offset += 11;
+        } else {
+            $message = & substr_replace($message, '</div></blockquote>', $k + $new_offset, 8);
+            $new_offset += 5;
+        }
+    }
     return $message;
-  }
-
-  //Get rid of extra start tags, if any
-  foreach($stack as $v) {
-    unset($tags_found[$v]);
-  }
-
-  //Now rebuild the string using $tags_found
-  $new_offset = 0;
-  foreach($tags_found as $k => $v) {
-    if($v == 's') {
-      $message = & substr_replace($message, '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $k + $new_offset, 7);
-      $new_offset += 11;
-    }
-    else {
-      $message = & substr_replace($message, '</div></blockquote>', $k + $new_offset, 8);
-      $new_offset += 5;
-    }
-  }
-
-  return $message;
 } // bbcode_encode_quote()
 
 

@@ -47,11 +47,14 @@ function bbcode_admin_modifyconfig()
         case 'update':
             if (!xarVarFetch('dolinebreak', 'int', $dolinebreak, 0)) return;
             if (!xarVarFetch('transformtype', 'int', $transformtype, 1)) return;
+            if (!xarVarFetch('advancedbbcode', 'checkbox', $advancedbbcode, false, XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return; 
             // Update module variables
             xarModSetVar('bbcode', 'transformtype', $transformtype);
             xarModSetVar('bbcode', 'dolinebreak', $dolinebreak);
+            xarModSetVar('bbcode', 'useadvanced', $advancedbbcode);
+
             // Call Update Config Hooks
             xarModCallHooks('module', 
                             'updateconfig', 

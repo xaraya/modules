@@ -12,14 +12,66 @@
  * @subpackage BBCode
  * @author larseneo, Hinrich Donner
 */
+xarDBLoadTableMaintenanceAPI();
 
 function bbcode_init() 
 {
+    // Set up database tables
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    
     // Set up module variables
-    //
     xarModSetVar('bbcode', 'dolinebreak', 0);
     xarModSetVar('bbcode', 'transformtype', 1);
+
+    $table = $xartable['bbcode'];
+    $fields = array('xar_id'            => array('type' => 'integer', 
+                                                 'null' => false, 
+                                                 'increment' => true, 
+                                                 'primary_key' => true),
+                    'xar_tag'           => array('type' => 'varchar', 
+                                                 'size' => 100, 
+                                                 'null' => false, 
+                                                 'default' => ''),
+                    'xar_name'          => array('type' => 'varchar', 
+                                                 'size' => 200, 
+                                                 'null' => false, 
+                                                 'default' => ''),
+                    'xar_description'   => array('type' => 'text'),
+                    'xar_transformed'   => array('type' => 'text'));
+
+    $query = xarDBCreateTable($table, $fields);
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name' => 'i_'.xarDBGetSiteTablePrefix().'_bbcode_1',
+        'fields' => array('xar_tag'),
+        'unique' => true);
+    $query = xarDBCreateIndex($table, $index);
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    $codes = array("'[u]','underline','[u]Your Text[/u] will produce', '[u]Your Text[/u]'",
+                   "'[b]','bold','[b]Your Text[/b] will produce', '[b]Your Text[/b]'",
+                   "'[o]','overline','[o]Your Text[/o] will produce', '[o]Your Text[/o]'",
+                   "'[lt]','linethrough','[lt]Your Text[/lt] will produce', '[lt]Your Text[/lt]'",
+                   "'[sc]','smallcaps','[sc]Your Text[/sc] will produce', '[sc]Your Text[/sc]'",
+                   "'[i]','italics','[i]Your Text[/i] will produce', '[i]Your Text[/i]'",
+                   "'[sub]','sub','[sub]Your Text[/sub] will produce', '[sub]Your Text[/sub]'",
+                   "'[sup]','sup','[sup]Your Text[/sup] will produce', '[sup]Your Text[/sup]'",
+                   "'[you]','you','[you] will produce', 'The viewers name, likeso: [you]'");
+
+    foreach ($codes as $code) {
+        // Get next ID in table
+        $nextId = $dbconn->GenId($table);
+        $query = "INSERT INTO $table VALUES ($nextId,$code)";
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
+    }
+
     xarRegisterMask('EditBBCode','All','bbcode','All','All','ACCESS_EDIT');
+    xarRegisterMask('OverviewBBCode','All','bbcode','All','All','ACCESS_OVERVIEW');
+
     // Set up module hooks
     if (!xarModRegisterHook('item',
                            'transform',
@@ -120,6 +172,16 @@ function bbcode_delete()
     xarModDelAllVars('bbcode');
     xarRemoveMasks('bbcode');
     xarRemoveInstances('bbcode');
+
+    // Drop the table
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    $table = $xartable['bbcode'];
+    $query = xarDBDropTable($table);
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
     // Remove module hooks
     if (!xarModUnregisterHook('item',
                              'transform',
