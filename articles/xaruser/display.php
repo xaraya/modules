@@ -116,9 +116,9 @@ function articles_user_display($args)
                                     array('aid' => $article['aid']));
     // don't show unapproved articles to non-editors
     } elseif (!$preview && $article['status'] < 2) {
-	
-		$status = xarModAPIFunc('articles', 'user', 'getstatusname', array('status' => $article['status']));
-	
+
+    $status = xarModAPIFunc('articles', 'user', 'getstatusname', array('status' => $article['status']));
+
         return xarML('You have no permission to view this item [Status: #(1)]', $status);
     }
     $data['edittitle'] = xarML('Edit');
@@ -450,7 +450,8 @@ function articles_user_display($args)
         $data['hooks'] = '';
     } else {
         $data['hooks'] = xarModCallHooks('item', 'display', $aid,
-                                         array('itemtype'  => $pubtypeid,
+                                         array('module'    => 'articles',
+                                               'itemtype'  => $pubtypeid,
                                                'returnurl' => xarModURL('articles',
                                                                         'user',
                                                                         'display',
