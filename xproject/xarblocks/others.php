@@ -146,7 +146,7 @@ function example_othersblock_modify($blockinfo)
     // Create row
     $row = array();
     $output->SetOutputMode(_XH_RETURNOUTPUT);
-    $row[] = $output->Text(_NUMITEMS);
+    $row[] = $output->Text(xarML('Number of example tasks to display'));
     $row[] = $output->FormText('numitems',
                                xarVarPrepForDisplay($vars['numitems']),
                                5,
