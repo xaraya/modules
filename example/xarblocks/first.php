@@ -72,6 +72,7 @@ function example_firstblock_display($blockinfo)
  
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
+    $data['items'] = array();
     if (is_array($items)) {
         foreach ($items as $item) {
             // Let any transformation hooks know that we want to transform some text
@@ -101,9 +102,6 @@ function example_firstblock_display($blockinfo)
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
         }
-    } else {
-        // No items.
-        $data['items'] = array();
     }
     $data['blockid'] = $blockinfo['bid'];
 
