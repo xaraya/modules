@@ -25,13 +25,13 @@ function converter_adminapi_pntheme($args)
     if ((!isset($theme)) ||
         (!isset($theme_dir))) {
         $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'delete', 'converter');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $theme_file = $theme_dir.'theme.php';
     if (!file_exists($theme_file)) {
         $msg = xarML('Theme file does not exist.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -261,13 +261,13 @@ function converter_adminapi_pnuketheme($args)
     if ((!isset($theme)) ||
         (!isset($theme_dir))) {
         $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'delete', 'converter');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!file_exists($theme_file)) {
         $msg = xarML('Theme file does not exist.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -470,7 +470,7 @@ function converter_adminapi_createxarthemefile($args)
         (!isset($id))    ||
         (!isset($author))) {
         $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'delete', 'converter');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

@@ -61,17 +61,17 @@ function converter_admin_pntheme()
     // Check arguments
     if (empty($theme)) {
         $msg = xarML('No Theme Provided, Please Go Back and Provide Theme');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (empty($author)) {
         $msg = xarML('No Author Provided, Please Go Back and Provide Author');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (empty($id)) {
         $msg = xarML('No ID Provided, Please Go Back and Provide ID');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -147,17 +147,17 @@ function converter_admin_phpnuketheme()
     // Check arguments
     if (empty($theme)) {
         $msg = xarML('No Theme Provided, Please Go Back and Provide Theme');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (empty($author)) {
         $msg = xarML('No Author Provided, Please Go Back and Provide Author');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (empty($id)) {
         $msg = xarML('No ID Provided, Please Go Back and Provide ID');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
