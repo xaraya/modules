@@ -78,7 +78,7 @@ function newsletter_init()
         'xar_ownerid'       => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'xar_title'         => array('type'=>'varchar','size'=>255,'null'=>FALSE),
         'xar_external'      => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
-        'xar_editornote'    => array('type'=>'varchar','size'=>255,'null'=>TRUE),
+        'xar_editornote'    => array('type'=>'text','null'=>TRUE),
         'xar_datepublished' => array('type'=>'integer','unsigned'=>TRUE,'null'=>TRUE,'default'=>'0')
     );
     
