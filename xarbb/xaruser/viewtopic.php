@@ -1,13 +1,15 @@
 <?php
 
+include 'includes/xarDate.php';
+
 function xarbb_user_viewtopic()
 {
-     
+
     $tid = xarVarCleanFromInput('tid');
 
     // Security Check
     if(!xarSecurityCheck('ReadxarBB')) return;
-    
+
     // The user API function is called
     $data = xarModAPIFunc('xarbb',
                           'user',
@@ -84,10 +86,21 @@ function xarbb_user_viewtopic()
 
     // End individual Replies
 
+    // adjust the display format
+    // TODO: needs to be made variable
+    $thisdate = new xarDate();
+    if(is_numeric($posterdata['date_reg'])) {
+        $thisdate->setTimestamp($posterdata['date_reg']);
+    }
+    else {
+        $thisdate->DBtoTS($posterdata['date_reg']);
+    }
+    $regdate = $thisdate->display("m-d-Y");
+
     //Forum Name and Links
     $data['fname']      = $forumdata['fname'];
     $data['postername'] = $posterdata['name'];
-    $data['posterdate'] = $posterdata['date_reg'];
+    $data['posterdate'] = $regdate;
     $data['usertopics'] = $topiccount;
     $data['xbbname']    = xarModGetVar('themes', 'SiteName');
 
