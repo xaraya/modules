@@ -11,7 +11,7 @@
 	  <xar:mlstring>Modules</xar:mlstring>
 	  &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="all"  />
 	  <xar:mlstring>All</xar:mlstring>
-	  &nbsp;&nbsp;<input type="submit" value="Refresh" align="middle" tabindex="6" />
+	  &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
   </form>
 
   <br /><br />

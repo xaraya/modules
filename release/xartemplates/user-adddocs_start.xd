@@ -53,7 +53,7 @@
 			<input type="radio" name="phase" id="phase" value="blockgroups"  />
 			<xar:mlstring>Defined Block Groups</xar:mlstring><br /><br />
 		</xar:if>
-		<input type="submit" value="Continue" align="middle" tabindex="6" />
+		<input type="submit" value="Continue"  tabindex="6" />
 	</form>
 </div>
 </xar:if>

@@ -48,7 +48,7 @@
 				</tr>
 			</table>			
 			<br />
-			<input type="submit" value="Create ID" align="middle" tabindex="6" />
+			<input type="submit" value="Create ID"  tabindex="6" />
 		</form>
 	</xar:if>
 </div>

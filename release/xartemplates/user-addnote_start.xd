@@ -41,7 +41,7 @@
 			</tr>
 		</table>			
 		<br /><br />
-		<input type="submit" value="Continue" align="middle" tabindex="6" />
+		<input type="submit" value="Continue"  tabindex="6" />
 	</form>
 </div>
 </xar:if>

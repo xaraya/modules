@@ -21,7 +21,7 @@
 	<input type="radio" name="phase" id="phase" value="docsblockgroups"  />
 	<xar:mlstring>Defined Block Groups</xar:mlstring>
 </xar:if>
-&nbsp;&nbsp;<input type="submit" value="Refresh" align="middle" tabindex="6" />
+&nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
 </form>
 
 <xar:if condition="$version eq 2">

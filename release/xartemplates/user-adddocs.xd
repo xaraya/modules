@@ -46,7 +46,7 @@
 			</tr>
 		</table>
 		<br />
-		<input type="submit" value="Create General Documentation" align="middle" tabindex="6" />
+		<input type="submit" value="Create General Documentation"  tabindex="6" />
 	</form>
 </div>
 </div>
