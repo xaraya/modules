@@ -75,6 +75,7 @@
                     </td>
                     <td>
    			            <input type="checkbox" name="removedatadir" id="removedatadir" value="1" checked="checked" />
+                        <xar:mlstring>Will remove all directories and content for the&nbsp;</xar:mlstring>#$mssite#<xar:mlstring>&nbsp;site data directory!</xar:mlstring>
 				    </td>
 				</tr>
 

@@ -6,14 +6,17 @@
     <table border="0" width="100%" align="center">
 	     <tr align="left" valign="middle">
 	 	    <td>
-			    <xar:mlstring>$infomsg</xar:mlstring>
+			    <xar:mlstring>The Master Multisite has not yet been configured!
+                              <p>Please configure the Master Site from the menu option Multisites - Master Config.</p>
+                              <p>You can then add new sites through the menu option Multisites - Add Sites.</p>
+                              <p>Return here to View Sites once your have added sites to view!</p></xar:mlstring>
 			</td>
 	     </tr>
     </table>
 <xar:else condition="$mastersite eq true" />
     <xar:mlstring>Total number of sites, including Master Site:</xar:mlstring> #$siteno#
-<!--- TO DO: get rid of tables --->
-<table width="100%" border="1" cellspacing="0" cellpadding="4">
+
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <th><xar:mlstring>Site</xar:mlstring></th>
         <th><xar:mlstring>Prefix</xar:mlstring></th>
@@ -82,7 +85,7 @@
 
 
 </table>
-<br />
+<p><xar:mlstring>Note: only the Delete function is currently implemented.</xar:mlstring></p>
 
 <!-- add the pager here -->
 #$pager#

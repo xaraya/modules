@@ -6,7 +6,9 @@
     <table border="0" width="100%" align="center">
 	     <tr align="left" valign="middle">
 	 	    <td>
-			    <xar:mlstring>$infomsg</xar:mlstring>
+			    <xar:mlstring>Multisites must be configured first before you can Add a site! <br /><br />
+                              Please configure the master site from the menu option Multisites - Master Config.
+                              <p>The Master site can then return here to Add Sites.</p></xar:mlstring>
 			</td>
 	     </tr>
     </table>
@@ -59,12 +61,12 @@
 					</tr>
 					<tr align="left" valign="middle">
 						<td>
-							<xar:mlstring>Shared tables prefix:</xar:mlstring>
+							<xar:mlstring>Shared tables prefix (NOT FUNCTIONAL):</xar:mlstring>
 						</td>
 						<td>
 						<input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sharedTables#" />
 						</td>
-						<td><xar:mlstring>LEAVE EMPTY unless you want to share System tables. Enter the System Table prefix.</xar:mlstring>
+						<td><xar:mlstring>LEAVE EMPTY unless you want to share System tables. To share, enter the System Table prefix.</xar:mlstring>
 						</td>
 					</tr>
 

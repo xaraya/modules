@@ -125,7 +125,7 @@ function multisites_admin_updateconfig($args)
                                   'DNexts'     => $DNexts));
 
     if (!$setconfig) {
-        $msg = xarML('Unable to configure Master Multisite');
+        $msg = xarML('Unable to configure Master Multisite, check all directories exist and are writeable, and database tables are available.');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
        return false;
     }
@@ -276,11 +276,6 @@ global $HTTP_SERVER_VARS;
 
     } else {  // The master site has not been configured, or this is not the master
       $data['mastersite']= false;
-      $data['infomsg']=xarML('The Master Multisite has not yet been configured!
-                              <p>Please configure the Master Site from the menu option Multisites - Master Config.</p>
-                              <p>You can then add new sites through the menu option Multisites - Add Sites.</p>
-                              <p>Return here to View Sites once your have added sites to view!</p>');
-
     }
 
     // Return the template variables defined in this function
@@ -327,9 +322,6 @@ function multisites_admin_addsite()
 
    } else {  //this is not the Master, or Master site not configured
       $data['mastersite']= false;
-      $data['infomsg']=xarML('Multisites must be configured first before you can Add a site! <br /><br />
-                              Please configure the master site from the menu option Multisites - Master Config.
-                              <p>The Master site can then return here to Add Sites.</p>');
    }
     // Return the template variables defined in this function
     return $data;
@@ -362,10 +354,14 @@ global $HTTP_SERVER_VARS;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'str:1:', $btntxt,'', XARVAR_NOT_REQUIRED)) return;
 
-  
-    if (!empty($objectid)) {
+     if (!empty($objectid)) {
         $exid = $objectid;
-    } 
+    }
+
+    //Let's make sure the prefix is the table SITE prefix until prefix sharing is working
+    //Remove this when table sharing is working as required in xar code
+    $sharedTables=$msPrefix;
+
 
    // Auth Key
     if (!xarSecConfirmAuthKey()) return;
@@ -429,7 +425,7 @@ global $HTTP_SERVER_VARS;
        xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE', new DefaultUserException($msg));
     return;
     }
-
+    // Set the site prefix
     $setmultisite = xarMSConfigSetVar('Site.DB.TablePrefix',
                                    $msPrefix,
 					  	           $msPrefix,
@@ -442,6 +438,7 @@ global $HTTP_SERVER_VARS;
        xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE ".$siteDB', new DefaultUserException($msg));
        return;
     }
+    //set the shared tables prefix(system)
     $setmultisite = xarMSConfigSetVar('System.DB.TablePrefix',
                                    $sharedTables,
 					  	           $msPrefix,
@@ -645,7 +642,8 @@ function multisites_admin_delete($args)
        $data['msdb']          = $subsite['msdb'];
        $data['msshare']       = $subsite['msshare'];
        $data['removetables']  = 1;
-       $data['removedatadir'] = 1;
+       $data['removedatadir'] = 0;
+
 
    } else {  //this is not the Master, or Master site not configured
 
