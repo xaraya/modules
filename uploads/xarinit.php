@@ -16,6 +16,13 @@
  */
 function uploads_init()
 {    
+    //Not needed anymore with the dependency checks.
+    if (!xarModIsAvailable('mime')) {
+        $msg = xarML('The mime module should be activated first');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
+        return;
+    }
+
     // load the predefined constants
     xarModAPILoad('uploads', 'user');
 
@@ -51,7 +58,7 @@ function uploads_init()
     $filter['fileStatus']   = '';
     
     $mimetypes =& $data['filters']['mimetypes'];
-    $mimetypes .= xarModAPIFunc('mime','user','getall_types');
+    $mimetypes += xarModAPIFunc('mime','user','getall_types');
 
     xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
     unset($mimetypes);
@@ -68,7 +75,7 @@ function uploads_init()
         'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
         'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>FALSE),
-        'xar_location'     => array('type'=>'varchar', 'size'=>256,   'null'=>FALSE),
+        'xar_location'     => array('type'=>'varchar', 'size'=>255,   'null'=>FALSE),
         'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE,  'default'=>'0'),
         'xar_filesize'     => array('type'=>'integer', 'size'=>'big',    'null'=>FALSE),
         'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny',     'null'=>FALSE),
@@ -191,6 +198,13 @@ function uploads_upgrade($oldversion)
         case .10: 
         case .75:
         
+            //Not needed anymore with the dependency checks.
+            if (!xarModIsAvailable('mime')) {
+                $msg = xarML('The mime module should be activated first');
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
+                return;
+            }
+
             xarModAPILoad('uploads','user');
             xarDBLoadTableMaintenanceAPI();
             
@@ -245,14 +259,14 @@ function uploads_upgrade($oldversion)
             
             // Create the new tables
             $fileEntry_fields = array(
-                'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big',      'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
-                'xar_user_id'      => array('type'=>'integer', 'size'=>'big',     'null'=>FALSE),
-                'xar_filename'     => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
-                'xar_location'     => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
-                'xar_status'       => array('type'=>'integer', 'size'=>'tiny',      'null'=>FALSE,  'default'=>'0'),
-                'xar_filesize'     => array('type'=>'integer', 'size'=>64,     'null'=>FALSE),
-                'xar_store_type'   => array('type'=>'varchar', 'size'=>1,      'null'=>FALSE),
-                'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
+		        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
+        		'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+        		'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>FALSE),
+        		'xar_location'     => array('type'=>'varchar', 'size'=>255,   'null'=>FALSE),
+        		'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE,  'default'=>'0'),
+        		'xar_filesize'     => array('type'=>'integer', 'size'=>'big',    'null'=>FALSE),
+        		'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny',     'null'=>FALSE),
+        		'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
             );
 
 
