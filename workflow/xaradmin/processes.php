@@ -58,7 +58,12 @@ $tplData['info'] =  $info;
 
 //Check here for an uploaded process
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-	$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+    // move the uploaded file to some temporary wf* file in cache/templates
+    $tmpdir = xarCoreGetVarDirPath();
+    $tmpdir .= '/cache/templates';
+    $tmpfile = tempnam($tmpdir, 'wf');
+    if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
+        $fp = fopen($tmpfile, "rb");
 
 	$data = '';
 	$fhash = '';
@@ -82,6 +87,8 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	} else {
 		$processManager->import_process($process_data);
 	}
+        unlink($tmpfile);
+    }
 }
 
 if (isset($_REQUEST["delete"])) {
