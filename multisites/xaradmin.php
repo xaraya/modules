@@ -91,7 +91,7 @@ function multisites_admin_updateconfig($args)
     if (!xarVarFetch('themepath', 'str:2:', $themepath, 'themes')) return;
     if (!xarVarFetch('varpath', 'str:2:', $varpath, 'var')) return;
     if (!xarVarFetch('masterfolder', 'str:4:', $masterfolder, 'xarsites')) return;
-    if (!xarVarFetch('DNexts', 'str:3:', $DNexts, '.com,.org.,.net')) return;
+    if (!xarVarFetch('DNexts', 'str', $DNexts, '.com,.org,.net')) return;
  
     // Auth Key
     if (!xarSecConfirmAuthKey()) return;
@@ -616,7 +616,7 @@ global $HTTP_SERVER_VARS;
     if (!xarVarFetch('themepath', 'str:2:', $themepath, 'themes')) return;
     if (!xarVarFetch('varpath', 'str:2:', $varpath, 'var')) return;
     if (!xarVarFetch('masterfolder', 'str:4:', $cWhereIsPerso, 'xarsites')) return;
-    if (!xarVarFetch('DNexts', 'str:3:', $DNexts, '.com,.org.,.net')) return;
+    if (!xarVarFetch('DNexts', 'str', $DNexts, '.com,.org,.net')) return;
 
 
    //check security
@@ -720,7 +720,7 @@ global $HTTP_SERVER_VARS;
      //Get all the subdomain and domain extensions required for this site
      //Put in an array til we need them
      $ext_array = explode(',',xarModGetVar('multisites','DNexts'));
-      usort($ext_array,"multisites_admin_lengthcmp");
+     usort($ext_array,"multisites_admin_lengthcmp");
      //Create the new config data for the master site
      $newConf=file('./var/config.system.php');
      $oldumask = umask(0);
@@ -731,7 +731,9 @@ global $HTTP_SERVER_VARS;
         fwrite($IOk, "\$GLOBALS['myhostName'] = \$_SERVER['".$servervar."'];\n");
         fwrite($IOk, "\$GLOBALS['myhostName'] = str_replace('www.','',\$GLOBALS['myhostName']);\n");
         foreach ($ext_array as $key => $ext) {
-            fwrite($IOk, "\$GLOBALS['myhostName'] = str_replace('".$ext."','',\$GLOBALS['myhostName']);\n");
+           if ($ext!='') {
+                fwrite($IOk, "\$GLOBALS['myhostName'] = str_replace('".$ext."','',\$GLOBALS['myhostName']);\n");
+           } 
         }
         fwrite($IOk, "if (file_exists('".$cWhereIsPerso."/'.\$GLOBALS['myhostName'].'/var/config.system.php')) {\n");
         fwrite($IOk, "include_once ('".$cWhereIsPerso."/'.\$GLOBALS['myhostName'].'/var/config.system.php');\n");
