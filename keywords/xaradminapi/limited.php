@@ -18,10 +18,10 @@ function keywords_adminapi_limited($args)
     $invalid = array();
     if (!isset($moduleid) || !is_numeric($moduleid)) {
         $invalid[] = 'moduleid';
-    } 
+    }
     if (!isset($keyword) || !is_string($keyword)) {
         $invalid[] = 'keyword';
-    } 
+    }
     if (!isset($itemtype) || !is_numeric($itemtype)) {
         $invalid[] = 'itemtype';
     }
@@ -31,30 +31,32 @@ function keywords_adminapi_limited($args)
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
- 
+    }
+
     $key = xarModAPIFunc('keywords',
                          'admin',
                          'separekeywords',
                           array('keywords' => $keyword));
- 
+
     foreach ($key as $keyres) {
-    $keyres = trim($keyres);     
-        
+    $keyres = trim($keyres);
+
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
+    $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords_restr'];
     $nextId = $dbconn->GenId($keywordstable);
     $query = "INSERT INTO $keywordstable (
               xar_id,
               xar_keyword,
-              xar_moduleid)
+              xar_moduleid,
+              xar_itemtype)
               VALUES (
               ?,
               ?,
+              ?,
               ?)";
-    $result =& $dbconn->Execute($query,array($nextId, $keyres, $moduleid));
-    if (!$result) return; 
+    $result =& $dbconn->Execute($query,array($nextId, $keyres, $moduleid, $itemtype));
+    if (!$result) return;
     }
     return;
 }
