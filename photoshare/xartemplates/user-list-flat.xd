@@ -24,7 +24,7 @@
                     #$folder['description']#<br />
                 </xar:if>
                 <xar:mlstring>By</xar:mlstring> #$folder['ownername']#
-                <xar:mlstring>created</xar:mlstring> #$folder['createdDate']#
+                <xar:mlstring>created</xar:mlstring> #xarLocaleFormatDate(null, $folder['createdDate'])#
                 (#$folder['imageCount']# <xar:mlstring>images</xar:mlstring>)
             </td>
         </tr>

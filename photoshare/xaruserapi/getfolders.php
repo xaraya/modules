@@ -171,7 +171,7 @@ function photoshare_userapi_getfolders($args)
             $folders[$i]['title'] = xarVarPrepForDisplay($folders[$i]['title']);
             $folders[$i]['description'] = xarVarPrepForDisplay($folders[$i]['description']);
             $folders[$i]['ownername'] = xarVarPrepForDisplay($folders[$i]['ownername']);
-            $folders[$i]['createdDate'] = xarLocaleFormatDate(null, $folders[$i]['createdDate']);
+            $folders[$i]['createdDate'] = xarVarPrepForDisplay($folders[$i]['createdDate']);
         }
     }
 
