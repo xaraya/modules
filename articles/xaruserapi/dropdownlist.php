@@ -29,7 +29,7 @@ function articles_userapi_dropdownlist($args)
         $args['field'] = 'title';
     }
     if (!isset($args['fields'])) {
-        $args['fields'] = array('aid', $args['field']);
+        $args['fields'] = array('aid', $args['field'], 'cids');
     }
     if (!isset($args['sort'])) {
         $args['sort'] = $args['field'];
