@@ -15,7 +15,7 @@ function articles_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
-    
+
     // Get the article settings for this publication type
     //Sometimes $settings can be set but $string can return empty eg importing a pubtype
     //Let's make provision for this
@@ -28,10 +28,10 @@ function articles_userapi_encode_shorturl($args)
     if (!empty($string)) {
         $settings = unserialize($string);
     }
-    
+
     // check if we want to encode URLs using their titles rather then their ID
     $encodeUsingTitle= (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
-    
+
 
     // Coming from categories etc.
     if (!empty($objectid)) {
@@ -142,9 +142,9 @@ function articles_userapi_encode_shorturl($args)
             }
         }
     } elseif ($func == 'display' && isset($aid)) {
-        if (isset($ptid) && isset($pubtypes[$ptid])) 
+        if (isset($ptid) && isset($pubtypes[$ptid]))
         {
-        
+
             $alias = xarModGetAlias($pubtypes[$ptid]['name']);
             if ($module == $alias) {
                 // OK, we can use a 'fake' module name here
@@ -152,7 +152,7 @@ function articles_userapi_encode_shorturl($args)
             } else {
                 $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . "/";
             }
-            
+
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
@@ -160,9 +160,9 @@ function articles_userapi_encode_shorturl($args)
             } else {
                 $path .= $aid;
             }
-            
+
         } else {
-        
+
             $path = '/' . $module . "/";
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
@@ -317,38 +317,39 @@ function articles_encodeUsingTitle( $aid )
     $dupeResolutionMethod = 'Append Date';
 
     $searchArgs = array();
-    $conn =& xarDBGetConn(); $qtitle = $conn->qstr($article['title']);
-    $searchArgs['where'] = "title = {$qtitle}";    
+    $conn =& xarDBGetConn();
+    $qtitle = $conn->qstr($article['title']);
+    $searchArgs['where'] = "title = {$qtitle}";
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
 
     if( strpos($article['title'],'_') === FALSE )
     {
         $article['title'] = str_replace(' ','_',$article['title']);
     }
-    
+
     if( count($articles) == 1 )
     {
         $path = rawurlencode($article['title']);
-    } else {    
+    } else {
         switch( $dupeResolutionMethod )
         {
             case 'Append AID':
                 // User Title and AID
                 $path = rawurlencode($article['title']).'/'.$aid;
                 break;
-                
+
             case 'Append Date':
                 // User Title and Date
-                
+
                 $path = rawurlencode( $article['title'] ) .'/'.date('Y-m-d H:i',$article['pubdate']) ;
                 break;
-                
+
             default:
                 // Just use ID instead of title
                 $path = $aid;
         }
     }
-        
+
     return $path;
 }
 ?>
