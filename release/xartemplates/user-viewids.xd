@@ -6,44 +6,61 @@
 <br /><br />
 <div align="center">
 <div class="xar-accent">
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent">
+<table width="100%" border="0" cellspacing="0" cellpadding="1">
     <tr>    
-		<th width="5%">
-            <xar:mlstring>Action</xar:mlstring>
-		</th>
-		<th width="5%">
-            <xar:mlstring>ID</xar:mlstring>
-		</th>
-        <th width="15%">
-            <xar:mlstring>Name</xar:mlstring>
-		</th>
-        <th width="10%">
-            <xar:mlstring>Type</xar:mlstring>
-		</th>
-        <th width="70%" align="left">
-            <xar:mlstring>Description</xar:mlstring>
-		</th>
+		<td>
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
+				<tr>    
+					<th width="20%">
+						<xar:mlstring>Action</xar:mlstring>
+					</th>
+					<th width="5%">
+						<xar:mlstring>ID</xar:mlstring>
+					</th>
+					<th width="15%">
+						<xar:mlstring>Name</xar:mlstring>
+					</th>
+					<th width="10%">
+						<xar:mlstring>Type</xar:mlstring>
+					</th>
+				</tr>
+			</table>
+		</td>
 	</tr>
-    <xar:loop name="$items">
-    <tr>
-        <td align="center" valign="top" class="xar-norm">
-           <xar:if condition="empty($editurl)">
-               #$edittitle#
-           <xar:else />
-              <a href="#$editurl#">#$edittitle#</a>
-           </xar:if>
+		<xar:loop name="$items">
+	<tr>
+		<td>
+		<table width="100%" border="0" cellspacing="1">
+			<tr>
+				<td align="left" valign="top" width="20%" class="xar-norm">
+				   <xar:if condition="empty($editurl)">
+					   #$edittitle#
+				   <xar:else />
+					  <a href="#$editurl#">#$edittitle#</a>
+				   </xar:if> | 
+				   <xar:if condition="empty($addurl)">
+					   #$addtitle#
+				   <xar:else />
+					  <a href="#$addurl#">#$addtitle#</a>
+				   </xar:if>
+				</td>
+				<td align="center" valign="top" width="5%" class="xar-norm">
+					#$rid#
+				</td>
+				<td align="center" valign="top" width="15%" class="xar-norm">
+					<a href="#$contacturl#">#$name#</a>
+				</td>
+				<td align="center" valign="top" width="10%" class="xar-norm">
+					#$type#
+				</td>
+			</tr>
+		</table>
 		</td>
-		<td align="center" valign="top">
-			#$rid#
-		</td>
-        <td align="center" valign="top" class="xar-norm">
-			<a href="#$contacturl#">#$name#</a>
-		</td>
-		<td align="center" valign="top" class="xar-norm">
-			#$type#
-		</td>
-        <td align="left" class="xar-norm">
+	<tr>
+	<tr>
+		<td align="left" valign="top" class="xar-norm">
 			&nbsp;&nbsp;#$desc#
+			<br /><br />
 		</td>
     </tr>
     </xar:loop>

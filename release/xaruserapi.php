@@ -70,7 +70,7 @@ function release_userapi_getallids($args)
     return $releaseinfo;
 }
 
-function release_userapi_get($args)
+function release_userapi_getid($args)
 {
     extract($args);
 
@@ -240,6 +240,74 @@ function release_userapi_updateid($args)
     return $rid;
 }
 
+function release_userapi_getallnotes($args)
+{
+    extract($args);
+
+    // Optional arguments.
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
+
+    $releaseinfo = array();
+
+    // Security check
+    if (!xarSecAuthAction(0, 'users::', '::', ACCESS_OVERVIEW)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        return;
+    }
+
+    // Get database setup
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+
+    $releasenotes = $xartable['release_notes'];
+
+    $query = "SELECT xar_rnid,
+                     xar_rid,
+                     xar_version,
+                     xar_price,
+                     xar_priceterms,
+                     xar_demo,
+                     xar_demolink,
+                     xar_dllink,
+                     xar_supported,
+                     xar_supportlink,
+                     xar_certified,
+                     xar_approved
+            FROM $releasenotes
+            ORDER BY xar_rnid";
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    if (!$result) return;
+
+    // Put users into result array
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $certified, $approved) = $result->fields;
+        if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
+            $releaseinfo[] = array('rnid'       => $rnid,
+                                   'rid'        => $rid,
+                                   'version'    => $version,
+                                   'price'      => $price,
+                                   'priceterms' => $priceterms,
+                                   'demo'       => $demo,
+                                   'demolink'   => $demolink,
+                                   'dllink'     => $dllink,
+                                   'supported'  => $supported,
+                                   'supportlink'=> $supportlink,
+                                   'certified'  => $certified,
+                                   'approved'   => $approved);
+        }
+    }
+
+    $result->Close();
+
+    // Return the users
+    return $releaseinfo;
+}
+
 function release_userapi_getmenulinks()
 {
     if (xarSecAuthAction(0, 'users::', '::', ACCESS_OVERVIEW)) {
@@ -247,14 +315,34 @@ function release_userapi_getmenulinks()
                                                   'user',
                                                   'viewids'),
                              'title' => xarML('View all theme and module IDs'),
-                             'label' => xarML('View IDs'));
+                             'label' => xarML('View Registration'));
 
 
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'user',
                                                   'addid'),
                              'title' => xarML('Add a module or theme ID so it will not be duplicated'),
-                             'label' => xarML('Add ID'));
+                             'label' => xarML('Add Registration'));
+        $menulinks[] = Array('url'   => xarModURL('release',
+                                                  'user',
+                                                  'viewnotes'),
+                             'title' => xarML('View all theme and module releases'),
+                             'label' => xarML('View Release Notes'));
+        $menulinks[] = Array('url'   => xarModURL('release',
+                                                  'user',
+                                                  'addnotes'),
+                             'title' => xarML('Add a module or theme release note'),
+                             'label' => xarML('Add Release Notes'));
+        $menulinks[] = Array('url'   => xarModURL('release',
+                                                  'user',
+                                                  'viewdocs'),
+                             'title' => xarML('View all theme and module documentation'),
+                             'label' => xarML('View Documentation'));
+        $menulinks[] = Array('url'   => xarModURL('release',
+                                                  'user',
+                                                  'adddocs'),
+                             'title' => xarML('Add module or theme documentation'),
+                             'label' => xarML('Add Documentation'));
 
     }
 
