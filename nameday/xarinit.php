@@ -32,8 +32,8 @@
 function nameday_init()
 {
     // Get database information
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     // Create tables
     $namedaytable = $pntable['nameday'];
@@ -92,8 +92,8 @@ function nameday_upgrade($oldversion)
 function nameday_delete()
 {
     // Get database information
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     // Delete tables
     $sql = "DROP TABLE $pntable[nameday]";

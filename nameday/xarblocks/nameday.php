@@ -47,9 +47,9 @@ function nameday_namedayblock_display($blockinfo)
 {
     // Database information
     pnModDBInfoLoad('nameday');
-    list($dbconn) = pnDBGetConn();
+    $dbconn =& xarDBGetConn();;
 
-    $pntable = pnDBGetTables();
+    $pntable =& xarDBGetTables();
     $namedaytable = $pntable['nameday'];
     $namedaycolumn = &$pntable['nameday_column'];
 

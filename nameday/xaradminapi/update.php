@@ -25,8 +25,8 @@ function nameday_adminapi_update($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $namedaytable = $pntable['nameday'];
     $namedaycolumn = &$pntable['nameday_column'];
