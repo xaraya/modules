@@ -36,7 +36,6 @@ function release_admin_viewnotes()
             break;
 
         case 'viewall':
-        default:
 
             // The user API function is called.
             $items = xarModAPIFunc('release',
