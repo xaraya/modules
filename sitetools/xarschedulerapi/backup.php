@@ -15,15 +15,18 @@ function sitetools_schedulerapi_backup($args)
             $dbname= xarDBGetName();
             $dbtype= xarDBGetType();
     }
-    
-    if (!isset($startbackup)) {
-          $startbackup='complete';
+    $SelectedTables=''; //Todo: setup a default array of selected tables for partial backups
+
+    $startbackup=xarModGetVar('sitetools','defaultbktype');
+
+    if ((!isset($startbackup)) || (empty($startbackup))) {
+      $startbackup='complete';
     }
-    
+
     if ((!isset($usegz)) && (bool)(function_exists('gzopen'))) {
          $usegz =true;
     } else {
-       $usegz = false;
+        $usegz = false;
     }
 
     $screen=0; //TODO: Fix this when configurable in main backup util
@@ -36,7 +39,8 @@ function sitetools_schedulerapi_backup($args)
                                       'dbname'         => $dbname,
                                       'dbtype'         => $dbtype));
 
-    return true;
+
+ return true;
 }
 
 ?>

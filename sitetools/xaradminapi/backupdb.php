@@ -23,11 +23,12 @@ function sitetools_adminapi_backupdb ($args)
     extract($args);
     // Security check
     if (!xarSecurityCheck('AdminSiteTools')) return;
+ 
     $items=array();
     $items['startbackup']=$startbackup;
     $items['usegz']=$usegz;
     //Assign missing or empty variables
-    if (($startbackup=='') || !isset($startbackup)) return;
+    if (!isset($startbackup)) return;
 
     if ((($usegz==1) || !isset($usegz)) && (bool)(function_exists('gzopen'))) {
          $GZ_enabled =true;
@@ -36,11 +37,11 @@ function sitetools_adminapi_backupdb ($args)
     }
     //Set the backup type to full if not set
     if (!isset($startbackup)) {
-          $startbackup='complete';
+//          $startbackup='complete';
       }
 
     if ($screen=='') $screen==false;
-    
+
     if (!isset($dbname) || ($dbname='') || (empty($dbname))){
         list($dbconn) = xarDBGetConn();
             $dbname= xarDBGetName();
@@ -303,6 +304,7 @@ function sitetools_adminapi_backupdb ($args)
     			    for ($i = 0; $i < mysql_num_fields($result); $i++) {
 	    			    $fieldnames[] = mysql_field_name($result, $i);
 		    	    }
+//		    	    if ($startbackup=='complete') {
 			        if ($_REQUEST['startbackup'] == 'complete') {
 				        $insertstatement = 'INSERT INTO '.$backtickchar.$SelectedTables["$dbname"]["$t"].$backtickchar.' ('.implode(', ', $fieldnames).') VALUES (';
     			    } else {
