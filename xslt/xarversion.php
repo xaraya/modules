@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'XSLT';
 $modversion['id']             = '184';
-$modversion['version']        = '1.0';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'XSLT Transform Hook';
 $modversion['credits']        = '';
 $modversion['help']           = '';
