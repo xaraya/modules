@@ -11,15 +11,21 @@
   <div id="bkdirlist" style="margin-bottom: 50px;">
     <xar:loop name="$dirlist">
       <div style="float:left; min-width: #$maxlen#em;">
-        <img src="#$imgloc#/dir.gif" alt="directory"/>
+        <xar:if condition="trim($loop:item['dirname']) == '..'">
+          <img src="#$imgloc#/back.gif" alt="parent directory"/>
+          <xar:set name="$dirtext"><xar:mlstring>Up</xar:mlstring></xar:set> 
+        <xar:else/>
+          <img src="#$imgloc#/dir.gif" alt="go into directory #$loop:item['dirname']#"/>
+          <xar:set name="$dirtext">#$loop:item['dirname']#</xar:set>
+        </xar:if>
         <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">
-          #$loop:item['dirname']#
+          #$dirtext#
         </a>
       </div>
     </xar:loop>
   </div>
     
-  
+  <br style="clear:both;" />
     
     <table class="csets">
       <tr>
