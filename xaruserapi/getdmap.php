@@ -98,32 +98,31 @@ function moveabletype_userapi_getdmap()
         
         Return value: on success, boolean true value; on failure, fault";
     
-    
     // Construct the dmap
     $moveabletype_dmap=array("mt.getRecentPostTitles" => array("function" => "moveabletype_userapi_getRecentPostTitles",
                                                                "signature" => $getRecentPostTitles_sig,
                                                                "docstring" => $getRecentPostTitles_doc),
-                           "mt.getCategoryList" => array("function" => "moveabletype_userapi_getCategoryList",
-                                                                "signature"=> $getCategoryList_sig,
-                                                                "docstring"=> $getCategoryList_doc),
-                           "mt.getPostCategories"        => array("function" => "moveabletype_userapi_getPostCategories",
-                                                                "signature" => $getPostCategories_sig,
-                                                                "docstring" => $getPostCategories_doc),
-                           "mt.setPostCategories"       => array("function" => "moveabletype_userapi_setPostCategories",
-                                                                "signature" => $setPostCategories_sig,
-                                                                "docstring" => $setPostCategories_doc),
-                             "mt.supportedMethods"        => array("function" => "moveabletype_userapi_supportedMethods",
-                                                                   "signature" => $supportedMethods_sig,
-                                                                   "docstring" => $supportedMethods_doc),
-                             "mt.supportedTextFilters"        => array("function" => "moveabletype_userapi_supportedTextFilters",
-                                                                   "signature" => $supportedTextFilters_sig,
-                                                                   "docstring" => $supportedTextFilters_doc),
-                             "mt.getTrackbackPings"        => array("function" => "moveabletype_userapi_getTrackbackPings",
-                                                                   "signature" => $getTrackbackPings_sig,
-                                                                   "docstring" => $getTrackbackPings_doc),
-                             "mt.publishPost" => array("function" => "moveabletype_userapi_publishPost",
-                                                                "signature" => $publishPost_sig,
-                                                                "docstring" => $publishPost_doc)
+                            "mt.getCategoryList"      => array("function" => "moveabletype_userapi_getCategoryList",
+                                                               "signature"=> $getCategoryList_sig,
+                                                               "docstring"=> $getCategoryList_doc),
+                            "mt.getPostCategories"    => array("function" => "moveabletype_userapi_getPostCategories",
+                                                               "signature" => $getPostCategories_sig,
+                                                               "docstring" => $getPostCategories_doc),
+                            "mt.setPostCategories"    => array("function" => "moveabletype_userapi_setPostCategories",
+                                                               "signature" => $setPostCategories_sig,
+                                                               "docstring" => $setPostCategories_doc),
+                            "mt.supportedMethods"     => array("function" => "moveabletype_userapi_supportedMethods",
+                                                               "signature" => $supportedMethods_sig,
+                                                               "docstring" => $supportedMethods_doc),
+                            "mt.supportedTextFilters" => array("function" => "moveabletype_userapi_supportedTextFilters",
+                                                               "signature" => $supportedTextFilters_sig,
+                                                               "docstring" => $supportedTextFilters_doc),
+                            "mt.getTrackbackPings"    => array("function" => "moveabletype_userapi_getTrackbackPings",
+                                                               "signature" => $getTrackbackPings_sig,
+                                                               "docstring" => $getTrackbackPings_doc),
+                            "mt.publishPost"          => array("function" => "moveabletype_userapi_publishPost",
+                                                               "signature" => $publishPost_sig,
+                                                               "docstring" => $publishPost_doc)
                            );
     return $moveabletype_dmap;
     
