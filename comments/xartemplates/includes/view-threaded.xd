@@ -13,7 +13,7 @@
     <xar:loop name="$package['comments']">
         <xar:if condition="(($loop:index + 1) % 2)">
             <tr valign="center">
-                <td class="xar-norm" nowrap="nowrap">
+                <td class="xar-norm" style="word-wrap: nowrap;">
                     <table cellspacing="0" cellpadding="0" border="0">
                         <tr>
                             <td>
@@ -47,7 +47,7 @@
                         </xar:mlstring>
                     </xar:if>
                 </td>
-                <td class="xar-norm" nowrap="nowrap" align="right">
+                <td class="xar-norm" style="word-wrap: nowrap; text-align: right">
                     #$loop:item['xar_date']#
                 </td>
             </tr>
