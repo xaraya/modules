@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * XSLT Transform Hook
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
@@ -14,12 +14,12 @@
 
 /**
  * Initialise the XSLT Transform Hook module
- * 
+ *
  * @author mikespub
- * @access public 
+ * @access public
  */
 function xslt_init()
-{ 
+{
     // Make sure that XSLT is available
     if (!extension_loaded('xslt')) {
         $msg=xarML('Your PHP configuration does not seem to include the required XSLT extension. Please refer to http://www.php.net/manual/en/ref.xslt.php on how to install it.');
@@ -31,38 +31,38 @@ function xslt_init()
     // Set up module hooks
     if (!xarModRegisterHook('item', 'transform', 'API',
                             'xslt', 'user', 'transform'))
-        return; 
+        return;
 
-    xarRegisterMask('AdminXSLT', 'All', 'xslt', 'All', 'All', ACCESS_ADMIN);
+    xarRegisterMask('AdminXSLT', 'All', 'xslt', 'All', 'All', 'ACCESS_ADMIN');
 
     xarModSetVar('xslt','default','modules/xslt/default.xsl');
 
     // Initialisation successful
     return true;
-} 
+}
 
 /**
  * Upgrade the xslt transform hook module from an old version
- * 
+ *
  * @author mikespub
- * @access public 
- * @param  $oldVersion 
+ * @access public
+ * @param  $oldVersion
  * @return true on success or false on failure
  * @throws no exceptions
  */
 function xslt_upgrade($oldversion)
 {
     return true;
-} 
+}
 
 /**
  * Delete the xslt transform hook module
- * 
+ *
  * @author mikespub
- * @access public 
+ * @access public
  */
 function xslt_delete()
-{ 
+{
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'transform', 'API',
                               'xslt', 'user', 'transform'))
@@ -76,6 +76,6 @@ function xslt_delete()
 
     // Deletion successful
     return true;
-} 
+}
 
 ?>
