@@ -157,7 +157,8 @@ function articles_admin_exportpubtype($args)
         }
     }
 
-    $data['xml'] .= "</object>\n";
+    $data['xml'] .= "  </properties>
+</object>\n";
 
 /* // for migration to dynamic objects later
 

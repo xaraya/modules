@@ -78,7 +78,7 @@
 </table>
 <br /><input type="submit" value="#$buttonlabel#" />
 </form>
-<a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#"><xar:mlstring>Export Definition to XML</xar:mlstring></a>
+<h3 style="text-align: left;"><a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#"><xar:mlstring>Export Definition to XML</xar:mlstring></a></h3>
 </xar:if>
 
 <xar:if condition="isset($action) and $action eq 'delete'">
@@ -135,6 +135,7 @@
     </tr>
     </xar:foreach>
 </table>
+<h3 style="text-align: left;"><a href="#xarModURL('articles','admin','importpubtype')#"><xar:mlstring>Import Definition from XML</xar:mlstring></a></h3>
 </xar:if>
 <br />
 </div>
