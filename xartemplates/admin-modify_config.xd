@@ -17,10 +17,14 @@
             <td>
               <select name="config_pdfbackend" id="config_pdfbackend">
                 <xar:loop name="$backends">
-                  <xar:if condition="$selectedbackend eq $loop:item['id']">
-                    <option selected="selected" value="#$loop:item['id']#">#$loop:item['name']#</option>
+                  <xar:if condition="$loop:item.available">
+                      <xar:if condition="$selectedbackend eq $loop:item['id']">
+                        <option selected="selected" value="#$loop:item['id']#">#$loop:item['name']#</option>
+                      <xar:else/>
+                        <option value="#$loop:item['id']#">#$loop:item['name']#</option>
+                      </xar:if>
                   <xar:else/>
-                    <option value="#$loop:item['id']#">#$loop:item['name']#</option>
+                      <option disabled="disabled" value="#$loop:item.id#">#$loop:item.name# <xar:mlstring>(unavailable)</xar:mlstring></option>
                   </xar:if>
                 </xar:loop>
               </select>
@@ -37,11 +41,15 @@
                     </xar:if>
                     <xar:if condition="$format == 'pdf'">
                         <option selected="selected" value="pdf"><xar:mlstring>PDF-output</xar:mlstring></option>
-                    <xar:else/>          
+                    <xar:else/>
                         <option value="pdf"><xar:mlstring>PDF-output</xar:mlstring></option>
                     </xar:if>
                 </select>
             </td>
+        </tr>
+        <tr>
+            <td><label for="config_foplocation"><xar:mlstring>Path to fop</xar:mlstring></label></td>
+            <td><input type="text" size="70" name="config_foplocation" id="config_foplocation" value="#$fop_location#"/></td>
         </tr>
         <tr>
             <td><label for="config_itemsperpage"><xar:mlstring>Items per page (search results)</xar:mlstring></label></td>

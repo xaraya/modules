@@ -21,11 +21,17 @@ function reports_admin_modify_config()
 
 
     $backends= array( array('id'=>'ezpdf',
-                            'name'=> xarML('EzPDF (pure PHP)')),
+                            'name'=> xarML('EzPDF (pure PHP)'),
+                            'available' => false),
                       array('id'=>'yaps',
-                            'name'=> xarML('YaPS (GS based)')),
+                            'name'=> xarML('YaPS (GS based)'),
+                            'available' => false),
                       array('id'=>'pdflib',
-                            'name'=> xarML('pdfLib (C-library)'))
+                            'name'=> xarML('pdfLib (C-library)'),
+                            'available' => false),
+                      array('id' => 'fop',
+                            'name' => xarML('Formatting Objects Processor (fop)'),
+                            'available' => true)
                       );
     $format = xarModGetVar('reports','default_output');
     if(empty($format)) {
@@ -35,10 +41,15 @@ function reports_admin_modify_config()
     if(empty($itemsperpage)) {
         xarModSetVar('reports','itemsperpage', 10);
     }
+    $fop_location = xarModGetVar('reports','fop_location');
+    if(empty($fop_location)) {
+        xarModSetVar('reports','fop_location','c:/apps/fop/');
+    }
 
     $data = array('authid' => xarSecGenAuthKey(),
                   'rep_location' => xarModGetVar('reports','reports_location'),
                   'img_location' => xarModGetVar('reports','images_location'),
+                  'fop_location' => xarModGetVar('reports','fop_location'),
                   'backends' => $backends,
                   'selectedbackend' => xarModGetVar('reports','pdf_backend'),
                   'format' => $format,

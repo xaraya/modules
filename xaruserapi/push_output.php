@@ -17,7 +17,7 @@ function reports_userapi_push_output($args)
 
     // Write the resulting document into a temporary outputfile
     $output = realpath(tempnam($cacheDir,'REP_OUT'));
-    $command ="fop -d -fo $input -$format $output";
+    $command =xarModGetVar('reports','fop_location')."fop -d -fo $input -$format $output";
     xarLogMessage("FOP: $command");
     $lastline = exec($command, $outlines, $returnvalue);
     $outlines = join("\n",$outlines);
