@@ -130,7 +130,7 @@ function pubsub_user_displayicon($args)
                              ,'cid'     => xarVarPrepForDisplay($cid)
                              ,'userid'  => xarVarPrepForDisplay($userid)
                              ,'itemtype' => xarVarPrepForDisplay($itemtype)
-                             ,'returnurl' => rawurlencode($returnurl)
+                             ,'returnurl' => $returnurl
                              ,'subaction' => $data['subscribe']
                              );
 
