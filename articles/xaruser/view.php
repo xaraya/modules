@@ -368,6 +368,8 @@ function articles_user_view($args)
                                      'getchildcats',
                                      array('cid' => $info['catid'],
                                            'ptid' => $ptid,
+                                           // include current cid
+                                           'showcid' => true,
                                            // filter on the currently selected categories
                                            'filter' => $andcids ? $catid : '',
                                            // we don't want counts here
