@@ -59,15 +59,17 @@ function newsletter_admin_createaltsubscription()
     // Presume that the email is invalid
     $valid = 0;
 
+    // Trim the name and email - make sure their are no blanks before or after
+    $name = trim($name);
+    $email = trim($email);
+
     // Validate the syntax
     if (eregi($regexp, $email))
     {
         list($username,$domaintld) = split("@",$email);
         // Validate the domain
-        if (getmxrr($domaintld,$mxrecords))
+	if (getmxrr($domaintld,$mxrecords))
             $valid = 1;
-    } else {
-        $valid = 0;
     }
 
     if ($valid) {
