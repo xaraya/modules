@@ -29,5 +29,6 @@
     </tr>
     </xar:loop>
 </table>
+<p>#$pager#</p>
 </xar:if>
 </div>

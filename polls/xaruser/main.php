@@ -3,11 +3,9 @@
 /**
  * main display function
  */
-function polls_user_main()
+function polls_user_main($args)
 {
-    xarResponseRedirect(xarModURL('polls',
-                                         'user',
-                                         'list'));
+    return xarModFunc('polls', 'user', 'list', $args);
 }
 
 ?>
