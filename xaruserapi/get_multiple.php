@@ -16,7 +16,6 @@
  * @param integer    $cid       (optional) the id of a comment
  * @param integer    $status    (optional) only pull comments with this status
  * @param integer    $author    (optional) only pull comments by this author
- * @param boolean    $nowrap    (optional) don't do word wrapping of the text (e.g. for URLs)
  * @param boolean    $reverse   (optional) reverse sort order from the database
  * @returns array     an array of comments or an empty array if no comments
  *                   found for the particular modid/objectid pair, or raise an
@@ -161,9 +160,7 @@ function comments_userapi_get_multiple($args)
         $row = $result->GetRowAssoc(false);
         $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
-        if (empty($nowrap)) {
-            comments_renderer_wrap_words($row['xar_text'],80);
-        }
+        comments_renderer_wrap_words($row['xar_text'],80);
         $commentlist[] = $row;
         $result->MoveNext();
     }
