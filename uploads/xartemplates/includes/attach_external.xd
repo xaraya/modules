@@ -1,0 +1,3 @@
+<div id="attach_external" style="visibility: hidden; display: inline;">
+    External Import: <input type="text" name="attach_external" value="" size="40" maxlength="128" />
+</div>

@@ -1,0 +1,10 @@
+<xar:if condition="isset($fileList) AND count($fileList)">
+    <div id="attach_trusted" style="visibility: hidden; display: inline;">
+		Local (trusted) import:<br />
+        <select name="attach_trusted[]" multiple="multiple">
+            <xar:loop name="$fileList">
+                <option value="#$loop:item['relativePath']#">#$loop:item['relativePath']#</option>
+            </xar:loop>
+        </select>
+    </div>
+</xar:if>
