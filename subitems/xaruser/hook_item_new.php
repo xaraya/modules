@@ -22,8 +22,13 @@ function subitems_user_hook_item_new($args)
                              array('objectid' => $objectid,
                                      'status' => 1));
 
+    $template = $object->name;
+    if(!empty($ddobjectlink['template']))
+        $template = $ddobjectlink['template'];
+
     $data['object'] = $object;
-    return $data;
+
+    return xarTplModule('subitems','user','hook_item_new',$data,$template);
 }
 
 ?>

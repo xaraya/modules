@@ -51,8 +51,19 @@ function subitems_admin_item_modify($args)
     $data['ddid'] = $ddid;
     $data['objectid'] = $objectid;
 
+    // get the subitems link for this object
+    $ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',
+                                  array('objectid' => $objectid));
+    // nothing to see here
+    if (empty($ddobjectlink) || empty($ddobjectlink['objectid'])) return;
+
+    // set the template if available
+    $template = $object->name;
+    if(!empty($ddobjectlink['template']))
+        $template = $ddobjectlink['template'];
+
     // Return the template variables defined in this function
-    return $data;
+    return xarTplModule('subitems','admin','item_modify',$data,$template);
 }
 
 ?>

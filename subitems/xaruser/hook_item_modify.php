@@ -55,6 +55,10 @@ function subitems_user_hook_item_modify($args)
     else
         $items = Array();
 
+    $template = $object->name;
+    if(!empty($ddobjectlink['template']))
+        $template = $ddobjectlink['template'];
+
     // output
     $data['properties'] = & $object->getProperties();
     $data['values'] = & $items;
@@ -62,7 +66,7 @@ function subitems_user_hook_item_modify($args)
     $data['objectid'] = $objectid;
     $data['object'] = $object;
     $data['ids'] = $ids;
-    return $data;
+    return xarTplModule('subitems','user','hook_item_modify',$data,$template);
 }
 
 ?>
