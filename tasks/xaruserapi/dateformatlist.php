@@ -3,7 +3,9 @@
  * Get the date formats supported
  *
  */
-function tasks_userapi_dateformatlist() {
+
+function tasks_userapi_dateformatlist()
+{
 	$dateformatlist = array(xarML('Please choose a Date/Time Format'),
 							'%m/%d/%Y',
 							'%m.%d.%y',
