@@ -22,6 +22,10 @@ function articles_schedulerapi_makedigest($args)
     $now = time();
     // see when we last created a digest
     $lastdigest = xarModGetVar('articles','lastdigest');
+    if (empty($lastdigest)) {
+        // if we haven't created a digest yet, let's skip all past articles
+        $lastdigest = $now;
+    }
 
     // count the number of new items since the last digest
     $count = xarModAPIFunc('articles','user','countitems',
@@ -31,6 +35,7 @@ function articles_schedulerapi_makedigest($args)
                                  'startdate' => $lastdigest)); // since the last digest
     // specify some minimum number of items before we create a digest
     if ($count < 1) {
+        // Note: don't update the last digest time here - we're waiting for enough articles
         // we're done here
         return true;
     }
