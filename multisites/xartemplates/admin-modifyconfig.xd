@@ -4,14 +4,12 @@
 <xar:if condition="$modifysite eq 0">
     <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
 	    <p><xar:mlstring>This option will gather some server configuration data and then modify your main config.system.php file.
-        Once this is complete, this site will become the Master site from which you can create other subsites. Usually this operation is only carried out
-        once. If there is a change in your server configuration, you may need to reconfigure this Master site using this option.<br /><br />
+        Once this is complete, this site will become the Master site from which you can create other (sub)sites. Usually this operation is only carried out once. If there is a change in your server configuration, you may need to reconfigure this Master site using this option.<br /><br />
         Before you continue, please make sure that you</xar:mlstring>:</p>
             <ol>
                 <li>
-                    <xar:mlstring>Create the Master SubSite Data folder '$sitefolder' in your main Xaraya install directory.  If you wish to change the 
-                    name of the Master SubSite Data Folder, make sure you update the name in the form below to your Master SubSite Data folder name. 
-                    Important: Make sure your Site Data folder is writable chmod777 before you continue.
+                    <xar:mlstring>Create the Master Data folder '$masterfolder' in your main Xaraya install directory. This is where you (sub)site configuration information is stored.  If you wish to change the name of the Master Data Folder, make sure you update the name in the form below to your Master Data folder name. 
+                    Important: Make sure your Master Data folder is writable chmod777 before you continue.
                                   </xar:mlstring>
                 </li>
                 <li>
@@ -30,12 +28,10 @@
                     <xar:mlstring>You need to add or change the domains or subdomains extensions that you wish to use with multisites.</xar:mlstring>
                 </li>
                 <li>
-                    <xar:mlstring>You want to change the directory where subsite information is held. Note that if you do this, you must move any existing
-                    site data from your old Master SubSite Data Directory to your new one manually. This module will not move it for you.</xar:mlstring>
+                    <xar:mlstring>You want to change the Master Data directory where subsite information is held. Note that if you do this, you must move any existing site data from your old Master Data Directory to your new one manually. This module will not move it for you.</xar:mlstring>
                 </li>
                 <li>
-                    <xar:mlstring>You need to change the server configuration to HTTP_HOST or SERVER_NAME. This should only be required if you chose 
-                    the wrong setup the first time round, or in some instances, if there has been changes to the server configuration where you host your
+                    <xar:mlstring>You need to change the server configuration to HTTP_HOST or SERVER_NAME. This should only be required if you chose the wrong setup the first time round, or in some instances, if there has been changes to the server configuration where you host your
                     site.</xar:mlstring>
                 </li>
             </ul>
@@ -57,7 +53,7 @@
                     your config.system.php file back to 444.</xar:mlstring>
                 </li>
                 <li>
-                    <xar:mlstring>The Master SubSite Data Folder and subsite subdirectories are not removed by this action, and must be removed manually if required.</xar:mlstring>
+                    <xar:mlstring>The Master Data Folder and subsite subdirectories are not removed by this action, and must be removed manually if required.</xar:mlstring>
                 </li>
             </ol>
     </div>
@@ -113,7 +109,7 @@
 						</td>
 						<td><br />
 						<input type="text" name="themepath" id="themepath" size="20" maxlength="30" value="#xarModGetVar('multisites', 'themepath')#" />
-						(Don't want this changed!)</td>
+						</td>
 					</tr>
 					<tr align="left" valign="middle">
 						<td width="30%">
@@ -126,10 +122,10 @@
 --->
 					<tr align=left" valign="middle">
 						<td width="30%">
-							<xar:mlstring>Default Master SubSite Data Path</xar:mlstring>:
+							<xar:mlstring>Default Master Data Directory Path</xar:mlstring>:
 						</td>
 						<td>
-						<input type="text" name="sitefolder" id="sitefolder" size="30" maxlength="40" value="#xarModGetVar('multisites', 'sitefolder')#" />
+						<input type="text" name="masterfolder" id="masterfolder" size="30" maxlength="40" value="#xarModGetVar('multisites', 'masterfolder')#" />
 						<xar:mlstring>NOTE: Do not enter trailing slashes.</xar:mlstring>
 						</td>
 					</tr>

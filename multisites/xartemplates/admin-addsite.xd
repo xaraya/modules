@@ -87,6 +87,14 @@
 						</td>
 					</tr>
 --->
+	                <tr valign = "left">
+				        <td>
+                            <xar:mlstring>Create Database</xar:mlstring>?
+                        </td>
+                        <td>
+   			                <input type="checkbox" name="createdb" id="createdb" value="1" /> /Not functional TO DO
+				        </td>
+				   </tr>
                     <tr align="center" valign="middle">
                         <td colspan="3"><br /><br /><input type="submit" value="#$btnAddSite#" align="middle" tabindex="3" />
                     </td>
