@@ -10,10 +10,10 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>XML-RPC is Xaraya Utility Module.</xar:mlstring></em>
+            <em><xar:mlstring>XML-RPC is a Xaraya Utility Module.</xar:mlstring></em>
 			<p>
 			  <xar:mlstring>The XML-RPC server module is responsible for exposing certain procedure calls using XML as
-			  the transport format. Each command is send as a http request in a specified format. The XML-RPC
+			  the transport format. Each command is send as an http request in a specified format. The XML-RPC
 			  server answers to that call with a properly formatted XML-RPC response.</xar:mlstring>
 			</p>
 			<p>
@@ -30,7 +30,7 @@
 			</p>
 
 			<p>
-			  <xar:mlstring>The XML-RPC server can be configured to serve multiple API's The currently supported APIs are</xar:mlstring>:
+			  <xar:mlstring>The XML-RPC server can be configured to serve multiple APIs The currently supported APIs are</xar:mlstring>:
 			  <ol>
 				<li>
 				  <a href="http://plant.blogger.com/api/index.html">blogger API</a> : <xar:mlstring>use Xaraya as a Blogging site installation. 
