@@ -23,13 +23,17 @@ function workflow_init()
 
     xarDBLoadTableMaintenanceAPI();
 
+    // 'user' is a reserved word in PostgreSQL and must be surrounded
+    // by double quotes to be used as a column name
+    $dbtype  = xarCore_getSystemVar('DB.Type');
+    if ($dbtype == 'postgres') {
+        $usercol = '"user"';
+    } else {
+        $usercol = 'user';
+    }
+
 // From file db/tiki.sql of TikiWiki 1.8 in CVS :
-
-    $queries = array();
-
-// TODO
-//    $query = xarDBCreateTable($xartable['...'], ...);
-
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_activities] (
   activityId int(14) NOT NULL auto_increment,
@@ -44,14 +48,71 @@ function workflow_init()
   description text,
   PRIMARY KEY  (activityId)
 )";
+    */
 
+    // Create table workflow_activities
+    $table = $xartable['workflow_activities'];
+
+    $fields = array(
+        'activityId'        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'name'              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        'normalized_name'   => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'type'              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
+        'isAutoRouted'      => array('type'=>'char','size'=>1,'null'=>TRUE),
+        'flowNum'           => array('type'=>'integer','null'=>TRUE),
+        'isInteractive'     => array('type'=>'char','size'=>1,'null'=>TRUE),
+        'lastModif'         => array('type'=>'integer','null'=>TRUE),
+        'description'       => array('type'=>'text','null'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_activity_roles] (
   activityId int(14) NOT NULL default '0',
   roleId int(14) NOT NULL default '0',
   PRIMARY KEY  (activityId,roleId)
 )";
+    */
+    // Create table workflow_activity_roles
+    $table = $xartable['workflow_activity_roles'];
 
+    $fields = array(
+        'activityId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        'roleId'            => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instance_activities] (
   instanceId int(14) NOT NULL default '0',
@@ -62,7 +123,36 @@ function workflow_init()
   status enum('running','completed') default NULL,
   PRIMARY KEY  (instanceId,activityId)
 )";
+    */
 
+    // Create table workflow_instance_activities
+    $table = $xartable['workflow_instance_activities'];
+
+    $fields = array(
+        'instanceId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        'activityId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        'started'           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'ended'             => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $usercol            => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        'status'            => array('type'=>'varchar','size'=>20,'null'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instance_comments] (
   cId int(14) NOT NULL auto_increment,
@@ -76,7 +166,39 @@ function workflow_init()
   timestamp int(14) default NULL,
   PRIMARY KEY  (cId)
 )";
+    */
 
+    // Create table workflow_instance_comments
+    $table = $xartable['workflow_instance_comments'];
+
+    $fields = array(
+        'cId'               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'instanceId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $usercol            => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        'activityId'        => array('type'=>'integer','null'=>TRUE),
+        'hash'              => array('type'=>'varchar','size'=>32,'null'=>TRUE),
+        'title'             => array('type'=>'varchar','size'=>250,'null'=>TRUE),
+        'comment'           => array('type'=>'text','null'=>TRUE),
+        'activity'          => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        'timestamp'         => array('type'=>'integer','null'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instances] (
   instanceId int(14) NOT NULL auto_increment,
@@ -90,7 +212,39 @@ function workflow_init()
   properties longblob,
   PRIMARY KEY  (instanceId)
 )";
+    */
 
+    // Create table workflow_instances
+    $table = $xartable['workflow_instances'];
+
+    $fields = array(
+        'instanceId'        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'started'           => array('type'=>'integer','null'=>TRUE),
+        'owner'             => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        'nextActivity'      => array('type'=>'integer','null'=>TRUE),
+        'nextUser'          => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        'ended'             => array('type'=>'integer','null'=>TRUE),
+        'status'            => array('type'=>'varchar','size'=>20,'null'=>TRUE),
+        'properties'        => array('type'=>'blob','null'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_processes] (
   pId int(14) NOT NULL auto_increment,
@@ -103,7 +257,38 @@ function workflow_init()
   normalized_name varchar(80) default NULL,
   PRIMARY KEY  (pId)
 )";
+    */
 
+    // Create table workflow_processes
+    $table = $xartable['workflow_processes'];
+
+    $fields = array(
+        'pId'               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'name'              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        'isValid'           => array('type'=>'char','size'=>1,'null'=>TRUE),
+        'isActive'          => array('type'=>'char','size'=>1,'null'=>TRUE),
+        'version'           => array('type'=>'varchar','size'=>12,'null'=>TRUE),
+        'description'       => array('type'=>'text','null'=>TRUE),
+        'lastModif'         => array('type'=>'integer','null'=>TRUE),
+        'normalized_name'   => array('type'=>'varchar','size'=>80,'null'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_roles] (
   roleId int(14) NOT NULL auto_increment,
@@ -113,7 +298,35 @@ function workflow_init()
   description text,
   PRIMARY KEY  (roleId)
 )";
+    */
 
+    // Create table workflow_roles
+    $table = $xartable['workflow_roles'];
+
+    $fields = array(
+        'roleId'            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'lastModif'         => array('type'=>'integer','null'=>TRUE),
+        'name'              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        'description'       => array('type'=>'text','null'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_transitions] (
   pId int(14) NOT NULL default '0',
@@ -121,7 +334,34 @@ function workflow_init()
   actToId int(14) NOT NULL default '0',
   PRIMARY KEY  (actFromId,actToId)
 )";
+    */
 
+    // Create table workflow_transitions
+    $table = $xartable['workflow_transitions'];
+
+    $fields = array(
+        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'actFromId'         => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        'actToId'           => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE)
+    );
+
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_user_roles] (
   pId int(14) NOT NULL default '0',
@@ -129,7 +369,34 @@ function workflow_init()
   user varchar(200) NOT NULL default '',
   PRIMARY KEY  (roleId,user)
 )";
+    */
 
+    // Create table workflow_user_roles
+    $table = $xartable['workflow_user_roles'];
+
+    $fields = array(
+        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'roleId'            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $usercol            => array('type'=>'varchar','size'=>200,'null'=>FALSE,'default'=>'','primary_key'=>TRUE)
+    );
+
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+    
+    /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_workitems] (
   itemId int(14) NOT NULL auto_increment,
@@ -142,14 +409,38 @@ function workflow_init()
   user varchar(200) default NULL,
   PRIMARY KEY  (itemId)
 )";
+    */
 
-    // create tables
-    foreach ($queries as $query) {
-        // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
-        $result = &$dbconn->Execute($query);
-        if (!$result) return;
+    // Create table workflow_workitems
+    $table = $xartable['workflow_workitems'];
+
+    $fields = array(
+        'itemId'            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'instanceId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'orderId'           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'activityId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'type'              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
+        'properties'        => array('type'=>'blob','null'=>TRUE),
+        'started'           => array('type'=>'integer','null'=>TRUE),
+        'ended'             => array('type'=>'integer','null'=>TRUE),
+        $usercol            => array('type'=>'varchar','size'=>200,'null'=>TRUE)
+    );
+
+    // Create the table DDL
+    $query = xarDBCreateTable($table, $fields);
+    if (empty($query)) return false; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($query);
+
+    // Check for an error with the database
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
     }
-
+    
     // set default activityId for create, update and delete hooks
     xarModSetVar('workflow','default.create',0);
     xarModSetVar('workflow','default.update',0);
@@ -277,11 +568,11 @@ function workflow_upgrade($oldversion)
                 $query = xarDBAlterTable($oldname,
                                          array('command' => 'rename',
                                                'new_name' => $xartable[$mytable]));
-                if (empty($query)) return; // throw back
+                if (empty($query)) return false; // throw back
 
                 // Rename the table and send exception if returns false.
                 $result = &$dbconn->Execute($query);
-                if (!$result) return;
+                if (!$result) return false;
             }
             // fall through to next upgrade
 
@@ -356,11 +647,11 @@ function workflow_delete()
     foreach ($mytables as $mytable) {
         // Generate the SQL to drop the table using the API
         $query = xarDBDropTable($xartable[$mytable]);
-        if (empty($query)) return; // throw back
+        if (empty($query)) return false; // throw back
 
         // Drop the table and send exception if returns false.
         $result = &$dbconn->Execute($query);
-        if (!$result) return;
+        if (!$result) return false;
     }
 
     // Remove module hooks
