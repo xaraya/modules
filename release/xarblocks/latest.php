@@ -71,7 +71,7 @@ function release_latestblock_display($blockinfo)
               'approved' => 2)
     );
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {return;} // throw back
- 
+
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
     $data['items'] = array();
@@ -94,24 +94,28 @@ function release_latestblock_display($blockinfo)
                 $item['link'] = xarModURL(
                     'release', 'user', 'displaynote',
                     array('rnid' => $item['rnid'])
-                ); 
+                );
+
                 // Security check 2 - else only display the item name (or whatever is
                 // appropriate for your module)
             } else {
                 $item['link'] = '';
-            } 
-
+            }
+            $roles = new xarRoles();
+            $role = $roles->getRole($item['uid']);
+            $item['author']= $role->getName();
+            $item['authorlink']=xarModURL('roles','user','display',array('uid'=>$item['uid']));            
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
+
         }
     }
     $data['blockid'] = $blockinfo['bid'];
-
     // Now we need to send our output to the template.
     // Just return the template data.
     $blockinfo['content'] = $data;
 
     return $blockinfo;
-} 
+}
 
 ?>
