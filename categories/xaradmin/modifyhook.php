@@ -80,18 +80,22 @@ function categories_admin_modifyhook($args)
 
     // used e.g. for previews of modified items
     if (empty($extrainfo['cids']) || !is_array($extrainfo['cids'])) {
-        // try to get cids from input
-        $cids = xarVarCleanFromInput('cids');
-        if (empty($cids) || !is_array($cids)) {
-            $links = xarModAPIFunc('categories', 'user', 'getlinks',
-                                   array('iids' => array($objectid),
-                                         'itemtype' => $itemtype,
-                                         'modid' => $modid,
-                                         'reverse' => 0));
-            if (!empty($links) && is_array($links) && count($links) > 0) {
-                $cids = array_keys($links);
-            } else {
-                $cids = array();
+        if (!empty($extrainfo['modify_cids'])) {
+            $cids = $extrainfo['modify_cids'];
+        } else {
+            // try to get cids from input
+            $cids = xarVarCleanFromInput('modify_cids');
+            if (empty($cids) || !is_array($cids)) {
+                $links = xarModAPIFunc('categories', 'user', 'getlinks',
+                                       array('iids' => array($objectid),
+                                             'itemtype' => $itemtype,
+                                             'modid' => $modid,
+                                             'reverse' => 0));
+                if (!empty($links) && is_array($links) && count($links) > 0) {
+                    $cids = array_keys($links);
+                } else {
+                    $cids = array();
+                }
             }
         }
     } else {

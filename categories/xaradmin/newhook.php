@@ -42,6 +42,7 @@ function categories_admin_newhook($args)
     } else {
         $numcats = (int) $extrainfo['number_of_categories'];
     }
+
     if (empty($numcats) || !is_numeric($numcats)) {
         $numcats = 0;
         // no categories to show here -> return empty output
@@ -69,10 +70,14 @@ function categories_admin_newhook($args)
 
     // used e.g. for previews of new items
     if (empty($extrainfo['cids']) || !is_array($extrainfo['cids'])) {
-        // try to get cids from input
-        $cids = xarVarCleanFromInput('cids');
-        if (empty($cids) || !is_array($cids)) {
-            $cids = array();
+        if (!empty($extrainfo['new_cids']) && is_array($extrainfo['new_cids'])) {
+            $cids = $extrainfo['new_cids'];
+        } else {
+            // try to get cids from input
+            $cids = xarVarCleanFromInput('new_cids');
+            if (empty($cids) || !is_array($cids)) {
+                $cids = array();
+            }
         }
     } else {
         $cids = $extrainfo['cids'];
