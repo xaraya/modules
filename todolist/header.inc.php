@@ -105,7 +105,7 @@ function page_top($page,$printlayout)
         case THELIST: 
             if (pnSessionGetVar('todolist_show_icons')) {
                 $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">
-                   <img border="0" src="'.$todoimagespath.'reload.png" alt="'._TODOLIST_RELOAD.'"/></a>';
+                   <img border="0" src="'.$todoimagespath.'reload.png" alt="'._TODOLIST_RELOAD.'" /></a>';
             } else {
                 $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'._TODOLIST_RELOAD.'</a>';
             }
@@ -113,7 +113,7 @@ function page_top($page,$printlayout)
         default:
             if (pnSessionGetVar('todolist_show_icons'))
                 $str.= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">
-                   <img border="0" src="'.$todoimagespath.'back.png" alt="'._TODOLIST_BACK.'"/></a>';
+                   <img border="0" src="'.$todoimagespath.'back.png" alt="'._TODOLIST_BACK.'" /></a>';
             else
                 $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'._TODOLIST_BACK.'</a>';
             break;
@@ -151,7 +151,7 @@ function page_top($page,$printlayout)
         if ($page != PREFPAGE) {
             if (pnSessionGetVar('todolist_show_icons')) {
                 $str .=' <a href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;route='.PREFERENCES.'" accesskey="p">
-                    <img border="0" src="'.$todoimagespath.'preferences.png" alt="'._TODOLIST_PREFERENCES.'"/></a>';
+                    <img border="0" src="'.$todoimagespath.'preferences.png" alt="'._TODOLIST_PREFERENCES.'" /></a>';
             }
             else {
                 $str .=' / <a href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;route='.PREFERENCES.'" accesskey="p">'._TODOLIST_PREFERENCES.'</a>';
@@ -253,14 +253,14 @@ function page_foot($page,$printlayout)
         case THELIST: 
             if (pnSessionGetVar('todolist_show_icons')) {
                 $str .= '<a href="#top">';
-                $str .= '<img border="0" src="'.$todoimagespath.'up.png" alt="'._TODOLIST_TOP.'"/></a>';
+                $str .= '<img border="0" src="'.$todoimagespath.'up.png" alt="'._TODOLIST_TOP.'" /></a>';
             } else
                 $str .= "  <a href=\"#top\">"._TODOLIST_TOP.'</a>';
             break;
         default:
             if (pnSessionGetVar('todolist_show_icons'))
                 $str.= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">
-                   <img border="0" src="'.$todoimagespath.'back.png" alt="'._TODOLIST_BACK.'"/></a>';
+                   <img border="0" src="'.$todoimagespath.'back.png" alt="'._TODOLIST_BACK.'" /></a>';
             else
                 $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'._TODOLIST_BACK.'</a>';
             break;
