@@ -3,7 +3,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2><br />
 <div style="margin: auto;">
 
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<table width="98%" border="0" >
 
 <form method="post" action="&xar-modurl-xarlinkme-admin-updateconfig;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
