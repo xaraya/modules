@@ -54,10 +54,10 @@
         <td colspan="2" style="text-align: center"><br />
             <xar:if condition="$func eq 'modify'">
                 <input type="submit" value="#$modifylabel#" />
-                <input type="hidden" name="creating" id="creating" value="false">
+                <input type="hidden" name="creating" id="creating" value="false"/>
             <xar:else />
                 <input type="submit" value="#$addlabel#"  />
-                <input type="hidden" name="creating" id="creating" value="true">
+                <input type="hidden" name="creating" id="creating" value="true"/>
             </xar:if>
             <br />&nbsp;
         </td>

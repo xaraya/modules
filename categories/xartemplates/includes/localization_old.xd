@@ -29,7 +29,7 @@
                     <xar:if condition="$i eq 0">
                         --+&nbsp;&nbsp;
                     <xar:else />
-                        <xar:if condition="$categories[$i-1]['indentation'] < $categories[$i]['indentation']">
+                        <xar:if condition="$categories[$i-1]['indentation'] lt $categories[$i]['indentation']">
                             --+&nbsp;&nbsp;
                         <xar:else />
                            &nbsp;&nbsp;&nbsp;+&nbsp;
