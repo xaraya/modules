@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Id: s.user.php 1.2 02/12/01 14:47:45+00:00 miko@miko.homelinux.org $
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2001 by the PostNuke Development Team.

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: s.xaradminapi.php 1.3 02/12/01 14:27:27+01:00 marcel@hsdev.com $
 // ----------------------------------------------------------------------
 // Dynamic Planning Module
 // Copyright (C) 2002 by Curtis Nelson

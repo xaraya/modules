@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Id: s.admin.php 1.2 02/12/01 14:47:45+00:00 miko@miko.homelinux.org $
 // ----------------------------------------------------------------------
 // Original Author of file: Jim McDonald
 // Purpose of file:  Language defines for pnadmin.php

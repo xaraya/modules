@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: s.xaruserapi.php 1.3 02/12/01 14:26:47+01:00 marcel@hsdev.com $
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2002 by the PostNuke Development Team.

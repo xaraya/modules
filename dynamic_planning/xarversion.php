@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: s.xarversion.php 1.3 02/12/01 14:28:39+01:00 marcel@hsdev.com $
 $modversion['name'] = 'dynamic_planning';
 $modversion['id'] = '144';
 $modversion['version'] = '1.0';

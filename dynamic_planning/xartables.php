@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: s.xartables.php 1.2 02/12/01 14:29:27+01:00 marcel@hsdev.com $
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2002 by the PostNuke Development Team.

@@ -1,6 +1,6 @@
 <?php
 /**
- *  $Id$
+ *  $Id: s.index.php 1.1 02/06/24 20:35:54-00:00 clnelson $
  *
  *  PostCalendar::PostNuke Events Calendar Module
  *  Copyright (C) 2002  The PostCalendar Team

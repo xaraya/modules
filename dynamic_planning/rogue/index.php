@@ -1,7 +1,7 @@
 <?php
 
 ////////////////////////////////////////////////////////////////////
-//File:	$Id$	
+//File:	$Id: s.index.php 1.1 02/06/25 17:44:31-00:00 clnelson $	
 //
 //This one's for Post Nuke -- Rogue !
 //Now a module -- change from 4.4 and mutant
@@ -634,3 +634,4 @@ switch($func) {
     viewproject();
     break;
 }
+?>
