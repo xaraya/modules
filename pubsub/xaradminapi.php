@@ -779,4 +779,28 @@ function pubsub_adminapi_updatetemplate($args)
 
     return true;
 }
+/**
+ * utility function pass individual menu items to the main menu
+ *
+ * @author the Example module development team
+ * @returns array
+ * @return array containing the menulinks for the main menu items.
+ */
+function pubsub_adminapi_getmenulinks()
+{
+    if (xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
+
+        $menulinks[] = Array('url'   => xarModURL('pubsub',
+                                                  'admin',
+                                                  'view'),
+                              'title' => xarML('View and Edit Pubsub Events'),
+                              'label' => xarML('View'));
+    }
+
+    if (empty($menulinks)){
+        $menulinks = '';
+    }
+
+    return $menulinks;
+}
 ?>
