@@ -36,6 +36,7 @@ function metaweblogapi_userapi_getpost($args)
         if(!empty($article['cids'])) {
             foreach($article['cids'] as $catid) {
                 // Get the base categories for the itemtype (in this context, this means: the blogs)
+                // TODO: replace with $rootCats = xarModAPIFunc('articles','user','getrootcats', array('ptid' => $article['pubtypeid']));
                 $basecats = xarModAPIFunc('categories','user','getallcatbases',array('itemtype' => $article['pubtypeid'],
                                                                                      'modid' => xarModGetIdFromName('Articles'),
                                                                                      'format' => 'cids'));

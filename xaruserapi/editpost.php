@@ -37,6 +37,10 @@ function metaweblogapi_userapi_editpost($args)
     } else {
         $dateCreated = time();
     }
+    $usingMT=false;
+    if(array_key_exists('mt_allow_comments', $struct)) {
+        $usingMT =true;
+    }
     
     // categories are optional
     $categories = array();
@@ -50,7 +54,7 @@ function metaweblogapi_userapi_editpost($args)
         $err = xarML("Invalid user (#(1)) or password while editing post",$username);
     } else {
         // FIXME: test for exceptions
-        $article = xarModAPIFunc('articles','user','get',array('aid'=>$postid, 'withcids' => true));
+        $article = xarModAPIFunc('articles','user','get',array('aid' => $postid, 'withcids' => true));
         $iids = array(); $iids[] = $postid;
         
         // Should we error out here maybe?
@@ -60,18 +64,29 @@ function metaweblogapi_userapi_editpost($args)
         
         // FIXME: test for exceptions
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
-        $modId = xarModGetIDFromName('articles');
+        $modId = 151;
         $cids = array();
-        foreach($categories as $catname) {
-            $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $catname));
+        if($usingMT) {
+            // MT has a separate method for setting the post categories, just copy them over here
+            $cids = $article['cids'];
+        } else {
+            foreach($categories as $catname) {
+                $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $catname));
+            }
         }
+        if ($publish) {
+            $status ='publishstatus'; 
+        } else {
+            $status = 'draftstatus';
+        }
+        $status = xarModGetVar('bloggerapi',$status);
+        if(empty($status)) $status = 0; // Submitted
         if (!xarModAPIFunc('articles','admin','update',array('aid'=>$article['aid'], 'title'=>$title,
-                                                             'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids,
+                                                             'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids, 'status' => $status,
                                                              'bodytype'=>'normal', 'bodytext'=>$article['body'],'language'=>' '))) {
             $err = "Failed to update post: $postid";
         }
     }
-    
     
     if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));

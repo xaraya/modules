@@ -17,14 +17,6 @@
  */
 function metaweblogapi_admin_main()
 {
-    // Security Check
-    if (xarModGetVar('adminpanels', 'overview') == 0){
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('metaweblogapi', 'admin', 'modifyconfig'));
-    }
-    // success
-    return true;
+    return array();
 }
 ?>
