@@ -56,14 +56,17 @@ class bkRepo
         
         $out=array();$retval='';
         $out = shell_exec($cmd);
-        if(function_exists('xarLogMessage')) {
-            xarLogMessage("BK: $cmd");
-        }
+
         $out = str_replace("\r\n","\n",$out);
         $out = explode("\n", $out);
         $out = array_filter($out,'notempty');
 
         chdir($savedir);
+        // We need to do this here, because this class changes the cwd secretly and we dont 
+        // know what kind of effect this has on the environment
+        if(function_exists('xarLogMessage')) {
+            xarLogMessage("BK: $cmd", XARLOG_LEVEL_WARNING);
+        }
         return $out;
     }
     
@@ -106,7 +109,7 @@ class bkRepo
         $file = __fileproper($file);
         $cmd="bk r2c -r".$rev." ".$file;
         $cset = $this->_run($cmd);
-        return $cset;
+        return $cset[0];
     } 
     
     function bkGetChangeSets($range='',$merge=false,$user='') 
@@ -288,14 +291,30 @@ class bkRepo
 // Class to model a changeset
 class bkChangeSet  
 {
-    var $_repo;   // in which repository is this changeset?
-    var $_rev;    // which changeset to instantiate?
-    var $_deltas; // array of file/rev combos which hold the deltas in this cset
+    var $_repo;     // in which repository is this changeset?
+    var $_rev;      // which changeset to instantiate?
+    var $_deltas;   // array of file/rev combos which hold the deltas in this cset
+    var $_author;   // author of this cset
+    var $_comments; // cset comment
+    var $_key;      // fixed key of this cset
+    var $_tag;      // tag, if any
     
     function bkChangeset($repo,$rev='+') 
     {
         $this->_repo=$repo;
         $this->_rev=$rev;   // changeset revision number
+        // Fill basic properties
+        $cmd = "bk changes -r".$rev. " -d':P:\n\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}\n:KEY:\n:TAG:'";
+        $tmp = $this->_repo->_run($cmd);
+        $this->_author = $tmp[0];
+        $this->_comments = explode(BK_NEWLINE_MARKER,$tmp[1]);
+        $this->_key = $tmp[2];
+        if(array_key_exists(3,$tmp)) {
+            $this->_tag = $tmp[3];
+        } else {
+            $this->_tag = '';
+        }
+        
         // Fill delta array with identification of deltas
         $this->_deltas=NULL;
         $this->_deltas();
@@ -309,7 +328,7 @@ class bkChangeSet
         while (list(,$did) = each($tmp)) {
             list($file,$rev) = explode('|',$did);
             if (strtolower($file)!="changeset") {
-                $this->_deltas[$did]=new bkDelta($this,$file,$rev);
+                $this->_deltas[$did]=new bkDelta(&$this,$file,$rev);
             }
         }
     }
@@ -330,6 +349,26 @@ class bkChangeSet
     {
         return $this->_rev;
     }
+    
+    function bkGetAuthor()
+    {
+        return $this->_author;
+    }
+    
+    function bkGetComments()
+    {
+        return $this->_comments;
+    }
+    
+    function bkGetKey()
+    {
+        return $this->_key;
+    }
+    
+    function bkGetTag()
+    {
+        return $this->_tag;
+    }
 }
 
 // Class to model a delta
@@ -342,6 +381,7 @@ class bkDelta
     var $_age;      // how long ago?
     var $_domain;   // from where?
     var $_comments; // what were the comments?
+    var $_date;     // exact date of the delta
     
     function bkDelta($cset='',$file,$rev) 
     {
@@ -349,10 +389,12 @@ class bkDelta
         $this->_file=$file;
         $this->_rev=$rev;
         $this->_cset=$cset;
-        $cmd ="bk prs -hvn -r$rev -d':AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
+        $cmd ="bk prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
         
         $info = $this->_cset->_repo->_run($cmd);
-        list($age, $author,$domain, $comments) = explode('|',$info[0]);
+        list($date,$time,$age, $author,$domain, $comments) = explode('|',$info[0]);
+        $this->_date = $date;
+        $this->_time = $time;
         $this->_age=$age;
         $this->_author=$author;
         $this->_domain=$domain;

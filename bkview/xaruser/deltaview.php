@@ -19,34 +19,26 @@ function bkview_user_deltaview($args)
     xarVarFetch('rev','str::',$rev,'+');
     extract($args);
 
+    // Get the information on the repository
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
-    $data=array();
-    $data['deltalist']=array();
-    $deltalist=array();
-    $counter=1;
-    $formatstring="':TAG:|:GFILE:|:REV:|:D:|:T:|:USER:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}'";
+    // Initialize
+    $data=array(); $data['deltatree']=array(); $deltatree = array();
     $repo =& $item['repo'];
-    // FIXME: do we need to do this as a method of $repo ? Now it's really a coincedence it works
+
+    // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
-    $deltas=$changeset->bkDeltas($formatstring);
-    while (list($key,$val) = each($deltas)){
-        // FIXME: if comments contain a | only the part before it is shown
-        // (example: exclude csets )
-        list($tag,$file,$revision,$date,$time,$user,$domain,$comments)= explode('|',$val);
-        $deltalist[$counter]['tag']=$tag;
-        $deltalist[$counter]['file']=$file;
-        $deltalist[$counter]['revision']=$revision;
-        $deltalist[$counter]['date']=$date;
-        $deltalist[$counter]['time']=$time;
-        $deltalist[$counter]['user']=$user;
-        $deltalist[$counter]['domain']=$domain;
-        $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
-        $deltalist[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
-        $counter++;
+    foreach($changeset->_deltas as $delta_id => $delta) {
+        // Repo id is a xaraya thing, add it sneaky to the object because we dont
+        // want it in the class
+        $delta->repoid = $repoid;
+        $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->_file)) . "']";
+        // mwuhahaha
+        eval("$arrayindex = \$delta;");
     }
 
+    $data['deltatree'] =  array('deltatree' => $deltatree);
     $hooks='';
     // We have to construct an artificial $hookId because we don't use the database
     // 1. It needs to include the identification of the repository: ROOTKEY
@@ -57,14 +49,17 @@ function bkview_user_deltaview($args)
     // 3. Can we use the cset number for something? 1.xxx.xxx.xxx.xxx problem with cset numbers
     //    is that they can change on merges, so we can't rely on them
     // And we have to squeeze all this info in a 11 digit integer
-    
     //  $hooks = xarModCallHooks('item', 'display', $hookId, $extraInfo, 'bkview', 'changeset')
     
     // Pass data to BL compiler
+    // FIXME: this sucks
     $data['pageinfo']=xarML("Changeset details for #(1)",$rev);
     $data['rev']=$rev;
+    $data['author'] = $changeset->bkGetAuthor();
+    $data['comments'] = $changeset->bkGetComments();
+    $data['key'] = $changeset->bkGetKey();
+    $data['tag'] = $changeset->bkGetTag();
     $data['repoid']=$repoid;
-    $data['deltalist']=$deltalist;
     $data['name_value']=$item['reponame'];
     $data['hooks'] = $hooks;
     return $data;

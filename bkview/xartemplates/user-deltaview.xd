@@ -1,32 +1,35 @@
 <xar:template file="user-menu" type="module"/>
 
 <div style="float: left; margin-top: 1em;">
-<table class="csets">
-<xar:loop name="$deltalist">
-  <tr>
-    <td class="deltaline">#$loop:item['file']#@#$loop:item['revision']#&nbsp;#$loop:item['date']#&nbsp;#$loop:item['time']#&nbsp;#$loop:item['user']#@#$loop:item['domain']#
-    <xar:if condition="$loop:item['file'] == 'ChangeSet'">
-      <br/>
-      <a href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#">
-        <xar:mlstring>all diffs</xar:mlstring>
-      </a>
-      <xar:if condition="$loop:item['tag'] != ''">
-        <tr><td>#$loop:item['tag']#</td></tr>
-      </xar:if>
-		<xar:else/>
-      <br/>
-      <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$loop:item['file']#">
-        <xar:mlstring>history</xar:mlstring>
-      </a>&nbsp;&nbsp;
-      <a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$loop:item['file']#&amp;rev=#$loop:item['revision']#">
-        <xar:mlstring>annotate</xar:mlstring>
-      </a>&nbsp;&nbsp;
-      <a href="&xar-modurl-bkview-user-diffview;&amp;repoid=#$repoid#&amp;file=#$loop:item['file']#&amp;rev=#$loop:item['revision']#">
-        <xar:mlstring>diffs</xar:mlstring>
-			</a>
-    </xar:if>
-  </td></tr>
-  <tr><td class="comments">#$loop:item['comments']#</td></tr>
-</xar:loop>
-</table>
+
+<style type="text/css">
+table.csetsummary td:first-child {
+    font-weight: bold;
+    text-align: right;
+    vertical-align: top;
+    padding-right: 3pt;
+}
+
+div.csetsummary {
+    padding: 5pt;
+}
+
+</style>
+
+<!-- Summary of the cset -->
+<div class="xar-norm-outline xar-accent csetsummary">
+  <table class="csetsummary">
+    <tr><td><xar:mlstring>Author</xar:mlstring> :</td><td>#$author#</td></tr>
+    <tr><td><xar:mlstring>Revision</xar:mlstring> :</td><td>#$rev#</td></tr>
+    <tr><td><xar:mlstring>Key</xar:mlstring> :</td><td>#$key#</td></tr>
+    <tr><td><xar:mlstring>Patch</xar:mlstring> :</td><td><a title="#xarML('View differences')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#"><xar:mlstring>View diff</xar:mlstring></a> | Download BK patch</td></tr>
+    <xar:if condition="$tag != ''"><tr><td ><xar:mlstring>Tag</xar:mlstring> :</td><td class="xar-alt-outline">#$tag#</td></tr></xar:if>
+    <tr><td><xar:mlstring>Comments</xar:mlstring> :</td><td><xar:foreach in="$comments" value="$line">#$line#<br/></xar:foreach></td></tr>
+  </table>
+</div>
+
+<!-- Let's try something daring, recursive templating -->
+<div style="margin-left: 1em;">
+  <xar:template file="deltatree" subdata="$deltatree"/>
+</div>
 </div>
