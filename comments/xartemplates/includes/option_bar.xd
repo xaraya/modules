@@ -1,3 +1,4 @@
+<!--- TODO : clean up all this header and receipt junk in URLs and hidden fields --->
 <div class="xar-accent" style="padding: 1px;">
     <div class="xar-norm" style="padding: 4px; text-align: center;">
         <h2> 
@@ -205,7 +206,7 @@
                         </td>
                         <td style="text-align: center;vertical-align: middle;">
                             <input type="hidden" id="header-modid" name="header[modid]" value="#$header['modid']#" /> <input type="hidden" id="header-objectid" name="header[objectid]" value="#$header['objectid']#" /> 
-                            <xar:if condition="isset($header['selected_cid'])">
+                            <input type="hidden" id="header-itemtype" name="header[itemtype]" value="#$header['itemtype']#" />                            <xar:if condition="isset($header['selected_cid'])">
                                 <input type="hidden" id="header-selected_cid" name="header[selected_cid]" value="#$header['selected_cid']#" /> 
                             </xar:if>
                             <xar:if condition="isset($header['branchout'])">

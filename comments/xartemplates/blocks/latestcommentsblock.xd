@@ -23,7 +23,7 @@
 				  #$comment['xar_subject']#
 				  </a>,
 				<xar:else />
-				  <a href="&xar-modurl-comments-user-display;&amp;modid=#$comment['xar_modid']#&amp;objectid=#$comment['xar_objectid']#&amp;selected_cid=#$comment['xar_cid']#&amp;returnurl=#$comment['returnurl']#">
+				  <a href="&xar-modurl-comments-user-display;&amp;modid=#$comment['xar_modid']#&amp;itemtype=#$comment['xar_itemtype']#&amp;objectid=#$comment['xar_objectid']#&amp;selected_cid=#$comment['xar_cid']#&amp;returnurl=#$comment['returnurl']#">
 				  #$comment['xar_subject']#</a>,
 				  </xar:if>
 			  </span>

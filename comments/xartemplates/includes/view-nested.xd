@@ -1,3 +1,4 @@
+<!--- TODO : clean up all this header and receipt junk in URLs and hidden fields --->
 <div class="xar-norm">
     <xar:loop name="$package['comments']">
         <div class="xar-accent" style="padding: 1px; margin-left: #$loop:item['depth']*30#px;margin-bottom: 4px;">
@@ -41,7 +42,7 @@
                 <xar:if condition="$loop:item['xar_branchout'] eq 1">
                     <br />
                     <br />
-                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a> &nbsp;&nbsp;&nbsp;
+                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a> &nbsp;&nbsp;&nbsp;
                 </xar:if>
             </div>
             <div class="xar-norm" style="padding: 1px; text-align: left;">
@@ -49,6 +50,7 @@
                     <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;">
 			<div style="display: inline;">
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" /> 
+                        <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" /> 
 			<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
 			<input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
 			<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
@@ -63,6 +65,7 @@
                         <form action="#xarModUrl('comments', 'user', 'modify')#" method="post" style="display: inline;">
 			    <div style="display: inline;">
                             <input type="hidden" name="header[modid]" value="#$header['modid']#" />
+                            <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
 							<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
 							<input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
 							<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
@@ -77,6 +80,7 @@
                     <form action="#xarModUrl('comments', 'user', 'delete')#" method="post" style="display: inline;">
 			<div style="display: inline;">
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" />
+                            <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
 						<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
 						<input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
 						<input type="hidden" name="header[pid]" value="#$loop:item['xar_pid']#" />

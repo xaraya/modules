@@ -13,6 +13,7 @@
  * @author Carl P. Corliss <rabbitt@xaraya.com>
 */
 
+// FIXME: simplify all this header, package, receipt stuff
 
 /**
  * include module constants and definitions
@@ -36,6 +37,7 @@ function comments_user_main($args) {
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
  * @param    integer    $args['modid']              the module id
+ * @param    integer    $args['itemtype']           the item type
  * @param    string     $args['objectid']           the item id
  * @param    string     $args['returnurl']          the url to return to
  * @param    integer    [$args['selected_cid']]     optional: the cid of the comment to view (only for displaying single comments)
@@ -46,8 +48,6 @@ function comments_user_display($args) {
 
     if (!xarSecurityCheck('Comments-Read',0))
         return;
-
-// FIXME: simplify all this header, package, receipt stuff
 
     $header   = xarRequestGetVar('header');
     $package  = xarRequestGetVar('package');
@@ -66,6 +66,14 @@ function comments_user_display($args) {
         $header['modid'] = $args['modid'];
     } elseif (isset($header['modid'])) {
         $args['modid'] = $header['modid'];
+    } elseif (!empty($args['extrainfo']) && !empty($args['extrainfo']['module'])) {
+        if (is_numeric($args['extrainfo']['module'])) {
+            $modid = $args['extrainfo']['module'];
+        } else {
+            $modid = xarModGetIDFromName($args['extrainfo']['module']);
+        }
+        $args['modid'] = $modid;
+        $header['modid'] = $modid;
     } else {
         xarVarFetch('modid','isset',$modid,NULL,XARVAR_NOT_REQUIRED);
         if (empty($modid)) {
@@ -95,6 +103,18 @@ function comments_user_display($args) {
         $header['selected_cid'] = $selected_cid;
     }
 
+    if (isset($args['itemtype'])) {
+        $header['itemtype'] = $args['itemtype'];
+    } elseif (isset($header['itemtype'])) {
+        $args['itemtype'] = $header['itemtype'];
+    } elseif (!empty($args['extrainfo']) && isset($args['extrainfo']['itemtype'])) {
+        $args['itemtype'] = $args['extrainfo']['itemtype'];
+        $header['itemtype'] = $args['extrainfo']['itemtype'];
+    } else {
+        xarVarFetch('itemtype','isset',$itemtype,NULL,XARVAR_NOT_REQUIRED);
+        $args['itemtype'] = $itemtype;
+        $header['itemtype'] = $itemtype;
+    }
 
     if (!isset($receipt['returnurl']['raw'])) {
         if (empty($args['extrainfo'])) {
@@ -117,8 +137,6 @@ function comments_user_display($args) {
         $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['raw']);
         $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'] . $settings_uri;
     }
-
-    // TODO: handle item types
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
@@ -210,8 +228,10 @@ function comments_user_reply() {
     if (!isset($package['postanon'])) {
         $package['postanon'] = 0;
     }
-
     xarVarValidate('checkbox', $package['postanon']);
+    if (!isset($header['itemtype'])) {
+        $header['itemtype'] = 0;
+    }
 
     switch (strtolower($receipt['action'])) {
         case 'submit':
@@ -228,6 +248,7 @@ function comments_user_reply() {
             }
             xarModAPIFunc('comments','user','add',
                                         array('modid'    => $header['modid'],
+                                              'itemtype' => $header['itemtype'],
                                               'objectid' => $header['objectid'],
                                               'pid'      => $header['pid'],
                                               'comment'  => $package['text'],
@@ -289,6 +310,7 @@ function comments_user_reply() {
             $comments[0]['xar_text']     = $package['text'];
             $comments[0]['xar_title']    = $package['title'];
             $comments[0]['xar_modid']    = $header['modid'];
+            $comments[0]['xar_itemtype'] = $header['itemtype'];
             $comments[0]['xar_objectid'] = $header['objectid'];
             $comments[0]['xar_pid']      = $header['pid'];
             $comments[0]['xar_author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
@@ -348,6 +370,9 @@ function comments_user_modify() {
         $package['postanon'] = 0;
     }
     xarVarValidate('checkbox', $package['postanon']);
+    if (!isset($header['itemtype'])) {
+        $header['itemtype'] = 0;
+    }
 
     switch (strtolower($receipt['action'])) {
         case 'submit':
@@ -403,6 +428,7 @@ function comments_user_modify() {
             $comments[0]['xar_text']     = $package['text'];
             $comments[0]['xar_title']    = $package['title'];
             $comments[0]['xar_modid']    = $header['modid'];
+            $comments[0]['xar_itemtype'] = $header['itemtype'];
             $comments[0]['xar_objectid'] = $header['objectid'];
             $comments[0]['xar_pid']      = $header['pid'];
             $comments[0]['xar_author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
@@ -457,6 +483,10 @@ function comments_user_delete() {
     // Make sure some action was submitted
     if (!array_key_exists('action', $receipt))
         $receipt['action'] = 'confirm-delete';
+
+    if (!isset($header['itemtype'])) {
+        $header['itemtype'] = 0;
+    }
 
     $output['header'] = $header;
     $output['receipt'] = $receipt;
@@ -642,6 +672,7 @@ function comments_user_search( $args ) {
     if (!empty($package['comments'])) {
 
         $header['modid'] = $package['comments'][0]['xar_modid'];
+        $header['itemtype'] = $package['comments'][0]['xar_itemtype'];
         $header['objectid'] = $package['comments'][0]['xar_objectid'];
         $receipt['returnurl']['decoded'] = xarModURL('comments','user','display', $postinfo);
         $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
@@ -698,6 +729,10 @@ function comments_userapi_collapse( ) {
     $receipt = xarRequestGetVar('receipt');
     $package['settings'] = xarModAPIFunc('comments','user','getoptions');
 
+    if (!isset($header['itemtype'])) {
+        $header['itemtype'] = 0;
+    }
+
     if (xarUserIsLoggedIn()) {
 
         $branches = unserialize(xarModGetUserVar('comments','CollapsedBranches'));
@@ -709,6 +744,7 @@ function comments_userapi_collapse( ) {
     }
 
     $args['header[modid]']               = $header['modid'];
+    $args['header[itemtype]']            = $header['itemtype'];
     $args['header[objectid]']            = $header['objectid'];
 
     if (isset($header['selected_cid'])) {
@@ -747,6 +783,10 @@ function comments_userapi_expand( ) {
     $receipt = xarRequestGetVar('receipt');
     $package['settings'] = xarModAPIFunc('comments','user','getoptions');
 
+    if (!isset($header['itemtype'])) {
+        $header['itemtype'] = 0;
+    }
+
     if (xarUserIsLoggedIn()) {
 
         $branches = unserialize(xarModGetUserVar('comments','CollapsedBranches'));
@@ -758,6 +798,7 @@ function comments_userapi_expand( ) {
     }
 
     $args['header[modid]']               = $header['modid'];
+    $args['header[itemtype]']            = $header['itemtype'];
     $args['header[objectid]']            = $header['objectid'];
 
     if (isset($header['selected_cid'])) {
@@ -781,7 +822,6 @@ function comments_userapi_expand( ) {
     xarResponseRedirect($url);
 }
 
-// FIXME: why is this written as a hook/GUI function instead of a block function ?
 function comments_user_displayall($args) {
 
     $modarray = array();
@@ -796,6 +836,16 @@ function comments_user_displayall($args) {
         $modarray=$args['modid'];
     }        
 
+    if (!isset($args['itemtype'])) {
+        $args['itemtype'] = xarVarCleanFromInput('itemtype');
+        if (!$args['itemtype']) {
+            $itemtype = null;
+        }  else      {
+            $itemtype = $args['itemtype'];
+        }
+    }   else {     
+        $itemtype=$args['itemtype'];
+    }        
    
     if (empty($args['order'])) {
         $args['order'] = xarVarCleanFromInput('order');
@@ -897,6 +947,8 @@ function comments_user_displayall($args) {
     }
 
     $args['modarray']=$modarray;
+
+// TODO: replace all this with a call to getitemlinks()
 
     // check is supported modules are hooked and are requested
     $supported=array();
@@ -1002,6 +1054,7 @@ function comments_user_displayall($args) {
     $templateargs['supported']      =$args['supported'];
     $templateargs['modarray']       =$modarray;
     $templateargs['modid']          =$modarray;
+    $templateargs['itemtype']       =$itemtype;
     $templateargs['modlist']        =$modlist;
     $templateargs['decoded_returnurl'] = rawurldecode(xarModURL('comments','user','displayall'));
     $templateargs['decoded_nexturl'] = xarModURL('comments','user','displayall',array(

@@ -108,6 +108,10 @@ function comments_userapi_get_node_root($args) {
         return;
     }
 
+    if (empty($itemtype)) {
+        $itemtype = 0;
+    }
+
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
@@ -117,6 +121,7 @@ function comments_userapi_get_node_root($args) {
     $sql = "SELECT  $ctable[cid], $ctable[left], $ctable[right]
               FROM  $xartable[comments]
              WHERE  $ctable[modid]='$modid'
+               AND  $ctable[itemtype]='$itemtype'
                AND  $ctable[objectid]='$objectid'
                AND  $ctable[status]='"._COM_STATUS_ROOT_NODE."'";
 
@@ -153,6 +158,9 @@ function comments_userapi_get_object_maxright( $args ) {
     if (!isset($objectid) || !isset($modid)) {
         // TODO:  raise exception
     }
+    if (empty($itemtype)) {
+        $itemtype = 0;
+    }
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -163,6 +171,7 @@ function comments_userapi_get_object_maxright( $args ) {
     $sql = "SELECT  MAX($ctable[right]) as max_right
               FROM  $xartable[comments]
              WHERE  $ctable[objectid] = $objectid
+               AND  $ctable[itemtype] = $itemtype
                AND  $ctable[modid] = $modid";
 
     $result =& $dbconn->Execute($sql);
@@ -264,10 +273,13 @@ function comments_userapi_get_node_lrvalues($comment_id) {
  * @returns  array an array containing the left and right values or an
  *           empty array if the modid specified doesn't exist
  */
-function comments_userapi_get_module_lrvalues($modid) {
+function comments_userapi_get_module_lrvalues($modid, $itemtype = 0) {
 
     if (empty($modid)) {
         // TODO: raise exception
+    }
+    if (empty($itemtype)) {
+        $itemtype = 0;
     }
 
     list($dbconn) = xarDBGetConn();
@@ -280,6 +292,7 @@ function comments_userapi_get_module_lrvalues($modid) {
                     MAX($ctable[right]) AS xar_right
               FROM  $xartable[comments]
              WHERE  $ctable[modid]='$modid'
+               AND  $ctable[itemtype]='$itemtype'
           GROUP BY  $ctable[objectid]";
 
     $result =& $dbconn->Execute($sql);
@@ -386,10 +399,11 @@ function comments_userapi_remove_gap($startpoint, $endpoint, $gapsize) {
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   private
  * @param    integer     $modid      the id of the module this is attached to
+ * @param    integer     $itemtype   the item type this is attached to
  * @param    string      $objectid     the particular item in the specified module that this is attached to
  * @returns   integer     the id of the node that was created so it can be used as a parent id
  */
-function comments_userapi_add_rootnode($modid, $objectid) {
+function comments_userapi_add_rootnode($modid, $objectid, $itemtype = 0) {
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -428,6 +442,7 @@ function comments_userapi_add_rootnode($modid, $objectid) {
                                 xar_status,
                                 xar_objectid,
                                 xar_modid,
+                                xar_itemtype,
                                 xar_hostname,
                                 xar_date
                                             )
@@ -441,6 +456,7 @@ function comments_userapi_add_rootnode($modid, $objectid) {
                                 "._COM_STATUS_ROOT_NODE.",
                                 $objectid,
                                 $modid,
+                                $itemtype,
                                 '',
                                 $cdate 
                             )";
@@ -551,6 +567,7 @@ function comments_userapi_get_one($args) {
  * @author Carl P. Corliss (aka rabbitt)
  * @access public
  * @param integer    $modid     the id of the module that these nodes belong to
+ * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $objectid  (optional) the id of the item that these nodes belong to
  * @param integer    $cid       (optional) the id of a comment
  * @param integer    $status    (optional) only pull comments with this status
@@ -618,6 +635,10 @@ function comments_userapi_get_multiple($args) {
              WHERE  $ctable[modid]='$modid'
                AND  $ctable[status]='$status'";
 
+    if (isset($itemtype) && is_numeric($itemtype)) {
+        $sql .= " AND $ctable[itemtype]='$itemtype'";
+    }
+
     if (isset($objectid) && !empty($objectid)) {
         $sql .= " AND $ctable[objectid]='$objectid'";
     }
@@ -676,6 +697,7 @@ function comments_userapi_get_multiple($args) {
  * @author mikespub
  * @access public
  * @param integer    $modid     the id of the module that these nodes belong to
+ * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $objectid    the id of the item that these nodes belong to
  * @returns integer  the number of comments for the particular modid/objectid pair,
  *                   or raise an exception and return false.
@@ -710,6 +732,10 @@ function comments_userapi_get_count($args) {
              WHERE  ($ctable[objectid]='$objectid' AND $ctable[modid]='$modid')
                AND  $ctable[status]='"._COM_STATUS_ON."'";
 
+    if (isset($itemtype) && is_numeric($itemtype)) {
+        $sql .= " AND $ctable[itemtype]='$itemtype'";
+    }
+
     $result =& $dbconn->Execute($sql);
     if (!$result)
         return;
@@ -731,6 +757,7 @@ function comments_userapi_get_count($args) {
  * @author mikespub
  * @access public
  * @param integer    $modid     the id of the module that these nodes belong to
+ * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $author      the id of the author you want to count comments for
  * @param integer    $status    (optional) the status of the comments to tally up
  * @returns integer  the number of comments for the particular modid/objectid pair,
@@ -770,6 +797,10 @@ function comments_userapi_get_author_count($args) {
              WHERE  ($ctable[author]='$author' AND $ctable[modid]='$modid')
                AND  $ctable[status]='$status'";
 
+    if (isset($itemtype) && is_numeric($itemtype)) {
+        $sql .= " AND $ctable[itemtype]='$itemtype'";
+    }
+
     $result =& $dbconn->Execute($sql);
     if (!$result)
         return;
@@ -791,6 +822,7 @@ function comments_userapi_get_author_count($args) {
  * @author mikespub
  * @access public
  * @param integer    $modid     the id of the module that these nodes belong to
+ * @param integer    $itemtype  the item type that these nodes belong to
  * @param array    $objectids    the list of ids of the items that these nodes belong to
  * @returns array  the number of comments for the particular modid/objectids pairs,
  *                   or raise an exception and return false.
@@ -824,8 +856,13 @@ function comments_userapi_get_countlist($args) {
               FROM  $xartable[comments]
              WHERE  $ctable[modid]='$modid'
                AND  $ctable[objectid] IN ('" . join("', '",$objectids) . "')
-               AND  $ctable[status]='"._COM_STATUS_ON."'
-          GROUP BY  $ctable[objectid]";
+               AND  $ctable[status]='"._COM_STATUS_ON."'";
+
+    if (isset($itemtype) && is_numeric($itemtype)) {
+        $sql .= " AND $ctable[itemtype]='$itemtype'";
+    }
+
+    $sql .= " GROUP BY  $ctable[objectid]";
 
     $result =& $dbconn->Execute($sql);
     if (!$result)
@@ -957,6 +994,7 @@ function comments_userapi_get_childcountlist($args) {
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
  * @param    integer     $args['modid']      the module id
+ * @param    integer     $args['itemtype']   the item type
  * @param    string      $args['objectid']   the item id
  * @param    integer     $args['pid']        the parent id
  * @param    string      $args['title']    the title (title) of the comment
@@ -979,6 +1017,10 @@ function comments_userapi_add($args) {
             xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
+    }
+
+    if (empty($itemtype) || !is_numeric($itemtype)) {
+        $itemtype = 0;
     }
 
     if (!isset($objectid)) {
@@ -1043,14 +1085,14 @@ function comments_userapi_add($args) {
     // left and right values cuz we're adding the new comment
     // as a top level comment
     if ($pid == 0) {
-        $root_lnr = comments_userapi_get_node_root(array('modid' => $modid, 'objectid' => $objectid));
+        $root_lnr = comments_userapi_get_node_root(array('modid' => $modid, 'objectid' => $objectid, 'itemtype' => $itemtype));
 
         // ok, if the there was no root left and right values then
         // that means this is the first comment for this particular
         // modid/objectid combo -- so we need to create a dummy (root)
         // comment from which every other comment will branch from
         if (!count($root_lnr)) {
-            $pid = comments_userapi_add_rootnode($modid, $objectid);
+            $pid = comments_userapi_add_rootnode($modid, $objectid, $itemtype);
         } else {
             $pid = $root_lnr['xar_cid'];
         }
@@ -1084,6 +1126,7 @@ function comments_userapi_add($args) {
     $sql = "INSERT INTO $xartable[comments]
                 (xar_cid,
                  xar_modid,
+                 xar_itemtype,
                  xar_objectid,
                  xar_author,
                  xar_title,
@@ -1098,6 +1141,7 @@ function comments_userapi_add($args) {
           VALUES ("
         .xarVarPrepForStore($cid).",'"
         .xarVarPrepForStore($modid)."','"
+        .xarVarPrepForStore($itemtype)."','"
         .xarVarPrepForStore($objectid)."','"
         .xarVarPrepForStore($author)."','"
         .xarVarPrepForStore($title)."',"
@@ -1127,9 +1171,10 @@ function comments_userapi_add($args) {
  * @author Carl P. Corliss (aka rabbitt)
  * @access  private
  * @param   integer     $modid      the id of the module that the objectids are associated with
+ * @param   integer     $itemtype   the item type that these nodes belong to
  * @returns array A list of objectid's
  */
-function comments_userapi_get_object_list( $modid ) {
+function comments_userapi_get_object_list( $modid, $itemtype = null ) {
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -1139,6 +1184,9 @@ function comments_userapi_get_object_list( $modid ) {
                            FROM $xartable[comments]
                           WHERE $ctable[modid] = '$modid'";
 
+    if (isset($itemtype) && is_numeric($itemtype)) {
+        $sql .= " AND $ctable[itemtype]='$itemtype'";
+    }
 
     $result =& $dbconn->Execute($sql);
     if (!$result) return;
@@ -1265,6 +1313,7 @@ function comments_userapi_search($args) {
                     $ctable[right] AS xar_right,
                     $ctable[postanon] AS xar_postanon,
                     $ctable[modid]  AS xar_modid,
+                    $ctable[itemtype]  AS xar_itemtype,
                     $ctable[objectid] as xar_objectid
               FROM  $xartable[comments]
              WHERE  $ctable[status]='"._COM_STATUS_ON."'
@@ -1517,6 +1566,7 @@ function comments_userapi_get_multipleall($args) {
                         $ctable[status] AS xar_status,
                         $ctable[postanon] AS xar_postanon,
                         $ctable[objectid] AS xar_objectid,
+                        $ctable[itemtype] AS xar_itemtype,
                         $ctable[modid] AS xar_modid";
     
    
@@ -1531,7 +1581,9 @@ function comments_userapi_get_multipleall($args) {
     if ($first == 1) {
         $sqlend .=   " LIMIT 0, $howmany";
     }
-    
+
+// TODO: replace all this with a call to getitemlinks()
+
     //construct sql query that gets comments from unsupported modules
     //currently supported: Articles (modid=151)
     $sqluns = $sqlcols . " FROM  $xartable[comments]

@@ -43,6 +43,7 @@ function comments_init() {
         'xar_cid'       => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_pid'       => array('type'=>'integer',  'null'=>FALSE),
         'xar_modid'     => array('type'=>'integer',  'null'=>TRUE),
+        'xar_itemtype'  => array('type'=>'integer',  'null'=>false),
         'xar_objectid'  => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'xar_date'      => array('type'=>'integer',  'null'=>FALSE),
         'xar_author'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'medium','default'=>1),
@@ -90,6 +91,15 @@ function comments_init() {
 
     $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_modid',
                    'fields'    => array('xar_modid'),
+                   'unique'    => FALSE);
+
+    $query = xarDBCreateIndex($xartable['comments'],$index);
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_itemtype',
+                   'fields'    => array('xar_itemtype'),
                    'unique'    => FALSE);
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
@@ -268,6 +278,66 @@ function comments_upgrade($oldversion)
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                                array('modName'  => 'comments',
                                      'blockType'=> 'latestcomments'))) return;
+            // fall through to the next upgrade
+        case 1.1:
+            // Code to upgrade from version 1.1 goes here
+            if (xarModIsAvailable('articles')) {
+                // load API for table definition etc.
+                if (!xarModAPILoad('articles','user')) return;
+            }
+
+            // Get database information
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $commentstable = $xartable['comments'];
+
+            xarDBLoadTableMaintenanceAPI();
+
+            // add the xar_itemtype column
+            $query = xarDBAlterTable($commentstable,
+                                     array('command' => 'add',
+                                           'field' => 'xar_itemtype',
+                                           'type' => 'integer',
+                                           'null' => false,
+                                           'default' => '0'));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // make sure all current records have an itemtype 0 (just in case)
+            $query = "UPDATE $commentstable SET xar_itemtype = 0";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // update the itemtype field for all articles
+            if (xarModIsAvailable('articles')) {
+                $modid = xarModGetIDFromName('articles');
+                $articlestable = $xartable['articles'];
+
+                $query = "SELECT xar_aid, xar_pubtypeid FROM $articlestable";
+                $result =& $dbconn->Execute($query);
+                if (!$result) return;
+
+                while (!$result->EOF) {
+                    list($aid,$ptid) = $result->fields;
+                    $update = "UPDATE $commentstable SET xar_itemtype = $ptid WHERE xar_objectid = '$aid' AND xar_modid = $modid";
+                    $test =& $dbconn->Execute($update);
+                    if (!$test) return;
+
+                    $result->MoveNext();
+                }
+                $result->Close();
+            }
+
+// TODO: any other modules where we need to insert the right itemtype here ?
+
+            // add an index for the xar_itemtype column
+            $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_itemtype',
+                           'fields'    => array('xar_itemtype'),
+                           'unique'    => FALSE);
+            $query = xarDBCreateIndex($commentstable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
             // fall through to the next upgrade
         case 2.0:
             // Code to upgrade from version 2.0 goes here

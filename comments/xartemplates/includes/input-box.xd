@@ -1,3 +1,4 @@
+<!--- TODO : clean up all this header and receipt junk in URLs and hidden fields --->
 <xar:sec mask="Comments-Reply" catch="false">
     <div class="xar-accent" style="padding: 1px;">
         <div style="padding: 3px;">
@@ -88,7 +89,8 @@
                         <td colspan="2">
                             <br />
                             <input type="hidden" name="header[modid]" value="#$header['modid']#" /> 
-							<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
+                            <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" /> 
+                            <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
                             <xar:if condition="!isset($header['pid']) or empty($header['pid'])">
                                 <input type="hidden" name="header[pid]" value="0" />
                                 <xar:else />
