@@ -10,8 +10,7 @@ function xarcachemanager_admin_blocks($args)
     if (!xarSecurityCheck('AdminXarCache')) return;
 
     $data = array();
-    $iscached = xarModGetVar('xarcachemanager','CacheBlockOutput');
-    if (empty($iscached)) {
+    if (!file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.blocklevel')) {
         $data['blocks'] = array();
         return $data;
     }

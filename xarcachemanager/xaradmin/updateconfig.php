@@ -13,6 +13,8 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVarFetch('pageexpiretime',   'str:1:9', $pageexpiretime,  '0',  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachedisplayview', 'isset', $cachedisplayview, 0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachetimestamp',   'isset', $cachetimestamp,   0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('expireheader', 	 'isset', $expireheader,   0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cacheblocks', 	 'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockexpiretime',  'str:1:9', $blockexpiretime, '0',  XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
@@ -46,10 +48,8 @@ function xarcachemanager_admin_updateconfig()
         }
     }
 
-    // turn block level ouput caching on or off
-    xarVarFetch('cacheblocks', 'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED);
+    // turn block level ouput caching on or off 
     if ($cacheblocks) {
-        xarModSetVar('xarcachemanager','CacheBlockOutput', 1);
         if(!file_exists($outputCacheDir . '/cache.blocklevel')) {
             touch($outputCacheDir . '/cache.blocklevel');
         }
@@ -61,7 +61,6 @@ function xarcachemanager_admin_updateconfig()
         $cacheKey = "adminpanels-blockid";
         xarPageFlushCached($cacheKey);
     } else {
-        xarModSetVar('xarcachemanager','CacheBlockOutput', 0);
         if(file_exists($outputCacheDir . '/cache.blocklevel')) {
             unlink($outputCacheDir . '/cache.blocklevel');
         }
@@ -110,6 +109,7 @@ function xarcachemanager_admin_updateconfig()
     $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
     $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
     $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
+    $cachingConfig = preg_replace('/\[\'Page.ExpireHeader\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ExpireHeader'] = $expireheader;", $cachingConfig);
     $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
 
     $fp = fopen ($cachingConfigFile, 'wb');

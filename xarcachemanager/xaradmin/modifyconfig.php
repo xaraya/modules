@@ -30,7 +30,7 @@ function xarcachemanager_admin_modifyconfig()
     } else {
         $data['pageCachingEnabled'] = 0;
     }
-    if (file_exists($varCacheDir . '/output/cache.blocklevel') && xarModGetVar('xarcachemanager','CacheBlockOutput')) {
+    if (file_exists($varCacheDir . '/output/cache.blocklevel')) {
         $data['blockCachingEnabled'] = 1;
     } else {
         $data['blockCachingEnabled'] = 0;
@@ -69,6 +69,9 @@ function xarcachemanager_admin_modifyconfig()
     }
     if(!isset($data['settings']['PageViewTime'])) {
         $data['settings']['PageViewTime'] = 0;
+    }
+    if(!isset($data['settings']['PageExpireHeader'])) {
+        $data['settings']['PageExpireHeader'] = 1;
     }
     if(!isset($data['settings']['BlockTimeExpiration'])) {
         $data['settings']['BlockTimeExpiration'] = 7200;

@@ -25,8 +25,7 @@ function xarcachemanager_adminapi_getmenulinks()
                                  'title' => xarML('Configure the caching options for pages'),
                                  'label' => xarML('Page Caching'));
         }
-        $iscached = xarModGetVar('xarcachemanager','CacheBlockOutput');
-        if (!empty($iscached)) {
+        if (file_exists($varCacheDir . '/output/cache.blocklevel')) {
             $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                       'admin',
                                                       'blocks'),

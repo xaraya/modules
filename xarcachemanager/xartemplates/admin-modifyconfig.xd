@@ -138,6 +138,18 @@
             </td>
         </tr>
         <tr>
+            <td><span class="help" title="#xarML('If enabled, xarCache will sends an Expires header to the client, encouraging the page to be cached locally')#"><label for="cachetimestamp">
+                <xar:mlstring>Send an "Expires" header to the client:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <xar:if condition="$settings.PageExpireHeader eq 1 ">
+                    <input type="checkbox" name="expireheader" id="expireheader" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="expireheader" id="expireheader" value="1" />
+                </xar:if>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2"><h3><xar:mlstring>Block Output Cache Settings</xar:mlstring></h3></td>
         </tr>
         <tr>

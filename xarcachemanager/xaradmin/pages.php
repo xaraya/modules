@@ -79,13 +79,7 @@ function xarcachemanager_admin_pages($args)
         $cachingConfig = join('', file($cachingConfigFile));
    
         $cachegroups = join(';', $grouplist); 
-        if (preg_match('/Page.CacheGroups/', $cachingConfig)) {
-            $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
-        } else {
-            // we put everything on 1 line to avoid DOS vs. Unix newline issue
-            $newstuff = '$cachingConfiguration[\'Page.CacheGroups\'] = \'' . $cachegroups . '\'; ?>';
-            $cachingConfig = preg_replace('/\?>/', $newstuff, $cachingConfig);
-        }
+        $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
     
         $fp = fopen ($cachingConfigFile, 'wb');
         fwrite ($fp, $cachingConfig);

@@ -119,6 +119,7 @@ function xarcachemanager_init()
     * xar_page tinyint(4) NOT NULL default '0',
     * xar_user tinyint(4) NOT NULL default '0',
     * xar_expire int(11)
+    * UNIQUE KEY `i_xar_cache_blocks_1` (`xar_bid`)
     * );
     *****************************************************************/
     
@@ -133,6 +134,12 @@ function xarcachemanager_init()
     // Create or alter the table as necessary.
     $result = $datadict->changeTable($cacheblockstable, $flds);    
     if (!$result) {return;}
+    
+    // Create a unique key on the xar_bid collumn
+    $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_cache_blocks_1',
+                                     $cacheblockstable,
+                                     'xar_bid',
+                                     array('UNIQUE'));
     
     // Set up module variables
     xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
@@ -267,16 +274,70 @@ function xarcachemanager_upgrade($oldversion)
             }
             break;
         case '0.3.0':
-            // Code to upgrade from the 0.3 version (base block level caching)
+            // Code to upgrade from the 0.3.0
+            // Bring the config file up to current version
+            $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+            $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
+            $cachingConfigFile = $varCacheDir . '/config.caching.php';
+            include($cachingConfigFile);
+            $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
+            $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
+            $pageexpiretime = $cachingConfiguration['Page.TimeExpiration'];
+            $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
+            $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
+            $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
+            if(isset($cachingConfiguration['Page.CacheGroups'])) {
+            	$cachegroups = $cachingConfiguration['Page.CacheGroups'];
+            }
+            @unlink($cachingConfigFile);
+            $handle = fopen($defaultConfigFile, "rb");
+            $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
+            $fp = @fopen($cachingConfigFile,"wb");
+            fwrite($fp, $defaultConfig);
+            fclose($fp);
+            $cachingConfig = join('', file($cachingConfigFile));
+            $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
+            if(isset($cachegroups)) {
+            	$cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
+            }
+
+            $fp = fopen ($cachingConfigFile, 'wb');
+            fwrite ($fp, $cachingConfig);
+            fclose ($fp);
+            // Add the unique index that was added with this release
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $cacheblockstable = $xartable['cache_blocks'];
+            $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_cache_blocks_1',
+                                             $cacheblockstable,
+                                             'xar_bid',
+                                             array('UNIQUE'));
+            // switch to the file bashed block caching enabler
+            if (xarModGetVar('xarcachemanager', 'CacheBlockOutput')) {
+            	$outputCacheDir = $varCacheDir . '/output/';
+            	if(!file_exists($outputCacheDir . 'cache.blocklevel')) {
+            		touch($outputCacheDir . 'cache.blocklevel');
+        		}
+        		xarModDelVar('xarcachemanager', 'CacheBlockOutput');
+        	}
+            break;
+        case '0.3.1':
+            // Code to upgrade from the 0.3.1 version (base block level caching)
             break;
         case '0.4.0':
-            // Code to upgrade from the 0.4 version (base module level caching)
+            // Code to upgrade from the 0.4.0 version (base module level caching)
             break;
         case '1.0.0':
-            // Code to upgrade from version 1.0 goes here
+            // Code to upgrade from version 1.0.0 goes here
             break;
         case '2.0.0':
-            // Code to upgrade from version 2.0 goes here
+            // Code to upgrade from version 2.0.0 goes here
             break;
     }
     // Update successful
