@@ -38,7 +38,7 @@
           <xar:ml>
             <xar:mlstring> ((#1) words) </xar:mlstring>
             <xar:mlvar>#$words#</xar:mlvar>
-          </xar:mlvar>
+          </xar:ml>
 				</xar:if>
 				<xar:if condition="!empty($comments)">
 					#$comments#
