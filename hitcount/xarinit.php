@@ -54,7 +54,7 @@ function hitcount_init()
 
     $query = xarDBCreateIndex($xartable['hitcount'],
                              array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_hitcombo',
-                                   'fields' => array('xar_moduleid','xar_itemtype'),
+                                   'fields' => array('xar_moduleid','xar_itemtype', 'xar_itemid'),
                                    'unique' => false));
 
     $result =& $dbconn->Execute($query);
@@ -172,13 +172,11 @@ function hitcount_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            break;
         case '1.1':
             xarModSetVar('hitcount', 'countadmin', 0);
             xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
             $modversion['admin']          = 1;
             // Code to upgrade from version 1.1 goes here
-            break;
 
         case '1.2.0':
             // delete invalid hitcount entries for articles itemtype 0
@@ -191,7 +189,34 @@ function hitcount_upgrade($oldversion)
             // fall through to next upgrade
 
         case '1.2.1':
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+
+            //Load Table Maintenance API
+            xarDBLoadTableMaintenanceAPI();
+
+            $query = xarDBDropIndex(
+                $xartable['hitcount'],
+                array(
+                    'name' => 'i_' . xarDBGetSiteTablePrefix() . '_hitcombo',
+                    ));
+
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            $query = xarDBCreateIndex($xartable['hitcount'],
+                array(
+                    'name'   => 'i_' . xarDBGetSiteTablePrefix() . '_hitcombo',
+                    'fields' => array('xar_moduleid','xar_itemtype', 'xar_itemid'),
+                    'unique' => false));
+
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+        case '1.2.2':
             // Code to upgrade from version 1.2.1 goes here
+            break;
     }
 
     return true;
