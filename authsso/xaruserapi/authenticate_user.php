@@ -160,7 +160,9 @@ function authsso_userapi_authenticate_user($args)
         $rid = $userRole['uid'];
     }
 
-    xarVarDelCached('Security.Variables', 'privilegeset');
+    // At the begining of the server reqest the session was for an anonymous user,
+    // now it's not, flush any security cache that may have accumulated thus far.
+    xarVarFlushCached('Security.Variables');
     return $rid;
 }
 
