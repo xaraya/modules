@@ -130,7 +130,6 @@ function pubsub_userapi_deluser($args)
     $query = "DELETE FROM $pubsubregtable
               WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
     $dbconn->Execute($query);
-    if (!$result) return;
 
     return true;
 }
