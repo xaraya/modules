@@ -29,6 +29,22 @@
     </td>
   </tr>
   <tr>
+    <td><label for="config_defaultoutput"><xar:mlstring>Default output format</xar:mlstring></label></td>
+    <td>
+      <select id="config_defaultoutput" name="config_defaultoutput">
+        <xar:if condition="$format == 'html'">
+          <option selected="selected" value="html"><xar:mlstring>HTML-output</xar:mlstring></option>
+        <xar:else/>
+          <option value="html"><xar:mlstring>HTML-output</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$format == 'pdf'">
+          <option selected="selected" value="pdf"><xar:mlstring>PDF-output</xar:mlstring></option>
+        <xar:else/>          
+          <option value="pdf"><xar:mlstring>PDF-output</xar:mlstring></option>
+        </xar:if>
+      </select>
+    </td>
+  <tr>
     <xar:set name="$buttonlabel"><xar:mlstring>Update config</xar:mlstring></xar:set>
     <td><input type="submit" value="#$buttonlabel#"/></td>
     <td>&nbsp;</td>

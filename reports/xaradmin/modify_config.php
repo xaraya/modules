@@ -8,12 +8,17 @@ function reports_admin_modify_config()
                       array('id'=>'pdflib',
                             'name'=> xarML('pdfLib (C-library)'))
                       );
+    $format = xarModGetVar('reports','default_output');
+    if(empty($format)) {
+        xarModSetVar('reports','default_output','html');
+    }
     
 	$data = array('authid' => xarSecGenAuthKey(),
                   'rep_location' => xarModGetVar('reports','reports_location'),
                   'img_location' => xarModGetVar('reports','images_location'),
                   'backends' => $backends,
-                  'selectedbackend' => xarModGetVar('reports','pdf_backend')
+                  'selectedbackend' => xarModGetVar('reports','pdf_backend'),
+                  'format' => $format
                   );
     
 	return $data;
