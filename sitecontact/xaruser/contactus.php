@@ -42,6 +42,7 @@ function sitecontact_user_contactus()
     $optiontext = xarModGetVar('sitecontact','optiontext');
     $optionset = array();
     $selectitem=array();
+    $adminemail = xarModGetVar('mail','adminmail');
     $optionset=explode(',',$optiontext);
     $data['optionset']=$optionset;
     $optionitems=array();
@@ -49,13 +50,18 @@ function sitecontact_user_contactus()
       $optionitems[]=explode(';',$optionitem);
     }
     foreach ($optionitems as $optionid) {
-      if ($optionid[0]==$requesttext) {
-         if (isset($optionid[1])) {
-          $altmail=$optionid[1];
-         }
-      }
+        if (trim($optionid[0])==trim($requesttext)) {
+            if (isset($optionid[1])) {
+                $setmail=$optionid[1];
+            }else{
+                $setmail=$adminemail;
+            }
+        }
     }
-   $today = getdate();
+    if (!isset($setmail) ) {
+       $setmail = xarModGetVar('mail','adminmail');
+   }
+    $today = getdate();
     $month = $today['month'];
     $mday = $today['mday'];
     $year = $today['year'];
@@ -73,11 +79,7 @@ function sitecontact_user_contactus()
     $notetouser = preg_replace('/%%company%%/',
                             $company,
                             $notetouser);
-   if (!isset($altmail) ) {
-       $adminemail = xarModGetVar('mail','adminmail');
-   }else{
-       $adminemail=$altmail;
-   }
+
 
    $adminname= xarModGetVar('mail','adminname');
    $sitename = xarModGetVar('themes','SiteName');
@@ -123,7 +125,7 @@ function sitecontact_user_contactus()
     $htmlmessage .=$sitename.' '.xarML('at').' '.$siteurl;
     $htmlmessage .='<br /><br />';
 
-
+    //send mail to user
     if (!xarModAPIFunc('mail',
                        'admin',
                        'sendmail',
@@ -132,7 +134,7 @@ function sitecontact_user_contactus()
                              'subject'      => $subject,
                              'htmlmessage'  => $htmlmessage,
                              'message'      => $message,
-                             'from'         => $adminemail,
+                             'from'         => $setmail,
                              'fromname'     => $adminname))) return;
     //now do admin email
     $adminmessage=xarML('Submitted By:').' '.$username;
@@ -167,7 +169,7 @@ function sitecontact_user_contactus()
     if (!xarModAPIFunc('mail',
                        'admin',
                        'sendmail',
-                       array('info'         => $adminemail,
+                       array('info'         => $setmail,
                              'name'         => $adminname,
                              'subject'      => $subject,
                              'message'      => $adminmessage,

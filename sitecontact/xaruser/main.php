@@ -10,7 +10,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage sitecontact
- * @author SiteContact module development team 
+ * @author jojodee
  */
 /**
  * the main user function
@@ -22,7 +22,6 @@ function sitecontact_user_main()
  //   global $HTTP_SERVER_VARS;
     if(!xarVarFetch('message', 'isset', $message,  NULL, XARVAR_DONT_SET)) {return;}
 
-//     $message = xarVarCleanFromInput($message);
     // Security Check
 	if(!xarSecurityCheck('ViewSiteContact')) return;
 
@@ -46,17 +45,18 @@ function sitecontact_user_main()
       $optionitems[]=explode(';',$optionitem);
     }
     $data['optionitems']=$optionitems;
+
     $HTTP_REMOTE_ADDR = getenv('REMOTE_ADDR');
     if (empty($HTTP_REMOTE_ADDR)) {
         $HTTP_REMOTE_ADDR= isset($_SERVER['$REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
     }
     $data['useripaddress'] = $HTTP_REMOTE_ADDR;
     $HTTP_REFERER = getenv('HTTP_REFERER');
-   if (empty($HTTP_REFERER)) {
+    if (empty($HTTP_REFERER)) {
         $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
     }
-     $data['userreferer']=$HTTP_REFERER;
-    $altmail='';
+    $data['userreferer']=$HTTP_REFERER;
+    $setmail='';
     if (isset($customtitle)){
         xarTplSetPageTitle(xarVarPrepForDisplay(xarML($customtitle)));
     } else {
@@ -85,7 +85,7 @@ function sitecontact_user_main()
     }
 
     // everything else happens in Template for now
-    return $data;
+ return $data;
 
 }
 
