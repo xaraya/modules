@@ -37,3 +37,10 @@ styles
 styles2
 styles3
 *.mno
+xarbb/xaradmin/getnntp.php
+xarbb/xarclass/afux_NNTP.php
+xarbb/xarclass/nntp.lib.php
+xarbb/xarclass/standard.lib.php
+xarbb/xaruser/errors.txt
+xarbb/xaruser/redirect.php
+xarbb/xaruserapi/getnntp.php
