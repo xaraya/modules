@@ -91,6 +91,10 @@ function keywords_user_displayhook($args)
        $item['keyword'] = xarVarPrepForDisplay($word);
        $data['words'][$id] = $item;
     }
+    
+    $keys = implode(",",$words);
+    xarVarSetCached('Blocks.keywords','keys',$keys);
+    
     return xarTplModule('keywords', 'user', 'displayhook', $data);
 }
 
