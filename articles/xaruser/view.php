@@ -653,17 +653,36 @@ function articles_user_view($args)
                     } else {
                         $article[$field] = '';
                     }
-                    
-                // TODO: replace by  and sync with templates
+
+                    // legacy support for $date variable in templates
                     if ($field == 'pubdate') {
                         // the date for this field is represented in the user's timezone for display
                         $article['date'] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",$article[$field]));
                     }
                     break;
                 case 'urltitle':
+                    // fall through
+// Warning : changes might be needed in customized summary templates if we enable this
+//                case 'webpage':
+//                    if (empty($value['validation'])) {
+//                        $value['validation'] = 'modules/articles';
+//                    }
+//                    // fall through
+//                case 'imagelist':
+//                    if (empty($value['validation'])) {
+//                        $value['validation'] = 'modules/articles/xarimages';
+//                    }
+//                    // fall through
+                case 'dropdown':
                     if (!empty($article[$field])) {
-                        $array = array('type' => 'urltitle', 'value' => $article[$field]);
-                        $article[$field] = xarModAPIFunc('dynamicdata','user','showoutput',$array);
+                        if (empty($value['validation'])) {
+                            $value['validation'] = '';
+                        }
+                        $article[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
+                                                         array('name' => $field,
+                                                               'type' => $value['format'],
+                                                               'validation' => $value['validation'],
+                                                               'value' => $article[$field]));
                     }
                     break;
             }

@@ -18,8 +18,7 @@ function articles_userapi_getfieldformatnums($args)
         'textarea_small'  => 3,
         'textarea_medium' => 4,
         'textarea_large'  => 5,
-// TODO: define how to fill this in (cfr. status)
-//        'dropdown'        => 6,
+        'dropdown'        => 6,
         'username'        => 7,
         'calendar'        => 8,
         'fileupload'      => 9,
@@ -30,6 +29,7 @@ function articles_userapi_getfieldformatnums($args)
         'imagelist'       => 35,
         'textupload'      => 38,
         'urltitle'        => 41,
+// TODO: add more property types after testing
     );
 }
 

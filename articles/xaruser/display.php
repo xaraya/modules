@@ -311,33 +311,31 @@ function articles_user_display($args)
                 }
                 break;
             case 'urltitle':
-                if (!empty($article[$field])) {
-                    $array = array('type' => 'urltitle', 'value' => $article[$field]);
-                    $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',$array);
-                } else {
-                    $data[$field] = '';
-                }
-                break;
+                // fall through
         // TEST ONLY
             case 'webpage':
                 if (empty($value['validation'])) {
                     $value['validation'] = 'modules/articles';
                 }
-                $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
-                                              array('name' => $field,
-                                                    'type' => 'webpage',
-                                                    'validation' => $value['validation'],
-                                                    'value' => $article[$field]));
-                break;
+                // fall through
             case 'imagelist':
                 if (empty($value['validation'])) {
                     $value['validation'] = 'modules/articles/xarimages';
                 }
-                $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
-                                              array('name' => $field,
-                                                    'type' => 'imagelist',
-                                                    'validation' => $value['validation'],
-                                                    'value' => $article[$field]));
+                // fall through
+            case 'dropdown':
+                if (empty($value['validation'])) {
+                    $value['validation'] = '';
+                }
+                if (!empty($article[$field])) {
+                    $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
+                                                  array('name' => $field,
+                                                        'type' => $value['format'],
+                                                        'validation' => $value['validation'],
+                                                        'value' => $article[$field]));
+                } else {
+                    $data[$field] = '';
+                }
                 break;
             default:
                 $data[$field] = xarVarPrepHTMLDisplay($article[$field]);

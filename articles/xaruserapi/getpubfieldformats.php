@@ -18,18 +18,18 @@ function articles_userapi_getpubfieldformats($args)
         'textarea_small'  => xarML('Small Text Area'),
         'textarea_medium' => xarML('Medium Text Area'),
         'textarea_large'  => xarML('Large Text Area'),
+        'dropdown'        => xarML('Dropdown List'),
         'textupload'      => xarML('Text Upload'),
         'url'             => xarML('URL'),
         'urltitle'        => xarML('URL + Title'),
         'image'           => xarML('Image'),
         'imagelist'       => xarML('Image List'),
-// TODO: define how to fill this in (cfr. status)
-//        'dropdown'        => xarML('Dropdown List'),
         'username'        => xarML('Username'),
         'calendar'        => xarML('Calendar'),
         'status'          => xarML('Status'),
         'fileupload'      => xarML('File Upload'),
         'webpage'         => xarML('HTML Page'),
+// TODO: add more property types after testing
     );
 }
 
