@@ -8,24 +8,26 @@
         <br />
     </xar:if>
 
+    <xar:comment>
+        If you want to let users pre-select a category first, before selecting a publication type,
+        you can use the following tag. Note that this only makes sense if you have a single base
+        category for your articles
         <!-- xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" func="new" itemtype="$ptid" catid="$catid" /-->
+    </xar:comment>
 
-	<xar:template file="navtabs" type="module" />
+    <xar:template file="navtabs" type="module" />
     
-	<xar:if condition="!empty($ptid)">
-
-    <!--
-        // Start form - note the use of xarModURL() to create the recipient URL of
-        // this form.  All URLs should be generated through xarModURL() to ensure
-        // compatibility with future versions of Xaraya
-    -->
-
-    <xar:if condition="!empty($withupload)">
-        <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="multipart/form-data" #$formhooks['formaction']#>
-    <xar:else />
-        <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" #$formhooks['formaction']#>
-    </xar:if>
+    <xar:if condition="!empty($ptid)">
+        <xar:if condition="!empty($withupload)">
+            <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="multipart/form-data" #$formhooks['formaction']#>
+        <xar:else />
+            <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" #$formhooks['formaction']#>
+        </xar:if>
         <div style="float:left;width:100%"> <xar:comment> containing float - quick fix for JC's css layouts [andyv] </xar:comment>
+        <xar:comment>
+            Instead of looping over all fields, you can also access individual field definitions
+            via $fields['title'], $fields['summary'] etc.
+        </xar:comment>
             <xar:foreach in="$fields" value="$field">
                 <div style="clear: both; padding-top: 10px;">
                     <span style="float: left; width: 20%; text-align: right;">
@@ -54,7 +56,9 @@
                     </span>
                 </div>
             </xar:if>
-            <!-- put the hooks in, each hook should be a block level element thus keeping the form valid -->
+            <xar:comment>
+                put the hooks in, each hook should be a block level element thus keeping the form valid
+            </xar:comment>
             <xar:if condition="!empty($hooks)">
                 <xar:foreach in="$hooks" key="$hookmodule">
                     #$hooks[$hookmodule]# 
@@ -75,12 +79,7 @@
             </div>
             <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 30%; text-align: right;">
-            <!--
-                // Add an authorisation ID - this adds a hidden field in the form that
-                // contains an authorisation ID.  The authorisation ID is very important in
-                // preventing certain attacks on the website
-            -->
-            <!-- These need to be in elements for xhtml -->
+            <xar:comment> These need to be in elements for xhtml </xar:comment>
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="submit" name="preview" id="preview" value="#$previewlabel#" />

@@ -159,8 +159,8 @@ function articles_admin_new($args)
             if (!empty($preview) && isset($invalid) && !empty($invalid[$field])) {
                 $input['invalid'] = $invalid[$field];
             }
-            $fields[] = array('label' => $value['label'], 'id' => $field,
-                              'definition' => $input);
+            $fields[$field] = array('label' => $value['label'], 'id' => $field,
+                                    'definition' => $input);
         }
     }
     $data['fields'] = $fields;

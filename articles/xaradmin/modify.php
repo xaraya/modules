@@ -108,8 +108,8 @@ function articles_admin_modify($args)
             $input['invalid'] = $invalid[$field];
         }
         // using new field tags here
-        $fields[] = array('label' => $value['label'], 'id' => $field,
-                          'definition' => $input);
+        $fields[$field] = array('label' => $value['label'], 'id' => $field,
+                                'definition' => $input);
     }
     unset($article);
     $data['fields'] = $fields;
