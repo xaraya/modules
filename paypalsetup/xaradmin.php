@@ -79,6 +79,7 @@ function paypalsetup_admin_updateconfig()
     xarModSetVar('paypalsetup', 'currency_code', $currency);
     xarModSetVar('paypalsetup', 'business', $business);
     xarModSetVar('paypalsetup', 'return', $return);
+
 	// lets update status and display updated configuration
 	xarResponseRedirect(xarModURL('paypalsetup', 'admin', 'modifyconfig')); 
 	// Return

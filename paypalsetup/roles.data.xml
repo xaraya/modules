@@ -1,0 +1,17 @@
+<items>
+  <roles itemid="3">
+    <first_name>John</first_name>
+    <last_name>Cox</last_name>
+    <address_1>734 Mulligan Lane</address_1>
+    <address_2></address_2>
+    <city>Westminster</city>
+    <state>3</state>
+    <zip>21158</zip>
+    <night_phone_area_code>501</night_phone_area_code>
+    <night_phone_exchange>222</night_phone_exchange>
+    <night_phone_number>1923</night_phone_number>
+    <day_phone_area_code>301</day_phone_area_code>
+    <day_phone_exchange>232</day_phone_exchange>
+    <day_phone_number>1212</day_phone_number>
+  </roles>
+</items>
