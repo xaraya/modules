@@ -62,7 +62,7 @@ function uploads_userapi_file_push( $args )
     }
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    $list = '';
+    $finished = FALSE;
 
     $pageBuffer = xarModAPIFunc('uploads', 'user', 'flush_page_buffer');
 
@@ -100,7 +100,7 @@ function uploads_userapi_file_push( $args )
 
         // TODO: evaluate registering shutdown functions to take care of
         //       ending Xaraya in a safe manner
-        exit();
+        $finished = TRUE;
 
     } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
 
@@ -127,7 +127,21 @@ function uploads_userapi_file_push( $args )
 
         // TODO: evaluate registering shutdown functions to take care of
         //       ending Xaraya in a safe manner
-        exit();
+        $finished = TRUE;
+    }
+
+    if ($finished) {
+        // Let any hooked modules know that we've just pushed a file
+        // the hitcount module in particular needs to know to save the fact
+        // that we just pushed a file and not display the count
+        xarVarSetCached('Hooks.hitcount','save', 1)
+
+        xarModCallHooks('item', 'display', $fileId,
+                         array('module'    => 'uploads', 'itemtype'  => 0,
+                               'returnurl' => xarModURL('uploads', 'user', 'download', array('fileId' => $fileId))),
+                         'uploads');
+        // File has been pushed to the client, now shut down.
+        exit()
     }
 
     // rebuffer the old page data
