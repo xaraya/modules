@@ -19,8 +19,8 @@
 function ephemerids_init()
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Create tables
     $ephemtable = $xartable['ephem'];
@@ -88,8 +88,8 @@ function ephemerids_upgrade($oldversion)
 function ephemerids_delete()
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Delete tables
     $query = "DROP TABLE $xartable[ephem]";

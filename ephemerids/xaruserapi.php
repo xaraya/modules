@@ -55,8 +55,8 @@ function ephemerids_userapi_getall($args)
     $items = array();
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ephemtable = $xartable['ephem'];
 
@@ -105,8 +105,8 @@ function ephemerids_userapi_getalltoday()
     $items = array();
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ephemtable = $xartable['ephem'];
 
@@ -167,8 +167,8 @@ function ephemerids_userapi_get($args)
     }
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ephemtable = $xartable['ephem'];
 
@@ -223,8 +223,8 @@ function ephemerids_userapi_get($args)
 function ephemerids_userapi_countitems()
 {
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Security Check
     if(!xarSecurityCheck('OverviewEphemerids')) return;

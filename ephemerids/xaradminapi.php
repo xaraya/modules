@@ -33,8 +33,8 @@ function ephemerids_adminapi_add($args)
     // Security Check
     if(!xarSecurityCheck('AddEphemerids')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $elanguage = 'all';
     $ephemtable = $xartable['ephem'];
@@ -97,8 +97,8 @@ function ephemerids_adminapi_update($args)
     if(!xarSecurityCheck('EditEphemerids')) return;
     $elanguage = 'all';
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ephemtable = $xartable['ephem'];
 
@@ -137,8 +137,8 @@ function ephemerids_adminapi_delete($args)
     // Security Check
     if(!xarSecurityCheck('DeleteEphemerids')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ephemtable = $xartable['ephem'];
 
@@ -159,8 +159,8 @@ function ephemerids_adminapi_display()
     // Security Check
     if(!xarSecurityCheck('EditEphemerids')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ephemtable = $xartable['ephem'];
 

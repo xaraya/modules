@@ -33,9 +33,9 @@ function ephemerids_ephemblock_display($blockinfo)
 {
     // Database information
     xarModDBInfoLoad('Ephemerids');
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
 
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $ephemtable = $xartable['ephem'];
 
     // Security Check
