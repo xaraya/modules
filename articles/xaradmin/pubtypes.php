@@ -13,6 +13,7 @@ function articles_admin_pubtypes()
     if (!xarVarFetch('label',  'isset', $label,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('format', 'isset', $format, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('input',  'isset', $input,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('validation',  'isset', $validation,  NULL, XARVAR_DONT_SET)) {return;}
 
 
     // Publication types can only be managed with ADMIN rights
@@ -49,7 +50,9 @@ function articles_admin_pubtypes()
             foreach ($format as $field => $value) {
                 $config[$field]['format'] = $value;
                 // some default basedirs for now...
-                if ($value == 'imagelist') {
+                if (isset($validation[$field])) {
+                    $config[$field]['validation'] = $validation[$field];
+                } elseif ($value == 'imagelist') {
                     $config[$field]['validation'] = 'modules/articles/xarimages';
                 } elseif ($value == 'webpage') {
                     $config[$field]['validation'] = 'modules/articles';
@@ -110,7 +113,9 @@ function articles_admin_pubtypes()
             foreach ($format as $field => $value) {
                 $config[$field]['format'] = $value;
                 // some default basedirs for now...
-                if ($value == 'imagelist') {
+                if (isset($validation[$field])) {
+                    $config[$field]['validation'] = $validation[$field];
+                } elseif ($value == 'imagelist') {
                     $config[$field]['validation'] = 'modules/articles/xarimages';
                 } elseif ($value == 'webpage') {
                     $config[$field]['validation'] = 'modules/articles';
@@ -224,6 +229,7 @@ function articles_admin_pubtypes()
             $data['fields'][] = array('name'   => $field,
                                       'label'  => $value['label'],
                                       'format' => $value['format'],
+                                      'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
                                       'input'  => !empty($value['input']) ? 'checked ' : '');
         }
@@ -245,6 +251,7 @@ function articles_admin_pubtypes()
             $data['fields'][] = array('name'   => $field,
                                       'label'  => $value['label'],
                                       'format' => $value['format'],
+                                      'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
                                       'input'  => !empty($value['input']) ? 'checked ' : '');
         }

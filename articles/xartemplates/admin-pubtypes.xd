@@ -77,6 +77,12 @@
         <td class="xar-norm" style="text-align: center;"><input type="checkbox" name="input[#$field['name']#]" id="input[#$field['name']#]" #$field['input']# /></td>
         <td class="xar-norm">#$field['type']#</td>
     </tr>
+<xar:if condition="$field['format'] eq 'imagelist' or $field['format'] eq 'wepage' or $field['format'] eq 'fileupload'">
+    <tr>
+        <td class="xar-norm">&nbsp;</td>
+        <td class="xar-norm" style="text-align: left;" colspan="4"><xar:mlstring>Validation</xar:mlstring> <input type="text" name="validation[#$field['name']#]" id="validation[#$field['name']#]" value="#$field['validation']#" size="60" /></td>
+    </tr>
+</xar:if>
     </xar:foreach>
 </table>
 <br /><input type="submit" value="#$buttonlabel#" />
