@@ -31,7 +31,7 @@ function mime_init() {
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
     
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $fields['mime_type'] = array(
@@ -112,7 +112,7 @@ function mime_delete()
     xarDBLoadTableMaintenanceAPI();    
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     // Delete tables
