@@ -25,7 +25,7 @@ function authsql_userapi_authenticate_user($args)
 
     if (!isset($uname) || !isset($pass) || $pass == "") {
         $msg = xarML('Empty uname (#(1)) or pass (not shown).', $uname);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return XARUSER_AUTH_FAILED;
     }
@@ -79,7 +79,7 @@ function authsql_userapi_authenticate_user($args)
             $sqlconfig['sqldbpass'], 
             $sqlconfig['sqldbname']);
         xarLogMessage($msg, XARLOG_LEVEL_INFO);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
             new SystemException($msg));
         return; 
     }
