@@ -12,7 +12,7 @@ function xarlinkme_adminapi_getmenulinks()
 
     // Security Check
     if (xarSecurityCheck('AdminxarLinkMe', 0)) {
-                                               	
+                                                   
         $menulinks[] = Array('url' => xarModURL('xarlinkme',
                 'admin',
                 'main'),
