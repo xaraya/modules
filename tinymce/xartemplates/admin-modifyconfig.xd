@@ -97,7 +97,7 @@
 
         <h4><xar:mlstring>2. Set HTML tags in HTML Module</xar:mlstring></h4>
         <p style="margin-left:20px;">
-            <xar:mlstring>Go to the HTML module and <a href="index.php?module=html&type=admin&func=set" rel="ext">set HTML tags allowed</a> like like code, pre, span, image, h1, and so on so they will be rendered in your WYSIWYG editing.</xar:mlstring>
+            <xar:mlstring>Go to the HTML module and <a href="index.php?module=html&amp;type=admin&amp;func=set" rel="ext">set HTML tags allowed</a> like like code, pre, span, image, h1, and so on so they will be rendered in your WYSIWYG editing.</xar:mlstring>
         </p>
         <h4><xar:mlstring>3. Set XarTinyMCE as default editor</xar:mlstring></h4>
         <p style="margin-left:20px;"><xar:mlstring>Set XarTinyMCE as default WYSIWYG editor: </xar:mlstring>
@@ -112,7 +112,7 @@
             </select>
         </p>
         <p style="margin-left:20px;">
-            <xar:mlstring>(You can also set installed editors in <a href="index.php?module=base&type=admin&func=modifyconfig&tab=other" rel="ext">Base Module - Modify Config - Other Tab</a>)</xar:mlstring>
+            <xar:mlstring>(You can also set installed editors in <a href="index.php?module=base&amp;type=admin&amp;func=modifyconfig&amp;tab=other" rel="ext">Base Module - Modify Config - Other Tab</a>)</xar:mlstring>
          </p>
 
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
@@ -418,7 +418,7 @@
                 <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="60" maxlength="240" />
                     <p><xar:mlstring>Plugins requiring button addition: ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
                      advimage, advlink, flash, advhr</xar:mlstring></p>
-                    <xar:mlstring>Plugins requiring additional tags: advimage, advlink.</xar:mlstring></p>
+                    <p><xar:mlstring>Plugins requiring additional tags: advimage, advlink.</xar:mlstring></p>
             </span>
         </div>
 

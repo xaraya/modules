@@ -35,7 +35,7 @@
                    </li>
                   <li><xar:mlstring> go to the Adminpanel menu -&gt; Modules -&gt; View All</xar:mlstring>
                   </li>
-                  <li><xar:mlstring> Click on the &quot;install&quot; link of the tinymce module</xar:mlstring>
+                  <li><xar:mlstring> Click on the &quot;install&quot; link of the tinymce module</xar:mlstring></li>
                 </ul>
               </li>
               <li> <xar:mlstring>The XarTinyMCE editor is not turned on by default.
