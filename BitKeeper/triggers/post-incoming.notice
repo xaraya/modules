@@ -78,18 +78,14 @@ then (
 		echo
 		bk changes -v - < $BK_CSETLIST
      ) | sed 's/^/    /'
-		# FIXME: when pushing a merge changest this gives an ambigious redirect
-		# BK_CSETLIST is not empty we check for that, what's happening?
-		echo Links for the differences:
-		cat $BK_CSETLIST | xargs -n1 -i echo -e "\"$BKURL/patch@{}\"" | sed 's/ //'
+     CSLINKS=`bk changes -d"$BKURL/patch@:REV: " - < $BK_CSETLIST`
+     echo Links for the differences:
+     for link in `echo $CSLINKS`; do
+        echo $link
+     done
 fi
 ) | $POSTPROGRAM $SUBJECTSWITCH"${NUMSETS} ${CHANGETEXT} pushed to ${VIRGIN}/${REPO}: ${CSCOMMENT:0:40}..." $DESTINATION
 
-# Convert numbers from the cset list into something useful
-#nums=
-#for s in `cat $BK_CSETLIST`; do
-#    nums="`bk prs -h -d\"\\\$if(:DS: -eq $s){:REV:}\" ChangeSet` $nums"
-#done
 
 # Send logs to CIA (no, not that one, this one: http://cia.navi.cx)
 echo "Sending notification to project aggregator..."
