@@ -44,8 +44,8 @@ function keywords_keywordsarticlesblock_update($blockinfo)
     //MikeC: Make sure we retrieve the new pubtype from the configuration form.
     
     if (!xarVarFetch('ptid', 'id', $vars['ptid'],NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('cid', 'id,:int:1:4', $vars['cid'],NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('status', 'strlist:,:int:1:4', $vars['status'], XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('cid', 'int:1:', $vars['cid'],NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('status', 'int:1:', $vars['status'], XARVAR_DONT_SET)) return;
     if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'],1,XARVAR_DONT_SET)) return;
     
 
