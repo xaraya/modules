@@ -165,6 +165,24 @@ if (!isset($_REQUEST['auto']) && $activity->isInteractive() && $__activity_compl
                 $output = xarTpl__executeFromFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
                 $tplData['mid'] = $output;
 		$template = 'running';
+
+                // call display hooks if we have an instance
+                if (!empty($instance->instanceId)) {
+                    // get object properties for this instance - that's a bit much :)
+                    //$item = get_object_vars($instance);
+                    $props = array('pId','instanceId','properties','owner','status','started','ended','nextActivity','nextUser','workitems');
+                    $item = array();
+                    foreach ($props as $prop) {
+                        $item[$prop] = $instance->$prop;
+                    }
+                    $item['module'] = 'workflow';
+                    $item['itemtype'] = $activity->getProcessId();
+                    $item['itemid'] = $instance->getInstanceId();
+                    $item['returnurl'] = xarModURL('workflow','user','run_activity',
+                                                   array('activityId' => $activity->getActivityId(),
+                                                         'iid' => $instance->getInstanceId()));
+                    $tplData['hooks'] = xarModCallHooks('item','display',$instance->instanceId,$item);
+                }
 	} else {
 		$template = 'completed';
 	}
