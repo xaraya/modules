@@ -423,7 +423,7 @@ function articles_user_view($args)
              return; // throw back
         } elseif (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
             // get back the reason in string format
-            $reason = xarErrorValue();
+            $reason = xarCurrentError();
             if (!empty($reason)) {
                 $reason = ' - ' . xarML('Reason') . ' : ' . $reason->toString();
             }

@@ -128,8 +128,8 @@ function articles_admin_create()
         // Handle the user exceptions yourself
         $status = xarML('Creating article failed');
         // Get the information about the exception (in HTML or string format)
-        // $reason = xarErrorValueHTML();
-        $reason = xarErrorValue();
+        // $reason = xarCurrentErrorHTML();
+        $reason = xarCurrentError();
         if (!empty($reason)) {
             $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
         }
