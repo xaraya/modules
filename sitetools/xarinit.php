@@ -56,6 +56,7 @@ function sitetools_init()
     xarModSetVar('sitetools','backuppath', $backupdir);
     xarModSetVar('sitetools','lineterm','\n');
     xarModSetVar('sitetools','timestamp',1);
+    xarModSetVar('sitetools','colnumber',3);   
     /**
      * Register the module components that are privileges objects
      * Format is
