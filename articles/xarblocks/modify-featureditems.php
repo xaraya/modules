@@ -77,7 +77,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if ($vars['itemlimit'] != 0 ) {
         $article_args['numitems'] = $vars['itemlimit'];
     }
-    
+
     // Add the rest of the arguments
     $article_args['cids'] = $cidsarray;
     $article_args['enddate'] = time();
@@ -112,8 +112,7 @@ function articles_featureditemsblock_modify($blockinfo)
         array('id' => 'date', 'name' => xarML('Date')),
         array('id' => 'hits', 'name' => xarML('Hit Count')),
         array('id' => 'rating', 'name' => xarML('Rating')),
-        array('id' => 'title', 'name' => xarML('Title')),
-        array('id' => 'date', 'name' => xarML('Date'))
+        array('id' => 'title', 'name' => xarML('Title'))
     );
 
     //Put together the additional featured articles list
