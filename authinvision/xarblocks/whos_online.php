@@ -17,7 +17,7 @@
  */
 function authinvision_whos_onlineblock_init()
 {
-    return true;
+    return array();
 }
 
 /**
@@ -40,7 +40,11 @@ function authinvision_whos_onlineblock_display($blockinfo)
     if (!xarSecurityCheck('ViewRoles',0,'Block',"All:" . $blockinfo['title'] . ":All", 'All')) return;
 
     // Get variables from content block
-    $vars = unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Database setup
     $dbconn =& xarDBGetConn();
@@ -104,12 +108,8 @@ function authinvision_whos_onlineblock_display($blockinfo)
     }
 
     $args['blockid'] = $blockinfo['bid'];
-    if (empty($blockinfo['template'])) {
-        $template = 'whos_online';
-    } else {
-        $template = $blockinfo['template'];
-    }
-    $blockinfo['content'] = xarTplBlock('authinvision', $template, $args);
+
+    $blockinfo['content'] = $args;
     return $blockinfo;
 }
 
