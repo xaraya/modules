@@ -2,6 +2,7 @@
 $modversion['name'] = 'AuthphpBB2';
 $modversion['id'] = '77102';
 $modversion['version'] = '0.0.2';
+$modversion['displayname'] = xarML('AuthphpBB2');
 $modversion['description'] = 'Authorization in Xaraya engine using phpBB2.0.x users table';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = '';
