@@ -126,8 +126,10 @@ function comments_userapi_add($args) {
                        'user',
                        'create_gap',
                         array('startpoint' => $parent_lnr['xar_right']))) {
-            // TODO: raise exception
-            die ("Could not create gap for new comment insertion. I'm going to die a really horrible death now -- see you later!");
+            
+            $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
+            $msg .= xarML('Please seek help on the public-developer list xaraya_public-dev@xaraya.com, or in the #support channel on Xaraya\'s IRC network.');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
             return;
     }
 

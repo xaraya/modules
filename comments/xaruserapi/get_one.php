@@ -79,9 +79,11 @@ function comments_userapi_get_one( $args ) {
     $result->Close();
 
     if (!comments_renderer_array_markdepths_bypid($commentlist)) {
-        // TODO: raise exception -- couldn't figure out depths for nodes
-        // NOTE: <rabbitt> this stuff should really be moved out of the comments
-        //       module into a "rendering" module of some sort anyway -- or (god forbid) a widget.
+        $msg = xarML('Unable to add depth field to comments!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        return;
+        // FIXME: <rabbitt> this stuff should really be moved out of the comments
+        //        module into a "rendering" module of some sort anyway -- or (god forbid) a widget.
     }
 
     return $commentlist;
