@@ -13,7 +13,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>#$menutitle#</xar:mlstring></h2><br />
+<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
 <div style="margin: auto;">
 
 <!-- the specific template for the current admin function comes here -->
