@@ -879,9 +879,7 @@ function categories_navigationblock_display($blockinfo)
     // The template base is set by this block if not already provided.
     // The base is 'nav-tree', 'nav-trails' or 'nav-prevnext', but allow
     // the admin to override this completely.
-    if (empty($blockinfo['_bl_template_base'])) {
-        $blockinfo['_bl_template_base'] = 'nav-' . $template;
-    }
+    $blockinfo['_bl_template_base'] = 'nav-' . $template;
 
     // Return data, not rendered content.
     $blockinfo['content'] = $data;
