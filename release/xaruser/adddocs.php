@@ -27,8 +27,7 @@ function release_user_adddocs()
             $authid = xarSecGenAuthKey();
             $data = xarTplModule('release','user', 'adddocs_getmodule', array('authid'    => $authid));
 
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Documentation')));
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Documentation')));
 
             break;
 
@@ -58,9 +57,7 @@ function release_user_adddocs()
                 $message = xarML('There is no assigned ID for your module or theme.');
             }
 
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Documentation'))
-                       .' :: '.xarVarPrepForDisplay($data['name']));
+            xarTplSetPageTitle(xarVarPrepForDisplay($data['name']));
 
             $authid = xarSecGenAuthKey();
             $data = xarTplModule('release','user', 'adddocs_start', array('rid'       => $data['rid'],
@@ -89,9 +86,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Documentation'))
-                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -125,9 +120,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Documentation'))
-                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -161,9 +154,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Documentation'))
-                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -197,9 +188,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Documentation'))
-                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete
@@ -234,9 +223,7 @@ function release_user_adddocs()
             }
 
             
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Documentation'))
-                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
 
 
             // Check individual permissions for Edit / Delete

@@ -48,9 +48,7 @@ function release_user_addnotes()
                 $message = xarML('There is no assigned ID for your module or theme.');
             }
 
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Release'))
-                       .' :: '.xarVarPrepForDisplay($data['name']));
+            xarTplSetPageTitle(xarVarPrepForDisplay($data['name']));
 
             $authid = xarSecGenAuthKey();
             $data = xarTplModule('release','user', 'addnote_start', array('rid'       => $data['rid'],
@@ -69,9 +67,7 @@ function release_user_addnotes()
 
            //if (!xarSecConfirmAuthKey()) return;
 
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Release'))
-                       .' :: '.xarVarPrepForDisplay($name));
+            xarTplSetPageTitle(xarVarPrepForDisplay($name));
 
            $authid = xarSecGenAuthKey();
            $data = xarTplModule('release','user', 'addnote_getbasics', array('rid'       => $rid,
@@ -95,9 +91,7 @@ function release_user_addnotes()
             
            //if (!xarSecConfirmAuthKey()) return;
 
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Release'))
-                       .' :: '.xarVarPrepForDisplay($name));
+            xarTplSetPageTitle(xarVarPrepForDisplay($name));
 
            $authid = xarSecGenAuthKey();
            $data = xarTplModule('release','user', 'addnote_getdetails', array('rid'         => $rid,
@@ -141,9 +135,7 @@ function release_user_addnotes()
            $notesf = nl2br($notes);
            $changelogf = nl2br($changelog);
 
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Release'))
-                       .' :: '.xarVarPrepForDisplay($name));
+            xarTplSetPageTitle(xarVarPrepForDisplay($name));
 
            $authid = xarSecGenAuthKey();
            $data = xarTplModule('release','user', 'addnote_preview',    array('rid'         => $rid,
@@ -216,9 +208,7 @@ function release_user_addnotes()
                                       'type'        => $data['type'],
                                       'notes'       => $notes))) return;
 
-            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                               xarVarPrepForDisplay(xarML('Release'))
-                       .' :: '.xarVarPrepForDisplay(xarML('Thank You')));
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Thank You')));
 
            $data = xarTplModule('release','user', 'addnote_thanks');
 
