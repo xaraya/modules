@@ -178,10 +178,10 @@ function netquery_user_main()
                   fputs ($sock, "QUIT\r\n");
                   fclose($sock);
                   if (!ereg ("^250", $from) || !ereg ( "^250", $to )) {
-                  	$addmsg = "<br />MX Server Address Check: Address rejected by ".$address;
+                      $addmsg = "<br />MX Server Address Check: Address rejected by ".$address;
                   }
                 } else {
-                	$addmsg = "<br />MX Server Address Check: No response from ".$address;
+                    $addmsg = "<br />MX Server Address Check: No response from ".$address;
                 }
               }
               $msg .= $addmsg;

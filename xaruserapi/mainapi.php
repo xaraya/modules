@@ -122,7 +122,8 @@ function netquery_userapi_mainapi()
     return $data;
 }
 if (!function_exists('checkdnsrr')) {
-  function checkdnsrr($host, $type = '') {
+  function checkdnsrr($host, $type = '') 
+  {
     if(!empty($host)) {
       if($type == '') $type = "MX";
       $output = '';
@@ -139,7 +140,8 @@ if (!function_exists('checkdnsrr')) {
   }
 }
 if (!function_exists('getmxrr')) {
-  function getmxrr($hostname, &$mxhosts) {
+  function getmxrr($hostname, &$mxhosts) 
+  {
     if (!is_array($mxhosts)) $mxhosts = array();
     if (!empty($hostname )) {
       $output = '';
