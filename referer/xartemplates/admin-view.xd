@@ -26,12 +26,12 @@
 <xar:loop name="$items">
 	<xar:if condition="(($loop:index + 1) % 2)">
 	<div class="xar-norm" style="padding: 3px;">
-		<a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a>
-		<span style="right-margin: 20px;float: right;">#$loop:item['frequency']#</span>
+		<span style="float: left; text-align: left;"><a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a></span>
+		<span style="float: right; text-align: right;">#$loop:item['frequency']#</span>
 	</div>
 	<xar:else />
 	<div class="xar-accent" style="padding: 3px;">
-		<a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a>
+		<span style="float: left; text-align: left;"><a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a></span>
 		<span style="right-margin: 20px; float: right;">#$loop:item['frequency']#</span>
 	</div>
 	</xar:if>
