@@ -103,7 +103,7 @@ div.xarbb-tablewrapper table td.lastpost {
 	white-space: nowrap;
 }
 
-div.xarbb-tablewrapper table td.stats { width: 5em; }
+div.xarbb-tablewrapper table td.stats { width: 6em; }
 
 div.xarbb-tablewrapper table td.message {
 	border: 0 none;
@@ -140,7 +140,7 @@ div.xarbb-noteswrapper .leftnote {
 div.xarbb-noteswrapper .rightnote {
 	float: right;
 	width: 48%;
-	text-align: right;
+	text-align: left;
 }
 
 /* login form */
