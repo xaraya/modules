@@ -31,7 +31,7 @@ function TinyMCE_advanced_getButtonHTML(button_name) {
 			return '<img id="{$editor_id}_full" src="{$themeurl}/images/full.gif" title="{$lang_justifyfull_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'JustifyFull\')">';
 
 		case "styleselect":
-			return '<select id="{$editor_id}_styleSelect" name="{$editor_id}_styleSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSetCSSClass\',false,this.options[this.selectedIndex].value);" class="mceSelectList">{$style_select_options}</select>';
+			return '<select id="{$editor_id}_styleSelect" onmousedown="TinyMCE_advanced_setupCSSClasses(\'{$editor_id}\');" name="{$editor_id}_styleSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSetCSSClass\',false,this.options[this.selectedIndex].value);" class="mceSelectList">{$style_select_options}</select>';
 
 		case "bullist":
 			return '<img id="{$editor_id}_bullist" src="{$themeurl}/images/bullist.gif" title="{$lang_bullist_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'InsertUnorderedList\')">';
@@ -67,7 +67,7 @@ function TinyMCE_advanced_getButtonHTML(button_name) {
 			return '<img src="{$themeurl}/images/help.gif" title="{$lang_help_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceHelp\')">';
 
 		case "code":
-			return '<img id="{$editor_id}_code" src="{$themeurl}/images/code.gif" title="{$lang_theme_code_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="TinyMCE_advanced_openHTMLSourceEditor();">';
+			return '<img id="{$editor_id}_code" src="{$themeurl}/images/code.gif" title="{$lang_theme_code_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="TinyMCE_advanced_openHTMLSourceEditor(\'{$editor_id}\');">';
 
 		case "table":
 			return '<img id="{$editor_id}_table" src="{$themeurl}/images/table.gif" title="{$lang_theme_table_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceInsertTable\',true);">';
@@ -230,54 +230,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 function TinyMCE_advanced_getInsertLinkTemplate() {
 	var template = new Array();
 
-	template['html'] = '\
-<html><head><title>{$lang_insert_link_title}</title>\
-<link href="{$css}" rel="stylesheet" type="text/css">\
-<script language="javascript">\
-function init() {\
-	for (var i=0; i<document.forms[0].target.options.length; i++) {\
-		var option = document.forms[0].target.options[i];\
-\
-		if (option.value == \'{$target}\')\
-			option.selected = true;\
-	}\
-\
-	window.focus();\
-}\
-\
-function insertLink() {\
-	if (window.opener) {\
-		var href = document.forms[0].href.value;\
-		var target = document.forms[0].target.options[document.forms[0].target.selectedIndex].value;\
-\
-		window.opener.tinyMCE.insertLink(href, target);\
-		top.close();\
-	}\
-}\
-\
-function cancelAction() {\
-	top.close();\
-}\
-</script>\
-</head><body onload="init();">\
-\
-<form onsubmit="insertLink();return false;">\
-<table border="0" cellpadding="0" cellspacing="0" width="100%">\
-<tr><td align="center" valign="middle">\
-<table border="0" cellpadding="4" cellspacing="0">\
-<tr><td colspan="2" class="title">{$lang_insert_link_title}</td></tr>\
-<tr><td>{$lang_insert_link_url}:</td><td><input name="href" type="text" id="href" value="{$href}" style="width: 200px"></td></tr>\
-<tr><td>{$lang_insert_link_target}:</td>\
-<td><select name="target" style="width: 200px">\
-<option value="_self">{$lang_insert_link_target_same}</option>\
-<option value="_blank">{$lang_insert_link_target_blank}</option>\
-</select></td></tr>\
-<tr><td><input type="button" name="insert" value="{$lang_insert}" onclick="insertLink();">\
-</td><td align="right"><input type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();"></td></tr>\
-</table>\
-</td></tr></table>\
-</form></body></html>';
-
+	template['file'] = 'link.htm';
 	template['width'] = 320;
 	template['height'] = 130;
 
@@ -287,76 +240,7 @@ function cancelAction() {\
 function TinyMCE_advanced_getInsertImageTemplate() {
 	var template = new Array();
 
-	template['html'] = '\
-<html><head><title>{$lang_insert_image_title}</title>\
-<link href="{$css}" rel="stylesheet" type="text/css">\
-\
-<script language="javascript">\
-function insertImage() {\
-	if (window.opener) {\
-		var src = document.forms[0].src.value;\
-		var alt = document.forms[0].alt.value;\
-		var border = document.forms[0].border.value;\
-		var vspace = document.forms[0].vspace.value;\
-		var hspace = document.forms[0].hspace.value;\
-		var width = document.forms[0].width.value;\
-		var height = document.forms[0].height.value;\
-		var align = document.forms[0].align.options[document.forms[0].align.selectedIndex].value;\
-\
-		window.opener.tinyMCE.insertImage(src, alt, border, hspace, vspace, width, height, align);\
-		top.close();\
-	}\
-}\
-\
-function init() {\
-	for (var i=0; i<document.forms[0].align.options.length; i++) {\
-		if (document.forms[0].align.options[i].value == "{$align}")\
-			document.forms[0].align.options.selectedIndex = i;\
-	}\
-\
-	window.focus();\
-}\
-\
-function cancelAction() {\
-	top.close();\
-}\
-</script>\
-</head><body onload="window.focus();init();">\
-<form onsubmit="insertImage();return false;">\
-<table border="0" cellpadding="0" cellspacing="0" width="100%">\
-<tr><td align="center" valign="middle">\
-<table border="0" cellpadding="4" cellspacing="0">\
-<tr><td colspan="2" class="title">{$lang_insert_image_title}</td></tr>\
-<tr><td>{$lang_insert_image_src}:</td><td><input name="src" type="text" id="src" value="{$src}" style="width: 200px"></td></tr>\
-<tr><td>{$lang_insert_image_alt}:</td>\
-<td><input name="alt" type="text" id="alt" value="{$alt}" style="width: 200px"></td></tr>\
-<tr><td>{$lang_insert_image_align}:</td>\
-<td><select name="align">\
-<option value="">{$lang_insert_image_align_default}</option>\
-<option value="baseline">{$lang_insert_image_align_baseline}</option>\
-<option value="top">{$lang_insert_image_align_top}</option>\
-<option value="middle">{$lang_insert_image_align_middle}</option>\
-<option value="bottom">{$lang_insert_image_align_bottom}</option>\
-<option value="texttop">{$lang_insert_image_align_texttop}</option>\
-<option value="absmiddle">{$lang_insert_image_align_absmiddle}</option>\
-<option value="absbottom">{$lang_insert_image_align_absbottom}</option>\
-<option value="left">{$lang_insert_image_align_left}</option>\
-<option value="right">{$lang_insert_image_align_right}</option>\
-</select></td></tr>\
-<tr><td>{$lang_insert_image_dimensions}:</td>\
-<td><input name="width" type="text" id="width" value="{$width}" size="3" maxlength="3"> x <input name="height" type="text" id="height" value="{$height}" size="3" maxlength="3"></td></tr>\
-<tr><td>{$lang_insert_image_border}:</td>\
-<td><input name="border" type="text" id="border" value="{$border}" size="3" maxlength="3"></td></tr>\
-<tr><td>{$lang_insert_image_vspace}:</td>\
-<td><input name="vspace" type="text" id="vspace" value="{$vspace}" size="3" maxlength="3"></td></tr>\
-<tr><td>{$lang_insert_image_hspace}:</td>\
-<td><input name="hspace" type="text" id="hspace" value="{$hspace}" size="3" maxlength="3"></td></tr>\
-<tr><td><input type="button" name="insert" value="{$lang_insert}" onclick="insertImage();">\
-</td><td align="right"><input type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();"></td></tr>\
-</table>\
-</td></tr></table>\
-</form></body></html>';
-
+	template['file'] = 'image.htm';
 	template['width'] = 340;
 	template['height'] = 260;
 
@@ -374,77 +258,7 @@ function cancelAction() {\
 function TinyMCE_advanced_getInsertTableTemplate(settings) {
 	var template = new Array();
 
-	template['html'] = '\
-<html><head><title>{$lang_insert_table_title}</title>\
-<link href="{$css}" rel="stylesheet" type="text/css">\
-\
-<script language="javascript">\
-function insertTable() {\
-	if (window.opener) {\
-		var args = new Array();\
-		args["cols"] = document.forms[0].cols.value;\
-		args["rows"] = document.forms[0].rows.value;\
-		args["border"] = document.forms[0].border.value;\
-		args["cellpadding"] = document.forms[0].cellpadding.value;\
-		args["cellspacing"] = document.forms[0].cellspacing.value;\
-		args["width"] = document.forms[0].width.value;\
-		args["height"] = document.forms[0].height.value;\
-		args["align"] = document.forms[0].align.options[document.forms[0].align.selectedIndex].value;\
-\
-		window.opener.tinyMCE.execCommand("mceInsertTable", false, args);\
-		top.close();\
-	}\
-}\
-\
-function init() {\
-	for (var i=0; i<document.forms[0].align.options.length; i++) {\
-		if (document.forms[0].align.options[i].value == "{$align}")\
-			document.forms[0].align.options.selectedIndex = i;\
-	}\
-\
-	if ("{$action}" == "update") {\
-		document.forms[0].cols.disabled = true;\
-		document.forms[0].rows.disabled = true;\
-	}\
-\
-	window.focus();\
-}\
-\
-function cancelAction() {\
-	top.close();\
-}\
-</script>\
-</head><body onload="window.focus();init();">\
-<form onsubmit="insertTable();return false;">\
-<table border="0" cellpadding="0" cellspacing="0" width="100%">\
-<tr><td align="center" valign="middle">\
-<table border="0" cellpadding="4" cellspacing="0"> \
-<tr><td colspan="4" class="title">{$lang_insert_table_title}</td></tr> \
-<tr><td>{$lang_insert_table_cols}:</td> \
-<td><input name="cols" type="text" id="cols" value="{$cols}" size="3" maxlength="3"></td> \
-<td>{$lang_insert_table_rows}:</td> \
-<td><input name="rows" type="text" id="rows" value="{$rows}" size="3" maxlength="3"></td> \
-</tr><tr><td>{$lang_insert_table_cellpadding}:</td> \
-<td><input name="cellpadding" type="text" id="cellpadding" value="{$cellpadding}" size="3" maxlength="3"></td> \
-<td>{$lang_insert_table_cellspacing}:</td> \
-<td><input name="cellspacing" type="text" id="cellspacing" value="{$cellspacing}" size="3" maxlength="3"></td> \
-</tr><tr><td>{$lang_insert_table_align}:</td> \
-<td><select name="align"> \
-<option value="">{$lang_insert_table_align_default}</option> \
-<option value="center">{$lang_insert_table_align_middle}</option> \
-<option value="left">{$lang_insert_table_align_left}</option> \
-<option value="right">{$lang_insert_table_align_right}</option> \
-</select></td> \
-<td>{$lang_insert_table_border}:</td> \
-<td><input name="border" type="text" id="border" value="{$border}" size="3" maxlength="3"></td></tr> \
-<tr><td>{$lang_insert_table_width}:</td> \
-<td><input name="width" type="text" id="width" value="{$width}" size="4" maxlength="4"></td> \
-<td>{$lang_insert_table_height}: </td><td><input name="height" type="text" id="height" value="{$height}" size="4" maxlength="4"></td> </tr><tr><td><input type="button" name="insert" value="{$lang_insert}" onclick="insertTable();"></td> \
-<td align="right">&nbsp;</td><td align="right">&nbsp;</td> \
-<td align="right"><input type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();"></td></tr></table> \
-</td></tr></table>\
-</form></body></html>';
-
+	template['file'] = 'table.htm';
 	template['width'] = 330;
 	template['height'] = 180;
 
@@ -477,8 +291,6 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 	var colorElm = tinyMCE.getParentElement(node, "font", "color")
 	if (colorElm)
 		TinyMCE_advanced_foreColor = "" + colorElm.color.toUpperCase();
-
-	TinyMCE_advanced_setupCSSClasses(editor_id);
 
 	// Reset old states
 	tinyMCE.switchClassSticky(editor_id + '_left', 'mceButtonNormal');
@@ -658,109 +470,28 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 }
 
 // Custom HTML editor function
-function TinyMCE_advanced_openHTMLSourceEditor() {
-	// Alert if the editor isn't selected.
-	if (tinyMCE.getContent() == null) {
-		if (tinyMCE.settings['focus_alert'])
-			alert(tinyMCELang['lang_focus_alert']);
-
-		return;
-	}
-
+function TinyMCE_advanced_openHTMLSourceEditor(editor_id) {
 	var template = new Array();
 
-	template['html'] = '<html><head><title>{$lang_theme_code_title}</title>\
-		<link href="{$css}" rel="stylesheet" type="text/css">\
-		<script language="javascript">\
-		function saveContent() {\
-			if (window.opener) {\
-				window.opener.tinyMCE.setContent(document.getElementById(\'htmlSource\').value);\
-				window.close();\
-			}\
-		}\
-		window.focus();\
-		</script></head>\
-		<body>\
-		<div class="title">{$lang_theme_code_title}</div><br>\
-		<textarea id="htmlSource" name="htmlSource" cols="60" rows="15" style="width: ' + tinyMCE.getParam("theme_advanced_source_editor_area_width", 320) + 'px; height: ' + tinyMCE.getParam("theme_advanced_source_editor_area_height", 190) + 'px">' + tinyMCE.getContent() + '</textarea><br>\
-		<input type="button" name="Button" value="{$lang_theme_code_save}" onclick="saveContent();">\
-		</body></html>';
-
+	template['file'] = 'source_editor.htm';
 	template['width'] = tinyMCE.getParam("theme_advanced_source_editor_width", 340);
 	template['height'] = tinyMCE.getParam("theme_advanced_source_editor_height", 270);
 
-	tinyMCE.openWindow(template);
+	tinyMCE.openWindow(template, {editor_id : editor_id});
 }
 
 // Custom HTML editor function
 function TinyMCE_advanced_openColorPicker(editor_id, command, input_color) {
 	var template = new Array();
-	var colorPicker = "";
 
 	if (!input_color)
 		input_color = "#000000";
 
-	var colors = new Array(
-	"#000000","#000033","#000066","#000099","#0000CC","#0000FF","#330000","#330033","#330066","#330099","#3300CC",
-	"#3300FF","#660000","#660033","#660066","#660099","#6600CC","#6600FF","#990000","#990033","#990066","#990099",
-	"#9900CC","#9900FF","#CC0000","#CC0033","#CC0066","#CC0099","#CC00CC","#CC00FF","#FF0000","#FF0033","#FF0066",
-	"#FF0099","#FF00CC","#FF00FF","#003300","#003333","#003366","#003399","#0033CC","#0033FF","#333300","#333333",
-	"#333366","#333399","#3333CC","#3333FF","#663300","#663333","#663366","#663399","#6633CC","#6633FF","#993300",
-	"#993333","#993366","#993399","#9933CC","#9933FF","#CC3300","#CC3333","#CC3366","#CC3399","#CC33CC","#CC33FF",
-	"#FF3300","#FF3333","#FF3366","#FF3399","#FF33CC","#FF33FF","#006600","#006633","#006666","#006699","#0066CC",
-	"#0066FF","#336600","#336633","#336666","#336699","#3366CC","#3366FF","#666600","#666633","#666666","#666699",
-	"#6666CC","#6666FF","#996600","#996633","#996666","#996699","#9966CC","#9966FF","#CC6600","#CC6633","#CC6666",
-	"#CC6699","#CC66CC","#CC66FF","#FF6600","#FF6633","#FF6666","#FF6699","#FF66CC","#FF66FF","#009900","#009933",
-	"#009966","#009999","#0099CC","#0099FF","#339900","#339933","#339966","#339999","#3399CC","#3399FF","#669900",
-	"#669933","#669966","#669999","#6699CC","#6699FF","#999900","#999933","#999966","#999999","#9999CC","#9999FF",
-	"#CC9900","#CC9933","#CC9966","#CC9999","#CC99CC","#CC99FF","#FF9900","#FF9933","#FF9966","#FF9999","#FF99CC",
-	"#FF99FF","#00CC00","#00CC33","#00CC66","#00CC99","#00CCCC","#00CCFF","#33CC00","#33CC33","#33CC66","#33CC99",
-	"#33CCCC","#33CCFF","#66CC00","#66CC33","#66CC66","#66CC99","#66CCCC","#66CCFF","#99CC00","#99CC33","#99CC66",
-	"#99CC99","#99CCCC","#99CCFF","#CCCC00","#CCCC33","#CCCC66","#CCCC99","#CCCCCC","#CCCCFF","#FFCC00","#FFCC33",
-	"#FFCC66","#FFCC99","#FFCCCC","#FFCCFF","#00FF00","#00FF33","#00FF66","#00FF99","#00FFCC","#00FFFF","#33FF00",
-	"#33FF33","#33FF66","#33FF99","#33FFCC","#33FFFF","#66FF00","#66FF33","#66FF66","#66FF99","#66FFCC","#66FFFF",
-	"#99FF00","#99FF33","#99FF66","#99FF99","#99FFCC","#99FFFF","#CCFF00","#CCFF33","#CCFF66","#CCFF99","#CCFFCC",
-	"#CCFFFF","#FFFF00","#FFFF33","#FFFF66","#FFFF99","#FFFFCC","#FFFFFF");
-
-	colorPicker += '<table border="0" cellspacing="1" cellpadding="0">';
-	colorPicker += '<tr>';
-	for (var i=0; i<colors.length; i++) {
-		colorPicker += '<td bgcolor="' + colors[i] + '"><a href="javascript:void(0);" onclick="selectColor();" onmouseover="showColor(\'' + colors[i] +  '\');"><img border="0" src="{$themeurl}/images/spacer.gif" width="8" height="12"></a></td>';
-
-		if ((i+1) % 18 == 0)
-			colorPicker += '</tr><tr>';
-	}
-	colorPicker += '<tr><td colspan="18">';
-	colorPicker += '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
-	colorPicker += '<tr><td><img id="selectedColor" style="background-color:' + input_color + '" border="0" src="{$themeurl}/images/spacer.gif" width="80" height="16"></td><td align="right"><input id="selectedColorBox" name="selectedColorBox" type="text" size="7" maxlength="7" style="width:65px" value="' + input_color + '"></td><tr>';
-	colorPicker += '</table></td></tr>';
-	colorPicker += '</table>';
-	colorPicker += '<input type="button" name="" value="{$lang_theme_colorpicker_apply}" style="margin-top:3px" onclick="selectColor();">';
-
-	template['html'] = '<html><head><title>{$lang_theme_colorpicker_title}</title>\
-		<link href="{$css}" rel="stylesheet" type="text/css">\
-		<script language="javascript">\
-		function selectColor() {\
-			var color = document.getElementById("selectedColorBox").value;\
-			if (window.opener)\
-				window.opener.tinyMCE.execInstanceCommand("' + editor_id + '","' + command + '",false,color);\
-			window.close();\
-		}\
-\
-		function showColor(color) {\
-			document.getElementById("selectedColor").style.backgroundColor = color;\
-			document.getElementById("selectedColorBox").value = color;\
-		}\
-		window.focus();\
-		</script></head>\
-		<body marginheight="3" topmargin="3" leftmargin="3" marginwidth="3">\
-		' + colorPicker + '\
-		</body></html>';
-
+	template['file'] = 'color_picker.htm';
 	template['width'] = 170;
 	template['height'] = 205;
 
-	tinyMCE.openWindow(template);
+	tinyMCE.openWindow(template, {editor_id : editor_id, command : command, input_color : input_color});
 }
 
 // This function auto imports CSS classes into the class selection droplist
@@ -772,19 +503,24 @@ function TinyMCE_advanced_setupCSSClasses(editor_id) {
 
 	if (selectElm && selectElm.getAttribute('cssImported') != 'true') {
 		var doc = tinyMCE.instances[editor_id].contentWindow.document;
-		var csses = tinyMCE.isMSIE ? doc.styleSheets(0).rules : doc.styleSheets[0].cssRules;
+		var styles = tinyMCE.isMSIE ? doc.styleSheets : doc.styleSheets;
+		if (styles.length > 0) {
+			//alert(doc.styleSheets[0].ownerNode);
+			var csses = tinyMCE.isMSIE ? doc.styleSheets(0).rules : doc.styleSheets[0].cssRules;
 
-		if (csses && selectElm) {
-			for (var i=0; i<csses.length; i++) {
-				var className = csses[i].selectorText;
-				if (csses[i].selectorText.charAt(0) == '.' && csses[i].selectorText.indexOf(' ') == -1) {
-					className = className.substring(1);
-					selectElm.options[selectElm.length] = new Option(className, className);	 
+			if (csses && selectElm) {
+				for (var i=0; i<csses.length; i++) {
+					var className = csses[i].selectorText;
+					if (csses[i].selectorText.charAt(0) == '.' && csses[i].selectorText.indexOf(' ') == -1) {
+						className = className.substring(1);
+						selectElm.options[selectElm.length] = new Option(className, className);	 
+					}
 				}
 			}
+
+			// Only do this once
+			selectElm.setAttribute('cssImported', 'true');
 		}
 
-		// Only do this once
-		selectElm.setAttribute('cssImported', 'true');
 	}
 }

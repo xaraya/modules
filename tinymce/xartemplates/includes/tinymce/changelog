@@ -1,3 +1,9 @@
+Version 1.26 (2004-08-25)
+	Added a better way to create theme popup windows (External files).
+	Added new getWindowArg function, returns window arguments in theme popups.
+	Modified the advanced theme to adopt the new theme popup idea.
+	Fixed critical Mozilla bug, where the editor didn't work at all some times.
+	Fixed bug with auto CSS class import feature running on Firefox.
 Version 1.25 (2004-08-22)
 	Added new format select box in advanced theme (Can be disabled).
 	Added new "theme_advanced_disable" option to advanced theme.
