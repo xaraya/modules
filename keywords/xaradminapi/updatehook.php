@@ -227,13 +227,13 @@ function keywords_adminapi_updatehook($args)
                                                xar_moduleid,
                                                xar_itemtype,
                                                xar_itemid)
-                    VALUES ($nextId,
-                            '" . xarVarPrepForStore($word) . "',
-                            '" . xarVarPrepForStore($modid) . "',
-                            '" . xarVarPrepForStore($itemtype) . "',
-                            '" . xarVarPrepForStore($objectid) . "')";
+                    VALUES (?,
+                            ?,
+                            ?,
+                            ?,
+                            ?)";
 
-            $result =& $dbconn->Execute($query);
+            $result =& $dbconn->Execute($query,array($nextId, $word, $modid, $itemtype, $objectid));
             if (!$result) {
                 // we *must* return $extrainfo for now, or the next hook will fail
                 //return false;
@@ -243,12 +243,8 @@ function keywords_adminapi_updatehook($args)
             //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'xar_id');
         }
     }
-
     $extrainfo['keywords'] = join(' ',$cleanwords);
-
     // Return the extra info
     return $extrainfo;
 }
-
-
 ?>

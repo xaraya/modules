@@ -59,17 +59,15 @@ function keywords_adminapi_removehook($args)
 
     // Delete the entries
     $query = "DELETE FROM $keywords
-               WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'";
+               WHERE xar_moduleid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query,array($modid));
     if (!$result) {
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
     }
-
     // Return the extra info
     return $extrainfo;
 }
-
 ?>

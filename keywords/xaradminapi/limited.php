@@ -13,16 +13,15 @@
 //gestire errore su inserted
 function keywords_adminapi_limited($args)
 {
-
-extract($args);
-if (!xarSecurityCheck('AdminKeywords')) return;
-$invalid = array();
+    extract($args);
+    if (!xarSecurityCheck('AdminKeywords')) return;
+    $invalid = array();
     if (!isset($moduleid) || !is_numeric($moduleid)) {
         $invalid[] = 'moduleid';
     } 
     if (!isset($keyword) || !is_string($keyword)) {
         $invalid[] = 'keyword';
-    }
+    } 
     if (!isset($itemtype) || !is_numeric($itemtype)) {
         $invalid[] = 'itemtype';
     }
@@ -33,36 +32,30 @@ $invalid = array();
             new SystemException($msg));
         return;
     } 
-
  
- $key = xarModAPIFunc('keywords',
+    $key = xarModAPIFunc('keywords',
                          'admin',
                          'separekeywords',
                           array('keywords' => $keyword));
  
- foreach ($key as $keyres) {
-   $keyres = trim($keyres);     
+    foreach ($key as $keyres) {
+    $keyres = trim($keyres);     
         
- $dbconn =& xarDBGetConn();
- $xartable =& xarDBGetTables(); 
- $keywordstable = $xartable['keywords_restr'];
- 
-
- $nextId = $dbconn->GenId($keywordstable);
- $query = "INSERT INTO $keywordstable (
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
+    $keywordstable = $xartable['keywords_restr'];
+    $nextId = $dbconn->GenId($keywordstable);
+    $query = "INSERT INTO $keywordstable (
               xar_id,
               xar_keyword,
-              xar_moduleid,
-	      xar_itemtype)
+              xar_moduleid)
               VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($keyres) . "',
-              " . xarvarPrepForStore($moduleid) . ",
-	      " . xarVarPrepForStore($itemtype) . ")";
-    $result = &$dbconn->Execute($query); 
+              ?,
+              ?,
+              ?)";
+    $result =& $dbconn->Execute($query,array($nextId, $keyres, $moduleid));
     if (!$result) return; 
-}
- return;
-
+    }
+    return;
 }
 ?>
