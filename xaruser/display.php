@@ -59,8 +59,6 @@ function xarpages_user_display($args)
         }
     }
 
-    // Get the root page for the current page tree.
-    // The current page may be a root page, so check that first.
     // TODO: allow relevent privileges to overlook the status.
     // Get the complete tree for this section of pages.
     $data = xarModAPIfunc(
@@ -74,21 +72,49 @@ function xarpages_user_display($args)
     );
 
     // Point the current page at the page in the tree.
-    $current_page =& $data['pages'][$pid];
+    $data['current_page'] =& $data['pages'][$pid];
 
     // Create an ancestors array.
     // We don't do that in getpagestree() since that function does not
     // have any knowledge of the 'current' page.
+    // Shift the pages onto the start of the array, so the resultant array
+    // is in order furthest ancestor towards the current page.
+    // The ancestors array includes the current page.
     // TODO: stop at an non-ACTIVE page. Non-ACTIVE pages act as blockers
     // in the hierarchy.
+    // Ancestors will include self - filter out in the template if required.
     $ancestors = array();
     $pid_ancestor = $pid;
-    while ($data['pages'][$pid_ancestor]['parent_pid'] != 0) {
+    // TODO: protect against infinite loops if we never reach a parent of zero.
+    // This *could* happen if a root page is set to INACTIVE and a child page is
+    // set as a module alias.
+    while ($data['pages'][$pid_ancestor]['parent_pid'] > 0) {
         array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
-        $pid_ancestor = $data['pages'][$pid_ancestor]['parent'];
+        $pid_ancestor = $data['pages'][$pid_ancestor]['parent_key'];
     }
     array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
     $data['ancestors'] = $ancestors;
+
+    // Create a 'children' array for children of the current page.
+    $data['children'] = array();
+    if (!empty($data['current_page']['child_keys'])) {
+        foreach ($data['current_page']['child_keys'] as $key => $child) {
+            $data['children'][$key] =& $data['pages'][$child];
+        }
+    }
+
+    // TODO: create a 'siblings' array.
+    // Siblings are the children of the current page parent.
+    // The root page will have no siblings, as we want to keep this in
+    // a single tree.
+    // Siblings will include self - filter out in the template if necessary.
+    $data['siblings'] = array();
+    if (!empty($data['current_page']['parent_key'])) {
+        // Loop though all children of the parent.
+        foreach ($data['pages'][$data['current_page']['parent_key']]['child_keys'] as $key => $child) {
+            $data['siblings'][$key] =& $data['pages'][$child];
+        }
+    }
 
     // Provide a 'rolled up' version of the current page (or page and
     // ancestors) that contain inherited values from the pages before it.
@@ -106,7 +132,6 @@ function xarpages_user_display($args)
 
     // Add remaining values to the tree.
     $data['pid'] = $pid;
-    $data['current_page'] =& $data['pages'][$pid];
 
     // Call up a custom function to do any further manipulation or
     // checking, before invoking the rendering template.

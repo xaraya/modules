@@ -32,7 +32,7 @@ function xarpages_userapi_decode_shorturl($params)
     // Look for a root page with the name as the first part of the path.
     $rootpage = xarModAPIfunc(
         'xarpages', 'user', 'getpage',
-        array('name' => $params[0], 'parent' => 0, 'status' => 'ACTIVE')
+        array('name' => $params[0], 'parent' => 0, 'status' => 'ACTIVE', 'key' => 'pid')
     );
 
     // If no root page matches, and an alias was provided, look for a non-root start page.
@@ -40,7 +40,7 @@ function xarpages_userapi_decode_shorturl($params)
     if (empty($rootpage) && $args['module_alias'] != 'xarpages') {
         $rootpage = xarModAPIfunc(
             'xarpages', 'user', 'getpage',
-            array('name' => $params[0], 'status' => 'ACTIVE')
+            array('name' => $params[0], 'status' => 'ACTIVE', 'key' => 'pid')
         );
     }
 
@@ -73,8 +73,8 @@ function xarpages_userapi_decode_shorturl($params)
         // Walk the page tree, matching as many path components as possible.
         $pid = $rootpage['pid'];
 
-        while (isset($params[0]) && array_key_exists($params[0], $tree['children']['names'][$pid])) {
-            $pid = $tree['children']['names'][$pid][$params[0]];
+        while (isset($params[0]) && array_key_exists($params[0], $tree['child_refs']['names'][$pid])) {
+            $pid = $tree['child_refs']['names'][$pid][$params[0]];
             array_shift($params);
         }
 
@@ -101,11 +101,11 @@ function xarpages_userapi_decode_shorturl($params)
             }
         }
 
-        //var_dump($rootpage);
         return array($func, $args);
     }
 
     // default: return nothing -> no short URL decoded
+    return;
 }
 
 ?>

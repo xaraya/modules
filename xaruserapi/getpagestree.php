@@ -20,8 +20,9 @@ function xarpages_userapi_getpagestree($args)
     // Create a children list, so the tree can be walked recursively by page key index.
     // Three forms are available, useful in different circumstances:
     // - children_pids: page IDs only
+    // - children_pids: linked to the page keys (in the pages array)
     // - children_names: children organised by page name
-    // - children: children linked to page records (i.e. the array keys)
+    // - children_pages: children linked to page records (i.e. the array keys)
     // Note the pages version contains linked references to each page, to save memory
     // and allow changes made to the main 'pages' array to be visible in the 'pages'
     // children array.
@@ -34,56 +35,62 @@ function xarpages_userapi_getpagestree($args)
 
     // Create some additional arrays to help navigate the [flat] pages array.
     foreach($pages as $key => $page) {
+        // Put links in the pages themselves.
+        // Ensure each page has at least an empty array of child keys.
+        if (!isset($pages[$key]['child_keys'])) {
+            $pages[$key]['child_keys'] = array();
+        }
         // Each page has a children array, based on the array keys.
-        if ($page['parent'] > 0) {
-            $pages[$page['parent']]['children'][$key] = $key;
+        // If this page has a parent, then add this key to that parent page.
+        if ($page['parent_key'] > 0 && isset($pages[$page['parent_key']])) {
+            $pages[$page['parent_key']]['child_keys'][$key] = $key;
         }
 
+        // Additional arrays that stand separately to the pages.
         // Add an entry to the children array of pages.
         // Create a new 'parent' page if it does not exist.
-        if (!isset($children_pids[$page['parent']])) {
-            $children_pids[$page['parent_pid']] = array();
-            $children_keys[$page['parent']] = array();
-            $children_names[$page['parent']] = array();
-            $children_pages[$page['parent']] = array();
+        if (!isset($children_keys[$page['parent_key']])) {
+            $children_keys[$page['parent_key']] = array();
+            $children_names[$page['parent_key']] = array();
+            $children_pages[$page['parent_key']] = array();
         }
         // Don't allow item 0 to loop back onto itself.
         // Item 0 points to all the root pages retrieved.
-        if ($key != 0 || $page['parent'] != 0) {
-            $children_pids[$page['parent_pid']][$page['pid']] = $page['pid'];
-            $children_keys[$page['parent']][$key] = $key;
-            $children_names[$page['parent']][$page['name']] = $key;
-            $children_pages[$page['parent']][$key] =& $pages[$key];
+        if ($key != 0 || $page['parent_key'] != 0) {
+            //$children_pids[$page['parent_pid']][$page['pid']] = $page['pid'];
+            $children_keys[$page['parent_key']][$key] = $key;
+            $children_names[$page['parent_key']][$page['name']] = $key;
+            $children_pages[$page['parent_key']][$key] =& $pages[$key];
         }
 
-        // Calculate the relative nesting level. Top level (root node) is zero.
+        // Calculate the relative nesting level.
+        // 'depth' is 0-based. Top level (root node) is zero.
         if (!empty($depthstack)) {
             while (!empty($depthstack) && end($depthstack) < $page['right']) {
                 array_pop($depthstack);
                 array_pop($pathstack);
             }
         }
-
-        // 'depth' is 0-based
         $depthstack[$page['pid']] = $page['right'];
         $pages[$key]['depth'] = (empty($depthstack) ? 0 : count($depthstack) - 1);
-        // This item is the path for each page, based on IDs.
+        // This item is the path for each page, based on page IDs.
+        // It is effectively a list of ancestor IDs for a page.
         // FIXME: some paths seem to get a '0' root ID. They should only have real page IDs.
         $pages[$key]['pidpath'] = array_keys($depthstack);
 
-        $pathstack[] = $page['name'];
+        $pathstack[$key] = $page['name'];
         // This item is the path for each page, based on names.
-        // Imploding it can give a directory-type of path.
+        // Imploding it can give a directory-style path.
         $pages[$key]['namepath'] = $pathstack;
     }
 
     $tree['pages'] =& $pages;
 
-    $tree['children'] = array();
-    $tree['children']['pids'] = $children_pids;
-    $tree['children']['keys'] = $children_keys;
-    $tree['children']['names'] = $children_names;
-    $tree['children']['pages'] = $children_pages;
+    $tree['child_refs'] = array(
+        'keys' => $children_keys,
+        'names' => $children_names,
+        'pages' => $children_pages
+    );
 
     return $tree;
 }

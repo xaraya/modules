@@ -44,9 +44,9 @@ function xarpages_userapi_encode_shorturl($args)
 
     // Follow the tree up to the root.
     $pid_follow = $pid;
-    while ($pages[$pid_follow]['parent'] <> 0) {
+    while ($pages[$pid_follow]['parent_key'] <> 0) {
         array_unshift($path, $pages[$pid_follow]['name']);
-        $pid_follow = $pages[$pid_follow]['parent'];
+        $pid_follow = $pages[$pid_follow]['parent_key'];
     }
 
     // Do the final path part.

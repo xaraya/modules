@@ -160,6 +160,8 @@ function xarpages_userapi_getpages($args)
                 $theme, $function
             ) = $result->fields;
 
+            $pid = (int)$pid;
+
             // Note: ['parent_pid'] is the parent page ID,
             // but ['parent'] is the parent item key in the
             // pages array.
@@ -175,12 +177,13 @@ function xarpages_userapi_getpages($args)
             }
 
             $pages[$$key] = array(
-                'pid' => (int)$pid,
+                'pid' => $pid,
+                'key' => $$key,
                 'name' => $name,
                 'desc' => $desc,
-                'itemtype' => (int)$itemtype,
+                'itemtype' => (int)$itemtype, // deprecated
                 'ptid' => (int)$itemtype,
-                'parent' => $parent_key,
+                'parent_key' => $parent_key,
                 'parent_pid' => (int)$parent_pid,
                 'left' => (int)$left,
                 'right' => (int)$right,
