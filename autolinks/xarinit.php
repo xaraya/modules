@@ -114,7 +114,7 @@ function autolinks_init()
     xarModSetVar('autolinks', 'maxlinkcount', '');
     xarModSetVar('autolinks', 'newwindow', 1);
     xarModSetVar('autolinks', 'punctuation', AUTOLINKS_PUNCTUATION);
-    xarModSetVar('autolinks', 'excludeelements', 'a');
+    xarModSetVar('autolinks', 'excludeelements', 'a code pre');
     xarModSetVar('autolinks', 'nbspiswhite', '1');
     xarModSetVar('autolinks', 'templatebase', 'link');
     xarModSetVar('autolinks', 'showerrors', 0);
@@ -437,7 +437,7 @@ function autolinks_upgrade($oldversion)
                 array('action'=>'create')
             );
 
-            xarModSetVar('autolinks', 'excludeelements', 'a');
+            xarModSetVar('autolinks', 'excludeelements', 'a code pre');
 
             return true;
     }
