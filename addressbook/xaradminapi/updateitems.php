@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateitems.php,v 1.3 2003/07/05 23:08:23 garrett Exp $
+ * File: $Id: updateitems.php,v 1.4 2003/07/09 01:09:20 garrett Exp $
  *
  * AddressBook adminapi updateItems()
  *
@@ -13,7 +13,7 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
- 
+
 /**
  * Updates one or more rows, individually based on the complete SQL string
  * passed via $updates
@@ -24,35 +24,35 @@
  */
  function AddressBook_adminapi_updateItems($args) {
 
-	$returnCode = TRUE;
-	
-	/**
-	 * Security check 
-	 */
+    $returnCode = TRUE;
+
+    /**
+     * Security check
+     */
     if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
-	extract($args);
-	
-	/*
-	 * Validate parameters
-	 */
-	$invalid = array();
-	if(!isset($tablename) || !is_string($tablename)) {
-		$invalid[] = 'tablename';
-	}
-	if(!isset($updates) || !is_array($updates)) {
-		$invalid[] = 'updates';
-	}
+    extract($args);
+
+    /*
+     * Validate parameters
+     */
+    $invalid = array();
+    if(!isset($tablename) || !is_string($tablename)) {
+        $invalid[] = 'tablename';
+    }
+    if(!isset($updates) || !is_array($updates)) {
+        $invalid[] = 'updates';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            				new SystemException($msg));
-		$returnCode = FALSE;            				
+                    new SystemException($msg));
+        $returnCode = FALSE;
     } else {
         list($dbconn) = xarDBGetConn();
         foreach($updates as $update) {
-	
+
             $result =& $dbconn->Execute($update);
             if (!$result) $returnCode = FALSE;
         }

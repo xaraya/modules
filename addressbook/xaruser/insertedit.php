@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertedit.php,v 1.5 2003/07/09 11:20:20 garrett Exp $
+ * File: $Id: insertedit.php,v 1.6 2003/07/14 02:32:24 garrett Exp $
  *
  * AddressBook user insertEdit
  *
@@ -19,10 +19,10 @@
 //=========================================================================
 function AddressBook_user_insertedit() {
 
-	$output = array();
+    $output = array();
 
-	// Get the form values
-	$output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues',array('output'=>$output));
+    // Get the form values
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues',array('output'=>$output));
 
     /**
      * read in the menu values for preservation & display
@@ -32,43 +32,43 @@ function AddressBook_user_insertedit() {
         $output[$key] = $value;
     }
 
-	/**
-	 * Check for a cancel / update / insert button click
-	 */
-	if (xarVarCleanFromInput('cancel')) {
-		xarResponseRedirect(xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$output['menuValues']));
-		return true;
-	} elseif (xarVarCleanFromInput('update')) {
-		/**
-		 * Check for an update
-		 */
+    /**
+     * Check for a cancel / update / insert button click
+     */
+    if (xarVarCleanFromInput('cancel')) {
+        xarResponseRedirect(xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$output['menuValues']));
+        return true;
+    } elseif (xarVarCleanFromInput('update')) {
+        /**
+         * Check for an update
+         */
 
          //Security Check
         if (!xarSecConfirmAuthKey()) {
             return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
         }
 
-		if (xarModAPIFunc(__ADDRESSBOOK__,'user','checksubmitvalues',$output)) {
-			if (xarModAPIFunc(__ADDRESSBOOK__,'user','updaterecord',$output)) {
-				$output['menuValues'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
-				xarResponseRedirect(xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$output['menuValues']));
-				return true;
-			}
-		} else {
-			$output['action'] = _AB_TEMPLATE_NAME;
-		}
-	} elseif (xarVarCleanFromInput('insert')) {
-		/**
-		 * Was the insert button clicked
-		 */
+        if (xarModAPIFunc(__ADDRESSBOOK__,'user','checksubmitvalues',$output)) {
+            if (xarModAPIFunc(__ADDRESSBOOK__,'user','updaterecord',$output)) {
+                $output['menuValues'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
+                xarResponseRedirect(xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$output['menuValues']));
+                return true;
+            }
+        } else {
+            $output['action'] = _AB_TEMPLATE_NAME;
+        }
+    } elseif (xarVarCleanFromInput('insert')) {
+        /**
+         * Was the insert button clicked
+         */
 
-	     //Security Check
-	    if (!xarSecConfirmAuthKey()) {
+         //Security Check
+        if (!xarSecConfirmAuthKey()) {
             return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-	    }
+        }
 
-		if (xarModAPIFunc(__ADDRESSBOOK__,'user','checksubmitvalues',$output)) {
-			if (xarModAPIFunc(__ADDRESSBOOK__,'user','insertrecord',$output)) {
+        if (xarModAPIFunc(__ADDRESSBOOK__,'user','checksubmitvalues',$output)) {
+            if (xarModAPIFunc(__ADDRESSBOOK__,'user','insertrecord',$output)) {
                 $output['insertStatus'] = TRUE;
                 $output['insertSuccess'] = xarML(_AB_INSERT_AB_SUCCESS);
                 $output['newAddrLinkTEXT'] = xarML(_AB_MENU_ADD);
@@ -80,36 +80,36 @@ function AddressBook_user_insertedit() {
                 // incorporated back into the module
                 // gehDEBUG
                 /*
-				$output['menuValues']=array('formcall'=>'insert','authid'=>xarSecGenAuthKey(),'catview'=>$output['catview'],'menuprivate'=>$output['menuprivate'],'all'=>$output['all'],'sortview'=>$output['sortview'],'page'=>$output['page'],'char'=>$output['char'],'total'=>$output['total']);
-				$output->Text(AddressBook_themetable('start'));
-				$output->Linebreak(1);
-				$output->Text('<div align="center">');
-				$output->Text(xarVarPrepHTMLDisplay('<b>'._AB_INSERT_AB_SUCCESS.'</b>'));
-				$addTXT	= xarVarPrepHTMLDisplay(_AB_MENU_ADD);
-				$addURL = xarModURL(__ADDRESSBOOK__,'user','insertedit',$output['menuValues']);
-				$backTXT = xarVarPrepHTMLDisplay('['._AB_GOBACK.']');
-				$backURL = xarModURL(__ADDRESSBOOK__,'user','viewall',$output['menuValues']);
-				$output->Linebreak(2);
-				if(xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'create'))) {
-					$output->URL($addURL,$addTXT);
-					$output->Text('&nbsp;&nbsp;&nbsp;');
-				}
-				$output->URL($backURL,$backTXT);
-				$output->Text('</div>');
-				$output->Linebreak(1);
-				$output->Text(AddressBook_themetable('end'));
-				return $output->GetOutput();
+                $output['menuValues']=array('formcall'=>'insert','authid'=>xarSecGenAuthKey(),'catview'=>$output['catview'],'menuprivate'=>$output['menuprivate'],'all'=>$output['all'],'sortview'=>$output['sortview'],'page'=>$output['page'],'char'=>$output['char'],'total'=>$output['total']);
+                $output->Text(AddressBook_themetable('start'));
+                $output->Linebreak(1);
+                $output->Text('<div align="center">');
+                $output->Text(xarVarPrepHTMLDisplay('<b>'._AB_INSERT_AB_SUCCESS.'</b>'));
+                $addTXT = xarVarPrepHTMLDisplay(_AB_MENU_ADD);
+                $addURL = xarModURL(__ADDRESSBOOK__,'user','insertedit',$output['menuValues']);
+                $backTXT = xarVarPrepHTMLDisplay('['._AB_GOBACK.']');
+                $backURL = xarModURL(__ADDRESSBOOK__,'user','viewall',$output['menuValues']);
+                $output->Linebreak(2);
+                if(xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'create'))) {
+                    $output->URL($addURL,$addTXT);
+                    $output->Text('&nbsp;&nbsp;&nbsp;');
+                }
+                $output->URL($backURL,$backTXT);
+                $output->Text('</div>');
+                $output->Linebreak(1);
+                $output->Text(AddressBook_themetable('end'));
+                return $output->GetOutput();
                 */
-			}
-		}
-	} // END submit checks
+            }
+        }
+    } // END submit checks
 
     $output['globalprotect'] = xarModGetVar(__ADDRESSBOOK__, 'globalprotect');
     $output['custom_tab'] = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
 
-	/**
-	 * Configure for custom field tab
-	 */
+    /**
+     * Configure for custom field tab
+     */
     if (empty($output['custom_tab'])) {
         $output['addrow'] = 0;
     }  else {
@@ -127,7 +127,8 @@ function AddressBook_user_insertedit() {
      * Get everything from the input
      */
     // Insert or Edit
-    if (!xarVarFetch ('formcall','str::',$output['formcall'], 'insert')) return;
+    if (!xarVarFetch ('formcall','str::',$output['formcall'], 'insert'))
+        return;
 
     if ($output['addrow'] && !$output['formSubmitted']) {
         if ($output['formcall'] == 'edit') {
@@ -138,13 +139,13 @@ function AddressBook_user_insertedit() {
         }
     }
 
-	if ($output['id'] > 0 && !$output['formSubmitted']) {
-		// Get detailed values from database
-		$details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$output['id']));
+    if ($output['id'] > 0 && !$output['formSubmitted']) {
+        // Get detailed values from database
+        $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$output['id']));
         foreach ($details as $key=>$value) {
             $output[$key] = $value;
         }
-	}
+    }
 
     switch ($output['formcall']) {
         case 'edit':    $output['btnCommitID'] = "update"; $output['btnCommitTitle'] = "Update"; break;
@@ -163,23 +164,23 @@ function AddressBook_user_insertedit() {
         case _AB_TEMPLATE_NAME:
             $output['prfxs'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'prefixes'));
 
-			/**
-			 * Handle images
-			 */
-			if (xarModGetVar(__ADDRESSBOOK__,'use_img') && xarSecurityCheck('AdminAddressBook',0)) {
-			   	$modInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
-            	$handle = @opendir("modules/".$modInfo['directory']."/xarimages");
-            	$output['imgFiles'][] = array('id'=>'','name'=>_AB_NOIMAGE);
-            	while ($file = @readdir ($handle)) {
-					if (eregi("^\.{1,2}$",$file)) {
-						continue;
-					}
-					else {
-						$output['imgFiles'][] = array('id'=>$file, 'name'=>$file);
-					}
-				}
-				@closedir($handle);
-			}
+            /**
+             * Handle images
+             */
+            if (xarModGetVar(__ADDRESSBOOK__,'use_img') && xarSecurityCheck('AdminAddressBook',0)) {
+                $modInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
+                $handle = @opendir("modules/".$modInfo['directory']."/xarimages");
+                $output['imgFiles'][] = array('id'=>'','name'=>_AB_NOIMAGE);
+                while ($file = @readdir ($handle)) {
+                    if (eregi("^\.{1,2}$",$file)) {
+                        continue;
+                    }
+                    else {
+                        $output['imgFiles'][] = array('id'=>$file, 'name'=>$file);
+                    }
+                }
+                @closedir($handle);
+            }
 
             /**
              * Company auto fill dropdown
@@ -189,17 +190,17 @@ function AddressBook_user_insertedit() {
             break;
 
         case _AB_TEMPLATE_ADDR:
-                if (!xarVarFetch('autoCompanyFill','int::',$autoCompanyFill,FALSE)) return;
-                if (!xarVarFetch('comp_lookup',    'int::',$comp_lookup,FALSE)) return;
-                if ($autoCompanyFill) {
-                    if (!xarVarFetch('companyId','int::',$companyId,FALSE)) return;
-                    $comp_id = xarVarCleanFromInput('comp_lookup');
-                    $compaddress = xarModAPIFunc(__ADDRESSBOOK__,'user','getCompanyAddress',array('id'=>$comp_id));
+            if (!xarVarFetch('autoCompanyFill','int::',$autoCompanyFill,FALSE)) return;
+            if (!xarVarFetch('comp_lookup',    'int::',$comp_lookup,FALSE)) return;
+            if ($autoCompanyFill) {
+                if (!xarVarFetch('companyId','int::',$companyId,FALSE)) return;
+                $comp_id = xarVarCleanFromInput('comp_lookup');
+                $compaddress = xarModAPIFunc(__ADDRESSBOOK__,'user','getCompanyAddress',array('id'=>$comp_id));
 
-                    foreach($compaddress as $fieldName=>$value) {
-                        $output[$fieldName] = $value;
-                    }
+                foreach($compaddress as $fieldName=>$value) {
+                    $output[$fieldName] = $value;
                 }
+            }
 
             break;
 
@@ -221,7 +222,7 @@ function AddressBook_user_insertedit() {
     /**
      * Preserve menu vars from page to page
      */
-	$output['menuValues'] = array('catview'   =>$output['catview'],
+    $output['menuValues'] = array('catview'   =>$output['catview'],
                     'menuprivate'=>$output['menuprivate'],
                     'all'       =>$output['all'],
                     'sortview'  =>$output['sortview'],
@@ -235,7 +236,7 @@ function AddressBook_user_insertedit() {
     }
     // END custom field handling
 
-	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 
 } // END insertedit
 

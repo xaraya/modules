@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getdetailvalues.php,v 1.3 2003/07/09 17:49:38 garrett Exp $
+ * File: $Id: getdetailvalues.php,v 1.4 2003/07/19 06:18:28 garrett Exp $
  *
  * AddressBook user getDetailValues
  *
@@ -25,79 +25,79 @@ function AddressBook_userapi_getDetailValues($args) {
 
     $detailValues = FALSE;
 
-	/**
-	 * Security check 
-	 */
-    if (!xarSecurityCheck('ViewAddressBook',0)) return FALSE; 
+    /**
+     * Security check
+     */
+    if (!xarSecurityCheck('ViewAddressBook',0)) return FALSE;
 
-	extract($args);
+    extract($args);
 
     $invalid = array();
-	if (!isset($id)) { $invalid[] = 'id'; } 
+    if (!isset($id)) { $invalid[] = 'id'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      join(', ',$invalid), 'getDetailValues', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+                    new SystemException($msg));
         return FALSE;
     } else {
 
-	    list($dbconn) = xarDBGetConn();
-	    $xarTables = xarDBGetTables();
-	    $address_table = $xarTables['addressbook_address'];
-	
-	    $sql = "SELECT * FROM $address_table WHERE (nr=".$id.")";
-	    $result =& $dbconn->Execute($sql);
-	    if(!$result) { return FALSE; }
-	
-		$detailValues = array();
-	    list($detailValues['id']
-	        ,$detailValues['cat_id']
-	        ,$detailValues['prfx']
-	        ,$detailValues['lname']
-	        ,$detailValues['fname']
-	        ,$detailValues['sortname']
-	        ,$detailValues['title']
-	        ,$detailValues['company']
-	        ,$detailValues['sortcompany']
-	        ,$detailValues['img']
-	        ,$detailValues['zip']
-	        ,$detailValues['city']
-	        ,$detailValues['address_1']
-	        ,$detailValues['address_2']
-	        ,$detailValues['state']
-	        ,$detailValues['country']
-	        ,$detailValues['contact_1']
-	        ,$detailValues['contact_2']
-	        ,$detailValues['contact_3']
-	        ,$detailValues['contact_4']
-	        ,$detailValues['contact_5']
-	        ,$detailValues['c_label_1']
-	        ,$detailValues['c_label_2']
-	        ,$detailValues['c_label_3']
-	        ,$detailValues['c_label_4']
-	        ,$detailValues['c_label_5']
-	        ,$detailValues['c_main']
-	        ,$detailValues['custom_1']
-	        ,$detailValues['custom_2']
-	        ,$detailValues['custom_3']
-	        ,$detailValues['custom_4']
-	        ,$detailValues['note']
-	        ,$detailValues['user']
-	        ,$detailValues['private']
-	        ,$detailValues['last_updt']
-	        ) = $result->fields;
-	
-	    /**
-	     * get the custom field information
-	     */
-	    $detailValues['custUserData'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',array('id'=>$id));
-	
-	    $result->Close();
+        list($dbconn) = xarDBGetConn();
+        $xarTables = xarDBGetTables();
+        $address_table = $xarTables['addressbook_address'];
+
+        $sql = "SELECT * FROM $address_table WHERE (nr=".$id.")";
+        $result =& $dbconn->Execute($sql);
+        if(!$result) { return FALSE; }
+
+        $detailValues = array();
+        list($detailValues['id']
+            ,$detailValues['cat_id']
+            ,$detailValues['prfx']
+            ,$detailValues['lname']
+            ,$detailValues['fname']
+            ,$detailValues['sortname']
+            ,$detailValues['title']
+            ,$detailValues['company']
+            ,$detailValues['sortcompany']
+            ,$detailValues['img']
+            ,$detailValues['zip']
+            ,$detailValues['city']
+            ,$detailValues['address_1']
+            ,$detailValues['address_2']
+            ,$detailValues['state']
+            ,$detailValues['country']
+            ,$detailValues['contact_1']
+            ,$detailValues['contact_2']
+            ,$detailValues['contact_3']
+            ,$detailValues['contact_4']
+            ,$detailValues['contact_5']
+            ,$detailValues['c_label_1']
+            ,$detailValues['c_label_2']
+            ,$detailValues['c_label_3']
+            ,$detailValues['c_label_4']
+            ,$detailValues['c_label_5']
+            ,$detailValues['c_main']
+            ,$detailValues['custom_1']
+            ,$detailValues['custom_2']
+            ,$detailValues['custom_3']
+            ,$detailValues['custom_4']
+            ,$detailValues['note']
+            ,$detailValues['user']
+            ,$detailValues['private']
+            ,$detailValues['last_updt']
+            ) = $result->fields;
+
+        /**
+         * get the custom field information
+         */
+        $detailValues['custUserData'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',array('id'=>$id));
+
+        $result->Close();
     }
-	    
+
     return $detailValues;
-    
+
 } // END getDetailValues
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getaddresslist.php,v 1.6 2003/07/16 01:08:26 garrett Exp $
+ * File: $Id: getaddresslist.php,v 1.7 2003/07/19 06:18:28 garrett Exp $
  *
  * AddressBook user getAddressList
  *
@@ -145,7 +145,7 @@ function AddressBook_userapi_getAddressList($args) {
     }
     $output['sql'] .= " ORDER BY ";
     foreach ($sortCols as $sortCol) {
-        $output['sql'] .= $sortCol.",";	
+        $output['sql'] .= $sortCol.",";
     }
     $output['sql'] = rtrim($output['sql'],",");
     $output['sql'] .= " ASC";
@@ -496,9 +496,9 @@ function AddressBook_userapi_getAddressList($args) {
                         'page'=>$output['page'],
                         'char'=>$selChar);
 
-		//FIXME:<garrett> sloppy way of of setting up data. Redundant vars (accessLevel, *TEXT..)
+        //FIXME:<garrett> sloppy way of of setting up data. Redundant vars (accessLevel, *TEXT..)
         $output['displayRows'][] = array ('displayRow' => $displayRow
-        								 ,'user'	=> $user
+                                         ,'user'    => $user
                                        ,'detailURL' => xarModURL(__ADDRESSBOOK__,'user','viewdetail',$detailargs)
                                        ,'detailTXT' => xarVarPrepHTMLDisplay(_AB_LABEL_SHOWDETAIL)
                                        ,'deleteURL' => xarModURL(__ADDRESSBOOK__,'user','confirmdelete',$detailargs)

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateprefixes.php,v 1.4 2003/07/06 04:42:25 garrett Exp $
+ * File: $Id: updateprefixes.php,v 1.5 2003/07/21 21:13:03 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -25,23 +25,23 @@ function AddressBook_adminapi_updateprefixes($args) {
 
     // var defines
     $dels = '';
-    
-	/**
-	 * Security check 
-	 */
+
+    /**
+     * Security check
+     */
     if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
-	extract($args);
+    extract($args);
 
     $invalid = array();
-	if (!isset($id)) { $invalid[] = 'id'; } 
-	if (!isset($del)) { $invalid[] = 'del'; } 
-	if (!isset($name)) { $invalid[] = 'name'; } 
+    if (!isset($id)) { $invalid[] = 'id'; }
+    if (!isset($del)) { $invalid[] = 'del'; }
+    if (!isset($name)) { $invalid[] = 'name'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      join(', ',$invalid), 'updatelabels', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+                    new SystemException($msg));
         return FALSE;
     }
 
@@ -79,25 +79,25 @@ function AddressBook_adminapi_updateprefixes($args) {
     }
 
     if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateItems',array('tablename'=>'prefixes','updates'=>$updates))) {
-		xarErrorSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
-						new abUserException('UPDATE - '._AB_SUCCESS));
+        xarErrorSet(XAR_USER_EXCEPTION,
+                    _AB_ERR_INFO,
+                    new abUserException('UPDATE - '._AB_SUCCESS));
     }
 
     if(!empty($dels)) {
         $delete = "DELETE FROM $preTable WHERE nr IN ($dels)";
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteItems',array('tablename'=>'prefixes','delete'=>$delete))) {
-		xarErrorSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
-						new abUserException('DELETE - '._AB_SUCCESS));
+        xarErrorSet(XAR_USER_EXCEPTION,
+                    _AB_ERR_INFO,
+                    new abUserException('DELETE - '._AB_SUCCESS));
         }
     }
 
     if( (isset($newname)) && ($newname != '') ) {
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addItems',array('tablename'=>'prefixes','name'=>$newname))) {
-		xarErrorSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
-						new abUserException('INSERT - '._AB_SUCCESS));
+        xarErrorSet(XAR_USER_EXCEPTION,
+                    _AB_ERR_INFO,
+                    new abUserException('INSERT - '._AB_SUCCESS));
         }
     }
 

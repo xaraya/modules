@@ -19,92 +19,92 @@
  *
  * @param passed in from updatecustomfields api
  * @return bool
- */ 
+ */
 function AddressBook_adminapi_decCustomfields($args) {
 
-	$returnCode = TRUE;
-	
-	/**
-	 * Security check 
-	 */
+    $returnCode = TRUE;
+
+    /**
+     * Security check
+     */
     if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
     extract($args);
 
-	/*
-	 * Validate parameters
-	 */
-	$invalid = array();
-	if(!isset($id) && is_numeric($id)) {
-		$invalid[] = 'id';
-	}
+    /*
+     * Validate parameters
+     */
+    $invalid = array();
+    if(!isset($id) && is_numeric($id)) {
+        $invalid[] = 'id';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            				new SystemException($msg));
-		$returnCode = FALSE;
+                    new SystemException($msg));
+        $returnCode = FALSE;
     } else {
 
-	    list($dbconn) = xarDBGetConn();
-	    $xarTables = xarDBGetTables();
-	    $cus_table = $xarTables['addressbook_customfields'];
-	
-	    // Get info on current position of field
-	    $sql = "SELECT position
-	            FROM $cus_table
-	            WHERE nr=" . (int)xarVarPrepForStore($id);
-	    $result =& $dbconn->Execute($sql);
-	
-	    if (!$result) {
-	    	$returnCode = FALSE;
-	    } elseif ($result->EOF) {
-	        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
-            				new abUserException(xarML("No such field ID $id")));
-	        $returnCode = FALSE;
-	    } else {
-		    list($seq) = $result->fields;
-		    $result->Close();
-		
-		    // Get info on displaced field
-		    $sql = "SELECT nr,
-		                   position
-		            FROM $cus_table
-		            WHERE position > " . xarVarPrepForStore($seq) . "
-		            ORDER BY position ASC";
-		    $result =& $dbconn->SelectLimit($sql, 1);
-		    if (!$result) {
-		    	$returnCode = FALSE;
-		    } elseif ($result->EOF) {
-		        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
-	            				new abUserException(xarML("No field directly below that one")));
-		        $returnCode = FALSE;
-		    } else {
-			    list($altid, $altseq) = $result->fields;
-			    $result->Close();
-			
-			    // Swap sequence numbers
-			    $sql = "UPDATE $cus_table
-			            SET position=$seq
-			            WHERE nr=$altid";
-			    $dbconn->Execute($sql);
-			    if (!$result) {
-			    	$returnCode = FALSE;
-			    } else {
-				    $sql = "UPDATE $cus_table
-				            SET position=$altseq
-				            WHERE nr=$id";
-				    $dbconn->Execute($sql);
-				    if (!$result) {
-				    	$returnCode = FALSE;
-				    }
-			    }
-		    }
-	    }
+        list($dbconn) = xarDBGetConn();
+        $xarTables = xarDBGetTables();
+        $cus_table = $xarTables['addressbook_customfields'];
+
+        // Get info on current position of field
+        $sql = "SELECT position
+                FROM $cus_table
+                WHERE nr=" . (int)xarVarPrepForStore($id);
+        $result =& $dbconn->Execute($sql);
+
+        if (!$result) {
+            $returnCode = FALSE;
+        } elseif ($result->EOF) {
+            xarErrorSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
+                        new abUserException(xarML("No such field ID $id")));
+            $returnCode = FALSE;
+        } else {
+            list($seq) = $result->fields;
+            $result->Close();
+
+            // Get info on displaced field
+            $sql = "SELECT nr,
+                           position
+                    FROM $cus_table
+                    WHERE position > " . xarVarPrepForStore($seq) . "
+                    ORDER BY position ASC";
+            $result =& $dbconn->SelectLimit($sql, 1);
+            if (!$result) {
+                $returnCode = FALSE;
+            } elseif ($result->EOF) {
+                xarErrorSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
+                            new abUserException(xarML("No field directly below that one")));
+                $returnCode = FALSE;
+            } else {
+                list($altid, $altseq) = $result->fields;
+                $result->Close();
+
+                // Swap sequence numbers
+                $sql = "UPDATE $cus_table
+                        SET position=$seq
+                        WHERE nr=$altid";
+                $dbconn->Execute($sql);
+                if (!$result) {
+                    $returnCode = FALSE;
+                } else {
+                    $sql = "UPDATE $cus_table
+                            SET position=$altseq
+                            WHERE nr=$id";
+                    $dbconn->Execute($sql);
+                    if (!$result) {
+                        $returnCode = FALSE;
+                    }
+                }
+            }
+        }
     } // END else
 
     return $returnCode;
-    
+
 } // END decCustomfields
 
 ?>

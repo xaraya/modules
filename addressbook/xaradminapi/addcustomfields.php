@@ -22,35 +22,35 @@
  */
 function AddressBook_adminapi_addCustomfields($args)
 {
-	$returnCode = TRUE;
-	
-	/**
-	 * Security check 
-	 */
+    $returnCode = TRUE;
+
+    /**
+     * Security check
+     */
     if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
     extract($args);
-    
-	/*
-	 * Validate parameters
-	 */
-	$invalid = array();
-	if(!isset($inserts)) {
-		$invalid[] = 'inserts';
-	}
+
+    /*
+     * Validate parameters
+     */
+    $invalid = array();
+    if(!isset($inserts)) {
+        $invalid[] = 'inserts';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            				new SystemException($msg));
-		$returnCode = FALSE;            				
+                    new SystemException($msg));
+        $returnCode = FALSE;
     } else {
-	    list($dbconn) = xarDBGetConn();
-	    foreach($inserts as $insert) {
-	        $result =& $dbconn->Execute($insert);
-	        if (!$result) $returnCode = FALSE;
-	
-	    }
+        list($dbconn) = xarDBGetConn();
+        foreach($inserts as $insert) {
+            $result =& $dbconn->Execute($insert);
+            if (!$result) $returnCode = FALSE;
+
+        }
     }
 
     return $returnCode;

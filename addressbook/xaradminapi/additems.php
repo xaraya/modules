@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: additems.php,v 1.1 2003/07/05 21:31:55 garrett Exp $
+ * File: $Id: additems.php,v 1.2 2003/07/18 19:44:13 garrett Exp $
  *
  * AddressBook admin addItems
  *
@@ -25,30 +25,30 @@
  */function AddressBook_adminapi_addItems($args)
 {
     $returnCode = TRUE;
-    
-	/**
-	 * Security check 
-	 */
+
+    /**
+     * Security check
+     */
     if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
     extract($args);
-    
-	/*
-	 * Validate parameters
-	 */
-	$invalid = array();
-	if(!isset($tablename)) {
-		$invalid[] = 'tablename';
-	}
-	if(!isset($name)) {
-		$invalid[] = 'name';
-	}
+
+    /*
+     * Validate parameters
+     */
+    $invalid = array();
+    if(!isset($tablename)) {
+        $invalid[] = 'tablename';
+    }
+    if(!isset($name)) {
+        $invalid[] = 'name';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            				new SystemException($msg));
-		$returnCode = FALSE;            				
+                    new SystemException($msg));
+        $returnCode = FALSE;
     } else {
 
         list($dbconn) = xarDBGetConn();
@@ -56,7 +56,8 @@
         $tablename = 'addressbook_'.$tablename;
         $table = $xarTables[$tablename];
 
-    	$nextID = $dbconn->GenID($table);
+        $nextID = $dbconn->GenID($table);
+
 
         $name = xarVarPrepForStore($name);
 
@@ -66,8 +67,8 @@
 
         $result =& $dbconn->Execute($sql);
         if (!$result) $returncode = FALSE;
-    } 
-    
+    }
+
     return $returnCode;
 
 } // END addItems

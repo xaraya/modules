@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.11 2003/09/07 23:40:41 garrett Exp $
+ * File: $Id: handleexception.php,v 1.12 2003/09/15 00:29:58 garrett Exp $
  *
  * AddressBook utilapi handleException
  *
@@ -48,15 +48,15 @@ function AddressBook_utilapi_handleException ($args) {
         global $ErrorStack, $CoreStack;
         while (!$ErrorStack->isempty() || !$CoreStack->isempty()) {
 
-			if (!$CoreStack->isempty()) {
-            	$errorException = $CoreStack->pop();
-			} else {
-				if (!$ErrorStack->isempty()) {
-	            	$errorException = $ErrorStack->pop();
-				} else {
-					$errorException = NULL;
-				}
-			}
+            if (!$CoreStack->isempty()) {
+                $errorException = $CoreStack->pop();
+            } else {
+                if (!$ErrorStack->isempty()) {
+                    $errorException = $ErrorStack->pop();
+                } else {
+                    $errorException = NULL;
+                }
+            }
 
             switch ($errorException->getMajor()) {
                 case XAR_SYSTEM_EXCEPTION:
@@ -175,7 +175,7 @@ function AddressBook_utilapi_handleException ($args) {
         xarCoreExceptionFree();
 
         $output['abExceptions'] = $abExceptions;
-        
+
         /**
          * For system errors we will redirect to a special error handling page
          * for a more user friendly message

@@ -75,9 +75,9 @@ function AddressBook_userapi_getCustFieldUserInfo($args) {
             $errMsg .= 'id not set';
         }
 
-        xarErrorSet(XAR_USER_EXCEPTION, 
-                        _AB_ERR_ERROR, 
-                        new abUserException("userapi - getCustFieldUserInfo: ".$errMsg)); //gehDEBUG
+        xarErrorSet(XAR_USER_EXCEPTION,
+                    _AB_ERR_ERROR,
+                    new abUserException("userapi - getCustFieldUserInfo: ".$errMsg)); //gehDEBUG
     }
 
     return $custFieldUserInfo;
