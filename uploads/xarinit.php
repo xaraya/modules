@@ -26,11 +26,10 @@ function uploads_init()
     xarModSetVar('uploads', 'path.uploads-directory',   $base_directory . 'var/uploads');
     xarModSetVar('uploads', 'path.imports-directory',   $base_directory . 'var/imports');
     xarModSetVar('uploads', 'file.maxsize',            '10000000');
-    xarModSetVar('uploads', 'file.censored-mimetypes',  serialize(array()));
     xarModSetVar('uploads', 'file.delete-confirmation', TRUE);
+    xarModSetVar('uploads', 'file.auto-purge',          FALSE);
     xarModSetVar('uploads', 'file.obfuscate-on-import', FALSE);
     xarModSetVar('uploads', 'file.obfuscate-on-upload', TRUE);
-    xarModSetVar('uploads', 'file.auto-purge',          FALSE);
         
     $data['filters']['mimetypes'][0]['typeId']      = 0;
     $data['filters']['mimetypes'][0]['typeName']    = xarML('All');

@@ -27,27 +27,23 @@ function uploads_user_file_properties( $args ) {
         ob_end_clean();
         
         $fileInfo   = $fileInfo[0];
-        $storeType  = $fileInfo['storeType'];
-        $fileInfo['storeType'] = array('long' => '', 'short' => $storeType);
-        $storeType =& $fileInfo['storeType'];
         
-        if (_UPLOADS_STORE_DB_ENTRY & $fileInfo['storeType']) {
-            $storeType['long'] = 'Database File Entry';
-        }
+        $storeType  = array('long' => '', 'short' => $fileInfo['storeType']);
+        $storeType['long'] = 'Database File Entry';
         
         if (_UPLOADS_STORE_FILESYSTEM & $fileInfo['storeType']) {
             if (!empty($storeType['long'])) {
                 $storeType['long'] .= ' / ';
             }
-            $fileInfo['storeType']['long'] .= 'File System Store';
-        }
-        
-        if (_UPLOADS_STORE_DB_DATA & $fileInfo['storeType']) {
+            $storeType['long'] .= 'File System Store';
+        } elseif (_UPLOADS_STORE_DB_DATA & $fileInfo['storeType']) {
             if (!empty($storeType['long'])) {
                 $storeType['long'] .= ' / ';
             }
-            $fileInfo['storeType']['long'] .= 'Database Store';
+            $storeType['long'] .= 'Database Store';
         }
+        
+        $fileInfo['storeType'] = $storeType;
         unset($storeType);
         
         $fileInfo['size']['long']  = number_format($fileInfo['fileSize']);
@@ -60,7 +56,31 @@ function uploads_user_file_properties( $args ) {
         $short = round($size, 2).' '.$range[$i];
         $fileInfo['size']['short']  = $short;
         
+        if (ereg('^image', $fileInfo['fileType'])) {
+            $imageInfo = getimagesize($fileInfo['fileLocation']);
+            if (is_array($imageInfo)) {
+                if ($imageInfo['0'] > 100 || $imageInfo[1] > 400) {
+                    $oWidth  = $imageInfo[0];
+                    $oHeight = $imageInfo[1];
+                    
+                    $ratio = $oHeight / $oWidth;
+
+                    // MAX WIDTH is 200 for this preview.
+                    $newWidth  = 100;
+                    $newHeight = round($newWidth * $ratio, 0);
+
+                    $fileInfo['image']['height'] = $newHeight;
+                    $fileInfo['image']['width']  = $newWidth;
+                } else {
+                    $fileInfo['image']['height'] = $imageInfo[1];
+                    $fileInfo['image']['width']  = $imageInfo[0];
+                }
+            }
+        }
+                
+        
         $data['fileInfo'] = $fileInfo;
+                
         echo xarTplModule('uploads','user','file_properties', $data, NULL);
         exit();
     }

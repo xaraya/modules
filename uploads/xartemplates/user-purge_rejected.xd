@@ -1,0 +1,51 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>File Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Purge Rejected Files</xar:mlstring></h2>
+    <br />
+    <div style="margin: auto;">
+    
+        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-norm">
+            <xar:if condition="!count($fileList)">
+                <tr>
+                    <td colspan="3" align="center">
+                        <xar:mlstring>
+                            There are no files marked as rejected.
+                        </xar:mlstring>
+                    </td>
+                </tr>
+            <xar:else />
+                <tr>
+                    <td colspan="2">
+                        <form action="#xarModUrl('uploads','user','purge_rejected')#" method="post">
+                            <xar:mlstring>
+                                Are you sure you want to delete the following files?
+                            </xar:mlstring>&nbsp;
+                            <input type="submit" name="submit" value="#xarML('Delete')#">
+                            <input type="hidden" name="confirmation" value="1">
+                            <input type="submit" name="submit" value="#xarML('Cancel')#" onClick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;">
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <xar:loop name="$fileList">
+                        <xar:if condition="(($loop:index + 1) % 2)">
+                            </tr><tr>
+                        </xar:if>
+                        <td class="xar-norm" align="left">&nbsp;
+                            <a onClick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&fileId=#$loop:item['fileId']#',
+                                                            '#$loop:item['fileName']#',
+                                                            'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20'); 
+                                                            return false;">
+                                #$loop:item['fileName']#
+                            </a>
+                        </td>
+                    </xar:loop>
+                </tr>
+            </xar:if>
+        </table>
+    </div>
+</div>

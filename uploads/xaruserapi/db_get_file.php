@@ -100,7 +100,15 @@ function uploads_userapi_db_get_file( $args )  {
     // remove the '/' from the path
     $importDir = eregi_replace('/$', '', $importDir);
     $uploadDir = eregi_replace('/$', '', $uploadDir);
-    
+
+    if(xarServerGetVar('PATH_TRANSLATED')) {
+        $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
+    } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
+        $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+    } else {
+        $base_directory = './';
+    }
+        
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         
@@ -113,14 +121,17 @@ function uploads_userapi_db_get_file( $args )  {
         $fileInfo['fileStatus']   = $row['xar_status'];
         $fileInfo['fileType']     = $row['xar_mime_type'];
         $fileInfo['storeType']    = $row['xar_store_type'];
+        $fileInfo['mimeImage']    = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
+        $fileInfo['fileURL']      = xarServerGetBaseURL() . str_replace($base_directory, '', $fileInfo['fileLocation']);
+        $fileInfo['fileDownload'] = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
         
         $row = $result->GetRowAssoc(false);
         
         if (stristr($fileInfo['fileLocation'], $importDir)) {
-            $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'IMPORTS', $fileInfo['fileLocation']));
+            $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'imports', $fileInfo['fileLocation']));
             $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         } elseif (stristr($fileInfo['fileLocation'], $uploadDir)) {
-            $fileInfo['fileDirectory'] = dirname(str_replace($uploadDir, 'UPLOADS', $fileInfo['fileLocation']));
+            $fileInfo['fileDirectory'] = dirname(str_replace($uploadDir, 'uploads', $fileInfo['fileLocation']));
             $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         } else {
             $fileInfo['fileDirectory'] = dirname($fileInfo['fileLocation']);

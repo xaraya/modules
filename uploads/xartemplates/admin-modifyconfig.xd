@@ -1,106 +1,137 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Uploads Configuration</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
-<input type="hidden" name="authid" value="#$authid#">
-
-
-<h2><xar:mlstring>Primary Configuration</xar:mlstring></h2><br />
-
-<p><b><xar:mlstring>Uploads Directory</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="uploads_directory" value="#$uploads_directory#" size="70">
-<br />
-<xar:mlstring>This must be the full path to the folder on your server, including ending slash.  This directory must be php-writable.</xar:mlstring>
-</p>
-<p><b><xar:mlstring>Maximum Upload Size (in bytes)</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="maximum_upload_size" value="#$maximum_upload_size#">
-<br />
-<xar:mlstring>This number may be ignored if it is greater than your PHP maximum upload size.</xar:mlstring>
-</p>
-<p><b><xar:mlstring>Allowed File Extensions</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="allowed_types" value="#$allowed_types#" size="70">
-<br />
-<xar:mlstring>This list should be semicolon (;) delimited. Do not use dots (.) unless it is a multi-part extension like tar.gz. Do not put a semicolon on the end unless you want to accept uploads without extensions.</xar:mlstring>
-</p>
-
-<p><b><xar:mlstring>Confirm Deletes/Rejects</xar:mlstring>:</b>&nbsp;&nbsp;
-<xar:if condition="$confirm_delete == '0'">
-	<input type="radio" name="confirm_delete" value="1"> Yes
-	<input type="radio" name="confirm_delete" value="0" checked="true"> No
-<xar:else />
-	<input type="radio" name="confirm_delete" value="1" checked="true"> Yes
-	<input type="radio" name="confirm_delete" value="0"> No
-</xar:if>
-<br/><xar:mlstring>Confirmation must be provided before files are deleted.</xar:mlstring>
-</p>
-
-
-
-
-<h2><xar:mlstring>Images Configuration</xar:mlstring></h2><br />
-
-<p><b><xar:mlstring>Maximum Image Width (in pixels)</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="max_image_width" value="#$max_image_width#">
-</p>
-<p><b><xar:mlstring>Maximum Image Height (in pixels)</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="max_image_height" value="#$max_image_height#">
-</p>
-
-<p><b><xar:mlstring>Thumbnails</xar:mlstring>:</b>
-&nbsp;&nbsp;
-<xar:if condition="$thumbnail_setting == '0'">
-	<input type="radio" name="thumbnail_setting" value="0" checked="true"> Kept with original file
-	<input type="radio" name="thumbnail_setting" value="1"> Kept in thumbnail folder
-	<input type="radio" name="thumbnail_setting" value="2"> None
-<xar:elseif condition="$thumbnail_setting == 1"/>
-	<input type="radio" name="thumbnail_setting" value="0"> Kept with original file
-	<input type="radio" name="thumbnail_setting" value="1" checked="true"> Kept in thumbnail folder
-	<input type="radio" name="thumbnail_setting" value="2"> None
-<xar:else />
-	<input type="radio" name="thumbnail_setting" value="0"> Kept with original file
-	<input type="radio" name="thumbnail_setting" value="1"> Kept in thumbnail folder
-	<input type="radio" name="thumbnail_setting" value="2" checked="true"> None
-</xar:if>
-<br />
-<xar:mlstring>If Yes, file names will be obfuscated.</xar:mlstring>
-</p>
-<p><b><xar:mlstring>Thumbnail Path</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="thumbnail_path" value="#$thumbnail_path#" size="70">
-<br />
-<xar:mlstring>Path to optionally store thumbnails, including trailing slash.  This directory needs to be php writable.</xar:mlstring>
-</p>
-<p><b><xar:mlstring>NetPBM Path</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="netpbm_path" value="#$netpbm_path#" size="70">
-<br />
-<xar:mlstring>Path to NetPBM installation, including trailing slash (ie: /usr/local/bin/).  If specified Upload's will use NetPBM for thumbnails, otherwise it will use PHP's GD interface which requires PHP to be compiled against GD 1.8+.  Check phpinfo().</xar:mlstring>
-</p>
-
-
-
-
-<h2><xar:mlstring>Import Configuration</xar:mlstring></h2><br />
-
-
-<p><b><xar:mlstring>Import Directory</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="import_directory" value="#$import_directory#" size="70">
-<br />
-<xar:mlstring>Files placed in this directory can be imported via the File Import option in the Uploads Admin Menu. This must be the full path to the folder on your server, including ending slash.</xar:mlstring>
-</p>
-
-<p><b><xar:mlstring>Obfuscate/Secure Imported Files</xar:mlstring>:</b>
-&nbsp;&nbsp;
-<xar:if condition="$obfuscate_imports == '0'">
-	<input type="radio" name="obfuscate_imports" value="1"> Yes
-	<input type="radio" name="obfuscate_imports" value="0" checked="true"> No
-<xar:else />
-	<input type="radio" name="obfuscate_imports" value="1" checked="true"> Yes
-	<input type="radio" name="obfuscate_imports" value="0"> No
-</xar:if>
-<br />
-<!--
-<xar:mlstring>If Yes, file names will be obfuscated.</xar:mlstring>
--->
-</p>
-
-
-
-
-<xar:set name="$saveConfigLabel"><xar:mlstring>Save Configuration</xar:mlstring></xar:set>
-<p>
-<input type="submit" name="#$saveConfigLabel#">
-</p>
-</form>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Uploads Administration</xar:mlstring>
+    </span>
 </div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>Modify Uploads Configuration</xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+
+        <form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#">
+            <input type="hidden" name="authid" value="#$authid#">
+            <p>
+                <b><xar:mlstring>Uploads Directory</xar:mlstring>:</b>&nbsp;&nbsp;
+                <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="70">
+                <br />
+                <xar:mlstring>
+                    This is the full path to the directory where uploaded files will be placed.
+                    <br />NOTE: This directory MUST be writable by the webserver.
+                </xar:mlstring>
+            </p>
+            <p>
+                <b>
+                    <xar:mlstring>
+                        Import Directory:
+                    </xar:mlstring>
+                </b>&nbsp;&nbsp;
+                <input type="text" name="path[imports-directory]" value="#$path['imports-directory']#" size="70">
+                <br />
+                <xar:mlstring>
+                    This is the full path to the directory where imported files will be placed.
+                    <br />NOTE: This directory MUST be writable by the webserver.
+                </xar:mlstring>
+            </p>
+
+                <b>
+                    <xar:mlstring>
+                        Maximum Upload Size in bytes (commas are fine):
+                    </xar:mlstring>
+                </b>&nbsp;&nbsp;
+                <input type="text" name="file[maxsize]" value="#$file['maxsize']#">
+                <br />
+                <xar:mlstring>
+                    This is the maximum size an uploaded file may be.<br />
+                    NOTE: The server wide PHP setting, if set to a lower value, <em>will</em> override this setting. 
+                    Please ask your web host provider for details on the settings that they use for uploaded files.
+                </xar:mlstring>
+            </p>
+            <p>
+                <b>
+                    <xar:mlstring>
+                        Confirm deletion of files:
+                    </xar:mlstring>
+                </b>&nbsp;&nbsp;
+                
+                <xar:if condition="$file['delete-confirmation'] eq FALSE">
+                    <input type="radio" name="file[delete-confirmation]" value="1"> Yes
+                    <input type="radio" name="file[delete-confirmation]" value="0" checked="true"> No
+                <xar:else />
+                    <input type="radio" name="file[delete-confirmation]" value="1" checked="true"> Yes
+                    <input type="radio" name="file[delete-confirmation]" value="0"> No
+                </xar:if>
+                <br/>
+                <xar:mlstring>
+                    Confirmation must be provided before files are deleted.
+                </xar:mlstring>
+            </p>
+            <p>
+                <b>
+                    <xar:mlstring>
+                        Auto purge files marked as 'rejected':
+                    </xar:mlstring>
+                </b>&nbsp;&nbsp;
+                    
+                <xar:if condition="$file['auto-purge'] eq FALSE">
+                    <input type="radio" name="file[auto-purge]" value="1"> Yes
+                    <input type="radio" name="file[auto-purge]" value="0" checked="true"> No
+                <xar:else />
+                    <input type="radio" name="file[auto-purge]" value="1" checked="true"> Yes
+                    <input type="radio" name="file[auto-purge]" value="0"> No
+                </xar:if>
+                <br/>
+                <xar:mlstring>
+                    Normally, when you reject files, have to manually purge them by clicking on 
+                    the 'Purge Rejected' button located on the <em>Admin->Uploads->View page</em>. This 
+                    option forces any file you set to 'rejected' status to be deleted right away.
+                </xar:mlstring>
+            </p>
+            <p>
+                <b>
+                    <xar:mlstring>
+                        Obfuscate/Secure Imported Files:
+                    </xar:mlstring>
+                </b>&nbsp;&nbsp;
+                <xar:if condition="$file['obfuscate-on-import'] eq FALSE">
+                    <input type="radio" name="file[obfuscate-on-import]" value="1"> Yes
+                    <input type="radio" name="file[obfuscate-on-import]" value="0" checked="true"> No
+                <xar:else />
+                    <input type="radio" name="file[obfuscate-on-import]" value="1" checked="true"> Yes
+                    <input type="radio" name="file[obfuscate-on-import]" value="0"> No        
+                </xar:if>
+                <br />
+                <xar:mlstring>
+                    If Yes, imported files will be stored with their original names obfuscated for added security.
+                </xar:mlstring>
+            </p>
+            <p>
+                <b>
+                    <xar:mlstring>
+                        Obfuscate/Secure Uploaded Files:
+                    </xar:mlstring>
+                </b>&nbsp;&nbsp;
+                <xar:if condition="$file['obfuscate-on-upload'] eq FALSE">
+                    <input type="radio" name="file[obfuscate-on-upload]" value="1"> Yes
+                    <input type="radio" name="file[obfuscate-on-upload]" value="0" checked="true"> No
+                <xar:else />
+                    <input type="radio" name="file[obfuscate-on-upload]" value="1" checked="true"> Yes
+                    <input type="radio" name="file[obfuscate-on-upload]" value="0"> No        
+                </xar:if>
+                <br />
+                <xar:mlstring>
+                    If Yes, uploaded files will be stored with their original names obfuscated for added security.
+                    <br />
+                    <strong style="color: red;">NOTE:</strong>Setting this option to 'No' can open a possible route for users
+                    to upload and run malicious scripts on your site. It is <strong>highly</strong>
+                    recommended that you leave this option on unless you have a throrough understanding
+                    of the implications behind turning it off.
+                </xar:mlstring>
+            </p>
+            <p>
+                <input type="submit" name="update" value="#xarMl('Update Configuration')#">
+            </p>
+        </form>
+    </div>
 </div>

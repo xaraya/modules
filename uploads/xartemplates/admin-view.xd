@@ -30,7 +30,7 @@
                             <td class="xar-norm" align="center">&nbsp;
                                 <a onClick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&fileId=#$loop:item['fileId']#',
                                                                  '#$loop:item['fileName']#',
-                                                                 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=600,left=20,top=20'); 
+                                                                 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20'); 
                                                                  return false;">
                                     #$loop:item['fileName']#
                                 </a>
@@ -46,7 +46,7 @@
                             <td class="xar-accent" align="center">&nbsp;
                                 <a onClick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&fileId=#$loop:item['fileId']#',
                                                                  '#$loop:item['fileName']#',
-                                                                 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=600,left=20,top=20'); 
+                                                                 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20'); 
                                                                  return false;">
                                     #$loop:item['fileName']#
                                 </a>
@@ -76,23 +76,27 @@
                                             </xar:if>
                                         </xar:foreach>
                                     </select>
-                                    <input type="submit" name="fileDo" id="file_change" value="Change">
+                                    <input type="submit" name="fileDo" id="file_change" value="#xarML('Change')#">
                                 </td>
                             </tr>
                         </table>
                     </td>
+                    </form>
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                    <form action="#xarModUrl('uploads','user','purge_rejected')#" method="post">
                         <td class="xar-accent">
                             <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                                 <tr>
                                     <td width="100%" align="center">
                                         <center>
-                                        <input type="submit" name="fileDo" id="file_purge"  value="Purge Rejected">
+                                        <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+                                        <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
                                         </center>
                                     </td>
                                 </tr>
                             </table>
-                        </td>                    
+                        </td>
+                    </form>
                     </xar:if>
                 </tr>                                    
             <xar:else />
@@ -107,6 +111,5 @@
                 </td>
             </xar:if>
         </table>
-        </form>
     </div>
 </div>

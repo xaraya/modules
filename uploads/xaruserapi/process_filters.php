@@ -7,13 +7,13 @@ function uploads_userapi_process_filters( $args ) {
      *  Set up the filter data for the template to use
      */
      
-	$options = unserialize(xarModGetVar('uploads', 'view.filter'));
-	$data 	 = $options['data'];
-	$filter  = $options['filter'];   
-	$mimetypes =& $data['filters']['mimetypes'];
-	$subtypes  =& $data['filters']['subtypes'];
-	$statuses  =& $data['filters']['status'];
-	unset($options);
+    $options   =  unserialize(xarModGetVar('uploads', 'view.filter'));
+    $data      =  $options['data'];
+    $filter    =  $options['filter'];   
+    $mimetypes =& $data['filters']['mimetypes'];
+    $subtypes  =& $data['filters']['subtypes'];
+    $statuses  =& $data['filters']['status'];
+    unset($options);
     /**
      *  Grab the mimetypes and setup the selected one
      */
@@ -52,7 +52,7 @@ function uploads_userapi_process_filters( $args ) {
         $subtypes[0]['selected'] = TRUE;
     }
     unset($subtypes);
-	unset($mimetypes);
+    unset($mimetypes);
 
     /**
      *  Set up the actual filter that will be passed to the api get function 

@@ -44,14 +44,14 @@ function uploads_admin_view( ) {
     }
     
     /**
-     * Perform all TYPE specific actions
+     * Perform all actions
      */
     
     if (isset($action)) {
         
         
         if ($action > 0) {
-            if (isset($fileDo) && strtolower($fileDo) == 'change') {
+            if (isset($fileDo)) {
                 $args['fileId']     = $fileId;
             } else {
                 $args['fileType']   = $filter['fileType'];
@@ -67,16 +67,14 @@ function uploads_admin_view( ) {
                     xarModAPIFunc('uploads','user','db_change_status', $args +  array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
                     break;
             case _UPLOADS_STATUS_REJECTED:
-                /**
-                 *  If auto-purge is turned on, then don't set to rejected state,
-                 *  instead, just get confirmation and delete right away
-                 */
-                if (xarModGetVar('uploads','file.auto-purge')) {
-                    $files = xarModAPIFUnc('uploads','user','db_get_file',      $args);
-                    return xarModFunc('uploads','admin','confirm_delete',       array('fileList' => $files));
-                } else {
-                    xarModAPIFunc('uploads','user','db_change_status', $args +  array('newStatus'   => _UPLOADS_STATUS_REJECTED));
-                }                          
+                xarModAPIFunc('uploads','user','db_change_status', $args +  array('newStatus'   => _UPLOADS_STATUS_REJECTED));
+                if (xarModGetVar('uploads', 'file.auto-purge')) {
+                    if (xarModGetVar('uploads', 'file.delete-confirmation')) {
+                        return xarModFunc('uploads', 'user', 'purge_rejected');
+                    } else {
+                        return xarModFunc('uploads', 'user', 'purge_rejected', array('confirmation' => TRUE));
+                    }
+                }
                 break;
             case 0: /* Change View or anything not defined */
             default:
@@ -85,12 +83,6 @@ function uploads_admin_view( ) {
     }
     
     /**
-     * TODO: Perform all FILE specific actions
-     */
-     
-     
-     
-	/**
      * Grab a list of files based on the defined filter 
      */
      

@@ -47,8 +47,14 @@ function uploads_userapi_db_getall_files( /* VOID */ ) {
     $importDir = eregi_replace('/$', '', $importDir);
     $uploadDir = eregi_replace('/$', '', $uploadDir);
 
-    // zip through the list of results and
-    // add it to the array we will return
+    if(xarServerGetVar('PATH_TRANSLATED')) {
+        $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
+    } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
+        $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+    } else {
+        $base_directory = './';
+    }
+        
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         
@@ -61,8 +67,9 @@ function uploads_userapi_db_getall_files( /* VOID */ ) {
         $fileInfo['fileStatus']   = $row['xar_status'];
         $fileInfo['fileType']     = $row['xar_mime_type'];
         $fileInfo['storeType']    = $row['xar_store_type'];
-        
-        $row = $result->GetRowAssoc(false);
+        $fileInfo['mimeImage']    = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
+        $fileInfo['fileURL']      = xarServerGetBaseURL() . str_replace($base_directory, '', $fileInfo['fileLocation']);
+        $fileInfo['fileDownload'] = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
 
         if (stristr($fileInfo['fileLocation'], $importDir)) {
             $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'IMPORTS', $fileInfo['fileLocation']));
