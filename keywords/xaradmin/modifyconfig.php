@@ -18,11 +18,12 @@
  * @param $restricted -
  * @return true on success or void on failure
  * @throws no exceptions
- * @todo nothing
+ * @todo EFFETTUARE LE CHIAMATE SU RESTRICTED SOLO SE IL CASO
  */
 function keywords_admin_modifyconfig()
 { 
     if (!xarVarFetch('restricted', 'int', $restricted, $restricted, XARVAR_NOT_REQUIRED)) return;
+
     if (!xarSecurityCheck('AdminKeywords')) return;
 
     $data = array();
@@ -31,8 +32,7 @@ function keywords_admin_modifyconfig()
                               'admin',
                               'getwordslimited',
                               array('moduleid' => '0'));
-
-    var_dump($keywords);
+    
 
     // $keywords = xarModGetVar('keywords','default');
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
@@ -59,6 +59,7 @@ function keywords_admin_modifyconfig()
                                                    'admin',
                                                    'getwordslimited',
                                                    array('moduleid' => $moduleid));
+                         
 
 
                     if (isset($mytypes[$itemtype])) {
@@ -78,6 +79,7 @@ function keywords_admin_modifyconfig()
                                                 'admin',
                                                 'getwordslimited',
                                                  array('moduleid' => $moduleid));
+                      
 
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
@@ -96,6 +98,8 @@ function keywords_admin_modifyconfig()
     $data['delimiters'] = xarModGetVar('keywords','delimiters');
 
     $data['authid'] = xarSecGenAuthKey();
+
+//var_dump($data);
 
     return $data;
 }
