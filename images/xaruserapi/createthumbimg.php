@@ -1,24 +1,24 @@
 <?php
 /* Create a thumbnail for an image
    PARAMS:
-   		'file'       - Original File
-		'thumbwidth' - Width of thumbnail
-		'thumbheight'- Height of thumbnail
-		'newfile'    - Name of new Filer
+           'file'       - Original File
+        'thumbwidth' - Width of thumbnail
+        'thumbheight'- Height of thumbnail
+        'newfile'    - Name of new Filer
 */
 function uploads_userapi_createthumbimg($args)
 {
-	extract($args);
+    extract($args);
 
-	$netpbm_path = xarModGetVar('uploads', 'netpbm_path');
+    $netpbm_path = xarModGetVar('uploads', 'netpbm_path');
 
-	if( isset($netpbm_path) && ($netpbm_path != '') )
-	{
-		createthumbNetPBM( $file, $thumbwidth, $thumbheight, $newfile );
-	} else {
-		createthumb( $file, $thumbwidth, $thumbheight, $newfile );
-	}
-	
+    if( isset($netpbm_path) && ($netpbm_path != '') )
+    {
+        createthumbNetPBM( $file, $thumbwidth, $thumbheight, $newfile );
+    } else {
+        createthumb( $file, $thumbwidth, $thumbheight, $newfile );
+    }
+    
 }
 
 
@@ -26,22 +26,22 @@ function uploads_userapi_createthumbimg($args)
 
 function ImageCreateFrom($file)
 {
-	$IMAGE_PROPERTIES = GetImageSize($file);
+    $IMAGE_PROPERTIES = GetImageSize($file);
 
-	switch( $IMAGE_PROPERTIES[2] )
-	{
-		case 1:
-		    $im = @imagecreatefromgif ($file); /* Attempt to open */
-			break;
-		case 2:
-		    $im = @imagecreatefromjpeg ($file); /* Attempt to open */
-			break;
-		case 3:
-		    $im = @imagecreatefrompng ($file); /* Attempt to open */
-			break;
-		default:
-			$im = false;
-	}
+    switch( $IMAGE_PROPERTIES[2] )
+    {
+        case 1:
+            $im = @imagecreatefromgif ($file); /* Attempt to open */
+            break;
+        case 2:
+            $im = @imagecreatefromjpeg ($file); /* Attempt to open */
+            break;
+        case 3:
+            $im = @imagecreatefrompng ($file); /* Attempt to open */
+            break;
+        default:
+            $im = false;
+    }
     if (!$im) { /* See if it failed */
         $im = imagecreate (150, 30); /* Create a blank image */
         $bgc = imagecolorallocate ($im, 255, 255, 255);
@@ -59,8 +59,8 @@ function ImageCreateFrom($file)
 function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE)
 {
 
-	$BACKUP_FILE = $OUTPUT_FILE . "_backup.jpg";
-	copy($IMAGE_SOURCE,$BACKUP_FILE);
+    $BACKUP_FILE = $OUTPUT_FILE . "_backup.jpg";
+    copy($IMAGE_SOURCE,$BACKUP_FILE);
 
 
     $SRC_IMAGE = ImageCreateFrom($BACKUP_FILE);
@@ -92,11 +92,11 @@ function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE)
     } else {
       imagedestroy($SRC_IMAGE);
 
-	if (ImageJPEG($DEST_IMAGE,$OUTPUT_FILE)) 
-	{
-	   imagedestroy($DEST_IMAGE);
-	   return(1);
-	}
+    if (ImageJPEG($DEST_IMAGE,$OUTPUT_FILE)) 
+    {
+       imagedestroy($DEST_IMAGE);
+       return(1);
+    }
       imagedestroy($DEST_IMAGE);
     }
     return(0);
@@ -201,88 +201,88 @@ function ImageCopyResampleBicubic (&$dst_img, &$src_img, $dst_x,
                     ImageColorClosest ($dst_img, $red, $green, $blue)); 
             }
         }
-		return true;
+        return true;
     } 
 
 // **********************
 // ** NetPBM Support
 // *****************
-				     
+                     
 function createthumbnetpbm( $file, $thumbwidth, $thumbheight, $newfile )
-{	
-	// Path to NetPBM installation
-	$bin_path = xarModGetVar('uploads', 'netpbm_path');
+{    
+    // Path to NetPBM installation
+    $bin_path = xarModGetVar('uploads', 'netpbm_path');
 
-	// Create thumb from $file and store it as $newfile
-	$absname = $file;		
-	$thumbname = $newfile;
+    // Create thumb from $file and store it as $newfile
+    $absname = $file;        
+    $thumbname = $newfile;
 
 
-	// Get image info
-	$info = getimagesize($absname);			
-	$imagewidth = $info[0];			
-	$imageheight = $info[1];			
-	
-	// Workout thumbnail width/height	
-	$new_w = $thumbwidth;			
-	$new_h = $thumbheight;
-	if( !isset( $new_h ) || ($new_h == 0) )
-	{
-		$scale = ($imagewidth / $new_w);			
-		$new_h = round($imageheight / $scale);			
-	}
-	
-	if( !isset( $new_w ) || ($new_w == 0) )
-	{
-		$scale = ($thumbheight / $new_h);			
-		$new_w = round($imagewidth / $scale);			
-	}
-	
-	// determine file formats
-	switch($info[2]) 
-	{			
-		// GIF			
-		case 1:				
-			$topnm = "giftopnm";				
-			$tothumb = "ppmtogif";				
-			$quant = "ppmquant 256";				
-			break;			
-		// JPEG			
-		case 2:				
-			$topnm = "jpegtopnm";				
-			$tothumb = "ppmtojpeg";				
-			$quant = "";				
-			break;			
-		// PNG			
-		case 3:				
-			$topnm = "pngtopnm";				
-			$tothumb = "pnmtopng";				
-			$quant = "ppmquant 256";				
-			break;		
-	}	
-	// switch on file type to figure out which executables we need		
-	// build the shell command		
-	$cmd = $bin_path . $topnm . " \"" . $absname . "\" | ";		
-	$cmd .= $bin_path . "pnmscale -xysize " . $new_w . " " . $new_h . " | ";		
-	if( $quant != "" ) 
-	{
-		$cmd .= $bin_path . $quant . " | ";		
-	}
-	$cmd .= $bin_path . $tothumb . " > \"" . $thumbname . "\"";		
-	// create the path to the thumbnail, if necessary, and execute the shell command		
-	// to create the thumbnail file		
-/*	
-	echo $cmd;
-	echo "<hr/>";
-//	exit();
-	echo "Executing...<br/>";
-	echo "<pre>";
-//	passthru($cmd);
-	exit();
-	exit();
-*/	
-	
-	exec($cmd);	
+    // Get image info
+    $info = getimagesize($absname);            
+    $imagewidth = $info[0];            
+    $imageheight = $info[1];            
+    
+    // Workout thumbnail width/height    
+    $new_w = $thumbwidth;            
+    $new_h = $thumbheight;
+    if( !isset( $new_h ) || ($new_h == 0) )
+    {
+        $scale = ($imagewidth / $new_w);            
+        $new_h = round($imageheight / $scale);            
+    }
+    
+    if( !isset( $new_w ) || ($new_w == 0) )
+    {
+        $scale = ($thumbheight / $new_h);            
+        $new_w = round($imagewidth / $scale);            
+    }
+    
+    // determine file formats
+    switch($info[2]) 
+    {            
+        // GIF            
+        case 1:                
+            $topnm = "giftopnm";                
+            $tothumb = "ppmtogif";                
+            $quant = "ppmquant 256";                
+            break;            
+        // JPEG            
+        case 2:                
+            $topnm = "jpegtopnm";                
+            $tothumb = "ppmtojpeg";                
+            $quant = "";                
+            break;            
+        // PNG            
+        case 3:                
+            $topnm = "pngtopnm";                
+            $tothumb = "pnmtopng";                
+            $quant = "ppmquant 256";                
+            break;        
+    }    
+    // switch on file type to figure out which executables we need        
+    // build the shell command        
+    $cmd = $bin_path . $topnm . " \"" . $absname . "\" | ";        
+    $cmd .= $bin_path . "pnmscale -xysize " . $new_w . " " . $new_h . " | ";        
+    if( $quant != "" ) 
+    {
+        $cmd .= $bin_path . $quant . " | ";        
+    }
+    $cmd .= $bin_path . $tothumb . " > \"" . $thumbname . "\"";        
+    // create the path to the thumbnail, if necessary, and execute the shell command        
+    // to create the thumbnail file        
+/*    
+    echo $cmd;
+    echo "<hr/>";
+//    exit();
+    echo "Executing...<br/>";
+    echo "<pre>";
+//    passthru($cmd);
+    exit();
+    exit();
+*/    
+    
+    exec($cmd);    
 }
 
 
