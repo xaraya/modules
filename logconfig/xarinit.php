@@ -74,7 +74,11 @@ function logconfig_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '0.5':
+        case '0.1.0':
+            $logConfigFile = xarCoreGetVarDirPath() . '/cache/config.log.php';
+            if (file_exists($logConfigFile)) unlink($logConfigFile);
+            //When people turn it on again it will produce the config in the
+            //new directory, no need to do it in here.
         case '1.0.0':
         case '2.0.0':
             break;

@@ -2,7 +2,7 @@
 
 $modversion['name'] = 'Log Configuration Module';
 $modversion['id'] = '6969';
-$modversion['version'] = '0.1.0';
+$modversion['version'] = '0.1.1';
 $modversion['displayname']    = xarML('LogConfig');
 $modversion['description'] = 'Module for Configuration the Logging System';
 $modversion['credits'] = 'xardocs/credits.txt';
