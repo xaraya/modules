@@ -13,7 +13,7 @@
             <em><xar:mlstring>Comments is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
-                <li><xar:mlstring>Allows the use of consistant comments across any module that calls display hooks.</xar:mlstring></li>
+                <li><xar:mlstring>Allows the use of consistent comments across any module that calls display hooks.</xar:mlstring></li>
             </ul>
         </div>
         <br />
