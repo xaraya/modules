@@ -52,16 +52,18 @@ function ping_init()
         return false;
     } 
 
-    $links = array("'http://rpc.weblogs.com/RPC2', 0",
-                   "'http://api.my.yahoo.com/RPC2', 0",
-                   "'http://rpc.technorati.com/rpc/ping', 0",
-                   "'http://rssrpc.weblogs.com/RPC2', 1",
-                   "'http://ping.blo.gs/', 1");
+    $links = array(
+        array('http://rpc.weblogs.com/RPC2', 0),
+        array('http://api.my.yahoo.com/RPC2', 0),
+        array('http://rpc.technorati.com/rpc/ping', 0),
+        array('http://rssrpc.weblogs.com/RPC2', 1),
+        array('http://ping.blo.gs/', 1));
+    
     foreach ($links as $link){
         // Get next ID in table
         $nextId = $dbconn->GenId($table);
-        $query = "INSERT INTO $table VALUES ($nextId,$link)";
-        $result =& $dbconn->Execute($query);
+        $query = "INSERT INTO $table (xar_id, xar_url, xar_method) VALUES (?,?,?)";
+        $result =& $dbconn->Execute($query,array($nextId, $link[0], (int) $link[1]));
         if (!$result) return;
     }
 
