@@ -1,21 +1,25 @@
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-    <div class="tabnav">
-        <div class="navhelp help" title="#xarML('Click on a tab to display articles from that publication type')#">
-            <xar:mlstring>
-                Publication Type 
-            </xar:mlstring>
-            : 
-        </div>
-        <div class="tabnav-hairline"><!-- &nbsp; --></div>
-        <ul class="navlist">
-            <xar:foreach in="$pubfilters" value="$pubfilter">
-                <xar:if condition="empty($pubfilter['plink'])">
-                    <li class="active"><a href="#xarServerGetCurrentURL()#" title="#$pubfilter['ptitle']#"> #$pubfilter['ptitle']# </a></li>
-                    <xar:else />
-                    <li><a href="#$pubfilter['plink']#" title="#$pubfilter['ptitle']#"> #$pubfilter['ptitle']# </a></li>
-                </xar:if>
-            </xar:foreach>
-        </ul>
-        <div class="tabnav-hairline"><!-- &nbsp; --></div>
-    </div>
 </xar:if>
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>
+            Publication Type 
+        </xar:mlstring>
+        : 
+    </dt>
+    <xar:foreach in="$pubfilters" value="$pubfilter">
+        <xar:if condition="empty($pubfilter['plink'])">
+            <dd class="active">
+                <a href="#xarServerGetCurrentURL()#" title="#$pubfilter['ptitle']#">
+                    #$pubfilter['ptitle']# 
+                </a>
+            </dd>
+            <xar:else />
+            <dd>
+                <a href="#$pubfilter['plink']#" title="#$pubfilter['ptitle']#">
+                    #$pubfilter['ptitle']# 
+                </a>
+            </dd>
+        </xar:if>
+    </xar:foreach>
+</dl>

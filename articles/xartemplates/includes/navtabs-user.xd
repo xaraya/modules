@@ -1,39 +1,35 @@
 <xar:if condition="!empty($maplink) or !empty($archivelink) or !empty($submitlink)">
     <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-        <div class="tabnav">
-            <div class="navhelp help" title="#xarML('Click on a tab to explore further')#">
-                <xar:mlstring>
-                    Options 
-                </xar:mlstring>
-                : 
-            </div>
-            <div class="tabnav-hairline"><!-- &nbsp; --></div>
-            <ul class="navlist">
-                <xar:if condition="!empty($maplink)">
-                    <li>
-                        <a href="#$maplink#">
-                            #$maplabel# 
-                        </a>
-                    </li>
-                </xar:if>
-                <xar:if condition="!empty($submitlink)">
-                    <li>
-                        <a href="#$submitlink#" title="Submit Article">
-                            <xar:mlstring>
-                                Contribute 
-                            </xar:mlstring>
-                        </a>
-                    </li>
-                </xar:if>
-                <xar:if condition="!empty($archivelink)">
-                    <li>
-                        <a href="#$archivelink#">
-                            #$archivelabel# 
-                        </a>
-                    </li>
-                </xar:if>
-            </ul>
-            <div class="tabnav-hairline"><!-- &nbsp; --></div>
-        </div>
     </xar:if>
+    <dl class="xar-tabs">
+        <dt class="help">
+            <xar:mlstring>
+                Options 
+            </xar:mlstring>
+            : 
+        </dt>
+        <xar:if condition="!empty($maplink)">
+            <dd>
+                <a href="#$maplink#">
+                    #$maplabel# 
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="!empty($submitlink)">
+            <dd>
+                <a href="#$submitlink#" title="Submit Article">
+                    <xar:mlstring>
+                        Contribute 
+                    </xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="!empty($archivelink)">
+            <dd>
+                <a href="#$archivelink#">
+                    #$archivelabel# 
+                </a>
+            </dd>
+        </xar:if>
+    </dl>
 </xar:if>
