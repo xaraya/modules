@@ -1,6 +1,6 @@
 <xar:template file="user-menu" />
 
-<div style="float: left; margin-top: 1em;">
+<div style="float: left; margin-top: 1em; width: 100%">
 
     <style type="text/css">
     table.csetsummary {
@@ -19,7 +19,7 @@
         padding: 5pt;
     }
 
-    div.csetdetails ul.subtree {
+    div.csetdetails ul.subtree  {
       padding: 0em 0em 0em 2em;
     }
 
@@ -37,22 +37,16 @@
       list-style-image: none;
       list-style-type: none;
     }
+    
+    ul.subtree li {
+        background-image: none;
+    }
     </style>
 
 
     <!-- Summary of the cset -->
-    <div class="xar-norm-outline xar-accent csetsummary">
-      <table class="csetsummary"> 
-        <tr><td><xar:mlstring>Author</xar:mlstring> :</td>
-            <td><a title="#xarML('Show the changeset activity of this user')#" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$author#" onclick="return loadContent(this.href);">#$author#</a></td></tr>
-        <tr><td><xar:mlstring>Revision</xar:mlstring> :</td><td>#$rev#</td></tr>
-        <tr><td><xar:mlstring>Key</xar:mlstring> :</td><td>#$key#</td></tr>
-        <tr><td><xar:mlstring>Patch</xar:mlstring> :</td><td><a  onclick="return loadContent(this.href);" title="#xarML('View differences')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#"><xar:mlstring>View diff</xar:mlstring></a> | Download BK patch</td></tr>
-        <xar:if condition="$tag != ''"><tr><td ><xar:mlstring>Tag</xar:mlstring> :</td><td class="xar-alt-outline">#$tag#</td></tr></xar:if>
-        <tr><td><xar:mlstring>Comments</xar:mlstring> :</td><td><xar:foreach in="$comments" value="$line">#$line#<br/></xar:foreach></td></tr>
-      </table>
-    </div>
-
+    <xar:template file="user-cset" subdata="$cset"/>
+    
     <!-- Let's try something daring, recursive templating -->
     <div class="xar-mod-title" style="margin-top: 1em;">
         <xar:mlstring>Modified files and included deltas by this changeset</xar:mlstring>

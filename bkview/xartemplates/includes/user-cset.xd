@@ -48,4 +48,9 @@
     <div class="comments">
         #$comments#
     </div>
+    
+    <div style="text-align: right; padding-right: 5pt; font-size: smaller">
+        <a href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#" onclick="return loadContent(this.href);">
+        <xar:mlstring>View all differences</xar:mlstring></a>
+    </div>
 </div>

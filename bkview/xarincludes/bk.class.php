@@ -298,19 +298,21 @@ class bkChangeSet
     var $_comments; // cset comment
     var $_key;      // fixed key of this cset
     var $_tag;      // tag, if any
+    var $_age;      // how old is this
     
     function bkChangeset($repo,$rev='+') 
     {
         $this->_repo=$repo;
         $this->_rev=$rev;   // changeset revision number
         // Fill basic properties
-        $cmd = "bk changes -r".$rev. " -d':P:\n\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}\n:KEY:\n:TAG:'";
+        $cmd = "bk changes -r".$rev. " -d':P:\n\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}\n:KEY:\n:AGE:\n:TAG:'";
         $tmp = $this->_repo->_run($cmd);
         $this->_author = $tmp[0];
         $this->_comments = explode(BK_NEWLINE_MARKER,$tmp[1]);
         $this->_key = $tmp[2];
-        if(array_key_exists(3,$tmp)) {
-            $this->_tag = $tmp[3];
+        $this->_age = $tmp[3];
+        if(array_key_exists(4,$tmp)) {
+            $this->_tag = $tmp[4];
         } else {
             $this->_tag = '';
         }
@@ -369,6 +371,11 @@ class bkChangeSet
     {
         return $this->_tag;
     }
+    
+    function bkGetAge()
+    {
+        return $this->_age;
+   }
 }
 
 // Class to model a delta

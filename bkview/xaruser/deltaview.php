@@ -67,6 +67,13 @@ function bkview_user_deltaview($args)
     $data['repoid']=$repoid;
     $data['name_value']=$item['reponame'];
     $data['hooks'] = $hooks;
+    $data['cset']['rev'] = $rev;
+    $data['cset']['repoid'] = $repoid;
+    $data['cset']['age'] = $changeset->bkGetAge();
+    $data['cset']['range'] = bkAgeToRangeCode($changeset->bkGetAge());
+    $data['cset']['author'] = $changeset->bkGetAuthor();
+    $data['cset']['comments'] = nl2br(xarVarPrepForDisplay(implode("\n",$changeset->bkGetComments())));
+    $data['cset']['tag'] = $changeset->bkGetTag();
     return $data;
 }
 

@@ -1,20 +1,23 @@
 <xar:template file="user-menu" />
 
 <div style="float: left; margin-top: 1em; width: 100%;">
-  <xar:loop name="$deltalist">
-    <div class="xar-accent xar-title">
-      <xar:ml>
-        <xar:mlstring>Diffs for #(1) introduced in #(2)</xar:mlstring>
-        <xar:mlvar>#$loop:item['file']#</xar:mlvar>
-        <xar:mlvar>#$loop:item['revision']#</xar:mlvar>
-      </xar:ml>
-    </div>
-    <div class="precontainer">
-      <xar:loop name="$loop:item['difflines']">
-        <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
-      </xar:loop>
-    </div>
-  </xar:loop>
+    <xar:template file="user-cset" subdata="$cset"/>
+  
+    <xar:loop name="$deltalist">
+        <div class="xar-accent xar-title">
+            <xar:ml>
+                <xar:mlstring>Diffs for #(1) introduced in #(2)</xar:mlstring>
+                <xar:mlvar>#$loop:item['file']#</xar:mlvar>
+                <xar:mlvar>#$loop:item['revision']#</xar:mlvar>
+            </xar:ml>
+            </div>
+    
+        <div class="precontainer">
+            <xar:loop name="$loop:item['difflines']">
+                <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
+            </xar:loop>
+        </div>
+    </xar:loop>
 </div>
 
 <xar:template file="user-trailer" />
