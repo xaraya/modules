@@ -2,7 +2,7 @@
 
 <xar:template type="module" file="druidbar" />
 <p>
-  <xar:mlstring>Choose from the list below which theme you want to translate.</xar:mlstring>
+  <xar:mlstring>Choose which theme you want to translate from the list below.</xar:mlstring>
 </p>
 <ul>
 <xar:loop name="$themelist">

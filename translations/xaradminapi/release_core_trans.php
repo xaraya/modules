@@ -27,7 +27,7 @@ function translations_adminapi_release_core_trans($args)
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     if ($bt != 'php') {
-        $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that such backend.', $bt);
+        $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that backend.', $bt);
         xarExceptionSet(XAR_USER_EXCEPTION, 'UnsupportedReleaseBackend', new DefaultUserException($msg));
         return;
     }

@@ -7,7 +7,7 @@
 <!-- <xar:template type="module" file="druidbar" /> -->
 <p>
 <form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarModURL('translations', 'admin', 'update_release_locale')#" method="post">
-    <xar:mlstring>Choose the locale for which you want to generate translations</xar:mlstring>:
+    <xar:mlstring>Choose the locale you want to generate translations for</xar:mlstring>:
     <select name="locale" id="locale" onchange="document.releaseLocaleForm.submit();">
         <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
             <xar:if condition="$locales[$i] eq $release_locale">

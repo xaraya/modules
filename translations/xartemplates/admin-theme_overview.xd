@@ -2,7 +2,7 @@
 
 <xar:template type="module" file="druidbar" />
 <xar:mlstring>Theme name</xar:mlstring>: #$displayname#<br />
-<xar:mlstring>Them original name</xar:mlstring>: #$name#<br />
+<xar:mlstring>Theme original name</xar:mlstring>: #$name#<br />
 <xar:mlstring>Theme version</xar:mlstring>: #$version#<br />
 <br />
 <xar:mlstring>Make a choice</xar:mlstring>:<br />
