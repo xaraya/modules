@@ -15,6 +15,9 @@
  */
 
 function AddressBook_userapi_input2numeric($args){
+
+	$num = 0;
+	    
     extract($args);
     if( (!isset($inum)) || (empty($inum)) || ($inum=='')) {
         return 'NULL';

@@ -5,11 +5,9 @@
 <!--- -------------------------------------------------------------- --->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        #xarModGetVar(__ADDRESSBOOK__,'abtitle')#</span>
+        #xarModGetVar(__ADDRESSBOOK__,'abtitle')#
+    </span>
 </div>
 <!--- START DEBUG DISPLAY -----------------------------------------------------------  --->
 <xar:template compile="false" file="mod-debug" type="module" />
 <!--- END DEBUG DISPLAY -------------------------------------------------------------  --->
-<!--- START INFO DISPLAY -----------------------------------------------------------  --->
-<xar:template compile="false" file="mod-info-msg" type="module" />
-<!--- END INFO DISPLAY -------------------------------------------------------------  --->

@@ -19,22 +19,22 @@
  */
 function AddressBook_user_viewdetail() {
 
-    $data = array();
+    $output = array();
 
     /**
      * Retrieve data from submitted input / URL
      */
-    $data = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array('data' => $data));
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array('data' => $output));
 
     /**
      * Retrieve any config values needed to configure the page
      */
-    $data['zipbeforecity'] = pnModGetVar(__ADDRESSBOOK__,'zipbeforecity');
+    $output['zipbeforecity'] = pnModGetVar(__ADDRESSBOOK__,'zipbeforecity');
 
     // Get detailed values from database
-    $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$data['id']));
+    $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$output['id']));
     foreach ($details as $key=>$value) {
-        $data[$key] = $value;
+        $output[$key] = $value;
     }
 
     // Get the labels
@@ -43,46 +43,50 @@ function AddressBook_user_viewdetail() {
     // General information
     // headline
     $cats = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormCategories');
-    $data['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '._AB_UNFILED);
-    if ($data['cat_id'] > 0) {
+    $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '._AB_UNFILED);
+    if ($output['cat_id'] > 0) {
         foreach ($cats as $c) {
-            if ($data['cat_id'] == $c['nr']) {
-                $data['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '.$c['name']);
+            if ($output['cat_id'] == $c['nr']) {
+                $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '.$c['name']);
             }
         }
     }
 
-    if ($data['date'] > 0) {
-        $data['info'] .= ' | '.xarVarPrepHTMLDisplay(_AB_LASTCHANGED)
+    if ($output['date'] > 0) {
+        $output['info'] .= ' | '.xarVarPrepHTMLDisplay(_AB_LASTCHANGED)
                                .xarModAPIFunc(__ADDRESSBOOK__,'util','ml_ftime',
                                                             array ('datefmt' =>_DATETIMEBRIEF
-                                                                  ,'timestamp'=>$data['date']));
+                                                                  ,'timestamp'=>$output['date']));
     }
 
     // Format the Contat info for display
-    $data['contacts'] = array();
+    $output['contacts'] = array();
     for ($i=1;$i<6;$i++) {
         $contact = array();
         $the_contact = 'contact_'.$i;
         $the_label = 'c_label_'.$i;
-        if (!empty($data[$the_contact])) {
+        if (!empty($output[$the_contact])) {
+        	//FIXME:<garrett> if there is a record with a set of contact labels
+        	// and ALL those labels were deleted & new ones added, this will fail to
+        	// to build the contact array because none of the old labels['nr'] will
+        	// be found in the new label list.
             foreach ($labels as $lab) {
-                if ($data[$the_label] == $lab['nr']) {
+                if ($output[$the_label] == $lab['nr']) {
                     $contact['label'] = xarVarPrepHTMLDisplay($lab['name']);
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$data[$the_contact]))) {
-                        if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$data[$the_contact]))) {
-                            $contact['contact'] = xarVarPrepHTMLDisplay($data[$the_contact]);
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$output[$the_contact]))) {
+                        if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$output[$the_contact]))) {
+                            $contact['contact'] = xarVarPrepHTMLDisplay($output[$the_contact]);
                         }
                         else {
-                            $contact['contact'] = '<a href="'.xarVarPrepHTMLDisplay($data[$the_contact]).'" target="_blank">'.xarVarPrepHTMLDisplay($data[$the_contact]).'</a>';
+                            $contact['contact'] = '<a href="'.xarVarPrepHTMLDisplay($output[$the_contact]).'" target="_blank">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
                         }
                     }
                     else {
-                        $contact['contact'] = '<a href="mailto:'.xarVarPrepHTMLDisplay($data[$the_contact]).'">'.xarVarPrepHTMLDisplay($data[$the_contact]).'</a>';
+                        $contact['contact'] = '<a href="mailto:'.xarVarPrepHTMLDisplay($output[$the_contact]).'">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
                     }
                 }
             }
-            $data['contacts'][] = $contact;
+            $output['contacts'][] = $contact;
         }
     } // END for
 
@@ -98,10 +102,10 @@ function AddressBook_user_viewdetail() {
     $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
     if ((!empty($custom_tab)) || ($custom_tab != '')) {
 
-        $data['custom_tab'] = $custom_tab;
-//        $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustUserData',array('id'=>$data['id']
-//                                                                                       ,'flag'=>_AB_CUST_DATAONLY));
-
+        $output['custom_tab'] = $custom_tab;
+        $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',
+        								array('id'=>$output['id']
+                                             ,'flag'=>_AB_CUST_ALLINFO));
 
 /* gehDEBUG
         $hasValues = false;
@@ -137,11 +141,10 @@ function AddressBook_user_viewdetail() {
                     $userData['userData'] = '&nbsp;';
                 }
 
-                $data['custUserData'][] = $userData;
+                $output['custUserData'][] = $userData;
 
             } // END foreach
 */
-//            echo "ID = ".$data['id']; print_r($data['custUserData']);die(); //gehDEBUG
 
 //        }
     } // END if
@@ -149,12 +152,12 @@ function AddressBook_user_viewdetail() {
     /**
      * Notes
      */
-    if (!empty($data['note'])) {
+    if (!empty($output['note'])) {
 
         // headline
-        $data['noteHeading'] = xarVarPrepHTMLDisplay(_AB_NOTETAB);
+        $output['noteHeading'] = xarVarPrepHTMLDisplay(_AB_NOTETAB);
 
-        $data['note'] = xarVarPrepHTMLDisplay(nl2br($data['note']));
+        $output['note'] = xarVarPrepHTMLDisplay(nl2br($output['note']));
     }
 
     /**
@@ -163,42 +166,32 @@ function AddressBook_user_viewdetail() {
     // Copy to clipboard if IE
     if (xarModAPIFunc(__ADDRESSBOOK__,'user','checkForIE')) {
         $clip='';
-        if (!empty($data['company'])) {$clip.=$data['company'].'\n'; }
-        if (!empty($data['lname'])) {
-            if (!empty($data['fname'])) {$clip.=$data['fname'].' '.$data['lname'].'\n'; }
-            else { $clip .= $data['lname'].'\n'; }
+        if (!empty($output['company'])) {$clip.=$output['company'].'\n'; }
+        if (!empty($output['lname'])) {
+            if (!empty($output['fname'])) {$clip.=$output['fname'].' '.$output['lname'].'\n'; }
+            else { $clip .= $output['lname'].'\n'; }
         }
-        if (!empty($data['address_1'])) {$clip.=$data['address_1'].'\n'; }
-        if (!empty($data['address_2'])) {$clip.=$data['address_2'].'\n'; }
-        if ($data['zipbeforecity']) {
-            if (!empty($data['zip'])) {$clip.=$data['zip'].' '; }
-            if (!empty($data['city'])) {$clip.=$data['city'].'\n'; }
-            if (!empty($data['state'])) {$clip.=$data['state'].'\n'; }
-            if (!empty($data['country'])) {$clip.=$data['country'].'\n'; }
+        if (!empty($output['address_1'])) {$clip.=$output['address_1'].'\n'; }
+        if (!empty($output['address_2'])) {$clip.=$output['address_2'].'\n'; }
+        if ($output['zipbeforecity']) {
+            if (!empty($output['zip'])) {$clip.=$output['zip'].' '; }
+            if (!empty($output['city'])) {$clip.=$output['city'].'\n'; }
+            if (!empty($output['state'])) {$clip.=$output['state'].'\n'; }
+            if (!empty($output['country'])) {$clip.=$output['country'].'\n'; }
         }
         else {
-            if (!empty($data['city'])) {$clip.=$data['city'].'\n'; }
-            if (!empty($data['state'])) {$clip.=$data['state'].'\n'; }
-            if (!empty($data['zip'])) {$clip.=$data['zip'].'\n'; }
-            if (!empty($data['country'])) {$clip.=$data['country'].'\n'; }
+            if (!empty($output['city'])) {$clip.=$output['city'].'\n'; }
+            if (!empty($output['state'])) {$clip.=$output['state'].'\n'; }
+            if (!empty($output['zip'])) {$clip.=$output['zip'].'\n'; }
+            if (!empty($output['country'])) {$clip.=$output['country'].'\n'; }
         }
-        $data['clip'] = $clip;
-        $data['copy2clipboard'] = xarVarPrepHTMLDisplay(_AB_COPY);
+        $output['clip'] = $clip;
+        $output['copy2clipboard'] = xarVarPrepHTMLDisplay(_AB_COPY);
     }
 
-    $data['goBack'] = xarVarPrepHTMLDisplay(_AB_GOBACK);
-
-    if (xarExceptionMajor() != XAR_NO_EXCEPTION) {
-        // Got an exception
-        if ((xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) && !_AB_DEBUG) {
-            return; // throw back
-        } else {
-            // We are going to handle this exception REGARDLESS of the type
-            $data['abExceptions'] = xarModAPIFunc(__ADDRESSBOOK__,'user','handleException');
-        }
-    }
-
-    return $data;
+    $output['goBack'] = xarVarPrepHTMLDisplay(_AB_GOBACK);
+ 
+	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 
 } // END viewdetail
 

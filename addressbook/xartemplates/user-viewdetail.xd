@@ -90,9 +90,9 @@
                             </td>
                                     <xar:if condition="$img">
                                         <td width="24" align="left" valign="top">&nbsp;</td>
-                                        <td width="1" bgcolor="#E6E6E6"><img width="1" height="1" src="modules/xarAddressBook/xarimages/pix.gif" alt=""></td>
+                                        <td width="1" bgcolor="#E6E6E6"><img width="1" height="1" src="modules/#$modInfo['directory']#/xarimages/pix.gif" alt=""></td>
                                         <td width="24" align="left" valign="top">&nbsp;</td>
-                                        <td align="center" valign="middle"><img src="modules/xarAddressBook/xarimages/#$img#" border="0" alt=""></td>
+                                        <td align="center" valign="middle"><img src="modules/#$modInfo['directory']#/xarimages/#$img#" border="0" alt=""></td>
                                 </xar:if>
                         </tr>
                         </table>
@@ -113,17 +113,23 @@
                                             <td align="left" valign="top">
                                                 <table border="0" cellpadding="0" cellspacing="0" align="left">
                                                 <xar:foreach in="$custUserData" value="$cud">
-                                                                                                    <xar:if condition="strstr($type,_AB_CUST_TEST_LB) or strstr($type,_AB_CUST_TEST_HR)">
+                                                  <xar:if condition="strstr($cud['type'],_AB_CUST_TEST_LB) or strstr($cud['type'],_AB_CUST_TEST_HR)">
                                                     <tr align="center" valign="middle">
                                                         <td colspan="3" rowspan="1" align="left" valign="top">#$cud['userData']#</td>
                                                     </tr>
-                                                                                                    <xar:else />
+                                                  <xar:else />
                                                     <tr align="center" valign="middle">
                                                         <td colspan="1" rowspan="1" align="left" valign="top">#$cud['label']#:</td>
                                                         <td width="10"></td>
-                                                        <td colspan="1" rowspan="1" align="left" valign="top">#$cud['userData']#</td>
+                                                        <td colspan="1" rowspan="1" align="left" valign="top">
+                                                        <xar:if condition="isset($cud['userData'])">
+                                                          #$cud['userData']#
+                                                        <xar:else />
+                                                          &nbsp;
+                                                        </xar:if>
+                                                        </td>
                                                     </tr>
-                                                                                                    </xar:if>
+                                                  </xar:if>
                                                 </xar:foreach>
                                                 </table>
                                             </td>

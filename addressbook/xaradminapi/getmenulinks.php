@@ -74,7 +74,7 @@ function AddressBook_adminapi_getmenulinks()
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('Modify module labels used to describe data fields'),
-                              'label' => xarML('Labels'));
+                              'label' => xarML('Contact Labels'));
     }
 
     if (xarSecurityCheck('ModifyPrefixes',0)) {
@@ -89,7 +89,7 @@ function AddressBook_adminapi_getmenulinks()
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('Modify contact prefix labels (Mr. / Mrs. / etc.)'),
-                              'label' => xarML('Prefixes'));
+                              'label' => xarML('Name Prefixes'));
     }
 
     if (xarSecurityCheck('ModifyCustomFields',0)) {

@@ -129,6 +129,16 @@
 </table>
 </form>
 <xar:else />
-    <xar:template compile="false" file="user-saved" type="module" />
+<br />
+<br />
+	<div align="center">
+	<strong>#$insertSuccess#</strong><br /><br />
+	<a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
+	<br />
+	<br />
+	</div>
 </xar:if>
+	<div style="text-align:center;">
+		<xar:template compile="false" file="mod-footer" type="module" />
+	</div>
 </div>

@@ -15,21 +15,21 @@
         </div>
         <xar:elseif condition="!$userCanViewModule" />
         <div style="text-align:center;">
-                <p><xar:mlstring>We're sorry. You do not have authorization to access the Address Book module</xar:mlstring></p>
-                <p><xar:mlstring>Please contact the <a href="mailto:webmaster@blacktower.com">webmaster</a> for further assistance</xar:mlstring></p>
-            </div>
+            <p><xar:mlstring>We're sorry. You do not have authorization to access the Address Book module</xar:mlstring></p>
+            <p><xar:mlstring>Please contact the <a href="mailto:webmaster@blacktower.com">webmaster</a> for further assistance</xar:mlstring></p>
+        </div>
         <xar:elseif condition="!$userCanViewEntries" />
         <div style="text-align:center;">
-                <p><xar:mlstring>We're sorry. You do not have authorization to view Address Book entries</xar:mlstring></p>
-                <p><xar:mlstring>Please contact the <a href="mailto:webmaster@blacktower.com">webmaster</a> for further assistance</xar:mlstring></p>
-            </div>
+            <p><xar:mlstring>We're sorry. You do not have authorization to view Address Book entries</xar:mlstring></p>
+            <p><xar:mlstring>Please contact the <a href="mailto:webmaster@blacktower.com">webmaster</a> for further assistance</xar:mlstring></p>
+        </div>
         <xar:else />
     <table  border="0" cellspacing="1" cellpadding="5">
       <tr>
         <td><table border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td align="center" valign="top">
-                        <xar:if condition="!$show_menu_off">
+                <xar:if condition="!$show_menu_off">
               <table border="0" cellspacing="1" cellpadding="0">
                 <tr>
                   <td>
@@ -102,7 +102,7 @@
                                 </form>
                               </td>
                               <td align="center" valign="middle" bgcolor="#FFFFFF">
-                                                            <form name="searchform" id="searchform" action="#pnModURL(__ADDRESSBOOK__, 'user', 'viewall')#" method="post" enctype="application/x-www-form-urlencoded">
+                              <form name="searchform" id="searchform" action="#pnModURL(__ADDRESSBOOK__, 'user', 'viewall')#" method="post" enctype="application/x-www-form-urlencoded">
                                   <input type="hidden" name="authid" id="authid" value="#$authid#" />
                                   <input type="hidden" name="catview" id="catview" value="#$catview#" />
                                   <input type="hidden" name="sortview" id="sortview" value="#$sortview#" />
@@ -124,7 +124,7 @@
                                 </form>
                               </td>
                             </tr>
-                                                        <xar:if condition="(xarModGetVar(__ADDRESSBOOK__, 'menu_semi') ne 1) or (xarSecurityCheck('EditAddressBook',0))">
+                            <xar:if condition="(xarModGetVar(__ADDRESSBOOK__, 'menu_semi') ne 1) or (xarSecurityCheck('EditAddressBook',0))">
                             <tr align="center" valign="middle">
                               <td align="center" valign="middle" bgcolor="#FFFFFF"><table border="0" cellpadding="0" cellspacing="0">
                                   <tr>
@@ -161,10 +161,10 @@
                                       <table border="0">
                                         <tr align="center" valign="middle">
                                           <td colspan="1" rowspan="1" align="center" valign="middle">
-                                                                                    <xar:if condition="$addNewAddress">
-                                                                                        <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>
-                                                                                    </xar:if>
-                                                                                    </td>
+                                          <xar:if condition="$addNewAddress">
+                                             <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>
+                                          </xar:if>
+                                          </td>
                                         </tr>
                                       </table>
                                     </td>
@@ -172,54 +172,52 @@
                                 </table>
                               </td>
                             </tr>
-                                                        </xar:if>
+                            </xar:if>
                           </table>
                     </td>
                   </tr>
                 </table>
               <br />
-                            </xar:if>
+              </xar:if>
               <table border="0" cellspacing="1" cellpadding="0">
                 <tr>
                   <td>
-                                    <xar:if condition="!$all">
-                                        <div style="text-align:center;">
-                                        <xar:foreach in="$azLinks" value="$link">
-                                            #$link['azLink']#
-                                        </xar:foreach>
-                                        </div>
-                                    </xar:if>
+              <xar:if condition="!$all">
+                 <div style="text-align:center;">
+                 <xar:foreach in="$azLinks" value="$link">
+                   #$link['azLink']#
+                 </xar:foreach>
+                  </div>
+                   </xar:if>
                                     <br />
-                                    <xar:if condition="!$total">
-                                                                        <div style="text-align:center">
-                                                                                <xar:template compile="false" file="mod-info-msg" type="module" />
-                                                                        </div>
-                                    <xar:else />
-                                    <div align="center">
-                                        <xar:template file="user-viewall-results" compile="false" type="module" />
-                                    </div>
-                          <br />
-                                                    <div style="text-align:center;">
-                                                    <xar:foreach in="$pageNav" value="$pn">
-                                                        <xar:if condition="$pn['pageNum'] ne 1">
-                                                            &nbsp;|&nbsp;
-                                                        </xar:if>
-                                                        <xar:if condition="$pn['pageNum'] eq $absolutePage">
-                                                            <b><u>#$pageNum#</u></b>
-                                                        <xar:else />
-                                                            <a href="#$pn['pageURL']#">#$pn['pageNum']#</a>
-                                                        </xar:if>
-                                                    </xar:foreach>
-                                                    </div>
-                                                </xar:if>
-                                                <xar:if condition="!xarModGetVar(__ADDRESSBOOK__, 'hidecopyright')">
-                                                    <br />
-                                                    <br />
-                                                    <div style="text-align:center;">
-                                                    <xar:mlstring>Powered by</xar:mlstring> <a href="http://xaraya.blacktower.com">xarAddressBook</a> &copy; 2003
-                            <xar:mlstring>based on</xar:mlstring> <a href="http://www.smiatek.com">pnAddressBook</a> v2.0 &copy;  smiatek.com</div>
-                                                </xar:if>
-                                                <br />
+                    <xar:if condition="!$total">
+                      <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center">
+                         <br />
+                         <strong><xar:template compile="false" file="mod-info-msg" type="module" /></strong>
+                         <br />
+                      </div>
+                    <xar:else />
+                      <div align="center">
+                         <xar:template file="user-viewall-results" compile="false" type="module" />
+                      </div>
+                      <br />
+                      <div style="text-align:center;">
+                      <xar:foreach in="$pageNav" value="$pn">
+                         <xar:if condition="$pn['pageNum'] ne 1">
+                            &nbsp;|&nbsp;
+                         </xar:if>
+                         <xar:if condition="$pn['pageNum'] eq $pn['absolutePage']">
+                           <b><u>#$pageNum#</u></b>
+                         <xar:else />
+                           <a href="#$pn['pageURL']#">#$pn['pageNum']#</a>
+                         </xar:if>
+                       </xar:foreach>
+                       </div>
+                    </xar:if>
+                    <br />
+                    <div style="text-align:center;">
+						<xar:template compile="false" file="mod-footer" type="module" />
+                    </div>
                     </td>
                   </tr>
                 </table>

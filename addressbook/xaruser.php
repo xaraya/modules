@@ -22,23 +22,8 @@ include_once ('modules/addressbook/xarglobal.php');
 //=========================================================================
 function AddressBook_user_main() {
 
-    $data = xarModFunc(__ADDRESSBOOK__,'user','viewall');
+    return xarModFunc(__ADDRESSBOOK__,'user','viewall');
 
-//function xarTplModule($modName, $modType, $funcName, $tplData = array(), $templateName = NULL)
-
-//    return xarTplModule(__ADDRESSBOOK__,'user','viewall',$data);
-
-    if (xarExceptionMajor() != XAR_NO_EXCEPTION) {
-        // Got an exception
-        if ((xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) && !_AB_DEBUG) {
-            return; // throw back
-        } else {
-            // We are going to handle this exception REGARDLESS of the type
-            $data['abExceptions'] = xarModAPIFunc(__ADDRESSBOOK__,'user','handleException');
-        }
-    }
-
-    return $data; //gehDEBUG
 } // END main
 
 ?>

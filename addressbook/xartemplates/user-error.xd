@@ -29,7 +29,7 @@
 			<br />
 	</div>
 	<div style="border-width: 1px; background-color:#EFEFEF; border-style: solid; border-color: #666666; padding: 2px; text-align:center;">
-			<xar:foreach in="$abExceptions['xarSysException']" value="sysExc">
+			<xar:foreach in="$abExceptions['xarSysException']" value="$sysExc">
 					#$sysExc['type']# = #$sysExc['text']#<br />
 			</xar:foreach>
 	</div>

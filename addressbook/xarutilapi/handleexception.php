@@ -66,9 +66,9 @@ function AddressBook_utilapi_handleException ($args) {
                             break;
 
                         case _AB_ERR_WARN:
-                            $abInfoMsg['type'] = $exception['exceptionId'];
-                            $abInfoMsg['text'] = $abExc->abExceptionRender(_AB_ERR_WARN_STYLE);
-                            $abExceptions['abWarnMsg'][] = $abInfoMsg;
+                            $abWarnMsg['type'] = $exception['exceptionId'];
+                            $abWarnMsg['text'] = $abExc->abExceptionRender(_AB_ERR_WARN_STYLE);
+                            $abExceptions['abWarnMsg'][] = $abWarnMsg;
                             break;
 
                         case _AB_ERR_ERROR:

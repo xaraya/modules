@@ -19,10 +19,10 @@
         <xar:foreach in="$row['displayRow']" value="$rowData">
                 <td bgcolor="#FFFFFF">#$rowData#</td>
         </xar:foreach>
-                <td bgcolor="#FFFFFF"><a href="#$detailURL#">Details</a>
-                  <xar:if condition="xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',$accessLevel)">
+                <td bgcolor="#FFFFFF"><a href="#$row['detailURL']#">Details</a>
+                  <xar:if condition="xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',$row['accessLevel'])">
                     <xar:if condition="xarSecurityCheck('EditAddressBook',0) or ($user_id eq $user)">
-                        | <a href="#$editURL#">Edit</a> | <a href="#$deleteURL#">Delete</a>
+                        | <a href="#$row['editURL']#">Edit</a> | <a href="#$row['deleteURL']#">Delete</a>
                     </xar:if>
                     </xar:if>
                     </td>

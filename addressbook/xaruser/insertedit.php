@@ -149,6 +149,7 @@ function AddressBook_user_insertedit() {
         case _AB_TEMPLATE_CUST:
             $data['dateformat_1'] = _AB_DATEFORMAT_1;
             $data['dateformat_2'] = _AB_DATEFORMAT_2;
+            $data['textareawidth'] = xarModGetVar(__ADDRESSBOOK__,'textareawidth');
             break;
 
         case _AB_TEMPLATE_NOTE:
@@ -256,77 +257,6 @@ function AddressBook_user_insertedit() {
     if (xarUserIsLoggedIn()) {
         $data['user_id'] = xarUserGetVar('uid');
     }
-
-/*
-    foreach($cus_fields as $cus) {
-        $output->TableRowStart();
-        $the_name = 'custom_'.$cus['nr'];
-        switch ($cus['type']) {
-            case 'varchar(60) default NULL':
-                $cus['name'] = xarVarPrepHTMLDisplay($cus['name']);
-                $cus['value'] = xarVarCleanFromInput($the_name);
-                $cus['the_name'] = $the_name;
-                break;
-            case 'varchar(120) default NULL':
-                $output->TableColStart(1,'left','top');
-                $output->Text(pnVarPrepHTMLDisplay($cus['name']).':');
-                $output->TableColEnd();
-                $output->TableColStart(1,'left','top');
-                $output->Text('<textarea name="'.$the_name.'" rows="2" cols="'.$textareawidth.'" onkeyup="TrackCount(this,120)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;">'.pnVarCleanFromInput($the_name).'</textarea>');
-                break;
-            case 'varchar(240) default NULL':
-                $output->TableColStart(1,'left','top');
-                $output->Text(pnVarPrepHTMLDisplay($cus['name']).':');
-                $output->TableColEnd();
-                $output->TableColStart(1,'left','top');
-                $output->Text('<textarea name="'.$the_name.'" rows="4" cols="'.$textareawidth.'" onkeyup="TrackCount(this,240)" onkeypress="LimitText(this,240)" STYLE="overflow:hidden;">'.pnVarCleanFromInput($the_name).'</textarea>');
-                break;
-            case 'decimal(10,2) default NULL':
-                $output->TableColStart(1,'left','middle');
-                $output->Text(pnVarPrepHTMLDisplay($cus['name']).':');
-                $output->TableColEnd();
-                $output->TableColStart(1,'left','middle');
-                $output->FormText($the_name,pnVarCleanFromInput($the_name),12,12);
-                break;
-            case 'int default NULL':
-                $output->TableColStart(1,'left','middle');
-                $output->Text(pnVarPrepHTMLDisplay($cus['name']).':');
-                $output->TableColEnd();
-                $output->TableColStart(1,'left','middle');
-                $output->FormText($the_name,pnVarCleanFromInput($the_name),9,9);
-                break;
-            case 'date default NULL':
-                $output->TableColStart(1,'left','middle');
-                $output->Text(pnVarPrepHTMLDisplay($cus['name']).':');
-                $output->TableColEnd();
-                $output->TableColStart(1,'left','middle');
-                $output->Text('<table border="0" cellpadding="0" cellspacing="0"><tr><td>');
-                $output->FormText($the_name,pnVarCleanFromInput($the_name),10,10);
-                if (pnModGetVar(__PNADDRESSBOOK__,'dateformat') == 0) {
-                    $output->Text('</td><td>&nbsp;&nbsp;('.pnVarPrepHTMLDisplay(_pnAB_DATEFORMAT_1).')</td></tr></table>');
-                }
-                else {
-                    $output->Text('</td><td>&nbsp;&nbsp;('.pnVarPrepHTMLDisplay(_pnAB_DATEFORMAT_2).')</td></tr></table>');
-                }
-                break;
-            case 'tinyint default NULL':
-                $output->TableColStart(2,'left','middle');
-                $output->Text(pnVarPrepHTMLDisplay('<br>'));
-                break;
-            case 'smallint default NULL':
-                $output->TableColStart(2,'left','middle');
-                $output->Text(pnVarPrepHTMLDisplay('<hr>'));
-                break;
-            default:
-                $output->TableColStart(1,'left','middle');
-                $output->Text(pnVarPrepHTMLDisplay($cus['name']).':');
-                $output->TableColEnd();
-                $output->TableColStart(1,'left','middle');
-                $output->FormText($the_name,pnVarCleanFromInput($the_name),60,60);
-                break;
-        }
-    } // END foreach
-*/
     // END custom field handling
 
     if (xarExceptionMajor() != XAR_NO_EXCEPTION) {

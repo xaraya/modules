@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: insertrecord.php,v 1.1 2003/07/02 08:27:45 garrett Exp $
  *
  * AddressBook user insertRecord
  *
@@ -156,6 +156,10 @@ function AddressBook_userapi_insertrecord($args) {
                         $sql .= "'".xarVarPrepForStore($userData['userData'])."',";
                     } elseif ($userData['type']=='date default NULL') {
                         $sql .= "'".xarModAPIFunc(__ADDRESSBOOK__,'user','td2stamp',array('idate'=>$userData['userData']))."',";
+                    } elseif ($userData['type']=='int default NULL') {
+                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','input2numeric',array('inum'=>$userData['userData'])).",";
+                    } elseif ($userData['type']=='int(1) default NULL') {
+                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','input2numeric',array('inum'=>$userData['userData'])).",";
                     } elseif ($userData['type']=='decimal(10,2) default NULL') {
                         $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','input2numeric',array('inum'=>$userData['userData'])).",";
                     } elseif ((!strstr($userData['type'],_AB_CUST_TEST_LB) &&
