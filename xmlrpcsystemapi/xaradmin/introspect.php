@@ -44,11 +44,13 @@ function xmlrpcsystemapi_admin_introspect()
             $data['debugoutput'] = ob_get_contents();
             ob_end_clean();
         }
-        //var_dump($response);
+
         $methodobjects = $response->xv->me['array'];
         $methods = array();
-        foreach($methodobjects as $methodobject) {
-            $methods[] = $methodobject->me['string'];
+        if(!empty($methodobjects)) {
+            foreach($methodobjects as $methodobject) {
+                $methods[] = $methodobject->me['string'];
+            }
         }
         $data['methods'] = $methods;
     }
