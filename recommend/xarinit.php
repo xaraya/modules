@@ -39,6 +39,11 @@ Site URL: %%siteurl%%';
     xarRegisterMask('OverviewRecommend','All','recommend','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('EditRecommend','All','recommend','All','All','ACCESS_EDIT');
 
+    xarTplRegisterTag(
+        'recommend', 'recommend-sendtofriend', array(),
+        'recommend_userapi_rendersendtofriend'
+    );
+
     return true;
 }
 
@@ -53,6 +58,12 @@ function recommend_upgrade($oldversion)
             // Remove Masks and Instances
             xarRemoveMasks('recommend');
             xarRemoveInstances('recommend');
+            
+            //Set custom sendtofriend tag
+            xarTplRegisterTag(
+               'recommend', 'recommend-sendtofriend', array(),
+               'recommend_userapi_rendersendtofriend'
+            );
             // Set ModVar
             $email = 'Hello %%toname%%, your friend %%name%% considered our site interesting and wanted to send it to you.
 
