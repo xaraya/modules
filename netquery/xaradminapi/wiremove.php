@@ -13,7 +13,7 @@ function netquery_adminapi_wiremove($args)
                           array('whois_id' => $whois_id));
     if (empty($data)) {
         $msg = xarML('No Such Whois Lookup Link Present', 'netquery');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if(!xarSecurityCheck('DeleteNetquery')) return;
