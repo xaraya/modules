@@ -73,6 +73,7 @@ function bkview_user_display($args)
     // Now we need to count the number of entries in the slices defined by the times array
     $rangetext = array();
     $correctwith = 0;
+    $savesets =0;
     foreach($times as $rangecode => $timestamp) {
         if(!array_key_exists($timestamp,$stats)) {
             // This will be almost always i guess, chance that the timestamp key exists is rather minimal
