@@ -57,7 +57,7 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 // Database handler
 global $dbGalaxia;
 if (!isset($dbGalaxia)) {
-    list($dbGalaxia) = xarDBGetConn();
+    $dbGalaxia =& xarDBGetConn();
 }
 
 // Specify how error messages should be shown (for use in compiler and activity code)
