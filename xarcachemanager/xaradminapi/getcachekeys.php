@@ -14,7 +14,7 @@ function xarcachemanager_adminapi_getcachekeys($dir = FALSE)
                         if (strpos($item, '.php')) {
                             $ckey = substr($item, 0, (strrpos($item, '-')));
                             if (!empty($ckey)) {
-                                $cachekeys[$ckey] = array('ckey' => $ckey);
+                                $cachekeys[$ckey] = $ckey;
                             }
                         }
                     }

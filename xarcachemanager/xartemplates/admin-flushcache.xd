@@ -19,8 +19,8 @@
                         <select name="flushkey" id="flushkey" size="1">
                             <option value="-" selected="selected"> - - - </option>
                             <xar:loop name="$cachekeys">
-                                <option value="#$loop:item['ckey']#">
-                                    #$loop:item['ckey']#
+                                <option value="#$loop:item#">
+                                    #$loop:item#
                                 </option>
                             </xar:loop>
                             <xar:if condition="$empty ne 1">
