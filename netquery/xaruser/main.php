@@ -7,19 +7,6 @@ function netquery_user_main()
 { 
     $data = xarModAPIFunc('netquery', 'user', 'mainapi'); 
 
-    xarVarFetch('querytype', 'str:1:', $data['querytype'], 'none', XARVAR_NOT_REQUIRED);
-    xarVarFetch('domain', 'str:1:', $data['domain'], 'example', XARVAR_NOT_REQUIRED);
-    xarVarFetch('ext', 'str:1:', $data['ext'], '.com', XARVAR_NOT_REQUIRED);
-    xarVarFetch('addr', 'str:1:', $data['addr'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
-    xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_HOST'], XARVAR_NOT_REQUIRED);
-    xarVarFetch('server', 'str:1:', $data['server'], $_SERVER['SERVER_NAME'], XARVAR_NOT_REQUIRED);
-    xarVarFetch('maxp', 'int:1:', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
-    xarVarFetch('portnum', 'int:1:', $data['portnum'], '80', XARVAR_NOT_REQUIRED);
-
-    $data['pingexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'ping'));
-    $data['traceexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'trace'));
-    $data['all_tlds'] = xarModAPIFunc('netquery', 'user', 'gettlds'); 
-
     if ($data['querytype'] == 'none')
     {
         return $data;
@@ -205,10 +192,10 @@ function netquery_user_main()
           $msg .= '</blockquote></p>';
           $data['results'] .= $msg;
     }
-    if ($data['capture_log_enabled'])
+    $logfp = $data['logfile'];
+    if ($data['capture_log_enabled'] && $logfp['local'])
     {
-          $logfile = 'var/logs/netquery.log';
-          $fp = fopen($logfile, 'a');
+          $fp = fopen($logfp['local'], 'a');
           if ($fp) {
             $string = "NQ Target: ".$target."   User IP: ".$_SERVER[REMOTE_ADDR]." \n";
             $write = fputs($fp, $string);

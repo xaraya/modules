@@ -7,8 +7,6 @@
         font-size : .8em;
         color: black;
         background-color: white;
-        text-align : justify;
-        
     }
     table.main {
         background-color: black;
@@ -45,14 +43,14 @@
         <td class="help-desc" colspan=2>
         <p>Netquery provides users of your site with a range of common network tools, including
         Whois lookups, DNS queries, ICMP ping, traceroute and server port checking. Each feature
-        can be enabled or disabled individually by the administrator. The administrator can also
-        configure the Whois feature to specify which Whois server is associated with each domain
-        name.ext entry and can add, modify and delete those entries in the Netquery Whois data table.</p>
-        <p>Configuration options determine which Netquery functions are available to users of your
-        web site. You should select at least one, or else uninstall this module completely.
-        <b>Please note</b> that the local ping and traceroute options requires read/execute permission
-        for your operating system's ping and traceroute executables. If you check the Capture Logfile
-        option, a netquery.log file will be created in the Xaraya's var/logs sub-folder.</p>
+        can be enabled or disabled individually by the administrator. Local execution and/or a
+        remote server script can be used for the ping and traceroute features. The administrator
+        can also configure the Whois feature to specify which Whois server is associated with each
+        domain name.ext (TLD) entry and can add, modify and delete those entries in the Netquery
+        Whois data table.</p>
+        <p><b>Please Note</b>: The local ping and traceroute options require read/execute permission
+        for your operating system's ping and traceroute executables. The Netquery Log option requires
+        write permission for the specified path/filename. (Installation default is var/logs/netquery.log)</p>
         <p>     
         </td>
     <tr><td class="item-heading" colspan=2>Netquery Configuration Options</td></tr>
@@ -78,7 +76,7 @@
     </tr>
     <tr>
         <td class="item">Enable Remote ICMP Ping</td>
-        <td class="item-desc">Ping count is determined by remote script. (Target param entry is ?<i>param</i>= in URL.)</td>
+        <td class="item-desc">Ping count is determined by remote script. (Remote script <b>url</b>?<b>param</b>=target)</td>
     </tr>
     <tr>
         <td class="item">Enable Local Traceroute</td>
@@ -86,20 +84,20 @@
     </tr>
     <tr>
         <td class="item">Enable Remote Traceroute</td>
-        <td class="item-desc">Traceroute from remote server to specified target. (Target param entry is ?<i>param</i>= in URL.)</td>
+        <td class="item-desc">Traceroute from remote server to specified target. (Remote script <b>url</b>?<b>param</b>=target)</td>
     </tr>
     <tr>
         <td class="item">Enable Port Check</td>
         <td class="item-desc">Checks specified server for availability of specified port.</td>
     </tr>
     <tr>
-        <td class="item">Enable Capture Log</td>
-        <td class="item-desc">Logs all Netquery actions in a netquery.log file in Xaraya's var/logs sub-folder.</td>
+        <td class="item">Enable Netquery Log</td>
+        <td class="item-desc">Logs all Netquery actions to the specified path/filename. (Requires write permission.)</td>
     </tr>
     <tr><td class="item-heading" colspan=2>Edit-Add-Delete Whois Lookup Links</td></tr>
     <tr>
         <td class="item">General</td>
-        <td class="item-desc">This admin menu option displays a list of whois server - domain.ext pairs.</td>
+        <td class="item-desc">This admin menu option displays a list of whois server - TLD pairs.</td>
     </tr>
     <tr>
         <td class="item">Edit</td>
@@ -111,7 +109,7 @@
     </tr>
     <tr>
         <td class="item">Add New</td>
-        <td class="item-desc">This option allows you to add a new whois server - domain.ext pair.</td>
+        <td class="item-desc">This option allows you to add a new whois server - TLD pair.</td>
     </tr>
     <tr>
         <td class="item">*NOTE*</td>

@@ -50,6 +50,9 @@ function netquery_init()
     $id = $dbconn->GenId($ExecTable);
     $query = "INSERT INTO $ExecTable (exec_id, exec_type, exec_local, exec_winsys, exec_remote, exec_remote_t) VALUES ($id, 'trace', 'traceroute.exe', '0', 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', 'target');";
     $result =& $dbconn->Execute($query);
+    $id = $dbconn->GenId($ExecTable);
+    $query = "INSERT INTO $ExecTable (exec_id, exec_type, exec_local, exec_winsys, exec_remote, exec_remote_t) VALUES ($id, 'log', 'var/logs/netquery.log', '0', 'var/logs/netquery.log', 'log');";
+    $result =& $dbconn->Execute($query);
 
     $id = $dbconn->GenId($WhoisTable);
     $query = "INSERT INTO $WhoisTable (whois_id, whois_ext, whois_server) VALUES ($id, '.com', 'whois.crsnic.net');";
@@ -161,6 +164,9 @@ function netquery_upgrade($oldversion)
             $id = $dbconn->GenId($ExecTable);
             $query = "INSERT INTO $ExecTable (exec_id, exec_type, exec_local, exec_winsys, exec_remote, exec_remote_t) VALUES ($id, 'trace', 'traceroute.exe', '0', 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', 'target');";
             $result =& $dbconn->Execute($query);
+            $id = $dbconn->GenId($ExecTable);
+            $query = "INSERT INTO $ExecTable (exec_id, exec_type, exec_local, exec_winsys, exec_remote, exec_remote_t) VALUES ($id, 'log', 'var/logs/netquery.log', '0', 'var/logs/netquery.log', 'log');";
+            $result =& $dbconn->Execute($query);
             xarModSetVar('netquery', 'ping_remote_enabled', 1);
             xarModSetVar('netquery', 'trace_remote_enabled', 1);
             xarModDelVar('netquery', 'localexec_enabled');
@@ -175,21 +181,6 @@ function netquery_upgrade($oldversion)
 
 function netquery_delete()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    xarDBLoadTableMaintenanceAPI();
-    $WhoisTable = $xartable['netquery_whois'];
-
-    $query = xarDBDropTable($WhoisTable);
-    if (empty($query)) return;
-    $result = &$dbconn->Execute($query);
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-
     xarModDelVar('netquery', 'capture_log_enabled');
     xarModDelVar('netquery', 'port_check_enabled');
     xarModDelVar('netquery', 'trace_remote_enabled');
@@ -203,6 +194,32 @@ function netquery_delete()
 
     xarRemoveMasks('netquery');
     xarRemoveInstances('netquery');
+
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $ExecTable = $xartable['netquery_exec'];
+    $WhoisTable = $xartable['netquery_whois'];
+    xarDBLoadTableMaintenanceAPI();
+
+    $query = xarDBDropTable($ExecTable);
+    if (empty($query)) return;
+    $result = &$dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    $query = xarDBDropTable($WhoisTable);
+    if (empty($query)) return;
+    $result = &$dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
 
     return true;
 }

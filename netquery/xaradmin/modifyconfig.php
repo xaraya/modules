@@ -24,6 +24,7 @@ function netquery_admin_modifyconfig()
             $data['submitlabel'] = xarML('Submit');
             $data['pingexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'ping'));
             $data['traceexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'trace'));
+            $data['logfile'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'log'));
             $data['helplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html'),
                                       'title' => xarML('Netquery online administration manual'),
                                       'label' => xarML('Online Manual'));
@@ -37,16 +38,17 @@ function netquery_admin_modifyconfig()
             if (!xarVarFetch('pingexec_local', 'str:1:100', $pingexec_local, 'ping.exe', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pingexec_winsys', 'checkbox', $pingexec_winsys, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('ping_remote_enabled', 'checkbox', $ping_remote_enabled, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pingexec_remote', 'str:1:100', $pingexec_remote, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pingexec_remote_t', 'str:1:100', $pingexec_remote_t, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pingexec_remote', 'str:1:100', $pingexec_remote, 'http://noc.thunderworx.net/cgi-bin/public/ping.pl', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pingexec_remote_t', 'str:1:100', $pingexec_remote_t, 'target', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('trace_enabled', 'checkbox', $trace_enabled, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('traceexec_local', 'str:1:100', $traceexec_local, 'tracert.exe', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('traceexec_winsys', 'checkbox', $traceexec_winsys, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('trace_remote_enabled', 'checkbox', $trace_remote_enabled, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('traceexec_remote', 'str:1:100', $traceexec_remote, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('traceexec_remote_t', 'str:1:100', $traceexec_remote_t, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('traceexec_remote', 'str:1:100', $traceexec_remote, 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('traceexec_remote_t', 'str:1:100', $traceexec_remote_t, 'target', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('port_check_enabled', 'checkbox', $port_check_enabled, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_enabled', 'checkbox', $capture_log_enabled, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('logfile_local', 'str:1:100', $logfile_local, 'var/logs/netquery.log', XARVAR_NOT_REQUIRED)) return;
             if (!xarSecConfirmAuthKey()) return;
             if ($whois_enabled) {
                 xarModSetVar('netquery', 'whois_enabled', $whois_enabled);
@@ -117,6 +119,11 @@ function netquery_admin_modifyconfig()
                     exec_remote   = '" . xarVarPrepForStore($traceexec_remote) . "',
                     exec_remote_t = '" . xarVarPrepForStore($traceexec_remote_t) . "'
                 WHERE exec_type = 'trace'";
+            $result =& $dbconn->Execute($query);
+
+            $query = "UPDATE $ExecTable
+                SET exec_local    = '" . xarVarPrepForStore($logfile_local) . "'
+                WHERE exec_type = 'log'";
             $result =& $dbconn->Execute($query);
 
             $result->Close();

@@ -5,35 +5,52 @@
 
 function netquery_userapi_mainapi()
 { 
-    $settings = array(); 
-    $settings['maintitle']  = xarVarPrepForDisplay(xarML('Netquery'));
-    $settings['subtitle']   = xarVarPrepForDisplay(xarML('Click "Go" for any Netquery option'));
-    $settings['domainlabel'] = xarVarPrepForDisplay(xarML('Whois Domain Name (No www.)'));
-    $settings['extlabel'] = xarVarPrepForDisplay(xarML('Domain'));
-    $settings['whoisiplabel'] = xarVarPrepForDisplay(xarML('Whois IP Address'));
-    $settings['lookuplabel'] = xarVarPrepForDisplay(xarML('Lookup IP Address or Host Name'));
-    $settings['diglabel'] = xarVarPrepForDisplay(xarML('Lookup (Dig) IP or Host Name'));
-    $settings['pinglabel'] = xarVarPrepForDisplay(xarML('Ping IP Address or Host Name'));
-    $settings['countlabel'] = xarVarPrepForDisplay(xarML('Count'));
-    $settings['pingremotelabel'] = xarVarPrepForDisplay(xarML('Ping IP or Host - Remote'));
-    $settings['tracelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host Name'));
-    $settings['traceremotelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host - Remote'));
-    $settings['serverlabel'] = xarVarPrepForDisplay(xarML('Query Port for Server'));
-    $settings['portnumlabel'] = xarVarPrepForDisplay(xarML('Port'));
-    $settings['windows_system'] = xarModGetVar('netquery', 'windows_system');
-    $settings['localexec_enabled'] = xarModGetVar('netquery', 'localexec_enabled');
-    $settings['whois_enabled'] = xarModGetVar('netquery', 'whois_enabled');
-    $settings['whoisip_enabled'] = xarModGetVar('netquery', 'whoisip_enabled');
-    $settings['dns_lookup_enabled'] = xarModGetVar('netquery', 'dns_lookup_enabled');
-    $settings['dns_dig_enabled'] = xarModGetVar('netquery', 'dns_dig_enabled');
-    $settings['ping_enabled'] = xarModGetVar('netquery', 'ping_enabled');
-    $settings['ping_remote_enabled'] = xarModGetVar('netquery', 'ping_remote_enabled');
-    $settings['trace_enabled'] = xarModGetVar('netquery', 'trace_enabled');
-    $settings['trace_remote_enabled'] = xarModGetVar('netquery', 'trace_remote_enabled');
-    $settings['port_check_enabled'] = xarModGetVar('netquery', 'port_check_enabled');
-    $settings['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
-    $settings['results'] = '';
-    return $settings;
+    $data = array(); 
+
+    xarVarFetch('querytype', 'str:1:', $data['querytype'], 'none', XARVAR_NOT_REQUIRED);
+    xarVarFetch('domain', 'str:1:', $data['domain'], 'example', XARVAR_NOT_REQUIRED);
+    xarVarFetch('ext', 'str:1:', $data['ext'], '.com', XARVAR_NOT_REQUIRED);
+    xarVarFetch('addr', 'str:1:', $data['addr'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_HOST'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('server', 'str:1:', $data['server'], $_SERVER['SERVER_NAME'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('maxp', 'int:1:', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
+    xarVarFetch('portnum', 'int:1:', $data['portnum'], '80', XARVAR_NOT_REQUIRED);
+
+    $data['windows_system'] = xarModGetVar('netquery', 'windows_system');
+    $data['localexec_enabled'] = xarModGetVar('netquery', 'localexec_enabled');
+    $data['whois_enabled'] = xarModGetVar('netquery', 'whois_enabled');
+    $data['whoisip_enabled'] = xarModGetVar('netquery', 'whoisip_enabled');
+    $data['dns_lookup_enabled'] = xarModGetVar('netquery', 'dns_lookup_enabled');
+    $data['dns_dig_enabled'] = xarModGetVar('netquery', 'dns_dig_enabled');
+    $data['ping_enabled'] = xarModGetVar('netquery', 'ping_enabled');
+    $data['ping_remote_enabled'] = xarModGetVar('netquery', 'ping_remote_enabled');
+    $data['trace_enabled'] = xarModGetVar('netquery', 'trace_enabled');
+    $data['trace_remote_enabled'] = xarModGetVar('netquery', 'trace_remote_enabled');
+    $data['port_check_enabled'] = xarModGetVar('netquery', 'port_check_enabled');
+    $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
+
+    $data['pingexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'ping'));
+    $data['traceexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'trace'));
+    $data['logfile'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'log'));
+    $data['all_tlds'] = xarModAPIFunc('netquery', 'user', 'gettlds'); 
+    $data['results'] = '';
+
+    $data['maintitle']  = xarVarPrepForDisplay(xarML('Netquery'));
+    $data['subtitle']   = xarVarPrepForDisplay(xarML('Click "Go" for any Netquery option'));
+    $data['domainlabel'] = xarVarPrepForDisplay(xarML('Whois Domain Name (No www.)'));
+    $data['extlabel'] = xarVarPrepForDisplay(xarML('Domain'));
+    $data['whoisiplabel'] = xarVarPrepForDisplay(xarML('Whois IP Address'));
+    $data['lookuplabel'] = xarVarPrepForDisplay(xarML('Lookup IP Address or Host Name'));
+    $data['diglabel'] = xarVarPrepForDisplay(xarML('Lookup (Dig) IP or Host Name'));
+    $data['pinglabel'] = xarVarPrepForDisplay(xarML('Ping IP Address or Host Name'));
+    $data['countlabel'] = xarVarPrepForDisplay(xarML('Count'));
+    $data['pingremotelabel'] = xarVarPrepForDisplay(xarML('Ping IP or Host - Remote'));
+    $data['tracelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host Name'));
+    $data['traceremotelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host - Remote'));
+    $data['serverlabel'] = xarVarPrepForDisplay(xarML('Query Port for Server'));
+    $data['portnumlabel'] = xarVarPrepForDisplay(xarML('Port'));
+
+    return $data;
 } 
 
 function netquery_userapi_getexec($args)

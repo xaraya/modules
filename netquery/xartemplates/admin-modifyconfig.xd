@@ -7,10 +7,9 @@ web site. You should select at least one, or else uninstall this module complete
 <xar:if condition="1 eq 1">
 [<a href=javascript:openwindow("#$helplink['url']#");>#$helplink['label']#</a>]
 </xar:if><br /><br />
-<xar:mlstring><b>Please note</b> that the local ping and traceroute options require
+<xar:mlstring><b>Please Note</b>: The local ping and traceroute options require
 read/execute permission for your operating system's ping and traceroute executables.
-If you check the Capture Logfile option, a netquery.log file will be created in
-Xaraya's var/logs sub-folder.</xar:mlstring><br /></p>
+The Netquery Log option requires write permission for the specified filepath.</xar:mlstring><br /></p>
 
 <h4><xar:mlstring>Netquery Options</xar:mlstring></h4>
 
@@ -158,8 +157,11 @@ Xaraya's var/logs sub-folder.</xar:mlstring><br /></p>
                     </xar:if>
                 </span>
                 <span>
-                    <xar:mlstring>Enable Capture Logfile</xar:mlstring>
-                </span>
+                    <xar:mlstring>Enable Netquery Log</xar:mlstring>
+                </span><br />&nbsp; &nbsp; &nbsp;
+                <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="logfile_local"><xar:mlstring>At Filepath:</xar:mlstring></label></span>
+                <input type="text" name="logfile_local" id="logfile_local" value="#$logfile['local']#" size="30" maxlength="100" />
+                <xar:mlstring>Requires write permission!</xar:mlstring>
             </div>
         <br /><br />
         <input type="submit" value="#$submitlabel#"  tabindex="2" />
