@@ -83,4 +83,4 @@ then (
 		echo Links for the differences:
 		cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //'
 fi
-) | $POSTPROGRAM $SUBJECTSWITCH"${NUMSETS} ${CHANGETEXT} pushed to core/${REPO}: ${CSCOMMENT:0:40}..." $DESTINATION
+) | $POSTPROGRAM $SUBJECTSWITCH"${NUMSETS} ${CHANGETEXT} pushed to ${VIRGIN}/${REPO}: ${CSCOMMENT:0:40}..." $DESTINATION
