@@ -315,13 +315,14 @@
 						<span>
 						<xar:mlstring>
 							Posted
-						</xar:mlstring>: #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['xar_datetime'])# 
-							<span class="xar-title">&nbsp; &nbsp; &nbsp;
+						</xar:mlstring>: #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['xar_datetime'])#
+							<span class="xar-title">&nbsp;&nbsp;&nbsp;
 								<xar:mlstring>
 									Subject
 								</xar:mlstring>:
 								<a name="#top"></a>
-								#$ttitle#
+								<!-- #$ttitle# Allow changing of reply post title -->
+                                #$item['xar_title']#
 							</span>
 						</span>
 					</td>
