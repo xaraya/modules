@@ -3,9 +3,15 @@
 function release_admin_deletenote()
 {
     // Get parameters
-    list($rnid,
-         $confirmation) = xarVarCleanFromInput('rnid',
-                                              'confirmation');
+    if (!xarVarFetch('rnid', 'int:1:', $rnid)) return;
+    if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
+    
+    extract($args);
+
+    if (!empty($obid)) {
+        $rnid = $obid;
+    } 
 
     // The user API function is called.
     $data = xarModAPIFunc('release',

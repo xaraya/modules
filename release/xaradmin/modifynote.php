@@ -5,13 +5,8 @@ function release_admin_modifynote()
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
-    list ($phase,
-          $rnid) = xarVarCleanFromInput('phase',
-                                        'rnid');
-
-    if (empty($phase)){
-        $phase = 'modify';
-    }
+    if (!xarVarFetch('rnid', 'int:1:', $rnid)) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
 
     switch(strtolower($phase)) {
 

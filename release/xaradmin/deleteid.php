@@ -3,9 +3,15 @@
 function release_admin_deleteid()
 {
     // Get parameters
-    list($rid,
-         $confirmation) = xarVarCleanFromInput('rid',
-                                              'confirmation');
+    if (!xarVarFetch('rid', 'int:1:', $rid)) return;
+    if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
+    
+    extract($args);
+
+    if (!empty($obid)) {
+        $rid = $obid;
+    } 
 
     // The user API function is called.
     $data = xarModAPIFunc('release',
