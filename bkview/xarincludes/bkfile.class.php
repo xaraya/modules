@@ -52,7 +52,27 @@ class bkFile
         if(!empty($this->_csets)) return $this->_csets;
         
         $cmd="bk f2csets $this->_file";
-        return $this->_repo->_run($cmd);
+        $csetrevs = $this->_repo->_run($cmd);
+        // Make the list of changesets into a range
+        $revs='';
+        while (list(,$cset) = each($csetrevs)) $revs.="$cset,";
+        $revs=substr($revs,0,strlen($revs)-1);
+        $formatstring = "':AGE:|:P:|:REV:|\$each(:C:){(:C:)<br />}'";
+        $list = $this->_repo->bkChangeSets($revs,'',$formatstring,false);
+        
+        $csets=array();
+        $counter=1;
+        while (list($key,$val) = each($list)) {
+            list($age, $author, $rev, $comments) = explode('|',$val);
+            $changeset = (object) null;
+            $changeset->file = $this->_file;
+            $changeset->rev = $rev;
+            $changeset->age = $age;
+            $changeset->author = $author;
+            $changeset->comments = $comments;
+            $csets[$rev] = $changeset;
+        }
+        return $csets;
    }
     
     function bkChangeSet($rev) 

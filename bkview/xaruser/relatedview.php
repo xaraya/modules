@@ -29,30 +29,20 @@ function bkview_user_relatedview($args)
     $repo =& $item['repo'];
     $the_file = new bkFile($repo,$file);
 
-    $changesets=$the_file->bkChangeSets();
-    // Make the list of changesets into a range
-    $revs='';$range='';
-    while (list(,$cset) = each($changesets)) {
-        $revs.="$cset,";
+    if(xarModIsAvailable('mime') && file_exists($the_file->bkAbsoluteName())) {
+        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $the_file->bkAbsoluteName()));
+        $icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+        $checkedout = true;
+    } else {
+        $icon = xarTplGetImage('file.gif','bkview');
+        $checkedout = false;
     }
-    
-    $revs=substr($revs,0,strlen($revs)-1);
-    $formatstring = "':AGE:|:P:|:REV:|\$each(:C:){(:C:)<br />}'";
-    $list = $repo->bkChangeSets($revs,$range,$formatstring,false);
-    
-    $data['csets']=array();
-    $csets=array();
-    $counter=1;
-    while (list($key,$val) = each($list)) {
-        list($age, $author, $rev, $comments) = explode('|',$val);
-        $csets[$counter]['file'] = 'ChangeSet';
-        $csets[$counter]['age']=$age;
-        $csets[$counter]['author']=$author;
-        $csets[$counter]['rev']=$rev;
-        $csets[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
-        $csets[$counter]['repoid'] = $repoid;
-        $csets[$counter]['range'] = bkAgeToRangeCode($age);
-        $counter++;
+    $changesets=$the_file->bkChangeSets();
+    foreach($changesets as $revision => $changeset) {
+        $changeset->repoid = $repoid;
+        $changeset->icon = $icon;
+        $changeset->checkedout = $checkedout;
+        $csets[$revision] = (array) $changeset;
     }
     
     // Return data to BL
