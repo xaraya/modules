@@ -498,7 +498,8 @@ function uploads_upgrade($oldversion)
                 
             return true;
         case .75:
-            
+        default: 
+            return true;            
     }
     return true;
 }

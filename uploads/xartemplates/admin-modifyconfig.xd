@@ -97,7 +97,7 @@
                     <xar:mlstring>
                         Obfuscate/Secure Imported Files:
                     </xar:mlstring>
-                </b>&nbsp;&nbsp;
+                </strong>&nbsp;&nbsp;
                 <xar:if condition="$file['obfuscate-on-import'] eq FALSE">
                     <input type="radio" name="file[obfuscate-on-import]" value="1"> Yes
                     <input type="radio" name="file[obfuscate-on-import]" value="0" checked="true"> No
@@ -111,7 +111,7 @@
                 </xar:mlstring>
             </p>
             <p>
-                <b>
+                <strong>
                     <xar:mlstring>
                         Obfuscate/Secure Uploaded Files:
                     </xar:mlstring>

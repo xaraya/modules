@@ -44,13 +44,13 @@ function uploads_userapi_process_files( $args ) {
                 return;
             }
             
-            $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', 
-                                       array('fileName' => $upload['name'],
-                                             'fileSize' => $upload['size']));
-            if (count($fileTest)) {
-                $file = end($fileTest);
-                $fileList[0] = $file;
-                break;
+            if (isset($upload['name']) && !empty($upload['name'])) {
+                $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name'], 'fileSize' => $upload['size']));
+                if (count($fileTest)) {
+                    $file = end($fileTest);
+                    $fileList[0] = $file;
+                    break;
+                }
             }
             
             // if there is an override['upload']['path'], use that
@@ -110,7 +110,7 @@ function uploads_userapi_process_files( $args ) {
             $uri = parse_url($import);
             
             if (!isset($uri['scheme']) || empty($uri['scheme'])) {
-                $uri['scheme'] = 'unknown';
+                $uri['scheme'] = xarML('unknown');
             }
             
             switch ($uri['scheme']) {
