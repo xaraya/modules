@@ -1,7 +1,7 @@
 <?php
 /**
     MailBag for Xaraya
-  
+
     @package Mailbag
     @copyright (C) 2003 Brian McGilligan.
     @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -12,6 +12,7 @@
 $modversion['id'] = '915';
 $modversion['name'] = 'mailbag';
 $modversion['version'] = '0.1.0';
+$modversion['displayname']    = xarML('Mailbag');
 $modversion['description'] = 'Mailbag Module';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
