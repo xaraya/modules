@@ -3,7 +3,7 @@
 <p>#$title#</p>
 
 <xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
-	
+    
 <p>
         <xar:if condition="$type eq 'single'">
             <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />

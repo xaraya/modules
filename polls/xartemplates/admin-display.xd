@@ -10,7 +10,7 @@
 </tr>
 <xar:loop name="$options">
 <tr>
-	<td class="xar-norm" style="text-align: left;">#$loop:item['name']# (#$loop:item['votes']# <xar:mlstring>votes</xar:mlstring>)</td>
+    <td class="xar-norm" style="text-align: left;">#$loop:item['name']# (#$loop:item['votes']# <xar:mlstring>votes</xar:mlstring>)</td>
     <td class="xar-norm" style="text-align: center;">
 <xar:if condition="isset($loop:item['down'])">
     <a href="#$loop:item['down']#" title="#$downlabel#" ><img src="modules/polls/xarimages/downarrow.gif" style="border: 0px;" alt="#$downlabel#" /></a>
@@ -31,7 +31,7 @@
     <a href="#$loop:item['delete']#"><xar:mlstring>Delete</xar:mlstring></a>
 </xar:if>
      ]
-	</td>
+    </td>
 </tr>
 </xar:loop>
 </table><br /><br />

@@ -2,7 +2,7 @@
 <div class="xar-mod-body" style="text-align: center;margin: auto;"><br/>
 <xar:if condition="empty($polls)">
 <div style="align: center;margin: auto;">
-	<p><xar:mlstring>There are no polls available</xar:mlstring></p>
+    <p><xar:mlstring>There are no polls available</xar:mlstring></p>
 </div>
 <xar:else/>
 <table style="width: 100%;border: 0px;" cellpadding="2" cellspacing="1" class="xar-accent">

@@ -48,9 +48,9 @@
                 <select name="imggraph" id="imggraph">
                 <xar:foreach in="$imggraphs" value="$v" key="$k">
                 <xar:if condition="$imggraph eq $k">
-       	        <option value="#$k#" selected="selected">#$v#</option>
+                   <option value="#$k#" selected="selected">#$v#</option>
                 <xar:else/>
-       	        <option value="#$k#">#$v#</option>
+                   <option value="#$k#">#$v#</option>
                 </xar:if>
                 </xar:foreach>
                 </select>
@@ -64,9 +64,9 @@
                 <select name="voteinterval" id="voteinterval">
                 <xar:foreach in="$voteintervals" value="$v" key="$k">
                 <xar:if condition="$voteinterval eq $k">
-       	        <option value="#$k#" selected="selected">#$v#</option>
+                   <option value="#$k#" selected="selected">#$v#</option>
                 <xar:else/>
-       	        <option value="#$k#">#$v#</option>
+                   <option value="#$k#">#$v#</option>
                 </xar:if>
                 </xar:foreach>
                 </select>

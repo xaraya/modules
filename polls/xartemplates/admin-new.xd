@@ -37,10 +37,10 @@
         </td>
     </tr>
     <xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
-	    <tr>
-	        <td><label for="option_#$i#"><xar:mlstring>Option</xar:mlstring> #$i#</label>:</td>
-	        <td><input type="text" name="option_#$i#" value="" size="50" maxlength="50"></td>
-	    </tr>
+        <tr>
+            <td><label for="option_#$i#"><xar:mlstring>Option</xar:mlstring> #$i#</label>:</td>
+            <td><input type="text" name="option_#$i#" value="" size="50" maxlength="50"></td>
+        </tr>
     </xar:for>
 </table><br /><br />
             <input type="submit" value="#$buttonlabel#">
