@@ -9,9 +9,9 @@
 function stats_userapi_getmisc()
 {
 	// core
-    $data['users'] = xarModAPIFunc('roles','user','countitems')  // all roles
-                   - xarModAPIFunc('roles','user','countgroups') // all groups
-                   - 1;                                          // anonymous user  
+	$countArgs = array('include_anonymous' => false,
+					   'include_myself'    => false);
+	$data['users'] = xarModAPIFunc('roles','user','countall',$countArgs);
     $data['sysversion'] = xarConfigGetVar('System.Core.VersionNum');
 
 	//TODO:
@@ -19,7 +19,8 @@ function stats_userapi_getmisc()
 	// comments
 	// waiting content
 	// categories
-
+	unset($countArgs);
+	
 	return $data;
 }
 
