@@ -29,7 +29,7 @@ function newsletter_admin_mailissue()
 
     // Get parameters from input
     if (!xarVarFetch('issueId', 'id', $issueId)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must choose an issue to publish.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
@@ -48,7 +48,7 @@ function newsletter_admin_mailissue()
     // Determine if issue was already published
     if ($issue['datePublished']['timestamp'] != 0) {
         // If this issue was already published, then throw error and return
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('This issue has already been published.  You must edit the issue and remove the date published to publish again.');
         xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;

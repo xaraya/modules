@@ -46,7 +46,7 @@ function newsletter_admin_createpublication()
 
     // Get parameters from the input
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select an owner name.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
@@ -55,7 +55,7 @@ function newsletter_admin_createpublication()
     if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
 
     if (!xarVarFetch('title', 'str:1:', $title)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must enter a publication title');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

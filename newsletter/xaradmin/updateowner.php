@@ -37,7 +37,7 @@ function newsletter_admin_updateowner($args)
     if (!xarVarFetch('id', 'id', $id)) return;
 
     if (!xarVarFetch('groupName', 'str:1:', $groupName)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select a group.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

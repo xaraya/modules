@@ -283,7 +283,7 @@ function newsletter_init()
 
         // Just in case creation of category blew up, 
         // free all error exceptions
-        xarExceptionFree();
+        xarErrorFree();
     }
 
     // Set the category cid so we can delete on removal

@@ -48,14 +48,14 @@ function newsletter_admin_updateissue()
     if (!xarVarFetch('id', 'id', $id)) return;
 
     if (!xarVarFetch('publication', 'id', $publication)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select a publication.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
      if (!xarVarFetch('ownerId', 'id', $ownerId)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select an owner name.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

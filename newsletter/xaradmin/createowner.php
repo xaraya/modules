@@ -33,13 +33,13 @@ function newsletter_admin_createowner()
 
     // Get parameters from the input
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select an owner name.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (!xarVarFetch('userGroup', 'str:1:', $userGroup)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select a group.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

@@ -56,7 +56,7 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('id', 'id', $id)) return;
 
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select an owner name.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
@@ -66,7 +66,7 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
 
     if (!xarVarFetch('title', 'str:1:', $title)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must enter a title for the story.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
@@ -75,7 +75,7 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('source', 'str:1:', $source, '')) return;
 
     if (!xarVarFetch('content', 'str:1:', $content)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must provide content for the story.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
@@ -99,7 +99,7 @@ function newsletter_admin_updatestory()
     // If commentary exists, then check that a commentary source 
     // was entered
     if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must enter a commentary source for the commentary.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

@@ -39,7 +39,7 @@ function newsletter_admin_importaltsubscription()
     if (!xarVarFetch('delim', 'str:1:2', $delim, ',')) return;
 
     if (!xarVarFetch('pids', 'array:1:', $pids)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select at least one publication.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

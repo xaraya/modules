@@ -81,7 +81,7 @@ function newsletter_admin_modifypublication()
                                    'getcat');
                                                                                               
     // Check for exceptions
-    if (!isset($altcategories) && xarExceptionMajor() != XAR_NO_EXCEPTION) {
+    if (!isset($altcategories) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return;
     }       
     

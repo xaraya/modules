@@ -38,14 +38,14 @@ function newsletter_admin_createissue()
 
     // Get parameters from the input
     if (!xarVarFetch('publicationId', 'id', $publicationId)) { 
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select a publication.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select an owner name.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

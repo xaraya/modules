@@ -39,14 +39,14 @@ function newsletter_admin_createaltsubscription()
     if (!xarVarFetch('name', 'str:1:', $name, '')) return;
 
     if (!xarVarFetch('email', 'str:1:', $email)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must provide an email address.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     if (!xarVarFetch('pids', 'array:1:', $pids)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must select at least one publication.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

@@ -78,11 +78,15 @@ function newsletter_adminapi_createstory($args)
     /*
     // Check if that story already exists
     $query = "SELECT xar_id FROM $nwsltrTable
-              WHERE xar_title = '".xarVarPrepForStore($title)."'
-              AND xar_cid = '".xarVarPrepForStore($categoryId)."'
-              AND xar_ownerid = ".xarVarPrepForStore($ownerId);
+              WHERE xar_title = ?
+              AND xar_cid = ?
+              AND xar_ownerid = ?";
+    
+    $bindvars[] = (string) $title;
+    $bindvars[] = (int) $categoryId;
+    $bindvars[] = (int) $ownerId;
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return false; 
 
     if ($result->RecordCount() > 0) {

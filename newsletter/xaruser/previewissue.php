@@ -32,7 +32,7 @@ function newsletter_user_previewissue($args)
 
     // Get parameters from the input
     if (!isset($issueId) &&  !xarVarFetch('issueId', 'id', $issueId)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must choose an issue to preview.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

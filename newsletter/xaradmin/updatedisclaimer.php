@@ -38,14 +38,14 @@ function newsletter_admin_updatedisclaimer()
     if (!xarVarFetch('id', 'id', $id)) return;
 
     if (!xarVarFetch('title', 'str:1:', $title)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must provide a title for the disclaimer.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     if (!xarVarFetch('disclaimer', 'str:1:', $disclaimer)) {
-        xarExceptionFree();
+        xarErrorFree();
         $msg = xarML('You must provide the disclaimer.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
