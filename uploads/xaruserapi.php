@@ -66,24 +66,53 @@ function uploads_userapi_upload($args)
 	$filesize = $file['size'];
 	$tmp_name = $file['tmp_name'];
 	$type = $file['type'];
-	$extension = substr($ulfile, strrpos($ulfile,".") + 1);
-	
-//check and make sure the file extension is of the proper type
-	$allowed = $extensions;
-	$allowed_types = explode(';',$allowed);
-	
-	$allowfile = False;
-	foreach($allowed_types AS $typevalue) {
-	   if ($extension == $typevalue) {
-		 		$allowfile = True;
-		 }
-	} 
-	
-	if ($allowfile == False) {
-		 $msg = xarML('file extension not allowed.  allowed file types are: #(1)',$allowed);
+
+    // check and make sure the file extension is of the proper type
+    $allowed_types = explode(';',$extensions);
+    $allowfile = False;
+
+    // Get the file extension - could by multi-part (eg .tar.gz)
+    $file_extension = explode(".", $ulfile);
+    $file_ext_cnt = count($file_extension);
+
+    // Check for filename of "name.ext"
+    if ($file_ext_cnt == 2) {
+        foreach($allowed_types AS $typevalue) {
+            if ($file_extension[1] == $typevalue) {
+                $allowfile = True;
+                break;
+            }
+        } 
+    } elseif ($file_ext_cnt > 2) {
+        // Check for multi-part extensions
+        foreach($allowed_types AS $typevalue) {
+
+            // Check for multi-part allowed extensions
+            $allowed_ext = explode(".",$typevalue);
+            $allowed_ext_cnt = count($allowed_ext);
+
+            // Ignore allowed types with only one extension
+            if ($allowed_ext_cnt < 2) {
+                continue;
+            } else {
+                // Try to match arrays
+                $start = $file_ext_cnt - $allowed_ext_cnt;
+                for ($idx = 0, $sdx = $start; $idx < $allowed_ext_cnt; $idx++, $sdx++) {
+                    if($allowed_ext[$idx] != $file_extension[$sdx]) {
+                        $allowfile = False;
+                        break;
+                    }
+                    $allowfile = True;
+                }
+            }
+        } 
+    }
+
+    if ($allowfile == False) {
+        $msg = xarML('file extension not allowed.  allowed file types are: #(1)',$extensions);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, xarML('Invalid Extension'), new SystemException($msg));
         return;
-	}
+    }
 	
 //check to make sure the file size isn't too big.
 	$maxsize = xarModGetVar('uploads','maximum_upload_size');
