@@ -9,6 +9,17 @@ BK|CVSROOT/notify|19700101030959|00355|c74c5283f99190e4
 BK|CVSROOT/rcsinfo|19700101030959|00348|f9dce88887861ac0
 BK|CVSROOT/taginfo|19700101030959|00352|d3aee47a678a7080
 BK|CVSROOT/verifymsg|19700101030959|00350|b96de1393d947475
+BK|New_pnadmin/html/CVSROOT/checkoutlist|19700101030959|01117|5a1b13975993016d
+BK|New_pnadmin/html/CVSROOT/commitinfo|19700101030959|01115|a72a4c7ddef05a37
+BK|New_pnadmin/html/CVSROOT/config|19700101030959|01121|418fdb87a1dd9842
+BK|New_pnadmin/html/CVSROOT/cvswrappers|19700101030959|01118|bf24304b6ae476f4
+BK|New_pnadmin/html/CVSROOT/editinfo|19700101030959|01113|937b7d74d1b84157
+BK|New_pnadmin/html/CVSROOT/loginfo|19700101030959|01111|1741b7a785f63088
+BK|New_pnadmin/html/CVSROOT/modules|19700101030959|01120|743562181402adb
+BK|New_pnadmin/html/CVSROOT/notify|19700101030959|01119|3990e750f579d58c
+BK|New_pnadmin/html/CVSROOT/rcsinfo|19700101030959|01112|4cd758d29436130d
+BK|New_pnadmin/html/CVSROOT/taginfo|19700101030959|01116|271bc9e197e607b8
+BK|New_pnadmin/html/CVSROOT/verifymsg|19700101030959|01114|b7b8648adf2974d4
 BK|New_pnadmin/html/modules/admin/Attic/changes.txt|19700101030959|01087|d0f40681b54e178a
 BK|New_pnadmin/html/modules/admin/docs/Attic/Intructions.txt|19700101030959|01049|35343e951d000feb
 BK|New_pnadmin/html/modules/admin/docs/old_admin_docs/Attic/changelog.txt|19700101030959|01046|fdcdeb4ce98a4e92
@@ -23,6 +34,8 @@ BK|articles/pntemplates/Attic/user-news-content.pnd|19700101030959|00382|1b9e8d2
 BK|articles/pntemplates/Attic/user-section-content.pnd|19700101030959|00383|275b72b9cef774bb
 BK|articles/pntemplates/Attic/user-section-summary.pnd|19700101030959|00384|7e0a75352a5c90db
 BK|articles/pntemplates/Attic/user-story.pnd|19700101030959|00381|98a095841ac2fb9
+BK|articles/pntemplates/user-display-sections.pnd|19700101030959|00396|e227a4beb07c66c6
+BK|articles/pntemplates/user-sections-summary.pnd|19700101030959|00397|ded671b1b0f99ab
 BK|bookcooperative/pnimages/.xvpics/Attic/browse.gif|19700101030959|00661|5b123880b26f501d
 BK|bookcooperative/pnimages/.xvpics/Attic/find-a-book.gif|19700101030959|00662|949a73244e5f963a
 BK|bookcooperative/pnimages/.xvpics/Attic/logo.gif|19700101030959|00665|2b61a8bb580435d2
