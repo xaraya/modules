@@ -89,9 +89,9 @@
                             <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
                         </xar:if>
                         <xar:mlstring>
-                            Joined 
+                            Joined
                         </xar:mlstring>
-                        : #$posterdatestamp# 
+                        : #xarLocaleFormatDate('%d %b %Y ', $posterdatestamp)#
                         <br />
                         <xar:mlstring>
                             Posts 
