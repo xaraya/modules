@@ -157,8 +157,8 @@ function articles_admin_exportpubtype($args)
       <default>' . $info['default'] . '</default>
       <source>' . $info['source'] . '</source>
       <status>' . $info['status'] . '</status>
-      <order>' . $info['status'] . '</order>
-      <validation>' . $info['status'] . '</validation>
+      <order>' . $info['order'] . '</order>
+      <validation>' . $info['validation'] . '</validation>
     </property>
 ';
         }
