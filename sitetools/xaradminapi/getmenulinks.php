@@ -22,6 +22,8 @@
  */
 function sitetools_adminapi_getmenulinks()
 { 
+    $menulinks = array();
+
      // Security Check
     if (xarSecurityCheck('AdminSiteTools', 0)) {
         // The main menu will look for this array and return it for a tree view of the module
@@ -29,48 +31,39 @@ function sitetools_adminapi_getmenulinks()
                 'admin',
                 'optimize'),
             'title' => xarML('Optimize a database'),
-            'label' => xarML('Optimize'));
-    }
-    // Security Check
-    if (xarSecurityCheck('AdminSiteTools', 0)) {
+            'label' => xarML('Optimize database'));
 
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'backup'),
             'title' => xarML('Backup a database'),
-            'label' => xarML('Backup'));
-    }
-    // Security Check
-    if (xarSecurityCheck('AdminSiteTools', 0)) {
-
-        $menulinks[] = Array('url' => xarModURL('sitetools',
-                'admin',
-                'deletecache'),
-            'title' => xarML('Clear cache files'),
-            'label' => xarML('Clear cache files'));
-    }
-    // Security Check
-    if (xarSecurityCheck('AdminSiteTools', 0)) {
+            'label' => xarML('Backup database'));
 
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'cacheview'),
             'title' => xarML('Browse cache files'),
             'label' => xarML('Browse cache files'));
-    }
-    // Security Check
-    if (xarSecurityCheck('AdminSiteTools', 0)) {
+
+        $menulinks[] = Array('url' => xarModURL('sitetools',
+                'admin',
+                'deletecache'),
+            'title' => xarML('Clear cache files'),
+            'label' => xarML('Clear cache files'));
+
+        $menulinks[] = Array('url' => xarModURL('sitetools',
+                'admin',
+                'links'),
+            'title' => xarML('Check URLs and images in articles, roles, ...'),
+            'label' => xarML('Check links'));
+
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'modifyconfig'),
             'title' => xarML('Modify the configuration for the module'),
             'label' => xarML('Modify Config'));
     }
-    // If we return nothing, then we need to tell PHP this, in order to avoid an ugly
-    // E_ALL error.
-    if (empty($menulinks)) {
-        $menulinks = '';
-    }
+
     // The final thing that we need to do in this function is return the values back
     // to the main menu for display.
     return $menulinks;

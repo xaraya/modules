@@ -29,6 +29,8 @@ function sitetools_xartables()
     $sitetoolsTable = xarDBGetSiteTablePrefix() . '_sitetools';
     // Set the table name
     $xarTables['sitetools'] = $sitetoolsTable;
+
+    $xarTables['sitetools_links'] = xarDBGetSiteTablePrefix() . '_sitetools_links';
     // Return the table information
     return $xarTables;
 } 

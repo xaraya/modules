@@ -1,0 +1,122 @@
+<a name="top"></a>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Search for Links</xar:mlstring></h2>
+<div style="margin: auto;">
+<form action="#xarModURL('sitetools', 'admin', 'links')#" method="post">
+<table border="0" cellpadding="4" cellspacing="0">
+ <tr>
+  <input type="hidden" name="authid" id="authid" value="#$authid#" />
+  <xar:set name="$i">0</xar:set>
+  <xar:foreach in="$modules" key="$name" value="$fields">
+   <td valign="top">
+    <h3>
+      #$name#
+      <xar:if condition="!empty($count) and isset($count[$name])">
+        (#$count[$name]#)
+      </xar:if>
+    </h3>
+    <xar:foreach in="$fields" value="$field">
+      <xar:if condition="!empty($todo) and !empty($todo[$field['field']])">
+        <input type="checkbox" name="todo[#$field['field']#]" id="#$field['field']#" value="1" checked="checked" /> <label for="#$field['field']#">#$field['name']# [#$field['type']#]</label><br/>
+      <xar:else/>
+        <input type="checkbox" name="todo[#$field['field']#]" id="#$field['field']#" value="1" /> <label for="#$field['field']#">#$field['name']# [#$field['type']#]</label><br/>
+      </xar:if>
+    </xar:foreach>
+   </td>
+   <xar:if condition="$i++ and $i % 4 == 0">
+    </tr><tr>
+   </xar:if>
+  </xar:foreach>
+ </tr>
+</table>
+<p>
+  <xar:set name="$findbutton"><xar:mlstring>Find Links</xar:mlstring></xar:set>
+  <input type="submit" name="find" value="#$findbutton#" align="center" />
+  <label for="skiplocal">
+  <xar:if condition="xarModGetVar('sitetools','links_skiplocal')">
+    <input type="checkbox" name="skiplocal" value="1" id="skiplocal" checked="checked" />
+  <xar:else/>
+    <input type="checkbox" name="skiplocal" value="1" id="skiplocal" />
+  </xar:if>
+  <xar:mlstring>Skip local links</xar:mlstring></label>
+</p>
+</form>
+
+<xar:if condition="!empty($total)">
+  <h2><xar:mlstring>Check Links</xar:mlstring></h2>
+  <xar:if condition="!empty($checked)">
+    <b>#$checked#</b> [<a href="&xar-modurl-sitetools-admin-links;"><xar:mlstring>Refresh</xar:mlstring></a>]
+  <xar:else/>
+    <a href="#xarModURL('sitetools','admin','links',array('check' => 1, 'authid' => $authid))#"><xar:mlstring>Start Link Check</xar:mlstring></a>
+    <xar:set name="$proxyhost">#xarModGetVar('base','proxyhost')#</xar:set>
+    <xar:if condition="!empty($proxyhost)">
+      (<a href="&xar-modurl-base-admin-modifyconfig;#proxy"><xar:ml><xar:mlstring>via #(1)</xar:mlstring><xar:mlvar>#$proxyhost#</xar:mlvar></xar:ml></a>)
+    <xar:else/>
+      (<a href="&xar-modurl-base-admin-modifyconfig;#proxy"><xar:mlstring>direct connection</xar:mlstring></a>)
+    </xar:if>
+  </xar:if>
+
+  <h2><xar:mlstring>Link Status</xar:mlstring></h2>
+  <xar:data-getitems name="$props" value="$stats" module="sitetools" itemtype="3" fieldlist="status,COUNT(id)" groupby="status" />
+  <table border="1" cellpadding="4" cellspacing="0">
+    <tr>
+      <th><xar:mlstring>Status</xar:mlstring></th>
+      <th><xar:mlstring>Count</xar:mlstring></th>
+    </tr>
+    <xar:foreach in="$stats" value="$stat">
+    <tr>
+      <td><a href="#xarModURL('sitetools','admin','links',array('status' => $stat['status']))#">#$stat['status']#</a></td>
+      <td>#$stat['id']#</td>
+    </tr>
+    </xar:foreach>
+  </table>
+
+  <h2><xar:mlstring>View Links</xar:mlstring></h2>
+  <xar:if condition="empty($where)">
+    <a href="#xarModURL('sitetools','admin','links',array('filter' => 1))#"><xar:mlstring>Show Broken Links Only</xar:mlstring></a>
+  <xar:else/>
+    <a href="#xarModURL('sitetools','admin','links')#"><xar:mlstring>Show All Links</xar:mlstring></a>
+  </xar:if>
+
+  <xar:set name="$numitems">100</xar:set>
+  <xar:data-getitems name="$properties" value="$items" module="sitetools" itemtype="3" numitems="$numitems" startnum="$startnum" sort="$sort" where="$where" />
+  <table border="1" cellpadding="4" cellspacing="0">
+    <tr>
+      <th><a href="#xarModURL('sitetools','admin','links',array('sort' => 'link'))#"><xar:mlstring>Link</xar:mlstring></a></th>
+      <th><a href="#xarModURL('sitetools','admin','links',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
+      <th><a href="#xarModURL('sitetools','admin','links',array('sort' => 'moduleid'))#"><xar:mlstring>Module</xar:mlstring></a></th>
+      <th><a href="#xarModURL('sitetools','admin','links',array('sort' => 'itemtype'))#"><xar:mlstring>Itemtype</xar:mlstring></a></th>
+      <th><a href="#xarModURL('sitetools','admin','links',array('sort' => 'itemid'))#"><xar:mlstring>Itemid</xar:mlstring></a></th>
+      <th><a href="#xarModURL('sitetools','admin','links',array('sort' => 'itemtitle'))#"><xar:mlstring>Item</xar:mlstring></a></th>
+    </tr>
+  <xar:foreach in="$items" key="$itemid">
+    <tr>
+      <td><a href="#$items[$itemid]['link']#">#xarVarPrepForDisplay($items[$itemid]['link'])# </a></td>
+      <td>#$items[$itemid]['status']#</td>
+      <td>#$items[$itemid]['moduleid']#</td>
+      <td>#$items[$itemid]['itemtype']#</td>
+      <td>#$items[$itemid]['itemid']#</td>
+      <td><a href="#$items[$itemid]['itemlink']#">#xarVarPrepForDisplay($items[$itemid]['itemtitle'])# </a></td>
+    </tr>
+  </xar:foreach>
+  </table>
+  <p align="center">
+  <xar:if condition="(!empty($startnum) and $startnum gt 1) or (!empty($items) and count($items) eq $numitems)">
+    <xar:if condition="!empty($startnum) and $startnum gt 1">
+      <a href="#xarServerGetCurrentURL(array('startnum' => $startnum - $numitems))#">&lt;&lt; </a>
+    <xar:else/>
+      ---
+    </xar:if>
+    &nbsp;&nbsp;&nbsp;
+    <xar:if condition="!empty($items) and count($items) eq $numitems">
+      <a href="#xarServerGetCurrentURL(array('startnum' => $startnum + $numitems))#"> &gt;&gt;</a>
+    <xar:else/>
+      ---
+    </xar:if>
+  </xar:if>
+  </p>
+  <a href="#xarServerGetCurrentURL()##top"><xar:mlstring>Back to top</xar:mlstring></a>
+</xar:if>
+
+</div>
+</div>

@@ -1,0 +1,92 @@
+<object name="sitetools_links">
+  <objectid>22</objectid>
+  <label>Sitetools Links</label>
+  <moduleid>887</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>108</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_id</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="link">
+      <id>109</id>
+      <label>Link</label>
+      <type>url</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_link</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>1:254</validation>
+    </property>
+    <property name="status">
+      <id>110</id>
+      <label>Status</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_status</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="moduleid">
+      <id>111</id>
+      <label>Module</label>
+      <type>module</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_moduleid</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="itemtype">
+      <id>112</id>
+      <label>Itemtype</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_itemtype</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="itemid">
+      <id>113</id>
+      <label>Itemid</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_itemid</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="itemtitle">
+      <id>114</id>
+      <label>Itemtitle</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_itemtitle</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="itemlink">
+      <id>115</id>
+      <label>Itemlink</label>
+      <type>url</type>
+      <default></default>
+      <source>xar_sitetools_links.xar_itemlink</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

@@ -41,6 +41,85 @@ function sitetools_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
+    $linkstable = $xartable['sitetools_links'];
+    $query = xarDBCreateTable($linkstable,
+                             array('xar_id'         => array('type'        => 'integer',
+                                                            'null'       => false,
+                                                            'increment'  => true,
+                                                            'primary_key' => true),
+                                   'xar_link'       => array('type'        => 'varchar',
+                                                            'size'        => 254,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+                                   'xar_status'     => array('type'        => 'integer',
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+// TODO: replace with unique id
+                                   'xar_moduleid'   => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'xar_itemtype'   => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'xar_itemid'     => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                   'xar_itemtitle'  => array('type'        => 'varchar',
+                                                            'size'        => 254,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+                                   'xar_itemlink'   => array('type'        => 'varchar',
+                                                            'size'        => 254,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+                                  ));
+
+    if (empty($query)) return; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    // allow several entries for the same link here
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_link',
+        'fields'    => array('xar_link'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($linkstable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // allow several links for the same module item
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_combo',
+        'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($linkstable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // allow many entries with the same status here
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_status',
+        'fields'    => array('xar_status'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($linkstable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // create the dynamic object that will represent our items
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/sitetools/sitetools_links.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('sitetools','objectid_links',$objectid);
+
     // Set up an initial value for a module variable.
     // Use relative path for now
    /*   if( isset( $_SERVER['PATH_TRANSLATED'] ) )
@@ -51,7 +130,7 @@ function sitetools_init()
     } else {
         $backupdir = 'var/uploads/backup';
     } */
-    $backupdir=xarCoerGetVarDirPath()."/uploads";
+    $backupdir=xarCoreGetVarDirPath()."/uploads";
     xarModSetVar('sitetools','adocachepath',xarCoreGetVarDirPath()."/cache/adodb");
     xarModSetVar('sitetools','rsscachepath', xarCoreGetVarDirPath()."/cache/rss");
     xarModSetVar('sitetools','templcachepath', xarCoreGetVarDirPath()."/cache/templates");
@@ -85,14 +164,95 @@ function sitetools_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case 0.1:
+            // Code to upgrade from version 0.1 goes here
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
 
-            return sitetools_upgrade(1.0);
+            xarDBLoadTableMaintenanceAPI();
+
+            $linkstable = $xartable['sitetools_links'];
+            $query = xarDBCreateTable($linkstable,
+                                     array('xar_id'         => array('type'        => 'integer',
+                                                                    'null'       => false,
+                                                                    'increment'  => true,
+                                                                    'primary_key' => true),
+                                           'xar_link'       => array('type'        => 'varchar',
+                                                                    'size'        => 254,
+                                                                    'null'        => false,
+                                                                    'default'     => ''),
+                                           'xar_status'     => array('type'        => 'integer',
+                                                                    'null'        => false,
+                                                                    'default'     => '0'),
+        // TODO: replace with unique id
+                                           'xar_moduleid'   => array('type'        => 'integer',
+                                                                    'unsigned'    => true,
+                                                                    'null'        => false,
+                                                                    'default'     => '0'),
+                                           'xar_itemtype'   => array('type'        => 'integer',
+                                                                    'unsigned'    => true,
+                                                                    'null'        => false,
+                                                                    'default'     => '0'),
+                                           'xar_itemid'     => array('type'        => 'integer',
+                                                                    'unsigned'    => true,
+                                                                    'null'        => false,
+                                                                    'default'     => '0'),
+                                           'xar_itemtitle'  => array('type'        => 'varchar',
+                                                                    'size'        => 254,
+                                                                    'null'        => false,
+                                                                    'default'     => ''),
+                                           'xar_itemlink'   => array('type'        => 'varchar',
+                                                                    'size'        => 254,
+                                                                    'null'        => false,
+                                                                    'default'     => ''),
+                                          ));
+
+            if (empty($query)) return; // throw back
+
+            // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // allow several entries for the same link here
+            $index = array(
+                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_link',
+                'fields'    => array('xar_link'),
+                'unique'    => false
+            );
+            $query = xarDBCreateIndex($linkstable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // allow several links for the same module item
+            $index = array(
+                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_combo',
+                'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
+                'unique'    => false
+            );
+            $query = xarDBCreateIndex($linkstable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // allow many entries with the same status here
+            $index = array(
+                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_status',
+                'fields'    => array('xar_status'),
+                'unique'    => false
+            );
+            $query = xarDBCreateIndex($linkstable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // create the dynamic object that will represent our items
+            $objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/sitetools/sitetools_links.xml'));
+            if (empty($objectid)) return;
+            // save the object id for later
+            xarModSetVar('sitetools','objectid_links',$objectid);
+
         case 1.0:
             // Code to upgrade from version 1.0 goes here
-            break;
         case 2.0:
             // Code to upgrade from version 2.0 goes here
-            break;
     }
     // Update successful
     return true;
@@ -115,6 +275,21 @@ function sitetools_delete()
     if (empty($query)) {
     //return; // let's let delete go to completion.
     }
+    // Drop the table and send exception if returns false.
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    // delete the dynamic object and its properties
+    $objectid = xarModGetVar('sitetools','objectid_links');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',
+                      array('objectid' => $objectid));
+        xarModDelVar('sitetools','objectid_links');
+    }
+
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['sitetools_links']);
+    if (empty($query)) return;
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
