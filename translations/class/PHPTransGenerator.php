@@ -55,7 +55,9 @@ class PHPTranslationsGenerator {
                 $contextName = $context->getName();
                 $contextDir = $context->getDir();
                 if ($contextName == 'core' || $contextName == 'file') continue;
-                if (!file_exists($this->baseDir.$contextDir)) mkdir($this->baseDir.$contextDir, 0777);
+                if (file_exists($this->baseDir.$contextDir)) continue;
+                if (!file_exists("modules/$dnName/xar$contextDir")) continue;
+                mkdir($this->baseDir.$contextDir, 0777);
             }
             break;
             case XARMLS_DNTYPE_THEME:
