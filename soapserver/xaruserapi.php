@@ -76,7 +76,8 @@ function wsModAPIFunc(&$request_data)
 */	
 }
 
-function wsModApiSimpleFunc(&$request_data) { 
+function wsModApiSimpleFunc(&$request_data) 
+{ 
 	return wsModAPIFunc($request_data);
 }
 
