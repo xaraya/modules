@@ -187,6 +187,10 @@ function xarcachemanager_delete()
                               'xarcachemanager', 'admin', 'deletehook')) {
         return false;
     }
+    if (!xarModUnregisterHook('module', 'updateconfig', 'API',
+                            'xarcachemanager', 'admin', 'updateconfighook')) {
+        return false;
+    }
 
     // Remove Masks and Instances
     xarRemoveMasks('xarcachemanager');
