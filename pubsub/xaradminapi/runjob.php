@@ -66,8 +66,14 @@ function pubsub_adminapi_runjob($args)
         $info = xarUserGetVar('email',$userid);
         $name = xarUserGetVar('uname',$userid);
     } else {
-        $info = $email;
-        $name = '';
+        $emailinfo = explode(' ',$email,2);
+        $info    = $emailinfo[0];
+        if( isset($emailinfo[1]) )
+        {
+            $name = $emailinfo[1];
+        } else {
+            $name = '';
+        }
     }
 
     $modinfo = xarModGetInfo($modid);
