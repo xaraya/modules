@@ -193,9 +193,9 @@ function uploads_admin_importgallery( $args )
 //	echo $contents."<pre>";
 exit();
 
-			echo '<hr><pre>';
+			echo '<hr/><pre>';
 			print_r( $alumbs_lookup[$album] );
-			echo '</pre></hr>';										  
+			echo '</pre>';										  
 
 
 
@@ -208,7 +208,7 @@ exit();
 	{
 		$filename = $file['filename'];
 		
-		echo "<hr> <b>File: ".$filename."</b><br/>";
+		echo "<hr/> <b>File: ".$filename."</b><br/>";
 		$lastSlash = strlen($filename) - strpos( strrev( $filename ), '/' );
 		$title = ucwords(str_replace( "_", " ", substr ($filename, $lastSlash, strpos( $filename, '.')-1 ) ));
 
@@ -483,9 +483,9 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
 					FROM $uploadstable
 					WHERE xar_ulfile = '$filename' OR xar_ulfile = '$album$filename' OR xar_ulhash = '$filename' OR xar_ulhash = '$image_import_dir$filename';";
 					
-//			echo "<hr><pre>";
+//			echo "<hr/><pre>";
 //			print_r($sql);
-//			echo "</pre></hr>";
+//			echo "</pre>";
 			$result = $dbconn->Execute($sql);
 			
 			// Check for an error with the database code, and if so set an appropriate

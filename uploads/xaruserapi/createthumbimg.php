@@ -273,7 +273,7 @@ function createthumbnetpbm( $file, $thumbwidth, $thumbheight, $newfile )
 	// to create the thumbnail file		
 /*	
 	echo $cmd;
-	echo "<hr>";
+	echo "<hr/>";
 //	exit();
 	echo "Executing...<br/>";
 	echo "<pre>";
