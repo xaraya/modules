@@ -6,6 +6,7 @@
  *           FROM ...
  *           LEFT JOIN $table
  *               ON $field = <name of itemid field in your module>
+ *           $more
  *           WHERE ...
  *               AND $where // this includes xar_modid = <your module ID>
  *
@@ -42,6 +43,21 @@ function categories_userapi_leftjoin($args)
     }
 
     // Optional argument
+    if (!empty($catid)) {
+        if (strpos($catid,' ')) {
+            $cids = explode(' ',$catid);
+            $andcids = true;
+        } elseif (strpos($catid,'+')) {
+            $cids = explode('+',$catid);
+            $andcids = true;
+        } elseif (strpos($catid,'-')) {
+            $cids = explode('-',$catid);
+            $andcids = false;
+        } else {
+            $cids = array($catid);
+            $andcids = false;
+        }
+    }
     if (!isset($cids)) {
         $cids = array();
     }
