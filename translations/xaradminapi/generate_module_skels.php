@@ -157,7 +157,7 @@ function translations_adminapi_generate_module_skels($args)
         $contexts = $GLOBALS['MLS']->getContexts();
         $foundmatch = false;
         foreach ($contexts as $context) {
-            $matchstring = '#^' . $context->getName() . '::(.*)#';
+            $matchstring = '!^' . $context->getName() . '::(.*)!';
             if (preg_match($matchstring, $subname, $matches)) {
                 if (!$gen->create($context->getType(), $matches[1])) return;
                 $foundmatch = true;
