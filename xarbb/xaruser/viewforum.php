@@ -212,8 +212,12 @@ function xarbb_user_viewforum()
                                     $settings['topicsperpage']);
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
     $data['catname'] = $categories['name'];
-//$pre = var_export($data, true); echo "<pre>$pre</pre>"; return;
-    // Return the template variables defined in this function
+
+    // Forum Jump
+    $data['forums'] = xarModAPIFunc('xarbb',
+                                    'user',
+                                    'getallforums');
+    
     return $data;
 }
 
