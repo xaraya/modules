@@ -18,7 +18,7 @@ function metaweblogapi_userapi_getpost($args)
         $err = xarML("Invalid user (#(1)) or wrong password while getting post",$username);
     } else {
         // FIXME: test for exceptions
-        $article = xarModAPIFunc('articles','user','get',array('aid'=>$postid));
+        $article = xarModAPIFunc('articles','user','get',array('aid'=>$postid,'withcids' => true));
         if (!$article) {
             $err = xarML("Failed to retrieve article (#(1)",$postid);
         }
@@ -33,6 +33,20 @@ function metaweblogapi_userapi_getpost($args)
         $data['userid']=$article['authorid'];
         $data['dateCreated']=iso8601_encode($article['pubdate']);
         $data['categories'] = array();
+        if(!empty($article['cids'])) {
+            foreach($article['cids'] as $catid) {
+                // Get the base categories for the itemtype (in this context, this means: the blogs)
+                $basecats = xarModAPIFunc('categories','user','getallcatbases',array('itemtype' => $article['pubtypeid'],
+                                                                                     'modid' => xarModGetIdFromName('Articles'),
+                                                                                     'format' => 'cids'));
+                if(in_array($catid,$basecats)) continue;
+                //if($catid == $blogid) continue;
+                $catname = xarModAPIFunc('categories','user','cid2name',array('cid' => $catid));
+                // the cat api func does a raw url encode, why o why is that in an api method?
+                $catnames[]['name'] = rawurldecode($catname);
+            }
+        }
+        $data['categories'] = $catnames;
         $data['content']=xarVarPrepForDisplay($article['summary']);
         $data['postid']=$article['aid'];
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',

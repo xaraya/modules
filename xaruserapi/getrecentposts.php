@@ -59,6 +59,17 @@ function metaweblogapi_userapi_getrecentposts($args)
             $article_list[$i]['dateCreated'] = iso8601_encode($article['pubdate']);
             $article_list[$i]['content'] = xarVarPrepForDisplay($article['summary']);
             $article_list[$i]['postid'] = $article['aid'];
+            $catnames = array();
+            
+            if(!empty($article['cids'])) {
+                foreach($article['cids'] as $catid) {
+                    if($catid == $blogid) continue;
+                    $catname = xarModAPIFunc('categories','user','cid2name',array('cid' => $catid));
+                    // the cat api func does a raw url encode, why o why is that in an api method?
+                    $catnames[]['name'] = rawurldecode($catname);
+                }
+            }
+            $article_list[$i]['categories'] = $catnames;
             $i++;
         }
                 
