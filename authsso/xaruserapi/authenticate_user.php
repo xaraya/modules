@@ -160,6 +160,8 @@ function authsso_userapi_authenticate_user($args)
     } else {
         $rid = $userRole['uid'];
     }
+
+    xarVarDelCached('Security.Variables', 'privilegeset');
     return $rid;
 }
 
