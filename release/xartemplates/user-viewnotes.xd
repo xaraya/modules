@@ -29,7 +29,7 @@
 [ #$type# ]
 <h1><a class="xar-title" href="#$displaylink#">#$name#</a></h1>
 <div class="xar-accent" style="padding: 2px;"><span class="xar-sub">
-<xar:mlstring>Posted by</xar:mlstring>: 
+<xar:mlstring>Author</xar:mlstring>: 
 <a href="#$contacturl#">#$realname#</a>
 <xar:mlstring>on</xar:mlstring>
 #$time#
