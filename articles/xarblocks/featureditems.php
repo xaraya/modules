@@ -232,12 +232,18 @@ function articles_featureditemsblock_display(& $blockinfo)
             }else{
                $cids='';
             }
+            if (isset($article['pubdate'])) {
+               $pubdate=$article['pubdate'];
+            }else{
+               $pubdate='';
+            }
             // Pass $desc to items[] array so that the block template can render it
             $data['items'][] = array(
                 'label' => $article['title'],
                 'link' => $link,
                 'count' => $count,
                 'cids' => $cids,
+                'pubdate' => $pubdate,
                 'desc' => ((!empty($vars['showsummary']) && !empty($article['summary'])) ? $article['summary'] : '')
             );
         }
