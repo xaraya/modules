@@ -60,7 +60,7 @@ function metaweblogapi_userapi_getrecentposts($args)
             $article_list[$i]['content']     = xarVarPrepForDisplay($article['summary']);
             $article_list[$i]['body']        = xarVarPrepForDisplay($article['body']);
             $article_list[$i]['postid']      = $article['aid'];
-            $article_list[$i]['link']        = xarModUrl('articles','user','display',array('aid' => $article['aid']));
+            $article_list[$i]['link']        = xarModUrl('articles','user','display',array('aid' => $article['aid'],'itemtype' => $article['pubtypeid']));
             $catnames = array();
             
             if(!empty($article['cids'])) {

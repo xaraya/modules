@@ -30,7 +30,7 @@ function metaweblogapi_userapi_getpost($args)
         $data['title']       = $article['title'];
         $data['userid']      = $article['authorid'];
         $data['dateCreated'] = iso8601_encode($article['pubdate']);
-        $data['link']        = xarModUrl('articles','user','display',array('aid' => $postid));
+        $data['link']        = xarModUrl('articles','user','display',array('aid' => $postid,'itemtype' => $article['pubtypeid']));
         // Get the categories for this article.
         $data['categories'] = array(); $catnames = array();
         if(!empty($article['cids'])) {
