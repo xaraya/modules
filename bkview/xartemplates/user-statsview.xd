@@ -1,22 +1,22 @@
-<xar:template file="user-menu" type="module"/>
+<xar:template file="user-menu" />
     
-    <div style="float:left; margin-top: 1em;">
-      
-      <table class="csets">
-        <tr>
-          <th><xar:mlstring>Author</xar:mlstring></th>
-          <th><xar:mlstring>Recent changesets</xar:mlstring></th>
-          <th><xar:mlstring>All changesets</xar:mlstring></th>
-        </tr>
-        
-        <xar:loop name="$users">    
-          <tr class="csets">
-            <td class="csets">
-              <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$loop:item['user']#">#$loop:item['user']#</a></td>
-            <td class="csets" width="33%">#$loop:item['recentcsets']#&nbsp;</td>
-            <td class="csets" width="33%">#$loop:item['allcsets']#</td>
-          </tr>    
-        </xar:loop>
-      </table>
-    </div>
-<xar:template file="user-trailer" type="module"/>
+<div style="margin-top: 1em;">
+  
+  <table style="width: 100%;">
+    <tr>
+      <th><xar:mlstring>Author</xar:mlstring></th>
+      <th><xar:mlstring>Recent changesets</xar:mlstring></th>
+      <th><xar:mlstring>All changesets</xar:mlstring></th>
+    </tr>
+    
+    <xar:loop name="$users">    
+      <tr>
+        <td>
+          <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$loop:item['user']#">#$loop:item['user']#</a></td>
+        <td style="text-align: center;">#$loop:item['recentcsets']#&nbsp;</td>
+        <td style="text-align: center;">#$loop:item['allcsets']#</td>
+      </tr>    
+    </xar:loop>
+  </table>
+</div>
+<xar:template file="user-trailer" />
