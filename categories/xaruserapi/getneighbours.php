@@ -10,7 +10,8 @@
  * @returns array
  * @return TODO
  */
-function categories_userapi_getneighbours($args) {
+function categories_userapi_getneighbours($args)
+{
     extract($args);
 
     if (!isset($left) || !isset($right) || !is_numeric($left) || !is_numeric($right)) {

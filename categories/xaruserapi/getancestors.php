@@ -15,7 +15,8 @@
  * @returns array
  * @return array of category info arrays, false on failure
  */
-function categories_userapi_getancestors($args) {
+function categories_userapi_getancestors($args)
+{
     // Cache each database retrieval.
     // The final result will be an array of aliases (aka pointers) into this cache.
     static $cached = array();

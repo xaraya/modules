@@ -9,7 +9,8 @@
  * @returns array
  * @return array of category info arrays, false on failure
  */
-function categories_userapi_getchildren($args) {
+function categories_userapi_getchildren($args)
+{
     extract($args);
 
     if (!isset($cid) && !isset($cids)) {

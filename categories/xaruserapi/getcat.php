@@ -21,7 +21,8 @@
  *                                   eid and its children, grandchildren and
  *                                   every other sibbling will be returned
  */
-function categories_userapi_getcat($args) {
+function categories_userapi_getcat($args)
+{
     extract($args);
 
     $dbconn =& xarDBGetConn();
