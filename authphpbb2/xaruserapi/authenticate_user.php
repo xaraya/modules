@@ -159,56 +159,55 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
     $prefix = xarModGetVar('authphpbb2','prefix');
     $password = md5($pass);
     $table = $prefix.'users';
-
+    
     if($connect)  //just double-checking the connection.
-    {
-        // connect to the invision database and get the user data
-        //$inv_db = mysql_select_db($database, $connect);
-        $sql = "SELECT * FROM " . $table . 
+        {
+            // connect to the invision database and get the user data
+            //$inv_db = mysql_select_db($database, $connect);
+            $sql = "SELECT * FROM " . $table . 
         		" WHERE username='" . xarVarPrepForStore($username) . 
         		"' AND user_password='".xarVarPrepForStore($password)."'";
-        
-        $connect->SetFetchMode(ADODB_FETCH_ASSOC);
-        
-        $result = $connect->Execute($sql);
-    
-        if (!$result) {
-        	//error
-            $msg = "phpBB2: Query to $table has failed: " . $db->ErrorMsg();
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
-                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-            error_log("phpBB2 Error: Query to $table failed");
-            return false;
-        } 
-        if ($result->EOF)
-        {
-        	//incorrect login
-        $msg = xarML('Wrong username (#(1)) or pass (not shown).', $username);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-            $result->Close();
-            return false;
-        }
-        else {
-            //correct login.  return uid.
-            	if ($result->fields['user_active']=='0') 
-            	{
-            		//user inactive
-			        $msg = xarML('User #(1) not activated.', $username);
-            		xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                		new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                	$result->Close();
-            		return false;	
-            	}
-            	else
-            	{
-            		$user_data=$result->fields;
-            		$result->Close();
-                	return $user_data;
-            	}
+            
+            $connect->SetFetchMode(ADODB_FETCH_ASSOC);
+            
+            $result = $connect->Execute($sql);
+            
+            if (!$result) {
+                //error
+                $msg = "phpBB2: Query to $table has failed: " . $db->ErrorMsg();
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
+                                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                error_log("phpBB2 Error: Query to $table failed");
+                return false;
+            } 
+            if ($result->EOF)
+                {
+                    //incorrect login
+                    $msg = xarML('Wrong username (#(1)) or pass (not shown).', $username);
+                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                    $result->Close();
+                    return false;
+                }
+            else {
+                //correct login.  return uid.
+                if ($result->fields['user_active']=='0') 
+                    {
+                        //user inactive
+                        $msg = xarML('User #(1) not activated.', $username);
+                        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                        $result->Close();
+                        return false;	
+                    }
+                else
+                    {
+                        $user_data=$result->fields;
+                        $result->Close();
+                        return $user_data;
+                    }
             }
         }
-    }
 }
 
 ?>
