@@ -58,6 +58,10 @@ function wiki_init()
  */
 function wiki_upgrade($oldversion)
 {
+    switch($oldversion){
+        case '1.0':
+            break;
+    }
     return true;
 } 
 

@@ -14,7 +14,7 @@
  */
 $modversion['name']           = 'Wiki';
 $modversion['id']             = '28';
-$modversion['version']        = '1.0';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'Allow Wiki formatting in the news';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
