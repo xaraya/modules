@@ -51,7 +51,7 @@
 </tr>
 <tr>
 <td align="right" valign="top"> #$yourmessage#&nbsp;</td>
-<td><textarea name="message" wrap="virtual" rows="8"> </textarea> </td>
+<td><textarea name="message" rows="8"> </textarea> </td>
 </tr>
 <td align="right" valign="top"> #$send_me_copy# &nbsp; </td>
 
