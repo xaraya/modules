@@ -84,7 +84,17 @@ function xarcachemanager_adminapi_updatehook($args)
                                           'usershared',
                                           'cacheexpire'
                                           );
-            
+
+            if (empty($nocache)) {
+                $nocache = 0;
+            }
+            if (empty($pageshared)) {
+                $pageshared = 0;
+            }
+            if (empty($cacheexpire)) {
+                $cachexpire = 0;
+            }
+
             if ($cacheexpire > 0 ) {
                 $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                               array('starttime' => $cacheexpire,
