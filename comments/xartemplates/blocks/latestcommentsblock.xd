@@ -19,7 +19,7 @@
 			<xar:elseif condition="$addcomment ge 20" />
 			  <span class="xar-title">
 				<xar:if condition="(!empty($comment['objurl']) AND $addcomment ge 21)">
-				  <a href="#$comment['objurl']###$comment['xar_cid']#">
+				  <a href="#$comment['objurl']####$comment['xar_cid']#">
 				  #$comment['xar_subject']#
 				  </a>
 				<xar:else />
@@ -34,7 +34,7 @@
 				<xar:mlstring>in</xar:mlstring> 
 				<span class="xar-title">
                                   <xar:if condition="$addobject ge 21">
-				    <a href="#$comment['objurl']###$comment['xar_cid']#">
+				    <a href="#$comment['objurl']####$comment['xar_cid']#">
                                   <xar:else/>
 				    <a href="#$comment['objurl']#">
                                   </xar:if>
