@@ -14,6 +14,24 @@
                     <span class="xar-title"><xar:mlstring>You are about to delete a publication.</xar:mlstring></span>
                 </td>
             </tr>
+            <tr align="left">
+                <td>
+                    <span class="xar-title"><xar:mlstring>On removal of publication:</xar:mlstring></span>
+                    <br />
+                    <input type="radio" value="remove" name="issues" checked><xar:mlstring>Delete all issues, stories and subscriptions for this publication.</xar:mlstring>
+                    <br />
+                    <input type="radio" value="reassign" name="issues"><xar:mlstring>Move all issues, stories and subscriptions to another publication.</xar:mlstring>
+                    <br />
+                    <select name="newpid">
+                        <option value=0>Choose Publication:</option>
+                        <xar:loop name="$publications">
+                            <xar:if condition="$id != $loop:item['id']">
+                                <option name="id" value="#$loop:item['id']#" selected>#$loop:item['title']#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td>
                     <span class="xar-title"><xar:mlstring>Confirm removal of publication:</xar:mlstring></span>&nbsp;&nbsp;

@@ -20,6 +20,8 @@
  * @author Richard Cave
  * @param 'id' the id of the publication to be deleted
  * @param 'confirm' confirm that this publication can be deleted
+ * @param 'issues' remove or reassign issues/stories for this publication
+ * @param 'newpid' if reassign, the new id of the publication
  * @returns array
  * @return $data
  */
@@ -34,6 +36,8 @@ function newsletter_admin_deletepublication($args)
     // Get parameters from input
     if (!xarVarFetch('id', 'id', $id, 0)) return;
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
+    if (!xarVarFetch('issues', 'str:1:', $issues, 'remove')) return;
+    if (!xarVarFetch('newpid', 'int:0:', $newpid, 0)) return;
 
     // The user API function is called
     $publication = xarModAPIFunc('newsletter',
@@ -51,6 +55,18 @@ function newsletter_admin_deletepublication($args)
         // Get the admin menu
         $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
+        // Get a list of all publications
+        $data['publications'] = xarModAPIFunc('newsletter',
+                                              'user',
+                                              'get',
+                                               array('phase' => 'publication',
+                                                     'sortby' => 'title'));
+        
+        // Check for exceptions
+        if (!isset($data['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)  {
+            return; // throw back
+        }
+    
         // Specify for which publication you want confirmation
         $data['id'] = $id;
         $data['confirmbutton'] = xarML('Confirm');
@@ -79,7 +95,9 @@ function newsletter_admin_deletepublication($args)
     if (!xarModAPIFunc('newsletter',
                        'admin',
                        'deletepublication',
-                       array('id' => $id))) {
+                       array('id' => $id,
+                             'issues' => $issues,
+                             'newpid' => $newpid))) {
         return; // throw back
     }
 

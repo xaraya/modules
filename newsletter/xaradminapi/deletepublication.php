@@ -19,6 +19,8 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['id'] ID of the publication
+ * @param $args['issues'] remove or reassign the issues/stories of the publication
+ * @param $args['newpid'] if reassign, the id of the new publication
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -41,6 +43,14 @@ function newsletter_adminapi_deletepublication($args)
         return;
     }
 
+    if (!isset($issues) || !is_string($issues)) {
+        $issues = 'remove';
+    }
+
+    if (!isset($newpid) || !is_numeric($newpid)) {
+        $newpid = 0;
+    }
+
     // Get item
     $item = xarModAPIFunc('newsletter',
                           'user',
@@ -59,41 +69,95 @@ function newsletter_adminapi_deletepublication($args)
     $publicationsTable = $xartable['nwsltrPublications'];
     $issuesTable = $xartable['nwsltrIssues'];
     $storiesTable = $xartable['nwsltrStories'];
+    $subsTable = $xartable['nwsltrSubscriptions'];
     $altsubsTable = $xartable['nwsltrAltSubscriptions'];
+
 
     // Delete the publication
     $query = "DELETE 
-                FROM $publicationsTable
-               WHERE xar_id = ?";
-    $bindvars[] = (int) $id;
-    $result =& $dbconn->Execute($query, $bindvars);
+              FROM $publicationsTable
+              WHERE xar_id = ?";
+
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;
 
-    // Set all issues under publication to publication id of 0
-    $query = "UPDATE FROM $issuesTable
-              SET xar_pid = 0";
-    $result =& $dbconn->Execute($query);
+    // Do we reassign or remove the issues/stories of the publication
+    switch($issues) {
+        case 'reassign':
+            // Set all issues to publication id of new id
+            $query = "UPDATE $issuesTable
+                      SET xar_pid = ? 
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $newpid, (int) $id));
 
-    // Check for an error
-    if (!$result) return;
-    
-    // Set all stories under publication to publication id of 0
-    $query = "UPDATE FROM $storiesTable
-              SET xar_pid = 0";
-    $result =& $dbconn->Execute($query);
+            // Check for an error
+            if (!$result) return;
+            
+            // Set all stories to publication id of new id
+            $query = "UPDATE $storiesTable
+                      SET xar_pid = ?
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $newpid, (int) $id));
 
-    // Check for an error
-    if (!$result) return;
-    
-    // Set all altsubscriptions for publication to publication id of 0
-    $query = "UPDATE FROM $altsubsTable
-              SET xar_pid = 0";
-    $result =& $dbconn->Execute($query);
+            // Check for an error
+            if (!$result) return;
+        
+            // Delete all subscriptions for publication
+            $query = "UPDATE $subsTable
+                      SET xar_pid = ?
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $newpid, (int) $id));
 
-    // Check for an error
-    if (!$result) return;
+            // Delete all altsubscriptions for publication
+            $query = "UPDATE $altsubsTable
+                      SET xar_pid = ?
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $newpid, (int) $id));
+
+            // Check for an error
+            if (!$result) return;
+
+            break;
+
+        case 'remove':
+        default:
+            // Delete all issues under publication
+            $query = "DELETE FROM $issuesTable
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $id));
+
+            // Check for an error
+            if (!$result) return;
+            
+            // Delete all stories under publication
+            $query = "DELETE FROM $storiesTable
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $id));
+
+            // Check for an error
+            if (!$result) return;
+
+            // Delete all subscriptions for publication
+            $query = "DELETE FROM $subsTable
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $id));
+
+            // Check for an error
+            if (!$result) return;
+
+            // Delete all altsubscriptions for publication
+            $query = "DELETE FROM $altsubsTable
+                      WHERE xar_pid = ?";
+            $result =& $dbconn->Execute($query, array((int) $id));
+
+            // Check for an error
+            if (!$result) return;
+
+            break;
+    }
+
     // Let any hooks know that we have deleted an item.  As this is a
     // delete hook we're not passing any extra info
     $item['module'] = 'newsletter';
