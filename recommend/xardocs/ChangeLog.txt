@@ -1,0 +1,8 @@
+ChangeLog
+Version 1.0.0
+ * Added Statistics
+ * Added User Contributed Notes
+ * Added template for the mail
+ * Fixed HTML Display
+
+Credits to jojodee for the User Contributed Notes.
