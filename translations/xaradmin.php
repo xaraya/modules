@@ -87,7 +87,7 @@ define('RELEASE', 4);
 // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!($themelist = xarThemeGetList())) return;
+    if (!($themelist = xarModAPIFunc('themes','admin','GetThemeList',array()))) return;
 
     $tplData = translations_create_choose_a_theme_druidbar(CHOOSE);
     $tplData['themelist'] = $themelist;
@@ -119,11 +119,11 @@ define('RELEASE', 4);
 // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $sessmodid = xarSessionGetVar('translations_modid');
-    if (!xarVarFetch('modid', 'id', $modid, $sessmodid)) return;
-    xarSessionSetVar('translations_modid', $modid);
+    $sessthemeid = xarSessionGetVar('translations_themeid');
+    if (!xarVarFetch('themeid', 'id', $themeid, $sessthemeid)) return;
+    xarSessionSetVar('translations_themeid', $themeid);
 
-    if (!($tplData = xarModGetInfo($modid))) return;
+    if (!($tplData = xarThemeGetInfo($themeid))) return;
 
     xarSessionSetVar('translations_dnName', $tplData['name']);
 
@@ -836,7 +836,7 @@ function translations__dntype2name ($tran_type)
     case XARMLS_DNTYPE_MODULE:
         return xarML('module');
         break;
-    case XARML_DNTYPE_THEME:
+    case XARMLS_DNTYPE_THEME:
         return xarML('theme');
         break;
     default:

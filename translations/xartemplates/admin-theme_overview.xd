@@ -1,0 +1,10 @@
+<xar:template type="module" file="admin-menu"/>
+
+<xar:template type="module" file="druidbar" />
+<xar:mlstring>Theme name</xar:mlstring>: #$displayname#<br />
+<xar:mlstring>Them original name</xar:mlstring>: #$name#<br />
+<xar:mlstring>Theme version</xar:mlstring>: #$version#<br />
+<br />
+<xar:mlstring>Make a choice</xar:mlstring>:<br />
+<br />
+<xar:template type="module" file="opbar" />
