@@ -54,15 +54,6 @@ function xarbb_user_viewtopic()
 
     $data['pager'] = '';
 
-    if ($allowhtml){
-        $data['tpost'] = xarVarPrepHTMLDisplay($data['tpost']);
-        $data['ttitle'] = xarVarPrepHTMLDisplay($data['ttitle']);
-    } else {
-        $data['tpost'] = xarVarPrepForDisplay($data['tpost']);
-        $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
-    }
-    xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
-
     // Need to get this working for new itemtypes
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
@@ -72,6 +63,15 @@ function xarbb_user_viewtopic()
                                                        $data['ttitle']),
                                                        'xarbb',
                                                        $data['fid']);
+
+    if ($allowhtml) {
+        $data['tpost'] = xarVarPrepHTMLDisplay($data['tpost']);
+        $data['ttitle'] = xarVarPrepHTMLDisplay($data['ttitle']);
+    } else {
+        $data['tpost'] = xarVarPrepForDisplay($data['tpost']);
+        $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
+    }
+    xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
     // The user API function is called
     $posterdata = xarModAPIFunc('roles',
                                 'user',
