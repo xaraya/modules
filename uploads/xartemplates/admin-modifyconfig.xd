@@ -81,7 +81,9 @@
 	<input type="radio" name="obfuscate_imports" value="0"> No
 </xar:if>
 <br />
+<!--
 <xar:mlstring>If Yes, file names will be obfuscated.</xar:mlstring>
+-->
 </p>
 
 
