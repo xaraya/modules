@@ -3,7 +3,7 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Modify a Smiley</xar:mlstring></h2>
 
-<form method="post" action="#xarModURL('smilies', 'admin', 'modify', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" >
+<form method="post" action="#xarModURL('smilies', 'admin', 'modify', array('phase' => 'update'))#"  enctype="application/x-www-form-urlencoded" >
     <div style="clear: both; padding-top: 10px;">
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="sid" id="sid" value="#$sid#" />
