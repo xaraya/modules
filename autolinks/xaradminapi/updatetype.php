@@ -80,6 +80,21 @@ function autolinks_adminapi_updatetype($args)
 
     $autolinkstypestable = $xartable['autolinks_types'];
 
+    // Check if that type name exists
+    if (isset($type_name)) {
+        $query = 'SELECT xar_tid FROM ' . $autolinkstypestable
+              . ' WHERE xar_type_name = \'' . xarVarPrepForStore($type_name) . '\''
+              . ' AND xar_tid <> ' . xarVarPrepForStore($tid);
+        $result =& $dbconn->Execute($query);
+        if (!$result) {return;}
+
+        if ($result->RecordCount() > 0) {
+            $msg = xarML('The given name already exists.');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            return;
+        }
+    }
+
     // Update the link
     $query = 'UPDATE ' . $autolinkstypestable . ' SET ' . $set
           . ' WHERE xar_tid = ' . xarVarPrepForStore($tid);

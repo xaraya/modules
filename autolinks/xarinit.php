@@ -309,7 +309,7 @@ function autolinks_upgrade($oldversion)
             // - drop and alter some autolink table columns
             // - set up some sample data
 
-            // Need Xaraya version 0.9.0.6.1 or above for correct ADOdb version.
+            // Need Xaraya version 0.9.1 or above for correct ADOdb version.
             if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1'))) {
                 return;
             }
@@ -397,11 +397,6 @@ function autolinks_upgrade($oldversion)
                 return;
             }
 
-            // Create the first autolink type then update all existing autolinks to point to it.
-            // Only do this for autolinks of type '0', and only create default if there are none yet.
-            // TODO: revisit error handling when a better upgrade model is available.
-            autolinks_init_upgrade_data();
-
             xarModSetVar('autolinks', 'templatebase', 'link');
             xarModSetVar('autolinks', 'showerrors', 0);
             xarModSetVar('autolinks', 'showsamples', 1);
@@ -429,6 +424,10 @@ function autolinks_upgrade($oldversion)
 
         case '1.5':
             // The current version.
+
+            // Create or update sample data.
+            autolinks_init_upgrade_data();
+
             return true;
     }
 
@@ -483,40 +482,66 @@ function autolinks_delete()
     return true;
 }
 
+// If required, create default autolink type and update unlinked autolinks to point to it.
+// TODO: revisit error handling when a better upgrade model is available.
+// TODO: structure so each new sample autolink type can be added for each upgrade.
+
 function autolinks_init_upgrade_data()
 {
-    $CountTypes = xarModAPIfunc('autolinks', 'user', 'counttypes');
+    $setuptypes = array(
+        array(
+            'type_name' => xarML('Standard autolink'),
+            'template_name' => 'standard',
+            'default' => true),
+        array(
+            'type_name' => xarML('Sample autolink type 1'),
+            'template_name' => 'sample1',
+            'type_desc' => xarML('URL in [square brackets] after the matched keyword.')
+        ),
+        array(
+            'type_name' => xarML('External'),
+            'template_name' => 'external',
+            'type_desc' => xarML('External URLs. Opens in an "external" window. These URLs are marked up with a "WWW" world icon.')
+        )
+    );
 
-    if ($CountTypes === 0) {
-        // Create some sample data.
-        $tid = xarModAPIfunc('autolinks', 'admin', 'createtype',
-            array('type_name'=>xarML('Standard autolink'), 'template_name'=>'standard'));
+    // Create some autolink types where they do not exist.
 
-        if ($tid > 0) {
-            // Scan the current autolinks for tids to be updated.
-            $links = xarModAPIfunc('autolinks', 'user', 'getall');
-            if (is_array($links)) {
-                foreach ($links as $lid => $link) {
-                    if ($links['tid'] == 0 || $links['type_name'] == '') {
-                        // Update the tid in this link.
-                        $result = xarModAPIfunc('autolinks', 'admin', 'update',
-                            array('lid'=>$lid, 'tid'=>$tid));
+    foreach ($setuptypes as $setuptype) {
+        // Check if a type for that template exists.
+        $links = xarModAPIfunc(
+            'autolinks', 'user', 'getalltypes',
+            array('template_name' => $setuptype['template_name'])
+        );
+
+        if (!$links) {
+            // Make sure the type name has not already been used.
+            $links = xarModAPIfunc(
+                'autolinks', 'user', 'getalltypes',
+                array('type_name' => $setuptype['type_name'])
+            );
+
+            if (!$links) {
+                // Create the autolink type
+                $tid = xarModAPIfunc('autolinks', 'admin', 'createtype', $setuptype);
+                if (!$tid) {return;}
+
+                // Now if this is the default type, point existing links to it.
+                if (!empty($setuptype['default'])) {
+                    // Scan the current autolinks for tids to be updated.
+                    $links = xarModAPIfunc('autolinks', 'user', 'getall');
+                    if (is_array($links)) {
+                        foreach ($links as $lid => $link) {
+                            if ($links['tid'] == 0 || $links['type_name'] == '') {
+                                // Update the tid in this link.
+                                $result = xarModAPIfunc('autolinks', 'admin', 'update',
+                                    array('lid'=>$lid, 'tid'=>$tid));
+                            }
+                        }
                     }
                 }
             }
-        } else {
-            return;
         }
-
-        // Create a second sample autolink type
-        $tid = xarModAPIfunc('autolinks', 'admin', 'createtype',
-            array(
-                'type_name'=>xarML('Sample autolink type 1'),
-                'template_name'=>'sample1',
-                'type_desc'=>xarML('URL in [square brackets] after the matched keyword.')
-            )
-        );
-        if (!$tid) {return;}
     }
 
     return true;

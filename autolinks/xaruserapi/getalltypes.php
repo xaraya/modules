@@ -5,6 +5,7 @@
  * @param $args['startnum'] start number (optional)
  * @param $args['numitems'] number of items (optional)
  * @param $args['template_name'] for a given template name (optional)
+ * @param $args['type_name'] for a given type name (optional)
  * @returns array
  * @return link type array, or false on failure
  */
@@ -24,6 +25,10 @@ function autolinks_userapi_getalltypes($args)
 
     if (isset($template_name)) {
         $where[] = 'xar_template_name like \''.xarVarPrepForStore($template_name).'\'';
+    }
+
+    if (isset($type_name)) {
+        $where[] = 'xar_type_name like \''.xarVarPrepForStore($type_name).'\'';
     }
 
     if (!empty($where)) {

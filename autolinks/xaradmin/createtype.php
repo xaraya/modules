@@ -18,34 +18,30 @@ function autolinks_admin_createtype()
     if (!xarVarFetch('type_name', 'str:1:', $type_name)) {
         $errorcount += 1;
         $data['type_name_error'] = xarExceptionRender('text');
-        xarExceptionFree();
+        xarExceptionHandled();
     }
 
     // TODO: better validation on template name
     if (!xarVarFetch('template_name', 'str:1:', $template_name)) {
         $errorcount += 1;
         $data['template_name_error'] = xarExceptionRender('text');
-        xarExceptionFree();
+        xarExceptionHandled();
     }
 
     if (!xarVarFetch('dynamic_replace', 'int:0:1', $dynamic_replace, '0')) {
         $errorcount += 1;
         $data['dynamic_replace_error'] = xarExceptionRender('text');
-        xarExceptionFree();
+        xarExceptionHandled();
     }
 
     if (!xarVarFetch('type_desc', 'str:0:400', $type_desc)) {
         $errorcount += 1;
         $data['type_desc_error'] = xarExceptionRender('text');
-        xarExceptionFree();
+        xarExceptionHandled();
     }
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
-        $errorcount += 1;
-        $data['global_error'] = xarExceptionRender('text');
-        xarExceptionFree();
-    }
+    if (!xarSecConfirmAuthKey()) {return;}
 
     if ($errorcount == 0) {
         // Call the API function if we have not encountered errors.
@@ -64,7 +60,7 @@ function autolinks_admin_createtype()
     if (xarExceptionValue()) {
         $errorcount += 1;
         $data['global_error'] = xarExceptionRender('text');
-        xarExceptionFree();
+        xarExceptionHandled();
     }
 
     if ($errorcount > 0) {

@@ -6,9 +6,9 @@
 function autolinks_admin_updateconfig()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminAutolinks')) return;
+    if(!xarSecurityCheck('AdminAutolinks')) {return;}
 
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {return;}
 
     $old_newwindow = xarModGetVar('autolinks', 'newwindow');
     $old_showerrors = xarModGetVar('autolinks', 'showerrors');
@@ -27,6 +27,7 @@ function autolinks_admin_updateconfig()
     $showerrors = xarModGetVar('autolinks', 'showerrors');
 
     // TODO: do these returns make any sense here? Do we not just fallback to the default value?
+    // TODO: represent values and errors to user for correcting.
     if (!xarVarFetch('maxlinkcount', 'int:1:', $maxlinkcount, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemsperpage', 'int:1:', $itemsperpage, 20, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('decoration', 'str::30', $decoration, '', XARVAR_NOT_REQUIRED)) {return;}
@@ -44,8 +45,8 @@ function autolinks_admin_updateconfig()
     xarModSetVar('autolinks', 'punctuation', $punctuation);
     xarModSetVar('autolinks', 'templatebase', $templatebase);
 
-    // If certain values have changed, then rebuild the static replace caches.
-    // These are the values that affect the static replace templates.
+    // If certain values have changed, then rebuild the replace caches (these values
+    // will affect the cached template outputs).
     if ($old_decoration !== $decoration || $old_templatebase !== $templatebase
         || $old_newwindow !== $newwindow || $old_showerrors !== $showerrors) {
         // Get the static autolink types.
@@ -53,11 +54,9 @@ function autolinks_admin_updateconfig()
 
         if (is_array($types)) {
             foreach ($types as $tid => $type) {
-                if (!$type['dynamic_replace']) {
-                    // Rebuild replace cache.
-                    $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('tid' => $tid));
-                    if (!$result) {return;}
-                }
+                // Rebuild replace cache.
+                $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('tid' => $tid));
+                if (!$result) {return;}
             }
         }
     }

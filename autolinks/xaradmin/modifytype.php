@@ -27,18 +27,27 @@ function autolinks_admin_modifytype($args)
         $tid = $obid;
     }
 
+    $currenttype = xarModAPIFunc(
+        'autolinks', 'user', 'gettype',
+        array('tid' => $tid)
+    );
+    if (!$currenttype) {return;}
+
+    // TODO: some restructuring on fetched values.
+    // Ideal would be to fetch current values, apply changes to
+    // the array, then submit the same array for doing the updates.
     if (!empty($submit)) {
         // Values have been submitted by the form.
         $type = array('tid' => $tid);
 
-        if (!xarVarFetch('type_name', 'str:1:', $type['type_name'])) {
+        if (!xarVarFetch('type_name', 'str:1', $type['type_name'])) {
             $errorcount += 1;
             $type['type_name_error'] = xarExceptionRender('text');
             xarExceptionHandled();
         }
 
         // TODO: better validation on template name
-        if (!xarVarFetch('template_name', 'str:1:', $type['template_name'])) {
+        if (!xarVarFetch('template_name', 'str:1', $type['template_name'])) {
             $errorcount += 1;
             $type['template_name_error'] = xarExceptionRender('text');
             xarExceptionHandled();
@@ -57,11 +66,7 @@ function autolinks_admin_modifytype($args)
         }
 
         // Confirm authorisation code.
-        if (!xarSecConfirmAuthKey()) {
-            $errorcount += 1;
-            $type['global_error'] = xarExceptionRender('text');
-            xarExceptionHandled();
-        }
+        if (!xarSecConfirmAuthKey()) {return;}
 
         if ($errorcount == 0) {
             // Call the API function if we have not encountered errors.
@@ -84,21 +89,17 @@ function autolinks_admin_modifytype($args)
                 xarExceptionHandled();
             }
 
-            return true;
+            //return true;
         }
     } else {
-        // First time - fetch the type.
-        $type = xarModAPIFunc(
-            'autolinks', 'user', 'gettype',
-            array('tid' => $tid)
-        );
-        if (!$type) {return;}
+        // First time - return the current type details.
+        $type = $currenttype;
     }
 
     // Do config hooks for the items.
     $hooks = xarModCallHooks(
         'module', 'modifyconfig', 'autolinks',
-        array('itemtype' => $type['itemtype'], 'module' => 'autolinks'));
+        array('itemtype' => $currenttype['itemtype'], 'module' => 'autolinks'));
     $type['itemhooks'] = $hooks;
 
     // Do modify hooks for the item type itself.

@@ -125,7 +125,7 @@ function autolinks_userapi_getreplace($args)
             $error = xarExceptionRender('text');
 
             // Free the exception since we have handled it.
-            xarExceptionFree();
+            xarExceptionHandled();
 
             // Do we want the error displayed in-line?
             if (xarModGetVar('autolinks', 'showerrors') || xarVarGetCached('autolinks', 'showerrors')) {

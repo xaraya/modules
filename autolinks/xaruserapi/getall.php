@@ -71,7 +71,8 @@ function autolinks_userapi_getall($args)
                    xar_type_tid,
                    xar_dynamic_replace,
                    xar_template_name,
-                   xar_type_name
+                   xar_type_name,
+                   xar_link_itemtype
             FROM ' . $autolinkstable
         . ' LEFT JOIN ' . $autolinkstypestable 
         . ' ON xar_tid = xar_type_tid'
@@ -84,7 +85,7 @@ function autolinks_userapi_getall($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list(
             $lid, $keyword, $title, $url, $comment, $enabled, $match_re, $cache_replace, $sample, $name,
-            $tid, $dynamic_replace, $template_name, $type_name
+            $tid, $dynamic_replace, $template_name, $type_name, $itemtype
         ) = $result->fields;
     	if(xarSecurityCheck('ReadAutolinks', 0, 'All', $name.':'.$lid)) {
             $links[$lid] = array(
@@ -101,7 +102,8 @@ function autolinks_userapi_getall($args)
                 'tid' => $tid,
                 'dynamic_replace' => $dynamic_replace,
                 'template_name' => $template_name,
-                'type_name' => $type_name
+                'type_name' => $type_name,
+                'itemtype' => $itemtype
             );
         }
     }
