@@ -95,7 +95,7 @@
             <ul>
                 <li><xar:mlstring>Support itemtype as a 'name' between cacheKey and page when available.</xar:mlstring></li>
                 <li><xar:mlstring>Provide Scheduler, getfile/link integration for pre-population of output cache.</xar:mlstring></li>
-                <li><xar:mlstring>Analyze Slashdot and Google News use of 304 & ETag HTTP headers and rework our use of these headers based on findings.</xar:mlstring></li>
+                <li><xar:mlstring>Analyze Slashdot and Google News use of 304 &amp; ETag HTTP headers and rework our use of these headers based on findings.</xar:mlstring></li>
             </ul>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
