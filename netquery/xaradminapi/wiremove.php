@@ -4,7 +4,7 @@ function netquery_adminapi_wiremove($args)
     extract($args);
     if (!isset($whois_id)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $data = xarModAPIFunc('netquery',
@@ -21,8 +21,9 @@ function netquery_adminapi_wiremove($args)
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
     $query = "DELETE FROM $WhoisTable
-            WHERE whois_id = " . xarVarPrepForStore($whois_id);
-    $result =& $dbconn->Execute($query);
+            WHERE whois_id = ?";
+    $bindvars=array($whois_id);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     return true;
 }

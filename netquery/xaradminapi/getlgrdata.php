@@ -7,14 +7,15 @@ function netquery_adminapi_getlgrdata($args)
     extract($args);
     if (!isset($router)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
-    $query = "SELECT * FROM $LGRouterTable WHERE router =  '" . xarVarPrepForStore($router) . "'";
-    $result =& $dbconn->Execute($query);
+    $query = "SELECT * FROM $LGRouterTable WHERE router =  ?";
+    $bindvars= array($router);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     list($router_id,
          $router,

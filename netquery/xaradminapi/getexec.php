@@ -7,13 +7,14 @@ function netquery_adminapi_getexec($args)
     extract($args);
     if (!isset($exec_type)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $ExecTable = $xartable['netquery_exec'];
-    $query = "SELECT * FROM $ExecTable WHERE exec_type = '" . xarVarPrepForStore($exec_type) . "'";
+    $query = "SELECT * FROM $ExecTable WHERE exec_type = ?";
+    $bindvars=array($exec_type);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     list($exec_id, $exec_type, $exec_local, $exec_winsys, $exec_remote, $exec_remote_t) = $result->fields;

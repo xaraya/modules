@@ -74,48 +74,59 @@ function netquery_admin_config()
             $ExecTable = $xartable['netquery_exec'];
             $LGRouterTable = $xartable['netquery_lgrouter'];
             $query = "UPDATE $ExecTable
-                SET exec_local    = '" . xarVarPrepForStore($logfile_local) . "',
-                    exec_remote   = '" . xarVarPrepForStore($logfile_remote) . "'
+                SET exec_local    = ?,
+                    exec_remote   = ?
                 WHERE exec_type = 'log'";
-            $result =& $dbconn->Execute($query);
+            $bindvars=array($logfile_local, $logfile_remote);
+            $result =& $dbconn->Execute($query,$bindvars);
             $query = "UPDATE $ExecTable
-                SET exec_local    = '" . xarVarPrepForStore($pingexec_local) . "',
-                    exec_winsys   = '" . xarVarPrepForStore($pingexec_winsys) . "',
-                    exec_remote   = '" . xarVarPrepForStore($pingexec_remote) . "',
-                    exec_remote_t = '" . xarVarPrepForStore($pingexec_remote_t) . "'
+                SET exec_local    = ?,
+                    exec_winsys   = ?,
+                    exec_remote   = ?,
+                    exec_remote_t = ?
                 WHERE exec_type = 'ping'";
-            $result =& $dbconn->Execute($query);
+            $bindvars=array($pingexec_local, $pingexec_winsys, $pingexec_remote, $pingexec_remote_t);
+            $result =& $dbconn->Execute($query,$bindvars);
             $query = "UPDATE $ExecTable
-                SET exec_local    = '" . xarVarPrepForStore($traceexec_local) . "',
-                    exec_winsys   = '" . xarVarPrepForStore($traceexec_winsys) . "',
-                    exec_remote   = '" . xarVarPrepForStore($traceexec_remote) . "',
-                    exec_remote_t = '" . xarVarPrepForStore($traceexec_remote_t) . "'
+                SET exec_local    = ?,
+                    exec_winsys   = ?,
+                    exec_remote   = ?,
+                    exec_remote_t = ?
                 WHERE exec_type = 'trace'";
-            $result =& $dbconn->Execute($query);
+           $bindvars=array($traceexec_local, $traceexec_winsys, $traceexec_remote, $traceexec_remote_t);
+            $result =& $dbconn->Execute($query,$bindvars);
+
             $query = "UPDATE $LGRouterTable
-                SET username        = '" . xarVarPrepForStore($lgdefault_username) . "',
-                    password        = '" . xarVarPrepForStore($lgdefault_password) . "',
-                    zebra           = '" . xarVarPrepForStore($lgdefault_zebra) . "',
-                    zebra_port      = '" . xarVarPrepForStore($lgdefault_zebra_port) . "',
-                    zebra_password  = '" . xarVarPrepForStore($lgdefault_zebra_password) . "',
-                    ripd            = '" . xarVarPrepForStore($lgdefault_ripd) . "',
-                    ripd_port       = '" . xarVarPrepForStore($lgdefault_ripd_port) . "',
-                    ripd_password   = '" . xarVarPrepForStore($lgdefault_ripd_password) . "',
-                    ripngd          = '" . xarVarPrepForStore($lgdefault_ripngd) . "',
-                    ripngd_port     = '" . xarVarPrepForStore($lgdefault_ripngd_port) . "',
-                    ripngd_password = '" . xarVarPrepForStore($lgdefault_ripngd_password) . "',
-                    ospfd           = '" . xarVarPrepForStore($lgdefault_ospfd) . "',
-                    ospfd_port      = '" . xarVarPrepForStore($lgdefault_ospfd_port) . "',
-                    ospfd_password  = '" . xarVarPrepForStore($lgdefault_ospfd_password) . "',
-                    bgpd            = '" . xarVarPrepForStore($lgdefault_bgpd) . "',
-                    bgpd_port       = '" . xarVarPrepForStore($lgdefault_bgpd_port) . "',
-                    bgpd_password   = '" . xarVarPrepForStore($lgdefault_bgpd_password) . "',
-                    ospf6d          = '" . xarVarPrepForStore($lgdefault_ospf6d) . "',
-                    ospf6d_port     = '" . xarVarPrepForStore($lgdefault_ospf6d_port) . "',
-                    ospf6d_password = '" . xarVarPrepForStore($lgdefault_ospf6d_password) . "',
-                    use_argc        = '" . xarVarPrepForStore($lgdefault_use_argc) . "'
+                SET username        = ?,
+                    password        = ?,
+                    zebra           = ?,
+                    zebra_port      = ?,
+                    zebra_password  = ?,
+                    ripd            = ?,
+                    ripd_port       = ?,
+                    ripd_password   = ?,
+                    ripngd          = ?,
+                    ripngd_port     = ?,
+                    ripngd_password = ?,
+                    ospfd           = ?,
+                    ospfd_port      = ?,
+                    ospfd_password  = ?,
+                    bgpd            = ?,
+                    bgpd_port       = ?,
+                    bgpd_password   = ?,
+                    ospf6d          = ?,
+                    ospf6d_port     = ?,
+                    ospf6d_password = ?,
+                    use_argc        = ?
                 WHERE router = 'default'";
-            $result =& $dbconn->Execute($query);
+           $bindvars=array($lgdefault_username, $lgdefault_password, $lgdefault_zebra, $lgdefault_zebra_port,
+                           $lgdefault_zebra_password, $lgdefault_ripd, $lgdefault_ripd_port, $lgdefault_ripd_password,
+                           $lgdefault_ripngd, $lgdefault_ripngd_port, $lgdefault_ripngd_password, $lgdefault_ospfd,
+                           $lgdefault_ospfd_port, $lgdefault_ospfd_password, $lgdefault_bgpd, $lgdefault_bgpd_port,
+                           $lgdefault_bgpd_password,$lgdefault_ospf6d, $lgdefault_ospf6d_port, $lgdefault_ospf6d_password,
+                           $lgdefault_use_argc);
+            $result =& $dbconn->Execute($query,$bindvars);
+
             $result->Close();
             xarResponseRedirect(xarModURL('netquery', 'admin', 'config'));
             return true;

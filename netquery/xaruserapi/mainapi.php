@@ -67,15 +67,16 @@ function netquery_userapi_getexec($args)
     extract($args);
     if (!isset($exec_type)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $ExecTable = $xartable['netquery_exec'];
 
-    $query = "SELECT * FROM $ExecTable WHERE exec_type = '" . xarVarPrepForStore($exec_type) . "'";
-    $result =& $dbconn->Execute($query);
+    $query = "SELECT * FROM $ExecTable WHERE exec_type = ?";
+    $bindvars=array($exec_type);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($exec_id, $exec_type, $exec_local, $exec_winsys, $exec_remote, $exec_remote_t) = $result->fields;
     if(!xarSecurityCheck('OverviewNetquery')) return;
@@ -118,14 +119,15 @@ function netquery_userapi_getlink($args)
     extract($args);
     if (!isset($whois_ext)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
-    $query = "SELECT * FROM $WhoisTable WHERE whois_ext = '" . xarVarPrepForStore($whois_ext) . "'";
-    $result =& $dbconn->Execute($query);
+    $query = "SELECT * FROM $WhoisTable WHERE whois_ext = ?";
+    $bindvars=array($whois_ext);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($whois_id, $whois_ext, $whois_server) = $result->fields;
     $link = array('whois_id'     => $whois_id,
@@ -166,14 +168,15 @@ function Netquery_userapi_getlgrequest($args)
     extract($args);
     if (!isset($request)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
     $LGRequestTable = $xartable['netquery_lgrequest'];
-    $query = "SELECT * FROM $LGRequestTable WHERE request = '" . xarVarPrepForStore($request) . "'";
-    $result =& $dbconn->Execute($query);
+    $query = "SELECT * FROM $LGRequestTable WHERE request = ?";
+    $bindvars=array($request);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($request_id, $request, $command, $handler, $argc) = $result->fields;
     $lgrequest = array('request_id' => $request_id,
@@ -258,7 +261,7 @@ function Netquery_userapi_getlgrouter($args)
     extract($args);
     if (!isset($router)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
