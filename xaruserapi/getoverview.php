@@ -17,7 +17,7 @@
  * 
  * @param $args['gid'] int group id (future), or
  * @param $args['group'] string news group
- * @param $args['startnum'] int start number
+ * @param $args['startnum'] int start number (in reverse, i.e. the last article you want)
  * @param $args['numitems'] int number of items
  * @param $args['sortby'] string optional sort field (default 'thread')
  * @param $args['order'] string optional sort order (default 'DESC')
