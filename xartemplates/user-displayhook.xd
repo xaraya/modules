@@ -5,8 +5,8 @@
     <rdf:Description
         rdf:about="#xarServerGetCurrentURL()#"
         dc:title="#xarVarGetCached('Comments.title', 'title')#"
-        dc:identifier="#xarServerGetCurrentURL()#" />
-        trackback:ping="#$rdflink#"
+        dc:identifier="#xarServerGetCurrentURL()#" 
+        trackback:ping="#$rdflink#" />
     </rdf:RDF>
 #$close#
 
