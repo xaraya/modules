@@ -30,7 +30,11 @@
                             </td>
                             <td>
                                 <xar:if condition="$loop:item['xar_branchout'] eq 0">
-                                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[selected_cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']#
+                                    <xar:if condition="!empty($receipt['directurl'])">
+                                        <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#"> #$loop:item['xar_title']#
+                                    <xar:else/>
+                                        <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[selected_cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']#
+                                    </xar:if>
                                 <xar:else />
                                     <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']# #$loop:item['thread_text']#
                                 </xar:if>
@@ -70,7 +74,11 @@
                             </td>
                             <td>
                                 <xar:if condition="$loop:item['xar_branchout'] eq 0">
-                                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[selected_cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']#
+                                    <xar:if condition="!empty($receipt['directurl'])">
+                                        <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#"> #$loop:item['xar_title']#
+                                    <xar:else/>
+                                        <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[selected_cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']#
+                                    </xar:if>
                                 <xar:else />
                                     <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']# #$loop:item['thread_text']#
                                 </xar:if>

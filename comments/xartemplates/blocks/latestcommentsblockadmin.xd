@@ -234,9 +234,7 @@
 
 <div style="clear: both; padding-top: 10px;"> 
 	<span style="float: left; width: 100%; text-align: left;">
-		*<xar:mlstring>Currently, only "Articles" and "Polls" modules are fully supported, meaning 
-		that the option of displaying and linking the object title will not work for the 
-		other modules. Links to module name may not work.</xar:mlstring>
+		*<xar:mlstring>Not all modules may support this</xar:mlstring>
 	</span>
 </div>
 <div style="clear: both; padding-top: 10px;"> 

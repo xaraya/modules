@@ -514,6 +514,8 @@ function comments_userapi_get_one($args) {
                     $ctable[left] AS xar_left,
                     $ctable[right] AS xar_right,
                     $ctable[postanon] AS xar_postanon,
+                    $ctable[modid] AS xar_modid,
+                    $ctable[itemtype] AS xar_itemtype,
                     $ctable[objectid] AS xar_objectid
               FROM  $xartable[comments]
              WHERE  $ctable[cid]='$cid'
@@ -538,7 +540,7 @@ function comments_userapi_get_one($args) {
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_date'] = strftime("%B %d, %Y %I:%M %p",$row['xar_datetime']);
+        $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         comments_renderer_wrap_words($row['xar_text'],80);
         $commentlist[] = $row;
@@ -674,7 +676,7 @@ function comments_userapi_get_multiple($args) {
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_date'] = strftime("%B %d, %Y %I:%M %p",$row['xar_datetime']);
+        $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         comments_renderer_wrap_words($row['xar_text'],80);
         $commentlist[] = $row;
@@ -1256,7 +1258,7 @@ function comments_userapi_modify($args) {
         $hostname = xarServerGetVar('REMOTE_ADDR');
     }
 
-    $modified_date = strftime("%B %d, %Y %I:%M %p",time());
+    $modified_date = xarLocaleFormatDate("%B %d, %Y %I:%M %p",time());
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -1356,7 +1358,7 @@ function comments_userapi_search($args) {
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_date'] = strftime("%B %d, %Y %I:%M %p",$row['xar_date']);
+        $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_date']);
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         $commentlist[] = $row;
         $result->MoveNext();
@@ -1522,181 +1524,88 @@ function comments_userapi_setoptions($args) {
 }
 
 /**
- * Get a single comment or a list of comments. Depending on the parameters passed
- * you can retrieve either a single comment, a complete list of comments, a complete
- * list of comments down to a certain depth or, lastly, a specific branch of comments
- * starting from a specified root node and traversing the complete branch
+ * Get a list of comments from one or several modules + item types
  *
-
- * TODO: modify here 
  * @author Andrea Moro modified from Carl P. Corliss (aka rabbitt) userapi
  * @access public
- * @param integer    $modid     the id of the module that these nodes belong to
- * @param integer    $objectid    the id of the item that these nodes belong to
- * @param integer    $cid       the id of a comment
+ * @param array    $modarray   array of module names + itemtypes to look for
+ * @param string   $order      sort order (ASC or DESC date)
+ * @param integer  $howmany    number of comments to retrieve
+ * @param integer  $first      start number
  * @returns array     an array of comments or an empty array if no comments
- *                   found for the particular modid/objectid pair, or raise an
+ *                   found for the particular modules, or raise an
  *                   exception and return false.
  */
-
-
 function comments_userapi_get_multipleall($args) {
     extract($args);
     // $modid
     if (!isset($modarray) || empty($modarray) || !is_array($modarray)) {
         $modarray=array('all');    
     }
-    if (!isset($order) || empty ($order) ){
+    if (empty($order) || $order != 'ASC') {
         $order = 'DESC';
-    } 
+    } else {
+        $order = 'ASC';
+    }
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     
     $ctable = &$xartable['comments_column'];
-    $prefix =  xarDBGetSiteTablePrefix();
     $commentlist = array();
 
-   
-    // columns to fetch common to all modules
-    $sqlcols = "SELECT  $ctable[title] AS xar_subject,
-                        $ctable[cdate] AS xar_datetime,                        
-                        $ctable[author] AS xar_author,
-                        $ctable[cid] AS xar_cid,
-                        $ctable[status] AS xar_status,
-                        $ctable[postanon] AS xar_postanon,
-                        $ctable[objectid] AS xar_objectid,
-                        $ctable[itemtype] AS xar_itemtype,
-                        $ctable[modid] AS xar_modid";
+    $query = "SELECT  $ctable[title] AS xar_subject,
+                      $ctable[cdate] AS xar_datetime,                        
+                      $ctable[author] AS xar_author,
+                      $ctable[cid] AS xar_cid,
+                      $ctable[status] AS xar_status,
+                      $ctable[postanon] AS xar_postanon,
+                      $ctable[modid] AS xar_modid,
+                      $ctable[itemtype] AS xar_itemtype,
+                      $ctable[objectid] AS xar_objectid
+                FROM  $xartable[comments]
+               WHERE  $ctable[status]='"._COM_STATUS_ON."' ";
     
-   
-    $sql=array();
-    
-    // end of sql query common to all modules
-    $sqlend = " ORDER BY xar_datetime $order ";
-    // since multiple tables are going to be queried, I dont' 
-    // think there is a more efficient way to do this : when
-    // $first != 1 must get all comments and then array_slice them at the end     
-    // fortunately all block queries want $first=1
-    if ($first == 1) {
-        $sqlend .=   " LIMIT 0, $howmany";
-    }
-
-// TODO: replace all this with a call to getitemlinks()
-
-    //construct sql query that gets comments from unsupported modules
-    //currently supported: Articles (modid=151)
-    $sqluns = $sqlcols . " FROM  $xartable[comments]
-                           WHERE  $ctable[status]='"._COM_STATUS_ON."' ";
-      
-    // request all requested modules except supported ones (currently: 151,23)
-    $sqluns .=           " AND $ctable[modid] NOT IN ( '151' , '23' )";
-   
     if (count($modarray) > 0 && $modarray[0] != 'all' ) {
-        // make sure the IN part is nonempty by adding nonexsistent module
-        $sqluns .=   " AND $ctable[modid] IN ( -1, " ;        
+        $where = array();     
         foreach ($modarray as $modname) {
-            // skip articles (151) and polls (23)
-            if ( substr($modname,0,8)=='articles' || $modname=='polls') { continue;
-            }
-            // add other modules
-            $modid = xarModGetIDFromName($modname);
-            $sqluns .=   " '$modid' ,";
-        }
-        // get rid of the last comma, ugly but efficient believe me
-        $sqluns=substr($sqluns,0,strlen($sqluns)-2);
-        $sqluns =$sqluns.             " ) " ;
-    }
-
-
-    $sql[] = $sqluns.$sqlend;
-
-    // if articles are requested, 
-    // construct sql query that  gets comments from articles modules (modid=151)    
-    if (!empty($supported['articles'])) {
-        $articletable = $prefix . '_articles'; 
-        $publicationtypes = $prefix . '_publication_types';    
-        $sqlart =   $sqlcols. 
-                    " , 
-                    $articletable".".xar_pubtypeid ,
-                    $articletable".".xar_title ,
-                    $articletable".".xar_pubtypeid 
-                    FROM  $xartable[comments], $articletable
-                    WHERE   $ctable[status]='"._COM_STATUS_ON."'
-                        AND $ctable[modid] = '151'     
-                        AND $ctable[objectid]=$articletable".".xar_aid ";
-
-        $pubtypearray = array();
-        foreach ($modarray as $modname) {
-            if (substr($modname,0,8) !='articles') {
-                continue;
-            }
-            if (!strstr($modname,'.')) continue;
-            list($module,$pubtype) = explode('.',$modname);
-            if (isset($pubtype)) {
-                $pubtypearray[] = $pubtype;
+            if (strstr($modname,'.')) {
+                list($module,$itemtype) = explode('.',$modname);
+                $modid = xarModGetIDFromName($module);
+                if (empty($itemtype)) {
+                    $itemtype = 0;
+                }
+                $where[] = "($ctable[modid] = '$modid' AND $ctable[itemtype] = '$itemtype')";
+            } else {
+                $modid = xarModGetIDFromName($modname);
+                $where[] = "($ctable[modid] = '$modid')";
             }
         }
-
-        if (count($pubtypearray) > 0) { 
-            // get messages only from the requested pubtypes
-            $sqlart .= " AND $articletable.xar_pubtypeid IN ( '" . join("', '",$pubtypearray) . "' ) " ;
+        if (count($where) > 0) {
+            $query .= " AND ( " . join(' OR ', $where) . " ) ";
         }
-
-        $sql[] =$sqlart.$sqlend;
     }
 
-    // if polls are requested, 
-    // construct sql query that  gets comments from polls modules (modid=23)    
-    if (!empty($supported['polls'])) {
-        $pollstable = $prefix . '_polls';  
-        $sqlpoll =   $sqlcols. 
-                    " , 
-                    $pollstable".".xar_title 
-                    FROM  $xartable[comments], $pollstable 
-                    WHERE   $ctable[status]='"._COM_STATUS_ON."'
-                        AND $ctable[modid] = '23'     
-                        AND $ctable[objectid]=$pollstable".".xar_pid
-                    ";                          
-        $sql[] =$sqlpoll.$sqlend;
+    $query .= " ORDER BY xar_datetime $order ";
+
+    if (empty($howmany) || !is_numeric($howmany)) {
+        $howmany = 5;
+    }
+    if (empty($first) || !is_numeric($first)) {
+        $first = 1;
     }
 
-    // construct sql query that gets comments from other supported modules
-    // No more for now
+    $result = $dbconn->SelectLimit($query, $howmany, $first - 1);
+    if (!$result) return;
 
-    // query the database and merge all results
-    foreach ($sql as $query)    {
-        $result =&$dbconn->Execute($query);
-        if (!$result) continue;
-        if ($result->EOF) continue;
-        // zip through the list of results and
-        // add it to the array we will return
-        while (!$result->EOF) {
-            $row = $result->GetRowAssoc(false);
-            $row['xar_date'] = strftime("%B %d, %Y %I:%M %p",$row['xar_datetime']);
-            $row['xar_author'] = xarUserGetVar('uname',$row['xar_author']);
-            $commentlist[] = $row;
-            $result->MoveNext();
-        }
-        $result->Close();
-
+    while (!$result->EOF) {
+        $row = $result->GetRowAssoc(false);
+        $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
+        $row['xar_author'] = xarUserGetVar('uname',$row['xar_author']);
+        $commentlist[] = $row;
+        $result->MoveNext();
     }
- 
-    // if we have nothing to return nada            
-    if ( sizeof($commentlist)==0 ) return array();        
-
-    // sort by date and limit results
-    foreach ($commentlist as $val) {
-          $datearray[] = $val['xar_datetime'];
-    }   
-    if ($order=='ASC') {
-        array_multisort($datearray,SORT_ASC,$commentlist);
-    } else {
-        array_multisort($datearray,SORT_DESC,$commentlist);
-    }
-    
-    // return only $howmany comments starting from $first-1
-    $commentlist=array_slice($commentlist,$first-1,$howmany);
+    $result->Close();
 
     return $commentlist;
 }

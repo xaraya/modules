@@ -14,17 +14,17 @@
 			</xar:if>
 			<xar:if condition="$addcomment eq 1">
 			  <!-- COMMENT TITLE -->  
-			  <span class="xar-title">#$comment['xar_subject']#,
+			  <span class="xar-title">#$comment['xar_subject']#
 			  </span>
 			<xar:elseif condition="$addcomment ge 20" />
 			  <span class="xar-title">
 				<xar:if condition="(!empty($comment['objurl']) AND $addcomment ge 21)">
 				  <a href="#$comment['objurl']###$comment['xar_cid']#">
 				  #$comment['xar_subject']#
-				  </a>,
+				  </a>
 				<xar:else />
-				  <a href="&xar-modurl-comments-user-display;&amp;modid=#$comment['xar_modid']#&amp;itemtype=#$comment['xar_itemtype']#&amp;objectid=#$comment['xar_objectid']#&amp;selected_cid=#$comment['xar_cid']#&amp;returnurl=#$comment['returnurl']#">
-				  #$comment['xar_subject']#</a>,
+				  <a href="#xarModURL('comments','user','display',array('cid' => $comment['xar_cid']))#">
+				  #$comment['xar_subject']#</a>
 				  </xar:if>
 			  </span>
 			</xar:if>

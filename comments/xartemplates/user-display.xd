@@ -24,6 +24,8 @@
         <br />
         <xar:if condition="!isset($header['selected_cid'])">
             <xar:template file="input-box" type="module" />
+        <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
+            <p><xar:mlstring>Return to</xar:mlstring> <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
         </xar:if>
     </xar:if>
 </xar:sec>
