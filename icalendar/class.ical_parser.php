@@ -9,6 +9,8 @@ define('_VFREEBUSY_', 3);
 define('_VALARM_',    4);
 define('_VTIMEZONE_', 5);
 
+require_once('Date/Calc.php');
+
 class iCal_Parser
 {
     var $file;              /* filename we're working on */
@@ -33,11 +35,6 @@ class iCal_Parser
     
     // containers
     var $vcalendar  = array();
-    //var $vtimezone  = array();
-    //var $vevent     = array();
-    //var $vtodo      = array();
-    //var $vfreebusy  = array();
-    //var $valarm     = array();
     
     /**
      *  ical_parser constructor
@@ -159,6 +156,7 @@ class iCal_Parser
                     $this->current = _VCALENDAR_;
                     $this->vcal_pos = count($this->vcalendar);
                     $this->vcalendar[$this->vcal_pos] = array();
+                    //$this->vcalendar[$this->vcal_pos] =& new iCal_VCALENDAR;
                     break;
                     
                 case 'END:VCALENDAR' :
@@ -264,18 +262,19 @@ class iCal_Parser
                     // close out the daylight saving timezone definition
                     $this->tz_daylight = false;
                     break;
-                    
+                
+                // if the line is not any of the above, then we just want to parse it
+                // this data is placed into the current container defined above    
                 default:
                     $this->__parse_params();
                     break;
             }
-            
-            
         }
     }
     
     function __parse_params()
     {
+        // get the property we are parsing
         $this->__get_property();
         // parse depending on where we are in the file
         switch($this->current) {
@@ -322,90 +321,6 @@ class iCal_Parser
     function __parse_vcalendar()
     {
         $this->vcalendar[$this->vcal_pos][$this->property] = $this->data;
-    }
-    
-    function __parse_vtimezone()
-    {
-        // what object are we assigning data to?
-        if((bool)$this->tz_standard) {
-            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['standard'][$this->tz_spos];
-        } elseif((bool)$this->tz_daylight) {
-            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['daylight'][$this->tz_dpos];
-        } else {
-            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos];
-        }
-        
-        switch ($this->property) {
-			case 'TZID' :
-                // populate the current TZID for this element
-                // TODO::this element probably exists in a lot of different ways
-                $el['TZID'] = $this->data;
-                break;
-            
-            case 'TZOFFSETFROM' :
-                $el['TZOFFSETFROM'] = $this->data;
-                break;
-                
-            case 'TZOFFSETTO' :
-                $el['TZOFFSETTO'] = $this->data;
-                break;
-            
-            case 'TZNAME':
-                $el['TZNAME'] = $this->data;
-                break;
-                
-            case 'DTSTART':
-                // see if the date is represented in UTC
-                $zulu = (substr($this->data,-1)=='Z') ? true : false;
-		        $this->data  = str_replace('T','',$this->data); // remove the T for easier processing
-		        $this->data  = str_replace('Z','',$this->data); // remove the Z if it exists
-		        $this->field = str_replace(';VALUE=DATE-TIME','',$this->field); // yep, we know :)
-
-                // DTSTART for timezones should be simple and only contain a datetime
-                // without a lot of extra parameters.
-                
-                preg_match('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})([0-9]{0,2})/', $this->data, $regs);
-// TODO: adodb_datetime functions only handle dates >= 100 A.D.
-// TODO: so, what are we going to do about that - eh!?!
-                $start_unixtime = adodb_mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-
-                // we're going to convert this timestamp into a UTC unix stamp
-                // this should make it easier to implement in our applications
-                if( (bool) $zulu) {
-                    $offset = '+0000';
-                } elseif( (bool) $this->tz_standard) {
-                    $offset = $el['TZOFFSETTO'];
-                } elseif( (bool) $this->tz_daylight) {
-                    $offset = $el['TZOFFSETTO'];
-                } else {
-                    $offset = '+0000';
-                }
-                $offset = $this->tzOffset2Seconds($offset);
-                $start_unixtime -= $offset;
-                $el['DTSTART'] = adodb_date('Ymd\THis\Z', $start_unixtime);
-                break;
-                
-            case 'RRULE':
-                $this->data = str_replace('RRULE:', '', $this->data);
-				$rrule = split (';', $this->data);
-				foreach ($rrule as $recur) {
-					preg_match('/(.*)=(.*)/i', $recur, $match);
-					$el['RRULE'][$match[1]] = $match[2];
-				}
-                break;
-                
-            case 'RDATE':
-                if(!isset($el['RDATE'])) {
-                    $el['RDATE'] = array();
-                }
-                $el['RDATE'][] = $this->data;
-                break;
-                
-            default:
-                $el["$this->property"] = $this->data;    
-                break;
-            
-	    }
     }
     
     function __parse_vevent()
@@ -520,6 +435,138 @@ class iCal_Parser
     
     }
     
+    function __parse_vtimezone()
+    {
+        // what object are we assigning data to?
+        if((bool)$this->tz_standard) {
+            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['standard'][$this->tz_spos];
+        } elseif((bool)$this->tz_daylight) {
+            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['daylight'][$this->tz_dpos];
+        } else {
+            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos];
+        }
+        
+        switch ($this->property) {
+			case 'TZID' :
+                // populate the current TZID for this element
+                // TODO::this element probably exists in a lot of different ways
+                $el['TZID'] = $this->data;
+                break;
+            
+            case 'TZOFFSETFROM' :
+                $el['TZOFFSETFROM'] = $this->data;
+                break;
+                
+            case 'TZOFFSETTO' :
+                $el['TZOFFSETTO'] = $this->data;
+                break;
+            
+            case 'TZNAME':
+                $el['TZNAME'] = $this->data;
+                break;
+                
+            case 'DTSTART':
+                // see if the date is represented in UTC
+                $zulu = (substr($this->data,-1)=='Z') ? true : false;
+		        $this->data  = str_replace('T','',$this->data); // remove the T for easier processing
+		        $this->data  = str_replace('Z','',$this->data); // remove the Z if it exists
+		        $this->field = str_replace(';VALUE=DATE-TIME','',$this->field); // yep, we know :)
+
+                // DTSTART for timezones should be simple and only contain a datetime
+                // without a lot of extra parameters.
+                preg_match('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})([0-9]{0,2})/', $this->data, $regs);
+
+                // ADOdb_date will change dates that fall in the less that 100 year range
+                // we attempt to catch this so we can later subtract this value
+                // this probably creates inaccurate results, but it shouldn't be a problem
+                // since I don't expect most apps to be using dates before the year 100
+                // this is mainly a hack for the timezone module
+                // set a flag to check to see if we need to subtract from the date later
+                $lt100 = ($regs[1] < 100) ? true : false ;
+                // ADOdb_date modified the date based on prev and next centuries
+                // for dates before the year 33 it makes the date the current century
+                // for dates from the year 33 and on, it makes it the previous century
+                // we attempt to determine how many years to subtract from year prior to 100
+                $lt100subtract = (($regs[1] < 33) ? strftime('%C') : strftime('%C')-1) * 100 ;
+
+                // get the unixtime for this date
+                $start_unixtime = adodb_mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
+
+                // we're going to convert this timestamp into a UTC unix stamp
+                // this should make it easier to implement in our applications
+                if((bool)$zulu) {
+                    $offset = '+0000';
+                } elseif((bool)$this->tz_standard) {
+                    $offset = $el['TZOFFSETFROM'];
+                } elseif((bool)$this->tz_daylight) {
+                    $offset = $el['TZOFFSETFROM'];
+                } else {
+                    $offset = '+0000';
+                }
+                $offset = $this->tzOffset2Seconds($offset);
+                $start_unixtime -= $offset;
+                // we format the date twice because we need to make sure the year
+                // is comprised of four (4) integers
+                $el['DTSTART'] = sprintf('%04d',adodb_date('Y', $start_unixtime));
+                // check to see if the date was modified by ADOdb_date for dates before the year 100
+                if($lt100) {
+                    $el['DTSTART'] = sprintf('%04d',$el['DTSTART']-$lt100subtract);
+                }
+                unset($lessThan100,$lt100subtract);
+                $el['DTSTART'] .= adodb_date('md\THis\Z', $start_unixtime);
+                break;
+                
+            case 'RRULE':
+                $this->data = str_replace('RRULE:', '', $this->data);
+		        $rrule = split (';', $this->data);
+		        foreach ($rrule as $recur) {
+			        preg_match('/(.*)=(.*)/i', $recur, $match);
+			        $el['RRULE'][$match[1]] = $match[2];
+		        }
+                break;
+                
+            case 'RDATE':
+                // see if the date is represented in UTC
+                $zulu = (substr($this->data,-1)=='Z') ? true : false;
+		        $this->data  = str_replace('T','',$this->data); // remove the T for easier processing
+		        $this->data  = str_replace('Z','',$this->data); // remove the Z if it exists
+		        $this->field = str_replace(';VALUE=DATE-TIME','',$this->field); // yep, we know :)
+                preg_match('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})([0-9]{0,2})/', $this->data, $regs);
+                $lt100 = ($regs[1] < 100) ? true : false ;
+                $lt100subtract = (($regs[1] < 33) ? strftime('%C') : strftime('%C')-1) * 100 ;
+                $start_unixtime = adodb_mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
+                if((bool)$zulu) {
+                    $offset = '+0000';
+                } elseif((bool)$this->tz_standard) {
+                    $offset = $el['TZOFFSETFROM'];
+                } elseif((bool)$this->tz_daylight) {
+                    $offset = $el['TZOFFSETFROM'];
+                } else {
+                    $offset = '+0000';
+                }
+                $offset = $this->tzOffset2Seconds($offset);
+                $start_unixtime -= $offset;
+                $this->data = sprintf('%04d',adodb_date('Y', $start_unixtime));
+                // check to see if the date was modified by ADOdb_date for dates before the year 100
+                if($lt100) {
+                    $this->data = sprintf('%04d',$this->data-$lt100subtract);
+                }
+                unset($lessThan100,$lt100subtract);
+                $this->data .= adodb_date('md\THis\Z', $start_unixtime);
+
+                if(!isset($el['RDATE'])) {
+                    $el['RDATE'] = array();
+                }
+                $el['RDATE'][] = $this->data;
+                break;
+                
+            default:
+                $el["$this->property"] = $this->data;    
+                break;
+            
+	    }
+    }
+    
     function tzOffset2Seconds($offset) 
     {
         // make sure the offset starts with a + or -
@@ -532,8 +579,6 @@ class iCal_Parser
         unset($match);
         return (int) "$flag$seconds";
     }
-    
-    
 }
 
 ?>
