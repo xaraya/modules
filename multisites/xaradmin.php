@@ -62,13 +62,8 @@ function multisites_admin_modifyconfig()
 
         $data['modifysite']=1;
 
-        //Submit button
-        $data['btnSetConfig'] = xarML('Change Multisite Configuration');
-
 	} else {
         $data['modifysite']=0;
-      //Submit button
-        $data['btnSetConfig'] = xarML('Set Multisite Configuration');
     }
         $data['authid'] = xarSecGenAuthKey();
 
@@ -138,8 +133,6 @@ function multisites_admin_adminconfig()
            return;
     }
    $data['authid'] = xarSecGenAuthKey();
-     //Submit button
-    $data['btnUpdateAdmin'] = xarML('Update Admin Configuration');
 
     // Return the template variables defined in this function
     return $data;
@@ -289,7 +282,7 @@ function multisites_admin_addsite()
 {
    global $HTTP_SERVER_VARS;
   // Security check
-    if (!xarSecurityCheck('AdminMultisites')) {
+    if (!xarSecurityCheck('AddMultisites')) {
         return;
     }
       // Check if the Master site has been set up
@@ -321,8 +314,6 @@ function multisites_admin_addsite()
       //TO DO: maybe add some extras later when I think of what
        $data['sharedTables']= xarDBGetSystemTablePrefix(); // prefix sharing, defaults to Master
 
-       //Submit button
-       $data['btnAddSite'] = xarML('Create New Site');
    } else {  //this is not the Master, or Master site not configured
       $data['mastersite']= false;
       $data['infomsg']=xarML('Multisites must be configured first before you can Add a site! <br /><br />
@@ -354,7 +345,7 @@ global $HTTP_SERVER_VARS;
     if (!xarVarFetch('siteStatus', 'int:1:', $siteStatus,'0')) return;
     if (!xarVarFetch('createdb', 'int:1:', $createdb, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $btnAddSite,'', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('confirm', 'str:1:', $btntxt,'', XARVAR_NOT_REQUIRED)) return;
 
   
     if (!empty($objectid)) {
@@ -365,7 +356,7 @@ global $HTTP_SERVER_VARS;
     if (!xarSecConfirmAuthKey()) return;
 
     // Security
-    if (!xarSecurityCheck('AdminMultisites')) {
+    if (!xarSecurityCheck('AddMultisites')) {
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
@@ -455,26 +446,37 @@ global $HTTP_SERVER_VARS;
         fwrite ($fd, trim($line)."\n");
     }
     fclose ($fd);
-       
+
+    $sitefolder =$cWhereIsPerso."/".$sitedir;
     //Update new site to the Master multisite table
     $msid = xarModAPIFunc('multisites',
                               'admin',
                               'create',
-                        array('mssite'   => $siteDN,
-                              'msprefix' => $msPrefix,
-                              'msdb'     => $siteDB,
-                              'msshare'  => $sharedTables,
-                              'msstatus' => $siteStatus));
+                        array('mssite'     => $siteDN,
+                              'msprefix'   => $msPrefix,
+                              'msdb'       => $siteDB,
+                              'msshare'    => $sharedTables,
+                              'msstatus'   => $siteStatus,
+                              'sitefolder' => $sitefolder));
 
     if (!$msid) return;
 
-    // TO DO - set the subsite config vars
-    
+    $setmultisite = MSConfigSetVar('System.MS.MultiSites',
+                                   '1',
+					  	           $msPrefix,
+						           xarDBGetSiteTablePrefix(),
+						           $siteDB);
+    $setmultisite = MSConfigSetVar('Site.DB.TablePrefix',
+                                   $msPrefix,
+					  	           $msPrefix,
+						           xarDBGetSiteTablePrefix(),
+						           $siteDB);
+
     // TO DO - set subsite mod vars
 
     // TO DO - option to create database, create tables
 
-
+//
    xarResponseRedirect(xarModURL('multisites', 'admin', 'view'));
    // success
    return true;
@@ -487,7 +489,7 @@ function multisites_admin_delete($args)
     if (!xarVarFetch('msid', 'int:2:', $msid)) return;
 
     // Security check
-    if (!xarSecurityCheck('AdminMultisites')) {
+    if (!xarSecurityCheck('DeleteMultisites')) {
         return;
     }
       // Check if the Master site has been set up
@@ -518,7 +520,6 @@ function multisites_admin_delete($args)
        $data['msprefix']      = $subsite['msprefix'];
        $data['msdb']          = $subsite['msdb'];
        $data['msshare']       = $subsite['msshare'];
-       $data['btnDeleteSite'] = xarML('Delete Site');
        $data['removetables']  = 1;
        $data['removedatadir'] = 1;
 
@@ -542,7 +543,7 @@ function multisites_admin_removesite($args)
     if (!xarVarFetch('removetables', 'int:0:', $removetables,'0')) return;
     if (!xarVarFetch('removedatadir', 'int:0:', $removedatadir,'0')) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $btnDeleteSite,'', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('confirm', 'str:1:', $btntxt,'', XARVAR_NOT_REQUIRED)) return;
   
     if (!empty($objectid)) {
         $exid = $objectid;
@@ -590,9 +591,7 @@ function multisites_admin_removesite($args)
      }
     // remove the site specific tables from the database
     if ($removetables==1) {
-
-    //TO DO
-
+      //TO DO
     }
    // success
   xarResponseRedirect(xarModURL('multisites', 'admin', 'view'));
@@ -778,7 +777,7 @@ global $HTTP_SERVER_VARS;
 return true;
 }
 
-
+// Not currently required
 function multisites_admin_mainload()
 {
 global $HTTP_HOST,$SERVER_NAME;
@@ -946,7 +945,7 @@ global $HTTP_HOST,$SERVER_NAME;
     // Return the output that has been generated by this function
     return $output->GetOutput();
 }
-
+//not currently required
 function multisites_admin_createsub() {
 	$lNext = false;
     if (!xarSecurityCheck('AdminMultisites')) {
@@ -1263,7 +1262,8 @@ function template_admin_updateconfig()
     // Return
     return true;
 }
-//<jojodee> Recursively delete everything in a directory!!
+
+//<jojodee> Recursively delete everything in a directory!!!
 function multisites_admin_recdeldir($sitedir)
 {
 $current_dir = opendir($sitedir);
@@ -1307,7 +1307,7 @@ function multisites_admin_lengthcmp ($a, $b) {
 
 
 
-
+// not currently required
 ######################################################################
 function cleanDN($nomServeur) {
 	$nomServeur = str_replace("www.","",$nomServeur);
@@ -1318,7 +1318,7 @@ function cleanDN($nomServeur) {
 	$nomServeur = str_replace(".co.uk","",$nomServeur);
 	return $nomServeur;
 	}
-
+// not currently required
 function nettoie_config($domaine_a_creer, $database_utilisee, $prefix_utilise) {
 	// second modify config.php in $domaine_a_creer.
 	$nomConfig = getcwd().'/'.xarModGetVar('multisites','whereisperso') . cleanDN($domaine_a_creer) . '/' . 'config.php';
@@ -1469,7 +1469,7 @@ function create_path($to_path)
 }
 
 
-
+// not currently required
 // ==================================================================================================
 // the next 3 functions are replacement of them equivalent, xarMod*
 // i have been obliged to do this terrible hacking, unable to change the prefix in the xartables ...
@@ -1537,7 +1537,7 @@ function multisitesModSetVar(	$modname,
     }
     return true;
 }
-
+// not currently required
 function multisitesModGetVar($modname, $name, $oldPrefix, $prefix_utilise)
 {
     list($dbconn) = xarDBGetConn();
@@ -1569,8 +1569,8 @@ function multisitesModGetVar($modname, $name, $oldPrefix, $prefix_utilise)
     return $value;
 }
 
-
-function multisitesConfigSetVar( 	$name, 
+// not currently used
+function multisitesConfigSetVar( 	$name,
 									$value,
 									$masterfolderOriginal,
 									$masterfolderSubSite,
@@ -1650,4 +1650,95 @@ return true;
 
 // ==================================================================================================
 
+//jojodee: my turn to hack!
+function MSModSetVar()
+{
+ 	    //TO DO
+}
+
+function MSModGetVar()
+{
+		//TO DO
+}
+function MSModDelVar()
+{
+		//TO DO
+}
+function MSConfigSetVar($name,
+                        $value,
+						$msprefix,
+						$masterprefix,
+						$msdb)
+{
+    //TO DO: put some more error checking in this function
+
+	if (empty($name)) {
+        $msg = xarML('Empty name.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+    return;
+    }
+   // Connect to master db - and get the config table
+   list($dbconn) 	= xarDBGetConn();
+   $xartable 		= xarDBGetTables();
+   $configtable     = $xartable['config_vars'];
+
+   // Start connection with the new database - assume same type as master.
+   $dbconn = ADONewConnection(xarDBGetType());
+   $dbsite 	= $dbconn->Connect(
+ 					  xarDBGetHost(), // assume same as master for these atm
+					  xarCore_getSystemVar('DB.UserName'),
+					  xarCore_getSystemVar('DB.Password'),
+					  $msdb  // new site database - maybe same as master
+					  );
+   if (!$dbsite){
+             $setmultisite=" didn't connect to new database";
+             return $setmultisite;
+   }
+   $configtable 		= str_replace($masterprefix,$msprefix,$configtable);
+   //check the var exists already
+   $query = "SELECT xar_value
+              FROM $configtable
+              WHERE xar_name = '" . xarVarPrepForStore($name) . "'
+              ";
+    $result = $dbconn->Execute($query);
+    if ((!$result) || ($result->EOF)) {
+       $mustInsert = true;
+    } else {
+       $mustInsert = false;
+    }
+
+    //Here we serialize the configuration variables
+    //so they can effectively contain more than one value
+    $value = serialize($value);
+
+    //Here we insert the value if it's new
+    //or update the value if it already exists
+   if ($mustInsert == true) {
+        //Insert
+        $seqId = $dbconn->GenId($configtable);
+        $query = "INSERT INTO $configtable
+                  (xar_id,
+                   xar_name,
+                   xar_value)
+                  VALUES ('$seqId',
+                          '" . xarVarPrepForStore($name) . "',
+                          '" . xarVarPrepForStore($value). "')";
+    } else {
+         //Update
+         $query = "UPDATE $configtable
+                   SET xar_value='" . xarVarPrepForStore($value) . "'
+                   WHERE xar_name='" . xarVarPrepForStore($name) . "'";
+     }
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    return true;
+}
+
+function multisites_admin_MSConfigGetVar()
+{
+	// TO DO
+}
 ?>

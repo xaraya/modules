@@ -17,7 +17,7 @@ function multisites_xartables()
     // Initialise table array
     $xartable = array();
 
-    // Get the name for the autolinks item table
+    // Get the name for the multisites item table
     $multisites = xarDBGetSiteTablePrefix() . '_multisites';
 
     // Set the table name

@@ -119,14 +119,16 @@ function multisites_adminapi_create($args)
               xar_msprefix,
               xar_msdb,
               xar_msshare,
-              xar_msstatus)
+              xar_msstatus,
+              xar_sitefolder)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($mssite) . "',
               '" . xarVarPrepForStore($msprefix) . "',
               '" . xarVarPrepForStore($msdb) . "',
               '" . xarVarPrepForStore($msshare) . "',
-              '" . xarVarPrepForStore($msstatus) . "')";
+              '" . xarVarPrepForStore($msstatus) . "',
+              '" . xarVarPrepForStore($sitefolder) . "')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -271,4 +273,5 @@ function multisites_adminapi_delete($args)
     // Let the calling process know that we have finished successfully
     return true;
 }
+
 ?>

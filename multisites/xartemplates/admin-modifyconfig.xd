@@ -2,6 +2,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Multisites Configuration</xar:mlstring></h2><br />
 <div align="center">
 <xar:if condition="$modifysite eq 0">
+<xar:set name="$btntxt"><xar:mlstring>Set Multisite Configuration</xar:mlstring></xar:set>
     <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
 	    <p><xar:mlstring>This option will gather some server configuration data and then modify your main config.system.php file.
         Once this is complete, this site will become the Master site from which you can create other (sub)sites. Usually this operation is only carried out once. If there is a change in your server configuration, you may need to reconfigure this Master site using this option.<br /><br />
@@ -19,14 +20,16 @@
     </div>
 
 <xar:elseif condition="$modifysite eq 1" />
+<xar:set name="$btntxt"><xar:mlstring>Change Multisite Configuration</xar:mlstring></xar:set>
      <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
 	    <p><xar:mlstring>THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.<br /><br />
-           The config.system.php file has been updated with the required changes for running a Multisite.<br /><br />
-           You should only make changes to this configuration, if</xar:mlstring>:</p>
+        You should only make changes to this configuration, if</xar:mlstring>:</p>
              <ul>
-                <li>
-                    <xar:mlstring>You need to add or change the domains or subdomains extensions that you wish to use with multisites.</xar:mlstring>
-                </li>
+                
+        <li> <xar:mlstring>You need to add or change the domains or subdomains 
+          extensions that you wish to use with multisites.</xar:mlstring> Note 
+          that if you delete any extensions, any current sites that use this extension 
+          will not function.</li>
                 <li>
                     <xar:mlstring>You want to change the Master Data directory where subsite information is held. Note that if you do this, you must move any existing site data from your old Master Data Directory to your new one manually. This module will not move it for you.</xar:mlstring>
                 </li>
@@ -60,41 +63,39 @@
 </xar:if>
     <form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" />
     <input type="hidden" name="authid" value="&xar-var-authid;" />
-	    <table border="0" width="100%" align="center">
-		    <th align="center" valign="middle" colspan="2">
-			    <xar:mlstring>Server Configuration</xar:mlstring>
-			</th>
-
-            <tr>
-				<td align="left" valign="middle" colspan="2"><br />
-							<xar:mlstring>Multisites can use one of 2 possible variables, HTTP_HOST, or SERVER_NAME.<br />One or the other may not always work on your system, depending on the way your server is configured.</xar:mlstring><br />
-                <br /></td>
-            <tr align="left" valign="middle">
-				<td colspan="2">
-                     <span style="margin-left:1.2em;"><xar:mlstring>Your SERVER_NAME value&nbsp;=&nbsp;&nbsp;</xar:mlstring>#$SERVER_NAME#</span><br />
-                     <span style="font:bold; margin-left:1.2em;"><xar:mlstring>Your HTTP_HOST value&nbsp;&nbsp;=&nbsp;</xar:mlstring>#$HTTP_HOST#</span>
-				</td>
-			</tr>
-            <tr align="left" valign="middle">
-                <td>
-                     <br /><xar:mlstring>If the HTTP_HOST value above displays your correct domain name,<br />
-                     you should make sure HTTP_HOST is selected from the drop down box.<br />
-                     If the domain name for HTTP_HOST is incorrect,<br />
-                     only then, change the value in the drop down box to SERVER_NAME.</xar:mlstring>
-                </td>
-				<td>
-							<select name="servervar" id="servervar" size="1" tabindex="1">
-								<xar:if condition="xarModGetVar('multisites', 'servervar') eq 'HTTP_HOST'">
-									<option value="HTTP_HOST" selected="selected"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
-									<option value="SERVER_NAME"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
-								<xar:elseif condition="xarModGetVar('multisites', 'servervar') eq 'SERVER_NAME'" />
-									<option value="HTTP_HOST"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
-									<option value="SERVER_NAME" selected="selected"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
-								</xar:if>
-							</select>
-						</td>
-					</tr>
-			</table><br />
+	    
+    <table border="0" width="100%" align="center">
+      <th align="center" valign="middle" colspan="2"> <xar:mlstring>Server Configuration</xar:mlstring> 
+      </th>
+      <tr> 
+        <td align="left" valign="middle" colspan="2"><br /> <xar:mlstring>Multisites 
+          can use one of 2 possible variables, HTTP_HOST, or SERVER_NAME.<br />
+          One or the other may not always work on your system, depending on the 
+          way your server is configured.</xar:mlstring><br /> <br /></td>
+      <tr align="left" valign="middle"> 
+        <td> <span style="margin-left:1.2em;"><xar:mlstring>Your SERVER_NAME 
+          value&nbsp;=&nbsp;&nbsp;</xar:mlstring>#$SERVER_NAME#</span><br /> <span style="font:bold; margin-left:1.2em;"><xar:mlstring>Your 
+          HTTP_HOST value&nbsp;&nbsp;=&nbsp;</xar:mlstring>#$HTTP_HOST#</span> 
+        </td>
+        <td><select name="servervar" id="servervar" size="1" tabindex="1">
+            <xar:if condition="xarModGetVar('multisites', 'servervar') eq 'HTTP_HOST'"> 
+            <option value="HTTP_HOST" selected="selected"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
+            <option value="SERVER_NAME"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
+            <xar:elseif condition="xarModGetVar('multisites', 'servervar') eq 'SERVER_NAME'" /> 
+            <option value="HTTP_HOST"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
+            <option value="SERVER_NAME" selected="selected"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
+            </xar:if> </select></td>
+      </tr>
+      <tr align="left" valign="middle"> 
+        <td colspan="2"> <br />
+          <xar:mlstring>If the HTTP_HOST value above displays your correct domain 
+          name, you should make sure HTTP_HOST is selected from the drop down 
+          box. <br />
+          If the domain name for HTTP_HOST is incorrect, only then, change the 
+          value in the drop down box to SERVER_NAME.</xar:mlstring> </td>
+      </tr>
+    </table>
+    <br />
 	        <table border="0" width="100%">
 		        <th align="center" valign="middle" colspan="2">
 			    <xar:mlstring>File Paths &amp; Domain Types</xar:mlstring>
@@ -144,12 +145,12 @@
 						</td>
 					</tr>
 			        <tr align=left" valign="middle">
-						<td colspan="2">
-							<xar:mlstring>The common extensions are .com, .net, .org. However, if for example you use a subdomain or
-                             domain such as www.domain.biz as a master site or subsite, you will need to add the .biz extension to the list.</xar:mlstring>:
-		           </td>
+						
+        <td colspan="2"> <xar:mlstring>The common extensions are .com, .net, .org. 
+          However, if for example you use a subdomain or domain such as www.domain.biz 
+          as a site, you will need to add the .biz extension to the list.</xar:mlstring></td>
 		           <tr align="center" valign="middle">
-                      <td colspan="2"><br /><br /><input type="submit" value="#$btnSetConfig#" align="middle" tabindex="3" />
+                      <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#" align="middle" tabindex="3" />
                       </td>
                   </tr>
          </table>

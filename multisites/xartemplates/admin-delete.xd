@@ -1,6 +1,8 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Delete A Site</xar:mlstring></h2><br />
 <div align="center">
+<xar:set name="$btntxt"><xar:mlstring>Delete Site</xar:mlstring></xar:set>
+
 <xar:if condition="$mastersite eq false">
     <table border="0" width="100%" align="center">
 	     <tr align="left" valign="middle">
@@ -77,7 +79,7 @@
 				</tr>
 
 			    <tr align="center" valign="middle">
-                   <td colspan="2"><br /><br /><input type="submit" value="#$btnDeleteSite#" align="middle" tabindex="3" />
+                   <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#" align="middle" tabindex="3" />
                    </td>
                 </tr>
         </table>
