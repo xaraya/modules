@@ -1,6 +1,6 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id: main.php,v 1.2 2003/09/22 14:52:20 jojodee Exp $
  *
  * SiteTools Module
  *
@@ -35,7 +35,7 @@ function sitetools_admin_main()
     } else {
         // If docs are turned off, then we just return the view page, or whatever
         // function seems to be the most fitting.
-        xarResponseRedirect(xarModURL('sitetools', 'admin', 'optimize'));
+        xarResponseRedirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
     }
     // success
     return true;
