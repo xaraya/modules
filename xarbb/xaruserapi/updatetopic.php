@@ -30,7 +30,7 @@ function xarbb_userapi_updatetopic($args)
 
     // params in arg
     $params = array("fid"       => "xar_fid",
-    				"ttitle"    => "xar_ttitle",
+                    "ttitle"    => "xar_ttitle",
                     "tpost"     => "xar_tpost",
                     "tposter"   => "xar_tposter",
                     "time"      => "xar_ttime",
@@ -71,15 +71,20 @@ function xarbb_userapi_updatetopic($args)
     $xbbtopicstable = $xartable['xbbtopics'];
     $time = time();
 
+    $update = array();
+    $bindvars = array();
     foreach($params as $vvar => $field)	{
-    	if(isset($$vvar))
-	    	$update[] = $field ."='".xarVarPrepForStore($$vvar)."'";
+        if(isset($$vvar)) {
+            $update[] = $field ."=?";
+            $bindvars[] = $$vvar;
+        }
     }
 
     // Update item
     $query = "UPDATE $xbbtopicstable SET ".join(",",$update)." WHERE xar_tid = ?";
+    $bindvars[] = $tid;
 
-    $result =& $dbconn->Execute($query, array($tid));
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     $data = xarModAPIFunc('xarbb',
