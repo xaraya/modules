@@ -177,7 +177,7 @@
           $fieldName = $this->fieldNames[$fieldNr];
           $record[$fieldName] = ereg_replace(";",'&semi&',$record[$fieldName]);
         }
-        $recordRaw = ereg_replace("\r\n",'<br>',implode(";", $record));
+        $recordRaw = ereg_replace("\r\n",'<br/>',implode(";", $record));
 
         if ($this->crypt)
           $recordRaw = $this->encrypt($recordRaw, $this->cryptKey);
