@@ -154,7 +154,24 @@ function ratings_upgrade($oldversion)
             ratings_init();
 
             break;
-        case '1.2':
+
+        case '1.2.0':
+            // clean up double hook registrations
+            xarModUnregisterHook('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
+            xarModRegisterHook('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
+            $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+                                           array('hookModName' => 'ratings'));
+            if (isset($hookedmodules) && is_array($hookedmodules)) {
+                foreach ($hookedmodules as $modname => $value) {
+                    foreach ($value as $itemtype => $val) {
+                        xarModAPIFunc('modules','admin','enablehooks',
+                                      array('hookModName' => 'ratings',
+                                            'callerModName' => $modname,
+                                            'callerItemType' => $itemtype));
+                    }
+                }
+            }
+
     }
 
     return true;
