@@ -147,7 +147,7 @@ function articles_topitemsblock_display($blockinfo)
     if (!empty($vars['nopublimit'])) {
         //don't limit by pubtype
         $ptid = 0;
-        if (empty($vars['nocatlimit']) || empty($vars['nopublimit']) || !empty($vars['dynamictitle'])) {
+        if (!empty($vars['dynamictitle'])) {
             $blockinfo['title'] .= ' ' . xarML('Content');
         }
     } else {
