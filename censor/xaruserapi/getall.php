@@ -7,7 +7,6 @@
 function censor_userapi_getall($args)
 {
     extract($args);
-
     // Optional arguments
     if (!isset($startnum)) {
         $startnum = 1;
@@ -15,19 +14,15 @@ function censor_userapi_getall($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
-
     $censors = array();
     // Security Check
-
     if(!xarSecurityCheck('ReadCensor')){
         return $censors;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $censortable = $xartable['censor'];
-
     // Get links
     $query = "SELECT xar_cid,
                    xar_keyword,
@@ -49,10 +44,7 @@ function censor_userapi_getall($args)
                             'locale' => $locale);
         }
     }
-
     $result->Close();
-
     return $censors;
 }
-
 ?>

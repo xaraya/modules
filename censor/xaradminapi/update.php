@@ -9,8 +9,7 @@ function censor_adminapi_update($args)
 {
     // Get arguments from argument array
     extract($args);
-
-     
+    
     // Argument check
     if ((!isset($cid)) ||
             (!isset($keyword))) {
@@ -40,16 +39,15 @@ function censor_adminapi_update($args)
     $censortable = $xartable['censor']; 
     // Update the link
     $query = "UPDATE $censortable
-            SET xar_keyword = '" . xarVarPrepForStore($keyword) . "',
-                xar_case_sensitive  = '" . xarVarPrepForStore($case) . "',
-                xar_match_case  = '" . xarVarPrepForStore($matchcase) . "',
-                xar_locale = '" . xarVarPrepForStore($locale) . "'
-            WHERE xar_cid = " . xarVarPrepForStore($cid);
-    $result = &$dbconn->Execute($query);
-    if (!$result) return; 
+            SET xar_keyword         = ?,
+                xar_case_sensitive  = ?,
+                xar_match_case      = ?,
+                xar_locale          = ?
+            WHERE xar_cid           = ?";
+    $bindvars = array($keyword, $case, $matchcase, $locale, $cid);
+    $result =& $dbconn->Execute($query,$bindvars);
+    if (!$result) return;
     // Let the calling process know that we have finished successfully
     return true;
 }
-
-
 ?>

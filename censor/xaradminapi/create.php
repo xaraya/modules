@@ -13,20 +13,15 @@ function censor_adminapi_create($args)
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
     if (!isset($keyword)) {
-        $msg = xarML('Invalid Parameter Count',
-            join(', ', $invalid), 'admin', 'create', 'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2).php', 'admin', 'create', 'censor');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } 
     // Security Check
     if (!xarSecurityCheck('AddCensor')) return;
-    // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $censortable = $xartable['censor'];
-    // Get next ID in table
     $nextId = $dbconn->GenId($censortable); 
     // Add item
     $query = "INSERT INTO $censortable (
@@ -36,12 +31,13 @@ function censor_adminapi_create($args)
               xar_match_case,
               xar_locale)
             VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($keyword) . "',
-              '" . xarVarPrepForStore($case) . "',
-              '" . xarVarPrepForStore($matchcase) . "',
-              '" . xarVarPrepForStore($locale) . "')";
-    $result = &$dbconn->Execute($query);
+              ?,
+              ?,
+              ?,
+              ?,
+              ?)";
+    $bindvars = array($nextId, $keyword, $case, $matchcase, $locale);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted
     $cid = $dbconn->PO_Insert_ID($censortable, 'xar_cid');
@@ -50,5 +46,4 @@ function censor_adminapi_create($args)
     // Return the id of the newly created link to the calling process
     return $cid;
 }
-
 ?>

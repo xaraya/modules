@@ -7,18 +7,13 @@
 function censor_userapi_getall1($args)
 {
     extract($args);
-
     $censors = array();
-
     if(!xarSecurityCheck('ReadCensor')){
         return $censors;
     }
-    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $censortable = $xartable['censor'];
-
     $query = "SELECT xar_cid,
                    xar_keyword,
                    xar_case_sensitive,
@@ -26,9 +21,10 @@ function censor_userapi_getall1($args)
                    xar_locale
             FROM $censortable
             WHERE xar_locale = 'ALL'  
-            OR xar_locale ='" . xarVarPrepForStore($local) . "'";
+            OR xar_locale = ?";
             
-    $result =& $dbconn->Execute($query);
+    $bindvars = array($local);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
@@ -44,5 +40,4 @@ function censor_userapi_getall1($args)
     $result->Close();
     return $censors;
 }
-
 ?>
