@@ -13,7 +13,7 @@
 to submit any questions or problems.</p>
 
 <p>If you are a registered site member and are logged in,
-return to this page and 'View Tickets' to see a responce to your inquiries.</p>
+return to this page and 'View Tickets' to see a response to your inquiries.</p>
 
 <xar:if condition="!xarUserIsLoggedIn()">
  Display box for user to view ticket status by email address and ticket number!
