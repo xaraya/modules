@@ -34,7 +34,7 @@ function bloggerapi_userapi_getusersblogs($msg) {
 	
     // Try to login
     if (!xarUserLogin($username, $password)) {
-        $err = xarML("Invalid user ($username) while getting users blogs");
+        $err = xarML('Invalid user (#(1)) while getting users blogs',$username);
     } else {
         if (xarModIsHooked('categories','articles')) {
             // Logged in, load categories in which articles can be published
