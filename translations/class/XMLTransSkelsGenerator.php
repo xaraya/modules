@@ -47,15 +47,12 @@ class XMLTranslationsSkelsGenerator {
             case XARMLS_DNTYPE_MODULE:
             $this->baseDir = "$modules_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
-            $allcontexts = $GLOBALS['MLS']->getContexts();
-            foreach ($allcontexts as $context) {
-                $contextName = $context->getName();
-                $contextDir = $context->getDir();
-                if ($contextName == 'core' || $contextName == 'file') continue;
-                if (file_exists($this->baseDir.$contextDir)) continue;
-                if (!file_exists("modules/$dnName/xar$contextDir")) continue;
-                mkdir($this->baseDir.$contextDir, 0777);
 
+            $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$dnName));
+            foreach ($dirnames as $dirname) {
+                if (file_exists($this->baseDir.$dirname)) continue;
+                if (!file_exists("modules/$dnName/xar$dirname")) continue;
+                mkdir($this->baseDir.$dirname, 0777);
             }
             break;
             case XARMLS_DNTYPE_THEME:
@@ -74,8 +71,11 @@ class XMLTranslationsSkelsGenerator {
     {
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
-        $context = $GLOBALS['MLS']->getContextByType($ctxType);
-        if ($context->getDir() != "") $this->fileName .= $context->getDir() . "/";
+
+        if (!ereg("^[a-z]+:$", $ctxType)) {
+           list($prefix,$directory) = explode(':',$ctxType);
+           if ($directory != "") $this->fileName .= $directory . "/";
+        }
         $this->fileName .= $ctxName . ".xml";
         $this->fp = fopen($this->fileName.'.swp', 'w');
 
@@ -106,8 +106,8 @@ class XMLTranslationsSkelsGenerator {
         // string and translation are already encoded in utf-8
         /*$string = utf8_encode(htmlspecialchars($string));
         $translation = utf8_encode($translation);*/
-    //Allow html tags
-    $translation = htmlspecialchars($translation);
+        //Allow html tags
+        $translation = htmlspecialchars($translation);
         $string = htmlspecialchars($string);
         fwrite($this->fp, "\t<entry>\n");
         fwrite($this->fp, "\t\t<string>".$string."</string>\n");

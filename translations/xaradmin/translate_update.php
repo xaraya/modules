@@ -20,18 +20,18 @@ function translations_admin_translate_update()
 // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $contexts = $GLOBALS['MLS']->getContexts();
-    $regexstring = "";
-    $i=0;
-    foreach($contexts as $context) {
-        if ($i>0) $regexstring .= "|";
-        $regexstring .= $context->getName();
-        $i++;
-    }
-    $regexstring = 'regexp:/^(' . $regexstring . ')$/';
-
-// FIXME
-//    if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+    // FIXME voll context validation
+    //$contexts = Load all contexts types;
+    //$regexstring = "";
+    //$i=0;
+    //foreach($contexts as $context) {
+    //    if ($i>0) $regexstring .= "|";
+    //    $regexstring .= context_get_Name();
+    //    $i++;
+    //}
+    //$regexstring = 'regexp:/^(' . $regexstring . ')$/';
+    //if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+    
     if (!xarVarFetch('subtype', 'str:1:', $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
     if (!xarVarFetch('numEntries', 'int:0:', $numEntries)) return;
@@ -39,10 +39,7 @@ function translations_admin_translate_update()
 
     $dnType = xarSessionGetVar('translations_dnType');
     $dnName = xarSessionGetVar('translations_dnName');
-
-    $context = $GLOBALS['MLS']->getContextByName($subtype);
-    if ($subtype == 'file') $ctxType = XARMLS_CTXTYPE_FILE;
-    else $ctxType = $context->getType();
+    $ctxType = $subtype;
     $ctxName = $subname;
 
     $locale = translations_working_locale();
@@ -84,6 +81,7 @@ function translations_admin_translate_update()
 
     $gen->close();
 
-    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
+// voll    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
+    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('defaultcontext'=>$subtype.':'.$subname)));
 }
 ?>

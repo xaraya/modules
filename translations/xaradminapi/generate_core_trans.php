@@ -48,12 +48,12 @@ function translations_adminapi_generate_core_trans($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'MissingSkels', new DefaultUserException($msg, $link));
         return;
     }
-    if (!$backend->loadContext(XARMLS_CTXTYPE_FILE, 'core')) return;
+    if (!$backend->loadContext('core:', 'core')) return;
 
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) return;
-    if (!$gen->create(XARMLS_CTXTYPE_FILE, 'core')) return;
+    if (!$gen->create('core:', 'core')) return;
 
     $statistics['core'] = array('entries'=>0, 'keyEntries'=>0);
 

@@ -19,20 +19,26 @@ function translations_admin_translate_subtype()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $contexts = $GLOBALS['MLS']->getContexts();
-    $regexstring = "";
-    $i=0;
-    foreach($contexts as $context) {
-        if ($i>0) $regexstring .= "|";
-        $regexstring .= $context->getName();
-        $i++;
-    }
-    $regexstring = 'regexp:/^(' . $regexstring . ')$/';
+    // FIXME voll context validation
+    //$contexts = Load all contexts types;
+    //$regexstring = "";
+    //$i=0;
+    //foreach($contexts as $context) {
+    //    if ($i>0) $regexstring .= "|";
+    //    $regexstring .= context_get_Name();
+    //    $i++;
+    //}
+    //$regexstring = 'regexp:/^(' . $regexstring . ')$/';
+    //if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
 
-// FIXME 
-//    if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
-    if (!xarVarFetch('subtype', 'str:1:', $subtype)) return;
-    if (!xarVarFetch('subname', 'str:1:', $subname)) return;
+    // FIXME voll do we use subtype,subname really?
+    if (!xarVarFetch('defaultcontext', 'str:1:', $defaultcontext)) {
+        if (!xarVarFetch('subtype', 'str:1:', $subtype)) return;
+        if (!xarVarFetch('subname', 'str:1:', $subname)) return;
+    } else {
+        list($subtype1,$subtype2,$subname) = explode(':',$defaultcontext);
+        $subtype = $subtype1.':'.$subtype2;
+    }
 
     $args = array();
     $args['subtype'] = $subtype;

@@ -8,7 +8,8 @@
   <ul>
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
       <li>
-        <a href="#xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'file', 'subname'=>$subnames[$i]))#">#$subnames[$i]#</a>
+        <!-- a href="#xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'file', 'subname'=>$subnames[$i]))#">#$subnames[$i]#</a -->
+        <a href="#xarModURL('translations', 'admin', 'translate_subtype', array('defaultcontext'=>'file:'.$subnames[$i]))#">#$subnames[$i]#</a>
       </li>
     </xar:for>
   </ul>

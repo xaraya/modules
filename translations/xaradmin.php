@@ -139,85 +139,95 @@ function translations_create_opbar($currentOp)
 
 function translations_create_trabar($subtype, $subname, $backend=NULL)
 {
+    set_time_limit(0);
+    $time = explode(' ', microtime());
+    $startTime = $time[1] + $time[0];
+
+    // Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
     $dnType = xarSessionGetVar('translations_dnType');
     $dnName = xarSessionGetVar('translations_dnName');
 
     $currentTra = -1;
     switch ($dnType) {
         case XARMLS_DNTYPE_CORE:
-        $traLabels[0] = 'core';
-
-        $traURLs[0] = xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'file', 'subname'=>'core'));
-
-        $enabledTras = array(true);
-
-        if ($subtype == 'file') {
-            $currentTra = 0;
-        }
-        break;
-
-        case XARMLS_DNTYPE_MODULE:
-        $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',
-                                  array('moddir'=>$dnName));
+        $subtypes = array();
+        $subnames = array();
+        $entrydata = array();
 
         $args = array();
-        $args['subtype'] = "file";
-        $subnams = $subnames;
+        $args['subtype'] = 'core:';
+        $args['subname'] = 'core';
+        $selectedsubtype = 'core:';
+        $selectedsubname = 'core';
+        $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
+        if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+             $entrydata[] = $entry;
+             $subtypes[] = 'core:';
+             $subnames[] = 'core';
+        }
+        break;
+        case XARMLS_DNTYPE_MODULE:
 
-        $j = 0;
-        foreach ($subnams as $subnameinlist) {
-            $args['subname'] = $subnameinlist;
+        $sessmodid = xarSessionGetVar('translations_modid');
+        if (!xarVarFetch('modid', 'id', $modid, $sessmodid)) return;
+        xarSessionSetVar('translations_modid', $modid);
+
+        if (!$modinfo = xarModGetInfo($modid)) return;
+        $modname = $modinfo['name'];
+        $moddir = $modinfo['osdirectory'];
+
+        $selectedsubtype = $subtype;
+        $selectedsubname = $subname;
+
+        $module_contexts_list[] = 'modules:'.$modname.'::common';
+
+        $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
+        foreach ($subnames as $subname) {
+            $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
+        }
+
+        $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
+        foreach ($dirnames as $dirname) {
+            if (!preg_match('!^templates!i', $dirname, $matches))
+                $pattern = '/^([a-z\-_]+)\.php$/i';
+            else 
+                $pattern = '/^([a-z\-_]+)\.xd$/i';
+            $subnames = xarModAPIFunc('translations','admin','get_module_files',
+                                  array('moddir'=>"modules/$moddir/xar$dirname",'pattern'=>$pattern));
+            foreach ($subnames as $subname) {
+                $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
+            }
+        }
+
+        $subtypes = array();
+        $subnames = array();
+        $entrydata = array();
+        foreach ($module_contexts_list as $module_context) {
+            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$module_context);
+            $args = array();
+            $ctxtype2 = 'modules:'.$ctxtype1;
+            $args['subtype'] = $ctxtype2;
+            $args['subname'] = $ctxname1;
             $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
             if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
-                array_splice($subnames,$j,1);
-                $traLabels[$j] = $subnameinlist;
-                $traURLs[$j] = xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'file', 'subname'=>$subnameinlist));
-                $enabledTras[$j] = true;
-                $j++;
+                $entrydata[] = $entry;
+                $subtypes[] = $ctxtype2;
+                $subnames[] = $ctxname1;
             }
         }
-
-        if ($backend == NULL) {
-            $locale = translations_working_locale();
-            $args['interface'] = 'ReferencesBackend';
-            $args['locale'] = $locale;
-            $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
-            if (!isset($backend)) return;
-            if (!$backend->bindDomain($dnType, $dnName)) {
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
-                return;
-            }
-        }
-        $contexts = $GLOBALS['MLS']->getContexts();
-        foreach ($contexts as $context) {
-            if ($context->getName() != "file" && count($backend->getContextNames($context->getType())) >0) {
-                $traLabels[$j] = $context->getLabel();
-                $enabledTras[$j] = true;
-                $traURLs[$j] = xarModURL('translations', 'admin', 'translate_context',array('name'=>$context->getName()));
-                $j++;
-            }
-        }
-
-        if ($subtype !="") {
-            if($subtype =="file") {
-                $currentTra = array_search($subname, $traLabels);
-            }
-            else {
-                $currentContext = $GLOBALS['MLS']->getContextByName($subtype);
-                $currentTra = array_search($currentContext->getLabel(), $traLabels);
-            }
-        }
-        else {
-            $currentTra = 99;
-        }
-
         break;
         case XARMLS_DNTYPE_THEME:
         // TODO
         break;
     }
 
-    return array('traLabels'=>$traLabels, 'traURLs'=>$traURLs, 'enabledTras'=>$enabledTras, 'currentTra'=>$currentTra);
+    return array('subtypes'=>$subtypes,
+                 'subnames'=>$subnames,
+                 'entrydata'=>$entrydata,
+                 'selectedsubtype'=>$selectedsubtype,
+                 'selectedsubname'=>$selectedsubname);
 }
 
 function translations_working_locale($locale = NULL)

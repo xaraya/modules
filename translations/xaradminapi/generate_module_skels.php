@@ -55,7 +55,7 @@ function translations_adminapi_generate_module_skels($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'MissingCoreSkels', new DefaultUserException($msg, $link));
         return;
     }
-    if (!$core_backend->loadContext(XARMLS_CTXTYPE_FILE, 'core')) return;
+    if (!$core_backend->loadContext('core:', 'core')) return;
 
     // Parse files
     $transEntriesCollection = array();
@@ -64,6 +64,7 @@ function translations_adminapi_generate_module_skels($args)
     $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
 
     foreach ($subnames as $subname) {
+        $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
         $filename = "modules/$moddir/xar$subname.php";
 
         if (file_exists($filename)) {
@@ -76,35 +77,27 @@ function translations_adminapi_generate_module_skels($args)
 
     }
 
-    $allowedcontexts = array();
-    $allcontexts = $GLOBALS['MLS']->getContexts();
-    foreach ($allcontexts as $context) {
-        $contextName = $context->getName();
-        if ($contextName == 'core' || $contextName == 'file') continue;
-        $allowedcontexts[] = $contextName;
-    }
-
-    foreach($allowedcontexts as $allowedcontext) {
-        ${$allowedcontext . "names"} = array();
-        $thiscontext = $GLOBALS['MLS']->getContextByName($allowedcontext);
-        $alloweddir = $thiscontext->getDir();
-        $xtype = $thiscontext->getXtype();
-
-        if ($xtype == 'php') $pattern = '/^([a-z\-_]+)\.php$/i';
-        elseif ($xtype == 'xd') $pattern = '/^([a-z\-_]+)\.xd$/i';
-        else $pattern = '/^([a-z\-_]+)\.php$/i'; // php files as default
-        
+    $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
+    foreach ($dirnames as $dirname) {
+        ${$dirname . "names"} = array();
+        if (!preg_match('!^templates!i', $dirname, $matches)) {
+            $pattern = '/^([a-z\-_]+)\.php$/i';
+            $xtype = 'php';
+        }
+        else { 
+            $pattern = '/^([a-z\-_]+)\.xd$/i';
+            $xtype = 'xd';
+        }
         $subnames = xarModAPIFunc('translations','admin','get_module_files',
-                                  array('moddir'=>"modules/$moddir/xar$alloweddir",'pattern'=>$pattern));
-
+                         array('moddir'=>"modules/$moddir/xar$dirname",'pattern'=>$pattern));
         foreach ($subnames as $subname) {
-            if ($xtype == 'php') $parser = new PHPParser();
-            elseif ($xtype == 'xd') $parser = new TPLParser();
-            else $parser = new PHPParser(); // php files as default
-            $parser->parse("modules/$moddir/xar$alloweddir/$subname.$xtype");
-            ${$allowedcontext . "names"}[] = $subname;
-            $transEntriesCollection[$allowedcontext.'::'.$subname] = $parser->getTransEntries();
-            $transKeyEntriesCollection[$allowedcontext.'::'.$subname] = $parser->getTransKeyEntries();
+            $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
+            if ($xtype == 'xd') $parser = new TPLParser();
+            else $parser = new PHPParser();
+            $parser->parse("modules/$moddir/xar$dirname/$subname.$xtype");
+            ${$dirname . "names"}[] = $subname;
+            $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
+            $transKeyEntriesCollection[$dirname.'::'.$subname] = $parser->getTransKeyEntries();
         }
     }
 
@@ -116,19 +109,14 @@ function translations_adminapi_generate_module_skels($args)
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
 
-    $contexts = $GLOBALS['MLS']->getContexts();
     if ($backend->bindDomain(XARMLS_DNTYPE_MODULE,$modname)) {
-        foreach ($contexts as $context) {
-            if ($context->getDir() == "") {
-                $names = $subnames;
-            }
-            else{
-                $names = ${$context->getName() . "names"};
-            }
-            foreach($names as $name) {
-                if ($backend->hasContext($context->getType(),$name)){
-                    if (!$backend->loadContext($context->getType(),$name)) return;
-                }
+        if ($backend->hasContext('modules:','common')){
+            if (!$backend->loadContext('modules:','common')) return;
+        }
+        foreach ($module_contexts_list as $module_context) {
+            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$module_context);
+            if ($backend->hasContext('modules:'.$ctxtype1,$ctxname1)){
+                if (!$backend->loadContext('modules:'.$ctxtype1,$ctxname1)) return;
             }
         }
     }
@@ -154,19 +142,14 @@ function translations_adminapi_generate_module_skels($args)
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
 
     foreach ($subnames as $subname) {
-        $contexts = $GLOBALS['MLS']->getContexts();
-        $foundmatch = false;
-        foreach ($contexts as $context) {
-            $matchstring = '!^' . $context->getName() . '::(.*)!';
-            if (preg_match($matchstring, $subname, $matches)) {
-                if (!$gen->create($context->getType(), $matches[1])) return;
-                $foundmatch = true;
-                break;
-            }
+        if (preg_match('/(.*)::(.*)/', $subname, $matches)) {
+           list ($ctxtype1, $ctxname1) = explode('::',$subname);
+        } else {
+            $ctxtype1 = '';
+            $ctxname1 = $subname;
         }
-        if (!$foundmatch) {
-            if (!$gen->create(XARMLS_CTXTYPE_FILE, $subname)) return;
-        }
+        if (!$gen->create('modules:'.$ctxtype1,$ctxname1)) return;
+
         $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
 
         // Avoid creating entries for the same locale
@@ -180,6 +163,7 @@ function translations_adminapi_generate_module_skels($args)
                 $statistics[$subname]['entries']++;
                 // Get previous translation, it's void if not yet translated
                 $translation = $backend->translate($string);
+
                 // Add entry
                 $gen->addEntry($string, $references, $translation);
             }

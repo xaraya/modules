@@ -1,14 +1,22 @@
-<p>
-<xar:for start="$i=0" test="$i lt count($traLabels)" iter="$i++">
-  <xar:if condition="$i gt 0">
-  |
-  </xar:if>
-  <xar:if condition="$enabledTras[$i] and $i ne $currentTra">
-    <a href="#$traURLs[$i]#">#$traLabels[$i]#</a>
-  <xar:elseif condition="$i eq $currentTra" />
-    <b>#$traLabels[$i]#</b>
-  <xar:else />
-    #$traLabels[$i]#
-  </xar:if>
-</xar:for>
-</p>
+<xar:if condition="count($subnames) gt 0">
+  <p>
+    <xar:mlstring>Choose from the list below which entries you want to translate.</xar:mlstring>
+  </p>
+
+    <form method="post" action="&xar-modurl-translations-admin-translate_subtype;">
+	<select name="defaultcontext" id="defaultcontext" size="1">
+    <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
+		<xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
+			<option value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">#$subtypes[$i]#:#$subnames[$i]#&nbsp;(#$entrydata[$i]['numEntries']# strings, #$entrydata[$i]['numKeyEntries']# keys)</option>
+		<xar:else />
+			<option value="#$subtypes[$i]#:#$subnames[$i]#">#$subtypes[$i]#:#$subnames[$i]#&nbsp;(#$entrydata[$i]['numEntries']# strings, #$entrydata[$i]['numKeyEntries']# keys)</option>
+		</xar:if>
+    </xar:for>
+	</select>
+    <input type="submit" value="Select" align="middle" />
+    </form>
+<xar:else />
+  <p>
+    <xar:mlstring>There are no entries to translate.</xar:mlstring>
+  </p>
+</xar:if>

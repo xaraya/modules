@@ -10,6 +10,8 @@
  * @link http://www.xaraya.com
  *
  * @subpackage translations
+ * @param $args['subtype'] translation subtype
+ * @param $args['subname'] translation subname
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
@@ -20,10 +22,7 @@ function translations_adminapi_getcontextentries($args)
 
     $dnType = xarSessionGetVar('translations_dnType');
     $dnName = xarSessionGetVar('translations_dnName');
-
-    $context = $GLOBALS['MLS']->getContextByName($subtype);
-    if ($subtype == 'file') $ctxType = XARMLS_CTXTYPE_FILE;
-    else $ctxType = $context->getType();
+    $ctxType = $subtype;
     $ctxName = $subname;
 
     $locale = translations_working_locale();

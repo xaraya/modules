@@ -50,14 +50,12 @@ class PHPTranslationsGenerator {
             case XARMLS_DNTYPE_MODULE:
             $this->baseDir = "$modules_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
-            $allcontexts = $GLOBALS['MLS']->getContexts();
-            foreach ($allcontexts as $context) {
-                $contextName = $context->getName();
-                $contextDir = $context->getDir();
-                if ($contextName == 'core' || $contextName == 'file') continue;
-                if (file_exists($this->baseDir.$contextDir)) continue;
-                if (!file_exists("modules/$dnName/xar$contextDir")) continue;
-                mkdir($this->baseDir.$contextDir, 0777);
+
+            $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$dnName));
+            foreach ($dirnames as $dirname) {
+                if (file_exists($this->baseDir.$dirname)) continue;
+                if (!file_exists("modules/$dnName/xar$dirname")) continue;
+                mkdir($this->baseDir.$dirname, 0777);
             }
             break;
             case XARMLS_DNTYPE_THEME:
@@ -76,8 +74,12 @@ class PHPTranslationsGenerator {
     {
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
-        $context = $GLOBALS['MLS']->getContextByType($ctxType);
-        if ($context->getDir() != "") $this->fileName .= $context->getDir() . "/";
+
+        if (!ereg("^[a-z]+:$", $ctxType)) {
+           list($prefix,$directory) = explode(':',$ctxType);
+           if ($directory != "") $this->fileName .= $directory . "/";
+        }
+
         $this->fileName .= $ctxName . ".php";
 
         $this->fp = fopen($this->fileName.'.swp', 'w');

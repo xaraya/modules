@@ -16,7 +16,9 @@
   <ul>
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
       <li>
-        <a href="#xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subnames[$i]))#">#$subnames[$i]#</a>
+        <!--a href="#xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subnames[$i]))#">#$subnames[$i]#</a>
+        &nbsp;(#$entrydata[$i]['numEntries']# strings, #$entrydata[$i]['numKeyEntries']# keys) -->
+        <a href="#xarModURL('translations', 'admin', 'translate_subtype', array('defaultcontext'=>$subtype.':'.$subnames[$i]))#">#$subnames[$i]#</a>
         &nbsp;(#$entrydata[$i]['numEntries']# strings, #$entrydata[$i]['numKeyEntries']# keys)
       </li>
     </xar:for>

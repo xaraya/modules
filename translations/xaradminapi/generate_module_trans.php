@@ -58,39 +58,52 @@ function translations_adminapi_generate_module_trans($args)
         return;
     }
 
-    $allcontexts = $GLOBALS['MLS']->getContexts();
-    foreach ($allcontexts as $context)
-        $allCtxNames[$context->getType()] = $backend->getContextNames($context->getType());
-
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
 
-    foreach ($allCtxNames as $ctxType => $ctxNames) {
-        foreach ($ctxNames as $ctxName) {
-            if (!$backend->loadContext($ctxType, $ctxName)) return;
+    $module_contexts_list[] = 'modules:'.$modname.'::common';
 
-            if (!$gen->create($ctxType, $ctxName)) return;
+    $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
+    foreach ($subnames as $subname) {
+        $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
+    }
 
-            $context = $GLOBALS['MLS']->getContextByType($ctxType);
-            if ($context->getName() != '') $sName = $context->getName() . "::" . $ctxName;
-            else $sName = $ctxName;
-
-            $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);
-
-            while (list($string, $translation) = $backend->enumTranslations()) {
-                $statistics[$sName]['entries']++;
-                $gen->addEntry($string, $translation);
-            }
-
-            while (list($key, $translation) = $backend->enumKeyTranslations()) {
-                $statistics[$sName]['keyEntries']++;
-                $gen->addKeyEntry($key, $translation);
-            }
-
-            $gen->close();
-            $backend->clear();
+    $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
+    foreach ($dirnames as $dirname) {
+        if (!preg_match('!^templates!i', $dirname, $matches))
+            $pattern = '/^([a-z\-_]+)\.php$/i';
+        else 
+            $pattern = '/^([a-z\-_]+)\.xd$/i';
+        $subnames = xarModAPIFunc('translations','admin','get_module_files',
+                              array('moddir'=>"modules/$moddir/xar$dirname",'pattern'=>$pattern));
+        foreach ($subnames as $subname) {
+            $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
         }
+    }
+
+    foreach ($module_contexts_list as $module_context) {
+        list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$module_context);
+        $ctxType = 'modules:'.$ctxtype1;
+        $ctxName = $ctxname1;
+
+        if (!$backend->loadContext($ctxType, $ctxName)) return;
+        if (!$gen->create($ctxType, $ctxName)) return;
+
+        if ($ctxtype1 != '') $sName = $ctxtype1 . "::" . $ctxName;
+        else $sName = $ctxName;
+
+        $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);
+        while (list($string, $translation) = $backend->enumTranslations()) {
+            $statistics[$sName]['entries']++;
+            $gen->addEntry($string, $translation);
+        }
+        while (list($key, $translation) = $backend->enumKeyTranslations()) {
+            $statistics[$sName]['keyEntries']++;
+            $gen->addKeyEntry($key, $translation);
+        }
+        $gen->close();
+        $backend->clear();
     }
 
     $time = explode(' ', microtime());
