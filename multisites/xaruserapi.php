@@ -46,7 +46,6 @@ function multisites_userapi_countitems()
 function multisites_userapi_get($args)
 {
     extract($args);
-
     if (!isset($msid)) {
         $msg = xarML('Invalid Parameter Count',
                     'userapi', 'get', 'multisites');
@@ -117,8 +116,7 @@ function multisites_userapi_getall($args)
         $invalid[] = 'numitems';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function getall() in module Multisites',
-            join(', ', $invalid), 'user', 'getall', 'multisites');
+        $msg = xarML('Invalid - function getall() in module Multisites');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
