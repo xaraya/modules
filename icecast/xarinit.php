@@ -24,7 +24,7 @@ function icecast_init()
     // will activate later if necessary
     /*if (!extension_loaded('curl')) {
         $msg=xarML('Your PHP configuration does not seem to include the required cURL extension. Please refer to http://www.php.net/manual/en/ref.curl.php on how to install it.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }*/
