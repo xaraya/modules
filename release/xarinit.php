@@ -50,12 +50,35 @@ function release_init()
 }
 
 /**
- * upgrade the send to friend module from an old version
+ * upgrade the example module from an old version
+ * This function can be called multiple times
  */
 function release_upgrade($oldversion)
 {
-    return false;
-}
+    // Upgrade dependent on old version number
+    switch($oldversion) {
+        case 0.02:
+
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $releaseidtable = $xartable['release_id'];
+
+            // Add a column to the table
+
+            xarDBLoadTableMaintenanceAPI();
+
+            $query = xarDBAlterTable(array('table' => $releaseidtable,
+                                           'command' => 'add',
+                                           'field' => 'xar_uid',
+                                           'type' => 'integer',
+                                           'null' => false,
+                                           'default' => '0'));
+
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            return example_upgrade(0.02);
 
 /**
  * delete the send to friend module

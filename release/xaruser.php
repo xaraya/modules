@@ -40,7 +40,11 @@ function release_user_viewids()
                            'user',
                            'getallids');
 
-    if ($items == false) return 'all'; 
+    if (empty($items)) {
+        $msg = xarML('There are no items to display in the release module');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
@@ -76,6 +80,7 @@ function release_user_addid()
         case 'add':
         default:
 
+            $data['uid'] = xarUserGetVar('uid');
             $data['authid'] = xarSecGenAuthKey();
 
             break;
@@ -83,12 +88,14 @@ function release_user_addid()
         case 'update':
 
             list($rid,
+                 $uid,
                  $name,
                  $desc,
                  $idtype) = xarVarCleanFromInput('rid',
-                                               'name',
-                                               'desc',
-                                               'idtype');
+                                                 'uid',
+                                                 'name',
+                                                 'desc',
+                                                 'idtype');
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) {
