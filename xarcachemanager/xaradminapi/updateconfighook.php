@@ -99,7 +99,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
         xarOutputFlushCached('static');
         $configKeys = array('Page.SessionLess');
         $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                         array('keys' => $configKeys, 'from' => 'file'));
+                                         array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
         
         foreach ($sessionlessurls['Page.SessionLess'] as $url) {
             xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));

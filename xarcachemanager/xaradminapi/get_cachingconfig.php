@@ -8,6 +8,7 @@
  * @param string $args['from'] source of configuration to get - file or db 
  * @param array $args['keys'] array of config labels and values
  * @param boolean $args['tpl_prep'] prep the config for use in templates
+ * @param boolean $args['viahook'] config value requested as part of a hook call
  * @returns array
  * @returns array of caching configuration settings
  * @throws MODULE_FILE_NOT_EXIST
@@ -15,9 +16,13 @@
 function xarcachemanager_adminapi_get_cachingconfig($args)
 {
     extract($args);
-
-    if (!xarSecurityCheck('AdminXarCache')) { return; }
     
+    if (!isset($viahook)) {
+        $viahook = FALSE;
+    }
+    if (!$viahook) {
+        if (!xarSecurityCheck('AdminXarCache')) { return; }
+    }
     if (!isset($from)) {
         $from = 'file';
     }
