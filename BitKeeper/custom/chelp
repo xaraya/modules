@@ -1,0 +1,4 @@
+#!/bin/sh
+
+reproot=`bk root`
+bk help -f $reproot/BitKeeper/custom/customhelp.txt $@

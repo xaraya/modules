@@ -1,0 +1,82 @@
+#!/bin/sh
+
+# Add a comment to a file
+# Steps to make sure the comment is propagated, 
+# because bk comments is NOT (lame)
+#
+# 1. create a delta on the file and grab the revision
+# 2. run bk comments on that revision
+# 3. committ it to a changeset
+
+# Synopsis:
+#
+# bk addcomment [-y<comment>] <file>
+
+# Configurable items
+CMTWHENEMPTY="New comment on"
+CMTCSET="Comment added for"
+
+_usage() {
+    echo "Usage: addcomment [-y\"<comment>\"] <file>  -- add propagatable comment for <file>"
+    exit 1
+}
+
+# Check arguments
+FILENAME=''
+COMMENT=''
+if [ $# -gt 2 -o $# -lt 1 ]
+then _usage
+fi
+
+while getopts :hy: opt
+do
+    case "$opt" in
+		h) _usage
+       ;;
+    y) COMMENT=$OPTARG
+       ;;
+		*) _usage
+       ;;
+	  esac
+done
+shift `expr $OPTIND - 1`
+
+if [ $# -eq 2 -a "X$COMMENT"=X ]
+then _usage
+  exit 1
+fi
+
+#filename should be the last argument so in $@
+FILENAME=$@
+test -f $FILENAME || {
+		echo "Can't find '$FILENAME'"
+		exit 1
+}
+
+# if comment is empty ask for it otherwise go through with 
+# the thing automatically
+if [ "X$COMMENT" = X ]
+then TMPCOMMENT="$CMTWHENEMPTY $FILENAME"
+fi
+
+bk ci -qlf -y"\"${TMPCOMMENT}\"" $FILENAME || {
+		echo "Check in of comment failed"
+    exit 1
+}
+	
+# Grab the file revision which was created by that checking
+REV=`prs -hr+ -d:REV: $FILENAME`
+echo Created revision $REV for $FILENAME
+
+# Change the comments to this revision
+if [ "X$COMMENT" = X ]
+then
+	# if comments was empty fire up the editor to change them
+  echo "Editting comments in ${EDITOR}..."
+  bk comments -r$REV $FILENAME
+fi
+
+# Commit it to a specific changeset, takinig the deltas from stdin 
+# use -f with list of revisions to commit like test/SCCS/s.testfile.txt|1.13
+bk prs -h -r$REV -d":SPN:|:REV:\n" $FILENAME | bk commit -y"\"$CMTCSET $FILENAME\"" -
+

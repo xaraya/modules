@@ -1,0 +1,101 @@
+Note: At the time of writing the custom command system has only been tested 
+      on a linux system. There's no reason it shouldn't work on any other 
+      platform supported by bk, i just haven't tested it.
+
+Activation instructions
+-----------------------
+This repository supports custom commands. For custom commands to work you have to 
+do one thing. Tell bitkeeper to look in this directory for commands. 
+
+The easiest way to do this, is to add a few lines to the file bk.script, 
+which is located in the bitkeeper install directory. 
+(type bk bin to find out what it is)
+
+=================================================================================
+IMPORTANT: Read carefully, it is easy to make a typing error and the snippet needs
+           to be in exactly the right location!
+=================================================================================
+
+At the very end of your current bk.script file there are probably the following lines:
+
+...
+...
+# ------------- main ----------------------
+__platformInit
+__init
+if type "_$1" >/dev/null 2>&1
+then    cmd=_$1
+        shift
+        $cmd "$@"
+        exit $?
+fi
+cmd=$1
+shift
+
+if type "$cmd" > /dev/null 2>&1
+then
+        exec $cmd "$@"
+else
+        echo "$cmd: command not found"
+        exit 1
+fi
+if type "$cmd" > /dev/null 2>&1
+then
+	exec $cmd "$@"
+else
+	echo "$cmd: command not found"
+	exit 1
+fi 
+
+Make sure it looks like this:
+...
+...
+# ------------- main ----------------------
+__platformInit
+__init
+
+if type "_$1" >/dev/null 2>&1
+then    cmd=_$1
+        shift
+        $cmd "$@"
+        exit $?
+fi
+cmd=$1
+shift
+
+# INSERTION STARTS HERE
+# custom command ?
+custdir=`bk root`/BitKeeper/custom
+bk get -Sq $custdir/$cmd > /dev/null 2>&1
+if type $custdir/$cmd > /dev/null 2>&1
+then
+    exec $custdir/$cmd "$@"
+    exit $?
+fi
+# INSERTION ENDS HERE
+
+# Is the command in the path (normal os command)
+if type "$cmd" > /dev/null 2>&1
+then
+        exec $cmd "$@"
+else
+        echo "$cmd: command not found"
+        exit 1
+fi
+
+
+From that point on bk also looks in the BitKeeper/custom directory for extra commands
+defined in the repository.
+
+A vanilla custom command system defines at least two commands:
+
+bk chelp     - custom help command line version
+bk chelptool - custom help graphical frontend
+
+The custom help system should contain information about the custom commands defined
+for the repository you are working with at a given time.
+
+Enjoy!
+
+Marcel
+

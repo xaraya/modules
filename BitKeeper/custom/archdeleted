@@ -1,0 +1,91 @@
+#!/bin/sh
+
+# Archive deleted files from a certain month
+# arguments -m <monthno>
+
+_usage() {
+    echo "Usage: archdeleted -m<monthnr>  -- archives deleted file in month <monthnr> and adds them to the gone file"
+    exit 1
+}
+
+# Check if we are at least at bk version 3.0 2.x has no bk prompt command
+case `bk version` in
+    *2.*)
+	echo "You need bk version 3.0 or higher to run this command, please upgrade"
+	exit 1
+	;;
+esac
+
+# Check arguments
+MONTH='' 
+while getopts :m: opt
+do
+    case "$opt" in
+    m) MONTH=$OPTARG
+	;;
+    *) _usage
+       ;;
+    esac
+done
+shift `expr $OPTIND - 1`
+if [ "X$MONTH" = X ] 
+then _usage 
+fi	
+if [ $MONTH -lt 1 -o $MONTH -gt 12 ] 
+then  _usage 
+fi
+
+MONTH=`printf "%02d" $MONTH`
+YEAR=`date "+%Y"`
+
+echo "Archiving: $MONTH-$YEAR"
+# 1. find all files in deleted directory for a certain month
+# 2. create a tar file for these files
+# 3. bk gone the list of files
+# 4. bk rmgone 
+
+# 1. in deleted dir
+deldir=`bk root`/BitKeeper/deleted
+cd $deldir
+
+# 2. count the files for this period
+numfiles=$(bk prs -hDr+ -d"\$if(:Dm: -eq $MONTH){:UTC:\n}" | wc -l)
+echo "$numfiles files in period $MONTH-$YEAR to archive"
+#==================================  Info  ==================================
+bk prompt -i "I'm about to archive $numfiles files into the file $YEAR-$MONTH-del.tar.gz. 
+The archive will contain the files which were deleted and which had their 
+latest revision in this period. The files will be put into the archive and 
+then registered as gone from the repository."  && (
+
+echo "Starting archiving"
+
+# 3. tar -czvf deleted-<year>-$1.tar.gz <filelist>
+tarfile=$YEAR-$MONTH-del.tar.gz
+if [ -f ./$tarfile ]
+then
+    echo "Archive with that name already exists!"
+    exit 1
+fi
+
+# Make sure the dir is clean
+bk clean
+bk prs -hDr+ -d"\$if(:Dm: -eq $MONTH){:GFILE:\n}" | xargs -n1 bk get 
+# All the gotten files are starting with .del make sure tar gets them
+# also make sure the directory is cleaned again
+tar -czvf $YEAR-$MONTH-del.tar.gz --exclude=SCCS .del*
+bk clean
+
+# 3. bk gone <filelist>
+echo "Archive created, adding files to gone file"
+bk prs -hDr+ -d"\$if(:Dm: -eq $MONTH){:GFILE:\n}" | xargs -n1 bk prs -hDr+ -d":ROOTKEY:\n" | bk gone - 
+bk prompt -c "Once you have committed the gone file and optionally pushed your
+changes, you may issue the bk rmgone command which will physically remove
+the files listed in the gone file. Be carefull with that command as it 
+cannot be undone and you will need a backup if something goes wrong!"
+)
+echo "Finished" 
+exit 0
+
+
+
+
