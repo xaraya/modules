@@ -8,14 +8,33 @@
  */
 function sitetools_schedulerapi_backup($args)
 {
+    extract ($args);
 
-// TODO: get some configuration info here if necessary
-    // $whatever = xarModGetVar('sitetools','whatever');
-    // ...
-// TODO: we need some API function here (not a GUI function)
-//       It may return true (or some logging text) if it succeeds, and null if it fails
-    // return xarModAPIFunc('sitetools','admin','backup',
-    //                      array('whatever' => $whatever));
+    if (!isset($dbname) || ($dbname='') || (empty($dbname))){
+        list($dbconn) = xarDBGetConn();
+            $dbname= xarDBGetName();
+            $dbtype= xarDBGetType();
+    }
+    
+    if (!isset($startbackup)) {
+          $startbackup='complete';
+    }
+    
+    if ((!isset($usegz)) && (bool)(function_exists('gzopen'))) {
+         $usegz =true;
+    } else {
+       $usegz = false;
+    }
+
+    $screen=0; //TODO: Fix this when configurable in main backup util
+    $data=array();
+    $data= xarModAPIFunc('sitetools','admin','backupdb',
+                               array ('usegz'          => $usegz,
+                                      'startbackup'    => $startbackup,
+                                      'screen'         => $screen,
+                                      'SelectedTables' => $SelectedTables,
+                                      'dbname'         => $dbname,
+                                      'dbtype'         => $dbtype));
 
     return true;
 }
