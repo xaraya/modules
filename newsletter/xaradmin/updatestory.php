@@ -185,6 +185,14 @@ function newsletter_admin_updatestory()
     if (!isset($topic) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
         return; // throw back
 
+    // Resort the stories
+    if (!xarModAPIFunc('newsletter',
+                       'admin',
+                       'updateissuetopics',
+                       array('issueId' => $topic['issueId']))) {
+        return; // throw back
+    }
+
     xarSessionSetVar('statusmsg', xarML('Newsletter Story Update'));
 
     // Redirect
