@@ -16,6 +16,7 @@
  *
  * @package dynamicdata
  */
+include_once "modules/dynamicdata/class/properties.php";
 class Dynamic_Example_Property extends Dynamic_Property
 {
     var $size = 50;
