@@ -44,7 +44,7 @@ function categories_userapi_countcatbases($args)
         // Get list of item types.
         // Don't throw an exception if this function doesn't exist.
         $mytypes = xarModAPIFunc(
-            $modname, 'user', 'getitemtypes',
+            $module, 'user', 'getitemtypes',
             array(), 0
         );
 
