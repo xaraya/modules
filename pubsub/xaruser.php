@@ -281,7 +281,7 @@ function pubsub_user_unsubscribe($args)
     if (!xarModAPIFunc('pubsub',
                        'user',
                        'deluser',
-                        array('pubsubid' => $pubsupid))) {
+                        array('pubsubid' => $pubsubid))) {
         $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                      'deluser', 'unsubscribe', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
