@@ -20,7 +20,7 @@
                 </xar:mlstring>
             </p>
         <xar:else />
-        	<table cellpadding="2" cellspacing="0" style="align: center;margin: auto;border: 0px;">
+            <table cellpadding="2" cellspacing="0" style="align: center;margin: auto;border: 0px;">
                 <xar:loop name="$options">
                     <tr>
                         <td style="text-align: left;vertical-align: middle;" colspan="3">
@@ -29,8 +29,8 @@
                             </b>
                             [ #$loop:item['percentage']#%&nbsp;(#$loop:item['votes']#) ]<br />
                             <xar:if condition="$imggraph eq 1">
-                            	<xar:if condition="$loop:item['barwidth'] le 1">
-                                	<img src="#xarTplGetImage('bar.png')#" style="width: 1px;height: 10px;" alt="vote bar" />
+                                <xar:if condition="$loop:item['barwidth'] le 1">
+                                    <img src="#xarTplGetImage('bar.png')#" style="width: 1px;height: 10px;" alt="vote bar" />
                                 <xar:else />
                                     <img src="#xarTplGetImage('bar.png')#" style="width: #$loop:item['barwidth']#%;height: 10px;" alt="vote bar" />
                                 </xar:if>
@@ -52,7 +52,7 @@
                 </xar:mlstring>
                 : #$totalvotes#
             </b>
-        </span>    
+        </span>
         <span class="xar-sub" style="float: left; width: 100%; text-align: center;">
             <xar:mlstring>
                 We allow just one vote
