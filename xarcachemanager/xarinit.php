@@ -243,6 +243,19 @@ function xarcachemanager_upgrade($oldversion)
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
     $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
+    
+    // check to see if we've got the necessary permissions to upgrade
+    if ((!file_exists($cachingConfigFile) && !is_writable($varCacheDir)) || 
+        (file_exists($cachingConfigFile) && !is_writable($cachingConfigFile))) {
+        $msg=xarML('The xarCacheManager module upgrade has failed.  
+                   Please make #(1) writable by the web server process 
+                   owner to complete the upgrade.  If #(1) does not exist, 
+                   please make #(2) writable by the web server process and 
+                   #(1) will be created for you.', $cachingConfigFile, $varCacheDir);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                        new SystemException($msg));
+        return false;
+    }
 
     // Upgrade dependent on old version number
     switch ($oldversion) {
@@ -260,27 +273,30 @@ function xarcachemanager_upgrade($oldversion)
         case '0.2.0':
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
             // Bring the config file up to current version
-            include($cachingConfigFile);
-            $xarPage_cacheTime = $cachingConfiguration['Page.TimeExpiration'];
-            $xarPage_cacheTheme = $cachingConfiguration['Page.DefaultTheme'];
-            $xarPage_cacheDisplay = $cachingConfiguration['Page.DisplayView'];
-            $xarPage_cacheShowTime = $cachingConfiguration['Page.ShowTime'];
-            $xarOutput_cacheSizeLimit = $cachingConfiguration['Output.SizeLimit'];
-            @unlink($cachingConfigFile);
-            $handle = fopen($defaultConfigFile, "rb");
-            $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
-            $fp = @fopen($cachingConfigFile,"wb");
-            fwrite($fp, $defaultConfig);
-            fclose($fp);
-            $cachingConfig = join('', file($cachingConfigFile));
-            $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$xarPage_cacheTheme';", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $xarOutput_cacheSizeLimit;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $xarPage_cacheTime;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $xarPage_cacheDisplay;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $xarPage_cacheShowTime;", $cachingConfig);
-            $fp = fopen ($cachingConfigFile, 'wb');
-            fwrite ($fp, $cachingConfig);
-            fclose ($fp);
+            if (@include($cachingConfigFile)) {
+                $xarPage_cacheTime = $cachingConfiguration['Page.TimeExpiration'];
+                $xarPage_cacheTheme = $cachingConfiguration['Page.DefaultTheme'];
+                $xarPage_cacheDisplay = $cachingConfiguration['Page.DisplayView'];
+                $xarPage_cacheShowTime = $cachingConfiguration['Page.ShowTime'];
+                $xarOutput_cacheSizeLimit = $cachingConfiguration['Output.SizeLimit'];
+                @unlink($cachingConfigFile);
+                $handle = fopen($defaultConfigFile, "rb");
+                $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
+                $fp = @fopen($cachingConfigFile,"wb");
+                fwrite($fp, $defaultConfig);
+                fclose($fp);
+                $cachingConfig = join('', file($cachingConfigFile));
+                $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$xarPage_cacheTheme';", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $xarOutput_cacheSizeLimit;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $xarPage_cacheTime;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $xarPage_cacheDisplay;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $xarPage_cacheShowTime;", $cachingConfig);
+                $fp = fopen ($cachingConfigFile, 'wb');
+                fwrite ($fp, $cachingConfig);
+                fclose ($fp);
+            } else {
+                copy($defaultConfigFile, $cachingConfigFile);
+            }
             // Add new table to DB
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -303,36 +319,39 @@ function xarcachemanager_upgrade($oldversion)
         case '0.3.0':
             // Code to upgrade from the 0.3.0
             // Bring the config file up to current version            
-            include($cachingConfigFile);
-            $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
-            $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
-            $pageexpiretime = $cachingConfiguration['Page.TimeExpiration'];
-            $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
-            $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
-            $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
-            if (isset($cachingConfiguration['Page.CacheGroups'])) {
-                $cachegroups = $cachingConfiguration['Page.CacheGroups'];
-            }
-            @unlink($cachingConfigFile);
-            $handle = fopen($defaultConfigFile, "rb");
-            $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
-            $fp = @fopen($cachingConfigFile,"wb");
-            fwrite($fp, $defaultConfig);
-            fclose($fp);
-            $cachingConfig = join('', file($cachingConfigFile));
-            $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
-            if (isset($cachegroups)) {
-                $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
-            }
+            if (@include($cachingConfigFile)) {
+                $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
+                $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
+                $pageexpiretime = $cachingConfiguration['Page.TimeExpiration'];
+                $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
+                $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
+                $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
+                if (isset($cachingConfiguration['Page.CacheGroups'])) {
+                    $cachegroups = $cachingConfiguration['Page.CacheGroups'];
+                }
+                @unlink($cachingConfigFile);
+                $handle = fopen($defaultConfigFile, "rb");
+                $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
+                $fp = @fopen($cachingConfigFile,"wb");
+                fwrite($fp, $defaultConfig);
+                fclose($fp);
+                $cachingConfig = join('', file($cachingConfigFile));
+                $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
+                if (isset($cachegroups)) {
+                    $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
+                }
 
-            $fp = fopen ($cachingConfigFile, 'wb');
-            fwrite ($fp, $cachingConfig);
-            fclose ($fp);
+                $fp = fopen ($cachingConfigFile, 'wb');
+                fwrite ($fp, $cachingConfig);
+                fclose ($fp);
+            } else {
+                copy($defaultConfigFile, $cachingConfigFile);
+            }
             // Add the unique index that was added with this release
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -353,82 +372,103 @@ function xarcachemanager_upgrade($oldversion)
         case '0.3.1':
             // Code to upgrade from the 0.3.1 version (base block level caching)
             // Bring the config file up to current version
-            include($cachingConfigFile);
-            $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
-            $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
-            $pageexpiretime = $cachingConfiguration['Page.TimeExpiration'];
-            $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
-            $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
-            $expireheader = $cachingConfiguration['Page.ExpireHeader'];
-            $cachegroups = $cachingConfiguration['Page.CacheGroups'];
-            $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
-            if (isset($cachingConfiguration['Page.SessionLess'])) {
-                $sessionlessarray = $cachingConfiguration['Page.SessionLess'];
-                $sessionlesslist = "'" . join("','", $sessionlessarray) . "'";
-            }
-            if (isset($cachingConfiguration['AutoCache.Period'])) {
-                $autocacheperiod = $cachingConfiguration['AutoCache.Period'];
-            }
-            if (isset($cachingConfiguration['AutoCache.Period'])) {
-                $autocachethreshold = $cachingConfiguration['AutoCache.Threshold'];
-            }
-            if (isset($cachingConfiguration['AutoCache.Period'])) {
-                $autocachemaxpages = $cachingConfiguration['AutoCache.MaxPages'];
-            }
-            if (isset($cachingConfiguration['Page.SessionLess'])) {
-                $includearray = $cachingConfiguration['AutoCache.Include'];
-                $includelist = "'" . join("','", $includearray) . "'";
-            }
-            if (isset($cachingConfiguration['Page.SessionLess'])) {
-                $excludearray = $cachingConfiguration['AutoCache.Exclude'];
-                $excludelist = "'" . join("','", $excludearray) . "'";
-            }
-            @unlink($cachingConfigFile);
-            $handle = fopen($defaultConfigFile, "rb");
-            $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
-            $fp = @fopen($cachingConfigFile,"wb");
-            fwrite($fp, $defaultConfig);
-            fclose($fp);
-            $cachingConfig = join('', file($cachingConfigFile));
-            $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.ExpireHeader\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ExpireHeader'] = $expireheader;", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
-            $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
-            if (isset($sessionlesslist)) {
-                $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($sessionlesslist);", $cachingConfig);
-            }
-            if (isset($autocacheperiod)) {
-                $cachingConfig = preg_replace('/\[\'AutoCache.Period\'\]\s*=\s*(.*?);/', "['AutoCache.Period'] = $autocacheperiod;", $cachingConfig);
-            }
-            if (isset($autocachethreshold)) {
-                $cachingConfig = preg_replace('/\[\'AutoCache.Threshold\'\]\s*=\s*(.*?);/', "['AutoCache.Threshold'] = $autocachethreshold;", $cachingConfig);
-            }
-            if (isset($autocachemaxpages)) {
-                $cachingConfig = preg_replace('/\[\'AutoCache.MaxPages\'\]\s*=\s*(.*?);/', "['AutoCache.MaxPages'] = $autocachemaxpages;", $cachingConfig);
-            }
-            if (isset($includelist)) {
-                $cachingConfig = preg_replace('/\[\'AutoCache.Include\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Include'] = array($includelist);", $cachingConfig);
-            }
-            if (isset($excludelist)) {
-                $cachingConfig = preg_replace('/\[\'AutoCache.Exclude\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Exclude'] = array($excludelist);", $cachingConfig);
+            if (@include($cachingConfigFile)) {
+                $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
+                $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
+                $pageexpiretime = $cachingConfiguration['Page.TimeExpiration'];
+                $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
+                $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
+                $expireheader = $cachingConfiguration['Page.ExpireHeader'];
+                $cachegroups = $cachingConfiguration['Page.CacheGroups'];
+                $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
+                if (isset($cachingConfiguration['Page.SessionLess'])) {
+                    $sessionlessarray = $cachingConfiguration['Page.SessionLess'];
+                    $sessionlesslist = "'" . join("','", $sessionlessarray) . "'";
+                }
+                if (isset($cachingConfiguration['AutoCache.Period'])) {
+                    $autocacheperiod = $cachingConfiguration['AutoCache.Period'];
+                }
+                if (isset($cachingConfiguration['AutoCache.Threshold'])) {
+                    $autocachethreshold = $cachingConfiguration['AutoCache.Threshold'];
+                }
+                if (isset($cachingConfiguration['AutoCache.MaxPages'])) {
+                    $autocachemaxpages = $cachingConfiguration['AutoCache.MaxPages'];
+                }
+                if (isset($cachingConfiguration['AutoCache.Include'])) {
+                    $includearray = $cachingConfiguration['AutoCache.Include'];
+                    $includelist = "'" . join("','", $includearray) . "'";
+                }
+                if (isset($cachingConfiguration['AutoCache.Exclude'])) {
+                    $excludearray = $cachingConfiguration['AutoCache.Exclude'];
+                    $excludelist = "'" . join("','", $excludearray) . "'";
+                }
+                @unlink($cachingConfigFile);
+                $handle = fopen($defaultConfigFile, "rb");
+                $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
+                $fp = @fopen($cachingConfigFile,"wb");
+                fwrite($fp, $defaultConfig);
+                fclose($fp);
+                $cachingConfig = join('', file($cachingConfigFile));
+                $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.ExpireHeader\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ExpireHeader'] = $expireheader;", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
+                $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
+                if (isset($sessionlesslist)) {
+                    $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($sessionlesslist);", $cachingConfig);
+                }
+                if (isset($autocacheperiod)) {
+                    $cachingConfig = preg_replace('/\[\'AutoCache.Period\'\]\s*=\s*(.*?);/', "['AutoCache.Period'] = $autocacheperiod;", $cachingConfig);
+                }
+                if (isset($autocachethreshold)) {
+                    $cachingConfig = preg_replace('/\[\'AutoCache.Threshold\'\]\s*=\s*(.*?);/', "['AutoCache.Threshold'] = $autocachethreshold;", $cachingConfig);
+                }
+                if (isset($autocachemaxpages)) {
+                    $cachingConfig = preg_replace('/\[\'AutoCache.MaxPages\'\]\s*=\s*(.*?);/', "['AutoCache.MaxPages'] = $autocachemaxpages;", $cachingConfig);
+                }
+                if (isset($includelist)) {
+                    $cachingConfig = preg_replace('/\[\'AutoCache.Include\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Include'] = array($includelist);", $cachingConfig);
+                }
+                if (isset($excludelist)) {
+                    $cachingConfig = preg_replace('/\[\'AutoCache.Exclude\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Exclude'] = array($excludelist);", $cachingConfig);
+                }
+
+                $fp = fopen ($cachingConfigFile, 'wb');
+                fwrite ($fp, $cachingConfig);
+                fclose ($fp);
+            } else {
+                copy($defaultConfigFile, $cachingConfigFile);
             }
 
-            $fp = fopen ($cachingConfigFile, 'wb');
-            fwrite ($fp, $cachingConfig);
-            fclose ($fp);
-            
             // set up the new output sub-directorys
-            $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+            $cacheOutputDir = $varCacheDir . '/output';
             $old_umask = umask(0);
-            if (!is_dir($varCacheDir.'/output/page')) {
-                mkdir($varCacheDir.'/output/page', 0777);
+            // first, if the output directory has been lost, recreate it
+            if (!is_dir($cacheOutputDir)) {
+                if (is_writable($varCacheDir)) {
+                    mkdir($cacheOutputDir, 0777);
+                } else {
+                    $msg=xarML('The xarCacheManager module upgrade has failed.  
+                               The #(1) directory is missing, and the #(2) is not 
+                               writable by the web server process owner. Please 
+                               make #(2) writable by the web server process owner 
+                               to complete the upgrade.  Alternatively, the #(1) 
+                               directory can be manually created.  #(1) must be 
+                               writable by the web service process owner for 
+                               output caching to work.', $cacheOutputDir, $varCacheDir);
+                    xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                                    new SystemException($msg));
+                    return false;
+                }
             }
-            if (!is_dir($varCacheDir.'/output/block')) {
-                mkdir($varCacheDir.'/output/block', 0777);
+            if (!is_dir($cacheOutputDir . '/page')) {
+                mkdir($cacheOutputDir . '/page', 0777);
+            }
+            if (!is_dir($cacheOutputDir . '/block')) {
+                mkdir($cacheOutputDir . '/block', 0777);
             }
             umask($old_umask);
             
