@@ -73,3 +73,4 @@
 	<h3>#$type# Description:</h3> &nbsp;&nbsp; #$desc#
 	<br /><br />
 	#$hooks#
+</xar:if>
