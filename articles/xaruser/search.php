@@ -498,7 +498,9 @@ function articles_user_search($args)
  */
 function articles_search_sortbyroot ($a,$b)
 {
-    if ($GLOBALS['artsearchcatinfo'][$a]['root'] == $GLOBALS['artsearchcatinfo'][$b]['root']) return 0;
+    if ($GLOBALS['artsearchcatinfo'][$a]['root'] == $GLOBALS['artsearchcatinfo'][$b]['root']) {
+        return articles_search_sortbyleft($a,$b);
+    }
     return ($GLOBALS['artsearchcatinfo'][$a]['root'] > $GLOBALS['artsearchcatinfo'][$b]['root']) ? 1 : -1;
 }
 
@@ -510,7 +512,9 @@ function articles_search_sortbyleft ($a,$b)
 
 function articles_search_sortbyorder ($a,$b)
 {
-    if ($GLOBALS['artsearchcatinfo'][$a]['order'] == $GLOBALS['artsearchcatinfo'][$b]['order']) return 0;
+    if ($GLOBALS['artsearchcatinfo'][$a]['order'] == $GLOBALS['artsearchcatinfo'][$b]['order']) {
+        return articles_search_sortbyleft($a,$b);
+    }
     return ($GLOBALS['artsearchcatinfo'][$a]['order'] > $GLOBALS['artsearchcatinfo'][$b]['order']) ? 1 : -1;
 }
 
