@@ -112,7 +112,7 @@ function headlines_upgrade($oldVersion)
 {
     // Upgrade dependent on old version number
     switch($oldVersion) {
-        case '0.1':
+     case '0.1':
             // Version 0.1 didn't have a 'order' field, it was added
             // in version 0.2
 
@@ -132,13 +132,21 @@ function headlines_upgrade($oldVersion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result =& $dbconn->Execute($query);
             if (!$result) return;
+            return headlines_upgrade('0.2');
+            continue;
 
-        break;
         case '0.2':
+            return headlines_upgrade('0.2.0');
+            continue;
         case '0.2.0':
             xarModSetVar('headlines', 'SupportShortURLs', 1);
-        case '1.0':
-        case '1.0.0':
+            return headlines_upgrade('0.9');
+            continue;
+        case '0.9':
+            return headlines_upgrade('0.9.0');
+            continue;
+
+        case '0.9.0':
             // Get database setup
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -179,8 +187,15 @@ function headlines_upgrade($oldVersion)
                                'register_block_type',
                                array('modName'  => 'headlines',
                                      'blockType'=> 'cloud'))) return;
+           return headlines_upgrade('1.0.0');
+           continue;
 
-        break;
+       case '1.0.0':
+           return headlines_upgrade('1.0.1');
+           continue;
+
+       case '1.0.1': //current version
+           break;
     }
     // Update successful
     return true;
