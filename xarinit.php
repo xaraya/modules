@@ -174,7 +174,7 @@ function addressbook_init()
 
     $nextId = 1;
     foreach ($insertRows as $row) {
-        $query = sprintf ("INSERT INTO %s (nr,label,type,position) VALUES (?,?,_AB_CUSTOM_TEXT_SHORT,?)"
+        $query = sprintf ("INSERT INTO %s (nr,label,type,position) VALUES (?,?,'"._AB_CUSTOM_TEXT_SHORT."',?)"
                          ,$abCustomfieldsTable);
         $bindvars = array ($nextId,$row,$nextId);
         $result =& $dbconn->Execute($query,$bindvars);
