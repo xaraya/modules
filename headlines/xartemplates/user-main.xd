@@ -7,24 +7,24 @@
 </xar:if>
 
 <xar:loop name="$indlinks">
-	<xar:if condition="!empty($loop:item['chanlink'])">
+    <xar:if condition="!empty($loop:item['chanlink'])">
     <h2><a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a></h2>
-		<div>#$loop:item['chandesc']#</div>
+        <div>#$loop:item['chandesc']#</div>
     <xar:else/>
     <h2>#$loop:item['chantitle']#</h2>
-		<p>#$loop:item['chandesc']#</p>
+        <p>#$loop:item['chandesc']#</p>
     </xar:if>
-	<p class="xar-sub">[ 
+    <p class="xar-sub">[ 
     <xar:if condition="!empty($loop:item['viewlink'])">
-		<a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a> | 
+        <a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a> | 
     </xar:if>
     <xar:if condition="!empty($loop:item['comments'])"> 
-		#$loop:item['comments']# | 
+        #$loop:item['comments']# | 
     </xar:if>
     <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and !empty($loop:item['importlink'])">
-		<a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a>
+        <a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a>
     </xar:if>
-	]</p>
+    ]</p>
 </xar:loop>
 
 <p>#$pager#</p>

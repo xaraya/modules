@@ -19,11 +19,11 @@
             </xar:if>
             <xar:if condition="!empty($loop:item['description'])">
                 <p>#$loop:item['description']#</p>
-				<xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
-					<p class="xar-sub">
-						[ <a href="#xarModUrl('headlines', 'admin', 'importitem', array('theme' => 'print', 'title' => $loop:item['title'], 'description' => $loop:item['description'], 'authid' => $authid, 'hid' => $hid))#"><xar:mlstring>Import to News Queue</xar:mlstring></a> ]
-					</p>
-				</xar:if>
+                <xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
+                    <p class="xar-sub">
+                        [ <a href="#xarModUrl('headlines', 'admin', 'importitem', array('theme' => 'print', 'title' => $loop:item['title'], 'description' => $loop:item['description'], 'authid' => $authid, 'hid' => $hid))#"><xar:mlstring>Import to News Queue</xar:mlstring></a> ]
+                    </p>
+                </xar:if>
             </xar:if>
         </xar:loop>
     </xar:if>
