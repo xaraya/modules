@@ -169,6 +169,10 @@ function articles_userapi_getall($args)
             $select[] = $articlesdef[$field];
         }
     }
+    // FIXME: <rabbitt> PostgreSQL requires that all fields in an 'Order By' be in the SELECT
+    //        this has been added to remove the error that not having it creates
+    $select[] = $articlesdef['pubdate'];
+    
     // we need distinct for multi-category OR selects where articles fit in more than 1 category
     $query = 'SELECT DISTINCT ' . join(', ', $select);
 
