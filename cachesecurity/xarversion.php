@@ -11,7 +11,7 @@
  */
 $modversion['name']           = 'CacheSecurity';
 $modversion['id']                  = '91098';
-$modversion['version']         = '0.2.0';
+$modversion['version']         = '0.3.0';
 $modversion['description']   = 'Manage the cache of Xaraya\'s security system';
 $modversion['credits']          = '';
 $modversion['help']              = '';

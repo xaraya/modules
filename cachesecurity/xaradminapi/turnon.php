@@ -16,6 +16,13 @@ function cachesecurity_adminapi_turnon()
         return;
     }
 
+    //Make sure the file cache is empty.
+    $masksDir = xarCoreGetVarDirPath() . "/security/masks";
+    if (!xarModAPIFunc('cachesecurity','admin','recursivedelete', array(
+        'directory'=>$masksDir))) return false;
+
+    if (!mkdir($masksDir)) return false;
+
     if (!touch($filename)) return false;
   
      return true;

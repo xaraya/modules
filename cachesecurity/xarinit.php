@@ -26,6 +26,7 @@ function cachesecurity_init()
             // set up the output directory
             $old_umask = umask(0);
             mkdir($cacheSecurityDir, 0777);
+            mkdir($cacheSecurityDir.'/masks', 0777);
             umask($old_umask);
         }
         if (!is_writable($cacheSecurityDir)) {
@@ -416,8 +417,10 @@ function cachesecurity_upgrade($oldversion)
             xarModAPIFunc('modules','admin','enablehooks',
                 array('callerModName' => 'privileges', 'hookModName' => 'cachesecurity'));
             break;
-        case '0.3.0':
-            // Code to upgrade from the 0.3 version (base block level caching)
+        case '0.2.0':
+            // Code to upgrade from the 0.2 version
+            $cacheSecurityDir = xarCoreGetVarDirPath() . '/security';
+            mkdir($cacheSecurityDir.'/masks', 0777);
             break;
         case '0.4.0':
             // Code to upgrade from the 0.4 version (base module level caching)
@@ -441,26 +444,9 @@ function cachesecurity_upgrade($oldversion)
 function cachesecurity_delete()
 {
     //if still there, remove the cache.touch file, this turns everything off
-    $varCacheDir = xarCoreGetVarDirPath();
     $cacheSecurityDir = xarCoreGetVarDirPath() . '/security';
 
-    if (file_exists($cacheSecurityDir) && is_dir($cacheSecurityDir)) {
-
-        // clear out the touch files 
-        if ($handle = @opendir($cacheSecurityDir)) {
-            while (($file = readdir($handle)) !== false) {
-                $cache_file = $cacheSecurityDir . '/' .$file;
-                if (is_file($cache_file)) {
-                    @unlink($cache_file);
-                }
-            }
-            closedir($handle);
-        }
-
-        // remove the output cache directory
-        @rmdir($cacheSecurityDir);
-    }
-
+    if (!cachesecurity_recursivedelete ($cacheSecurityDir)) return false;
 
     // Drop the tables
     $dbconn =& xarDBGetConn();
@@ -507,5 +493,25 @@ function cachesecurity_delete()
     // Deletion successful
     return true;
 } 
+
+function cachesecurity_recursivedelete ($directory)
+{
+
+    if (file_exists($directory) && is_dir($directory)) {
+        if ($handle = opendir($directory)) {
+            while (($file = readdir($handle)) !== false) {
+                $cache_file = $directory . '/' .$file;
+                if (is_file($cache_file) || is_link($cache_file)) {
+                    unlink($cache_file);
+                } elseif (is_dir($cache_file)) {
+                    if (!cachesecurity_recursivedelete ($cache_file)) return false;
+                }
+            }
+            closedir($handle);
+        }
+
+        rmdir($directory);
+    }
+}
 
 ?>
