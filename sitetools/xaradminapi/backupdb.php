@@ -75,10 +75,10 @@ function sitetools_adminapi_backupdb ($args)
     }
     $items['authid']     = xarSecGenAuthKey();
     $backuptimestamp    = $items['backuptimestamp'];
-    $fullbackupfilename = 'xar_backup'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
-    $partbackupfilename = 'xar_backup_partial'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
-    $strubackupfilename = 'xar_backup_structure'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
-    $tempbackupfilename = 'xar_backup.temp.sql'.($GZ_enabled ? '.gz' : '');
+    $fullbackupfilename = $dbname.'.xar_backup'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
+    $partbackupfilename = $dbname.'.xar_backup_partial'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
+    $strubackupfilename = $dbname.'.xar_backup_structure'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
+    $tempbackupfilename = $dbname.'.xar_backup.temp.sql'.($GZ_enabled ? '.gz' : '');
     $xarbackupversion   = '0.1'; //TO DO: get actual version from var
     $items['gz-enabled']=$GZ_enabled;
     $runningstatus=array();
@@ -404,7 +404,7 @@ function sitetools_adminapi_backupdb ($args)
    //Return data for display
    return $items;
 }
- //A few formatting functions - move these later
+ //A few formatting functions
  function FormattedTimeRemaining($seconds, $precision=1) {
 	if ($seconds > 86400) {
 		return number_format($seconds / 86400, $precision).' days';
