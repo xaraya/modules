@@ -40,13 +40,13 @@
 </xar:if>
 
 <table border="1" cellpadding="5" cellspacing="0">
-    <xar:loop name="tasks" prefix="task">
+    <xar:loop name="tasks"">
     <tr align="center"><td>
 
-        <xar:if condition="empty($task_link)">
-            #$task_name#
+        <xar:if condition="empty($loop:item['link'])">
+            #$loop:item['name']#
             <xar:else />
-               <a href="#$task_link#">#$task_name#</a>
+               <a href="#$loop:item['link']#">#$loop:item['name']#</a>
         </xar:if>
 
     </td></tr>

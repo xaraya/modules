@@ -21,21 +21,22 @@
         <th><xar:mlstring>Tasks</xar:mlstring></th>
         <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
-    <xar:loop name="$xprojects" prefix="project">
+    <xar:loop name="$xprojects">
     <tr><td class="xar-norm">
 
-        <xar:if condition="empty($project_link)">
-            #$project_name#
-            <xar:else />
-               <a href="#$project_link#">#$project_name#</a>
+        <xar:if condition="empty($loop:item['link'])">
+            #$loop:item['name']#
+        <xar:else />
+            <a href="#$loop:item['link']#">#$loop:item['name']#</a>
         </xar:if>
 
     </td>
-    <td class="xar-norm">#$project_description#
+    <td class="xar-norm">#$loop:item['description']#
     </td>
-    <td class="xar-norm" align="center">#$project_numtasks#
+    <td class="xar-norm" align="center">
+    <!--- #$loop:item['project_numtasks']#--->
     </td>
-        <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($project_editurl)"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$project_editurl#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($project_deleteurl)"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$project_deleteurl#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
+        <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
   </tr>
     </xar:loop>
 

@@ -52,10 +52,10 @@
 <td><label for="sendmailfreq">Email group</label></td>
 <td colspan="3"><select name="sendmailfreq" id="sendmailfreq">
 	<xar:loop name="$sendmailoptions">
-		<xar:if condition="$selected eq 1">
-      	<option value="#$id#" selected="selected">#$name#</option>
+		<xar:if condition="$loop:item['selected'] eq 1">
+      	<option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
 		<xar:else/>
-      	<option value="#$id#">#$name#</option>
+      	<option value="#$loop:item['id']#">#$loop:item['name']#</option>
 		</xar:if>
 	</xar:loop>
 	</select>

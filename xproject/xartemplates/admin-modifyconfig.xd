@@ -8,21 +8,15 @@
     // this form.  All URLs should be generated through xarModURL() to ensure
     // compatibility with future versions of Xaraya
 -->
-<form method="post" action="&xar-modurl-xproject-admin-updateconfig;">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-    <input type="hidden" name="authid" value="#$authid#" />
+<form method="post" action="&xar-modurl-xproject-admin-updateconfig;">    <input type="hidden" name="authid" value="#$authid#" />
 
 <tr><td><label for="dateformat"><xar:mlstring>Date Format</xar:mlstring></label></td>
 <td><select name="dateformat" id="dateformat">
 	<xar:loop name="$dateoptions">
-		<xar:if condition="$id eq $dateformat">
-      	<option value="#$id#" selected="selected">#$name#</option>
+		<xar:if condition="$loop:item['id'] eq $dateformat">
+      		<option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
 		<xar:else/>
-      	<option value="#$id#">#$name#</option>
+      		<option value="#$loop:item['id']#">#$loop:item['name']#</option>
 		</xar:if>
 	</xar:loop>
 	</select>

@@ -49,10 +49,16 @@ function xprojectToggleView(id){
 
         <tr>
 	<xar:if condition="$taskparent_id ne 0">
-	        <td align="right" class="xar-norm"><xar:mlstring>Parent Task</xar:mlstring></td>
-	        <td class="xar-norm"><a href="&xar-modurl-xproject-user-display;&projectid=#$projectid#&taskid=#$taskparent_id#">#$taskparent#</a></td>
+		<td align="right" class="xar-norm">
+			<xar:mlstring>Parent Task</xar:mlstring>
+		</td>
+		<td class="xar-norm">
+			<a href="&xar-modurl-xproject-user-display;&projectid=#$projectid#&taskid=#$taskparent_id#">#$taskparent#</a>
+		</td>
 	<xar:else />
-	  	<td align="center" colspan="2" class="xar-norm">( #$roottask# )</td>
+	  	<td align="center" colspan="2" class="xar-norm">
+	  		( #$roottask# )
+	  	</td>
 	</xar:if>
         </tr>
 </table>
@@ -77,14 +83,15 @@ function xprojectToggleView(id){
 
 <tr>
 <td width="25%">&nbsp;</td>
-<td width="30%"><label for="status"><xar:mlstring>Status</xar:mlstring></label> <select name="status" id="status">
-	<xar:loop name="$statusoptions">
-		<xar:if condition="$status eq $value">
-      	<option name="status" value="#$id#" selected="selected">#$name#</option>
-		<xar:else/>
-      	<option name="status" value="#$id#">#$name#</option>
-		</xar:if>
-	</xar:loop>
+<td width="30%"><label for="status"><xar:mlstring>Status</xar:mlstring></label> 
+	<select name="status" id="status">
+		<xar:loop name="$statusoptions">
+			<xar:if condition="$status eq $loop:item['value']">
+				<option name="status" value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
+			<xar:else/>
+				<option name="status" value="#$loop:item['id']#">#$loop:item['name']#</option>
+			</xar:if>
+		</xar:loop>
 	</select>
   </td>
   <td width="30%"><label for="priority"><xar:mlstring>Priority</xar:mlstring></label> <select name="priority" id="priority">
@@ -111,13 +118,13 @@ function xprojectToggleView(id){
 
 <table border="0" width="100%" cellpadding="2" cellspacing="1" class="xar-accent">
     <tr><th colspan="4">Num Tasks: #$numtasks#</th></tr>
-    <xar:loop name="$tasks" prefix="task">
+    <xar:loop name="$tasks">
     <tr><td class="xar-norm" valign="top">
-        <a href="&xar-modurl-xproject-user-display;&projectid=#$task_projectid#&taskid=#$task_taskid#">#$task_name#</a>
+        <a href="&xar-modurl-xproject-user-display;&projectid=#$loop:item['projectid']#&taskid=#$loop:item['taskid']#">#$loop:item['name']#</a>
     </td>
-    <td class="xar-norm" valign="top">#$task_description#</td>
-    <td class="xar-norm" valign="top">#$task_numsubtasks#</td>
-        <td class="xar-norm" valign="top">[&nbsp;<xar:if condition="empty($task_editurl)"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$task_editurl#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($task_deleteurl)"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$task_deleteurl#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
+    <td class="xar-norm" valign="top">#$loop:item['description']#</td>
+    <td class="xar-norm" valign="top">#$loop:item['numsubtasks']#</td>
+        <td class="xar-norm" valign="top">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
     </tr>
     </xar:loop>
 

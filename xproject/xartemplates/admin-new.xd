@@ -11,11 +11,6 @@
 <form method="post" action="&xar-modurl-xproject-admin-create;">
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
     <input type="hidden" name="authid" value="#$authid#" />
 
 <tr>
@@ -38,7 +33,7 @@
 <td width="25%"><label for="sendmails"><xar:mlstring>Email Group</xar:mlstring></label></td>
 <td width="75%" colspan="3"><select name="sendmails" id="sendmails">
 	<xar:loop name="$sendmailoptions">
-      	<option value="#$id#">#$name#</option>
+      	<option value="#$loop:item['id']#">#$loop:item['name']#</option>
 	</xar:loop>
 	</select>
 </td>
