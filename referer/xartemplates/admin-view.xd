@@ -1,23 +1,9 @@
+<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Referer Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2>Recent Referers</h2>
-<b><xar:mlstring>Delete Referers</xar:mlstring>:</b><br />
-
-<form action="#xarModURL('referer', 'admin', 'delete')#" method="post">
-<div>
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<input type="hidden" name="confirm" id="confirm" value="1" />
-	<input type="hidden" name="confirmation" id="confirmation" value="1" />
-	<input type="submit" value="#$confirmbutton#" align="middle" tabindex="1" />
-</div>
-</form>
-
-<br />
-<xar:if condition="!empty($message)">
-	#$message#
-<xar:else />
-
+<p><a href="#$deleteurl#" onClick="#$javascript#"><xar:mlstring>Delete Referers</xar:mlstring></a></p>
 <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
 <div class="xar-norm" style="padding: 3px;">
 	<span style="float: left; text-align: left; width: 89%;"><xar:mlstring>Url</xar:mlstring></span>
@@ -39,6 +25,5 @@
 </div>
 	<!-- add the pager here -->
 	<div style="text-align: center;">#$pager#</div>
-</xar:if>
 </div>
 </div>

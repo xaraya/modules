@@ -1,13 +1,26 @@
+<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<script language="JavaScript">
+<!--
+	// Enter name of mandatory fields
+	var fieldRequired = Array("itemsperpage");
+	// Enter field description to appear in the dialog box
+	var fieldDescription = Array("Items Per Page");
+//-->
+</script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Referer Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-<h2><xar:mlstring>Modify Referer Configuration</xar:mlstring></h2>
-<form method="post" action="&xar-modurl-referer-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" />
-<div>
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring>:</label>&nbsp;&nbsp;<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('referer', 'itemsperpage')#" />
-<br /><br />
-<input type="submit" value="Update Referer Configuration" />
-</div>
-</form>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Referer Configuration</xar:mlstring></h2>
+	<div style="margin: auto;">
+	<form action="#xarModURL('referer', 'admin', 'updateconfig')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" />
+		<div style="clear: both; padding-top: 10px;">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Enter the number of items to display per page.')#"><label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring>:</label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('referer', 'itemsperpage')#" />
+		</span>
+		</div>
+		<br /><br /><span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#xarML('Submit')#" /></span>
+	</form>
+	</div>
 </div>
