@@ -10,6 +10,7 @@
   *  @param  integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
   *  @param  string     subtypeName the subtype name of the mime type, which should fetch just one subtype
   *  @param  string     typeName the type name of the mime type
+  *  @param  string     mimeName the full two-part mime name
   *  returns array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
   */
   
@@ -19,6 +20,15 @@ function mime_userapi_getall_subtypes($args)
     
     $where = array();
     $bind = array();
+
+    // The complete mime name can be passed in (type/subtype) and this
+    // will be split up here for convenience.
+    if (isset($mimeName) && is_string($mimeName)) {
+        $parts = explode('/', strtolower(trim($mimeName)), 2);
+        if (count($parts) == 2) {
+            list($typeName, $subtypeName) = $parts;
+        }
+    }
 
     if (isset($typeId) && is_int($typeId)) {
         $where[] = 'subtype_tab.xar_mime_type_id = ?';
@@ -47,7 +57,6 @@ function mime_userapi_getall_subtypes($args)
     // table and column definitions
     $subtype_table =& $xartable['mime_subtype'];
     $type_table =& $xartable['mime_type'];
-    $ext_table =& $xartable['mime_extension'];
     
     $sql = 'SELECT subtype_tab.xar_mime_type_id, subtype_tab.xar_mime_subtype_id,'
         . ' subtype_tab.xar_mime_subtype_name, subtype_tab.xar_mime_subtype_desc,'
