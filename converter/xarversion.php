@@ -1,7 +1,7 @@
 <?php
 $modversion['name'] = 'Converter';
 $modversion['id'] = '742';
-$modversion['version'] = '1.0';
+$modversion['version'] = '1.0.0';
 $modversion['description'] = 'Convert Files for Xaraya User';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
