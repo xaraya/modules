@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment> ************************ Setup Tabs************************</xar:comment>
-<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+<xar:if condition="xarTplAddStyleLink('tinymce', 'navtabs')">
 </xar:if>
 <xar:base-include-javascript module="base" filename="formcheck.js" />
 <script type="text/javascript">
@@ -89,6 +89,12 @@
                 &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
             &lt;/xar:if&gt;
         </pre>
+        <p style="margin-left:20px;">
+            <xar:mlstring><strong>NOTE:</strong> You can override the insert template by copying <code>modules/tinymce/xartemplates/
+            includes/tinymce_insert.xd</code> and putting it in <code>themes/yourtheme/modules/tinymce/includes/tinymce_insert.xt</code> with the new .xt extension.
+            You can then override or add additional settings. See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring>
+        </p>
+
         <h4><xar:mlstring>2. Set HTML tags in HTML Module</xar:mlstring></h4>
         <p style="margin-left:20px;">
             <xar:mlstring>Go to the HTML module and <a href="index.php?module=html&type=admin&func=set" rel="ext">set HTML tags allowed</a> like like code, pre, span, image, h1, and so on so they will be rendered in your WYSIWYG editing.</xar:mlstring>
@@ -172,6 +178,7 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
+               <xar:mlstring>See </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/themes.htm">theme instructions</a><xar:mlstring> to code your own.</xar:mlstring>
             </span>
         </div>
         <div style="clear: both; width: 98%; padding-top: 10px;">
@@ -227,11 +234,10 @@
                 <xar:mlstring><strong>Dynamic Data Property</strong> :  </xar:mlstring>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
-                  <xar:mlstring>There is a xarTinyMCE Dynamic Data WYSIWYG textarea which works with All Textareas or 
-                  Specific text areas mode. Install XarTinyMCE as usual. You <strong>do not</strong> have to add the template code to your
-                  templates. Add a  XarTinyMCE GUI TextArea Dynamic Data property to your publication types, or
-                  other modules (in usual way). You can set the row height and column width in the
-                  validation field of the DD property. eg 20:80 for 20 rows high, 80 columns wide.</code></xar:mlstring>
+                  <xar:mlstring>Add a XarTinyMCE GUI Dynamic Data property to your
+                  publication type (or other module) in the usual way. No xarTinyMCE tag need be added to your template. Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
+                  If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
+                  <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
             </span>
              </p>
         </div>
@@ -274,8 +280,8 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
-                <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="3" maxlength="3" /> px
-                <xar:mlstring>All WYSIWYG textareas affected.</xar:mlstring>
+                <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="8" maxlength="8" />
+                <xar:mlstring>Eg "80%" or "450px".  Affects all WYSIWYG textareas. (Unpredictable for IE versions)</xar:mlstring>
             </span>
         </div>
         <div style="clear: both; padding-top: 10px;">
@@ -285,8 +291,8 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
-                <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="3" maxlength="3" /> px
-                <xar:mlstring>All WYSIWYG textareas affected.</xar:mlstring>
+                <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="8" maxlength="8" />
+                <xar:mlstring>Eg "80%" or "450px". Affects all WYSIWYG textareas. (Unpredictable for IE versions)</xar:mlstring>
             </span>
         </div>
         <div style="clear: both; padding-top: 10px;">
@@ -410,7 +416,8 @@
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="60" maxlength="240" />
-                    <p><xar:mlstring> eg emotions, iespell (IE only), insertdatetime, preview, zoom. (Don't forget to add the button to access it as well).</xar:mlstring></p>
+                    <p><xar:mlstring>Plugins requiring button addition: ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom.</xar:mlstring></p>
+                    <xar:mlstring>Plugins requiring additional tags: advimage, advlink.</xar:mlstring></p>
             </span>
         </div>
 
@@ -441,39 +448,37 @@
        <div style="clear: both; width: 98%; padding-top: 10px;">
             <span style="float: left; width: 30%; text-align: right;">
                 <span class="help" title="#xarML('Automatically add the image browser to use with xarTinyMCE')#">
-                    <label for="useibrowser"><xar:mlstring>Auto add the image browser?</xar:mlstring></label>
+                    <label for="useibrowser"><xar:mlstring>Auto add Image Browser?</xar:mlstring></label>
                 </span>
             </span>
            <span style="float: right; width: 51%; text-align: left;">
-                <xar:mlstring>This will auto add the plugin, change theme to Advanced, add the Ibrowser button, and remove
-                the Image button (on the next screen). Alternatively, set this to No and do the settings manually.</xar:mlstring>
+                <xar:mlstring>This will add the plugin, change theme to Advanced, add the Ibrowser button, and remove
+                the Image button.</xar:mlstring>
             </span>
 
-            <span style="float: right; width: 15%; text-align: left;">
+            <span style="float: right; width: 16%; text-align: left;">
                 <select name="useibrowser" id="useibrowser" size="1">
                 <xar:if condition="$useibrowser eq 0">
                     <option value="0" selected="selected"><xar:mlstring>Manual set</xar:mlstring></option>
-                    <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
-                    <option value="2"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="1"><xar:mlstring>Auto add</xar:mlstring></option>
+                    <option value="2"><xar:mlstring>Auto remove</xar:mlstring></option>
                 <xar:elseif condition="$useibrowser eq 1" />
                     <option value="0"><xar:mlstring>Manual set</xar:mlstring></option>
-                    <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                    <option value="2"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="1" selected="selected"><xar:mlstring>Auto add</xar:mlstring></option>
+                    <option value="2"><xar:mlstring>Auto remove</xar:mlstring></option>
                 <xar:elseif condition="$useibrowser eq 2" />
                     <option value="0"><xar:mlstring>Manual set</xar:mlstring></option>
-                    <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
-                    <option value="2" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="1"><xar:mlstring>Auto add</xar:mlstring></option>
+                    <option value="2" selected="selected"><xar:mlstring>Auto remove</xar:mlstring></option>
                 </xar:if>
             </select>
             </span>
         </div>
          <div style="clear:both; margin-top:10px; margin-bottom:10px; float:right; width:68%; text-align:left;">
            <span style="left:30%; width: 68%; text-align: left;">
-            <xar:mlstring><strong>TO USE THE IBROWSER REMEMBER:</strong> Update the <a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file 
+            <xar:mlstring><strong>TO USE IMAGE BROWSER YOU MUST:</strong> Update the <a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file 
             at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a> for the IBrowser Plugin - then chmod 444
-            for added security. Using the IBrowser is an alternative to using the Images and Uploads module, or can be using in conjunction
-            with them by pointing your image libraries to one or more of the Upload and Image modules' image, upload and
-            trusted directories.  Keep in mind that using the Uploads module is much more secure.</xar:mlstring>
+            for added security. </xar:mlstring>
             </span>
          </div>
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
@@ -540,7 +545,8 @@
             <xar:mlstring>The ADVANCED theme is defined BY DEFAULT with extra buttons and functions.
             You DO NOT have to change anything on this page. If you do wish to change the defaults then you can add buttons, remove them, or define
             exactly what buttons appear. Valid button names are (separate names by comma - no spaces):</xar:mlstring>
-            <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, charmap, visualaid (and for plugins - iespell, preview, zoom, emotions, insertdate, inserttime)
+            <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, charmap, visualaid
+              (and for plugins - ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime)
                </xar:mlstring>
             </p>
         </div>

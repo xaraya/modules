@@ -24,7 +24,7 @@ unset($tinyMCE_imglib_include);
 // include image library config settings
 include 'config.php';
 
-$request_uri = urldecode(empty($HTTP_POST_VARS['request_uri'])?(empty($HTTP_GET_VARS['request_uri'])?'':$HTTP_GET_VARS['request_uri']):$HTTP_POST_VARS['request_uri']);
+$request_uri = urldecode(empty($_SERVER["REQUEST_URI"])?(empty($_SERVER['REQUEST_URI'])?'':$_SERVER['REQUEST_URI']):$_SERVER['REQUEST_URI']);
 
 // if set include file specified in $tinyMCE_imglib_include
 if (!empty($tinyMCE_imglib_include)) {
@@ -100,30 +100,31 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     // validate input values
         function validateParams() 
         {
+
         // check numeric values for attributes
-        if (isNaN(parseInt(libbrowser.width.value)) && libbrowser.width.value != '') {
+        if (isNaN(parseInt(document.libbrowser.width.value)) && document.libbrowser.width.value != '') {
                 alert(tinyMCE.getLang('lang_ibrowser_error')+ ' : '+ tinyMCE.getLang('lang_ibrowser_error_width_nan'));
-                libbrowser.width.focus();
+                document.libbrowser.width.focus();
               return false;}
 
-        if (isNaN(parseInt(libbrowser.height.value)) && libbrowser.height.value != '') {
+        if (isNaN(parseInt(document.libbrowser.height.value)) && document.libbrowser.height.value != '') {
                     alert(tinyMCE.getLang('lang_ibrowser_error')+ ' : '+ tinyMCE.getLang('lang_ibrowser_error_height_nan'));
-              libbrowser.height.focus();
+              document.libbrowser.height.focus();
              return false;}
 
-        if (isNaN(parseInt(libbrowser.border.value)) && libbrowser.border.value != '') {
+        if (isNaN(parseInt(document.libbrowser.border.value)) && document.libbrowser.border.value != '') {
             alert(tinyMCE.getLang('lang_ibrowser_error')+ ' : '+ tinyMCE.getLang('lang_ibrowser_error_border_nan'));
-            libbrowser.border.focus();
+            document.libbrowser.border.focus();
             return false;}
 
-        if (isNaN(parseInt(libbrowser.hspace.value)) && libbrowser.hspace.value != '') {
+        if (isNaN(parseInt(document.libbrowser.hspace.value)) && document.libbrowser.hspace.value != '') {
             alert(tinyMCE.getLang('lang_ibrowser_error')+ ' : '+ tinyMCE.getLang('lang_ibrowser_error_hspace_nan'));
-            libbrowser.hspace.focus();
+            document.libbrowser.hspace.focus();
               return false;}
 
-        if (isNaN(parseInt(libbrowser.vspace.value)) && libbrowser.vspace.value != '') {
+        if (isNaN(parseInt(document.libbrowser.vspace.value)) && document.libbrowser.vspace.value != '') {
             alert(tinyMCE.getLang('lang_ibrowser_error')+ ' : '+ tinyMCE.getLang('lang_ibrowser_error_vspace_nan'));
-          libbrowser.vspace.focus();
+          document.libbrowser.vspace.focus();
         return false;}
 
     return true;

@@ -28,7 +28,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyask', 'true');
    xarModSetVar('tinymce', 'tinybuttonsremove', '');
    xarModSetVar('tinymce', 'tinyexstyle', 'heading 1=head1,heading 2=head2,heading 3=head3,heading 4=head4');
-   xarModSetVar('tinymce', 'tinyextended', 'code,pre,blockquote/quote,a[href|rel:external]');
+   xarModSetVar('tinymce', 'tinyextended', 'code,pre,blockquote/quote,a[id|name|href|target|rel:external|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout]');
    xarModSetVar('tinymce', 'tinyinstances','summary,body');
    xarModSetVar('tinymce', 'tinycsslist','modules/tinymce/xarstyles/editor.css');
    xarModSetVar('tinymce', 'tinytoolbar','bottom');

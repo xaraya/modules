@@ -67,7 +67,7 @@ function tinymce_admin_modifyconfig()
     $tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
     $themelist=array();
     $handle=opendir($tinythemepath);
-    $skip_array = array('.','..','SCCS','index.htm','index.html');
+    $skip_array = array('.','..','SCCS','CVS','index.htm','index.html');
     while (false !== ($file = readdir($handle))) {
         // check the skip array and add files in it to array
         if (!in_array($file,$skip_array)) {
@@ -88,6 +88,7 @@ function tinymce_admin_modifyconfig()
     closedir($handle);
     $data['themelist']=$themelist;
     $data['langlist']=$langlist;
+    $data['ddflushurl']=xarModURL('dynamicdata','admin','modifyconfig');
     $hooks = xarModCallHooks('module', 'modifyconfig', 'tinymce',
         array('module' => 'tinymce'));
     if (empty($hooks)) {

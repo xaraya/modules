@@ -33,4 +33,5 @@ tinyMCELang['lang_insert_image_alt'] = 'Description de l\'image';
 tinyMCELang['lang_help_desc'] = 'Aide';
 tinyMCELang['lang_bold_img'] = "bold_fr.gif";
 tinyMCELang['lang_italic_img'] = "italic.gif";
+tinyMCELang['lang_underline_img'] = "underline.gif";
 

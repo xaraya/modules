@@ -29,11 +29,11 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinymode','str:1:',$tinymode,'textareas',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'default',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyask','str:1:',$tinyask,'true',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'10',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyinstances', 'str:1:', $tinyinstances, 'summary,body,tpost,message', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinywidth','int:1:',$tinywidth,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyheight','int:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyinstances', 'str:1:', $tinyinstances, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinywidth','str:1:',$tinywidth,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyheight','str:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinymode', $tinymode);
@@ -169,57 +169,57 @@ function tinymce_admin_updateconfig()
         }
 
     if (xarModGetVar('tinymce','tinywidth') > 0) {
-        $jstext .='width : "'.xarModGetVar('tinymce','tinywidth').' px",';
+        $jstext .='width : "'.xarModGetVar('tinymce','tinywidth').'", ';
     }
     if (xarModGetVar('tinymce','tinyheight') > 0) {
-        $jstext .='height : "'.xarModGetVar('tinymce','tinyheight').' px",';
+        $jstext .='height : "'.xarModGetVar('tinymce','tinyheight').'", ';
     }
 
     if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
-        $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'",';
+        $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
     }
  
     if (xarModGetVar('tinymce','tinyask')=='true'){
         $jstext .='ask : "true",';
     }
     if (xarModGetVar('tinymce','tinyinlinestyle')){
-        $jstext .='inline_styles : "'.xarModGetVar('tinymce','tinyinlinestyle').'",';
+        $jstext .='inline_styles : "'.xarModGetVar('tinymce','tinyinlinestyle').'", ';
     }
     if (xarModGetVar('tinymce','tinyundolevel') > 0){
-        $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'",';
+        $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'", ';
     }
     if (xarModGetVar('tinymce','tinybr')=='true'){
         $jstext .='force_br_newlines: "true",';
     }
    if (trim(xarModGetVar('tinymce','tinyinvalid')) <> '') {
-          $jstext .='invalid_elements  : "'.trim(xarModGetVar('tinymce','tinyinvalid')).'",';
+          $jstext .='invalid_elements  : "'.trim(xarModGetVar('tinymce','tinyinvalid')).'", ';
     }
     if (trim(xarModGetVar('tinymce','tinydate')) <> '') {
-          $jstext .='plugin_insertdate_dateFormat  : "'.trim(xarModGetVar('tinymce','tinydate')).'",';
+          $jstext .='plugin_insertdate_dateFormat  : "'.trim(xarModGetVar('tinymce','tinydate')).'", ';
     }
     if (trim(xarModGetVar('tinymce','tinytime')) <> '') {
-          $jstext .='plugin_insertdate_timeFormat  : "'.trim(xarModGetVar('tinymce','tinytime')).'",';
+          $jstext .='plugin_insertdate_timeFormat  : "'.trim(xarModGetVar('tinymce','tinytime')).'", ';
     }
     if (xarModGetVar('tinymce','tinytheme') =='advanced') {
     //set a few advanced theme options
-        $jstext .='theme_advanced_toolbar_location : "'.xarModGetVar('tinymce','tinytoolbar').'",';
+        $jstext .='theme_advanced_toolbar_location : "'.xarModGetVar('tinymce','tinytoolbar').'", ';
 
      // $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",';
 
         if (trim(xarModGetVar('tinymce','tinybuttonsremove')) <> '') {
-            $jstext .='theme_advanced_disable : "'.trim(xarModGetVar('tinymce','tinybuttonsremove')).'",';
+            $jstext .='theme_advanced_disable : "'.trim(xarModGetVar('tinymce','tinybuttonsremove')).' ",';
         }
         if (trim(xarModGetVar('tinymce','tinybuttons')) <> '') {
-          $jstext .='theme_advanced_buttons1_add : "'.trim(xarModGetVar('tinymce','tinybuttons')).'",';
+          $jstext .='theme_advanced_buttons1_add : "'.trim(xarModGetVar('tinymce','tinybuttons')).'", ';
         }
         if (trim(xarModGetVar('tinymce','tinybuttons2')) <> '') {
-          $jstext .='theme_advanced_buttons2_add : "'.trim(xarModGetVar('tinymce','tinybuttons2')).'",';
+          $jstext .='theme_advanced_buttons2_add : "'.trim(xarModGetVar('tinymce','tinybuttons2')).'", ';
         }
         if (trim(xarModGetVar('tinymce','tinybuttons3')) <> '') {
-          $jstext .='theme_advanced_buttons3_add : "'.trim(xarModGetVar('tinymce','tinybuttons3')).'",';
+          $jstext .='theme_advanced_buttons3_add : "'.trim(xarModGetVar('tinymce','tinybuttons3')).'", ';
         }
         if (trim(xarModGetVar('tinymce','tinybuild1')) <> '') {
-          $jstext .='theme_advanced_buttons1 : "'.xarModGetVar('tinymce','tinybuild1').'",';
+          $jstext .='theme_advanced_buttons1 : "'.xarModGetVar('tinymce','tinybuild1').'", ';
         }
         if (trim(xarModGetVar('tinymce','tinybuild2')) <> '') {
           $jstext .='theme_advanced_buttons2 : "'.xarModGetVar('tinymce','tinybuild2').'",';
@@ -229,7 +229,7 @@ function tinymce_admin_updateconfig()
         }
   //      $jstext .= 'debug : "true",';
         if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
-          $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'",';
+          $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'", ';
         }
 
 
@@ -238,19 +238,19 @@ function tinymce_admin_updateconfig()
     //Setup for 'exact' mode - we only want to replace areas that match for id or name
     if ((xarModGetVar('tinymce','tinymode') =='exact') and (trim(xarModGetVar('tinymce','tinyinstances')) <> '')){
       $elementlist=explode(',',xarModGetVar('tinymce','tinyinstances'));
-            $jstext .='elements : "'.xarModGetVar('tinymce','tinyinstances').'",';
+            $jstext .='elements : "'.xarModGetVar('tinymce','tinyinstances').'", ';
     }
     if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
-        $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'",';
+        $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
     }
 
     if (xarModGetVar('tinymce','tinyencode')){
-        $jstext .='encoding : "'.xarModGetVar('tinymce','tinyencode').'",';
+        $jstext .='encoding : "'.xarModGetVar('tinymce','tinyencode').'", ';
     }
    // $jstext .='force_br_newlines : "",';    //works only for IE at the moment
     $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
     //add known requirement last to ensure proper syntax with no trailing comma
-    $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'"';
+    $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'" ';
 
     //let's set the var to hold the js text
     xarModSetVar('tinymce','jstext',$jstext);

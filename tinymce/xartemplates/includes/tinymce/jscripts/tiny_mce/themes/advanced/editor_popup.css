@@ -35,6 +35,14 @@ input, select, textarea {
     border: 0px solid #808080;
 }
 
+#insert {
+   font-weight: bold;
+}
+
+#cancel {
+   font-weight: bold;
+}
+
 .title {
     font-size: 12px;
     font-weight: bold;

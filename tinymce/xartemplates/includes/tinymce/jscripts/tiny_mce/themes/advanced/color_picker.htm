@@ -52,15 +52,16 @@
 
     colorPicker += '<tr><td colspan="18">';
     colorPicker += '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
-    colorPicker += '<tr><td><img id="selectedColor" style="background-color:' + tinyMCE.getWindowArg('input_color') + '" border="0" src="images/spacer.gif" width="80" height="16"></td><td align="right"><input id="selectedColorBox" name="selectedColorBox" type="text" size="7" maxlength="7" style="width:65px" value="' + tinyMCE.getWindowArg('input_color') + '"></td><tr>';
-    colorPicker += '</table></td></tr>';
+    colorPicker += '<tr><td><img id="selectedColor" style="background-color:' + tinyMCE.getWindowArg('input_color') + '" border="0" src="images/spacer.gif" width="80" height="16"></td><td align="right"><input id="selectedColorBox" name="selectedColorBox" type="text" size="7" maxlength="7" style="width:65px" value="' + tinyMCE.getWindowArg('input_color') + '"></td></tr>';
+    colorPicker += '</table><input type="button" id="insert" name="insert" value="{$lang_theme_colorpicker_apply}" style="margin-top:3px" onclick="selectColor();"></td></tr>';
     colorPicker += '</table>';
-    colorPicker += '<input type="button" name="" value="{$lang_theme_colorpicker_apply}" style="margin-top:3px" onclick="selectColor();">';
 </script>
 </head>
 <body marginheight="3" topmargin="3" leftmargin="3" marginwidth="3">
+<div align="center">
 <script language="JavaScript">
     document.write(colorPicker);
 </script>
+</div>
 </body>
 </html>

@@ -34,3 +34,4 @@ tinyMCELang['lang_insert_image_alt'] = '&#1575;&#1604;&#1608;&#1589;&#1601;';
 tinyMCELang['lang_help_desc'] = '&#1575;&#1604;&#1605;&#1587;&#1575;&#1593;&#1583;&#1577;';
 tinyMCELang['lang_bold_img'] = 'bold.gif';
 tinyMCELang['lang_italic_img'] = 'italic.gif';
+tinyMCELang['lang_underline_img'] = "underline.gif";

@@ -9,7 +9,7 @@ var TinyMCE_advanced_buttons = [
         // Control id, button img, button title, command, user_interface, value
         ['bold', '{$lang_bold_img}', '{$lang_bold_desc}', 'Bold'],
         ['italic', '{$lang_italic_img}', '{$lang_italic_desc}', 'Italic'],
-        ['underline', 'underline.gif', '{$lang_underline_desc}', 'Underline'],
+        ['underline', '{$lang_underline_img}', '{$lang_underline_desc}', 'Underline'],
         ['strikethrough', 'strikethrough.gif', '{$lang_striketrough_desc}', 'Strikethrough'],
         ['justifyleft', 'left.gif', '{$lang_justifyleft_desc}', 'JustifyLeft'],
         ['justifycenter', 'center.gif', '{$lang_justifycenter_desc}', 'JustifyCenter'],
@@ -133,8 +133,8 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
                 inputColor = "#000000";
 
             template['file'] = 'color_picker.htm';
-            template['width'] = 170;
-            template['height'] = 205;
+            template['width'] = 190;
+            template['height'] = 235;
 
             tinyMCE.openWindow(template, {editor_id : editor_id, command : "forecolor", input_color : inputColor});
             return true;
@@ -154,7 +154,7 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
             template['file'] = 'charmap.htm';
             template['width'] = 320;
-            template['height'] = 190;
+            template['height'] = 210;
 
             tinyMCE.openWindow(template, {editor_id : editor_id});
             return true;
@@ -164,7 +164,7 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
             template['file'] = 'anchor.htm';
             template['width'] = 320;
-            template['height'] = 110;
+            template['height'] = 130;
 
             tinyMCE.openWindow(template, {editor_id : editor_id, name : TinyMCE_advanced_anchorName});
             return true;
@@ -282,7 +282,7 @@ function TinyMCE_advanced_getInsertLinkTemplate() {
 
     template['file'] = 'link.htm';
     template['width'] = 320;
-    template['height'] = 160;
+    template['height'] = 170;
 
     // Language specific width and height addons
     template['width'] += tinyMCE.getLang('lang_insert_link_delta_width', 0);
@@ -299,7 +299,7 @@ function TinyMCE_advanced_getInsertImageTemplate() {
 
     template['file'] = 'image.htm';
     template['width'] = 340;
-    template['height'] = 260;
+    template['height'] = 280;
 
     // Language specific width and height addons
     template['width'] += tinyMCE.getLang('lang_insert_image_delta_width', 0);
@@ -315,8 +315,8 @@ function TinyMCE_advanced_getInsertTableTemplate(settings) {
     var template = new Array();
 
     template['file'] = 'table.htm';
-    template['width'] = 330;
-    template['height'] = 200;
+    template['width'] = 340;
+    template['height'] = 220;
 
     // Language specific width and height addons
     template['width'] += tinyMCE.getLang('lang_insert_table_delta_width', 0);

@@ -22,6 +22,7 @@ function tinymce_admin_main()
         $data = xarModAPIFunc('tinymce', 'admin', 'menu');
         // Specify some other variables used in the blocklayout template
         $data['welcome'] = xarML('Welcome to the administration part of this TinyMCE  module...');
+        $data['ddflushurl']=xarModURL('dynamicdata','admin','modifyconfig');        
         // Return the template variables defined in this function
         return $data;
     } else {

@@ -5,9 +5,9 @@
 <script language="javascript" src="../../tiny_mce_popup.js"></script>
 <script language="javascript" type="text/javascript">
 
-var charmap = [ "&euro;","ƒ","„","…","†","‡","ˆ","\‰","Š","‹",
-                "Œ","&lsquo;","&rsquo;","&rsquo;","&ldquo;","&rdquo;","•","&ndash;","&mdash;","˜","™",
-                "š","›","œ","Ÿ","&iexcl;","&cent;","&pound;","&pound;","&curren;","&yen;","&brvbar;",
+var charmap = [ "&euro;","&#130;","&#131;","&#132;","&#133;","&#134;","&#135;","&#136;","&#137;","&#138;","&#139;",
+                "&#140;","&#142;","&lsquo;","&rsquo;","&ldquo;","&rdquo;","&#149;","&ndash;","&mdash;","&#152;","&#153;",
+                "&#154;","&#155;","&#156;","&#158","&#159;","&iexcl;","&cent;","&pound;","&curren;","&yen;","&brvbar;",
                 "&sect;","&uml;","&copy;","&ordf;","&laquo;","&not;","­","&reg;","&macr;","&deg;",
                 "&plusmn;","&sup2;","&sup3;","&acute;","&micro;","&para;","&middot;","&cedil;","&sup1;",
                 "&ordm;","&raquo;","&frac14;","&frac12;","&frac34;","&iquest;","&Agrave;","&Aacute;",
@@ -18,7 +18,7 @@ var charmap = [ "&euro;","ƒ","„","…","†","‡","ˆ","\‰","Š","‹",
                 "&atilde;","&auml;","&aring;","&aelig;","&ccedil;","&egrave;","&eacute;","&ecirc;",
                 "&euml;","&igrave;","&iacute;","&icirc;","&iuml;","&eth;","&ntilde;","&ograve;",
                 "&oacute;","&ocirc;","&otilde;","&ouml;","&divide;","&oslash;","&ugrave;","&uacute;",
-                "&ucirc;","&uuml;","&uuml;","&yacute;","&thorn;","&yuml;" ];
+                "&ucirc;","&uuml;","&yacute;","&thorn;","&yuml;" ];
 
 function renderCharMapHTML() {
     var html = '<table border="1" class="charmap" cellspacing="0"><tr>';
@@ -30,7 +30,6 @@ function renderCharMapHTML() {
         if ((i+1) % charsPerRow == 0)
             html += '</tr><tr>';
     }
-
     if (i % charsPerRow > 0) {
         var padd = charsPerRow - (i % charsPerRow);
 
@@ -38,9 +37,7 @@ function renderCharMapHTML() {
         for (var i=0; i<padd; i++)
             html += '<td class="charmap">&nbsp;</td>';
     }
-
-    html += '</table>';
-
+    html += '</tr></table>';
     document.write(html);
 }
 

@@ -1,3 +1,35 @@
+Version 1.37 (2004-11-12)
+    Added new mceResetDesignMode command that can be used when the editor is placed in tabs.
+    Added new updated Italian language pack thanks goes to "Fabrix Xm" for the contribtion.
+    Added new greek language pack thanks goes to "Jacaranda Bill" for the contribution.
+    Added new french language pack thanks goes to "Pat Boens" for the contribution.
+    Added new russian language pack thanks goes to "Roman Filippov" for the contribution.
+    Added new updated Dutch language pack thanks goes to Arnoud van Delden and Ernst de Moor for the contribution.
+    Added new convert_newlines_to_brs option, that enables newlines to be converted to br elements.
+    Added new custom_undo_redo_keyboard_shortcuts option, enables keyboard shortcuts to be enabled/disabled.
+    Added new auto_reset_designmode option, thats resets the design mode when a editor instance is focused.
+    Added new form reset handler, resets the contents of TinyMCE areas when the onreset event is trigged.
+    Added new skip_cleanup parameter to triggerSave, this parameter is optional and defaults to false.
+    Added new lang_underline_img language variable to all themes.
+    Added new title attribute to all images, enables tooltips in Mozilla and Firefox.
+    Added new insert and cancel CSS id's for all submit and cancel buttons.
+    Added new full featured example that includes all available plugins and buttons.
+    Added new advlink and advimage plugins to TinyMCE, these are more advanced link and image tools. Contributed by Michael Keck.
+    Added new parameters to insertImage and insertLink commands. Contributed by Michael Keck.
+    Added updated compatiblity chart, includes a matrix table thanks goes to Ernst de Moor.
+    Added new insert image icon contributed by Arnoud van Delden and Ernst de Moor.
+    Added window focus on all popup windows, contributed by Arnoud van Delden and Ernst de Moor.
+    Fixed some issues with the char map added some characters and removed duplicate ones, contributed by Arnoud van Delden and Ernst de Moor.
+    Fixed the insert row icon, rotated it 180 degrees, contributed by Arnoud van Delden and Ernst de Moor.
+    Fixed the visual aid icon, made it a bit darker. Contributed by Arnoud van Delden and Ernst de Moor.
+    Fixed some issues with entity encoding in source editor aswell as in core cleanup code.
+    Fixed bug where the auto import CSS feature imported invalid CSS rules with : or spaces.
+    Fixed bug where unnecessary entity encoding of characters was done.
+    Fixed the window sizes some to better function on MSIE with SP2.
+    Fixed some issued with the auto word cleanup feature, fixes some issued with content duplication.
+    Fixed bug that made the editor to throw weird error when HTML code includes <!a or <!/a> content.
+    Fixed bug where the style attribute was returned on images in source output even if it was disabled.
+    Fixed issue where the UI form elements of TinyMCE was submitted with the form submit.
 Version 1.36 (2004-10-19)
     Added a newly modified version of the German language pack from "krokogras".
     Added auto resizing to popup windows with the same name.

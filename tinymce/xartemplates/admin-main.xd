@@ -1,8 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - XarTinyMCE </xar:mlstring></span></div>
-<div class="xar-mod-body" style="display:block;">
+<div class="xar-mod-body" style="display:block; width:98%;">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+    <div style="width:98%;border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
         <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
             <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
         </div>
@@ -55,11 +55,10 @@
               If you wish to be more specific, you can just add it at the top of a specific template that
               contains a textarea field that you wish to convert to WYSIWYG (eg a module template like xarbb
               newreply.xt or newtopic.xt)</xar:mlstring>
-            <pre>
-            &lt;xar:if condition=&quot;xarModGetVar('base','editor') eq 'tinymce'&quot;&gt;
-                &lt;xar:template file=&quot;tinymce_insert&quot; module=&quot;tinymce&quot; type=&quot;module&quot; /&gt;
-            &lt;/xar:if&gt;
-            </pre>
+            <p><code>&lt;xar:if condition=&quot;xarModGetVar('base','editor') eq 'tinymce'&quot;&gt;</code><br />
+               <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;xar:template file=&quot;tinymce_insert&quot; module=&quot;tinymce&quot; type=&quot;module&quot; /&gt;</code><br />
+            <code>&lt;/xar:if&gt;</code>
+            </p>
            </li>
 
            <li><xar:mlstring>You can become more specific by choosing the Mode of "Special Labelled Only" in the configuration options. You must then also add the attribute: <code>mce_editable="true"</code> to any "textarea" 
@@ -68,6 +67,38 @@
              </ol>
         </div>
         <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>xarTinyMCE WYSIWYG Dynamic Data Property</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p style="margin-left: 1em; margin-right: 1em; text-align:left;"><xar:mlstring>A xarTinyMCE Dynamic Data WYSIWYG textarea is also available and works with All Textareas or
+                  Special Labelled text area mode. Add a XarTinyMCE GUI Dynamic Data property to your
+                  publication type (or other module) in the usual way. No xarTinyMCE tag need be added to your template. Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
+                  If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
+                  <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.</p>
+        </div>
+        <br />
+      <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Plug Ins</xar:mlstring>
+        </div>
+
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>There are a number of plugins available to add on to xarTinyMCE. These include:</xar:mlstring></p>
+            <ol>
+                <li><xar:mlstring>Image Browser (ibrowser) - browse your image libraries and select a file to insert to
+                your textarea. Upload a file if you have allowed uploads in the configuration. See the configuration area for more detail</xar:mlstring></li>
+                <li><xar:mlstring>Emotions - click to add fancy emoticons</xar:mlstring></li>
+                <li><xar:mlstring>Preview and Zoom</xar:mlstring></li>
+                <li><xar:mlstring>ISpell spell checker - only available for IE</xar:mlstring></li>
+                <li><xar:mlstring>Advanced Image - allows insert of rollover images. Add the <strong>advimg</strong> to Plugins,
+                 and <strong>img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout]</strong>
+                 to the Additional Tags configuration</xar:mlstring></li>
+                <li><xar:mlstring>Advanced Link - allows insert of extended link tags, plus popup windows. Add <strong>advlink</strong> to Plugins, and <strong>a[id|name|href|title|onclick]</strong> to Additional Tags configuration.</xar:mlstring></li>
+            </ol>
+
+        </div>
+        <br />
+
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>
         </div>
