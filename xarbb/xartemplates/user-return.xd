@@ -26,13 +26,13 @@
 				</p>
 				<p>
 					<a href="#$topicreturn#">
-						<xar:mlstring>Click Here</xar:mlstring>
-					</a> <xar:mlstring>to view your message</xar:mlstring>
+						<xar:mlstring>Click here</xar:mlstring>
+					</a> <xar:mlstring>to view your message.</xar:mlstring>
 				</p>
 				<p>
 					<a href="#$forumreturn#">
-						<xar:mlstring>Click Here</xar:mlstring>
-					</a> <xar:mlstring>to return to the forum</xar:mlstring>
+						<xar:mlstring>Click here</xar:mlstring>
+					</a> <xar:mlstring>to return to the forum.</xar:mlstring>
 				</p>
 			</td>
 		</tr>
