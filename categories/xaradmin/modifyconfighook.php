@@ -64,22 +64,25 @@ function categories_admin_modifyconfighook($args)
     }
     // get all valid master cids for this module
     // Note : a module might have the same master cid twice (just in case...)
-    $seencid = array();
+    $cleancids = array();
     foreach ($mastercids as $cid) {
         if (empty($cid) || !is_numeric($cid)) {
             continue;
         }
-        if (empty($seencid[$cid])) {
-            $seencid[$cid] = 1;
-        } else {
-            $seencid[$cid]++;
-        }
+        // preserve order of root categories if possible - do not use this for multi-select !
+        $cleancids[] = $cid;
     }
 
     $items = array();
     for ($n = 0; $n < $numcats; $n++) {
         $item = array();
         $item['num'] = $n + 1;
+        // preserve order of root categories if possible - do not use this for multi-select !
+        if (isset($cleancids[$n])) {
+            $seencid = array($cleancids[$n] => 1);
+        } else {
+            $seencid = array();
+        }
         // TODO: improve memory usage
         // limit to some reasonable depth for now
         $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
