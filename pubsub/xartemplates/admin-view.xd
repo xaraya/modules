@@ -13,33 +13,21 @@ ministration</xar:mlstring></span></div>
                         #$categorylabel#
                 </th>
         <th>
-                        #$itemlabel#
-                </th>
-        <th>
                         #$numsubscriberslabel#
-                </th>
-        <th>
-                        #$templatelabel#
                 </th>
         </tr>
     <xar:if condition="count($items) gt 0">
     <xar:loop name="$items">
     <tr>
         <td>
-			#$modname#
-  	</td>
+            #$modname#
+    </td>
         <td>
-			#$category#
-  	</td>
+            #$category#
+    </td>
         <td>
-			#$item#
-  	</td>
-        <td>
-			#$numsubscribers#
-  	</td>
-        <td>
-			#$template#
-  	</td>
+            #$numsubscribers#
+    </td>
      </tr>
      </xar:loop>
     <xar:else />

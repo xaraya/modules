@@ -290,6 +290,21 @@ function pubsub_userapi_getall($args)
 
     $query = "SELECT $modulestable.xar_name AS ModuleName,
                      $categoriestable.xar_name AS Category,
+                     COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers
+                FROM $pubsubeventstable,
+                     $pubsubeventcidstable,
+                     $modulestable,
+                     $categoriestable,
+                     $pubsubregtable
+               WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
+                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+                 AND $pubsubeventcidstable.xar_cid = $categoriestable.xar_cid
+                 AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
+            GROUP BY $pubsubeventstable.xar_eventid";
+
+// FIXME: <garrett> will deprecate once we confirm template table goes bye bye
+/*    $query = "SELECT $modulestable.xar_name AS ModuleName,
+                     $categoriestable.xar_name AS Category,
                      COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers,
                      $pubsubtemplatetable.xar_template AS Template
               FROM $pubsubeventstable,
@@ -298,26 +313,25 @@ function pubsub_userapi_getall($args)
                    $categoriestable,
                    $pubsubtemplatetable,
                    $pubsubregtable
-              WHERE $pubsubeventstable.xar_modid = $modulestable.xar_id
+              WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
               AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
               AND   $pubsubeventcidstable.xar_cid = $categoriestable.xar_cid
               AND   $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
               AND   $pubsubtemplatetable.xar_eventid = $pubsubeventstable.xar_eventid
               GROUP BY $pubsubeventstable.xar_eventid";
-
+*/
 // ???         $pubsubeventstable.xar_itemtype = $itemstable.xar_id
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($modname, $category, $item, $numsubscribers, $template) = $result->fields;
+        list($modname, $category, $numsubscribers) = $result->fields;
         if (xarSecurityCheck('ReadPubSub', 0)) {
-            $events[] = array('modname'       => $modname,
-                             'category'       => $category,
-                             'item'           => $item,
-                             'numsubscribers' => $numsubscribers,
-                             'template'       => $template);
+            $events[] = array('modname'       => $modname
+                             ,'category'       => $category
+                             ,'numsubscribers' => $numsubscribers
+                             );
         }
     }
 
