@@ -90,20 +90,20 @@ function bbcode_encode($message, $is_html_disabled)
         $message = str_replace ("<p></p>", "", $message);
     }
 
-	// matches an "xxxx://yyyy" URL at the start of a line, or after a space. 
-	// xxxx can only be alpha characters. 
-	// yyyy is anything up to the first space, newline, comma, double quote or < 
-	$message = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $message); 
+    // matches an "xxxx://yyyy" URL at the start of a line, or after a space. 
+    // xxxx can only be alpha characters. 
+    // yyyy is anything up to the first space, newline, comma, double quote or < 
+    $message = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $message); 
 
-	// matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing 
-	// Must contain at least 2 dots. xxxx contains either alphanum, or "-" 
-	// zzzz is optional.. will contain everything up to the first space, newline, 
-	// comma, double quote or <. 
-	$message = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r<]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $message); 
+    // matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing 
+    // Must contain at least 2 dots. xxxx contains either alphanum, or "-" 
+    // zzzz is optional.. will contain everything up to the first space, newline, 
+    // comma, double quote or <. 
+    $message = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r<]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $message); 
 
-	// matches an email@domain type address at the start of a line, or after a space.
-	// Note: Only the followed chars are valid; alphanums, "-", "_" and or ".".
-	$message = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $message);
+    // matches an email@domain type address at the start of a line, or after a space.
+    // Note: Only the followed chars are valid; alphanums, "-", "_" and or ".".
+    $message = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $message);
 
     
     // First: If there isn't a "[" and a "]" in the message, don't bother.

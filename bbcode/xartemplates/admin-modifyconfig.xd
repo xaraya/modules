@@ -43,11 +43,11 @@
             <span class="help" title="#xarML('Admin defined bbcode for advanced users.')#"><label for="advancedbbcode"><xar:mlstring>Use Advanced BBCode?</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="xarModGetVar('bbcode', 'useadvanced')">
-			  <input type="checkbox" name="advancedbbcode" id="advancedbbcode" value="1" checked="checked" />
-			<xar:else />
-			  <input type="checkbox" name="advancedbbcode" id="advancedbbcode" value="1" />
-			</xar:if>
+            <xar:if condition="xarModGetVar('bbcode', 'useadvanced')">
+              <input type="checkbox" name="advancedbbcode" id="advancedbbcode" value="1" checked="checked" />
+            <xar:else />
+              <input type="checkbox" name="advancedbbcode" id="advancedbbcode" value="1" />
+            </xar:if>
         </span>
         </div>
 

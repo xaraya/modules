@@ -3,7 +3,7 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>View BBCode</xar:mlstring></h2>
 
-	<xar:comment> Legend </xar:comment>
+    <xar:comment> Legend </xar:comment>
 <div class="xar-accent-outline xar-sub" style="margin-top:5px;margin-bottom:5px;padding:3px;text-align:center;">
     <xar:mlstring>
         Actions: [E]dit [R]emove
