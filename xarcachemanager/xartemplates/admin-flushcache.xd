@@ -16,12 +16,15 @@
                     </td>
                     <td>
                         <select name="flushkey" id="flushkey" size="1">
-                            <option value="" selected="selected"> - - - </option>
+                            <option value="-" selected="selected"> - - - </option>
                             <xar:loop name="$cachekeys">
                                 <option value="#$loop:item['ckey']#">
                                     #$loop:item['ckey']#
                                 </option>
                             </xar:loop>
+                            <xar:if condition="$empty ne 1">
+                            <option value=""> * Flush all cache keys * </option>
+                            </xar:if>
                         </select>
                     </td>
                     <td>

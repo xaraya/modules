@@ -19,7 +19,9 @@ function xarcachemanager_admin_flushcache($args)
     extract($args);
 
     if (!xarVarFetch('flushkey', 'str', $flushkey, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    
+    $outputcachedir = xarCoreGetVarDirPath() . '/cache/output/';
 
     if (empty($confirm)) {
 
@@ -28,7 +30,7 @@ function xarcachemanager_admin_flushcache($args)
         $data['message']    = false;
         $data['cachekeys'] = array();
 
-        $handle = opendir(xarCoreGetVarDirPath() . '/cache/output/');
+        $handle = opendir($outputcachedir);
         while ($file = readdir($handle)) {
             if ($file != '.' && $file != '..' && $file !='cache.touch') {
                 $ckey = substr($file, 0, (strrpos($file, '-')));
@@ -37,6 +39,12 @@ function xarcachemanager_admin_flushcache($args)
         }
         closedir($handle);
         sort($data['cachekeys']);
+
+        if (!$data['cachekeys']) {
+            $data['empty']  = true;
+        } else {
+            $data['empty']  = false;
+        }
 
         $data['instructions'] = xarML("Please select a cache key to be flushed.");
         $data['instructionhelp'] = xarML("All cached pages of output associated with this key will be deleted.");
@@ -48,10 +56,16 @@ function xarcachemanager_admin_flushcache($args)
 
         // Confirm authorisation code.
         if (!xarSecConfirmAuthKey()) return;
+        
+        //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
+        if (!file_exists($outputcachedir . 'cache.touch')) {
+            include_once('includes/xarCache.php');
+            xarCache_init(array('cacheDir' => 'var/cache/output'));
+        }
 
         //Make sure their is an authkey selected
-        if (empty($flushkey)) {
-            $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select, there are no output cache files to flush.");
+        if ($flushkey == '-') {
+            $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
             xarPageFlushCached($flushkey);
             $data['notice'] = xarML("Cached " . $flushkey . " pages have been successfully flushed.");

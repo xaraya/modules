@@ -73,7 +73,8 @@
             </xar:mlstring>
             <ul>
                 <li><xar:mlstring>Support multisite configurations.</xar:mlstring></li>
-                <li><xar:mlstring>Refactor to use more robust, unified caching infrastructure - potential third party candidates: PEAR/cache, jpcache.</xar:mlstring></li>
+                <li><xar:mlstring>Refactor to use more robust, unified caching infrastructure - potential third party candidates: PEAR/cache_lite, PEAR/cache, jpcache.</xar:mlstring></li>
+                <li><xar:mlstring>Provide an output cache file browser, like the template cache file browser in SiteTools.</xar:mlstring></li>
             </ul>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
@@ -81,7 +82,7 @@
                 Page level output caching related: 
             </xar:mlstring>
             <ul>
-                <li><xar:mlstring>Support itemtype in cache key.</xar:mlstring></li>
+                <li><xar:mlstring>Support itemtype as a 'name' between cacheKey and page when available.</xar:mlstring></li>
                 <li><xar:mlstring>Provide Scheduler, getfile/link integration for pre-population of output cache.</xar:mlstring></li>
                 <li><xar:mlstring>Provide getfile/link regeneration of heavily requested files.</xar:mlstring></li>
                 <li><xar:mlstring>Provide option of serving cached pages to anonymous users before loading xarCore.</xar:mlstring></li>
@@ -94,6 +95,7 @@
             <ul>
                 <li><xar:mlstring>Add block/function awareness in xarCache, distinguishing between blocks, functions, and pages when appropriate.</xar:mlstring></li>
                 <li><xar:mlstring>Add xar[Block?]*Cached() calls in xarModFunc() and xarBlocks_renderGroup().</xar:mlstring></li>
+                <li><xar:mlstring>Provide Admin GUI hooks to Blocks and other modules for the configuration of per block cache settings.</xar:mlstring></li>
             </ul>
         </div>
         <br />
