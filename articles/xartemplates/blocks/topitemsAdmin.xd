@@ -3,7 +3,7 @@
     <td><input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" /></td>
 </tr>
 <tr align="left" valign="middle">
-    <td><xar:mlstring>Publication Type</xar:mlstring></td>
+    <td><label for="pubtypeid#$blockid#"><xar:mlstring>Publication Type</xar:mlstring></label></td>
     <td><select name="pubtypeid" id="pubtypeid#$blockid#">
         <option value="0"><xar:mlstring>Default / Current</xar:mlstring></option>
         <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
@@ -28,7 +28,7 @@
     </td>
 </tr>
 <tr align="left" valign="middle">
-    <td><xar:mlstring>Category</xar:mlstring></td>
+    <td><label for="catfilter#$blockid#"><xar:mlstring>Category</xar:mlstring></label></td>
     <td><select name="catfilter" id="catfilter#$blockid#">
         <option value="0"><xar:mlstring>All / Current</xar:mlstring></option>
             <xar:foreach in="$categorylist" value="$catlistx">
@@ -64,7 +64,7 @@
         </span>
     </td>
 <tr align="left" valign="middle">
-    <td><xar:mlstring>Sort by</xar:mlstring></td>
+    <td><label for="toptype#$blockid#"><xar:mlstring>Sort by</xar:mlstring></label></td>
     <td><select name="toptype" id="toptype#$blockid#" size="1">
         <xar:foreach in="$sortoptions" value="$sortoption">
         <xar:if condition="$toptype eq $sortoption['id']">
