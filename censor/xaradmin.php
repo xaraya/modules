@@ -78,9 +78,6 @@ function censor_admin_create($args)
         return;
     }
 
-    // Load API
-    if (!xarModAPILoad('censor', 'admin')) return;
-
     // The API function is called
     $cid = xarModAPIFunc('censor',
                         'admin',
@@ -110,9 +107,6 @@ function censor_admin_modify($args)
     if (!empty($obid)) {
         $cid = $obid;
     }
-
-    // Load API
-    if (!xarModAPILoad('censor', 'user')) return;
 
     $censor = xarModAPIFunc('censor',
                          'user',
@@ -166,9 +160,6 @@ function censor_admin_update($args)
         return;
     }
 
-    // Load API
-    if (!xarModAPILoad('censor', 'admin')) return;
-
     if (!xarModAPIFunc('censor',
                        'admin',
                        'update',
@@ -199,9 +190,6 @@ function censor_admin_delete($args)
      if (!empty($obid)) {
          $tid = $obid;
      }
-
-    // Load API
-    if (!xarModAPILoad('censor', 'user')) return;
 
     // The user API function is called
     $censor = xarModAPIFunc('censor',
@@ -237,9 +225,6 @@ function censor_admin_delete($args)
         return;
     }
 
-    // Load API
-    if (!xarModAPILoad('censor', 'admin')) return;
-
     // The API function is called
     if (!xarModAPIFunc('censor',
                        'admin',
@@ -272,9 +257,6 @@ function censor_admin_view()
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
-
-    // Load API
-    if (!xarModAPILoad('censor', 'user')) return;
 
     // The user API function is called
     $censors = xarModAPIFunc('censor',

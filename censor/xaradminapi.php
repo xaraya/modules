@@ -90,9 +90,6 @@ function censor_adminapi_delete($args)
         return;
     }
 
-    // Load API
-    if (!xarModAPILoad('censor', 'user')) return;
-
     // The user API function is called
     $link = xarModAPIFunc('censor',
                          'user',
@@ -155,9 +152,6 @@ function censor_adminapi_update($args)
                        new SystemException($msg));
         return;
     }
-
-    // Load API
-    if (!xarModAPILoad('censor', 'user')) return;
 
     // The user API function is called
     $link = xarModAPIFunc('censor',

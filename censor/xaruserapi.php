@@ -168,7 +168,6 @@ function censor_userapitransform($text)
 
     if (empty($gotcensor)) {
         $gotcensor = 1;
-        xarModAPILoad('censor', 'user');
         $tmpcensors = xarModAPIFunc('censor', 'user', 'getall');
 
         // Create search/replace array from censor information
