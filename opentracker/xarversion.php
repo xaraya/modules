@@ -15,4 +15,5 @@ $modversion['user']           = 1;
 $modversion['securityschema'] = array('Opentracker::report' => 'Reportname::Reportid');
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Global';
+$modversion['dependency']     = array(775);
 ?>
