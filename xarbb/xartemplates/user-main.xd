@@ -43,13 +43,13 @@
                 <xar:mlstring>
                     You last visited on 
                 </xar:mlstring>
-                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $lastvisitdate)# 
+                #xarLocaleGetFormattedDate('medium', $lastvisitdate)# #xarLocaleGetFormattedTime('medium', $lastvisitdate)#
             </li>
             <li>
                 <xar:mlstring>
                     The current time is 
                 </xar:mlstring>
-                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $now)# 
+                #xarLocaleGetFormattedDate('medium', $now)# #xarLocaleGetFormattedTime('medium', $now)#
             </li>
         </ul>
     </xar:if>
@@ -189,7 +189,7 @@
                     </td>
                     <td class="xar-norm lastpost">
                         <span class="xar-sub">
-                            #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])# 
+                            #xarLocaleGetFormattedDate('medium', $forum['fpostid'])# #xarLocaleGetFormattedTime('medium', $forum['fpostid'])#
                             <br />
                             <xar:if condition="!empty($forum['foptions']['ttitle'])">
                                 <a href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $forum['foptions']['tid']))#">#$forum['foptions']['ttitle']#</a>

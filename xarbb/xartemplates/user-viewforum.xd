@@ -191,7 +191,7 @@
                 </td>
                 <td class="xar-accent lastpost">
                     <div class="xar-sub">
-                        #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])# 
+                        #xarLocaleGetFormattedDate('medium', $loop:item['ttime'])# #xarLocaleGetFormattedTime('medium', $loop:item['ttime'])#
                     </div>
                     <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
                         #$loop:item['replyname']# 
