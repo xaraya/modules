@@ -160,7 +160,10 @@ function xarcachemanager_adminapi_updatehook($args)
                                          array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
         
         foreach ($sessionlessurls['Page.SessionLess'] as $url) {
-            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
+            // Make sure the url isn't empty before calling getfile()
+            if (strlen(trim($url))) {
+                xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
+            }
         }
     }
 
