@@ -38,8 +38,8 @@ function comments_userapi_get_countlist($args) {
         return false;
     }
      
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
     $sql = "SELECT  $ctable[objectid], COUNT($ctable[cid]) as numitems

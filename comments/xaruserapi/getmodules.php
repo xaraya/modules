@@ -23,8 +23,8 @@ function comments_userapi_getmodules($args)
     $status = strtolower($status);
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $commentstable = $xartable['comments'];
     $ctable = $xartable['comments_column'];
 

@@ -443,8 +443,8 @@ function comments_admin_delete( ) {
                                          'objectid' => $objectid));
                     break;
                 case 'all':
-                    list($dbconn) = xarDBGetConn();
-                    $xartable = xarDBGetTables();
+                    $dbconn =& xarDBGetConn();
+                    $xartable =& xarDBGetTables();
 
                     $ctable = &$xartable['comments_column'];
 

@@ -15,8 +15,8 @@ function comments_userapi_search($args) {
 
     extract($args);
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ctable = &$xartable['comments_column'];
     $where = '';

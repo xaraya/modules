@@ -19,8 +19,8 @@ function comments_userapi_get_object_list( $modid, $itemtype = null )
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
     $sql     = "SELECT DISTINCT $ctable[objectid] AS pageid

@@ -42,8 +42,8 @@ function comments_userapi_get_author_count($args) {
         $status = _COM_STATUS_ON;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
     $sql = "SELECT  COUNT($ctable[cid]) as numitems

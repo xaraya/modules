@@ -63,8 +63,8 @@ function comments_userapi_get_multiple($args) {
         $status = _COM_STATUS_ON;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ctable = &$xartable['comments_column'];
 

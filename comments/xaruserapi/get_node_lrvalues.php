@@ -20,8 +20,8 @@ function comments_userapi_get_node_lrvalues( $args ) {
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ctable = &$xartable['comments_column'];
 

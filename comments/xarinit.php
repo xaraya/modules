@@ -32,8 +32,8 @@ function comments_init() {
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Create tables
     $ctable = $xartable['comments'];
@@ -228,8 +228,8 @@ function comments_delete()
     xarDBLoadTableMaintenanceAPI();
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Delete tables
     $query = xarDBDropTable($xartable['comments']);
@@ -291,8 +291,8 @@ function comments_upgrade($oldversion)
             }
 
             // Get database information
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $commentstable = $xartable['comments'];
 
             xarDBLoadTableMaintenanceAPI();

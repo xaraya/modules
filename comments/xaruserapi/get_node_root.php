@@ -38,8 +38,8 @@ function comments_userapi_get_node_root( $args ) {
         $itemtype = 0;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ctable = &$xartable['comments_column'];
     // grab the root node's id, left and right values

@@ -50,8 +50,8 @@ function comments_userapi_getitems($args)
     if (!xarSecurityCheck('Comments-Read')) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $commentstable = $xartable['comments'];
     $ctable = $xartable['comments_column'];
 

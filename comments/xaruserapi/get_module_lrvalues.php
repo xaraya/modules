@@ -23,8 +23,8 @@ function comments_userapi_get_module_lrvalues( $args ) {
         $itemtype = 0;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ctable = &$xartable['comments_column'];
 

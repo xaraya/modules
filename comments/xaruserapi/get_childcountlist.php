@@ -22,8 +22,8 @@ function comments_userapi_get_childcountlist($args) {
         return false;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
     $sql = "SELECT P1.xar_cid, COUNT(P2.xar_cid) AS numitems

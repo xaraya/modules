@@ -28,8 +28,8 @@ function comments_userapi_create_gap( $args ) {
         $gapsize = 2;
     }
      
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $sql_left  = "UPDATE $xartable[comments]
                      SET xar_left = (xar_left + $gapsize)

@@ -130,8 +130,8 @@ function comments_adminapi_get_module_stats( $args ) {
 /* replaced by getmodules
 function comments_adminapi_get_module_list( ) {
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
     $mtable = &$xartable['modules'];
 
@@ -177,8 +177,8 @@ function comments_adminapi_count_module_pages( $args ) {
     // initialize total to zero
     $total = 0;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
     $query = "SELECT DISTINCT $ctable[objectid]
@@ -231,8 +231,8 @@ function comments_adminapi_delete_node( $args ) {
     $del_node_lr = xarModAPIFunc('comments','user','get_node_lrvalues',array('cid'=>$node));
     $max_right = xarModAPIFunc('comments','user','get_table_maxright');
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ctable = &$xartable['comments_column'];
 
@@ -292,8 +292,8 @@ function comments_adminapi_delete_branch( $args ) {
     $del_node_lr = xarModAPIFunc('comments','user','get_node_lrvalues', array('cid'=>$node));
     $max_right = xarModAPIFunc('comments','user','get_table_maxright');
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $ctable = &$xartable['comments_column'];
 
@@ -420,8 +420,8 @@ function comments_adminapi_count_comments( $args ) {
 
     extract($args);
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
     $total          = 0;

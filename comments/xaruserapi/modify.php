@@ -49,8 +49,8 @@ function comments_userapi_modify($args) {
 
     $modified_date = xarLocaleFormatDate("%B %d, %Y %I:%M %p",time());
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $text .= "\n<br />\n<br />\n";
     $text .= xarML('[Modified by: #(1) (#(2)) on #(3)]', 

@@ -69,8 +69,8 @@ function comments_user_search( $args ) {
 
         // need to get the user's uid from the name
         // FIXME:  this should be an api function in the roles module
-        list($dbconn) = xarDBGetConn();
-        $xartable = xarDBGetTables();
+        $dbconn =& xarDBGetConn();
+        $xartable =& xarDBGetTables();
 
         // Get user information
         $rolestable = $xartable['roles'];
