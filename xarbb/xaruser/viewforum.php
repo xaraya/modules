@@ -48,6 +48,7 @@ function xarbb_user_viewforum()
                                                 'user',
                                                 'get',
                                                 array('modname' => 'xarbb',
+                                                      'itemtype' => 2,
                                                       'objectid' => $topic['tid']));
 
         if (!$topics[$i]['hitcount']) {
