@@ -97,10 +97,10 @@ function addressbook_userapi_getAddressList($args)
                 if (strcasecmp($output['char'],'a')) {
                     $output['sql'] .= " AND (sortname LIKE '".$output['char']."%')";
                 } else {
-                    $output['sql'] .= " AND (sortname < 'b')";
+                    $output['sql'] .= " AND ((sortname < 'b') OR (sortname > 'z'))";
                 }
             } else {
-                $output['sql'] .= " AND (sortname < 'b')";
+                $output['sql'] .= " AND ((sortname < 'b') OR (sortname > 'z'))";
             }
         }
         else {
@@ -109,10 +109,10 @@ function addressbook_userapi_getAddressList($args)
                     if (strcasecmp($output['char'],'a')) {
                         $output['sql'] .= " AND (sortcompany LIKE '".$output['char']."%')";
                     } else {
-                        $output['sql'] .= " AND (sortcompany < 'b')";
+                        $output['sql'] .= " AND ((sortcompany < 'b') OR (sortcompany > 'z'))";
                     }
                 } else {
-                    $output['sql'] .= " AND (sortcompany < 'b')";
+                    $output['sql'] .= " AND ((sortcompany < 'b') OR (sortcompany > 'z'))";
                 }
             }
             else {
