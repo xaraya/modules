@@ -1,1 +1,23 @@
-The search results should be presented here.
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Search results</xar:mlstring>
+  </span>
+</div>
+
+<div>
+  Your search on <span class="xar-title">'#$searchterms#'</span> 
+  in the data of module <span class="xar-title">'#$searchmodule#</span> 
+  produced the following results:
+</div>
+
+<div>
+  #$searchform#
+</div>
+
+<xar:loop name="$searchresults">
+<a href="#$loop:item['link']#">#$loop:item['result']#</a> [ #$loop:item['itemtype']# ]<br/>
+
+<xar:if condition="!empty($loop:item['description'])">
+    <xar:mlstring>Description:</xar:mlstring> #$loop:item['description']#<br/>
+</xar:if>
+</xar:loop>

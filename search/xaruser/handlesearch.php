@@ -67,6 +67,7 @@ function search_user_handlesearch() {
                                        array('terms' => $search_terms,
                                              'itemtypes' => $item_types,
                                              'object_id' => $object_id));
+        //var_dump($searchresults);
     } else {
         // If module is not hooked how are we going to get results, not possible
         // set a user exception for this
@@ -75,6 +76,14 @@ function search_user_handlesearch() {
         return;
     }
 
+    // Display the search form again
+    $searchform = xarModCallHooks('item','search',$object_id,array(),$search_in_module);
+ 
+    // Pass data to template
+    $data['searchform'] = $searchform['search'];
+    $data['searchmodule'] = $search_in_module;
+    $data['searchterms'] = $search_terms;
+    $data['searchresults'] = $searchresults;
     return $data;
 }
 
