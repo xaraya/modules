@@ -28,6 +28,10 @@ function translations_admin_generate_skels()
         $args['modid'] = xarSessionGetVar('translations_modid');
         $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
         break;
+        case XARMLS_DNTYPE_THEME:
+        $args['themeid'] = xarSessionGetVar('translations_themeid');
+        $res = xarModAPIFunc('translations','admin','generate_theme_skels',$args);
+        break;
     }
     if (!isset($res)) return;
 
