@@ -104,28 +104,35 @@ function navigator_newsletter_subblock_display($blockinfo)
     if (xarUserIsLoggedIn()) {
         // Get user id
         $uid = xarUserGetVar('uid');
+    } else {
+        // Set user id to 0
+        $uid = 0;
+    }
 
-        // Loop through publications
-        foreach ($publications as $publication) {
-            // Check if a publication has been assigned to an alternative category
-            if (in_array($primary_cid, $publication['altcids'])) {
-                // Get the publication subscription information
-                $logo = $publication['logo'];
-                $description = $publication['description'];
+    // Loop through publications
+    foreach ($publications as $publication) {
+        // Check if a publication has been assigned to an alternative category
+        if (in_array($primary_cid, $publication['altcids'])) {
+            // Get the publication subscription information
+            $logo = $publication['logo'];
+            $description = $publication['description'];
 
-                // Create title
-                $title = xarVarPrepForDisplay($research_cat[0]['name'] . ' News');
+            // Create title
+            $title = xarVarPrepForDisplay($research_cat[0]['name'] . ' News');
 
-                // Determine if archives are available for the publication
-                if (!$publication['private']) {
-                    $archive_link = xarModURL('newsletter',
-                                              'user',
-                                              'viewarchives',
-                                              array('publicationId' => $publication['id']));
-                    $archive_text = 'Archives';
-                }
+            // Determine if archives are available for the publication
+            if (!$publication['private']) {
+                $archive_link = xarModURL('newsletter',
+                                          'user',
+                                          'viewarchives',
+                                          array('publicationId' => $publication['id']));
+                $archive_text = 'Archives';
             }
+        }
 
+        // If a user is logged in, determine if they have subscribed
+        // to this publication
+        if ($uid) {
             // Get user subscription for this publication
             $subscriptions = xarModAPIFunc('newsletter', 'user', 'get',
                                            array('id' => 0, // doesn't matter
@@ -136,8 +143,7 @@ function navigator_newsletter_subblock_display($blockinfo)
 
             // Check if user has subscribed to this publication
             if (count($subscriptions) > 0) {
-                // Set flag
-                $found = true;
+                $found = true; // Set flag
             }
         }
     }
