@@ -64,14 +64,49 @@ function comments_userapi_create_gap( $args )
         $sql_right  .= " AND xar_objectid = '$objectid'";
     }
 
-    $result1 =& $dbconn->Execute($sql_left);
-    $result2 =& $dbconn->Execute($sql_right);
-
-    if(!$result1 || !$result2) {
+    // see if we support transactions here
+    if ($dbconn->hasTransactions) {
+        // try 3 times with increasing delay
+        for ($i = 0; $i < 3; $i++) {
+            if ($i > 0) {
+                // sleep 10 msec the second time, 100 msec the third time
+                $delay = 1000 * pow(10,$i);
+                usleep($delay);
+            }
+            // start the transaction
+            $dbconn->StartTrans();
+            // note: we don't do explicit row locking here, because it takes longer
+            //       and we end up with more deadlocks (ask the Postgres people why ?)
+            // start by increasing the right side
+            $result =& $dbconn->Execute($sql_right);
+            if ($result) {
+                // this should at least affect the parent
+                $affected = $dbconn->Affected_Rows();
+                // then increase the left side if necessary
+                $result =& $dbconn->Execute($sql_left);
+            }
+            // if the transaction succeeded
+            if ($dbconn->CompleteTrans()) {
+                // return the number of affected rows
+                return $affected;
+            }
+            // otherwise we roll back and try again
+        }
         return;
+    } else {
+        // start by increasing the right side
+        $result =& $dbconn->Execute($sql_right);
+        if ($result) {
+            // this should at least affect the parent
+            $affected = $dbconn->Affected_Rows();
+            // then increase the left side if necessary
+            $result =& $dbconn->Execute($sql_left);
+        }
+        if (!$result) {
+            return;
+        }
+        return $affected;
     }
-
-    return $dbconn->Affected_Rows();
 }
 
 ?>
