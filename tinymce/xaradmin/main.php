@@ -17,7 +17,7 @@
  */
 function tinymce_admin_main()
 {
-    if (!xarSecurityCheck('AdminTinyMCE ')) return;
+    if (!xarSecurityCheck('AdminTinyMCE')) return;
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         $data = xarModAPIFunc('tinymce', 'admin', 'menu');
         // Specify some other variables used in the blocklayout template
