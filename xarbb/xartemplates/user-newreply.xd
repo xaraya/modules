@@ -219,3 +219,6 @@
         </xar:mlstring>
     </span>
 </div>
+
+<xar:set name="topic_view">xarModFunc('xarbb','user','viewtopic',$tid);</xar:set>
+#$topic_view#
