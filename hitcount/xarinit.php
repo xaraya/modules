@@ -18,8 +18,8 @@ function hitcount_init()
     xarModSetVar('hitcount', 'countadmin', 0);
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
@@ -155,8 +155,8 @@ function hitcount_upgrade($oldversion)
             // Code to upgrade from version 1.0 goes here
 
             // Get database information
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
 
             //Load Table Maintenance API
             xarDBLoadTableMaintenanceAPI();
@@ -210,8 +210,8 @@ function hitcount_delete()
     }
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();

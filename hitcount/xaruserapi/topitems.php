@@ -33,8 +33,8 @@ function hitcount_userapi_topitems($args)
 	if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get items

@@ -37,8 +37,8 @@ function hitcount_adminapi_deleteall($args)
     // avoid potential security holes or just too much wasted processing
 	if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"All:All:$objectid")) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $hitcounttable = $xartable['hitcount'];
 
     $query = "DELETE FROM $hitcounttable

@@ -12,8 +12,8 @@ function hitcount_userapi_getmodules($args)
 	if(!xarSecurityCheck('ViewHitcountItems')) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get items

@@ -50,7 +50,7 @@ function hitcount_userapi_leftjoin($args)
     }
 
     // Table definition
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $userstable = $xartable['hitcount'];
 
     $leftjoin = array();
