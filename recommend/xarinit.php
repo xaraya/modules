@@ -27,9 +27,7 @@ Site Name: %%sitename%% :: %%siteslogan%%
 Site URL: %%siteurl%%';
 
     $date = date('Y-m-d G:i:s');
-    xarModSetVar('recommend', 'numbersent', 1);
-    xarModSetVar('recommend', 'lastsentemail', 'niceguyeddie@xaraya.com');
-    xarModSetVar('recommend', 'lastsentname', 'John Cox');
+    xarModSetVar('recommend', 'numbersent', 0);
     xarModSetVar('recommend', 'date', $date);
     xarModSetVar('recommend', 'username', 'Admin');
     xarModSetVar('recommend', 'title', $title);

@@ -17,8 +17,17 @@ function recommend_admin_modifyconfig()
             $data['title']          = xarModGetVar('recommend', 'title');
             $data['template']       = xarModGetVar('recommend', 'template');
             $data['numbersent']     = xarModGetVar('recommend', 'numbersent');
+            if (empty($data['numbersent'])){
+                $data['numbersent'] = '0';
+            }
             $data['lastemailaddy']  = xarModGetVar('recommend', 'lastsentemail');
+            if (empty($data['lastemailaddy'])){
+                $data['lastemailaddy'] = '';
+            }
             $data['lastemailname']  = xarModGetVar('recommend', 'lastsentname');
+            if (empty($data['lastemailname'])){
+                $data['lastemailname'] = '';
+            }
             $data['date']           = xarModGetVar('recommend', 'date');
             $data['username']       = xarModGetVar('recommend', 'username');
             $data['authid']         = xarSecGenAuthKey(); 
