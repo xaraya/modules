@@ -39,6 +39,12 @@ function bkview_adminapi_getmenulinks()
                                               'new'),
                          'title' => xarML('Register a new repository'),
                          'label' => xarML('Add repository'));
+    $menulinks[] = Array('url'   => xarModURL('bkview',
+                                              'admin',
+                                              'modifyconfig'),
+                         'title' => xarML('Confgure module bkview'),
+                         'label' => xarML('Mofify config'));
+
     return $menulinks;
 }
   
