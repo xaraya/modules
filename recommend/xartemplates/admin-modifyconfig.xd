@@ -28,7 +28,7 @@
 		<input type="text" name="title" id="title" value="#$title#" size="35" maxlength="100" />
         <br /><br />
 		<label for="template"><xar:mlstring>Email Template</xar:mlstring></label>:<br />
-		<textarea name="template" id="template" wrap="soft" rows="20" cols="80" tabindex="1">#$template#</textarea>
+		<textarea name="template" id="template" rows="20" cols="80" tabindex="1">#$template#</textarea>
 		<br /><br />
 		<input type="submit" value="#$submitlabel#" align="middle" tabindex="2" />
 	</form>
