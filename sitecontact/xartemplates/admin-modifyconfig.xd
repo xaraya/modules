@@ -11,97 +11,97 @@
 
 <form method="post" action="&xar-modurl-sitecontact-admin-updateconfig;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short URLSs [DO NOT USE - NOT WORKING]</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 68%; text-align: left;">
-		<xar:if condition="xarModGetVar('sitecontact', 'SupportShortURLs')">
-			<input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-		<xar:else />
-			<input type="checkbox" name="shorturls" id="shorturls" value="1" />
-		</xar:if>
-	</span>
-	</div>
-	
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short URLSs [DO NOT USE - NOT WORKING]</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+        <xar:if condition="xarModGetVar('sitecontact', 'SupportShortURLs')">
+            <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+        </xar:if>
+    </span>
+    </div>
+    
     <div style="clear: both; width: 98%;padding-top: 10px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#xarML('Custom title for your contact page.')#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Custom title for your contact page.')#">
             <label for="customtitle"><xar:mlstring>Custom page title</xar:mlstring></label>:
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <input type="text" name="customtitle" id="customtitle" size="40" maxlength="128" value="#$customtitle#" />
         </span>
     </div>
     
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
-		<span class="help" title="#xarML('Custom text for the contact page. You can use HTML here if configured on your site.')#"><label for="customtext">
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
+        <span class="help" title="#xarML('Custom text for the contact page. You can use HTML here if configured on your site.')#"><label for="customtext">
         <xar:mlstring>Your custom text. :</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 68%; text-align: left;">
-			<textarea name="customtext" id="customtext" rows="5" cols="40">#$customtext#</textarea>
-	</span>
-	</div>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+            <textarea name="customtext" id="customtext" rows="5" cols="40">#$customtext#</textarea>
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 20px;">
-	<span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
-		<span class="help" title="#xarML('Custom text displayed on your site after the user sends their message.')#"><label for="webconfirmtext">
+    <div style="clear: both; padding-top: 20px;">
+    <span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
+        <span class="help" title="#xarML('Custom text displayed on your site after the user sends their message.')#"><label for="webconfirmtext">
         <xar:mlstring>Confirm Page Text:</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 68%; text-align: left;">
-			<textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="60">#$webconfirmtext#</textarea>
-	</span>
-	</div>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+            <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="60">#$webconfirmtext#</textarea>
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 10px;">	
-	<span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
-		<span class="help" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#"><label for="optiontext">
+    <div style="clear: both; padding-top: 10px;">    
+    <span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
+        <span class="help" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#"><label for="optiontext">
         <xar:mlstring>Options for subject with optional alternative email address.</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 68%; text-align: left;">
-			<textarea name="optiontext" id="optiontext" rows="10" cols="60">#$optiontext#</textarea>
-	</span>
-	<span style="float: right; width: 68%; text-align: left;">
-	<xar:mlstring>Each line above should be entered with the semicolon and comma: </xar:mlstring>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+            <textarea name="optiontext" id="optiontext" rows="10" cols="60">#$optiontext#</textarea>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+    <xar:mlstring>Each line above should be entered with the semicolon and comma: </xar:mlstring>
     <strong><xar:mlstring>subject;optional-email,</xar:mlstring></strong><br />
-	<xar:mlstring>The optional email and semicolon can be omitted but must have comma to separate each line.</xar:mlstring>
+    <xar:mlstring>The optional email and semicolon can be omitted but must have comma to separate each line.</xar:mlstring>
 
-	</span>
-	</div>
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 20px;">
-	<span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
-		<span class="help" title="#xarML('Included in email to user - use HTML only if email configured for HTML')#"><label for="notetouser">
+    <div style="clear: both; padding-top: 20px;">
+    <span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
+        <span class="help" title="#xarML('Included in email to user - use HTML only if email configured for HTML')#"><label for="notetouser">
         <xar:mlstring>Emailed note to user:</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 68%; text-align: left;">
-			<textarea name="notetouser" id="notetouser" rows="10" cols="50">#$notetouser#</textarea>
-	</span>
-	</div>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+            <textarea name="notetouser" id="notetouser" rows="10" cols="50">#$notetouser#</textarea>
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 20px;">
-	<span style="float: right; width: 68%; text-align: left;margin-top:10px;margin-bottom:40px;">
+    <div style="clear: both; padding-top: 20px;">
+    <span style="float: right; width: 68%; text-align: left;margin-top:10px;margin-bottom:40px;">
         <p><xar:mlstring>You can use the following variables in your email:</xar:mlstring></p>
          %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
          %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
          %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
          %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />
     </span>
-	</div>
+    </div>
 
-	<div style="clear: both; padding-top: 10px;">
-		#$hooks#
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+        #$hooks#
+    </div>
 
-	<xar:set name="$updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
+    <xar:set name="$updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
 
-	<div style="clear: both; padding-top: 10px; width:98%;">
-		<span style="float: left; width: 30%; text-align: right;">
-			<input type="submit" value="#$updatebutton#" />
-		</span>
-	</div>
-	</form>
+    <div style="clear: both; padding-top: 10px; width:98%;">
+        <span style="float: left; width: 30%; text-align: right;">
+            <input type="submit" value="#$updatebutton#" />
+        </span>
+    </div>
+    </form>
 </div>
 </div>

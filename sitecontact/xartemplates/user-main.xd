@@ -2,10 +2,10 @@
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("useremail", "usermessage","username");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Your Email","Your message", "Your Name");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("useremail", "usermessage","username");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Your Email","Your message", "Your Name");
 //-->
 </script>
 <xar:if condition="empty($customtitle)">
@@ -17,8 +17,8 @@
 <div style="margin: auto;">
 
 <xar:if id="title_condition" condition="!empty($message)">
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 95%; text-align: center; padding:20px;">
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 95%; text-align: center; padding:20px;">
      #$messagetxt#
     </span>
     </div>
@@ -27,49 +27,49 @@
 <form action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
 <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
 <div class="xar-norm" style="padding: 20px;">
-	<input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<input type="hidden" name="message" id="message" value="1" />
-	<div style="clear: both; ">
-	<span style="float: left; width: 95%; text-align: left; padding-top: 10px; padding-bottom:20px;">
-  	    #$customtext#
-	</span>
-   </div>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%;">
-				<label for="username"><xar:mlstring>Your Name</xar:mlstring></label>:<span style="color:red;">*</span>
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="message" id="message" value="1" />
+    <div style="clear: both; ">
+    <span style="float: left; width: 95%; text-align: left; padding-top: 10px; padding-bottom:20px;">
+          #$customtext#
     </span>
-    	<span style="float: left; width="78%"; margin-top:10px;">
-				<xar:if condition = "xarUserIsLoggedIn()">
-				<input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
-				#xarUserGetVar('name')#
-				<xar:else />
-				<input type="text" name="username" id="username" value="" size="25" maxlength="25" />
-				</xar:if>
+   </div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%;">
+                <label for="username"><xar:mlstring>Your Name</xar:mlstring></label>:<span style="color:red;">*</span>
+    </span>
+        <span style="float: left; width="78%"; margin-top:10px;">
+                <xar:if condition = "xarUserIsLoggedIn()">
+                <input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
+                #xarUserGetVar('name')#
+                <xar:else />
+                <input type="text" name="username" id="username" value="" size="25" maxlength="25" />
+                </xar:if>
 
-		</span>
+        </span>
     </div>
     <div style="clear: both; padding-top: 10px;">
-	    <span style="float: left; width: 20%;">
-					<label for="useremail"><xar:mlstring>Your Email</xar:mlstring></label>:
+        <span style="float: left; width: 20%;">
+                    <label for="useremail"><xar:mlstring>Your Email</xar:mlstring></label>:
                     <span style="color:red;">*</span>
         </span>
     <span style="float: left; width="78%"; margin-top:10px;">
         <xar:if condition = "xarUserIsLoggedIn()">
-		    <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
-				    #xarUserGetVar('email')#
-				<xar:else />
-			    	<input type="text" name="useremail" id="useremail" value="" size="25" maxlength="40" />
-				</xar:if>
+            <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
+                    #xarUserGetVar('email')#
+                <xar:else />
+                    <input type="text" name="useremail" id="useremail" value="" size="25" maxlength="40" />
+                </xar:if>
 
-	</span>
+    </span>
     </div>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%;">
-		<span class="help" title="#xarML('Select the topic of your message')#"><label for="requesttext">
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%;">
+        <span class="help" title="#xarML('Select the topic of your message')#"><label for="requesttext">
         <xar:mlstring>Subject:</xar:mlstring></label></span><span style="color:red;">*</span>
-	</span>
+    </span>
 
-		<span style="float: left; width: 78%; text-align: left;">
+        <span style="float: left; width: 78%; text-align: left;">
         <select name="requesttext">
             <xar:foreach in="$optionitems" value="$optionrequest" key="$key" >
                 <xar:if condition="$optionrequest[0] eq $requesttext">
@@ -83,39 +83,39 @@
     </span>
     </div>
 
-	<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; ">
-		<span class="help" title="#xarML('Please enter your organization name.')#">
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; ">
+        <span class="help" title="#xarML('Please enter your organization name.')#">
             <label for="company"><xar:mlstring>Organization</xar:mlstring></label>:
         </span>
-		</span>
-		<span style="float: left; width: 78%; text-align: left;">
+        </span>
+        <span style="float: left; width: 78%; text-align: left;">
             <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
         </span>
     </div>
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%;margin-top:10px;">
-		<span class="help" title="#xarML('Type in your message.')#"><label for="usermessage">
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%;margin-top:10px;">
+        <span class="help" title="#xarML('Type in your message.')#"><label for="usermessage">
         <xar:mlstring>Your message:</xar:mlstring></label></span><span style="color:red;">*</span>
-	</span>
+    </span>
 
-	<span style="float: left; width="78%"; margin-top:10px;">
-				<textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea></span>
+    <span style="float: left; width="78%"; margin-top:10px;">
+                <textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea></span>
 
-	</div>
-	<div style="clear: both; padding-top: 10px;">
-	    <span style="float: left; text-align: left;margin-top:10px;">
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; text-align: left;margin-top:10px;">
             <span style="color:red;">*</span><xar:mlstring>Required field.</xar:mlstring>
-	    </span>
-	</div>
+        </span>
+    </div>
      <input type="hidden" name="useripaddress" value="#$useripaddress#" />
      <input type="hidden" name="userreferer" value="#$userreferer#" />
-  	<div style="clear: both; padding-top: 10px;">
-      	<span style="text-align: center;">
+      <div style="clear: both; padding-top: 10px;">
+          <span style="text-align: center;">
             <input type="submit" value="#$submit#" />
         </span>
-	</div>
+    </div>
 </form>
 </div>
 </div>
