@@ -86,10 +86,10 @@ function example_admin_modify($args)
     // Return the template variables defined in this function
     return array('authid'       => xarSecGenAuthKey(),
                  'namelabel'    => xarVarPrepForDisplay(xarML('Example Name:')),
-	             'name'         => $name,
+                 'name'         => $name,
                  'numberlabel'  => xarVarPrepForDisplay(xarML('Example Number:')),
-	             'number'       => $number,
-		         'invalid'      => $invalid,
+                 'number'       => $number,
+                 'invalid'      => $invalid,
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update Example')),
                  'hooks'        => $hooks,
                  'item'         => $item);

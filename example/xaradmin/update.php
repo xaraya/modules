@@ -68,11 +68,11 @@ function example_admin_update($args)
     $invalid = array();
     if (empty($number) || !is_numeric($number)) {
         $invalid['number'] = 1;
-		$number = '';
+        $number = '';
     } 
     if (empty($name) || !is_string($name)) {
         $invalid['name'] = 1;
-		$name = '';
+        $name = '';
     } 
 
     // check if we have any errors

@@ -54,11 +54,11 @@ function example_admin_create($args)
     $invalid = array();
     if (empty($number) || !is_numeric($number)) {
         $invalid['number'] = 1;
-		$number = '';
+        $number = '';
     } 
     if (empty($name) || !is_string($name)) {
         $invalid['name'] = 1;
-		$name = '';
+        $name = '';
     } 
 
     if (!empty($name) && $item['name'] == $name) {

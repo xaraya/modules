@@ -31,7 +31,7 @@ class testExample extends xarTestCase
      */
     function setup() 
     {
-		$GLOBALS['xarDebug'] = false;
+        $GLOBALS['xarDebug'] = false;
 
         /* these must point to the correct location of the core */
         include_once 'includes/xarCore.php';
