@@ -78,7 +78,15 @@ function articles_admin_update()
             
             $body .= ' '. $magicLink;
         } else {
-            $body = join('', @file($_FILES['body_upload']['tmp_name']));
+            // this doesn't work on some configurations
+            //$body = join('', @file($_FILES['body_upload']['tmp_name']));
+            $tmpdir = xarCoreGetVarDirPath();
+            $tmpdir .= '/cache/templates';
+            $tmpfile = tempnam($tmpdir, 'art');
+            if (move_uploaded_file($_FILES['body_upload']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
+                $body = join('', file($tmpfile));
+                unlink($tmpfile);
+            }
         }
     }
 
