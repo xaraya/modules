@@ -116,7 +116,7 @@
 			#$loop:item['timeimage']#
 		</td>
 		<td class="xar-norm" width="100%" >
-			<span class="xar-title">
+			<span>
 				<xar:if condition="$loop:item['tstatus'] eq 5">
 					<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tpost']))#">
 						#$loop:item['ttitle']#
