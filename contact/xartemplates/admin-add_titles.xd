@@ -38,7 +38,7 @@
 
 </xar:loop>
 </td>
-</tr><tr><td colspan="2" align="center"><hr></td>
+</tr><tr><td colspan="2" align="center"><hr/></td>
 
 <tr><td><strong>#$titleslabel#</strong></td>
 <td><input type="text" size="40" maxlength="60" name="newtitles"></td>

@@ -59,7 +59,7 @@
 </xar:loop>
 </table>
 </td>
-</tr><tr><td><hr></td>
+</tr><tr><td><hr/></td>
 <tr><td colspan="2" align="right" nowrap="nowrap"><strong>#$departmentlabel#</strong></td>
 </tr><tr>
 <td colspan="2">
@@ -74,7 +74,7 @@
 <td><input type="text" size="10" maxlength="60" name="addcountry"></td>
 <td><input type="checkbox" name="addhide" value="1"></td>
 </tr></table></td></tr><tr>
-<td colspan="2"><hr></td>
+<td colspan="2"><hr/></td>
 </tr><tr>
 <td colspan="2" align="right"><input type="submit" name="addnewdepartment" value="#$adddepartmentbutton#"></td></tr>
 </table>
