@@ -1,0 +1,9 @@
+    <tr>
+        <td><xar:var name="$labels['categories']" /></td>
+        <td>
+<xar:loop name="$items">
+            #$loop:item['select']#&nbsp;&nbsp;
+</xar:loop>
+        </td>
+    </tr>
+

@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * creates a category using the parent model
+ *
+ *  -- INPUT --
+ * @param $args['name'] the name of the category
+ * @param $args['description'] the description of the category
+ * @param $args['image'] the (optional) image for the category
+ * @param $args['parent_id'] Parent Category ID (0 if root)
+ *
+ *  -- OUTPUT --
+ * @returns int
+ * @return category ID on success, false on failure
+ */
+function categories_adminapi_create ($args)
+{
+    // Get arguments from argument array
+    extract($args);
+
+    // Argument check
+    if ((!isset($name))        ||
+        (!isset($description)) ||
+        (!isset($parent_id))   ||
+        (!is_numeric($parent_id))
+       )
+    {
+        xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
+        return false;
+    }
+
+    if (!isset($image)) {
+        $image = '';
+    }
+
+    // Security check
+    // Has to be redone later
+
+    if(!xarSecurityCheck('AddCategories')) return;
+
+    if (!xarModAPILoad('categories', 'user')) return;
+
+    if ($parent_id != 0)
+    {
+       $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid'=>$parent_id));
+
+       if ($cat == false)
+       {
+          xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                          new SystemException(__FILE__.'('.__LINE__.'): Unable to load the categories module´s user API'));
+          return false;
+       }
+//       $point_of_insertion = $cat['left'] + 1;
+        $point_of_insertion = $cat['right'];
+    } else {
+        list($dbconn) = xarDBGetConn();
+        $xartable = xarDBGetTables();
+        $categoriestable = $xartable['categories'];
+        $query = "SELECT MAX(xar_right) FROM " . $categoriestable;
+        $result = $dbconn->Execute($query);
+        if (!$result) return;
+
+        if (!$result->EOF) {
+            list($max) = $result->fields;
+            $point_of_insertion = $max + 1;
+        } else {
+            $point_of_insertion = 1;
+        }
+    }
+    return xarModAPIFunc('categories','admin','createcatdirectly',Array(
+                    'point_of_insertion' => $point_of_insertion,
+                    'name' => $name,
+                    'description' => $description,
+                    'image' => $image,
+                    'parent' => $parent_id
+                )
+            );
+}
+
+?>

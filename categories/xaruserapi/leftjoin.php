@@ -1,0 +1,178 @@
+<?php
+
+/**
+ * return the field names and correct values for joining on categories table
+ * example : SELECT ..., $cid, ...
+ *           FROM ...
+ *           LEFT JOIN $table
+ *               ON $field = <name of itemid field in your module>
+ *           WHERE ...
+ *               AND $where // this includes xar_modid = <your module ID>
+ *
+ * @param $args['modid'] your module ID (use xarModGetIDFromName('mymodule'))
+ *
+ * @param $args['iids'] optional array of item ids that we are selecting on
+ * @param $args['cids'] optional array of cids we're counting for (OR/AND)
+ * @param $args['andcids'] true means AND-ing categories listed in cids
+ * @param $args['groupcids'] the number of categories you want items grouped by
+ * @returns array
+ * @return array('table' => 'nuke_categories_linkage',
+ *               'field' => 'nuke_categories_linkage.xar_iid',
+ *               'where' => 'nuke_categories_linkage.xar_modid = ...
+ *                           AND nuke_categories_linkage.xar_cid IN (...)',
+ *               'cid'   => 'nuke_categories_linkage.xar_cid',
+ *               ...
+ *               'modid' => 'nuke_categories_linkage.xar_modid')
+ */
+function categories_userapi_leftjoin($args)
+{
+    // Get arguments from argument array
+    extract($args);
+
+    // Required argument ?
+    if (!isset($modid) || !is_numeric($modid)) {
+        $msg = xarML('Missing parameter #(1) for #(2)',
+                    'modid','categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return array();
+    }
+
+    // Optional argument
+    if (!isset($cids)) {
+        $cids = array();
+    }
+    if (!isset($iids)) {
+        $iids = array();
+    }
+    if (!isset($andcids)) {
+        $andcids = false;
+    }
+
+    // Security check
+    if (!xarSecurityCheck('ViewCategoryLink')) return;
+
+/*
+    if (count($cids) > 0) {
+        if (count($iids) > 0) {
+            foreach ($cids as $cid) {
+                foreach ($iids as $iid) {
+                    if(!xarSecurityCheck('ViewCategoryLink',1,'Link',"$modid:All:$iid:$cid")) return;
+                }
+            }
+        } else {
+            foreach ($cids as $cid) {
+                if(!xarSecurityCheck('ViewCategoryLink',1,'Link',"$modid:All:All:$cid")) return;
+            }
+        }
+    } elseif (count($iids) > 0) {
+    // Note: your module should be checking security for the iids too !
+        foreach ($iids as $iid) {
+            if(!xarSecurityCheck('ViewCategoryLink',1,'Link',"$modid:All:$iid:All")) return;
+        }
+    } else {
+        if(!xarSecurityCheck('ViewCategoryLink',1,'Link',"$modid:All:All:All")) return;
+    }
+*/
+
+    // dummy cids array when we're going for x categories at a time
+    if (isset($groupcids) && count($cids) == 0) {
+        $andcids = true;
+        $isdummy = 1;
+        for ($i = 0; $i < $groupcids; $i++) {
+            $cids[] = $i;
+        }
+    } else {
+        $isdummy = 0;
+    }
+
+    // Table definition
+    $xartable = xarDBGetTables();
+    $categorieslinkagetable = $xartable['categories_linkage'];
+
+    $leftjoin = array();
+
+    // create list of tables we'll be left joining for AND
+    if (count($cids) > 0 && $andcids) {
+        $catlinks = array();
+        for ($i = 0; $i < count($cids); $i++) {
+            $catlinks[] = 'catlink' . $i;
+        }
+        $linktable = $catlinks[0];
+    } else {
+        $linktable = $categorieslinkagetable;
+    }
+
+    // Add available columns in the categories table
+    $columns = array('cid','iid','modid');
+    foreach ($columns as $column) {
+        $leftjoin[$column] = $linktable . '.xar_' . $column;
+    }
+
+    // Specify LEFT JOIN ... ON ... [WHERE ...] parts
+    if (count($cids) > 0 && $andcids) {
+        $leftjoin['table'] = $categorieslinkagetable . ' as ' . $catlinks[0];
+        $leftjoin['more'] = ' ';
+        $leftjoin['cids'] = array();
+        $leftjoin['cids'][] = $catlinks[0] . '.xar_cid';
+        for ($i = 1; $i < count($catlinks); $i++) {
+            $leftjoin['more'] .= ' LEFT JOIN ' . $categorieslinkagetable .
+                                     ' as ' . $catlinks[$i] .
+                                 ' ON ' . $leftjoin['iid'] . ' = ' .
+                                     $catlinks[$i] . '.xar_iid' .
+                                 ' AND ' . $leftjoin['modid'] . ' = ' .
+                                     $catlinks[$i] . '.xar_modid ';
+            $leftjoin['cids'][] = $catlinks[$i] . '.xar_cid';
+        }
+    } else {
+        $leftjoin['table'] = $categorieslinkagetable;
+        $leftjoin['more'] = '';
+    }
+    $leftjoin['field'] = $leftjoin['iid'];
+
+    // Specify the WHERE part
+    $where = array();
+    if (!empty($modid) && is_numeric($modid)) {
+        $where[] = $leftjoin['modid'] . ' = ' . $modid;
+    }
+    if (count($cids) > 0) {
+        if ($andcids) {
+            // select only the 1-2-4 combination, not the 2-1-4, 4-2-1, etc.
+            if ($isdummy) {
+                $oldcid = '';
+                foreach ($leftjoin['cids'] as $cid) {
+                    if (!empty($oldcid)) {
+                        $where[] .= $oldcid . ' < ' . $cid;
+                    }
+                    $oldcid = $cid;
+                }
+            // select the categories you wanted
+            } else {
+                for ($i = 0; $i < count($cids); $i++) {
+                    $where[] = $catlinks[$i] . '.xar_cid = ' .
+                                   xarVarPrepForStore($cids[$i]);
+                }
+            }
+            // include all cids here
+            $leftjoin['cid'] = join(', ',$leftjoin['cids']);
+        } else {
+            $allcids = join(', ', $cids);
+            $where[] = $leftjoin['cid'] . ' IN (' .
+                       xarVarPrepForStore($allcids) . ')';
+        }
+    }
+    if (count($iids) > 0) {
+        $alliids = join(', ', $iids);
+        $where[] = $leftjoin['iid'] . ' IN (' .
+                   xarVarPrepForStore($alliids) . ')';
+    }
+    if (count($where) > 0) {
+        $leftjoin['where'] = join(' AND ', $where);
+    } else {
+        $leftjoin['where'] = '';
+    }
+
+    return $leftjoin;
+}
+
+?>

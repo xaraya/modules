@@ -1,0 +1,11 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">
+            <xar:mlstring>Categories Administration</xar:mlstring>
+        </th>
+    </tr>
+</table>
+<!-- these do not belong here!!!
+        </td>
+    </tr>
+</table> -->

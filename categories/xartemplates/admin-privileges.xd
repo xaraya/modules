@@ -1,0 +1,109 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Hooked Modules and/or Categories for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
+<div style="margin: auto;">
+
+<form method="post" action="&xar-modurl-categories-admin-privileges;">
+    <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+    <input type="hidden" name="extname" id="extname" value="#$extname#" />
+    <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+    <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+    <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+
+<table border="1" cellpadding="8" cellspacing="0">
+<tr><th valign="top" align="right">
+<xar:mlstring>Hooked Module</xar:mlstring>
+</th><td>
+    <select name="moduleid" onchange="submit()">
+        <option value="0"><xar:mlstring>All</xar:mlstring></option>
+        <xar:foreach in="$modlist" key="$modid" value="$modname">
+            <xar:if condition="!empty($moduleid) and $moduleid eq $modid">
+                <option value="#$modid#" selected="selected">#$modname#</option>
+            <xar:else />
+                <option value="#$modid#">#$modname#</option>
+            </xar:if>
+        </xar:foreach>
+    </select>
+</td></tr>
+
+<!-- TODO: show dropdown box for all relevant item types
+<tr><th valign="top" align="right">
+<xar:mlstring>Item Type</xar:mlstring>
+</th><td>
+    <input type="text" name="itemtype" id="itemtype" value="#$itemtype#" size="10" onchange="submit()" />
+</td></tr>
+-->
+<input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+
+<tr><th valign="top" align="right">
+<xar:mlstring>Item ID</xar:mlstring>
+</th><td>
+    <input type="text" name="itemid" id="itemid" value="#$itemid#" size="10" onchange="submit()" />
+    <!-- TODO: show dropdown box for all relevant item ids (if not too many) -->
+</td></tr>
+
+<tr><th valign="top" align="right">
+<xar:mlstring>Category</xar:mlstring>
+</th><td>
+    <xar:foreach in="$cats" key="$catid">
+        #$cats[$catid]#<br /><br />
+    </xar:foreach>
+</td></tr>
+
+<tr><th valign="top" align="right">
+<xar:mlstring>Access Level</xar:mlstring>
+</th><td>
+    <select name="extlevel" id="extlevel">
+        <xar:if condition="$extlevel eq 0">
+        	<option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
+        <xar:else />
+        	<option value="0"><xar:mlstring>No Access</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$extlevel eq 100">
+        	<option value="100" selected="selected"><xar:mlstring>Overview</xar:mlstring></option>
+        <xar:else />
+        	<option value="100"><xar:mlstring>Overview</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$extlevel eq 300">
+        	<option value="300" selected="selected"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+        <xar:else />
+        	<option value="300"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$extlevel eq 500">
+        	<option value="500" selected="selected"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
+        <xar:else />
+        	<option value="500"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
+        </xar:if>	
+        <xar:if condition="$extlevel eq 700">
+        	<option value="700" selected="selected"><xar:mlstring>Delete All</xar:mlstring></option>
+        <xar:else />
+        	<option value="700"><xar:mlstring>Delete All</xar:mlstring></option>
+        </xar:if>
+    </select>
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$refreshlabel#" />
+</td></tr>
+</table>
+
+<br />
+<xar:ml><xar:mlstring>There are #(1) category links matching these selection criteria at the moment</xar:mlstring><xar:mlvar>#$numitems#</xar:mlvar></xar:ml>
+<br /><hr /><br />
+(Instance Definition #$extinstance#)
+<br /><br />
+<input type="submit" name="apply" value="#$applylabel#" />
+</form>
+<br />
+
+<xar:mlstring>
+Some examples :  (assuming your users have read access by default)<br /><br />
+- In order to allow 'Friends' to assign articles (and only those) to categories, define a privilege 'SubmitArticleCats'
+(or whatever name you prefer), and choose the module "Articles" (instance 151:All:All:All) and
+access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
+<br /><br />
+- ...
+<br /><br />
+</xar:mlstring>
+
+</div>
+</div>

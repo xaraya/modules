@@ -1,0 +1,36 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Categories Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<form action="#xarModURL('categories','admin','setconfig')#" method="post">
+<table border="0" cellpadding="2" cellspacing"0" width="100%">
+    <tr>
+        <td><label for="catsperpage"><xar:mlstring>Default number of categories per page</xar:mlstring></label></td>
+        <td><input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" /></td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Windows Explorer like tree? (requires JavaScript enabled browser)</xar:mlstring></td>
+        <td>
+            <xar:if condition="$useJSdisplay">
+                <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" checked="checked" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
+                <input type="radio" name="useJSdisplay" id="useJSdisplayNo" value="false" /><label for="useJSdisplayNo"><xar:mlstring>No</xar:mlstring></label>
+            <xar:else />
+                <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
+                <input type="radio" name="useJSdisplay" id="useJSdisplayNo" value="false" checked="checked" /><label for="useJSdisplayNo"><xar:mlstring>No</xar:mlstring></label>
+            </xar:if>
+        </td>
+    </tr>
+<xar:if condition="!empty($hooks)">
+    <tr>
+        <td colspan="2" align="center"><b><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></b></td>
+    </tr>
+    <tr>
+        <td colspan="2">#$hooks#</td>
+    </tr>
+</xar:if>
+</table>
+<br />
+<input type="submit" value="#$submitlabel#" />
+</form>
+</div>
+</div>

@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * modify configuration for a module - hook for ('module','modifyconfig','GUI')
+ *
+ * @param $args['objectid'] ID of the object
+ * @param $args['extrainfo'] extra information
+ * @returns bool
+ * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ */
+function categories_admin_modifyconfighook($args)
+{
+    extract($args);
+
+    if (!isset($extrainfo)) {
+        $extrainfo = array();
+    }
+
+    // When called via hooks, the module name may be empty, so we get it from
+    // the current module
+    if (empty($extrainfo['module'])) {
+        $modname = xarModGetName();
+    } else {
+        $modname = $extrainfo['module'];
+    }
+
+    $modid = xarModGetIDFromName($modname);
+    if (empty($modid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module name', 'admin', 'modifyconfighook', 'categories');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return $msg;
+    }
+
+    // see what we have to show here
+    if (empty($extrainfo['number_of_categories'])) {
+        // try to get number of categories from current settings
+        if (!empty($extrainfo['itemtype'])) {
+            $numcats = (int) xarModGetVar($modname, 'number_of_categories.'.$extrainfo['itemtype']);
+        } else {
+            $numcats = (int) xarModGetVar($modname, 'number_of_categories');
+        }
+    } else {
+        $numcats = (int) $extrainfo['number_of_categories'];
+    }
+    if (empty($numcats) || !is_numeric($numcats)) {
+        $numcats = 0;
+    }
+
+    if (empty($extrainfo['mastercids']) || !is_array($extrainfo['mastercids'])) {
+        // try to get cids from current settings
+        if (!empty($extrainfo['itemtype'])) {
+            $cidlist = xarModGetVar($modname,'mastercids.'.$extrainfo['itemtype']);
+        } else {
+            $cidlist = xarModGetVar($modname,'mastercids');
+        }
+        if (empty($cidlist)) {
+            $mastercids = array();
+        } else {
+            $mastercids = explode(';',$cidlist);
+        }
+    } else {
+        $mastercids = $extrainfo['mastercids'];
+    }
+    // get all valid master cids for this module
+    // Note : a module might have the same master cid twice (just in case...)
+    $seencid = array();
+    foreach ($mastercids as $cid) {
+        if (empty($cid) || !is_numeric($cid)) {
+            continue;
+        }
+        if (empty($seencid[$cid])) {
+            $seencid[$cid] = 1;
+        } else {
+            $seencid[$cid]++;
+        }
+    }
+
+    if (!xarModAPILoad('categories', 'visual')) return;
+
+    $items = array();
+    for ($n = 0; $n < $numcats; $n++) {
+        $item = array();
+        $item['num'] = $n + 1;
+        $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
+                                       array('values' => &$seencid,
+// TODO: improve memory usage
+// limit to some reasonable depth for now
+'maximum_depth' => 3,
+                                             'show_edit' => true));
+        $items[] = $item;
+    }
+    unset($item);
+
+    if(xarSecurityCheck('AddCategories',0)) {
+        $newcat = xarML('new');
+    } else {
+        $newcat = '';
+    }
+
+    $data = array();
+    $data['newcat'] = $newcat;
+    $data['numcats'] = $numcats;
+    $data['items'] = $items;
+    $data['modname'] = $modname;
+
+    return xarTplModule('categories','admin','modifyconfighook', $data);
+}
+
+?>
