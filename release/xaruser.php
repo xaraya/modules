@@ -213,14 +213,18 @@ function release_user_display()
 
         case 'view':
         default:
+
             $hooks = xarModCallHooks('item',
                                      'display',
-                                     $id['rid'],
-                                     array('itemtype' => '1',
-                                     xarModURL('release',
-                                               'user',
-                                               'display',
-                                               array('rid' => $rid))));
+                                     $rid,
+                                     array('itemtype'  => '1',
+                                           'returnurl' => xarModURL('release',
+                                                                    'user',
+                                                                    'display',
+                                                                     array('rid' => $rid))
+                                                 )
+                                            );
+
             if (empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
@@ -1192,14 +1196,16 @@ function release_user_displaynote()
                               array('uid' => $id['uid']));
 
 
-    $hooks = xarModCallHooks('item',
-                             'display',
-                             $item['rnid'],
-                             array('itemtype' => '2',
-                                     xarModURL('release',
-                                               'user',
-                                               'displaynote',
-                                               array('rnid' => $rnid))));
+        $hooks = xarModCallHooks('item',
+                                        'display',
+                                        $rnid,
+                                        array('itemtype'  => '2',
+                                              'returnurl' => xarModURL('release',
+                                                                       'user',
+                                                                       'displaynote',
+                                                                       array('rnid' => $rnid))
+                                             )
+                                        );
     if (empty($hooks)) {
         $item['hooks'] = '';
     } elseif (is_array($hooks)) {
@@ -1531,16 +1537,16 @@ function release_user_getdoc()
 
     if ($item == false) return;
 
-    $hooks = xarModCallHooks('item',
-                             'display',
-                             $rdid,
-                             array('itemtype' => '3',
-                                     xarModURL('release',
-                                               'user',
-                                               'getdoc',
-                                               array('rdid' => $rdid))));
-
-
+        $hooks = xarModCallHooks('item',
+                                 'display',
+                                 $rdid,
+                                 array('itemtype'  => '3',
+                                       'returnurl' => xarModURL('release',
+                                                                'user',
+                                                                'getdoc',
+                                                                 array('rdid' => $rdid))
+                                             )
+                                        );
 
     if (empty($hooks)) {
         $item['hooks'] = '';
