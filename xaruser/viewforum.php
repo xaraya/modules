@@ -35,11 +35,13 @@ function xarbb_user_viewforum()
     if(!xarSecurityCheck('ViewxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
     xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
 
-
-    // Lets deal with the cookie in a more sane manner
+    // Need to grab the last visit to update the not read, before we kill it.
+    $lastvisitthisforum = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid);
+    $lastvistallforums = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
+    $lastvistcompared = max($lastvisitthisforum, $lastvistallforums);
+    // And now we kill all of this work and just move on.
     if (xarUserIsLoggedIn()){
         xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, time());
-        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', time());
     }
 
     // Settings and disply
@@ -120,9 +122,8 @@ function xarbb_user_viewforum()
         if (isset($read_topic)){
             $cookie_time_compare = $read_topic;
         } else {
-            $lastvisitsession = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
             if (isset($lastvisitsession)){
-                $data['lastvisitdate'] = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
+                $data['lastvisitdate'] = $lastvistcompared;
             } else {
                 $data['lastvisitdate'] = time() - 60*60*24;
             }
