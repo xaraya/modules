@@ -3,12 +3,10 @@
 <h4><xar:mlstring>Choose a translation to work on</xar:mlstring></h4>
 <form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations', 'admin', 'update_working_locale')#" method="post">
   <p>
-    While working inside the translations module, you always work on the translation of 1 particular
+    While working inside the translations module, you always work on the translation of one particular
     locale. You choose that locale below. It will activate the proper storage location for the translated
     items while you are working on a translation.<br />
-    So, i you want to work on the dutch translation for the dutch locale, encoded in
-    single byte format, choose nl_NL.iso8859-1 below. If you want to work on another translation, just
-    return to this screen and select another locale.
+    If you don't see the locale you want in the dropdown below, you will need to create it and activate it in the Modify Config page of the Base module.
   </p>
   <p>
     <xar:mlstring>Choose the working locale</xar:mlstring>:
