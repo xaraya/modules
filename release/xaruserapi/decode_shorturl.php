@@ -27,8 +27,14 @@ function release_userapi_decode_shorturl($params)
     // Initialise the argument list we will return
     $args = array(); 
     if ($params[0] == 'rid') {
-        $args['rid'] = (int) $params[1];
-        return array('display', $args);
+        if (is_numeric($params[1])) { 
+            $args['rid'] = (int) $params[1];
+            return array('display', $args);
+        } else {
+            //Lots of hits for categories... But how can we discover them
+            //as what we know about them is c107 or c31? Time for Good Urls instead of Short?
+            return array('view', $args);
+        }
     } elseif (empty($params[1])) {
         // nothing specified -> we'll go to the main function
         return array('main', $args);

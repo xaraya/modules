@@ -1,15 +1,15 @@
 <?php
 
-function release_user_display()
+function release_user_display($args)
 {
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    list($rid,
-         $startnum,
-         $phase) = xarVarCleanFromInput('rid',
-                                        'startnum',
-                                        'phase');
+    extract($args);
+
+    if (!xarVarFetch('rid', 'int', $rid, null)) {return;}
+    if (!xarVarFetch('startnum', 'int', $startnum, 0, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('phase', 'str', $phase, 'view', XARVAR_NOT_REQUIRED)) {return;}
 
     // The user API function is called. 
     $id = xarModAPIFunc('release',
@@ -22,10 +22,6 @@ function release_user_display()
                              'user',
                              'get',
                               array('uid' => $id['uid']));
-
-    if (empty($phase)){
-        $phase = 'view';
-    }
 
     $stateoptions=array();
     $stateoptions[0] = xarML('Planning');
