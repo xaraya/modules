@@ -13,7 +13,7 @@
 <xar:mlstring>Skels successfully generated. The results are shown below.</xar:mlstring>
 </p>
 <table width="100%">
-<tr><td></td><td>Entries</td><td>KeyEntries</td></tr>
+<tr><td></td><td>Entries</td><td>Key Entries</td></tr>
 <xar:loop name="$statistics">
 <tr><td>#$loop:key#</td><td>#$loop:item['entries']#</td><td>#$loop:item['keyEntries']#</td></tr>
 </xar:loop>

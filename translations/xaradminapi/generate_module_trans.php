@@ -8,7 +8,7 @@
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage modules
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
@@ -26,20 +26,20 @@ function translations_adminapi_generate_module_trans($args)
 {
     // Get arguments
     extract($args);
-    
+
     // Argument check
     assert('isset($modid) && isset($locale)');
-    
+
     if (!($modinfo = xarModGetInfo($modid))) return;
     $modname = $modinfo['name'];
     $moddir = $modinfo['osdirectory'];
-    
+
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
-    
+
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
-    
+
     $l = xarLocaleGetInfo($locale);
     if ($l['charset'] == 'utf-8') {
         $ref_locale = $locale;
@@ -62,6 +62,10 @@ function translations_adminapi_generate_module_trans($args)
     $allCtxNames[XARMLS_CTXTYPE_INCLTEMPL] = $backend->getContextNames(XARMLS_CTXTYPE_INCLTEMPL);
     $allCtxNames[XARMLS_CTXTYPE_BLKTEMPL] = $backend->getContextNames(XARMLS_CTXTYPE_BLKTEMPL);
     $allCtxNames[XARMLS_CTXTYPE_BLOCK] = $backend->getContextNames(XARMLS_CTXTYPE_BLOCK);
+    $allCtxNames[XARMLS_CTXTYPE_ADMIN] = $backend->getContextNames(XARMLS_CTXTYPE_ADMIN);
+    $allCtxNames[XARMLS_CTXTYPE_ADMINAPI] = $backend->getContextNames(XARMLS_CTXTYPE_ADMINAPI);
+    $allCtxNames[XARMLS_CTXTYPE_USER] = $backend->getContextNames(XARMLS_CTXTYPE_USER);
+    $allCtxNames[XARMLS_CTXTYPE_USERAPI] = $backend->getContextNames(XARMLS_CTXTYPE_USERAPI);
 
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
@@ -77,6 +81,10 @@ function translations_adminapi_generate_module_trans($args)
             elseif ($ctxType == XARMLS_CTXTYPE_INCLTEMPL) $sName = 'incltempl::'.$ctxName;
             elseif ($ctxType == XARMLS_CTXTYPE_BLKTEMPL) $sName = 'blktempl::'.$ctxName;
             elseif ($ctxType == XARMLS_CTXTYPE_BLOCK) $sName = 'block::'.$ctxName;
+            elseif ($ctxType == XARMLS_CTXTYPE_ADMIN) $sName = 'user::'.$ctxName;
+            elseif ($ctxType == XARMLS_CTXTYPE_ADMINAPI) $sName = 'adminapi::'.$ctxName;
+            elseif ($ctxType == XARMLS_CTXTYPE_USER) $sName = 'user::'.$ctxName;
+            elseif ($ctxType == XARMLS_CTXTYPE_USERAPI) $sName = 'userapi::'.$ctxName;
             else $sName = $ctxName;
 
             $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);

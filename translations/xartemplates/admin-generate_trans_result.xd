@@ -7,8 +7,8 @@
 <table width="100%">
   <tr>
     <td></td>
-    <td>##Entries</td>
-    <td>##KeyEntries</td>
+    <td>Entries</td>
+    <td>Key Entries</td>
   </tr>
   <xar:loop name="$statistics">
     <tr>
