@@ -1,5 +1,16 @@
 <xar:template file="menu" />
 
+<xar:if condition="$fallbackOn">
+	<br />
+	<div style="color: #9ACD32">
+		<xar:ml>
+			<xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
+			<xar:mlvar>#$fallbackFile#</xar:mlvar>
+		</xar:ml>
+	</div>
+	<br />
+</xar:if>
+
 <h2><xar:mlstring>List of Loggers</xar:mlstring></h2>
 
     <div style="text-align: center;">
@@ -64,3 +75,14 @@
         </xar:for>
     </table>
     </div>
+	
+	<br />
+	<br />
+
+	<xar:ml>    
+		<xar:mlstring>There exists a fallback mechanism which will log to file #(1) even if the logging is turned off, so admins can still log if unable to install/use the logconfig module.</xar:mlstring>
+		<xar:mlvar>#$fallbackFile#</xar:mlvar>
+	</xar:ml>
+	<br />
+	<xar:mlstring>For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user.</xar:mlstring>
+		

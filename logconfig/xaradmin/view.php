@@ -13,6 +13,16 @@ function logconfig_admin_view()
 
     $data['itemsnum'] = xarModGetVar('logconfig','itemstypenumber');
 
+    if (!xarModAPIFunc('logconfig','admin','islogon')
+        && xarLogFallbackPossible()) 
+    {
+        $data['fallbackOn'] = true;
+    } else {
+        $data['fallbackOn'] = false;
+    }
+    
+    $data['fallbackFile'] = xarLogFallbackFile();
+
     // Return the template variables defined in this function
     return $data;
 }
