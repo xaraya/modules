@@ -84,3 +84,18 @@ then (
 		cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //'
 fi
 ) | $POSTPROGRAM $SUBJECTSWITCH"${NUMSETS} ${CHANGETEXT} pushed to ${VIRGIN}/${REPO}: ${CSCOMMENT:0:40}..." $DESTINATION
+
+# Convert numbers from the cset list into something useful
+#nums=
+#for s in `cat $BK_CSETLIST`; do
+#    nums="`bk prs -h -d\"\\\$if(:DS: -eq $s){:REV:}\" ChangeSet` $nums"
+#done
+
+# Send logs to CIA (no, not that one, this one: http://cia.navi.cx)
+echo "Sending notification to project aggregator..."
+(
+    for n in `cat $BK_CSETLIST`; do
+        $BKD_ROOT/BitKeeper/triggers/cia-bk2xml.sh $n
+    done
+) &
+exit 0
