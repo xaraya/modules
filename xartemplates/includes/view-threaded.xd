@@ -42,7 +42,7 @@
                 #$loop:item['xar_date']#
             </span>
         </div>
-        
+
 <xar:comment> CHECKME: no text or buttons in search results </xar:comment>
       <xar:if condition="isset($loop:item['xar_text'])">
         <div class="xar-tr-collapsed" id="#$loop:item['xar_cid']#">
@@ -58,7 +58,7 @@
                                 <input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
                                 <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
                                 <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
-                                <input type="hidden" name="receipt[action]" value="reply" /> 
+                                <input type="hidden" name="receipt[action]" value="reply" />
                                 <input type="submit" name="submit" id="submit-reply#$loop:item['xar_cid']#" value="#xarML('Reply')#" />
                             </div>
                         </form>
@@ -95,6 +95,7 @@
                         </form>
                     </xar:sec>
                 </xar:if>
+
 <xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
                 <xar:if condition="isset($package['transformed-text'])">
                     #$package['transformed-text']# 
@@ -104,7 +105,7 @@
                         </a>
                     </p>
                     <xar:else />
-                    #$loop:item['xar_text']# 
+                    #$loop:item['xar_text']#
                     <p>
                         <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
                             #
@@ -113,10 +114,23 @@
 <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />
-                        <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp; 
+                        <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp;
                     </xar:if>
                 </xar:if>
-                
+                <!-- show changelog -->
+                <xar:sec mask="Comments-Moderator" catch="false">
+                <xar:if condition="xarModIsHooked('changelog','comments')">
+                   <br />
+                    <span class="xar-sub">
+                        <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['xar_cid']))#" title="#xarML('View Changes')#">
+                            <xar:mlstring>
+                                View changes
+                            </xar:mlstring>
+                        </a>
+                    </span>
+                </xar:if>
+                </xar:sec>
+                <!-- end changelog -->
             </div>
         </div>
       </xar:if>
@@ -126,7 +140,7 @@
                 <xar:foreach in="$loop:item['xar_map']" value="$map">
                     <img class="xar-tr-image" height="21" src="#$map#" width="9" alt="" />
                 </xar:foreach>
-    
+
                 <xar:if condition="$loop:item['xar_branchout'] eq 0">
 <xar:comment> CHECKME: no text or buttons in search results </xar:comment>
                   <xar:if condition="isset($loop:item['xar_text'])">
@@ -211,7 +225,7 @@
                         </form>
                     </xar:sec>
                 </xar:if>
-                
+
 <xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
                 <xar:if condition="isset($package['transformed-text'])">
                     #$package['transformed-text']#
@@ -221,7 +235,7 @@
                         </a>
                     </p>
                     <xar:else />
-                    #$loop:item['xar_text']# 
+                    #$loop:item['xar_text']#
                     <p>
                         <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
                             #
@@ -230,9 +244,21 @@
 <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />
-                        <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp; 
+                        <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp;
                     </xar:if>
                 </xar:if>
+                <!-- show changelog -->
+                <xar:sec mask="Comments-Moderator" catch="false">
+                <xar:if condition="xarModIsHooked('changelog','comments')">
+                <br />
+                    <span class="xar-sub">
+                        <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['xar_cid']))#" title="#xarML('View Changes')#">
+                             <xar:mlstring>View changes</xar:mlstring>
+                        </a>
+                    </span>
+                </xar:if>
+                </xar:sec>
+                <!-- end changelog -->
             </div>
         </div>
       </xar:if>
