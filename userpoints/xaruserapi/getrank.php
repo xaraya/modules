@@ -78,7 +78,7 @@ function userpoints_userapi_getrank($args)
     // this one is a bit late in the function it is as early as we can do it as
     // this is the first time we have the relevant information.
     // For this function, the user must *at least* have READ access to this item
-    if (!xarSecurityCheck('AdminRank', 1, 'Item', "$rankname:All:$id")) {
+    if (!xarSecurityCheck('ReadUserpointsRank', 1, 'Rank', "$rankname:$id")) {
         return;
     } 
     // Create the item array

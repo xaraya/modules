@@ -62,7 +62,7 @@ function userpoints_userapi_getallranks($args)
     $items = array(); 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminRank')) return; 
+    if (!xarSecurityCheck('ReadUserpointsRank')) return; 
     // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
     // return arrays but we handle them differently.  For xarDBGetConn() we
     // currently just want the first item, which is the official database
@@ -94,7 +94,7 @@ function userpoints_userapi_getallranks($args)
     // the details of the item, this *must* be verified by your function.
     for (; !$result->EOF; $result->MoveNext()) {
         list($id, $rankname, $rankminscore) = $result->fields;
-        if (xarSecurityCheck('AdminRank', 0, 'Item', "$rankname:All:$id")) {
+        if (xarSecurityCheck('ReadUserpointsRank', 0, 'Rank', "$rankname:$id")) {
             $items[] = array('id' => $id,
                              'rankname' => $rankname,
                              'rankminscore' => $rankminscore);

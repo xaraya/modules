@@ -39,9 +39,10 @@ function userpoints_adminapi_addpoints($args)
         if (!$result) return;
     }
 
-    // TODO: add points for the module item as well ?
 
 /*    
+    // TODO: add points for the module item as well ?
+
     //add the points to the table.
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -65,8 +66,8 @@ function userpoints_adminapi_addpoints($args)
             if (!$result) return;
 
     
-    // Return the extra info
-    return ;
 */
+    // Return success
+    return true;
 }
 ?>

@@ -1,8 +1,7 @@
 <?php
 
 /**
- * create linkage for an item - hook for ('item','create','API')
- * Needs $extrainfo['cids'] from arguments, or 'cids' from input
+ * create points for an item - hook for ('item','create','API')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
@@ -19,9 +18,10 @@ function userpoints_adminapi_createhook($args)
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'admin', 'createhook', 'userpoints');
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                     'object ID', 'admin', 'createhook', 'userpoints');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        return $extrainfo;
     }
 
     // When called via hooks, the module name may be empty, so we get it from
@@ -34,9 +34,10 @@ function userpoints_adminapi_createhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'createhook', 'userpoints');
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                     'module name', 'admin', 'createhook', 'userpoints');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        return $extrainfo;
     }
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -46,7 +47,7 @@ function userpoints_adminapi_createhook($args)
     if (isset($extrainfo['authorid']) && is_numeric($extrainfo['authorid'])) {
         $authorid = $extrainfo['authorid'];
     } else {
-        $authorid = xarModGetUserVar('uid');
+        $authorid = xarUserGetVar('uid');
     }
 
 // Get Status Of Item
@@ -67,30 +68,29 @@ function userpoints_adminapi_createhook($args)
         $pubdate = 1;
     }
 
-// Now get the points to award
-
-    if($itemtype == 0) {
-
-    $points = xarModGetVar('userpoints', "createpoints.$modname");
-
+    if (!xarUserIsLoggedIn()) {
+        return $extrainfo;
     }
-    else{
+    $uid = xarUserGetVar('uid');
 
-    $points = xarModGetVar('userpoints', "createpoints.$modname.$itemtype");
-
+    $points = xarModAPIFunc('userpoints', 'user', 'getpoints',
+                            array('pmodule'=>$modname,
+                                  'itemtype'=>$itemtype,
+                                  'paction'=>'create'));
+    if (empty($points)) {
+        return $extrainfo;
     }
 
-
-    if (!xarModAPIFunc('userpoints', 'admin', 'addpoints',
-                      array('moduleid'  => $modid,
-                            'itemtype'  => $itemtype,
-                            'objectid' => $objectid,
-                            'status' => $status,
-                            'authorid' => $authorid,
-                            'pubdate' => $pubdate,
-                            'points' => $points))) {
-        return false;
-    }
+    $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',
+                                 array('uid' => $uid,
+                                       'points' => $points,
+                                    // currently unused
+                                       'moduleid'  => $modid,
+                                       'itemtype'  => $itemtype,
+                                       'objectid' => $objectid,
+                                       'status' => $status,
+                                       'authorid' => $authorid,
+                                       'pubdate' => $pubdate));
 
     // Return the extra info
     return $extrainfo;

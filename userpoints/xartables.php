@@ -31,13 +31,15 @@ function userpoints_xartables()
 
     $userpoints = xarDBGetSiteTablePrefix() . '_userpoints';
     $userpoints_display = xarDBGetSiteTablePrefix() . '_userpoints_display';
+
     $ranks = xarDBGetSiteTablePrefix() . '_userpoints_ranks';
     $score = xarDBGetSiteTablePrefix() . '_userpoints_score';
 
     // Table name
 
-    $xartable['userpoints'] = $userpoints; 
-    $xartable['userpoints_display'] = $userpoints_display; 
+    $xartable['userpoints'] = $userpoints; // currently unused
+    $xartable['userpoints_display'] = $userpoints_display; // currently unused
+
     $xartable['userpoints_ranks'] = $ranks; 
     $xartable['userpoints_score'] = $score; 
 

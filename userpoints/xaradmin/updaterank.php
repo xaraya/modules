@@ -37,24 +37,8 @@ function userpoints_admin_updaterank($args)
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('id', 'int:1:', $id, $id, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rankname', 'str:1:', $rankname, $rankname, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rankminscore', 'int:1:', $rankminscore, $rankminscore, XARVAR_NOT_REQUIRED)) return;
-
-    // At this stage we check to see if we have been passed $objectid, the
-    // generic item identifier.  This could have been passed in by a hook or
-    // through some other function calling this as part of a larger module, but
-    // if it exists it overrides $exid
-
-    // Note that this module couuld just use $objectid everywhere to avoid all
-    // of this munging of variables, but then the resultant code is less
-    // descriptive, especially where multiple objects are being used.  The
-    // decision of which of these ways to go is up to the module developer
-    if (!empty($objectid)) {
-        $exid = $objectid;
-    } 
-
+    if (!xarVarFetch('rankminscore', 'int:0:', $rankminscore, $rankminscore, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.  This checks that the form had a valid
     // authorisation code attached to it.  If it did not then the function will
@@ -66,7 +50,7 @@ function userpoints_admin_updaterank($args)
     // do not duplicate the work here
 
     $invalid = array();
-    if (empty($rankminscore) || !is_numeric($rankminscore)) {
+    if (!is_numeric($rankminscore) || $rankminscore < 0) {
         $invalid['rankminscore'] = 1;
         $rankminscore = '';
     } 
@@ -80,7 +64,8 @@ function userpoints_admin_updaterank($args)
         // call the admin_new function and return the template vars
         // (you need to copy admin-new.xd to admin-create.xd here)
         return xarModFunc('userpoints', 'admin', 'modifyrank',
-                          array('rankname'     => $rankname,
+                          array('id'     => $id,
+                                'rankname'     => $rankname,
                                 'rankminscore'   => $rankminscore,
                                 'invalid'  => $invalid));
     } 

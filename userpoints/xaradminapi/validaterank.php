@@ -36,7 +36,7 @@ function userpoints_adminapi_validaterank($args)
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the Execute() command allows for simpler debug operation
     // if it is ever needed
-    $query = "SELECT xar_rankname
+    $query = "SELECT xar_rankname, xar_id
             FROM $ranks
             WHERE xar_rankname = ?";
 
@@ -45,7 +45,7 @@ function userpoints_adminapi_validaterank($args)
     // the exception so we just return
     if (!$result) return; 
     // Obtain the item information from the result set
-    list($rankname) = $result->fields; 
+    list($rankname,$id) = $result->fields; 
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close(); 
@@ -54,7 +54,7 @@ function userpoints_adminapi_validaterank($args)
     // this one is a bit late in the function it is as early as we can do it as
     // this is the first time we have the relevant information.
     // For this function, the user must *at least* have READ access to this item
-    if (!xarSecurityCheck('ReadRank', 1, 'Item', "$rankname:All:$rankname")) {
+    if (!xarSecurityCheck('ReadUserpointsRank', 1, 'Rank', "$rankname:$id")) {
         return;
     } 
     // Create the item array

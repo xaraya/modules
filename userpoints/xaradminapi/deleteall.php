@@ -9,7 +9,7 @@
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function ratings_adminapi_deleteall($args)
+function userpoints_adminapi_deleteall($args)
 {
     extract($args);
 
@@ -17,7 +17,7 @@ function ratings_adminapi_deleteall($args)
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID (= module name)', 'admin', 'deleteall', 'ratings');
+                    'object ID (= module name)', 'admin', 'deleteall', 'userpoints');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
@@ -26,30 +26,30 @@ function ratings_adminapi_deleteall($args)
     $modid = xarModGetIDFromName($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module ID', 'admin', 'deleteall', 'ratings');
+                    'module ID', 'admin', 'deleteall', 'userpoints');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
 
+/* nothing to do at the moment
 // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('DeleteRatings')) return;
+    if(!xarSecurityCheck('DeleteUserpoints')) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $ratingstable = $xartable['ratings'];
+    $userpointstable = $xartable['userpoints'];
 
-    $query = "DELETE FROM $ratingstable
+    $query = "DELETE FROM $userpointstable
             WHERE xar_moduleid = ?";
     $result =& $dbconn->Execute($query, array((int) $modid));
     if (!$result) return;
 
     // hmmm, I think we'll skip calling more hooks here... :-)
     //xarModCallHooks('item', 'delete', '', '');
-
-// TODO: delete user votes with xarModDelVar('ratings',"$modname:$itemtype:$itemid");
+*/
 
     // Return the extra info
     if (!isset($extrainfo)) {

@@ -71,10 +71,7 @@ function userpoints_adminapi_updaterank($args)
     // both of these to ensure that whoever is doing the modification has
     // suitable permissions to edit the item otherwise people can potentially
     // edit areas to which they do not have suitable access
-    if (!xarSecurityCheck('AdminRank', 1, 'Item', "$item[rankname]:All:$id")) {
-        return;
-    } 
-    if (!xarSecurityCheck('AdminRank', 1, 'Item', "$rankname:All:$id")) {
+    if (!xarSecurityCheck('EditUserpointsRank', 1, 'Rank', "$item[rankname]:$id")) {
         return;
     } 
     // Get database setup - note that both xarDBGetConn() and xarDBGetTables()

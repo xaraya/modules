@@ -1,13 +1,15 @@
 <?php
 
 /**
- * add user points for displaying an item
- * @param $args['objectid'] ID of the item this point is for
- * @param $args['extrainfo'] module, itemtype and return_url of the item
- * @returns string
- * @return empty string for display hook here
+ * delete points for an item - hook for ('item','delete','API')
+ *
+ * @param $args['objectid'] ID of the object
+ * @param $args['extrainfo'] extra information
+ * @returns bool
+ * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function userpoints_user_display($args)
+function userpoints_adminapi_deletehook($args)
 {
     extract($args);
 
@@ -17,7 +19,7 @@ function userpoints_user_display($args)
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'object ID', 'user', 'display', 'userpoints');
+                     'object ID', 'admin', 'deletehook', 'userpoints');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $extrainfo;
     }
@@ -33,9 +35,9 @@ function userpoints_user_display($args)
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'module name', 'user', 'display', 'userpoints');
+                     'module name', 'admin', 'deletehook', 'userpoints');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return '';
+        return $extrainfo;
     }
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -67,19 +69,22 @@ function userpoints_user_display($args)
     }
 
     if (!xarUserIsLoggedIn()) {
-        return '';
+        return $extrainfo;
     }
     $uid = xarUserGetVar('uid');
 
     $points = xarModAPIFunc('userpoints', 'user', 'getpoints',
                             array('pmodule'=>$modname,
                                   'itemtype'=>$itemtype,
-                                  'paction'=>'display'));
+                                  'paction'=>'delete'));
     if (empty($points)) {
-        return '';
+        return $extrainfo;
     }
 
-// CHECKME: do we want to add points to the author or the viewer (or both) ?
+// we substract points here instead of adding them !
+    $points = -$points;
+
+// CHECKME: do we want to remove points for the author or the deleter (or both) ?
     $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',
                                  array('uid' => $uid,
                                        'points' => $points,
@@ -91,26 +96,7 @@ function userpoints_user_display($args)
                                        'authorid' => $authorid,
                                        'pubdate' => $pubdate));
 
-/*
-    $pointsvalues = xarModAPIFunc('userpoints','user','getpoints',
-                                  array('pmodule'=>$modname,'itemtype'=>$itemtype,'paction'=>'D'));
-    if (!$pointsvalues) {
-        return '';
-    }
-
-    $points = $pointsvalues['tpoints']; 
-      
-    $uptid = $pointsvalues['uptid'];
-      
-    $args['uptid'] = $uptid;
-    $args['points'] = $points;
-    $args['uid'] = $uid;
-
-    $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
-*/
-    
-    // Nothing to see here
-    return '';
+    // Return the extra info
+    return $extrainfo;
 }
-
 ?>

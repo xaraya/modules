@@ -1,3 +1,7 @@
+Version 1.2.0 30th December 2004
+   - get hooks working again
+   - only keep total score per user at the moment
+
 Version 1.1 24th Februrary 2002
    - changed rating from int to double to allow for fairer average rating
      on items with many ratinsg

@@ -47,7 +47,7 @@ function userpoints_admin_viewrank()
         xarModGetVar('userpoints', 'ranksperpage')); 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminRank')) return; 
+    if (!xarSecurityCheck('AdminUserpointsRank')) return; 
     // The user API function is called.  This takes the number of items
     // required and the first number in the list of all items, which we
     // obtained from the input and gets us the information on the appropriate
@@ -67,7 +67,7 @@ function userpoints_admin_viewrank()
     // 'in place', and *then* pass the complete items array to $data
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-        if (xarSecurityCheck('AdminRank', 0, 'Item', "$item[rankname]:All:$item[id]")) {
+        if (xarSecurityCheck('EditUserpointsRank', 0, 'Rank', "$item[rankname]:$item[id]")) {
             $items[$i]['editurl'] = xarModURL('userpoints',
                 'admin',
                 'modifyrank',
@@ -76,7 +76,7 @@ function userpoints_admin_viewrank()
             $items[$i]['editurl'] = '';
         } 
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('DeleteRank', 0, 'Item', "$item[rankname]:All:$item[id]")) {
+        if (xarSecurityCheck('DeleteUserpointsRank', 0, 'Rank', "$item[rankname]:$item[id]")) {
             $items[$i]['deleteurl'] = xarModURL('userpoints',
                 'admin',
                 'deleterank',

@@ -22,6 +22,7 @@ function userpoints_init()
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
 
+/* currently unused
     // Create table to store the user's score per item and stats
 
     $fields = array(
@@ -46,7 +47,9 @@ function userpoints_init()
     
     $result = &$dbconn->Execute($query);
     if (!$result) return;
+*/
 
+/* current unused
     // Create table to store the user's score per item and stats
 
     $fields = array(
@@ -67,6 +70,7 @@ function userpoints_init()
     
     $result = &$dbconn->Execute($query);
     if (!$result) return;
+*/
 
     // Create table to hold rank information
 
@@ -119,8 +123,8 @@ function userpoints_init()
                            'userpoints', 'admin', 'createhook')) {
         return false;
     }
-    if (!xarModRegisterHook('item', 'remove', 'API',
-                           'userpoints', 'admin', 'removehook')) {
+    if (!xarModRegisterHook('item', 'delete', 'API',
+                           'userpoints', 'admin', 'deletehook')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'update', 'API',
@@ -131,12 +135,14 @@ function userpoints_init()
                            'userpoints', 'user', 'display')) {
         return false;
     }
+
     /**
      * Define instances for this module
      * Format is
      * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
      */
 
+/* currently unused
     $query1 = "SELECT DISTINCT $xartable[modules].xar_name FROM $xartable[userpoints] LEFT JOIN $xartable[modules] ON $xartable[userpoints].xar_moduleid = $xartable[modules].xar_regid";
     $query2 = "SELECT DISTINCT xar_itemtype FROM $xartable[userpoints]";
     $query3 = "SELECT DISTINCT xar_itemid FROM $xartable[userpoints]";
@@ -177,6 +183,22 @@ function userpoints_init()
     
     // FIXME: this seems to be some left-over from the old template module
     //xarDefineInstance('userpoints', 'Template', $instances);
+*/
+
+    $query1 = "SELECT xar_rankname FROM $xartable[userpoints_ranks] ORDER BY xar_id";
+    $query2 = "SELECT xar_id FROM $xartable[userpoints_ranks] ORDER BY xar_id";
+    $instances = array(
+        array('header' => 'Rank Name:',
+            'query' => $query1,
+            'limit' => 20
+            ),
+        array('header' => 'Rank ID:',
+            'query' => $query2,
+            'limit' => 20
+            )
+        );
+
+    xarDefineInstance('userpoints', 'Rank', $instances);
 
     /**
      * Register the module components that are privileges objects
@@ -186,16 +208,16 @@ function userpoints_init()
 
     xarRegisterMask('OverviewUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('CommentUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_COMMENT');
     xarRegisterMask('AddUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADD');
     xarRegisterMask('DeleteUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterMask('AdminUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADMIN');
-    xarRegisterMask('CommentUserpoints', 'All', 'userpoints', 'Item', 'All:All:All', 'ACCESS_COMMENT');
-    xarRegisterMask('EditUserpointsTemplate', 'All', 'userpoints', 'Template', 'All:All:All', 'ACCESS_ADMIN');
 
-    xarRegisterMask('ReadRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('AddRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADMIN');
+    xarRegisterMask('ReadUserpointsRank', 'All', 'userpoints', 'Rank', 'All:All', 'ACCESS_READ');
+    xarRegisterMask('EditUserpointsRank', 'All', 'userpoints', 'Rank', 'All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddUserpointsRank', 'All', 'userpoints', 'Rank', 'All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteUserpointsRank', 'All', 'userpoints', 'Rank', 'All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminUserpointsRank', 'All', 'userpoints', 'Rank', 'All:All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
 }
@@ -209,14 +231,41 @@ function userpoints_upgrade($oldversion)
     switch ($oldversion) {
         case 1.0:
         case '1.0':
-            // Code to upgrade from version 1.0 goes here
-            break;
+        case '1.0.0':
         case '1.1.0':
             // Code to upgrade from version 1.1 goes here
+
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+
+            xarDBLoadTableMaintenanceAPI();
+            // Delete tables
+            // Generate the SQL to drop the table using the API
+            $query = xarDBDropTable($xartable['userpoints']);
+            if (empty($query)) return; // throw back
+            // Drop the table and send exception if returns false.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            // Generate the SQL to drop the table using the API
+            $query = xarDBDropTable($xartable['userpoints_display']);
+            if (empty($query)) return; // throw back
+            // Drop the table and send exception if returns false.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            if (!xarModUnregisterHook('item', 'remove', 'API',
+                                      'userpoints', 'admin', 'removehook')) {
+                return false;
+            }
+
             // delete/initialize the whole thing again
             userpoints_delete();
             userpoints_init();
 
+            // fall through to next version
+
+        case '1.2.0':
             break;
     }
 
@@ -234,15 +283,15 @@ function userpoints_delete()
         return false;
     }   
     if (!xarModUnregisterHook('item', 'create', 'API',
-                           'userpoints', 'adminapi', 'createhook')) {
+                           'userpoints', 'admin', 'createhook')) {
         return false;
     }
-    if (!xarModUnregisterHook('item', 'remove', 'API',
-                           'userpoints', 'adminapi', 'removehook')) {
+    if (!xarModUnregisterHook('item', 'delete', 'API',
+                           'userpoints', 'admin', 'deletehook')) {
         return false;
     }
     if (!xarModUnregisterHook('item', 'update', 'API',
-                           'userpoints', 'adminapi', 'updatehook')) {
+                           'userpoints', 'admin', 'updatehook')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'display', 'GUI',
@@ -267,19 +316,22 @@ function userpoints_delete()
 
     xarDBLoadTableMaintenanceAPI();
     // Delete tables
+/* currently unused
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['userpoints']);
     if (empty($query)) return; // throw back
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
+*/
+/* currently unused
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['userpoints_display']);
     if (empty($query)) return; // throw back
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-
+*/
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['userpoints_ranks']);
     if (empty($query)) return; // throw back

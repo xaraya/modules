@@ -35,11 +35,8 @@ function userpoints_admin_createrank($args)
     // variables as well as setting default values if needed.  Getting vars
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
-    if (!xarVarFetch('id', 'str:1:', $id, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return; 
     if (!xarVarFetch('rankname', 'str:1:', $rankname, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rankminscore', 'str:1:', $rankminscore, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rankminscore', 'int:0:', $rankminscore, '',XARVAR_NOT_REQUIRED)) return;
 
     // Argument check - make sure that all required arguments are present
     // and in the right format, if not then return to the add form with the
@@ -53,7 +50,7 @@ function userpoints_admin_createrank($args)
 
     // Argument check
     $invalid = array();
-    if (empty($rankminscore) || !is_numeric($rankminscore)) {
+    if (!is_numeric($rankminscore) || $rankminscore < 0) {
         $invalid['rankminscore'] = 1;
         $rankminscore = '';
     } 

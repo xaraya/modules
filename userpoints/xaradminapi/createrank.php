@@ -50,7 +50,7 @@ function userpoints_adminapi_createrank($args)
     } 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AddRank', 1, 'Item', "$rankname:All:All")) {
+    if (!xarSecurityCheck('AddUserpointsRank', 1, 'Rank', "$rankname:All")) {
         return;
     } 
     // Get database setup - note that both xarDBGetConn() and xarDBGetTables()

@@ -37,23 +37,10 @@ function userpoints_admin_modifyrank($args)
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('id', 'int:1:', $id)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'isset', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rankname', 'str:1:', $rankname, $rankname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rankminscore', 'str:1:', $rankminscore, $rankminscore,XARVAR_NOT_REQUIRED)) return;
 
-    // At this stage we check to see if we have been passed $objectid, the
-    // generic item identifier.  This could have been passed in by a hook or
-    // through some other function calling this as part of a larger module, but
-    // if it exists it overrides $exid
-    
-    // Note that this module couuld just use $objectid everywhere to avoid all
-    // of this munging of variables, but then the resultant code is less
-    // descriptive, especially where multiple objects are being used.  The
-    // decision of which of these ways to go is up to the module developer
-    if (!empty($objectid)) {
-        $id = $objectid;
-    } 
     // The user API function is called.  This takes the item ID which we
     // obtained from the input and gets us the information on the appropriate
     // item.  If the item does not exist we post an appropriate message and
@@ -70,7 +57,7 @@ function userpoints_admin_modifyrank($args)
     // in this case we had to wait until we could obtain the item name to
     // complete the instance information so this is the first chance we get to
     // do the check
-    if (!xarSecurityCheck('AdminRank', 1, 'Item', "$item[rankname]:All:$id")) {
+    if (!xarSecurityCheck('EditUserpointsRank', 1, 'Rank', "$item[rankname]:$id")) {
         return;
     } 
     // Get menu variables - it helps if all of the module pages have a standard

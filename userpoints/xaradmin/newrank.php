@@ -34,14 +34,14 @@ function userpoints_admin_newrank($args)
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('rankname', 'str:1:', $rankname, $rankname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rankminscore', 'str:1:', $rankminscore, $rankminscore,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('invalid', 'isset', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return; 
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
     // helps if all of the module pages have a standard menu at the top to
     // support easy navigation
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AddRank')) return; 
+    if (!xarSecurityCheck('AddUserpointsRank')) return; 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid; 

@@ -74,7 +74,7 @@ function userpoints_admin_deleterank($args)
     // in this case we had to wait until we could obtain the item name to
     // complete the instance information so this is the first chance we get to
     // do the check
-    if (!xarSecurityCheck('DeleteRank', 1, 'Item', "$item[rankname]:All:$id")) {
+    if (!xarSecurityCheck('DeleteUserpointsRank', 1, 'Rank', "$item[rankname]:$id")) {
         return;
     } 
     // Check for confirmation.
