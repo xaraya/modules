@@ -218,7 +218,7 @@ function pubsub_delete()
                            'pubsub',
                            'admin',
                            'createhook')) {
-        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
     #if (!xarModUnregisterHook('item',
     #                       'create',
@@ -226,7 +226,7 @@ function pubsub_delete()
     #                       'pubsub',
     #                       'user',
     #                       'subscribe')) {
-    #    xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+    #    xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     #}
     if (!xarModUnregisterHook('item',
                            'display',
@@ -234,7 +234,7 @@ function pubsub_delete()
                            'pubsub',
                            'user',
                            'displayicon')) {
-        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
     #if (!xarModUnregisterHook('item',
     #                       'delete',
@@ -242,7 +242,7 @@ function pubsub_delete()
     #                       'pubsub',
     #                       'user',
     #                       'unsubscribe')) {
-    #    xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+    #    xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     #}
     if (!xarModUnregisterHook('item',
                            'delete',
@@ -250,7 +250,7 @@ function pubsub_delete()
                            'pubsub',
                            'user',
                            'delsubscriptions')) {
-        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
     if (!xarModUnregisterHook('item',
                            'delete',
@@ -258,7 +258,7 @@ function pubsub_delete()
                            'pubsub',
                            'admin',
                            'deletehook')) {
-        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
 
     // Get database information

@@ -57,7 +57,7 @@ function pubsub_user_modifysubscription()
     }
 */
 	switch ($subaction) {
-		case _PUBSUB_ACTION_UNSUB:
+		case 0:
 			xarModAPIFunc('pubsub','user','unsubscribe',
 						  array('modid'   =>$modid
 					           ,'cid'     =>$cid
@@ -65,7 +65,7 @@ function pubsub_user_modifysubscription()
 							   ,'userid'  =>$userid
 							   ));
 			break; 
-		case _PUBSUB_ACTION_SUB:
+		case 1:
 			xarModAPIFunc('pubsub','user','subscribe',
 						  array('modid'   =>$modid
 					           ,'cid'     =>$cid
