@@ -37,7 +37,7 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('hottopic','int:1:',$hotTopic,10,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('redhottopic','int:1:',$redhotTopic,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage,20,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('supportshorturls','isset', $shorturls,0,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('supportshorturls','isset', $supportshorturls,0,XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
