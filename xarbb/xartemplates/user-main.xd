@@ -1,4 +1,14 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:if condition="isset($catid)">
+	<table border="0" cellpadding="3" cellspacing="0" width="100%">
+		<tr>
+			<td colspan="2">
+				<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+			</td>
+		</tr>
+	</table>
+</xar:if>
+
 <table width="100%" cellspacing="0" cellpadding="2">
 	<tr> 
 		<td align="left" valign="bottom">
@@ -17,18 +27,18 @@
 						<br />
 					</span>
 				</xar:if>
-				<span>
+				<h4>
 					<a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
 						#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
 						<xar:mlstring>
 							Forum Index
 						</xar:mlstring>
 					</a><br />
-				</span>
+				</h4>
 			</p>
 		</td>
 		<td align="right" valign="bottom" class="xar-sub">
-			<p>
+			<span class="xar-norm">
 				<xar:if condition="xarUserIsLoggedIn()">
 					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('from' => $lastvisitdate))#">
 						<xar:mlstring>
@@ -46,37 +56,45 @@
 						</xar:mlstring>
 					</a>
 				</xar:if>
-			</p>
+			</span>
 		</td>
 	</tr>
 </table>
 <table width="100%" cellpadding="4" cellspacing="1">
-	<tr> 
+	<tr style="border: 1px solid #000;"> 
 		<th colspan="2" nowrap="nowrap">
-			<xar:mlstring>
-				Forum
-			</xar:mlstring>
+			<h4>
+				<xar:mlstring>
+					Forum
+				</xar:mlstring>
+			</h4>
 		</th>
-		<th width="50" nowrap="nowrap">
-			<xar:mlstring>
-				Topics
-			</xar:mlstring>
+		<th width="50" nowrap="nowrap" style="border: 1px solid #000;">
+			<h4>			
+				<xar:mlstring>
+					Topics
+				</xar:mlstring>
+			</h4>
 		</th>
-		<th width="50" nowrap="nowrap">
-			<xar:mlstring>
-				Posts
-			</xar:mlstring>
+		<th width="50" nowrap="nowrap" style="border: 1px solid #000;">
+			<h4>			
+				<xar:mlstring>
+					Posts
+				</xar:mlstring>
+			</h4>
 		</th>
-		<th width="250" nowrap="nowrap">
-			<xar:mlstring>
-				Last Post
-			</xar:mlstring>
+		<th width="250" nowrap="nowrap" style="border: 1px solid #000;">
+			<h4>			
+				<xar:mlstring>
+					Last Post
+				</xar:mlstring>
+			</h4>
 		</th>
 	</tr>
 	<xar:loop name="$items">
-	<tr class="xar-accent"> 
+	<tr class="xar-accent" style="border: 1px solid #000;"> 
 		<td colspan="2">
-			<span>
+			<h2>
 				<xar:if condition="isset($loop:item['catname'])">
 					<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $loop:item['cid']))#">
 						#$loop:item['catname']#
@@ -86,39 +104,39 @@
 						#$loop:item['name']#
 					</a>
 				</xar:if>
-			</span>
+			</h2>
 		</td>
 		<td colspan="3" align="right">
 			&nbsp;
 		</td>
 	</tr>
 	<xar:foreach in="$loop:item['cbchild']" value="$cats">
-		<tr> 
-			<td class="xar-norm" align="center" valign="middle">
+		<tr class="xar-accent" style="border: 1px solid #000;"> 
+			<td align="center" valign="middle" style="border: 1px solid #000;">
 				<img src="#xarTplGetImage('new/folder_cat.gif')#" alt="#xarML('Category')#" />
 			</td>
 
-			<td class="xar-norm" width="100%" height="50">
+			<td width="100%" height="50">
 				<span class="xar-title">
 					<a href="#xarModURL('xarbb', 'user', 'main', array('catid' => $cats['cid']))#" title="#$cats['name']#">
 						#$cats['name']#
 					</a><br />
 				</span> 
-				<span class="xar-norm">
+				<span>
 					#$cats['description']#<br />
 				</span>
 			</td>
-			<td class="xar-accent" align="center" valign="middle">
+			<td align="center" valign="middle">
 				<span class="xar-sub">
 					<!-- #$forum['ftopics']# -->
 				</span>
 			</td>
-			<td class="xar-norm" align="center" valign="middle">
+			<td align="center" valign="middle">
 				<span class="xar-sub">
 					<!-- #$forum['fposts']# -->
 				</span>
 			</td>
-			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
+			<td align="center" valign="middle" nowrap="nowrap">
 				<span class="gensmall">
 					<!-- #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])#<br />
 					<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a> -->
@@ -127,8 +145,8 @@
 		</tr>
 	</xar:foreach>
 	<xar:foreach in="$loop:item['forums']" value="$forum">
-		<tr> 
-			<td class="xar-norm" align="center" valign="middle">
+		<tr style="border: 1px solid #000;"> 
+			<td class="xar-norm" align="center" valign="middle" style="border: 1px solid #000;">
 				#$forum['timeimage']#
 			</td>
 			<td class="xar-norm" width="100%" height="50">
@@ -145,17 +163,17 @@
 					#$forum['fdesc']#<br />
 				</span>
 			</td>
-			<td class="xar-accent" align="center" valign="middle">
+			<td class="xar-accent" align="center" valign="middle" style="border: 1px solid #000;">
 				<span class="xar-sub">
 					#$forum['ftopics']#
 				</span>
 			</td>
-			<td class="xar-norm" align="center" valign="middle">
+			<td class="xar-norm" align="center" valign="middle" style="border: 1px solid #000;">
 				<span class="xar-sub">
 					#$forum['fposts']#
 				</span>
 			</td>
-			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
+			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap" style="border: 1px solid #000;">
 				<span class="gensmall">
 					#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])#<br />
 					<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a>
@@ -239,7 +257,7 @@
 <table cellspacing="3" border="0" align="center" cellpadding="0">
 	<tr> 
 		<td width="20" align="center">
-			#$newpost#
+			<img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post in forum')#" />
 		</td>
 		<td>
 			<span class="xar-sub">
@@ -252,7 +270,7 @@
 			&nbsp;&nbsp;
 		</td>
 		<td width="20" align="center">
-			#$nonewpost#
+			<img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post in forum')#" />
 		</td>
 		<td>
 			<span class="xar-sub">
@@ -265,12 +283,25 @@
 			&nbsp;&nbsp;
 		</td>
 		<td width="20" align="center">
-			#$locked#
+			<img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Forum locked for entry')#" />
 		</td>
 		<td>
 			<span class="xar-sub">
 				<xar:mlstring>
 				    Forum Locked
+				</xar:mlstring>
+			</span>
+		</td>
+		<td>
+			&nbsp;&nbsp;
+		</td>
+		<td width="20" align="center">
+			<img src="#xarTplGetImage('new/folder_cat.gif')#" alt="#xarML('More categories')#" />
+		</td>
+		<td>
+			<span class="xar-sub">
+				<xar:mlstring>
+				    Category Folder
 				</xar:mlstring>
 			</span>
 		</td>

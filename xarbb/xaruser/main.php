@@ -3,6 +3,7 @@
  * File: $Id$
  * 
  * Main user function to display list of all existing forums
+ * And existing categories
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -10,26 +11,44 @@
  * @link http://www.xaraya.org
  *
  * @subpackage  xarbb Module
- * @author John Cox
+ * @author John Cox, Roger Raymond, Carl Corliss (help)
+*/
+
+/**
+ * Configure forums and categories for display
+ *
+ * @access  public
+ * @param   startnum used for the pager
+ * @param   catid when not on top level forum
+ * @return  array
 */
 function xarbb_user_main()
 {
    // Get parameters from whatever input we need
     if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET)) return;
-    //$catid = xarVarCleanFromInput('catid');
+
     // Security Check
     if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
 
-    // Get parameters from whatever input we need
-    $data = array();
-    $data['pager'] = '';    
-    $data['uid']    = xarUserGetVar('uid');
-    $data['items'] = array();
+    // Variable Needed for output
+    $args               = array();
+    $args['modid']      = xarModGetIDfromName('xarbb');
+    $args['itemtype']   = 1;
+    $data               = array();
+    $data['pager']      = '';    
+    $data['uid']        = xarUserGetVar('uid');
+    $data['catid']      = $catid;
+    $data['items']      = array();
+    // Cookie
+    $data['now']        = time();
+    $sitename           = xarModGetVar('themes', 'SiteName', 0);
+    // Login
+    $data['return_url'] = xarModURL('xarbb', 'user', 'main');
+    $data['submitlabel']= xarML('Submit');
 
     // List the categories available as well
-    $args['modid'] = xarModGetIDfromName('xarbb');
-    $args['itemtype'] = 1;
+
     // Regular Categories
     if (isset($catid)){
         $args['cid'] = $catid;
@@ -78,66 +97,49 @@ function xarbb_user_main()
     }
     // Debug
     //$pre = var_export($items, true); echo "<pre>$pre</pre>"; return;
-
-
-    // TODO, need to check if new topics have been updated since last visit.
-    $data['folder']       = '<img src="' . xarTplGetImage('folder.gif') . '" alt="'.xarML('Folder').'"/>';
-
+    // Add the array of items to the template variables
+    $data['items'] = $items;
     // Add a pager
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('xarbb', 'user', 'countforums'),
         xarModURL('xarbb', 'user', 'main', array('startnum' => '%%')),
         xarModGetVar('xarbb', 'forumsperpage'));
-
-    // Add the array of items to the template variables
-    $data['items'] = $items;
-
-    // User Specifics
-    $data['now']    = time();
-    //xarModSetVar('xarbb', 'lastvisitdate', $data['now']);
-    $sitename = xarModGetVar('themes', 'SiteName', 0);
-
+    // Check the cookie for the date to display
     if (isset($_COOKIE["xarbb_lastvisit"])){
         $data['lastvisitdate'] = unserialize($_COOKIE["xarbb_lastvisit"]);
     } else {
         $data['lastvisitdate'] = 1;
     }
-
-    // Images
-    // These are dependant on the time functions being changed
-    $data['newpost']    = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
-    $data['nonewpost']  = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
-    $data['locked']     = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New posts').'" />';
-
-    // Login
-    $data['return_url']      = xarModURL('xarbb', 'user', 'main');
-    $data['submitlabel']    = xarML('Submit');
-
-    // Return the template variables defined in this function
     return $data;
 }
 
+/**
+ * Configure forums and categories for display
+ *
+ * @access  private
+ * @param   args contains that catid of forums
+ * @return  array of forum information
+*/
 function xarbb_user__getforuminfo($args)
 {
     $forums = $args;
-
     $totalforums = count($forums);
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
-
+        // Get the name of the poster.  Does it make sense to split this 
+        // to the API, since it is called so often?
         $getname = xarModAPIFunc('roles',
                                  'user',
                                  'get',
                                  array('uid' => $forum['fposter']));
-
         $forums[$i]['name'] = $getname['name'];
-
+        
+        // Forum Options
         // Check to see if forum is locked
         if ($forum['fstatus'] == 1){
             $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('Forum Locked').'" />';
         } else {
             // Here we can check the updated images or standard ones.
-
             // Images
             if (isset($_COOKIE["xarbb_all"])){
                 $alltimecompare = unserialize($_COOKIE["xarbb_all"]);
@@ -150,7 +152,6 @@ function xarbb_user__getforuminfo($args)
             } else {
                 $forumtimecompare = '';
             }
-
             if (($alltimecompare > $forum['fpostid']) || ($forumtimecompare > $forum['fpostid'])){
                 $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
             } else {
