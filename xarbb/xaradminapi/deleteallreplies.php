@@ -40,17 +40,10 @@ function xarbb_adminapi_deleteallreplies($args)
 
     if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
 
-    $comments = xarModAPIFunc('comments', 'user', 'get_multiple', array('modid' => xarModGetIdFromName('xarbb'), 'objectid' => $tid));
-    
-    if (!isset($comments) || !is_array($comments)){
-        $msg = xarML('Could not get comments in #(1), #(2), #(3)', 'admin', 'deleteallreplies', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
-    }
-
-    if(count($comments) > 0)    {
-        xarModAPIFunc('comments', 'admin', 'delete_object_nodes', array('modid' => xarModGetIdFromName('xarbb'), 'objectid' => $tid));
-    }
+    xarModAPIFunc('comments', 'admin', 'delete_object_nodes',
+                  array('modid' => xarModGetIdFromName('xarbb'),
+                        'itemtype' => $topic['fid'],
+                        'objectid' => $tid));
     return true;
 }
 ?>

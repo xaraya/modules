@@ -91,6 +91,7 @@ function xarbb_user_printtopic($args)
                               'user',
                               'get_multiple',
                               array('modid'       => $header['modid'],
+                                    'itemtype'    => $data['fid'],
                                     'objectid'    => $header['objectid']));
 /*
     $todolist = array();

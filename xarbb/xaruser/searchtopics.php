@@ -150,7 +150,7 @@ function xarbb_user_searchtopics()
                                                 'user',
                                                 'get',
                                                 array('modname' => 'xarbb',
-                                                      'itemtype' => 2,
+                                                      'itemtype' => $topic['fid'],
                                                       'objectid' => $topic['tid']));
 
         if (!$topics[$i]['hitcount']) {
