@@ -41,9 +41,6 @@ function figlet_user_main()
         $text = '';
     }
 
-    xarTplSetPageTitle(xarModGetVar('themes', 'SiteName').' :: '.
-                       xarVarPrepForDisplay(xarML('Figlet')));
-
     if (!empty($font)){
         require("modules/figlet/xarclass/phpfiglet_class.php");
 
