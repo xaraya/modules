@@ -5,28 +5,28 @@
 <br />
 <div style="text-align: center;">
 <xar:if condition="$previousState">
-	<h4>Logging was ON...</h4>
-	<!---
-   	<img src="modules/logconfig/xarimages/lit-lightbulb.png" name="lightbulb_on" id="lightbulb_on" alt="#xarML('Logging currently on')#" />
-   	-->
+    <h4>Logging was ON...</h4>
+    <!---
+       <img src="modules/logconfig/xarimages/lit-lightbulb.png" name="lightbulb_on" id="lightbulb_on" alt="#xarML('Logging currently on')#" />
+       -->
 <xar:else />
-	<h3>Logging was OFF...</h3>
-	<!---
-   	<img src="modules/logconfig/xarimages/lightbulb.png" name="lightbulb_off" id="lightbulb_off" alt="#xarML('Logging currently off')#" />
-   	-->
+    <h3>Logging was OFF...</h3>
+    <!---
+       <img src="modules/logconfig/xarimages/lightbulb.png" name="lightbulb_off" id="lightbulb_off" alt="#xarML('Logging currently off')#" />
+       -->
 </xar:if>
 
 <br />
 
 <xar:if condition="$currentState">
-	<h3>Logging now ON!</h3>
-	<!---
-   	<img src="modules/logconfig/xarimages/lit-lightbulb.png" name="lightbulb_on" id="lightbulb_on" alt="#xarML('Logging currently on')#" />
-   	-->
+    <h3>Logging now ON!</h3>
+    <!---
+       <img src="modules/logconfig/xarimages/lit-lightbulb.png" name="lightbulb_on" id="lightbulb_on" alt="#xarML('Logging currently on')#" />
+       -->
 <xar:else />
-	<h3>Logging now OFF!</h3>
-	<!---
-   	<img src="modules/logconfig/xarimages/lightbulb.png" name="lightbulb_off" id="lightbulb_off" alt="#xarML('Logging currently off')#" />
-   	-->
+    <h3>Logging now OFF!</h3>
+    <!---
+       <img src="modules/logconfig/xarimages/lightbulb.png" name="lightbulb_off" id="lightbulb_off" alt="#xarML('Logging currently off')#" />
+       -->
 </xar:if>
 </div>

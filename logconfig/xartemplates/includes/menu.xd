@@ -10,14 +10,14 @@
 <br />
 
 <div id="tabnav">
-	<div class="help" title="#xarML('Menu links for this module')#"><xar:mlstring>Actions</xar:mlstring> :</div>
+    <div class="help" title="#xarML('Menu links for this module')#"><xar:mlstring>Actions</xar:mlstring> :</div>
     <xar:foreach in="$menulinks" value="$linkarray">
-		<div>
-			<xar:if condition="$linkarray['func'] == $activelink">
-				<a href="#$linkarray['url']#" class="active" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
-			<xar:else />
-				<a href="#$linkarray['url']#" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
-			</xar:if>
-		</div>	
+        <div>
+            <xar:if condition="$linkarray['func'] == $activelink">
+                <a href="#$linkarray['url']#" class="active" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
+            <xar:else />
+                <a href="#$linkarray['url']#" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
+            </xar:if>
+        </div>    
     </xar:foreach>
 </div>

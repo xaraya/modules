@@ -17,17 +17,17 @@
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>The LogConfig Module controls the Xaraya logging system.</xar:mlstring></p>
-		</div>
+        </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <p><xar:mlstring>How to use it?</xar:mlstring></p>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>From the menu, you have three choices. </xar:mlstring></p>
-			<ul>
+            <ul>
                 <li><xar:mlstring>Add logger -- Allows you add a new logger to the configuration.</xar:mlstring></li>
-				<li><xar:mlstring>List loggers -- List the loggers that are currently configured.</xar:mlstring></li>
-				<li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
-		</ul>
+                <li><xar:mlstring>List loggers -- List the loggers that are currently configured.</xar:mlstring></li>
+                <li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
+        </ul>
         </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <p><xar:mlstring>Fallback System:</xar:mlstring></p>
