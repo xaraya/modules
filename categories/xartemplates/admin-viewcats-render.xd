@@ -55,10 +55,10 @@
     <td>
         <xar:for start="$i = 1" test="$i le ($pagertotal - $catsperpage)" iter="$i += $catsperpage">
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
-                #$i#-#$i+$catsperpage#
+                #$i#-#$i+$catsperpage-1#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
-                    #$i#-#$i+$catsperpage#
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                    #$i#-#$i+$catsperpage-1#
                 </a>
             </xar:if>
             <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
@@ -71,7 +71,7 @@
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
                 #$i#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
                     #$i#
                 </a>
             </xar:if>
@@ -80,7 +80,7 @@
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
                 #$i#-#$pagertotal#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
                     #$i#-#$pagertotal#
                 </a>
             </xar:if>
