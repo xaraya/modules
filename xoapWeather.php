@@ -3,11 +3,15 @@
  * Class to grab XML weather feeds from weather.com
  *
  * Implements the weather.com SDK and is derived from :
- * xoapWeather - Copyright (C) 2003 Brian Paulson <spectre013@spectre013.com>                         
+ * xoapWeather - Copyright (C) 2003 Brian Paulson <spectre013@spectre013.com>
  *
  * @package weather
  * @author Roger Raymond <roger@xaraya.com>
  */
+
+// use xaraya's Generic XML Parser
+require_once 'includes/xarXML.php';
+
 class xoapWeather
 {
     var $xoapKey;
@@ -22,7 +26,7 @@ class xoapWeather
     var $error;
     var $units;
     var $location;
-    
+
     /**
      * xoapWeather constructor
      *
@@ -71,7 +75,7 @@ class xoapWeather
             }
         }
     }
-    
+
     /**
      * Sets the units to be used for this instance
      *
@@ -79,7 +83,7 @@ class xoapWeather
      * @access  public
      * @param   string $units (S)tandard or (M)etric
      */
-    function setUnits($units=null) 
+    function setUnits($units=null)
     {
         if(isset($units)) {
             $this->units = strtolower($units);
@@ -146,123 +150,23 @@ class xoapWeather
             $this->error['number'] =& $tree['ERROR'][0]['ERR'][0]['ATTRIBUTES']['TYPE'];
             $this->error['type'] =& $tree['ERROR'][0]['ERR'][0]['VALUE'];
 
-            if($this->error['type'] != "" or $this->error['number'] != ""){            
+            if($this->error['type'] != "" or $this->error['number'] != ""){
                 $this->error['exists'] = true;
                 xarErrorSet(
                     XAR_USER_EXCEPTION,
-                    $this->error['number'], 
+                    $this->error['number'],
                     $this->error['type']
                 );
             }
         }
-        return false; 
+        return false;
     }
 
-    /**
-     * Get the Children data from and XML file
-     *
-     * @author  Roger Raymond <roger@xaraya.com>
-     * @access  protected
-     * @param   string $vals Array current Nodes in the XML File 
-     * @param   integer $i Integer current Increment in the process
-     * @return  Return Array Children for Node
-     */
-    function GetChildren($vals, &$i)
-    {
-         $children = array();     // Contains node data
-
-          /* Node has CDATA before it's children */
-          if (isset($vals[$i]['value'])) {
-              $children['VALUE'] = $vals[$i]['value'];
-        }
-
-          /* Loop through children */
-          $max = count($vals);
-        while (++$i < $max) {
-              switch ($vals[$i]['type']) {
-                /* Node has CDATA after one of it's children
-                 (Add to cdata found before if this is the case) */
-                 case 'cdata':
-                      if (isset($children['VALUE']))
-                         $children['VALUE'] .= $vals[$i]['value'];
-                      else
-                         $children['VALUE'] = $vals[$i]['value'];
-                       break;
-                  /* At end of current branch */
-                 case 'complete':
-                       if (isset($vals[$i]['attributes'])) {
-                            $children[$vals[$i]['tag']][]['ATTRIBUTES'] = $vals[$i]['attributes'];
-                        $index = count($children[$vals[$i]['tag']])-1;
-
-                           if (isset($vals[$i]['value']))
-                            $children[$vals[$i]['tag']][$index]['VALUE'] = $vals[$i]['value'];
-                        else
-                            $children[$vals[$i]['tag']][$index]['VALUE'] = '';
-                    } else {
-                        if (isset($vals[$i]['value']))
-                            $children[$vals[$i]['tag']][]['VALUE'] = $vals[$i]['value'];
-                        else
-                            $children[$vals[$i]['tag']][]['VALUE'] = '';
-                    }
-                    break;
-                /* Node has more children */
-                case 'open':
-                    if (isset($vals[$i]['attributes'])) {
-                        $children[$vals[$i]['tag']][]['ATTRIBUTES'] = $vals[$i]['attributes'];
-                        $index = count($children[$vals[$i]['tag']])-1;
-                        $children[$vals[$i]['tag']][$index] = array_merge($children[$vals[$i]['tag']][$index],$this->GetChildren($vals, $i));
-                    } else {
-                        $children[$vals[$i]['tag']][] = $this->GetChildren($vals, $i);
-                    }
-                    break;
-                /* End of node, return collected data */
-                case 'close':
-                    return $children;
-            }
-        }
-    }
-
-    /**
-     * Method parses the xml data feed
-     *
-     * @author  Roger Raymond <roger@xaraya.com>
-     * @access  protected
-     * @param   string $data xml data feed
-     * @return  array xml data tree
-     */
-    function &GetXMLTree(&$data)
-    {
-        if(!isset($data)) { 
-            // chances are we have a non-existent location or an error
-            xarErrorSet(
-                    XAR_USER_EXCEPTION,
-                    xarML('An Error Occured while Processing Your Request'),
-                    xarML('A likely cause for this is that the location you specified was not found')
-                );
-        }
-          $parser = xml_parser_create('ISO-8859-1');
-         xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-          xml_parse_into_struct($parser, $data, $vals, $index);
-         xml_parser_free($parser);
-
-          $tree = array();
-          $i = 0;
-
-          if (isset($vals[$i]['attributes'])) {
-            $tree[$vals[$i]['tag']][]['ATTRIBUTES'] = $vals[$i]['attributes'];
-            $index = count($tree[$vals[$i]['tag']])-1;
-            $tree[$vals[$i]['tag']][$index] =  array_merge($tree[$vals[$i]['tag']][$index], $this->GetChildren($vals, $i));
-          } else {
-            $tree[$vals[$i]['tag']][] = $this->GetChildren($vals, $i);
-        }
-        return $tree;
-    }
-    
     /**
      * Method grabs the xml feed
      *
      * Attempts to grab a local cached weather xml feed from /var/cache/rss
-     * otherwise it grabs it from the weather.com site and caches it 
+     * otherwise it grabs it from the weather.com site and caches it
      *
      * @author  Roger Raymond <roger@xaraya.com>
      * @access  protected
@@ -270,27 +174,26 @@ class xoapWeather
      * @param   string $units (S)tandard or (M)etric
      * @return  string xml data to parse
      */
-    function &getFile($type='cc',$units='s') 
+    function &getFile($type='cc',$units='s',$cache=true)
     {
         $location = urlencode($this->location);
-        if($type == "cc") {
-            $setup = "cc=*";
+        if($type == 'cc') {
+            $setup = 'cc=*';
             $refresh = $this->currentCondCache;
         } elseif($type == 'forecast') {
             $setup = "dayf=$this->forecastDays";
             $refresh = $this->multiDayforecastCache;
         }
-        $stream = "http://xoap.weather.com/weather/local/$location?$setup&link=xoap&unit=$units&prod=$this->product&par=$this->xoapPar&key=$this->xoapKey";    
+        $stream = "http://xoap.weather.com/weather/local/{$location}?{$setup}&amp;link=xoap&amp;unit={$units}&amp;prod={$this->product}&amp;par={$this->xoapPar}&amp;key={$this->xoapKey}";
         $data = xarModAPIFunc('base','user','getfile',
             array(
                 'url'=>$stream,
-                'cached'=>true,
+                'cached'=>$cache,
                 'cachedir'=>'cache/rss',
                 'refresh'=>$refresh,
                 'extension'=>'.xml',
-                'archive'=>false  
+                'archive'=>false
             ));
-        $this->errorCheck($data);
         return $data;
     }
 
@@ -301,60 +204,91 @@ class xoapWeather
      * @access  public
      * @return  array forecast data for the location
      */
-    function &forecastData()
+    function &forecastData($cache=true)
     {
         /*
-        Here we are taking the Array from the XML file and putting it into an manageble array
+        Grabbing the Current XML data for the Current Condition and the Current Conditions details
         */
-        $xmi =& $this->getFile('forecast',$this->units);
-        $tree =& $this->GetXMLTree($xmi);
-        $days = $tree['WEATHER'][0]['DAYF'][0]['DAY'];
-        $error = $this->errorCheck($xmi);
+        $p =& new xarXmlParser();
+        $xmi =& $this->getFile('forecast',$this->units,$cache);
+        if(!$p->parseString($xmi)) {
+            // try again
+            return $this->forecastData(false);
+        } else {
+            $tree = $p->tree[0]['children'][0];
+        }
 
-        $forecast[0]['loc'] = $tree['WEATHER'][0]['LOC'][0]['DNAM'][0]['VALUE'];
-        $forecast[0]['lsup'] = $tree['WEATHER'][0]['DAYF'][0]['LSUP'][0]['VALUE'];
-        $forecast[0]['unitsTemp'] = $tree['WEATHER'][0]['HEAD'][0]['UT'][0]['VALUE'];                  
-        $forecast[0]['unitsDistance'] = $tree['WEATHER'][0]['HEAD'][0]['UD'][0]['VALUE'];
-        $forecast[0]['unitsSpeed'] = $tree['WEATHER'][0]['HEAD'][0]['US'][0]['VALUE'];
-        $forecast[0]['unitsPrecip'] = $tree['WEATHER'][0]['HEAD'][0]['UP'][0]['VALUE'];
-        $forecast[0]['tempPressure'] = $tree['WEATHER'][0]['HEAD'][0]['UR'][0]['VALUE'];
-        $forecast[0]['linkOne'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][0]['L'][0]['VALUE']);
-        $forecast[0]['titleOne'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][0]['T'][0]['VALUE'];
-        $forecast[0]['linkTwo'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][1]['L'][0]['VALUE']);
-        $forecast[0]['titleTwo'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][1]['T'][0]['VALUE'];
-        $forecast[0]['linkThree'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][2]['L'][0]['VALUE']);
-        $forecast[0]['titleThree'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][2]['T'][0]['VALUE'];
-        $forecast[0]['linkFour'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][3]['L'][0]['VALUE']);
-        $forecast[0]['titleFour'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][3]['T'][0]['VALUE'];
+        $head =& $tree['children'][0];
+        $loc  =& $tree['children'][1];
+        $days =& $tree['children'][2]['children'];
+
+        $forecast[0]['linkOne']     = '';
+        $forecast[0]['titleOne']    = '';
+        $forecast[0]['linkTwo']     = '';
+        $forecast[0]['titleTwo']    = '';
+        $forecast[0]['linkThree']   = '';
+        $forecast[0]['titleThree']  = '';
+        $forecast[0]['linkFour']    = '';
+        $forecast[0]['titleFour']   = '';
+
+        $forecast[0]['unitsTemp']     = $head['children'][2]['content'];
+        $forecast[0]['unitsDistance'] = $head['children'][3]['content'];
+        $forecast[0]['unitsSpeed']    = $head['children'][4]['content'];
+        $forecast[0]['unitsPrecip']   = $head['children'][5]['content'];
+        $forecast[0]['tempPressure']  = $head['children'][6]['content'];
+
+        $forecast[0]['location']      = $loc['attributes']['id'];
+        $forecast[0]['sunrise']       = $loc['children'][4]['content'];
+        $forecast[0]['sunset']        = $loc['children'][5]['content'];
+        $forecast[0]['dnam']          = $loc['children'][5]['content'];
+        $forecast[0]['lat']           = $loc['children'][2]['content'];
+        $forecast[0]['lon']           = $loc['children'][3]['content'];
+        $forecast[0]['tm']            = $loc['children'][1]['content'];
+        $forecast[0]['zone']          = $loc['children'][6]['content'];
+
         /*
         With the Current Conditions we have up to 10 days of data that needs to be collected
         we do that here by looping though and grabbing the data
         */
-        for($i=0; $i<count($days); $i++) {
-            $forecast[$i]['wkday'] = $days[$i]['ATTRIBUTES']['T'];
-            $forecast[$i]['date'] = $days[$i]['ATTRIBUTES']['DT'];
-            $forecast[$i]['hi'] = $days[$i]['HI'][0]['VALUE'];
-            $forecast[$i]['lo'] = $days[$i]['LOW'][0]['VALUE'];
-            $forecast[$i]['sunr'] = $days[$i]['SUNR'][0]['VALUE'];
-            $forecast[$i]['suns'] = $days[$i]['SUNS'][0]['VALUE'];
-            $forecast[$i]['part']['d']['icon'] = $days[$i]['PART'][0]['ICON'][0]['VALUE'];
-            $forecast[$i]['part']['d']['cond'] = $days[$i]['PART'][0]['T'][0]['VALUE'];
-            $forecast[$i]['part']['d']['windspeed'] = $days[$i]['PART'][0]['WIND'][0]['S'][0]['VALUE'];
-            $forecast[$i]['part']['d']['windgust'] = $days[$i]['PART'][0]['WIND'][0]['GUST'][0]['VALUE'];
-            $forecast[$i]['part']['d']['winddir'] = $days[$i]['PART'][0]['WIND'][0]['T'][0]['VALUE'];
-            $forecast[$i]['part']['d']['ppcp'] = $days[$i]['PART'][0]['PPCP'][0]['VALUE'];
-            $forecast[$i]['part']['d']['humid'] = $days[$i]['PART'][0]['HMID'][0]['VALUE'];
-            $forecast[$i]['part']['n']['icon'] = $days[$i]['PART'][1]['ICON'][0]['VALUE'];
-            $forecast[$i]['part']['n']['cond'] = $days[$i]['PART'][1]['T'][0]['VALUE'];
-            $forecast[$i]['part']['n']['windspeed'] = $days[$i]['PART'][1]['WIND'][0]['S'][0]['VALUE'];
-            $forecast[$i]['part']['n']['windgust'] = $days[$i]['PART'][1]['WIND'][0]['GUST'][0]['VALUE'];
-            $forecast[$i]['part']['n']['winddir'] = $days[$i]['PART'][1]['WIND'][0]['T'][0]['VALUE'];
-            $forecast[$i]['part']['n']['ppcp'] = $days[$i]['PART'][1]['PPCP'][0]['VALUE'];
-            $forecast[$i]['part']['n']['humid'] = $days[$i]['PART'][1]['HMID'][0]['VALUE'];
-            $forecast[$i]['error'] = $error;
+        for($i=0,$c=1,$max=count($days); $c<$max; $i++,$c++) {
+
+            $day =& $days[$c]; // simple reference to our day node
+            $forecast[$i]['wkday']                   = $day['attributes']['t'];
+            $forecast[$i]['date']                    = $day['attributes']['dt'];
+
+            $children =& $day['children'];
+            $forecast[$i]['hi']                      = $children[0]['content'];
+            $forecast[$i]['lo']                      = $children[1]['content'];
+            $forecast[$i]['sunr']                    = $children[2]['content'];
+            $forecast[$i]['suns']                    = $children[3]['content'];
+
+            $daytime =& $children[4];
+            $forecast[$i]['part']['d']['icon']       = $daytime['children'][0]['content'];
+            $forecast[$i]['part']['d']['cond']       = $daytime['children'][1]['content'];
+            $forecast[$i]['part']['d']['windspeed']  = $daytime['children'][2]['children'][0]['content'];
+            $forecast[$i]['part']['d']['windgust']   = $daytime['children'][2]['children'][1]['content'];
+            $forecast[$i]['part']['d']['winddirdeg'] = $daytime['children'][2]['children'][2]['content'];
+            $forecast[$i]['part']['d']['winddir']    = $daytime['children'][2]['children'][3]['content'];
+            $forecast[$i]['part']['d']['bt']         = $daytime['children'][3]['content'];
+            $forecast[$i]['part']['d']['ppcp']       = $daytime['children'][4]['content'];
+            $forecast[$i]['part']['d']['humid']      = $daytime['children'][5]['content'];
+
+            $nighttime =& $children[5];
+            $forecast[$i]['part']['n']['icon']       = $nighttime['children'][0]['content'];
+            $forecast[$i]['part']['n']['cond']       = $nighttime['children'][1]['content'];
+            $forecast[$i]['part']['n']['windspeed']  = $nighttime['children'][2]['children'][0]['content'];
+            $forecast[$i]['part']['n']['windgust']   = $nighttime['children'][2]['children'][1]['content'];
+            $forecast[$i]['part']['n']['winddirdeg'] = $nighttime['children'][2]['children'][2]['content'];
+            $forecast[$i]['part']['n']['winddir']    = $nighttime['children'][2]['children'][3]['content'];
+            $forecast[$i]['part']['n']['bt']         = $nighttime['children'][3]['content'];
+            $forecast[$i]['part']['n']['ppcp']       = $nighttime['children'][4]['content'];
+            $forecast[$i]['part']['n']['humid']      = $nighttime['children'][5]['content'];
+            //$forecast[$i]['error'] = $error;
         }
-        return $forecast;    
+        //var_dump($forecast); die();
+        return $forecast;
     }
+
 
     /**
      * Get the current conditions forecast data
@@ -363,51 +297,73 @@ class xoapWeather
      * @access  public
      * @return  array forecast data for the location
      */
-    function &ccData()
+    function &ccData($cache=true)
     {
         /*
         Grabbing the Current XML data for the Current Condition and the Current Conditions details
-        */ 
-        $xmi =& $this->getFile('cc',$this->units);
-        $tree =& $this->GetXMLTree($xmi);
-        $error = $this->errorCheck($xmi);
-        $cc['linkOne'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][0]['L'][0]['VALUE']);
-        $cc['titleOne'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][0]['T'][0]['VALUE'];
-        $cc['linkTwo'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][1]['L'][0]['VALUE']);
-        $cc['titleTwo'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][1]['T'][0]['VALUE'];
-        $cc['linkThree'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][2]['L'][0]['VALUE']);
-        $cc['titleThree'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][2]['T'][0]['VALUE'];
-        $cc['linkFour'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][3]['L'][0]['VALUE']);
-        $cc['titleFour'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][3]['T'][0]['VALUE'];
-        $cc['unitsTemp'] = $tree['WEATHER'][0]['HEAD'][0]['UT'][0]['VALUE'];                  
-        $cc['unitsDistance'] = $tree['WEATHER'][0]['HEAD'][0]['UD'][0]['VALUE'];
-        $cc['unitsSpeed'] = $tree['WEATHER'][0]['HEAD'][0]['US'][0]['VALUE'];
-        $cc['unitsPrecip'] = $tree['WEATHER'][0]['HEAD'][0]['UP'][0]['VALUE'];
-        $cc['tempPressure'] = $tree['WEATHER'][0]['HEAD'][0]['UR'][0]['VALUE'];
-        $cc['location'] = $tree['WEATHER'][0]['LOC'][0]['ATTRIBUTES']['ID'];
-        $cc['sunrise'] = $tree['WEATHER'][0]['LOC'][0]['SUNR'][0]['VALUE'];
-        $cc['sunset'] = $tree['WEATHER'][0]['LOC'][0]['SUNS'][0]['VALUE'];
-        $cc['lastUpdate'] = $tree['WEATHER'][0]['CC'][0]['LSUP'][0]['VALUE'];
-        $cc['observStation'] = $tree['WEATHER'][0]['CC'][0]['OBST'][0]['VALUE'];
-        $cc['temp'] = $tree['WEATHER'][0]['CC'][0]['TMP'][0]['VALUE'];
-        $cc['feelsLike'] = $tree['WEATHER'][0]['CC'][0]['FLIK'][0]['VALUE'];
-        $cc['conditions'] = $tree['WEATHER'][0]['CC'][0]['T'][0]['VALUE'];
-        $cc['icon'] = $tree['WEATHER'][0]['CC'][0]['ICON'][0]['VALUE'];
-        $cc['barometer'] = $tree['WEATHER'][0]['CC'][0]['BAR'][0]['R'][0]['VALUE'];
-        $cc['barometerDesc'] = $tree['WEATHER'][0]['CC'][0]['BAR'][0]['D'][0]['VALUE'];
-        $cc['wind'] = $tree['WEATHER'][0]['CC'][0]['WIND'][0]['S'][0]['VALUE'];
-        $cc['windGust'] = $tree['WEATHER'][0]['CC'][0]['WIND'][0]['GUST'][0]['VALUE'];
-        $cc['windDirdeg'] = $tree['WEATHER'][0]['CC'][0]['WIND'][0]['D'][0]['VALUE'];
-        $cc['windDirname'] = $tree['WEATHER'][0]['CC'][0]['WIND'][0]['T'][0]['VALUE'];
-        $cc['humidity'] = $tree['WEATHER'][0]['CC'][0]['HMID'][0]['VALUE'];
-        $cc['visibility'] = $tree['WEATHER'][0]['CC'][0]['VIS'][0]['VALUE'];
-        $cc['uv'] = $tree['WEATHER'][0]['CC'][0]['UV'][0]['I'][0]['VALUE'];
-        $cc['uvDesc'] = $tree['WEATHER'][0]['CC'][0]['UV'][0]['T'][0]['VALUE'];
-        $cc['dewPoint'] = $tree['WEATHER'][0]['CC'][0]['DEWP'][0]['VALUE'];
-        $cc['error'] = $error;
+        */
+        $p =& new xarXmlParser();
+        $xmi =& $this->getFile('cc',$this->units,$cache);
+        if(!$p->parseString($xmi)) {
+            // try again
+            return $this->ccData(false);
+        } else {
+            $tree = $p->tree[0]['children'][0];
+        }
+
+        $head =& $tree['children'][0];
+        $loc  =& $tree['children'][1];
+        $cc   =& $tree['children'][2];
+
+        $cc['linkOne']     = '';
+        $cc['titleOne']    = '';
+        $cc['linkTwo']     = '';
+        $cc['titleTwo']    = '';
+        $cc['linkThree']   = '';
+        $cc['titleThree']  = '';
+        $cc['linkFour']    = '';
+        $cc['titleFour']   = '';
+
+
+        $cc['unitsTemp']     = $head['children'][2]['content'];
+        $cc['unitsDistance'] = $head['children'][3]['content'];
+        $cc['unitsSpeed']    = $head['children'][4]['content'];
+        $cc['unitsPrecip']   = $head['children'][5]['content'];
+        $cc['tempPressure']  = $head['children'][6]['content'];
+
+        $cc['location']      = $loc['attributes']['id'];
+        $cc['sunrise']       = $loc['children'][4]['content'];
+        $cc['sunset']        = $loc['children'][5]['content'];
+        $cc['dnam']          = $loc['children'][5]['content'];
+        $cc['lat']           = $loc['children'][2]['content'];
+        $cc['lon']           = $loc['children'][3]['content'];
+        $cc['tm']            = $loc['children'][1]['content'];
+        $cc['zone']          = $loc['children'][6]['content'];
+
+        $cc['lastUpdate']    = $cc['children'][0]['content'];
+        $cc['observStation'] = $cc['children'][1]['content'];
+        $cc['temp']          = $cc['children'][2]['content'];
+        $cc['feelsLike']     = $cc['children'][3]['content'];
+        $cc['conditions']    = $cc['children'][4]['content'];
+        $cc['icon']          = $cc['children'][5]['content'];
+        $cc['barometer']     = $cc['children'][6]['children'][0]['content'];
+        $cc['barometerDesc'] = $cc['children'][6]['children'][1]['content'];
+        $cc['wind']          = $cc['children'][7]['children'][0]['content'];
+        $cc['windspeed']     = $cc['children'][7]['children'][0]['content'];
+        $cc['windGust']      = $cc['children'][7]['children'][1]['content'];
+        $cc['winddirdeg']    = $cc['children'][7]['children'][2]['content'];
+        $cc['windDirname']   = $cc['children'][7]['children'][3]['content'];
+        $cc['humidity']      = $cc['children'][8]['content'];
+        $cc['visibility']    = $cc['children'][9]['content'];
+        $cc['uv']            = $cc['children'][10]['children'][0]['content'];
+        $cc['uvDesc']        = $cc['children'][10]['children'][1]['content'];
+        $cc['dewPoint']      = $cc['children'][11]['content'];
+        $cc['moonIcon']      = $cc['children'][12]['children'][0]['content'];
+        $cc['moonDesc']      = $cc['children'][12]['children'][1]['content'];
+        //$cc['error']         = $error;
         return $cc;
-    }    
-    
+    }
+
     /**
      * Search for the specified location
      *
@@ -424,27 +380,35 @@ class xoapWeather
                 'url'=>$stream,
                 'cached'=>false,
                 'extension'=>'.xml',
-                'archive'=>false  
+                'archive'=>false
             ));
-        $this->errorCheck($data);
-        if(!empty($data)) {
-            $tree =& $this->GetXMLTree($data);
+
+        //$this->errorCheck($data);
+        if(empty($data)) {
+            return;
         }
-        
-        if(isset($tree['SEARCH'][0]['LOC'])) {
-            $max = count($tree['SEARCH'][0]['LOC']);
-            for($i=0; $i<$max; $i++) {
-                $info[$i]['zip'] = $tree['SEARCH'][0]['LOC'][$i]['ATTRIBUTES']['ID'];
-                $info[$i]['name'] = $tree['SEARCH'][0]['LOC'][$i]['VALUE'];
-            }
-            return $info;
+
+        $p =& new xarXmlParser();
+        if(!$p->parseString($data)) {
+            // try again
+            return $this->locData($loc);
+        } elseif(!isset($p->tree[0]['children'][0]['children'])) {
+            // no results
+            return;
         } else {
-            // we don't have any results
-            return false;
+            $tree = $p->tree[0]['children'][0]['children'];
         }
-        return true;
+
+        $i=0;
+        foreach($tree as $loc) {
+            $info[$i]['zip']  = $loc['attributes']['id'];
+            $info[$i]['name'] = $loc['content'];
+            $i++;
+        }
+
+        return $info;
     }
-    
+
     /**
      * Allows the user to override the location and units variables in the url
      *
@@ -465,7 +429,7 @@ class xoapWeather
         }
         return true;
     }
-    
+
     /**
      * Fixes for the links provided in the weather.com xml feed
      *
@@ -476,7 +440,7 @@ class xoapWeather
      * @param   string $link the link to format
      * @return  string the correctly formatted link
      */
-    function formatLink($link) 
+    function formatLink($link)
     {
         if(stristr($link,'par=xoap')) {
             // weather.com's feed is wrong so we'll fix it to comply with the TOS
@@ -484,7 +448,7 @@ class xoapWeather
         } elseif(stristr($link,'prod=xoap')) {
             // the feed is correct, append the partner id
             $link .= '&amp;par='.$this->xoapPar;
-            
+
         }
         return $link;
     }
