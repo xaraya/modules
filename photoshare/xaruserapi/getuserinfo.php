@@ -17,8 +17,8 @@ function photoshare_userapi_getuserinfo($args)
 	$uid = xarUserGetVar('uid');
 	extract($args);
     
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	
 	$imagesTable  = $xartables['photoshare_images'];
 	

@@ -28,8 +28,8 @@ function photoshare_userapi_deleteimage($args)
 
 
 	// Get database setup
-	list($dbconn) = xarDBGetConn();
-	$xartable = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartable =& xarDBGetTables();
 	$imagesTable = $xartable['photoshare_images'];
 	$foldersTable = $xartable['photoshare_folders'];
 

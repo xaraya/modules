@@ -43,8 +43,8 @@ function photoshare_userapi_deletefolder($args)
 			if (!$ok) return;
 		}
 	} else {
-		list($dbconn) = xarDBGetConn();
-		$xartable = xarDBGetTables();
+		$dbconn =& xarDBGetConn();
+		$xartable =& xarDBGetTables();
 		$imagesTable = $xartable['photoshare_images'];
 		$foldersTable = $xartable['photoshare_folders'];
 
@@ -66,8 +66,8 @@ function photoshare_userapi_deletefolder($args)
 	}
 
 	// Get database setup
-	list($dbconn) = xarDBGetConn();
-	$xartable = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartable =& xarDBGetTables();
 	$imagesTable = $xartable['photoshare_images'];
 	$foldersTable = $xartable['photoshare_folders'];
 

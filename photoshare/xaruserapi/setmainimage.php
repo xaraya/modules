@@ -27,8 +27,8 @@ function photoshare_userapi_setmainimage($args)
 		$image = xarModAPIFunc('photoshare', 'user', 'getimages', array('imageID' => $imageID));
 
 	// Get database setup
-	list($dbconn) = xarDBGetConn();
-	$xartable = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartable =& xarDBGetTables();
 	$foldersTable = $xartable['photoshare_folders'];
 
 	$sql = "UPDATE $foldersTable

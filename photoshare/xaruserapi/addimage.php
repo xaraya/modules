@@ -58,8 +58,8 @@ function photoshare_userapi_addimage($args)
 	if (!isset($userInfo)) return;
 
 	// Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $imagesTable = $xartable['photoshare_images'];
 
 	$nextId = $dbconn->GenId($imagesTable);

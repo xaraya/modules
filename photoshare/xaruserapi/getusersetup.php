@@ -27,8 +27,8 @@ function photoshare_userapi_getusersetup($args)
         return;
 	}
 		
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	
 	$setupTable   = $xartables['photoshare_setup'];
 	

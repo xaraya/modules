@@ -40,8 +40,8 @@ function photoshare_userapi_moveimage($args)
 		--$position;
 
 	// Get database setup
-	list($dbconn) = xarDBGetConn();
-	$xartable = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartable =& xarDBGetTables();
 	$imagesTable = $xartable['photoshare_images'];
 
     // First update moves all images after current image one to the left.

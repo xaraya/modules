@@ -27,8 +27,8 @@ function photoshare_userapi_getfoldertrail($args)
         return false;
     }
 
-	list($dbconn) = xarDBGetConn();
-	$xartable = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartable =& xarDBGetTables();
 
 	$foldersTable  = $xartable['photoshare_folders'];
 

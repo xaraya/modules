@@ -23,8 +23,8 @@ function photoshare_init()
 	    return;
 	}
 	
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	xarDBLoadTableMaintenanceAPI();
 
     // It's good practice to name the table and column definitions you
@@ -235,8 +235,8 @@ function photoshare_upgrade($oldversion)
 // -----------------------------------------------------------------------
 function photoshare_delete()
 {
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API

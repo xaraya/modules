@@ -23,8 +23,8 @@ function photoshare_userapi_getimages($args)
         return;
     }
 
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	$imagesTable  = $xartables['photoshare_images'];
 
 	if (isset($imageID))

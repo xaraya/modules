@@ -27,8 +27,8 @@ function photoshare_userapi_getnewposition($args)
 	}
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $imagesTable  = $xartable['photoshare_images'];
 
 	$sql = "SELECT MAX(ps_position), COUNT(*) FROM $imagesTable

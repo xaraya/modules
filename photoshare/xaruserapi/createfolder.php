@@ -49,8 +49,8 @@ function photoshare_userapi_createfolder($args)
 	}
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $foldersTable = $xartable['photoshare_folders'];
 
 	$nextId = $dbconn->GenId($foldersTable);

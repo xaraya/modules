@@ -114,8 +114,8 @@ function photoshare_userapi_updateimage($args)
 	}
 
 	// Get database setup
-	list($dbconn) = xarDBGetConn();
-	$xartable = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartable =& xarDBGetTables();
 	$imagesTable = $xartable['photoshare_images'];
 
 	$sql = "UPDATE $imagesTable SET

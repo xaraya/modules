@@ -41,8 +41,8 @@ function photoshare_userapi_updatefolder($args)
 	}
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $foldersTable = $xartable['photoshare_folders'];
 
 	$sql = "UPDATE $foldersTable SET

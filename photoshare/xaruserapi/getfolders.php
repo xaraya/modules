@@ -28,8 +28,8 @@ function photoshare_userapi_getfolders($args)
 	if (!isset($countSubFolders))
 		$countSubFolders = false;
 
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	
 	$whereSQL = ($getForList ? "NOT f.ps_blockfromlist " : "");
 	//TODO : topics
