@@ -30,8 +30,8 @@ function html_userapi_countitems()
 	if(!xarSecurityCheck('ReadHTML')) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Set HTML table
     $htmltable = $xartable['html'];

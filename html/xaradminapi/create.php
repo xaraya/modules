@@ -58,8 +58,8 @@ function html_adminapi_create($args)
     $type = trim($type);
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Set tables
     $htmltable = $xartable['html'];

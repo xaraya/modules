@@ -32,8 +32,8 @@ function html_init()
     xarDBLoadTableMaintenanceAPI();
 
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Create html table
     $htmltable = $xartable['html'];
@@ -276,8 +276,8 @@ function html_upgrade($oldversion)
     xarDBLoadTableMaintenanceAPI();
 
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $htmltable = $xartable['html'];
     $htmltypestable = $xartable['htmltypes'];
@@ -439,8 +439,8 @@ function html_delete()
     xarRemoveInstances('html');
 
     // Get the database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();

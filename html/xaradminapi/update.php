@@ -48,8 +48,8 @@ function html_adminapi_update($args)
 	if(!xarSecurityCheck('EditHTML')) return;
     
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $htmltable = $xartable['html'];
 

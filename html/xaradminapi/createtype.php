@@ -48,8 +48,8 @@ function html_adminapi_createtype($args)
     $tagtype = trim($tagtype);
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Set tables
     $htmltypestable = $xartable['htmltypes'];

@@ -53,8 +53,8 @@ function html_adminapi_delete($args)
 	if(!xarSecurityCheck('DeleteHTML')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $htmltable = $xartable['html'];
 

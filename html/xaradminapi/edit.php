@@ -61,8 +61,8 @@ function html_adminapi_edit($args)
 	if(!xarSecurityCheck('EditHTML')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $htmltable = $xartable['html'];
 
     // Make sure $tag is lowercase

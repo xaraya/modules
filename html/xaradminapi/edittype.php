@@ -60,8 +60,8 @@ function html_adminapi_edittype($args)
 	if(!xarSecurityCheck('EditHTML')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $htmltypestable = $xartable['htmltypes'];
 
     // Make sure tag type is lowercase
