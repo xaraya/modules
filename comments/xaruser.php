@@ -144,6 +144,7 @@ function comments_user_display($args) {
     $package['uid']                   = xarUserGetVar('uid');
     $package['uname']                 = xarUserGetVar('uname');
     $package['name']                  = xarUserGetVar('name');
+    $package['new_title']             = xarVarGetCached('Comments.title', 'title');
 
     $receipt['post_url']              = xarModURL('comments','user','reply');
     $receipt['action']                = 'display';
