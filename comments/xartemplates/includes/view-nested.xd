@@ -1,9 +1,8 @@
 <div class="xar-norm">
     <xar:loop name="$package['comments']">
         <div class="xar-accent" style="padding: 1px; margin-left: #$loop:item['depth']*30#px;margin-bottom: 4px;">
-            <a name="#$loop:item['xar_cid']#" id="#$loop:item['xar_cid']#"> </a>
-            <div class="xar-accent" style="padding: 4px;" align="left">
-                <h4 style="display: inline;"> #$loop:item['xar_title']# </h4>
+             <div class="xar-accent" style="padding: 4px;" align="left">
+                <h4 style="display: inline;"><a name="#$loop:item['xar_cid']#" id="#$loop:item['xar_cid']#">#$loop:item['xar_title']#</a></h4>
                 <br />
                 <span class="xar-sub">
                     <xar:mlstring>
@@ -50,19 +49,37 @@
                 <br />
                 <xar:sec catch="false" mask="Comments-Reply" instance="$header[modid]:$header[objectid]:ALL">
                     <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;">
-                        <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> <input type="hidden" name="header[pid]" id="header-pid" value="#$loop:item['xar_cid']#" /> <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> <input type="submit" name="receipt[action]" id="receipt-action-reply" value="reply" />
+                        <input type="hidden" name="header[modid]" value="#$header['modid']#" /> 
+						<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
+						<input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
+						<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
+						<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
+						<input type="submit" name="receipt[action]" id="receipt-action-reply" value="reply" />
                     </form>
                 </xar:sec>
                 <xar:if condition="xarUserIsLoggedIn()">
                     <xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$loop:item['xar_cid']) or $loop:item['xar_uid'] eq $package['uid']">
                         <form action="#xarModUrl('comments', 'user', 'modify')#" method="post" style="display: inline;">
-                            <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> <input type="hidden" name="header[cid]" id="header-cid" value="#$loop:item['xar_cid']#" /> <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> <input type="hidden" name="receipt[action]" id="receipt-action-modify" value="modify" /> <input type="submit" name="submit" id="submit" value="#xarML('Modify')#" />
+                            <input type="hidden" name="header[modid]" value="#$header['modid']#" />
+							<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
+							<input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
+							<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
+							<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
+							<input type="hidden" name="receipt[action]" value="modify" />
+							<input type="submit" name="submit" id="submit" value="#xarML('Modify')#" />
                         </form>
                     </xar:if>
                 </xar:if>
                 <xar:sec catch="false" mask="Comments-Delete" instance="$header[modid]:$header[objectid]:#$loop:item[xar_cid]#">
                     <form action="#xarModUrl('comments', 'user', 'delete')#" method="post" style="display: inline;">
-                        <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> <input type="hidden" name="header[cid]" id="header-cid" value="#$loop:item['xar_cid']#" /> <input type="hidden" name="header[pid]" id="header-pid" value="#$loop:item['xar_pid']#" /> <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> <input type="hidden" name="receipt[action]" id="receipt-action-delete" value="confirm-delete" /> <input type="submit" name="submit" id="submit" value="#xarML('Delete')#" />
+                        <input type="hidden" name="header[modid]" value="#$header['modid']#" />
+						<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
+						<input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
+						<input type="hidden" name="header[pid]" value="#$loop:item['xar_pid']#" />
+						<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
+						<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
+						<input type="hidden" name="receipt[action]" value="confirm-delete" />
+						<input type="submit" name="submit" id="submit" value="#xarML('Delete')#" />
                     </form>
                 </xar:sec>
             </div>
