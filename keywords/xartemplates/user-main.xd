@@ -1,4 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="empty($status)">
     <h2><xar:mlstring>Overview of Keywords</xar:mlstring></h2>
     <ul>
@@ -17,10 +17,10 @@
         <xar:if condition="!empty($item['url']) and !empty($item['label'])">
             <a href="#$item['url']#">#$item['label']#</a>
         <xar:elseif condition="!empty($item['url'])"/>
-            <!--- you could skip these items --->
+            <xar:comment> you could skip these items </xar:comment>
             <a href="#$item['url']#"><xar:ml><xar:mlstring>item #(1)</xar:mlstring><xar:mlvar>#$item['itemid']#</xar:mlvar></xar:ml></a>
         <xar:else/>
-            <!--- you could skip these items --->
+            <xar:comment> you could skip these items </xar:comment>
             <xar:mlstring>item</xar:mlstring> #$item['moduleid']# #$item['itemtype']# #$item['itemid']#</a>
         </xar:if>
         </li>
