@@ -1,16 +1,10 @@
-<table border="0" width="100%">
-    <tr>
-        <th colspan="4" align="center">
-            <xar:mlstring>Release Module :: View Modules and Themes</xar:mlstring>            
-        </th>
-    </tr>
-</table>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
+<div align="center">
 
-<center>
-<br />
-<br />
-
-<table width="100%" border="0" cellspacing="0" cellpadding="4">
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent">
     <tr>        
 		<th width="5%">
             <xar:mlstring>ID</xar:mlstring>
@@ -26,20 +20,21 @@
 		</th>
 	</tr>
     <xar:loop name="$items">
-    <tr onmouseover="this.style.backgroundColor='##C1A88F';this.style.cursor='hand';" onmouseout="this.style.backgroundColor='##F1EFED';this.style.cursor='hand';">
-        <td align="center" valign="top">
+    <tr>
+        <td align="center" valign="top" class="xar-norm">
 			#$rid#
 		</td>
-        <td align="center" valign="top">
+        <td align="center" valign="top" class="xar-norm">
 			#$name#
 		</td>
-		<td align="center" valign="top">
+		<td align="center" valign="top" class="xar-norm">
 			#$type#
 		</td>
-        <td>
+        <td class="xar-norm">
 			#$desc#
 		</td>
     </tr>
     </xar:loop>
 </table>
-<br />
+</div>
+</div>
