@@ -29,7 +29,6 @@ function sniffer_init()
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI(); 
     // Create the Table
-    // FIXME: MrB: sniffer is giving problems during install, hardcode the tablename here
     $systemPrefix = xarDBGetSystemTablePrefix();
     $xartable['sniffer'] = $systemPrefix . '_sniffer';
     $query = xarDBCreateTable($xartable['sniffer'],
