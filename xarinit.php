@@ -139,7 +139,7 @@ function html_init()
                       'br' =>       2,
                       'button' =>   0,
                       'caption' =>  0,
-                      'center' =>   2,
+                      'center' =>   0,
                       'cite' =>     0,
                       'code' =>     0,
                       'col' =>      0,
