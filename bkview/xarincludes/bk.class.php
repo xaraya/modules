@@ -213,7 +213,7 @@ class bkRepo {
     }
     
     function bkFileList($dir='/') {
-        $cmd="bk prs -hn -r+ -d':GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)<br/>}' ".$this->_root."/".$dir;
+        $cmd="bk prs -hn -r+ -d':GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
         $filelist = $this->_run($cmd);
         asort($filelist);
         return $filelist;
@@ -328,14 +328,14 @@ class bkDelta {
         $this->_file=$file;
         $this->_rev=$rev;
         $this->_cset=$cset;
-        $cmd ="bk prs -hvn -r$rev -d':AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)<br/>}' $file";
+        $cmd ="bk prs -hvn -r$rev -d':AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
         
         $info = $this->_cset->_repo->_run($cmd);
         list($age, $author,$domain, $comments) = explode('|',$info[0]);
         $this->_age=$age;
         $this->_author=$author;
         $this->_domain=$domain;
-        $this->_comments=str_replace("<br />","\n",$comments);
+        $this->_comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
     }
     
     function bkDiffs() {
@@ -405,6 +405,7 @@ class bkFile {
                 $cmd = "bk changes -r".$this->_tagrevs[$rev]. " -d':TAG:\n'";
                 $tag = $this->_repo->_run($cmd);
                 if (count($tag)) {
+                    // FIXME: remove the br, it assumes browser output
                     return implode($tag,"<br/>");
                 }
             }

@@ -51,7 +51,8 @@ function bkview_user_browseview($args)
         $files[$counter]['rev']=$rev;
         $files[$counter]['author']=$author;
         $files[$counter]['age']=$age;
-        $files[$counter]['comments']=$comments;
+        $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
+        $files[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $files[$counter]['relfile']=substr($dir,0,strlen($dir)-1)."/".basename($name);
         // FIXME: huge performance penalty for this, make it configurable
         $the_file= new bkFile($repo,$files[$counter]['relfile']);
