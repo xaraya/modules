@@ -28,7 +28,7 @@
 	<input type="radio" name="confirm_delete" value="1" checked="true"> Yes
 	<input type="radio" name="confirm_delete" value="0"> No
 </xar:if>
-<br><xar:mlstring>Confirmation must be provided before files are deleted.</xar:mlstring>
+<br/><xar:mlstring>Confirmation must be provided before files are deleted.</xar:mlstring>
 </p>
 
 
