@@ -248,7 +248,7 @@ function autolinks_adminapi_samples($args)
                     )
                 ),
                 'links' => array(
-                    'link:lid:1' => array(
+                    'link:lid:9' => array(
                         'name' => xarML('Uploads'),
                         'keyword' => '#ulid:([\d]+)#',
                         'match_re' => '1',
@@ -296,7 +296,7 @@ function autolinks_adminapi_samples($args)
                         $links = xarModAPIfunc('autolinks', 'user', 'getall');
                         if (is_array($links)) {
                             foreach ($links as $lid => $link) {
-                                if ($links['tid'] == 0 || $links['type_name'] == '') {
+                                if ($link['tid'] == 0 || $link['type_name'] == '') {
                                     // Update the tid in this link.
                                     $result = xarModAPIfunc('autolinks', 'admin', 'update',
                                         array('lid'=>$lid, 'tid'=>$tid));
