@@ -26,12 +26,16 @@ function uploads_init()
 		$uploads_directory = 'var/uploads/';
 	}
     xarModSetVar('uploads', 'uploads_directory', $uploads_directory);
-    xarModSetVar('uploads', 'import_directory',  $uploads_directory."import/");
-    xarModSetVar('uploads', 'obfuscate_imports', '1');
     xarModSetVar('uploads', 'maximum_upload_size', '100000');
     xarModSetVar('uploads', 'allowed_types', 'gif;jpg;zip;tar.gz;tgz');
+	xarModSetVar('uploads', 'confirm_delete', '1');
+
     xarModSetVar('uploads', 'max_image_width', '600');
     xarModSetVar('uploads', 'max_image_height', '800');
+	xarModSetVar('uploads', 'thumbnail_setting', '0');
+
+    xarModSetVar('uploads', 'import_directory',  '');
+    xarModSetVar('uploads', 'obfuscate_imports', '0');
 		
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
