@@ -1,6 +1,9 @@
 <xar:if condition="!isset($error)">
 
-    <img src="modules/messages/xarimages/xaraya_logo.gif" width="202" height="69">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title"><xar:mlstring>Your private messages</xar:mlstring></span>
+    </div>
+    
     <table cellspacing="0" cellpadding="0" width="50%" border="0">
         <tr>
             <td nowrap width="5%" align="center">
@@ -49,7 +52,7 @@
     </xar:comment>
     </table>
     <hr/>
-    <div align="right"><br />
+    <div align="right">
        <br />
     </div>
     <table cellspacing="0" cellpadding="0" width="100%" border="0">

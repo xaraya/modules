@@ -7,7 +7,16 @@ function messages_user_send()
         return $data['error'] = xarML('You are not permitted to send messages.');
     }
 
-    if (!xarVarFetch('action', 'enum:submit:preview:reply:post', $action)) return;
+    xarVarFetch('preview', 'checkbox', $preview, false, XARVAR_NOT_REQUIRED);
+    xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED);
+
+    if ($preview === true) {
+        $action = 'preview';
+    } elseif ($confirm === true) {
+        $action = 'submit';
+    } else {
+        if (!xarVarFetch('action', 'enum:submit:preview:reply:post', $action)) return;
+    }
 
     $data['post_url']       = xarModURL('messages','user','send');
     $data['action']         = $action;
