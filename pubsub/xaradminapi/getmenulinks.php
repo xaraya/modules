@@ -23,16 +23,24 @@
  */
 function pubsub_adminapi_getmenulinks()
 {
+    $menulinks = array();
+
     if (xarSecurityCheck('AdminPubSub', 0)) {
         $menulinks[] = Array('url'   => xarModURL('pubsub',
                                                   'admin',
                                                   'viewall'),
                              'title' => xarML('View all Pubsub Subscriptions'),
                              'label' => xarML('View All'));
-    }
-
-    if (empty($menulinks)){
-        $menulinks = '';
+        $menulinks[] = Array('url'   => xarModURL('pubsub',
+                                                  'admin',
+                                                  'modifytemplates'),
+                              'title' => xarML('Modify the Pubsub Templates'),
+                              'label' => xarML('Modify Templates'));
+        $menulinks[] = Array('url'   => xarModURL('pubsub',
+                                                  'admin',
+                                                  'modifyconfig'),
+                              'title' => xarML('Modify the Pubsub Configuration'),
+                              'label' => xarML('Modify Config'));
     }
 
     return $menulinks;

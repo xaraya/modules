@@ -1,0 +1,64 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+<div style="margin: auto;">
+<form method="post" action="#xarModURL('pubsub', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<h3><xar:mlstring>Global Configuration</xar:mlstring></h3>
+    <label for="isalias"><xar:mlstring>Enable Short URLs :</xar:mlstring></label>
+    <xar:if condition="!empty($isalias)">
+    <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
+    <xar:else/>
+    <input type="checkbox" name="isalias" id="isalias" value="1" />
+    </xar:if>
+<br/><br/>
+    <label for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>
+    <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
+<br/><br/>
+
+<h3><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h3>
+    <p><xar:mlstring><b>Description:</b> first enable pubsub hooks for a particular module+itemtype,
+then specify here which template should be used when a new item is created for that module+itemtype.</xar:mlstring></p>
+	<table border="0" cellpadding="8" cellspacing="0">
+	<xar:foreach in="$settings" key="$modname" value="$config">
+		<tr>
+			<td colspan="2"><b>#$config['label']#</b></td>
+		</tr>
+		<tr>
+			<td><label for="settings_#$modname#"><xar:mlstring>Template to use</xar:mlstring></label></td>
+			<td>
+			<select name="settings[#$modname#]" id="settings_#$modname#">
+			<xar:foreach in="$templates" key="$id" value="$name">
+				<xar:if condition="$config['template'] eq $id">
+					<option value="#$id#" selected="selected">#$name#</option>
+				<xar:else/>
+					<option value="#$id#">#$name#</option>
+				</xar:if>
+			</xar:foreach>
+			</select>
+			</td>
+		</tr>
+	</xar:foreach>
+	</table>
+<br/>
+
+<h3><xar:mlstring>Configuration of Scheduled Processing</xar:mlstring></h3>
+    <p><xar:mlstring><b>Description:</b> in order to process queued events, you need to install the 'scheduler' module first.
+    Then you can specify here how often the event queue should be processed.</xar:mlstring></p>
+    <label for="interval"><xar:mlstring>Run Scheduler Job : </xar:mlstring></label>
+    <select name="interval" id="interval">
+        <option value=""><xar:mlstring>disabled</xar:mlstring></option>
+        <xar:foreach in="$intervals" key="$id" value="$name">
+            <xar:if condition="!empty($interval) and $interval eq $id">
+              <option value="#$id#" selected="selected">#$name#</option>
+            <xar:else/>
+              <option value="#$id#">#$name#</option>
+            </xar:if>
+        </xar:foreach>
+    </select>
+<br/><br/><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, queued events will not be processed.</xar:mlstring>
+<br /><br />
+<input type="submit" value="Update Pubsub Configuration" />
+</form>
+</div>
+</div>

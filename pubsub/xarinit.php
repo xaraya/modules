@@ -27,6 +27,7 @@ function pubsub_init()
     // Get database information
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
+    $prefix = xarDBGetSiteTablePrefix();
 
     xarDBLoadTableMaintenanceAPI();
 
@@ -72,6 +73,47 @@ function pubsub_init()
         'xar_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
     );
     $query = xarDBCreateTable($pubsubprocesstable,$processfields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $pubsubtemplatestable = $xartable['pubsub_templates'];
+    $templatesfields = array(
+        'xar_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_name'=>array('type'=>'varchar','size'=>64,'null'=>FALSE,'default'=>''),
+        'xar_template'=>array('type'=>'text'),
+        'xar_compiled'=>array('type'=>'text')
+    );
+    $query = xarDBCreateTable($pubsubtemplatestable,$templatesfields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // template names must be unique (to avoid confusion)
+    $index = array(
+        'name'      => 'i_' . $prefix . '_pubsub_templatename',
+        'fields'    => array('xar_name'),
+        'unique'    => true
+    );
+    $query = xarDBCreateIndex($pubsubtemplatestable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $nextId = $dbconn->GenId($pubsubtemplatestable);
+    $name = 'default';
+    $template = '<xar:ml>
+<xar:mlstring>A new item #(1) was created in module #(2).<br/>
+Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
+<xar:mlvar>#$itemid#</xar:mlvar>
+<xar:mlvar>#$module#</xar:mlvar>
+<xar:mlvar>#$link#</xar:mlvar>
+<xar:mlvar>#$title#</xar:mlvar>
+</xar:ml>';
+    // compile the template now
+    $compiled = xarTplCompileString($template);
+
+    $template = xarVarPrepForStore($template);
+    $compiled = xarVarPrepForStore($compiled);
+    $query = "INSERT INTO $pubsubtemplatestable (xar_templateid, xar_name, xar_template, xar_compiled)
+              VALUES ($nextId, '$name', '$template', '$compiled')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -168,22 +210,22 @@ function pubsub_init()
  */
 function pubsub_upgrade($oldversion)
 {
-	switch ($oldversion) {
-		case '1.0':
-		    list($dbconn) = xarDBGetConn();
-		    $prefix = xarDBGetSiteTablePrefix();
-		    
-		    $xarTables = xarDBGetTables();
-		    $pubsubregtable = $xarTables['pubsub_reg'];
-			$pubsubtemplatetable = $prefix.'_pubsub_template';
+    switch ($oldversion) {
+        case '1.0':
+            list($dbconn) = xarDBGetConn();
+            $prefix = xarDBGetSiteTablePrefix();
+            
+            $xarTables = xarDBGetTables();
+            $pubsubregtable = $xarTables['pubsub_reg'];
+            $pubsubtemplatetable = $prefix.'_pubsub_template';
 
             xarDBLoadTableMaintenanceAPI();
 
-			// Drop the template table
+            // Drop the template table
             $query = xarDBDropTable($pubsubtemplatetable);
             $result =& $dbconn->Execute($query);
-			
-			// Add a column to the register table
+            
+            // Add a column to the register table
             $query = xarDBAlterTable($pubsubregtable,
                                      array('command' => 'add',
                                            'field' => 'xar_subdate',
@@ -192,15 +234,68 @@ function pubsub_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
 
-			$sql = "UPDATE $pubsubregtable
-					   SET xar_subdate = ".time()."";
-		    $result =& $dbconn->Execute($sql);
-		    if (!$result) return;
-		    break;
-	} // END switch
+            $sql = "UPDATE $pubsubregtable
+                       SET xar_subdate = ".time()."";
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return;
+
+        case 1.1:
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $prefix = xarDBGetSiteTablePrefix();
+
+            xarDBLoadTableMaintenanceAPI();
+
+            $pubsubtemplatestable = $xartable['pubsub_templates'];
+            $templatesfields = array(
+                'xar_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                'xar_name'=>array('type'=>'varchar','size'=>64,'null'=>FALSE,'default'=>''),
+                'xar_template'=>array('type'=>'text'),
+                'xar_compiled'=>array('type'=>'text')
+            );
+            $query = xarDBCreateTable($pubsubtemplatestable,$templatesfields);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // template names must be unique (to avoid confusion)
+            $index = array(
+                'name'      => 'i_' . $prefix . '_pubsub_templatename',
+                'fields'    => array('xar_name'),
+                'unique'    => true
+            );
+            $query = xarDBCreateIndex($pubsubtemplatestable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            $name = 'default';
+            $template = '<xar:ml>
+<xar:mlstring>A new item #(1) was created in module #(2).<br/>
+Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
+<xar:mlvar>#$itemid#</xar:mlvar>
+<xar:mlvar>#$module#</xar:mlvar>
+<xar:mlvar>#$link#</xar:mlvar>
+<xar:mlvar>#$title#</xar:mlvar>
+</xar:ml>';
+            // compile the template now
+            $compiled = xarTplCompileString($template);
+            $nextId = $dbconn->GenId($pubsubtemplatestable);
+
+            $template = xarVarPrepForStore($template);
+            $compiled = xarVarPrepForStore($compiled);
+            $query = "INSERT INTO $pubsubtemplatestable (xar_templateid, xar_name, xar_template, xar_compiled)
+                      VALUES ($nextId, '$name', '$template', '$compiled')";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            break;
+
+        default:
+            break;
+    } // END switch
 
     return true;
 }
+
 /**
  * delete the pubsub module
  *
@@ -291,6 +386,13 @@ function pubsub_delete()
     if (!$result) return;
 
     $query = xarDBDropTable($xartable['pubsub_process']);
+    if (empty($query)) return; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $query = xarDBDropTable($xartable['pubsub_templates']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.

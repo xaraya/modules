@@ -15,7 +15,7 @@
  */
 
 /**
- * Process the queue and run all pending jobs
+ * Process the queue and run all pending jobs (executed by the scheduler module)
  * @returns bool
  * @return number of jobs run on success, false if not
  * @raise DATABASE_ERROR
@@ -31,8 +31,9 @@ function pubsub_adminapi_processq($args)
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Get all jobs in pending state
-    $query = "SELECT xar_pubsubid,
-    		         xar_objectid
+    $query = "SELECT xar_handlingid,
+                     xar_pubsubid,
+                     xar_objectid
               FROM $pubsubprocesstable
               WHERE xar_status = " . xarVarPrepForStore('pending');
     $result = $dbconn->Execute($query);
@@ -42,8 +43,12 @@ function pubsub_adminapi_processq($args)
     $count = 0;
 
     while (!$result->EOF) {
-        // run the job passing it the pubsub and object ids.
-        pubsub_adminapi_runjob($result->fields[0], $result->fields[1]);
+        list($handlingid,$pubsubid,$objectid) = $result->fields;
+        // run the job passing it the handling, pubsub and object ids.
+        xarModAPIFunc('pubsub','admin','runjob',
+                      array('handlingid' => $handlingid,
+                            'pubsubid' => $pubsubid,
+                            'objectid' => $objectid));
         $count++;
         $result->MoveNext();
     }

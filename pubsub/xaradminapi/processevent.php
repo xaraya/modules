@@ -68,10 +68,6 @@ function pubsub_adminapi_processevent($args)
 
     $nextId = $dbconn->PO_Insert_ID($pubsubprocesstable, 'xar_handlingid');
 
-    // TODO implement queuing properly
-    // for now we'll just go parse the queue immediately
-    pubsub_adminapi_processq();
-
     // return handlingID
     return $nextId;
 

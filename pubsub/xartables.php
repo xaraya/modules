@@ -51,6 +51,12 @@ function pubsub_xartables()
     // Table name
     $xartable['pubsub_process'] = $pubsub_process;
 
+    // Name for pubsub templates
+    $pubsub_templates = xarDBGetSiteTablePrefix() . '_pubsub_templates';
+
+    // Table name
+    $xartable['pubsub_templates'] = $pubsub_templates;
+
     // Return table information
     return $xartable;
 }

@@ -69,7 +69,7 @@ function pubsub_adminapi_updateevent($args)
                   xar_itemtype = " . xarVarPrepForStore($groupdescr) . ",
                   xar_groupdescr = '" . xarVarPrepForStore($groupdescr) . "'
               WHERE xar_eventid = " . xarVarPrepForStore($eventid);
-    $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     return true;
