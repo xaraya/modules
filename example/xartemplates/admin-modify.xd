@@ -1,0 +1,68 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<!-- the specific template for the current admin function comes here -->
+
+<table width="" border="0" cellspacing="1" cellpadding="8">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form method="post" action="&xar-modurl-example-admin-update;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="exid" id="exid" value="#$item['exid']#" />
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+
+<tr><td><label for="name">#$namelabel#</label></td>
+
+<xar:if condition="isset($name)">
+
+<td><input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" /> <xar:if condition="!empty($invalid['name'])">
+    <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+</xar:if></td></tr>
+
+<xar:else />
+
+<td><input type="text" name="name" id="name" size="32" maxlength="32" value="#$item['name']#" /> <xar:if condition="!empty($invalid['name'])">
+    <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+</xar:if></td></tr>
+
+</xar:if>
+
+<xar:if condition="isset($number)">
+
+<tr><td><label for="number">#$numberlabel#</label></td>
+<td><input type="text" name="number" id="number" size="5" maxlength="5" value="#$number#" /><xar:if condition="!empty($invalid['number'])">
+    <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+</xar:if></td></tr>
+
+<xar:else />
+
+<tr><td><label for="number">#$numberlabel#</label></td>
+<td><input type="text" name="number" id="number" size="5" maxlength="5" value="#$item['number']#" /><xar:if condition="!empty($invalid['number'])">
+    <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+</xar:if></td></tr>
+
+</xar:if>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#" /></td></tr>
+</form>
+
+</table>
+<br />
+</div>
+</div>
