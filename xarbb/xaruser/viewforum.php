@@ -17,6 +17,7 @@ function xarbb_user_viewforum()
     // Get parameters from whatever input we need
     if(!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('fid', 'id', $fid)) return;
+    if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
     // The user API function is called.
     $data = xarModAPIFunc('xarbb',
@@ -97,6 +98,10 @@ function xarbb_user_viewforum()
                                          'xarbb',
                                          $fid);
 
+        if (!empty($read)){
+            xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $topic['tid'], time());
+        }
+        
         $read_topic = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $topic['tid']);
 
         if (isset($read_topic)){
