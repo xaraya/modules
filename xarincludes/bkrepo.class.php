@@ -159,7 +159,7 @@ class bkRepo
         if ($flags & BK_FLAG_FORWARD) $params.='-f ';
         
         // Do we want to show merge csets?
-        if ($flags & BK_FLAG_SHOWMERGE) {
+        if (!($flags & BK_FLAG_SHOWMERGE)) {
             $dspec="'\$unless(:MERGE:){".substr($dspec,1,strlen($dspec)-2)."}'";
         } else {
             $params.='-e ';
