@@ -1,81 +1,17 @@
+<!-- This is the template which will be shown when there is
+     a xar:workflow-instances tag somewhere in the code
+     The ideas is to use a layout attribute in tag tag to select the proper layout
+-->
 <xar:if condition="empty($layout) or $layout eq 'default'">
-<div style="margin: auto;">
-<h3><xar:mlstring>My Current Task List</xar:mlstring></h3>
-<xar:if condition="!empty($items) and count($items) gt 0">
-<table class="normal">
-  <tr>
-    <td class="heading"><xar:mlstring>Process</xar:mlstring></td>
-    <td class="heading"><xar:mlstring>Start</xar:mlstring></td>
-    <td class="heading"><xar:mlstring>Owner</xar:mlstring></td>
-    <td class="heading"><xar:mlstring>Current Activity</xar:mlstring></td>
-    <td class="heading"><xar:mlstring>Assigned To</xar:mlstring></td>
-    <td class="heading"><xar:mlstring>Action</xar:mlstring></td>
-  </tr>
-  <xar:foreach in="$items" value="$item">
-  <tr>
-<form method="post" action="&xar-modurl-workflow-user-instances;">
-    <td>#$item['procname']# #$item['version']#</td>
-    <td>#$item['started']#</td>
-    <td>#$item['owner']#</td>
-    <td>
-    <xar:if condition="$item['type'] eq 'start'">
-      <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-    <xar:elseif condition="$item['type'] eq 'end'"/>
-      <img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-    <xar:elseif condition="$item['type'] eq 'activity'"/>
-      <img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-    <xar:elseif condition="$item['type'] eq 'switch'"/>
-      <img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-    <xar:elseif condition="$item['type'] eq 'standalone'"/>
-      <img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-    <xar:elseif condition="$item['type'] eq 'split'"/>
-      <img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-    <xar:elseif condition="$item['type'] eq 'join'"/>
-      <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-    <xar:else/>
-      #$item['type']# 
-    </xar:if>
-      #$item['name']#
-    </td>
-    <td>#$item['user']#</td>
-    <td>
-      <input type="hidden" name="iid" value="#$item['instanceId']#"/>
-      <input type="hidden" name="aid" value="#$item['activityId']#"/>
-      <input type="hidden" name="return_url" value="#$return_url#"/>
-    <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active'">
-      <input type="hidden" name="activityId" value="#$item['activityId']#"/>
-      <input type="image" name="run" value="1" title="#xarML('run instance')#" alt="#xarML('run instance')#" src="modules/workflow/lib/Galaxia/img/icons/next.gif">
-    </xar:if>
-    <xar:if condition="$item['isAutoRouted'] eq 'n' and $item['actstatus'] eq 'completed'">
-      <input type="image" name="send" value="1" title="#xarML('send instance')#" alt="#xarML('send instance')#" src="modules/workflow/lib/Galaxia/img/icons/linkto.gif">
-    </xar:if>
-    <xar:if condition="$item['status'] ne 'aborted' and $item['status'] ne 'exception' and $item['userId'] eq $userId">
-      <input type="image" name="exception" value="1" title="#xarML('exception handling')#" alt="#xarML('exception handling')#" src="modules/workflow/lib/Galaxia/img/icons/stop.gif">
-    </xar:if>
-    <xar:if condition="$item['status'] eq 'exception' and $item['userId'] eq $userId">
-      <input type="image" name="resume" value="1" title="#xarML('resume instance')#" alt="#xarML('resume instance')#" src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif">
-    </xar:if>
-    <xar:if condition="$item['status'] ne 'aborted' and $item['userId'] eq $userId">
-      <input type="image" name="abort" value="1" title="#xarML('abort instance')#" alt="#xarML('abort instance')#" src="modules/workflow/lib/Galaxia/img/icons/trash.gif">
-    </xar:if>
-    <xar:if condition="$item['user'] eq '*' and $item['status'] eq 'active'">
-      <input type="image" name="grab" value="1" title="#xarML('grab instance')#" alt="#xarML('grab instance')#" src="modules/workflow/lib/Galaxia/img/icons/fix.gif">
-    <xar:elseif condition="$item['status'] eq 'active'"/>
-      <input type="image" name="release" value="1" title="#xarML('release instance')#" alt="#xarML('release instance')#" src="modules/workflow/lib/Galaxia/img/icons/float.gif">
-    </xar:if>
-    </td>
-</form>
-  </tr>
-  </xar:foreach>
-</table>
+  <h3><xar:mlstring>My Current Task List</xar:mlstring></h3>
+  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+    <!-- Produce the list of instances -->
+    <xar:template file="instancelist"/>
+  </div>
 <xar:else/>
-  <xar:mlstring>No instances found</xar:mlstring>
-</xar:if>
-</div>
-
-<xar:else/>
-<xar:comment> you can provide different layouts here, or use separate templates </xar:comment>
-<xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd</xar:mlstring>
-
+  <!-- Layout apparently had a value -->
+  <xar:mlstring>Trying to use layout : </xar:mlstring>#$layout#
+  <xar:mlstring>Not implemented yet</xar:mlstring>
+  <xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd</xar:mlstring>
 </xar:if>
 

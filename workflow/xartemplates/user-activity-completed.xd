@@ -1,20 +1,21 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Module</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#xarML('Activity Completed')#</h2><br />
-<div style="margin: auto;">
-
 <xar:template file="user_bar" type="module"/>
-<br/><br/>
-<table class="normal">
-<tr>
-	<td class="odd">#xarML('Process')#
-	<td class="odd">#$procname# #$procversion#</td>
-</tr>
-<tr>
-	<td class="odd">#xarML('Activity')#
-	<td class="odd">#$actname#</td>
-</tr>
-</table>
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
-</div>
+  <div class="xar-mod-body">
+    <h3><xar:mlstring>Activity Completed</xar:mlstring></h3>
+    <div style="xar-norm-outline" style="padding: 0.5em 1em 0.5em; margin: auto;">
+      <table style="border-collapse: separate;">
+        <tr>
+          <th><xar:mlstring>Process</xar:mlstring></th>
+          <th><xar:mlstring>Version</xar:mlstring></th>
+          <th><xar:mlstring>Activity</xar:mlstring></th>
+        </tr>
+        <tr>
+          <td>#$procname#</td>
+          <td style="text-align: right;">#$procversion#</td>
+          <td>#$actname#</td>
+        </tr>
+      </table>
+    </div>
+    
+    <xar:template file="galaxfooter"/>
+  </div>
 

@@ -1,9 +1,11 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Module</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Workflow Error</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<xar:template file="user_bar" type="module"/>
-<p>#$msg#</p>
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
+  <xar:template file="user_bar" type="module"/>
+  <div class="xar-mod-body">
+    <h3><xar:mlstring>Workflow Error</xar:mlstring></h3>
+    <div class="xar-norm-outline" style="padding: 0.5 em 1em 0.5em;">
+      <p>#$msg#</p>
+    </div>
+    
+    <!-- Show a courtesy footer -->
+    <xar:template file="galaxfooter"/>
+  </div>
 </div>

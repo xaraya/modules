@@ -1,4 +1,29 @@
-<a class="link" href="&xar-modurl-workflow-user-main;"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/home.gif' alt='#xarML('workflows')#' title='#xarML('my workflows')#' /></a>
-<a class="link" href="&xar-modurl-workflow-user-processes;"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Process.gif' alt='#xarML('processes')#' title='#xarML('user processes')#' /></a>
-<a class="link" href="&xar-modurl-workflow-user-activities;"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Activity.gif' alt='#xarML('activities')#' title='#xarML('user activities')#' /></a>
-<a class="link" href="&xar-modurl-workflow-user-instances;"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Instance.gif' alt='#xarML('instances')#' title='#xarML('user instances')#' /></a>
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Workflow Module</xar:mlstring>
+  </span>
+</div>
+
+<div>
+  <span>
+    <b><xar:mlstring>Manage:</xar:mlstring></b>
+  </span>
+</div>
+<div style="padding: 5pt; margin: 0.3em 1em 1em 0.7em; border:thin solid black;">
+    <a href="&xar-modurl-workflow-user-main;">
+      <img border='0' src='modules/workflow/lib/Galaxia/img/icons/home.gif' alt='#xarML('workflows')#' title='#xarML('my workflows')#' />
+        <xar:mlstring>My Workflow</xar:mlstring>
+    </a>
+    <a href="&xar-modurl-workflow-user-processes;">
+      <img border='0' src='modules/workflow/lib/Galaxia/img/icons/Process.gif' alt='#xarML('processes')#' title='#xarML('user processes')#' />
+        <xar:mlstring>Processes</xar:mlstring>
+    </a>
+    <a href="&xar-modurl-workflow-user-activities;">
+      <img border='0' src='modules/workflow/lib/Galaxia/img/icons/Activity.gif' alt='#xarML('activities')#' title='#xarML('user activities')#' />
+        <xar:mlstring>Activities</xar:mlstring>
+    </a>
+    <a href="&xar-modurl-workflow-user-instances;">
+      <img border='0' src='modules/workflow/lib/Galaxia/img/icons/Instance.gif' alt='#xarML('instances')#' title='#xarML('user instances')#' />
+        <xar:mlstring>Instances</xar:mlstring>
+    </a>
+  </div>

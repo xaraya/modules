@@ -1,35 +1,34 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Module</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#xarML('Current Activity')#</h2><br />
-<div style="margin: auto;">
-
 <xar:template file="user_bar" type="module"/>
-<br/><br/>
-<table class="normal">
-<tr>
-	<td class="odd">#xarML('Process')#
-	<td class="odd">#$procname# #$procversion#</td>
-</tr>
-<tr>
-	<td class="odd">#xarML('Activity')#
-	<td class="odd">#$actname#</td>
-</tr>
-</table>
-
-<xar:if condition="!empty($mid)">
-#$mid#
-</xar:if>
-
-<xar:if condition="!empty($return_url)">
-<p><a href="#$return_url#"><xar:mlstring>Return to previous page</xar:mlstring></a></p>
-</xar:if>
-
-<xar:if condition="!empty($hooks) and count($hooks) gt 0">
-    <xar:foreach in="$hooks" key="$hookname" value="$hookoutput">
+<div class="xar-mod-body">
+  <h3><xar:mlstring>Running activity</xar:mlstring></h3>
+  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; margin: auto;">
+    <table style="border-collapse: separate;">
+      <tr>
+        <th><xar:mlstring>Process</xar:mlstring></th>
+        <th><xar:mlstring>Version</xar:mlstring></th>
+        <th><xar:mlstring>Activity</xar:mlstring></th>
+      </tr>
+      <tr>
+        <td>#$procname#</td>
+        <td style="text-align: right;">#$procversion#</td>
+        <td>#$actname#</td>
+      </tr>
+    </table>
+      
+    <xar:if condition="!empty($mid)">#$mid#</xar:if>
+      
+    <xar:if condition="!empty($return_url)">
+      <p><a href="#$return_url#"><xar:mlstring>Return to previous page</xar:mlstring></a></p>
+    </xar:if>
+      
+    <xar:if condition="!empty($hooks) and count($hooks) gt 0">
+      <xar:foreach in="$hooks" key="$hookname" value="$hookoutput">
         #$hookoutput#
-    </xar:foreach>
-</xar:if>
+      </xar:foreach>
+    </xar:if>
+  </div>
+      
+  <xar:template file="galaxfooter"/>
+</div>
 
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
-</div>
 

@@ -1,15 +1,13 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Module</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<xar:template file="user_bar" type="module"/>
-
-<p>See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction and user manual of Galaxia</a> for more details on what this module is all about, and how to use it.</p>
-
-<xar:workflow-status/>
-
-<xar:workflow-instances/>
-
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
-</div>
+  <xar:template file="user_bar" type="module"/>
+  <div style="margin: auto;">
+    
+    <p>See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction and user manual of Galaxia</a> for more details on what this module is all about, and how to use it.</p>
+    
+    <!-- Show the status of the processes that the user started -->
+    <xar:workflow-status/>
+    
+    <!-- Show the tasklist for this user -->
+    <xar:workflow-instances/>
+    
+    <xar:template file="galaxfooter"/>
+  </div>
