@@ -30,15 +30,6 @@
 			<form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" #$formhooks['formaction']#>
 		</xar:if>
 
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-		<!-- These need to be in elements for xhtml -->
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-
 		<xar:foreach in="$fields" value="$field">
 			<div style="clear: both; padding-top: 10px;">
 			<span style="float: left; width: 20%; text-align: right;">
@@ -78,7 +69,15 @@
 		</div>
 
 		<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 30%; text-align: right;">				
+			<span style="float: left; width: 30%; text-align: right;">
+		<!--
+			// Add an authorisation ID - this adds a hidden field in the form that
+			// contains an authorisation ID.  The authorisation ID is very important in
+			// preventing certain attacks on the website
+		-->
+				<!-- These need to be in elements for xhtml -->
+				<input type="hidden" name="authid" id="authid" value="#$authid#" />
+				<input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
 				<input type="submit" name="preview" id="preview" value="#$previewlabel#" />
 				&nbsp;&nbsp;&nbsp;
 				<input type="submit" value="#$addlabel#" />
