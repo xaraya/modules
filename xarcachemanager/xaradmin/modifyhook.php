@@ -36,6 +36,11 @@ function xarcachemanager_admin_modifyhook($args)
     } else {
         $modname = $extrainfo['module'];
     }
+    
+    // we are only interested in the config of block output caching for now
+    if ($modname !== 'blocks') {
+        return;
+    }
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
