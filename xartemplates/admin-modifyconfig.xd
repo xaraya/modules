@@ -124,7 +124,7 @@
            <xar:mlstring>You can choose either of the following ways to add a WYSIWYG editor:</xar:mlstring></p>
         <ol style="list-style-type:lower-alpha; ">
             <li style="margin-top:20px;">
-                <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage.</xar:mlstring>
+                <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage. You can turn off wysiwyg in a textarea by adding the attribute <code>mce_editable="false"</code> to the textarea. This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring>
             </li>
           <li style="margin-top:20px;"><xar:mlstring>Choose the Mode of <strong>Special Labelled Only</strong> in the configuration options.
             Then add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
@@ -467,7 +467,7 @@
             <xar:comment>
                 <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="60" maxlength="240" />
             </xar:comment>
-               <textarea name="tinyplugins" id="tinyplugins" cols="50" rows="3" >#$tinyplugins#</textarea>
+               <textarea name="tinyplugins" id="tinyplugins" cols="50" rows="3" mce_editable="false">#$tinyplugins#</textarea>
 
                     <p><xar:mlstring>Available plugins: save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
                      advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak</xar:mlstring></p>
@@ -605,7 +605,7 @@
               <xar:comment>
                 <input type="text" name="tinyadvformat" id="tinyadvformat" value="#$tinyadvformat#" size="60" maxlength="240" />
               </xar:comment>
-                <textarea name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" >#$tinyadvformat#</textarea>
+                <textarea name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" mce_editable="false" >#$tinyadvformat#</textarea>
 
                     <p><xar:mlstring>These will defalut to p, address, pre, h1, h2, h3, h4, h5 and h6 if this option is left blank.</xar:mlstring></p>
             </span>
