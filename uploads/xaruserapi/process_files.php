@@ -3,211 +3,109 @@
 /** 
  *  Processes incoming files (uploades / imports)
  *
- *  @author Carl P. Corliss (aka Rabbitt)
- *  @access public
- *  @param
+ *  @author  Carl P. Corliss (aka Rabbitt)
+ *  @access  public
+ *  @param   string     importFrom  The complete path to a (local) directory to import files from
+ *  @param   array      override    Array containing override values for import/uplaod path/obfuscate
+ *  @param   string     override.upload.path        Override the upload path with the specified value
+ *  @param   string     override.upload.obfuscate   Override the upload filename obfuscation 
+ *  @param   string     override.import.path        Override the import path with the specified value
+ *  @param   string     override.import.obfuscate   Override the import filename obfuscation 
+ *  @returns array      list of files the files that were requested to be stored. If they had errors,
+ *                      they will have 'error' index defined and will -not- have been added. otherwise,
+ *                      they will have a fileId associated with them if they were added to the DB
  */
+ 
+xarModAPILoad('uploads', 'user');
  
 function uploads_userapi_process_files( $args ) {
 
     extract($args);
 
-    $fileErrors = array();
-    $filesAdded = array();
-
+    $storeList = array();
+    
     // If we have an import then verify the information given
     if (!isset($importFrom)) {
         $importFrom = NULL;
-        $import_path_override = NULL;
+        $override['import']['path'] = NULL;
     } else {
-        if (isset($import_path_override) && file_exists($import_path_override)) {
-            $import_directory = $import_path_override;
+        if (!empty($override['import']['path']) && file_exists($import_path_override)) {
+            $import_directory = $override['import']['path'];
         } else {
             $import_directory = xarModGetVar('uploads','path.imports-directory');
         }
     }
     
-    // if there is an upload_path_override, use that
-    if (isset($upload_path_override) && file_exists($upload_path_override)) {
-        $upload_directory = $upload_path_override;
+    // if there is an override['upload']['path'], use that
+    if (isset($override['upload']['path']) && file_exists($override['upload']['path'])) {
+        $upload_directory = $override['upload']['path'];
     } else {
         $upload_directory = xarModGetVar('uploads','path.uploads-directotry');
     }
     
-    if (isset($upload_obfuscate_override) && $upload_obfuscate_override) {
+    // Check for override of upload obfuscation and set accordingly
+    if (isset($override['upload']['obfuscate']) && $override['upload']['obfuscate']) {
         $upload_obfuscate = TRUE;
     } else {
         $upload_obfuscate = FALSE;
     }
     
-    if (isset($import_obfuscate_override) && $import_obfuscate_override) {
+    // Check for override of import obfuscation and set accordingly
+    if (isset($override['import']['obfuscate']) && $override['import']['obfuscate']) {
         $import_obfuscate = TRUE;
     } else {
         $import_obfuscate = FALSE;
     }
     
-    
+    // If not store type defined, default to DB ENTRY AND FILESYSTEM STORE
     if (!isset($store_type)) {
-        $store_type = _UPLOADS_STORE_DB_ENTRY | _UPLOADS_STORE_FILESYSTEM;
+        // this is the same as _UPLOADS_STORE_DB_ENTRY OR'd with _UPLOADS_STORE_FILESYSTEM
+        $store_type = _UPLOADS_STORE_FSDB;
     }
     
     /**
-     * Prepare the uploaded filelist
+     * Prepare the uploaded file list
      */
 
-    $fileList = array();
-    
-    if (is_array($_FILES) && count($_FILES) > 0) {
-        foreach ($_FILES as $fileInfo) {
-            $file = xarModAPIFunc('uploads','user','process_upload', 
-                                   array('fileInfo'  => $fileInfo,
-                                         'savePath'  => $upload_directory,
-                                         'obfuscate' => $upload_obfuscate));
-    
-            if (!$file) {
-                return; // Pass the exception up.
-            } else { 
-                $fileList[] = $file;
-            }            
-        }
-    }
-    
-    $imports = array();
+     
+    $fileList = xarModAPIFunc('uploads','user','process_upload', 
+                               array('savePath'  => $upload_directory,
+                                     'obfuscate' => $upload_obfuscate));
     
     /**
-     * Prepare the filelist of imports
+     * Prepare the imported files file list
      */    
-    if (isset($importFrom) && strlen(trim($importFrom))) {
+    if (isset($importFrom)) {
+        $args = array('savePath' => $import_directory, 
+                      'obfuscate' => $import_obfuscate);
         
-        /**
-         * if the importFrom is an url, then
-         * we can't descend (obviously) so set it to FALSE
-         */
-        if (eregi('^(http[s]?|ftp)?\:\/\/', $importFrom)) {
-            $descend = FALSE;
+        if (!empty($fileList)) {
+            $fileList = array_merge($fileList, xarModAPIFunc('uploads', 'user', 'prepare_imports', $args));
         } else {
-            $descend = TRUE;
+            $fileList = xarModAPIFunc('uploads', 'user', 'prepare_imports',$args);
         }
-                   
-        $imports = xarModAPIFunc('uploads','user','import_get_filelist',
-                                  array('fileLocation'  => $importFrom,
-                                        'descend'       => $descend));
-        
-        $imports = xarModAPIFunc('uploads','user','import_prepare_files',
-                                  array('fileList'  => $imports,
-                                        'savePath'  => $import_directory,
-                                        'obfuscate' => $import_obfuscate));
-        
-        // TODO: think about the return values - if there 
-        //       is an error in one of the two api funcs above, we
-        //       need to think about catching them
-    }
-    $fileList = array_merge($fileList, $imports);
+    } 
+    
+    /**
+     *  Iterate through each file in the list and store it, providing it doesn't have errors defined.
+     */
 
-    foreach ($fileList as $fileName => $fileInfo) {
-        // If this is just a file dump, return the dump
-        if ($store_type & _UPLOADS_STORE_TEXT) {
-            return xarModAPIFunc('uploads','user','file_dump', $fileInfo);
-        }
+    foreach ($fileList as $fileInfo) {
         
-        // first, make sure the file isn't already stored in the db/filesystem
-        // if it is, then don't add it.
-        // FIXME: need to rethink how this is handled - maybe give the user a choice
-        //        to rename the file ... (rabbitt)
-        $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', 
-                                array('fileName' => $fileInfo['fileName'],
-                                      'fileSize' => $fileInfo['fileSize']));
-
-        if (is_array($fInfo)) {
-            $filesAdded[$fileInfo['fileSrc']] = array('fileLocation' => $fileInfo['fileDest'],
-                                                      'fileName'     => $fileInfo['fileName']);
+        // If the file has errors, add the file to the storeList (with it's errors intact),
+        // and continue to the next file in the list. Note: it's up to the calling function 
+        // to deal with the error (or not) - however, we won't be adding the file with errors :-)
+        if (isset($fileInfo['error'])) {
+            $storeList[] = $fileInfo;
             continue;
         }
-
-        if ($store_type & _UPLOADS_STORE_FILESYSTEM) {
-            if (($fileInfo['fileSrc'] != $fileInfo['fileDest']) &&
-                !xarModAPIFunc('uploads','user','file_move', 
-                                array('fileSrc'        => $fileInfo['fileSrc'], 
-                                      'fileDest'   => $fileInfo['fileDest']))) {
-                // Catch the exception, and create an error list for each file that
-                // has an error associated with it 
-                $errorObj = xarExceptionValue();
-
-                if (is_object($errorObj)) {
-                    $fileErrors[$fileInfo['fileSrc']] = array('fileName' => $fileInfo['fileName'],
-                                                              'errMsg'   => $errorObj->getShort(),
-                                                              'errID'    => $errorObj->getID());
-                } else {
-                    $fileErrors[$fileInfo['fileSrc']] = array('fileName' => $fileInfo['fileName'],
-                                                              'errMsg'   => 'Unknown Error!',
-                                                              'errID'    => -1);
-                }
-                // clear the exception
-                xarExceptionHandled();
-               
-                continue;
-            } else {
-                // Now add the file to the array of added files
-                $filesAdded[$fileInfo['fileSrc']] = array('fileLocation' => $fileInfo['fileDest'], 
-                                                          'fileName'     => $fileInfo['fileName']);
-            }
-        }
-        
-        // If the store db_entry bit is set, then go ahead 
-        // and set up the database meta information for the file
-        if ($store_type & _UPLOADS_STORE_DB_ENTRY) {
-
-            $fileInfo['fileLocation'] =& $fileInfo['fileDest'];
-            $fileInfo['store_type']   = $store_type ^ _UPLOADS_STORE_DB_ENTRY;
-                        
-            $fileId = xarModAPIFunc('uploads','user','db_add_file', $fileInfo);
-            
-
-            // If there wasn't a fileID returned it means there was an error, 
-            // so, record the error for that particular file and continue on
-            // Errors will be tabulated at the end and passed on to the user
-            // for manual inspection
-            if (!$fileId) {
-                // store the file that had an error (and it's error) in an array for later display
-                $errorObj = xarExceptionValue();
-                
-                if (is_object($errorObj)) {
-                    $fileErrors[$fileInfo['fileSrc']] = array('fileName' => $fileInfo['fileName'],
-                                                              'errMsg'   => $errorObj->getShort(),
-                                                              'errID'    => $errorObj->getID());
-                } else {
-                    $fileErrors[$fileInfo['fileSrc']] = array('fileName' => $fileInfo['fileName'],
-                                                              'errMsg'   => 'Unknown Error!',
-                                                              'errID'    => -1);
-                }
-                // Clear the exception because we've handled it already
-                xarExceptionHandled();
-                
-                // Remove the file cuz we we weren't able to add it to the db
-                if (isset($filesAdded[$fileInfo['fileSrc']])) {
-                    $file = $filesAdded[$fileInfo['fileSrc']]['fileLocation'];
-                    if (!xarModAPIFunc('uploads','user','delete', array('fileName' => $file))) {
-                        return;
-                    }
-                }
-                
-                continue;
-                
-            } else {
-                // store the added files fileID in an array for later use
-                $filesAdded[$fileInfo['fileSrc']] = array('fileName' => $fileInfo['fileName'], 
-                                                          'fileId'   => $fileId);
-            }
-        } 
-        
-        if ($store_type & _UPLOADS_STORE_DB_DATA) {
-            // TODO: add the file's contents to the database
-            continue;
-        }
+    
+        $storeList[] = xarModAPIFunc('uploads', 'user', 'file_store',
+                                      array('fileInfo'  => $fileInfo,
+                                            'storeType' => $store_type));
     }
     
-    return array('errors' => $fileErrors,
-                 'added'  => $filesAdded);
+    return $storeList;
 }
 
 ?>

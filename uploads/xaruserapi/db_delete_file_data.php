@@ -1,24 +1,23 @@
 <?php
 
 /** 
- *  Remove a file entry from the database. This just removes any metadata about a file 
- *  that we might have in store. The actual DATA (contents) of the file (ie., the file 
- *  itself) are removed via either file_delete() or db_delete_fileData() depending on 
- *  how the DATA is stored.
+ *  Remove a file's data contents from the database. This just removes any data (contents) 
+ *  that we might have in store for this file. The actual metadata (FILE ENTRY) for the file
+ *  itself is removed via db_delete_file() .
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   integer file_id    The id of the file we are deleting
+ *  @param   integer fileId    The id of the file who's contents we are removing
  *
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_delete_file( $args ) {
+function uploads_userapi_db_delete_file_data( $args ) {
     extract($args);
     
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
-                     'file_id','db_delete_file','uploads');
+                     'fileId','db_delete_file_data','uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -29,10 +28,10 @@ function uploads_userapi_db_delete_file( $args ) {
     $xartable       = xarDBGetTables();
 
     // table and column definitions
-    $fileEntry_table   = $xartable['file_entry'];
+    $fileData_table   = $xartable['file_data'];
     
     // insert value into table
-    $sql = "DELETE FROM $fileEntry_table
+    $sql = "DELETE FROM $fileData_table
                   WHERE xar_fileEntry_id = $fileId";
                   
                       

@@ -1,13 +1,15 @@
 <?php
 
 /** 
- *  Move a file from one location to another
+ *  Move a file from one location to another. Can (or will eventually be able to) grab a file from
+ *  a remote site via ftp/http/etc and save it locally as well. Note: isUpload=TRUE implies isLocal=True
  *
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   string  fileSrc    Complete path to source file
  *  @param   string  fileDest   Complete path to destination 
- *  @param   boolean isupload   Whether or not this file was uploaded (uses special checks on uploaded files)
+ *  @param   boolean isUpload   Whether or not this file was uploaded (uses special checks on uploaded files)
+ *  @param   boolean isLocal    Whether or not the file is a Local file or not (think: grabbing a web page)
  * 
  *  @returns boolean TRUE on success, FALSE otherwise
  */
@@ -21,11 +23,13 @@ function uploads_userapi_file_move( $args ) {
     }
     
     // if it wasn't specified, assume TRUE
-    if (!isset($isupload)) {
-        $isupload = TRUE;
-    }
+    if (!isset($isUpload)) {
+        $isUpload = TRUE;
+        $isLocal  = TRUE;
+    } elseif ($isUpload) {
+        $isLocal = TRUE;
+    } 
     
-    echo "<br />file_exist(\"$fileSrc\") returnns: [<b>".file_exists($fileSrc)."</b>]<br />";
     if (!isset($fileSrc)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'fileSrc','file_move','uploads');
@@ -76,22 +80,26 @@ function uploads_userapi_file_move( $args ) {
         return FALSE;
     }
     
-    if (!$isupload) {
+    if ($isUpload) {
         if (!move_uploaded_file($fileSrc, $fileDest)) {
             $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
             return FALSE;
         }
     } else {
-        if (!copy($fileSrc, $fileDest)) {
-            $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
-            return FALSE;
+        if ($isLocal) {
+            if (!copy($fileSrc, $fileDest)) {
+                $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
+                return FALSE;
+            } else {
+                // This step is technically redundant due to php actually removing 
+                // the temp file upon script completion anyway (which is why don't 
+                // don't check to see if unlink was successful or not ;)
+                unlink($fileSrc);
+            }
         } else {
-            // This step is technically redundant due to php actually removing 
-            // the temp file upon script completion anyway (which is why don't 
-            // don't check to see if unlink was successful or not ;)
-            unlink($fileSrc);
+            // TODO: Grab remote file (web page?) and save it locally
         }
     }
             

@@ -21,7 +21,7 @@ function uploads_userapi_import_get_filelist( $args ) {
     
     if (!isset($fileLocation)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'location', 'import_get_filelist', 'uploads');
+                     'fileLocation', 'import_get_filelist', 'uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }

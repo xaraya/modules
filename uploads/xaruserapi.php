@@ -26,4 +26,9 @@ define('_INODE_TYPE_DIRECTORY', 1);
 define('_INODE_TYPE_FILE', 2);
 define('_INODE_TYPE_LINK', 3);
 
+define('_UPLOADS_ERROR_UNKNOWN', -1);
+define('_UPLOADS_ERROR_NONE', 0);
+define('_UPLOADS_ERROR_NO_OBFUSCATE', 1);
+
+
 ?>

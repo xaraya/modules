@@ -6,7 +6,7 @@
  *
  * @author  Carl P. Corliss
  * @access  public
- * @param   array   fileList    List of files to delete
+ * @param   array   fileList    List of files to delete containing complete fileName => fileInfo arrays 
  * @returns boolean             true if successful, false otherwise
  */
  
@@ -24,13 +24,11 @@ function uploads_userapi_purge_files( $args ) {
     foreach ($fileList as $fileName => $fileInfo) {
         
         if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM) {
-            echo "<br />Unlinking file: [<strong>$fileInfo[fileName]</strong>]";
             xarModAPIFunc('uploads', 'user', 'file_delete', array('fileName' => $fileInfo['fileLocation']));
         }
         
         if ($fileInfo['storeType'] & _UPLOADS_STORE_DB_DATA) {
-            // TODO: remove the file's contents from the database
-            continue;
+            xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileInfo['fileId']));            
         }
         // go ahead and delete the file from the database.
         

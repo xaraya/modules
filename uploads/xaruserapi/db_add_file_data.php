@@ -1,56 +1,38 @@
 <?php
 
 /** 
- *  Adds a file (fileEntry) entry to the database. This entry just contains metadata 
- *  about the file and not the actual DATA (contents) of the file.
+ *  Adds a file's  contents to the database. This only takes 4K (4096 bytes) blocks.
+ *  So a file's data could potentially be contained amongst many records. This is done to 
+ *  ensure that we are able to actually save the whole file in the db.
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   integer userId         The id of the user whom submitted the file
+ *  @param   integer fileId         The ID of the file this data belongs to
  *  @param   string  fileName       The name of the file (minus any path information)
  *  @param   string  fileLocation   The complete path to the file including the filename (obfuscated if so chosen)
  *  @param   string  fileType       The mime content-type of the file
  *  @param   integer fileStatus     The status of the file (APPROVED, SUBMITTED, READABLE, REJECTED)
  *  @param   integer store_type     The manner in which the file is to be stored (filesystem, database)
  *
- *  @returns integer The id of the fileEntry that was added, or FALSE on error
+ *  @returns integer The id of the fileData that was added, or FALSE on error
  */
 
-function uploads_userapi_db_add_file( $args ) {
+function uploads_userapi_db_add_file_data( $args ) {
     
     extract($args);
     
-    if (!isset($fileName)) {
+    if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
-                     'filename','db_add_file','uploads');
+                     'fileId','db_add_file_data','uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
     
-    if (!isset($fileLocation)) {
+    if (!isset($fileData)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module (#3)]', 
-                     'location','db_add_file','uploads');
+                     'location','db_add_file_data','uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
-    }
-    
-    if (!isset($userId)) {
-        $userId = xarSessionGetVar('uid');
-    }
-    
-    if (!isset($fileStatus)) {
-        $fileStatus = _UPLOADS_STATUS_SUBMITTED;
-    }
-    
-    if (!isset($store_type)) {
-        $store_type = _UPLOADS_STORE_FILESYSTEM;
-    } 
-      
-    if (!isset($fileType)) {
-        $fileType = xarModAPIFunc('mime','user','analyze_file', array('fileName' => $fileLocation));
-        if (empty($fileType)) {
-            $fileType = 'application/octet-stream';
-        }
     }
     
     //add to uploads table
@@ -60,30 +42,20 @@ function uploads_userapi_db_add_file( $args ) {
 
 
     // table and column definitions
-    $fileEntry_table = $xartable['file_entry'];
-    $file_id    = $dbconn->GenID($fileEntry_table);
+    $fileData_table = $xartable['file_data'];
+    $fileDataID    = $dbconn->GenID($fileData_table);
 
     // insert value into table
-    $sql = "INSERT INTO $fileEntry_table 
+    $sql = "INSERT INTO $fileData_table 
                       ( 
                         xar_fileEntry_id, 
-                        xar_user_id, 
-                        xar_filename, 
-                        xar_location, 
-                        xar_status,
-                        xar_filesize,
-                        xar_store_type, 
-                        xar_mime_type
+                        xar_fileData_id, 
+                        xar_fileData 
                       ) 
                VALUES 
                       (
-                        $file_id,
-                        $userId,'" .
-                        xarVarPrepForStore($fileName) . "', '" .
-                        xarVarPrepForStore($fileLocation) . "', 
-                        $fileStatus, " .
-                        filesize($fileLocation) . ", 
-                        $store_type, '" .
+                        $fileId,
+                        $fileDataID,'".
                         xarVarPrepForStore($fileType) . "'
                       )";
                       
@@ -92,7 +64,7 @@ function uploads_userapi_db_add_file( $args ) {
     if (!$result) {
         return FALSE;
     } else {
-        $id = $dbconn->PO_Insert_ID($xartable['file_entry'], 'xar_cid');
+        $id = $dbconn->PO_Insert_ID($xartable['file_data'], 'xar_cid');
         return $id;
     }
 }
