@@ -297,6 +297,10 @@ function authinvision_userapi_getmessages($args)
     {
    
        $user_info = authinvision__get_invision_publicuserdata($username);
+       if (!$user_info) {
+          //no matching user.  let's just say there are no messages.
+          return 0;
+       }
        $inv_id = $user_info['id'];
        $sql = "SELECT COUNT(*) as msg_total FROM $database.$table WHERE recipient_id='$inv_id' AND vid = 'in' AND read_date is null";
        $result = mysql_query($sql,$connect);
@@ -363,8 +367,11 @@ function authinvision__open_invision_connection()
 	$connect = mysql_connect($server, $uname, $pwd);
 
     if (!$connect) {
-        echo "Invision: Connection to $server has failed<br />";
+        $msg = "Invision: Connection to $server has failed: " & mysql_error();
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         error_log("Invision Error: Connection to $server failed");
+        return;
     }
     return $connect;
 }
@@ -425,10 +432,10 @@ function authinvision__close_invision_connection($connect)
 }
 
 /**
- * fetch ldap userdata
+ * fetch invision userdata
  * @private
- * @author Andreas Jeitler
- * @param args['connect'] open LDAP link connection
+ * @author Marie Altobelli
+ * @param args['connect'] open invision DB connection
  * @param args['uname'] user name of user
  * @param args['pass'] password of user
  * @returns int
@@ -438,26 +445,30 @@ function authinvision__get_invision_userdata($connect,$username,$pass)
 {
     $server = xarModGetVar('authinvision','server');
     $prefix = xarModGetVar('authinvision','prefix');
-	$database = xarModGetVar('authinvision','database');
-	$password = md5($pass);
-	$table = $prefix.'_members';
+    $database = xarModGetVar('authinvision','database');
+    $password = md5($pass);
+    $table = $prefix.'_members';
 
     if($connect)  //just double-checking the connection.
     {
         // connect to the invision database and get the user data
-		//$inv_db = mysql_select_db($database, $connect);
-		$sql = "SELECT * FROM $database.$table WHERE name='$username' AND password='$password'";
-		$result = mysql_query($sql,$connect);
-
-		if (!$result) {
-			//incorrect login.
-			return false;
-		} else {
-		    //correct login.  return uid.
-			while ($row = mysql_fetch_array($result)) {
-				$invision_user_info = $row;
-				return $invision_user_info;
-			}
+        //$inv_db = mysql_select_db($database, $connect);
+        $sql = "SELECT * FROM $database.$table WHERE name='$username' AND password='$password'";
+        $result = mysql_query($sql,$connect);
+    
+        if (!$result) {
+        //incorrect login.
+            $msg = "Invision: Query to $table has failed: " & mysql_error();
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
+                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+            error_log("Invision Error: Query to $table failed");
+            return false;
+        } else {
+            //correct login.  return uid.
+            while ($row = mysql_fetch_array($result)) {
+                $invision_user_info = $row;
+            return $invision_user_info;
+            }
         }
     }
 }
@@ -484,7 +495,7 @@ function authinvision__get_invision_publicuserdata($username)
 			//incorrect login.
 			return false;
 		} else {
-		    //correct login.  return uid.
+		    //correct login.  return userdata.
 			while ($row = mysql_fetch_array($result)) {
 				$invision_user_info = $row;
 			}
