@@ -37,7 +37,7 @@ function authphpbb2_userapi_authenticate_user($args)
         $msg = xarML('Wrong username (#(1)) or pass (not shown).', $uname);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-    	return XARUSER_AUTH_FAILED;
+        return XARUSER_AUTH_FAILED;
     }
 
     // OK, authentication worked
@@ -54,14 +54,14 @@ function authphpbb2_userapi_authenticate_user($args)
 
 
     if (!$userRole) {
-    	if (xarModGetVar('authphpbb2','add_user')!='true')
-    		return XARUSER_AUTH_FAILED;
-    		
+        if (xarModGetVar('authphpbb2','add_user')!='true')
+            return XARUSER_AUTH_FAILED;
+            
         // add a user that does NOT exist in the database
-		// get username from array
-		$realname = $user_info['username'];
-		// get email from array
-		$email = $user_info['user_email'];
+        // get username from array
+        $realname = $user_info['username'];
+        // get email from array
+        $email = $user_info['user_email'];
 
         // call role module to create new user role
         $now = time();
@@ -78,9 +78,9 @@ function authphpbb2_userapi_authenticate_user($args)
                                    'authmodule'  => 'authphpbb2'));
 
         if (!$rid)
-        	return XARUSER_AUTH_FAILED;
+            return XARUSER_AUTH_FAILED;
 
-		$usergroup = xarModGetVar('authphpbb2','defaultgroup');
+        $usergroup = xarModGetVar('authphpbb2','defaultgroup');
 
         // Get the list of groups
         if (!$groupRoles = xarGetGroups()) return; // throw back
@@ -98,14 +98,14 @@ function authphpbb2_userapi_authenticate_user($args)
         // Insert the user into the default users group
         if( !xarMakeRoleMemberByID($rid, $groupId))
                return XARUSER_AUTH_FAILED; 
-			
+            
     } else {
         $rid = $userRole['uid'];
     }
     
     // Create a session in phpBB2
     authphpbb2__board_login($connect, $uname, $pass);
-	
+    
     // close phpbb2 connection --may not be necessary
     authphpbb2__close_phpbb2_connection($connect);
     
@@ -116,12 +116,12 @@ function authphpbb2_userapi_authenticate_user($args)
 function authphpbb2__open_phpbb2_connection()
 {
     
-	$server = xarModGetVar('authphpbb2','server');
-	$uname = xarModGetVar('authphpbb2','username');
-	$pwd = xarModGetVar('authphpbb2','password');  
+    $server = xarModGetVar('authphpbb2','server');
+    $uname = xarModGetVar('authphpbb2','username');
+    $pwd = xarModGetVar('authphpbb2','password');  
     $database = xarModGetVar('authphpbb2','database');
     $dbtype= xarModGetVar('authphpbb2','dbtype');
-	
+    
     $db = NewADOConnection($dbtype);
     if (!$db) {
         $msg = "phpBB2: Loading ADOdb driver '".$server."' has failed: " . $db->ErrorMsg();
@@ -144,14 +144,14 @@ function authphpbb2__open_phpbb2_connection()
 
 function authphpbb2__board_login($connect,$username,$password)
 {
-	//Not realized yet.
-	return true;
+    //Not realized yet.
+    return true;
 }
 
 
 function authphpbb2__close_phpbb2_connection($connect)
 {
-	return true;
+    return true;
 }
 
 function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
@@ -165,15 +165,15 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
         // connect to the invision database and get the user data
         //$inv_db = mysql_select_db($database, $connect);
         $sql = "SELECT * FROM " . $table . 
-        		" WHERE username='" . xarVarPrepForStore($username) . 
-        		"' AND user_password='".xarVarPrepForStore($password)."'";
+                " WHERE username='" . xarVarPrepForStore($username) . 
+                "' AND user_password='".xarVarPrepForStore($password)."'";
         
         $connect->SetFetchMode(ADODB_FETCH_ASSOC);
         
         $result = $connect->Execute($sql);
     
         if (!$result) {
-        	//error
+            //error
             $msg = "phpBB2: Query to $table has failed: " . $connect->ErrorMsg();
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                 new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
@@ -182,7 +182,7 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
         } 
         if ($result->EOF)
         {
-        	//incorrect login
+            //incorrect login
         $msg = xarML('Wrong username (#(1)) or pass (not shown).', $username);
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                 new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
@@ -191,21 +191,21 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
         }
         else {
             //correct login.  return uid.
-            	if ($result->fields['user_active']=='0') 
-            	{
-            		//user inactive
-			        $msg = xarML('User #(1) not activated.', $username);
-            		xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                		new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                	$result->Close();
-            		return false;	
-            	}
-            	else
-            	{
-            		$user_data=$result->fields;
-            		$result->Close();
-                	return $user_data;
-            	}
+                if ($result->fields['user_active']=='0') 
+                {
+                    //user inactive
+                    $msg = xarML('User #(1) not activated.', $username);
+                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                    $result->Close();
+                    return false;    
+                }
+                else
+                {
+                    $user_data=$result->fields;
+                    $result->Close();
+                    return $user_data;
+                }
         }
     }
 }

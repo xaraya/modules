@@ -25,9 +25,9 @@ function authphpbb2_init()
 
     xarModSetVar('authphpbb2', 'forumurl', 'http://my.domain/forum');
 
-	// Register blocks
+    // Register blocks
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'authphpbb2', 'blockType' => 'phpbb2login')))
-    	return;
+        return;
 
     // Define mask definitions for security checks
     xarRegisterMask('AdminAuthphpBB2', 'All', 'authphpbb2', 'All', 'All', 'ACCESS_ADMIN');
@@ -55,9 +55,9 @@ function roles_upgrade($oldVersion)
     switch ($oldVersion) {
         case '0.0.1':
 
-			// Register blocks
-		    xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'authphpbb2', 'blockType' => 'phpbb2login'));
-    		xarModSetVar('authphpbb2', 'forumurl', 'http://my.domain/forum');
+            // Register blocks
+            xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'authphpbb2', 'blockType' => 'phpbb2login'));
+            xarModSetVar('authphpbb2', 'forumurl', 'http://my.domain/forum');
         
             break;
         case 2.0:

@@ -55,7 +55,7 @@ function authphpbb2_admin_updateconfig()
     // update config
     xarModSetVar('authphpbb2', 'defaultgroup', $defaultgroup);
     if ($dbtype == '')
-    	$dbtype = 'mysql';
+        $dbtype = 'mysql';
 
     xarModSetVar('authphpbb2', 'server', $server);
     xarModSetVar('authphpbb2', 'dbtype', $dbtype);

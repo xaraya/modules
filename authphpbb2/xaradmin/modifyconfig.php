@@ -23,7 +23,7 @@ function authphpbb2_admin_modifyconfig()
     $data['server'] = xarVarPrepForDisplay(xarModGetVar('authphpbb2','server'));
     $data['dbtype'] = xarVarPrepForDisplay(xarModGetVar('authphpbb2','dbtype'));
     if ($data['dbtype'] == '')
-    	$data['dbtype'] = 'mysql';
+        $data['dbtype'] = 'mysql';
     $data['database'] = xarVarPrepForDisplay(xarModGetVar('authphpbb2','database'));
     $data['username'] = xarVarPrepForDisplay(xarModGetVar('authphpbb2','username'));
     $data['password'] = xarVarPrepForDisplay(xarModGetVar('authphpbb2','password'));
