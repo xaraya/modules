@@ -34,7 +34,7 @@
 	<div style="text-align: center;">
 		<h3><xar:mlstring>Top 10 Browsers</xar:mlstring></h3>
 		<a href="#xarModURL('stats', 'user', 'details_browser')#"><xar:mlstring>More details</xar:mlstring></a>
-		<xar:if condition="!empty($browser)">
+		<xar:if condition="!empty($browsers)">
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$browsers">
 				<tr>
@@ -49,7 +49,7 @@
 	<div style="text-align: center;">
 		<h3><xar:mlstring>Top 10 Operating systems</xar:mlstring></h3>
 		<a href="#xarModURL('stats', 'user', 'details_os')#"><xar:mlstring>More details</xar:mlstring></a>
-		<xar:if condition="!empty($browser)">
+		<xar:if condition="!empty($browsers)">
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$os">
 				<tr>
