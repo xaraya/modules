@@ -2,21 +2,24 @@
 
 function stats_userapi_get_os_data($args)
 {
-	extract($args);
-	unset($args);
-	$args = compact('top10');
-	
+    extract($args);
+    
     // API function to get the hits by browsers
     list($osdata, $ossum, $osmax) = xarModAPIFunc('stats',
-												  'user',
-												  'getbyos',
-												  $args);
-	$os = array();
-	foreach($osdata as $ositem) {
+                                                  'user',
+                                                  'getbyos',
+                                                  $args);
+    $os = array();
+    if (empty($osdata)) {
+        $data = compact('os');
+        return $data;
+    }
+
+    foreach($osdata as $ositem) {
         $osname = $ositem['os'].' '.$ositem['osver'];
-		switch ($ositem['os']) {
-			case 'win':
-				$ospic = 'win.png';
+        switch ($ositem['os']) {
+            case 'win':
+                $ospic = 'win.png';
                 // add translations for OS Versions
                 switch(strtolower($ositem['osver'])) {
                     case 'xp':
@@ -53,52 +56,52 @@ function stats_userapi_get_os_data($args)
                 }                                 
                 break;
                 
-			case '*nix':
-				switch ($ositem['osver']) {
-					case 'linux':
-						$osname = xarML('Linux');
-						$ospic = 'linux.gif';
-						break;
-					default:
-						$osname = xarML($ositem['osver']);
-						$ospic = 'question.gif';
-				}
-				break;
-                
-			case 'mac':
-				$ospic = 'mac.png';
+            case '*nix':
                 switch ($ositem['osver']) {
-					case 'osx':
-						$osname = xarML('Mac OSX');
+                    case 'linux':
+                        $osname = xarML('Linux');
+                        $ospic = 'linux.gif';
+                        break;
+                    default:
+                        $osname = xarML($ositem['osver']);
+                        $ospic = 'question.gif';
+                }
+                break;
+                
+            case 'mac':
+                $ospic = 'mac.png';
+                switch ($ositem['osver']) {
+                    case 'osx':
+                        $osname = xarML('Mac OSX');
                         $ospic = 'osx.png';
                         break;
                     case 'ppc':
-						$osname = xarML('Mac PowerPC');
+                        $osname = xarML('Mac PowerPC');
                         break;
                     case '68k':
-						$osname = xarML('Mac 68k');
+                        $osname = xarML('Mac 68k');
                         break;
-					default:
-						break;
-				}
-				break;
-                
-			default:
-				$osname = xarML('Unknown');
-				$ospic = 'question.gif';
+                    default:
+                        break;
+                }
                 break;
-		}
+                
+            default:
+                $osname = xarML('Unknown');
+                $ospic = 'question.gif';
+                break;
+        }
         
-		$os[] = array('name' => $osname,
-					  'rel'  => sprintf('%01.2f',(100*$ositem['hits']/$ossum)),
-					  'abs'  => $ositem['hits'],
-					  'wid'  => round(($barlen*$ositem['hits']/$osmax)),
-					  'pic'  => $ospic);
-	}
-	unset($osdata, $ossum, $osmax, $ositem, $osname, $ospic);
-	
-	$data = compact('os');
-	return $data;
+        $os[] = array('name' => $osname,
+                      'rel'  => sprintf('%01.2f',(100*$ositem['hits']/$ossum)),
+                      'abs'  => $ositem['hits'],
+                      'wid'  => round(($barlen*$ositem['hits']/$osmax)),
+                      'pic'  => $ospic);
+    }
+    unset($osdata, $ossum, $osmax, $ositem, $osname, $ospic);
+    
+    $data = compact('os');
+    return $data;
 }
 
 ?>

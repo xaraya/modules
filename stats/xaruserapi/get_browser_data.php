@@ -3,8 +3,6 @@
 function stats_userapi_get_browser_data($args)
 {
     extract($args);
-    unset($args);
-    $args = compact('top10');
     
     // API function to get the hits by browsers
     list($brdata, $brsum, $brmax) = xarModAPIFunc('stats',
@@ -12,13 +10,11 @@ function stats_userapi_get_browser_data($args)
                                                   'getbybrowser',
                                                   $args);
     $browsers = array();
-
     if (empty($brdata)) {
-        $msg = xarML('No browser data available');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'NO_BROWSER_DATA',
-            new DefaultUserException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
-        return;
-    }     
+        $data = compact('browsers');
+        return $data;
+    }
+
     foreach($brdata as $browser){
         $brname = '';
         switch ($browser['agent']) {

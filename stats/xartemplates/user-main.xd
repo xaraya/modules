@@ -1,18 +1,25 @@
 <xar:template file="header" type="module" />
 	<div style="text-align:left">
+		<xar:if condition="!empty($year) and !empty($month) and !empty($day)">
+			<h3><xar:ml><xar:mlstring>Statistics for #(1)</xar:mlstring><xar:mlvar>#xarLocaleGetFormattedDate('medium',mktime(12,0,0,$month,$day,$year))#</xar:mlvar></xar:ml></h3>
+		<xar:elseif condition="!empty($year) and !empty($month)"/>
+			<h3><xar:ml><xar:mlstring>Statistics for #(1)</xar:mlstring><xar:mlvar>#xarLocaleFormatDate('%B %Y',mktime(0,0,0,$month,15,$year))#</xar:mlvar></xar:ml></h3>
+		<xar:elseif condition="!empty($year)"/>
+			<h3><xar:ml><xar:mlstring>Statistics for #(1)</xar:mlstring><xar:mlvar>#xarLocaleFormatDate('%Y',mktime(0,0,0,6,1,$year))#</xar:mlvar></xar:ml></h3>
+		</xar:if>
 		<xar:ml>
 			<xar:mlstring>We have received <strong>#(1)</strong> page views since #(2), #(3) today, and #(4) yesterday.</xar:mlstring>
 			<xar:mlvar>#$hits['total']#</xar:mlvar>
-			<xar:mlvar>#xarLocaleFormatDate('%D', $startdate)#</xar:mlvar>
+			<xar:mlvar>#xarLocaleGetFormattedDate('medium', $startdate)#</xar:mlvar>
 			<xar:mlvar>#$hits['today']#</xar:mlvar>
 			<xar:mlvar>#$hits['yesterday']#</xar:mlvar>
 		</xar:ml>
 		<br /><br />
 		<xar:ml>
 			<xar:mlstring>The best day was #(1) (<strong>#(2)</strong> page views), while #(3) (<strong>#(4)</strong> page views) was a really poor day.</xar:mlstring>
-			<xar:mlvar>#xarLocaleFormatDate('%D', $topday['best'])#</xar:mlvar>
+			<xar:mlvar>#xarLocaleGetFormattedDate('medium', $topday['best'])#</xar:mlvar>
 			<xar:mlvar>#$topday['mosthits']#</xar:mlvar>
-			<xar:mlvar>#xarLocaleFormatDate('%D', $topday['worst'])#</xar:mlvar>
+			<xar:mlvar>#xarLocaleGetFormattedDate('medium', $topday['worst'])#</xar:mlvar>
 			<xar:mlvar>#$topday['leasthits']#</xar:mlvar>
 		</xar:ml>
 		<br /><br />
@@ -31,43 +38,13 @@
 			<xar:mlvar>#$tophour['leasthits']#</xar:mlvar>
 		</xar:ml>
 	</div>
-	<div style="text-align: center;">
-		<xar:if condition="!empty($browsers)">
-		<h3><xar:mlstring>Top 10 Browsers</xar:mlstring></h3>
-		<a href="#xarModURL('stats', 'user', 'details_browser')#"><xar:mlstring>More details</xar:mlstring></a>
-		<table cellspacing="0" cellpadding="2">
-			<xar:loop name="$browsers">
-				<tr>
-					<td><img src="#$picpath#/#$loop:item['pic']#" alt="#$loop:item['name']#" /></td>
-					<td>#$loop:item['name']#</td>
-					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
-				</tr>
-			</xar:loop>
-		</table>
-		</xar:if>
-	</div>
-	<div style="text-align: center;">
-		<xar:if condition="!empty($os)">
-		<h3><xar:mlstring>Top 10 Operating systems</xar:mlstring></h3>
-		<a href="#xarModURL('stats', 'user', 'details_os')#"><xar:mlstring>More details</xar:mlstring></a>
-		<table cellspacing="0" cellpadding="2">
-			<xar:loop name="$os">
-				<tr>
-					<td><img src="#$picpath#/#$loop:item['pic']#" alt="#$loop:item['name']#" /></td>
-					<td>#$loop:item['name']#</td>
-					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
-				</tr>
-			</xar:loop>
-		</table>
-		</xar:if>
-	</div>
 	<xar:if condition="!empty($last7days)">
 	<div style="text-align: center;">
 		<h3><xar:mlstring>Last Seven Days</xar:mlstring></h3>
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$last7days">
 				<tr>
-					<td>#xarLocaleFormatDate('%D', $loop:item['unformatted'])#</td>
+					<td><a href="#$loop:item['link']#">#xarLocaleGetFormattedDate('medium', $loop:item['unformatted'])#</a></td>
 					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
 				</tr>
 			</xar:loop>
@@ -179,6 +156,36 @@
 				</tr>
 			</xar:loop>
 		</table>
+	</div>
+	<div style="text-align: center;">
+		<xar:if condition="!empty($browsers)">
+		<h3><xar:mlstring>Top 10 Browsers</xar:mlstring></h3>
+		<a href="#xarModURL('stats', 'user', 'details_browser')#"><xar:mlstring>More details</xar:mlstring></a>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$browsers">
+				<tr>
+					<td><img src="#$picpath#/#$loop:item['pic']#" alt="#$loop:item['name']#" /></td>
+					<td>#$loop:item['name']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+		</xar:if>
+	</div>
+	<div style="text-align: center;">
+		<xar:if condition="!empty($os)">
+		<h3><xar:mlstring>Top 10 Operating systems</xar:mlstring></h3>
+		<a href="#xarModURL('stats', 'user', 'details_os')#"><xar:mlstring>More details</xar:mlstring></a>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$os">
+				<tr>
+					<td><img src="#$picpath#/#$loop:item['pic']#" alt="#$loop:item['name']#" /></td>
+					<td>#$loop:item['name']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+		</xar:if>
 	</div>
 	<div style="text-align: center;">
 		<h3><xar:mlstring>Miscellaneous stats</xar:mlstring></h3>

@@ -52,33 +52,6 @@ function stats_user_main()
                                              'day'   => $yesterday[2]));
     unset($today, $yesterday);
 
-    $topday = array();
-    // API function to get the best days figure
-// TODO: filter by year and month too ?
-    list($bestday, $topday['mosthits']) = xarModAPIFunc('stats',
-                                                        'user',
-                                                        'gettopday',
-                                                        array('type' => 'best'));
-    $topday['best'] = gmmktime(0,0,0,$bestday['month'],$bestday['day'],$bestday['year']);
-    unset($bestday);
-
-    // API function to get the worst days figure
-// TODO: filter by year and month too ?
-    list($worstday, $topday['leasthits']) = xarModAPIFunc('stats',
-                                                          'user',
-                                                          'gettopday',
-                                                          array('type' => 'worst'));
-    $topday['worst'] = gmmktime(0,0,0,$worstday['month'],$worstday['day'],$worstday['year']);
-    unset($worstday);
-
-    // get the hits by browsers
-    $top10 = true;
-    $args = compact('top10', 'picpath', 'barlen');
-    extract(xarModAPIFunc('stats','user','get_browser_data',$args));
-
-    // get the hits by operating system
-    extract(xarModAPIFunc('stats','user','get_os_data', $args));
-
     // get hits of the last seven days
     list($l7data, $l7sum, $l7max) = xarModAPIFunc('stats',
                                                   'user',
@@ -88,11 +61,36 @@ function stats_user_main()
     //TODO: use dateformat-medium from locales file here
         $unformatted = gmmktime(0,0,0,$val['month'],$val['day'],$val['year']);
         $last7days[$key] = array('unformatted' => $unformatted,        
+                                 'link'        => xarModURL('stats','user','main',
+                                                            array('year'  => $val['year'],
+                                                                  'month' => $val['month'],
+                                                                  'day'   => $val['day'])),
                                  'abs'         => $val['hits'],
                                  'rel'         => sprintf('%01.2f',(100*$val['hits']/$l7sum)),
                                  'wid'         => round($barlen*$val['hits']/$l7max));
     }
     unset($l7data, $l7sum, $l7max, $unformatted);
+
+    $topday = array();
+    // API function to get the best days figure
+    list($bestday, $topday['mosthits']) = xarModAPIFunc('stats',
+                                                        'user',
+                                                        'gettopday',
+                                                        array('type' => 'best',
+                                                              'year' => $year,
+                                                              'month' => $month));
+    $topday['best'] = gmmktime(0,0,0,$bestday['month'],$bestday['day'],$bestday['year']);
+    unset($bestday);
+
+    // API function to get the worst days figure
+    list($worstday, $topday['leasthits']) = xarModAPIFunc('stats',
+                                                          'user',
+                                                          'gettopday',
+                                                          array('type' => 'worst',
+                                                                'year' => $year,
+                                                                'month' => $month));
+    $topday['worst'] = gmmktime(0,0,0,$worstday['month'],$worstday['day'],$worstday['year']);
+    unset($worstday);
 
     // API function to get the hits per year
     list($pydata, $pysum, $pymax) = xarModAPIFunc('stats',
@@ -196,6 +194,14 @@ function stats_user_main()
                              'gettophour',
                              $perhour);
     
+    // get the hits by browsers
+    $top10 = true;
+    $args = compact('top10', 'picpath', 'barlen', 'year', 'month', 'day');
+    extract(xarModAPIFunc('stats','user','get_browser_data',$args));
+
+    // get the hits by operating system
+    extract(xarModAPIFunc('stats','user','get_os_data', $args));
+
     // get misc stats
     $misc = xarModAPIFunc('stats',
                           'user',
