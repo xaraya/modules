@@ -17,10 +17,10 @@ function printToDoTable($xquery, $xis_search, $page) {
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
     $stati = array (
-            0    => _TODOLIST_STATUS_OPEN,
-            1    => _TODOLIST_STATUS_IN_PROGRESS,
-            9    => _TODOLIST_STATUS_OBSOLETE,
-            10   => _TODOLIST_STATUS_DONE,
+            0    => xarML('open'),
+            1    => xarML('in progress'),
+            9    => xarML('obsolete'),
+            10   => xarML('done'),
             );
     $very_important_date = date("Y-m-d H:i", mktime() + (86400 * pnModGetVar('todolist', 'VERY_IMPORTANT_DAYS')));
     $most_important_date = date("Y-m-d H:i", mktime() - (86400 * pnModGetVar('todolist', 'MOST_IMPORTANT_DAYS')));
@@ -80,7 +80,7 @@ function printToDoTable($xquery, $xis_search, $page) {
     $result = $dbconn->Execute("$xquery");
     
     if ($result->PO_RecordCount() == 0 ){
-        return (_TODOLIST_NO_DATA_FOUND);
+        return (xarML('No data found!'));
     }
     
     $i = 0;
@@ -94,12 +94,12 @@ function printToDoTable($xquery, $xis_search, $page) {
             $arrayurl['order_by'] = 'prio_asc';
             $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
             $str .= '<th width="60" align="left">
-            <a href="'.$xREFRESH_URL.'">'._TODOLIST_PRIORITY.'</a></th>';
+            <a href="'.$xREFRESH_URL.'">'.xarML('priority').'</a></th>';
         } else { 
             $arrayurl['order_by'] = 'prio_desc';
             $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
             $str .= '<th width="60" align="left">
-            <a href="'.$xREFRESH_URL.'">'._TODOLIST_PRIORITY.'</a></th>';
+            <a href="'.$xREFRESH_URL.'">'.xarML('priority').'</a></th>';
         }
     }
 
@@ -107,52 +107,52 @@ function printToDoTable($xquery, $xis_search, $page) {
         $arrayurl['order_by'] = 'status_asc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
         $str .= '<th align="left">
-        <a href="'.$xREFRESH_URL.'">'._TODOLIST_STATUS.'</a></th>';
+        <a href="'.$xREFRESH_URL.'">'.xarML('Status').'</a></th>';
     } else { 
         $arrayurl['order_by'] = 'status_desc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
         $str .= '<th align="left">
-        <a href="'.$xREFRESH_URL.'">'._TODOLIST_STATUS.'</a></th>';
+        <a href="'.$xREFRESH_URL.'">'.xarML('Status').'</a></th>';
     }
 
     if (pnModGetVar('todolist', 'SHOW_PERCENTAGE_IN_TABLE')){
         $str .= "<th>%</th>";
     }
-    $str .= "<th align=\"left\">"._TODOLIST_TEXT."</th>";
+    $str .= "<th align=\"left\">".xarML('Text')."</th>";
     
     /*
     if ($order_by=="responsible_asc"){
         $arrayurl['order_by'] = 'responsible_desc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
-        $str .= "<th align=\"left\"><a href=\"$xREFRESH_URL\">"._TODOLIST_RESPONSIBLE."</a></th>\n";
+        $str .= "<th align=\"left\"><a href=\"$xREFRESH_URL\">".xarML('responsible')."</a></th>\n";
     } else {
         $arrayurl['order_by'] = 'responsible_asc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
-        $str .= "<th align=\"left\"><a href=\"$xREFRESH_URL\">"._TODOLIST_RESPONSIBLE."</a></th>\n";
+        $str .= "<th align=\"left\"><a href=\"$xREFRESH_URL\">".xarML('responsible')."</a></th>\n";
     }
     */
-        $str .= "<th align=\"left\">"._TODOLIST_RESPONSIBLE."</th>\n";
+        $str .= "<th align=\"left\">".xarML('responsible')."</th>\n";
     
     if ($order_by=="due_asc"){
         $arrayurl['order_by'] = 'due_desc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
-        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._TODOLIST_DUE.'</a></th>';
+        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'.xarML('due date').'</a></th>';
     } else { 
         $arrayurl['order_by'] = 'due_asc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
-        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._TODOLIST_DUE.'</a></th>';
+        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'.xarML('due date').'</a></th>';
     }
     
     if ($order_by=="changed_on_asc") {
         $arrayurl['order_by'] = 'changed_on_desc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
-        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._TODOLIST_CHANGED_ON.'</a></th>';
+        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'.xarML('changed').'</a></th>';
     } else { 
         $arrayurl['order_by'] = 'changed_on_asc';
         $xREFRESH_URL = pnModURL('todolist', 'user', 'main', $arrayurl);
-        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._TODOLIST_CHANGED_ON.'</a></th>';
+        $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'.xarML('changed').'</a></th>';
     }
-    $str .= '<th width="100" align="left">'._TODOLIST_DETAILS.'</th>';
+    $str .= '<th width="100" align="left">'.xarML('detail').'</th>';
     $str .= "</tr>\n\n";
 
     $done_start=true;
@@ -253,7 +253,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         if ($nr_notes > 0) {
               $str .= '<td>&nbsp;<a href="'.
                       pnModURL('todolist', 'user', 'main', array('route' => DETAILS, 'id' => $id)).
-                      '">'._TODOLIST_DETAILS.'</a><b>';
+                      '">'.xarML('detail').'</a><b>';
               if ($nr_notes < 5) {
                   for ($zaehler=0;($zaehler < $nr_notes) && ($zaehler < 5) && ($nr_notes < 5) ; $zaehler++) {
                       $str .= "*";
@@ -265,7 +265,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         } else {
               $str .= '<td>&nbsp;<a href="'.
                       pnModURL('todolist', 'user', 'main', array('route' => DETAILS, 'id' => $id)).
-                      '">'._TODOLIST_DETAILS.'</a></td>'; 
+                      '">'.xarML('detail').'</a></td>'; 
         }
         $str .= '</tr>';
         $i++;
@@ -383,7 +383,7 @@ function printToDoTable($xquery, $xis_search, $page) {
             if ($nr_notes > 0) {
                 $str .= "<td>&nbsp;<a href=\"".
                 pnModURL('todolist', 'user', 'main', array('route' => DETAILS, 'id' => $id)).
-                "\">"._TODOLIST_DETAILS."</a><b>"; 
+                "\">".xarML('detail')."</a><b>"; 
                 if ($nr_notes < 5) {
                     for ($zaehler=0;($zaehler < $nr_notes) && ($zaehler < 5) && ($nr_notes < 5) ; $zaehler++) {
                     $str .= "*";
@@ -396,7 +396,7 @@ function printToDoTable($xquery, $xis_search, $page) {
           // not todo-liste
           $str .= "<td>&nbsp;<a href=\"".
                   pnModURL('todolist', 'user', 'main', array('route' => DETAILS, 'id' => $id)).
-                  "\">"._TODOLIST_DETAILS."</a></td>"; 
+                  "\">".xarML('detail')."</a></td>"; 
         }
         $str .= '</tr>
             ';
@@ -437,29 +437,29 @@ function add_box(){
         <input type="hidden" name="route" value="'.ACTIONS.'"/>
         <input type="hidden" name="action" value="todo-add"/>
         <table width="100%">';
-    $str .= "<tr><th align=\"left\">"._TODOLIST_TEXT."</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_PRIORITY."</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_PROJECT."</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_DUE."</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_RESPONSIBLE."</th></tr>";
+    $str .= "<tr><th align=\"left\">".xarML('Text')."</th>";
+    $str .= "<th align=\"left\">".xarML('priority')."</th>";
+    $str .= "<th align=\"left\">".xarML('project')."</th>";
+    $str .= "<th align=\"left\">".xarML('due date')."</th>";
+    $str .= "<th align=\"left\">".xarML('responsible')."</th></tr>";
     $str .='
         <tr align="left" valign="top"><td>
         <textarea cols="40" rows="5" name="text"></textarea>
         </td>';
     $str .='<td><select name="priority" size="1">';
-    $str .= "<option>"._TODOLIST_PRIORITY_HIGH."</option>";
-    $str .= "<option>"._TODOLIST_PRIORITY_MEDIUM."</option>";
-    $str .= "<option>"._TODOLIST_PRIORITY_LOW."</option>";
+    $str .= "<option>".xarML('high')."</option>";
+    $str .= "<option>".xarML('med')."</option>";
+    $str .= "<option>".xarML('low')."</option>";
     $str .='</select></td>';
     $str .='<td>'. makeProjectDropdown("project",$add_project, false, "updateaddbox()"). '</td>';
     $str .= '<td>
         <input type="text" name="due_date" size="10" value="'.convDate(date("Y-m-d")).'" maxlength="10"/>
         <pre>
-        '.convDate(_TODOLIST_DATEFORMAT).'</pre>';
-    $str .= "<a href=\"javascript:showCalendar()\"> "._TODOLIST_SHOW_CAL."</a>";
+        '.convDate(xarML('YYYY-MM-DD')).'</pre>';
+    $str .= "<a href=\"javascript:showCalendar()\"> ".xarML('show calendar')."</a>";
     $str .='</td><td>';
     $str .=  makeUserDropdown("responsible_person", array(pnUserGetVar('uid')), $add_project ,0,true); //empty array to keep it clear
-    $str .='<p /><div align="right"><input type="submit" value="'._TODOLIST_SUBMIT.'" /></div>
+    $str .='<p /><div align="right"><input type="submit" value="'.xarML('submit').'" /></div>
         </td></tr></table></form>';
     return $str;
 }
@@ -497,13 +497,13 @@ function search_box($priority,$search_status, $search_project,$responsible_perso
     $str .='<table width="100%">
         <tr>
         ';
-    $str .= "<th align=\"left\">"._TODOLIST_THE_SEARCH.":</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_PRIORITY.":</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_STATUS.":</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_PROJECT.":</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_RESPONSIBLE.":</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_DATE_FROM.":</th>";
-    $str .= "<th align=\"left\">"._TODOLIST_DATE_TO.":</th>";
+    $str .= "<th align=\"left\">".xarML('Search').":</th>";
+    $str .= "<th align=\"left\">".xarML('priority').":</th>";
+    $str .= "<th align=\"left\">".xarML('Status').":</th>";
+    $str .= "<th align=\"left\">".xarML('project').":</th>";
+    $str .= "<th align=\"left\">".xarML('responsible').":</th>";
+    $str .= "<th align=\"left\">".xarML('from date').":</th>";
+    $str .= "<th align=\"left\">".xarML('to date').":</th>";
     $str .='
         </tr><tr valign="top"><td>
         ';
@@ -520,30 +520,30 @@ function search_box($priority,$search_status, $search_project,$responsible_perso
         <select name="priority" size="1">
         ';
     if ($priority == ""){
-        $str .= '<option selected="selected" value="">'._TODOLIST_ALL.'</option>';
+        $str .= '<option selected="selected" value="">'.xarML('all').'</option>';
     }else{
-        $str .= '<option value="">'._TODOLIST_ALL.'</option>';
+        $str .= '<option value="">'.xarML('all').'</option>';
     }
     if ($priority == "1"){
-        $str .= '<option value="1" selected="selected">'._TODOLIST_PRIORITY_HIGH.'</option>';
+        $str .= '<option value="1" selected="selected">'.xarML('high').'</option>';
     }else{
-        $str .= '<option value="1">'._TODOLIST_PRIORITY_HIGH.'</option>';
+        $str .= '<option value="1">'.xarML('high').'</option>';
     }
     if ($priority == "2"){
-        $str .= '<option value="2" selected="selected">'._TODOLIST_PRIORITY_MEDIUM.'</option>';
+        $str .= '<option value="2" selected="selected">'.xarML('med').'</option>';
     }else{
-        $str .= '<option value="2">'._TODOLIST_PRIORITY_MEDIUM.'</option>';
+        $str .= '<option value="2">'.xarML('med').'</option>';
     }
     if ($priority == "3"){
-        $str .= '<option value="3" selected="selected">'._TODOLIST_PRIORITY_LOW.'</option>';
+        $str .= '<option value="3" selected="selected">'.xarML('low').'</option>';
     }else{
-        $str .= '<option value="3">'._TODOLIST_PRIORITY_LOW.'</option>';
+        $str .= '<option value="3">'.xarML('low').'</option>';
     }
     /*
     if ($priority == "4"){
-        $str .= '<option value="4" selected="selected">'._TODOLIST_PRIORITY_DONE.'</option>';
+        $str .= '<option value="4" selected="selected">'.xarML('done').'</option>';
     }else{
-        $str .= '<option value="4">'._TODOLIST_PRIORITY_DONE.'</option>';
+        $str .= '<option value="4">'.xarML('done').'</option>';
     }
     */
     $str .= '</select></td>
@@ -570,12 +570,12 @@ function search_box($priority,$search_status, $search_project,$responsible_perso
     }
 
     $str .='</td><td>
-        <input type="text" name="date_min" size="10" value="' . convDate($date_min) . '" maxlength="10"/><br/><pre>'.convDate(_TODOLIST_DATEFORMAT).'</pre>
+        <input type="text" name="date_min" size="10" value="' . convDate($date_min) . '" maxlength="10"/><br/><pre>'.convDate(xarML('YYYY-MM-DD')).'</pre>
         </td><td>
-        <input type="text" name="date_max" size="10" value="' . convDate($date_max) . '" maxlength="10"/><pre>'.convDate(_TODOLIST_DATEFORMAT).'</pre>
+        <input type="text" name="date_max" size="10" value="' . convDate($date_max) . '" maxlength="10"/><pre>'.convDate(xarML('YYYY-MM-DD')).'</pre>
         <p/>
         <div align="right">
-        <input type="submit" value="'._TODOLIST_SEARCH.'"/>
+        <input type="submit" value="'.xarML('search').'"/>
         </div>
         </td></tr></table>
         </form>';
@@ -702,44 +702,44 @@ function details_page($id){
     <table border="0">';
 
     $str .= '<tr>
-    <td><input type="hidden" name="id" value="'.$id. '" readonly="readonly" />'._TODOLIST_PROJECT.'</td>
+    <td><input type="hidden" name="id" value="'.$id. '" readonly="readonly" />'.xarML('project').'</td>
     <td>' . makeProjectDropdown("project",$project,false,"updatedetails()") . '</td></tr>';
-    // $str .= '<tr><td>'._TODOLIST_PROJECT.'</td><td>'.$project_name.'</td></tr>';
-    $str .= '<tr><td>'._TODOLIST_PRIORITY.'</td>';
+    // $str .= '<tr><td>'.xarML('project').'</td><td>'.$project_name.'</td></tr>';
+    $str .= '<tr><td>'.xarML('priority').'</td>';
 
     $priority = switchPriority($priority);
 
     $str .= "<td><select name=\"priority\" size=\"1\">";
-    if ($priority == _TODOLIST_PRIORITY_HIGH) {
-      $str .= "<option selected=\"selected\">"._TODOLIST_PRIORITY_HIGH."</option>";
+    if ($priority == xarML('high')) {
+      $str .= "<option selected=\"selected\">".xarML('high')."</option>";
     } else {
-      $str .= "<option>"._TODOLIST_PRIORITY_HIGH."</option>";
+      $str .= "<option>".xarML('high')."</option>";
     }
 
-    if ($priority == _TODOLIST_PRIORITY_MEDIUM){
-      $str .= "<option selected>"._TODOLIST_PRIORITY_MEDIUM."</option>";
+    if ($priority == xarML('med')){
+      $str .= "<option selected>".xarML('med')."</option>";
     } else {
-      $str .= "<option>"._TODOLIST_PRIORITY_MEDIUM."</option>";
+      $str .= "<option>".xarML('med')."</option>";
     }
 
-    if ($priority == _TODOLIST_PRIORITY_LOW){
-      $str .= "<option selected=\"selected\">"._TODOLIST_PRIORITY_LOW."</option>";
+    if ($priority == xarML('low')){
+      $str .= "<option selected=\"selected\">".xarML('low')."</option>";
     } else {
-      $str .= "<option>"._TODOLIST_PRIORITY_LOW."</option>";
+      $str .= "<option>".xarML('low')."</option>";
     }
 
     /*
-    if ($priority == _TODOLIST_PRIORITY_DONE){
-      $str .= "<option selected=\"selected\">"._TODOLIST_PRIORITY_DONE."</option>";
+    if ($priority == xarML('done')){
+      $str .= "<option selected=\"selected\">".xarML('done')."</option>";
     } else {
-      $str .= "<option>"._TODOLIST_PRIORITY_DONE."</option>";
+      $str .= "<option>".xarML('done')."</option>";
     }
     */
 
     $str .= '</select></td></tr>';
     $str .= '
-    <tr><td>'._TODOLIST_STATUS.'</td><td>'.makeStatusDropdown("status",$status,false,'updatepercentage()').'</td></tr>';
-    $str .='<tr><td>'._TODOLIST_PERCENTAGE.'</td><td>
+    <tr><td>'.xarML('Status').'</td><td>'.makeStatusDropdown("status",$status,false,'updatepercentage()').'</td></tr>';
+    $str .='<tr><td>'.xarML('percentage').'</td><td>
     <select name="percentage_completed" size="1" onchange="updatestatus()">';
     for ($i = 0 ; $i <= 100 ; $i += 20)
     {
@@ -749,37 +749,37 @@ function details_page($id){
       $str .= '<option value="'.$i.'">'.$i.'</option>';
     }
     $str .= '</select></td></tr><tr>';
-    $str .= "<td>"._TODOLIST_TEXT."</td>";
+    $str .= "<td>".xarML('Text')."</td>";
     $str .= '<td><textarea cols="50" rows="5" name="text">'.stripslashes($text).'</textarea></td>';
     $str .= "</tr>";
     $str .= "<tr>";
-    $str .= "<td>"._TODOLIST_RESPONSIBLE."</td><td>";
+    $str .= "<td>".xarML('responsible')."</td><td>";
     $str .= makeUserDropdown("responsible_persons", $responsible_users, $project ,0,true);
-    $str .= "</td></tr><tr><td>"._TODOLIST_DUE."</td>";
-    $str .= "<td><input type=\"text\" name=\"due_date\" value=\"" . convDate($due_date) . "\" /><br/><pre>".convDate(_TODOLIST_DATEFORMAT).'</pre></td>';
+    $str .= "</td></tr><tr><td>".xarML('due date')."</td>";
+    $str .= "<td><input type=\"text\" name=\"due_date\" value=\"" . convDate($due_date) . "\" /><br/><pre>".convDate(xarML('YYYY-MM-DD')).'</pre></td>';
 
-    $str .= "</tr><tr><td>"._TODOLIST_CREATED_ON."</td>";
+    $str .= "</tr><tr><td>".xarML('created on')."</td>";
     $str .= '<td><input type="hidden" name="datum_erstellt" value="'.strftime("%Y-%m-%d",$date_created).'" />';
     $str .= convDate(strftime("%Y-%m-%d",$date_created)) . "</td></tr><tr>";
-    $str .= "<td>"._TODOLIST_CREATED_BY."</td>";
+    $str .= "<td>".xarML('created by')."</td>";
     $str .= "<td>".$usernames["$created_by"]."</td>";
     $str .= "</tr>";
     $str .= "<tr>";
-    $str .= "<td>"._TODOLIST_CHANGED_BY."</td>";
+    $str .= "<td>".xarML('changed by')."</td>";
     $str .= "<td>".$usernames["$changed_by"]."</td>";
     $str .= "</tr>";
     $str .= "<tr>";
-    $str .= "<td>"._TODOLIST_CHANGED_ON."</td>";
+    $str .= "<td>".xarML('changed')."</td>";
     $str .= "<td>";
     $str .= convDate(strftime("%Y-%m-%d %H:%M:%S", $date_changed)) . "</td></tr>";
 
 
     $str .= "</table>";
     $str .= '<select name="action" size="1">';
-    $str .= '<option value="todo_change">'._TODOLIST_CHANGE."</option>";
-    $str .= '<option value="todo_delete">'._TODOLIST_DELETE."</option>";
+    $str .= '<option value="todo_change">'.xarML('change')."</option>";
+    $str .= '<option value="todo_delete">'.xarML('delete')."</option>";
     $str .= "</select>";
-    $str .= "&nbsp;&nbsp;<input type=\"submit\" value=\""._TODOLIST_SUBMIT."\" />";
+    $str .= "&nbsp;&nbsp;<input type=\"submit\" value=\"".xarML('submit')."\" />";
 
 
     $str .= "<br /><br />";
@@ -798,9 +798,9 @@ function details_page($id){
 
     if ($anzahl > 0){
         $str .= '<table border="1"><tr>';
-        $str .= "<th align=\"left\">"._TODOLIST_NOTE."</th>";
-        $str .= "<th align=\"left\">"._TODOLIST_USER."</th>";
-        $str .= "<th align=\"left\">"._TODOLIST_DATE."</th>";
+        $str .= "<th align=\"left\">".xarML('note')."</th>";
+        $str .= "<th align=\"left\">".xarML('user')."</th>";
+        $str .= "<th align=\"left\">".xarML('date')."</th>";
         $str .= "</tr>";
     }
 
@@ -822,13 +822,13 @@ function details_page($id){
     $str .= "<hr noshade=\"noshade\"/>";
 
     $str .= "<table><tr>";
-    $str .= "<th align=\"left\">"._TODOLIST_NOTE."</th>";
+    $str .= "<th align=\"left\">".xarML('note')."</th>";
     $str .= "<th>&nbsp;</th>";
     $str .= "</tr><tr><td>";
 
     $str .= '<textarea cols="50" rows="4" name="note_text"></textarea></td>';
     $str .= "<td>";
-    $str .= "&nbsp;&nbsp;<input type=\"submit\" value=\""._TODOLIST_SUBMIT."\" /></td>";
+    $str .= "&nbsp;&nbsp;<input type=\"submit\" value=\"".xarML('submit')."\" /></td>";
     $str .= "</tr></table>";
     $str .= "</form>";
     return $str;

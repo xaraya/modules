@@ -47,7 +47,7 @@ if ($page==PREFPAGE) {
 if (!pnUserLoggedIn()) {
     // user doesn't exist
     $output->SetInputMode(_PNH_VERBATIMINPUT);
-    $output->Text(_TODOLIST_LOGIN_USER_UNKNOWN1);
+    $output->Text(xarML('You are anonymous user!'));
     $output->SetInputMode(_PNH_PARSEINPUT);
     return $output->GetOutput();
 } else {
@@ -57,7 +57,7 @@ if (!pnUserLoggedIn()) {
     if(!$result->PO_RecordCount()) {
         // user doesn't exist
         $output->SetInputMode(_PNH_VERBATIMINPUT);
-        $output->Text(_TODOLIST_LOGIN_USER_UNKNOWN2);
+        $output->Text(xarML('User unknown!'));
         $output->SetInputMode(_PNH_PARSEINPUT);
         return $output->GetOutput();
     }
@@ -73,7 +73,7 @@ if (!pnUserLoggedIn()) {
     $result = $dbconn->Execute($sql2);
 
     if ($result->PO_RecordCount() == 0 ) {
-        $feedback = _TODOLIST_LOGIN_NO_PROJECT;
+        $feedback = xarML("You are not a member in any projects, so you can't use this software. Contact administrator.");
         $output->SetInputMode(_PNH_VERBATIMINPUT);
         $output->Text($feedback);
         $output->SetInputMode(_PNH_PARSEINPUT);
@@ -174,7 +174,7 @@ switch($route) {
         // deleting a task
         case "todo_delete":
             delete_todo($id);
-            $feedback = _TODOLIST_DATASET_DELETED;
+            $feedback = xarML('dataset deleted!');
             $output->SetInputMode(_PNH_VERBATIMINPUT);
             $output->Text(page_top(THELIST,$printlayout));
             $query = makeFrontQuery($order_by, pnSessionGetVar('todolist_selected_project'));
@@ -190,7 +190,7 @@ switch($route) {
         case "todo_change":
             update_todo($due_date, $priority, $status, $percentage_completed, $text, $responsible_persons,
                         $id, $note_text, $project);
-            $feedback = _TODOLIST_DATASET_CHANGED;
+            $feedback = xarML('dataset changed.');
             $output->SetInputMode(_PNH_VERBATIMINPUT);
             $output->Text(page_top(THELIST,$printlayout));
             $query = makeFrontQuery($order_by, pnSessionGetVar('todolist_selected_project'));
@@ -205,7 +205,7 @@ switch($route) {
         // add a new task
         case "todo-add":
             add_todo($due_date,$priority,$project,$percentage_completed,$text,$responsible_person,$note_text);
-            $feedback = _TODOLIST_TODO_ADDED1.'"'.stripslashes($text).'"'._TODOLIST_TODO_ADDED2;
+            $feedback = xarML('ToDo').'"'.stripslashes($text).'"'.xarML(' added to database');
             $output->SetInputMode(_PNH_VERBATIMINPUT);
             $output->Text(page_top(THELIST,$printlayout));
             $query = makeFrontQuery($order_by, pnSessionGetVar('todolist_selected_project'));
@@ -244,7 +244,7 @@ function todolist_user_updateuser($args)
                         'user_primary_project' => $user_primary_project,
                         'user_my_tasks' => $user_my_tasks,
                         'user_show_icons' => $user_show_icons))) {
-        pnSessionSetVar('statusmsg', _TODOLIST_UPDATED);
+        pnSessionSetVar('statusmsg', xarML('Updated'));
     }
     pnRedirect(pnModURL('todolist', 'user', 'main'));
 

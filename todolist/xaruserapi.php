@@ -43,7 +43,7 @@ function todolist_userapi_getallprojects($args)
     }
 
     if ((!isset($startnum)) || (!isset($numitems))) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
@@ -65,7 +65,7 @@ function todolist_userapi_getallprojects($args)
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _TODOLIST_GETFAILED);
+        pnSessionSetVar('errormsg', xarML('Items load failed'));
         return false;
     }
 
@@ -94,7 +94,7 @@ function todolist_userapi_getproject($args)
     extract($args);
 
     if (!isset($project_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
@@ -174,7 +174,7 @@ function todolist_userapi_getallgroups($args)
     }
 
     if ((!isset($startnum)) || (!isset($numitems))) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
@@ -196,7 +196,7 @@ function todolist_userapi_getallgroups($args)
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _TODOLIST_GETFAILED);
+        pnSessionSetVar('errormsg', xarML('Items load failed'));
         return false;
     }
 
@@ -225,7 +225,7 @@ function todolist_userapi_getgroup($args)
     extract($args);
 
     if (!isset($group_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
@@ -305,7 +305,7 @@ function todolist_userapi_getallusers($args)
     }
 
     if ((!isset($startnum)) || (!isset($numitems))) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
@@ -328,7 +328,7 @@ function todolist_userapi_getallusers($args)
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _TODOLIST_GETFAILED);
+        pnSessionSetVar('errormsg', xarML('Items load failed'));
         return false;
     }
 
@@ -358,7 +358,7 @@ function todolist_userapi_getuser($args)
     extract($args);
 
     if (!isset($user_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
@@ -429,7 +429,7 @@ function todolist_userapi_updateuser($args)
     
     if ((!isset($user_id)) && (!isset($user_email_notify)) && (!isset($user_primary_project)) &&
         (!isset($user_my_tasks)) && (!isset($user_show_icons))) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
     //HTML-Forms submit nothing if a checkbox isn't checked... :-(
@@ -439,7 +439,7 @@ function todolist_userapi_updateuser($args)
     if (!isset($user_show_icons)) { $user_show_icons = 0; }
 
     if ($user_id != pnUserGetVar('uid')) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -455,10 +455,10 @@ function todolist_userapi_updateuser($args)
             " WHERE $todolist_users_column[usernr]=$user_id";
     $result = $dbconn->Execute($query);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_UPDATE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Update attempt failed'));
         return false;
     }
-    pnSessionSetVar('errormsg', _TODOLIST_USER_UPDATED);
+    pnSessionSetVar('errormsg', xarML('User info was updated'));
     return true;
 }
 
@@ -473,7 +473,7 @@ function todolist_userapi_getprojectmembers($args)
     extract($args);
 
     if (!isset($project_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
@@ -515,7 +515,7 @@ function todolist_userapi_getgroupmembers($args)
     extract($args);
 
     if (!isset($group_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 

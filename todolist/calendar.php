@@ -34,8 +34,8 @@ function Kalender($Monat,$Jahr)
 {
     $modurl="modules.php?op=modload&amp;name=todolist&amp;file=calendar";
 
-    $Monatsname = explode(' ', _TODOLIST_MONTH_NAMES);
-    $Tag = explode(' ', _TODOLIST_SHORT_DAY_NAMES);
+    $Monatsname = explode(' ', xarML('January Febuary March April May June July August September October November December'));
+    $Tag = explode(' ', xarML('Mo Tu We Th Fr Sa Su'));
     $KSchrArt = "Verdana,Arial"; /* Schriftart Kalenderkopf */
     $KSchrGroesse = 2;       /* Schriftgroesse 1-7 Kalenderkopf */
     $KSchrFarbe = "#FFFF00";     /* Schriftfarbe Kalenderkopf */
@@ -122,7 +122,7 @@ function Kalender($Monat,$Jahr)
  */
 function SchreibeKopf($Monatstitel,$HgFarbe,$SchrFarbe,$SchrGroesse,$SchrArt)
 {
-    $Tag = explode(' ', _TODOLIST_SHORT_DAY_NAMES);
+    $Tag = explode(' ', xarML('Mo Tu We Th Fr Sa Su'));
     echo "<tr>";
     echo "<td class=\"cal\" align=\"center\" colspan=\"7\" valign=\"middle\" bgcolor=\"" . $HgFarbe . "\">";
     echo "<font size=" . $SchrGroesse . " color=" . $SchrFarbe . " face=" . $SchrArt . "><b>";

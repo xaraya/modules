@@ -1,0 +1,91 @@
+<?
+/******************************************************************************
+*                                                                             *
+* This is the czech-language file for ToDoList.php                            *
+* Maintained by Ales Lednej <pinguin@centrum.cz>                              *
+*                                                                             *
+*******************************************************************************/
+define(_TODOLIST_ADMIN		,"Admin");
+define(_TODOLIST_ADMIN_MODULES	,"Modul administrace");
+define(_TODOLIST_ALL	,"vse");
+define(_TODOLIST_BACK	,"zpet");
+define(_TODOLIST_CHANGE	,"zmenit");
+define(_TODOLIST_CHANGED_BY,"zmeneno");
+define(_TODOLIST_CHANGED_ON,"zmeneno");
+define(_TODOLIST_CHOOSE_EXISTING_PROJECT,"Vyberte existujici projekt");
+define(_TODOLIST_CHOOSE_EXISTING_USER	,"Vyberte existujiciho uzivatele");
+define(_TODOLIST_CHOOSE_MODULE	,"Vyberte modul administrace");
+define(_TODOLIST_CREATED_BY,"vytvoreno");
+define(_TODOLIST_CREATED_ON,"vytvoreno");
+define(_TODOLIST_CREATE_NEW_PROJECT,"Vytvorit novy projekt");
+define(_TODOLIST_CREATE_NEW_USER	,"Vytvorit noveho uzivatele");
+define(_TODOLIST_DATASET_CHANGED	,"Soubor dat zmenen.");
+define(_TODOLIST_DATASET_DELETED	,"Soubor dat smazan!");
+define(_TODOLIST_DATE	,"date");
+define(_TODOLIST_DATEFORMAT,"YYYY-DD-MM");
+define(_TODOLIST_DATE_FROM ,"datum od");
+define(_TODOLIST_DATE_TO   ,"datum do");
+define(_TODOLIST_DELETE	,"smazat");
+define(_TODOLIST_DETAILS	,"detail");
+define(_TODOLIST_DUE	,"datum splneni");
+define(_TODOLIST_EMAIL 		,"email");
+define(_TODOLIST_EMAIL_NOTIFY	,"Informovat o zmenach na email ?");
+define(_TODOLIST_GROUPS		,"skupiny");
+define(_TODOLIST_ID	,"ID");
+define(_TODOLIST_LANGUAGE	,"jazyk");
+define(_TODOLIST_LOGIN_DISABLE	,"Zablokovat ucet ?");
+define(_TODOLIST_LOGIN_DISABLED	,"Ucet zablokovan. Kontaktujte adminstratora.");
+define(_TODOLIST_LOGIN_NAME	,"Prihlasovaci jmeno");
+define(_TODOLIST_LOGIN_USER_UNKNOWN,"Uzivatel neznamy!");
+define(_TODOLIST_LOGIN_REMEMBER_USER ,"Pamatovat Prihlasovaci jmeno?");
+define(_TODOLIST_LOGIN_WRONG_PW	,"Spatne heslo!");
+define(_TODOLIST_LOGOUT	,"Odhlasit");
+define(_TODOLIST_MONTH_NAMES, "Leden Unor Brezen Duben Kveten Cerven Cervenec Srpen Zari Rijen Listopad Prosinec");
+define(_TODOLIST_NAME_FIRST	,"jmeno");
+define(_TODOLIST_NAME_LAST		,"prijmeni");
+define(_TODOLIST_NEW	,"novy");
+define(_TODOLIST_NOTE	,"poznamka");
+define(_TODOLIST_NO_DATA_FOUND		,"Data nenalezena!");
+define(_TODOLIST_PASSWORD		,"heslo");
+define(_TODOLIST_PASSWORD_RETYPE,"znovu heslo");
+define(_TODOLIST_PASSWORDS_DONT_MATCH,"Hesla nejsou stejna!");
+define(_TODOLIST_PERCENTAGE,"procento");
+define(_TODOLIST_PREFERENCES  ,"Nastaveni");
+define(_TODOLIST_PRINTLAYOUT,"verze pro tisk");
+define(_TODOLIST_PRIORITY	,"priorita");
+define(_TODOLIST_PRIORITY_HIGH	,"vysoka");
+define(_TODOLIST_PRIORITY_LOW	,"nizka");
+define(_TODOLIST_PRIORITY_MEDIUM	,"stredni");
+define(_TODOLIST_PROJECT   ,"projekt");
+define(_TODOLIST_PROJECTS   ,"projekty");
+define(_TODOLIST_PROJECT_CREATED ,"projekt vytvoren");
+define(_TODOLIST_PROJECT_DELETED ,"projekt smazan");
+define(_TODOLIST_PROJECT_DESCRIPTION ,"popis projektu");
+define(_TODOLIST_PROJECT_LEADER ,"vedouci projektu");
+define(_TODOLIST_PROJECT_MEMBERS ,"clenove projektu");
+define(_TODOLIST_PROJECT_NAME ,"jmeno projektu");
+define(_TODOLIST_PROJECT_PRIMARY ,"primarni project");
+define(_TODOLIST_PROJECT_UPDATED ,"projekt aktualizovan");
+define(_TODOLIST_RELOAD	,"aktualizovat");
+define(_TODOLIST_RESPONSIBLE,"odpovedny");
+define(_TODOLIST_SEARCH	,"hledani");
+define(_TODOLIST_SELECT		,"vyber");
+define(_TODOLIST_SHORT_DAY_NAMES, "Po Ut St Ct Pa So Ne");
+define(_TODOLIST_SHOW_CAL	,"ukaz kalendar");
+define(_TODOLIST_SHOW_MY_TASKS ,"Ukaz jenom moje ukoly");
+define(_TODOLIST_STATUS_DONE	,"skoncen");
+define(_TODOLIST_SUBMIT	,"odeslat");
+define(_TODOLIST_TASKS_ALL ,"Vsechny ukoly");
+define(_TODOLIST_TASKS_MY ,"moje ukoly");
+define(_TODOLIST_TEXT	,"Text");
+define(_TODOLIST_THE_SEARCH,"Hledat");
+define(_TODOLIST_TODO	,"zaznamu");
+define(_TODOLIST_TODO_ADDED1,"ToDo ");
+define(_TODOLIST_TODO_ADDED2," vlozen do databeze");
+define(_TODOLIST_TOP	,"nahoru");
+define(_TODOLIST_USER	,"uzivatel");
+define(_TODOLIST_USERS		,"uzivatele");
+define(_TODOLIST_USER_CREATED,"Uzivatel vytvoren.");
+define(_TODOLIST_USER_DELETED,"Uzivatel smazan.");
+define(_TODOLIST_USER_UPDATED,"Uzivatel aktualizovan.");
+?>

@@ -379,39 +379,39 @@ function switchPriority($priority)
 {
     switch ($priority)
     {
-        case _TODOLIST_PRIORITY_HIGH:
+        case xarML('high'):
             $priority = 1;
         break;
 
-        case _TODOLIST_PRIORITY_MEDIUM:
+        case xarML('med'):
             $priority = 2;
         break;
 
-        case _TODOLIST_PRIORITY_LOW:
+        case xarML('low'):
             $priority = 3;
         break;
 
         /*
-           case _TODOLIST_PRIORITY_DONE:
+           case xarML('done'):
            $priority = 4;
            break;
          */
 
         case "1":
-            $priority = _TODOLIST_PRIORITY_HIGH;
+            $priority = xarML('high');
         break;
 
         case "2":
-            $priority = _TODOLIST_PRIORITY_MEDIUM;
+            $priority = xarML('med');
         break;
 
         case "3":
-            $priority = _TODOLIST_PRIORITY_LOW;
+            $priority = xarML('low');
         break;
 
         /*
            case "4":
-           $priority = _TODOLIST_PRIORITY_DONE;
+           $priority = xarML('done');
            break;
          */
     } //switch 
@@ -590,16 +590,16 @@ function userDialog()
 {
 //    $output = new pnHTML();
     if (!pnModAPILoad('todolist', 'user')) {
-//        $output->Text(_TODOLIST_LOADFAILED);
+//        $output->Text(xarML('Load of module failed'));
 //        return $output->GetOutput();
-          return _TODOLIST_LOADFAILED;
+          return xarML('Load of module failed');
     }
     $item = pnModAPIFunc('todolist','user','getuser',
             array('user_id' => pnUserGetVar('uid')));
     if ($item == false) {
-//        $output->Text(_TODOLIST_NOSUCHUSER);
+//        $output->Text(xarML('No such user'));
 //        return $output->GetOutput();
-          return _TODOLIST_NOSUCHUSER;
+          return xarML('No such user');
     }
 
     $usernr          = $item['user_id'];
@@ -612,27 +612,27 @@ function userDialog()
         pnModURL('todolist', 'user', 'updateuser', array()).'" method="post">
         <input type="hidden" name="authid" value=".'.pnSecGenAuthKey().'" />
         <input type="hidden" name="new_user_id" value="'.$usernr.'" />
-        <table><tr><td><b>'._TODOLIST_USERNAME.
+        <table><tr><td><b>'.xarML('username').
         "</b></td><td>".pnUserGetVar('uname',$usernr).'</td></tr>
-        <tr><td><b>'._TODOLIST_EMAIL_NOTIFY.'</b></td>
+        <tr><td><b>'.xarML('Notify changes via email?').'</b></td>
         <td><input type="checkbox" name="new_user_email_notify" value="1"';
     if ($email_notify==1) {
         $str .= 'checked="checked"';
     }
-    $str .= '/></td></tr><tr><td><b>'._TODOLIST_PROJECT_PRIMARY.'</b></td><td>'.
+    $str .= '/></td></tr><tr><td><b>'.xarML('primary project').'</b></td><td>'.
             makeProjectDropdown("new_user_primary_project", $primary_project, true).
-            '</td></tr><tr><td><b>'._TODOLIST_SHOW_MY_TASKS.
+            '</td></tr><tr><td><b>'.xarML('Show only my tasks').
             '</b></td><td><input type="checkbox" name="new_user_my_tasks" value="1"';
     if ($new_my_tasks==1) {
         $str .= 'checked="checked"';
     }
-    $str .= '/></td></tr><tr><td><b>'._TODOLIST_SHOW_ICONS.'</b></td>
+    $str .= '/></td></tr><tr><td><b>'.xarML('Show icons?').'</b></td>
             <td><input type="checkbox" name="new_user_show_icons" value="1" ';
     if ($showicons=='1') {
         $str .= 'checked="checked"';
     }
     $str .= '/></td></tr><tr><td>&nbsp;</td>
-            <td><input type="submit" value="'._TODOLIST_SUBMIT.'" /></td>
+            <td><input type="submit" value="'.xarML('submit').'" /></td>
             </tr></table></form>';
     return $str;
 }
@@ -768,9 +768,9 @@ function makeProjectDropdown($myname,$selected_project,$all=false, $java=false)
     // all means all projects the user is member off
     if ($all) {
         if ($selected_project == "all" ) {
-            $str .= '<option selected="selected" value="all">'._TODOLIST_ALL;
+            $str .= '<option selected="selected" value="all">'.xarML('all');
         } else {
-            $str .= '<option value="all">'._TODOLIST_ALL;
+            $str .= '<option value="all">'.xarML('all');
         }
         $str.='</option>';
     }
@@ -816,7 +816,7 @@ function makeProjectDropdown($myname,$selected_project,$all=false, $java=false)
     }
     $resarray = array();
     if ($all) {
-        $resarray[] = array('id' => "all",'name' => _TODOLIST_ALL);
+        $resarray[] = array('id' => "all",'name' => xarML('all'));
     }
     while(list($project_id, $project_name) = $result->fields) {
 	$result->MoveNext();
@@ -879,12 +879,12 @@ function makeStatusDropdown($myname, $selected_status, $all=false, $java=false)
 
     $stati   = array ();
     if ($all) {
-        $stati[] = array('id' => "all",'name' => _TODOLIST_ALL);
+        $stati[] = array('id' => "all",'name' => xarML('all'));
     }
-    $stati[] = array('id'=>0,  'name' => _TODOLIST_STATUS_OPEN);
-    $stati[] = array('id'=>1,  'name' => _TODOLIST_STATUS_IN_PROGRESS);
-    $stati[] = array('id'=>9,  'name' => _TODOLIST_STATUS_OBSOLETE);
-    $stati[] = array('id'=>10, 'name' => _TODOLIST_STATUS_DONE);
+    $stati[] = array('id'=>0,  'name' => xarML('open'));
+    $stati[] = array('id'=>1,  'name' => xarML('in progress'));
+    $stati[] = array('id'=>9,  'name' => xarML('obsolete'));
+    $stati[] = array('id'=>10, 'name' => xarML('done'));
 
     $output = new pnHTML();
     $output->FormSelectMultiple($myname, $stati, 0, 1, $selected_status);

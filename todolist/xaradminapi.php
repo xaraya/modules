@@ -31,12 +31,12 @@ function todolist_adminapi_creategroup($args)
     extract($args);
     
    if ((!isset($group_name)) && (!isset($group_description)) && (!isset($group_leader))) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -48,7 +48,7 @@ function todolist_adminapi_creategroup($args)
     $result = $dbconn->Execute("INSERT INTO $pntable[todolist_groups] VALUES
                     ($newgid,'$group_name','$group_description',$group_leader)");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
     $newgid = $dbconn->PO_Insert_ID("$pntable[todolist_groups]","$todolist_groups_column[id]");
@@ -56,7 +56,7 @@ function todolist_adminapi_creategroup($args)
     $result = $dbconn->Execute("INSERT INTO $pntable[todolist_group_members] VALUES
                     ($newgid,$group_leader)");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
     return true;
@@ -68,12 +68,12 @@ function todolist_adminapi_updategroup($args)
     extract($args);
     
    if ((!isset($group_id)) && (!isset($group_name)) && (!isset($group_description)) && (!isset($groupt_leader))) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -88,7 +88,7 @@ function todolist_adminapi_updategroup($args)
                       WHERE $todolist_groups_column[id]=$group_id";
     $result = $dbconn->Execute($query);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_UPDATE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Update error occured'));
         return false;
     }
     // update group-members... Is there a more elegant way to do this?
@@ -99,7 +99,7 @@ function todolist_adminapi_updategroup($args)
                       WHERE $todolist_group_members_column[group_id]=$group_id";
     $result = $dbconn->Execute($query);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -114,11 +114,11 @@ function todolist_adminapi_updategroup($args)
     }
     $result = $dbconn->Execute("$query");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
 
-    pnSessionSetVar('errormsg', _TODOLIST_GROUP_UPDATED);
+    pnSessionSetVar('errormsg', xarML('Group was updated'));
     return true;
 }
 
@@ -130,12 +130,12 @@ function todolist_adminapi_deletegroup($args)
     extract($args);
     
     if (!isset($group_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -146,7 +146,7 @@ function todolist_adminapi_deletegroup($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_groups]
         WHERE $todolist_groups_column[id]=$group_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -154,7 +154,7 @@ function todolist_adminapi_deletegroup($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_group_members]
         WHERE $todolist_group_members_column[group_id]=$group_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -162,7 +162,7 @@ function todolist_adminapi_deletegroup($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_responsible_groups]
         WHERE $todolist_responsible_groups_column[group_id]=$group_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -174,12 +174,12 @@ function todolist_adminapi_createproject($args)
     extract($args);
     
    if ((!isset($project_name)) && (!isset($project_description)) && (!isset($project_leader))) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -191,14 +191,14 @@ function todolist_adminapi_createproject($args)
     $result = $dbconn->Execute("INSERT INTO $pntable[todolist_projects] VALUES
                     ($newpid,'$project_name','$project_description',$project_leader)");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
     $newpid = $dbconn->PO_Insert_ID("$pntable[todolist_projects]","$todolist_projects_column[id]");
     $result = $dbconn->Execute("INSERT INTO $pntable[todolist_project_members] VALUES
                     ($newpid,$project_leader)");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
     return true;
@@ -210,12 +210,12 @@ function todolist_adminapi_updateproject($args)
     extract($args);
     
    if ((!isset($project_id)) && (!isset($project_name)) && (!isset($project_description)) && (!isset($project_leader))) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -230,7 +230,7 @@ function todolist_adminapi_updateproject($args)
                      WHERE $todolist_projects_column[id] = $project_id";
     $result = $dbconn->Execute($query);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_UPDATE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Update error occured'));
         return false;
     }
     // update project-members... Is there a more elegant way to do this?
@@ -241,7 +241,7 @@ function todolist_adminapi_updateproject($args)
               WHERE $todolist_project_members_column[project_id] = $project_id";
     $result = $dbconn->Execute($query);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
     if (sizeof($project_members) > 0) {
@@ -255,11 +255,11 @@ function todolist_adminapi_updateproject($args)
     }
     $result = $dbconn->Execute("$query");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
   
-    pnSessionSetVar('errormsg', _TODOLIST_PROJECT_UPDATED);
+    pnSessionSetVar('errormsg', xarML('Project was updated'));
     return true;
 }
 
@@ -271,12 +271,12 @@ function todolist_adminapi_deleteproject($args)
     extract($args);
     
     if (!isset($project_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -287,7 +287,7 @@ function todolist_adminapi_deleteproject($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_projects] WHERE 
                     $todolist_projects_column[id] = ". $project_id);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -295,7 +295,7 @@ function todolist_adminapi_deleteproject($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_project_members]
               WHERE $todolist_project_members_column[project_id]=$project_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -307,7 +307,7 @@ function todolist_adminapi_deleteproject($args)
               WHERE $todolist_todos_column[todo_id]=$todolist_notes_column[todo_id]
               AND $todolist_todos_column[project_id]=$project_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_SELECT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Select error occured'));
         return false;
     }
     for (;!$result->EOF;$result->MoveNext()){
@@ -326,14 +326,14 @@ function todolist_adminapi_deleteproject($args)
         }
         $result = $dbconn->Execute("$query");
         if ($result === false) {
-            pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+            pnSessionSetVar('errormsg', xarML('Delete error occured'));
            return false;
         }
         $todolist_todos_column = &$pntable['todolist_todos_column'];
         $result = $dbconn->Execute("DELETE FROM $pntable[todolist_todos]
                   WHERE $todolist_todos_column[project_id]=$project_id");
         if ($result === false) {
-            pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+            pnSessionSetVar('errormsg', xarML('Delete error occured'));
             return false;
         }
     }
@@ -346,7 +346,7 @@ function todolist_adminapi_createuser($args)
     
     if ((!isset($user_id)) && (!isset($user_email_notify)) && (!isset($user_primary_project)) &&
         (!isset($user_my_tasks)) && (!isset($user_show_icons))) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
     //HTML-Forms submit nothing if a checkbox isn't checked... :-(
@@ -356,7 +356,7 @@ function todolist_adminapi_createuser($args)
     if (!isset($user_show_icons)) { $user_show_icons = 0; }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -375,7 +375,7 @@ function todolist_adminapi_createuser($args)
     echo $sql;
     $result = $dbconn->Execute($sql);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
 
@@ -383,7 +383,7 @@ function todolist_adminapi_createuser($args)
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
     $dbconn->Execute("INSERT INTO $pntable[todolist_project_members] VALUES (1,$user_id)");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_INSERT_ERROR);
+        pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
     }
 
@@ -396,7 +396,7 @@ function todolist_adminapi_updateuser($args)
     
     if ((!isset($user_id)) && (!isset($user_email_notify)) && (!isset($user_primary_project)) &&
         (!isset($user_my_tasks)) && (!isset($user_show_icons))) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
     //HTML-Forms submit nothing if a checkbox isn't checked... :-(
@@ -406,7 +406,7 @@ function todolist_adminapi_updateuser($args)
     if (!isset($user_show_icons)) { $user_show_icons = 0; }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -422,10 +422,10 @@ function todolist_adminapi_updateuser($args)
             " WHERE $todolist_users_column[usernr]=$user_id";
     $result = $dbconn->Execute($query);
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_UPDATE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Update error occured'));
         return false;
     }
-    pnSessionSetVar('errormsg', _TODOLIST_USER_UPDATED);
+    pnSessionSetVar('errormsg', xarML('User was updated'));
     return true;
 }
 
@@ -437,12 +437,12 @@ function todolist_adminapi_deleteuser($args)
     extract($args);
     
     if (!isset($user_id)) {
-        pnSessionSetVar('errormsg', _TODOLIST_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _TODOLIST_NOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
         return false;
     }
 
@@ -453,7 +453,7 @@ function todolist_adminapi_deleteuser($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_users]
            WHERE $todolist_users_column[usernr]=$user_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -461,7 +461,7 @@ function todolist_adminapi_deleteuser($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_responsible_persons]
            WHERE $todolist_responsible_persons_column[user_id]=$user_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -469,7 +469,7 @@ function todolist_adminapi_deleteuser($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_group_members]
            WHERE $todolist_group_members_column[member_id]=$user_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -477,7 +477,7 @@ function todolist_adminapi_deleteuser($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_project_members]
            WHERE $todolist_project_members_column[member_id]=$user_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 
@@ -485,7 +485,7 @@ function todolist_adminapi_deleteuser($args)
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_notes]
            WHERE $todolist_notes_column[usernr]=$user_id");
     if ($result === false) {
-        pnSessionSetVar('errormsg', _TODOLIST_DELETE_ERROR);
+        pnSessionSetVar('errormsg', xarML('Delete error occured'));
         return false;
     }
 

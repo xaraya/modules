@@ -14,7 +14,7 @@ function page_top($page,$printlayout)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
     $modinfo = pnModGetInfo(pnModGetIDFromName('todolist'));
-    $todoimagespath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/pnimages/';
+    $todoimagespath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/xarimages/';
 
     $str = "";
 
@@ -105,63 +105,63 @@ function page_top($page,$printlayout)
         case THELIST: 
             if (pnSessionGetVar('todolist_show_icons')) {
                 $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">
-                   <img border="0" src="'.$todoimagespath.'reload.png" alt="'._TODOLIST_RELOAD.'" /></a>';
+                   <img border="0" src="'.$todoimagespath.'reload.png" alt="'.xarML('reload').'" /></a>';
             } else {
-                $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'._TODOLIST_RELOAD.'</a>';
+                $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'.xarML('reload').'</a>';
             }
             break;
         default:
             if (pnSessionGetVar('todolist_show_icons'))
                 $str.= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">
-                   <img border="0" src="'.$todoimagespath.'back.png" alt="'._TODOLIST_BACK.'" /></a>';
+                   <img border="0" src="'.$todoimagespath.'back.png" alt="'.xarML('back').'" /></a>';
             else
-                $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'._TODOLIST_BACK.'</a>';
+                $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'.xarML('back').'</a>';
             break;
         }
 
         if (pnSessionGetVar('todolist_show_icons')) {
             $str .= '<br/><a href="'.pnModURL('todolist', 'user', 'main', array()).'#todoAddForm" accesskey="n">
-                 <img border="0" src="'.$todoimagespath.'new.png" alt="'._TODOLIST_NEW.'" /></a>';
+                 <img border="0" src="'.$todoimagespath.'new.png" alt="'.xarML('new').'" /></a>';
             $str .= ' <a href="'.pnModURL('todolist', 'user', 'main', array()).'#todoSearchForm" accesskey="s">
-                 <img border="0" src="'.$todoimagespath.'find.png" alt="'._TODOLIST_SEARCH.'" /></a>';
+                 <img border="0" src="'.$todoimagespath.'find.png" alt="'.xarML('search').'" /></a>';
         } else {
-            $str .= '<br/><a href="'.pnModURL('todolist', 'user', 'main', array()).'#todoAddForm" accesskey="n">'._TODOLIST_NEW .'</a> / ';
-            $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'#todoSearchForm" accesskey="s">'._TODOLIST_SEARCH.'</a>';
+            $str .= '<br/><a href="'.pnModURL('todolist', 'user', 'main', array()).'#todoAddForm" accesskey="n">'.xarML('new') .'</a> / ';
+            $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'#todoSearchForm" accesskey="s">'.xarML('search').'</a>';
         }
 
         if (!$printlayout && ($page!=DETPAGE) && ($page!=PREFPAGE)) {
             if ($QUERY_STRING=="") {
                 if (pnSessionGetVar('todolist_show_icons')) {
                     $str .= '<a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;printlayout=true">';
-                    $str .= '<img border="0" src="'.$todoimagespath.'print.png" alt="'._TODOLIST_PRINTLAYOUT.'" /></a>';
+                    $str .= '<img border="0" src="'.$todoimagespath.'print.png" alt="'.xarML('printlayout').'" /></a>';
                 } else {
                     $str .= '/ <a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;printlayout=true" accesskey="p">'.
-                            _TODOLIST_PRINTLAYOUT."</a>";
+                            xarML('printlayout')."</a>";
                 }
             } else {
                 if (pnSessionGetVar('todolist_show_icons'))
                     $str .= '<a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&'.$QUERY_STRING.'&amp;printlayout=true" accesskey="p">
-                        <img border="0" src="'.$todoimagespath.'print.png" alt="'._TODOLIST_PRINTLAYOUT.'" /></a>';
+                        <img border="0" src="'.$todoimagespath.'print.png" alt="'.xarML('printlayout').'" /></a>';
                 else {
                     $str .= '/ <a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&'.$QUERY_STRING.'&amp;printlayout=true" accesskey="p">'.
-                            _TODOLIST_PRINTLAYOUT."</a>";
+                            xarML('printlayout')."</a>";
                 }
             }
         }
         if ($page != PREFPAGE) {
             if (pnSessionGetVar('todolist_show_icons')) {
                 $str .=' <a href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;route='.PREFERENCES.'" accesskey="p">
-                    <img border="0" src="'.$todoimagespath.'preferences.png" alt="'._TODOLIST_PREFERENCES.'" /></a>';
+                    <img border="0" src="'.$todoimagespath.'preferences.png" alt="'.xarML('preferences').'" /></a>';
             }
             else {
-                $str .=' / <a href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;route='.PREFERENCES.'" accesskey="p">'._TODOLIST_PREFERENCES.'</a>';
+                $str .=' / <a href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;route='.PREFERENCES.'" accesskey="p">'.xarML('preferences').'</a>';
             }
         }
     }
     $str .= '</td><td width="33%"><h1 align="center">';
     $str .= pnModGetVar('todolist', 'TODO_HEADING');
     if ($page == PREFPAGE) {
-        $str .= "<br/>"._TODOLIST_PREFERENCES;
+        $str .= "<br/>".xarML('preferences');
     }
     $str .= '</h1></td>';
 
@@ -194,7 +194,7 @@ function page_top($page,$printlayout)
 
     $str .= '<td width="33%" align="right">'. convDate($date) . "<br/>";
     if (isset($anzahl_jobs)) {
-        $str .= '<font size="-1">'.$anzahl_jobs . " " ._TODOLIST_TODO.' </font>';
+        $str .= '<font size="-1">'.$anzahl_jobs . " " .xarML('things to do').' </font>';
     }
 
     if (($page != DETPAGE) && ($page != PREFPAGE)) {
@@ -205,10 +205,10 @@ function page_top($page,$printlayout)
                  <input type="hidden" name="route" value="'.FRONTPAGE.'"/>';
              if (pnSessionGetVar('todolist_my_tasks') == 1) {
                  $str .= '<input type="hidden" name="my_tasks" value="0"/>
-                      <input type="submit" value="'._TODOLIST_TASKS_ALL.'" />';
+                      <input type="submit" value="'.xarML('all tasks').'" />';
              } else {
                  $str .= '<input type="hidden" name="my_tasks" value="1"/>
-                      <input type="submit" value="'._TODOLIST_TASKS_MY.'" />';
+                      <input type="submit" value="'.xarML('my tasks').'" />';
              }
              $str .= '</form>';
              $str .= '
@@ -220,9 +220,9 @@ function page_top($page,$printlayout)
              $str .= '</form>';
          } else {
               if (pnSessionGetVar('todolist_my_tasks') == 1) {
-                  $str .= '<br />'._TODOLIST_TASKS_MY;
+                  $str .= '<br />'.xarML('my tasks');
               } else {
-                  $str .= '<br />'._TODOLIST_TASKS_ALL;
+                  $str .= '<br />'.xarML('all tasks');
               }
          }
     }
@@ -244,7 +244,7 @@ function page_top($page,$printlayout)
 function page_foot($page,$printlayout)
 {
     $modinfo = pnModGetInfo(pnModGetIDFromName('todolist'));
-    $todoimagespath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/pnimages/';
+    $todoimagespath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/xarimages/';
 
     $str = '<hr noshade="noshade" />
             <table width="100%"><tr><td width="30%" align="left" valign="top">';
@@ -253,16 +253,16 @@ function page_foot($page,$printlayout)
         case THELIST: 
             if (pnSessionGetVar('todolist_show_icons')) {
                 $str .= '<a href="#top">';
-                $str .= '<img border="0" src="'.$todoimagespath.'up.png" alt="'._TODOLIST_TOP.'" /></a>';
+                $str .= '<img border="0" src="'.$todoimagespath.'up.png" alt="'.xarML('top').'" /></a>';
             } else
-                $str .= "  <a href=\"#top\">"._TODOLIST_TOP.'</a>';
+                $str .= "  <a href=\"#top\">".xarML('top').'</a>';
             break;
         default:
             if (pnSessionGetVar('todolist_show_icons'))
                 $str.= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">
-                   <img border="0" src="'.$todoimagespath.'back.png" alt="'._TODOLIST_BACK.'" /></a>';
+                   <img border="0" src="'.$todoimagespath.'back.png" alt="'.xarML('back').'" /></a>';
             else
-                $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'._TODOLIST_BACK.'</a>';
+                $str .= '<a href="'.pnModURL('todolist', 'user', 'main', array()).'">'.xarML('back').'</a>';
             break;
         }
     }
@@ -273,9 +273,9 @@ function page_foot($page,$printlayout)
     if (pnUserLoggedIn() && !$printlayout){
         $str .= pnUserGetVar('uname') . ' (';
         if (pnSessionGetVar('todolist_my_tasks') == 1) {
-            $str .= _TODOLIST_TASKS_MY;
+            $str .= xarML('my tasks');
         } else {
-            $str .= _TODOLIST_TASKS_ALL;
+            $str .= xarML('all tasks');
         }
         $str .=  ')<br />';
         $str .=  convDate(date("Y-m-d H:i"));

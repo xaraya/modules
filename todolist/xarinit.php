@@ -122,7 +122,7 @@ function todolist_init()
     // Check for an error with the database code, and if so set an
     // appropriate error message and return
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _CREATETABLEFAILED);
+        pnSessionSetVar('errormsg', xarML('Table creation failed'));
         return false;
     }
 

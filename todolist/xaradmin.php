@@ -27,14 +27,97 @@
 // ----------------------------------------------------------------------
 
 $modinfo = pnModGetInfo(pnModGetIDFromName('todolist'));
-include_once('modules/'.pnVarPrepForOS($modinfo['directory']).'/pnadmin-functions.php'); 
+
+/**
+ * creates a HTML-dropdownbox with the availible Users
+ *
+ * @param $myname            string    Name of the form-variable
+ * @param $selected_names    Array    Array containing the usernr
+ * @param $emty_choice        Boolean    Should an emty-entry be created? [1,0,true,false]
+ * @param $multiple            Boolean    Allow multiple selects? [1,0,true,false]
+ * @param $multiple            string    'all' - users from nuke_users, '' - users from nuke_todo_users
+ * @return HTML containing the dropdownbox
+ */
+function makeUserDropdownList($myname,$selected_names,$selected_project, $emty_choice, $multiple, $all) {
+    global $route, $page;
+
+    list($dbconn) = pnDBGetConn();
+    $pntable = pnDBGetTables();
+
+    if ($all == 'all') {
+       $result = $dbconn->Execute("SELECT xar_uid, xar_uname FROM $pntable[roles] ORDER BY xar_uname");
+       $usercnt = $result->PO_RecordCount();
+    } else {
+       $todolist_users_column = &$pntable['todolist_users_column'];    
+       $result = $dbconn->Execute("SELECT $todolist_users_column[usernr] FROM $pntable[todolist_users]");
+       $usercnt = $result->PO_RecordCount();
+    }
+
+    $str = "";
+    if ($multiple) {
+        if ($usercnt > 100) {
+            $size=15;
+        } elseif ($usercnt > 50) {
+            $size=10;
+        } elseif ($usercnt > 25) {
+            $size=7;
+        } elseif ($usercnt > 5) {
+            $size=6;
+        } elseif ($usercnt <= 5) {
+            $size=$usercnt;
+        }
+        $myname=$myname . "[]";
+        $str .= '<select multiple="multiple" name="'.$myname.'" size="'.$size.'">';
+    } else  {
+        $str .= '<select name="'.$myname.'" size="1">';
+    }
+
+    if ($emty_choice) {
+        if ("$selected_names[0]" == "")  {
+            $str .= '<option selected="selected" VALUE="">';
+        } else {
+            $str .= '<option value="">';
+        }
+    } 
+    if ($usercnt > 0)
+    {
+        for (;!$result->EOF;$result->MoveNext())
+        {
+
+            if ($all == 'all') {
+                $usernr = $result->fields[0];
+                $user_name = $result->fields[1];
+            } else {
+                $usernr = $result->fields[0];
+                $user_name  = stripslashes(pnUserGetVar('name',$usernr));
+                if (empty($user_name)) $user_name  = stripslashes(pnUserGetVar('uname',$usernr));
+            }
+
+            $inlist = 0;
+            @reset($selected_names);
+            while (@list(, $value) = @each ($selected_names)) {
+                if ($value == "$usernr"){
+                    $inlist = 1;
+                }
+            }
+            if ($inlist == 1) {
+                $str .= '<option selected="selected" value="'.$usernr.'">'.$user_name;
+            } else {
+                $str .= '<option value="'.$usernr.'">'.$user_name;
+            }
+            $str .= "</option>\n";
+        }
+    }
+    $str .= '</select>';
+    return $str;
+}
 
 function todolist_admin_main()
 {
     $output = new pnHTML();
 
     if (!pnSecAuthAction(0, 'todolist::Item', '::', ACCESS_EDIT)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -54,7 +137,7 @@ function todolist_adminmenu()
     $authid = pnSecGenAuthKey();
 
     if(!(pnSecAuthAction(0, 'todolist::', '::', ACCESS_EDIT))) {
-	$output->Text(_TODOLIST_NOAUTH);
+	$output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -65,23 +148,23 @@ function todolist_adminmenu()
     $output->Linebreak();
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
-    $output->TableStart(_TODOLIST_ADMIN, '', 1);
+    $output->TableStart(xarML('Todolist administration'), '', 1);
     $output->TableRowStart();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','viewusers'),_TODOLIST_VIEWUSERS); 
+    $output->URL(pnModURL('todolist','admin','viewusers'),xarML('Users')); 
     $output->TableColEnd();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','viewgroups'),_TODOLIST_VIEWGROUPS); 
+    $output->URL(pnModURL('todolist','admin','viewgroups'),xarML('Groups')); 
     $output->TableColEnd();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','viewprojects'),_TODOLIST_VIEWPROJECTS); 
+    $output->URL(pnModURL('todolist','admin','viewprojects'),xarML('Projects')); 
     $output->TableColEnd();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','modifyconfig'),_TODOLIST_EDITCONFIG); 
+    $output->URL(pnModURL('todolist','admin','modifyconfig'),xarML('Edit Configuration')); 
     $output->TableColEnd();
     $output->TableRowEnd();
     $output->TableEnd();
@@ -97,13 +180,13 @@ function todolist_admin_createproject($args)
     extract($args);
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewprojects'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        pnSessionSetVar('errormsg', _TODOLIST_LOADFAILED);
+        pnSessionSetVar('errormsg', xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -113,7 +196,7 @@ function todolist_admin_createproject($args)
                         'project_leader' => $project_leader));
 
     if ($result != false) {
-        pnSessionSetVar('statusmsg', _TODOLIST_PROJECT_CREATED);
+        pnSessionSetVar('statusmsg', xarML('Project has been created'));
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewprojects'));
@@ -130,19 +213,19 @@ function todolist_admin_modifyproject($args)
     $output = new pnHTML();
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     $item = pnModAPIFunc('todolist','user','getproject',array('project_id' => $project_id));
 
     if ($item == false) {
-        $output->Text(_TODOLIST_NOSUCHPROJECT);
+        $output->Text(xarML('No such project'));
         return $output->GetOutput();
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -150,7 +233,7 @@ function todolist_admin_modifyproject($args)
     $output->Text(todolist_adminmenu());
     $output->SetInputMode(_PNH_PARSEINPUT);
 
-    $output->Title(_TODOLIST_EDITPROJECT);
+    $output->Title(xarML('Edit Project'));
 
     $output->FormStart(pnModURL('todolist', 'admin', 'updateproject'));
     $output->FormHidden('authid', pnSecGenAuthKey());
@@ -160,7 +243,7 @@ function todolist_admin_modifyproject($args)
     // Project Name
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_PROJECT_NAME));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Project name')));
     $row[] = $output->FormText('new_project_name', pnVarPrepForDisplay($item['project_name']), 30, 30);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -170,7 +253,7 @@ function todolist_admin_modifyproject($args)
     // Project Description
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_PROJECT_DESCRIPTION));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Project description')));
     $row[] = $output->FormText('new_project_description', pnVarPrepForDisplay($item['project_description']), 30, 200);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -181,7 +264,7 @@ function todolist_admin_modifyproject($args)
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_PROJECT_LEADER));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Project leader')));
 //    $row[] = $output->FormText('new_project_leader', pnVarPrepForDisplay($item['project_leader']), 30, 30);
     $row[] = $output->Text(makeUserDropdownList("new_project_leader",array(pnVarPrepForDisplay($item['project_leader'])),"all",false,false,''));
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
@@ -195,7 +278,7 @@ function todolist_admin_modifyproject($args)
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_PROJECT_MEMBERS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Project members')));
     $row[] = $output->Text(makeUserDropdownList("new_project_members",$project_members,"all",false,true,''));
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->TableAddrow($row, 'LEFT');
@@ -203,7 +286,7 @@ function todolist_admin_modifyproject($args)
 
     $output->TableEnd();
     $output->Linebreak(2);
-    $output->FormSubmit(_TODOLIST_UPDATE);
+    $output->FormSubmit(xarML('Update'));
     $output->FormEnd();
     
     return $output->GetOutput();
@@ -222,13 +305,13 @@ function todolist_admin_updateproject($args)
     extract($args);
                             
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewprojects'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        pnSessionSetVar('errormsg', _TODOLIST_LOADFAILED);
+        pnSessionSetVar('errormsg', xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -236,7 +319,7 @@ function todolist_admin_updateproject($args)
                     array('project_id' => $project_id,'project_name' => $project_name,
                     'project_description' => $project_description,'project_leader' => $project_leader,
                     'project_members' => $project_members))) {
-        pnSessionSetVar('statusmsg', _TODOLIST_UPDATED);
+        pnSessionSetVar('statusmsg', xarML('Updated'));
     }
     pnRedirect(pnModURL('todolist', 'admin', 'viewprojects'));
 
@@ -251,19 +334,19 @@ function todolist_admin_deleteproject($args)
     extract($args);
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     $item = pnModAPIFunc('todolist','user','getproject', array('project_id' => $project_id));
 
     if ($item == false) {
-        $output->Text(_TODOLIST_NOSUCHPROJECT);
+        $output->Text(xarML('No such project'));
         return $output->GetOutput();
     }
 
     if (!pnSecAuthAction(0, 'todolist::Item', "$item[project_name]::$project_id", ACCESS_DELETE)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -274,11 +357,11 @@ function todolist_admin_deleteproject($args)
         $output->Text(todolist_adminmenu());
         $output->SetInputMode(_PNH_PARSEINPUT);
 
-        $output->Title(_TODOLIST_DELETE);
+        $output->Title(xarML('Delete'));
 
-        $output->ConfirmAction(_TODOLIST_CONFIRM_DELETE,
+        $output->ConfirmAction(xarML('Confirm deletion'),
                                pnModURL('todolist','admin','deleteproject'),
-                               _TODOLIST_CANCEL_DELETE,
+                               xarML('Cancel deletion'),
                                pnModURL('todolist','admin','viewprojects'),
                                array('project_id' => $project_id));
 
@@ -286,19 +369,19 @@ function todolist_admin_deleteproject($args)
     }
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewprojects'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     if (pnModAPIFunc('todolist','admin','deleteproject',
                      array('project_id' => $project_id))) {
-        pnSessionSetVar('statusmsg', _TODOLIST_PROJECT_DELETED);
+        pnSessionSetVar('statusmsg', xarML('Project has been deleted'));
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewprojects'));
@@ -313,7 +396,7 @@ function todolist_admin_viewprojects()
     $output = new pnHTML();
 
     if (!pnSecAuthAction(0, 'todolist::', '::', ACCESS_EDIT)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -323,11 +406,11 @@ function todolist_admin_viewprojects()
     if (pnSecAuthAction(0, 'todolist::', '::', ACCESS_ADD)) {
         $output->FormStart(pnModURL('todolist', 'admin', 'createproject'));
         $output->FormHidden('authid', pnSecGenAuthKey());
-        $output->TableStart(_TODOLIST_ADDPROJECT);
+        $output->TableStart(xarML('Add New Project'));
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_PROJECT_NAME));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Project name')));
         $row[] = $output->FormText('project_name', '', 32, 32);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -336,7 +419,7 @@ function todolist_admin_viewprojects()
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_PROJECT_DESCRIPTION));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Project description')));
         $row[] = $output->FormText('project_description', '', 25, 25);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -346,7 +429,7 @@ function todolist_admin_viewprojects()
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_PROJECT_LEADER));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Project leader')));
         $row[] = $output->Text(makeUserDropdownList("project_leader",array(),"all",false,false,''));
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->TableAddrow($row, 'LEFT');
@@ -354,16 +437,16 @@ function todolist_admin_viewprojects()
         $output->TableEnd();
 
         $output->Linebreak();
-        $output->FormSubmit(_TODOLIST_ADD);
+        $output->FormSubmit(xarML('Add'));
         $output->FormEnd();
     }
 
     $output->SetInputMode(_PNH_PARSEINPUT);
 
-    $output->Title(_TODOLIST_VIEWPROJECTS);
+    $output->Title(xarML('Projects'));
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -371,7 +454,7 @@ function todolist_admin_viewprojects()
                           array('startnum' => $startnum,
                           'numitems' => pnModGetVar('todolist','ITEMS_PER_PAGE')));
 
-    $output->TableStart('',array(_TODOLIST_PROJECT_ID, _TODOLIST_PROJECT_NAME, _TODOLIST_ACTION), 3);
+    $output->TableStart('',array(xarML('Id'), xarML('Project name'), xarML('Action')), 3);
 
     foreach ($items as $item) {
         $row = array();
@@ -383,10 +466,10 @@ function todolist_admin_viewprojects()
             $output->SetOutputMode(_PNH_RETURNOUTPUT);
             if (pnSecAuthAction(0, 'todolist::', "$item[project_name]::$item[project_id]", ACCESS_EDIT)) {
                 $options[] = $output->URL(pnModURL('todolist','admin','modifyproject',
-                             array('project_id' => $item['project_id'])), _TODOLIST_EDIT);
+                             array('project_id' => $item['project_id'])), xarML('Edit'));
                 if (pnSecAuthAction(0, 'todolist::', "$item[project_name]::$item[project_id]", ACCESS_DELETE)) {
                     $options[] = $output->URL(pnModURL('todolist','admin','deleteproject',
-                             array('project_id' => $item['project_id'])), _TODOLIST_DELETE);
+                             array('project_id' => $item['project_id'])), xarML('Delete'));
                 }
             }
             $options = join(' | ', $options);
@@ -416,13 +499,13 @@ function todolist_admin_creategroup($args)
     extract($args);
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        pnSessionSetVar('errormsg', _TODOLIST_LOADFAILED);
+        pnSessionSetVar('errormsg', xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -432,7 +515,7 @@ function todolist_admin_creategroup($args)
                         'group_leader' => $group_leader));
 
     if ($result != false) {
-        pnSessionSetVar('statusmsg', _TODOLIST_GROUP_CREATED);
+        pnSessionSetVar('statusmsg', xarML('Group was created'));
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
@@ -449,19 +532,19 @@ function todolist_admin_modifygroup($args)
     $output = new pnHTML();
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     $item = pnModAPIFunc('todolist','user','getgroup',array('group_id' => $group_id));
 
     if ($item == false) {
-        $output->Text(_TODOLIST_NOSUCHGROUP);
+        $output->Text(xarML('No such group'));
         return $output->GetOutput();
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -469,7 +552,7 @@ function todolist_admin_modifygroup($args)
     $output->Text(todolist_adminmenu());
     $output->SetInputMode(_PNH_PARSEINPUT);
 
-    $output->Title(_TODOLIST_EDITGROUP);
+    $output->Title(xarML('Edit Group'));
 
     $output->FormStart(pnModURL('todolist', 'admin', 'updategroup'));
     $output->FormHidden('authid', pnSecGenAuthKey());
@@ -479,7 +562,7 @@ function todolist_admin_modifygroup($args)
     // Group Name
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_GROUP_NAME));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Group Name')));
     $row[] = $output->FormText('new_group_name', pnVarPrepForDisplay($item['group_name']), 30, 30);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -489,7 +572,7 @@ function todolist_admin_modifygroup($args)
     // Group Description
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_GROUP_DESCRIPTION));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Group description')));
     $row[] = $output->FormText('new_group_description', pnVarPrepForDisplay($item['group_description']), 30, 200);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -500,7 +583,7 @@ function todolist_admin_modifygroup($args)
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_GROUP_LEADER));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Group Leader')));
     $row[] = $output->Text(makeUserDropdownList("new_group_leader",array(pnVarPrepForDisplay($item['group_leader'])),"all",false,false,''));
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->TableAddrow($row, 'left');
@@ -513,7 +596,7 @@ function todolist_admin_modifygroup($args)
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_GROUP_MEMBERS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Group Members')));
     $row[] = $output->Text(makeUserDropdownList("new_group_members",$group_members,"all",false,true,''));
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->TableAddrow($row, 'LEFT');
@@ -521,7 +604,7 @@ function todolist_admin_modifygroup($args)
 
     $output->TableEnd();
     $output->Linebreak(2);
-    $output->FormSubmit(_TODOLIST_UPDATE);
+    $output->FormSubmit(xarML('Update'));
     $output->FormEnd();
     
     return $output->GetOutput();
@@ -540,13 +623,13 @@ function todolist_admin_updategroup($args)
     extract($args);
                             
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        pnSessionSetVar('errormsg', _TODOLIST_LOADFAILED);
+        pnSessionSetVar('errormsg', xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -554,7 +637,7 @@ function todolist_admin_updategroup($args)
                     array('group_id' => $group_id,'group_name' => $group_name,
                     'group_description' => $group_description,'group_leader' => $group_leader,
                     'group_members' => $group_members))) {
-        pnSessionSetVar('statusmsg', _TODOLIST_UPDATED);
+        pnSessionSetVar('statusmsg', xarML('Updated'));
     }
     pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
 
@@ -569,19 +652,19 @@ function todolist_admin_deletegroup($args)
     extract($args);
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     $item = pnModAPIFunc('todolist','user','getgroup', array('group_id' => $group_id));
 
     if ($item == false) {
-        $output->Text(_TODOLIST_NOSUCHGROUP);
+        $output->Text(xarML('No such group'));
         return $output->GetOutput();
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_DELETE)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -592,11 +675,11 @@ function todolist_admin_deletegroup($args)
         $output->Text(todolist_adminmenu());
         $output->SetInputMode(_PNH_PARSEINPUT);
 
-        $output->Title(_TODOLIST_DELETE);
+        $output->Title(xarML('Delete'));
 
-        $output->ConfirmAction(_TODOLIST_CONFIRM_DELETE,
+        $output->ConfirmAction(xarML('Confirm deletion'),
                                pnModURL('todolist','admin','deletegroup'),
-                               _TODOLIST_CANCEL_DELETE,
+                               xarML('Cancel deletion'),
                                pnModURL('todolist','admin','viewgroups'),
                                array('group_id' => $group_id));
 
@@ -604,19 +687,19 @@ function todolist_admin_deletegroup($args)
     }
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     if (pnModAPIFunc('todolist','admin','deletegroup',
                      array('group_id' => $group_id))) {
-        pnSessionSetVar('statusmsg', _TODOLIST_GROUP_DELETED);
+        pnSessionSetVar('statusmsg', xarML('Group was deleted'));
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
@@ -631,7 +714,7 @@ function todolist_admin_viewgroups()
     $output = new pnHTML();
 
     if (!pnSecAuthAction(0, 'todolist::', '::', ACCESS_EDIT)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -641,11 +724,11 @@ function todolist_admin_viewgroups()
     if (pnSecAuthAction(0, 'todolist::', '::', ACCESS_ADD)) {
         $output->FormStart(pnModURL('todolist', 'admin', 'creategroup'));
         $output->FormHidden('authid', pnSecGenAuthKey());
-        $output->TableStart(_TODOLIST_ADDGROUP);
+        $output->TableStart(xarML('Add New Group'));
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_GROUP_NAME));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Group Name')));
         $row[] = $output->FormText('group_name', '', 32, 32);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -654,7 +737,7 @@ function todolist_admin_viewgroups()
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_GROUP_DESCRIPTION));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Group description')));
         $row[] = $output->FormText('group_description', '', 25, 25);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -664,7 +747,7 @@ function todolist_admin_viewgroups()
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_GROUP_LEADER));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Group Leader')));
         $row[] = $output->Text(makeUserDropdownList("group_leader",array(),"all",false,false,''));
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->TableAddrow($row, 'LEFT');
@@ -672,16 +755,16 @@ function todolist_admin_viewgroups()
         $output->TableEnd();
 
         $output->Linebreak();
-        $output->FormSubmit(_TODOLIST_ADD);
+        $output->FormSubmit(xarML('Add'));
         $output->FormEnd();
     }
 
     $output->SetInputMode(_PNH_PARSEINPUT);
 
-    $output->Title(_TODOLIST_VIEWGROUPS);
+    $output->Title(xarML('Groups'));
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -689,7 +772,7 @@ function todolist_admin_viewgroups()
                           array('startnum' => $startnum,
                           'numitems' => pnModGetVar('todolist','ITEMS_PER_PAGE')));
 
-    $output->TableStart('',array(_TODOLIST_GROUP_ID, _TODOLIST_GROUP_NAME, _TODOLIST_ACTION), 3);
+    $output->TableStart('',array(xarML('Id'), xarML('Group Name'), xarML('Action')), 3);
 
     foreach ($items as $item) {
         $row = array();
@@ -704,7 +787,7 @@ function todolist_admin_viewgroups()
                                                    array('group_id' => $item['group_id'])), _EDIT);
                 if (pnSecAuthAction(0, 'todolist::', "$item[group_name]::$item[group_id]", ACCESS_DELETE)) {
                     $options[] = $output->URL(pnModURL('todolist','admin','deletegroup',
-                                                       array('group_id' => $item['group_id'])), _TODOLIST_DELETE);
+                                                       array('group_id' => $item['group_id'])), xarML('Delete'));
                 }
             }
             $options = join(' | ', $options);
@@ -733,13 +816,13 @@ function todolist_admin_createuser($args)
     extract($args);
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        pnSessionSetVar('errormsg', _TODOLIST_LOADFAILED);
+        pnSessionSetVar('errormsg', xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -751,7 +834,7 @@ function todolist_admin_createuser($args)
                         'user_show_icons' => $user_show_icons));
 
     if ($result != false) {
-        pnSessionSetVar('statusmsg', _TODOLIST_USER_CREATED);
+        pnSessionSetVar('statusmsg', xarML('User was created'));
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
@@ -768,19 +851,19 @@ function todolist_admin_modifyuser($args)
     $output = new pnHTML();
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     $item = pnModAPIFunc('todolist','user','getuser',array('user_id' => $user_id));
 
     if ($item == false) {
-        $output->Text(_TODOLIST_NOSUCHUSER);
+        $output->Text(xarML('No such user'));
         return $output->GetOutput();
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -788,7 +871,7 @@ function todolist_admin_modifyuser($args)
     $output->Text(todolist_adminmenu());
     $output->SetInputMode(_PNH_PARSEINPUT);
 
-    $output->Title(_TODOLIST_EDITUSER);
+    $output->Title(xarML('Edit User'));
 
     $output->FormStart(pnModURL('todolist', 'admin', 'updateuser'));
     $output->FormHidden('authid', pnSecGenAuthKey());
@@ -798,7 +881,7 @@ function todolist_admin_modifyuser($args)
     // Email notify
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_NAME));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('User Name')));
     $row[] = $output->Text(pnVarPrepForDisplay(pnUserGetVar('uname',$item['user_id'])));
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -808,7 +891,7 @@ function todolist_admin_modifyuser($args)
     // Email notify
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_EMAIL_NOTIFY));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Email notify')));
     $row[] = $output->FormText('new_user_email_notify', pnVarPrepForDisplay($item['user_email_notify']), 20, 20);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -818,7 +901,7 @@ function todolist_admin_modifyuser($args)
     // Primary Project
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_PRIMARY_PROJECT));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Primary project')));
     $row[] = $output->FormText('new_user_primary_project', pnVarPrepForDisplay($item['user_primary_project']), 20, 20);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -828,7 +911,7 @@ function todolist_admin_modifyuser($args)
     // My Tasks
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_MY_TASKS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('My tasks')));
     $row[] = $output->FormText('new_user_my_tasks', pnVarPrepForDisplay($item['user_my_tasks']), 20, 20);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -839,7 +922,7 @@ function todolist_admin_modifyuser($args)
     // Show Icons
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_SHOW_ICONS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Show icons')));
     $row[] = $output->FormText('new_user_show_icons', pnVarPrepForDisplay($item['user_show_icons']), 20, 20);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -848,7 +931,7 @@ function todolist_admin_modifyuser($args)
 
     $output->TableEnd();
     $output->Linebreak(2);
-    $output->FormSubmit(_TODOLIST_UPDATE);
+    $output->FormSubmit(xarML('Update'));
     $output->FormEnd();
     
     return $output->GetOutput();
@@ -867,13 +950,13 @@ function todolist_admin_updateuser($args)
     extract($args);
                             
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        pnSessionSetVar('errormsg', _TODOLIST_LOADFAILED);
+        pnSessionSetVar('errormsg', xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -882,7 +965,7 @@ function todolist_admin_updateuser($args)
                         'user_primary_project' => $user_primary_project,
                         'user_my_tasks' => $user_my_tasks,
                         'user_show_icons' => $user_show_icons))) {
-        pnSessionSetVar('statusmsg', _TODOLIST_UPDATED);
+        pnSessionSetVar('statusmsg', xarML('Updated'));
     }
     pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
 
@@ -897,19 +980,19 @@ function todolist_admin_deleteuser($args)
     extract($args);
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     $item = pnModAPIFunc('todolist','user','getuser', array('user_id' => $user_id));
 
     if ($item == false) {
-        $output->Text(_TODOLIST_NOSUCHUSER);
+        $output->Text(xarML('No such user'));
         return $output->GetOutput();
     }
 
     if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_DELETE)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -920,11 +1003,11 @@ function todolist_admin_deleteuser($args)
         $output->Text(todolist_adminmenu());
         $output->SetInputMode(_PNH_PARSEINPUT);
 
-        $output->Title(_TODOLIST_DELETE);
+        $output->Title(xarML('Delete'));
 
-        $output->ConfirmAction(_TODOLIST_CONFIRM_DELETE,
+        $output->ConfirmAction(xarML('Confirm deletion'),
                                pnModURL('todolist','admin','deleteuser'),
-                               _TODOLIST_CANCEL_DELETE,
+                               xarML('Cancel deletion'),
                                pnModURL('todolist','admin','viewusers'),
                                array('user_id' => $user_id));
 
@@ -932,19 +1015,19 @@ function todolist_admin_deleteuser($args)
     }
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
         return true;
     }
 
     if (!pnModAPILoad('todolist', 'admin')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
     if (pnModAPIFunc('todolist','admin','deleteuser',
                      array('user_id' => $user_id))) {
-        pnSessionSetVar('statusmsg', _TODOLIST_USER_DELETED);
+        pnSessionSetVar('statusmsg', xarML('User was deleted'));
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
@@ -959,7 +1042,7 @@ function todolist_admin_viewusers()
     $output = new pnHTML();
 
     if (!pnSecAuthAction(0, 'todolist::', '::', ACCESS_EDIT)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -969,12 +1052,12 @@ function todolist_admin_viewusers()
     if (pnSecAuthAction(0, 'todolist::', '::', ACCESS_ADD)) {
         $output->FormStart(pnModURL('todolist', 'admin', 'createuser'));
         $output->FormHidden('authid', pnSecGenAuthKey());
-        $output->TableStart(_TODOLIST_ADDUSER);
+        $output->TableStart(xarML('Add User'));
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('User')));
         $row[] = $output->Text(makeUserDropdownList("user_id",array(),"all",false,false,'all'));
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->TableAddrow($row, 'LEFT');
@@ -982,7 +1065,7 @@ function todolist_admin_viewusers()
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_EMAIL_NOTIFY));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Email notify')));
         $row[] = $output->FormText('user_email_notify', '', 20, 20);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -991,7 +1074,7 @@ function todolist_admin_viewusers()
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_PRIMARY_PROJECT));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Primary project')));
         $row[] = $output->FormText('user_primary_project', '', 20, 20);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1000,7 +1083,7 @@ function todolist_admin_viewusers()
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_MY_TASKS));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('My tasks')));
         $row[] = $output->FormText('user_my_tasks', '', 20, 20);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1009,7 +1092,7 @@ function todolist_admin_viewusers()
 
         $row = array();
         $output->SetOutputMode(_PNH_RETURNOUTPUT);
-        $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_USER_SHOW_ICONS));
+        $row[] = $output->Text(pnVarPrepForDisplay(xarML('Show icons')));
         $row[] = $output->FormText('user_show_icons', '', 20, 20);
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1019,16 +1102,16 @@ function todolist_admin_viewusers()
         $output->TableEnd();
 
         $output->Linebreak();
-        $output->FormSubmit(_TODOLIST_ADD);
+        $output->FormSubmit(xarML('Add'));
         $output->FormEnd();
     }
 
     $output->SetInputMode(_PNH_PARSEINPUT);
 
-    $output->Title(_TODOLIST_VIEWUSERS);
+    $output->Title(xarML('Users'));
 
     if (!pnModAPILoad('todolist', 'user')) {
-        $output->Text(_TODOLIST_LOADFAILED);
+        $output->Text(xarML('Load of module failed'));
         return $output->GetOutput();
     }
 
@@ -1036,8 +1119,8 @@ function todolist_admin_viewusers()
                           array('startnum' => $startnum,
                           'numitems' => pnModGetVar('todolist','ITEMS_PER_PAGE')));
 
-    $output->TableStart('',array(_TODOLIST_USER_NAME, _TODOLIST_USER_EMAIL_NOTIFY, _TODOLIST_USER_PRIMARY_PROJECT,
-    _TODOLIST_USER_MY_TASKS, _TODOLIST_USER_SHOW_ICONS, _TODOLIST_ACTION), 6);
+    $output->TableStart('',array(xarML('User Name'), xarML('Email notify'), xarML('Primary project'),
+    xarML('My tasks'), xarML('Show icons'), xarML('Action')), 6);
 
     foreach ($items as $item) {
         $row = array();
@@ -1052,10 +1135,10 @@ function todolist_admin_viewusers()
             $output->SetOutputMode(_PNH_RETURNOUTPUT);
             if (pnSecAuthAction(0, 'todolist::', "$item[user_name]::$item[user_id]", ACCESS_EDIT)) {
                 $options[] = $output->URL(pnModURL('todolist','admin','modifyuser',
-                                                   array('user_id' => $item['user_id'])), _TODOLIST_EDIT);
+                                                   array('user_id' => $item['user_id'])), xarML('Edit'));
                 if (pnSecAuthAction(0, 'todolist::', "$item[user_name]::$item[user_id]", ACCESS_DELETE)) {
                     $options[] = $output->URL(pnModURL('todolist','admin','deleteuser',
-                                                       array('user_id' => $item['user_id'])), _TODOLIST_DELETE);
+                                                       array('user_id' => $item['user_id'])), xarML('Delete'));
                 }
             }
             $options = join(' | ', $options);
@@ -1083,7 +1166,7 @@ function todolist_admin_modifyconfig()
     $output = new pnHTML();
 
     if (!pnSecAuthAction(0, 'todolist::', '::', ACCESS_ADMIN)) {
-        $output->Text(_TODOLIST_NOAUTH);
+        $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
@@ -1091,7 +1174,7 @@ function todolist_admin_modifyconfig()
     $output->Text(todolist_adminmenu());
     $output->SetInputMode(_PNH_PARSEINPUT);
 
-    $output->Title(_TODOLIST_MODIFYCONFIG);
+    $output->Title(xarML('Modify Todolist module configuration'));
     $output->FormStart(pnModURL('todolist', 'admin', 'updateconfig'));
     $output->FormHidden('authid', pnSecGenAuthKey());
 
@@ -1099,7 +1182,7 @@ function todolist_admin_modifyconfig()
 
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_ACCESS_RESTRICTED));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Access restricted')));
     $row[] = $output->FormText('ACCESS_RESTRICTED', pnModGetVar('todolist', 'ACCESS_RESTRICTED'), 3, 3);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1107,7 +1190,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_BACKGROUND_COLOR));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('BACKGROUND_COLOR (Default = #99CCFF)')));
     $row[] = $output->FormText('BACKGROUND_COLOR', pnModGetVar('todolist', 'BACKGROUND_COLOR'), 7, 7);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1115,7 +1198,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_DONE_COLOR));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('DONE_COLOR (Default = #CCFFFF)')));
     $row[] = $output->FormText('DONE_COLOR', pnModGetVar('todolist', 'DONE_COLOR'), 7, 7);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1123,7 +1206,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_HIGH_COLOR));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('HIGH_COLOR (Default = #ffff00)')));
     $row[] = $output->FormText('HIGH_COLOR', pnModGetVar('todolist', 'HIGH_COLOR'), 7, 7);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1131,7 +1214,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_LOW_COLOR));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('LOW_COLOR (Default = #66ccff)')));
     $row[] = $output->FormText('LOW_COLOR', pnModGetVar('todolist', 'LOW_COLOR'), 7, 7);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1139,7 +1222,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_MED_COLOR));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('MED_COLOR (Default = #FFcc66)')));
     $row[] = $output->FormText('MED_COLOR', pnModGetVar('todolist', 'MED_COLOR'), 7, 7);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1147,7 +1230,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_MOST_IMPORTANT_COLOR));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('MOST_IMPORTANT_COLOR (Default = #FFFF99)')));
     $row[] = $output->FormText('MOST_IMPORTANT_COLOR', pnModGetVar('todolist', 'MOST_IMPORTANT_COLOR'), 7, 7);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1155,7 +1238,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_VERY_IMPORTANT_COLOR));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('VERY_IMPORTANT_COLOR (Default = #FF3366)')));
     $row[] = $output->FormText('VERY_IMPORTANT_COLOR', pnModGetVar('todolist', 'VERY_IMPORTANT_COLOR'), 7, 7);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1163,7 +1246,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_DATEFORMAT_NUMBER));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Dateformat: 1 = YYYY-MM-DD / 2 = DD.MM.JJJJJ / 3 = MM/DD/YYYY (Default - 2)')));
     $row[] = $output->FormText('DATEFORMAT', pnModGetVar('todolist', 'DATEFORMAT'), 1, 1);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1171,7 +1254,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_MAX_DONE));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Maximum number of done-entries shown on the main page.')));
     $row[] = $output->FormText('MAX_DONE', pnModGetVar('todolist', 'MAX_DONE'), 3, 3);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1179,7 +1262,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_MOST_IMPORTANT_DAYS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Days in the past that should be higligted with VERY_IMPORTANT_COLOR and MOST_IMPORTANT_COLOR foreground-color (Disable = 0)')));
     $row[] = $output->FormText('MOST_IMPORTANT_DAYS', pnModGetVar('todolist', 'MOST_IMPORTANT_DAYS'), 3, 3);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1187,7 +1270,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_REFRESH_MAIN));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Refresh-time for the main page (Default = 600)')));
     $row[] = $output->FormText('REFRESH_MAIN', pnModGetVar('todolist', 'REFRESH_MAIN'), 5, 5);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1195,7 +1278,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_SEND_MAILS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Should mails be send via local mailserver?')));
     $row[] = $output->FormText('SEND_MAILS', pnModGetVar('todolist', 'SEND_MAILS'), 5, 5);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1203,7 +1286,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_SHOW_EXTRA_ASTERISK));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('If there is a note attached to the todo the number of notes attached is shown in the details column. To have another notification you can also show an asterisk in one of the left columns. Possible options are: 0 = disable extra asterisk, 1 = show it in #-column, 2 = show it in priority-column, 3 = show it in percentage completed-column, 4 = show it in text-column)')));
     $row[] = $output->FormText('SHOW_EXTRA_ASTERISK', pnModGetVar('todolist', 'SHOW_EXTRA_ASTERISK'), 1, 1);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1211,7 +1294,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_SHOW_LINE_NUMBERS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Show the line-Numbers? [true/false] (Default = true)')));
     $row[] = $output->FormText('SHOW_LINE_NUMBERS', pnModGetVar('todolist', 'SHOW_LINE_NUMBERS'), 5, 5);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1219,7 +1302,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_SHOW_PERCENTAGE_IN_TABLE));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Show percentage-completed in the tables? [true/false] (Default = true)')));
     $row[] = $output->FormText('SHOW_PERCENTAGE_IN_TABLE', pnModGetVar('todolist', 'SHOW_PERCENTAGE_IN_TABLE'), 5, 5);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1227,7 +1310,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_SHOW_PRIORITY_IN_TABLE));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Show priority as text in the tables ? [true/false] (Default = true)')));
     $row[] = $output->FormText('SHOW_PRIORITY_IN_TABLE', pnModGetVar('todolist', 'SHOW_PRIORITY_IN_TABLE'), 5, 5);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1235,7 +1318,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_TODO_HEADING));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML("Custom title. For example the Company's-Name")));
     $row[] = $output->FormText('TODO_HEADING', pnModGetVar('todolist', 'TODO_HEADING'), 30, 30);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1243,7 +1326,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_VERY_IMPORTANT_DAYS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Days in the future that should be higligted with VERY_IMPORTANT_COLOR (Disable = 0)')));
     $row[] = $output->FormText('VERY_IMPORTANT_DAYS', pnModGetVar('todolist', 'VERY_IMPORTANT_DAYS'), 3, 3);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1251,7 +1334,7 @@ function todolist_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TODOLIST_ITEMSPERPAGE));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Items per page')));
     $row[] = $output->FormText('ITEMS_PER_PAGE', pnModGetVar('todolist', 'ITEMS_PER_PAGE'), 3, 3);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1263,7 +1346,7 @@ function todolist_admin_modifyconfig()
 
     // End form
     $output->Linebreak(2);
-    $output->FormSubmit(_TODOLIST_UPDATE);
+    $output->FormSubmit(xarML('Update'));
     $output->FormEnd();
     
     return $output->GetOutput();
@@ -1295,7 +1378,7 @@ function todolist_admin_updateconfig()
     $ITEMS_PER_PAGE = pnVarCleanFromInput('ITEMS_PER_PAGE');
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _TODOLIST_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'view'));
         return true;
     }
