@@ -60,7 +60,7 @@ function pubsub_adminapi_checkevent($args)
               WHERE xar_modid = ?
               AND   xar_itemtype = ?
               AND   xar_cid = ?";
-    $bindvars = array((int)$modid, $ityemtype, $cid);
+    $bindvars = array((int)$modid, $itemtype, $cid);
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
