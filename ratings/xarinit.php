@@ -79,9 +79,9 @@ function ratings_init()
      * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
      */
 
-    $query1 = "SELECT DISTINCT xar_modules.xar_name FROM xar_ratings LEFT JOIN xar_modules ON xar_ratings.xar_moduleid = xar_modules.xar_regid";
-    $query2 = "SELECT DISTINCT xar_itemtype FROM xar_ratings";
-    $query3 = "SELECT DISTINCT xar_itemid FROM xar_ratings";
+    $query1 = "SELECT DISTINCT $xartable[modules].xar_name FROM $xartable[ratings] LEFT JOIN $xartable[modules] ON $xartable[ratings].xar_moduleid = $xartable[modules].xar_regid";
+    $query2 = "SELECT DISTINCT xar_itemtype FROM $xartable[ratings]";
+    $query3 = "SELECT DISTINCT xar_itemid FROM $xartable[ratings]";
     $instances = array(
         array('header' => 'Module Name:',
             'query' => $query1,
@@ -97,10 +97,11 @@ function ratings_init()
             )
         );
     xarDefineInstance('ratings', 'Item', $instances);
+    $ratingstable=$xartable['ratings'];
 
-    $query1 = "SELECT DISTINCT xar_modules.xar_name FROM xar_ratings LEFT JOIN xar_modules ON xar_ratings.xar_moduleid = xar_modules.xar_regid";
-    $query2 = "SELECT DISTINCT xar_itemtype FROM xar_ratings";
-    $query3 = "SELECT DISTINCT xar_itemid FROM xar_ratings";
+    $query1 = "SELECT DISTINCT $xartable[modules].xar_name FROM $xartable[ratings] LEFT JOIN $xartable[modules] ON $xartable[ratings].xar_moduleid = $xartable[modules].xar_regid";
+    $query2 = "SELECT DISTINCT xar_itemtype FROM $xartable[ratings]";
+    $query3 = "SELECT DISTINCT xar_itemid FROM $xartable[ratings]";
     $instances = array(
         array('header' => 'Module Name:',
             'query' => $query1,
