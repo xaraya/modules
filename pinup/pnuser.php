@@ -25,7 +25,7 @@ function pinup_user_main()
     for ($i=0;$i<$x;$i++) {
         $again=eregi_replace("</td>", " ", $lines[$i]);
         $again=eregi_replace("7babpol.shtml", " ", $again);
-        $again=eregi_replace("\" >", " ", $again);
+//      $again=eregi_replace("\" >", " ", $again);
         $location .= $again;
     }
     return array('piclocation' => $location);

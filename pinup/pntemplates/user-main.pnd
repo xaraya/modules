@@ -2,26 +2,13 @@
     <tr>
         <th align="center">Pinup Module</th>
     </tr>
-    <tr>
-        <td>
-            <table border="0" width="100%">
-                <tr align="center" valign="middle">
-                    <td><a href="&pnt-var-menulink_view;">Menu goes here</a></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
 </table>
 <br />
 
 <!-- the specific template for the current function comes here -->
 
-<div align="center"><a href="http://coolpick.com/way/cool/syn/babe.html">&pnt-var-piclocation;
-
-<!-- rest of template goes here -->
-
-</a><br><a href="http://coolpick.com/way/cool/syn/babe.html"> CoolPick.com </></div>
-
-<!-- some variable filled in by the function using this template -->
-
-<center><strong>Test</strong></center>
+<div align="center">
+    <a href="http://coolpick.com/way/cool/syn/babe.html">&pnt-var-piclocation;</a>
+    <br />
+    <a href="http://coolpick.com/way/cool/syn/babe.html">CoolPick.com </a>
+</div>
