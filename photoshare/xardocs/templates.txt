@@ -95,7 +95,7 @@ class MyTemplate
   function usesStyleSheet() ...
 
 
-    // This function outputs whatever it wants to the pnHTML object $output.
+    // This function outputs whatever it wants to the pn_HTML object $output.
     // The template data input is an associative array (struct) (let's call it Folder) 
     // with the following elements:
     // 
