@@ -28,7 +28,7 @@
                        <xar:mlstring>Reads</xar:mlstring>)
                     </xar:if>
           </span>
-          <div align="right">
+          <div style="text-align: right;">
             <span class="xar-sub">
               #$topic_icons#
             </span>
