@@ -3,7 +3,7 @@
 /**
  * Save the config file to its appropriate place 
  */
-function logconfig_adminapi_saveconfig()
+function logconfig_adminapi_turnon()
 {
     $content = xarModAPIFunc('logconfig','admin','produceconfig');
     $filename = xarModAPIFunc('logconfig','admin','filename');

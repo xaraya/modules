@@ -1,9 +1,9 @@
 <?php
 
 /**
- * If log is on, turn it off. If it is off, turn it on. 
+ * Turn logging off 
  */
-function logconfig_adminapi_switchonoff ()
+function logconfig_adminapi_turnoff ()
 {
     $filename = xarModAPIFunc('logconfig','admin','filename');
     
@@ -19,9 +19,6 @@ function logconfig_adminapi_switchonoff ()
             xarExceptionSet(XAR_SYSTEM_MESSAGE, 'UNABLE_DELETE_FILE', $msg);
             return;
          }
-    } else {
-        //Turn on!
-        if (!xarModAPIFunc('logconfig','admin','saveconfig')) return;
     }
     
     return true;
