@@ -61,7 +61,7 @@ function ratings_userapi_rate($args)
     if ($seclevel == 'high') {
         if (xarUserIsLoggedIn()) {
             $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
-            if (!empty($rated)) {
+            if (!empty($rated) && $rated > 1) {
                 return;
             }
         } else {

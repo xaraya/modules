@@ -115,7 +115,7 @@ function ratings_user_display($args)
                 xarModSetVar('ratings',$modname.':'.$itemtype.':'.$objectid,1);
             }
             $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
-            if (!empty($rated)) {
+            if (!empty($rated) && $rated > 1) {
                 $data['rated'] = true;
             }
         } else {
