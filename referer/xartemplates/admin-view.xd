@@ -32,7 +32,7 @@
 	<xar:else />
 	<div class="xar-accent" style="padding: 3px; line-height: 14px;">
 		<span style="float: left; text-align: left; width: 49%;"><a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a></span>
-		<span style="right-margin: 20px; float: right; width: 49%;">#$loop:item['frequency']#</span><br />
+		<span style="float: right; text-align: right; width: 49%;">#$loop:item['frequency']#</span><br />
 	</div>
 	</xar:if>
 </xar:loop>
