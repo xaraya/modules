@@ -17,25 +17,25 @@
 	<xar:loop name="$searchitems">
 	<xar:if condition="(($loop:index + 1) % 2)">
 	<tr>
-		<td width="20%">
+		<td style="width: 20%;">
 			#$loop:item['sname']#
 		</td>
-		<td width="60%">
+		<td style="width: 60%;">
 			<a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
 		</td>
-		<td width="20%">
+		<td style="width: 20%;">
 			#$loop:item['date']#
 		</td>
 	</tr>
 	<xar:else />
 	<tr>
-		<td class="xar-accent" width="20%">
+		<td class="xar-accent" style="width: 20%;">
 			#$loop:item['sname']#
 		</td>
-		<td class="xar-accent" width="60%">
+		<td class="xar-accent" style="width: 60%;">
 			<a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
 		</td>
-		<td class="xar-accent" width="20%">
+		<td class="xar-accent" style="width: 20%;">
 			#$loop:item['date']#
 		</td>
 	</tr>
@@ -48,7 +48,7 @@
 <xar:else />
 
 
-	<form action="#xarModURL('search', 'user', 'main')#" method="get">
+	<form action="#xarModURL('search', 'user', 'main')#" method="post">
 	<p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" />
 	&nbsp;&nbsp;&nbsp; <input type="submit" value="Search" />
 	&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset Form" /></p>
