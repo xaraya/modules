@@ -265,9 +265,9 @@ global $HTTP_SERVER_VARS;
            $sites[$i]['editlabel'] = xarML('Configure');
            if (xarSecurityCheck('DeleteMultisites', 0, 'Item', "$item[mssite]:All:$item[msid]")) {
             $sites[$i]['deleteurl'] = xarModURL('multisites',
-                'admin',
-                'delete',
-                array('msid' => $item['msid']));
+                                                    'admin',
+                                                   'delete',
+                                             array('msid' => $item['msid']));
            } else {
             $sites[$i]['deleteurl'] = '';
            }
@@ -368,15 +368,15 @@ global $HTTP_SERVER_VARS;
         return;
     }
 
-       // Get site folder name
-    $sitefolder = multisites_admin_cleanDN($siteDN);
+    // Get site folder name
+    $sitedir = multisites_admin_cleanDN($siteDN);
 
-    if (!$sitefolder) {
+    if (!$sitedir) {
         $msg = xarML("Could not clean ".$siteDN);
         xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
         return $msg;
     }
-    
+
     //Check the prefix does not already exist
     $prefixexists = xarModAPIFunc('multisites',
                                      'user',
@@ -392,26 +392,26 @@ global $HTTP_SERVER_VARS;
 
     $cWhereIsPerso =xarModGetVar('multisites','sitefolder');
     //Create new sitefolder data tree
-    $var = is_dir($cWhereIsPerso."/".$sitefolder);
+    $var = is_dir($cWhereIsPerso."/".$sitedir);
         if ($var == true) { // the folder and perhaps site already exists
            $msg = xarML("The subsite ".$siteDN." already exists!\nRemove this subsite and recreate, or edit the exising subsite.");
                 xarExceptionSet(XAR_USER_EXCEPTION, 'EXISTING_DIRECTORY', new DefaultUserException($msg));
                 return $msg;
             } else {
             $oldumask = umask(0);
-            if (!mkdir($cWhereIsPerso."/".$sitefolder,0777)) {
-                $msg = xarML("The subsite directory ".$cWhereIsPerso."/".$sitefolder." was not created!");
+            if (!mkdir($cWhereIsPerso."/".$sitedir,0755)) {
+                $msg = xarML("The subsite directory ".$cWhereIsPerso."/".$sitedir." was not created!");
                 xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
                 return $msg;
             }
 
             umask($oldumask);
         }
-        $var = is_dir($cWhereIsPerso."/".$sitefolder."/var");
+        $var = is_dir($cWhereIsPerso."/".$sitedir."/var");
         if ($var == false) {
             $oldumask = umask(0);
-            if (!mkdir($cWhereIsPerso."/".$sitefolder."/var",0777)) {
-                $msg = xarML("The subsite var directory ".$cWhereIsPerso."/".$sitefolder."/var was not created!");
+            if (!mkdir($cWhereIsPerso."/".$sitedir."/var",0755)) {
+                $msg = xarML("The subsite var directory ".$cWhereIsPerso."/".$sitedir."/var was not created!");
                 xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
                 return $msg;
             }
@@ -420,14 +420,14 @@ global $HTTP_SERVER_VARS;
 
         // copy the master config.system.php file to the new master/var directory
         $filenamein = $cWhereIsPerso."/master/var/config.system.php";
-        $filenameout= $cWhereIsPerso."/".$sitefolder."/var/config.system.php";
+        $filenameout= $cWhereIsPerso."/".$sitedir."/var/config.system.php";
         if (!copy($filenamein,$filenameout)) {
-            $msg = xarML("Unable to copy master config to ".$cWhereIsPerso."/".$sitefolder."/var");
+            $msg = xarML("Unable to copy master config to ".$cWhereIsPerso."/".$sitedir."/var");
             xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT COPY FILE', new DefaultUserException($msg));
             return $msg;
         }
        // update the new subsite config file
-       $configfile =getcwd().'/'.$cWhereIsPerso."/".$sitefolder."/var/config.system.php";
+       $configfile =getcwd().'/'.$cWhereIsPerso."/".$sitedir."/var/config.system.php";
        if (!(empty($COMSPEC))) {
            $configfile = str_replace("/","\\",$configfile); //windows
        } else {
@@ -469,6 +469,123 @@ global $HTTP_SERVER_VARS;
    // success
    return true;
 }
+
+function multisites_admin_delete($args)
+{
+   extract($args);
+   list($msid)=xarVarCleanFromInput('msid');
+  // Security check
+    if (!xarSecurityCheck('AdminMultisites')) {
+        return;
+    }
+      // Check if the Master site has been set up
+	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+	$lIsMaster=xarConfigGetVar('System.MS.Master');
+    $masterurl=xarModGetVar('multisites','masterurl');
+    $servervar=xarModGetVar('multisites','servervar');
+    $currenthost=$_SERVER[$servervar];
+
+ 	if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
+       // This is the master.
+
+       $data['authid']     = xarSecGenAuthKey();
+       $data['mastersite'] = true;
+       $data['msid']     = $msid;
+
+       $subsite =xarModAPIFunc('multisites','user','get',
+                             array('msid' => $msid));
+
+       if (!$subsite) {
+            $msg = xarML("Cannot delete subsite '".$siteDB);
+            xarExceptionSet(XAR_USER_EXCEPTION, 'NO_DATA_RECORD', new DefaultUserException($msg));
+            return $msg;
+       }
+
+       $data['msid']          = $subsite['msid'];
+       $data['mssite']        = $subsite['mssite'];
+       $data['msprefix']      = $subsite['msprefix'];
+       $data['msdb']          = $subsite['msdb'];
+       $data['msshare']       = $subsite['msshare'];
+       $data['btnDeleteSite'] = xarML('Delete Site');
+       $data['removetables']  = 1;
+       $data['removedatadir'] = 1;
+
+   } else {  //this is not the Master, or Master site not configured
+
+      $data['mastersite']= false;
+      $data['infomsg']=xarML('Sorry, no authority for Deleting subsites.');
+   }
+    // Return the template variables defined in this function
+    return $data;
+}
+
+function multisites_admin_removesite($args)
+{
+    extract($args);
+
+    list($msid,
+         $mssite,
+         $msprefix,
+         $msdb,
+         $removetables,
+         $removedatadir) = xarVarCleanFromInput('msid',
+                                                'mssite',
+                                                'msprefix',
+                                                'msdb',
+                                                'removetables',
+                                                'removedatadir');
+
+   // Auth Key
+    if (!xarSecConfirmAuthKey()) return;
+
+    // Security
+    if (!xarSecurityCheck('DeleteMultisites')) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        return;
+    }
+    // detele the site from the multisite table
+    $site = xarModAPIFunc('multisites','admin','delete',
+                                 array('msid' => $msid));
+
+       if (!$site) {
+            $msg = xarML("Cannot delete subsite '".$msid);
+            xarExceptionSet(XAR_USER_EXCEPTION, 'NO_DATA_RECORD', new DefaultUserException($msg));
+            return $msg;
+       }
+
+    if ($removedatadir==1) {
+        // remove the site specific data directory tree and files
+        // Get site folder name
+        $sitedir = multisites_admin_cleanDN($mssite);
+        if (!$sitedir) {
+            $msg = xarML("Could not clean ".$siteDN);
+            xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
+            return $msg;
+        }
+        $cWhereIsPerso =xarModGetVar('multisites','sitefolder');
+        $var = is_dir($cWhereIsPerso."/".$sitedir);
+        chmod($cWhereIsPerso."/".$sitedir,0755);
+        if (!is_writable($cWhereIsPerso."/".$sitedir)) {
+                $msg = xarML("The subsite directory ".$cWhereIsPerso."/".$sitedir." could not be deleted!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
+                return $msg;
+        } else {
+           multisites_admin_recdeldir($cWhereIsPerso."/".$sitedir."/");
+        }
+     }
+    // remove the site specific tables from the database
+    if ($removetables==1) {
+
+    //TO DO
+
+    }
+   // success
+  xarResponseRedirect(xarModURL('multisites', 'admin', 'view'));
+
+return true;
+}
+
+
 
 /**
  * This is a function that is called with the results of the
@@ -1129,10 +1246,26 @@ function template_admin_updateconfig()
     // Return
     return true;
 }
+//<jojodee> Recursively delete everything in a directory
+function multisites_admin_recdeldir($sitedir)
+{
+$current_dir = opendir($sitedir);
+    while($topdir = readdir($current_dir)){
+        if(is_dir("$sitedir/$topdir") and ($topdir != "." and $topdir!="..")){
+            multisites_admin_recdeldir("${sitedir}/${topdir}");
+        }elseif($topdir != "." and $topdir!=".."){
+            unlink("${sitedir}/${topdir}");
+        }
+    }
+    closedir($current_dir);
+    rmdir($sitedir);
 
-// Need new cleanDN function - to clean all extensions that people may want to use
+return true;
+}
+
+
+// <jojodee> Need new cleanDN function - to clean all extensions that people may want to use
 // The multisite config has already setup modvar called DNexts. Let's use this
-
 function multisites_admin_cleanDN($siteDN)
 {
   $siteext =xarModGetVar('multisites','DNexts');
@@ -1147,7 +1280,9 @@ function multisites_admin_cleanDN($siteDN)
   }
  return $siteDN;
 }
-// Sorts the array of domain extensions - eg must do .com.au before .com else wrong outcome
+
+// <jojodee> Sorts the array of domain extensions -
+// eg must do .com.au before .com else wrong outcome
 function multisites_admin_lengthcmp ($a, $b) {
     if (strlen($a) > strlen($b)) return 0;
     return ($a > $b) ? -1 : 1;
