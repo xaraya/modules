@@ -13,11 +13,11 @@ function bbcode_user_main()
     if(!xarVarFetch('text', 'str', $text['text'], '' , XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     // Security Check
 
-    if (!empty($text)){
+    if (isset($text)){
     // Do transform
         $text = xarModCallHooks('item', 'transform', 1, $text, 'bbcode');
         $data['output'] = $text[0];
-        //$data['output'] = var_dump($data['output']);
+        $data['output'] = var_dump($data['output']);
     }
 
     $data['submit'] = xarML('Submit');    

@@ -105,17 +105,28 @@ function bbcode_encode($message, $is_html_disabled)
     // [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.    
     $message = bbcode_encode_quote($message);
 
+
+
     // [list] and [list=x] for (un)ordered lists.
     $message = bbcode_encode_list($message);
 
     // [u] and [/u] for underline text.
-    $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<u>\\1</u>", $message);
+    $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
+
+    // [o] and [/o] for overline text.
+    $message = preg_replace("/\[o\](.*?)\[\/o\]/si", "<span style='text-decoration: overline;'>\\1</span>", $message);
+
+    // [lt] and [/lt] for line through text.
+    $message = preg_replace("/\[lt\](.*?)\[\/lt\]/si", "<span style='text-decoration: line-through;'>\\1</span>", $message);
 
     // [b] and [/b] for bolding text.
-    $message = preg_replace("/\[b\](.*?)\[\/b\]/si", "<b>\\1</b>", $message);
+    $message = preg_replace("/\[b\](.*?)\[\/b\]/si", "<span style='font-weight: bold;'>\\1</span>", $message);
+
+    // [sc] and [/sc] for small caps.
+    $message = preg_replace("/\[sc\](.*?)\[\/b\]/si", "<span style='font-variant: small-caps;'>\\1</span>", $message);
 
     // [i] and [/i] for italicizing text.
-    $message = preg_replace("/\[i\](.*?)\[\/i\]/si", "<i>\\1</i>", $message);
+    $message = preg_replace("/\[i\](.*?)\[\/i\]/si", "<span style='font-style: italic;'>\\1</span>", $message);
 
     // [p] and [/p] for paragraphs
     $message = preg_replace("/\[p\](.*?)\[\/p\]/si", "<p>\\1</p>", $message);
@@ -223,9 +234,8 @@ function bbcode_encode_quote($message)
   //Fast Path: is we know our string is well formed, then we can do a batch replace
   if($is_well_formed && empty($stack)) {
     //No str_ireplace until PHP 5.0 :-(
-    $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote>', $message);
-    $message = wordwrap($message);
-    $message = preg_replace('/\[\/quote\]/i', '</blockquote>', $message);
+    $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $message);
+    $message = preg_replace('/\[\/quote\]/i', '</div></blockquote>', $message);
     return $message;
   }
 
@@ -238,11 +248,11 @@ function bbcode_encode_quote($message)
   $new_offset = 0;
   foreach($tags_found as $k => $v) {
     if($v == 's') {
-      $message = & substr_replace($message, '<p>' . xarML('Quote') . ':</p><blockquote>', $k + $new_offset, 7);
+      $message = & substr_replace($message, '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $k + $new_offset, 7);
       $new_offset += 11;
     }
     else {
-      $message = & substr_replace($message, '</blockquote>', $k + $new_offset, 8);
+      $message = & substr_replace($message, '</div></blockquote>', $k + $new_offset, 8);
       $new_offset += 5;
     }
   }
@@ -251,17 +261,11 @@ function bbcode_encode_quote($message)
 } // bbcode_encode_quote()
 
 
-/**
- * Nathan Codding - Jan. 12, 2001.
- * Performs [code][/code] bbencoding on the given string, and returns the results.
- * Any unmatched "[code]" or "[/code]" token will just be left alone. 
- * This works fine with both having more than one code block in a message, and with nested code blocks.
- * Since that is not a regular language, this is actually a PDA and uses a stack. Great fun.
- *
- * Note: This function assumes the first character of $message is a space, which is added by 
- * bbencode().
- */
-function bbcode_encode_code($message, $is_html_disabled)
+/* completely reworked bbcode quote function to improve performance.
+ * Credit for the algorithm goes to Ara Anjargolian <ara@jargol.com>
+ * Adapted for code tag
+*/
+function bbcode_encode_code($message, $is_html_disabled) 
 {
     // First things first: If there aren't any "[code]" strings in the message, we don't
     // need to process it at all.
@@ -379,7 +383,7 @@ function bbcode_encode_code($message, $is_html_disabled)
                     highlight_string($after_replace, TRUE);
                 }
                 
-                $message = preg_replace("/$str_to_match/si", xarML('Code') . ": <blockquote><pre> " . bbcode_br2nl($after_replace) . "</pre></blockquote>", $message);
+                $message = preg_replace("/$str_to_match/si", xarML('Code') . ": <div style='width: 90%; height: 300px; overflow: auto;'><pre> " . bbcode_br2nl($after_replace) . "</pre></div>", $message);
             }
         }
     }
@@ -390,7 +394,6 @@ function bbcode_encode_code($message, $is_html_disabled)
     return $message;
     
 } // bbcode_encode_code()
-
 
 /**
  * Nathan Codding - Jan. 12, 2001.
