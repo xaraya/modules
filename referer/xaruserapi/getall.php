@@ -22,21 +22,6 @@ function referer_userapi_getall($args)
     if (!isset($numitems)) {
         $numitems = -1;
     } 
-    // Argument check
-    $invalid = array();
-    if (!isset($startnum) || !is_numeric($startnum)) {
-        $invalid[] = 'startnum';
-    } 
-    if (!isset($numitems) || !is_numeric($numitems)) {
-        $invalid[] = 'numitems';
-    } 
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'Example');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    } 
 
     $items = array(); 
     // Security Check
@@ -50,11 +35,11 @@ function referer_userapi_getall($args)
                    xar_url,
                    xar_frequency
             FROM $referertable
-            WHERE xar_url != 'Bookmark' 
+            WHERE xar_url != ?
             ORDER BY xar_frequency
             DESC";
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1); 
-    // Check for an error
+    $bind[] = 'Bookmark';
+    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bind);
     if (!$result) return; 
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
