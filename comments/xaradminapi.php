@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File: $Id$
+ * File: $Id: s.xaradminapi.php 1.26 03/10/21 02:05:20+02:00 mikespub@fully.qualified.hostname $
  *
  * Comments administration API functions
  *
@@ -228,8 +228,8 @@ function comments_adminapi_delete_node( $args ) {
 
     // Grab the deletion node's left and right values
     // as well as the max right value for the comments table
-    $del_node_lr = comments_userapi_get_node_lrvalues($node);
-    $max_right = comments_userapi_get_table_maxright();
+    $del_node_lr = xarModAPIFunc('comments','user','get_node_lrvalues',array('cid'=>$node));
+    $max_right = xarModAPIFunc('comments','user','get_table_maxright');
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -257,8 +257,12 @@ function comments_adminapi_delete_node( $args ) {
     // First we subtract 1 from all the deletion node's children's left and right values
     // and then we subtract 2 from all the nodes > the deletion node's right value
     // and <= the max right value for the table
-    comments_userapi_remove_gap($del_node_lr['xar_left'], $del_node_lr['xar_right'], 1);
-    comments_userapi_remove_gap($del_node_lr['xar_right'], $max_right, 2);
+    xarModAPIFunc('comments','user','remove_gap',array( 'startpoint'=>$del_node_lr['xar_left'], 
+                                                        'endpoint' =>$del_node_lr['xar_right'],
+                                                        'gapsize' =>1));
+    xarModAPIFunc('comments','user','remove_gap',array('startpoint'=>$del_node_lr['xar_right'],
+                                                       'endpoint'  => $max_right, 
+                                                       'gapsize'   =>2));
 
     return $dbconn->Affected_Rows();
 }
@@ -285,8 +289,8 @@ function comments_adminapi_delete_branch( $args ) {
 
     // Grab the deletion node's left and right values
     // as well as the max right value for the comments table
-    $del_node_lr = comments_userapi_get_node_lrvalues($node);
-    $max_right = comments_userapi_get_table_maxright();
+    $del_node_lr = xarModAPIFunc('comments','user','get_node_lrvalues', array('cid'=>$node));
+    $max_right = xarModAPIFunc('comments','user','get_table_maxright');
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -310,7 +314,10 @@ function comments_adminapi_delete_branch( $args ) {
 
 
     // Go through and fix all the l/r values for the comments
-    if (comments_userapi_remove_gap($del_node_lr['xar_left'], $max_right, $adjust_value)) {
+    if (xarModAPIFunc('comments','user','remove_gap', array('startpoint' =>$del_node_lr['xar_left'], 
+                                                            'endpoint'    =>$max_right,
+                                                            'gapsize'   => $adjust_value)))
+    {
         return $dbconn->Affected_Rows();
     }
 

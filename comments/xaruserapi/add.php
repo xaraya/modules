@@ -97,14 +97,16 @@ function comments_userapi_add($args) {
     // left and right values cuz we're adding the new comment
     // as a top level comment
     if ($pid == 0) {
-        $root_lnr = comments_userapi_get_node_root(array('modid' => $modid, 'objectid' => $objectid, 'itemtype' => $itemtype));
+        $root_lnr = xarModAPIFunc('comments','user','get_node_root',array('modid' => $modid, 'objectid' => $objectid, 'itemtype' => $itemtype));
 
         // ok, if the there was no root left and right values then
         // that means this is the first comment for this particular
         // modid/objectid combo -- so we need to create a dummy (root)
         // comment from which every other comment will branch from
         if (!count($root_lnr)) {
-            $pid = comments_userapi_add_rootnode($modid, $objectid, $itemtype);
+            $pid = xarModAPIFunc('comments','user','add_rootnode', array('modid'    => $modid,
+                                                                          'objectid' => $objectid, 
+                                                                          'itemtype' => $itemtype));
         } else {
             $pid = $root_lnr['xar_cid'];
         }
@@ -159,7 +161,7 @@ function comments_userapi_add($args) {
                  xar_status,
                  xar_anonpost)
           VALUES ("
-        .xarVarPrepForStore($cid).",'"
+        .xarVarPrepForStore($id).",'"
         .xarVarPrepForStore($modid)."','"
         .xarVarPrepForStore($itemtype)."','"
         .xarVarPrepForStore($objectid)."','"
