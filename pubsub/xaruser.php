@@ -58,15 +58,6 @@ function pubsub_user_displayicon($args)
          return;
     }
 
-    // Load API
-    if (!xarModAPILoad('pubsub', 'user')) {
-        $msg = xarML('API Failed to Load',
-	            'pubsub');
-	xarExceptionSet(XAR_SYSTEM_EXCEPTION,
-	            'LOAD_FAILED',
-	            new SystemException($msg));
-	return;
-    }
     $data['modid'] = xarVarPrepForDisplay($modid);
     $data['cid'] = xarVarPrepForDisplay($cid);
     $data['iid'] = xarVarPrepForDisplay($iid);
@@ -120,15 +111,6 @@ function pubsub_user_subscribe($args)
     if (!$result) return;
     $eventid = $result->fields[0];
     
-    // Load API
-    if (!xarModAPILoad('pubsub', 'user')) {
-        $msg = xarML('API Failed to Load',
-	            'pubsub');
-	xarExceptionSet(XAR_SYSTEM_EXCEPTION,
-	            'LOAD_FAILED',
-	            new SystemException($msg));
-	return;
-    }
     pubsub_userapi_adduser($eventid);
 
     return;
@@ -180,15 +162,6 @@ function pubsub_user_unsubscribe($args)
     if (!$result) return;
     $eventid = $result->fields[0];
     
-    // Load API
-    if (!xarModAPILoad('pubsub', 'user')) {
-        $msg = xarML('API Failed to Load',
-	            'pubsub');
-	xarExceptionSet(XAR_SYSTEM_EXCEPTION,
-	            'LOAD_FAILED',
-	            new SystemException($msg));
-	return;
-    }
     pubsub_userapi_deluser($eventid);
 
     return;
@@ -217,15 +190,6 @@ function pubsub_user_remove($args)
         return;
     }
 		    
-    // Load API
-    if (!xarModAPILoad('pubsub', 'user')) {
-        $msg = xarML('API Failed to Load',
-	            'pubsub');
-	xarExceptionSet(XAR_SYSTEM_EXCEPTION,
-	            'LOAD_FAILED',
-	            new SystemException($msg));
-	return;
-    }
     pubsub_userapi_deluser($eventid);
 
     return;

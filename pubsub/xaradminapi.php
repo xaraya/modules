@@ -461,7 +461,6 @@ function pubsub_adminapi_runjob($args)
 	    $message=$plaintext;
 	 }   
 	 // Send the mail using the mail module
-	 if (!xarModAPILoad('mail', 'admin')) return;
 	 if (!xarModAPIFunc('mail',
                  'admin',
                  'sendmail',

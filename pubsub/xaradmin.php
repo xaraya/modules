@@ -50,8 +50,6 @@ function pubsub_admin_view()
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
-    // Load API
-    if (!xarModAPILoad('pubsub', 'user')) return;
     // The user API function is called
     $events = xarModAPIFunc('pubsub',
                           'user',
