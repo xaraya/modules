@@ -17,10 +17,10 @@ function xarbb_xartables()
 {
     // Initialise table array
     $xartable = array();
-
+    $prefix = xarDBGetSiteTablePrefix();
     // Get the name for the autolinks item table
-    $xbbforums = xarConfigGetVar('prefix') . '_xbbforums';
-    $xbbtopics = xarConfigGetVar('prefix') . '_xbbtopics';
+    $xbbforums = $prefix . '_xbbforums';
+    $xbbtopics = $prefix . '_xbbtopics';
 
     // Set the table name
     $xartable['xbbforums'] = $xbbforums;
