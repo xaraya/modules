@@ -2,11 +2,11 @@
 /*
  * File: $Id: $
  *
- * CHSF Navigation Block for IAP Subscription
+ * Navigation Block for Newsletter Subscription
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2004 by the Schwab Foundation
- * @link http://wwwk.schwabfoundation.org
+ * @link http://www.schwabfoundation.org
  *
  * @subpackage navigator module
  * @author Richard Cave <caveman : rcave@xaraya.com>
