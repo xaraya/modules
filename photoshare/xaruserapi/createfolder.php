@@ -23,28 +23,28 @@ function photoshare_userapi_createfolder($args)
     if (!isset($title)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'title', 'userapi', 'createfolder', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($description)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'description', 'userapi', 'createfolder', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($viewTemplate)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'viewtemplate', 'userapi', 'createfolder', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($owner)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'owner', 'userapi', 'createfolder', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

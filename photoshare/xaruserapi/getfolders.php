@@ -119,7 +119,7 @@ function photoshare_userapi_getfolders($args)
     if (isset($folderID) && $result->EOF) {
         $result->Close();
         $msg = xarML('This item does not exists');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }

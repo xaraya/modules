@@ -18,7 +18,7 @@ function photoshare_init()
     if (!extension_loaded('gd')) 
     {
         $msg=xarML('Your server does unfortunately not have the image library "GD" installed, so Photoshare cannot be installed. Please contact your web administrator in order to get GD installed.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }

@@ -23,7 +23,7 @@ function photoshare_userapi_getusersetup($args)
     if (!isset($uid)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
             'uid', 'userapi', 'getusersetup', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
         

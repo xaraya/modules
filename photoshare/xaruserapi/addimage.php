@@ -19,35 +19,35 @@ function photoshare_userapi_addimage($args)
     if (!isset($title)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'title', 'userapi', 'addimage', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($description)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'description', 'userapi', 'addimage', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($folderID)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'folderid', 'userapi', 'addimage', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($owner)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'owner', 'userapi', 'addimage', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($inputfield)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
         'uploadInputName', 'userapi', 'addimage', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -88,7 +88,7 @@ function photoshare_userapi_addimage($args)
                         'admin',
                         'reject',
                         array(    'ulid'=>$upload['ulid']));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'INVALID_OPERATION', new SystemException(xarMl('The image cannot be uploaded since it is so big that your storage quota would be exceeded')));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'INVALID_OPERATION', new SystemException(xarMl('The image cannot be uploaded since it is so big that your storage quota would be exceeded')));
         return;
     }
 

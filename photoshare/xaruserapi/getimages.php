@@ -19,7 +19,7 @@ function photoshare_userapi_getimages($args)
     if (!isset($folderID) && !isset($imageID)) {
         $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
             'folderID or imageID', 'userapi', 'getimages', 'Photoshare');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
