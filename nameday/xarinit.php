@@ -51,7 +51,7 @@ function nameday_init()
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
         // Report failed initialisation attempt
-        pnSessionSetVar('errormsg', _NAMEDAY_CREATETABLEFAILED);
+        pnSessionSetVar('errormsg', xarML('Table creation failed'));
         return false;
     }
 

@@ -29,7 +29,7 @@
 function nameday_admin_main()
 {
     if(!(pnSecAuthAction(0, 'nameday::', '::', ACCESS_EDIT))) {
-	$output->Text(_NAMEDAY_EDITNOAUTH);
+	$output->Text(xarML('Not authorised to edit nameday'));
         return $output->GetOutput();
     }
 
@@ -52,11 +52,11 @@ function nameday_adminmenu()
     $authid = pnSecGenAuthKey();
 
     if(!(pnSecAuthAction(0, 'nameday::', '::', ACCESS_EDIT))) {
-	$output->Text(_NAMEDAY_EDITNOAUTH);
+	$output->Text(xarML('Not authorised to edit nameday'));
         return $output->GetOutput();
     }
 
-    $output->Title(_NAMEDAY_ADMIN);
+    $output->Title(xarML('Nameday Administration'));
     $output->Text(pnGetStatusMsg());
     $output->Linebreak(2);
 
@@ -64,20 +64,20 @@ function nameday_adminmenu()
     for ($i=1;$i<=12;$i++) $monlist[] = array('id' => $i,'name' => $i);
 
     if(pnSecAuthAction(0, 'nameday::', '::', ACCESS_ADD)) {
-        $output->TableStart(_NAMEDAY_NAMEDAYADD);
+        $output->TableStart(xarML('Add new nameday'));
         $output->TableRowStart();
         $output->TableColStart();
         $output->FormStart(pnModURL('nameday', 'admin', 'add'));
         $output->FormHidden('authid', $authid);
 
-        $output->BoldText(''._NAMEDAY_DAY.': ');
+        $output->BoldText(''.xarML('Day').': ');
         $output->FormSelectMultiple('did', $daylist, 0, 1, '');
 
-        $output->BoldText(''._NAMEDAY_MONTH.': ');
+        $output->BoldText(''.xarML('Month').': ');
         $output->FormSelectMultiple('mid', $monlist, 0, 1, '');
 
         $output->LineBreak(2);
-        $output->BoldText(''._NAMEDAY_LANGUAGE.': ');
+        $output->BoldText(''.xarML('Language').': ');
 
         $langlist = pnLangGetList();
 // TODO: figure out how to get the list of *available* languages
@@ -94,14 +94,14 @@ function nameday_adminmenu()
 */
         asort($langlist);
         $languages = array();
-        $languages[] = array('id' => '', 'name' => _NAMEDAY_ALL);
+        $languages[] = array('id' => '', 'name' => xarML('All'));
         foreach ($langlist as $k => $v) {
             $languages[] = array('id' => $k, 'name' => $v);
         }
         $output->FormSelectMultiple('ndlanguage', $languages, 0, 1, '');
         $output->LineBreak(2);
 
-        $output->BoldText(''._NAMEDAY_NAMESLIST.': ');
+        $output->BoldText(''.xarML('Names List').': ');
         $output->SetInputMode(_PNH_PARSEINPUT);
         $output->LineBreak();
         $output->FormTextArea('content','', 10, 60);
@@ -114,7 +114,7 @@ function nameday_adminmenu()
         $output->LineBreak();
     }
 
-    $output->TableStart(_NAMEDAY_MAINT);
+    $output->TableStart(xarML('Nameday maintenance (Edit/Delete):'));
     $output->TableRowStart();
     $output->TableColStart();
     $output->FormStart(pnModURL('nameday', 'admin', 'editday'));
@@ -122,27 +122,27 @@ function nameday_adminmenu()
 
     $output->SetInputMode(_PNH_VERBATIMINPUT);
 
-    $output->Text(""._NAMEDAY_DAY.": ");
+    $output->Text("".xarML('Day').": ");
     $output->FormSelectMultiple('did', $daylist, 0, 1, '');
 
-    $output->Text(""._NAMEDAY_MONTH.": ");
+    $output->Text("".xarML('Month').": ");
     $output->FormSelectMultiple('mid', $monlist, 0, 1, '');
 
-    $output->FormSubmit(_NAMEDAY_EDIT);
+    $output->FormSubmit(xarML('Edit nameday'));
     $output->FormEnd();
     $output->TableColEnd();
     $output->TableRowEnd();
     $output->TableRowStart();
     $output->TableColStart();
     $output->URL(pnModURL('nameday', 'admin', 'display',
-                           array('page' => 1, 'authid' => $authid)), _NAMEDAY_MODIFY);
+                           array('page' => 1, 'authid' => $authid)), xarML('Modify nameday'));
     $output->TableColEnd();
     $output->TableRowEnd();
     $output->TableEnd();
 
     $output->TableRowStart();
     $output->TableColStart();
-    $output->URL(pnModURL('nameday', 'admin', 'addlist',array()), _NAMEDAY_ADDLIST);
+    $output->URL(pnModURL('nameday', 'admin', 'addlist',array()), xarML('Add namedays for this language'));
     $output->TableColEnd();
     $output->TableRowEnd();
 
@@ -161,24 +161,24 @@ function nameday_admin_display()
     $authid = pnSecGenAuthKey();
 
     if(!(pnSecAuthAction(0, 'nameday::', '::', ACCESS_READ))) {
-	$output->Text(_NAMEDAY_NOAUTH);
+	$output->Text(xarML('Not authorised to access nameday'));
         return $output->GetOutput();
     }
-    $output->Text(_NAMEDAY_CURRENT);
+    $output->Text(xarML('Current nameday'));
 
-    $columnHeaders = array(_NAMEDAY_DAY,_NAMEDAY_MONTH,
-                           _NAMEDAY_NAMESLIST,_NAMEDAY_LANGUAGE,_NAMEDAY_ACTION);
+    $columnHeaders = array(xarML('Day'),xarML('Month'),
+                           xarML('Names List'),xarML('Language'),xarML('Action'));
 
     $output->TableStart('', $columnHeaders, 1);
 
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(_NAMEDAY_APILOADFAILED);
+	$output->Text(xarML('Unable to load API.'));
 	return $output->GetOutput();
     }
     $namedaylist = pnModAPIFunc('nameday', 'admin', 'display');
 
     if($namedaylist == false) {
-	$output->Text(_NAMEDAY_NONAMEDAYS);
+	$output->Text(xarML('No nameday Found.'));
         // if no nameday found, end the table or the footer gets pulled up the page.
 	$output->TableEnd();
 	return $output->GetOutput();
@@ -192,18 +192,18 @@ function nameday_admin_display()
             $actions[] = $output->URL(pnModURL('nameday', 'admin', 'edit', 
             array('ndid' => $nameday1['ndid'], 'did' => $nameday1['did'], 'mid' => $nameday1['mid'],
             'content' => $nameday1['content'], 'ndlanguage' => $nameday1['ndlanguage'],
-            'authid' => $authid)),_NAMEDAY_EDITACTION);
+            'authid' => $authid)),xarML('Edit'));
         }
         if(pnSecAuthAction(0, 'nameday::', "$nameday1[content]::$nameday1[ndid]", ACCESS_DELETE)) {
             $actions[] = $output->URL(pnModURL('nameday', 'admin', 'delete', 
             array('ndid' => $nameday1['ndid'], 'did' => $nameday1['did'], 'mid' => $nameday1['mid'],
             'content' => $nameday1['content'], 'ndlanguage' => $nameday1['ndlanguage'],
-            'authid' => $authid)),_NAMEDAY_DELETEACTION);
+            'authid' => $authid)),xarML('Delete'));
         }
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $actions = join(' | ', $actions);
         if (empty($nameday1['ndlanguage'])) {
-            $nameday1['ndlanguage'] = _NAMEDAY_ALL;
+            $nameday1['ndlanguage'] = xarML('All');
         }
         $row = array(pnVarPrepForDisplay($nameday1['did']),
             pnVarPrepForDisplay($nameday1['mid']),
@@ -228,12 +228,12 @@ function nameday_admin_add()
     pnVarCleanFromInput('did', 'mid', 'content', 'ndlanguage');
 
     if(!pnSecConfirmAuthKey()) {
-	pnSessionSetVar('errormsg', _NAMEDAY_BADAUTHKEY);
+	pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
 	pnRedirect(pnModURL('nameday', 'admin', 'main'));
 	return true;
     }
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(_NAMEDAY_APILOADFAILED);
+	$output->Text(xarML('Unable to load API.'));
 	return $output->GetOutput();
     }
 
@@ -244,7 +244,7 @@ function nameday_admin_add()
                           'mid' => $mid, 
                           'content' => $content, 
                           'ndlanguage' => $ndlanguage))) {
-	pnSessionSetVar('statusmsg', _NAMEDAY_ADDSUCCESS);
+	pnSessionSetVar('statusmsg', xarML('Nameday Added Successfully.'));
     }
     pnRedirect(pnModURL('nameday', 'admin', 'main'));
 
@@ -263,23 +263,23 @@ function nameday_admin_addlist()
         $output = new pnHTML();
 
         $output->SetInputMode(_PNH_VERBATIMINPUT);
-        $output->Title(_NAMEDAY_LOADLISTFROMFILE);
+        $output->Title(xarML('Load names list from file'));
 	$output->SetInputMode(_PNH_PARSEINPUT);
-        $output->ConfirmAction(_NAMEDAY_LOADLIST,
+        $output->ConfirmAction(xarML('Load'),
                                pnModURL('nameday','admin','addlist'),
-                               _NAMEDAY_CANCEL,
+                               xarML('Cancel'),
                                pnModURL('nameday','admin','main'),
                                array());
         return $output->GetOutput();
     }
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _NAMEDAY_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
         pnRedirect(pnModURL('nameday', 'admin', 'main'));
         return true;
     }
 
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(_NAMEDAY_APILOADFAILED);
+	$output->Text(xarML('Unable to load API.'));
 	return $output->GetOutput();
     }
 
@@ -287,7 +287,7 @@ function nameday_admin_addlist()
 		    'admin',
                     'addlist',
 		    array())) {
-	pnSessionSetVar('statusmsg', _NAMEDAY_ADDSUCCESS);
+	pnSessionSetVar('statusmsg', xarML('Nameday Added Successfully.'));
     }
     pnRedirect(pnModURL('nameday', 'admin', 'main'));
 
@@ -307,11 +307,11 @@ function nameday_admin_delete()
         $output = new pnHTML();
 
         $output->SetInputMode(_PNH_VERBATIMINPUT);
-        $output->Title(_NAMEDAY_DEL);
+        $output->Title(xarML('Delete This Nameday?'));
 	$output->SetInputMode(_PNH_PARSEINPUT);
-        $output->ConfirmAction(_NAMEDAY_DEL,
+        $output->ConfirmAction(xarML('Delete This Nameday?'),
                                pnModURL('nameday','admin','delete'),
-                               _NAMEDAY_CANCEL,
+                               xarML('Cancel'),
                                pnModURL('nameday','admin','display'),
                                array('ndid' => $ndid, 'did' => $did, 'mid' => $mid,
                                'content' => $content,
@@ -319,12 +319,12 @@ function nameday_admin_delete()
         return $output->GetOutput();
     }
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _NAMEDAY_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
         pnRedirect(pnModURL('nameday', 'admin', 'display'));
         return true;
     }
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(_NAMEDAY_APILOADFAILED);
+	$output->Text(xarML('Unable to load API.'));
 	return $output->GetOutput();
     }
     if (pnModAPIFunc('nameday',
@@ -332,7 +332,7 @@ function nameday_admin_delete()
                      'delete',
                      array('ndid' => $ndid, 'did' => $did, 'mid' => $mid,
                      'content' => $content, 'ndlanguage' => $ndlanguage))) {
-        pnSessionSetVar('statusmsg', _NAMEDAY_DELETED);
+        pnSessionSetVar('statusmsg', xarML('Nameday Deleted.'));
     }
     pnRedirect(pnModURL('nameday', 'admin', 'main'));
 
@@ -350,12 +350,12 @@ function nameday_admin_edit()
     $output = new pnHTML();
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _NAMEDAY_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
         pnRedirect(pnModURL('nameday', 'admin', 'display'));
         return true;
     }
     if(!pnModAPILoad('nameday', 'admin', 'edit')) {
-	$output->Text(_NAMEDAY_APILOADFAILED);
+	$output->Text(xarML('Unable to load API.'));
 	return $output->GetOutput();
     }
     $namedaylist = pnModAPIFunc('nameday',
@@ -365,12 +365,12 @@ function nameday_admin_edit()
                               'content' => $content, 'ndlanguage' => $ndlanguage));
 
     if($namedaylist == false) {
-	$output->Text(_NAMEDAY_NONAMEDAYS);
+	$output->Text(xarML('No nameday Found.'));
 	return $output->GetOutput();
     }
     $authid = pnSecGenAuthKey();
 
-    $output->TableStart(_NAMEDAY_EDIT);
+    $output->TableStart(xarML('Edit nameday'));
 
     foreach($namedaylist as $nameday1) {
 
@@ -381,16 +381,16 @@ function nameday_admin_edit()
 
         $output->SetInputMode(_PNH_VERBATIMINPUT);
 
-        $output->BoldText(''._NAMEDAY_DAY.': ');
+        $output->BoldText(''.xarML('Day').': ');
         for ($i=1;$i<=31;$i++) $daylist[] = array('id' => $i,'name' => $i);
         $output->FormSelectMultiple('did', $daylist, 0, 1, pnVarPrepForDisplay($did));
 
-        $output->BoldText(''._NAMEDAY_MONTH.': ');
+        $output->BoldText(''.xarML('Month').': ');
         for ($i=1;$i<=12;$i++) $monlist[] = array('id' => $i,'name' => $i);
         $output->FormSelectMultiple('mid', $monlist, 0, 1, pnVarPrepForDisplay($mid));
 
     	$output->LineBreak(2);
-        $output->BoldText(''._NAMEDAY_LANGUAGE.': ');
+        $output->BoldText(''.xarML('Language').': ');
 
         $langlist = pnLangGetList();
 // TODO: figure out how to get the list of *available* languages
@@ -407,18 +407,18 @@ function nameday_admin_edit()
 */
         asort($langlist);
         $languages = array();
-        $languages[] = array('id' => '', 'name' => _NAMEDAY_ALL);
+        $languages[] = array('id' => '', 'name' => xarML('All'));
         foreach ($langlist as $k => $v) {
             $languages[] = array('id' => $k, 'name' => $v);
         }
         $output->FormSelectMultiple('ndlanguage', $languages, 0, 1, $ndlanguage);
         $output->LineBreak(2);
         
-        $output->BoldText(_NAMEDAY_NAMESLIST);
+        $output->BoldText(xarML('Names List'));
     	$output->LineBreak();
     	$output->FormTextArea('content',$nameday1['content'], 10, 60);
     	$output->LineBreak();
-    	$output->FormSubmit(_NAMEDAY_SAVECHANGES);
+    	$output->FormSubmit(xarML('Save Modification?'));
     	$output->FormEnd();
         $output->SetInputMode(_PNH_PARSEINPUT);
     }
@@ -446,19 +446,19 @@ function nameday_admin_update()
         $output->Title('Update nameday');
 	$output->SetInputMode(_PNH_PARSEINPUT);
         $output->ConfirmAction(
-            _NAMEDAY_SAVE, pnModURL('nameday','admin','update'),
-            _NAMEDAY_CANCEL, pnModURL('nameday','admin','display'),
+            xarML('Save'), pnModURL('nameday','admin','update'),
+            xarML('Cancel'), pnModURL('nameday','admin','display'),
             array('ndid' => $ndid, 'did' => $did, 'mid' => $mid,
                   'content' => $content,'ndlanguage' => $ndlanguage));
         return $output->GetOutput();
     }
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _NAMEDAY_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
         pnRedirect(pnModURL('nameday', 'admin', 'main'));
         return true;
     }
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(_NAMEDAY_APILOADFAILED);
+	$output->Text(xarML('Unable to load API.'));
 	return $output->GetOutput();
     }
     if (pnModAPIFunc('nameday',
@@ -467,7 +467,7 @@ function nameday_admin_update()
                      array('ndid' => $ndid, 'did' => $did, 'mid' => $mid,
                      'content' => $content, 'ndlanguage' => $ndlanguage))) {
 
-        pnSessionSetVar('statusmsg', _NAMEDAY_UPDATESUCCESS);
+        pnSessionSetVar('statusmsg', xarML('Nameday Successfully Updated.'));
     }
     pnRedirect(pnModURL('nameday', 'admin', 'main'));
 
@@ -479,7 +479,7 @@ function nameday_admin_editday()
     list($did,$mid) = pnVarCleanFromInput('did','mid');
 
     if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _NAMEDAY_BADAUTHKEY);
+        pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
         pnRedirect(pnModURL('nameday', 'admin', 'display'));
         return true;
     }
@@ -487,20 +487,20 @@ function nameday_admin_editday()
     $output = new pnHTML();
 
     if(!(pnSecAuthAction(0, 'nameday::', '::', ACCESS_READ))) {
-	$output->Text(_NAMEDAY_NOAUTH);
+	$output->Text(xarML('Not authorised to access nameday'));
         return $output->GetOutput();
     }
-    $output->Text(_NAMEDAY_CURRENT);
+    $output->Text(xarML('Current nameday'));
 
-    $columnHeaders = array(_NAMEDAY_DAY,_NAMEDAY_MONTH,_NAMEDAY_NAMESLIST,
-                           _NAMEDAY_LANGUAGE,_NAMEDAY_ACTION);
+    $columnHeaders = array(xarML('Day'),xarML('Month'),xarML('Names List'),
+                           xarML('Language'),xarML('Action'));
 
     $authid = pnSecGenAuthKey();
 
     $output->TableStart('', $columnHeaders, 1);
 
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(_NAMEDAY_APILOADFAILED);
+	$output->Text(xarML('Unable to load API.'));
 	return $output->GetOutput();
     }
 
@@ -510,7 +510,7 @@ function nameday_admin_editday()
                               array('did' => $did, 'mid' => $mid));
     
     if($namedaylist == false) {
-	$output->Text(_NAMEDAY_NONAMEDAYS);
+	$output->Text(xarML('No nameday Found.'));
         // if no nameday found, end the table or the footer gets pulled up the page.
 	$output->TableEnd();
 	return $output->GetOutput();
@@ -524,18 +524,18 @@ function nameday_admin_editday()
             $actions[] = $output->URL(pnModURL('nameday', 'admin', 'edit', 
             array('ndid' => $nameday1['ndid'], 'did' => $nameday1['did'], 'mid' => $nameday1['mid'],
             'content' => $nameday1['content'], 'ndlanguage' => $nameday1['ndlanguage'],
-            'authid' => $authid)),_NAMEDAY_EDITACTION);
+            'authid' => $authid)),xarML('Edit'));
         }
         if(pnSecAuthAction(0, 'nameday::', "$nameday1[content]::$nameday1[ndid]", ACCESS_DELETE)) {
             $actions[] = $output->URL(pnModURL('nameday', 'admin', 'delete', 
             array('ndid' => $nameday1['ndid'], 'did' => $nameday1['did'], 'mid' => $nameday1['mid'],
             'content' => $nameday1['content'], 'ndlanguage' => $nameday1['ndlanguage'],
-            'authid' => $authid)),_NAMEDAY_DELETEACTION);
+            'authid' => $authid)),xarML('Delete'));
         }
         $output->SetOutputMode(_PNH_KEEPOUTPUT);
         $actions = join(' | ', $actions);
         if (empty($nameday1['ndlanguage'])) {
-            $nameday1['ndlanguage'] = _NAMEDAY_ALL;
+            $nameday1['ndlanguage'] = xarML('All');
         }
         $row = array(pnVarPrepForDisplay($nameday1['did']),
             pnVarPrepForDisplay($nameday1['mid']),

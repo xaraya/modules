@@ -34,13 +34,13 @@ function nameday_adminapi_add($args)
 
     // Argument check
     if ((!isset($did)) || (!isset($mid)) || (!isset($content)) || (!isset($ndlanguage))) {
-        pnSessionSetVar('errormsg', _NAMEDAY_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in nameday admin API arguments'));
         return false;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'nameday::', '::', ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APINOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not Authorized to Access Admin API'));
         return false;
     }
 
@@ -72,12 +72,12 @@ function nameday_adminapi_update($args)
 
     if ((!isset($ndid)) || (!isset($did)) || (!isset($mid)) || 
         (!isset($content)) || (!isset($ndlanguage))) {
-        pnSessionSetVar('errormsg', _NAMEDAY_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in nameday admin API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'nameday::', "$content::$ndid", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APINOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not Authorized to Access Admin API'));
         return false;
     }
 
@@ -97,7 +97,7 @@ function nameday_adminapi_update($args)
     $dbconn->Execute($query);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APIUPDATEFAILED);
+        pnSessionSetVar('errormsg', xarML('Nameday API Update Failed.'));
         return false;
     }
     return true;
@@ -109,12 +109,12 @@ function nameday_adminapi_delete($args)
     extract($args);
 
     if (!isset($ndid)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in nameday admin API arguments'));
         return false;
     }
 
     if (!pnSecAuthAction(0, 'nameday::', "$content::$ndid", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APINOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not Authorized to Access Admin API'));
         return false;
     }
 
@@ -128,7 +128,7 @@ function nameday_adminapi_delete($args)
     $dbconn->Execute($query);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APIUPDATEFAILED);
+        pnSessionSetVar('errormsg', xarML('Nameday API Update Failed.'));
         return false;
     }
 
@@ -140,7 +140,7 @@ function nameday_adminapi_display()
 {
     // Security check
     if (!pnSecAuthAction(0, 'nameday::', '::', ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APINOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not Authorized to Access Admin API'));
         return false;
     }
 
@@ -183,13 +183,13 @@ function nameday_adminapi_edit($args)
 
     // Argument check
     if (!isset($ndid)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in nameday admin API arguments'));
         return false;
     }    
 
     // Security check
     if (!pnSecAuthAction(0, 'nameday::', "$content::$ndid", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APINOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not Authorized to Access Admin API'));
         return false;
     }
 
@@ -233,13 +233,13 @@ function nameday_adminapi_editday($args)
     // Argument check
 
     if ((!isset($did)) || (!isset($mid))) {
-        pnSessionSetVar('errormsg', _NAMEDAY_ARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Error in nameday admin API arguments'));
         return false;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'nameday::', "::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APINOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not Authorized to Access Admin API'));
         return false;
     }
 
@@ -281,7 +281,7 @@ function nameday_adminapi_addlist($args)
 {
     // Security check
     if (!pnSecAuthAction(0, 'nameday::', '::', ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_APINOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not Authorized to Access Admin API'));
         return false;
     }
 
@@ -290,7 +290,7 @@ function nameday_adminapi_addlist($args)
     $ndfilepath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/pnlang/'.$clang.'/'.$clang.'.txt';
 
     if (!file_exists($ndfilepath)) {
-        pnSessionSetVar('errormsg', _NAMEDAY_NOSUCHFILE);
+        pnSessionSetVar('errormsg', xarML('No such file'));
         return false;
     }
 
