@@ -24,10 +24,10 @@
 </xar:loop>
 
 <xar:if condition="!empty($items)">
-    <br />
     <div class="xar-block-title"><xar:mlstring>More Featured Headlines</xar:mlstring>:</div>
+    <ul>
     <xar:foreach in="$items" value="$item">
-        &bull;
+      <li>
         <xar:if condition="empty($item['link'])">
             #xarVarPrepForDisplay($item['label'])#
         <xar:else />
@@ -36,10 +36,10 @@
         <xar:if condition="!empty($item['count'])">
             (#$item['count']#)
         </xar:if>
-        <br />
         <xar:if condition="!empty($item['desc'])">
             #xarVarPrepHTMLDisplay($item['desc'])#
-        <br />
         </xar:if>
+      </li>        
     </xar:foreach>
+    </ul>
 </xar:if>
