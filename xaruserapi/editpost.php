@@ -50,7 +50,7 @@ function metaweblogapi_userapi_editpost($args)
         $err = xarML("Invalid user (#(1)) or password while editing post",$username);
     } else {
         // FIXME: test for exceptions
-        $article = xarModAPIFunc('articles','user','get',array('aid'=>$postid));
+        $article = xarModAPIFunc('articles','user','get',array('aid'=>$postid, 'withcids' => true));
         $iids = array(); $iids[] = $postid;
         
         // Should we error out here maybe?
@@ -61,7 +61,10 @@ function metaweblogapi_userapi_editpost($args)
         // FIXME: test for exceptions
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
         $modId = xarModGetIDFromName('articles');
-        $cids = array_keys(xarModAPIFunc('categories','user','getlinks',array('iids'=>$iids,'modid'=>$modId,'itemtype' => $pubType,'reverse'=>0)));
+        $cids = array();
+        foreach($categories as $catname) {
+            $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $catname));
+        }
         if (!xarModAPIFunc('articles','admin','update',array('aid'=>$article['aid'], 'title'=>$title,
                                                              'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids,
                                                              'bodytype'=>'normal', 'bodytext'=>$article['body'],'language'=>' '))) {
