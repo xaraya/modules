@@ -24,7 +24,7 @@ function uploads_userapi_db_count_data( $args )  {
     }
     
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable     = xarDBGetTables();
         
         // table and column definitions

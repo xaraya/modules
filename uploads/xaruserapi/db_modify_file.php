@@ -59,7 +59,7 @@ function uploads_userapi_db_modify_file( $args ) {
     
     //add to uploads table
     // Get database setup
-    list($dbconn)    = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable        = xarDBGetTables();
 
     $fileEntry_table = $xartable['file_entry'];

@@ -42,7 +42,7 @@ function uploads_userapi_db_get_associations( $args )  {
     }
     
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable     = xarDBGetTables();
         
         // table and column definitions
