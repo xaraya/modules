@@ -1,9 +1,20 @@
-<xar:mlstring>An Example User Menu Hook</xar:mlstring>:<br /><br />
-
-<!-- 
-Here we are just setting up the icon, and the link.  
-Notice the phase variable being set in order to know where to process in our loop.
--->
-
-<a href="#xarModURL('example', 'user', 'usermenu', array('phase' => 'form'))#"><img src="#$iconbasic#" alt="" /></a>
-<br /><br />
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+<xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'dyn_example'))</xar:set>
+<xar:if condition="$compare eq $current">
+    <dd class="active">
+        <a href="#xarServerGetCurrentURL()#">
+            <xar:mlstring>
+                Example
+            </xar:mlstring>
+        </a>
+    </dd>    
+<xar:else />
+    <dd>
+        <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'dyn_example'))#">
+            <xar:mlstring>
+                Example
+            </xar:mlstring>
+        </a>
+    </dd>    
+</xar:if>
