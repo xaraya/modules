@@ -62,7 +62,7 @@ function newsletter_userapi_getsubscription($args)
     $bindvars[] = (int) $uid;
 
     if(isset($pid)) {
-        $bindvars[] = (int) $pid
+        $bindvars[] = (int) $pid;
         $query .= " AND $subTable.xar_pid = ? ";
     }
 

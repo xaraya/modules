@@ -578,7 +578,7 @@ function newsletter_userapi_get($args)
                       WHERE $subscriptionsTable.xar_pid = ?
                       AND $subscriptionsTable.xar_uid = $rolesTable.xar_uid";
 
-            $bindvars[] = (int) $pid);
+            $bindvars[] = (int) $pid;
 
             if(isset($uid)) {
                 $query .= " AND $subscriptionsTable.xar_uid = ?";
