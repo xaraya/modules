@@ -93,7 +93,7 @@ class TPLParser
                             $this->transKeyEntries[$this->_string] = array();
                         }
                         $this->transKeyEntries[$this->_string][] = array('line' => $this->_line, 'file' => $this->filename);
-                    } else { 
+                    } else {
                         if (!isset($this->transEntries[$this->_string])) {
                             $this->transEntries[$this->_string] = array();
                         }
@@ -128,8 +128,12 @@ class TPLParser
     {
         if (!file_exists($filename)) return;
         $this->filename = $filename;
-        $this->_fd = fopen($filename, 'r') or die("Cannot open file");
-
+        $this->_fd = fopen($filename, 'r');
+        if (!$this->_fd) {
+            $msg = xarML('Cannot open the file #(1)',$filename);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
+            return;
+        }
         if (!$filesize = filesize($filename)) return;
 
         $this->_offs = 0;

@@ -15,7 +15,7 @@ class TPLParser
 {
     var $transEntries = array();
     var $transKeyEntries = array();
-    
+
     var $_fd;
     var $_offs;
     var $_pos;
@@ -38,7 +38,7 @@ class TPLParser
     {
         return $this->transKeyEntries;
     }
-    
+
     function _get_token($t_array, $right) {
         $found = false;
         while (!$found && !feof($this->_fd)) {
@@ -72,22 +72,26 @@ class TPLParser
     function parse($filename)
     {
         if (!file_exists($filename)) return;
-        $this->_fd = fopen($filename, 'r') or die("Cannot open file");
-
+        $this->_fd = fopen($filename, 'r');
+        if (!$this->_fd) {
+            $msg = xarML('Cannot open the file #(1)',$filename);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
+            return;
+        }
         if (!$filesize = filesize($filename)) return;
-    
+
     $this->_offs = 0;
     $this->_len = 0;
-        
+
         while (!feof($this->_fd)) {
-            
+
             if ($this->_get_token(array("<xar:mlstring>", "<xar:mlkey>", "xarML(", "xarMLByKey("), false)) {
-            
+
                 $this->_string ='';
                 $line = $this->_line;
-                
+
                 switch ($this->_token) {
-                    case 0: 
+                    case 0:
                         if ($this->_get_token(array("</xar:mlstring>"), true)) {
                             $this->_string = trim($this->_string);
                             if (!isset($this->transEntries[$this->_string])) {
@@ -133,7 +137,7 @@ class TPLParser
                     printf("Result: %s %s<br />\n", $string, $this->_string);
             }
         }
-        
+
         fclose($this->_fd);
     }
 

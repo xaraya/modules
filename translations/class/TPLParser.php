@@ -131,10 +131,9 @@ class TPLParser
         $this->_fd = fopen($filename, 'r');
         if (!$this->_fd) {
             $msg = xarML('Cannot open the file #(1)',$filename);
-            xarExceptionSet(XAR_SYSTM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
             return;
         }
-
         if (!$filesize = filesize($filename)) return;
 
         $this->_offs = 0;
