@@ -67,7 +67,7 @@ function polls_admin_deleteopt()
                      array('pid' => $pid,
                            'opt' => $opt))) {
         // Success
-        xarSessionSetVar('statusmsg', _POLLSDELETEDPOLLOPT);
+        xarSessionSetVar('statusmsg', xarML('Deleted option'));
 
     }
 

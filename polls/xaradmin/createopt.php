@@ -32,7 +32,7 @@ function polls_admin_createopt()
     if (!$created && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
-    xarSessionSetVar('statusmsg', _POLLSCREATEDOPT);
+    xarSessionSetVar('statusmsg', xarML('Created option'));
 
     xarResponseRedirect(xarModURL('polls',
                         'admin',
