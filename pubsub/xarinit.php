@@ -58,7 +58,7 @@ function pubsub_init()
         'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_userid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0'),
-        'xar_subdate'=>array('type'=>'integer','size'=>'medium','null'=>FALSE, 'default'=>'0')
+        'xar_subdate'=>array('type'=>'integer','null'=>FALSE, 'default'=>'0')
     );
     $query = xarDBCreateTable($pubsubregtable,$regfields);
     $result =& $dbconn->Execute($query);

@@ -76,7 +76,7 @@ function pubsub_adminapi_getsubscribers($args)
             $subscribers[] = array('username'  => $username
                                   ,'modname'   => $modname
                                   ,'modid'     => $modid
-                                  ,'subdate'   => xarLocaleFormatDate($subdate,"%a, %d-%B-%Y")
+                                  ,'subdate'   => xarLocaleFormatDate("%a, %d-%B-%Y",$subdate)
                                   ,'pubsubid'  => $pubsubid
                                   );
         }

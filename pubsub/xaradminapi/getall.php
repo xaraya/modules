@@ -66,7 +66,7 @@ function pubsub_adminapi_getall($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($modname, $catname, $cid, $numsubscribers) = $result->fields;
+        list($eventid, $modname, $catname, $cid, $numsubscribers) = $result->fields;
         if (xarSecurityCheck('AdminPubSub', 0)) {
             $events[] = array('modname'        => $modname
                              ,'catname'        => $catname
