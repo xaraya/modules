@@ -39,7 +39,7 @@ function articles_userapi_decode_shorturl($params)
         }
     }
     
-    // check if we want to encode URLs using their titles rather then their ID
+    // check if we want to decode URLs using their titles rather then their ID
     $decodeUsingTitle = (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
 
 
@@ -109,6 +109,7 @@ function articles_userapi_decode_shorturl($params)
         foreach ($pubtypes as $id => $pubtype) {
             if ($params[1] == $pubtype['name']) {
                 $args['ptid'] = $id;
+
                 if (!empty($params[2])) {
                     if (preg_match('/^(\d+)/',$params[2],$matches)) {
                         $aid = $matches[1];
@@ -136,6 +137,12 @@ function articles_userapi_decode_shorturl($params)
                             return array('redirect', $args);
                         }
                     } else {
+
+                        // Now that we find out that we're in a specific pubtype, get specific pubtype settings again
+                        $settings = unserialize(xarModGetVar('articles', 'settings.'.$args['ptid']));
+        
+                        // check if we want to decode URLs using their titles rather then their ID
+                        $decodeUsingTitle = (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
 
                         // Decode using title
                         if( $decodeUsingTitle )
@@ -165,6 +172,7 @@ function articles_userapi_decode_shorturl($params)
 function articles_decodeUsingTitle( $params, $ptid = '' )
 {
     $dupeResolutionMethod = 'ALL';
+
 
     // The $params passed in does not match on all legal URL characters and
     // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"

@@ -316,7 +316,7 @@ function articles_encodeUsingTitle( $aid )
     $dupeResolutionMethod = 'Append Date';
 
     $searchArgs = array();
-    $searchArgs['where'] = "title = '".$article['title']."'";
+    $searchArgs['where'] = "title = '".str_replace("'","\\'",$article['title'])."'";
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     
     if( count($articles) == 1 )
