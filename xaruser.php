@@ -1,14 +1,14 @@
 <?php
 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Frank Besler <besfred@xaraya.com>
-// Purpose of file: Show Image feeds
-// ----------------------------------------------------------------------
+/**
+ *  Purpose of file: Show Image feeds
+ *
+ *  Xaraya eXtensible Management System 
+ *  Copyright (C) 2002 by the Xaraya Development Team. 
+ *  http://www.xaraya.org
+ * 
+ * @author Frank Besler <besfred@xaraya.com>
+ */
 
 
 /**
