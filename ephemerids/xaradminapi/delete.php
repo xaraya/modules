@@ -8,7 +8,7 @@ function ephemerids_adminapi_delete($args)
     if (!isset($eid) || !is_numeric($eid)) {
         $msg = xarML('Invalid argument',
                     'eid', 'admin', 'delete', 'ephemerid');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

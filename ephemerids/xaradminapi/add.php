@@ -27,7 +27,7 @@ function ephemerids_adminapi_add($args)
         (!isset($yid)) ||
         (!isset($content))) {
         $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'add', 'empherids');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
