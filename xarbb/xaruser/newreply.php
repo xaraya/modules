@@ -59,7 +59,7 @@ function xarbb_user_newreply()
                 $package['text'] = $comment['xar_text'];
             }
         }
-        $data = xarModAPIFunc('xarbb',
+        $topic = xarModAPIFunc('xarbb',
                       'user',
                       'gettopic',
                       array('tid' => $tid));
@@ -69,10 +69,24 @@ function xarbb_user_newreply()
 
     // Security Check
     if($phase == "edit")    {
-	    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
-	}    else	{
+        $uid = xarUserGetVar('uid');
+        if (!xarSecurityCheck('ModxarBB',0,'Forum',$topic['catid'].':'.$topic['fid'])){
+            // No Privs, Hows about this is my comment?
+            if ($uid != $data[0]['xar_uid']){
+                // Nope?  Lets return
+                $message = xarML('You do not have access to modify this reply');
+                return $message;
+            }
+        }
+	} else {
    	    if(!xarSecurityCheck('PostxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
     }
+
+    $data = xarModAPIFunc('xarbb',
+                  'user',
+                  'gettopic',
+                  array('tid' => $tid));
+
 
     // Var Set-up
     $header['input-title']  = xarML('Post a Reply');

@@ -51,11 +51,17 @@ function xarbb_user_newtopic()
     // Security Check
 
     if(isset($tid))    {
-        if(!xarSecurityCheck('ModxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
-    }
-    else    {
+        $uid = xarUserGetVar('uid');
+        if (!xarSecurityCheck('ModxarBB',0,'Forum',$data['catid'].':'.$data['fid'])){
+            // No Privs, Hows about this is my comment?
+            if ($uid != $data['tposter']){
+                // Nope?  Lets return
+                $message = xarML('You do not have access to modify this topic.');
+                return $message;
+            }
+        }
+    } else {
         if(!xarSecurityCheck('PostxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
-
     }
 
     if (isset($preview)){
@@ -134,7 +140,7 @@ function xarbb_user_newtopic()
 
             if(isset($tid))    {
                  $modified_date= xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z',time());
-                 $tpost .= "\n";
+                 $tpost .= "\n\n";
                  $tpost .=xarML('[Modified by: #(1) (#(2)) on #(3)]',
                      xarUserGetVar('name'),
                      xarUserGetVar('uname'),

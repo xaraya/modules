@@ -1,5 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 <table border="0" width="98%">
 	<tr>
@@ -149,10 +148,17 @@
 										#$quoteimg#</a>
 								</xar:if>
 							</xar:sec>
-							<xar:sec mask="ModxarBB" catch="false">
+							<xar:if condition="xarUserGetVar('uid') eq $tposter">
 								<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
-									#$editimg#</a>
-							</xar:sec>
+									#$editimg#
+								</a>
+							<xar:else />
+								<xar:sec mask="ModxarBB" catch="false">
+									<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
+										#$editimg#
+									</a>
+								</xar:sec>
+							</xar:if>
 						</xar:if>
 						<xar:sec mask="DeletexarBB" catch="false">
 							<a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onClick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')">
@@ -334,10 +340,16 @@
 										#$quoteimg#</a>
 								</xar:if>
 							</xar:sec>
-							<xar:sec mask="ModxarBB" catch="false">
+							<xar:if condition="xarUserGetVar('uid') eq $item['xar_uid']">
 								<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#">
-									#$editimg#</a>
-							</xar:sec>
+									#$editimg#
+								</a>
+							<xar:else />
+								<xar:sec mask="ModxarBB" catch="false">
+									<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#">
+										#$editimg#</a>
+								</xar:sec>
+							</xar:if>
 						</xar:if>
 						<xar:sec mask="DeletexarBB" catch="false">
 							<a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onClick="return xar_base_confirmLink(this, '#xarML('Delete this reply?').' '.xarVarPrepfordisplay($item['xar_title'])#?')">
