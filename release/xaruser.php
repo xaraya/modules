@@ -68,11 +68,12 @@ function release_user_viewids()
             $items[$i]['editurl'] = '';
         }
 
-        if (($uid = $item['uid']) || (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
+        if (($uid = $item['uid']) && (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
             $items[$i]['addurl'] = xarModURL('release',
                                               'user',
                                               'addnotes',
-                                               array('rid' => $item['rid']));
+                                               array('rid' => $item['rid'],
+                                                     'phase' => 'start'));
         } else {
             $items[$i]['addurl'] = '';
         }
@@ -229,14 +230,24 @@ function release_user_addnotes()
     $phase = xarVarCleanFromInput('phase');
 
     if (empty($phase)){
-        $phase = 'add';
+        $phase = 'getmodule';
     }
 
     switch(strtolower($phase)) {
-
-        case 'add':
+        case 'getmodule':
         default:
-            
+            // First we need to get the module that we are adding the release note to.
+            // This will be done in several stages so that the information is accurate.
+
+            $authid = xarSecGenAuthKey();
+            $data = xarTplModule('release','user', 'addnote_getmodule', array('authid'    => $authid));
+
+            break;
+
+        case 'start':
+            // First we need to get the module that we are adding the release note to.
+            // This will be done in several stages so that the information is accurate.
+
             $rid = xarVarCleanFromInput('rid');
 
             // The user API function is called.
@@ -245,10 +256,50 @@ function release_user_addnotes()
                                   'getid',
                                   array('rid' => $rid));
 
-            if ($data == false) return;
+            
+            //TODO FIX ME!!!
+            if ($data == false){
+                $message = xarML('There is no assigned ID for your module or theme.  You must first register module ID before you can add a release notification');
+            }
 
-            $data['authid'] = xarSecGenAuthKey();
 
+            $users = xarModAPIFunc('users',
+                                   'user',
+                                   'get',
+                                   array('uid' => $data['uid']));
+
+            if (($data['uid'] = $users['uid']) || (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
+                $message = '';
+                
+            } else {
+                $message = xarML('You are not allowed to add a release notification to this module');               
+            }
+
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Release'))
+                       .' :: '.xarVarPrepForDisplay($data['name']));
+
+            $authid = xarSecGenAuthKey();
+            $data = xarTplModule('release','user', 'addnote_start', array('rid'       => $data['rid'],
+                                                                          'name'      => $data['name'],
+                                                                          'desc'      => $data['desc'],
+                                                                          'message'   => $message,
+                                                                          'authid'    => $authid));
+
+            break;
+
+        case 'getbasics':
+
+           list($rid,
+                $name) = xarVarCleanFromInput('rid',
+                                              'name');
+
+           if (!xarSecConfirmAuthKey()) return;
+
+           $authid = xarSecGenAuthKey();
+           $data = xarTplModule('release','user', 'addnote_getbasics', array('rid'       => $rid,
+                                                                             'name'     => $name,
+                                                                             'authid'   => $authid));
             break;
         
         case 'update':
