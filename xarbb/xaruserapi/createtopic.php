@@ -109,7 +109,7 @@ function xarbb_userapi_createtopic($args)
               xar_tstatus,
               xar_thostname)
             VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array($nextId, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $treplier, $tstatus, $thostname);
+    $bindvars = array((int)$nextId, (int)$fid, (string)$ttitle, (string)$tpost,(string)$tposter, (int)$ttime, (int)$tftime, (int)$treplies, (int)$treplier, (int)$tstatus, (string)$thostname);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
