@@ -45,13 +45,15 @@ function xarbb_userapi_createtopic($args)
               xar_ttitle,
               xar_tpost,
               xar_tposter,
-              xar_ttime)
+              xar_ttime,
+              xar_tftime)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($fid) . "',
               '" . xarVarPrepForStore($ttitle) . "',
               '" . xarVarPrepForStore($tpost) . "',
               '" . xarVarPrepForStore($tposter) . "',
+              '$time',
               '$time')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;

@@ -29,7 +29,7 @@ function xarbb_user_main()
     }
 
     // TODO, need to check if new topics have been updated since last visit.
-    $data['folder']       = '<img src="' . xarTplGetImage('folder.gif') . '" />';
+    $data['folder']       = '<img src="' . xarTplGetImage('folder.gif') . '" alt="'.xarML('Folder').'"/>';
 
     // Add the array of items to the template variables
     $data['items'] = $forums;

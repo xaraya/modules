@@ -97,7 +97,7 @@ function xarbb_user_viewforum()
     $data['fname'] = $forums['fname'];
 
     //images
-    $data['newtopic'] = '<img src="' . xarTplGetImage('newpost.gif') . '" />';
+    $data['newtopic'] = '<img src="' . xarTplGetImage('newpost.gif') . '" alt="'.xarML('New post').'" />';
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.

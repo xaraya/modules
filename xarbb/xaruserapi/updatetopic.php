@@ -25,7 +25,8 @@ function xarbb_userapi_updatetopic($args)
                     "time" => "xar_ttime",
                     "tposter" => "xar_tposter",
                     "treplies" => "xar_treplies",
-                    "treplier" => "xar_treplier");
+                    "treplier" => "xar_treplier",
+                    "tftime"   => "xar_tftime");
     foreach($params as $vvar => $dummy)	{
     	if(isset($$vvar))	{
 			$set = true;

@@ -87,7 +87,7 @@ function xarbb_user_viewtopic()
                                               array('uid' => $comment['xar_uid']));
 
         //format reply poster's registration date
-        $comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y/%m/%d',$comments[$i]['userdata']['date_reg']);
+        $comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
         //format the post reply date consistently with topic post date
         $comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
     }
@@ -98,17 +98,20 @@ function xarbb_user_viewtopic()
 
     // adjust the display format
     // TODO: needs to be made variable
-    $thisdate = new xarDate();
-    if(is_numeric($posterdata['date_reg'])) {
-        $thisdate->setTimestamp($posterdata['date_reg']);
-    }
-    else {
-        $thisdate->DBtoTS($posterdata['date_reg']);
-    }
-    $regdate = $thisdate->display("Y-m-d");
+
+    // <jojodee> OK - rather than change each post reply time formats above
+    // Let's bring this reg date into line with future locale use
+    //$thisdate = new xarDate();
+    //if(is_numeric($posterdata['date_reg'])) {
+    //    $thisdate->setTimestamp($posterdata['date_reg']);
+     $regdate=xarLocaleFormatDate('%Y-%m-%d',$posterdata['date_reg']);
+    //}
+    // else {
+    //     $thisdate->DBtoTS($posterdata['date_reg']);
+    // }
 
     //Forum Name and Links
-   // $data['fname']      = $forumdata['fname']; //No need to reassign here
+    // $data['fname']      = $forumdata['fname']; //No need to reassign here
     $data['postername'] = $posterdata['name'];
     $data['posterdate'] = $regdate;
     $data['usertopics'] = $topiccount;
@@ -133,7 +136,6 @@ function xarbb_user_viewtopic()
                                    array('tid' => $tid));
     $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
 
-    //var_dump($data['hooks']); return;
     // Let's suppress the hitcount hook from showing.
     $data['hooks']['hitcount'] = '';
     // Return the template variables defined in this function

@@ -63,7 +63,7 @@ function xarbb_init()
     // TREPLIES -- Number of replies to topic
     // TREPLIER -- UID of the last replier
     // TSTATUS -- Special attributes of the topic (sticky, locked, etc)
-
+    // TFTIME -- Time of the topic post itself
     $fields = array(
     'xar_tid'          => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
     'xar_fid'          => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
@@ -71,6 +71,7 @@ function xarbb_init()
     'xar_tpost'        => array('type'=>'text'),
     'xar_tposter'      => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
     'xar_ttime'        => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
+    'xar_tftime'       => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
     'xar_treplies'     => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
     'xar_treplier'     => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
     'xar_tstatus'      => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0')
@@ -231,8 +232,36 @@ function xarbb_upgrade($oldversion)
             $update =  "UPDATE $linkagetable SET xar_itemtype = 1 WHERE xar_modid = $modid";
             $result =& $dbconn->Execute($update);
             if (!$result) return;
+            return xarbb_upgrade('1.0.0');
             break;
         case '1.0':
+            return xarbb_upgrade('1.0.0');
+            break;
+        case '1.0.0':
+       // Get database information
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $topicstable = $xartable['xbbtopics'];
+
+             xarDBLoadTableMaintenanceAPI();
+            // Update the topics table with a first post date tfpost field
+           $query = xarDBAlterTable($topicstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_tftime',
+                                    'type'    => 'datetime',
+                                    'null'    => false,
+                                    'default' => '1970-01-01 00:00'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return; 
+
+            //Now let's update that field. The only data we have is either
+            //ttime in the topic table - if there are no other post replies
+            //or use the first post reply time - (or maybe user reg date?) - use first post for now.
+            $dotopicstable=xarbb_updatetopicstable();
+            if (!$dotopicstable)  return;
+
+            break;
         default:
             break;
     }
@@ -242,6 +271,16 @@ function xarbb_upgrade($oldversion)
 
 function xarbb_delete()
 {
+	//Let's first get all the forums
+    $forums = xarModAPIFunc('xarbb','user','getallforums');
+
+    //Now if there are forums, let's identify all the topics associated with each forum
+    // and delete al the replies associated with each topic
+    foreach($forums as $forum) {
+           xarModAPIFunc('xarbb','user','deletealltopics',
+                                  array('fid'=>$forum['fid']));
+    }
+
     // Drop the table
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -265,5 +304,49 @@ function xarbb_delete()
 
     return true;
 }
+/**
+ * Update the new first post field introduced in v 1.0.1
+ *
+*/
+function xarbb_updatetopicstable()
+{
+   $allforums = xarModAPIFunc('xarbb','user','getallforums');
 
+   $forums=count($allforums);
+       for ($i=0; $i <$forums; $i++) {
+           $alltopics[$i]=xarModAPIFunc('xarbb','user','getalltopics',
+                                  array('fid'=>$allforums[$i]['fid']));
+       }
+       list($dbconn) = xarDBGetConn();
+       $xartable = xarDBGetTables();
+       $xbbtopicstable = $xartable['xbbtopics'];
+       foreach ($alltopics as $eachforum) {
+           foreach ($eachforum as $eachtopic) {
+               if ($eachtopic['treplies']==0) {
+
+                   $query = "UPDATE $xbbtopicstable
+                             SET xar_tftime = '" . $eachtopic['ttime'] . "'
+                             WHERE xar_tid = " . $eachtopic['tid'];
+                   $result =& $dbconn->Execute($query);
+                   $result->Close();
+                   if (!$result) return;
+               } else {
+                   $getfirstpost=xarModAPIFunc('comments','user','get_multiple',
+                                         array('modid' => xarModGetIdFromName('xarbb'),
+                                               'objectid' => $eachtopic['tid']));
+                   //Let's put this in the correct date format for tftime 
+                   //Must be datetime type format from int(11) format direct conversion
+                   $newpostdate=date("Y-m-d H:i:s",$getfirstpost[0]['xar_datetime']);
+                   $query = "UPDATE $xbbtopicstable
+                             SET xar_tftime = '" . $newpostdate . "'
+                             WHERE xar_tid = " . $eachtopic['tid'];
+                   $result =& $dbconn->Execute($query);
+                   $result->Close();
+                   if (!$result) return;
+               }
+           }
+       }
+
+ return true;
+}
 ?>

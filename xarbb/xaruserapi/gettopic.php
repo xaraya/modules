@@ -38,6 +38,7 @@ function xarbb_userapi_gettopic($args)
                      xar_tpost,
                      xar_tposter,
                      xar_ttime,
+                     xar_tftime,
                      xar_treplies,
                      xar_treplier,
                      xar_tstatus,
@@ -74,7 +75,7 @@ function xarbb_userapi_gettopic($args)
         return;
     }
 
-    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $treplies, $tstatus,$treplier,
+    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
     	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid,$catid) = $result->fields;
     $result->Close();
 
@@ -86,6 +87,7 @@ function xarbb_userapi_gettopic($args)
                    'tpost'   => $tpost,
                    'tposter' => $tposter,
                    'ttime'   => $ttime,
+                   'tftime'  => $tftime,
                    'treplies'=> $treplies,
                    'tstatus' => $tstatus,
                    'treplier' => $treplier,

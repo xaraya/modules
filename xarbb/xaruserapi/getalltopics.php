@@ -52,6 +52,7 @@ function xarbb_userapi_getalltopics($args)
                      xar_tpost,
                      xar_tposter,
                      xar_ttime,
+                     xar_tftime,
                      xar_treplies,
                      xar_tstatus,
                      xar_treplier,
@@ -79,7 +80,7 @@ function xarbb_userapi_getalltopics($args)
 
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $treplies, $tstatus,$treplier,
+        list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
     	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid,$catid) = $result->fields;
 
 	    if (xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid"))	{
@@ -89,6 +90,7 @@ function xarbb_userapi_getalltopics($args)
                    'tpost'   => $tpost,
                    'tposter' => $tposter,
                    'ttime'   => $ttime,
+                   'tftime'  => $tftime,
                    'treplies'=> $treplies,
                    'tstatus' => $tstatus,
                    'treplier' => $treplier,
