@@ -113,9 +113,9 @@
                         </td>
                         <td>
                             <xar:if condition="isset($package['text'])">
-                                <textarea wrap="virtual" cols="57" rows="10" name="package[text]" id="package-text">#$package['text']#</textarea>
+                                <textarea cols="57" rows="10" name="package[text]" id="package-text">#$package['text']#</textarea>
                                 <xar:else />
-                                <textarea wrap="virtual" cols="57" rows="10" name="package[text]" id="package-text"></textarea>
+                                <textarea cols="57" rows="10" name="package[text]" id="package-text"></textarea>
                             </xar:if>
                         </td>
                     </tr>
