@@ -16,8 +16,9 @@ function referer_xartables()
 { 
     // Initialise table array
     $xartable = array(); 
+    $prefix = xarDBGetSiteTablePrefix();
     // Get the name for the autolinks item table
-    $referertable = xarConfigGetVar('prefix') . '_referer'; 
+    $referertable = $prefix . '_referer'; 
     // Set the table name
     $xartable['referer'] = $referertable; 
     // Return the table information
