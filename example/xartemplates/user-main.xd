@@ -1,4 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common user menu for this module - remove link to the current function -->
 
 <table border="0" width="100%">

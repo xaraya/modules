@@ -1,4 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="" position="head" />
