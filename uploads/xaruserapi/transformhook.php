@@ -37,8 +37,10 @@ function & uploads_userapi_transform ( $body )
             case 'ulid':
                 // DEPRECATED
                 //$replacement = "index.php?module=uploads&func=download&fileId=$id";
-                $replacement = xarModAPIFunc('uploads','user','showoutput',
-                                             array('value' => $id));
+                $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $replacement = xarTplModule('uploads', 'user', 'attachment-list',
+                                             array('Attachments' => $list,
+                                                   'style' => 'transform'));
                 break;
             case 'ulidd':
                 // DEPRECATED

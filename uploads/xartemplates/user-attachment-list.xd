@@ -12,6 +12,17 @@
                             #$loop:item['fileName']#
                     </a>
                 </div>
+            <xar:elseif condition="isset($style) AND $style eq 'transform'"/>
+                <xar:comment>do something special when working through transform hooks, e.g. show images directly</xar:comment>
+                <xar:set name="filetype">#$loop:item['fileType']#</xar:set>
+                <xar:if condition="substr($filetype,0,5) eq 'image'">
+                    <img src="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" border="0"/>
+                <xar:else/>
+                    <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
+                    #$loop:item['fileName']#
+                    </a>
+                </xar:if>
+                <br />
             <xar:else />
                 <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
                     #$loop:item['fileName']#
