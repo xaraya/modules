@@ -21,7 +21,8 @@
  * 'adminpanels - configurations - configure overview'.
  */
 
-function webdavserver_admin_view($args) {
+function webdavserver_admin_view($args) 
+{
 
     list( $itemtype ) = xarVarCleanFromInput('itemtype' );
 

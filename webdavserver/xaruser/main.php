@@ -14,7 +14,8 @@
  *
  */
 
-function webdavserver_user_main() {
+function webdavserver_user_main() 
+{
 
     // Security Check 
     // It is important to do this as early as possible to avoid potential

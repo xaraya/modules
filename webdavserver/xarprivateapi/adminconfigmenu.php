@@ -17,7 +17,8 @@
 /**
  * Create a little submenu for the configuration screen.
  */
-function webdavserver_privateapi_adminconfigmenu( $itemtype ) {
+function webdavserver_privateapi_adminconfigmenu( $itemtype )
+{
 
     /*
      * Build the configuration submenu

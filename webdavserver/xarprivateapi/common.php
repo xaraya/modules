@@ -23,7 +23,8 @@
  *      'menu'      => Array with information about the module menu
  *      'statusmsg' => Status message if set
  */
-function webdavserver_privateapi_common( $args ) {
+function webdavserver_privateapi_common( $args ) 
+{
 
     extract( $args );
 

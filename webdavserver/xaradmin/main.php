@@ -18,7 +18,8 @@
  * The main ( default ) administration view.
  */
 
-function webdavserver_admin_main() {
+function webdavserver_admin_main() 
+{
 
     if (!xarSecurityCheck( 'Adminwebdavserver')) return;
 

@@ -24,7 +24,8 @@
  * @return  array containing the menulinks for the main menu items
  */
 
-function webdavserver_userapi_getmenulinks ( $args ) {
+function webdavserver_userapi_getmenulinks ( $args ) 
+{
 
     
     // First we need to do a security check to ensure that we only return menu items

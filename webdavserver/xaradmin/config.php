@@ -17,7 +17,8 @@
 /**
  * Administration for the webdavserver module.
  */
-function webdavserver_admin_config( $args ) {
+function webdavserver_admin_config( $args ) 
+{
 
     list( $cancel, $itemtype ) = xarVarCleanFromInput( 'cancel', 'itemtype' );
     extract( $args );
@@ -55,7 +56,8 @@ function webdavserver_admin_config( $args ) {
 /**
  * Administration for the webdavserver module.
  */
-function webdavserver_adminpriv_config( $args ) {
+function webdavserver_adminpriv_config( $args ) 
+{
 
     $data = xarModAPIFunc(
         'webdavserver'

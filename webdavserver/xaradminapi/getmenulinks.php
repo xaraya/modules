@@ -21,7 +21,8 @@
  * @return  array containing the menulinks for the main menu items
  */
 
-function webdavserver_adminapi_getmenulinks ( $args ) {
+function webdavserver_adminapi_getmenulinks ( $args ) 
+{
 
     if (xarSecurityCheck('Adminwebdavserver')) {
 

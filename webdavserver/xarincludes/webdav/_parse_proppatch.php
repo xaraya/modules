@@ -204,7 +204,8 @@ class _parse_proppatch
      * @return void
      * @access private
      */
-    function _data($parser, $data) {
+    function _data($parser, $data) 
+    {
         if (isset($this->current)) {
             $this->current["val"] .= $data;
         }
