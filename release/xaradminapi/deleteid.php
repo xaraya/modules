@@ -7,8 +7,7 @@ function release_adminapi_deleteid($args)
 
     // Argument check
     if (!isset($rid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'deleteid', 'Release');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -21,8 +20,7 @@ function release_adminapi_deleteid($args)
                          array('rid' => $rid));
 
     if ($link == false) {
-        $msg = xarML('No Such Release ID Present',
-                    'release');
+        $msg = xarML('No Such Release ID Present');
         xarErrorSet(XAR_USER_EXCEPTION, 
                     'MISSING_DATA',
                      new DefaultUserException($msg));

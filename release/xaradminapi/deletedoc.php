@@ -7,8 +7,7 @@ function release_adminapi_deletedoc($args)
 
     // Argument check
     if (!isset($rdid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'deletedoc', 'Release');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -21,8 +20,7 @@ function release_adminapi_deletedoc($args)
                          array('rdid' => $rdid));
 
     if ($link == false) {
-        $msg = xarML('No Such Release Doc Present',
-                    'release');
+        $msg = xarML('No Such Release Doc Present');
         xarErrorSet(XAR_USER_EXCEPTION, 
                     'MISSING_DATA',
                      new DefaultUserException($msg));

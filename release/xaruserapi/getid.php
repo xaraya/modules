@@ -5,8 +5,7 @@ function release_userapi_getid($args)
     extract($args);
 
     if (!isset($rid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'getid', 'Release');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

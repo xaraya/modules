@@ -12,8 +12,7 @@ function release_userapi_updateid($args)
         (!isset($displname)) ||
         (!isset($type)) ||
         (!isset($class))) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'updateid', 'Release');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -26,8 +25,7 @@ function release_userapi_updateid($args)
                           array('rid' => $rid));
 
     if ($link == false) {
-        $msg = xarML('No Such Release ID Present',
-                    'release');
+        $msg = xarML('No Such Release ID Present');
         xarErrorSet(XAR_USER_EXCEPTION, 
                     'MISSING_DATA',
                      new DefaultUserException($msg));
