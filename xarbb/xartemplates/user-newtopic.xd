@@ -92,9 +92,9 @@
         </tr>
     </table>
     <xar:if condition="!isset($tid)">
-        <input type="submit" value="#xarML('New Topic')#" align="middle" tabindex="3" />
+        <input type="submit" value="#xarML('New Topic')#"  tabindex="3" />
     <xar:else />
-        <input type="submit" value="#xarML('Edit Topic')#" align="middle" tabindex="3" />
+        <input type="submit" value="#xarML('Edit Topic')#"  tabindex="3" />
     </xar:if>
     
 </form>
