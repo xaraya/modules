@@ -38,7 +38,7 @@ function bloggerapi_userapi_deletepost($args)
     } else {
         if (!xarModAPIFunc('articles','admin','delete',array('aid'=>$postid))) {
             // Prevent exception to propagate
-            xarExceptionFree();
+            xarErrorFree();
             $err = xarML("Failed to delete post #(1)",$postid);
         }
     }
