@@ -32,8 +32,14 @@ function articles_userapi_getrandom($args)
     } else {
         $numitems = $args['numitems'];
     }
+    
+    if (empty($args['unique'])) {
+        $args['unique'] = false;
+    }
+    
     $articles = array();
     mt_srand((double) microtime() * 1000000);
+    
     if ($count <= $numitems) {
         unset($args['numitems']);
         // retrieve all articles and randomize the order
@@ -50,11 +56,21 @@ function articles_userapi_getrandom($args)
         $args['numitems'] = 1;
         for ($i = 0; $i < $numitems; $i++) {
             $args['startnum'] = mt_rand(1, $count);
+            
+            if ($args['unique']) {
+                if (in_array($args['startnum'], $articles)) {
+                    $i--;
+                    continue;
+                }
+            }
             $items = xarModAPIFunc('articles','user','getall',$args);
             if (empty($items)) break;
             array_push($articles, array_pop($items));
         }
     }
+    
+    
+    
     return $articles;
 }
 

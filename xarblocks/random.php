@@ -1,15 +1,14 @@
 <?php
-// File: random.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Author: Roger Keays <r.keays@ninthave.net>
-//   based on featureitems.php
-//
-// Purpose of file: Random Articles Block
-// ----------------------------------------------------------------------
+/**
+ * Random Block
+ *
+ * @package modules
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL { @link http://www.gnu.org/licenses/gpl.html }
+ * @link http://www.xaraya.com
+ * @subpackage articles
+ * @author Roger Keays <r.keays@ninthave.net>
+ */
 
 /**
  * initialise block
@@ -123,13 +122,15 @@ function articles_randomblock_display($blockinfo)
     if (empty($vars['numitems'])) $vars['numitems'] = 1;
     
     $articles = xarModAPIFunc('articles','user','getrandom',
-                              array('ptid' => $vars['pubtypeid'],
-                                    'cids' => $cidsarray,
-                                    'andcids' => false,
-                                    'status' => $statusarray,
+                              array('ptid'     => $vars['pubtypeid'],
+                                    'cids'     => $cidsarray,
+                                    'andcids'  => false,
+                                    'status'   => $statusarray,
                                     'language' => $lang,
                                     'numitems' => $vars['numitems'],
-                                    'fields' => $fields));
+                                    'fields'   => $fields,
+                                    'unique'   => true));
+                                    
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
         return;
     } else {
@@ -154,7 +155,6 @@ function articles_randomblock_display($blockinfo)
 /**
  * built-in block help/information system.
  */
-
 function articles_randomblock_help()
 {
     // No information yet.
