@@ -66,11 +66,14 @@ function hitcount_userapi_getitems($args)
             FROM $hitcounttable
             WHERE xar_moduleid = ?
               AND xar_itemtype = ?";
-    $bindvars[] = $modid; $bindvars[] = $itemtype;
+    $bindvars[] = (int) $modid;
+    $bindvars[] = (int) $itemtype;
     if (count($itemids) > 0) {
         $bindmarkers = '?' . str_repeat(',?',count($itemids)-1);
-        $bindvars = array_merge($bindvars,$itemids);
         $query .= " AND xar_itemid IN ($bindmarkers)";
+        foreach ($itemids as $itemid) {
+            $bindvars[] = (int) $itemid;
+        }
     }
     if ($sort == 'numhits') {
         $query .= " ORDER BY xar_hits DESC, xar_itemid ASC";

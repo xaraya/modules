@@ -43,7 +43,7 @@ function hitcount_userapi_topitems($args)
             WHERE xar_moduleid = ?
               AND xar_itemtype = ?
             ORDER BY xar_hits DESC";
-    $bindvars = array($modid, $itemtype);
+    $bindvars = array((int)$modid, (int)$itemtype);
 
     if (!isset($numitems) || !is_numeric($numitems)) {
         $numitems = 10;

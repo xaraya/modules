@@ -65,7 +65,7 @@ function hitcount_adminapi_delete($args)
                 WHERE xar_moduleid = ?
                   AND xar_itemtype = ?
                   AND xar_itemid = ?";
-        $bindvars = array($modid, $itemtype, $itemid);
+        $bindvars = array((int)$modid, (int)$itemtype, (int)$itemid);
         $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
 
@@ -103,10 +103,11 @@ function hitcount_adminapi_delete($args)
             }
             $query .= " WHERE xar_moduleid = ?
                           AND xar_itemtype = ?";
-            $bindvars[] = $modid; $bindvars[] = $itemtype;
+            $bindvars[] = (int) $modid;
+            $bindvars[] = (int) $itemtype;
             if (!empty($itemid)) {
                 $query .= " AND xar_itemid = ?";
-                $bindvars[] = $itemid;
+                $bindvars[] = (int) $itemid;
             }
         }
 
