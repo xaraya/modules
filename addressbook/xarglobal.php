@@ -113,104 +113,104 @@ define('_AB_ERR_DEBUG_STYLE',    '');
 /**
  * User Messages
  */
-define('_AB_NOAUTH_FUNCTION',       'You are not authorized to perform this function');
+define('_AB_NOAUTH_FUNCTION',       xarML('You are not authorized to perform this function'));
 
 //from admin.php
 //////////////////////////////
-define('_AB_NORECORDS',             'There are no records to show in this view');
-define('_ADDRESSBOOK_NOAUTH',       'Not authorised to access the AddressBook module.');
-define('_ADDRESSBOOK_TITLE',        'Title of this Address Book');
-define('_AB_INSERT_AB_SUCCESS',     'Address Book Entry saved!');
-define('_AB_INSERT_CHKMSG',         'An Address Book Entry must contain data in at least one field of the Name tab!');
-define('_AB_INSERT_ERROR',          'An Error ocurred. The Address Book Entry could not be saved!');
+define('_AB_NORECORDS',             xarML('There are no records to show in this view'));
+define('_ADDRESSBOOK_NOAUTH',       xarML('Not authorised to access the AddressBook module.'));
+define('_ADDRESSBOOK_TITLE',        xarML('Title of this Address Book'));
+define('_AB_INSERT_AB_SUCCESS',     xarML('Address Book Entry saved!'));
+define('_AB_INSERT_CHKMSG',         xarML('An Address Book Entry must contain data in at least one field of the Name tab!'));
+define('_AB_INSERT_ERROR',          xarML('An Error ocurred. The Address Book Entry could not be saved!'));
 
-define('_AB_ADDRESSBOOKUPDATE', 'Commit Changes');
-define('_AB_CAT_DELETE',            'Delete');
-define('_AB_CAT_NAME',          'Category');
-define('_AB_CAT_NEW',               '<= New');
-define('_AB_CONF_AB_SUCCESS',   'Configuration saved!');
-define('_AB_CREATE',                'Create');
-define('_AB_CREATE_CONTACT',        'Add');
-define('_AB_CUSTOMLABEL',           'Custom Label');
-define('_AB_CUSTOM_DATEFORMAT', 'Format for date entries');
-define('_AB_CUSTOM_NUMFORMAT',  'Format for numeric values');
-define('_AB_CUSTOM_TAB',            'Custom tab (if empty, no custom fields are displayed');
-define('_AB_CUSTOM_TEXTAREAWIDTH','Width of TEXTAREA fields');
-define('_AB_DATATYPE',          'Data Type');
-define('_AB_DOWN',              'down');
-define('_AB_EDITDELETE',            'Edit/Delete');
-define('_AB_EDIT_AB_CATEGORY',  'Categories');
-define('_AB_EDIT_CONFIG',       'Settings');
-define('_AB_EDIT_CUSTOM',           'Custom Fields');
-define('_AB_EDIT_LABEL',            'Labels');
-define('_AB_EDIT_PREFIX',           'Prefix');
-define('_AB_GLOBALPROTECT',     'Personal address book mode');
-define('_AB_GLOBALPROTECTERROR',    'Corrected: In personal address book mode guests have no and registered user have full access rights!!!');
-define('_AB_GRANTERROR',            'Corrected: The access rights of guest were higher than for registered users!!!');
-define('_AB_GRANTLEVEL',            'Access level');
-define('_AB_GRANTNOTE',             'Note: Users can ONLY edit/delete records which they have created!');
-define('_AB_GUESTMODE',             'Grant rights for an unregistered user');
-define('_AB_HIDEALL'    ,           'Disabled for all');
-define('_AB_HIDECOPYRIGHT',     'Hide the Copyright and Version Note');
-define('_AB_HIDEGUESTS',            'Disabled only for guests');
-define('_AB_HIDENOTHING',           'Enabled for all');
-define('_AB_ITEMSPERPAGE',      'Records viewed per page');
-define('_AB_LAB_DELETE',            'Delete');
-define('_AB_LAB_NAME',          'Contact Label');
-define('_AB_LAB_NEW',               '<= New');
-define('_AB_MENU_OFF',          'Disable the menu');
-define('_AB_MENU_SEMI',         'Disable the second line of the main menu');
-define('_AB_NAME_ORDER',            'Name display in list view and sort order for name information');
-define('_AB_NOPREFIX',          'No Prefix/Title');
-define('_AB_ORDER',             'Order');
-define('_AB_OTHERSTUFF',            'Other settings');
-define('_AB_SAVE_RECORD',           'Save Record');
-define('_AB_SHOWIMG',               'Do you want to use images/logos?');
-define('_AB_SHOWPREFIX',            'Do you want to use a prefix field?');
-define('_AB_SORTERROR_1',           'Equal columns selected / Default sort order was not changed!');
-define('_AB_SORTERROR_2',           'Equal columns selected / Alternate sort order was not changed!');
-define('_AB_SORTORDER_1',           'Default sort order / List View');
-define('_AB_SORTORDER_2',           'Alternate sortorder / List View');
+define('_AB_ADDRESSBOOKUPDATE', xarML('Commit Changes'));
+define('_AB_CAT_DELETE',            xarML('Delete'));
+define('_AB_CAT_NAME',          xarML('Category'));
+define('_AB_CAT_NEW',               '<= ' . xarML('New'));
+define('_AB_CONF_AB_SUCCESS',   xarML('Configuration saved!'));
+define('_AB_CREATE',                xarML('Create'));
+define('_AB_CREATE_CONTACT',        xarML('Add'));
+define('_AB_CUSTOMLABEL',           xarML('Custom Label'));
+define('_AB_CUSTOM_DATEFORMAT', xarML('Format for date entries'));
+define('_AB_CUSTOM_NUMFORMAT',  xarML('Format for numeric values'));
+define('_AB_CUSTOM_TAB',            xarML('Custom tab (if empty, no custom fields are displayed'));
+define('_AB_CUSTOM_TEXTAREAWIDTH',xarML('Width of TEXTAREA fields'));
+define('_AB_DATATYPE',          xarML('Data Type'));
+define('_AB_DOWN',              xarML('down'));
+define('_AB_EDITDELETE',            xarML('Edit/Delete'));
+define('_AB_EDIT_AB_CATEGORY',  xarML('Categories'));
+define('_AB_EDIT_CONFIG',       xarML('Settings'));
+define('_AB_EDIT_CUSTOM',           xarML('Custom Fields'));
+define('_AB_EDIT_LABEL',            xarML('Labels'));
+define('_AB_EDIT_PREFIX',           xarML('Prefix'));
+define('_AB_GLOBALPROTECT',     xarML('Personal address book mode'));
+define('_AB_GLOBALPROTECTERROR',    xarML('Corrected: In personal address book mode guests have no and registered user have full access rights!!!'));
+define('_AB_GRANTERROR',            xarML('Corrected: The access rights of guest were higher than for registered users!!!'));
+define('_AB_GRANTLEVEL',            xarML('Access level'));
+define('_AB_GRANTNOTE',             xarML('Note: Users can ONLY edit/delete records which they have created!'));
+define('_AB_GUESTMODE',             xarML('Grant rights for an unregistered user'));
+define('_AB_HIDEALL'    ,           xarML('Disabled for all'));
+define('_AB_HIDECOPYRIGHT',     xarML('Hide the Copyright and Version Note'));
+define('_AB_HIDEGUESTS',            xarML('Disabled only for guests'));
+define('_AB_HIDENOTHING',           xarML('Enabled for all'));
+define('_AB_ITEMSPERPAGE',      xarML('Records viewed per page'));
+define('_AB_LAB_DELETE',            xarML('Delete'));
+define('_AB_LAB_NAME',          xarML('Contact Label'));
+define('_AB_LAB_NEW',               '<= ' . xarML('New'));
+define('_AB_MENU_OFF',          xarML('Disable the menu'));
+define('_AB_MENU_SEMI',         xarML('Disable the second line of the main menu'));
+define('_AB_NAME_ORDER',            xarML('Name display in list view and sort order for name information'));
+define('_AB_NOPREFIX',          xarML('No Prefix/Title'));
+define('_AB_ORDER',             xarML('Order'));
+define('_AB_OTHERSTUFF',            xarML('Other settings'));
+define('_AB_SAVE_RECORD',           xarML('Save Record'));
+define('_AB_SHOWIMG',               xarML('Do you want to use images/logos?'));
+define('_AB_SHOWPREFIX',            xarML('Do you want to use a prefix field?'));
+define('_AB_SORTERROR_1',           xarML('Equal columns selected / Default sort order was not changed!'));
+define('_AB_SORTERROR_2',           xarML('Equal columns selected / Alternate sort order was not changed!'));
+define('_AB_SORTORDER_1',           xarML('Default sort order / List View'));
+define('_AB_SORTORDER_2',           xarML('Alternate sortorder / List View'));
 
-define('_AB_SO_FIRSTNAME',          'First name');
-define('_AB_SO_LASTNAME',           'Last name');
-define('_AB_SPECIAL_CHARS',         'Special character (Umlauts) replacement for sort columns');
-define('_AB_SPECIAL_CHARS_ERROR',   'Both fields must contain the same number of characters - Special character replacement was NOT saved!');
+define('_AB_SO_FIRSTNAME',          xarML('First name'));
+define('_AB_SO_LASTNAME',           xarML('Last name'));
+define('_AB_SPECIAL_CHARS',         xarML('Special character (Umlauts) replacement for sort columns'));
+define('_AB_SPECIAL_CHARS_ERROR',   xarML('Both fields must contain the same number of characters - Special character replacement was NOT saved!'));
 
-define('_AB_SUCCESS',               'successful');
-define('_AB_UP',                    'up');
-define('_AB_USERMODE',          'Grant right for registered users');
-define('_AB_VIEW',              'View');
-define('_AB_ZIPBEFORECITY',     'Show zip before city');
+define('_AB_SUCCESS',               xarML('successful'));
+define('_AB_UP',                    xarML('up'));
+define('_AB_USERMODE',          xarML('Grant right for registered users'));
+define('_AB_VIEW',              xarML('View'));
+define('_AB_ZIPBEFORECITY',     xarML('Show zip before city'));
 
 ////////////////
 // User Defines
-define('_AB_ALLCATEGORIES',     'All Categories');
-define('_AB_CANCEL',            "Cancel");
-define('_AB_CONFIRMDELETE',     "Delete this Address Book item?");
-define('_AB_CONTACTINFO',       "General Information");
-define('_AB_COPY',              "Copy to clipboard");
-define('_AB_DELETE',            "Delete");
-define('_AB_DELETENOSUCCESS',   "Deletion of this record failed. Please contact your administrator!");
-define('_AB_GOBACK',            "Back to list");
-define('_AB_INSERT_RECORD',     " Save ");
-define('_AB_LASTCHANGED',       'Last changed ');
-define('_AB_NOIMAGE',           'No Image');
+define('_AB_ALLCATEGORIES',     xarML('All Categories'));
+define('_AB_CANCEL',            xarML("Cancel"));
+define('_AB_CONFIRMDELETE',     xarML("Delete this Address Book item?"));
+define('_AB_CONTACTINFO',       xarML("General Information"));
+define('_AB_COPY',              xarML("Copy to clipboard"));
+define('_AB_DELETE',            xarML("Delete"));
+define('_AB_DELETENOSUCCESS',   xarML( "Deletion of this record failed. Please contact your administrator!"));
+define('_AB_GOBACK',            xarML("Back to list"));
+define('_AB_INSERT_RECORD',     xarML(" Save "));
+define('_AB_LASTCHANGED',       xarML('Last changed '));
+define('_AB_NOIMAGE',           xarML('No Image'));
 define('_AB_NUM_COLS',          4);
-define('_AB_REGONLY',           "This website require it's users to be registered to use the address book.<br /> Register for free <a href=\"user.php\">here</a>, or <a href=\"user.php\">log in</a> if you are already registered.");
-define('_AB_LABEL_NAME',        "NAME");
+define('_AB_REGONLY',           xarML("This website require it's users to be registered to use the address book.<br /> Register for free <a href=\"user.php\">here</a>, or <a href=\"user.php\">log in</a> if you are already registered."));
+define('_AB_LABEL_NAME',        xarML("NAME"));
 define('_AB_TEMPLATE_ADDR',   1);
 define('_AB_TEMPLATE_CONTACT', 2);
 define('_AB_TEMPLATE_CUST',   3);
 define('_AB_TEMPLATE_NAME',   0);
 define('_AB_TEMPLATE_NOTE',   4);
-define('_AB_UPDATE_ERROR',  'An Error ocurred. The Address Book Entry could not be updated!');
-define('_AB_UPDATE_RECORD',  "Update");
+define('_AB_UPDATE_ERROR',  xarML('An Error ocurred. The Address Book Entry could not be updated!'));
+define('_AB_UPDATE_RECORD',  xarML("Update"));
 
-define('_AB_ERRMSG_MISFIELDS_NAME_TAB', 'An Address Book Entry must contain data in at least one field of the Name tab!');
-define('_AB_ERRMSG_FALSENUM_CUST_TAB',  'There is a false numeric value in the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab.');
-define('_AB_ERRMSG_INVALNUM_CUST_TAB',  'In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there are characters in a digit-only field.');
-define('_AB_ERRMSG_INVALDATE_CUST_TAB', 'In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there is a false date format.');
+define('_AB_ERRMSG_MISFIELDS_NAME_TAB', xarML('An Address Book Entry must contain data in at least one field of the Name tab!'));
+define('_AB_ERRMSG_FALSENUM_CUST_TAB',  xarML('There is a false numeric value in the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab.'));
+define('_AB_ERRMSG_INVALNUM_CUST_TAB',  xarML('In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there are characters in a digit-only field.'));
+define('_AB_ERRMSG_INVALDATE_CUST_TAB', xarML('In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there is a false date format.'));
 
 
 
@@ -219,86 +219,86 @@ define('_AB_ERRMSG_INVALDATE_CUST_TAB', 'In the '.xarModGetVar(__ADDRESSBOOK__,'
 /**
  * Navigation Labels
  */
-define('_AB_VIEWPRIVATE',           'Show private contacts only');
-define('_AB_MENU_AZ',               'Show A - Z');
-define('_AB_MENU_ALL',              'Show all records');
-define('_AB_MENU_ADD',              'Add new address');
-define('_AB_MENU_SEARCH',           'Search');
-define('_AB_SORTBY',                'Sort&nbsp;by');
-define('_AB_LABEL_DELETE',          "Delete");
-define('_AB_LABEL_EDIT',            "Edit");
-define('_AB_LABEL_SHOWDETAIL',      "Details");
+define('_AB_VIEWPRIVATE',           xarML('Show private contacts only'));
+define('_AB_MENU_AZ',               xarML('Show A - Z'));
+define('_AB_MENU_ALL',              xarML('Show all records'));
+define('_AB_MENU_ADD',              xarML('Add new address'));
+define('_AB_MENU_SEARCH',           xarML('Search'));
+define('_AB_SORTBY',                xarML('Sort by'));
+define('_AB_LABEL_DELETE',          xarML("Delete"));
+define('_AB_LABEL_EDIT',            xarML("Edit"));
+define('_AB_LABEL_SHOWDETAIL',      xarML("Details"));
 
 /**
  * Results list headings
  */
-define('_AB_LABEL_ACTION',          "ACTION");
-define('_AB_LABEL_COMPANY',         "COMPANY");
-define('_AB_LABEL_CONTACT',         "CONTACT");
+define('_AB_LABEL_ACTION',          xarML("ACTION"));
+define('_AB_LABEL_COMPANY',         xarML("COMPANY"));
+define('_AB_LABEL_CONTACT',         xarML("CONTACT"));
 
 /**
  * Form Labels
  */
 // Name page
-define('_AB_NAME',              'Name');
-define('_AB_PREFIXLABEL',       'Prefix/Title');
-define('_AB_LABEL_FIRSTNAME',   'First&nbsp;name'); //&nbsp; keeps label from being split up
-define('_AB_LABEL_LASTNAME',    'Last&nbsp;name');
-define('_AB_TITLE',             'Title');
-define('_AB_COMPANY',           'Company');
-define('_AB_IMAGE',             'Image');
-define('_AB_ALLCOMPANIES',      'Enter new company name or select a company...');
+define('_AB_NAME',              xarML('Name'));
+define('_AB_PREFIXLABEL',       xarML('Prefix/Title'));
+define('_AB_LABEL_FIRSTNAME',   xarML('First&nbsp;name')); //&nbsp; keeps label from being split up
+define('_AB_LABEL_LASTNAME',    xarML('Last&nbsp;name'));
+define('_AB_TITLE',             xarML('Title'));
+define('_AB_COMPANY',           xarML('Company'));
+define('_AB_IMAGE',             xarML('Image'));
+define('_AB_ALLCOMPANIES',      xarML('Enter new company name or select a company...'));
 
 // Address page
-define('_AB_ADDRESS',           'Address');
-define('_AB_CITY',              'City');
-define('_AB_STATE',             'State');
-define('_AB_ZIP',               'Zip');
-define('_AB_COUNTRY',           'Country');
+define('_AB_ADDRESS',           xarML('Address'));
+define('_AB_CITY',              xarML('City'));
+define('_AB_STATE',             xarML('State'));
+define('_AB_ZIP',               xarML('Zip'));
+define('_AB_COUNTRY',           xarML('Country'));
 
 // Contact page
-define('_AB_CONTACT',           'Contact');
+define('_AB_CONTACT',           xarML('Contact'));
 
 // Note page
-define('_AB_NOTETAB',           'Note');
+define('_AB_NOTETAB',           xarML('Note'));
 
 // Fields displayed across pages
-define('_AB_CATEGORY',          'Category');
-define('_AB_UNFILED',           'Unfiled'); // unfiled category
-define('_AB_PRIVATE',           'Private');
+define('_AB_CATEGORY',          xarML('Category'));
+define('_AB_UNFILED',           xarML('Unfiled')); // unfiled category
+define('_AB_PRIVATE',           xarML('Private'));
 
 /**
  * Defaults used in the module
  */
 //Default Custom Field Labels
-define('_AB_CUSTOM_1',          'Custom Label 1'); //admin
-define('_AB_CUSTOM_2',          'Custom Label 2'); //admin
-define('_AB_CUSTOM_3',          'Custom Label 3'); //admin
-define('_AB_CUSTOM_4',          'Custom Label 4'); //admin
+define('_AB_CUSTOM_1',          xarML('Custom Label 1')); //admin
+define('_AB_CUSTOM_2',          xarML('Custom Label 2')); //admin
+define('_AB_CUSTOM_3',          xarML('Custom Label 3')); //admin
+define('_AB_CUSTOM_4',          xarML('Custom Label 4')); //admin
 
 // Default Contact Labels
-define('_AB_EMAIL',             'E-Mail');  //admin
-define('_AB_FAX',               'Fax');     //admin
-define('_AB_HOME',              'Home');    //admin
-define('_AB_MOBILE',            'Mobile');  //admin
-define('_AB_OTHER',             'Other');   //admin
-define('_AB_URL',               'URL');     //admin
-define('_AB_WORK',              'Work');    //admin
+define('_AB_EMAIL',             xarML('E-Mail'));  //admin
+define('_AB_FAX',               xarML('Fax'));     //admin
+define('_AB_HOME',              xarML('Home'));    //admin
+define('_AB_MOBILE',            xarML('Mobile'));  //admin
+define('_AB_OTHER',             xarML('Other'));   //admin
+define('_AB_URL',               xarML('URL'));     //admin
+define('_AB_WORK',              xarML('Work'));    //admin
 
 // Default Categories
-define('_AB_BUSINESS',          'Business');    //admin
-define('_AB_PERSONAL',          'Personal');    //admin
-define('_AB_QUICKLIST',         'Quicklist');   //admin;
+define('_AB_BUSINESS',          xarML('Business'));    //admin
+define('_AB_PERSONAL',          xarML('Personal'));    //admin
+define('_AB_QUICKLIST',         xarML('Quicklist'));   //admin;
 
 // Default Prefixes
-define('_AB_MR',                'Mr.');
-define('_AB_MRS',               'Mrs.');
+define('_AB_MR',                xarML('Mr.'));
+define('_AB_MRS',               xarML('Mrs.'));
 
 /**
  * Developer QA Contact information
  */
-define('_AB_DEVQA_NAME',	__ADDRESSBOOK__."QualityControl");
-define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
+define('_AB_DEVQA_NAME',    __ADDRESSBOOK__."QualityControl");
+define('_AB_DEVQA_EMAIL',   __ADDRESSBOOK__."@blacktower.com");
 
 ////////////////
 //
