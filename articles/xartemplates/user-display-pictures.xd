@@ -25,21 +25,18 @@
         </td></tr><tr><td align="center">
           <br />
 
-    <xar:comment> TODO: figure out a good way to be able to use the image-resize
-                        tag when available, without upsetting BL when it is not.</xar:comment>
-
     <xar:if condition="xarModIsHooked('uploads','articles',$itemtype) and substr($body,0,1) eq ';'">
       <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body))</xar:set>
-      <xar:foreach in="$img_output" key="$fileid" value="$fileinfo">
-        <a href="#$fileinfo['fileDownload']#" alt="#xarMl('View full sized image')#">
-        <xar:comment>Pretty please MrB, it would be really handy if nonexistant tags were silently ignored.
+      <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
+        <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#">
         <xar:if condition="xarModIsAvailable('images')">
-          (xar:image-resize src="$fileid" width="100%" label="$title" /)
-        <xar:else /></xar:comment>
-          <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileinfo['fileId']))#"  
+          <xar:set name="file">$fileInfo</xar:set>
+          <xar:template file="picture-display" type="module" />
+        <xar:else />
+          <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#"  
                                                  width="100%" 
                                                  alt="#$title#" />
-        <xar:comment></xar:if></xar:comment>
+        </xar:if>
         </a>
       </xar:foreach>
     <xar:else />
