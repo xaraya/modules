@@ -1,4 +1,4 @@
-<?php // File: $Id$
+<?php // File: $Id: s.xaradmin.php 1.3 02/12/01 14:25:46+01:00 marcel@hsdev.com $
 // ----------------------------------------------------------------------
 // POSTNUKE Content Management System
 // Copyright (C) 2001 by the PostNuke Development Team.
