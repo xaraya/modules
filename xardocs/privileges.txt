@@ -7,28 +7,30 @@ The components are:
 page            A page, identified by a unique ID and a non-unique name.
 pagetype        A page itemtype, identified by a unique ID and a unique name.
 
-The instances for the page component are:
+The instances for the page component are (in order):
 
-type_id         SELECT xar_ptid FROM [xar_]xarpages_types
-type_name       SELECT xar_name FROM [xar_]xarpages_types
-page_id         SELECT xar_pid FROM [xar_]xarpages_pages
 page_name       SELECT DISTINCT xar_name FROM [xar_]xarpages_pages
-
-The instances for the pagetype component are:
-
-type_id         SELECT xar_ptid FROM [xar_]xarpages_types
 type_name       SELECT xar_name FROM [xar_]xarpages_types
+page_id         ** SELECT xar_pid FROM [xar_]xarpages_pages
+type_id         ** SELECT xar_ptid FROM [xar_]xarpages_types
+** not implemented
+
+The instances for the pagetype component are (in order):
+
+type_name       SELECT xar_name FROM [xar_]xarpages_types
+type_id         ** SELECT xar_ptid FROM [xar_]xarpages_types
+** not implemented
 
 The masks (with explicit user functions) for the page component are:
 
-ACCESS_OVERVIEW n/a
-ACCESS_READ     A page can be viewed (user display).
-ACCESS_COMMENT  n/a
-ACCESS_MODERATE A page content and hooks can be changed. Overview of pages allowed.
-ACCESS_EDIT     A page can be moved and renamed.
-ACCESS_ADD      New pages can be added and existing pages can be moved and renamed.
-ACCESS_DELETE   A page can be removed completely.
-ACCESS_ADMIN    n/a
+ACCESS_OVERVIEW 
+ACCESS_READ     ReadPage        A page can be viewed (user display).
+ACCESS_COMMENT  
+ACCESS_MODERATE ModeratePage    Overview of pages allowed.
+ACCESS_EDIT     EditPage        A page content and hooks can be changed.
+ACCESS_ADD      AddPage         New pages can be added.
+ACCESS_DELETE   DeletePage      A page can be moved, renamed or removed completely.
+ACCESS_ADMIN    
 
 The masks for the pagetype component are:
 
@@ -47,7 +49,7 @@ should not be able to move or change the name of that page either.
 
 TODO: do we really need the ID in the instances? Would the name alone be enough?
 
-TODO: three things to make privileges easier:-
+TODO: some things to make privileges in general easier to set up:-
 
 1. Change the name of the function xarDefineInstance() to xarDefineComponent()
 2. Allow the masks to take a comment field when registering. The database column

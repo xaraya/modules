@@ -63,12 +63,13 @@ function xarpages_user_display($args)
                 'xarpages', 'user', 'getpage',
                 array('pid' => $pid, 'status' => 'ACTIVE')
             );
-//var_dump($current_page); die;
         }
     }
 
-    if (empty($current_page)) {
+    if (empty($current_page) && !empty($pid)) {
         // Get the PID for the 'error' page.
+        // We have a pid, but no page, so there must have been an error
+        // attempting to fetch the page.
         $pid = xarModGetVar('xarpages', 'errorpage');
 
         if (!empty($pid)) {
@@ -76,12 +77,13 @@ function xarpages_user_display($args)
                 'xarpages', 'user', 'getpage',
                 array('pid' => $pid, 'status' => 'ACTIVE')
             );
-        } else {
-            // Give up: we could not find the requested page, the notfound page nor the error page.
-            $msg = xarML('Could not load page.');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
         }
+    }
+
+    if (empty($current_page)) {
+        // Give up: we could not find the requested page, the notfound page nor the error page.
+        // Return the dafault display template.
+        return array();
     }
 
     // TODO: allow relevent privileges to overlook the status.

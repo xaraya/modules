@@ -19,6 +19,7 @@ Various stuff to do:
 - Provide selection box when there is more than one template page for a
   given page type (possibly including -none- as an option)
 - Cache the page details so that they can be used by blocks
+- Overview of module in the 'admin/main' template
 
 
 To get this thing working in the meantime, create a page type called 'html'
