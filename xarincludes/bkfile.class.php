@@ -66,32 +66,21 @@ class bkFile
         return $deltas;
    }
     
-    function bkChangeSets() 
+    function &bkChangeSets($user='') 
    {
         if(!empty($this->_csets)) return $this->_csets;
         
+        // First get the cset revs for this file
         $cmd="bk f2csets $this->_file";
         $csetrevs = $this->_repo->_run($cmd);
-        // Make the list of changesets into a range
+
+        // Make it suitable for bk cmd
         $revs='';
         while (list(,$cset) = each($csetrevs)) $revs.="$cset,";
         $revs=substr($revs,0,strlen($revs)-1);
-        $formatstring = "':AGE:|:P:|:REV:|\$each(:C:){(:C:)<br />}'";
-        $list = $this->_repo->bkChangeSets($revs,'',$formatstring,false);
         
-        $csets=array();
-        $counter=1;
-        while (list($key,$val) = each($list)) {
-            list($age, $author, $rev, $comments) = explode('|',$val);
-            $changeset = (object) null;
-            $changeset->file = $this->_file;
-            $changeset->rev = $rev;
-            $changeset->age = $age;
-            $changeset->author = $author;
-            $changeset->comments = $comments;
-            $changeset->checkedout = file_exists($this->_repo->_root . '/' . $this->_file);
-            $csets[$rev] = $changeset;
-        }
+        // Get these revisions from the repo, we are sure it wont be a range, so tell bk that.
+        $csets =& $this->_repo->bkChangeSets('',$revs, BK_FLAG_NORANGEREVS);
         return $csets;
    }
     

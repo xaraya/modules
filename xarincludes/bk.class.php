@@ -22,6 +22,7 @@ define('BK_NEWLINE_MARKER','<nl/>');
 define('BK_FLAG_FORWARD'   ,  1);
 define('BK_FLAG_SHOWMERGE' , 2);
 define('BK_FLAG_TAGGEDONLY', 4);
+define('BK_FLAG_NORANGEREVS', 8);
 
 
 // Include the repository class

@@ -165,14 +165,21 @@ class bkRepo
             $params.='-e ';
         }
         
-        if ($range!='') $params.='-c'.$range.' ';
+        if ($range!='') {
+            // If the revs are not a range (not continuous or no range format) we use -r, otherwise -c
+            if($flags & BK_FLAG_NORANGEREVS) {
+                $params .= '-r'.$range.' ';
+            } else {
+                $params .= '-c'.$range.' ';
+            }
+        }
         if ($user!='') $params.='-u'.$user.' ';
 
         $params.="-d$dspec";
         $cmd="bk changes $params";
-        //echo $cmd."<br/>";
+        //echo "<pre>$cmd"."</pre><br/>";
         $csetlist = $this->_run($cmd);
-        
+
         $csets=array();
         while (list($key,$val) = each($csetlist)) {
             $tags = array();

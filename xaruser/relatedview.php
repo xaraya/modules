@@ -31,7 +31,9 @@ function bkview_user_relatedview($args)
 
     $icon = xarModAPIFunc('bkview','user','geticon',array('file' => $the_file->bkAbsoluteName()));
     
-    $changesets=$the_file->bkChangeSets();
+    $changesets =& $the_file->bkChangeSets();
+
+    $csets = array();
     foreach($changesets as $revision => $changeset) {
         $changeset->repoid = $repoid;
         $changeset->icon = $icon;
@@ -42,7 +44,7 @@ function bkview_user_relatedview($args)
     $data['pageinfo']   = xarML("Changesets that modify #(1)",$file);
     $data['repoid']     = $repoid;
     $data['name_value'] = $item['reponame'];
-    $data['csets']      = $csets;
+    $data['csets']      =& $csets;
     return $data;
 }
 
