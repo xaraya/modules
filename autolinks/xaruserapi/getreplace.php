@@ -61,8 +61,8 @@ function autolinks_userapi_getreplace($args)
     // Fixed/standard values available to the template
     $template_data = array(
         'match' => '$1',
-        'url' => $link['url'],
-        'title' => $link['title'],
+        'url' => xarVarPrepForDisplay($link['url']),
+        'title' => xarVarPrepForDisplay($link['title']),
         'style' => $style,
         'target' => $target
     );
@@ -78,28 +78,28 @@ function autolinks_userapi_getreplace($args)
         // Place each field value into the template array.
         if (is_array($dd_data)) {
             foreach ($dd_data as $name => $value) {
-                // TODO: do we need a prep here?
-                // TODO: support nested structure so that fields can be grouped:
-                //    namea => $namea
-                //    namea_nameb => $namea['nameb']
                 // Prefixing a property name with an underscore will prevent it getting
                 // into the template.
+                // Splitting a property name into parts using underscores will allow
+                // sub-arrays of any depth to be created. This is a bit of a work-around
+                // that perhaps DD will support directly in the future.
                 if ($name{0} != '_') {
-                    $template_data[$name] = xarVarPrepForDisplay($value);
+                    // e.g. a DD property named 'a' will be evaluated as $template_data['a']
+                    // and a DD property named 'a_b_c' will be evaluated as $template_data['a']['b']['c']
+                    @eval('$template_data[\'' . str_replace('_', '\'][\'', $name) . '\'] = xarVarPrepForDisplay($value);');
                 }
             }
         }
     }
 
     // Additional values for the 'standard' template.
-    // Pick these back out of the template array, so they can all be
+    // Pick these back out of the template array, so any of them can be
     // over-ridden by DD property values.
-    $template_data['stdattributes'] = array(
-        'href' => $template_data['url'],
-        'title' => $template_data['title'],
-        'target' => $template_data['target'],
-        'style' => $template_data['style']
-    );
+
+    $template_data['stdattributes']['href'] = $template_data['url'];
+    $template_data['stdattributes']['title'] = $template_data['title'];
+    $template_data['stdattributes']['target'] = $template_data['target'];
+    $template_data['stdattributes']['style'] = $template_data['style'];
 
     // Either execute the template now (if cachable) or return the expression used to
     // execute the template in an expression-based preg_replace.

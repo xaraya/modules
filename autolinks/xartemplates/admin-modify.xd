@@ -9,7 +9,11 @@
     <table border="0">
         <tr align="left" valign="top">
             <td>
-                <xar:mlstring>Type</xar:mlstring> <a href="#$edittypeurl#">[<xar:mlstring>Edit</xar:mlstring>]</a>
+                <xar:if condition="!empty($edittypeurl)">
+                <a href="#$edittypeurl#" title="#xarML('Edit autolink type')#"><xar:mlstring>Type</xar:mlstring></a>
+                <xar:else/>
+                <xar:mlstring>Type</xar:mlstring>
+                </xar:if>
             </td>
             <td>
                 #$preptypename#

@@ -1,4 +1,22 @@
+<!--- Dropdown for link style --->
+<!--- TODO: is there a better way to do this using DD display tags? --->
 <xar:set name="$decorationsel">xarModGetVar('autolinks', 'decoration')</xar:set>
+<xar:set name="$decoration['']"><xar:mlstring>Default</xar:mlstring></xar:set>
+<xar:set name="$decoration['none']"><xar:mlstring>None</xar:mlstring></xar:set>
+<xar:set name="$decoration['underline']"><xar:mlstring>Underline</xar:mlstring></xar:set>
+<xar:set name="$decoration['overline']"><xar:mlstring>Overline</xar:mlstring></xar:set>
+<xar:set name="$decoration['both']"><xar:mlstring>Both</xar:mlstring></xar:set>
+
+<!--- Dropdown for samples display --->
+<xar:set name="$samplessel">xarModGetVar('autolinks', 'showsamples')</xar:set>
+<xar:set name="$samples[0]"><xar:mlstring>None</xar:mlstring></xar:set>
+<xar:set name="$samples[1]"><xar:mlstring>Results Only</xar:mlstring></xar:set>
+<xar:set name="$samples[2]"><xar:mlstring>Samples Only</xar:mlstring></xar:set>
+<xar:set name="$samples[3]"><xar:mlstring>Samples and Results</xar:mlstring></xar:set>
+
+<!--- Button labels --->
+<xar:set name="$submit"><xar:mlstring>Submit</xar:mlstring></xar:set>
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Configure Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto;">
@@ -25,7 +43,7 @@
 		<input type="text" name="maxlinkcount" id="maxlinkcount" size="3" maxlength="3" value="#xarModGetVar('autolinks', 'maxlinkcount', 1)#"/>
 	</p>
 
-	<label for="decoration"><xar:mlstring>Autolink decoration (style will over-ride class)</xar:mlstring></label>&nbsp;&nbsp;
+	<p><label for="decoration"><xar:mlstring>Autolink decoration (style will over-ride class)</xar:mlstring></label>&nbsp;&nbsp;
 	<select name="decoration" id="decoration" size="1">
 		<xar:foreach in="$decoration" value="$v" key="$k">
 		<xar:if condition="$k eq $decorationsel">
@@ -34,9 +52,9 @@
 			<option value="#$k#">#$v#</option>
 		</xar:if>
 		</xar:foreach>
-	</select>
+	</select><p>
 
-	<p>	<label for="newwindow"><xar:mlstring>Open links in new window</xar:mlstring></label>
+	<p><label for="newwindow"><xar:mlstring>Open links in new window</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'newwindow')">
 			<input type="checkbox" name="newwindow" id="newwindow" value="1" checked="checked" />
 		<xar:else />
@@ -44,7 +62,7 @@
 		</xar:if>
 	</p>
 
-	<p>	<label for="showerrors"><xar:mlstring>Show template errors inline (errors shown in content)</xar:mlstring></label>
+	<p><label for="showerrors"><xar:mlstring>Show template errors inline (errors shown in content)</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'showerrors')">
 			<input type="checkbox" name="showerrors" id="showerrors" value="1" checked="checked" />
 		<xar:else />
@@ -62,7 +80,7 @@
 	<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('autolinks', 'itemsperpage', 1)#" />
 	</p>
 
-	<p>	<label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>
+	<p><label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'showsamples')">
 			<input type="checkbox" name="showsamples" id="showsamples" value="1" checked="checked" />
 		<xar:else />
@@ -70,13 +88,26 @@
 		</xar:if>
 	</p>
 
-    <xar:if condition="!empty($hooks)">
+	<p><label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>&nbsp;&nbsp;
+	<select name="showsamples" id="showsamples" size="1">
+		<xar:foreach in="$samples" value="$v" key="$k">
+		<xar:if condition="$k eq $samplessel">
+			<option value="#$k#" selected="selected">#$v#</option>
+		<xar:else />
+			<option value="#$k#">#$v#</option>
+		</xar:if>
+		</xar:foreach>
+	</select>
+    </p>
+
+    <p><xar:if condition="!empty($hooks)">
         <h2><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h2>
         <xar:foreach in="$hooks" key="$hookmodule">
             #$hooks[$hookmodule]#
         </xar:foreach>
         <br style="clear: both;"/>
     </xar:if>
+    </p>
 
     <input type="submit" value="#$submit#" align="middle" />
 </form>

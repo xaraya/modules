@@ -47,10 +47,14 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
         // TODO: replace with xarExceptionHandled() when we know
         // how to handle multiple exceptions on the stack.
         xarExceptionFree();
+    } else {
+        // Trim whitespace from template output by default, until we have a choice
+        // on how to handle whitespace from within the template.
+        $replace = trim($replace);
     }
 
     // Put a placeholder in the spaces so we don't match it again.
-    return preg_replace('/(\w)/', '$1ALSPACEHOLDER', trim($replace));
+    return preg_replace('/(\w)/', '$1ALSPACEHOLDER', $replace);
 }
 
 /**
@@ -95,11 +99,17 @@ function autolinks_userapi__transform($args)
     $punctuation = preg_replace('/([-^\]])/', '\\\$1', $punctuation);
 
     if (empty($gotautolinks)) {
-        // Only get enabled and valid autolinks.
+        // Only get enabled autolinks.
         // A valid autolink is one in which the replace template successfully parsed.
         if (!isset($lid)) {
             // Normal mode: go through all enabled autolinks.
-            $tmpautolinks = xarModAPIFunc('autolinks', 'user', 'getall', array('enabled'=>true));
+            // Order by name so the admin has some control over the order in which the
+            // links are applied to content (some links may need to stack on top of
+            // each other).
+            $tmpautolinks = xarModAPIFunc(
+                'autolinks', 'user', 'getall',
+                array('enabled'=>true, 'order'=>'name')
+            );
             $gotautolinks = 1;
         } else {
             // Test mode: just select one specific link.

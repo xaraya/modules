@@ -14,7 +14,7 @@ function autolinks_admin_updateconfig()
     $old_showerrors = xarModGetVar('autolinks', 'showerrors');
 
     // The flags that are accepted (values: 0 or 1; 'name'=>default-value)
-    $flags = array('newwindow'=>0, 'nbspiswhite'=>0, 'showerrors'=>0, 'showsamples'=>0);
+    $flags = array('newwindow'=>0, 'nbspiswhite'=>0, 'showerrors'=>0);
 
     // Deal with flags.
     foreach ($flags as $flag => $default)
@@ -30,6 +30,7 @@ function autolinks_admin_updateconfig()
     // TODO: represent values and errors to user for correcting.
     if (!xarVarFetch('maxlinkcount', 'int:1:', $maxlinkcount, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemsperpage', 'int:1:', $itemsperpage, 20, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('showsamples', 'int:0:3', $showsamples, 0, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('decoration', 'str::30', $decoration, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('punctuation', 'str::30', $punctuation, '', XARVAR_NOT_REQUIRED)) {return;}
     // TODO: further validation to ensure the template base is a valid partial-filename.
@@ -39,8 +40,9 @@ function autolinks_admin_updateconfig()
     $old_decoration = xarModGetVar('autolinks', 'decoration');
     $old_templatebase = xarModGetVar('autolinks', 'templatebase');
 
-    xarModSetVar('autolinks', 'itemsperpage', $itemsperpage);
     xarModSetVar('autolinks', 'maxlinkcount', $maxlinkcount);
+    xarModSetVar('autolinks', 'itemsperpage', $itemsperpage);
+    xarModSetVar('autolinks', 'showsamples', $showsamples);
     xarModSetVar('autolinks', 'decoration', $decoration);
     xarModSetVar('autolinks', 'punctuation', $punctuation);
     xarModSetVar('autolinks', 'templatebase', $templatebase);

@@ -77,7 +77,7 @@ function autolinks_userapi_getall($args)
         . ' LEFT JOIN ' . $autolinkstypestable 
         . ' ON xar_tid = xar_type_tid'
         . (!empty($where) ? ' where ' . $where : '')
-        . ' ORDER BY xar_keyword';
+        . ' ORDER BY xar_name';
 
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) {return;}
