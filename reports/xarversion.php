@@ -7,7 +7,7 @@
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage reports
  * @author Marcel van der Boom <marcel@hsdev.com>
 */
@@ -15,6 +15,7 @@
 $modversion['name'] = 'reports';
 $modversion['id']='4704';
 $modversion['version'] = '0.0.2';
+$modversion['displayname']    = xarML('Reports');
 $modversion['description'] = 'Web based reporting';
 $modversion['credits'] = 'xardocs/CREDITS';
 $modversion['help'] = 'xardocs/INSTALL';
