@@ -17,6 +17,7 @@
 $modversion['name']         = 'AddressBook';
 $modversion['id']           = '66417';
 $modversion['version']      = '1.2.5';
+$modversion['displayname']    = xarML('Address Book');
 $modversion['description']  = 'Xaraya Address Book';
 $modversion['credits']      = '';
 $modversion['help']         = '';
