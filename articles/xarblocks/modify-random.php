@@ -29,6 +29,7 @@ function articles_randomblock_modify($blockinfo)
     if (empty($vars['pubtypeid'])) {$vars['pubtypeid'] = '';}
     if (empty($vars['catfilter'])) {$vars['catfilter'] = '';}
     if (empty($vars['status'])) {$vars['status'] = array(3, 2);}
+    if (empty($vars['language'])) {$vars['language'] = '';}
     if (empty($vars['numitems'])) {$vars['numitems'] = 5;}
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
     if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
@@ -51,7 +52,10 @@ function articles_randomblock_modify($blockinfo)
     } else {
         $cidsarray = array();
     }
-    
+
+    $vars['locales'] = xarMLSListSiteLocales();
+    asort($vars['locales']);
+
     $vars['blockid'] = $blockinfo['bid'];
     // Return output (template data)
     return $vars;
@@ -68,6 +72,7 @@ function articles_randomblock_update($blockinfo)
     xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('status', 'int:0:4', $vars['status'], NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('language', 'str', $vars['language'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('alttitle', 'str', $vars['alttitle'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('altsummary', 'str', $vars['altsummary'], '', XARVAR_NOT_REQUIRED);
     if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}

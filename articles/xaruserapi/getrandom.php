@@ -14,6 +14,7 @@
  *                        Default list is : 'aid','title','summary','authorid',
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
+ * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
  * @returns array
  * @return array of articles, or false on failure
  */

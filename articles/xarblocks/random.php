@@ -21,6 +21,7 @@ function articles_randomblock_init()
         'pubtypeid' => 0,
         'catfilter' => 0,
         'status' => '3,2',
+        'language' => '',
         'numitems' => 1,
         'alttitle' => '',
         'altsummary' => '',
@@ -77,7 +78,15 @@ function articles_randomblock_display($blockinfo)
     } else {
             $statusarray = $vars['status'];
     }
-    
+
+    if (empty($vars['language'])) {
+        $lang = null;
+    } elseif ($vars['language'] == 'current') {
+        $lang = xarMLSGetCurrentLocale();
+    } else {
+        $lang = $vars['language'];
+    }
+
     // get cids for security check in getall
     $fields = array('aid', 'title', 'body', 'notes', 'pubtypeid', 'cids', 'authorid');
 
@@ -117,6 +126,7 @@ function articles_randomblock_display($blockinfo)
                                     'cids' => $cidsarray,
                                     'andcids' => false,
                                     'status' => $statusarray,
+                                    'language' => $lang,
                                     'numitems' => $vars['numitems'],
                                     'fields' => $fields));
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {

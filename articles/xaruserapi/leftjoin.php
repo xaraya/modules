@@ -30,6 +30,7 @@
  * @param $args['enddate'] articles published before enddate
  *                         (unix timestamp format)
  * @param $args['where'] additional where clauses (myfield gt 1234)
+ * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
  * @returns array
  * @return array('table' => 'nuke_articles',
  *               'field' => 'nuke_articles.xar_aid',

@@ -53,7 +53,7 @@ function articles_userapi_decode_shorturl($params)
         return array('viewmap', $args);
 
     } elseif (preg_match('/^search/i',$params[1])) {
-        if (!empty($params[2]) && preg_match('/^c([0-9 +-]+)/',$params[2],$matches)) {
+        if (!empty($params[2]) && preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches)) {
             $catid = $matches[1];
             $args['catid'] = $catid;
         }
