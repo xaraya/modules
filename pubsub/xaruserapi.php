@@ -46,7 +46,7 @@ function pubsub_userapi_subscribe($args)
     if (xarUserLoggedIn()) {
         // if no userid was supplied then subscribe the currently logged in user
         if (!isset($userid)) {
-	    $userid = xarUserGetVar('userid');
+	    $userid = xarSessionGetVar('uid');
 	}
     } else {
         xarSessionSetVar('errormsg', _PUBSUBANONERROR);

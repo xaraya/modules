@@ -35,7 +35,7 @@ function pubsub_init()
         'xar_module'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
         'xar_eventtype'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
         'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
-        'xar_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+        'xar_actionid'=>array('type'=>'integer','size'=>100,'null'=>FALSE,'default'=>'0')
     );
     $query = xarDBCreateTable($pubsubeventstable,$eventsfields);
     $result =& $dbconn->Execute($query);
@@ -45,8 +45,8 @@ function pubsub_init()
     $regfields = array(
         'xar_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'xar_users'=>array('type'=>'text','size'=>'medium','null'=>FALSE),
-        'xar_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+        'xar_userid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0')
     );
     $query = xarDBCreateTable($pubsubregtable,$regfields);
     $result =& $dbconn->Execute($query);

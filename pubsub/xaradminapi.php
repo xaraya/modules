@@ -344,6 +344,7 @@ function pubsub_adminapi_runjob($args)
 
     // Get info on job to run
     $query = "SELECT xar_actionid,
+    		   xar_userid,
     		   xar_eventid
             FROM $pubsubregtable
             WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
@@ -351,70 +352,70 @@ function pubsub_adminapi_runjob($args)
     if (!$result) return;
 
     $actionid = $result->fields[0];
-    $eventid  = $result->fields[1]);
-    list($action,$info)   =  explode(':', $actionid);
+    $userid   = $result->fields[1]);
+    $eventid  = $result->fields[2]);
+    $info = xarUserGetVar('email',$userid);
+    $name = xarUserGetVar('uname',$userid);
+
     if ($action = "mail" || $action = "htmlmail") {
-	// check mail address is a valid email address
-	if (!eregi("^([A-Za-z0-9_]|\\-|\\.)+@(([A-Za-z0-9_]|\\-)+\\.)[A-Za-z]{2,4}$", $info)) {
-	    // address invalid
-	    $msg = xarML('Invalid E-mail address #(1)',
-                    $info);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                     new SystemException($msg));
-            return;
-	} else {
-       	    // Database information
-    	    $pubsubtemplatetable = $xartable['pubsub_template'];
-    	    // Get info on job to run
-    	    $query = "SELECT xar_template
-            	    FROM $pubsubtemplatetable
-            	    WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
-    	    $result   = $dbconn->Execute($query);
-	    if (!$result) return;
+       	// Database information
+    	$pubsubtemplatetable = $xartable['pubsub_template'];
+    	// Get info on job to run
+    	$query = "SELECT xar_template
+            FROM $pubsubtemplatetable
+            WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
+    	$result   = $dbconn->Execute($query);
+	if (!$result) return;
 
-    	    $template = $result->fields[0];
-	    // *** TODO  ***
-	    // need to define some variables for user firstname and surname,etc.
-	    // might not be able to use the normal BL user vars as they would 
-	    // probabaly expand to currently logged in user, not the user for 
-	    // this event.
-	    // need to create the $tplData array with all the information in it
+  	$template = $result->fields[0];
+	// *** TODO  ***
+	// need to define some variables for user firstname and surname,etc.
+	// might not be able to use the normal BL user vars as they would 
+	// probabaly expand to currently logged in user, not the user for 
+	// this event.
+	// need to create the $tplData array with all the information in it
 
-	    // call BL with the template to parse it and generate the HTML
-	    $html = xarTplString($template, $tplData);
-	    $plaintext = strip_tags($html);
-	    if ($action = "htmlmail") { 
-	       $boundary = "b" . md5(uniqid(time()));
-	       $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
-	       $message .= "Content-type: multipart/mixed; ";
-	       $message .= "boundary = $boundary\r\n\r\n";
-	       $message .= "This is a MIME encoded message.\r\n\r\n";
-	       // first the plaintext message
-	       $message .= "--$boundary\r\n";
-	       $message .= "Content-type: text/plain\r\n";
-	       $message .= "Content-Transfer-Encoding: base64";
-	       $message .= "\r\n\r\n" . chunk_split(base64_encode($plaintext)) . "\r\n";
-	       // now the HTML version
-	       $message .= "--$boundary\r\n";
-	       $message .= "Content-type: text/html\r\n";
-	       $message .= "Content-Transfer-Encoding: base64";
-	       $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
-	    
-	       // send the mail
-               mail($info,     // to
-	            $subject,  // subject
-		    '',        // empty mesage body as sending multipart messages
-	            $message); // message
-	    } else {
-	       // send the mail
-               mail($info,      // to
-	            $subject,   // subject
-		    $plaintext, // empty mesage body as sending multipart messages
-	            "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n"); 
-	    }   
-            // delete job from queue now it has run
-	    pubsub_adminapi_deljob($handlingid);
-        }
+									
+        // Check for exceptions
+        if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; 
+   
+        // call BL with the template to parse it and generate the HTML
+        $html = xarTplString($template, $tplData);
+        $plaintext = strip_tags($html);
+	if ($action = "htmlmail") { 
+	    $boundary = "b" . md5(uniqid(time()));
+	    $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
+	    $message .= "Content-type: multipart/mixed; ";
+	    $message .= "boundary = $boundary\r\n\r\n";
+	    $message .= "This is a MIME encoded message.\r\n\r\n";
+	    // first the plaintext message
+	    $message .= "--$boundary\r\n";
+	    $message .= "Content-type: text/plain\r\n";
+	    $message .= "Content-Transfer-Encoding: base64";
+	    $message .= "\r\n\r\n" . chunk_split(base64_encode($plaintext)) . "\r\n";
+	    // now the HTML version
+	    $message .= "--$boundary\r\n";
+	    $message .= "Content-type: text/html\r\n";
+	    $message .= "Content-Transfer-Encoding: base64";
+	    $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
+	 } else {
+	    // plaintext mail
+	    $message=$plaintext;
+	 }   
+	 // Send the mail using the mail module
+	 if (!xarModAPILoad('mail', 'admin')) return;
+	 if (!xarModAPIFunc('mail',
+                 'admin',
+                 'sendmail',
+                 array('info'     => $info,
+                       'name'     => $name,
+                       'subject'  => $subject,
+                       'message'  => $message,
+                       'from'     => $fmail,
+                       'fromname' => $fname))) return;
+
+         // delete job from queue now it has run
+         pubsub_adminapi_deljob($handlingid);
     } else {
         // invalid action - update queue accordingly
 	pubsub_adminapi_updatejob($handlingid,$pubsubid,$objectid,'error');
