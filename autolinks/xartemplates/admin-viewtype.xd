@@ -6,23 +6,20 @@
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <th><xar:mlstring>Name</xar:mlstring></th>
-        <th><xar:mlstring>Template Name</xar:mlstring></th>
-        <th><xar:mlstring>Dynamic</xar:mlstring></th>
+        <th><xar:mlstring>Template</xar:mlstring></th>
+        <th><xar:mlstring>Method</xar:mlstring></th>
         <th><xar:mlstring>Description</xar:mlstring></th>
         <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$items" value="$item">
     <tr>
-        <!---
         <td>
-            <xar:if condition="empty($item['enabled'])">
-                <xar:mlstring>Disabled</xar:mlstring>
+            <xar:if condition="empty($item['editurl'])">
+                #xarVarPrepForDisplay($item['type_name'])#
             <xar:else />
-                <xar:mlstring>Enabled</xar:mlstring>
+                <a href="#$item['editurl']#">#xarVarPrepForDisplay($item['type_name'])#</a>
             </xar:if>
         </td>
-        --->
-        <td><a href="#$item['editurl']#">#xarVarPrepForDisplay($item['type_name'])#</a></td>
         <td><span style="font-family: Courier New, Courier, mono;">
         #xarModGetVar('autolinks','templatebase', 1)#-#xarVarPrepForDisplay($item['template_name'])#.xd
         </span></td>

@@ -1,0 +1,16 @@
+<!--- The trigger - the URL - can be used to select different portions of this template. --->
+<xar:if condition="$url eq 'display'">
+    <!--- Provide a link to an article, given its aid. --->
+    <xar:set name="$aidarray['aid']">#$title#</xar:set>
+    <xar:set name="$article">#xarModAPIfunc('articles','user','get',$aidarray)#</xar:set>
+    <xar:if condition="!empty($article['title'])">
+    <xar:set name="$linktitle"><xar:mlstring>Click here to read the article</xar:mlstring></xar:set>
+    <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#$linktitle#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
+    <xar:else/>
+    <!--- Display error if the article could not be fetched (invalid number or no permission. --->
+    <span class="xar-error">[article number #$title# not available]</span>
+    </xar:if>
+<xar:else/>
+    <!--- No recognised trigger - just return what was matched. --->
+    #$match#
+</xar:if>

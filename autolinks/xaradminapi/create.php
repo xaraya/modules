@@ -44,6 +44,15 @@ function autolinks_adminapi_create($args)
     } else {
         $enabled = 0;
     }
+    if (isset($match_re) && !empty($match_re)) {
+        $match_re = 1;
+    } else {
+        $match_re = 0;
+    }
+
+    if (!isset($sample)) {
+        $sample = '';
+    }
 
     // Security check
     if(!xarSecurityCheck('AddAutolinks')) {return;}
@@ -88,6 +97,8 @@ function autolinks_adminapi_create($args)
               xar_title,
               xar_url,
               xar_comment,
+              xar_match_re,
+              xar_sample,
               xar_enabled)
             VALUES (
               $nextId,
@@ -97,6 +108,8 @@ function autolinks_adminapi_create($args)
               '" . xarVarPrepForStore($title) . "',
               '" . xarVarPrepForStore($url) . "',
               '" . xarVarPrepForStore($comment) . "',
+              " . xarVarPrepForStore($match_re) . ",
+              '" . xarVarPrepForStore($sample) . "',
               " . xarVarPrepForStore($enabled) . ")";
     
     $result =& $dbconn->Execute($query);

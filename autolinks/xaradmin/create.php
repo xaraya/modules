@@ -17,7 +17,7 @@ function autolinks_admin_create()
     if (!xarVarFetch('tid', 'id', $tid)) {
         $errorcount += 1;
         $data['tid_error'] = xarExceptionRender('text');
-        xarExceptionFree();
+        xarExceptionHandled();
     } else {
         // Get the autolink type details.
         $type = xarModAPIfunc('autolinks', 'user', 'gettype', array('tid' => $tid));
@@ -65,11 +65,7 @@ function autolinks_admin_create()
     }
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
-        $errorcount += 1;
-        $data['global_error'] = xarExceptionRender('text');
-        xarExceptionHandled();
-    }
+    if (!xarSecConfirmAuthKey()) {return;}
 
     if ($errorcount == 0) {
         // The API function is called
@@ -91,7 +87,7 @@ function autolinks_admin_create()
     if (xarExceptionValue()) {
         $errorcount += 1;
         $data['global_error'] = xarExceptionRender('text');
-        xarExceptionFree();
+        xarExceptionHandled();
     }
 
     if ($errorcount > 0) {

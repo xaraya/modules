@@ -15,17 +15,20 @@ function autolinks_admin_update($args)
     extract($args);
 
     // Get parameters from whatever input we need
+    // TODO: catch errors and represent them to the user (same as create).
     if (!xarVarFetch('lid',     'isset', $lid,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('obid',    'isset', $obid,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('keyword', 'isset', $keyword,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('title',   'isset', $title,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('url',     'isset', $url,      NULL, XARVAR_DONT_SET)) {return;}
+
+    if (!xarVarFetch('name', 'str:1', $name)) {return;}
+    if (!xarVarFetch('keyword', 'str:1', $keyword)) {return;}
+    if (!xarVarFetch('title',   'str', $title,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('url',     'str:1', $url)) {return;}
     if (!xarVarFetch('enabled', 'int:0:1', $enabled, 0, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('match_re', 'int:0:1', $match_re, 0, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('comment', 'isset', $comment,  '',   XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('comment', 'str', $comment,  '',   XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('sample', 'str', $sample,  '',   XARVAR_NOT_REQUIRED)) {return;}
+
     if (!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('sample', 'isset', $sample,  '',   XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name', 'isset', $name,  '',   XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($obid)) {
         $lid = $obid;

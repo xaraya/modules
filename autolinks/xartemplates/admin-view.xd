@@ -21,13 +21,33 @@
         </xar:if>
 
         <tr style="background-color: #$bgrow#;">
-            <td><a href="#$item['edittypeurl']#">#xarVarPrepForDisplay($item['type_name'])#</a></td>
-
-            <td><a href="#$item['editurl']#">#xarVarPrepForDisplay($item['name'])#</a></td>
+            <td>
+                <xar:if condition="empty($item['edittypeurl'])">
+                    #xarVarPrepForDisplay($item['type_name'])#
+                <xar:else/>
+                    <a href="#$item['edittypeurl']#">#xarVarPrepForDisplay($item['type_name'])#</a>
+                </xar:if>
+            </td>
 
             <td>
-                <xar:if condition="!empty($item['comment'])">
-                    <span title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['keyword'])#</span>
+                <xar:if condition="empty($item['editurl'])">
+                    <xar:if condition="!empty($item['comment'])">
+                        <span title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['name'])#</span>
+                    <xar:else/>
+                        #xarVarPrepForDisplay($item['name'])#
+                    </xar:if>
+                <xar:else />
+                    <xar:if condition="!empty($item['comment'])">
+                        <a href="#$item['editurl']#" title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['name'])#</a>
+                    <xar:else/>
+                        <a href="#$item['editurl']#">#xarVarPrepForDisplay($item['name'])#</a>
+                    </xar:if>
+                </xar:if>
+            </td>
+
+            <td>
+                <xar:if condition="!empty($item['match_re'])">
+                    <em>#xarVarPrepForDisplay($item['keyword'])#</em>
                 <xar:else/>
                     #xarVarPrepForDisplay($item['keyword'])#
                 </xar:if>

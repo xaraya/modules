@@ -502,6 +502,24 @@ function autolinks_init_upgrade_data()
             'type_name' => xarML('External'),
             'template_name' => 'external',
             'type_desc' => xarML('External URLs. Opens in an "external" window. These URLs are marked up with a "WWW" world icon.')
+        ),
+        array(
+            'type_name' => xarML('Articles'),
+            'template_name' => 'article',
+            'dynamic_replace' => '1',
+            'type_desc' => xarML('Various links for fetching articles links.'),
+            'links' => array(
+                array(
+                    'name' => xarML('Article title by article ID'),
+                    'keyword' => '\[article:title:aid:([\d]+)\]',
+                    'match_re' => '1',
+                    'title' => '$2',
+                    'url' => 'display',
+                    'comment' => 'Use format: [article:title:aid:<article-id>]',
+                    'sample' => 'Valid article: [article:title:aid:1]; invalid: [article:title:aid:9999]',
+                    'enabled' => '1'
+                )
+            )
         )
     );
 
@@ -515,17 +533,9 @@ function autolinks_init_upgrade_data()
         );
 
         if (!$links) {
-            // Make sure the type name has not already been used.
-            $links = xarModAPIfunc(
-                'autolinks', 'user', 'getalltypes',
-                array('type_name' => $setuptype['type_name'])
-            );
-
-            if (!$links) {
-                // Create the autolink type
-                $tid = xarModAPIfunc('autolinks', 'admin', 'createtype', $setuptype);
-                if (!$tid) {return;}
-
+            // Create the autolink type
+            $tid = xarModAPIfunc('autolinks', 'admin', 'createtype', $setuptype);
+            if ($tid) {
                 // Now if this is the default type, point existing links to it.
                 if (!empty($setuptype['default'])) {
                     // Scan the current autolinks for tids to be updated.
@@ -539,6 +549,19 @@ function autolinks_init_upgrade_data()
                             }
                         }
                     }
+                }
+
+                // If there are example links to add, do them.
+                if (isset($setuptype['links'])) {
+                    foreach ($setuptype['links'] as $samplelink) {
+                        $samplelink['tid'] = $tid;
+                        $result = xarModAPIfunc('autolinks', 'admin', 'create', $samplelink);
+                        //if (!$result) {return;}
+                    }
+                }
+            } else {
+                if (xarExceptionValue()) {
+                    xarExceptionHandled();
                 }
             }
         }
