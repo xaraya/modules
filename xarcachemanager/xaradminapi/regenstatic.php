@@ -28,10 +28,21 @@ function xarcachemanager_adminapi_regenstatic()
     $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                      array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
     
-    foreach ($sessionlessurls['Page.SessionLess'] as $url) {
+    $baseGetfileRealPath = realpath('modules/base/xaruserapi/getfile.php');
+    register_shutdown_function('xar_regenerate_static_cache', $sessionlessurls['Page.SessionLess'], $baseGetfileRealPath);
+    
+    return;
+
+}
+
+function xar_regenerate_static_cache($sessionlessurls, $baseGetfileRealPath)
+{
+    include_once($baseGetfileRealPath);
+    foreach ($sessionlessurls as $url) {
         // Make sure the url isn't empty before calling getfile()
         if (strlen(trim($url))) {
-            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
+            //xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
+            base_userapi_getfile(array('url' => $url));
         }
     }
     return;        
