@@ -64,7 +64,7 @@ function dynamic_planning_userapi_getall($args)
     // Check for an error with the database code, and if so set an appropriate
     // error message and return
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _GETFAILED);
+        pnSessionSetVar('errormsg', xarML('Items load failed'));
         return false;
     }
 

@@ -77,7 +77,7 @@ function dynamic_planning_init()
 
     // Check for an error
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', 'create tasks table failed');
+        pnSessionSetVar('errormsg', xarML('Create tasks table failed'));
         return false;
     }
 
@@ -133,7 +133,7 @@ function dynamic_planning_delete()
     // Check for an error 
     if ($dbconn->ErrorNo() != 0) {
         // Report failed deletion attempt
-	pnSessionSetVar('errormsg', 'delete tracks table failed');
+	pnSessionSetVar('errormsg', xarML('Delete tracks table failed'));
         return false;
     }
 
@@ -144,7 +144,7 @@ function dynamic_planning_delete()
     // Check for an error 
     if ($dbconn->ErrorNo() != 0) {
         // Report failed deletion attempt
-	pnSessionSetVar('errormsg', 'delete tasks table failed');
+	pnSessionSetVar('errormsg', xarML('Delete tasks table failed'));
         return false;
     }
 

@@ -157,7 +157,7 @@ function dynamic_planning_adminapi_delete($args)
             );
 
     if ($item == false) {
-        $output->Text(_DPNOSUCHITEM);
+        $output->Text(xarML('No such item'));
         return $output->GetOutput();
     }
 
@@ -167,7 +167,7 @@ function dynamic_planning_adminapi_delete($args)
     // name to complete the instance information so this is the first
     // chance we get to do the check
     if (!pnSecAuthAction(0, 'dynamic_planning::', "::", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _DPNOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Planning module'));
         return false;
     }
 
@@ -236,13 +236,13 @@ function dynamic_planning_adminapi_update($args)
             array('trackid' => $trackid));
 
     if ($track == false) {
-        $output->Text(_DPNOSUCHITEM);
+        $output->Text(xarML('No such item'));
         return $output->GetOutput();
     }
 
     // Security check - important to do this as early on as possible to 
     if (!pnSecAuthAction(0, 'dynamic_planning::', "$track[trackname]::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _DPNOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Planning module'));
         return false;
     }
 
@@ -308,13 +308,13 @@ function dynamic_planning_adminapi_updatetask($args)
             array('taskid' => $taskid));
 
     if ($task == false) {
-        $output->Text(_DPNOSUCHITEM);
+        $output->Text(xarML('No such item'));
         return $output->GetOutput();
     }
 
     // Security check - important to do this as early on as possible to
     if (!pnSecAuthAction(0, 'dynamic_planning::', "$track[trackname]::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _DPNOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to access Planning module'));
         return false;
     }
 

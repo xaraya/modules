@@ -34,7 +34,7 @@ function dynamic_planning_user_main()
 
     // Security check
     if (!pnSecAuthAction(0, 'dynamic_planning::', '::', ACCESS_READ)) {
-        $output->Text(_DPNOAUTH);
+        $output->Text(xarML('Not authorised to access  module'));
         return $output->GetOutput();
     }
 
@@ -80,7 +80,7 @@ function dynamic_planning_user_view()
                           'getall');
 
     if ($tracks == false) {
-        $output->Text(_DPITEMFAILED);
+        $output->Text(xarML('Failed to get any items'));
 	return $output->GetOutput();
     }
 
@@ -147,7 +147,7 @@ function dynamic_planning_user_display($args)
 			  array('trackid' => $trackid));
 
     if ($track == false) {
-        $output->Text(_DPITEMFAILED);
+        $output->Text(xarML('Failed to get any items'));
 	return $output->GetOutPut();
     }
     
@@ -158,29 +158,29 @@ function dynamic_planning_user_display($args)
                           array('trackid' => $trackid));
 
     if ($tasks == false) {
-        $output->Text(_DPITEMFAILED);
+        $output->Text(xarML('Failed to get any items'));
         return $output->GetOutput();
     }
 
     // Display it
     
-    $output->Text(_DPNAME . ': ');
+    $output->Text(xarML('Track Name') . ': ');
     $output->Text($track['trackname']);
     $output->Linebreak(2);
     
-    $output->Text(_DPLEAD . ': ');
+    $output->Text(xarML('Track Leader') . ': ');
     $output->Text($track['tracklead']);
     $output->Linebreak(2);
   
-    $output->Text(_DPTEXT . ': ');
+    $output->Text(xarML('Track Description') . ': ');
     $output->Text($track['tracktext']);
     $output->Linebreak(2);
 
-    $output->Text(_DPSTAT . ': ');
+    $output->Text(xarML('Track Status') . ': ');
     $output->Text($track['trackstatus']);
     $output->Linebreak(2);
 
-    $output->Text(_DPNEWS . ': ');
+    $output->Text(xarML('Most Recent News') . ': ');
     $output->Linebreak(2);
 
 
@@ -265,37 +265,37 @@ function dynamic_planning_user_displaytask($args)
                           array('taskid' => $taskid));
 
     if ($task == false) {
-        $output->Text(_DPITEMFAILED);
+        $output->Text(xarML('Failed to get any items'));
         return $output->GetOutPut();
     }
 
     // Display Track
 
-    $output->Text(_DPNAME . ': ');
+    $output->Text(xarML('Track Name') . ': ');
     $output->Text($task['tasktitle']);
     $output->Linebreak(2);
     
-    $output->Text(_DPDESC . ': ');
+    $output->Text(xarML('Task Description') . ': ');
     $output->Text($task['tasktext']);
     $output->Linebreak(2);
 
-    $output->Text(_DPSTART . ': ');
+    $output->Text(xarML('Start Date') . ': ');
     $output->Text($task['taskstart']);
     $output->Linebreak(2);
 
-    $output->Text(_DPEND . ': ');
+    $output->Text(xarML('End Date') . ': ');
     $output->Text($task['taskend']);
     $output->Linebreak(2);
 
-    $output->Text(_DPPERC . ': ');
+    $output->Text(xarML('Percent Complete') . ': ');
     $output->Text($task['taskpercent']);
     $output->Linebreak(2);
 
-    $output->Text(_DPSTEPS . ': ');
+    $output->Text(xarML('Task Steps') . ': ');
     $output->Text($task['tasksteps']);
     $output->Linebreak(2);
 
-    $output->Text(_DPTEAM . ': ');
+    $output->Text(xarML('Task Team') . ': ');
     $output->Text($task['taskteam']);
     $output->Linebreak(2);
 
@@ -321,13 +321,13 @@ function dynamic_planning_usermenu()
 
     // Menu options.  These options are all added in a single row, to add
     // multiple rows of options the code below would just be repeated
-    $output->TableStart(_DP);
+    $output->TableStart(xarML('Dynamic Planning Module'));
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
     $columns = array();
     $columns[] = $output->URL(pnModURL('dynamic_planning',
                                        'user',
                                        'view'),
-                              _DPVIEW);
+                              xarML('View Tracks'));
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
     $output->TableAddRow($columns);
