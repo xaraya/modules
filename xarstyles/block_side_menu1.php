@@ -40,7 +40,8 @@
  * It may accept parameters and it may check the browser version.
  */
 
-function set_header() {
+function set_header()
+{
     header("Content-type: text/css");
     header("Cache-Control: must-revalidate");
     // We always want to revalidate, since the same script could be called
@@ -50,7 +51,8 @@ function set_header() {
     header($ExpStr);
 }
 
-function sniffer() {
+function sniffer()
+{
     $http_agent = getenv('HTTP_USER_AGENT');
 
     if (ereg('MSIE ([0-9].[0-9]{1,2})', $http_agent, $ver)) {

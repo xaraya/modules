@@ -3,9 +3,9 @@
 /* Reset some of the defaults that the theme adds. */
 
 div.xarpages-side-menu1 li, div.xarpages-side-menu1 ul {
-	margin: 0;
-	padding: 0;
-	text-indent: 0;
+   margin: 0;
+   padding: 0;
+   text-indent: 0;
 }
 div.xarpages-side-menu1 ul, div.xarpages-side-menu1 li {
     line-height: 120%;
@@ -20,12 +20,12 @@ div.xarpages-side-menu1 ul {
  */
 
 div.xarpages-side-menu1 {
-	/* 180px external - outer wrapper */
-	width: 174px;
-	padding: 2px;
-	border-width: 1px;
-	/* Style is formatting really, but there is no width without a style */
-	border-style: solid;
+   /* 180px external - outer wrapper */
+   width: 174px;
+   padding: 2px;
+   border-width: 1px;
+   /* Style is formatting really, but there is no width without a style */
+   border-style: solid;
 }
 
 /* All anchors are 174px wide external, with a 1px border, and pixel of 
@@ -33,53 +33,53 @@ div.xarpages-side-menu1 {
  Internal padding and width varies with the level, but always adds up to 172px
  */
 div.xarpages-side-menu1 a, div.xarpages-side-menu1 h2 {
-	display: block;
+   display: block;
     /*float: left;
     clear: left;*/
-	padding: 2px 0;
-	margin: 0px 0px;
-	width: 172px;
-	border-width: 1px;
-	border-style: solid;
+   padding: 2px 0;
+   margin: 0px 0px;
+   width: 172px;
+   border-width: 1px;
+   border-style: solid;
 }
 /*div.xarpages-side-menu1 li>a, div.xarpages-side-menu1 li>h2 {
-	float: none;
+   float: none;
 }*/
 
 
 /* Remove styles for lists that the theme may have added */
 div.xarpages-side-menu1 ul {
-	margin: 0px;
-	padding: 0px;
-	list-style-type: none;
+   margin: 0px;
+   padding: 0px;
+   list-style-type: none;
 }
 
 /* Level 1 anchors: 20px to LHS */
 div.xarpages-side-menu1 ul.side-menu1 a, div.xarpages-side-menu1 ul.side-menu1 h2 {
-	width: 148px;
-	padding-right: 4px;
-	padding-left: 20px;
+   width: 148px;
+   padding-right: 4px;
+   padding-left: 20px;
 }
 
 /* Level 2: same indent as level 1, more padding to RHS */
 div.xarpages-side-menu1 ul.side-menu2 a, div.xarpages-side-menu1 ul.side-menu2 h2 {
-	width: 132px;
-	padding-right: 20px;
-	padding-left: 20px;
+   width: 132px;
+   padding-right: 20px;
+   padding-left: 20px;
 }
 
 /* Level 3: 10px more padding on left than level 2 */
 div.xarpages-side-menu1 ul.side-menu3 a, div.xarpages-side-menu1 ul.side-menu3 h2 {
-	width: 136px;
-	padding-left: 30px;
-	padding-right: 6px;
+   width: 136px;
+   padding-left: 30px;
+   padding-right: 6px;
 }
 
 /* Level 4: 8px more padding on left than level 3 */
 div.xarpages-side-menu1 ul.side-menu4 a, div.xarpages-side-menu1 ul.side-menu4 h2 {
-	width: 126px;
-	padding-left: 40px;
-	padding-right: 6px;
+   width: 126px;
+   padding-left: 40px;
+   padding-right: 6px;
 }
 
 
@@ -89,64 +89,64 @@ div.xarpages-side-menu1 ul.side-menu4 a, div.xarpages-side-menu1 ul.side-menu4 h
  */
 
 div.xarpages-side-menu1 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 80%;
-	border-color: #00FFFF;
-	border-style: solid;
-	background-color: #00FFFF;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 80%;
+   border-color: #00FFFF;
+   border-style: solid;
+   background-color: #00FFFF;
 }
 
 div.xarpages-side-menu1 h2 {
-	font-size: 98%;
+   font-size: 98%;
 }
-	
+   
 div.xarpages-side-menu1 li {
-	background-repeat: no-repeat;
+   background-repeat: no-repeat;
 }
 
 /* Default font style and colours for the menu links */
 div.xarpages-side-menu1 a, div.xarpages-side-menu1 h2 {
-	text-align: left;
-	text-decoration: none;
-	font-weight: bold;
-	color: #666;
-	border-color: #00ffff;
+   text-align: left;
+   text-decoration: none;
+   font-weight: bold;
+   color: #666;
+   border-color: #00ffff;
 }
 
 /* A blue tinge to the links after the first level */
 div.xarpages-side-menu1 ul.side-menu2 a, div.xarpages-side-menu1 ul.side-menu2 h2 {
-	color: #669;
+   color: #669;
 }
 /* Disable bold after the second level */
 div.xarpages-side-menu1 ul.side-menu3 a {
-	font-weight: normal;
+   font-weight: normal;
 }
 
 /* Menu background colours - lighter blue for deeper levels */
 div.xarpages-side-menu1 ul.side-menu1 li {
-	background-color: #00FFFF;
+   background-color: #00FFFF;
 }
 div.xarpages-side-menu1 ul.side-menu2 li {
-	background-color: #AAFFFF;
+   background-color: #AAFFFF;
 }
 div.xarpages-side-menu1 ul.side-menu3 li {
-	background-color: #CCFFFF;
+   background-color: #CCFFFF;
 }
 /* Selected menu item: background colour white - font and border set on the anchor */
 div.xarpages-side-menu1 ul.side-menu1 li.selected,
 div.xarpages-side-menu1 ul.side-menu2 li.selected,
 div.xarpages-side-menu1 ul.side-menu3 li.selected,
 div.xarpages-side-menu1 ul.side-menu4 li.selected {
-	background-color: #ffffff;
+   background-color: #ffffff;
 }
 
 /* Current page has a highlighted border and bolder text */
 div.xarpages-side-menu1 li a.selected {
-	border-color: #333333;
-	border-style: dotted;
-	color: #600;
-	/*font-style: italic;*/
-	font-weight: bold;
+   border-color: #333333;
+   border-style: dotted;
+   color: #600;
+   /*font-style: italic;*/
+   font-weight: bold;
 }
 
 /* Bullets for level 1:
@@ -157,37 +157,37 @@ div.xarpages-side-menu1 li a.selected {
 
 /* Default bullet - assuming no children. */
 div.xarpages-side-menu1 ul.side-menu1 li {
-	background-position: 0px 0.25em;
-	background-image: url(../xarimages/bull1.gif);
+   background-position: 0px 0.25em;
+   background-image: url(../xarimages/bull1.gif);
 }
 /* Closed, with children */
 div.xarpages-side-menu1 ul.side-menu1 li.closed {
-	background-position: 0px 0.25em;
-	background-image: url(../xarimages/bull1-closed.gif);
+   background-position: 0px 0.25em;
+   background-image: url(../xarimages/bull1-closed.gif);
 }
 /* Open - not selected */
 div.xarpages-side-menu1 ul.side-menu1 li.open {
-	background-position: 0px 0.25em;
-	background-image: url(../xarimages/bull1-open.gif);
+   background-position: 0px 0.25em;
+   background-image: url(../xarimages/bull1-open.gif);
 }
 
 /* Level 2 - no bullets (try some small bullets) */
 div.xarpages-side-menu1 ul.side-menu1 ul.side-menu2 li {
-	background-position: 4px 0.5em;
-	background-image: url(../xarimages/bull4.gif);
-	/*background-image: none;*/
+   background-position: 4px 0.5em;
+   background-image: url(../xarimages/bull4.gif);
+   /*background-image: none;*/
 }
 
 /* Level 3 - simple square bullets */
 div.xarpages-side-menu1 ul.side-menu2 ul.side-menu3 li {
-	background-position: 20px 0.5em;
-	background-image: url(../xarimages/bull3.gif);
+   background-position: 20px 0.5em;
+   background-image: url(../xarimages/bull3.gif);
 }
 
 /* Level 4 - simple round bullets */
 div.xarpages-side-menu1 ul.side-menu3 ul.side-menu4 li {
-	background-position: 30px 0.5em;
-	background-image: url(../xarimages/bull4.gif);
+   background-position: 30px 0.5em;
+   background-image: url(../xarimages/bull4.gif);
 }
 
 
@@ -197,9 +197,9 @@ div.xarpages-side-menu1 ul.side-menu3 ul.side-menu4 li {
 
 /* Darken the text and border when hovering */
 div.xarpages-side-menu1 li a:hover {
-	border-color: #600;
-	color: #600;
-	text-decoration: none;
+   border-color: #600;
+   color: #600;
+   text-decoration: none;
 }
 
 /* IE MAC may need all anchors floated to the left */
