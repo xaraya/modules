@@ -3,7 +3,14 @@
 # Only run this script on the server
 if [ $BK_SIDE != server ]
 then exit 0
-fi 
+fi
+
+# If we don't want to do anything set DRYRUN of NOTHING
+# NOTHING is also set automatically when there is nothing to do
+# DRYRUN is set when it was a test run (e.g. pull -n)
+if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING ]
+then exit 0
+fi
 
 # url to web interface
 BKURL=http://www.xaraya.com:15010
@@ -12,42 +19,29 @@ REPO=$(basename ${BKD_ROOT})
 # already been applied so we don't need to test for
 # CONFLICT variable. (see other trigger)
 
-# If we don't want to do anything set DRYRUN of NOTHING
-# NOTHING is also set automatically when there is nothing to do
-# DRYRUN is set when it was a test run (e.g. pull -n)
-#  
-if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING ]
-then exit 0
+# How many changesets are pushed? BK_CSETLIST maybe empty, but no harm done if it is.
+NUMSETS=`wc -l < $BK_CSETLIST`
+if [ $NUMSETS -gt 1 ]
+then
+CHANGETEXT="changesets were"
+else
+CHANGETEXT="changeset was"
 fi
+# Get the first changeset comment
+CSCOMMENT=`bk changes -r+ -d':C:'`
 
 (
-# Debug stuff 
-#if [ X$BKD_ROOT != X ]
-#then printf '%-10s%-20s%-20s\n' VAR CLIENT SERVER
-#     printf '%-10s%-20s%-20s\n' === ====== ======
-#     printf '%-10s%-20s%-20s\n' USER $BK_USER $BKD_USER
-#     printf '%-10s%-20s%-20s\n' HOST $BK_HOST $BKD_HOST
-#     printf '%-10s%-20s%-20s\n' ROOT $BK_ROOT $BKD_ROOT
-#     printf '%-10s%-20s%-20s\n' LEVEL $BK_LEVEL $BKD_LEVEL
-#     printf '%-10s%-20s%-20s\n' TIME_T $BK_TIME_T $BKD_TIME_T
-#     printf '%-10s%-20s%-20s\n' UTC $BK_UTC $BKD_UTC
-#     printf '%-10s%-20s%-20s\n' VERSION $BK_VERSION $BKD_VERSION
-#     echo
-#fi
-
-
 echo Changes were applied by ${BKD_USER} to the ${REPO} level ${BKD_LEVEL} repository.
 
 # What is the list of changesets which were incoming?
 if [ X$BK_CSETLIST != X ]
 then (
-	echo The following changesets were applied:
-	echo
-	bk changes -v - < $BK_CSETLIST
+		echo "The following $CHANGETEXT applied:"
+		echo
+		bk changes -v - < $BK_CSETLIST
      ) | sed 's/^/    /'
-	echo Links for the differences:
-	echo $(cat $BK_CSETLIST | xargs -n1 echo $BKURL/patch@ | sed 's/ //')
-	
+		echo Links for the differences:
+		echo $(cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@\n\r | sed 's/ //')
 fi
-# FIXME: subject should be: n change(s) applied to <repo>, <first comment trimmed>
-) | mail -s "$BK_EVENT in ${REPO} repository" xaraya_bk-notices@lists.xaraya.com
+# FIXME: subject spec should be" n changeset(s) pushed to <repo>, <firstcomment_trimmed>
+) | mail -s "${NUMSETS} ${CHANGETEXT} pushed to ${REPO}: ${CSCOMMENT:0:40}..." xaraya_bk-notices@lists.xaraya.com
