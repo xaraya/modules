@@ -73,7 +73,7 @@ function release_userapi_createid($args)
     $nextid=1;  //We want to start from ID=1 not 0
     for ($i = 0; $i < $totalrids; $i++)
     {
-  	if ($nextid == ($allrids[$i]['rid'])) {
+      if ($nextid == ($allrids[$i]['rid'])) {
           $nextid++;
        }
     }

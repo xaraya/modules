@@ -31,8 +31,8 @@ function release_admin_deleteid()
     if (!xarSecConfirmAuthKey()) return;
 
     if (!xarModAPIFunc('release',
-		               'admin',
-		               'deleteid', 
+                       'admin',
+                       'deleteid', 
                         array('rid' => $rid))) return;
 
     // Redirect

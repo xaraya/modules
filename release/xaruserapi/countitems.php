@@ -22,7 +22,7 @@
  */
 function release_userapi_countitems($args)
 {
-	extract($args);
+    extract($args);
 
     if (!isset($idtypes)) {
         $idtypes = 1;

@@ -22,7 +22,7 @@
  */
 function release_userapi_countnotes($args)
 {
-	extract($args);
+    extract($args);
     
     if (empty($phase)){
      $phase='viewall';

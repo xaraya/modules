@@ -31,8 +31,8 @@ function release_admin_deletenote()
     if (!xarSecConfirmAuthKey()) return;
 
     if (!xarModAPIFunc('release',
-		               'admin',
-		               'deletenote', 
+                       'admin',
+                       'deletenote', 
                         array('rnid' => $rnid))) return;
 
     // Redirect
