@@ -7,12 +7,15 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 
-/** *********REMEMBER TO CHECK AND EDIT THIS FILE!!! *******************
+/** *********REMEMBER TO CHECK, COPY AND EDIT THIS FILE!!! *******************
  *
- * The main configuration file for the xarTinyMCE image browser
- * Please make sure you check all configurations settings
- * Most will work as is, but you will have to set your own image libraries
- * Make sure the directories exist and are writeable
+ * INSTRUCTIONS: The main configuration file for the xarTinyMCE image browser
+ *
+ * 1. Copy this file to var/ibrowser/ibrowserconfig.inc
+ * 2. Please make sure you check all configurations settings
+ * 3. Update Allowed extensions, Allow Upload, Allow Delete, Base URL for your IMAGES
+ * 4. Enter the name and directories of your image libraries
+ *     Make sure the directories exist and are writeable
  */
 
 // allowed extentions for uploaded image files

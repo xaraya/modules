@@ -270,7 +270,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
         $ext = strtolower(substr(strrchr($entry,'.'), 1));
         if (is_file($_root.$imglib.$entry) && in_array($ext,$tinyMCE_valid_imgs))
         {
-            $arr_tinyMCE_image_files[$i][file_name] = $entry;
+            $arr_tinyMCE_image_files[$i]['file_name'] = $entry;
             $i++;
         }
       }
@@ -278,7 +278,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
       // sort the list of image filenames alphabetically.
       sort($arr_tinyMCE_image_files);
       for($k=0; $k<count($arr_tinyMCE_image_files); $k++){
-      $entry = $arr_tinyMCE_image_files[$k][file_name];
+      $entry = $arr_tinyMCE_image_files[$k]['file_name'];
       $size = getimagesize($tinyMCE_base_url.$imglib.$entry);
       $fsize = filesize($_root.$imglib.$entry);
    ?>

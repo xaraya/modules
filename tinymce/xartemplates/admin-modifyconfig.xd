@@ -474,13 +474,32 @@
             </select>
             </span>
         </div>
+        <xar:comment> LATER
+        <xar:if condition="strstr($tinyplugins,'ibrowser')" >
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#xarML('Add names and paths for image libraries separated by colons')#">
+                    <label for="iblibraries"><xar:mlstring>Names and paths for image libraries</xar:mlstring></label>
+                </span>
+            </span>
+            <span style="float: right; width: 68%; text-align: left;">
+                <input type="text" name="iblibraries" id="iblibraries" value="#$iblibraries#" size="60" maxlength="240" />
+                    <p><xar:mlstring>eg myimages,var/images/trusted/;otherimages,var/images/</xar:mlstring></p>
+            </span>
+        </div>
+        </xar:if>
+        </xar:comment>
+
          <div style="clear:both; margin-top:10px; margin-bottom:10px; float:right; width:68%; text-align:left;">
            <span style="left:30%; width: 68%; text-align: left;">
-            <xar:mlstring><strong>TO USE IMAGE BROWSER YOU MUST:</strong> Update the <a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file 
-            at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a> for the IBrowser Plugin - then chmod 444
+            <xar:mlstring><strong>TO USE IMAGE BROWSER YOU MUST:</strong></xar:mlstring><br />
+            <xar:mlstring>Copy the file at <a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file
+            at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a> to <code>/var/ibrowser/ibrowserconfig.inc</code> and update
+            the variables therein for your IBrowser Plugin - then chmod 444
             for added security. </xar:mlstring>
             </span>
          </div>
+
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
             <input type="submit" value="#$updatebutton#" />
         </div>
