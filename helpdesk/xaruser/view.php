@@ -48,17 +48,18 @@ function helpdesk_user_view($args)
     $data['showstatusinsummary']        = xarModGetVar('helpdesk', 'ShowStatusInSummary');
     $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');    
 
-    // Get number of tickets that met the given critera
-    $totaltickets  = xarModAPIFunc('helpdesk', 
-                                   'user', 
-                                   'gettickets', 
-                                   array('userid'    => $data['userid'],
-                                         'selection' => $selection,
-                                         'sortorder' => $sortorder,
-                                         'order'     => $order,
-                                         'statusfilter' => $statusfilter,
-                                         'countonly' => '1'));
-
+    // Lets get the ticket now for the view
+    $data['mytickets_data']  = xarModAPIFunc('helpdesk', 
+                                             'user', 
+                                             'gettickets', 
+                                             array('userid'    => $data['userid'],
+                                                   'selection' => $selection,
+                                                   'sortorder' => $sortorder,
+                                                   'order'     => $order,
+                                                   'startnum'  => $startnum,
+                                                   'statusfilter' => $statusfilter));
+    $totaltickets = sizeOf($data['mytickets_data']);    
+    
     //Setup args for pager so we don't lose our place                                                                                  
     $args = array('selection' => $selection,
                   'sortorder' => $sortorder,
@@ -69,18 +70,6 @@ function helpdesk_user_view($args)
                                     $totaltickets,
                                     xarModURL('helpdesk', 'user', 'view', $args),
                                     xarModGetVar('helpdesk', 'Default rows per page'));    
-        
-    // Lets get the ticket now for the view
-    $data['mytickets_data']  = xarModAPIFunc('helpdesk', 
-                                             'user', 
-                                             'gettickets', 
-                                             array('userid'    => $data['userid'],
-                                                   'selection' => $selection,
-                                                   'sortorder' => $sortorder,
-                                                   'order'     => $order,
-                                                   'startnum'  => $startnum,
-                                                   'statusfilter' => $statusfilter,
-                                                   'countonly' => '0'));
 
     // Sending state vars back into the form                                                                                                                                                         
     $data['selection'] = $selection;

@@ -83,9 +83,6 @@ function helpdesk_user_modify($args)
     $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
                                      array('itemtype' => 4));
 
-    //$data['types'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
-    //                               array('itemtype' => 5));
-    
     $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
                                    array('itemtype' => 10));
         

@@ -3,7 +3,7 @@
    Helpdesk for Xaraya
   
    @package Helpdesk
-   @copyright (C) 2003 Brian McGilligan.
+   @copyright (C) 2004 Brian McGilligan.
    @license GPL <http://www.gnu.org/licenses/gpl.html>
    @link http://www.abrasiontechnology.com
    @author Brian McGilligan
@@ -18,7 +18,7 @@
 /* This program is opensource so you can do whatever    */
 /* you want with it.                                    */
 /*                                                      */
-/* http://www.dimensionquest.net               		    */
+/* http://www.dimensionquest.net			*/
 /********************************************************/
 
 /**
@@ -27,14 +27,14 @@
 function helpdesk_init()
 {   
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable     =& xarDBGetTables();
+    $dbconn   =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
     // Create tables
-    $helpdesktable = $xartable['helpdesk_tickets'];
+    $helpdesktable  = $xartable['helpdesk_tickets'];
     $helpdeskcolumn = &$xartable['helpdesk_tickets_column'];
     
     $fields = array(
@@ -215,18 +215,7 @@ function helpdesk_upgrade($oldversion)
             // save the object id for later
             xarModSetVar('helpdesk','representativesobjectid',$objectid);                
             
-        case '.3.2':
-            // this module can't work without the comments module
-            $testmod = xarModIsAvailable('categories');
-            if (!isset($testmod)) return; // some other exception got in our way [locale for instance :)]
-
-            if (!$testmod) {
-                $msg = xarML('Please activate the Categories module first...');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
-                                new DefaultUserException($msg));
-                return;
-            }       
-            
+        case '.3.2':            
             $args = array('command' => 'add',
                           'field'   => 'xar_date',
                           'type'    => 'datetime',
@@ -271,6 +260,8 @@ function helpdesk_upgrade($oldversion)
             
         case '.3.3':
         case '0.3.3':
+
+        case '0.4.0':
                       
             
     }
@@ -287,7 +278,7 @@ function helpdesk_delete()
     xarDBLoadTableMaintenanceAPI();
 
     // Get database information
-    $dbconn =& xarDBGetConn();
+    $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     // Delete tables

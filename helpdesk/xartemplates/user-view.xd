@@ -98,7 +98,6 @@ Descending Order: <input type="radio" name="order" value="DESC" checked="checked
     <tr><td colspan="10">There are no tickets!</td></tr>
     </xar:if>
     <xar:foreach in="$mytickets_data" value="$ticket">
-<!--    foreach($mytickets_data as $ticket) {-->
         <xar:set name="$ticket_id">$ticket['ticket_id']</xar:set>
         <tr class="#$class#">
             <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'uid' => $userid, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket_id#</a>&nbsp;</td>

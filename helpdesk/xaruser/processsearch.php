@@ -32,8 +32,8 @@ function helpdesk_user_processsearch($args)
     $data['showdateenteredinsummary']   = xarModGetVar('helpdesk', 'ShowDateEnteredInSummary');
     $data['showstatusinsummary']        = xarModGetVar('helpdesk', 'ShowStatusInSummary');
     $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');    
-    $EditAccess = xarSecurityCheck('edithelpdesk');
-    $AdminAccess = xarSecurityCheck('adminhelpdesk');
+    $EditAccess = xarSecurityCheck('edithelpdesk', 0);
+    $AdminAccess = xarSecurityCheck('adminhelpdesk', 0);
 
     // Security check
     // No need for a security check if Anonymous Adding is enabled:
@@ -53,31 +53,12 @@ function helpdesk_user_processsearch($args)
     
     xarVarFetch('keywords',   'str:1:',  $keywords,   null,  XARVAR_NOT_REQUIRED);
     
-    xarVarFetch('subject',    'int:1:',  $subject,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('history',    'int:1:',  $history,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('notes',      'int:1:',  $notes,      null,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('subject',    'isset:1:',  $subject,    null,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('history',    'isset:1:',  $history,    null,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('notes',      'isset:1:',  $notes,      null,  XARVAR_NOT_REQUIRED);
     
-    
-    xarVarFetch('cboSearch1', 'str:1:',  $cboSearch1, null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('cboSearch2', 'str:1:',  $cboSearch2, null,  XARVAR_NOT_REQUIRED);
-    
-    //$results = xarModAPIFunc('helpdesk','user','runsearch', $args);
-    
-     // Get number of tickets that met the given critera
-    $totaltickets  = xarModAPIFunc('helpdesk', 
-                                   'user', 
-                                   'gettickets', 
-                                   array('userid'    => $data['userid'],
-                                         'selection' => $selection,
-                                         'sortorder' => $sortorder,
-                                         'order'     => $order,
-                                         'statusfilter' => $statusfilter,
-                                         'countonly' => '1'));
-   
     // Lets get the ticket now for the view
-    $data['mytickets_data']  = xarModAPIFunc('helpdesk', 
-                                             'user', 
-                                             'gettickets', 
+    $data['mytickets_data']  = xarModAPIFunc('helpdesk', 'user', 'gettickets', 
                                              array('userid'    => $data['userid'],
                                                    'selection' => $selection,
                                                    'sortorder' => $sortorder,
@@ -88,6 +69,8 @@ function helpdesk_user_processsearch($args)
                                                    'subject'   => $subject,
                                                    'keywords'  => $keywords));
 
+    $totaltickets = sizeOf($data['mytickets_data']);
+    
     //Setup args for pager so we don't lose our place                                                                                  
     $args = array('selection' => $selection,
                   'sortorder' => $sortorder,

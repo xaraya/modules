@@ -54,8 +54,11 @@ function helpdesk_user_new()
 
     $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
                                      array('itemtype' => 4));
-
-                                     
+    
+    $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+                                     array('itemtype' => 3));
+    
+    
     $cidlist =  xarModGetVar('helpdesk','mastercids.1');
     $data['cats'] = xarModAPIFunc('categories', 'visual', 'makeselect',
                                  array('cid' => $cidlist,

@@ -60,7 +60,6 @@ function helpdesk_xartables()
                 'ticket_id'         => "xar_id",
                 'ticket_date'       => "xar_date",
                 'ticket_statusid'   => "xar_statusid",
-                'ticket_typeid'     => "xar_typeid",
                 'ticket_priorityid' => "xar_priorityid",
                 'ticket_sourceid'   => "xar_sourceid",
                 'ticket_openedby'   => "xar_openedby",
@@ -68,9 +67,7 @@ function helpdesk_xartables()
                 'ticket_closedby'   => "xar_closedby",
                 'ticket_subject'    => "xar_subject",
                 'ticket_domain'     => "xar_domain",
-                'ticket_lastupdate' => "xar_updated",
-                'ticket_swversionid'=> "xar_swversionid",
-                'ticket_softwareid' => "xar_softwareid"
+                'ticket_lastupdate' => "xar_updated"
                 );
     
     // Return table information

@@ -104,7 +104,15 @@
             </xar:loop>
             </select>
         </td>    
-        <td colspan="2"> </td>
+        <td><xar:mlstring>Status</xar:mlstring>:</td>
+        <td>
+            <select name="status">
+	    <option value=""></option>
+            <xar:loop name="$status">
+                <option value="#$loop:item['id']#">#$loop:item['status']#</option>
+            </xar:loop>
+            </select>
+        </td>    
     </tr>
 <xar:if condition="$editaccess">
     <tr>
@@ -161,21 +169,6 @@
     <tr>
         <td colspan="4"><textarea name="notes" rows="6" cols="60"></textarea></td>
     </tr>
-    <tr>
-        <td colspan="4">
-            <xar:mlstring>Time Spent</xar:mlstring>:
-            <xar:mlstring>Hours</xar:mlstring>: <input name="hours" size="4" maxlength="4">
-            <xar:mlstring>Minutes</xar:mlstring>: <input name="minutes" size="4" maxlength="4">            
-        </td>
-    </tr>
-    <xar:if condition="$allowcloseonsubmit">
-    <tr>
-        <td colspan="4">
-            <xar:mlstring>Close ticket on submit</xar:mlstring>:
-            <input type="checkbox" name="closeonsubmit" size="4" maxlength="4">
-        </td>
-    </tr>
-    </xar:if>
 </xar:if>
 
     <tr>

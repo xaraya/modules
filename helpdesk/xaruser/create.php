@@ -32,18 +32,13 @@ function helpdesk_user_create($args)
     xarVarFetch('subject',  'str:1:',   $subject,   null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('nontech',  'str:1:',   $nontech,   null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('source',   'int:1:',   $source,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('status',   'int:1:',   $status,    null,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('status',   'int:1:',   $status,    1,     XARVAR_NOT_REQUIRED); // default = 1 or Open
     xarVarFetch('priority', 'int:1:',   $priority,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('sw_id',    'int:1:',   $sw_id,     null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('swv_id',   'int:1:',   $swv_id,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('types',    'int:1:',   $type,      null,  XARVAR_NOT_REQUIRED);    
     xarVarFetch('openedby', 'int:1:',   $openedby,  null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('assignedto','int:1:',  $assignedto,null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('closedby', 'int:1:',   $closedby,  null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('issue',    'str:1:',   $issue,     null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('notes',    'str:1:',   $notes,     null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('hours',    'int:1:',   $hours,     null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('minutes',  'int:1:',   $minutes,   null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('cids',     'array',    $cids,      array(),    XARVAR_NOT_REQUIRED);
     xarVarFetch('closeonsubmit', 'int', $closeonsubmit,  null,  XARVAR_NOT_REQUIRED);
     
@@ -55,23 +50,11 @@ function helpdesk_user_create($args)
         // Otherwise, use the value that the technician selected in the form
         $whosubmit = $openedby;
     }
-    // If the user has specified a Closed By or checked the "Close on Submit" checkbox, 
-    // then set ticket status to Closed.
-    if ($closeonsubmit) {
-        // Checkbox is marked, set status to closed.
-        $status = 3;
-        // Now, who closed it?  If there is not a selection in closed by 
-        // (UserID under 2 means anonymous or not set)
-        // Then set to current userid
-        if ($closedby < 2){
-            $closedby = $userid;	
-        }
-        // If the checkbox is empty, we still need to check the closedby dropbox
-    }elseif ($closedby > 1){
-        $status = 3;
-    } else {
-        $status = 1;
-    }
+    
+    // If it is closed by someone, the ticket must be closed
+    if(!empty($closedby))
+	$status = 3;
+    
     
     // If there is not assigned to rep we will try and 
     // find a rep to assign the ticket to
@@ -89,45 +72,39 @@ function helpdesk_user_create($args)
                                       'email'       => $email,
                                       'subject'     => $subject,
                                       'domain'      => $domain,
-                                      'sw_id'       => $sw_id,
-                                      'swv_id'      => $swv_id,
                                       'source'      => $source,
                                       'priority'    => $priority,
                                       'status'      => $status,
-                                      'type'        => $type,
                                       'openedby'    => $openedby,
                                       'assignedto'  => $assignedto,
                                       'closedby'    => $closedby,
                                       'issue'       => $issue,
-                                      'notes'       => $notes,
-                                      'hours'       => $hours,
-                                      'minutes'     => $minutes,
-                                      'closeonsubmit' => $closeonsubmit
+                                      'notes'       => $notes
                                       ));
 
     // Adds the Issue                                      
     $pid = 0; // parent id
     $itemid = $return_val; // id of ticket just created
     $result = xarModAPIFunc('comments', 'user', 'add', 
-                            array('modid' => $modid,
+                            array('modid'    => $modid,
                                   'objectid' => $itemid,
-                                  'pid' => $pid,
-                                  'title' => $subject,
-                                  'comment' => $issue,
+                                  'pid'      => $pid,
+                                  'title'    => $subject,
+                                  'comment'  => $issue,
                                   'postanon' => 0,
-                                  'author' =>  $userid                    
+                                  'author'   => $userid                    
                                  )
                            );
                                
     if(!empty($notes)){
         $result = xarModAPIFunc('comments', 'user', 'add', 
-                                array('modid' => $modid,
+                                array('modid'    => $modid,
                                       'objectid' => $itemid,
-                                      'pid' => $result,
-                                      'title' => $subject,
-                                      'comment' => $notes,
+                                      'pid'      => $result,
+                                      'title'    => $subject,
+                                      'comment'  => $notes,
                                       'postanon' => 0,
-                                      'author' =>  $userid
+                                      'author'   =>  $userid
                                     )
                                );
     }                                                              
@@ -141,8 +118,6 @@ function helpdesk_user_create($args)
                         'clean_first' => true)
                  );
      
-    //xarResponseRedirect(xarModURL('helpdesk', 'user', 'main'));
-                                      
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -164,8 +139,7 @@ function helpdesk_user_create($args)
     } else {
         $data['hooks'] = $hooks;
     } 
-                 
-        
+                         
     $data['userid'] = $userid;
     $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
     $data['menu']           = xarModFunc('helpdesk', 'user', 'menu');
