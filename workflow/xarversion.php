@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Workflow initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -13,6 +13,7 @@
 $modversion['name']           = 'Workflow';
 $modversion['id']             = '188';
 $modversion['version']        = '1.4.0';
+$modversion['displayname']    = xarML('Workflow');
 $modversion['description']    = 'Workflow Module based on the Galaxia Workflow Engine';
 $modversion['credits']        = '';
 $modversion['help']           = '';
