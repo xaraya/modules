@@ -407,6 +407,7 @@ function html_upgrade($oldversion)
             if (!$result) return;
 
             // fall through to the next upgrade
+        case '1.3':
         case '1.3.0':
             // Code to upgrade from version 1.3 goes here
             break;
