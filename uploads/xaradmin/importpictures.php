@@ -14,16 +14,16 @@ function uploads_admin_importpictures( $args )
     xarModSetVar('uploads', 'obfuscate_imports', 0);
 
 
-	echo "Import Pictures here<br>";
+	echo "Import Pictures here<br/>";
 	
 	// Kick mod available
 	echo "Checking mod avaliable (dynamicdata): ";
 	$avail = xarModIsAvailable("dynamicdata");
 	if( $avail )
 	{
-		echo "yes<br>";
+		echo "yes<br/>";
 	} else {
-		echo "no<br>";
+		echo "no<br/>";
 	}
 	
 	// Get files to import 
@@ -68,7 +68,7 @@ function uploads_admin_importpictures( $args )
 		$title = ucwords(str_replace( "_", " ", substr ($filename, $lastSlash, strpos( $filename, '.')-1 ) ));
 
 		$shortname = substr ($filename, $lastSlash, strlen( $filename));
-		echo "File: ".$filename."<br>";
+		echo "File: ".$filename."<br/>";
 
 
 		// import file into Uploads
@@ -84,12 +84,12 @@ function uploads_admin_importpictures( $args )
 						 ,'filesize' => filesize($filepath)
 						 ,'type'     => '');
 
-			echo "About to store<br>";	
+			echo "About to store<br/>";	
 			$info = xarModAPIFunc('uploads','user','store',$data);
 			echo '<pre>';
 			print_r( $info );
 			echo '</pre>';
-			echo "Stored<br>";	
+			echo "Stored<br/>";	
 
 		}		
 		
@@ -101,11 +101,11 @@ function uploads_admin_importpictures( $args )
 //		$dd_26 				 = $info['link'];
 
 		// Create Picture Article
-		echo "Creating Article<br>";
+		echo "Creating Article<br/>";
 		$aid = xarModAPIFunc('articles','admin','create',$article);
 		
 	
-		echo "Article Created :: ID :: $aid<br>";
+		echo "Article Created :: ID :: $aid<br/>";
 	}
 	exit();
 }

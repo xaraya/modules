@@ -46,17 +46,17 @@ function uploads_admin_importgallery( $args )
 	$avail = xarModIsAvailable("dynamicdata");
 	if( $avail )
 	{
-		echo "yes<br>";
+		echo "yes<br/>";
 	} else {
-		echo "no<br>";
+		echo "no<br/>";
 	}
 	echo "Checking mod avaliable (categories): ";
 	$avail = xarModIsAvailable("categories");
 	if( $avail )
 	{
-		echo "yes<br>";
+		echo "yes<br/>";
 	} else {
-		echo "no<br>";
+		echo "no<br/>";
 	}
 
 
@@ -77,7 +77,7 @@ function uploads_admin_importgallery( $args )
 		$albumdir = $image_import_dir."/".$album;
 		if( is_dir( $albumdir ) )
 		{
-			echo "<b>Found album: ".$album."</b><br>";
+			echo "<b>Found album: ".$album."</b><br/>";
 
 			$albumdat = $albumdir."/album.dat";
 			$x = getSerializedData( $albumdat );
@@ -144,7 +144,7 @@ function uploads_admin_importgallery( $args )
 					} else {
 						$info = array('link'=>''); //dummy for when not importing
 					}
-//					echo "Stored<br>";	
+//					echo "Stored<br/>";	
 				}		
 				
 			//Setup Article with file specific values
@@ -172,7 +172,7 @@ function uploads_admin_importgallery( $args )
 				// Setup var to overide the uploads dd property when dd hook is called to place correct link
 				$uploads_var_overide = $info['link'];
 				
-//				echo "<i>Creating Article: - </i> ".$article['title']."<br>";
+//				echo "<i>Creating Article: - </i> ".$article['title']."<br/>";
 				
 				if( $actuallyImport )
 				{
@@ -181,11 +181,11 @@ function uploads_admin_importgallery( $args )
 					$aid = "Mock run, Article not actually created.";
 				}	
 			
-				echo 'Article Created :: '.$aid.' :: '.$article['title'].' <br>';
+				echo 'Article Created :: '.$aid.' :: '.$article['title'].' <br/>';
 
 			}
 			
-			echo "<br><br>";
+			echo "<br/><br/>";
 		}
 	}
 
@@ -208,7 +208,7 @@ exit();
 	{
 		$filename = $file['filename'];
 		
-		echo "<hr> <b>File: ".$filename."</b><br>";
+		echo "<hr> <b>File: ".$filename."</b><br/>";
 		$lastSlash = strlen($filename) - strpos( strrev( $filename ), '/' );
 		$title = ucwords(str_replace( "_", " ", substr ($filename, $lastSlash, strpos( $filename, '.')-1 ) ));
 
@@ -227,12 +227,12 @@ exit();
 						 ,'filesize' => filesize($filepath)
 						 ,'type'     => '');
 
-			echo "<i>About to store</i>:<br>";	
+			echo "<i>About to store</i>:<br/>";	
 			if( $actuallyImport )
 			{
 				$info = xarModAPIFunc('uploads','user','store',$data);
 			}
-			echo "Stored<br>";	
+			echo "Stored<br/>";	
 
 		}		
 		
@@ -261,19 +261,19 @@ exit();
 		if( $catpath != '' )
 		{
 			$cat = $Root_Cat_Name.$catpath;
-			echo "<br><i>Looking up CID</i>:<br>";
-			echo $cat."<br>";
+			echo "<br/><i>Looking up CID</i>:<br/>";
+			echo $cat."<br/>";
 			$args = array('path'=>$cat);
 			$cid  = xarModAPIFunc('categories','user','categoryexists',$args);
 	
 			if( !$cid )
 			{
-				echo "<br><i>CID not found, creating or resolving</i><br>";
+				echo "<br/><i>CID not found, creating or resolving</i><br/>";
 				$cid = createCat( $Root_Cat_Name,$catpath,$image_import_dir );
 			}
 			
 			
-			echo "CID: $cid<br>";
+			echo "CID: $cid<br/>";
 			
 			$article['cids'] = array($cid);
 		}		
@@ -282,13 +282,13 @@ exit();
 		
 
 		// Create Picture Article
-		echo "<br><br><i>Creating Article:</i><br>";
+		echo "<br/><br/><i>Creating Article:</i><br/>";
 		echo '<pre>';
 		print_r( $article );
 		echo '</pre>';
-		echo 'Link :: '.$info['link'].'<br>';
-		echo 'File :: '.$filename.'<br>';
-		echo 'Path :: '.$filepath.'<br>';
+		echo 'Link :: '.$info['link'].'<br/>';
+		echo 'File :: '.$filename.'<br/>';
+		echo 'Path :: '.$filepath.'<br/>';
 
 		
 		if( $actuallyImport )
@@ -296,7 +296,7 @@ exit();
 			$aid = xarModAPIFunc('articles','admin','create',$article);
 		}	
 	
-		echo "Article Created :: ID :: $aid<br>";
+		echo "Article Created :: ID :: $aid<br/>";
 	}
 	exit();
 }
@@ -314,7 +314,7 @@ function createCat( $Root_Cat_Name,$catpath,$description )
 {
 	$catpath = $Root_Cat_Name.$catpath;
 
-	echo "<i>Looking up Category: ".$catpath.'</i><br>';
+	echo "<i>Looking up Category: ".$catpath.'</i><br/>';
 	
 	$path = '';
 	$lastCID = 0;
@@ -329,7 +329,7 @@ function createCat( $Root_Cat_Name,$catpath,$description )
 		}
 
 		$cid  = xarModAPIFunc('categories','user','categoryexists',array('path'=>$path));
-//		echo "path: $path [$lastCID/$cid]<br>";
+//		echo "path: $path [$lastCID/$cid]<br/>";
 		if( !$cid )
 		{
 			//This one is missing, create it.
@@ -339,7 +339,7 @@ function createCat( $Root_Cat_Name,$catpath,$description )
 			$args['image'] = '';
 			$args['parent_id'] = $lastCID;
 			$cid = xarModAPIFunc('categories','admin','create',$args);
-			echo "Created: $cat_name ($cid)<br>";
+			echo "Created: $cat_name ($cid)<br/>";
 		}
 		$lastCID = $cid;
 	}
@@ -348,7 +348,7 @@ function createCat( $Root_Cat_Name,$catpath,$description )
 
 function getGalleryInfo( $photodat )
 {
-//	echo "<i>Processing dat file :: $photodat <br></i>";
+//	echo "<i>Processing dat file :: $photodat <br/></i>";
 	
 	// get contents of a file into a string
 	$filename = $photodat;
@@ -386,7 +386,7 @@ function galleryTraverse( $import_directory )
 		$photodat = $import_directory.'/photos.dat';
 		if( file_exists($photodat) )
 		{
-//			echo "Found photo.dat<br>";
+//			echo "Found photo.dat<br/>";
 			$fileinfo = getGalleryInfo( $photodat );
 		}
 		while (($file = readdir($dir)) !== false) 
@@ -411,7 +411,7 @@ function galleryTraverse( $import_directory )
 				}
 			} else if (strpos($file,'.sized.') || strpos($file,'.thumb.') || strpos($file,'.highlight.')) {
 				$RealPathName = realpath($import_directory.'/'.$file);
-				echo "Removing unnessary thumbnail: $file<br>";
+				echo "Removing unnessary thumbnail: $file<br/>";
 				unlink( $RealPathName );
 			}
 		}
@@ -504,9 +504,9 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
 				$insystem = 'No';
 				$prunedFiles[] = $file;
 				
-//				echo "Added to import list.<br>";
+//				echo "Added to import list.<br/>";
 			} else {
-				echo "$filename - Already in system.<br>";
+				echo "$filename - Already in system.<br/>";
 			}
 			//close the result set
 			$result->Close();
