@@ -1,4 +1,4 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.3.2b
+INSTALLATION AND USE - XarTinyMCE Version 0.3.2c
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
 In addition to being very configurable it has some nice features not
