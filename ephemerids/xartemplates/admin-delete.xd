@@ -12,7 +12,7 @@
 
 	<p><xar:mlstring>Confirm deletion of Ephemerid</xar:mlstring></p>
 
-	<input type="submit" value="#$submitlabel#" align="middle" tabindex="1" /><br /><br />
+	<input type="submit" value="#$submitlabel#"  tabindex="1" /><br /><br />
 	
 	<a href="&xar-modurl-ephemerids-admin-main;"><xar:mlstring>Cancel deletion of Ephemerid</xar:mlstring></a>
 </form>        

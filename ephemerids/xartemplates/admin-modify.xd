@@ -23,7 +23,7 @@
 		<br />
 			<textarea name="content" id="content" rows="10" cols="60" tabindex="5">#$content#</textarea>
 		<br /><br />
-			<input type="submit" value="Submit" align="middle" tabindex="6" />
+			<input type="submit" value="Submit"  tabindex="6" />
 		</form>
 
 </div>
