@@ -1,7 +1,8 @@
 <?php
 
 
-function images_userapi_gd_info() {
+function images_userapi_gd_info() 
+{
 
     $gd_info = array(
         'GD Version'          => 'not supported', 
