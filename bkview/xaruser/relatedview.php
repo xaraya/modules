@@ -15,8 +15,13 @@
 
 function bkview_user_relatedview($args)
 {
-    if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
+    if($file == 'ChangeSet') {
+        // A request for other changesets on the ChangeSet file is the overview
+        // of changeset itself, go there
+        return xarModFunc('bkview','user','display');
+    }
+    if(!xarVarFetch('repoid','id',$repoid)) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));

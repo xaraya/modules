@@ -24,7 +24,14 @@
                     <xar:set name="icon">xarTplGetImage('file.gif','bkview')</xar:set>
                 </xar:if>
                 <xar:if condition="isset($checkedout) && $checkedout">
-                    <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$file#">
+                    <xar:set name="titlestring">
+                        <xar:ml>
+                            <xar:mlstring>Download revision #(1) of #(2)</xar:mlstring>
+                            <xar:mlvar>#$rev#</xar:mlvar>
+                            <xar:mlvar>#$file#</xar:mlvar>
+                        </xar:ml>
+                    </xar:set>
+                    <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
                         <img class="bkicon" src="#$icon#" alt="file" />
                     </a>
                 <xar:else/>
@@ -33,19 +40,38 @@
             </span>
             <xar:set name="filename">basename($file)</xar:set>
             <span style="vertical-align: top;">
-                <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#">
+                <xar:set name="titlestring">
+                    <xar:ml>
+                        <xar:mlstring>Show the history of #(1)</xar:mlstring>
+                        <xar:mlvar>#$file#</xar:mlvar>
+                    </xar:ml>
+                </xar:set>
+                <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#">
                 #$filename#</a>
             </span>
         </div>
         <span><xar:mlstring>Delta</xar:mlstring></span>
         <span>
-          <a onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+            <xar:set name="titlestring">
+                <xar:ml>
+                    <xar:mlstring>View annotated contents of #(1) for revision #(2)</xar:mlstring>
+                    <xar:mlvar>#$file#</xar:mlvar>
+                    <xar:mlvar>#$rev#</xar:mlvar>
+                </xar:ml>
+            </xar:set>
+          <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
             #$rev#
           </a> #$csettag#
         </span>
         <span><xar:mlstring>created by</xar:mlstring></span>
         <span>
-          <a onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$author#">
+            <xar:set name="titlestring">
+                <xar:ml>
+                    <xar:mlstring>Show the changes by #(1)</xar:mlstring>
+                    <xar:mlvar>#$author#</xar:mlvar>
+                </xar:ml>
+            </xar:set>
+          <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$author#">
             #$author#
           </a>
         </span>
@@ -59,6 +85,9 @@
         <a onclick="return loadContent(this.href);"  title="#xarML('View the changeset in which this delta was created')#" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$rev#&amp;file=#$file#">
             <xar:mlstring>Corresponding cset</xar:mlstring></a> | 
         <a  onclick="return loadContent(this.href);" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
-            <xar:mlstring>View differences</xar:mlstring></a>
+            <xar:mlstring>View differences</xar:mlstring></a> |
+        <a  onclick="return loadContent(this.href);" title="#xarML('View other changesets for this file')#" href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+            <xar:mlstring>Other changesets</xar:mlstring></a>
+            
      </div>
 </div>
