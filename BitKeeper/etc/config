@@ -1,5 +1,5 @@
-repository: xaraya-modules
-description: Xaraya modules repository
+repository: xaraya window module
+description: Xaraya window module repository
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
