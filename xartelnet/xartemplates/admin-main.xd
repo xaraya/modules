@@ -23,37 +23,37 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>You must configure xarTelnet before you can successfully use it.  The configuration sets the default host, port, etc that will be used if none other is specified.  This is a utility module, there are no user controls.  Module writers can use the follow method to provide thier programs with telnet functionality:</xar:mlstring>
-	    <xar:mlstring>
+        <xar:mlstring>
 <pre> 
 if( (dollar sign)socket = xarmodapifunc('xartelnet','user','connect', NULL))
 {
     (dollar sign)write = "This is an example command, for web browsing use GET / HTTP/1.0\n\n";
     xarmodapifunc('xartelnet','user','write',array('input' => (dollar sign)write, 
-    						    'socket' => (dollar sign)socket));
+                                'socket' => (dollar sign)socket));
     (dollar sign)results = xarmodapifunc('xartelnet','user','read',array('input' => xarmodgetvar('xartelnet','prompt'), 
-									'socket' => (dollar sign)socket));
+                                    'socket' => (dollar sign)socket));
     xarmodapifunc('xartelnet','user','disconnect',(dollar sign)socket);
 } 
 </pre>
-	    xarTelnet expects to recieve an array containing two variables, input and socket.  You must pass the socket to use and input contains, for the read function, the text to stop reading at, or for the write function, what to write.<br><br>
-	    In the future xarTelnet will become scriptable.
-	    </xar:mlstring>
+        xarTelnet expects to recieve an array containing two variables, input and socket.  You must pass the socket to use and input contains, for the read function, the text to stop reading at, or for the write function, what to write.<br><br>
+        In the future xarTelnet will become scriptable.
+        </xar:mlstring>
             <br /><br />
             <xar:mlstring>
-			You can do the following from the menu: 
-			</xar:mlstring>
-			<ul>
-				<li><xar:mlstring>Modify Config -- From here, you can configure the settings.</xar:mlstring></li>
-				<li><xar:mlstring>Test Connnection -- Test the connection settings.</xar:mlstring></li>
-			</ul>
-		</div>
+            You can do the following from the menu: 
+            </xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Modify Config -- From here, you can configure the settings.</xar:mlstring></li>
+                <li><xar:mlstring>Test Connnection -- Test the connection settings.</xar:mlstring></li>
+            </ul>
+        </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>There are no included blocks with the xartelnet Module</xar:mlstring>
+            <xar:mlstring>There are no included blocks with the xartelnet Module</xar:mlstring>
         </div>
         <br />
     </div>
