@@ -1,24 +1,9 @@
 <xar:template file="user-menu" />
 
 <div style="float: left; margin-top: 1em; width: 100%;">
-    <div class="xar-norm-outline" style="margin-bottom: 5pt; padding-left: 2pt;">
-      <div>
-        <span><xar:mlstring>Delta</xar:mlstring></span>
-        <span>
-          <a onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&rev=#$rev#">
-            #$rev#
-          </a>
-        </span>
-        <span><xar:mlstring>by</xar:mlstring></span>
-        <span>#$author#@#$domain#</span>
-        <span>#$age#</span>
-        <span><xar:mlstring>ago</xar:mlstring></span>
-      </div>
-      <div class="comments">
-        #$comments#
-      </div>
-    </div>
-   
+
+    <xar:template file="user-delta" subdata="$delta" />
+    
     <div class="precontainer">
         <xar:loop name="$difflines">
             <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>

@@ -29,11 +29,13 @@ function bkview_user_diffview($args)
     $changeset= new bkChangeSet($repo,$csetrev);
     $delta = new bkDelta($changeset,$file,$rev);
       
-    $data['age']=$delta->_age;
-    $data['author']=$delta->_author;
-    $data['domain']=$delta->_domain;
-    $data['rev']=$delta->_rev;
-    $data['comments']=$delta->_comments;
+    $data['delta']['repoid'] = $repoid;
+    $data['delta']['file'] = $file;
+    $data['delta']['rev'] = $rev;
+    $data['delta']['author'] = $delta->_author;
+    $data['delta']['age'] = $delta->_age;
+    $data['delta']['comments'] = $delta->_comments;
+    $data['delta']['csetrev'] = $delta->_cset->_rev;
     
     // Show differences for this file and revision
     $diffs=$delta->bkDiffs();
