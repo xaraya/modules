@@ -72,90 +72,8 @@ function translations_adminapi_generate_module_skels($args)
             $transKeyEntriesCollection[$subname] = $parser->getTransKeyEntries();
         }
 
-/*
-        //$partnames = array();
-        if (file_exists("modules/$moddir/xar$subname")) {
-           $dd = opendir("modules/$moddir/xar$subname");
-            while ($filename = readdir($dd)) {
-                if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
-                //$partnames[] = $matches[1];
-
-                $parser = new PHPParser();
-                $parser->parse("modules/$moddir/xar$subname/$filename");
-
-                $transEntriesCollection[$subname] = $parser->getTransEntries();
-                $transKeyEntriesCollection[$subname] = $parser->getTransKeyEntries();
-            }
-            closedir($dd);
-        }
-*/
     }
 
-/*
-    $tplnames = array();
-    if (file_exists("modules/$moddir/xartemplates")) {
-        $dd = opendir("modules/$moddir/xartemplates");
-        while ($filename = readdir($dd)) {
-            if (!preg_match('/^([a-z\-_]+)\.xd$/i', $filename, $matches)) continue;
-            $tplnames[] = $matches[1];
-
-            $parser = new TPLParser();
-            $parser->parse("modules/$moddir/xartemplates/$filename");
-
-            $transEntriesCollection['templates::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['templates::'.$matches[1]] = $parser->getTransKeyEntries();
-        }
-        closedir($dd);
-    }
-
-    $incltplnames = array();
-    if (file_exists("modules/$moddir/xartemplates/includes")) {
-        $dd = opendir("modules/$moddir/xartemplates/includes");
-        while ($filename = readdir($dd)) {
-            if (!preg_match('/^([a-z\-_]+)\.xd$/i', $filename, $matches)) continue;
-            $incltplnames[] = $matches[1];
-
-            $parser = new TPLParser();
-            $parser->parse("modules/$moddir/xartemplates/includes/$filename");
-
-            $transEntriesCollection['templateincludes::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['templateincludes::'.$matches[1]] = $parser->getTransKeyEntries();
-        }
-        closedir($dd);
-    }
-
-    $blktplnames = array();
-    if (file_exists("modules/$moddir/xartemplates/blocks")) {
-        $dd = opendir("modules/$moddir/xartemplates/blocks");
-        while ($filename = readdir($dd)) {
-            if (!preg_match('/^([a-z\-_]+)\.xd$/i', $filename, $matches)) continue;
-            $blktplnames[] = $matches[1];
-
-            $parser = new TPLParser();
-            $parser->parse("modules/$moddir/xartemplates/blocks/$filename");
-
-            $transEntriesCollection['templateblocks::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['templateblocks::'.$matches[1]] = $parser->getTransKeyEntries();
-        }
-        closedir($dd);
-    }
-
-    $blocknames = array();
-    if (file_exists("modules/$moddir/xarblocks")) {
-        $dd = opendir("modules/$moddir/xarblocks");
-        while ($filename = readdir($dd)) {
-            if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
-            $blocknames[] = $matches[1];
-
-            $parser = new PHPParser();
-            $parser->parse("modules/$moddir/xarblocks/$filename");
-
-            $transEntriesCollection['blocks::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['blocks::'.$matches[1]] = $parser->getTransKeyEntries();
-        }
-        closedir($dd);
-    }
-*/
     $allowedcontexts = array("templates", "templateincludes", "templateblocks");
 
     foreach($allowedcontexts as $allowedcontext) {
@@ -218,8 +136,9 @@ function translations_adminapi_generate_module_skels($args)
                 $names = ${$context->getName() . "names"};
             }
             foreach($names as $name) {
-                if ($backend->hasContext($context->getType(),$name))
+                if ($backend->hasContext($context->getType(),$name)){
                     if (!$backend->loadContext($context->getType(),$name)) return;
+                }
             }
         }
     }
@@ -258,7 +177,6 @@ function translations_adminapi_generate_module_skels($args)
         if (!$foundmatch) {
             if (!$gen->create(XARMLS_CTXTYPE_FILE, $subname)) return;
         }
-
         $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
 
         // Avoid creating entries for the same locale
