@@ -438,7 +438,7 @@ function articles_user_display($args)
             xarVarSetCached('Blocks.categories','catcount',$pubcatcount[$ptid]);
         }
     } else {
-        xarVarSetCached('Blocks.categories','catcount',array());
+    //    xarVarSetCached('Blocks.categories','catcount',array());
     }
 //}
 
