@@ -1,0 +1,25 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Uploads Module Overview</xar:mlstring></h2>
+<div align="center">
+<br />
+<ul>
+  <li>
+  <a href="#xarModURL('uploads', 'admin', 'view')#">
+    <xar:mlstring>View All Uploads</xar:mlstring>
+    </a>
+  </li>
+  <li>
+    <a href="#xarModURL('uploads', 'admin', 'view', array('filter'=>'waiting'))#">
+    <xar:mlstring>View Waiting Uploads</xar:mlstring>
+    </a>
+  </li>
+  <li>
+  <a href="#xarModURL('uploads', 'admin', 'modifyconfig')#">
+	<xar:mlstring>Modify Uploads Configuration</xar:mlstring>
+    </a>
+  </li>
+</ul>
+</div>
+</div>

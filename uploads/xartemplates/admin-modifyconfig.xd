@@ -1,0 +1,33 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Uploads Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+<input type="hidden" name="authid" value="#$authid#">
+<p><xar:mlstring>Uploads Directory</xar:mlstring>&nbsp;&nbsp;<input type="text" name="uploads_directory" value="#$uploads_directory#" size="70">
+<br />
+<xar:mlstring>This must be the full path to the folder on your server, including ending slash.  This directory must be php-writable.</xar:mlstring>
+</p>
+<p><xar:mlstring>Maximum Upload Size (in bytes)</xar:mlstring>&nbsp;&nbsp;<input type="text" name="maximum_upload_size" value="#$maximum_upload_size#">
+<br />
+<xar:mlstring>This number may be ignored if it is greater than your PHP maximum upload size.</xar:mlstring>
+</p>
+<p><xar:mlstring>Maximum Image Width (in pixels)</xar:mlstring>&nbsp;&nbsp;<input type="text" name="max_image_width" value="#$max_image_width#">
+</p>
+<p><xar:mlstring>Maximum Image Height (in pixels)</xar:mlstring>&nbsp;&nbsp;<input type="text" name="max_image_height" value="#$max_image_height#">
+</p>
+<p><xar:mlstring>Allowed File Extensions</xar:mlstring>&nbsp;&nbsp;<input type="text" name="allowed_types" value="#$allowed_types#" size="70">
+<br />
+<xar:mlstring>This list should be semicolon (;) delimited. Do not use dots (.) unless it is a multi-part extension like tar.gz. Do not put a semicolon on the end unless you want to accept uploads without extensions.</xar:mlstring>
+</p>
+
+<p><xar:mlstring>Confirm Deletes/Rejects</xar:mlstring>&nbsp;&nbsp;<input type="text" name="confirm_delete" value="#$confirm_delete#"><br>
+<xar:mlstring>Specify 0 to turn off confirmation, specify 1 to turn on confirmation.</xar:mlstring>
+</p>
+
+<xar:set name="$saveConfigLabel"><xar:mlstring>Save Configuration</xar:mlstring></xar:set>
+<p>
+<input type="submit" name="#$saveConfigLabel#">
+</p>
+</form>
+</div>
+</div>

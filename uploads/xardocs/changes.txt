@@ -1,0 +1,41 @@
+The following briefly describes how this version of the Uploads module differs from what was in BitKeeper around the end of May.
+
+
+
+* Downloads module now uses php to stream files back to browser.  This enables file's directory to be outside web root.
+
+
+
+* Converted security calls to new masks.  I haven't fully tested the security calls, but they seem to be functioning.  Any assistance from someone more experienced with Xaraya permissions/roles would be helpful.
+
+
+
+* Added the Upload Form to the Admin menu to provide a "quick & dirty" way of getting files into the system.
+
+
+
+* Added a "Reject/Delete" function.  The menu option was there, but the function was missing.  I've got a simple placeholder implemented.  It currently simply removes the DB entry, and leaves the file on the server.  I was receiving "Permission Denied" errors when calling "unlink($file)" in php, so the code to actually delete the files is currently commented out.
+
+
+
+* Added hooks for the articles system.  Two minor changes in the articles module allows the Uploads module to handle the "File Upload" field type in articles.  If a text file is uploaded, the contents are copied to the bodytext field of the article.  If some other file is uploaded, then a "upload code" is placed in the body text of the file.  A seperate display transformation hook takes the "upload code" and substitutes a template (based on the file's extension) for "displaying the file."  Templates currently included are a default <a href=""> link to the file, a <img src=""> for GIFs, and a download link with a "zip icon" for zip files.
+
+
+* Added an Upload DD property type.  This DD property type now utilizes the uploads module for managing uploads of files.
+
+
+
+
+TODO:
+
+
+
+* Better tools for handling batch uploads of files
+
+
+
+* Tutorial for setting up a "Downloads" publication type using the uploads module to push files to the server for download.
+
+
+
+* Integration with Image Pickers (Articles & DD)

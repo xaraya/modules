@@ -1,0 +1,22 @@
+* Initialize and Enable the Uploads Module
+
+* Enable the uploads module hooks for Articles
+
+
+
+* In the Uploads Admin, select Modify Config
+
+* Specify an upload folder
+
+* Make sure the web server account has write access to this folder
+
+* This folder must be web viewable if you want "Preview" to work while creating articles
+
+
+
+* In the Articles Administration, enable the bodyfile field for the publication type that you would like to be able to upload files for.  Select any name you like for the Label (I use "Upload") and select "File Upload" from the dropdown list for the Format of the field. Don't forget to also place a check in the "Input" column for that field.
+
+
+
+
+

@@ -1,0 +1,66 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Uploads</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<p><b><xar:mlstring>Sort Options</xar:mlstring>:</b>
+<a href="#xarModURL('uploads', 'admin', 'view')#"><xar:mlstring>View All</xar:mlstring></a>&nbsp;|
+<a href="#xarModURL('uploads', 'admin', 'view')#&amp;filter=waiting"><xar:mlstring>Waiting for Approval</xar:mlstring></a>
+</p>
+
+
+<xar:if condition="count($items) gt 0">
+<table summary="Uploads" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+<tr>
+	<th><xar:mlstring>Source Module</xar:mlstring></th>
+	<th><xar:mlstring>Upload Code</xar:mlstring></th>
+	<th><xar:mlstring>Mod Item ID</xar:mlstring></th>
+	<th><xar:mlstring>Uploaded by</xar:mlstring></th>
+	<th><xar:mlstring>User Given File Name</xar:mlstring></th>
+	<th><xar:mlstring>Current File Name</xar:mlstring></th>
+	<th><xar:mlstring>Actions</xar:mlstring></th>
+</tr>
+<xar:loop name="$items">
+<xar:if condition="(($loop:index + 1) % 2)">
+	<tr>
+		<td class="xar-norm">#$loop:item['ulmod']#</td>
+		<td class="xar-norm">#ulid:#$loop:item['ulid']##</td>
+		<td class="xar-norm">#$loop:item['ulmodid']#</td>
+		<td class="xar-norm">#$loop:item['uluid']#</td>
+		<td class="xar-norm">#$loop:item['ulfile']#</td>
+		<td class="xar-norm">#$loop:item['ulhash']#</td>
+		<td class="xar-norm">
+		<a href="#xarModURL('uploads', 'admin', 'download', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Download</xar:mlstring></a>
+		<xar:if condition="$loop:item['ulapp'] eq 0"> 
+		 | <a href="#xarModURL('uploads', 'admin', 'approve', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Approve</xar:mlstring></a> |
+		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Reject</xar:mlstring></a>
+		<xar:else />
+		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Delete</xar:mlstring></a>
+		</xar:if> 
+		</td>
+	</tr>
+<xar:else />
+	<tr>
+		<td class="xar-accent">#$loop:item['ulmod']#</td>
+		<td class="xar-accent">#ulid:#$loop:item['ulid']##</td>
+		<td class="xar-accent">#$loop:item['ulmodid']#</td>
+		<td class="xar-accent">#$loop:item['uluid']#</td>
+		<td class="xar-accent">#$loop:item['ulfile']#</td>
+		<td class="xar-accent">#$loop:item['ulhash']#</td>
+		<td class="xar-accent">
+		<a href="#xarModURL('uploads', 'admin', 'download', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Download</xar:mlstring></a>
+		<xar:if condition="$ulapp eq 0"> 
+		 | <a href="#xarModURL('uploads', 'admin', 'approve', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Approve</xar:mlstring></a> |
+		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Reject</xar:mlstring></a>
+		<xar:else />
+		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Delete</xar:mlstring></a>
+		</xar:if> 
+		</td>
+	</tr>
+</xar:if>
+</xar:loop>
+</table>
+<xar:else/>
+	<xar:mlstring>No uploads with applied filter.</xar:mlstring>
+</xar:if>
+</div>
+</div>

@@ -1,0 +1,17 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Uploads Module Overview</xar:mlstring></h2>
+<div align="center">
+<form action="#xarModURL('uploads','admin','approvefinal')#" method="post">
+<xar:mlstring>Are you sure?</xar:mlstring>
+<br /><br />
+<input type="hidden" name="authid" value="#$authid#">
+<input type="hidden" name="ulid" value="#$ulid#">
+<input type="hidden" name="ulhash" value="#$ulhash#">
+
+<xar:set name="$MLApprove"><xar:mlstring>Approve</xar:mlstring></xar:set>
+<input type="submit" value="#$MLApprove#">
+</form>
+</div>
+</div>
