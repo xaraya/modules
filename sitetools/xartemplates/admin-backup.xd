@@ -1,49 +1,130 @@
-<xar:set name="$confirmbutton"><xar:mlstring>Backup Now!</xar:mlstring></xar:set>
-<xar:set name="$backuptitle"><xar:mlstring>Backing Up Database:</xar:mlstring></xar:set>
-
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Backup Database Tables</xar:mlstring></h2>
+<xar:set name="$confirmbutton"><xar:mlstring>Backup</xar:mlstring></xar:set>
+<xar:set name="$backuptitle"><xar:mlstring>Backing Up Database:</xar:mlstring></xar:set>
+<xar:set name="$goback"><xar:mlstring>Go Back</xar:mlstring></xar:set>
+<xar:set name="$checktrue"><xar:mlstring>Select All</xar:mlstring></xar:set>
+<xar:set name="$checkfalse"><xar:mlstring>Deselect All</xar:mlstring></xar:set>
+<xar:set name="$screenlabel"><xar:mlstring>Running status display: </xar:mlstring></xar:set>
+<xar:set name="$screenhelp"><xar:mlstring>If checked, a running status of backup progresss is displayed.</xar:mlstring></xar:set>
+<xar:set name="$usegzlabel"><xar:mlstring>Create GZ backup file(if gz available)?</xar:mlstring></xar:set>
+<xar:set name="$usegzhelp"><xar:mlstring>If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.</xar:mlstring></xar:set>
+<xar:set name="$securitymessage"><xar:mlstring><b>WARNING:</b><br />Do not leave your backup file in a web browsable directory.
+                                 Remember to delete it, or move it to a secure directory.</xar:mlstring></xar:set>
+<xar:set name="$savefile"><xar:mlstring>Right click on backup file link to save and download</xar:mlstring></xar:set>
 <div style="margin: auto;">
+    <!-- First get choice of backup type -->
+<xar:if condition="$warning eq 1">
+    <div>#$warningmessage#</div>
 
+<xar:elseif condition="$startbackup eq ''" />
+
+    <form method="post" action="#xarModURL('sitetools', 'admin', 'backup')#" method="post" enctype="application/x-www-form-urlencoded">
+     <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+    <div>
+    <span style="float: left; width: 40%; text-align: right;"><xar:mlstring>Backup Type:</xar:mlstring></span>
+		<span style="float: right; width: 58%; text-align: left;">
+        <select name="startbackup" id="startbackup">
+        <option value="0"><xar:mlstring>Select backup type</xar:mlstring></option>
+            <xar:foreach in="$backupops" value="$v" key="$k">
+                    <xar:if condition="$k eq $startbackup">
+                        <option value="#$k#" selected="selected">#$v#</option>
+                    <xar:else />
+                        <option value="#$k#">#$v#</option>
+                    </xar:if>
+            </xar:foreach>
+        </select>
+		</span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 40%; text-align: right;">
+		<span class="help" title="#$usegzhelp#">
+            <label for="usegz">#$usegzlabel#</label>
+        </span>
+		</span>
+		<span style="float: right; width: 58%; text-align: left;">
+            <xar:if condition="$usegz eq true">
+                <input type="checkbox" name="usegz" id="usegz" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="usegz" id="usegz" value="1" />
+            </xar:if>
+        </span>
+
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 40%; text-align: right;">
+		<span class="help" title="#$screenhelp#">
+            <label for="screenlabel">#$screenlabel#</label>
+        </span>
+		</span>
+		<span style="float: right; width: 58%; text-align: left;">
+            <xar:if condition="$usegz eq true">
+                <input type="checkbox" name="screen" id="screen" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="screen" id="screen" value="1" />
+            </xar:if>        TO DO: Currently on, need to be made configurable
+
+        </span>
+
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+             <span style="text-align:center; width:98%; margin-top:20px;">
+                 <input type="submit" name="confirm" value="#$confirmbutton#" />
+             </span>
+    </div>
+    </form>
+
+    </div>
+  <!-- Start partial database table selection display -->
+<xar:elseif condition="$startbackup eq 'partial'" />
     <span style="float: left; width: 98%; text-align: right;">
-       <form action="#xarModURL('sitetools', 'admin', 'backup')#" method="post" enctype="application/x-www-form-urlencoded">
+       <form action="#xarModURL('sitetools', 'admin', 'backup')#" method="post" name="SelectedTablesForm" id="SelectedTablesForm" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="confirm" id="confirm" value="true" />
+        <input type="hidden" name="startbackup" id="startbackup" value="complete" />
+        <input type="hidden" name="usegz" id="usegz" value="#$usegz#" />
+        <input type="hidden" name="screen" id="screen" value="#$screen#" />
     </span>
 
-     <div style="clear: both; padding-top: 10px;">
-         <span class="xar-mod-title" style="float: left; padding-bottom: 10px; padding-top: 0px; width: 98%; text-align: center;">
-            #$backuptitle# #$dbname#
-         </span>
-    </div>
-<!---    <div style="clear: both; padding-top: 10px;">
-	    <table width="100%" border="0" cellspacing="1" cellpadding="1">
-            <tr>
-                <th nowrap="nowrap">
-                    <label class="xar-mod-title"><xar:mlstring>Table</xar:mlstring></label>
-                </th>
-                <th nowrap="nowrap">
-                    <label class="xar-mod-title"><xar:mlstring>Backup</xar:mlstring></label>
-                </th>
-               </tr>
-        <xar:foreach in="$tabledat" value="$tableinfo">
-           <tr>
-              <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
-                  #$tableinfo['name']#
-              </td>
-              <td class="xar-norm-outline" style="text-align: right;margin-top:2px; margin-bottom:2px;width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
-               <input type="hidden" name="#$tableinfo['name']#" id="#$tableinfo['name']#" value="true" />
-                  <input type="checkbox" value="1" name="#$tableinfo['id']#" />
-              </td>
-
-             </tr>
-        </xar:foreach>
-        </table>
-    </div> --->
+    <table width="100%" border="0" cellspacing="2" cellpadding="1">
+        <tr>
+            <th nowrap="nowrap" colspan="#$number_of_cols#">
+                <label class="xar-mod-title"><xar:mlstring>Tables for:&nbsp;</xar:mlstring>#$dbname# &nbsp;&nbsp;<xar:mlstring>(records)</xar:mlstring></label>
+            </th>
+        </tr>
+        <tr>
+           <xar:set name="$i">1</xar:set>
+           <xar:foreach in="$dbtables" value="$dbtable">
+               <xar:if condition ="$i++ lt $number_of_cols">
+                 <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                      <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked />  #$dbtable['tablename']# (#$dbtable['tablerecs']#)
+                  </td>
+               <xar:else />
+                      <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                      <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked />   #$dbtable['tablename']# (#$dbtable['tablerecs']#)
+                   <xar:set name="$i">1</xar:set>
+                  </tr><tr>
+               </xar:if>
+           </xar:foreach>
+    </tr></table>
        <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
-            <input type="submit" value="#$confirmbutton#" align="center" />
+           <input type="button" OnClick="CheckAll(true)" value="#$checktrue#" />
+           <input type="button" OnClick="CheckAll(false)" value="#$checkfalse#" />
+	       <input type="submit" name="SelectedTablesOnly" value="#$confirmbutton#" />
         </span>
      </form>
+<xar:elseif condition="$startbackup" />
+    <xar:loop name="$runningstatus">
+           #$loop:item['message']# <br />
+    </xar:loop>
+
+    <p><xar:mlstring>Completed in:</xar:mlstring> #$completetime#</p>
+    <p><xar:mlstring>File:</xar:mlstring>
+    <a href="#$bkfilename#" onclick="window.open(this.href, 'popupwindow', 'width=640,height=300,scrollbars,resizable'); return false;">#$bkname# #$bkfilesize#</a></p>
+    <p class="xar-accent">#$savefile#</p>
+    <div>#$securitymessage#</div>  #$deleteurl# //TO DO
+</xar:if>
+     <p><a href="javascript:history.back(-1)">#$goback#</a></p>
 
 </div>
 </div>

@@ -16,7 +16,7 @@
         <li><xar:mlstring>Delete Template, RSS or ADOdb cache files</xar:mlstring></li>
         <li><xar:mlstring>Browse template cache files</xar:mlstring></li>        
             
-        <li><xar:mlstring>Backup your MySQL database tables //TO DO</xar:mlstring></li>
+        <li><xar:mlstring>Backup your MySQL database tables //FUNCTIONAL BUT LOTS TO DO, NEEDS TESTING</xar:mlstring></li>
             </ul>
         
      </div>
