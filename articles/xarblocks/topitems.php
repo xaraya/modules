@@ -261,6 +261,8 @@ function articles_topitemsblock_display($blockinfo)
         // MikeC: Bring the summary field back as $desc
         if (!empty($vars['showsummary'])) {
             $article['summary']  = xarVarPrepHTMLDisplay($article['summary']);
+            $article['transform'] = array('summary', 'title');
+            $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
         } else {
             $article['summary'] = '';
         }
