@@ -15,8 +15,6 @@ function xarbb_admin_modifyconfig()
         case 'modify':
         default:
 
-            $data['supportshorturls'] = xarModGetVar('xarbb','SupportShortURLs') ? 'checked' : '';
-
             $hooks = xarModCallHooks('module', 'modifyconfig', 'xarbb',
                                     array('module' => 'xarbb',
                                           'itemtype' => 1)); // forum
@@ -37,7 +35,7 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('hottopic','int:1:',$hotTopic,10,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('redhottopic','int:1:',$redhotTopic,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage,20,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('supportshorturls','isset', $supportshorturls,0,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('supportshorturls','checkbox', $supportshorturls,false,XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
