@@ -165,31 +165,32 @@
 
  	   </span>
     </div>
-
-    <div style="clear:both; width: 98%; padding-top:20px; text-align:center">
-        <span class="xar-title" >#$schedulingoptions#</span>
-    </div>
-    <xar:foreach in="$schedule" key="$what" value="$descr">
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 30%; text-align: right;">
-            <span class="help" title="#$schedulinghelp#">
-                <label for="interval_#$what#">#$descr#</label>
+    <xar:if condition="xarModIsAvailable('scheduler')">
+        <div style="clear:both; width: 98%; padding-top:20px; text-align:center">
+            <span class="xar-title" >#$schedulingoptions#</span>
+        </div>
+        <xar:foreach in="$schedule" key="$what" value="$descr">
+        <div style="clear: both; padding-top: 5px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#$schedulinghelp#">
+                    <label for="interval_#$what#">#$descr#</label>
+                </span>
             </span>
-        </span>
-        <span style="float: right; width: 68%; text-align: left;">
-            <select name="interval[#$what#]" id="interval_#$what#">
-                <option value="">#$schedulingoff#</option>
-            <xar:foreach in="$intervals" key="$name" value="$display">
-                <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
-                    <option value="#$name#" selected="selected">#$display#</option>
-                <xar:else/>
-                    <option value="#$name#">#$display#</option>
-                </xar:if>
-            </xar:foreach>
-            </select>
-        </span>
-    </div>
-    </xar:foreach>
+            <span style="float: right; width: 68%; text-align: left;">
+                <select name="interval[#$what#]" id="interval_#$what#">
+                    <option value="">#$schedulingoff#</option>
+                <xar:foreach in="$intervals" key="$name" value="$display">
+                    <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
+                        <option value="#$name#" selected="selected">#$display#</option>
+                    <xar:else/>
+                        <option value="#$name#">#$display#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </span>
+        </div>
+        </xar:foreach>
+    </xar:if>
     <div style="clear: both; width: 98%; padding-top: 5px;">
         <span style="float: left; padding-bottom: 10px; padding-top: 10px; width: 98%; text-align: center;">
             #$schedulingnote#

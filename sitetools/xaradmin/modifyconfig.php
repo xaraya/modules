@@ -1,6 +1,6 @@
 <?php
 /*
- * File: $Id: modifyconfig.php,v 1.1 2003/09/19 09:16:03 jojodee Exp $
+ * File: $Id$
  *
  * Standard function to modify the configuration 
  *
@@ -43,15 +43,14 @@ function sitetools_admin_modifyconfig()
 
     // scheduler functions available in sitetools at the moment
     $schedulerapi = array('optimize','backup');
+    //Define for each job type
+    $data['schedule']['optimize']=xarML('Run Optimize Job');
+    $data['schedule']['backup']=xarML('Run Backup Job');
 
     if (xarModIsAvailable('scheduler')) {
         $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
         $data['interval'] = array();
-        //Define for each job type
-        $data['schedule']['optimize']=xarML('Run Optimize Job');
-        $data['schedule']['backup']=xarML('Run Backup Job');
-       foreach ($schedulerapi as $func) {
-
+        foreach ($schedulerapi as $func) {
             // see if we have a scheduler job running to execute this function
             $job = xarModAPIFunc('scheduler','user','get',
                                  array('module' => 'sitetools',
