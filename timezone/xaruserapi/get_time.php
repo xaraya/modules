@@ -44,8 +44,8 @@ function timezone_userapi_get_time($args=array())
     unset($Zones,$Leaps,$Links);
     
     //mydump($zone);
-    // Zone::   GMTOFF	RULES	FORMAT	[UNTIL]
-    // Rule::   FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
+    // Zone::   GMTOFF    RULES    FORMAT    [UNTIL]
+    // Rule::   FROM    TO    TYPE    IN    ON    AT    SAVE    LETTER
     // What rule are we supposed to use
     $zone_offset =& $zone[0];
     $zone_rule =& $zone[1];

@@ -3,12 +3,12 @@
 
 function timezone_userapi_encode_shorturl(&$params) 
 {
-	// Get arguments from argument array
+    // Get arguments from argument array
     //extract($args); unset($args);
     // check if we have something to work with
     if (!isset($params['func'])) { return; }
     
-	// default path is empty -> no short URL
+    // default path is empty -> no short URL
     $path = '';
     $extra = '';
     // we can't rely on xarModGetName() here (yet) !

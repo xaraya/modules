@@ -1,6 +1,6 @@
 <?php
 //========================================================================
-//	TimeZone Rules
+//    TimeZone Rules
 //========================================================================
 $Rules = array();
 $Rules['Algeria'][0] = array('1916','only','-','Jun','14','23:00s','1:00','S');
@@ -1666,7 +1666,7 @@ $Rules['Uruguay'][36] = array('1990','1991','-','Oct','Sun>=21','0:00','1:00','S
 $Rules['Uruguay'][37] = array('1992','only','-','Oct','18','0:00','1:00','S');
 $Rules['Uruguay'][38] = array('1993','only','-','Feb','28','0:00','0','-');
 //========================================================================
-//	TimeZones
+//    TimeZones
 //========================================================================
 $Zones = array();
 $Zones['Africa/Algiers'][0] = array('0:12:12','-','LMT','1891','Mar','15','0:01');
@@ -3412,7 +3412,7 @@ $Zones['America/Caracas'][1] = array('-4:27:40','-','CMT','1912','Feb','12');
 $Zones['America/Caracas'][2] = array('-4:30','-','VET','1965');
 $Zones['America/Caracas'][3] = array('-4:00','-','VET');
 //========================================================================
-//	Links for Backwards Compatibility
+//    Links for Backwards Compatibility
 //========================================================================
 $Links = array();
 $Links['Antarctica/South_Pole'] = 'Antarctica/McMurdo';

@@ -5,7 +5,7 @@
 // /calendar/function/Ymd/
 
 function timezone_userapi_decode_shorturl(&$params) 
-{	
+{    
     $args = array();
     
     // if we don't have a function, call the default view
