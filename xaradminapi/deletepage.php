@@ -31,7 +31,7 @@ function xarpages_adminapi_deletepage($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('DeletePage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+    if (!xarSecurityCheck('DeleteXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         return;
     }
 

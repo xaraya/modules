@@ -17,7 +17,7 @@ function xarpages_funcapi_example($args)
     //  true    - processing successful, but $args not modified
     //  false   - processing unsuccessful or processing must stop; results
     //            in an immediate return from the page processing
-    //  NULL    - treating by the calling function as 'custom function not found';
+    //  NULL    - treated by the calling function as 'custom function not found';
     //            has the same effect as 'true' for the present time
     //  other   - other data types and values are treated as 'true' for now; that
     //            may be extended if there are other actions that the calling
@@ -30,7 +30,11 @@ function xarpages_funcapi_example($args)
     xarVarFetch('cid', 'id', $cid, NULL, XARVAR_NOT_REQUIRED);
 
     if (!empty($cid)) {
-        $args['cid'] = $cid;
+        // I would recomment putting all the custom values under the 'custom'
+        // element of $args. That shoud avoid any namespace clashes with values
+        // supplied by the xarpages module itself (e.g. it may support categories
+        // natively in the future, and so 'cid' or 'cids' is likely to be needed).
+        $args['custom']['cid'] = $cid;
     }
 
     return $args;

@@ -1,15 +1,27 @@
 <?php
 
+/**
+ * File: $Id$
+ *
+ * Delete a page type
+ *
+ * @package Xaraya
+ * @copyright (C) 2004 by Jason Judge
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk/
+ * @author Jason Judge
+ * @subpackage xarpages
+ */
+
 function xarpages_admin_deletetype()
 {
     if (!xarVarFetch('ptid', 'id', $ptid)) return;
     if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
-    //if (!xarSecurityCheck('EditSurvey', 1, 'Survey', 'All')) {
-    //    // No privilege for editing survey structures.
-    //    return false;
-    //}
+    if (!xarSecurityCheck('AdminXarpagesPagetype', 1)) {
+        return false;
+    }
 
     // Get page type information
     $type = xarModAPIFunc(

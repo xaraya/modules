@@ -43,14 +43,14 @@ function xarpages_adminapi_updatepage($args)
     }
 
     // Check we have minimum privs to edit this page.
-    if (!xarSecurityCheck('EditPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+    if (!xarSecurityCheck('EditXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         return;
     }
 
     // Certain changes can only be made if we have delete privilege on the page.
     // Null those arguments out if we do not have the privs.
     // TODO: determine if there are other changes that should be disabled.
-    if (!xarSecurityCheck('DeletePage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+    if (!xarSecurityCheck('DeleteXarpagesPage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         // We do not allow the page to be renamed or moved if we only have edit priv.
         // TODO: perhaps there are other [arbitrary] attibutes that we would like to
         // prevent the user from changing?

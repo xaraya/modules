@@ -1,6 +1,6 @@
 <?php
 /*
- * Create a survey question group.
+ * Create a page.
  * It is added to the group hierarchy.
  * Mandatory columns:
  *  name: group name
@@ -37,7 +37,7 @@ function xarpages_adminapi_createpage($args)
     }
 
     // Security check - can we create pages of this type?
-    if (!xarSecurityCheck('AddPage', 1, 'Page', 'All' . ':' . $pagetype['name'])) {
+    if (!xarSecurityCheck('AddXarpagesPage', 1, 'Page', 'All:' . $pagetype['name'])) {
         return;
     }
 

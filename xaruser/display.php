@@ -45,7 +45,7 @@ function xarpages_user_display($args)
     // Security check on the page and page type.
     $noprivspage = xarModGetVar('xarpages', 'noprivspage');
     if (!empty($current_page) && !xarSecurityCheck(
-        'ReadPage', (empty($noprivspage) ? 1 : 0), 'Page',
+        'ReadXarpagesPage', (empty($noprivspage) ? 1 : 0), 'Page',
         $current_page['name'] . ':' . $current_page['pagetype']['name'], 'xarpages'
     )) {
         // If we don't have a special page reserved for handling lack of

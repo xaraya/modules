@@ -13,7 +13,7 @@ function xarpages_adminapi_getmenulinks()
     $menulinks = array();
 
     // Security Check
-    if (xarSecurityCheck('ModeratePage', 0)) {
+    if (xarSecurityCheck('ModerateXarpagesPage', 0)) {
         $menulinks[] = array(
             'url'   => xarModURL('xarpages', 'admin', 'viewpages'),
             'title' => xarML('View pages'),
@@ -21,7 +21,7 @@ function xarpages_adminapi_getmenulinks()
         );
     }
 
-    if (xarSecurityCheck('AddPage', 0)) {
+    if (xarSecurityCheck('AddXarpagesPage', 0)) {
         $menulinks[] = array(
             'url'   => xarModURL('xarpages', 'admin', 'newpage'),
             'title' => xarML('Add a new page'),
@@ -29,7 +29,7 @@ function xarpages_adminapi_getmenulinks()
         );
     }
 
-    if (xarSecurityCheck('EditPagetype', 0)) {
+    if (xarSecurityCheck('EditXarpagesPagetype', 0)) {
         $menulinks[] = array(
             'url'   => xarModURL('xarpages', 'admin', 'viewtypes'),
             'title' => xarML('View page types'),
@@ -37,7 +37,7 @@ function xarpages_adminapi_getmenulinks()
         );
     }
 
-    if (xarSecurityCheck('AdminPagetype', 0)) {
+    if (xarSecurityCheck('AdminXarpagesPagetype', 0)) {
         $menulinks[] = array(
             'url'   => xarModURL('xarpages', 'admin', 'newtype'),
             'title' => xarML('Add a page type'),
@@ -45,7 +45,7 @@ function xarpages_adminapi_getmenulinks()
         );
     }
 
-    if (xarSecurityCheck('AdminPage', 0)) {
+    if (xarSecurityCheck('AdminXarpagesPage', 0)) {
         $menulinks[] = array(
             'url'   => xarModURL('xarpages', 'admin', 'modifyconfig'),
             'title' => xarML('Configuration'),

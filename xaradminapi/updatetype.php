@@ -31,7 +31,7 @@ function xarpages_adminapi_updatetype($args)
     }
 
     // Security: allowed to create page types?
-    if (!xarSecurityCheck('EditPagetype', 1, 'Pagetype', $type['name'])) {
+    if (!xarSecurityCheck('EditXarpagesPagetype', 1, 'Pagetype', $type['name'])) {
         return;
     }
 

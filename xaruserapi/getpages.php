@@ -189,7 +189,7 @@ function xarpages_userapi_getpages($args)
             }
 
             $typename = $pagetypes[$itemtype]['name'];
-            if (!xarSecurityCheck('ReadPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
+            if (!xarSecurityCheck('ReadXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
                 // Save the right value. We need to skip all subsequent
                 // pages until we get to a page to the right of this one.
                 // The pages will be in 'left' order, so the descendants

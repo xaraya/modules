@@ -1,9 +1,16 @@
 <?php
 
 /**
- * Update or create a page.
- * TODO: when creating a page of a specific type, allow pages of status 'template'
- * to be pulled in to provide default population of the page.
+ * File: $Id$
+ *
+ * Modify or create a page
+ *
+ * @package Xaraya
+ * @copyright (C) 2004 by Jason Judge
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk/
+ * @author Jason Judge
+ * @subpackage xarpages
  */
 
 function xarpages_admin_modifypage()
@@ -29,12 +36,12 @@ function xarpages_admin_modifypage()
         );
 
         // Check we have minimum privs to edit this page.
-        if (!xarSecurityCheck('EditPage', 1, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
+        if (!xarSecurityCheck('EditXarpagesPage', 1, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
             return;
         }
 
         // Check the level of access we have. Are we allowed to rename or delete this page?
-        if (xarSecurityCheck('DeletePage', 0, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
+        if (xarSecurityCheck('DeleteXarpagesPage', 0, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
             $data['delete_allowed'] = true;
         }
 
@@ -60,7 +67,7 @@ function xarpages_admin_modifypage()
         // Adding a new page
 
         // Check we are allowed to create pages.
-        if (!xarSecurityCheck('AddPage', 1, 'Page', 'All')) {
+        if (!xarSecurityCheck('AddXarpagesPage', 1, 'Page', 'All')) {
             return;
         }
 
@@ -92,7 +99,7 @@ function xarpages_admin_modifypage()
             // pages for each type? We may actually end up with no page types
             // but that depends on the permissions.
             foreach($pagetypes as $key => $pagetype) {
-                if (!xarSecurityCheck('AddPage', 0, 'Page', 'All' . ':' . $pagetype['name'])) {
+                if (!xarSecurityCheck('AddXarpagesPage', 0, 'Page', 'All' . ':' . $pagetype['name'])) {
                     unset($pagetypes[$key]);
                 }
             }

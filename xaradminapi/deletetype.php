@@ -18,9 +18,6 @@ function xarpages_adminapi_deletetype($args)
         return false;
     }
 
-    // Security check
-    //if (!xarSecurityCheck('DeleteCategories',1,'category',"All:$cid")) return;
-
     // Get the page type.
     $type = xarModAPIfunc('xarpages', 'user', 'gettype', $args);
 
@@ -29,6 +26,9 @@ function xarpages_adminapi_deletetype($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+
+    // Security check
+    if (!xarSecurityCheck('AdminXarpagesPagetype', 1)) {return;}
 
     // Get the [optional] pages for deleting.
     $pages = xarModAPIFunc(

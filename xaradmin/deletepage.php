@@ -1,15 +1,22 @@
 <?php
 
+/**
+ * File: $Id$
+ *
+ * Delete a page
+ *
+ * @package Xaraya
+ * @copyright (C) 2004 by Jason Judge
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk/
+ * @author Jason Judge
+ * @subpackage xarpages
+ */
+
 function xarpages_admin_deletepage()
 {
     if (!xarVarFetch('pid', 'id', $pid)) return;
     if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-
-    // Security check
-    //if (!xarSecurityCheck('EditSurvey', 1, 'Survey', 'All')) {
-    //    // No privilege for editing survey structures.
-    //    return false;
-    //}
 
     // Get page information
     $page = xarModAPIFunc(
@@ -21,6 +28,11 @@ function xarpages_admin_deletepage()
         $msg = xarML('The page #(1) to be deleted does not exist', $pid);
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
+    }
+
+    // Security check
+    if (!xarSecurityCheck('DeleteXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+        return false;
     }
 
     // Check for confirmation

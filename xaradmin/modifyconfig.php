@@ -1,8 +1,16 @@
 <?php
 
-/*
- * Modify configuration options for the module.
- * TODO: Configure default page, error page (no permission), error page (page not found), short URL support.
+/**
+ * File: $Id$
+ *
+ * Modify module configuration
+ *
+ * @package Xaraya
+ * @copyright (C) 2004 by Jason Judge
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk/
+ * @author Jason Judge
+ * @subpackage xarpages
  */
 
 function xarpages_admin_modifyconfig()
@@ -10,7 +18,7 @@ function xarpages_admin_modifyconfig()
     $data = array();
 
     // Need admin priv to modify config.
-    if (!xarSecurityCheck('AdminPage')) {
+    if (!xarSecurityCheck('AdminXarpagesPage')) {
         return;
     }
 

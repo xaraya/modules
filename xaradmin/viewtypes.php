@@ -1,18 +1,22 @@
 <?php
 
 /**
- * View page types.
- * TODO: replace all this stuff with a generic hierarchy module.
- * It is presently held together with rubber bands and sticky tape.
+ * File: $Id$
+ *
+ * Admin overview of all page types.
+ *
+ * @package Xaraya
+ * @copyright (C) 2004 by Jason Judge
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk/
+ * @author Jason Judge
+ * @subpackage xarpages
  */
 
 function xarpages_admin_viewtypes()
 {
     // Security check
-    //if (!xarSecurityCheck('EditSurvey', 1, 'Survey', 'All')) {
-    //    // No privilege for editing survey structures.
-    //    return false;
-    //}
+    if (!xarSecurityCheck('EditXarpagesPage', 1)) {return false;}
 
     $types = xarModAPIFunc(
         'xarpages', 'user', 'gettypes',

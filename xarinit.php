@@ -166,27 +166,27 @@ function xarpages_init()
     // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
     // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
     xarRegisterMask(
-        'ReadPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_READ',
+        'ReadXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_READ',
         xarML('Read or view a page')
     );
     xarRegisterMask(
-        'ModeratePage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_MODERATE',
+        'ModerateXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_MODERATE',
         xarML('Change content of a page')
     );
     xarRegisterMask(
-        'EditPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_EDIT',
+        'EditXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_EDIT',
         xarML('Move and rename a page')
     );
     xarRegisterMask(
-        'AddPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_ADD',
+        'AddXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_ADD',
         xarML('Add new pages')
     );
     xarRegisterMask(
-        'DeletePage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_DELETE',
+        'DeleteXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_DELETE',
         xarML('Remove pages')
     );
     xarRegisterMask(
-        'AdminPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_ADMIN',
+        'AdminXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_ADMIN',
         xarML('Administer the module')
     );
 
@@ -213,20 +213,20 @@ function xarpages_init()
 
     // Allow the user to view the page types that are available.
     xarRegisterMask(
-        'ModeratePagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_MODERATE',
+        'ModerateXarpagesPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_MODERATE',
         xarML('Overview of page types')
     );
     // Allow the user to change the description and any hooks on the page type,
     // but not to rename it, delete it or create any new ones.
     xarRegisterMask(
-        'EditPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_EDIT',
+        'EditXarpagesPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_EDIT',
         xarML('Modify page type description and hooks')
     );
     // Since creation of templates are involved here (each page type requires at least
     // one [default] template), we go straight to admin level to make any changes in that area.
     // This access allows creation, deletion and renaming of page types.
     xarRegisterMask(
-        'AdminPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_ADMIN',
+        'AdminXarpagesPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_ADMIN',
         xarML('Administer page types')
     );
 
@@ -330,6 +330,36 @@ function xarpages_upgrade($oldversion)
             )) return;
 
         case '0.2.1':
+        case '0.2.2':
+            // Upgrading from 0.2.1 or 0.2.2 to 0.2.3
+            // This upgrade concerns the renaming of the privilege masks.
+            // The masks are renamed directly in the privilege tables in the
+            // absence of an API to do the job.
+
+            // Update the sucurity masks table.
+            $query_masks = 'UPDATE ' . $xartable['security_masks']
+                . ' SET xar_name = ?'
+                . ' WHERE xar_module = ? AND xar_name = ?';
+
+            // Loop for each mask to change.
+            $masks = array(
+                'ReadPage' => 'ReadXarpagesPage',
+                'ModeratePage' => 'ModerateXarpagesPage',
+                'EditPage' => 'EditXarpagesPage',
+                'AddPage' => 'AddXarpagesPage',
+                'DeletePage' => 'DeleteXarpagesPage',
+                'AdminPage' => 'AdminXarpagesPage',
+                'ModeratePagetype' => 'ModerateXarpagesPagetype',
+                'EditPagetype' => 'EditXarpagesPagetype',
+                'AdminPagetype' => 'AdminXarpagesPagetype'
+            );
+
+            foreach($masks as $old_mask => $new_mask) {
+                // Update the mask.
+                // TODO: not sure what affect this has cross-realm.
+                $dbconn->execute($query_masks, array($new_mask, 'xarpages', $old_mask));
+            }
+
             break;
     }
 

@@ -1,9 +1,18 @@
 <?php
 
 /**
- * Update page type.
- * @todo warn user if there is no 'page-{name}' fallback template available.
- * @todo the page type name must be unique - check this when updating and creating.
+ * File: $Id$
+ *
+ * Modify or create a page type
+ *
+ * @package Xaraya
+ * @copyright (C) 2004 by Jason Judge
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk/
+ * @author Jason Judge
+ * @subpackage xarpages
+ * @todo Warn user if there is not default template when the page type is created
+ * @todo Check the page type name is unique when creating and modifying; make a better error
  */
 
 function xarpages_admin_modifytype()
@@ -33,7 +42,7 @@ function xarpages_admin_modifytype()
         }
 
         // Security: check we are able to modify this page type.
-        if (!xarSecurityCheck('EditPagetype', 1, 'Pagetype', $type['name'])) {
+        if (!xarSecurityCheck('EditXarpagesPagetype', 1, 'Pagetype', $type['name'])) {
             return;
         }
 
@@ -54,7 +63,7 @@ function xarpages_admin_modifytype()
         // Adding a new page type.
 
         // Security: allowed to create page types?
-        if (!xarSecurityCheck('AdminPagetype', 1, 'Pagetype', 'All')) {
+        if (!xarSecurityCheck('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) {
             return;
         }
 
