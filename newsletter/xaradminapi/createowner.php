@@ -70,7 +70,7 @@ function newsletter_adminapi_createowner($args)
                   xar_uid,
                   xar_rid)
                   VALUES ( ?, ? )";
-		$bindvars = array((int) $id, (int) $rid);
+        $bindvars = array((int) $id, (int) $rid);
     } else {
         // Add item
         $query = "INSERT INTO $nwsltrTable (
@@ -78,7 +78,7 @@ function newsletter_adminapi_createowner($args)
                   xar_rid,
                   xar_signature)
                 VALUES (?, ?, ?)";
-		$bindvars = array((int) $id, (int) $rid, (string) $signature);
+        $bindvars = array((int) $id, (int) $rid, (string) $signature);
     }
 
     $result =& $dbconn->Execute($query, $bindvars);

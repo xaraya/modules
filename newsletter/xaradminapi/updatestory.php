@@ -79,39 +79,39 @@ function newsletter_adminapi_updatestory($args)
 
     // Update the item
     $query = "UPDATE $nwsltrTable 
-				 SET xar_ownerid = ?
-		             xar_pid = ?
-        		     xar_cid = ?
-		             xar_title = ?
-		             xar_source = ?
-		             xar_content = ?
-		             xar_priority = ?
-		             xar_storydate = ?
-		             xar_altdate = ?
-		             xar_datepublished = ?
-		             xar_fulltextlink = ?
-	       		     xar_registerlink = ?
-		             xar_linkexpiration = ?
-		             xar_commentary = ?
-		             xar_commentarysrc = ?
+                 SET xar_ownerid = ?
+                     xar_pid = ?
+                     xar_cid = ?
+                     xar_title = ?
+                     xar_source = ?
+                     xar_content = ?
+                     xar_priority = ?
+                     xar_storydate = ?
+                     xar_altdate = ?
+                     xar_datepublished = ?
+                     xar_fulltextlink = ?
+                        xar_registerlink = ?
+                     xar_linkexpiration = ?
+                     xar_commentary = ?
+                     xar_commentarysrc = ?
                WHERE xar_id = ?";
 
-	$bindvars = array((int) 	$ownerId,
-					  (int) 	$publicationId,
-					  (int) 	$categoryId,
-					  (string)  $title,
-					  (string)  $source,
-					  (string)  $content,
-					  (int) 	$priority,
-					  (int) 	$tstmpStoryDate,
-					  (string)  $altDate,
-					  (int) 	$tstmpDatePublished,
-					  (string)  $fullTextLink,
-					  (int) 	$registerLink,
-					  (int) 	$linkExpiration,
-					  (string)  $commentary,
-					  (string)  $commentarySource,
-					  (int) 	$id);
+    $bindvars = array((int)     $ownerId,
+                      (int)     $publicationId,
+                      (int)     $categoryId,
+                      (string)  $title,
+                      (string)  $source,
+                      (string)  $content,
+                      (int)     $priority,
+                      (int)     $tstmpStoryDate,
+                      (string)  $altDate,
+                      (int)     $tstmpDatePublished,
+                      (string)  $fullTextLink,
+                      (int)     $registerLink,
+                      (int)     $linkExpiration,
+                      (string)  $commentary,
+                      (string)  $commentarySource,
+                      (int)     $id);
 
     // Execute query
     $result =& $dbconn->Execute($query, $bindvars);
