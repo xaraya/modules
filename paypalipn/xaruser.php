@@ -1,0 +1,83 @@
+<?php
+/**
+ * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
+ * 
+ * paypalsetup System
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ * @subpackage paypalsetup module
+ * @author John Cox <admin@dinerminor.com> 
+ */
+
+/**
+ * the main IPN Function
+ *
+ * @author  John Cox <niceguyeddie@xaraya.com>
+ * @access  public
+ * @param   no parameters
+ * @return  true on success or void on falure
+ * @throws  XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION'
+*/
+function paypalipn_user_main()
+{
+
+    // Add to the string with cmd var
+    $req = 'cmd=_notify-validate';
+
+    // Post Vars must exactly match.  It would be nice to use the varBatch for this as well
+    // For now just using the $_Post global.  TODO clean this up.
+    foreach ($_POST as $key => $value) {
+        $value = urlencode(stripslashes($value));
+        $req .= "&$key=$value";
+    }
+
+    
+    // Config Option to test the post vars
+    if (!xarModGetVar('paypalipn', 'testmode')){
+        $domain = 'www.paypal.com';
+    } else {
+        $domain = 'www.eliteweaver.co.uk';
+    }
+
+
+    // post back to PayPal system to validate
+    $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
+    $header .= "User-Agent: PHP/".phpversion()."\r\n";
+	$header .= "Referer: " . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "\r\n";
+    $header .= "Host: " . $domain . ":80\r\n";
+    $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+    $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
+    $fp = fsockopen ($domain, 80, $errno, $errstr, 30);
+    
+    if (!$fp) return;
+
+    fputs($fp, $header . $req);
+
+
+    // Send an email of the vars
+    if (xarModGetVar('paypalipn', 'email')){
+        // Config Option
+        // Send Mail Confirmation to Site Admin
+        $mail['message'] = xarML('Your Recieved an IPN.  The variables sent are as followed');
+        $mail['message'] .= "\n\n";
+        foreach ($_POST as $key => $value) {
+            $mail['message'] .= "$key = $value\n";
+        }
+        $mail['admin_mail'] = xarModGetVar('mail', 'adminmail');
+        $mail['admin_name'] = xarModGetVar('mail', 'adminname');
+        // Send email
+        if (!xarModAPIFunc('mail', 'admin', 'sendmail',
+                           array('info' => $mail['admin_mail'],
+                                 'name' => $mail['admin_name'],
+                                 'subject' => xarML('IPN Notification'),
+                                 'message' => $mail['message']))) return;
+    }
+    
+
+    fclose ($fp);
+
+    return true;
+} 
+?>
