@@ -10,12 +10,12 @@
         <label for="tid"><xar:mlstring>Type</xar:mlstring></label>:
             <select name="tid" id="tid" size="1" tabindex="2">
             <xar:if condition="$tid eq '1'">
-            <option value="1" selected><xar:mlstring>Ephemerid</xar:mlstring></option>
+            <option value="1" selected="selected"><xar:mlstring>Ephemerid</xar:mlstring></option>
             <xar:else />
             <option value="1"><xar:mlstring>Ephemerid</xar:mlstring></option>
             </xar:if>
             <xar:if condition="$tid eq '2'">
-            <option value="2" selected><xar:mlstring>Nameday</xar:mlstring></option>
+            <option value="2" selected="selected"><xar:mlstring>Nameday</xar:mlstring></option>
             <xar:else />
             <option value="2"><xar:mlstring>Nameday</xar:mlstring></option>
             </xar:if>
