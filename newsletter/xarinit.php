@@ -372,7 +372,7 @@ function newsletter_upgrade($oldversion)
                                            'type' => 'integer',
                                            'size' => 'tiny',
                                            'null' => false,
-                                           'default' => 0));
+                                           'default' => '0'));
                                            
             $result = & $dbconn->Execute($query);
             if (!$result) return;
