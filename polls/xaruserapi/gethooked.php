@@ -28,8 +28,8 @@ function polls_userapi_gethooked($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
     $prefix = xarConfigGetVar('prefix');
 

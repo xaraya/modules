@@ -30,8 +30,8 @@ function polls_adminapi_deleteopt($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
     $prefix = xarConfigGetVar('prefix');
 

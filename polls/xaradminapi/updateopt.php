@@ -30,8 +30,8 @@ function polls_adminapi_updateopt($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
     $pollsinfocolumn = &$xartable['polls_info_column'];
     $prefix = xarConfigGetVar('prefix');

@@ -26,8 +26,8 @@ function polls_adminapi_close($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
     $prefix = xarConfigGetVar('prefix');
 

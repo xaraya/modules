@@ -24,8 +24,8 @@ function polls_userapi_search($args) {
         $numitems = xarModGetVar('polls', 'itemsperpage');
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $prefix = xarConfigGetVar('prefix');
     $pollstable = $xartable['polls'];
     $pollsinfotable = $xartable['polls_info'];

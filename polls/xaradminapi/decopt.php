@@ -39,8 +39,8 @@ function polls_adminapi_decopt($args)
     }
 
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
     $pollsinfocolumn = &$xartable['polls_info_column'];
     $prefix = xarConfigGetVar('prefix');

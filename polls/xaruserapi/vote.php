@@ -57,8 +57,8 @@ function polls_userapi_vote($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
     $prefix = xarConfigGetVar('prefix');
 

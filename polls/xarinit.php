@@ -17,8 +17,8 @@
 function polls_init()
 {
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $prefix = xarConfigGetVar('prefix');
     xarDBLoadTableMaintenanceAPI();
 
@@ -235,8 +235,8 @@ function polls_upgrade($oldversion)
     switch($oldversion) {
         case 1.0:
             // Code to upgrade from version 1.0 goes here
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $prefix = xarConfigGetVar('prefix');
             xarDBLoadTableMaintenanceAPI();
 
@@ -267,8 +267,8 @@ function polls_upgrade($oldversion)
         case 1.1:
             // Code to upgrade from version 1.1 goes here
             // Get database information
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
 
             $prefix = xarConfigGetVar('prefix');
 
@@ -343,8 +343,8 @@ function polls_upgrade($oldversion)
 function polls_delete()
 {
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Drop the tables
     $sql = "DROP TABLE $xartable[polls_info]";
