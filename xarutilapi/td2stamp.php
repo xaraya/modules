@@ -47,11 +47,11 @@ function addressbook_utilapi_td2stamp($args)
         if ($y >= 70) $y = $y + 1900;
         if ($y < 70) $y = $y + 2000;
     }
-	if (checkdate($m,$d,$y)) {
-		$returnValue = mktime(0,0,0,$m,$d,$y);
-	} else {
-		$returnValue = 0;
-	}
+    if (checkdate($m,$d,$y)) {
+        $returnValue = mktime(0,0,0,$m,$d,$y);
+    } else {
+        $returnValue = 0;
+    }
 
     return $returnValue;
 
