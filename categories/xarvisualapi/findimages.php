@@ -6,19 +6,32 @@
  */
 function categories_visualapi_findimages()
 {
-    //$curdir = xarTplGetThemeDir() . '/images';
-    $curdir = 'modules/categories/xarimages';
-    $curdir = realpath($curdir);
-    $image_array = array();
-    //$image_array[] = '';
-    if ($dir = @opendir($curdir)) {
-        while(($file = @readdir($dir)) !== false) {
-            if (preg_match('/\.(png|gif|jpg|jpeg)$/',$file)) {
-                $image_array[] = $file;
+    // theme *overrides* are possible, but the original must reside here
+    $basedir = 'modules/categories/xarimages';
+    $basedir = realpath($basedir);
+
+    $filetype = '(png|gif|jpg|jpeg)';
+    $filelist = array();
+
+    $todo = array();
+    array_push($todo, $basedir);
+    while (count($todo) > 0) {
+        $curdir = array_shift($todo);
+        if ($dir = @opendir($curdir)) {
+            while(($file = @readdir($dir)) !== false) {
+                $curfile = $curdir . '/' . $file;
+                if (preg_match("/\.$filetype$/",$file) && is_file($curfile) && filesize($curfile) > 0) {
+                    $curfile = preg_replace('#'.preg_quote($basedir,'#').'/#','',$curfile);
+                    $filelist[] = $curfile;
+                } elseif ($file != '.' && $file != '..' && is_dir($curfile)) {
+                    array_push($todo, $curfile);
+                }
             }
+            closedir($dir);
         }
     }
-    return $image_array;
+    natsort($filelist);
+    return $filelist;
 }
 
 ?>
