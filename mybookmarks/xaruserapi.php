@@ -287,6 +287,7 @@ function mybookmarks_userapi_getall( $args ) {
     }
 
     // Retrieve all objects via the dynamicdata module api.
+      $usrid = xarUserGetVar('uid'); 
     $objects =& xarModAPIFunc(
         'dynamicdata'
         ,'user'
