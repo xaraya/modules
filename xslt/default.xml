@@ -7,36 +7,36 @@
 <?rfc tocdepth="2"?>
 
 <rfc xmlns:ed="http://greenbytes.de/2002/rfcedit" number="2629" category="bcp">
-	<front>
-		<title>Writing X-Ds and RFCs using XML</title>
-		<author initials="M.T." surname="Rose" fullname="Marshall T. Rose">
-			<organization>Invisible Worlds, Inc.</organization>
-			<address>
-				<postal>
-					<street>660 York Street</street>
-					<city>San Francisco</city> <region>CA</region> <code>94110</code>
-					<country>US</country>
-				</postal>
-				<phone>+1 415 695 3975</phone>
-				<email>mrose@not.invisible.net</email>
-				<uri>http://invisible.net/</uri>
-			</address>
-		</author>
-		<date month="June" year="1999" />
-		<area>General</area>
-		<keyword>RFC</keyword>
-		<keyword>Request for Comments</keyword>
-		<keyword>X-D</keyword>
-		<keyword>Xaraya-Draft</keyword>
-		<keyword>XML</keyword>
-		<keyword>Extensible Markup Language</keyword>
-		<abstract>
-			<t>
+    <front>
+        <title>Writing X-Ds and RFCs using XML</title>
+        <author initials="M.T." surname="Rose" fullname="Marshall T. Rose">
+            <organization>Invisible Worlds, Inc.</organization>
+            <address>
+                <postal>
+                    <street>660 York Street</street>
+                    <city>San Francisco</city> <region>CA</region> <code>94110</code>
+                    <country>US</country>
+                </postal>
+                <phone>+1 415 695 3975</phone>
+                <email>mrose@not.invisible.net</email>
+                <uri>http://invisible.net/</uri>
+            </address>
+        </author>
+        <date month="June" year="1999" />
+        <area>General</area>
+        <keyword>RFC</keyword>
+        <keyword>Request for Comments</keyword>
+        <keyword>X-D</keyword>
+        <keyword>Xaraya-Draft</keyword>
+        <keyword>XML</keyword>
+        <keyword>Extensible Markup Language</keyword>
+        <abstract>
+            <t>
         This memo presents a technique for using XML (Extensible
         Markup Language) as a source format for documents in the
         Internet-Drafts (I-Ds) and Request for Comments (RFC) series
-			</t>
-		</abstract>
+            </t>
+        </abstract>
     <note title="IMPORTANT">
       <t>
         Although the copyright notice above says <em>Xaraya</em>, this
@@ -48,7 +48,7 @@
         for this situation.
       </t>
     </note>
-	</front>
+    </front>
   <middle>
     <section title="Introduction">
       <t>

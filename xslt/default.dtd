@@ -153,9 +153,9 @@
 
 <!-- the value of the style attribute is inherited from the closest 
      parent -->
-	 
+     
 <!ELEMENT em       (%CTEXT;)>
-	 
+     
 <!ELEMENT list        (t+)>
 <!ATTLIST list
           style       %ATEXT;            "empty">
@@ -190,7 +190,7 @@
           xml-space   (default|preserve) "preserve"
           name        %ATEXT;            ""
           type        %ATEXT;            ""
-	  src         %ATEXT;		 "">
+      src         %ATEXT;         "">
 
 <!ELEMENT postamble   (%TEXT;|xref|eref|iref)*>
 
