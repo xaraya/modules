@@ -5,6 +5,7 @@ $modversion = array(
 'name'            => 'Weirdmind',
 'id'              => '999889',
 'version'         => '1.0',
+'displayname'     => xarML('WeirdMind'),
 'description'     => 'WeirdX X-Windows and Mindterm SSH java applets merged together.  Source code included. Contains RSA patents. Check your local encryption laws before using.',
 'credits'         => 'xardocs/credits.txt',
 'help'            => '',
