@@ -16,7 +16,7 @@ function uploads_adminapi_dd_convert_value($args)
     }
 
     // if conversion isn't needed, then don't do it
-    if (!xarModAPIFunc('uploads', 'admin', 'dd_check_value', $value); {
+    if (!xarModAPIFunc('uploads', 'admin', 'dd_value_ishooked_style', $value)) {
         return $value;
     }
 
