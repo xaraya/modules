@@ -12,7 +12,7 @@
 
 $modversion['name']           = 'mybookmarks';
 $modversion['id']             = '178';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '1.0.1';
 $modversion['displayname']    = xarML('MyBookmarks');
 $modversion['description']    = 'MyBookmarks share your favorite urls';
 $modversion['credits']        = 'xardocs/credits.txt';

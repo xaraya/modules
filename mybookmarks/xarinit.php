@@ -192,6 +192,13 @@ function mybookmarks_upgrade($oldversion)
         $modversion['user']           = 0;
 
         break;
+ 
+    case '1.0.0':
+
+        $modversion['admin']          = 0;
+        $modversion['user']           = 0;
+
+        break;
     }
 
     // Update successful
