@@ -9,7 +9,7 @@
                             <xar:if condition="empty($loop:item['link'])">
                                 #$loop:item['reponame']# 
                             <xar:else />
-                                <a href="#$loop:item['link']#" onclick="return loadContent(this.href);">
+                                <a href="#$loop:item['link']#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                                     #$loop:item['reponame']#
                                 </a>
                             </xar:if>

@@ -52,7 +52,7 @@
                         <xar:mlvar>#$file#</xar:mlvar>
                     </xar:ml>
                 </xar:set>
-                <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#">
+                <a title="#$titlestring#" onclick="return loadContent(this.href, 'bkview-modbody-id');" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#">
                 #$filename#</a>
             </span>
         </div>
@@ -65,7 +65,7 @@
                     <xar:mlvar>#$rev#</xar:mlvar>
                 </xar:ml>
             </xar:set>
-          <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+          <a title="#$titlestring#" onclick="return loadContent(this.href, 'bkview-modbody-id');" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
             #$rev#
           </a> #$csettag#
         </span>
@@ -77,7 +77,7 @@
                     <xar:mlvar>#$author#</xar:mlvar>
                 </xar:ml>
             </xar:set>
-          <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$author#">
+          <a title="#$titlestring#" onclick="return loadContent(this.href, 'bkview-modbody-id');" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$author#">
             #$author#
           </a>
         </span>
@@ -88,11 +88,11 @@
       <div class="comments">#$comments#</div>
       
       <div style="text-align: right; font-size: smaller;">
-        <a onclick="return loadContent(this.href);"  title="#xarML('View the changeset in which this delta was created')#" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$rev#&amp;file=#$file#">
+        <a onclick="return loadContent(this.href, 'bkview-modbody-id');"  title="#xarML('View the changeset in which this delta was created')#" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$rev#&amp;file=#$file#">
             <xar:mlstring>Corresponding cset</xar:mlstring></a> | 
-        <a  onclick="return loadContent(this.href);" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+        <a  onclick="return loadContent(this.href, 'bkview-modbody-id');" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
             <xar:mlstring>View differences</xar:mlstring></a> |
-        <a  onclick="return loadContent(this.href);" title="#xarML('View other changesets for this file')#" href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+        <a  onclick="return loadContent(this.href, 'bkview-modbody-id');" title="#xarML('View other changesets for this file')#" href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
             <xar:mlstring>Other changesets</xar:mlstring></a>
             
      </div>

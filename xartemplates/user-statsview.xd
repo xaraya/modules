@@ -13,7 +13,7 @@
         <xar:loop name="$users">    
           <tr>
             <td>
-              <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$loop:item['user']#">#$loop:item['user']#</a></td>
+              <a  onclick="return loadContent(this.href, 'bkview-modbody-id');" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$loop:item['user']#">#$loop:item['user']#</a></td>
             <td style="text-align: center;">#$loop:item['recentcsets']#&nbsp;</td>
             <td style="text-align: center;">#$loop:item['allcsets']#</td>
           </tr>    

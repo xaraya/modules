@@ -16,7 +16,7 @@
               </xar:if>
               <div>
                 <xar:mlstring>Merge changesets were not included in this view.</xar:mlstring><br/>
-                <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$user#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">        
+                <a  onclick="return loadContent(this.href, 'bkview-modbody-id');" href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$user#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">        
                   <xar:mlstring>Retry with them turned on?</xar:mlstring>
                 </a>
               </div>

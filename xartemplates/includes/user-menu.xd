@@ -3,7 +3,7 @@
 </xar:set>
 <xar:if condition="strtolower($usexmlhttp) eq 'on'">
     <!-- Experimenting with http requests only when module is surrounded by element with an id -->
-    <script src="/modules/bkview/xarincludes/xmlhttprequest.js" ></script>
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
     <!-- Pathetic attempt to get some backbutton functionality when using xmlhttprequest -->
     <xar:set name="prev_bkview">
         <xar:var scope="session" name="bkview.previous.url"/>
@@ -31,7 +31,7 @@
             <xar:set name="classstring">'active'</xar:set>
         </xar:if>
         <dd class="#$classstring#" >
-            <a href="&xar-modurl-bkview-user-main;" onclick="return loadContent(this.href);">
+            <a href="&xar-modurl-bkview-user-main;" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                 <img src="#xarTplGetImage('bkindex.gif')#" alt="#xarML('Index')#" />
                 <xar:mlstring>Index</xar:mlstring>
             </a>
@@ -43,7 +43,7 @@
                 <xar:set name="classstring">'active'</xar:set>
             </xar:if>
             <dd class="#$classstring#" >
-                <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
+                <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                     <img src="#xarTplGetImage('bkcset.gif')#" alt="#xarML('Changeset activity')#" />
                     <xar:mlstring>Changeset activity</xar:mlstring>
                 </a>
@@ -54,7 +54,7 @@
                 <xar:set name="classstring">'active'</xar:set>
             </xar:if>
             <dd class="#$classstring#" >
-                <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1" onclick="return loadContent(this.href);">
+                <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                     <img src="#xarTplGetImage('bktags.gif')#" alt="#xarML('Tags')#" />
                     <xar:mlstring>Tags</xar:mlstring>
                 </a>
@@ -65,7 +65,7 @@
                 <xar:set name="classstring">'active'</xar:set>
             </xar:if>
             <dd class="#$classstring#" >
-                <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
+                <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                     <img src="#xarTplGetImage('bktree.gif')#" alt="#xarML('Browse source tree')#" />
                     <xar:mlstring>Browse source tree</xar:mlstring>
                 </a>
@@ -76,7 +76,7 @@
                 <xar:set name="classstring">'active'</xar:set>
             </xar:if>
             <dd class="#$classstring#" >
-                <a href="&xar-modurl-bkview-user-graphview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
+                <a href="&xar-modurl-bkview-user-graphview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                     <img src="#xarTplGetImage('graph.gif')#" alt="#xarML('Show history graph')#" />
                     <xar:mlstring>History graph</xar:mlstring>
                 </a>
@@ -87,7 +87,7 @@
                 <xar:set name="classstring">'active'</xar:set>
             </xar:if>
             <dd class="#$classstring#" >
-                <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
+                <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                     <img src="#xarTplGetImage('bkstats.gif')#" alt="#xarML('User statistics')#" />
                     <xar:mlstring>User statistics</xar:mlstring>
                 </a>
@@ -96,7 +96,7 @@
         <xar:if condition="strtolower($usexmlhttp) eq 'on'">
             <dd>
                 <!-- Using xmlhttprequest will be easier if we simulate the back button -->
-                <a href="#$prev_bkview#" onclick="return loadContent(this.href);">
+                <a href="#$prev_bkview#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
                     <img src="#xarTplGetImage('backarrow.gif')#" alt="#xarML('Go back to the previous view')#" />
                     <xar:mlstring>Back to previous view</xar:mlstring>
                 </a>
