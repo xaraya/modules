@@ -318,26 +318,33 @@ class bkRepo
     {
         if(!trim($end)) $end="+";
         // First, translate the ranges to revisions
-        $cmd = "bk prs -fhr$start -nd':REV:' $file";
+        $cmd = "bk prs -fhr$start -nd':REV:|:DS:' $file";
         $revs = $this->_run($cmd);
         if(empty($revs)) 
         {
             // Nothing in the range, take the last rev, which will be earlier
             // than the range specified
-            $cmd = "bk prs -fhr+ -nd':REV:' $file";
+            $cmd = "bk prs -fhr+ -nd':REV:|:DS:' $file";
             $revs = $this->_run($cmd);
         }
-        $startRev = $revs[0];
+        list($startRev,$startSerial) = explode('|',$revs[0]);
         
         // Do the same for the endmarker, but dont use forward ordering
-        $cmd = "bk prs -hr$end -nd':REV:' $file";
+        $cmd = "bk prs -hr$end -nd':REV:|:DS:' $file";
         $revs = $this->_run($cmd);
         if(empty($revs)) {
             $endRev = $startRev;
+            $endSerial = $startSerial;
         } else {
-            $endRev = $revs[0];
+            list($endRev,$endSerial) = explode('|',$revs[0]);
         }
-                
+        $reverse = false;
+        if($startSerial > $endSerial) {
+            // Make bk happy
+            $tmp = $startRev;
+            $startRev = $endRev;
+            $endRev = $tmp;
+        }
         $edges = array(); $nodes = array(); 
         $inEdges = array(); $lateMergeNodes = array();
         $cmd = "bk prs -hr$startRev..$endRev -nd':REV:|:KIDS:|:DS:' $file";
@@ -359,6 +366,7 @@ class bkRepo
         $lateMergeNodes = array_diff($nodes, array_keys($inEdges));
         if($startKey = array_search($startRev, $lateMergeNodes)) unset($lateMergeNodes[$startKey]);
         ksort($nodes);
+        
         $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
         return $graph;
     
