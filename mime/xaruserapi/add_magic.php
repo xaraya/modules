@@ -38,7 +38,7 @@ function mime_userapi_add_magic( $args ) {
     }
     
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable     = xarDBGetTables();
     
     // table and column definitions

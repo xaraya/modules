@@ -28,7 +28,7 @@ function mime_userapi_getall_subtypes( $args ) {
     }
     
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable     = xarDBGetTables();
     
     // table and column definitions

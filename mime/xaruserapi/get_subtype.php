@@ -20,7 +20,7 @@ function mime_userapi_get_subtype( $args ) {
     }
     
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable     = xarDBGetTables();
     
     $where = ' WHERE ';

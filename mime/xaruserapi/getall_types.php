@@ -13,7 +13,7 @@
 function mime_userapi_getall_types( /* VOID */ ) {
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable     = xarDBGetTables();
     
     // table and column definitions

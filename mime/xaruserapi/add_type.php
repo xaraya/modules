@@ -14,7 +14,7 @@ function mime_userapi_add_type( $args ) {
     extract( $args );
     
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable     = xarDBGetTables();
     
     if (!isset($typeName) || empty($typeName)) {
