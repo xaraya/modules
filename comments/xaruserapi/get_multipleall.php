@@ -80,7 +80,7 @@ function comments_userapi_get_multipleall($args)
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
-        $row['xar_author'] = xarUserGetVar('uname',$row['xar_author']);
+        $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         $commentlist[] = $row;
         $result->MoveNext();
     }
