@@ -37,7 +37,8 @@ function authldap_init()
     xarRegisterMask('AdminAuthLDAP','All','authldap','All','All','ACCESS_ADMIN');
     xarRegisterMask('ReadAuthLDAP','All','authldap','All','All','ACCESS_READ');
 
-    // Add authldap to Site.User.AuthenticationModules in xar_config_vars
+    // Do not add authldap to Site.User.AuthenticationModules in xar_config_vars here
+/*
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
     $authModulesUpdate = array();
 
@@ -51,6 +52,7 @@ function authldap_init()
 
     // save the setting
     xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
+*/
 
     // Initialization successful
     return true;

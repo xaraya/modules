@@ -103,6 +103,18 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Activate authentication module</xar:mlstring>
+                    </td>
+                    <td>
+                        <xar:if condition="in_array('authldap',xarConfigGetVar('Site.User.AuthenticationModules'))">
+                            <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
+                        <xar:else/>
+                            <input type="checkbox" name="activate" id="activate" value="1" />
+                        </xar:if>
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
                     <td colspan=2>
                         <xar:mlstring>If the LDAP Server is unavailable for authentication, Xaraya authentication can be used as a failover authentication system.  If failover to Xaraya is allowed, then this will only occur if authentication by LDAP is not available.  If the LDAP bind is successful but the user is not authenticated, then the failover will not be permitted.</xar:mlstring>
                     </td>
@@ -177,6 +189,7 @@
                         </xar:loop>
                         </select>
                     </td>
+                </tr>
                 <tr align="left" valign="top">
                     <td>
                         <br />

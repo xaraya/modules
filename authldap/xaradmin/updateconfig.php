@@ -34,6 +34,7 @@ function authldap_admin_updateconfig()
          $adduseremail,
          $storepassword,
          $failover,
+         $activate,
          $defaultgroup ) = xarVarCleanFromInput('ldapserver',
                                                 'portnumber',
                                                 'anonymousbind',
@@ -48,6 +49,7 @@ function authldap_admin_updateconfig()
                                                 'adduseremail', 
                                                 'storepassword', 
                                                 'failover', 
+                                                'activate', 
                                                 'defaultgroup');
 
     // Confirm authorisation code
@@ -128,6 +130,26 @@ function authldap_admin_updateconfig()
             $defaultgroup = 'Users';
     } 
     xarModSetVar('authldap', 'defaultgroup', $defaultgroup);
+
+    $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
+    if (empty($activate) && in_array('authldap', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module != 'authldap') {
+                $newauth[] = $module;
+            }
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    } elseif (!empty($activate) && !in_array('authldap', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module == 'authsystem') {
+                $newauth[] = 'authldap';
+            }
+            $newauth[] = $module;
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    }
 
     // lets update status and display updated configuration
     xarResponseRedirect(xarModURL('authldap', 'admin', 'modifyconfig'));
