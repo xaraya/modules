@@ -113,6 +113,10 @@ function headlines_user_main()
                                                'user',
                                                'view',
                                                array('hid' => $link['hid']));
+            $links[$i]['importlink'] = xarModURL('headlines',
+                                                 'admin',
+                                                 'import',
+                                                 array('hid' => $link['hid']));
 
         // FIXME Reverse Logic here until I make a config setting.
         if (!empty($settings['showcomments'])) {

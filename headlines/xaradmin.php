@@ -290,7 +290,11 @@ function headlines_admin_view()
                                 'numitems' => xarModGetVar('headlines',
                                                           'itemsperpage')));
 
-    if (empty($links)) return;
+    if (empty($links)) {
+        $msg = xarML('No Headlines in database, please add a site.', 'headlines');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {
@@ -355,5 +359,127 @@ function headlines_admin_updateconfig()
     xarResponseRedirect(xarModURL('headlines', 'admin', 'modifyconfig'));
 
     return true;
+}
+
+
+function headlines_admin_import()
+{
+    // Security Check
+    if(!xarSecurityCheck('EditHeadlines')) return;
+
+    // Get parameters from whatever input we need
+    $hid = xarVarCleanFromInput('hid');
+
+    // Require the xmlParser class
+    require_once('modules/base/xarclass/xmlParser.php');
+
+    // Require the feedParser class
+    require_once('modules/base/xarclass/feedParser.php');
+
+    // The user API function is called
+    $links = xarModAPIFunc('headlines',
+                          'user',
+                          'get',
+                          array('hid' => $hid));
+
+
+    // Check and see if a feed has been supplied to us.
+    if(isset($links['url'])) {
+        $feedfile = $links['url'];
+    } else {
+        $feedfile = "";
+    }
+
+    // Sanitize the URL provided to us since
+    // some people can be very mean.
+    $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
+    $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
+
+    // Create Cache File
+    $refresh = (time() - 3600);
+    $varDir = xarCoreGetVarDirPath();
+    $cacheKey = md5($feedfile);
+    $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
+    if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
+        $fp = @fopen($cachedFileName, 'r');
+        // Create a need feedParser object
+        $p = new feedParser();
+        // Read From Our Cache
+        $feeddata = fread($fp, filesize($cachedFileName));
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($feeddata);
+    } else {
+        // Create a need feedParser object
+        $p = new feedParser();
+
+        // Read in our sample feed file
+        $feeddata = @implode("",@file($feedfile));
+
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($feeddata);
+        $fp = fopen("$cachedFileName", "wt");
+        fwrite($fp, $feeddata);
+        fclose($fp);    
+    }
+
+    if (empty($info['warning'])){
+        foreach ($info as $content){
+             foreach ($content as $newline){
+                    if(is_array($newline)) {
+                        if (isset($newline['description'])){
+                            $description = $newline['description'];
+                        } else {
+                            $description = '';
+                        }
+                        if (isset($newline['title'])){
+                            $title = $newline['title'];
+                        } else {
+                            $title = '';
+                        }
+                        if (isset($newline['link'])){
+                            $link = $newline['link'];
+                        } else {
+                            $link = '';
+                        }
+
+                        $imports[] = array('title' => $title, 'link' => $link, 'description' => $description);
+                }
+            }
+        }
+
+        if (!empty($links['title'])){
+            $data['chantitle'] = $links['title'];
+        } else {
+            $data['chantitle']  =   $info['channel']['title'];
+        }
+        if (!empty($links['desc'])){
+            $data['chandesc'] = $links['desc'];
+        } else {
+            $data['chandesc']   =   $info['channel']['description'];
+        }
+        $data['chanlink']   =   $info['channel']['link'];
+
+    } else {
+        $msg = xarML('There is a problem with a feed.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
+    foreach ($imports as $import){
+
+        $article['title'] = $import['title'];
+        $article['summary'] = $import['description'];
+        $article['summary'] .= '<br /><br />';
+        $article['summary'] .= xarML('Source');
+        $article['summary'] .= ': <a href="';
+        $article['summary'] .= $import['link'];
+        $article['summary'] .= '">';
+        $article['summary'] .= $info['channel']['title'];
+        $article['summary'] .= '</a>';
+        $article['aid'] = 0;
+        xarModAPIFunc('articles', 'admin', 'create', $article);
+    }
+    
+    xarResponseRedirect(xarModURL('articles', 'user', 'view'));
 }
 ?>

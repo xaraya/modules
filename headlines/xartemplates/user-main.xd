@@ -11,7 +11,10 @@
             </td>
             <td align="right">
                 <a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a><br />
-                #$loop:item['comments']#
+                #$loop:item['comments']#<br />
+				<xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
+					<a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a><br />
+				</xar:if>
             </td>
         </tr>
     </table>
