@@ -15,7 +15,7 @@ $cachingConfiguration['Page.DisplayView'] = 0;
 // Should we show when the cached page was created or not
 $cachingConfiguration['Page.ShowTime'] = 1;
 // Send an "Expires: $time" header to the client
-$cachingConfiguration['Page.ExpireHeader'] = 1;
+$cachingConfiguration['Page.ExpireHeader'] = 0;
 // Allow page caching for the following user groups (besides anonymous)
 $cachingConfiguration['Page.CacheGroups'] = '';
 // Only cache the pages of modules hooked to xarCacheManager
