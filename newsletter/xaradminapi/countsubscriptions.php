@@ -74,23 +74,6 @@ function newsletter_adminapi_countsubscriptions($args)
 
     // Get subscriptions count
     $query = "SELECT COUNT(*) 
-              FROM   $nwsltrSubTable";
-
-    $result = $dbconn->Execute($query);
-
-    // Check for an error
-    if (!$result) return;
-
-    // Put items into result array
-    if (!$result->EOF) {
-        $subcount = $result->fields[0];
-    }
-
-    // Close result set
-    $result->Close();
-
-    // Get subscriptions count
-    $query = "SELECT COUNT(*) 
               FROM $nwsltrAltSubTable
               WHERE xar_pid = $id";
 
