@@ -23,7 +23,7 @@
                         </xar:mlstring>
                         : 
                         <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
-                            <a href="&xar-modurl-roles-user-email;&amp;uid=#$package['uid']#"> #$package['name']# </a> 
+                            <a href="&xar-modurl-roles-user-display;&amp;uid=#$package['uid']#"> #$package['name']# </a> 
                             <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
                                 [ <a class="xar-norm" href="&xar-modurl-roles-user-logout;"> 
                                     <xar:mlstring>
@@ -95,7 +95,7 @@
                         </xar:mlstring>
                         : 
                         <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
-                            <a href="&xar-modurl-roles-user-email;&amp;uid=#$package['uid']#"> #$package['name']# </a> 
+                            <a href="&xar-modurl-roles-user-display;&amp;uid=#$package['uid']#"> #$package['name']# </a> 
                             <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
                                 [ <a class="xar-norm" href="&xar-modurl-roles-user-logout;"> 
                                     <xar:mlstring>
