@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.8 2003/12/22 07:11:41 garrett Exp $
+ * File: $Id: modifyconfig.php,v 1.2 2004/03/28 23:22:23 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -116,7 +116,7 @@ function addressbook_admin_modifyconfig()
         // Inclue custom fields in sorts & ordering
         $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custFieldLabels = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo');
+            $custFieldLabels = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo', array('flag'=>_AB_CUST_UDCOLANDLABELS));
             foreach($custFieldLabels as $custFieldLabel) {
                 $sortOptions[] = array('id'=>$custFieldLabel['colName'], 'name'=>xarVarPrepHTMLDisplay($custFieldLabel['label']));
             }
