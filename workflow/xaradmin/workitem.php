@@ -58,11 +58,6 @@ $sameurl_elements = array(
 
 $tplData['mid'] =  'tiki-g-view_workitem.tpl';
 
-    if (count($smarty->tplData) > 0) {
-       foreach (array_keys($smarty->tplData) as $key) {
-           $tplData[$key] = $smarty->tplData[$key];
-       }
-    }
     $tplData['feature_help'] = $feature_help;
     $tplData['direct_pagination'] = $direct_pagination;
     return $tplData;

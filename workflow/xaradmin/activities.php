@@ -331,11 +331,6 @@ $tplData['mid'] =  'tiki-g-admin_activities.tpl';
     $tplData['find2'] = '';
     $tplData['sort_mode2'] = '';
 
-    if (count($smarty->tplData) > 0) {
-       foreach (array_keys($smarty->tplData) as $key) {
-           $tplData[$key] = $smarty->tplData[$key];
-       }
-    }
     $tplData['feature_help'] = $feature_help;
     $tplData['direct_pagination'] = $direct_pagination;
     return $tplData;

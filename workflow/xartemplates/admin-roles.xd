@@ -114,10 +114,10 @@ Errors:<br />
 					<select name="user[]" multiple="multiple" size="10">
 					<option value="">"#xarML('Anonymous')#"</option>
 					<xar:foreach in="$users" key="$ix">
-					<xar:if condition="$users[$ix]['login'] eq $users[$ix]['user']">
-						<option value="#$users[$ix]['userId']#">#$users[$ix]['user']#</option>
+					<xar:if condition="$users[$ix]['uname'] eq $users[$ix]['name']">
+						<option value="#$users[$ix]['uid']#">#$users[$ix]['name']#</option>
 					<xar:else/>
-						<option value="#$users[$ix]['userId']#">[#$users[$ix]['login']#] #$users[$ix]['user']#</option>
+						<option value="#$users[$ix]['uid']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
 					</xar:if>
 					</xar:foreach>
 					</select>
@@ -177,7 +177,7 @@ Errors:<br />
 		<td class="formcolor">
 			<select name="group">
 			<xar:foreach in="$groups" key="$ix">
-			<option value="#$groups[$ix]['groupId']#">#$groups[$ix]['groupName']#</option>
+			<option value="#$groups[$ix]['uid']#">#$groups[$ix]['name']#</option>
 			</xar:foreach>
 			</select>
 		</td>

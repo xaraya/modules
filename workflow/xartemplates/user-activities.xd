@@ -30,7 +30,7 @@
 	<small>#xarML('process')#</small>
 </td>
 <td>
-	<small>#xarML('find')#</small>
+	<small>#xarML('description')#</small>
 </td>
 
 <td >
@@ -71,6 +71,7 @@
 <input type="hidden" name="where" value="#$where#" />
 <input type="hidden" name="sort_mode" value="#$sort_mode#" />
 <table class="normal">
+<xar:if condition="!empty($items) and count($items) gt 0">
 <tr>
 <xar:if condition="$sort_mode eq 'procname_desc'">
 <td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_asc'))#">#xarML('Process')#</a></td>
@@ -84,7 +85,6 @@
 </xar:if>
 <td  class="heading" >#xarML('Instances')#</td>
 </tr>
-<xar:if condition="!empty($items) and count($items) gt 0">
 <xar:foreach in="$items" key="$ix">
 <tr>
 	<td>
@@ -125,7 +125,7 @@
 <xar:else/>
 <tr>
 	<td colspan="3">
-	#xarML('No processes defined yet')#
+	#xarML('No activities found')#
 	</td>
 </tr>	
 </xar:if>

@@ -10,12 +10,11 @@
 <div style="margin: auto;">
 <!--- beginning of next bit --->
 
-<xar:template file="monitor_bar" type="module"/>
-<h3>#xarML('Add or edit a process')# <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=#$sort_mode#&amp;pid=0">#xarML('new')#</a>
-</h3>
 <xar:if condition="$pid gt 0">
 <xar:template file="proc_bar" type="module"/>
 </xar:if>
+<h3>#xarML('Add or edit a process')# <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=#$sort_mode#&amp;pid=0">#xarML('new')#</a>
+</h3>
 <xar:if condition="$pid gt 0 and count($errors) gt 0">
 <div class="wikitext">
 #xarML('This process is invalid')#:<br/>

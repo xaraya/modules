@@ -172,7 +172,17 @@
 	</td>
 	
 	<td style="text-align:center;">
+	<xar:if condition="$items[$ix]['status'] eq 'active'">
+		<span style="color:green;">#$items[$ix]['status']#</span>
+	<xar:elseif condition="$items[$ix]['status'] eq 'completed'"/>
+		<span style="color:black;">#$items[$ix]['status']#</span>
+	<xar:elseif condition="$items[$ix]['status'] eq 'aborted'"/>
+		<span style="color:grey;">#$items[$ix]['status']#</span>
+	<xar:elseif condition="$items[$ix]['status'] eq 'exception'"/>
+		<span style="color:red;">#$items[$ix]['status']#</span>
+	<xar:else/>
 		#$items[$ix]['status']#
+	</xar:if>
 	</td>
 
 	<td style="text-align:left;">

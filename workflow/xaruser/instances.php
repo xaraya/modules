@@ -88,7 +88,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
+	$offset = 1;
 } else {
 	$offset = $_REQUEST["offset"];
 }
@@ -105,36 +105,41 @@ $tplData['find'] =  $find;
 $tplData['where'] =  $where;
 $tplData['sort_mode'] =&  $sort_mode;
 
-$items = $GUI->gui_list_user_instances($user, $offset, $maxRecords, $sort_mode, $find, $where);
+$items = $GUI->gui_list_user_instances($user, $offset - 1, $maxRecords, $sort_mode, $find, $where);
 $tplData['cant'] =  $items['cant'];
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $tplData['cant_pages'] =&  $cant_pages;
-$tplData['actual_page'] =  1 + ($offset / $maxRecords);
+$tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
-if ($items["cant"] > ($offset + $maxRecords)) {
+if ($items["cant"] >= ($offset + $maxRecords)) {
 	$tplData['next_offset'] =  $offset + $maxRecords;
 } else {
 	$tplData['next_offset'] =  -1;
 }
 
-if ($offset > 0) {
+if ($offset > 1) {
 	$tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
 	$tplData['prev_offset'] =  -1;
 }
 
-foreach (array_keys($items['data']) as $index) {
-    if (!empty($items['data'][$index]['owner']) &&
-        is_numeric($items['data'][$index]['owner'])) {
-        $items['data'][$index]['owner'] = xarUserGetVar('name', $items['data'][$index]['owner']);
+foreach ($items['data'] as $index => $info) {
+    if (!empty($info['started'])) {
+        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
+                                            . xarLocaleGetFormattedTime('short',$info['started']);
     }
-    if (!is_numeric($items['data'][$index]['user'])) {
-        $items['data'][$index]['userId'] = $items['data'][$index]['user'];
+    $items['data'][$index]['ownerId'] = $info['owner'];
+    if (!empty($info['owner']) &&
+        is_numeric($info['owner'])) {
+        $items['data'][$index]['owner'] = xarUserGetVar('name', $info['owner']);
+    }
+    if (!is_numeric($info['user'])) {
+        $items['data'][$index]['userId'] = $info['user'];
         continue;
     }
     $role = xarModAPIFunc('roles','user','get',
-                          array('uid' => $items['data'][$index]['user']));
+                          array('uid' => $info['user']));
     if (!empty($role)) {
         $items['data'][$index]['userId'] = $role['uid'];
         $items['data'][$index]['user'] = $role['name'];
@@ -182,17 +187,12 @@ $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_us
 $tplData['userId'] = $user;
 $tplData['user'] = xarUserGetVar('name', $user);
 
-    if (count($smarty->tplData) > 0) {
-       foreach (array_keys($smarty->tplData) as $key) {
-           $tplData[$key] = $smarty->tplData[$key];
-       }
-    }
     $tplData['feature_help'] = $feature_help;
     $tplData['direct_pagination'] = $direct_pagination;
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
-                                       $url,
                                        $items['cant'],
+                                       $url,
                                        $maxRecords);
     return $tplData;
 }

@@ -79,12 +79,10 @@ foreach ($act_role_names as $role) {
 	$name = 'tiki-role-' . $role['name'];
 
 	if (in_array($role['roleId'], $user_roles)) {
-		$smarty->assign("$name", 'y');
-
+                $tplData[$name] = 'y';
 		$$name = 'y';
 	} else {
-		$smarty->assign("$name", 'n');
-
+                $tplData[$name] = 'n';
 		$$name = 'n';
 	}
 }
@@ -124,12 +122,6 @@ $__comments = $instance->get_instance_comments();
 
 // This goes to the end part of all activities
 // If this activity is interactive then we have to display the template
-
-if (count($smarty->tplData) > 0) {
-    foreach (array_keys($smarty->tplData) as $key) {
-        $tplData[$key] = $smarty->tplData[$key];
-    }
-}
 
 $tplData['procname'] =  $process->getName();
 $tplData['procversion'] =  $process->getVersion();

@@ -10,7 +10,9 @@
 
 <!--- beginning of next bit --->
 
-<xar:template file="monitor_bar" type="module"/>
+<xar:if condition="$pid gt 0">
+<xar:template file="proc_bar" type="module"/>
+</xar:if>
 
 <xar:if condition="$pid gt 0 and count($errors) gt 0">
 <div class="wikitext">

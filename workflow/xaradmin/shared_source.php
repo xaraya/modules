@@ -137,11 +137,6 @@ $tplData['items'] = $activities['data'];
 
 $tplData['mid'] =  'tiki-g-admin_shared_source.tpl';
 
-    if (count($smarty->tplData) > 0) {
-       foreach (array_keys($smarty->tplData) as $key) {
-           $tplData[$key] = $smarty->tplData[$key];
-       }
-    }
     $tplData['feature_help'] = $feature_help;
     $tplData['direct_pagination'] = $direct_pagination;
     return $tplData;

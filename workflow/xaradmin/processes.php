@@ -162,7 +162,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
+	$offset = 1;
 } else {
 	$offset = $_REQUEST["offset"];
 }
@@ -179,20 +179,20 @@ $tplData['find'] =  $find;
 $tplData['where'] =  $where;
 $tplData['sort_mode'] = $sort_mode;
 
-$items = $processManager->list_processes($offset, $maxRecords, $sort_mode, $find, $where);
+$items = $processManager->list_processes($offset - 1, $maxRecords, $sort_mode, $find, $where);
 $tplData['cant'] =  $items['cant'];
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $tplData['cant_pages'] =  $cant_pages;
-$tplData['actual_page'] =  1 + ($offset / $maxRecords);
+$tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
-if ($items["cant"] > ($offset + $maxRecords)) {
+if ($items["cant"] >= ($offset + $maxRecords)) {
 	$tplData['next_offset'] =  $offset + $maxRecords;
 } else {
 	$tplData['next_offset'] =  -1;
 }
 
-if ($offset > 0) {
+if ($offset > 1) {
 	$tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
 	$tplData['prev_offset'] =  -1;
@@ -228,17 +228,12 @@ $tplData['all_procs'] =  $all_procs['data'];
 
 $tplData['mid'] =  'tiki-g-admin_processes.tpl';
 
-    if (count($smarty->tplData) > 0) {
-       foreach (array_keys($smarty->tplData) as $key) {
-           $tplData[$key] = $smarty->tplData[$key];
-       }
-    }
     $tplData['feature_help'] = $feature_help;
     $tplData['direct_pagination'] = $direct_pagination;
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
-                                       $url,
                                        $items['cant'],
+                                       $url,
                                        $maxRecords);
     return $tplData;
 }

@@ -156,6 +156,7 @@ function workflow_init()
     xarModSetVar('workflow','default.delete',0);
 
     xarModSetVar('workflow','SupportShortURLs',0);
+    xarModSetVar('workflow','itemsperpage',20);
 
     if (!xarModRegisterHook('item', 'create', 'API',
                            'workflow', 'admin', 'createhook')) {

@@ -74,8 +74,6 @@ $activities = $activityManager->list_activities($ins_info['pId'], 0, -1, 'flowNu
 $tplData['activities'] =  $activities['data'];
 
 // Users
-//$users = $userlib->get_users(0, -1, 'login_asc', '');
-//$tplData['users'] =&  $users['data'];
 $mapitems = $roleManager->list_mappings($ins_info['pId'], 0, -1, 'name_asc', '');
 // trick : replace userid by user here !
 foreach (array_keys($mapitems['data']) as $index) {
@@ -143,11 +141,6 @@ $__comments = $instance->get_instance_comments();
 
 $tplData['mid'] =  'tiki-g-admin_instance.tpl';
 
-    if (count($smarty->tplData) > 0) {
-       foreach (array_keys($smarty->tplData) as $key) {
-           $tplData[$key] = $smarty->tplData[$key];
-       }
-    }
     $tplData['feature_help'] = $feature_help;
     $tplData['direct_pagination'] = $direct_pagination;
     return $tplData;

@@ -8,7 +8,7 @@
 <p>See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction and user manual of Galaxia</a> for more details on what this module is all about, and how to use it.</p>
 <p>Then you should :
 <ol>
-<li>make sure that the webserver can write to the directory modules/workflow/lib/Galaxia/processes (chmod 777 or equivalent)</li>
+<li>make sure that the webserver can write to the directory var/processes (chmod 777 or equivalent)</li>
 <li>install <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> if you want to generate some nice process graphs, and adapt GRAPHVIZ_DIR in modules/workflow/tiki-setup.php if necessary</li>
 <li>go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import Object Definition</a> page and paste the content of the file <a href="modules/workflow/cdcollection3_dd.xml">cdcollection3_dd.xml</a> in the text area
 to create the sample database table</li>
