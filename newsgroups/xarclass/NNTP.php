@@ -216,7 +216,6 @@ class Net_NNTP extends PEAR
         $post = null;
         while (!feof($this->fp)) {
             $line = trim(fgets($this->fp, 256));
-
             if ($line == ".") {
                 break;
             } else {
@@ -292,11 +291,10 @@ class Net_NNTP extends PEAR
         if (PEAR::isError($r) || $this->responseCode($r) > 299) {
             return $this->raiseError($r);
         }
-
+        $i=0;
         $headers = '';
         while(!feof($this->fp)) {
             $line = trim(fgets($this->fp, 256));
-
             if ($line == '.') {
                 break;
             } else {
@@ -334,24 +332,33 @@ class Net_NNTP extends PEAR
             return $headers;
         }
 
-        $lines = explode("\n", $headers);
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (($pos = strpos($line, ':')) !== false) {
-                $head = substr($line, 0, $pos);
-                $ret[$head] = ltrim(substr($line, $pos+1));
-            // if the field was longer than 256 chars, look also in the next line
-            // XXX a better way to discover that than strpos?
+        $header_list = explode("\n", $headers);
+        $headers = array();
+
+        foreach ($header_list as $header) {
+            if (preg_match("/^([a-zA-Z0-9_-]*): (.*)/", $header, $matches)) {
+                $key = $matches[1];
+                $value = str_replace(array('<','>'),
+                                     array('&lt;','&gt;'),
+                                     $matches[2]);
+
+                if (stristr($key, 'date')) {
+                    $headers[$key] = xarLocaleFormatDate('%c',strtotime($value));
+                } elseif (stristr($key, 'references')) {
+                    $headers[$key] = explode(' ', $matches[2]);
+                } else {
+                    $headers[$key] = $value;
+                }
             } else {
-                $ret[$head] .= $line;
+                if (isset($key)) {
+                    $headers[$key] .= str_replace(array('<','>'),
+                                                  array('&lt;','&gt;'),
+                                                  $header);
+                }
             }
-        }
-        if (isset($ret['References']) &&
-            preg_match_all('|<.+>|U', $ret['References'], $matches))
-        {
-            $ret['References'] = $matches[0];
-        }
-        return $ret;
+       }
+
+       return $headers;
     }
 
     /**
@@ -408,7 +415,7 @@ class Net_NNTP extends PEAR
     {
         $body = array();
         while(!feof($this->fp)) {
-            $line = trim(fgets($this->fp, 256));
+            $line = trim(fgets($this->fp, 4096));
             if ($line == '.') {
                 break;
             } else {
@@ -479,7 +486,8 @@ class Net_NNTP extends PEAR
         $this->command("LIST NEWSGROUPS");
         foreach($this->_getData() as $line) {
             preg_match("/^(.*?)\s(.*?$)/",$line,$matches);
-            $groups[$matches[1]]["desc"] = $matches[2];
+            if (isset($matches[1]) && isset($matches[2]))
+                $groups[$matches[1]]["desc"] = $matches[2];
         }
         return $groups;
     }
@@ -534,14 +542,21 @@ class Net_NNTP extends PEAR
     */
     function getOverview($first,$last) {
         $format = $this->getOverviewFmt();
-
+        $messages = array();
         $this->command("XOVER $first-$last");
         foreach($this->_getData() as $line) {
             $i=0;
             foreach(explode("\t",$line) as $line) {
+                if (stristr($format[$i], 'date')) {
+                    $line = xarLocaleFormatDate("%c",strtotime($line));
+                } else {
+                    $line = str_replace(array('<', '>'),
+                                        array('&lt;','&gt;'),
+                                        $line);
+                }
                 $message[$format[$i++]] = $line;
             }
-            $messages[$message["Message-ID"]] = $message;
+            $messages[md5($message["Message-ID"])] = $message;
         }
 
         $response = $this->command("XROVER $first-$last");
@@ -549,12 +564,19 @@ class Net_NNTP extends PEAR
         if ($code == 500) {
               return $messages;
         }
-	foreach($this->_getData() as $line) {
+	    foreach($this->_getData() as $line) {
             $i=0;
             foreach(explode("\t",$line) as $line) {
+                if (stristr($format[$i], 'date')) {
+                    $line = xarLocaleFormatDate("%c",strtotime($line));
+                } else {
+                    $line = str_replace(array('<', '>'),
+                                        array('&lt;','&gt;'),
+                                        $line);
+                }
                 $message[$format[$i++]] = $line;
             }
-            $messages[$message["Message-ID"]] = $message;
+            $messages[md5($message["Message-ID"])] = $message;
         }
         return $messages;
     }

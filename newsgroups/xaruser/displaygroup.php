@@ -5,7 +5,7 @@ function newsgroups_user_displaygroup()
     // Security Check
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
-    xarVarFetch('group', 'str:1', $data['group']); 
+    xarVarFetch('group', 'str:1', $data['group']);
     xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED);
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['group']));
@@ -27,12 +27,12 @@ function newsgroups_user_displaygroup()
     if ($startnumitem == NULL){
         $startnumitem = $counts['last'];
     }
-    $data['items'] = $newsgroups -> getOverview($startnumitem - $numitems, $counts['last']);
-    $newsgroups -> quit();
+    $messages = $newsgroups->getOverview($startnumitem - $numitems, $counts['last']);
+    $newsgroups->quit();
+    $data['items'] = xarModAPIFunc('newsgroups','user','create_threads', $messages);
 
-    $data['items'] = array_reverse($data['items']);
-
-    //var_dump($data['items']);
+    //echo '<br /><pre> articles => '; print_r($data['items']); echo '</pre><br />';
+   //var_dump($data['items']);
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
