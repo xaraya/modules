@@ -21,7 +21,7 @@ function page_top($page,$printlayout)
     /*
     if ($page == THELIST || $page == ACTIONS) {
         $str .= '<meta http-equiv="refresh" content="'.pnModGetVar('todolist', 'REFRESH_MAIN').'; URL='.pnModURL('todolist', 'user', 'main', array());
-        if (isset($order_by)) $str .='&order_by='.$order_by;
+        if (isset($order_by)) $str .='&amp;order_by='.$order_by;
         $str .= '"/>';
     }
     */
@@ -132,29 +132,29 @@ function page_top($page,$printlayout)
         if (!$printlayout && ($page!=DETPAGE) && ($page!=PREFPAGE)) {
             if ($QUERY_STRING=="") {
                 if (pnSessionGetVar('todolist_show_icons')) {
-                    $str .= '<a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&printlayout=true">';
+                    $str .= '<a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;printlayout=true">';
                     $str .= '<img border="0" src="'.$todoimagespath.'print.png" alt="'._TODOLIST_PRINTLAYOUT.'" /></a>';
                 } else {
-                    $str .= '/ <a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&printlayout=true" accesskey="p">'.
+                    $str .= '/ <a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;printlayout=true" accesskey="p">'.
                             _TODOLIST_PRINTLAYOUT."</a>";
                 }
             } else {
                 if (pnSessionGetVar('todolist_show_icons'))
-                    $str .= '<a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&'.$QUERY_STRING.'&printlayout=true" accesskey="p">
+                    $str .= '<a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&'.$QUERY_STRING.'&amp;printlayout=true" accesskey="p">
                         <img border="0" src="'.$todoimagespath.'print.png" alt="'._TODOLIST_PRINTLAYOUT.'" /></a>';
                 else {
-                    $str .= '/ <a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&'.$QUERY_STRING.'&printlayout=true" accesskey="p">'.
+                    $str .= '/ <a target="_blank" href="'.pnModURL('todolist', 'user', 'main', array()).'&'.$QUERY_STRING.'&amp;printlayout=true" accesskey="p">'.
                             _TODOLIST_PRINTLAYOUT."</a>";
                 }
             }
         }
         if ($page != PREFPAGE) {
             if (pnSessionGetVar('todolist_show_icons')) {
-                $str .=' <a href="'.pnModURL('todolist', 'user', 'main', array()).'&route='.PREFERENCES.'" accesskey="p">
+                $str .=' <a href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;route='.PREFERENCES.'" accesskey="p">
                     <img border="0" src="'.$todoimagespath.'preferences.png" alt="'._TODOLIST_PREFERENCES.'"/></a>';
             }
             else {
-                $str .=' / <a href="'.pnModURL('todolist', 'user', 'main', array()).'&route='.PREFERENCES.'" accesskey="p">'._TODOLIST_PREFERENCES.'</a>';
+                $str .=' / <a href="'.pnModURL('todolist', 'user', 'main', array()).'&amp;route='.PREFERENCES.'" accesskey="p">'._TODOLIST_PREFERENCES.'</a>';
             }
         }
     }
