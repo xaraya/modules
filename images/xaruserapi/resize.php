@@ -58,7 +58,7 @@ function images_userapi_resize($args)
     
     $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $src));
     if (!is_object($image)) {
-        return 'echo "<img src=\"\" alt=\"' . xarML('File not found.') . '\">;';
+        return '<img src="" alt="' . xarML('File not found.') . '">';
     } 
     
     if (isset($width)) {
