@@ -10,7 +10,7 @@ function mailbag_adminapi_geterrors($args)
     $xartable =  xarDBGetTables();
     
     $table = $xartable['mailbag_errors'];
-
+    $bindvars[] = array();
     $sql = "SELECT  xar_msgid,
                     xar_subject,
                     xar_from,
@@ -22,9 +22,12 @@ function mailbag_adminapi_geterrors($args)
             FROM $table ";
 
     if(!empty($errorcode))
-        $sql .= " WHERE xar_errorcode = $errorcode ";
-            
-    $result = $dbconn->Execute($sql);
+    {
+        $sql .= " WHERE xar_errorcode = ? ";
+        $bindvars[] = $errorcode;
+    }
+    
+    $result = $dbconn->Execute($sql, $bindvars);
     if (!isset($result)) return;
 
     $errcount = 0;
