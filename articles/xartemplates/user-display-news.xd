@@ -54,6 +54,7 @@
 <div class="xar-normal">
     <span style="text-align: left;"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; <xar:mlstring>prev</xar:mlstring> </a></xar:if>&nbsp;</span>
     <span style="text-align: right; float: right;">&nbsp;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></span>
+</div>
 </xar:if>
 
 <xar:if condition="!empty($hooks)">
