@@ -64,7 +64,7 @@ function html_userapi_transformoutput($args)
  */
 function html_userapitransformoutput($text)
 {
-    $text = str_replace(chr(13), "</p><p>" , $text);
+    $text = str_replace("\n\n", "</p><p>" , $text);
     $text = "<p> " . $text . " </p>\n";
     $text = str_replace ("<p>\n</p>", "", $text);
     return $text;
