@@ -1,0 +1,19 @@
+<xar:if condition="!empty($replace2)">
+    <p>
+        #xarML('Quote')# #$replace1#:
+    </p>
+    <div style="width: 90%; overflow: auto;">
+        <blockquote>
+            #$replace2#
+        </blockquote>
+    </div>
+<xar:else />
+    <p>
+        #xarML('Quote')#:
+    </p>
+    <div style="width: 90%; overflow: auto;">
+        <blockquote>
+            #$replace1#
+        </blockquote>
+    </div>
+</xar:if>
