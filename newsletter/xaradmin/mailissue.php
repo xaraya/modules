@@ -31,7 +31,7 @@ function newsletter_admin_mailissue()
     if (!xarVarFetch('issueId', 'id', $issueId)) {
         xarExceptionFree();
         $msg = xarML('You must choose an issue to publish.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -50,7 +50,7 @@ function newsletter_admin_mailissue()
         // If this issue was already published, then throw error and return
         xarExceptionFree();
         $msg = xarML('This issue has already been published.  You must edit the issue and remove the date published to publish again.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 

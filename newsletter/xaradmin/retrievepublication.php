@@ -28,7 +28,7 @@ function newsletter_admin_retrievepublication()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for creating new #(1) item', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
         

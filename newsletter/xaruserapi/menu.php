@@ -22,7 +22,7 @@
  */
 function newsletter_userapi_menu()
 {
-    // Initialise the array that will hold the menu configuration
+    // Initialise the array that will hnew the menu configuration
     $menu = array();
 
     // Specify the menu title to be used in your blocklayout template

@@ -29,7 +29,7 @@ function newsletter_admin_updateowner($args)
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for updating #(1) item #(2)',
                     'Newsletter', xarVarPrepForDisplay($id));
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 
@@ -39,7 +39,7 @@ function newsletter_admin_updateowner($args)
     if (!xarVarFetch('groupName', 'str:1:', $groupName)) {
         xarExceptionFree();
         $msg = xarML('You must select a group.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

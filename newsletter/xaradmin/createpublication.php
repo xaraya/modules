@@ -40,7 +40,7 @@ function newsletter_admin_createpublication()
     // Confirm authorization key 
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for creating new #(1) item', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 
@@ -48,7 +48,7 @@ function newsletter_admin_createpublication()
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
         xarExceptionFree();
         $msg = xarML('You must select an owner name.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -57,7 +57,7 @@ function newsletter_admin_createpublication()
     if (!xarVarFetch('title', 'str:1:', $title)) {
         xarExceptionFree();
         $msg = xarML('You must enter a publication title');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

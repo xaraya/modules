@@ -43,7 +43,7 @@ function newsletter_adminapi_createaltsubscription($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'adminapi', 'createaltsubscription', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -68,7 +68,7 @@ function newsletter_adminapi_createaltsubscription($args)
 
     if ($result->RecordCount() > 0) {
         //$msg = xarML('The email address already exists.');
-        //xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
+        //xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return false;  // subscription already exists
     }
 

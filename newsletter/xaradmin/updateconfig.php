@@ -28,7 +28,7 @@ function newsletter_admin_updateconfig()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for updating #(1) configuration', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 

@@ -31,7 +31,7 @@ function newsletter_admin_createaltsubscription()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for creating new #(1) item', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 
@@ -41,14 +41,14 @@ function newsletter_admin_createaltsubscription()
     if (!xarVarFetch('email', 'str:1:', $email)) {
         xarExceptionFree();
         $msg = xarML('You must provide an email address.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     if (!xarVarFetch('pids', 'array:1:', $pids)) {
         xarExceptionFree();
         $msg = xarML('You must select at least one publication.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

@@ -45,7 +45,7 @@ function newsletter_admin_newpublication()
 
     if (empty($data['owners'])) {
         $msg = xarML('You must add an Newsletter user before creating a publication.  Please go to Admin -> Newsletter -> Add Newsletter User.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -61,7 +61,7 @@ function newsletter_admin_newpublication()
     // Check for categories to display
     if (empty($categories)) {
         $msg = xarML('You must create categories under the Newsletter category before creating a publication.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

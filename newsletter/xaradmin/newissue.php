@@ -82,7 +82,7 @@ function newsletter_admin_newissue()
 
     if (empty($data['owners'])) {
         $msg = xarML('You must create an owner name before publishing.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

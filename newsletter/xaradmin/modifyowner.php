@@ -34,7 +34,7 @@ function newsletter_admin_modifyowner()
     if(!$owner) {
         $msg = xarML('Error in #(1) #(2): could not find owner id #(3)',
                     'Newsletter', 'modifyowner', xarVarPrepForDisplay($id));
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 

@@ -73,7 +73,7 @@ function newsletter_admin_newstory()
 
     if (empty($data['owners'])) {
         $msg = xarML('You must set an newsletter owner before creating an story.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -158,7 +158,7 @@ function newsletter_admin_newstory()
         // Check for categories to display
         if (empty($categories)) {
             $msg = xarML('You must set an newsletter category for this publication.');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }
 

@@ -31,7 +31,7 @@ function newsletter_userapi_gettemplatefile($args)
     if (empty($filename)) {
         $msg = xarML('Must provide a filename!  #(1) function #(2)() in module #(3)',
                 'userapi', 'gettemplatefile', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return false;
     }
     
@@ -43,7 +43,7 @@ function newsletter_userapi_gettemplatefile($args)
     // Check if the template file exists
     if (!file_exists($sourceFile)) {
         $msg = xarML('Template file #(1) does not exist!', $sourceFile);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return false;
     }
 

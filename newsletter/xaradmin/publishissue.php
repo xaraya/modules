@@ -98,7 +98,7 @@ function newsletter_admin_publishissue()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for publishing #(1) story #(2)',
                     'Newsletter', xarVarPrepForDisplay($id));
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 

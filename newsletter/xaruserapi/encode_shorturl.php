@@ -41,7 +41,7 @@
  * the short URLs mean, and how they could e.g. display item 234 simply
  * by changing the 123.html into 234.html.
  *
- * For older modules with many different optional parameters and functions,
+ * For newer modules with many different optional parameters and functions,
  * this generally implies re-thinking which parameters could easily be set
  * to some default to cover the most frequently-used cases, and rethinking
  * how each function could be represented inside some "virtual directory

@@ -32,7 +32,7 @@ function newsletter_admin_updatealtsubscription()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for updating #(1) item #(2) in function #(3)',
                     'Newsletter', xarVarPrepForDisplay($id), 'newsletter_admin_updatealtsubscription');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return false;
     }
 
@@ -43,7 +43,7 @@ function newsletter_admin_updatealtsubscription()
     if (!xarVarFetch('email', 'str:1:', $email)) {
         xarExceptionFree();
         $msg = xarML('You must provide an email address.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return false;
     }
 

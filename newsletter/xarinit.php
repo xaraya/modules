@@ -19,7 +19,7 @@ function newsletter_init()
 {
     if(!xarModIsAvailable('categories')) {
         $msg=xarML('The categories module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }
@@ -63,7 +63,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -92,7 +92,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -118,7 +118,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -144,7 +144,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -169,7 +169,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -208,7 +208,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -233,7 +233,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -260,7 +260,7 @@ function newsletter_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }

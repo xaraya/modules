@@ -40,7 +40,7 @@ function newsletter_admin_viewsubscription($args)
     // If searching by publication, make sure something was selected
     if ($search == 'publication' && $publicationId == 0) {
         $msg = xarML('You must choose a publication to search.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

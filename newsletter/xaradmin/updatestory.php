@@ -48,7 +48,7 @@ function newsletter_admin_updatestory()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for updating #(1) item #(2) in function #(3)',
                     'Newsletter', xarVarPrepForDisplay($id), 'newsletter_admin_updatestory');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 
@@ -58,7 +58,7 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
         xarExceptionFree();
         $msg = xarML('You must select an owner name.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -68,7 +68,7 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('title', 'str:1:', $title)) {
         xarExceptionFree();
         $msg = xarML('You must enter a title for the story.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -77,7 +77,7 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('content', 'str:1:', $content)) {
         xarExceptionFree();
         $msg = xarML('You must provide content for the story.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -101,7 +101,7 @@ function newsletter_admin_updatestory()
     if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
         xarExceptionFree();
         $msg = xarML('You must enter a commentary source for the commentary.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

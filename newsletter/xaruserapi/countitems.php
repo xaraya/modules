@@ -34,7 +34,7 @@ function newsletter_userapi_countitems($args)
     if (!isset($phase) || !is_string($phase)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'phase', 'userapi', 'countitems', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

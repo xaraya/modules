@@ -30,7 +30,7 @@ function newsletter_admin_updatedisclaimer()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for updating #(1) item #(2) in function #(3)',
                     'Newsletter', xarVarPrepForDisplay($id), 'newsletter_admin_updatedisclaimer');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
 
@@ -40,14 +40,14 @@ function newsletter_admin_updatedisclaimer()
     if (!xarVarFetch('title', 'str:1:', $title)) {
         xarExceptionFree();
         $msg = xarML('You must provide a title for the disclaimer.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     if (!xarVarFetch('disclaimer', 'str:1:', $disclaimer)) {
         xarExceptionFree();
         $msg = xarML('You must provide the disclaimer.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

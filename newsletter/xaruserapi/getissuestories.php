@@ -36,7 +36,7 @@ function newsletter_userapi_getissuestories($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'userapi', 'getissuestories', 'Newsletter');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -60,7 +60,7 @@ function newsletter_userapi_getissuestories($args)
     // Load categories API
     if (!xarModAPILoad('categories', 'user')) {
         $msg = xarML('Unable to load #(1) #(2) API','categories','user');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
         return false;
     }
 
