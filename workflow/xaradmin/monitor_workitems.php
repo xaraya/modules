@@ -97,21 +97,31 @@ if ($offset > 0) {
 	$tplData['prev_offset'] =  -1;
 }
 
-foreach (array_keys($items['data']) as $index) {
-    if (!empty($items['data'][$index]['started'])) {
-        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$items['data'][$index]['started']) . ' '
-                                            . xarLocaleGetFormattedTime('short',$items['data'][$index]['started']);
+$maxtime = 0;
+foreach ($items['data'] as $info) {
+    if (isset($info['duration']) && $maxtime < $info['duration']) {
+        $maxtime = $info['duration'];
     }
-    if (!empty($items['data'][$index]['duration'])) {
-//        $items['data'][$index]['duration'] = strftime('%H:%M:%S',$items['data'][$index]['duration']);
+}
+if ($maxtime > 0) {
+    $scale = 100.0 / $maxtime;
+} else {
+    $scale = 1.0;
+}
+foreach ($items['data'] as $index => $info) {
+    $items['data'][$index]['timescale'] = intval( $scale * $info['duration'] );
+    $items['data'][$index]['duration'] = xarTimeToDHMS($info['duration']);
+    if (!empty($info['started'])) {
+        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
+                                            . xarLocaleGetFormattedTime('short',$info['started']);
     }
-    if (!is_numeric($items['data'][$index]['user'])) continue;
-    $items['data'][$index]['user'] = xarUserGetVar('name',$items['data'][$index]['user']);
+    if (!is_numeric($info['user'])) continue;
+    $items['data'][$index]['user'] = xarUserGetVar('name',$info['user']);
 }
 $tplData['items'] =&  $items["data"];
 
-$all_procs = $items = $processMonitor->monitor_list_processes(0, -1, 'name_desc', '', '');
-$tplData['all_procs'] =&  $all_procs["data"];
+$all_procs = $processMonitor->monitor_list_all_processes('name_asc');
+$tplData['all_procs'] =&  $all_procs;
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
 	$where = ' pId=' . $_REQUEST['filter_process'];
@@ -119,8 +129,8 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
 	$where = '';
 }
 
-$all_acts = $processMonitor->monitor_list_activities(0, -1, 'name_desc', '', $where);
-$tplData['all_acts'] =&  $all_acts["data"];
+$all_acts = $processMonitor->monitor_list_all_activities('name_desc', $where);
+$tplData['all_acts'] =&  $all_acts;
 
 $sameurl_elements = array(
 	'offset',

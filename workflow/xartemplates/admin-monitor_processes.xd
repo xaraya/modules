@@ -26,27 +26,24 @@
 <table>
 <tr>
 <td>
-	<small>#xarML('find')#</small>
+	<small>#xarML('process')#</small>
 </td>
-<td >
-	<small>#xarML('proc')#</small>
-</td>
-<td >
+<td>
 	<small>#xarML('active')#</small>
 </td>
-<td >
+<td>
 	<small>#xarML('valid')#</small>
 </td>
-<td >
+<td>
+	<small>#xarML('description')#</small>
+</td>
+<td>
 	&nbsp;
 </td>	
 </tr>
 
 <tr>
-<td >
-	<input size="8" type="text" name="find" value="#$find#" />
-</td>
-<td >
+<td>
 	<select name="filter_process">
 <xar:if condition="'' eq $filter_process">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -55,14 +52,14 @@
 </xar:if>
 	<xar:foreach in="$all_procs" key="$ix">
 <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
-	<option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']#</option>
+	<option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
 <xar:else/>
-	<option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']#</option>
+	<option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
 </xar:if>
 	</xar:foreach>
 	</select>
 </td>
-<td >
+<td>
 	<select name="filter_active">
 <xar:if condition="'' eq $filter_active">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -81,7 +78,7 @@
 </xar:if>
 	</select>
 </td>
-<td >
+<td>
 	<select name="filter_valid">
 <xar:if condition="'' eq $filter_valid">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -100,7 +97,10 @@
 </xar:if>
 	</select>
 </td>
-<td >	
+<td>
+	<input size="8" type="text" name="find" value="#$find#" />
+</td>
+<td>	
 	<input type="submit" name="filter" value="#xarML('filter')#" />
 </td>
 </tr>
@@ -113,15 +113,16 @@
 <input type="hidden" name="where" value="#$where#" />
 <input type="hidden" name="sort_mode" value="#$sort_mode#" />
 <table class="normal">
+<xar:if condition="!empty($items) and count($items) gt 0">
 <tr>
-<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#">#xarML('Name')#</a></td>
-<td  class="heading" >#xarML('Activs')#</td>
-<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isActive_asc'))#">#xarML('act')#</a></td>
-<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isValid_asc'))#">#xarML('val')#</a></td>
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#">#xarML('Process')#</a></td>
+<td  class="heading" >#xarML('Activities')#</td>
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isActive_asc'))#">#xarML('Active')#</a></td>
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isValid_asc'))#">#xarML('Valid')#</a></td>
 <td  class="heading" >#xarML('Instances')#<br/>
+<td  class="heading" >#xarML('Duration of completed processes - min/avg/max')#<br/>
 </td>
 </tr>
-<xar:if condition="!empty($items) and count($items) gt 0">
 <xar:foreach in="$items" key="$ix">
 <tr>
 	<td>
@@ -160,12 +161,21 @@
 		</tr>
 		</table>
 	</td>
+
+	<td style="text-align:left;">
+	<xar:if condition="!empty($items[$ix]['duration'])">
+	<xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']['min']#" height="10" border="0" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#" /></xar:if>
+	<xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="modules/workflow/xarimages/greenpixel.gif" width="#$items[$ix]['timescale']['avg']#" height="10" border="0" alt="average" title="average = #$items[$ix]['duration']['avg']#" /></xar:if>
+	<xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="modules/workflow/xarimages/redpixel.gif" width="#$items[$ix]['timescale']['max']#" height="10" border="0" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#" /></xar:if>
+	#$items[$ix]['duration']['avg']#
+	</xar:if>
+	</td>
 </tr>
 </xar:foreach>
 <xar:else/>
 <tr>
 	<td colspan="6">
-	#xarML('No processes defined yet')#
+	#xarML('No processes found')#
 	</td>
 </tr>	
 </xar:if>

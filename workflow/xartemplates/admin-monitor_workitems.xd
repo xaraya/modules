@@ -22,30 +22,27 @@
 <table>
 <tr>
 <td>
-	<small>#xarML('find')#</small>
+	<small>#xarML('process')#</small>
 </td>
-<td >
-	<small>#xarML('proc')#</small>
-</td>
-<td >
-	<small>#xarML('act')#</small>
-</td>
-<td >
+<td>
 	<small>#xarML('instance')#</small>
 </td>
-<td >
+<td>
+	<small>#xarML('activity')#</small>
+</td>
+<td>
 	<small>#xarML('user')#</small>
 </td>
-<td >
+<td>
+	<small>#xarML('properties')#</small>
+</td>
+<td>
 	&nbsp;
 </td>	
 </tr>
 
 <tr>
-<td >
-	<input size="8" type="text" name="find" value="#$find#" />
-</td>
-<td >
+<td>
 	<select name="filter_process">
 <xar:if condition="'' eq $filter_process">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -54,14 +51,17 @@
 </xar:if>
 	<xar:foreach in="$all_procs" key="$ix">
 <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
-	<option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']#</option>
+	<option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
 <xar:else/>
-	<option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']#</option>
+	<option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
 </xar:if>
 	</xar:foreach>
 	</select>
 </td>
-<td >
+<td>
+	<input type="text" name="filter_instance" value="#$filter_instance#" size="4" />
+</td>
+<td>
 	<select name="filter_activity">
 <xar:if condition="'' eq $filter_activity">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -77,10 +77,7 @@
 	</xar:foreach>
 	</select>
 </td>
-<td >
-	<input type="text" name="filter_instance" value="#$filter_instance#" size="4" />
-</td>
-<td >
+<td>
 	<select name="filter_user">
 <xar:if condition="'' eq $filter_user">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -96,8 +93,10 @@
 	</xar:foreach>
 	</select>
 </td>
-
-<td >	
+<td>
+	<input size="8" type="text" name="find" value="#$find#" />
+</td>
+<td>	
 	<input type="submit" name="filter" value="#xarML('filter')#" />
 </td>
 </tr>
@@ -110,17 +109,17 @@
 <input type="hidden" name="where" value="#$where#" />
 <input type="hidden" name="sort_mode" value="#$sort_mode#" />
 <table class="normal">
+<xar:if condition="!empty($items) and count($items) gt 0">
 <tr>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'itemId_asc'))#">#xarML('Id')#</a></td>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_asc'))#">#xarML('Process')#</a></td>
-<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'actname_asc'))#">#xarML('Activity')#</a></td>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'instanceId_asc'))#">#xarML('Ins')#</a></td>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'orderId_asc'))#">#</a></td>
-<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'started_asc'))#">#xarML('Start')#</a></td>
-<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'duration_asc'))#">#xarML('Duration')#</a></td>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'actname_asc'))#">#xarML('Activity')#</a></td>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'user_asc'))#">#xarML('User')#</a></td>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'started_asc'))#">#xarML('Start')#</a></td>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'duration_asc'))#">#xarML('Duration of this workitem')#</a></td>
 </tr>
-<xar:if condition="!empty($items) and count($items) gt 0">
 <xar:foreach in="$items" key="$ix">
 <tr>
 	<td style="text-align:left;">  
@@ -129,6 +128,14 @@
 
 	<td style="text-align:left;">  
 		#$items[$ix]['procname']# #$items[$ix]['version']#
+	</td>
+
+	<td>
+	  <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
+	</td>
+	
+	<td>
+	  #$items[$ix]['orderId']#
 	</td>
 
 	<td style="text-align:left;">
@@ -153,26 +160,19 @@
 	</td>
 
 	<td>
-	  <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
-	</td>
-	
-	<td>
-	  #$items[$ix]['orderId']#
+	  #$items[$ix]['user']#
 	</td>
 
 	<td>
 	  #$items[$ix]['started']#
 	</td>
 	
-	<td style="text-align:right;">
-	  #$items[$ix]['duration']#
+	<td style="text-align:left;">
+	<xar:if condition="!empty($items[$ix]['duration'])">
+	<xar:if condition="!empty($items[$ix]['timescale'])"><img src="modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']#" height="10" border="0" alt="duration" title="duration = #$items[$ix]['duration']#" /></xar:if>
+	#$items[$ix]['duration']#
+	</xar:if>
 	</td>
-
-	<td>
-	  #$items[$ix]['user']#
-	</td>
-
-	
 
 	
 	
@@ -180,8 +180,8 @@
 </xar:foreach>
 <xar:else/>
 <tr>
-	<td colspan="7">
-	#xarML('No workitems created yet')#
+	<td colspan="9">
+	#xarML('No workitems found')#
 	</td>
 </tr>	
 </xar:if>

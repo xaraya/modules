@@ -28,33 +28,30 @@
 <table>
 <tr>
 <td>
-	<small>#xarML('find')#</small>
+	<small>#xarML('process')#</small>
 </td>
-<td >
-	<small>#xarML('proc')#</small>
+<td>
+	<small>#xarML('activity')#</small>
 </td>
-<td >
-	<small>#xarML('act')#</small>
-</td>
-<td >
+<td>
 	<small>#xarML('type')#</small>
 </td>
-<td >
-	<small>#xarML('inter')#</small>
+<td>
+	<small>#xarML('interact')#</small>
 </td>
-<td >
-	<small>#xarML('auto')#</small>
+<td>
+	<small>#xarML('route')#</small>
 </td>
-<td >
+<td>
+	<small>#xarML('description')#</small>
+</td>
+<td>
 	&nbsp;
 </td>	
 </tr>
 
 <tr>
-<td >
-	<input size="8" type="text" name="find" value="#$find#" />
-</td>
-<td >
+<td>
 	<select name="filter_process" onChange='javascript:getElementById("filterf").submit();'>
 <xar:if condition="'' eq $filter_process">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -70,7 +67,7 @@
 	</xar:foreach>
 	</select>
 </td>
-<td >
+<td>
 	<select name="filter_activity">
 <xar:if condition="'' eq $filter_activity">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -86,7 +83,7 @@
 	</xar:foreach>
 	</select>
 </td>
-<td >
+<td>
 	<select name="filter_type">
 <xar:if condition="'' eq $filter_type">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -102,7 +99,7 @@
 	</xar:foreach>
 	</select>
 </td>
-<td >
+<td>
 	<select name="filter_isInteractive">
 <xar:if condition="'' eq $filter_isInteractive">
 	<option selected="selected" value="">#xarML('All')#</option>
@@ -121,27 +118,30 @@
 </xar:if>
 	</select>
 </td>
-<td >
+<td>
 	<select name="filter_isAutoRouted">
 <xar:if condition="'' eq $filter_isAutoRouted">
 	<option selected="selected" value="">#xarML('All')#</option>
 <xar:else/>
 	<option value="">#xarML('All')#</option>
 </xar:if>
-<xar:if condition="'y' eq $filter_isAutoRouted">
-	<option value="y" selected="selected">#xarML('Manual')#</option>
-<xar:else/>
-	<option value="y">#xarML('Manual')#</option>
-</xar:if>
 <xar:if condition="'n' eq $filter_isAutoRouted">
-	<option value="n" selected="selected">#xarML('Automatic')#</option>
+	<option value="n" selected="selected">#xarML('Manual')#</option>
 <xar:else/>
-	<option value="n">#xarML('Automatic')#</option>
+	<option value="n">#xarML('Manual')#</option>
+</xar:if>
+<xar:if condition="'y' eq $filter_isAutoRouted">
+	<option value="y" selected="selected">#xarML('Automatic')#</option>
+<xar:else/>
+	<option value="y">#xarML('Automatic')#</option>
 </xar:if>
 	</select>
 </td>
+<td>
+	<input size="8" type="text" name="find" value="#$find#" />
+</td>
 
-<td >	
+<td>	
 	<input type="submit" name="filter" value="#xarML('filter')#" />
 </td>
 </tr>
@@ -154,20 +154,21 @@
 <input type="hidden" name="where" value="#$where#" />
 <input type="hidden" name="sort_mode" value="#$sort_mode#" />
 <table class="normal">
+<xar:if condition="!empty($items) and count($items) gt 0">
 <tr>
 <td  class="heading" >#xarML('Process')#</td>
-<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#">#xarML('Name')#</a></td>
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#">#xarML('Activity')#</a></td>
 <td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'type_asc'))#">#xarML('Type')#</a></td>
-<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isInteractive_asc'))#">#xarML('int')#</a></td>
-<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isAutoRouted_asc'))#">#xarML('routing')#</a></td>
-<td  class="heading" >#xarML('Instances')#<br/>
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isInteractive_asc'))#">#xarML('Interact')#</a></td>
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isAutoRouted_asc'))#">#xarML('Route')#</a></td>
+<td  class="heading" >#xarML('Status')#<br/>
+<td  class="heading" >#xarML('Duration of completed activities - min/avg/max')#<br/>
 </td>
 </tr>
-<xar:if condition="!empty($items) and count($items) gt 0">
 <xar:foreach in="$items" key="$ix">
 <tr>
 	<td style="text-align:left;">
-		#$items[$ix]['procname']#
+		#$items[$ix]['procname']# #$items[$ix]['version']#
 	</td>
 
 	<td style="text-align:left;">
@@ -215,19 +216,29 @@
 		<table >
 		<tr>
  		 <td style="text-align:right;"><a style="color:green;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=active&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['active_instances']#</a></td>
-		 <td style="text-align:right;"><a style="color:black;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=completed&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['completed_instances']#</a></td>
+		 <td style="text-align:right;"><a style="color:black;" href="&xar-modurl-workflow-admin-monitor_workitems;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['act_completed_instances']#</a></td>
 		 <td style="text-align:right;"><a style="color:grey;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=aborted&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['aborted_instances']#</a></td>
 		 <td style="text-align:right;"><a style="color:red;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=exception&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['exception_instances']#</a></td>
 
 		</tr>
 		</table>
 	</td>
+
+	<td style="text-align:left;">
+	<xar:if condition="!empty($items[$ix]['duration'])">
+	<xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']['min']#" height="10" border="0" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#" /></xar:if>
+	<xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="modules/workflow/xarimages/greenpixel.gif" width="#$items[$ix]['timescale']['avg']#" height="10" border="0" alt="average" title="average = #$items[$ix]['duration']['avg']#" /></xar:if>
+	<xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="modules/workflow/xarimages/redpixel.gif" width="#$items[$ix]['timescale']['max']#" height="10" border="0" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#" /></xar:if>
+	#$items[$ix]['duration']['avg']#
+	</xar:if>
+	</td>
+
 </tr>
 </xar:foreach>
 <xar:else/>
 <tr>
-	<td colspan="6">
-	#xarML('No processes defined yet')#
+	<td colspan="7">
+	#xarML('No activities found')#
 	</td>
 </tr>	
 </xar:if>

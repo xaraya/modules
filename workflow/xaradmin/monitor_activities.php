@@ -53,7 +53,7 @@ if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
 	$wheres[] = "activityId=" . $_REQUEST['filter_activity'] . "";
 
 if (isset($_REQUEST['filter_type']) && $_REQUEST['filter_type'])
-	$wheres[] = "type=" . $_REQUEST['filter_type'] . "";
+	$wheres[] = "type='" . $_REQUEST['filter_type'] . "'";
 
 $where = implode(' and ', $wheres);
 
@@ -102,8 +102,33 @@ if ($offset > 0) {
 
 $tplData['items'] =&  $items["data"];
 
-$all_procs = $items = $processMonitor->monitor_list_processes(0, -1, 'name_desc', '', '');
-$tplData['all_procs'] =&  $all_procs["data"];
+$maxtime = 0;
+foreach ($items['data'] as $info) {
+    if (isset($info['duration']) && $maxtime < $info['duration']['max']) {
+        $maxtime = $info['duration']['max'];
+    }
+}
+if ($maxtime > 0) {
+    $scale = 200.0 / $maxtime;
+} else {
+    $scale = 1.0;
+}
+foreach ($items['data'] as $index => $info) {
+    if (isset($info['duration'])) {
+        $items['data'][$index]['duration']['min'] = xarTimeToDHMS($info['duration']['min']);
+        $items['data'][$index]['duration']['avg'] = xarTimeToDHMS($info['duration']['avg']);
+        $items['data'][$index]['duration']['max'] = xarTimeToDHMS($info['duration']['max']);
+        $info['duration']['max'] -= $info['duration']['avg'];
+        $info['duration']['avg'] -= $info['duration']['min'];
+        $items['data'][$index]['timescale'] = array();
+        $items['data'][$index]['timescale']['max'] = intval( $scale * $info['duration']['max'] );
+        $items['data'][$index]['timescale']['avg'] = intval( $scale * $info['duration']['avg'] );
+        $items['data'][$index]['timescale']['min'] = intval( $scale * $info['duration']['min'] );
+    }
+}
+
+$all_procs = $processMonitor->monitor_list_all_processes('name_asc');
+$tplData['all_procs'] =&  $all_procs;
 
 $pid2name = array();
 foreach ($tplData['all_procs'] as $info) {
@@ -124,8 +149,8 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
 	$where = '';
 }
 
-$all_acts = $processMonitor->monitor_list_activities(0, -1, 'name_desc', '', $where);
-$tplData['all_acts'] =&  $all_acts["data"];
+$all_acts = $processMonitor->monitor_list_all_activities('name_asc',$where);
+$tplData['all_acts'] =&  $all_acts;
 $types = $processMonitor->monitor_list_activity_types();
 $tplData['types'] =&  $types;
 
