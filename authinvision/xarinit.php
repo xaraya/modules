@@ -52,7 +52,8 @@ function authinvision_init()
     xarRegisterMask('Adminauthinvision','All','authinvision','All','All','ACCESS_ADMIN');
     xarRegisterMask('Readauthinvision','All','authinvision','All','All','ACCESS_READ');
 
-    // Add authinvision to Site.User.AuthenticationModules in xar_config_vars
+    // Do not add authinvision to Site.User.AuthenticationModules in xar_config_vars here
+/*
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
     $authModules[] = 'authinvision';
 
@@ -60,6 +61,7 @@ function authinvision_init()
     sort($authModules);
 
     xarConfigSetVar('Site.User.AuthenticationModules',$authModules);
+*/
 
     // Initialization successful
     return true;
@@ -100,6 +102,8 @@ function authinvision_delete()
         if ($authType != 'authinvision')
             $authModulesUpdate[] = $authType;
     }
+
+    xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
     
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
@@ -114,8 +118,6 @@ function authinvision_delete()
                        array('modName'  => 'authinvision',
                              'blockType'=> 'whos_online'))) return;
     
-    xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
-
     // Deletion successful
     return true;
 }

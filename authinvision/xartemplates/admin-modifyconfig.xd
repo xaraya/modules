@@ -98,6 +98,19 @@
                         </xar:loop>
                         </select>
                     </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Activate authentication module</xar:mlstring>
+                    </td>
+                    <td>
+                        <xar:if condition="in_array('authinvision',xarConfigGetVar('Site.User.AuthenticationModules'))">
+                            <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
+                        <xar:else/>
+                            <input type="checkbox" name="activate" id="activate" value="1" />
+                        </xar:if>
+                    </td>
+                </tr>
                 <tr align="left" valign="top">
                     <td>
                         <xar:mlstring>Submit Changes</xar:mlstring>

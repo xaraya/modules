@@ -86,6 +86,7 @@ function authinvision_admin_updateconfig()
     if (!xarVarFetch('forumroot',    'str', $forumroot,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('version',      'str', $version,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('defaultgroup', 'str', $defaultgroup, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('activate',     'str', $activate,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -105,6 +106,26 @@ function authinvision_admin_updateconfig()
             $defaultgroup = 'Users';
     } 
     xarModSetVar('authinvision', 'defaultgroup', $defaultgroup);
+
+    $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
+    if (empty($activate) && in_array('authinvision', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module != 'authinvision') {
+                $newauth[] = $module;
+            }
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    } elseif (!empty($activate) && !in_array('authinvision', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module == 'authsystem') {
+                $newauth[] = 'authinvision';
+            }
+            $newauth[] = $module;
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    }
 
     // lets update status and display updated configuration
     xarResponseRedirect(xarModURL('authinvision', 'admin', 'modifyconfig'));
