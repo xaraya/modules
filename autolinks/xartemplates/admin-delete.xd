@@ -9,7 +9,7 @@
 
     <p class="xar-title"><xar:mlstring>Confirm deletion of autolink:</xar:mlstring> #$name#</p>
 
-    <p><input type="submit" value="Confirm" align="middle"/></p>
+    <p><input type="submit" value="Confirm" /></p>
     
     <p><a href="#xarModURL('autolinks', 'admin', 'view')#"><xar:mlstring>Cancel</xar:mlstring></a></p>
 </form>        

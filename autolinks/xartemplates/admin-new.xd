@@ -88,7 +88,7 @@
         </div>
         <br style="clear: both; height=0;"/>
 
-    <input type="submit" value="#$addbuttonlabel#" align="middle" />
+    <input type="submit" value="#$addbuttonlabel#"  />
 </form>
 
 </div>

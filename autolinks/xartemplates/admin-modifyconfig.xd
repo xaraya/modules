@@ -23,7 +23,7 @@
 <form method="post" action="#xarModURL('autolinks', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
     <p>
         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-        <input type="submit" name="submit" id="submit" value="#$submit#" align="middle"/>
+        <input type="submit" name="submit" id="submit" value="#$submit#" />
     </p>
 
 	<h3><xar:mlstring>Matching Rule Options</xar:mlstring></h3>
@@ -138,7 +138,7 @@
         </xar:if>
     </p>
 
-    <p><input type="submit" name="submit" id="submit" value="#$submit#" align="middle"/></p>
+    <p><input type="submit" name="submit" id="submit" value="#$submit#" /></p>
 
     <h2><xar:mlstring>Create Sample Data</xar:mlstring></h2>
     <p>
@@ -171,7 +171,7 @@
 
 
     <xar:set name="$submitsamples"><xar:mlstring>Create sample data</xar:mlstring></xar:set>
-    <p><input type="submit" name="createsamples" id="createsamples" value="#$submitsamples#" align="middle"/></p>
+    <p><input type="submit" name="createsamples" id="createsamples" value="#$submitsamples#" /></p>
 </form>
 </div>
 </div>

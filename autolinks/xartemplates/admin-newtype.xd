@@ -68,7 +68,7 @@
     </xar:foreach>
     </xar:if>
 
-    <input type="submit" value="#$addbuttonlabel#" align="middle" />
+    <input type="submit" value="#$addbuttonlabel#"  />
 </form>
 
 </div>

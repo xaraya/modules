@@ -136,7 +136,7 @@
             <xar:if condition="$hookmodule ne 'dynamicdata'">#$hooks[$hookmodule]#</xar:if>
         </xar:foreach>
     </xar:if>
-    <input type="submit" value="#$modifybuttonlabel#" align="middle" tabindex="5" />
+    <input type="submit" value="#$modifybuttonlabel#"  tabindex="5" />
 </form>
 </div>
 </div>

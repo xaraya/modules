@@ -45,12 +45,12 @@
         <xar:set name="$buttonlabel"><xar:mlstring>Confirm</xar:mlstring></xar:set>
         <xar:set name="$buttonlabel2"><xar:mlstring>Back</xar:mlstring></xar:set>
         <div>
-            <input type="submit" name="confirm" value="#$buttonlabel#" align="middle"/>
-            <input type="submit" name="cancel" value="#$buttonlabel2#" align="middle"/>
+            <input type="submit" name="confirm" value="#$buttonlabel#" />
+            <input type="submit" name="cancel" value="#$buttonlabel2#" />
         </div>
     <xar:else/>
         <xar:set name="$buttonlabel"><xar:mlstring>Move</xar:mlstring></xar:set>
-        <div><input type="submit" name="submit" value="#$buttonlabel#" align="middle"/></div>
+        <div><input type="submit" name="submit" value="#$buttonlabel#" /></div>
     </xar:if>
 </form>
 
