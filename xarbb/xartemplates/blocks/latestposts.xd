@@ -13,12 +13,14 @@ TODO: layout, security checks etc
     </xar:comment>
 <div style="margin-bottom:2px; margin-top:2px; width:98%;">
     &bull;
-     <xar:if condition="empty($item['link']) AND $vars['addlink'] eq '1'">
-        #$textdisplay#
-    <xar:elseif condition="$vars['addlink'] eq '1'" />
-        #$textdisplay#
-    <xar:elseif condition="$vars['addlink'] eq '2'" />
-        <a href="#$item['link']#">#$textdisplay#</a>
+    <xar:if condition="!empty($item['link'])">
+        <xar:if condition="$vars['addlink'] eq '1'" >
+            #$textdisplay#
+        <xar:elseif condition="$vars['addlink'] eq '2'" />
+            <a href="#$item['link']#">#$textdisplay#</a>
+        </xar:if>
+    <xar:elseif condition="empty($item['link']) AND $vars['addlink'] eq '1'" />
+            #$textdisplay#
     </xar:if>
     <xar:if condition="$vars['addauthor'] eq '1'">
         <xar:if condition="!empty($item['poster']) AND !($item['anon'] eq '1')">
