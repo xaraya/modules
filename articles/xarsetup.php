@@ -163,6 +163,29 @@
                          'input'  => 0),
     );
 
+    $config['quotes'] = array(
+        'title' => array('label'  => xarML('Author'),
+                         'format' => 'textbox',
+                         'input'  => 1),
+        'summary' => array('label'  => xarML('Quotes'),
+                         'format' => 'textarea_small',
+                         'input'  => 1),
+        'body' => array('label'  => '',
+                         'format' => 'static',
+                         'input'  => 0),
+        'notes' => array('label'  => '',
+                         'format' => 'static',
+                         'input'  => 0),
+        'authorid' => array('label'  => xarML('Submitted By'),
+                         'format' => 'username',
+                         'input'  => 0),
+        'pubdate' => array('label'  => xarML('Submitted On'),
+                         'format' => 'calendar',
+                         'input'  => 0),
+        'status' => array('label'  => xarML('Status'),
+                         'format' => 'status',
+                         'input'  => 0),
+    );
 /*
     $config['generic'] = array(
         'title' => array('label'  => xarML('Title'),
@@ -203,6 +226,8 @@
                           serialize($config['pictures'])),
                     array(6, 'weblinks', 'Web Links',
                           serialize($config['weblinks'])),
+                    array(7, 'quotes', 'Random Quotes',
+                          serialize($config['quotes'])),
               );
 
     // Some starting categories as an example
@@ -240,6 +265,10 @@
                           'description' => 'Web Link Categories',
                           'children' => array('Link Category 1',
                                               'Link Category 2'));
+    $categories[] = array('name' => 'Random Quotes',
+                          'description' => 'Random Quote Categories',
+                          'children' => array('Quote Category 1',
+                                              'Quote Category 2'));
 
     // articles settings for each publication type
     $settings = array();
@@ -390,6 +419,30 @@
                          'defaultsort'          => 'date ASC',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Web Links',
+                                                         'Generic1'));
+
+    // weblinks can be in old-style Web Links, and in new Generic1
+    $settings[7] = array('number_of_columns'    => 0,
+                         'itemsperpage'         => 20,
+                         'defaultview'          => 1,
+                         'showcategories'       => 1,
+                         'showcatcount'         => 0,
+                         'showprevnext'         => 0,
+                         'showcomments'         => 0,
+                         'showhitcounts'        => 1,
+                         'showratings'          => 1,
+                         'showarchives'         => 0,
+                         'showmap'              => 1,
+                         'showpublinks'         => 0,
+                         'showpubcount'         => 1,
+                         'dotransform'          => 0,
+                         'prevnextart'          => 0,
+                         'usealias'             => 0,
+                         'page_template'        => '',
+                         'defaultstatus'        => 0,
+                         'defaultsort'          => 'date ASC',
+                         // category names - will be replaced by cids in xarinit.php
+                         'categories'           => array('Random Quotes',
                                                          'Generic1'));
 
     // default settings
