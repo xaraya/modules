@@ -103,11 +103,8 @@ function helpdesk_init()
         'xar_date'        => array('type'=>'datetime', 'null'=>FALSE),
         'xar_updated'     => array('type'=>'datetime', 'null'=>FALSE),
         'xar_statusid'    => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
-        'xar_typeid'      => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
         'xar_priorityid'  => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
         'xar_sourceid'    => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
-        'xar_swversionid' => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
-        'xar_softwareid'  => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
         'xar_openedby'    => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
         'xar_assignedto'  => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
         'xar_closedby'    => array('type'=>'integer', 'size'=>11,'null'=>FALSE, 'default'=>'0'),
@@ -206,84 +203,6 @@ function helpdesk_init()
                               array('file' => $path . 'hd_status.data.xml'));
     if (empty($objectid)) return;
     
-    /*
-    * The Type Object
-    */
-    /*  We are not using this object any more
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_type.xml'));
-    if (empty($objectid)) return;
-    // save the object id for later
-    xarModSetVar('helpdesk','typeobjectid',$objectid);    
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_type.data.xml'));
-    if (empty($objectid)) return;
-    */
-    
-    /*
-    * The Ticket Object
-    */
-    /*$objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_ticket.xml'));
-    if (empty($objectid)) return;*/
-    // save the object id for later
-    //xarModSetVar('helpdesk','ticketobjectid',$objectid);    
-    //$objectid = xarModAPIFunc('dynamicdata','util','import',
-    //                          array('file' => $path . 'hd_ticket.data.xml'));
-    //if (empty($objectid)) return;
-    
-    /*
-    * The Manufacturers Object
-    */
-    /*  We are not using this object any more
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_manufacturers.xml'));
-    if (empty($objectid)) return;
-    // save the object id for later
-    xarModSetVar('helpdesk','manufacturerobjectid',$objectid);    
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_manufacturers.data.xml'));
-    if (empty($objectid)) return;
-    */
-    /*
-    * The Software Types Object
-    */
-    /*  We are not using this object any more
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_swtypes.xml'));
-    if (empty($objectid)) return;
-    // save the object id for later
-    xarModSetVar('helpdesk','swtypeobjectid',$objectid);    
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_swtypes.data.xml'));
-    if (empty($objectid)) return;
-    */
-    /*
-    * The Software Object
-    */
-    /*  We are not using this object any more
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_software.xml'));
-    if (empty($objectid)) return;
-    // save the object id for later
-    xarModSetVar('helpdesk','softwareobjectid',$objectid);    
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_software.data.xml'));
-    if (empty($objectid)) return;    
-    */   
-    /*
-    * The Software Versions Object
-    */
-    /*  We are not using this object any more
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_swversions.xml'));
-    if (empty($objectid)) return;
-    // save the object id for later
-    xarModSetVar('helpdesk','swversionobjectid',$objectid);    
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'hd_swversions.data.xml'));
-    if (empty($objectid)) return;    
-    */   
     /*
     * The Rep Object
     */
@@ -424,46 +343,7 @@ function helpdesk_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
     xarModDelVar('helpdesk','statusobjectid');
-    
-    /*  We are not using this object any more
-    $objectid = xarModGetVar('helpdesk','typeobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    xarModDelVar('helpdesk','typeobjectid');
-    */
-    /*
-    $objectid = xarModGetVar('helpdesk','ticketobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    xarModDelVar('helpdesk','ticketobjectid');
-    */
-    /*  We are not using this object any more
-    $objectid = xarModGetVar('helpdesk','manufacturerobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    xarModDelVar('helpdesk','manufacturerobjectid');
         
-    $objectid = xarModGetVar('helpdesk','swtypeobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    xarModDelVar('helpdesk','swtypeobjectid');
-    
-    $objectid = xarModGetVar('helpdesk','softwareobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    xarModDelVar('helpdesk','softwareobjectid');
-    
-    $objectid = xarModGetVar('helpdesk','swversionobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    xarModDelVar('helpdesk','swversionobjectid');
-    */
     $objectid = xarModGetVar('helpdesk','representativeobjectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
