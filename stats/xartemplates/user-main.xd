@@ -3,16 +3,16 @@
 		<xar:ml>
 			<xar:mlstring>We have received <strong>#(1)</strong> page views since #(2), #(3) today, and #(4) yesterday.</xar:mlstring>
 			<xar:mlvar>#$hits['total']#</xar:mlvar>
-			<xar:mlvar>#$startdate#</xar:mlvar>
+			<xar:mlvar>#xarLocaleFormatDate('%D', $startdate)#</xar:mlvar>
 			<xar:mlvar>#$hits['today']#</xar:mlvar>
 			<xar:mlvar>#$hits['yesterday']#</xar:mlvar>
 		</xar:ml>
 		<br /><br />
 		<xar:ml>
 			<xar:mlstring>The best day was #(1) (<strong>#(2)</strong> page views), while #(3) (<strong>#(4)</strong> page views) was a really poor day.</xar:mlstring>
-			<xar:mlvar>#$day['best']#</xar:mlvar>
+			<xar:mlvar>#xarLocaleFormatDate('%D', $day['best'])#</xar:mlvar>
 			<xar:mlvar>#$day['mosthits']#</xar:mlvar>
-			<xar:mlvar>#$day['worst']#</xar:mlvar>
+			<xar:mlvar>#xarLocaleFormatDate('%D', $day['worst'])#</xar:mlvar>
 			<xar:mlvar>#$day['leasthits']#</xar:mlvar>
 		</xar:ml>
 		<br /><br />
@@ -89,7 +89,7 @@
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$last7days">
 				<tr>
-					<td>#$loop:item['formated']#</td>
+					<td>#xarLocaleFormatDate('%D', $loop:item['unformatted'])#</td>
 					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
 				</tr>
 			</xar:loop>
