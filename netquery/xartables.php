@@ -1,7 +1,4 @@
 <?php
-/**
- * File: $Id:
- */
 function netquery_xartables()
 {
         $xartable = array();

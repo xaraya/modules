@@ -15,6 +15,7 @@ function netquery_userapi_mainapi()
     $data['trace_remote_enabled'] = xarModGetVar('netquery', 'trace_remote_enabled');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
     $data['whois_max_limit'] = xarModGetVar('netquery', 'whois_max_limit');
+    $data['user_submissions'] = xarModGetVar('netquery', 'user_submissions');
     $data['pingexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'ping'));
     $data['traceexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'trace'));
     $data['logfile'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'log'));
@@ -70,6 +71,9 @@ function netquery_userapi_mainapi()
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main'),
                              'title' => xarML('Clear results and return'),
                              'label' => xarML('Clear'));
+    $data['submitlink'] = Array('url' => xarModURL('netquery', 'user', 'submit', array('portnum' => $data['portnum'])),
+                             'title' => xarML('Submit new service/exploit'),
+                             'label' => xarML('Submit'));
     $data['hlplink'] = Array('url' => xarML('modules/netquery/xardocs/manual.html#using'),
                              'title' => xarML('Netquery online user manual'),
                              'label' => xarML('Online Manual'));
@@ -216,7 +220,7 @@ function netquery_userapi_getportdata($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];
-    $query = "SELECT * FROM $PortsTable WHERE port = ?";
+    $query = "SELECT * FROM $PortsTable WHERE flag < 99 AND port = ?";
     $bindvars = array($port);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

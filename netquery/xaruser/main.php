@@ -3,7 +3,7 @@ function netquery_user_main()
 {
     $data = xarModAPIFunc('netquery', 'user', 'mainapi');
     $clrlink = $data['clrlink'];
-    $data['authid'] = xarSecGenAuthKey();        
+    $data['authid'] = xarSecGenAuthKey();
     if ($data['querytype'] == 'none')
     {
         return $data;
@@ -82,13 +82,15 @@ function netquery_user_main()
                 }
                 @fclose($sock);
             }
+            //declare extra var
+            $extra='';
             if (eregi("RIPE.NET", $readbuf))
                 $nextServer = "whois.ripe.net";
             else if (eregi("whois.apnic.net", $readbuf))
                 $nextServer = "whois.apnic.net";
             else if (eregi("nic.ad.jp", $readbuf)) {
                 $nextServer = "whois.nic.ad.jp";
-                #/e suppresses Japanese character output from JPNIC
+                /* /e suppresses Japanese character output from JPNIC */
                 $extra = "/e";
             }
             else if (eregi("whois.registro.br", $readbuf))
@@ -146,8 +148,11 @@ function netquery_user_main()
     {
         $target = $data['server'];
         $tport = $data['portnum'];
+        $submitlink = $data['submitlink'];
         $portdata = xarModAPIFunc('netquery', 'user', 'getportdata', array('port' => $tport));
-        $msg = ('<p><b>Port '.$tport.' Services &amp; Exploits [<a href="http://isc.sans.org/port_details.php?port='.$tport.'" target="_blank">Details</a>] [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg = ('<p><b>Port '.$tport.' Services &amp; Exploits [<a href="http://isc.sans.org/port_details.php?port='.$tport.'" target="_blank">Details</a>]');
+        if ($data['user_submissions']) $msg .= (' [<a href="'.$submitlink['url'].'">'.$submitlink['label'].'</a>]');
+        $msg .= (' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (!empty($target) && $target != 'None') {
             if (! $sock = @fsockopen($target, $tport, $errnum, $error, 10)) {
                 $msg .= 'Port '.$tport.' does not appear to be open.<br />';

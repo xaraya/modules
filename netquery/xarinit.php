@@ -15,6 +15,7 @@ function netquery_init()
     xarModSetVar('netquery', 'trace_remote_enabled', 1);
     xarModSetVar('netquery', 'looking_glass_enabled', 1);
     xarModSetVar('netquery', 'whois_max_limit', 3);
+    xarModSetVar('netquery', 'user_submissions', 1);
     xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('ReadNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('EditNetquery','All','netquery','All','All','ACCESS_EDIT');
@@ -36,6 +37,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'looking_glass_enabled', 1);
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
+            xarModSetVar('netquery', 'user_submissions', 1);
             create_flagstable();
             create_lgrequesttable();
             create_lgroutertable();
@@ -43,15 +45,21 @@ function netquery_upgrade($oldversion)
         case '1.1.0':
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
+            xarModSetVar('netquery', 'user_submissions', 1);
             create_flagstable();
             create_portstable();
         case '1.2.0':
             xarModSetVar('netquery', 'whois_max_limit', 3);
+            xarModSetVar('netquery', 'user_submissions', 1);
             create_flagstable();
             create_portstable();
         case '1.3.0':
             create_flagstable();
+            xarModSetVar('netquery', 'user_submissions', 1);
         case '1.3.1':
+            create_flagstable();
+            xarModSetVar('netquery', 'user_submissions', 1);
+        case '2.0.0':
         default:
             break;
     }
@@ -59,6 +67,7 @@ function netquery_upgrade($oldversion)
 }
 function netquery_delete()
 {
+    xarModDelVar('netquery', 'user_submissions');
     xarModDelVar('netquery', 'whois_max_limit');
     xarModDelVar('netquery', 'looking_glass_enabled');
     xarModDelVar('netquery', 'trace_remote_enabled');

@@ -86,6 +86,19 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                     <xar:mlstring>Enable Port Check</xar:mlstring>
                     ~ <a href="#$ptvlink['url']#">#$ptvlink['title']#</a>
                     ~ <a href="#$flvlink['url']#">#$flvlink['title']#</a>
+            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <xar:if condition="$user_submissions">
+                        <input type="checkbox" name="user_submissions" id="user_submissions" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="user_submissions" id="user_submissions" value="1">
+                    </xar:if>
+                    <xar:mlstring>Allow User Submissions</xar:mlstring>
+                    <xar:if condition="$portsubmits gt 0">
+                        ~ <a href="#$p99link['url']#">#$p99link['title']#</a>
+                    <xar:else />
+                        ~ #$p99link['label']#
+                    </xar:if>
+                    ~ <a href="#$xaplink['url']#">#$xaplink['label']#</a>
             </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$http_req_enabled">
                         <input type="checkbox" name="http_req_enabled" id="http_req_enabled" value="1" checked="checked">

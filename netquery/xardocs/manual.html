@@ -34,7 +34,9 @@
 </style>
 </head>
 <body>
-<h1 align="center"><a name="top">Netquery Manual</a></h1>
+<h1 align="center">
+<a name="top"><img src="nqlogo.gif" border=0 width=100 height=50 alt=""></a>
+<br />Netquery Manual</h1>
 
 <h2><a name="summary">Summary</a></h2>
 
@@ -53,39 +55,22 @@ all entries in the whois, port services and looking glass data tables to add, ed
 server/TLD associations, to modify port services and vulnerability information, and to specify both
 default and router-specific settings for looking glass feature execution.</p>
 
-<div align="center"><center><h3>Project Sites &amp; Downloads</h3>
-<table border="2" cellspacing="0" cellpadding="4">
-<tr><th>Project Site</th><th>ZIP Download</th><th>TAR.GZ Download</th></tr>
-<tr><td>
-<a href="http://noc.postnuke.com/projects/netquery/" target="_top">Postnuke Edition</a><br />
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/pn_netquery.zip">pn_netquery.zip</a>
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/pn_netquery.tar.gz">pn_netquery.tar.gz</a>
-</td></tr>
-<tr><td>
-<a href="http://www.xaraya.com/index.php/release/91.html" target="_top">Xaraya Edition</a><br />
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/xar_netquery.zip">xar_netquery.zip</a>
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/xar_netquery.tar.gz">xar_netquery.tar.gz</a>
-</td></tr>
-<tr><td>
-<a href="http://dev.xoops.org/modules/xfmod/project/?mwr-netquery" target="_top">Xoops Edition</a>
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/xoops_netquery.zip">xoops_netquery.zip</a>
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/xoops_netquery.tar.gz">xoops_netquery.tar.gz</a>
-<tr><td>
-<a href="http://users.vianet.ca/rvirtue/tools/" target="_top">Standalone Edition</a>
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/sa_netquery.zip">sa_netquery.zip</a>
-</td><td>
-<a href="http://users.vianet.ca/rvirtue/tools/sa_netquery.tar.gz">sa_netquery.tar.gz</a>
-</td></tr>
-</table></center></div>
+<h3>Development, Download &amp; Testing Sites</h3>
 
-<h3 align="center">Download Notes</h3>
+<p>A standlone edition and three CMS module editions of Netquery are available for download from the
+home site or from their respective CMS development project sites.  Live installations may also be seen
+and tested on line as follows:<ul>
+<li><a href="http://www.virtech.org/tools/" target="_top">Netquery Home</a>
+ ~ <a href="http://www.virtech.org/netquery/" target="_top">Standalone Edition Live</a></li>
+<li><a href="http://noc.postnuke.com/projects/netquery/" target="_top">Postnuke Project</a>
+ ~ <a href="http://postnuke.virtech.org/index.php?module=Netquery" target="_top">Postnuke Edition Live</a></li>
+<li><a href="http://www.xaraya.com/index.php/release/91.html" target="_top">Xaraya Project</a>
+ ~ <a href="http://xaraya.virtech.org/index.php?module=netquery" target="_top">Xaraya Edition Live</a></li>
+<li><a href="http://dev.xoops.org/modules/xfmod/project/?mwr-netquery" target="_top">Xoops Project</a>
+ ~ <a href="http://xoops.virtech.org/modules/netquery/" target="_top">Xoops Edition Live</a></li>
+</ul></p>
+
+<h3>Download Notes</h3>
 
 <p>(1) Windows downloads of .tar.gz files may get renamed with .tar.tar extensions. The downloaded file
 itself will be okay; it just needs to be renamed back to tar.gz at your end. (This happens because
@@ -121,7 +106,8 @@ COPA protections?  Or maybe you've joined the rapidly growing world of "always c
 access and are concerned about whether your newly bought "firewall" software really has closed all of
 the entry ports to your system. Perhaps you're an ardent gamer who worries about "lag times" and
 would like to know where those game-losing extra milliseconds are coming from.  Netquery can answer
-all those questions and more.  Read on.<p>
+all those questions and more.  Read on.</p>
+
 <h2><a name="startup">Getting Started</a></h2>
 
 <p>Getting started with Netquery is about as easy as anything could possibly be.  Just install it and
@@ -153,8 +139,9 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">4. Choose Your Options</td>
-        <td class="item-desc">From Netquery's admin menu, select and configure options you want
-                              to make available.</td>
+        <td class="item-desc">From Netquery's admin menu, select and configure options you want to make available.
+        If you wish to display services and exploits data for port checks, be sure to select the "Build New Table"
+        option for that feature and follow the on-screen instructions.</td>
     </tr>
     <tr><td class="item-heading" colspan=2>Installation of Content Management System (CMS) Editions</td></tr>
     <tr>
@@ -167,7 +154,9 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">3. Choose Your Options</td>
-        <td class="item-desc">From Netquery's admin menu, select and configure options you want to make available.</td>
+        <td class="item-desc">From Netquery's admin menu, select and configure options you want to make available.
+        If you wish to display services and exploits data for port checks, be sure to select the "Build New Table"
+        option for that feature and follow the on-screen instructions.</td>
     </tr>
     <tr><td class="item-heading" colspan=2>Netquery Options Configuration</td></tr>
     <tr>
@@ -193,7 +182,7 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">Enable Port Check</td>
-        <td class="item-desc">Checks specified server for availability of specified port.</td>
+        <td class="item-desc">Display port services, exploits and (optionally) host port status.</td>
     </tr>
     <tr>
         <td class="item">Enable HTTP Request</td>
@@ -219,33 +208,20 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Enable Looking Glass</td>
         <td class="item-desc">Interrogates looking glass routers using IPv4 and IPv6 daemons.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Whois Lookup Configuration</td></tr>
+    <tr><td class="item-heading" colspan=2>Edit Whois Server/TLD Links</td></tr>
     <tr>
         <td class="item">Edit</td>
-        <td class="item-desc">This option for each listed whois TLD-server pair allows you to edit that "linkage".</td>
+        <td class="item-desc">This option for each listed whois server-TLD pair allows you to edit that "linkage".</td>
     </tr>
     <tr>
         <td class="item">Delete</td>
-        <td class="item-desc">This option for each listed whois TLD-server pair allows you to remove that "linkage".</td>
+        <td class="item-desc">This option for each listed whois server-TLD pair allows you to remove that "linkage".</td>
     </tr>
     <tr>
         <td class="item">Add New</td>
-        <td class="item-desc">This option allows you to add a new whois TLD-server pair.</td>
+        <td class="item-desc">This option allows you to add a new whois server-TLD pair.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Looking Glass Configuration</td></tr>
-    <tr>
-        <td class="item">Edit</td>
-        <td class="item-desc">This option for each listed looking glass router allows you to edit its settings.</td>
-    </tr>
-    <tr>
-        <td class="item">Delete</td>
-        <td class="item-desc">This option for each listed looking glass router allows you to remove that router.</td>
-    </tr>
-    <tr>
-        <td class="item">Add New</td>
-        <td class="item-desc">This option allows you to add a new looking glass router.</td>
-    </tr>
-    <tr><td class="item-heading" colspan=2>Port Services Configuration</td></tr>
+    <tr><td class="item-heading" colspan=2>Edit Port Services/Exploits</td></tr>
     <tr>
         <td class="item">Edit</td>
         <td class="item-desc">This option for each listed port service allows you to edit its protocol and service notes.</td>
@@ -258,22 +234,50 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new port service and lookup information.</td>
     </tr>
+    <tr><td class="item-heading" colspan=2>Edit Service/Exploit Flags</td></tr>
+    <tr>
+        <td class="item">Edit</td>
+        <td class="item-desc">This option for each listed flag allows you to edit its display keyword and search URL.</td>
+    </tr>
+    <tr>
+        <td class="item">Delete</td>
+        <td class="item-desc">This option for each listed flag allows you to remove that flag. (Flag 99 reserved.)</td>
+    </tr>
+    <tr>
+        <td class="item">Add New</td>
+        <td class="item-desc">This option allows you to add a new flag for classifying port services/exploits.</td>
+    </tr>
+    <tr><td class="item-heading" colspan=2>Edit Looking Glass Routers</td></tr>
+    <tr>
+        <td class="item">Edit</td>
+        <td class="item-desc">This option for each listed looking glass router allows you to edit its settings.</td>
+    </tr>
+    <tr>
+        <td class="item">Delete</td>
+        <td class="item-desc">This option for each listed looking glass router allows you to remove that router.</td>
+    </tr>
+    <tr>
+        <td class="item">Add New</td>
+        <td class="item-desc">This option allows you to add a new looking glass router.</td>
+    </tr>
     <tr>
         <td class="help-desc" colspan=2>
         <p><b>Important Notes</b>:<br />
         - Netquery's local ping and traceroute options require read/execute permission for your
-        server OS executables.<br />
+          server OS executables.<br />
         - The Netquery Log option requires write permission for the specified path/filename.<br />
+        - The port services data table is not installed automatically. Select "Build New Table" to install it.<br />
+        - Port services flag #99 is reserved for user submissions pending admin reflagging.<br />
         - Deleting all whois pairs from the database table will produce an error. Disable the
-        whois feature option instead.<br />
+          whois feature option instead.<br />
         - Looking glass default settings, except disabled items, may be overridden by individual
-        router settings.<br />
+          router settings.<br />
         - Individual looking glass daemon port passwords take precedence over the default user password.
         </p></td>
     </tr>
 </table>
 
-<h2><a name="adminnotes">Administrator Items</a></h2>
+<h3><a name="adminnotes">Administrator Items</a></h3>
 
 <p>In many cases, unless you need to use other external scripts or have special path requirements, you
 won't need to change any configuration settings. <b>However</b>, unless you run your own web server and
@@ -295,6 +299,11 @@ populating the looking glass data table you can find lists of routers at
 be aware that whois server operators may set their own limits. If a whois server limit is execeeded,
 your system IP may automatically be "blocked" and no longer be able to obtain whois results from that
 server until the blockage expires or is removed by the server operator.</p>
+
+<p>All user submissions of new port services/exploits are initially classified with flag #99 and are
+NOT displayed in the listing for any port.  Initally, until accepted and reflagged by the administrator,
+they may be accessed ONLY via the [Allow User Submissions ~ ## New for Reflagging] item on the main
+Netquery admin panel.</p>
 
 <p>Because Netquery's looking glass configuration provides both default and individual router settings
 it is important to understand their order of operational precedence.  For entered items (username,
@@ -376,6 +385,9 @@ operate with "always connected" (cable, ADSL, etc) Internet services.</p>
 listing of that port's protocols, services and any known attack exploits such as "trojans" and "back
 doors".  If you also enter a host name or IP address, that host will be checked to determine whether
 the specified port is open and accepting connections.</p>
+
+<p>While viewing any listing of port services/exploits, users may click "Submit" to send a new item
+for the administrator's attention to be added to the listing upon acceptance.
 
 <p>More info:
 <a href="http://www.iana.org/assignments/port-numbers" target="_blank">IANA</a>

@@ -18,7 +18,7 @@ function netquery_admin_flview()
             $flags[$i]['editurl'] = '';
         }
         $flags[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('DeleteNetquery',0)) {
+        if (xarSecurityCheck('DeleteNetquery',0) && $flag['flagnum'] != 99) {
             $flags[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'fldelete', array('flag_id' => $flag['flag_id']));
         } else {
             $flags[$i]['deleteurl'] = '';

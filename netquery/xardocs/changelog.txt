@@ -1,25 +1,16 @@
-Version 0.1 2004-08-26
-   - initial development version
-Version 0.2 2004-09-07
-   - added whois lookup database and related admin functions
-Version 0.3 2004-09-20
-   - added config option to enable/disable local system execution
-   - added popup windows for external ping and traceroute functions
-Version 0.3.1 2004-09-26
-   - minor bug fixes
-   - completed PHP4 and PHP5 (E_STRICT) testing
 Version 1.0 2004-10-06
-   - added config options for local/remote ping and TR
+   - initial public release with local/remote ping and TR
+Version 1.1 2004-10-15
    - added config option for log filepath and datetime
-   - log filepath defaults to var/logs/netquery.log
-Version 1.1 2004-10-16
-   - added Looking Glass router IPv4 and IPv6 interrogation
-   - added Cancel buttons to configuration templates
+   - added looking glass router IPv4 and IPv6 interrogation
 Version 1.2 2004-10-22
    - added HTTP request object HEAD and GET
-Version 1.3 2004-11-08
+Version 1.3 2004-11-11
    - added MultiWhois with configurable maximum limit
-   - added Port Check lookup table (See credits)
-Version 1.3.1 2004-11-18
-   - added editable service/exploits flags table
-   - changed to $_Server['REMOTE_ADDR'] superglobal
+   - added Port Check lookup table (see credits)
+Version 2.0 2004-12-01
+   - fixed $_Server['REMOTE_HOST'] issue
+   - added ports data table update capability
+   - added user submissions for services/exploits
+   - added admin notification on new submissions
+   - updated manual and other refs to reflect changes

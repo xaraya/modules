@@ -36,6 +36,7 @@ function netquery_admin_config()
             if (!xarVarFetch('traceexec_remote_t', 'str:1:10', $traceexec_remote_t, 'target', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('looking_glass_enabled', 'checkbox', $looking_glass_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whois_max_limit', 'int:1:10', $whois_max_limit, '3', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('user_submissions', 'int:1:10', $user_submissions, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('lgdefault_username', 'str:1:20', $lgdefault_username, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('lgdefault_password', 'str:1:20', $lgdefault_password, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('lgdefault_zebra', 'checkbox', $lgdefault_zebra, '0', XARVAR_NOT_REQUIRED)) return;
@@ -71,6 +72,7 @@ function netquery_admin_config()
             xarModSetVar('netquery', 'trace_remote_enabled', $trace_remote_enabled);
             xarModSetVar('netquery', 'looking_glass_enabled', $looking_glass_enabled);
             xarModSetVar('netquery', 'whois_max_limit', $whois_max_limit);
+            xarModSetVar('netquery', 'user_submissions', $user_submissions);
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $ExecTable = $xartable['netquery_exec'];

@@ -16,12 +16,14 @@ function netquery_adminapi_configapi()
     $data['trace_remote_enabled'] = xarModGetVar('netquery', 'trace_remote_enabled');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
     $data['whois_max_limit'] = xarModGetVar('netquery', 'whois_max_limit');
+    $data['user_submissions'] = xarModGetVar('netquery', 'user_submissions');
     $data['submitlabel'] = xarML('Submit');
     $data['cancellabel'] = xarML('Cancel');
     $data['pingexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'ping'));
     $data['traceexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'trace'));
     $data['logfile'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'log'));
     $data['lgdefault'] = xarModAPIFunc('netquery', 'admin', 'getlgrdata', array('router' => 'default'));
+    $data['portsubmits'] = xarModAPIFunc('netquery', 'admin', 'countportflag', array('flag' => '99'));
     $data['whoislimits'] = Array(1, 2, 3, 4, 5);
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
@@ -36,8 +38,14 @@ function netquery_adminapi_configapi()
                              'title' => xarML('Edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));
     $data['ptvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
-                             'title' => xarML('Edit services and exploits'),
+                             'title' => xarML('Edit services/exploits'),
                              'label' => xarML('Edit Port Services'));
+    $data['p99link'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview', array('pflag' => '99')),
+                             'title' => '<font color="red">'.xarML($data['portsubmits'].' New for Reflagging').'</font>',
+                             'label' => xarML('None for Reflagging'));
+    $data['xaplink'] = Array('url'   => xarModURL('netquery', 'admin', 'xaports'),
+                             'title' => xarML('Build port services/exploits table'),
+                             'label' => xarML('Build New Table'));
     $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
@@ -48,7 +56,7 @@ function netquery_adminapi_configapi()
                                  'title' => xarML('View operations logfile'),
                                  'label' => xarML('View Log'));
     } else {
-        $data['loglink'] = '';
+    	$data['loglink'] = '';
     }
     return $data;
 }

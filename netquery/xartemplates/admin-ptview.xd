@@ -3,12 +3,15 @@
 </div>
 <div class="xar-mod-body">
 
-<h2><xar:mlstring>View-Edit Port Services</xar:mlstring></h2>
+<h2><xar:mlstring>View-Edit Port Services/Exploits</xar:mlstring></h2>
+<h4><xar:mlstring>Flag ## entry overrides port ## entry</xar:mlstring></h4>
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
 <form method="post" action="#xarModURL('netquery', 'admin', 'ptview')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <tr><td><label for="portnum">#$portnumlabel#</label>
-    <input type="text" name="portnum" id="portnum" value="#$portnum#" size="5" maxlength="10">
+    <input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10">
+    <label for="pflag">#$pflaglabel#</label>
+    <input type="text" name="pflag" id="pflag" value="#$pflag#" size="3" maxlength="4">
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td></tr>
 </form>

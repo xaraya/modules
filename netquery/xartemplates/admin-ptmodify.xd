@@ -11,6 +11,7 @@
 <input type="hidden" name="phase" id="phase" value="update" />
 <input type="hidden" name="port_id" id="port_id" value="#$port_id#" />
 <input type="hidden" name="port_port" id="port_port" value="#$port#" />
+<input type="hidden" name="pflag" id="pflag" value="#$pflag#" />
 <tr><td colspan=4>
 <span><xar:mlstring>Editing Data for Port Service Id #</xar:mlstring>#$port_id#<xar:mlstring>, Port #</xar:mlstring>#$port#<xar:mlstring> --</xar:mlstring></span>
 </tr></td><tr><td>
