@@ -12,9 +12,4 @@
 <script language="javascript" type="text/javascript" src="modules/htmlarea/xartemplates/includes/HTMLArea/dialog.js"></script>
 <script language="javascript" type="text/javascript" src="modules/htmlarea/xartemplates/includes/HTMLArea/htmlarea-lang-#$localeinfo['lang']#.js">
 </script>
-<script type="text/javascript" defer="1">
-	 var config = new HTMLArea.Config(); 
-	 config.width = '#$editorwidth#';
-	 config.height = '#$editorheight#';
-	 HTMLArea.replaceAll(config);
-</script>
+<xar:base-include-javascript filename="htmlarea_exe.js" module="htmlarea" position="body"/>
