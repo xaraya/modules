@@ -1,0 +1,154 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>HelpDesk - Show Tickets</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+#$menu#    
+<xar:if condition="xarUserIsLoggedIn()">
+<table border="0" width="100%">
+    <tr>
+        <td colspan="6">
+ <!--           <xar:mlstring>Hello</xar:mlstring> #$username# <br />
+            <xar:mlstring>
+                You may click on the ticket number or subject to view the 
+                details of your ticket.
+            </xar:mlstring>-->
+            <xar:if condition="!empty($rescount)">
+                <xar:mlstring>Total tickets found</xar:mlstring> #$rescount#
+            </xar:if>
+        </td>
+    </tr>
+    <xar:if condition="$pagecount gt 1">
+    <tr>
+        <td colspan="6">
+            <xar:mlstring>Result Page:</xar:mlstring>
+            <a href="#$url#"><xar:mlstring>All</xar:mlstring></a>
+            <xar:if condition="$startnum gt 1">
+                    <!-- then we're on a set of results after the first
+                    so we need some Left arrows to go to previous result set-->
+                    <a href="#xarModURL('helpdesk', 'user', 'showtickets', array('selection' => $selection, 'startnum' => 1, 'activepage' => 1))#" title="First set of result pages"><xar:mlstring>First set of result pages</xar:mlstring></a>
+                    <a href="#xarModURL('helpdesk', 'user', 'showtickets', array('selection' => $selection, 'startnum' => $prevstart, 'activepage' => $newactive))#" title="Previous set of result pages"><xar:mlstring>Previous set of result pages</xar:mlstring></a>
+            </xar:if>
+            <xar:if condition="$pagecountlimit gt 0">
+                <!-- If the pagecount limit has been set to something other than zero
+                Read the value and only output that number of page link headers at the top
+                with a "Next Result Set"  link at the end of them .. but only add this when there is an 
+                additional set of results available. -->
+                <xar:if condition="$pagecount gt $pagenumbers">
+                    <a href="#xarModURL('helpdesk', 'user', 'showtickets', array('selection' => $selection, 'startnum' => $pagenumbers, 'activepage' => $pagenumbers))#" title="First set of result pages"> &gt;&gt; </a>
+                    <xar:set name="$lastStartPage">$pagecount - $pagecountlimit + 1</xar:set>
+                    <a href="#xarModURL('helpdesk', 'user', 'showtickets', array('selection' => $selection, 'startnum' => $pagenumbers, 'activepage' => $pagecount))#" title="Previous set of result pages"> &lt;&lt; </a>                
+                </xar:if>
+            <xar:else />
+                <xar:set name="$pagerstart">2</xar:set>
+                <xar:set name="$pagenumbers">$pagecount</xar:set>               
+            </xar:if>
+            <xar:if condition="empty($activepage)">
+                <xar:set name="$activepage">1</xar:set>
+            </xar:if>                    
+            <xar:if condition="$startnum gt 1">
+                <xar:set name="$pagenumbers">$pagenumbers - 1</xar:set>
+            </xar:if>
+            <xar:for start="$i=0" test="$i ge $pagenumbers" iter="$i++">
+                <xar:if condition=" $activepage == $i">
+                    <strong>#$i#</strong> 
+                <xar:else />
+                    <a href="#xarModURL('helpdesk', 'user', 'showtickets', array('selection' => $selection, 'startnum' => $startnum, 'activepage' => $i))#">#$i#</a>
+                </xar:if>
+            </xar:for>
+            #$NextStr#        
+        </td>
+    </tr>
+    </xar:if>
+</table>
+
+<table border="0" width="100%" class="xar-alt-outline" cellspacing="2" cellpadding="0">
+    <tr>
+        <th colspan="12" class="xar-alt-outline">
+            #xarSessionGetVar('ResultTitle')#
+        </th>
+    </tr>    
+    <tr>
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Ticket</xar:mlstring> #</div></th>
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Subject</xar:mlstring></div></th>
+        <xar:if condition="$showstatusinsummary">
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Status</xar:mlstring></div></th>
+        </xar:if>
+        <xar:if condition="$showpriorityinsummary">
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Priority</xar:mlstring></div></th>
+        </xar:if>
+        <xar:if condition="$showopenbyinsummary">
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Opened by</xar:mlstring></div></th>
+        </xar:if>
+        <xar:if condition="$showassignedtoinsummary">
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Assigned to</xar:mlstring></div></th>
+        </xar:if>
+        <xar:if condition="$showclosedbyinsummary">
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Closed by</xar:mlstring></div></th>
+        </xar:if>
+        <xar:if condition="$showdateenteredinsummary">
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Date Entered</xar:mlstring></div></th>
+        </xar:if>
+        <xar:if condition="$showlastmodifiedinsummary">
+        <th class="xar-alt-outline"><div class="xar-title"><xar:mlstring>Last Modified</xar:mlstring></div></th>
+        </xar:if>
+    </tr>
+    
+    <!-- Cycle through the array, creating each row of the table
+         Fields to show: Ticket Number/Date/Subject/Status/Last Update -->
+    <xar:set name="$class">'xar-norm'</xar:set>
+    <xar:foreach in="$mytickets_data" value="$ticket">
+<!--    foreach($mytickets_data as $ticket) {-->
+        <xar:set name="$ticket_id">$ticket['ticket_id']</xar:set>
+        <form action="#xarModURL('helpdesk', 'user', 'viewticket')#" method="post" name="VIEWTICKET#$ticket_id#">
+        <input type="hidden" name="userid" value="#$userid#">
+        <input type="hidden" name="activity" value="VIEWTICKET">
+        <input type="hidden" name="ticket_id" value="#$ticket_id#">
+        <xar:if condition="$enforceauthkey">
+        <input type="hidden" name="authid" value="#xarSecGenAuthKey()#">
+        </xar:if>
+        <tr class="#$class#">
+            <td><a href="javascript:document.VIEWTICKET#$ticket_id#.submit();" title="View Ticket">#$ticket_id#</a>&nbsp;</td>
+            <td><a href="javascript:document.VIEWTICKET#$ticket_id#.submit();" title="View Ticket">#$ticket['subject']#</a>&nbsp;</td>
+            <xar:if condition="$showstatusinsummary">
+            <td>#$ticket['status']#</td>
+            </xar:if>
+            <xar:if condition="$showpriorityinsummary">
+            <td #$ticket['prioritycolor']#>#$ticket['priority']#</td>
+            </xar:if>
+            <xar:if condition="$showopenbyinsummary">
+            <td>#xarModAPIFunc('helpdesk', 'user', 'getusernamelink', $ticket['openedby'])#</td>
+            </xar:if>
+            <xar:if condition="$showassignedtoinsummary">
+            <td>#xarModAPIFunc('helpdesk', 'user', 'getusernamelink', $ticket['assignedto'])#</td>
+            </xar:if>
+            <xar:if condition="$showclosedbyinsummary">
+            <td>#xarModAPIFunc('helpdesk', 'user', 'getusernamelink', $ticket['closedby'])#</td>
+            </xar:if>
+            
+            <xar:if condition="$showdateenteredinsummary">
+            <td>#$ticket['ticketdate']#</td>
+            </xar:if>
+            
+            <xar:if condition="$showlastmodifiedinsummary">
+            <td>#$ticket['lastupdate']#</td>
+            </xar:if>
+        </tr>
+        </form>
+        <xar:if condition="$class eq 'xar-norm'">
+            <xar:set name="$class">'xar-accent'</xar:set>
+        <xar:else />
+            <xar:set name="$class">'xar-norm'</xar:set>
+        </xar:if>          
+    </xar:foreach>
+</table>
+
+<xar:else />
+    <h3><xar:mlstring>Not logged in</xar:mlstring>!</h3>
+    <xar:mlstring>Sorry, this feature is not available for anonymous users. Please login and try again.</xar:mlstring>
+</xar:if>
+<xar:if condition="!empty($summary)">
+    #$summary#    
+</xar:if>
+</div>

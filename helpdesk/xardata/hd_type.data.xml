@@ -1,0 +1,14 @@
+<items>
+  <hd_type itemid="1">
+    <id>1</id>
+    <type>General HelpDesk</type>
+  </hd_type>
+  <hd_type itemid="2">
+    <id>2</id>
+    <type>Tech Support</type>
+  </hd_type>
+  <hd_type itemid="3">
+    <id>3</id>
+    <type>Networking</type>
+  </hd_type>
+</items>

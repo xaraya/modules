@@ -1,0 +1,25 @@
+<tr>
+    <td>
+        <xar:mlstring>Software</xar:mlstring> :
+    </td>
+    <td>    
+        <select id="sw_id" name="sw_id" onChange="dropchg(this.options.selectedIndex)">
+            <option value="0">----------------</option>
+            #$options#
+        </select>
+    </td>
+    <xar:if condition="$allowversionchoice">
+    <td>            
+        <xar:mlstring>Version</xar:mlstring> :
+    </td>
+    <td>
+        <select id="swv_id" name="swv_id">
+        <option value="-1" selected="selected">----------------</option>
+        <xar:if condition="$swversionid">
+            <option value="#$swversionid#" selected="selected">#$swversionname#</option>
+        </xar:if>
+        </select>
+        #$dynscript#
+    </td>
+    </xar:if>                
+</tr>

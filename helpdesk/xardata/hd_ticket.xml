@@ -1,0 +1,12 @@
+<object name="hd_ticket">
+  <objectid>13</objectid>
+  <label>Ticket</label>
+  <moduleid>910</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+  </properties>
+</object>

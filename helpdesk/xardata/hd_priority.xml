@@ -1,0 +1,42 @@
+<object name="hd_priority">
+  <objectid>9</objectid>
+  <label>Priorities</label>
+  <moduleid>910</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>4</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="priority">
+      <id>52</id>
+      <label>Priority</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="color">
+      <id>53</id>
+      <label>Color</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="id">
+      <id>55</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

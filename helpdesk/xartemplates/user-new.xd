@@ -1,0 +1,208 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>HelpDesk - New Ticket</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+<div class="contentBorder">
+<xar:set name="$width">'100%'</xar:set>
+    
+    <script language="javascript">
+    <!--
+    function submitIt() {
+        var f = document.newticket;
+        var msg = ''; //-->
+        <xar:if condition="!$userisloggedin || $editaccess">
+        <!--
+        if (f.name.value.length < 3 || f.userid.value) {
+            msg += "\n- a valid name";
+        }
+        if (f.email.value.length < 3) {
+            msg += "\n- a valid email";
+        } //-->
+        </xar:if>
+        <!--
+        if (f.subject.value.length < 3) {
+            msg += "\n- a valid subject";
+        }
+        if (f.issue.value.length < 3) {
+            msg += "\n- a valid issue";
+        }
+        if (msg.length < 1) {
+            document.newticket.submit();
+        } else {
+            alert( "Please provide the following detail before submitting:" + msg );
+        }
+    }
+    //-->
+    </script>
+
+<form action="#$action#" method="POST" name="newticket">
+
+<xar:if condition="$enforceauthkey">
+    <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+</xar:if>
+
+<input type="hidden" name="userid" value="#$userid#" />
+
+<xar:if condition="!$editaccess">
+    <input type="hidden" name="source"  value="1" />
+    <input type="hidden" name="nontech" value="1" />
+</xar:if>
+<!--<div class="" style="margin: auto; float: none; clear: right; width: 1px;">
+<div class="" style="width: 1px;">-->
+<table class="xar-alt-outline xar-accent"  style="margin-left: auto; margin-right: auto;">
+<input type="hidden" name="username" value="#$username#">
+<input type="hidden" name="userid"   value="#$userid#">
+<!-- If Not Logged in, Place Username, Email, and phone info in form: -->
+<xar:if condition="!$userisloggedin || $editaccess">
+    <tr>
+        <td><xar:mlstring>Name</xar:mlstring>:</td>
+        <td colspan="3"><input name="name" size="25" maxlength="255" value="#$name#">(required)</td>
+    </tr>
+    <tr>    
+        <td><xar:mlstring>Phone</xar:mlstring>:</td>
+        <td colspan="3"><input name="phone" size="25" maxlength="255" value="#$phone#"></td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Email</xar:mlstring>:</td>
+        <td colspan="3"><input name="email" size="45" maxlength="255" value="#$email#">(required)</td>
+    </tr>
+</xar:if>
+    <xar:if condition="xarModGetVar('helpdesk', 'AllowDomainName')">
+    <tr>
+        <td><xar:mlstring>Domain</xar:mlstring>:</td>
+        <td colspan="3"><input name="domain" size="45" maxlength="255">(required)</td>
+    </tr>
+    </xar:if>
+    <tr>
+        <td colspan="1" class="td-text-width"><xar:mlstring>Subject</xar:mlstring>:</td>
+        <td colspan="3"><input name="subject" size="45" maxlength="255">(required)</td>
+    </tr>
+    <tr>
+        <td colspan="1"><xar:mlstring>Category:</xar:mlstring></td>
+        <td colspan="3">
+            #$cats#
+        </td>
+    </tr>
+     
+<!---    <xar:if condition="xarModGetVar('helpdesk', 'AllowSoftwareChoice')">
+        #$swdropdown#
+    </xar:if>--->
+    <xar:foreach in="$hooks" value="$hook" key="$key">
+        <tr>
+            <td colspan="4">
+            <xar:if condition="$key ne 'categories'">
+                #$hook#
+            </xar:if>
+            </td>
+        </tr>
+    </xar:foreach>    
+    <tr>
+<!---        <td><xar:mlstring>Type</xar:mlstring>:</td>
+        <td>
+            <select name="types">
+            <xar:loop name="$types">
+                <option value="#$loop:item['id']#">#$loop:item['type']#</option>
+            </xar:loop>
+            </select>
+        </td>--->
+        <td><xar:mlstring>Priority</xar:mlstring>:</td>
+        <td>
+            <select name="priority">
+            <xar:loop name="$priority">
+                <option value="#$loop:item['id']#">#$loop:item['priority']#</option>
+            </xar:loop>
+            </select>
+        </td>    
+        <td colspan="2"> </td>
+    </tr>
+<xar:if condition="$editaccess">
+    <tr>
+        <td><xar:mlstring>Ticket Opened By</xar:mlstring>:</td>
+        <td>
+            <select name="openedby">
+            <option value="">
+            <xar:loop name="$users">
+                <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
+            </xar:loop>
+            </select>
+        </td>
+        <td><xar:mlstring>Ticket Assigned To</xar:mlstring>:</td>
+        <td>
+            <select name="assignedto">
+            <option value="">
+            <xar:loop name="$reps">
+                <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
+            </xar:loop>
+        </td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Ticket Source</xar:mlstring>:</td>
+        <td>
+            <select name="source">
+            <xar:loop name="$sources">
+                <option value="#$loop:item['id']#">#$loop:item['source']#</option>
+            </xar:loop>
+            </select>
+        </td>    
+        <td><xar:mlstring>Closed By</xar:mlstring>:</td>
+        <td>
+            <select name="closedby">
+            <option value="">
+            <xar:loop name="$users">
+                <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
+            </xar:loop>
+            </select>
+        </td>    
+    </tr>
+</xar:if>
+    <tr>
+        <td colspan="4"><xar:mlstring>Full description of issue</xar:mlstring>: (required)</td>
+    </tr>
+    <tr>
+        <td colspan="4"><textarea name="issue" rows="6" cols="60"></textarea></td>
+    </tr>
+
+<xar:if condition="$editaccess">
+    <tr>
+        <td colspan="4"><xar:mlstring>Technician Notes (Only seen by users with EDIT access)</xar:mlstring>:</td>
+    </tr>
+    <tr>
+        <td colspan="4"><textarea name="notes" rows="6" cols="60"></textarea></td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <xar:mlstring>Time Spent</xar:mlstring>:
+            <xar:mlstring>Hours</xar:mlstring>: <input name="hours" size="4" maxlength="4">
+            <xar:mlstring>Minutes</xar:mlstring>: <input name="minutes" size="4" maxlength="4">            
+        </td>
+    </tr>
+    <xar:if condition="$allowcloseonsubmit">
+    <tr>
+        <td colspan="4">
+            <xar:mlstring>Close ticket on submit</xar:mlstring>:
+            <input type="checkbox" name="closeonsubmit" size="4" maxlength="4">
+        </td>
+    </tr>
+    </xar:if>
+</xar:if>
+
+    <tr>
+        <td colspan="4" align="center">
+        <xar:if condition="$enabledimages">
+            <a href="javascript:submitIt();"><img src="#xarTplGetImage('submit.gif', 'helpdesk')#" border="0"></a>
+        <xar:else />
+            <input type="button" value="Submit" onclick="submitIt();" />        
+        </xar:if>
+        </td>
+    </tr>
+</table>
+</form>
+</div>
+ 
+<br />
+#$summary#
+</div>

@@ -1,0 +1,39 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>HelpDesk - New Ticket Sent</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+<!-- <p><xar:mlstring>Welcome to the Help Desk. Please click a link to use the system.</xar:mlstring></p> -->
+
+<p>#$menu#</p>
+
+<p>
+   <xar:mlstring>Your new ticket has been submitted!</xar:mlstring>
+   <xar:mlstring>Please reference ticket ## </xar:mlstring> <b>#$return_val#</b>
+   <xar:mlstring>when referencing this issue</xar:mlstring>
+</p>
+
+<xar:if condition="xarUserIsLoggedIn()">
+    <form action="#xarModURL('helpdesk', 'user', 'display')#" method="post" name="viewticket">
+        <xar:if condition="$enforceauthkey">
+            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+        </xar:if>
+        
+        <input type="hidden" name="activity"  value="sendnewticket" />
+        <input type="hidden" name="userid"    value="#$userid#" />
+        <input type="hidden" name="ticket_id" value="#$return_val#" />
+            
+        <xar:if condition="$enabledimages">
+            <a href="javascript:document.viewticket.submit();" title="View Ticket">
+                <img src="#xarTplGetImage('viewticket.gif', 'helpdesk')#" border="0"></a>
+        <xar:else />
+            <a href="javascript:document.viewticket.submit();" title="View Ticket">
+                [<xar:mlstring>View Tickets</xar:mlstring>]</a>
+        </xar:if>    
+    </form>
+</xar:if>
+
+<p>#$summaryfooter#</p>
+
+</div>

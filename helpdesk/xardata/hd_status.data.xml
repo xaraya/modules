@@ -1,0 +1,14 @@
+<items>
+  <hd_status itemid="2">
+    <id>2</id>
+    <status>Inwork</status>
+  </hd_status>
+  <hd_status itemid="1">
+    <id>1</id>
+    <status>Open</status>
+  </hd_status>
+  <hd_status itemid="3">
+    <id>3</id>
+    <status>Closed</status>
+  </hd_status>
+</items>

@@ -1,0 +1,22 @@
+<items>
+  <hd_priority itemid="1">
+    <priority>Low</priority>
+    <color>00B99B</color>
+    <id>1</id>
+  </hd_priority>
+  <hd_priority itemid="2">
+    <priority>Medium</priority>
+    <color>F9FD5F</color>
+    <id>2</id>
+  </hd_priority>
+  <hd_priority itemid="3">
+    <priority>High</priority>
+    <color>FF0000</color>
+    <id>3</id>
+  </hd_priority>
+  <hd_priority itemid="4">
+    <priority>Comment</priority>
+    <color>FFC3C0</color>
+    <id>4</id>
+  </hd_priority>
+</items>

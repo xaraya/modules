@@ -1,0 +1,128 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>HelpDesk - Display Ticket</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+<br />
+#$menu#
+<div class="contentBorder">
+
+<table border="0" width="100%" class=" xar-alt-outline">
+    <tr>
+        <th colspan="4" class="xar-title" style="text-align: left;">###$tid# - #$subject#</th>
+    </tr>
+    <tr class="xar-accent">
+        <td style="font-weight: bold;"><xar:mlstring>Name:</xar:mlstring></td>
+        <td>#$name#</td>
+        <td style="font-weight: bold;"><xar:mlstring>Phone Number:</xar:mlstring></td>
+        <td>#$phone#</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold;"><xar:mlstring>Date Opened:</xar:mlstring></td>
+        <td>#$date#</td>
+        <td style="font-weight: bold;"><xar:mlstring>Updated:</xar:mlstring></td>
+        <td>#$updated#</td>
+    </tr>
+    <tr class="xar-accent">        
+        <td style="font-weight: bold;"><xar:mlstring>Status:</xar:mlstring></td>
+        <td>#$status#</td>
+        <td style="font-weight: bold;"><xar:mlstring>Source:</xar:mlstring></td>
+        <td colspan="3">#$source#</td>
+    </tr>
+    <tr >
+        <td style="font-weight: bold;"><xar:mlstring>Openedby:</xar:mlstring></td>
+        <td>#$openedbyname#</td>
+        <td style="font-weight: bold;"><xar:mlstring>Priority:</xar:mlstring></td>
+        <td style="background-color: ###$prioritycolor#;">#$priority#</td>
+    </tr>
+    <tr class="xar-accent">
+        <td style="font-weight: bold;"><xar:mlstring>Assigned To:</xar:mlstring></td>
+        <td>#$assignedtoname#</td>
+        <td style="font-weight: bold;"><xar:mlstring>Closed By:</xar:mlstring></td>
+        <td>#$closedbyname#</td>
+    </tr> 
+    <tr>
+        <td style="font-weight: bold;"><xar:mlstring>Domain:</xar:mlstring></td>
+        <td colspan="3">#$domain#</td>
+    </tr>
+    <tr class="xar-accent">
+        <td style="font-weight: bold;"><xar:mlstring>Categories:</xar:mlstring></td>
+        <td colspan="3">
+        <xar:foreach in="$cats" value="$cat">
+            #$cat# <br />
+        </xar:foreach>
+        </td>
+    </tr>
+    <!---
+    <xar:if condition="xarModGetVar('helpdesk', 'AllowSoftwareChoice')">
+    <tr>
+        <td style="font-weight: bold;"><xar:mlstring>Software:</xar:mlstring></td>
+        <td>#$software#</td>
+        <xar:if condition="xarModGetVar('helpdesk', 'AllowVersionChoice')">
+        <td style="font-weight: bold;"><xar:mlstring>Version:</xar:mlstring></td>
+        <td>#$swver#</td>
+        </xar:if>
+    </tr>    
+    </xar:if>
+    <tr class="xar-accent">
+        <td style="font-weight: bold;"><xar:mlstring>Type:</xar:mlstring></td>
+        <td>#$type#</td>    
+        <td style="font-weight: bold;"><xar:mlstring>Source:</xar:mlstring></td>
+        <td>#$source#</td>
+    </tr>
+    --->
+    <tr class="">
+        <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
+        <td colspan="3">
+            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> | 
+            <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
+        </td>
+    </tr>   
+    <xar:if condition="is_array($hookoutput)">
+    <xar:foreach in="$hookoutput" value="$hook">
+        <tr><td colspan="4">#$hook#</td></tr>
+    </xar:foreach>    
+    </xar:if>
+</table>
+
+<br />
+<br />
+
+<xar:loop name="$comments">    
+    <xar:set name="$margin">#$loop:item['depth'] * 10#</xar:set>
+    <div class="xar-alt-outline" style="margin-left: #$margin#px; padding: 2px;">
+        <div class="xar-accent" style=" padding: 5px;">
+            <b>Subject:</b> #$loop:item['xar_title']# <br />
+            <b>Author:</b> #$loop:item['xar_author']#<br />
+            <b>Date:</b> #$loop:item['xar_date']# <br />
+            <b>Host Name:</b> #$loop:item['xar_hostname']#
+        </div>
+        <div style="text-indent: 1em; padding: 5px;">#$loop:item['xar_text']#</div>
+    </div>
+    <br/>
+</xar:loop>
+
+<form action="#xarModURL('helpdesk', 'user', 'createcomment')#" method="POST">
+<table style="margin: auto;">
+    <tr>
+        <td><b>Subject:</b></td>
+        <td><input type="textbox" name="subject" size="50" value="Re: #$subject#" /></td>
+    </tr>
+    <tr>
+        <td><b>Comment:</b></td>
+        <td><textarea name="comment" rows="10" cols="50"></textarea></td>
+    </tr>
+    <tr style="text-align: center;">
+        <td colspan="2">
+            <input type="hidden" name="tid" value="#$tid#" />
+            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+            <input type="submit" name="submit" value="Post" />
+        </td>
+    </tr>
+</table>
+</form>
+</div>
+<br />
+#$summary#            
+</div>

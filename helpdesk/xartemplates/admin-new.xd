@@ -1,0 +1,44 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>HelpDesk</xar:mlstring>
+    </span>
+</div>
+<br />
+<h2><xar:mlstring>New </xar:mlstring></h2>
+
+<xar:if condition="!empty($preview)">
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <td align="center">
+            <xar:mlstring>Preview</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <xar:data-display object="$object" />
+        </td>
+    </tr>
+</table>
+</xar:if>
+
+<form method="post" action="#xarModURL('helpdesk','admin','create')#">
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+<!-- this does most of the hard work :) -->
+    <xar:data-form object="$object" />
+    <tr>
+        <td colspan="2">
+         #$hooks#
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="hidden" name="itemtype" value="#$itemtype#" />
+            <input type="submit" name="preview" value="#xarML('Preview')#" />
+            &nbsp;&nbsp;&nbsp;
+            <input type="submit" value="#xarML('Create')#" />
+        </td>
+    </tr>
+</table>
+</form>
+

@@ -1,0 +1,42 @@
+<object name="representative">
+  <objectid>37</objectid>
+  <label>Representative</label>
+  <moduleid>910</moduleid>
+  <itemtype>10</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>3</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>128</id>
+      <label>id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>129</id>
+      <label>Name</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="categories">
+      <id>140</id>
+      <label>Categories</label>
+      <type>categories</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

@@ -1,0 +1,69 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        Helpdesk Administration
+    </span>
+</div>
+<br />
+
+<table border=0 cellspacing=0 cellpadding=0 width="100%">
+    <tr>
+    <xar:loop name="$objects">
+    <xar:if condition="$itemtype eq $loop:item['itemtype']">
+        <!-- Selected Object -->
+        <td class="xar-norm" align="center">
+        <div style="border-left: solid 1px #000000; border-right: solid 1px #000000; border-top: solid 1px #000000; padding: 3px;">
+            <a href="#xarModURL('helpdesk', 'admin', 'view', array('itemtype' => $loop:item['itemtype']))#">#$loop:item['label']#</a>
+        </div>
+        </td>
+    <xar:else />
+        <!-- Not Selected -->
+        <td class="xar-accent" align="center">
+            <div style="border-left: solid 1px #000000; border-top: solid 1px #000000;border-bottom: solid 1px #000000;border-right: solid 1px #000000; padding: 3px;">
+            <a href="#xarModURL('helpdesk', 'admin', 'view', array('itemtype' => $loop:item['itemtype']))#">#$loop:item['label']#</a>
+            </div>
+        </td>
+    </xar:if>    
+    </xar:loop>
+    </tr>
+</table>
+    
+<xar:data-getitems name="$properties" value="$values" module="helpdesk" itemtype="$itemtype" numitems="$itemsperpage" startnum="$startnum" />
+
+<div style="border-left: solid 1px #000000; border-right: solid 1px #000000; border-bottom: solid 1px #000000; padding: 5px;">
+    <table width="100%" border="0" cellspacing="1" cellpadding="4">
+    <tr>
+        <xar:foreach in="$properties" key="$name">
+            <th align="center"><xar:data-label property="$properties[$name]" /></th>
+        </xar:foreach>
+        <th align="center"><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:set name="$class">'xar-norm'</xar:set>
+    <xar:foreach in="$values" key="$itemid" value="$fields">
+    <tr class="#$class#">
+        <xar:foreach in="$properties" key="$name">
+            <xar:if condition="!empty($fields[$name])">
+            <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+            <xar:else />
+            <td>&nbsp;</td>
+            </xar:if>
+        </xar:foreach>
+        <td>
+            <a href="#xarModURL('helpdesk','admin','display',array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Display</xar:mlstring></a> | 
+            <a href="#xarModURL('helpdesk','admin','modify',array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Modify</xar:mlstring></a> | 
+            <a href="#xarModURL('helpdesk','admin','delete',array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Delete</xar:mlstring></a>
+        </td>
+    </tr>
+    <xar:if condition="$class eq 'xar-norm'">
+        <xar:set name="$class">'xar-accent'</xar:set>
+    <xar:else />
+        <xar:set name="$class">'xar-norm'</xar:set>
+    </xar:if>          
+    </xar:foreach>
+    <tr>
+        <xar:foreach in="$properties" key="$name">
+            <td>&nbsp;</td>
+        </xar:foreach>
+        <td><a href="#xarModURL('helpdesk','admin','new', array('itemtype' => $itemtype))#"><xar:mlstring>New</xar:mlstring></a></td>
+    </tr>
+    </table>
+</div>

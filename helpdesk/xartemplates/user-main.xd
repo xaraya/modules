@@ -1,0 +1,36 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>HelpDesk</xar:mlstring>
+    </span>
+</div>
+<br />
+<div class="xar-mod-body">
+
+#$menu#
+
+<div class="contentBorder">
+<p>Welcome to the Help Desk. Please click New Ticket
+to submit any questions or problems.</p>
+
+<p>If you are a registered site member and are logged in,
+return to this page and 'View Tickets' to see a responce to your inquiries.</p>
+
+<xar:if condition="!xarUserIsLoggedIn()">
+ Display box for user to view ticket status by email address and ticket number!
+ <span>
+    <form action="" method="GET">
+        <span style="">Email:</span> <input type="text" name="email" value="" /><br />
+        <span style="">Ticket Id:</span> <input type="text" name="tid" value="" /><br />
+        <input type="submit" name="submit" value="submit" /> <br />
+    </form>
+ </span>
+</xar:if>
+</div>
+
+<!--If you are not a registered site member or are not logged in,
+be sure to include your e-mail so we can contact you
+We will do our best to answer any questions and fix any problems.
+-->
+
+<p>#$summary#</p>
+</div>

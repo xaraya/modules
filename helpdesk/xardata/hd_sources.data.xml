@@ -1,0 +1,18 @@
+<items>
+  <hd_sources itemid="1">
+    <id>1</id>
+    <source>Web</source>
+  </hd_sources>
+  <hd_sources itemid="2">
+    <id>2</id>
+    <source>Phone</source>
+  </hd_sources>
+  <hd_sources itemid="3">
+    <id>3</id>
+    <source>E-mail</source>
+  </hd_sources>
+  <hd_sources itemid="4">
+    <id>4</id>
+    <source>Other</source>
+  </hd_sources>
+</items>
