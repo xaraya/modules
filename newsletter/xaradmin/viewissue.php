@@ -19,7 +19,7 @@
  * @public
  * @author Richard Cave
  * @param 'startnum' starting number to display
- * @param 'sortby' sort stories by 'title, 'publication' or 'owner'
+ * @param 'sortby' sort stories by 'title, 'publication', 'owner' or 'datePublished'
  * @param 'owner' show only logged user stories (1=true, 0=false)
  * @param 'display' show 'published' or 'unpublished' or 'all' stories
  * @param 'publicationId' get issues for a specific publication
@@ -33,10 +33,11 @@ function newsletter_admin_viewissue($args)
 
     // Get parameters from the input
     if (!xarVarFetch('startnum', 'int:0:', $startnum, 1)) return;
-    if (!xarVarFetch('sortby', 'str:1:', $sortby, 'title')) return;
+    if (!xarVarFetch('sortby', 'str:1:', $sortby, 'datePublished')) return;
     if (!xarVarFetch('owner', 'int:0:1', $owner, 1)) return;
     if (!xarVarFetch('display', 'str:1:', $display, 'unpublished')) return;
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
+    if (!xarVarFetch('orderby', 'str:1:', $orderby, 'ASC')) return;
 
     // Get the admin edit menu
     $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
@@ -70,6 +71,12 @@ function newsletter_admin_viewissue($args)
     $data['display'] = $display;
     $data['previewbrowser']   = xarModGetVar('newsletter', 'previewbrowser');
 
+    // If sorting by date published, then sort in descending order
+    // so that the latest story is first
+    if ($sortby == 'datePublished' ) {
+        $orderby = 'DESC';
+    }
+
     // The user API function is called.
     $issues = xarModAPIFunc('newsletter',
                             'user',
@@ -81,6 +88,7 @@ function newsletter_admin_viewissue($args)
                                   'sortby' => $sortby,
                                   'owner' => $owner,
                                   'display' => $display,
+                                  'orderby' => $orderby,
                                   'publicationId' => $publicationId));
 
     // Check for exceptions
@@ -166,41 +174,54 @@ function newsletter_admin_viewissue($args)
     // Create sort by URLs
     if ($sortby != 'title' ) {
         $data['issuetitleurl'] = xarModURL('newsletter',
-                                         'admin',
-                                         'viewissue',
-                                         array('startnum' => 1,
-                                               'sortby' => 'title',
-                                               'display' => $display,
-                                               'owner' => $owner,
-                                               'publicationId' => $publicationId));
+                                           'admin',
+                                           'viewissue',
+                                           array('startnum' => 1,
+                                                 'sortby' => 'title',
+                                                 'display' => $display,
+                                                 'owner' => $owner,
+                                                 'publicationId' => $publicationId));
     } else {
         $data['issuetitleurl'] = '';
     }
 
     if ($sortby != 'publication' ) {
         $data['publicationurl'] = xarModURL('newsletter',
-                                             'admin',
-                                             'viewissue',
-                                             array('startnum' => 1,
-                                                   'sortby' => 'publication',
-                                                   'display' => $display,
-                                                   'owner' => $owner,
-                                                   'publicationId' => $publicationId));
+                                            'admin',
+                                            'viewissue',
+                                            array('startnum' => 1,
+                                                  'sortby' => 'publication',
+                                                  'display' => $display,
+                                                  'owner' => $owner,
+                                                  'publicationId' => $publicationId));
     } else {
         $data['publicationurl'] = '';
     }
 
     if ($sortby != 'owner' ) {
         $data['issueownerurl'] = xarModURL('newsletter',
-                                             'admin',
-                                             'viewissue',
-                                             array('startnum' => 1,
-                                                   'sortby' => 'owner',
-                                                   'display' => $display,
-                                                   'owner' => $owner,
-                                                   'publicationId' => $publicationId));
+                                           'admin',
+                                           'viewissue',
+                                           array('startnum' => 1,
+                                                 'sortby' => 'owner',
+                                                 'display' => $display,
+                                                 'owner' => $owner,
+                                                 'publicationId' => $publicationId));
     } else {
         $data['issueownerurl'] = '';
+    }
+
+    if ($sortby != 'datePublished' ) {
+        $data['issuedateurl'] = xarModURL('newsletter',
+                                          'admin',
+                                          'viewissue',
+                                          array('startnum' => 1,
+                                                'sortby' => 'datePublished',
+                                                'display' => $display,
+                                                'owner' => $owner,
+                                                'publicationId' => $publicationId));
+    } else {
+        $data['issuedateurl'] = '';
     }
 
     // Create pagination

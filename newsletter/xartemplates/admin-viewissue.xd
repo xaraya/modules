@@ -39,19 +39,24 @@
                     <td valign="top">
                         <select name="sortby" onChange="this.form.submit();" tabindex="2">
                             <xar:if condition="$sortby eq 'date'">
-                                <option value="date" selected>Date</option>
+                                <option value="datePublished" selected>Date Published</option>
                             <xar:else />
-                                <option value="date">Date</option>
+                                <option value="datePublished">Date Published</option>
                             </xar:if>
-                            <xar:if condition="$sortby eq 'title'">                  
-                                <option value="title" selected>Title</option>
+                            <xar:if condition="$sortby eq 'owner'">
+                                <option value="owner" selected>Owner</option>
                             <xar:else />
-                                <option value="title">Title</option>
+                                <option value="owner">Owner</option>
                             </xar:if>
                             <xar:if condition="$sortby eq 'publication'">                  
                                 <option value="publication" selected>Publication</option>
                             <xar:else />
                                 <option value="publication">Publication</option>
+                            </xar:if>
+                            <xar:if condition="$sortby eq 'title'">                  
+                                <option value="title" selected>Title</option>
+                            <xar:else />
+                                <option value="title">Title</option>
                             </xar:if>
                         </select>
                     </td>
@@ -84,6 +89,11 @@
                     <xar:else />
                         <th><xar:mlstring>Issue Title</xar:mlstring></th>
                     </xar:if>
+                    <xar:if condition="$issuedateurl != ''">
+                        <th><a href="#$issuedateurl#"><xar:mlstring>Date Published</xar:mlstring></a></th>
+                    <xar:else />
+                        <th><xar:mlstring>Date Published</xar:mlstring></th>
+                    </xar:if>
                     <xar:if condition="$publicationurl != ''">
                         <th><a href="#$publicationurl#"><xar:mlstring>Publication</xar:mlstring></a></th>
                     <xar:else />
@@ -100,6 +110,13 @@
                     <xar:loop name="$issues">
                         <tr>
                             <td>#$loop:item['title']#</td>
+                            <td>
+                               <xar:if condition="$loop:item['datePublished']['timestamp'] != 0">
+                                    #$loop:item['datePublished']['mon']#/#$loop:item['datePublished']['day']#/#$loop:item['datePublished']['year']#
+                                <xar:else />
+                                    <xar:mlstring>n/a</xar:mlstring>
+                                </xar:if>
+                            </td>
                             <td>#$loop:item['publicationTitle']#</td>
                             <td>#$loop:item['ownerName']#</td>
                             <td>
