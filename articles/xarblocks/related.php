@@ -184,7 +184,7 @@ function blocks_related_block($row)
         }
         $row['content'] .= "&bull;&nbsp;<a href=\"advtopics.php?topic=$story[topic]\">"._MOREABOUT." ".xarVarPrepForDisplay($story['topicname'])."</a><br />\n"
             ."&bull;&nbsp;<a class=\"xar-normal\" href=\"modules.php?op=modload&amp;name=Search&amp;file=index&amp;action=search&amp;overview=1&amp;active_stories=1&amp;stories_author=$story[aid]\">"._NEWSBY." ".xarVarPrepForDisplay($story['aid'])."</a><br />\n"
-            .'</span><br /><hr noshade width="95%" size="1"><b>'._MOSTREAD." ".xarVarPrepForDisplay($story['topicname']).":</b><br />\n"
+            .'</span><br /><hr noshade="noshade" width="95%" size="1"><b>'._MOSTREAD." ".xarVarPrepForDisplay($story['topicname']).":</b><br />\n"
             ."<div align=\"center\"><a href=\"advarticle.php?sid=$mrow[sid]\">".xarVarPrepForDisplay($mrow['title'])."</a></div><br /><br />\n"
             .'<div align="right">'
             ."<a href=\"print.php?sid=$mrow[sid]\"><img src=\"images/global/print.gif\" border=\"0\" alt=\""._PRINTER."\" /></a>&nbsp;&nbsp;"
