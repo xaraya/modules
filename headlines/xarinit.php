@@ -91,7 +91,7 @@ function headlines_upgrade($oldVersion)
 {
     // Upgrade dependent on old version number
     switch($oldVersion) {
-        case 0.1:
+        case '0.1':
             // Version 0.1 didn't have a 'order' field, it was added
             // in version 0.2
 
@@ -112,6 +112,10 @@ function headlines_upgrade($oldVersion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
+        break;
+        case '0.2':
+        case '0.2.0':
+            xarModSetVar('headlines', 'SupportShortURLs', 1);
         break;
     }
 

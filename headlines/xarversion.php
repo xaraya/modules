@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'Headlines';
 $modversion['id'] = '777';
-$modversion['version'] = '0.2.0';
+$modversion['version'] = '0.9.0';
 $modversion['description'] = 'Generates a list of news feeds.';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

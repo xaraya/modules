@@ -1,12 +1,43 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-<h2><xar:mlstring>Headlines Configuration</xar:mlstring></h2>
-<form method="post" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<p><xar:mlstring>Items Per Page</xar:mlstring>: <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'itemsperpage')#" />
-#$hooks#
-<input type="submit" value="Update Headlines Configuration" />
-</form>
-</div>
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<script language="JavaScript">
+<!--
+	// Enter name of mandatory fields
+	var mail_fieldRequired = Array("adminname", "adminmail");
+	// Enter field description to appear in the dialog box
+	var mail_fieldDescription = Array("Admin Name", "Admin Email");
+//-->
+</script>
+<div class="xar-mod-head"><span class="xar-mod-title"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2><br />
+	<div style="margin: auto;">
+		<form method="post" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+
+		<div style="clear: both; padding-top: 10px;">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Number of items per page to show.')#"><label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'itemsperpage')#" />
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Show short urls for the headlines.')#"><label for="shorturls"><xar:mlstring>Support Short URLS</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
+		</span>
+		</div>
+
+		#$hooks#
+
+		<div style="clear: both; padding-top: 10px;">
+			<span style="float: left; width: 20%; text-align: right;">
+				<input type="submit" value="#$submitlabel#" />
+			</span>
+		</div>
+		</form>
+	</div>
 </div>
