@@ -35,37 +35,14 @@ function newsgroups_user_post()
             xarVarFetch('article', 'str:1', $article);
             $article = xarVarPrepForDisplay($article);
 
-            include_once 'modules/newsgroups/xarclass/NNTP.php';
+            $message = xarModAPIFunc('newsgroups','user','getarticle',
+                                     array('group'   => $group,
+                                           'article' => $article));
+            if (!isset($message)) return;
 
-            $server     = xarModGetVar('newsgroups', 'server');
-            $port       = xarModGetVar('newsgroups', 'port');
-
-            $newsgroups = new Net_NNTP();
-            $newsgroups -> connect($server, $port);
-
-            $user = xarModGetVar('newsgroups', 'user');
-            if (!empty($user)) {
-                $pass = xarModGetVar('newsgroups', 'pass');
-                $rs = $newsgroups->authenticate($user,$pass);
-                if (PEAR::isError($rs)) {
-                    $error_message = $rs->message;
-                    $newsgroups->quit();
-                    return array('group' => $group,
-                                 'error_message' => $error_message);
-                }
-            }
-
-            $counts = $newsgroups->selectGroup($group);
-            $data               = $newsgroups->splitHeaders($article);
-            if (PEAR::isError($data)) {
-                $error_message = $data->message;
-                $newsgroups->quit();
-                return array('group' => $group,
-                             'error_message' => $error_message);
-            }
-
-            $data['raw']        = explode("\n", $newsgroups->getBody($article));
-            $newsgroups->quit();
+            // re-shuffle variables for the template
+            $data = $message['headers'];
+            $data['raw'] = explode("\n", $message['body']);
 
             if (preg_match ("/Re: /i", $data['Subject'])) {
                 $data['subject']    = xarVarPrepForDisplay($data['Subject']);
