@@ -1,8 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <h2>#$name# <xar:mlstring>Example Information</xar:mlstring></h2>
 <form action="#xarModURL('example', 'user', 'usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />	
-<input type="hidden" name="uid" id="uid" value="#$uid#" />	
+<input type="hidden" name="authid" id="authid" value="#$authid#" />    
+<input type="hidden" name="uid" id="uid" value="#$uid#" />    
 <input type="hidden" name="phase" id="phase" value="update" />
 <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" /> -- <label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label><br /><br />
 
