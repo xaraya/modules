@@ -30,14 +30,14 @@ function bloggerapi_userapi_editpost($msg)
 
     // get the params, we skip appkey
     $sn1=$msg->getParam(1);  $postid   = $sn1->scalarval();
-	$sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
-	$sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
-	$sn4=$msg->getParam(4);  $content   = $sn4->scalarval();
+    $sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
+    $sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
+    $sn4=$msg->getParam(4);  $content   = $sn4->scalarval();
     $sn5=$msg->getParam(5);  $publish   = $sn5->scalarval();
 
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or password while editing post",$username);
- 	} else {
+     } else {
         // FIXME: test for exceptions
         $article = xarModAPIFunc('articles','user','get',array('aid'=>$postid));
         $iids = array(); $iids[] = $postid;
@@ -46,7 +46,7 @@ function bloggerapi_userapi_editpost($msg)
         $title =$title[1];
         $content = ereg_replace("<title>(.*)</title>","",$content);
         if (empty($title)) {
-	        $title = $article['title'];
+            $title = $article['title'];
         }
 
         // FIXME: test for exceptions
@@ -63,8 +63,8 @@ function bloggerapi_userapi_editpost($msg)
        
     if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-	}	else {
-		// otherwise, we create the right response (boolean)
+    }    else {
+        // otherwise, we create the right response (boolean)
         $output = xarModAPIFunc('xmlrpcserver','user','successresponse');
     }
     return $output;

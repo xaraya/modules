@@ -28,10 +28,10 @@
 function bloggerapi_userapi_getusersblogs($msg) 
 {
     xarLogMessage("blogger api: getUsersBlogs");
-	// get the params, we skip appkey for now..
-	$sn1=$msg->getParam(1);  $username = $sn1->scalarval();
-	$sn2=$msg->getParam(2);  $password = $sn2->scalarval();
-	
+    // get the params, we skip appkey for now..
+    $sn1=$msg->getParam(1);  $username = $sn1->scalarval();
+    $sn2=$msg->getParam(2);  $password = $sn2->scalarval();
+    
     // Try to login
     if (!xarUserLogin($username, $password)) {
         $err = xarML('Invalid user (#(1)) while getting users blogs',$username);
@@ -67,19 +67,19 @@ function bloggerapi_userapi_getusersblogs($msg)
     }
     
     // Simple debugging can be done by assigning a value to $err at this point
-	if (!empty($err)) {
+    if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-	}	else {
-		// otherwise, we create the right response
+    }    else {
+        // otherwise, we create the right response
         $i = 0;
         $catlist=array();
         foreach ($categories as $category) {
             $url= xarModURL('articles','user','view', array('catid' => $category['cid'], 'ptid' => $pubtype));
-						$catlist[$i]['url']=$url;
+                        $catlist[$i]['url']=$url;
             $catlist[$i]['blogid']=$category['cid'];
             $catlist[$i]['blogname']=$category['name'];
-			$i++;
-		}
+            $i++;
+        }
         $data['categories'] = $catlist;
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                                 array('module'  => 'bloggerapi',

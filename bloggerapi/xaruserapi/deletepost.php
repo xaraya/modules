@@ -27,11 +27,11 @@ function bloggerapi_userapi_deletepost($msg)
 {
     xarLogMessage("blogger api: deletePost");
     
-	// get the params, we skip appkey and publish for now..
-	$sn1=$msg->getParam(1); $postid   = $sn1->scalarval();
-	$sn2=$msg->getParam(2); $username = $sn2->scalarval();
-	$sn3=$msg->getParam(3); $password = $sn3->scalarval();
-	
+    // get the params, we skip appkey and publish for now..
+    $sn1=$msg->getParam(1); $postid   = $sn1->scalarval();
+    $sn2=$msg->getParam(2); $username = $sn2->scalarval();
+    $sn3=$msg->getParam(3); $password = $sn3->scalarval();
+    
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) while trying to delete post",$username);
     } else {
@@ -42,10 +42,10 @@ function bloggerapi_userapi_deletepost($msg)
         }
     }
     
-	if (!empty($err)) {
+    if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-	}	else {
-		// otherwise, we create the right response (boolean)
+    }    else {
+        // otherwise, we create the right response (boolean)
         $output = xarModAPIFunc('xmlrpcserver','user','successresponse');
     }
     return $output;

@@ -27,14 +27,14 @@
 function bloggerapi_userapi_newpost($msg) 
 {
     xarLogMessage("blogger api: newPost");
-	setlocale(LC_TIME, xarConfigGetVar('locale'));
-	// get the params, we skip appkey
-	$sn1=$msg->getParam(1);  $category   = $sn1->scalarval();
-	$sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
-	$sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
-	$sn4=$msg->getParam(4);  $content   = $sn4->scalarval();
-	$sn5=$msg->getParam(5);  $publish   = $sn5->scalarval();
-	//xarLogVariable('publish', $publish);
+    setlocale(LC_TIME, xarConfigGetVar('locale'));
+    // get the params, we skip appkey
+    $sn1=$msg->getParam(1);  $category   = $sn1->scalarval();
+    $sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
+    $sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
+    $sn4=$msg->getParam(4);  $content   = $sn4->scalarval();
+    $sn5=$msg->getParam(5);  $publish   = $sn5->scalarval();
+    //xarLogVariable('publish', $publish);
 
     if (!xarUserLogin($username,$password)) {
       $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
@@ -44,10 +44,10 @@ function bloggerapi_userapi_newpost($msg)
         $title = $title[1];
         $content = ereg_replace("<title>(.*)</title>","",$content);
         if (empty($title)){
-	        $title = xarML("Post from #(1) on: #(2)",$username,date("Y-m-d"));
+            $title = xarML("Post from #(1) on: #(2)",$username,date("Y-m-d"));
         }
         $summary = $content;
-		$cids=array(); $cids[] = $category;
+        $cids=array(); $cids[] = $category;
         $bodytype = ' ';
         $bodytext = $content;
         $language = ' ';
@@ -75,10 +75,10 @@ function bloggerapi_userapi_newpost($msg)
             $err = xarML("Failed to create new post #(1) (permission problem?)",$postid);
         }
     }
-	  
-	if (!empty($err)) {
+      
+    if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-	}	else {
+    }    else {
         $data['postid'] = $postid;
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                                 array('module'  => 'bloggerapi',

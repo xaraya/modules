@@ -33,7 +33,7 @@ function bloggerapi_userapi_getrecentposts($msg)
     $sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
     $sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
     $sn4=$msg->getParam(4);  $numberOfPosts   = $sn4->scalarval();
-	
+    
     // Try to login 
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid username or password for (#(1)) while getting recent posts",$username);
@@ -54,18 +54,18 @@ function bloggerapi_userapi_getrecentposts($msg)
             array('startnum' => 1, 'ptid' => null, 'numitems' => $numberOfPosts, 'cids' => $cids));
         
         if (count($articles)==0) {
-					$cat = xarModAPIFunc('categories','user','getcat',array('return_itself'=>true,'cid'=>$blogid));
-					$err = xarML("No posts found in category (#(1))",$cat[0]['name']);
+                    $cat = xarModAPIFunc('categories','user','getcat',array('return_itself'=>true,'cid'=>$blogid));
+                    $err = xarML("No posts found in category (#(1))",$cat[0]['name']);
         }
     }
     
-	
-	if (!empty($err)) {
+    
+    if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-	} else {
+    } else {
         // otherwise, we create the right response
         $articlelist=array(); $i = 0;
-		$data=array();
+        $data=array();
         foreach ($articles as $article) {
             // FIXME: the title flagging needs to be configurable
             $content="<title>".$article['title']."</title>".$article['summary'];
@@ -77,7 +77,7 @@ function bloggerapi_userapi_getrecentposts($msg)
             $article_list[$i]['postid'] = $article['aid'];
 
             $i++;
-		}
+        }
 
         $data['articlelist'] = $article_list;
 

@@ -26,10 +26,10 @@
  */
 function bloggerapi_userapi_getuserinfo($msg) 
 {
-	xarLogMessage("blogger api: getUserInfo");
-	// get the params, we skip appkey for now..
-	$sn1=$msg->getParam(1); $username= $sn1->scalarval();
-	$sn2=$msg->getParam(2); $password= $sn2->scalarval();
+    xarLogMessage("blogger api: getUserInfo");
+    // get the params, we skip appkey for now..
+    $sn1=$msg->getParam(1); $username= $sn1->scalarval();
+    $sn2=$msg->getParam(2); $password= $sn2->scalarval();
     
     $err='';
     if (!xarUserLogin($username,$password)) {
@@ -42,11 +42,11 @@ function bloggerapi_userapi_getuserinfo($msg)
             $err=xarML("No user info found for #(1)",$username);
         }
     }
-	
+    
     if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-	}	else {
-		// otherwise, we create the right response in a struct
+    }    else {
+        // otherwise, we create the right response in a struct
         $data['nickname'] = $userinfo['uname'];
         $data['userid'] = $userinfo['uid'];
         $data['email'] = $userinfo['email'];

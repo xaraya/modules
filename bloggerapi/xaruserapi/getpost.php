@@ -28,12 +28,12 @@ function bloggerapi_userapi_getpost($msg)
 {
     xarLogMessage("blogger api: getPost");
 
-	// get the params, we skip appkey for now..
-	$sn1=$msg->getParam(1);  $postid   = $sn1->scalarval();
-	$sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
-	$sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
-	
-	if (!xarUserLogin($username,$password)) {
+    // get the params, we skip appkey for now..
+    $sn1=$msg->getParam(1);  $postid   = $sn1->scalarval();
+    $sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
+    $sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
+    
+    if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or wrong password while getting post",$username);
     } else {
         // FIXME: test for exceptions
@@ -43,16 +43,16 @@ function bloggerapi_userapi_getpost($msg)
         }
     }
     
-	if (!empty($err)) {
+    if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-	}	else {
+    }    else {
         // FIXME: title flagging should be configurable
         $content="<title>".$article['title']."</title>".$article['summary'];
 
-		// convert date to iso date code
-		$t = iso8601_encode($article['pubdate']);
+        // convert date to iso date code
+        $t = iso8601_encode($article['pubdate']);
         
-		// create a struct for the response
+        // create a struct for the response
         $data['userid']=$article['authorid'];
         $data['dateCreated']=$t;
         // FIXME: xmlrpc only requires <, > and & to be prepped, what do we do?
@@ -63,8 +63,8 @@ function bloggerapi_userapi_getpost($msg)
                    array('module'  => 'bloggerapi',
                          'command' => 'getpost',
                          'params'  => $data));
-	}
+    }
     return $output;
-	
+    
 }
 ?>

@@ -171,21 +171,21 @@ published page.";
                                                           "signature" => $deletePost_sig,
                                                           "docstring" => $deletePost_doc),
                         
-                        "blogger.getPost"        =>	 array("function" => "bloggerapi_userapi_getpost",
+                        "blogger.getPost"        =>     array("function" => "bloggerapi_userapi_getpost",
                                                            "signature" => $getPost_sig,
                                                            "docstring" => $getPost_doc),
                         
-                        "blogger.getRecentPosts" =>	array("function" => "bloggerapi_userapi_getrecentposts",
+                        "blogger.getRecentPosts" =>    array("function" => "bloggerapi_userapi_getrecentposts",
                                                           "signature" => $getRecentPosts_sig,
                                                           "docstring" => $getRecentPosts_doc),
                         
 
-                        "blogger.getUserInfo"    =>	array("function" => "bloggerapi_userapi_getuserinfo",
+                        "blogger.getUserInfo"    =>    array("function" => "bloggerapi_userapi_getuserinfo",
                                                           "signature" => $getUserInfo_sig,
                                                           "docstring" => $getUserInfo_doc),
 
                        
-                        "blogger.getUsersBlogs"  =>	array("function" => "bloggerapi_userapi_getusersblogs",
+                        "blogger.getUsersBlogs"  =>    array("function" => "bloggerapi_userapi_getusersblogs",
                                                           "signature" => $getUsersBlogs_sig,
                                                            "docstring" => $getUsersBlogs_doc)
                         );
