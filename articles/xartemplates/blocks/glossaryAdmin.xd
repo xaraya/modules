@@ -1,3 +1,4 @@
+<h4><xar:mlstring>Where the glossary items are held</xar:mlstring></h4>
 <div>
     <span class="help" title="#xarML('Choose the publication type for the glossary.')#"><label for="ptid_block_#$bid#"><xar:mlstring>Publication Type</xar:mlstring></label>:</span>
 </div>
@@ -30,6 +31,7 @@
     </select>
 </div>
 
+<h4><xar:mlstring>How the glossary block is invoked</xar:mlstring></h4>
 <div>
     <span class="help" title="#xarML('The name of the glossary parameter to trigger the block.')#"><label for="paramname_#$bid#"><xar:mlstring>Parameter Name</xar:mlstring></label>:</span>
 </div>
