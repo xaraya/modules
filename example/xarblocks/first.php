@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: first.php 1.24 04/01/28 12:16:10+00:00 dudleyc@pint.(none) $
- * 
  * Example Block
  * 
  * @package Xaraya eXtensible Management System
@@ -29,13 +27,15 @@ function example_firstblock_init()
 function example_firstblock_info()
 { 
     // Values
-    return array('text_type' => 'First',
+    return array(
+        'text_type' => 'First',
         'module' => 'example',
         'text_type_long' => 'Show first example items (alphabetical)',
         'allow_multiple' => true,
         'form_content' => false,
         'form_refresh' => false,
-        'show_preview' => true);
+        'show_preview' => true
+    );
 } 
 
 /**

@@ -14,7 +14,7 @@
 /**
  * modify block settings
  */
-function example_firstblock_modify($blockinfo)
+function example_othersblock_modify($blockinfo)
 { 
     // Get current content
     if (!is_array($blockinfo['content'])) {
@@ -38,7 +38,7 @@ function example_firstblock_modify($blockinfo)
 /**
  * update block settings
  */
-function example_firstblock_update($blockinfo)
+function example_othersblock_update($blockinfo)
 {
     $vars = array();
     if (!xarVarFetch('numitems', 'int:0', $vars['numitems'], 5, XARVAR_DONT_SET)) {return;}

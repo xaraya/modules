@@ -39,7 +39,7 @@
                 <tr>
                     <td><label for="shorturls">#$shorturlslabel#</label></td>
                     <td>
-                        <xar:if condition="$shorturlchecked">
+                        <xar:if condition="$shorturlschecked">
                             <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked"/>
                         <xar:else/>
                             <input type="checkbox" name="shorturls" id="shorturls" value="1" />

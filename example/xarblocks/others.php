@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id: others.php 1.22 04/01/20 11:17:25-05:00 roger@asphyxia.com $
- * 
- * Example block initialisation
+ * Example Block
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -60,7 +58,9 @@ function example_othersblock_display($blockinfo)
     // Security check
     if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
-    // Get variables from content block
+    // Get variables from content block.
+    // Content is a serialized array for legacy support, but will be
+    // an array (not serialized) once all blocks have been converted.
     if (!is_array($blockinfo['content'])) {
         $vars = @unserialize($blockinfo['content']);
     } else {
@@ -116,41 +116,6 @@ function example_othersblock_display($blockinfo)
 
     $blockinfo['content'] = array('items' => $items);
 
-    return $blockinfo;
-} 
-
-/**
- * modify block settings
- */
-function example_othersblock_modify($blockinfo)
-{ 
-    // Get current content
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-
-    // Defaults
-    if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
-    } 
-
-    // Send content to template
-    return array(
-        'numitems' => $vars['numitems'],
-        'blockid' => $blockinfo['bid']
-    );
-} 
-
-/**
- * update block settings
- */
-function example_othersblock_update($blockinfo)
-{
-    $vars = array();
-    if (!xarVarFetch('numitems', 'int:0', $vars['numitems'], 5, XARVAR_DONT_SET)) {return;}
-    $blockinfo['content'] = $vars;
     return $blockinfo;
 } 
 
