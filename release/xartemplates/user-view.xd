@@ -51,9 +51,9 @@
     <div style="clear:both;">
        <span style="float:left; text-align:left; width:98%;">
         <xar:if condition="!empty($catid)">
-            <xar:categories-navigation layout="trails" baseflag="2" showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="1" showempty="1" />
+            <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="1" showempty="1" />
         <xar:else />
-            <xar:categories-navigation layout="trails"  baseflag="2" showchildren="1" module="release" itemtype="" catid="11" showcatcount="1" showempty="1" />
+            <xar:categories-navigation layout="trails"  showchildren="1" module="release" itemtype="" catid="11" showcatcount="1" showempty="1" />
         </xar:if>
        </span>
     </div>
