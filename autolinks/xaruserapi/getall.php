@@ -31,6 +31,7 @@ function autolinks_userapi_getall($args)
 
     // Extra where-clause conditions.
     $where = array();
+    $bind = array();
 
     // TODO: put where-clause stuff in a common function
     if (isset($enabled))
@@ -47,7 +48,8 @@ function autolinks_userapi_getall($args)
 
     if (isset($tid) && is_numeric($tid))
     {
-        $where[] = '(xar_type_tid = ' . $tid . ')';
+        $where[] = '(xar_type_tid = ?)';
+        $bind[] = $tid;
     }
 
     $where = implode(' and ', $where);
@@ -79,7 +81,7 @@ function autolinks_userapi_getall($args)
         . (!empty($where) ? ' where ' . $where : '')
         . ' ORDER BY xar_name';
 
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bind);
     if (!$result) {return;}
 
     for (; !$result->EOF; $result->MoveNext()) {

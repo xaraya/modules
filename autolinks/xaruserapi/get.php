@@ -44,8 +44,8 @@ function autolinks_userapi_get($args)
             FROM    ' . $autolinkstable
         . ' LEFT JOIN ' . $autolinkstypestable 
         . ' ON xar_tid = xar_type_tid
-            WHERE xar_lid = ' . xarVarPrepForStore($lid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_lid = ?';
+    $result =& $dbconn->Execute($query, array($lid));
 
     if (!$result || $result->EOF) {return;}
 

@@ -34,10 +34,8 @@ function autolinks_adminapi_createtype($args)
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
     if (!isset($type_name) || !isset($template_name)) {
-        $msg = xarML('Invalid Parameter Count',
-                    'admin', 'createtype', 'Autolinks');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -52,8 +50,8 @@ function autolinks_adminapi_createtype($args)
 
     // Check if that type name exists
     $query = 'SELECT xar_tid FROM ' . $autolinkstypestable
-          . ' WHERE xar_type_name = \'' . xarVarPrepForStore($type_name) . '\'';
-    $result =& $dbconn->Execute($query);
+          . ' WHERE xar_type_name = ?';
+    $result =& $dbconn->Execute($query, array($type_name));
     if (!$result) {return;}
 
     if ($result->RecordCount() > 0) {
@@ -71,21 +69,20 @@ function autolinks_adminapi_createtype($args)
     }
 
     // Add item
-    $query = "INSERT INTO $autolinkstypestable (
+    $query = 'INSERT INTO ' . $autolinkstypestable . ' (
               xar_tid,
               xar_type_name,
               xar_template_name,
               xar_dynamic_replace,
               xar_link_itemtype,
               xar_type_desc)
-            VALUES (
-              $nextID,
-              '" . xarVarPrepForStore($type_name) . "',
-              '" . xarVarPrepForStore($template_name) . "',
-              " . xarVarPrepForStore($dynamic_replace) . ",
-              " . xarVarPrepForStore($itemtype) . ",
-              '" . xarVarPrepForStore($type_desc) . "')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?, ?, ?, ?, ?, ?)';
+
+    $bind = array(
+        $nextID, $type_name, $template_name, $dynamic_replace, $itemtype, $type_desc
+    );
+
+    $result =& $dbconn->Execute($query, $bind);
     if (!$result) {return;}
 
     // Get the ID of the item that we inserted
@@ -96,10 +93,10 @@ function autolinks_adminapi_createtype($args)
         $itemtype = $tid + 10;
 
         $query = 'UPDATE ' . $autolinkstypestable 
-              . ' SET xar_link_itemtype = ' . $itemtype
-              . ' WHERE xar_tid = ' . $tid
-              . ' AND xar_link_itemtype <> ' . $itemtype;
-        $result =& $dbconn->Execute($query);
+              . ' SET xar_link_itemtype = ?'
+              . ' WHERE xar_tid = ?'
+              . ' AND xar_link_itemtype <> ?';
+        $result =& $dbconn->Execute($query, array($itemtype, $tid, $itemtype));
         if (!$result) {return;}
     }
 

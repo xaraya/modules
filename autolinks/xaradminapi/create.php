@@ -33,8 +33,7 @@ function autolinks_adminapi_create($args)
             'Invalid Parameter Count',
             'admin', 'create', 'Autolinks'
         );
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -64,10 +63,10 @@ function autolinks_adminapi_create($args)
 
     // Check if that keyword or name exists
     $query = 'SELECT xar_lid FROM ' . $autolinkstable
-          . ' WHERE xar_keyword = \'' . xarVarPrepForStore($keyword). '\''
-          . ' OR xar_name = \'' . xarVarPrepForStore($name). '\'';
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+          . ' WHERE xar_keyword = ?'
+          . ' OR xar_name = ?';
+    $result =& $dbconn->Execute($query, array($keyword, $name));
+    if (!$result) {return;}
 
     if ($result->RecordCount() > 0) {
         $msg = xarML(
@@ -82,8 +81,7 @@ function autolinks_adminapi_create($args)
     $type = xarModAPIfunc('autolinks', 'user', 'gettype', array('tid'=>$tid));
     if (!$type) {
         $msg = xarML('Autolink Type does not exist') . ' ('.$tid.')';
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -91,7 +89,7 @@ function autolinks_adminapi_create($args)
     $nextId = $dbconn->GenId($autolinkstable);
 
     // Add item
-    $query = "INSERT INTO $autolinkstable (
+    $query = 'INSERT INTO ' . $autolinkstable . ' (
               xar_lid,
               xar_type_tid,
               xar_name,
@@ -102,19 +100,15 @@ function autolinks_adminapi_create($args)
               xar_match_re,
               xar_sample,
               xar_enabled)
-            VALUES (
-              $nextId,
-              " . xarVarPrepForStore($tid) . ",
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarVarPrepForStore($keyword) . "',
-              '" . xarVarPrepForStore($title) . "',
-              '" . xarVarPrepForStore($url) . "',
-              '" . xarVarPrepForStore($comment) . "',
-              " . xarVarPrepForStore($match_re) . ",
-              '" . xarVarPrepForStore($sample) . "',
-              " . xarVarPrepForStore($enabled) . ")";
-    
-    $result =& $dbconn->Execute($query);
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+    $bind = array(
+        $nextId, $tid, $name, $keyword,
+        $title, $url, $comment, $match_re,
+        $sample, $enabled
+    );
+
+    $result =& $dbconn->Execute($query, $bind);
     if (!$result) {return;}
 
     // Get the ID of the item that we inserted

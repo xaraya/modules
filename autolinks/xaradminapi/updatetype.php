@@ -15,6 +15,7 @@ function autolinks_adminapi_updatetype($args)
 
     // Array of column set statements.
     $set = array();
+    $bind = array();
 
     // TODO: use xarVarFetch to validate the parameters.
 
@@ -23,20 +24,23 @@ function autolinks_adminapi_updatetype($args)
     {
         if (isset($$parameter))
         {
-            $set[] = 'xar_' . $parameter . ' = \'' . xarVarPrepForStore($$parameter) . '\'';
+            $set[] = 'xar_' . $parameter . ' = ?';
+            $bind[] = $$parameter;
         }
     }
     
     // Numeric (boolean) parameters.
-    foreach(array('dynamic_replace'=>0) as $parameter => $default)
+    foreach(array('dynamic_replace' => 0) as $parameter => $default)
     {
         if (isset($$parameter))
         {
             if ($$parameter == '0' || $$parameter == '1')
             {
-                $set[] = 'xar_' . $parameter . ' = ' . xarVarPrepForStore($$parameter);
+                $set[] = 'xar_' . $parameter . ' = ?';
+                $bind[] = $$parameter;
             } else {
-                $set[] = 'xar_' . $parameter . ' = ' . xarVarPrepForStore($default);
+                $set[] = 'xar_' . $parameter . ' = ?';
+                $bind[] = $default;
             }
         }
     }
@@ -47,10 +51,11 @@ function autolinks_adminapi_updatetype($args)
     
     // Argument check
     if (!isset($tid) || empty($set)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ', $args), 'admin', 'update', 'Autolinks');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid Parameter Count',
+            join(', ', $args), 'admin', 'update', 'Autolinks'
+        );
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -83,23 +88,26 @@ function autolinks_adminapi_updatetype($args)
     // Check if that type name exists
     if (isset($type_name)) {
         $query = 'SELECT xar_tid FROM ' . $autolinkstypestable
-              . ' WHERE xar_type_name = \'' . xarVarPrepForStore($type_name) . '\''
-              . ' AND xar_tid <> ' . xarVarPrepForStore($tid);
-        $result =& $dbconn->Execute($query);
+              . ' WHERE xar_type_name = ?'
+              . ' AND xar_tid <> ?';
+
+        $result =& $dbconn->Execute($query, array($type_name, $tid));
         if (!$result) {return;}
 
         if ($result->RecordCount() > 0) {
-            $msg = xarML('The given name already exists.');
+            $msg = xarML('The autolink type name already exists.');
             xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }
     }
 
     // Update the link
-    $query = 'UPDATE ' . $autolinkstypestable . ' SET ' . $set
-          . ' WHERE xar_tid = ' . xarVarPrepForStore($tid);
+    $query = 'UPDATE ' . $autolinkstypestable
+        . ' SET ' . $set
+        . ' WHERE xar_tid = ?';
 
-    $result =& $dbconn->Execute($query);
+    $bind[] = $tid;
+    $result =& $dbconn->Execute($query, $bind);
     if (!$result) {return;}
 
     // Now recompile the cache for autolinks of this type.

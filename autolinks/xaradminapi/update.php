@@ -18,6 +18,7 @@ function autolinks_adminapi_update($args)
 
     // Array of column set statements.
     $set = array();
+    $bind = array();
 
     // TODO: use xarVarFetch to validate the parameters.
 
@@ -31,7 +32,8 @@ function autolinks_adminapi_update($args)
     {
         if (isset($$parameter))
         {
-            $set[] = "xar_$parameter = '" . xarVarPrepForStore($$parameter) . "'";
+            $set[] = "xar_$parameter = ?";
+            $bind[] = $$parameter;
         }
     }
     
@@ -42,19 +44,25 @@ function autolinks_adminapi_update($args)
         {
             if ($$parameter == "0" || $$parameter == "1")
             {
-                $set[] = "xar_$parameter = " . xarVarPrepForStore($$parameter) . "";
+                $set[] = "xar_$parameter = ?";
+                $bind[] = $$parameter;
             } else {
-                $set[] = "xar_$parameter = " . xarVarPrepForStore($default) . "";
+                $set[] = "xar_$parameter = ?";
+                $bind[] = $default;
             }
         }
     }
     
     // Argument check
     if (!isset($lid) || empty($set)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ', $args), 'admin', 'update', 'Autolinks');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid Parameter Count',
+            join(', ', $args), 'admin', 'update', 'Autolinks'
+        );
+        xarExceptionSet(
+            XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
 
@@ -68,15 +76,15 @@ function autolinks_adminapi_update($args)
     );
 
     if ($link == false) {
-        $msg = xarML('No Such Link Present',
-                    'autolinks');
-        xarExceptionSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No Such Link Present', 'autolinks');
+        xarExceptionSet(
+            XAR_USER_EXCEPTION, 'MISSING_DATA',
+            new DefaultUserException($msg)
+        );
         return;
     }
 
-    if (!xarSecurityCheck('EditAutolinks')) return;
+    if (!xarSecurityCheck('EditAutolinks')) {return;}
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
@@ -85,9 +93,9 @@ function autolinks_adminapi_update($args)
     $autolinkstable = $xartable['autolinks'];
 
     // Update the link
-    $query = 'UPDATE ' . $autolinkstable . ' SET ' . $set
-            . ' WHERE xar_lid = ' . xarVarPrepForStore($lid);
-    $result =& $dbconn->Execute($query);
+    $query = 'UPDATE ' . $autolinkstable . ' SET ' . $set . ' WHERE xar_lid = ?';
+    $bind[] = $lid;
+    $result =& $dbconn->Execute($query, $bind);
     if (!$result) {return;}
 
     // Call hooks to update DD etc.

@@ -21,14 +21,17 @@ function autolinks_userapi_getalltypes($args)
         $numitems = -1;
     }
 
-    $where = NULL;
+    $where = array();
+    $bind = array();
 
     if (isset($template_name)) {
-        $where[] = 'xar_template_name like \''.xarVarPrepForStore($template_name).'\'';
+        $where[] = 'xar_template_name like ?';
+        $bind[] = $template_name;
     }
 
     if (isset($type_name)) {
-        $where[] = 'xar_type_name like \''.xarVarPrepForStore($type_name).'\'';
+        $where[] = 'xar_type_name like ?';
+        $bind[] = $type_name;
     }
 
     if (!empty($where)) {
@@ -55,7 +58,7 @@ function autolinks_userapi_getalltypes($args)
                     xar_type_desc
             FROM    ' . $autolinkstypestable . ' ' . $where;
 
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bind);
     if (!$result) {return;}
 
     for (; !$result->EOF; $result->MoveNext()) {

@@ -29,9 +29,11 @@ function autolinks_userapi_gettype($args)
     $autolinkstypestable = $xartable['autolinks_types'];
 
     if (isset($tid)) {
-        $where = 'xar_tid = ' . xarVarPrepForStore($tid);
+        $where = 'xar_tid = ?';
+        $bind = array($tid);
     } elseif (isset($type_name)) {
-        $where = 'xar_type_name = \'' . xarVarPrepForStore($type_name) . '\'';
+        $where = 'xar_type_name = ?';
+        $bind = array($type_name);
     }
 
     // Get link type
@@ -44,7 +46,7 @@ function autolinks_userapi_gettype($args)
                xar_type_desc
         FROM   ' . $autolinkstypestable . '
         WHERE  ' . $where;
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bind);
 
     if (!$result || $result->EOF) {return;}
 

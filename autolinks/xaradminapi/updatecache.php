@@ -20,10 +20,11 @@ function autolinks_adminapi_updatecache($args)
 
     // Argument check
     if (empty($lid) && empty($tid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    'admin', 'updatecache', 'Autolinks');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid Parameter Count',
+            'admin', 'updatecache', 'Autolinks'
+        );
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -61,11 +62,11 @@ function autolinks_adminapi_updatecache($args)
             );
 
             $query = 'UPDATE ' . $autolinkstable
-                . ' SET xar_cache_replace = \'' . xarVarPrepForStore($replace) . '\''
+                . ' SET xar_cache_replace = ?'
                 . ' WHERE xar_lid = ' . $lid 
-                . ' AND (xar_cache_replace <> \'' . xarVarPrepForStore($replace) . '\''
+                . ' AND (xar_cache_replace <> ?'
                 . ' OR xar_cache_replace IS NULL)';
-            $result =& $dbconn->Execute($query);
+            $result =& $dbconn->Execute($query, array($replace, $replace));
         }
     }
 

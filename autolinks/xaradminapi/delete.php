@@ -50,8 +50,8 @@ function autolinks_adminapi_delete($args)
 
     // Delete the item
     $query = 'DELETE FROM ' . $autolinkstable
-          . ' WHERE xar_lid = ' . xarVarPrepForStore($lid);
-    $result =& $dbconn->Execute($query);
+          . ' WHERE xar_lid = ?';
+    $result =& $dbconn->Execute($query, array($lid));
     if (!$result) return;
 
     // Let any hooks know that we have deleted a link

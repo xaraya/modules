@@ -11,9 +11,11 @@ function autolinks_userapi_countitems($args)
     extract($args);
 
     if (isset($tid) and is_numeric($tid)) {
-        $where = 'WHERE xar_type_tid = ' . $tid;
+        $where = 'WHERE xar_type_tid = ?';
+        $bind = array($tid);
     } else {
         $where = '';
+        $bind = array();
     }
 
     $dbconn =& xarDBGetConn();
@@ -21,9 +23,8 @@ function autolinks_userapi_countitems($args)
 
     $autolinkstable = $xartable['autolinks'];
 
-    $query = 'SELECT COUNT(1) FROM ' . $autolinkstable
-        . ' ' . $where;
-    $result =& $dbconn->Execute($query);
+    $query = 'SELECT COUNT(1) FROM ' . $autolinkstable . ' ' . $where;
+    $result =& $dbconn->Execute($query, $bind);
     if (!$result) {return;}
 
     list($numitems) = $result->fields;

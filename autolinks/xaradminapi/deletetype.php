@@ -85,8 +85,8 @@ function autolinks_adminapi_deletetype($args)
 
     // Delete the item
     $query = 'DELETE FROM ' . $autolinkstypestable
-          . ' WHERE xar_tid = ' . xarVarPrepForStore($tid);
-    $result =& $dbconn->Execute($query);
+          . ' WHERE xar_tid = ?';
+    $result =& $dbconn->Execute($query, array($tid));
     if (!$result) return;
 
     // Let any hooks know that we have deleted a link type (as an item)
@@ -104,7 +104,6 @@ function autolinks_adminapi_deletetype($args)
     //    'item', 'delete', $linktype['itemtype'], 
     //    array('itemtype' => , 'module' => 'autolinks')
     //);
-
 
     // Let the calling process know that we have finished successfully
     return true;

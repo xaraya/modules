@@ -40,7 +40,7 @@ function autolinks_admin_modifytype($args)
         // Values have been submitted by the form.
         $type = array('tid' => $tid);
 
-        if (!xarVarFetch('type_name', 'str:1', $type['type_name'])) {
+        if (!xarVarFetch('type_name', 'pre:lower:passthru:str:1', $type['type_name'])) {
             $errorcount += 1;
             $errorstack = xarErrorGet();
             $errorstack = array_shift($errorstack);
@@ -48,8 +48,7 @@ function autolinks_admin_modifytype($args)
             xarErrorHandled();
         }
 
-        // TODO: better validation on template name
-        if (!xarVarFetch('template_name', 'str:1', $type['template_name'])) {
+        if (!xarVarFetch('template_name', 'pre:ftoken:lower:passthru:str:1', $type['template_name'])) {
             $errorcount += 1;
             $errorstack = xarErrorGet();
             $errorstack = array_shift($errorstack);
@@ -106,9 +105,7 @@ function autolinks_admin_modifytype($args)
         $type = $currenttype;
     }
 
-    if (is_array($type)) {
-        $type['authid'] = xarSecGenAuthKey();
-
+    if (empty($errorcount)) {
         // Do config hooks for the autolink type as an item type.
         $type['itemhooks'] = xarModCallHooks(
             'module', 'modifyconfig', 'autolinks',
@@ -121,6 +118,8 @@ function autolinks_admin_modifytype($args)
             array('itemtype' => xarModGetVar('autolinks', 'typeitemtype'), 'module' => 'autolinks')
         );
     }
+
+    $type['authid'] = xarSecGenAuthKey();
 
     return $type;
 }
