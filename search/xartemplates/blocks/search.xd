@@ -1,7 +1,9 @@
+<div style="text-align: right"><small><a href="index.php?module=search">Advanced Search</a></small></div>
 <form action="index.php?module=search" method="post">
 	<div>
 	<input type="hidden" name="module" id="module" value="search" />
 	<label for="q#$blockid#"><xar:mlstring>Search</xar:mlstring></label>
 	<input type="text" name="q" id="q#$blockid#" size="15" />
+	<input style="margin-top: 5px" type="submit" value="Go!">
 	</div>
 </form>
