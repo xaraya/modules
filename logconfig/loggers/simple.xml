@@ -58,13 +58,23 @@
       <validation>0:777</validation>
     </property>
 
+    <property name="maxFileSize">
+      <label>Maximum File Size</label>
+      <type>integerbox</type>
+      <default>1048576</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>0:104857600</validation>
+    </property>
+
     <property name="timeFormat">
       <label>Time Format</label>
       <type>dateformat</type>
       <default>%Y/%m/%d %H:%M:%S</default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>6</order>
+      <order>7</order>
       <validation></validation>
     </property>
 
@@ -74,7 +84,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>7</order>
+      <order>8</order>
       <validation></validation>
     </property>
 
