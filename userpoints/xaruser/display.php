@@ -9,140 +9,48 @@
  * @returns output
  * @return output with rating information
  */
-function ratings_user_display($args)
+function userpoints_user_display($args)
 {
     extract($args);
-
-    $data = array();
-    $data['objectid'] = $objectid;
-
-    $itemtype = 0;
-    if (isset($extrainfo) && is_array($extrainfo)) {
-        if (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
-            $modname = $extrainfo['module'];
-        }
-        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-            $itemtype = $extrainfo['itemtype'];
-        }
-        if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
-            $data['returnurl'] = $extrainfo['returnurl'];
-        }
-    } else {
-        $data['returnurl'] = $extrainfo;
+    if (!isset($extrainfo) || !is_array($extrainfo)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'admin', 'displayhook', 'userpoints');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        // we *must* return $extrainfo for now, or the next hook will fail
+        //return false;
+        return $extrainfo;
     }
 
-    if (empty($modname)) {
+    // When called via hooks, the module name may be empty, so we get it from
+    // the current module
+    if (empty($extrainfo['module'])) {
         $modname = xarModGetName();
-    }
-    $args['modname'] = $modname;
-    $args['itemtype'] = $itemtype;
-
-    if (!isset($style)) {
-        if (!empty($itemtype)) {
-            $style = xarModGetVar('ratings', "style.$modname.$itemtype");
-        }
-        if (!isset($style)) {
-            $style = xarModGetVar('ratings', 'style.'.$modname);
-        }
-        if (!isset($style)) {
-            $style = xarModGetVar('ratings', 'defaultstyle');
-        }
-    }
-    $data['style'] = $style;
-    $data['itemtype'] = $itemtype;
-
-    // Run API function
-    $data['rating'] = xarModAPIFunc('ratings',
-                           'user',
-                           'get',
-                           $args);
-
-    if (isset($data['rating'])) {
-        // Set the cached variable if requested
-        if (xarVarIsCached('Hooks.ratings','save') &&
-            xarVarGetCached('Hooks.ratings','save') == true) {
-            xarVarSetCached('Hooks.ratings','value',$data['rating']);
-        }
-
-        // Display current rating
-        switch($data['style']) {
-            case 'percentage':
-                $data['rating'] = sprintf("%.1f",$data['rating']);
-                break;
-            case 'outoffive':
-                $data['rating'] = (int)(($data['rating']+10)/20);
-                break;
-            case 'outoffivestars':
-                $data['rating'] = (int)($data['rating']/2);
-                $data['intrating'] = (int)($data['rating']/10);
-                $data['fracrating'] = $data['rating'] - (10*$data['intrating']);
-                break;
-            case 'outoften':
-                $data['rating'] = (int)(($data['rating']+5)/10);
-                break;
-            case 'outoftenstars':
-                $data['intrating'] = (int)($data['rating']/10);
-                $data['fracrating'] = $data['rating'] - (10*$data['intrating']);
-                $data['rating'] = sprintf("%.1f",$data['rating']);
-                break;
-            case 'customised':
-            default:
-                $data['rating'] = sprintf("%.1f",$data['rating']);
-                break;
-        }
     } else {
-        $data['rating'] = 0;
-        $data['intrating'] = 0;
-        $data['fracrating'] = 0;
+        $modname = $extrainfo['module'];
     }
 
-    // Multipe rate check
-    if (!empty($itemtype)) {
-        $seclevel = xarModGetVar('ratings', "seclevel.$modname.$itemtype");
-        if (!isset($seclevel)) {
-            $seclevel = xarModGetVar('ratings', 'seclevel.'.$modname);
-        }
+    if (!empty($extrainfo['itemtype'])) {
+        $itemtype = $extrainfo['itemtype'];
     } else {
-        $seclevel = xarModGetVar('ratings', 'seclevel.'.$modname);
+        $itemtype = 0;
     }
-    if (!isset($seclevel)) {
-        $seclevel = xarModGetVar('ratings', 'seclevel');
-    }
-    if ($seclevel == 'high') {
-        // Check to see if user has already voted
-        if (xarUserIsLoggedIn()) {
-            if (!xarModGetVar('ratings',$modname.':'.$itemtype.':'.$objectid)) {
-                xarModSetVar('ratings',$modname.':'.$itemtype.':'.$objectid,1);
-            }
-            $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
-            if (!empty($rated)) {
-                $data['rated'] = true;
-            }
-        } else {
-            // no rating for anonymous users here
-            $data['rated'] = true;
-        }
-    } elseif ($seclevel == 'medium') {
-        // Check to see if user has already voted
-        if (xarUserIsLoggedIn()) {
-            if (!xarModGetVar('ratings',$modname.':'.$itemtype.':'.$objectid)) {
-                xarModSetVar('ratings',$modname.':'.$itemtype.':'.$objectid,1);
-            }
-            $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
-            if (!empty($rated) && $rated > time() - 24*60*60) {
-                $data['rated'] = true;
-            }
-        } else {
-            $rated = xarSessionGetVar('ratings:'.$modname.':'.$itemtype.':'.$objectid);
-            if (!empty($rated) && $rated > time() - 24*60*60) {
-                $data['rated'] = true;
-            }
-        }
-    } // No check for low
 
-    // module name is mandatory here, because this is displayed via hooks (= from within another module)
-    $data['authid'] = xarSecGenAuthKey('ratings');
-    return $data;
+      // Need to get the correct itemtype so we send the correct URL to update
+      $uid = xarUserGetVar('uid');
+      if(!xarUserIsLoggedIn()) {return $extrainfo;}
+      $pointsvalues = xarModAPIFunc('userpoints','user','getpoints',array('pmodule'=>$modname,'itemtype'=>$itemtype,'paction'=>'D'));
+      if(!$pointsvalues) {return $extrainfo;}
+	    $points = $pointsvalues['tpoints']; 
+      
+      $uptid = $pointsvalues['uptid'];
+      
+      $args['uptid'] = $uptid;
+      $args['points'] = $points;
+      $args['uid'] = $uid;
+      
+      $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
+    
+	// Return the extra info
+	return $extrainfo;
 }
 
 ?>

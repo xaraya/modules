@@ -26,9 +26,11 @@ function userpoints_xartables()
     // Initialise table array
     $xartable = array(); 
     // Name for userpoints database entities
-    $userpoints = xarDBGetSiteTablePrefix() . '_userpoints'; 
+    $userpoints = xarDBGetSiteTablePrefix() . '_userpoints';
+    $pointstypes = xarDBGetSiteTablePrefix() . '_userptypes';
     // Table name
     $xartable['userpoints'] = $userpoints; 
+    $xartable['pointstypes'] = $pointstypes;
     // Return table information
     return $xartable;
 } 

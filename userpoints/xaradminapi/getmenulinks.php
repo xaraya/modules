@@ -18,6 +18,11 @@ function userpoints_adminapi_getmenulinks()
                               'label' => xarML('View Statistics'));
         $menulinks[] = Array('url'   => xarModURL('userpoints',
                                                   'admin',
+                                                  'pointstypes'),
+                              'title' => xarML('View userpoints types'),
+                              'label' => xarML('View Points Types'));
+        $menulinks[] = Array('url'   => xarModURL('userpoints',
+                                                  'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the userpoints module configuration'),
                               'label' => xarML('Modify Config'));

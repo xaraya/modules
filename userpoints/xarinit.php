@@ -22,58 +22,59 @@ function userpoints_init()
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
     // Create table
-    $fields = array('xar_rid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_moduleid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
+    $fields = array('xar_upid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_uptid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
         'xar_itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'xar_itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'xar_rating' => array('type' => 'float', 'size' => 'double', 'width' => 3, 'decimals' => 5, 'null' => false, 'default' => '0'),
-        'xar_numuserpoints' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '1')
+        'xar_uid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
+        'xar_points' => array('type' => 'float', 'size' => 'double', 'width' => 10, 'decimals' => 2, 'null' => false, 'default' => '0.00')
         );
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($xartable['userpoints'], $fields);
     if (empty($query)) return; // throw back
+    
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+    
+    $fields = array('xar_uptid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_module' => array('type' => 'varchar', 'size' => 25, 'null' => false, 'default' => ''),
+        'xar_itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
+        'xar_action' => array('type' => 'char', 'size' => 1, 'null' => false, 'default' => ''),
+        'xar_tpoints' => array('type' => 'float', 'size' => 'double', 'width' => 10, 'decimals' => 2, 'null' => false, 'default' => '0.00')
+        );
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($xartable['pointstypes'], $fields);
+    if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    // TODO: compare with having 2 indexes (cfr. hitcount)
-    $query = xarDBCreateIndex($xartable['userpoints'],
-        array('name' => 'i_' . xarDBGetSiteTablePrefix() . '_ratingcombo',
-            'fields' => array('xar_moduleid', 'xar_itemtype', 'xar_itemid'),
-            'unique' => true));
-
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDBCreateIndex($xartable['userpoints'],
-        array('name' => 'i_' . xarDBGetSiteTablePrefix() . '_rating',
-            'fields' => array('xar_rating'),
-            'unique' => false));
-
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    // Set up module variables
+    
+    
     xarModSetVar('userpoints', 'defaultscore', 10);
-    // Set up module hooks
-    if (!xarModRegisterHook('item',
-                            'display',
-                            'GUI',
-                            'userpoints',
-                            'user',
-                            'display')
-	    ) 
-		                       {
-                               return false;
-                               }
 
-    // when a whole module is removed, e.g. via the modules admin screen
-    // (set object ID to the module name !)
+    //when user performs any of the CRUD actions, have the hook fire.
     if (!xarModRegisterHook('module', 'remove', 'API',
                            'userpoints', 'admin', 'deleteall')) {
         return false;
+    }   
+    if (!xarModRegisterHook('item', 'create', 'API',
+                           'userpoints', 'adminapi', 'createhook')) {
+        return false;
     }
-
+    if (!xarModRegisterHook('item', 'remove', 'API',
+                           'userpoints', 'adminapi', 'removehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'update', 'API',
+                           'userpoints', 'adminapi', 'updatehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'display', 'GUI',
+                           'userpoints', 'user', 'display')) {
+        return false;
+    }
     /**
      * Define instances for this module
      * Format is
@@ -117,8 +118,9 @@ function userpoints_init()
             'limit' => 20
             )
         );
+    
     // FIXME: this seems to be some left-over from the old template module
-    xarDefineInstance('userpoints', 'Template', $instances);
+    //xarDefineInstance('userpoints', 'Template', $instances);
 
     /**
      * Register the module components that are privileges objects
@@ -167,21 +169,26 @@ function userpoints_upgrade($oldversion)
 function userpoints_delete()
 {
     // Remove module hooks
-    if (!xarModUnregisterHook('item',
-            'display',
-            'GUI',
-            'userpoints',
-            'user',
-            'display')) return;
-
     if (!xarModUnregisterHook('module', 'remove', 'API',
-                             'userpoints', 'admin', 'deleteall')) {
-        return;
+                           'userpoints', 'admin', 'deleteall')) {
+        return false;
+    }   
+    if (!xarModUnregisterHook('item', 'create', 'API',
+                           'userpoints', 'adminapi', 'createhook')) {
+        return false;
     }
-
-    // Remove Masks and Instances
-    xarRemoveMasks('userpoints');
-    xarRemoveInstances('userpoints');
+    if (!xarModUnregisterHook('item', 'remove', 'API',
+                           'userpoints', 'adminapi', 'removehook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'update', 'API',
+                           'userpoints', 'adminapi', 'updatehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'display', 'GUI',
+                           'userpoints', 'user', 'display')) {
+        return false;
+    }
 
     // Delete module variables
     xarModDelVar('userpoints', 'defaultscore');
@@ -198,6 +205,14 @@ function userpoints_delete()
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
+    
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['pointstypes']);
+    if (empty($query)) return; // throw back
+    // Drop the table and send exception if returns false.
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+    
     // Remove Masks and Instances
     xarRemoveMasks('userpoints');
     xarRemoveInstances('userpoints');

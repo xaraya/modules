@@ -1,0 +1,46 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Userpoints Type Values</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Userpoints Types</xar:mlstring></h2>
+<table summary="">
+<tr>
+<th><xar:mlstring>Module</xar:mlstring></th>
+<th><xar:mlstring>Itemtype</xar:mlstring></th>
+<th><xar:mlstring>Action</xar:mlstring></th>
+<th><xar:mlstring>Value</xar:mlstring></th>
+<th><xar:mlstring>Options</xar:mlstring></th>
+</tr>
+<xar:foreach in="$pointstypes" value="$pointstype">
+<tr>
+<td>#$pointstype['module']#</td>
+<td>#$pointstype['itemtype']#</td>
+<td>#$pointstype['action']#</td>
+<td>#$pointstype['tpoints']#</td>
+<td>
+    <a href="#xarModURL('userpoints','admin','pointstypes',array('ptid'=>$pointstype['uptid'],'paction'=>'delete'))#">Edit</a>&nbsp;
+    <a href="#xarModURL('userpoints','admin','pointstypes',array('ptid'=>$pointstype['uptid'],'paction'=>'delete'))#">Delete</a>
+</td>
+</tr>
+</xar:foreach>
+<form method="post" action="#xarModUrl('userpoints', 'admin', 'createptype')#">
+<tr>
+<td>
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+<xar:set name="$modules">#xarModAPIFunc('modules','admin','list')#</xar:set>
+<select name="pmodule">
+<xar:foreach in="$modules" value="$module">
+<option value="#$module['name']#">#$module['name']#</option>
+</xar:foreach>
+</select></td>
+<td><input type="text" name="itemtype" size="5" value="0" /></td>
+<td><select name="paction">
+<option value="C">Create</option>
+<option value="R">Remove</option>
+<option value="U">Update</option>
+<option value="D">Display</option>
+</select></td>
+<td><input type="text" name="tpoints" value="0.00" size="5" /></td>
+<td><button type="submit">Add</button></td>
+</tr>
+</form>
+</table>
+
+</div>
