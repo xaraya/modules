@@ -6,7 +6,7 @@
     #$style#    - the global or over-ridden autolinks 'style' setting (optional)
     #$class#    - puts a class on the link (optional)
     #$target#   - the global or over-ridden autolinks 'target' setting (optional)
-    #$module#   - the module name (mandatory)
+    #$modulename# - the module name (mandatory)
     #$type#     - the function type (default 'user')
     #$func#     - the function name (default 'display')
     #$idname#   - the item ID name
@@ -44,15 +44,15 @@
     <xar:set name="$idvalue2">''</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($module)">
+<xar:if condition="!empty($modulename)">
     <xar:if condition="!empty($idname)">
         <xar:if condition="!empty($idname2)">
-            <xar:set name="$href">#xarModURL($module, $type, $func, array($idname =&gt; $idvalue, $idname2 =&gt; $idvalue2))#</xar:set>
+            <xar:set name="$href">#xarModURL($modulename, $type, $func, array($idname =&gt; $idvalue, $idname2 =&gt; $idvalue2))#</xar:set>
         <xar:else/>
-            <xar:set name="$href">#xarModURL($module, $type, $func, array($idname =&gt; $idvalue))#</xar:set>
+            <xar:set name="$href">#xarModURL($modulename, $type, $func, array($idname =&gt; $idvalue))#</xar:set>
         </xar:if>
     <xar:else/>
-        <xar:set name="$href">#xarModURL($module, $type, $func)#</xar:set>
+        <xar:set name="$href">#xarModURL($modulename, $type, $func)#</xar:set>
     </xar:if>
 </xar:if>
 

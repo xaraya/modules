@@ -1,0 +1,2 @@
+<xar:comment>External site link (CSS style)</xar:comment>
+<a rel="external" href="#$url#" title="#xarVarPrepForDisplay(xarML($title))#">#$match#</a>

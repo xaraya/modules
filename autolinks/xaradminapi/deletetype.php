@@ -17,10 +17,7 @@ function autolinks_adminapi_deletetype($args)
 
     // Argument check
     if (!isset($tid) || !is_numeric($tid)) {
-        $msg = xarML(
-            'Invalid Parameter Count',
-            'admin', 'deletetype', 'Autolinks'
-        );
+        $msg = xarML('Invalid parameter count');
         xarExceptionSet(
             XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg)
@@ -35,7 +32,7 @@ function autolinks_adminapi_deletetype($args)
     );
 
     if ($linktype == false) {
-        $msg = xarML('No Such Link Type Present', 'autolinks');
+        $msg = xarML('No such link type present: #(1)', $tid);
         xarExceptionSet(
             XAR_USER_EXCEPTION,
             'MISSING_DATA',

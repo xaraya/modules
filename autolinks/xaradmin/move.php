@@ -16,7 +16,7 @@ function autolinks_admin_move()
     // Pass 3: does the move.
     
     // Security Check
-    if(!xarSecurityCheck('EditAutolinks')) {return;}
+    if (!xarSecurityCheck('EditAutolinks')) {return;}
     
     // A link ID is mandatory. The rest depend on the stage.
     if (!xarVarFetch('lid', 'id', $lid, NULL, XARVAR_DONT_SET)) {return;}
@@ -77,7 +77,7 @@ function autolinks_admin_move()
         if (xarModIsHooked('dynamicdata', 'autolinks', $link['itemtype'])) {
             $dd_data_old = xarModAPIfunc(
                 'dynamicdata', 'user', 'getitem',
-                array('module'=>'autolinks', 'itemtype'=>$link['itemtype'], 'itemid'=>$lid)
+                array('module' => 'autolinks', 'itemtype' => $link['itemtype'], 'itemid' => $lid)
             );
         }
 
@@ -103,7 +103,7 @@ function autolinks_admin_move()
         if (xarModIsHooked('dynamicdata', 'autolinks', $link['itemtype'])) {
             $dd_data_new = xarModAPIfunc(
                 'dynamicdata', 'user', 'getitem',
-                array('module'=>'autolinks', 'itemtype'=>$link['itemtype'], 'itemid'=>$link['lid'])
+                array('module' => 'autolinks', 'itemtype' => $link['itemtype'], 'itemid' => $link['lid'])
             );
         }
 

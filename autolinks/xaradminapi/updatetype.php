@@ -51,10 +51,7 @@ function autolinks_adminapi_updatetype($args)
     
     // Argument check
     if (!isset($tid) || empty($set)) {
-        $msg = xarML(
-            'Invalid Parameter Count',
-            join(', ', $args), 'admin', 'update', 'Autolinks'
-        );
+        $msg = xarML('Invalid parameter count');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -69,11 +66,11 @@ function autolinks_adminapi_updatetype($args)
     );
 
     if (!$type) {
-        $msg = xarML('No Such Link Type Present',
-                    'autolinks');
-        xarExceptionSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No such link type present: #(1)', $tid);
+        xarExceptionSet(
+            XAR_USER_EXCEPTION, 'MISSING_DATA',
+            new DefaultUserException($msg)
+        );
         return;
     }
 
@@ -88,14 +85,14 @@ function autolinks_adminapi_updatetype($args)
     // Check if that type name exists
     if (isset($type_name)) {
         $query = 'SELECT xar_tid FROM ' . $autolinkstypestable
-              . ' WHERE xar_type_name = ?'
-              . ' AND xar_tid <> ?';
+            . ' WHERE xar_type_name = ?'
+            . ' AND xar_tid <> ?';
 
         $result =& $dbconn->Execute($query, array($type_name, $tid));
         if (!$result) {return;}
 
         if ($result->RecordCount() > 0) {
-            $msg = xarML('The autolink type name already exists.');
+            $msg = xarML('The autolink type name (#(1)) already exists', $type_name);
             xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }

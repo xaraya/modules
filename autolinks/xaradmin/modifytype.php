@@ -21,7 +21,7 @@ function autolinks_admin_modifytype($args)
     if (!xarVarFetch('submit', 'str', $submit, NULL, XARVAR_DONT_SET)) {return;}
 
     // Security Check
-    if(!xarSecurityCheck('EditAutolinks')) {return;}
+    if (!xarSecurityCheck('EditAutolinks')) {return;}
 
     if (!empty($obid)) {
         $tid = $obid;

@@ -34,11 +34,12 @@ function autolinks_adminapi_delete($args)
     );
 
     if ($link == false) {
-        $msg = xarML('No Such Link Present',
-                    'autolinks');
-        xarExceptionSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No such link present');
+        xarExceptionSet(
+            XAR_USER_EXCEPTION, 
+            'MISSING_DATA',
+            new DefaultUserException($msg)
+        );
         return;
     }
 

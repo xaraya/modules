@@ -15,7 +15,7 @@ function autolinks_admin_createtype()
     $data = array();
 
     // Security check
-    if(!xarSecurityCheck('AddAutolinks')) {return;}
+    if (!xarSecurityCheck('AddAutolinks')) {return;}
 
     // Get parameters from whatever input we need
     if (!xarVarFetch('type_name', 'str:1:', $type_name)) {

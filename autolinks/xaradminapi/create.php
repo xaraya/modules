@@ -29,12 +29,16 @@ function autolinks_adminapi_create($args)
         || !isset($tid)
         || !is_numeric($tid)
         || !isset($url)) {
-        $msg = xarML(
-            'Invalid Parameter Count',
-            'admin', 'create', 'Autolinks'
-        );
+        $msg = xarML('Invalid Parameter Count');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
+    }
+
+    // Do some pre-formatting on some of the input values.
+    // Default the name to the keyword, if no name supplied.
+    if (!xarVarValidate('pre:ftoken:lower:passthru:str:1', $name)) {
+        $name = $keyword;
+        xarVarValidate('pre:ftoken:lower', $name);
     }
 
     if (isset($enabled) && !empty($enabled)) {

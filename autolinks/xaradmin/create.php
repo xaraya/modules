@@ -38,7 +38,7 @@ function autolinks_admin_create()
             $data['type'] = $type;
         } else {
             $errorcount += 1;
-            $data['tid_error'] = xarML('Autolink Type does not exist') . ' (' . $tid . ')';
+            $data['tid_error'] = xarML('Autolink Type does not exist: #(1)', $tid);
         }
     }
 

@@ -6,18 +6,15 @@
 function autolinks_admin_updateconfig()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminAutolinks')) {return;}
+    if (!xarSecurityCheck('AdminAutolinks')) {return;}
 
     if (!xarSecConfirmAuthKey()) {return;}
 
-    // Check if we need to create sample data.
-    if (!xarVarFetch('createsamples', 'str', $createsamples, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    
     $old_newwindow = xarModGetVar('autolinks', 'newwindow');
     $old_showerrors = xarModGetVar('autolinks', 'showerrors');
 
     // The flags that are accepted (values: 0 or 1; 'name'=>default-value)
-    $flags = array('newwindow'=>0, 'nbspiswhite'=>0, 'showerrors'=>0);
+    $flags = array('newwindow' => 0, 'nbspiswhite' => 0, 'showerrors' => 0);
 
     // Deal with flags.
     foreach ($flags as $flag => $default)
@@ -77,11 +74,6 @@ function autolinks_admin_updateconfig()
                 if (!$result) {return;}
             }
         }
-    }
-
-    // Create sample data if required.
-    if (!empty($createsamples)) {
-        $result = xarModAPIfunc('autolinks', 'admin', 'samples', array('action' => 'create'));
     }
 
     // Check for errors.

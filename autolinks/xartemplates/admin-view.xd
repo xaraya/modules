@@ -141,8 +141,8 @@
 <xar:else />
     <div><xar:mlstring>No Autolinks defined</xar:mlstring></div>
     <div>
-        <xar:mlstring>Click here to install sample Autolinks: </xar:mlstring>
-        <a href="#xarModURL('autolinks','admin','modifyconfig')#"><xar:mlstring>Autolinks Config</xar:mlstring></a>
+        <xar:mlstring>Click here to create sample Autolinks: </xar:mlstring>
+        <a href="#xarModURL('autolinks','util','main')#"><xar:mlstring>Autolinks Utilities</xar:mlstring></a>
     </div>
 </xar:if>
 </div>

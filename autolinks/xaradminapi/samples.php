@@ -192,7 +192,7 @@ function autolinks_adminapi_samples($args)
                 'type_desc' => xarML('Allows generic links to module functions to be set up. DD fields are numerous and described in the template.'),
                 'dd_object' => array(
                     'property:pid:1' => array(
-                        'name' => 'module',
+                        'name' => 'modulename',
                         'label' => xarML('Module'),
                         'type' => 2, // 'textbox'
                         'default' => ''
@@ -300,7 +300,27 @@ function autolinks_adminapi_samples($args)
                         'enabled' => '0'
                     )
                 )
+            ),
+
+            'autolink-type:tid:7' => array(
+                'type_name' => xarML('External CSS'),
+                'template_name' => 'externalcss',
+                'type_desc' => xarML('External URLs. These URLs are given an attribute "external".'
+                    .' Your theme will need to provide the styling for these external links.'),
+                'links' => array(
+                    'link:lid:1' => array(
+                        'name' => xarML('Any external URL'),
+                        'keyword' => '(http://(?!demo.xaraya.com)[-.a-z]+/)[^\s.;?!]*',
+                        'match_re' => '1',
+                        'title' => 'Visit the site: $2',
+                        'url' => '$1',
+                        'comment' => 'Matches any URL to an external website home page. Does not match the current site (demo.xaraya.com in this example) - which is left up to other links to catch.',
+                        'sample' => 'http://www.xaraya.com/ http://demo.xaraya.com/ http://xxx/abc/123',
+                        'enabled' => '0'
+                    )
+                ),
             )
+
         )
     );
 

@@ -20,10 +20,7 @@ function autolinks_adminapi_updatecache($args)
 
     // Argument check
     if (empty($lid) && empty($tid)) {
-        $msg = xarML(
-            'Invalid Parameter Count',
-            'admin', 'updatecache', 'Autolinks'
-        );
+        $msg = xarML('Invalid parameter count');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }

@@ -1,0 +1,46 @@
+<div style="margin: auto;">
+<form method="post" action="#xarModURL('autolinks', 'util', 'samples')#" method="post" enctype="application/x-www-form-urlencoded">
+
+    <xar:if condition="isset($status)">
+        <xar:if condition="!empty($status)">
+            <p><xar:mlstring>Samples ceated successfuly</xar:mlstring></p>
+        <xar:else />
+            <p><xar:mlstring>Samples could not be created</xar:mlstring></p>
+        </xar:if>
+    </xar:if>
+
+    <h2><xar:mlstring>Create Sample Data</xar:mlstring></h2>
+    <p>
+        <xar:mlstring>
+        Create sample link types, links and dynamic data objects and properties.
+        For the samples to work correctly, you must hook the Dyanamic Data module services
+        into the Autolinks module.
+        </xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+        Samples to be created are listed below. The samples will only be created where the
+        autolink type name does not exist and the template name is not used in any existing
+        autolink type. Delete or rename existing link types if you want to restore the samples.
+        </xar:mlstring>
+    </p>
+
+    <table>
+        <tr>
+            <th><xar:mlstring>Autolink Type Name</xar:mlstring></th>
+            <th><xar:mlstring>Template Name</xar:mlstring></th>
+        </tr>
+        <tr>
+            <xar:foreach in="$sample_data" key="$samplekey">
+                <td>#$sample_data[$samplekey]['type_name']#</td>
+                <td>#$sample_data[$samplekey]['template_name']#</td>
+            </tr>
+        </xar:foreach>
+    </table>
+
+    <div><input type="hidden" name="authid" value="#$authid#" /></div>
+
+    <xar:set name="$submitsamples"><xar:mlstring>Create sample data</xar:mlstring></xar:set>
+    <p><input type="submit" name="createsamples" id="createsamples" value="#$submitsamples#" /></p>
+</form>
+</div>

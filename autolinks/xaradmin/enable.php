@@ -21,10 +21,10 @@ function autolinks_admin_enable($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('autolinks',
-                         'user',
-                         'get',
-                         array('lid' => $lid));
+    $link = xarModAPIFunc(
+        'autolinks', 'user', 'get',
+        array('lid' => $lid)
+    );
 
     if ($link == false) {
         return;

@@ -8,13 +8,32 @@
  */
 function autolinks_userapi_get($args)
 {
+    $links = xarModAPIfunc('autolinks', 'user', 'getall', $args);
+
+    if (empty($links)) {return $links;}
+
+    if (count($links) > 1) {
+        // Too many matches.
+        $msg = xarML('Too many links match criteria');
+        xarExceptionSet(
+            XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg)
+        );
+        return;
+    }
+
+    // Just return the first (and only) link.
+    return reset($links);
+
+
     extract($args);
 
     if (!isset($lid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    'userapi', 'get', 'autolinks');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarExceptionSet(
+            XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
 
@@ -56,7 +75,7 @@ function autolinks_userapi_get($args)
     $result->Close();
 
     // Security Check
-    if(!xarSecurityCheck('ReadAutolinks')) {return;}
+    if (!xarSecurityCheck('ReadAutolinks')) {return;}
 
     $link = array(
         'lid' => $lid,
