@@ -17,11 +17,11 @@
             </td>
         </tr>
         <tr>
-            <td><span class="help" title="Time in minutes before cached file is invalid."><label for="expiretime">
-                <xar:mlstring>Cache Expiration Time (in minutes):</xar:mlstring>
+            <td><span class="help" title="The maximum lifetime of a cached file."><label for="expiretime">
+                <xar:mlstring>Cache Expiration Time (in hh:mm:ss):</xar:mlstring>
             </label></span></td>
             <td>
-                <input type="text" name="expiretime" id="expiretime" value="#$settings.PageMinuteExpiration#" size="5" maxlength="5" />
+                <input type="text" name="expiretime" id="expiretime" value="#$settings.PageTimeExpiration#" size="9" maxlength="9" />
             </td>
         </tr>
         <tr>
