@@ -4,7 +4,7 @@ function release_admin_main()
 {
 
     // Security Check
-    if(!xarSecurityCheck('EditRelease')) return;
+    xarResponseRedirect(xarModURL('release', 'admin', 'viewnotes'));
         
     return array();
 
