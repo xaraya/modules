@@ -18,7 +18,7 @@
 </table>
 <br />
             <input type="submit" value="#$buttonlabel#"><br /><br />
-            <a href="#$cancelurl#"><xar:mlstring>Cancel Modify</xar:mlstring></a>
+            <a href="#$cancelurl#"><xar:mlstring>Cancel changes</xar:mlstring></a>
 
             </form>
 </form>
