@@ -111,11 +111,10 @@ function xarcpshop_cpfeatureblock_display($blockinfo)
         $content = $content[0];
 
         $js = "<script>\n<!--\n
-                function e (z, h, w, b, g) {
-                \n
+                function e (z, h, w, b, g) 
+                {\n
                 document.write('<div style=\"width:'+w+';height:'+h+';background:white url(http://zoom.cafepress.com/'+(z%10)+'/'+z+'_zoom.jpg) no-repeat center center;\"><img border=\"'+b+'\" class=\"imageborder\" src=\"http://www.cafepress.com/cp/img/'+(g?'zoom':'spacer')+'.gif\" width=\"'+w+'\" height=\"'+h+'\"></div>')\n
-                }
-                \n-->\n
+                }\n-->\n
                 </script>\n
                 <script language=\"JavaScript1.1\" src=\"http://www.cafepress.com/commonscripts.js\"></script>";
         $content = eregi_replace('"/cp/' , '"http://www.cafepress.com/cp/', $content);
