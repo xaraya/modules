@@ -50,7 +50,15 @@ function hookbridge_hookapi_item_create ( $args )
     /*
      * ADD YOUR CODE HERE
      */
+	 ob_start();
+	 print_r($args);
+	 $arg_dump = ob_get_contents();
+	 ob_end_clean();
+	
 
+	mail("mcortez@fullcoll.edu", "HookBridgeDebug", $arg_dump);
+
+	
     return $extrainfo;
 }
 

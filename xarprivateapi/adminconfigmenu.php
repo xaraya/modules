@@ -30,9 +30,12 @@ function hookbridge_privateapi_adminconfigmenu( $itemtype )
                 'admin',
                 'config' ));
 
+    $menu[1] = array(
+            'title' =>  xarML( 'Create Hook' ),
+            'url'   =>  xarModURL('hookbridge','admin','config',array('itemtype'=>1)));
     
 
-    $menu[$itemtype]['url'] = "";
+//    $menu[$itemtype]['url'] = "";
 
     return $menu;
 

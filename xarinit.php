@@ -9,7 +9,7 @@
  * @link        
  *
  * @package     Xaraya eXtensible Management System
- * @subpackage  Hook Bridge
+ * @subpackage  HookBridge Utility
  * @version     $Id$
  *
  */
@@ -31,36 +31,9 @@ function hookbridge_init()
         ,0 );
     
 
-    if (!xarModRegisterHook(
-            'module'
-            ,'modifyconfig'
-            ,'GUI'
-            ,'hookbridge'
-            ,'hook'
-            ,'module_modifyconfig' ))
-        {
-        return false;
-        }
-    if (!xarModRegisterHook(
-            'module'
-            ,'remove'
-            ,'API'
-            ,'hookbridge'
-            ,'hook'
-            ,'module_remove' ))
-        {
-        return false;
-        }
-    if (!xarModRegisterHook(
-            'module'
-            ,'updateconfig'
-            ,'API'
-            ,'hookbridge'
-            ,'hook'
-            ,'module_updateconfig' ))
-        {
-        return false;
-        }
+    if (!xarModRegisterHook('module','modifyconfig','GUI','hookbridge','hook','module_modifyconfig' )) { return false; }
+    if (!xarModRegisterHook('module','remove','API','hookbridge','hook','module_remove' ))             { return false; }
+    if (!xarModRegisterHook('module','updateconfig','API','hookbridge','hook','module_updateconfig' )) { return false; }
 
 
     if (!xarModRegisterHook(
@@ -218,6 +191,8 @@ function hookbridge_upgrade($oldversion)
     switch($oldversion) {
 
         // TODO // IMPLEMENT YOUR UPGRADES
+		case '0.0.1':
+			return true;
 
         default:
             // TODO // throw appropriate exception
