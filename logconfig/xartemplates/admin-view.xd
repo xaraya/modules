@@ -31,14 +31,14 @@
                 <tr>
                     <td>
                         <xar:if condition="!empty($fields['loggerType'])">
-                               <xar:data-output property="$properties['loggerType']" value="$fields['loggerType']" /></td>
+                               <xar:data-output property="$properties['loggerType']" value="$fields['loggerType']" />
                         <xar:else />
                                &nbsp;
                         </xar:if>
                     </td>
                     <td>
                         <xar:if condition="!empty($fields['description'])">
-                               <xar:data-output property="$properties['description']" value="$fields['description']" /></td>
+                               <xar:data-output property="$properties['description']" value="$fields['description']" />
                         <xar:else />
                                &nbsp;
                         </xar:if>
