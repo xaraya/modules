@@ -52,6 +52,11 @@
                     </td>
                 </tr>
                 <tr align="left" valign="top">
+                    <td colspan="2">
+                       <xar:mlstring>Please note that your invision table prefix does <strong>not</strong> include the underscore in the table name.  if your invision members table is ibf_members, the prefix is "ibf"</xar:mlstring>
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
                     <td>
                         <xar:mlstring>Invision Forum Root</xar:mlstring>
                     </td>

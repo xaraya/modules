@@ -13,7 +13,8 @@
             <b><xar:mlstring>What is it?</xar:mlstring></b>
         </td>
         <td align="left" valign="top">
-            <xar:mlstring>The Authinvision module allows you to authenticate a user with your Invision Board database.  The Authinvision module forwards the username and password from the login screen to the Invision database for authentication.</xar:mlstring>
+            <p><xar:mlstring>The Authinvision module allows you to authenticate a user with your Invision Board database.  The Authinvision module checks the username and password from the login screen against the Invision database and returns true for a match.</xar:mlstring></p>
+            <p><xar:mlstring>Authinvision <strong>does not</strong> log users into both systems at once, nor does it allow users who register on xaraya to have their user information duplicated in the Invision database.  <strong>It is highly suggested that you turn off xaraya registration and use your Invision board's registration/password retrieval process.</strong></xar:mlstring></p>
         </td>
     </tr>
     <tr>
@@ -36,7 +37,8 @@
             <b><xar:mlstring>Included Blocks</xar:mlstring></b>
         </td>
         <td align="left" valign="top">
-			<xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring>
+			<xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring><br/>
+      <xar:mlstring>whos_online.php: a who's online block that replaces the one in the roles module.</xar:mlstring>
         </td>
     </tr>
 </table>
