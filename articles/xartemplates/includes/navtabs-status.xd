@@ -1,0 +1,29 @@
+<xar:if condition="xarTplAddStyleLink('articles', 'navtabs')">
+	<div id="navhelp" class="help" title="#xarML('Click on a tab to display articles from that publication type')#">
+		<xar:mlstring>
+			Status 
+		</xar:mlstring>
+		: 
+		<div id="tabnav">
+			<ul id="navlist">
+				<xar:foreach in="$statusfilters" value="$statusfilter">
+					<xar:if condition="empty($statusfilter['slink'])">
+						<li id="active">
+							<a href="#xarServerGetCurrentURL()#" title="#$statusfilter['stitle']#" class="active">
+								#$statusfilter['stitle']#
+							</a>
+						</li>
+						<xar:else />
+						<li>
+							<a href="#$statusfilter['slink']#" title="#$statusfilter['stitle']#">
+								#$statusfilter['stitle']#
+							</a>
+						</li>
+					</xar:if>
+				</xar:foreach>
+			</ul>
+			<div class="tabnav-hairline"><!-- &nbsp; --></div>
+		</div>
+	</div>
+</xar:if>
+<br /><br />

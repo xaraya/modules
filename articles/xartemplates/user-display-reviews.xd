@@ -106,21 +106,5 @@
 #$hooks[$hookmodule]#
 </xar:foreach>
 </xar:if>
-<xar:if condition="!empty($maplink) or !empty($archivelink)">
-	<ul style="padding: 10px;">
-		<xar:if condition="!empty($maplink)">
-			<li style="float: left; display: inline; text-align: left; width: 49%;">
-				<a href="#$maplink#">
-					#$maplabel#
-				</a>
-			</span>
-		</xar:if>
-		<xar:if condition="!empty($archivelink)">
-			<li style="float: right; display: inline; text-align: right; width: 49%;">
-				<a href="#$archivelink#">
-					#$archivelabel#
-				</a>
-			</span>
-		</xar:if>
-	</div>
-</xar:if>
+
+<xar:template file="navtabs-user" type="module" />

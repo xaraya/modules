@@ -93,45 +93,8 @@
                 </xar:if>
             </xar:foreach>
         </table>
-<xar:comment> new way </xar:comment>
-        <xar:if condition="!empty($maplink) or !empty($archivelink)">
-            <ul style="margin:0;padding:0;">
-                <xar:if condition="!empty($maplink)">
-                    <li style="display:inline;padding:0 .5em;">
-                        <a href="#$maplink#">
-                            #$maplabel# 
-                        </a>
-                    </li>
-                </xar:if>
-                <xar:if condition="!empty($archivelink)">
-                    <li style="display:inline;padding:0 .5em;">
-                        <a href="#$archivelink#">
-                            #$archivelabel# 
-                        </a>
-                    </li>
-                </xar:if>
-            </ul>
-        </xar:if>
-        <xar:comment>
-<!-- old way -->
-            <xar:if condition="!empty($maplink) or !empty($archivelink)">
-                <div style="text-align: left; padding: 10px">
-                    <xar:if condition="!empty($maplink)">
-                        <span style="text-align: left; padding: 50px">
-                            <a href="#$maplink#">
-                                #$maplabel# 
-                            </a>
-                        </span>
-                    </xar:if>
-                    <xar:if condition="!empty($viewlink)">
-                        <span style="text-align: right; padding: 50px">
-                            <a href="#$viewlink#">
-                                #$viewlabel# 
-                            </a>
-                        </span>
-                    </xar:if>
-                </div>
-            </xar:if>
-        </xar:comment>
+
+	<xar:template file="navtabs-user" type="module" />
+
     </div>
 </div>

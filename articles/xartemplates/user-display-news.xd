@@ -100,42 +100,5 @@
         #$hooks[$hookmodule]# 
     </xar:foreach>
 </xar:if>
-<xar:if condition="!empty($maplink) or !empty($archivelink)">
-	<ul style="padding: 10px;">
-		<xar:if condition="!empty($maplink)">
-			<li style="float: left; display: inline; text-align: left; width: 49%;">
-				<a href="#$maplink#">
-					#$maplabel#
-				</a>
-			</span>
-		</xar:if>
-		<xar:if condition="!empty($archivelink)">
-			<li style="float: right; display: inline; text-align: right; width: 49%;">
-				<a href="#$archivelink#">
-					#$archivelabel#
-				</a>
-			</span>
-		</xar:if>
-	</div>
-</xar:if>
-<xar:comment>
-    <!--    see new and more structurally correct alternative above - I left this (old) piece of template commented out for comparing
-            it wasnt rendering nicely due to disproportionally large padding and shifting to the right, please delete it when reviewed..
-            perhaps we could make a list widget in the future to be able to render vertical and horisontal lists like that [andyv] -->
-    <xar:if condition="!empty($maplink) or !empty($archivelink)">
-        <div style="text-align: left; padding: 10px">
-            <xar:if condition="!empty($maplink)">
-                <span style="text-align: left; padding: 50px">
-                    <a href="#$maplink#">
-                        #$maplabel#</a>
-                </span>
-            </xar:if>
-            <xar:if condition="!empty($archivelink)">
-                <span style="text-align: left; padding: 50px">
-                    <a href="#$archivelink#">
-                        #$archivelabel#</a>
-                </span>
-            </xar:if>
-        </div>
-    </xar:if>
-</xar:comment>
+
+<xar:template file="navtabs-user" type="module" />

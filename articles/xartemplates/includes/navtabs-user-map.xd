@@ -1,0 +1,42 @@
+	<xar:if condition="xarTplAddStyleLink('articles', 'navtabs')">
+		<div id="navhelp" class="help" title="#xarML('Click on a tab to explore further')#">
+			<xar:mlstring>
+				Options
+			</xar:mlstring>
+			: 
+			<div id="tabnav">
+				<ul id="navlist">
+					<li>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#">
+							<xar:mlstring>
+								Article Map by Category
+							</xar:mlstring>
+						</a>
+					</li>
+					<li>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
+							<xar:mlstring>
+								Article Map by Publication Type
+							</xar:mlstring>
+						</a>
+					</li>
+					<xar:if condition="!empty($viewlink)">
+						<li>
+							<a href="#$viewlink#">
+								#$viewlabel# 
+							</a>
+						</li>
+					</xar:if>
+					<xar:if condition="!empty($archivelink)">
+						<li>
+							<a href="#$archivelink#">
+								#$archivelabel# 
+							</a>
+						</li>
+					</xar:if>
+				</ul>
+				<div class="tabnav-hairline"><!-- &nbsp; --></div>
+			</div>
+		</div>
+	</xar:if>
+	<br /><br />

@@ -1,27 +1,8 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Articles Configuration</xar:mlstring></h2>
 <div style="margin: auto;">
-	<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
-		<div id="tabnav">
-			<div class="help" title="#xarML('Click on a tab to display articles from that publication type')#"><xar:mlstring>Publication Type</xar:mlstring> :</div>
-			<xar:foreach in="$pubfilters" value="$pubfilter">
-				<xar:if condition="empty($pubfilter['plink'])">
-					<div>
-						<a href="#xarServerGetCurrentURL()#" title="#$pubfilter['ptitle']#" class="active">
-							#$pubfilter['ptitle']#
-						</a>
-					</div>
-				<xar:else />
-					<div>
-						<a href="#$pubfilter['plink']#" title="#$pubfilter['ptitle']#">
-							#$pubfilter['ptitle']#
-						</a>
-					</div>
-				</xar:if>
-			</xar:foreach>
-		</div>
-	</xar:if>
-	<br />
+
+<xar:template file="navtabs" type="module" />
 
 <form method="post" action="&xar-modurl-articles-admin-updateconfig;">
 <div>
