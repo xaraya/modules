@@ -22,7 +22,7 @@ fi
 # If we don't want to do anything set DRYRUN of NOTHING
 # NOTHING is also set automatically when there is nothing to do
 # DRYRUN is set when it was a test run (e.g. pull -n)
-if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING ]
+if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING  -o X$BK_STATUS = XCONFLICTS ]
 then exit 0
 fi
 
