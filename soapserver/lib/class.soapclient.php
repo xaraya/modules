@@ -105,7 +105,7 @@
  		$this->faultstring = '';
  		$this->faultcode = '';
  		$this->opData = array();
- 		
+ 
  		$this->debug("call: $operation, $params, $namespace, $soapAction, $headers, $rpcParams");
  		$this->debug("endpointType: $this->endpointType");
  		// if wsdl, get operation data and process parameters
@@ -181,7 +181,7 @@
  		} else {
  			$this->return = $return;
  			$this->debug('sent message successfully and got a(n) '.gettype($return).' back');
- 			
+ 
  			// fault?
  			if(is_array($return) && isset($return['faultcode'])){
  				$this->debug('got fault');

@@ -45,11 +45,10 @@ function soapserver_user_calltest()
                             'callsoap',
                             array('type' => 'soap',
                                   'methodname' => 'wsModAPISimpleFunc',
-                                  'params' => array('username' => 'admin', 'password' => 'admin', 'module' => 'articles', 'func' => 'getAll', 'type' => 'user'),
+                                  'params' => array('username' => 'username', 'password' => 'password', 'module' => 'articles', 'func' => 'getAll', 'type' => 'user'),
                                   'endpoint' => array('site' => 'http://epicsaga.com', 'path' => '/ws.php?type=soap'),
                                   'namespace' => 'urn:XarayaSoap'));
 
-	print_r($answer);
 
     // Success
     $data['answer'] = $answer;

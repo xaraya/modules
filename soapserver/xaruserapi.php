@@ -35,14 +35,11 @@ function wsModAPIFunc(&$request_data)
 		extract($wsModApiFuncRequest);
 	}
 	
-	if (empty($username)) {
-		return new soap_fault('Client', 'Xaraya', 'Must supply a user name', ''); 
+	if (isset($wsModApiFuncSimpleRequest) && is_array($wsModApiFuncSimpleRequest)) { 
+		extract($wsModApiFuncSimpleRequest);
 	}
 	
-	if (empty($password)) {
-		return new soap_fault('Client', 'Xaraya', 'Must supply a password', ''); 
-	}
-    
+
 	if (empty($module)) {
 		return new soap_fault('Client', 'Xaraya', 'Must supply a module name', ''); 
 	}
@@ -55,6 +52,14 @@ function wsModAPIFunc(&$request_data)
 		return new soap_fault('Client', 'Xaraya', 'Must supply a function', ''); 
 	}
 	
+	if (empty($username)) {
+		return new soap_fault('Client', 'Xaraya', 'Must supply a user name', ''); 
+	}
+	
+	if (empty($password)) {
+		return new soap_fault('Client', 'Xaraya', 'Must supply a password', ''); 
+	}
+
 	if(!isset($args) || !is_array($args)) { 
 		$args = array();
 	}
@@ -63,17 +68,15 @@ function wsModAPIFunc(&$request_data)
 	if (!xarUserLogin($username,$password)) {
 		return new soap_fault('Server', 'Xaraya', "Invalid username or password for ($username) to access API methods"); 
 	}
-	
+
 	$out = xarModAPIFunc($module,$type,$func, $args);
 	
-	return "hello world";
-/*
     if (empty($out)) {
 		return new soap_fault('Server', 'Xaraya', xarExceptionRender('text') . " for module '$module' type '$type' func '$func' with args " . join('-',$args), ''); 
     } else {
     	return array('output' => $out);
 	}
-*/	
+
 }
 
 function wsModApiSimpleFunc(&$request_data) 

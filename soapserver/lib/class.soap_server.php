@@ -231,6 +231,11 @@
  					} else {
  						$this->debug('got a(n) '.gettype($method_response).' from method');
  						$this->debug('serializing return value');
+						
+						$return_val = $this->serialize_val($method_response);
+
+/********************
+ * Not sure why this fixes things, but it does
  						if($this->wsdl){ 
  							if(sizeof($this->opData['output']['parts']) > 1){								
  						    	$opParams = $method_response;
@@ -241,6 +246,7 @@
  						} else {							
  						    $return_val = $this->serialize_val($method_response);
  						}
+*/
  					}
  					$this->debug('return val:'.$this->varDump($return_val));
  				} else {

@@ -1435,7 +1435,7 @@
  		
  		$this->debug('received incoming payload: '.strlen($this->incoming_payload));
  		$data = $this->incoming_payload."\r\n\r\n\r\n\r\n";
- 		
+
  		// remove 100 header
  		if(ereg('^HTTP/1.1 100',$data)){
  			if($pos = strpos($data,"\r\n\r\n") ){
@@ -1947,7 +1947,7 @@
  			// does method exist?
  			if(!function_exists($this->methodname)){
  				// "method not found" fault here
- 				$this->debug("method '$this->methodname' not found!");
+    			$this->debug("method '$this->methodname' not found!");
  				$this->debug("parser debug: \n".$parser->debug_str);
  				$this->result = 'fault: method not found';
  				$this->fault('Server',"method '$this->methodname' not defined in service '$this->service'");
@@ -3761,7 +3761,7 @@
  		} else {
  			$this->return = $return;
  			$this->debug('sent message successfully and got a(n) '.gettype($return).' back');
- 			
+ 
  			// fault?
  			if(is_array($return) && isset($return['faultcode'])){
  				$this->debug('got fault');

@@ -37,15 +37,6 @@
          // throw exception
      } else {
          $return_val = $soapclient->call($methodname, $params, $namespace);
-		 
-		 echo "<pre>";
-		 print_r($soapclient->debug_str);
-		 if( isset( $soapclient->return ) )
-		 {
-			 print_r($soapclient->return);
-		 }
-		 echo "</pre>";
-		 
          if($err = $soapclient->getError()){
              // handle error however
              echo 'Request: <xmp>'.$soapclient->request.'</xmp>';

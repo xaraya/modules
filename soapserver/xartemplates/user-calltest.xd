@@ -1,5 +1,4 @@
 <hr>
-<pre>
-#$answer#
-</pre>
+Title of first article returned from the articles/getAll() soap call:<br />
+"#$answer['output'][0][0]['title']#"
 <hr>
