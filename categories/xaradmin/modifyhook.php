@@ -37,6 +37,11 @@ function categories_admin_modifyhook($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+    if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+        $itemtype = $extrainfo['itemtype'];
+    } else {
+        $itemtype = 0;
+    }
 
     if (empty($extrainfo['number_of_categories'])) {
         // get number of categories from current settings
@@ -80,6 +85,7 @@ function categories_admin_modifyhook($args)
         if (empty($cids) || !is_array($cids)) {
             $links = xarModAPIFunc('categories', 'user', 'getlinks',
                                    array('iids' => array($objectid),
+                                         'itemtype' => $itemtype,
                                          'modid' => $modid,
                                          'reverse' => 0));
             if (!empty($links) && is_array($links) && count($links) > 0) {

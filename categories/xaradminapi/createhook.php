@@ -64,10 +64,16 @@ function categories_adminapi_createhook($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
+    if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+        $itemtype = $extrainfo['itemtype'];
+    } else {
+        $itemtype = 0;
+    }
 
     if (!xarModAPIFunc('categories', 'admin', 'linkcat',
                       array('cids'  => $cids,
                             'iids'  => array($objectid),
+                            'itemtype' => $itemtype,
                             'modid' => $modid))) {
         return false;
     }

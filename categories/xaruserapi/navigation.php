@@ -134,7 +134,8 @@ function categories_userapi_navigation($args)
         } else {
             // get number of items per category (for this module)
             $catcount = xarModAPIFunc('categories','user','groupcount',
-                                     array('modid' => $modid));
+                                     array('modid' => $modid,
+                                           'itemtype' => $itemtype));
             xarVarSetCached('Blocks.categories','catcount',$catcount);
         }
     }
@@ -201,6 +202,7 @@ function categories_userapi_navigation($args)
                 if ((empty($module) || $module == $modname) && !empty($itemid)) {
                     $links = xarModAPIFunc('categories','user','getlinks',
                                           array('modid' => $modid,
+                                                'itemtype' => $itemtype,
                                                 'iids' => array($itemid)));
                     if (!empty($links) && count($links) > 0) {
                         $cids = array_keys($links);

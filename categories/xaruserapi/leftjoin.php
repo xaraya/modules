@@ -11,6 +11,7 @@
  *               AND $where // this includes xar_modid = <your module ID>
  *
  * @param $args['modid'] your module ID (use xarModGetIDFromName('mymodule'))
+ * @param $args['itemtype'] your item type (default is none)
  *
  * @param $args['iids'] optional array of item ids that we are selecting on
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
@@ -129,7 +130,7 @@ function categories_userapi_leftjoin($args)
     }
 
     // Add available columns in the categories table
-    $columns = array('cid','iid','modid');
+    $columns = array('cid','iid','modid','itemtype');
     foreach ($columns as $column) {
         $leftjoin[$column] = $linktable . '.xar_' . $column;
     }
@@ -164,6 +165,10 @@ function categories_userapi_leftjoin($args)
     $where = array();
     if (!empty($modid) && is_numeric($modid)) {
         $where[] = $leftjoin['modid'] . ' = ' . $modid;
+    }
+    // Note : do not default to 0 here, because we want to be able to do things across item types
+    if (isset($itemtype) && is_numeric($itemtype)) {
+        $where[] = $leftjoin['itemtype'] . ' = ' . $itemtype;
     }
     if (count($cids) > 0) {
         if ($andcids) {

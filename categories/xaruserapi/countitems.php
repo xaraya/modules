@@ -5,6 +5,7 @@
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['modid'] module´s ID
+ * @param $args['itemtype'] item type
  * @returns int
  * @return number of items
  */

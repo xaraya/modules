@@ -39,6 +39,12 @@ function categories_adminapi_updatehook($args)
         return false;
     }
 
+    if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+        $itemtype = $extrainfo['itemtype'];
+    } else {
+        $itemtype = 0;
+    }
+
     // see what we have to do here (might be empty => we need to unlink)
     if (empty($extrainfo['cids'])) {
         // try to get cids from input
@@ -63,12 +69,14 @@ function categories_adminapi_updatehook($args)
     if (count($cids) == 0) {
         if (!xarModAPIFunc('categories', 'admin', 'unlink',
                           array('iid' => $objectid,
+                                'itemtype' => $itemtype,
                                 'modid' => $modid))) {
             return false;
         }
     } elseif (!xarModAPIFunc('categories', 'admin', 'linkcat',
                             array('cids'  => $cids,
                                   'iids'  => array($objectid),
+                                  'itemtype' => $itemtype,
                                   'modid' => $modid,
                                   'clean_first' => true))) {
         return false;

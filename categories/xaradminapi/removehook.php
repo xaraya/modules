@@ -2,6 +2,7 @@
 
 /**
  * delete all category links for a module - hook for ('module','remove','API')
+ * // TODO: remove per itemtype ?
  *
  * @param $args['objectid'] ID of the object (must be the module name here !!)
  * @param $args['extrainfo'] extra information

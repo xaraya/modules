@@ -5,6 +5,7 @@
  * @param $args['cids'] array of ids of categories to get linkage for (OR/AND)
  * @param $args['iids'] array of ids of itens to get linkage for
  * @param $args['modid'] module´s ID
+ * @param $args['itemtype'] item type (if any)
  * @param $args['reverse'] if set to 1 the return will have as keys the 'iids'
  *                         else the keys are the 'cids'
  * @param $args['andcids'] true means AND-ing categories listed in cids

@@ -5,6 +5,7 @@
  * @param $args['cids'] Array of IDs of the category
  * @param $args['iids'] Array of IDs of the items
  * @param $args['modid'] ID of the module
+ * @param $args['itemtype'] item type
 
  * Links each cid in cids to each iid in iids
 
@@ -31,6 +32,11 @@ function categories_adminapi_linkcat($args)
         $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'linkcat', 'categories');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
+    }
+    if (isset($args['itemtype']) && is_numeric($args['itemtype'])) {
+        $itemtype = $args['itemtype'];
+    } else { 
+        $itemtype = 0;
     }
 
     foreach ($args['cids'] as $cid) {
@@ -61,6 +67,7 @@ function categories_adminapi_linkcat($args)
                                    'user',
                                    'getlinks',
                                    array('iids' => $args['iids'],
+                                         'itemtype' => $itemtype,
                                          'modid' => $args['modid'],
                                          'reverse' => 0));
         if (count($childiids) > 0) {
@@ -75,10 +82,10 @@ function categories_adminapi_linkcat($args)
             // Delete old links
             $sql = "DELETE FROM $categorieslinkagetable
                     WHERE xar_modid = $args[modid] AND
+                          xar_itemtype = $itemtype AND
                           xar_iid IN ("
                   . join (" ,", $args['iids'])
                   . ")";
-
             $result = $dbconn->Execute($sql);
             if (!$result) return;
         } else {
@@ -101,9 +108,11 @@ function categories_adminapi_linkcat($args)
           $sql = "INSERT INTO $categorieslinkagetable (
                     xar_cid,
                     xar_iid,
+                    xar_itemtype,
                     xar_modid)
                   VALUES(" . xarVarPrepForStore($cid) . ",
                          " . xarVarPrepForStore($iid) . ",
+                         " . xarVarPrepForStore($itemtype) . ",
                          " . xarVarPrepForStore($args['modid']) .")";
             $result =& $dbconn->Execute($sql);
             if (!$result) return;

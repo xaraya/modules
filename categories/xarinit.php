@@ -100,7 +100,8 @@ function categories_init()
     $fields = array(
         'xar_cid'   => array('type'=>'integer','null'=>false),
         'xar_iid'   => array('type'=>'integer','null'=>false),
-        'xar_modid' => array('type'=>'integer','null'=>false)
+        'xar_modid' => array('type'=>'integer','null'=>false),
+        'xar_itemtype' => array('type'=>'integer','null'=>false)
     );
     $query = xarDBCreateTable($xartable['categories_linkage'],$fields);
 
@@ -127,6 +128,15 @@ function categories_init()
 
     $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_cat_linkage_3',
                    'fields'    => array('xar_modid'),
+                   'unique'    => FALSE);
+
+    $query = xarDBCreateIndex($xartable['categories_linkage'],$index);
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_cat_linkage_4',
+                   'fields'    => array('xar_itemtype'),
                    'unique'    => FALSE);
 
     $query = xarDBCreateIndex($xartable['categories_linkage'],$index);
@@ -272,7 +282,8 @@ function categories_upgrade($oldversion)
     switch($oldversion) {
         case 1.0:
             // Code to upgrade from version 1.0 goes here
-            break;
+            // fall through to the next upgrade
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
 
@@ -285,8 +296,8 @@ function categories_upgrade($oldversion)
                       ADD COLUMN xar_image varchar(255) NOT NULL";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
+            // fall through to the next upgrade
 
-            break;
         case 2.1:
             // Code to upgrade from version 2.1 goes here
 
@@ -333,7 +344,70 @@ function categories_upgrade($oldversion)
                                    'categories', 'admin', 'removehook')) {
                 return false;
             }
-            break;
+            // fall through to the next upgrade
+
+        case 2.2:
+            // Code to upgrade from version 2.2 goes here
+
+            if (xarModIsAvailable('articles')) {
+                // load API for table definition etc.
+                if (!xarModAPILoad('articles','user')) return;
+            }
+
+            // Get database information
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $linkagetable = $xartable['categories_linkage'];
+
+            xarDBLoadTableMaintenanceAPI();
+
+            // add the xar_itemtype column
+            $query = xarDBAlterTable($linkagetable,
+                                     array('command' => 'add',
+                                           'field' => 'xar_itemtype',
+                                           'type' => 'integer',
+                                           'null' => false,
+                                           'default' => '0'));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // make sure all current records have an itemtype 0 (just in case)
+            $query = "UPDATE $linkagetable SET xar_itemtype = 0";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // update the itemtype field for all articles
+            if (xarModIsAvailable('articles')) {
+                $modid = xarModGetIDFromName('articles');
+                $articlestable = $xartable['articles'];
+
+                $query = "SELECT xar_aid, xar_pubtypeid FROM $articlestable";
+                $result =& $dbconn->Execute($query);
+                if (!$result) return;
+
+                while (!$result->EOF) {
+                    list($aid,$ptid) = $result->fields;
+                    $update = "UPDATE $linkagetable SET xar_itemtype = $ptid WHERE xar_iid = $aid AND xar_modid = $modid";
+                    $test =& $dbconn->Execute($update);
+                    if (!$test) return;
+
+                    $result->MoveNext();
+                }
+                $result->Close();
+            }
+
+// TODO: any other modules where we need to insert the right itemtype here ?
+
+            // add an index for the xar_itemtype column
+            $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_cat_linkage_4',
+                           'fields'    => array('xar_itemtype'),
+                           'unique'    => FALSE);
+            $query = xarDBCreateIndex($linkagetable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // fall through to the next upgrade
+
         case 2.5:
             // Code to upgrade from version 2.5 goes here
             break;
