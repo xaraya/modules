@@ -6,6 +6,15 @@
 </xar:comment>
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
+<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<script language="JavaScript">
+<!--
+	// Enter name of mandatory fields
+	var fieldRequired = Array("ttitle", "tpost");
+	// Enter field description to appear in the dialog box
+	var fieldDescription = Array("Topic Subject", "Topic body text");
+//-->
+</script>
 <div class="xarbb-topiccontrols">
     <span class="xar-sub">
         <a href="#xarModUrl('xarbb', 'user', 'main')#">
@@ -62,7 +71,7 @@
     </div>
 </xar:if>
 <div class="xarbb-tablewrapper">
-    <form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" name="post" id="post" enctype="application/x-www-form-urlencoded">
+    <form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">
