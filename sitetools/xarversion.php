@@ -1,8 +1,8 @@
 <?php
 /**
- * 
+ *
  * SiteTools Version information
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -16,6 +16,7 @@
 $modversion['name']           = 'SiteTools';
 $modversion['id']             = '887';
 $modversion['version']        = '0.2.0';
+$modversion['displayname']    = xarML('SiteTools');
 $modversion['description']    = 'Set of tools for site and database maintenance';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
