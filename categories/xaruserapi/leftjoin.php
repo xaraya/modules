@@ -35,6 +35,8 @@ function categories_userapi_leftjoin($args)
     // Get arguments from argument array
     extract($args);
 
+    $dbconn =& xarDBGetConn();
+
     // Required argument ?
     if (!isset($modid) || !is_numeric($modid)) {
         $msg = xarML('Missing parameter #(1) for #(2)',
@@ -185,16 +187,14 @@ function categories_userapi_leftjoin($args)
             // select the categories you wanted
             } else {
                 for ($i = 0; $i < count($cids); $i++) {
-                    $where[] = $catlinks[$i] . '.xar_cid = ' .
-                                   xarVarPrepForStore($cids[$i]);
+                    $where[] = $catlinks[$i] . '.xar_cid = ' . $cids[$i];
                 }
             }
             // include all cids here
             $leftjoin['cid'] = join(', ',$leftjoin['cids']);
         } else {
             $allcids = join(', ', $cids);
-            $where[] = $leftjoin['cid'] . ' IN (' .
-                       xarVarPrepForStore($allcids) . ')';
+            $where[] = $leftjoin['cid'] . ' IN (' . $allcids . ')';
         }
     }
     if (!empty($cidtree)) {
@@ -206,8 +206,7 @@ function categories_userapi_leftjoin($args)
     }
     if (count($iids) > 0) {
         $alliids = join(', ', $iids);
-        $where[] = $leftjoin['iid'] . ' IN (' .
-                   xarVarPrepForStore($alliids) . ')';
+        $where[] = $leftjoin['iid'] . ' IN (' . $alliids . ')';
     }
     if (count($where) > 0) {
         $leftjoin['where'] = join(' AND ', $where);
