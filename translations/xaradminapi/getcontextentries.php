@@ -133,7 +133,7 @@ function translations_grab_source_code($references, $maxReferences = NULL)
                 // FIXME: this is potentially very memory hungry, cant we do this more efficient?
                 $currentFileData = file($ref['file']);
             } else {
-            	// FIXME need more information about outdated references
+                // FIXME need more information about outdated references
                 $currentFileData = array();
             }
         }
