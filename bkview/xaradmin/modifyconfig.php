@@ -11,7 +11,7 @@
  * 
  * @subpackage module name
  * @link  link to where more info can be found
- * @author author name <author@email> (this tag means responsible person)
+ * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
 
@@ -24,7 +24,10 @@ function bkview_admin_modifyconfig()
     if(xarModIsHooked('search','bkview')) {
         $data['search_enabled'] = 1;
     }
-                                     
+    
+    // Is the xmlhttprequest configured
+    $data['xmlhttp_enabled'] = strtolower(xarModGetVar('bkview', 'xmlhttp_enabled'));
+    
     // Assemble the template data
     $data['pageinfo'] = xarML('BKview configuration');
     $data['hooks'] =  xarModCallHooks('module','modifyconfig','bkview',array());

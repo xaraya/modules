@@ -1,6 +1,12 @@
 <div id="bkview-modbody-id" class="xar-mod-body" >
-    <!-- Experimenting with http requests only when module is surrounded by element with an id -->
-    <script src="/modules/bkview/xarincludes/xmlhttprequest.js" ></script>
+
+    <xar:set name="usexmlhttp">
+        <xar:var scope="module" module="bkview" name="xmlhttp_enabled"/>
+    </xar:set>
+    <xar:if condition="strtolower($usexmlhttp) eq 'on'">
+        <!-- Experimenting with http requests only when module is surrounded by element with an id -->
+        <script src="/modules/bkview/xarincludes/xmlhttprequest.js" ></script>
+    </xar:if>
 
     <div class="xar-mod-head">
         <span class="xar-mod-title">

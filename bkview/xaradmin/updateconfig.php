@@ -17,6 +17,7 @@ function bkview_admin_updateconfig($args)
     
     // Get the variables
     xarVarFetch('enablesearch','str::',$enablesearch,"");
+    xarVarFetch('enablexmlhttp','str::',$enablexmlhttp,"");
     extract($args);
 
     // Process
@@ -33,6 +34,8 @@ function bkview_admin_updateconfig($args)
                       array('callerModName' => 'search', 'hookModName' => 'bkview'));
 
     }
+    
+    xarModSetVar('bkview','xmlhttp_enabled',strtolower($enablexmlhttp));
 
     xarModCallHooks('module','updateconfig','bkview',array());
     xarResponseRedirect(xarModUrl('bkview','admin','modifyconfig'));

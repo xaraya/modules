@@ -7,14 +7,84 @@
         </xar:foreach>
     </xar:if>
 
-    <div>
+    <div class="xar-norm-outline" style="padding: 3pt; margin-bottom: 1em;">
+        <h4><xar:mlstring>Search capability</xar:mlstring></h4>
         <xar:if condition="$search_enabled == 1">
             <input id="bkenablesearch" type="checkbox" name="enablesearch" checked="checked"/>
         <xar:else/>
             <input id="bkenablesearch" type="checkbox" name="enablesearch" />
         </xar:if>
         <label for="bkenablesearch"><xar:mlstring>Enable searching</xar:mlstring>
+        <p>
+            <xar:mlstring>
+                By hooking search into bkview we enable the search results screen provide by the search
+                module (GUI hook) and by hooking bkview into search module, we expose the bkview search
+                function to the search module (API) hook
+            </xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>
+                By clicking the checkbox these hooks will be enabled for you, so you dont have to do this
+                manually
+            </xar:mlstring>
+        </p>
     </div>
+    
+    <div class="xar-norm-outline" style="padding: 3pt; margin-bottom: 1em;">
+        <h4><xar:mlstring>Request method</xar:mlstring></h4>
+        <xar:if condition="$xmlhttp_enabled == 'on'">
+            <input id="bkenablexmlhttp" type="checkbox" name="enablexmlhttp" checked="checked"/>
+        <xar:else/>
+            <input id="bkenablexmlhttp" type="checkbox" name="enablexmlhttp" />
+        </xar:if>
+        <label for="bkenablexmlhttp"><xar:mlstring>Use an XMLHTTP request method</xar:mlstring>
+        <p>
+            <xar:mlstring>
+                BK-view can use an XML http request for all links in the module. This means that only the
+                module area is fetched from the server and dynamically replaced, and not the whole theme with it. If you have a site
+                configuration which is suitable this can speed up the access to bkview considerably. This option works
+                only with browsers which have support for the XMLHTTPRequest object (Opera has not, for example).
+            </xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>
+                Setting this wont break the site if your clients browser does not support the xmlhttprequest object, it
+                should gracefully fall back to a normal page request, so it's safe to set this to ON if you like.
+            </xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>These are the <em>known</em> issues:</xar:mlstring>
+            <ul>
+                <li>
+                    <xar:mlstring>You will have to have the module.xt page template (included in recent distributions) on the server, otherwise the 
+                    speed increase is considerably less, because the whole page will be fetched regardless.</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>If you have page caching enabled, and bkview pages are normally cached, this option will defeat this. This needs
+                    to be fixed eventually. For now, if you have page caching, this option will still work, but the page wont be cached
+                    in the output cache. In your configuration, you'll have to test what is the optimal configuration.</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>Not really an issue, because it is by design, but worth mentioning is that this technique basically NEVER 
+                    refreshes the page. This has two major consequences:</xar:mlstring>
+                    <ol>
+                        <li>
+                            <xar:mlstring>
+                                The back button (history functionality) will not be updated while navigating bkview
+                            </xar:mlstring>
+                        </li>
+                        <li>
+                            <xar:mlstring>
+                                Dynamic blocks which base their content on the <em>current page</em> will keep their content as if still on the 
+                                main page of the bkview module.
+                            </xar:mlstring>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+        </p>
+    </div>
+    
     <div>
         <input type="submit" value="#$updatelabel#"/>
     </div>
