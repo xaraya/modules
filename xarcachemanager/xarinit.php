@@ -32,36 +32,39 @@ function xarcachemanager_init()
     // Get a data dictionary object with item create methods.
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-    // Table didn't exist, create table
-    /*****************************************************************
-    * CREATE TABLE xar_cache_blocks (
-    * xar_bid int(11) NOT NULL default '0',
-    * xar_nocache tinyint(4) NOT NULL default '0',
-    * xar_page tinyint(4) NOT NULL default '0',
-    * xar_user tinyint(4) NOT NULL default '0',
-    * xar_expire int(11)
-    * UNIQUE KEY `i_xar_cache_blocks_1` (`xar_bid`)
-    * );
-    *****************************************************************/
+    $tables = $datadict->getTables();
+    if (!array_search($cacheblockstable, $tables)) {
+        // Table didn't exist, create table
+        /*****************************************************************
+        * CREATE TABLE xar_cache_blocks (
+        * xar_bid int(11) NOT NULL default '0',
+        * xar_nocache tinyint(4) NOT NULL default '0',
+        * xar_page tinyint(4) NOT NULL default '0',
+        * xar_user tinyint(4) NOT NULL default '0',
+        * xar_expire int(11)
+        * UNIQUE KEY `i_xar_cache_blocks_1` (`xar_bid`)
+        * );
+        *****************************************************************/
     
-    $flds = "
-        xar_bid             I           NotNull DEFAULT 0,
-        xar_nocache         L           NotNull DEFAULT 0,
-        xar_page            L           NotNull DEFAULT 0,
-        xar_user            L           NotNull DEFAULT 0,
-        xar_expire          I           Null
-    ";
+        $flds = "
+            xar_bid             I           NotNull DEFAULT 0,
+            xar_nocache         L           NotNull DEFAULT 0,
+            xar_page            L           NotNull DEFAULT 0,
+            xar_user            L           NotNull DEFAULT 0,
+            xar_expire          I           Null
+        ";
     
-    // Create or alter the table as necessary.
-    $result = $datadict->changeTable($cacheblockstable, $flds);    
-    if (!$result) {return;}
+        // Create or alter the table as necessary.
+        $result = $datadict->changeTable($cacheblockstable, $flds);    
+        if (!$result) {return;}
     
-    // Create a unique key on the xar_bid collumn
-    $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_cache_blocks_1',
-                                     $cacheblockstable,
-                                     'xar_bid',
-                                     array('UNIQUE'));
-    
+        // Create a unique key on the xar_bid collumn
+        $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_cache_blocks_1',
+                                         $cacheblockstable,
+                                         'xar_bid',
+                                         array('UNIQUE'));
+    }
+
     // Set up module variables
     xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
     xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
