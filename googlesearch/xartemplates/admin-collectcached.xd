@@ -25,7 +25,7 @@
     font-weight: bold;
   }
 </style>
-<script language="Javascript" type="text/javascript" src="modules/googlesearch/xartemplates/includes/admin.js"></script>
+<script type="text/javascript" src="modules/googlesearch/xartemplates/includes/admin.js"></script>
 
 <div style="margin-top: 1em; margin-bottom: 1em;">
 <h2><xar:mlstring>Collect Stored Cached Pages</xar:mlstring>:</h2>

@@ -2219,7 +2219,7 @@
              a:visited   { color: #666666; font-weight: bold; }
              a:hover     { color: #cc3300; font-weight: bold; }
          </style>
-         <script language="JavaScript" type="text/javascript">
+         <script type="text/javascript">
          <!--
          // POP-UP CAPTIONS...
          function lib_bwcheck()
