@@ -185,6 +185,14 @@
   </xar:foreach>
 </tr>
 </table>
+<xar:if condition="!empty($autocacheproposed)">
+<p><xar:mlstring>Current URLs proposed for session-less caching :</xar:mlstring></p>
+<ol>
+<xar:foreach in="$autocacheproposed" key="$url" value="$count">
+  <li>#$url# (#$count#)</li>
+</xar:foreach>
+</ol>
+</xar:if>
 </xar:if>
 
 </xar:if>

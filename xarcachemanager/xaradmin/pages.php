@@ -158,7 +158,10 @@ function xarcachemanager_admin_pages($args)
             if (file_exists($outputCacheDir . '/autocache.log')) {
                 unlink($outputCacheDir . '/autocache.log');
             }
-        } else {
+        } elseif (!file_exists($outputCacheDir . '/autocache.start') ||
+                  !isset($data['settings']['AutoCachePeriod']) ||
+                  // only re-initialise if the period changes
+                  $data['settings']['AutoCachePeriod'] != $autocache['period']) {
             // initialise autocache.start and autocache.log files
             touch($outputCacheDir . '/autocache.start');
             $fp = fopen($outputCacheDir . '/autocache.log', 'w');
@@ -210,7 +213,7 @@ function xarcachemanager_admin_pages($args)
         $data['settings']['AutoCacheExclude'] = join("\n",$data['settings']['AutoCacheExclude']);
     }
 
-    // Get some current information from auto-cache
+    // Get some current information from the auto-cache log
     $data['autocachepages'] = array();
     $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output';
     if (file_exists($outputCacheDir . '/autocache.log') &&
@@ -218,9 +221,11 @@ function xarcachemanager_admin_pages($args)
         $logs = file($outputCacheDir . '/autocache.log');
         $data['autocachehits'] = array('HIT' => 0,
                                        'MISS' => 0);
+        $autocacheproposed = array();
         foreach ($logs as $entry) {
             if (empty($entry)) continue;
             list($time,$status,$addr,$url) = explode(' ',$entry);
+            $url = trim($url);
             if (!isset($start)) $start = $time;
             $end = $time;
             if (!isset($data['autocachepages'][$url])) {
@@ -229,12 +234,41 @@ function xarcachemanager_admin_pages($args)
             if (!isset($data['autocachepages'][$url][$status])) {
                 $data['autocachepages'][$url][$status] = 0;
             }
+            if (!isset($autocacheproposed[$url])) {
+                $autocacheproposed[$url] = 0;
+            }
             $data['autocachepages'][$url][$status]++;
             $data['autocachehits'][$status]++;
+            $autocacheproposed[$url]++;
         }
         unset($logs);
         $data['autocachestart'] = $start;
         $data['autocacheend'] = $end;
+        // check that all required URLs are included
+        if (!empty($cachingConfiguration['AutoCache.Include'])) {
+            foreach ($cachingConfiguration['AutoCache.Include'] as $url) {
+                if (!isset($autocacheproposed[$url]) ||
+                    $autocacheproposed[$url] < $cachingConfiguration['AutoCache.Threshold'])
+                    $autocacheproposed[$url] = 99999999;
+            }
+        }
+        // check that all forbidden URLs are excluded
+        if (!empty($cachingConfiguration['AutoCache.Exclude'])) {
+            foreach ($cachingConfiguration['AutoCache.Exclude'] as $url) {
+                if (isset($autocacheproposed[$url])) unset($autocacheproposed[$url]);
+            }
+        }
+        // sort descending by count
+        arsort($autocacheproposed, SORT_NUMERIC);
+        $data['autocacheproposed'] = array();
+        // build the list of URLs proposed for session-less caching
+        foreach ($autocacheproposed as $url => $count) {
+            if (count($data['autocacheproposed']) >= $cachingConfiguration['AutoCache.MaxPages'] ||
+                $count < $cachingConfiguration['AutoCache.Threshold']) {
+                break;
+            }
+            $data['autocacheproposed'][$url] = $count;
+        }
     }
 
     // Get some page caching configurations
