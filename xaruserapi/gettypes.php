@@ -102,11 +102,13 @@ function xarpages_userapi_gettypes($args)
                 'dynamicdata', 'user', 'getitems',
                 array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($item_ids))
             );
-        }
 
-        // Move the DD fields to the types array.
-        foreach($dd_data as $dd_key => $dd_items) {
-            $types[$item_ids[$dd_key]]['dd'] = $dd_items;
+            // Move the DD fields to the types array.
+            if (is_array($dd_data)) {
+                foreach($dd_data as $dd_key => $dd_items) {
+                    $types[$item_ids[$dd_key]]['dd'] = $dd_items;
+                }
+            }
         }
     }
 
