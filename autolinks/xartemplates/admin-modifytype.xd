@@ -64,7 +64,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <textarea name="type_desc" id="type_desc" cols="32" rows="5" wrap="virtual">#xarVarPrepForDisplay($type_desc)#</textarea>
+        <textarea name="type_desc" id="type_desc" cols="32" rows="5">#xarVarPrepForDisplay($type_desc)#</textarea>
         <xar:if condition="isset($type_desc_error)">
         <div class="xar-error">#xarVarPrepForDisplay($type_desc_error)#</div>
         </xar:if>

@@ -54,7 +54,7 @@
         <label for="type_desc"><xar:mlstring>Description</xar:mlstring></label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <textarea name="type_desc" cols="32" rows="5" id="type_desc" wrap="VIRTUAL">#$type_desc#</textarea>
+        <textarea name="type_desc" cols="32" rows="5" id="type_desc">#$type_desc#</textarea>
         <xar:if condition="isset($type_desc_error)">
         <div class="xar-error">#$type_desc_error#</div>
         </xar:if>
