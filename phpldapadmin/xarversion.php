@@ -2,10 +2,10 @@
 /*
  * File: $Id: $
  *
- * phpLDAPadmin 
+ * phpLDAPadmin
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team 
+ * @copyright (C) 2003 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -17,6 +17,7 @@
 $modversion['name']           = 'phpLDAPadmin';
 $modversion['id']             = '1651';
 $modversion['version']        = '0.9.3';
+$modversion['displayname']    = xarML('phpLDAPAdmin');
 $modversion['description']    = 'Wrapper module for phpLDAPadmin (http://phpldapadmin.sourceforge.net/) for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
