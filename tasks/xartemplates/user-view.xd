@@ -36,7 +36,7 @@
       </xar:if>
     </xar:loop>
   </select>
-  <input type="submit" value="#$filtersubmit#" align="middle" tabindex="3" />
+  <input type="submit" value="#$filtersubmit#"  tabindex="3" />
 </form>
 
 <!-- Migrate form -->
@@ -106,7 +106,7 @@
                   <option value="#$id#" selected="selected">#$name#</option>
                 </xar:loop>
               </select>
-            <input type="submit" value="#$tasksubmitbutton#" align="middle" tabindex="5" />
+            <input type="submit" value="#$tasksubmitbutton#"  tabindex="5" />
           </td>
         </tr>
       </table>
