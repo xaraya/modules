@@ -1,0 +1,70 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post" action="#xarModURL('workflow', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+    <label for="isalias"><xar:mlstring>Enable Short URLs :</xar:mlstring></label>
+    <xar:if condition="!empty($isalias)">
+    <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
+    <xar:else/>
+    <input type="checkbox" name="isalias" id="isalias" value="1" />
+    </xar:if>
+    <p><xar:mlstring><b>Description:</b> first enable workflow hooks for a particular module+itemtype,
+then specify here which workflow process should be started when a particular hook is called by that module+itemtype</xar:mlstring></p>
+	<table border="0" cellpadding="8" cellspacing="0">
+	<xar:foreach in="$settings" key="$modname" value="$config">
+		<tr>
+			<td colspan="2"><b>#$config['label']#</b></td>
+		</tr>
+		<tr>
+			<td><label for="settings[#$modname#.create]"><xar:mlstring>Start Activity for Create Hook Calls</xar:mlstring></label></td>
+			<td>
+			<select name="settings[#$modname#.create]" id="settings[#$modname#.create]">
+			<xar:foreach in="$activities" key="$id" value="$name">
+				<xar:if condition="$config['create'] eq $id">
+					<option value="#$id#" selected="selected">#$name#</option>
+				<xar:else/>
+					<option value="#$id#">#$name#</option>
+				</xar:if>
+			</xar:foreach>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td><label for="settings[#$modname#.update]"><xar:mlstring>Start Activity for Update Hook Calls</xar:mlstring></label></td>
+			<td>
+			<select name="settings[#$modname#.update]" id="settings[#$modname#.update]">
+			<xar:foreach in="$activities" key="$id" value="$name">
+				<xar:if condition="$config['update'] eq $id">
+					<option value="#$id#" selected="selected">#$name#</option>
+				<xar:else/>
+					<option value="#$id#">#$name#</option>
+				</xar:if>
+			</xar:foreach>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td><label for="settings[#$modname#.delete]"><xar:mlstring>Start Activity for Delete Hook Calls</xar:mlstring></label></td>
+			<td>
+			<select name="settings[#$modname#.delete]" id="settings[#$modname#.delete]">
+			<xar:foreach in="$activities" key="$id" value="$name">
+				<xar:if condition="$config['delete'] eq $id">
+					<option value="#$id#" selected="selected">#$name#</option>
+				<xar:else/>
+					<option value="#$id#">#$name#</option>
+				</xar:if>
+			</xar:foreach>
+			</select>
+			</td>
+		</tr>
+	</xar:foreach>
+	</table>
+	<br /><br />
+	<input type="submit" value="Update Workflow Configuration" />
+</form>
+<p><xar:mlstring>Note: at the moment, only one activity can be started in each hook call from each module+itemtype.
+If necessary, this can be modified but perhaps you might rethink your processes instead :-)</xar:mlstring></p>
+</div>
+</div>

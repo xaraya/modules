@@ -23,6 +23,16 @@ to create the sample database table</li>
 </p>
 <p>Note: this is mostly a 1-to-1 conversion of the current Galaxia interface scripts from TikiWiki, and a quick &amp; dirty conversion of the templates that go with them. 
 The sample CD Loan process has been modified a bit to be more representative of actual processes, but is otherwise unchanged.</p>
+
+<p>With version 1.1, you can also automatically start a workflow process after some module item is created, updated or deleted. To try this out, you should :
+<ol>
+<li>upload the <a href="modules/workflow/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</li>
+<li>assign some users to the 'editors' workflow role and mark the process as active</li>
+<li>enable the workflow hooks for articles</li>
+<li>configure the workflow module so that the Review Articles - start activity is started when Create hooks are called from articles</li>
+<li>create a new article and have fun...</li>
+</ol>
+</p>
 <p><b>Patches and contributions are most welcome ;-)</b></p>
 </xar:mlstring>
 

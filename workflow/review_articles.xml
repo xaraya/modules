@@ -1,0 +1,242 @@
+<?xml version="1.0"?><process>
+  <name>Review Articles</name>
+  <isValid>y</isValid>
+  <version>1.0</version>
+  <isActive>n</isActive>
+   <description>If you enable the workflow hooks for articles and configure the workflow module to use this process for articles, it will be automatically started when an article is created</description>
+  <lastModif>28/09/2003 [07:01:27]</lastModif>
+  <sharedCode><![CDATA[<?php
+?>  ]]></sharedCode>
+  <activities>
+    <activity>
+      <name>end</name>
+      <type>end</type>
+      <description>default end activity</description>
+      <lastModif>28/09/2003 [02:09:17]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+      </roles>
+      <code><![CDATA[<?php
+?>      ]]></code>    </activity>
+    <activity>
+      <name>start</name>
+      <type>start</type>
+      <description>default start activity</description>
+      <lastModif>28/09/2003 [07:02:30]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+      </roles>
+      <code><![CDATA[<?php
+// save the module, itemtype and itemid for which the hook was called
+    if (empty($args['module'])) $args['module'] = xarModGetName();
+    $instance->set('module',$args['module']);
+    if (empty($args['itemtype'])) $args['itemtype'] = 0;
+    $instance->set('itemtype',$args['itemtype']);
+    if (empty($args['itemid'])) $args['itemid'] = 0;
+    $instance->set('itemid',$args['itemid']);
+// save the current user
+    $instance->set('user',xarUserGetVar('uid'));
+?>      ]]></code>    </activity>
+    <activity>
+      <name>Review Article</name>
+      <type>activity</type>
+      <description>Review an article before approving or rejecting it</description>
+      <lastModif>28/09/2003 [03:03:55]</lastModif>
+      <isInteractive>y</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+        <role>editors</role>
+      </roles>
+      <code><![CDATA[<?php
+// Get the module, itemtype and itemid from the workflow instance
+$module = $instance->get('module');
+$itemtype = $instance->get('itemtype');
+$itemid = $instance->get('itemid');
+if (empty($itemid) || !is_numeric($itemid)) {
+    $msg = xarML('Invalid article #(1)', xarVarPrepForDisplay($itemid));
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                   new SystemException($msg));
+    return;
+}
+
+// Retrieve the item
+$article = xarModAPIFunc('articles','user','get', array('aid' => $itemid));
+if (empty($article)) {
+    $msg = xarML('Unable to find article #(1)', xarVarPrepForDisplay($itemid));
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                   new SystemException($msg));
+    return;
+}
+
+// Security check
+$input = array();
+$input['article'] = $article;
+$input['mask'] = 'EditArticles';
+if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
+    $msg = xarML('You have no permission to modify article #(1)',
+                 xarVarPrepForDisplay($itemid));
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                   new SystemException($msg));
+    return;
+}
+unset($input);
+
+// Get parameters
+if (!xarVarFetch('edit','isset', $edit, NULL, XARVAR_DONT_SET)) {return;}
+if (!xarVarFetch('approve','isset', $approve, NULL, XARVAR_DONT_SET)) {return;}
+if (!xarVarFetch('reject','isset', $reject, NULL, XARVAR_DONT_SET)) {return;}
+if (!xarVarFetch('frontpage','isset', $frontpage, NULL, XARVAR_DONT_SET)) {return;}
+if (!xarVarFetch('reason','isset', $reason, NULL, XARVAR_DONT_SET)) {return;}
+if (empty($reason)) $reason = '';
+
+if (!empty($edit)) {
+    // Go to the articles modify page
+    xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
+                                  array('aid' => $itemid)));
+    return true;
+} elseif (!empty($approve)) {
+    // Save the reviewer information
+    $instance->set('reviewer', xarUserGetVar('uid'));
+    $instance->set('reviewed', time());
+    // Save the new status
+    $instance->set('status', 'approved');
+    $instance->set('reason', $reason);
+    $instance->set('title', $article['title']);
+    $instance->complete();
+} elseif (!empty($reject)) {
+    // Save the reviewer information
+    $instance->set('reviewer', xarUserGetVar('uid'));
+    $instance->set('reviewed', time());
+    // Save the new status
+    $instance->set('status', 'rejected');
+    $instance->set('reason', $reason);
+    $instance->set('title', $article['title']);
+    $instance->complete();
+} elseif (!empty($frontpage)) {
+    // Save the reviewer information
+    $instance->set('reviewer', xarUserGetVar('uid'));
+    $instance->set('reviewed', time());
+    // Save the new status
+    $instance->set('status', 'frontpage');
+    $instance->set('reason', $reason);
+    $instance->set('title', $article['title']);
+    $instance->complete();
+} else {
+    // Get the name of the user who initiated the process
+    $user = $instance->get('user');
+    $tplData['user'] = xarUserGetVar('name', $user);
+
+    // Get the time when the process was started
+    $started = $instance->started;
+    $tplData['date'] = xarLocaleGetFormattedDate('long', $started);
+
+    // Get a preview of the item
+    $tplData['preview'] = xarModFunc('articles', 'user', 'display',
+                                  array('preview' => true, 'article' => $article));
+}
+?>      ]]></code>      <template><![CDATA[<div class="xar-mod-body"><h2><xar:mlstring>Review Article</xar:mlstring></h2>
+<div style="margin: auto;">
+<xar:ml><xar:mlstring>Article submitted by #(1) on #(2)</xar:mlstring><xar:mlvar>#$user#</xar:mlvar><xar:mlvar>#$date#</xar:mlvar></xar:ml>
+
+<form method="post">
+<div>
+<br/><br/><textarea name="reason" rows="4" cols="40"></textarea><br/><br/>
+<input type="submit" name="approve" value="#xarML('Approve')#" />
+<input type="submit" name="frontpage" value="#xarML('Frontpage')#" />
+<input type="submit" name="edit" value="#xarML('Edit')#" />
+<input type="submit" name="reject" value="#xarML('Reject')#" />
+</div>
+</form>
+
+<xar:if condition="!empty($preview)">
+<div style="width: 100%;padding: 3px;">
+<h2><xar:mlstring>Preview</xar:mlstring></h2>
+    #$preview#
+</div>
+<xar:else/>
+    <xar:mlstring>No preview available...</xar:mlstring>
+</xar:if>
+</div>
+</div>      ]]></template>    </activity>
+    <activity>
+      <name>Change Status</name>
+      <type>activity</type>
+      <description>Change the status of the article</description>
+      <lastModif>28/09/2003 [03:03:26]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+      </roles>
+      <code><![CDATA[<?php
+// Get the module, itemtype and itemid from the workflow instance
+$module = $instance->get('module');
+$itemtype = $instance->get('itemtype');
+$itemid = $instance->get('itemid');
+if (empty($itemid) || !is_numeric($itemid)) {
+    $msg = xarML('Invalid article #(1)', xarVarPrepForDisplay($itemid));
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                   new SystemException($msg));
+    return;
+}
+
+// Retrieve the module item
+$article = xarModAPIFunc('articles','user','get', array('aid' => $itemid));
+if (empty($article)) {
+    $msg = xarML('Unable to find article #(1)', xarVarPrepForDisplay($itemid));
+
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                   new SystemException($msg));
+    return;
+}
+$article['ptid'] = $article['pubtypeid'];
+
+// Get the new status for this item
+$status = $instance->get('status');
+
+// Set the item status
+switch ($status) {
+    case 'approved':
+        $article['status'] = 2;
+         break;
+    case 'rejected':
+        $article['status'] = 1;
+         break;
+    case 'frontpage':
+        $article['status'] = 3;
+         break;
+    default:
+        $article['status'] = 0;
+         break;
+}
+
+// Pass to API - watch out, this will call update hooks again :-)
+if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
+    return; // throw back
+}
+
+// Send mail to the user or whatever...
+$user = $instance->get('user');
+// ...
+// Your article $instance->get('title') was reviewed by $instance->get('reviewer') on
+// $instance->get('reviewed') and assigned the status $instance->get('status').
+// No reason was supplied / The reason was $instance->get('reason')
+// ...
+?>      ]]></code>    </activity>
+  </activities>
+  <transitions>
+     <transition>
+       <from>start</from>
+       <to>Review Article</to>
+     </transition>
+     <transition>
+       <from>Review Article</from>
+       <to>Change Status</to>
+     </transition>
+     <transition>
+       <from>Change Status</from>
+       <to>end</to>
+     </transition>
+  </transitions>
+</process>

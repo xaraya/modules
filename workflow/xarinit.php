@@ -143,12 +143,45 @@ function workflow_init()
   PRIMARY KEY  (itemId)
 )";
 
+    // create tables
     foreach ($queries as $query) {
         // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
         $result = &$dbconn->Execute($query);
         if (!$result) return;
     }
 
+    // set default activityId for create, update and delete hooks
+    xarModSetVar('workflow','default.create',0);
+    xarModSetVar('workflow','default.update',0);
+    xarModSetVar('workflow','default.delete',0);
+
+    xarModSetVar('workflow','SupportShortURLs',0);
+
+    if (!xarModRegisterHook('item', 'create', 'API',
+                           'workflow', 'admin', 'createhook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'update', 'API',
+                           'workflow', 'admin', 'updatehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'delete', 'API',
+                           'workflow', 'admin', 'deletehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('module', 'remove', 'API',
+                           'workflow', 'admin', 'removehook')) {
+        return false;
+    }
+
+/* // TODO: show pending instances someday ?
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+            'workflow', 'user', 'usermenu')) {
+        return false;
+    }
+*/
+
+    // define privilege instances and masks
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarModURL('workflow', 'admin', 'privileges'),
@@ -157,7 +190,7 @@ function workflow_init()
                     );
     xarDefineInstance('workflow', 'Item', $instances);
 
-// TODO: tweak this - allow viewing keywords of "your own items" someday ?
+// TODO: tweak this - allow viewing workflow of "your own items" someday ?
     xarRegisterMask('ReadWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AdminWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
@@ -175,7 +208,31 @@ function workflow_upgrade($oldversion)
     switch ($oldversion) {
         case 1.0:
             // Code to upgrade from version 1.0 goes here
-            break;
+
+            // set default activityId for create, update and delete hooks
+            xarModSetVar('workflow','default.create',0);
+            xarModSetVar('workflow','default.update',0);
+            xarModSetVar('workflow','default.delete',0);
+
+            xarModSetVar('workflow','SupportShortURLs',0);
+
+            if (!xarModRegisterHook('item', 'create', 'API',
+                                   'workflow', 'admin', 'createhook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'update', 'API',
+                                   'workflow', 'admin', 'updatehook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'delete', 'API',
+                                   'workflow', 'admin', 'deletehook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('module', 'remove', 'API',
+                                   'workflow', 'admin', 'removehook')) {
+                return false;
+            }
+            // fall through to next upgrade
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
@@ -218,6 +275,32 @@ function workflow_delete()
         $result = &$dbconn->Execute($query);
         if (!$result) return;
     }
+
+    // Remove module hooks
+    if (!xarModUnregisterHook('item', 'create', 'API',
+                           'workflow', 'admin', 'createhook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'update', 'API',
+                           'workflow', 'admin', 'updatehook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'delete', 'API',
+                           'workflow', 'admin', 'deletehook')) {
+        return false;
+    }
+    // when a whole module is removed, e.g. via the modules admin screen
+    // (set object ID to the module name !)
+    if (!xarModUnregisterHook('module', 'remove', 'API',
+                           'workflow', 'admin', 'removehook')) {
+        return false;
+    }
+/* // TODO: show pending instances someday ?
+    if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
+            'workflow', 'user', 'usermenu')) {
+        return false;
+    } 
+*/
 
     // Remove Masks and Instances
     xarRemoveMasks('workflow');

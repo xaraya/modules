@@ -38,6 +38,11 @@ function workflow_adminapi_getmenulinks()
                                                   'processes'),
                               'title' => xarML('Edit the workflow processes'),
                               'label' => xarML('Admin Processes'));
+        $menulinks[] = Array('url'   => xarModURL('workflow',
+                                                  'admin',
+                                                  'modifyconfig'),
+                              'title' => xarML('Modify the workflow configuration'),
+                              'label' => xarML('Modify Config'));
     }
 
     return $menulinks;
