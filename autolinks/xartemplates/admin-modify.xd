@@ -34,7 +34,9 @@
         </tr>
         <tr align="left" valign="top">
             <td>
-                <label for="name"><xar:mlstring>Name</xar:mlstring></label>
+                <label for="name" class="help" title="#xarML('A unique name for the Autolink')#">
+                    <xar:mlstring>Name</xar:mlstring>
+                </label>
             </td>
             <td>
                 <input type="text" name="name" id="name" value="#$prepname#" size="20" maxlength="30"/>
@@ -43,7 +45,9 @@
 
         <tr align="left" valign="top">
             <td>
-                <label for="enabled"><xar:mlstring>Enabled</xar:mlstring></label>
+                <label for="enabled" class="help" title="#xarML('Flag determines whether the Autolink is active')#">
+                    <xar:mlstring>Enabled</xar:mlstring>
+                </label>
             </td>
             <td>
                 <xar:if condition="$enabled">
@@ -62,7 +66,9 @@
 
         <tr align="left" valign="top">
             <td>
-                <label for="keyword"><xar:mlstring>Matching Key</xar:mlstring></label>
+                <label for="keyword" class="help" title="#xarML('The word or regular expression that is replaced for this Autolink')#">
+                    <xar:mlstring>Matching Key</xar:mlstring>
+                </label>
             </td>
             <td>
                 <input type="text" name="keyword" id="keyword" value="#$prepkeyword#" size="32" maxlength="100"/>
@@ -71,7 +77,9 @@
 
         <tr align="left" valign="top">
             <td>
-                <label for="match_re"><xar:mlstring>Match As Regular Expression</xar:mlstring></label>
+                <label for="match_re" class="help" title="#xarML('Flag indicates whether the Matching Key should be processed as a regular expression')#">
+                    <xar:mlstring>Match As Regular Expression</xar:mlstring>
+                </label>
             </td>
             <td>
                 <xar:if condition="$match_re">
@@ -90,7 +98,9 @@
 
         <tr align="left" valign="top">
             <td>
-                <label for="title"><xar:mlstring>Title</xar:mlstring></label>
+                <label for="title" class="help" title="#xarML('The title (usually a tooltip) for the resulting Autolink transformation')#">
+                    <xar:mlstring>Title</xar:mlstring>
+                </label>
             </td>
             <td>
                 <input type="text" name="title" id="title" value="#$preptitle#" size="32" maxlength="100"/>
@@ -99,7 +109,9 @@
 
         <tr align="left" valign="top">
             <td>
-                <label for="url"><xar:mlstring>URL</xar:mlstring></label>
+                <label for="url" class="help" title="#xarML('The URL for the Autolink')#">
+                    <xar:mlstring>URL</xar:mlstring>
+                </label>
             </td>
             <td>
                 <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200"/>
@@ -108,10 +120,12 @@
 
         <tr align="left" valign="top">
             <td>
-                <label for="comment"><xar:mlstring>Comment</xar:mlstring></label>
+                <label for="comment" class="help" title="#xarML('A comment or description to help you manage the Autolinks generally not used in the Autolink transform')#">
+                    <xar:mlstring>Comment</xar:mlstring>
+                </label>
             </td>
             <td>
-                <input type="text" name="comment" id="comment" value="#$prepcomment#" size="40" maxlength="200"/>
+                <textarea name="comment" id="comment" cols="32" rows="5" wrap="virtual">#$prepcomment#</textarea>
             </td>
         </tr>
 
@@ -134,7 +148,9 @@
 
         <tr align="left" valign="top">
             <td>
-                <label for="sample"><xar:mlstring>Sample text to test link</xar:mlstring></label>
+                <label for="sample" class="help" title="#xarML('Some sample text that can be used to test the Autolink - the examples are displayed in the main Autolink list')#">
+                    <xar:mlstring>Sample text to test link</xar:mlstring>
+                </label>
             </td>
             <td>
                 <input type="text" name="sample" id="sample" value="#$prepsample#" size="40" maxlength="200"/>
