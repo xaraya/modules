@@ -59,7 +59,8 @@ function html_userapi_getalltags($args)
         list($typeid) = $result->fields;
         $result->Close();
 
-        $where = " WHERE $htmltable.xar_tid = " . xarVarPrepForStore($typeid);
+        $where = " WHERE $htmltable.xar_tid = ? ";
+        $bindvars = array((int) $typeid);
     } else {
         $where = " WHERE $htmltable.xar_tid = $htmltypestable.xar_id";
     }
@@ -74,7 +75,12 @@ function html_userapi_getalltags($args)
     $query .= $where;
     $query .= " ORDER BY $htmltypestable.xar_type, $htmltable.xar_tag";
 
-    $result =& $dbconn->Execute($query);
+    if (isset($bindvars) && !empty($bindvars)) {
+        $result =& $dbconn->Execute($query, $bindvars);
+    } else {
+        $result =& $dbconn->Execute($query);
+    }
+
     if (!$result) return;
 
     // Set empty array

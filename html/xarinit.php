@@ -109,11 +109,9 @@ function html_init()
     $query = "INSERT INTO $htmltypestable (
                 xar_id,
                 xar_type)
-              VALUES (
-                $nextid, 
-                '" . xarVarPrepForStore($defaulttype) ."')";
+              VALUES (?, ?)";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $nextid, (string) $defaulttype));
 
     // Check for error
     if (!$result) return;
@@ -223,13 +221,14 @@ function html_init()
                         xar_tid,
                         xar_tag,
                         xar_allowed)
-                    VALUES (
-                        $nextid, 
-                        " . xarVarPrepForStore($htmltypeid) . ", 
-                        '" . xarVarPrepForStore($htmltag) . "', 
-                        " . xarVarPrepForStore($allowed) . ")";
+                    VALUES (?, ?, ?, ?)";
 
-        $result =& $dbconn->Execute($query);
+        $bindvars = array((int) $nextid, 
+                          (int) $htmltypeid,
+                          (string) $htmltag,
+                          (int) $allowed);
+
+        $result =& $dbconn->Execute($query, $bindvars);
     
         // Check for errors
         if (!$result) return;
@@ -361,11 +360,9 @@ function html_upgrade($oldversion)
             $query = "INSERT INTO $htmltypestable (
                          xar_id,
                          xar_type)
-                     VALUES (
-                        $nextid, 
-                        '" . xarVarPrepForStore($defaulttype) ."')";
+                     VALUES (?, ?)";
 
-            $result =& $dbconn->Execute($query);
+            $result =& $dbconn->Execute($query, array((int) $nextid, (string) $defaulttype));
 
             // Check for error
             if (!$result) return;
