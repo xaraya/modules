@@ -251,6 +251,7 @@
                          'itemsperpage'         => 10,
                          'defaultview'          => 1,
                          'showcategories'       => 1,
+                         'showcatcount'         => 0,
                          'showprevnext'         => 0,
                          'showcomments'         => 1,
                          'showhitcounts'        => 1,
@@ -258,11 +259,13 @@
                          'showarchives'         => 1,
                          'showmap'              => 1,
                          'showpublinks'         => 0,
+                         'showpubcount'         => 1,
                          'dotransform'          => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
                          'defaultstatus'        => 0,
+                         'defaultsort'          => 'date',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Topics',
                                                          'Categories',
@@ -274,6 +277,7 @@
                          // category name - will be replaced by 'c' . cid in xarinit.php
                          'defaultview'          => 'Sections',
                          'showcategories'       => 0,
+                         'showcatcount'         => 0,
                          'showprevnext'         => 1,
                          'showcomments'         => 0,
                          'showhitcounts'        => 0,
@@ -281,11 +285,13 @@
                          'showarchives'         => 0,
                          'showmap'              => 1,
                          'showpublinks'         => 0,
+                         'showpubcount'         => 1,
                          'dotransform'          => 0,
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
                          'defaultstatus'        => 2,
+                         'defaultsort'          => 'title',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Sections',
                                                          'Generic1'));
@@ -295,6 +301,7 @@
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
                          'showcategories'       => 1,
+                         'showcatcount'         => 0,
                          'showprevnext'         => 1,
                          'showcomments'         => 0,
                          'showhitcounts'        => 1,
@@ -302,11 +309,13 @@
                          'showarchives'         => 1,
                          'showmap'              => 1,
                          'showpublinks'         => 0,
+                         'showpubcount'         => 1,
                          'dotransform'          => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
                          'defaultstatus'        => 0,
+                         'defaultsort'          => 'date',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Generic1'));
 
@@ -316,6 +325,7 @@
                          // category name - will be replaced by 'c' . cid in xarinit.php
                          'defaultview'          => 'FAQ',
                          'showcategories'       => 1,
+                         'showcatcount'         => 0,
                          'showprevnext'         => 0,
                          'showcomments'         => 0,
                          'showhitcounts'        => 0,
@@ -323,11 +333,13 @@
                          'showarchives'         => 0,
                          'showmap'              => 1,
                          'showpublinks'         => 0,
+                         'showpubcount'         => 1,
                          'dotransform'          => 0,
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
                          'defaultstatus'        => 2,
+                         'defaultsort'          => 'title',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('FAQ',
                                                          'Generic1'));
@@ -337,6 +349,7 @@
                          'itemsperpage'         => 12,
                          'defaultview'          => 1,
                          'showcategories'       => 0,
+                         'showcatcount'         => 0,
                          'showprevnext'         => 1,
                          'showcomments'         => 0,
                          'showhitcounts'        => 0,
@@ -344,11 +357,13 @@
                          'showarchives'         => 0,
                          'showmap'              => 1,
                          'showpublinks'         => 0,
+                         'showpubcount'         => 1,
                          'dotransform'          => 0,
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
                          'defaultstatus'        => 2,
+                         'defaultsort'          => 'date',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Gallery',
                                                          'Generic1'));
@@ -358,6 +373,7 @@
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
                          'showcategories'       => 1,
+                         'showcatcount'         => 0,
                          'showprevnext'         => 0,
                          'showcomments'         => 0,
                          'showhitcounts'        => 1,
@@ -365,11 +381,13 @@
                          'showarchives'         => 0,
                          'showmap'              => 1,
                          'showpublinks'         => 0,
+                         'showpubcount'         => 1,
                          'dotransform'          => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
                          'defaultstatus'        => 0,
+                         'defaultsort'          => 'date ASC',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Web Links',
                                                          'Generic1'));
@@ -379,6 +397,7 @@
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
                          'showcategories'       => 1,
+                         'showcatcount'         => 0,
                          'showprevnext'         => 0,
                          'showcomments'         => 1,
                          'showhitcounts'        => 1,
@@ -386,11 +405,13 @@
                          'showarchives'         => 1,
                          'showmap'              => 1,
                          'showpublinks'         => 0,
+                         'showpubcount'         => 1,
                          'dotransform'          => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
                          'defaultstatus'        => 0,
+                         'defaultsort'          => 'date',
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Generic1',
                                                          'Generic2'));

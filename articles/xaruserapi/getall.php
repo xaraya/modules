@@ -5,7 +5,7 @@
  * Note : the following parameters are all optional
  *
  * @param $args['numitems'] number of articles to get
- * @param $args['sort'] sort order ('date','title','hits','rating',...)
+ * @param $args['sort'] sort order ('pubdate','title','hits','rating','author','aid','summary','notes',...)
  * @param $args['startnum'] starting article number
  * @param $args['aids'] array of article ids to get
  * @param $args['authorid'] the ID of the author
@@ -47,7 +47,11 @@ function articles_userapi_getall($args)
         $andcids = false;
     }
     if (empty($sort)) {
-        $sort = 'date';
+        $sortlist = array('pubdate');
+    } elseif (is_array($sort)) {
+        $sortlist = $sort;
+    } else {
+        $sortlist = explode(',',$sort);
     }
     if (empty($ptid)) {
         $ptid = null;
@@ -243,15 +247,47 @@ function articles_userapi_getall($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-// TODO: make this configurable too someday ?
+// TODO: support other non-articles fields too someday ?
     // Create the ORDER BY part
-    if ($sort == 'title') {
-        $query .= ' ORDER BY ' . $articlesdef['title'] . ' ASC, ' . $articlesdef['aid'] . ' DESC';
-    } elseif ($sort == 'hits' && !empty($hitcountdef['hits'])) {
-        $query .= ' ORDER BY ' . $hitcountdef['hits'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
-    } elseif ($sort == 'rating' && !empty($ratingsdef['rating'])) {
-        $query .= ' ORDER BY ' . $ratingsdef['rating'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
-    } else { // default is 'date'
+    if (count($sortlist) > 0) {
+        $sortparts = array();
+        $seenaid = 0;
+        foreach ($sortlist as $criteria) {
+            // ignore empty sort criteria
+            if (empty($criteria)) continue;
+            // split off trailing ASC or DESC
+            if (preg_match('/^(.+)\s+(ASC|DESC)\s*$/i',$criteria,$matches)) {
+                $criteria = trim($matches[1]);
+                $sortorder = strtoupper($matches[2]);
+            } else {
+                $sortorder = '';
+            }
+            if ($criteria == 'title') {
+                $sortparts[] = $articlesdef['title'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } elseif ($criteria == 'pubdate' || $criteria == 'date') {
+                $sortparts[] = $articlesdef['pubdate'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
+            } elseif ($criteria == 'hits' && !empty($hitcountdef['hits'])) {
+                $sortparts[] = $hitcountdef['hits'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
+            } elseif ($criteria == 'rating' && !empty($ratingsdef['rating'])) {
+                $sortparts[] = $ratingsdef['rating'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
+            } elseif ($criteria == 'author' && !empty($usersdef['name'])) {
+                $sortparts[] = $usersdef['name'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } elseif ($criteria == 'aid') {
+                $sortparts[] = $articlesdef['aid'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
+                $seenaid = 1;
+            // other articles fields, e.g. summary, notes, ...
+            } elseif (!empty($articlesdef[$criteria])) {
+                $sortparts[] = $articlesdef[$criteria] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } else {
+                // ignore unknown sort fields
+            }
+        }
+        // add sorting by aid for unique sort order
+        if (count($sortparts) < 2 && empty($seenaid)) {
+            $sortparts[] = $articlesdef['aid'] . ' DESC';
+        }
+        $query .= ' ORDER BY ' . join(', ',$sortparts);
+    } else { // default is 'pubdate'
         $query .= ' ORDER BY ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
     }
 

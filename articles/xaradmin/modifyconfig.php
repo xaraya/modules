@@ -50,6 +50,7 @@ function articles_admin_modifyconfig()
         $data['prevnextart']            = !empty($settings['prevnextart']) ? 'checked="checked"' : '';
         $data['page_template']          = isset($settings['page_template']) ? $settings['page_template'] : '';
         $data['defaultstatus']          = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
+        $data['defaultsort']            = !empty($settings['defaultsort']) ? $settings['defaultsort'] : 'date';
     }
     if (!isset($data['itemsperpage'])) {
         $data['itemsperpage'] = 20;
@@ -64,7 +65,7 @@ function articles_admin_modifyconfig()
         $data['showcategories'] = '';
     }
     if (!isset($data['showcatcount'])) {
-        $data['showcatcount'] = 0;
+        $data['showcatcount'] = '';
     }
     if (!isset($data['showprevnext'])) {
         $data['showprevnext'] = '';
@@ -119,6 +120,9 @@ function articles_admin_modifyconfig()
         $data['withstatus'] = 0;
     } else {
         $data['withstatus'] = 1;
+    }
+    if (!isset($data['defaultsort'])) {
+        $data['defaultsort'] = 'date';
     }
 
     // call modifyconfig hooks with module + itemtype

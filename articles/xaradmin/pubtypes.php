@@ -89,7 +89,8 @@ function articles_admin_pubtypes()
                                   'prevnextart'          => 0,
                                   'usealias'             => 0,
                                   'page_template'        => '',
-                                  'defaultstatus'        => $status);
+                                  'defaultstatus'        => $status,
+                                  'defaultsort'          => 'date');
                 xarModSetVar('articles', 'settings.'.$ptid,serialize($settings));
                 xarModSetVar('articles', 'number_of_categories.'.$ptid, 0);
                 xarModSetVar('articles', 'mastercids.'.$ptid, '');

@@ -102,6 +102,66 @@
             </select></td>
     </tr>
     <tr>
+        <td><label for="defaultsort"><xar:mlstring>Default sort order</xar:mlstring></label></td>
+        <td><select name="defaultsort" id="defaultsort">
+                <xar:if condition="$defaultsort eq 'date'">
+                    <option value="date" selected="selected"><xar:mlstring>Date</xar:mlstring></option>
+                <xar:else />
+                    <option value="date"><xar:mlstring>Date</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="$defaultsort eq 'title'">
+                    <option value="title" selected="selected"><xar:mlstring>Title</xar:mlstring></option>
+                <xar:else />
+                    <option value="title"><xar:mlstring>Title</xar:mlstring></option>
+                </xar:if>
+<xar:if condition="$showhitcountsoptions">
+                <xar:if condition="$defaultsort eq 'hits'">
+                    <option value="hits" selected="selected"><xar:mlstring>Hits</xar:mlstring></option>
+                <xar:else />
+                    <option value="hits"><xar:mlstring>Hits</xar:mlstring></option>
+                </xar:if>
+</xar:if>
+<xar:if condition="$showratingsoptions">
+                <xar:if condition="$defaultsort eq 'rating'">
+                    <option value="rating" selected="selected"><xar:mlstring>Rating</xar:mlstring></option>
+                <xar:else />
+                    <option value="rating"><xar:mlstring>Rating</xar:mlstring></option>
+                </xar:if>
+</xar:if>
+                <xar:if condition="$defaultsort eq 'aid'">
+                    <option value="aid" selected="selected"><xar:mlstring>Article ID</xar:mlstring></option>
+                <xar:else />
+                    <option value="aid"><xar:mlstring>Article ID</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="$defaultsort eq 'author'">
+                    <option value="author" selected="selected"><xar:mlstring>Author</xar:mlstring></option>
+                <xar:else />
+                    <option value="author"><xar:mlstring>Author</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="$defaultsort eq 'summary'">
+                    <option value="summary" selected="selected"><xar:mlstring>Summary</xar:mlstring></option>
+                <xar:else />
+                    <option value="summary"><xar:mlstring>Summary</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="$defaultsort eq 'notes'">
+                    <option value="notes" selected="selected"><xar:mlstring>Notes</xar:mlstring></option>
+                <xar:else />
+                    <option value="notes"><xar:mlstring>Notes</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="$defaultsort eq 'date ASC'">
+                    <option value="date ASC" selected="selected"><xar:mlstring>Date (oldest first)</xar:mlstring></option>
+                <xar:else />
+                    <option value="date ASC"><xar:mlstring>Date (oldest first)</xar:mlstring></option>
+                </xar:if>
+            <!--- adapt to your own preferred sort order(s) --->
+                <xar:if condition="$defaultsort eq 'pubtypeid,date'">
+                    <option value="pubtypeid,date" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
+                <xar:else />
+                    <option value="pubtypeid,date"><xar:mlstring>Customized</xar:mlstring></option>
+                </xar:if>
+            </select></td>
+    </tr>
+    <tr>
         <td><label for="number_of_columns"><xar:mlstring>Number of columns</xar:mlstring> <i>($numcols)</i></label></td>
         <td><input type="text" name="number_of_columns" id="number_of_columns" size="1" maxlength="2" value="#$numcols#" /></td>
     </tr>

@@ -53,9 +53,6 @@ function articles_user_view($args)
     if (!isset($authorid)) {
         $authorid = null;
     }
-    if (!isset($sort)) {
-        $sort = null;
-    }
 
     $isdefault = 0;
     if (!empty($ptid)) {
@@ -66,6 +63,7 @@ function articles_user_view($args)
                 $catid = substr($settings['defaultview'],1);
             }
         }
+/*
     // Note: 'sort' is used to override the default start view too
         if (substr($settings['defaultview'],0,1) == 'c') {
             if (!isset($sort)) {
@@ -73,6 +71,7 @@ function articles_user_view($args)
             }
             $isdefault = 1;
         }
+*/
     } else {
         $string = xarModGetVar('articles', 'settings');
         if (!empty($string)) {
@@ -171,6 +170,16 @@ function articles_user_view($args)
         } else {
             $showcatcount = 1;
         }
+    }
+
+// TODO: make user-configurable too ?
+    if (empty($settings['defaultsort'])) {
+        $defaultsort = 'date';
+    } else {
+        $defaultsort = $settings['defaultsort'];
+    }
+    if (empty($sort)) {
+        $sort = $defaultsort;
     }
 
     // support multi-column output
@@ -732,7 +741,7 @@ function articles_user_view($args)
                                               array('ptid' => ($ishome ? null : $ptid),
                                                     'catid' => $catid,
                                                     'authorid' => $authorid,
-                                                    'sort' => $sort,
+                                                    'sort' => ($sort == $defaultsort ? null : $sort),
                                                     'startnum' => '%%')),
                                     $numitems);
 
@@ -749,7 +758,7 @@ function articles_user_view($args)
             $sortlist['rating'] = xarML('Rating');
         }
         foreach ($sortlist as $sname => $stitle) {
-            if (empty($sort) && $sname == 'date') {
+            if (empty($sort) && $sname == $defaultsort) {
                 $data['pager'] .= '&nbsp;' . xarML($stitle) . '&nbsp;';
                 continue;
             } elseif ($sname == $sort) {
@@ -757,7 +766,7 @@ function articles_user_view($args)
                 continue;
             }
             // Note: 'sort' is used to override the default start view too
-            if ($sname == 'date' && !$isdefault) {
+            if ($sname == $defaultsort && !$isdefault) {
                 $sortlink = xarModURL('articles','user','view',
                                      array('ptid' => ($ishome ? null : $ptid),
                                            'catid' => $catid));
