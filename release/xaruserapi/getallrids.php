@@ -19,7 +19,13 @@ function release_userapi_getallrids($args)
     if (!isset($idtypes)) {
         $idtypes = 1;
     }
-
+    if (empty($sort)) {
+        $sortlist = array('rids');
+    } elseif (is_array($sort)) {
+        $sortlist = $sort;
+    } else {
+        $sortlist = explode(',',$sort);
+    }
     $releaseinfo = array();
 
     // Security Check
@@ -71,7 +77,6 @@ function release_userapi_getallrids($args)
         $where[] = $categoriesdef['where'];
         $query .= $from;
     }
-
     switch ($idtypes) {
     case 3: // module
         $where[] = "xar_type = '0'";
@@ -85,12 +90,40 @@ function release_userapi_getallrids($args)
         $where[] = " xar_certified = '" . xarVarPrepForStore($certified). "'";
     }
 
+    if (count($sortlist) > 0) {
+        $sortparts = array();
+      foreach ($sortlist as $criteria) {
+            // ignore empty sort criteria
+            if (empty($criteria)) continue;
+            // split off trailing ASC or DESC
+            if (preg_match('/^(.+)\s+(ASC|DESC)\s*$/i',$criteria,$matches)) {
+                $criteria = trim($matches[1]);
+                $sortorder = strtoupper($matches[2]);
+            } else {
+                $sortorder = '';
+            }
+            if ($criteria == 'id') {
+                $sortparts[] = ' xar_rid ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } elseif ($criteria == 'author') {
+                $sortparts[] = ' xar_uid ' . (!empty($sortorder) ? $sortorder : 'DESC');
+            } elseif ($criteria == 'name') {
+                $sortparts[] = ' xar_regname ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } else {
+                // ignore unknown sort fields
+            }
+        }
+
+      $query .= ' ORDER BY ' . join(', ',$sortparts);
+    } else { // default is 'rid
+        $query .= ' ORDER BY  xar_rid ASC';
+    }
+
     if (count($where) > 0)
     {
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-    $query .= " ORDER BY xar_rid";
+  //  $query .= " ORDER BY xar_rid";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
@@ -115,7 +148,7 @@ function release_userapi_getallrids($args)
     $result->Close();
 
     // Return the users
-    return $releaseinfo;
+  return $releaseinfo;
 }
 
 ?>

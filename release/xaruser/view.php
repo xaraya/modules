@@ -8,7 +8,7 @@ function release_user_view()
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid', 'int', $catid, null,  XARVAR_NOT_REQUIRED)) {return;}
-
+    if (!xarVarFetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
@@ -28,7 +28,9 @@ function release_user_view()
      $idtypes=1;
     }
     $data = array();
-
+    if (empty($sort)) {
+        $sort = 'id';
+    }
     //jojodee: I've put all this into one function now userapi getallrids.
 
     /*
@@ -85,6 +87,7 @@ function release_user_view()
                              'getallrids',
                        array('idtypes'  => $idtypes,
                              'catid'    => $catid,
+                             'sort'     => $sort,
                              'startnum' => $startnum,
                              'numitems' => xarModGetUserVar('release',
                                                             'itemsperpage',$uid),
@@ -209,9 +212,10 @@ function release_user_view()
 
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid)),
-        xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase,'catid'=>$catid)),
+        xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase,'catid'=>$catid, 'sort'=>$sort)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
     }
+    $data['sort'] = $sort;
     $data['numitems']=$numitems;
     $data['phase']=$phase;
     $data['catid'] = $catid;

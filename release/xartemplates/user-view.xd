@@ -66,13 +66,13 @@
         <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
 		    <th width="5%">
-			    <xar:mlstring>ID</xar:mlstring>
+			    <a href="#xarModURL('release','user','view',array('sort'=>'id'))#"><xar:mlstring>ID</xar:mlstring></a>
 		    </th>
 		    <th width="30%" align="left">
-			    <xar:mlstring>Name</xar:mlstring>
+			    <a href="#xarModURL('release','user','view',array('sort'=>'name'))#"><xar:mlstring>Name (regname sort)</xar:mlstring></a>
 		    </th>
 		    <th width="25%" align="left">
-			    <xar:mlstring>Author</xar:mlstring>
+			    <a href="#xarModURL('release','user','view',array('sort'=>'author'))#"><xar:mlstring>Author (uid sort)</xar:mlstring></a>
 		    </th>
 		    <th width="5%">
 			    <xar:mlstring>Release</xar:mlstring>
@@ -80,7 +80,7 @@
             <xar:comment>jojodee: Taking out docs link here until docs actually works
              Putting in State instead for now
             <th width="10%">
-			    <xar:mlstring>Docs</xar:mlstring>
+			    <xar:mlstring>Docs</xar:mlstring> 
 		    </th>
             </xar:comment>
             <th width="10%">

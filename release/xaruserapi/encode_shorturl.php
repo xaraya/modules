@@ -39,8 +39,11 @@ function release_userapi_encode_shorturl($args)
     if ($func == 'main') {
         $path = '/' . $module . '/';
     } elseif ($func == 'view') {
-        $path = '/' . $module . '/view.html';
- 
+        if (isset($sort)) {
+            $path = '/' . $module . '/view/' . $sort . '.html';
+        } else {
+             $path = '/' . $module . '/view.html';
+        }
     } elseif ($func == 'display') {
         // check for required parameters
         if (isset($rid) && is_numeric($rid)) {

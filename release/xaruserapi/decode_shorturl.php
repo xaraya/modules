@@ -36,7 +36,14 @@ function release_userapi_decode_shorturl($params)
     } elseif (preg_match('/^viewnotes/i', $params[1])) {
             return array('viewnotes', $args);
     } elseif (preg_match('/^view/i', $params[1])) {
-         return array('view', $args);
+        if (!empty($params[2]) && ($params[2] == 'id.html')) {
+          $args['sort']='id';
+        }elseif (!empty($params[2]) && ($params[2] == 'name.html')) {
+          $args['sort']='name';
+        }elseif (!empty($params[2]) && ($params[2] == 'author.html')) {
+          $args['sort']='author';
+        }
+        return array('view', $args);
     } elseif (preg_match('/^addid/i', $params[1])) {
             return array('addid', $args);
     } elseif ($params[1] == 'displaynote') {
