@@ -15,7 +15,7 @@
 
 /**
  * Call a remote Xmlrpcserver method
- * <br>
+ * 
  * Opens an Xmlrpcserver connection
  * with the specified parameters.
  * @returns resultrarray

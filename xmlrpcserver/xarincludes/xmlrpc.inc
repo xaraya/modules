@@ -866,10 +866,10 @@ class xmlrpcval {
     function dump($ar) {
         reset($ar);
         while ( list( $key, $val ) = each( $ar ) ) {
-            echo "$key => $val<br>";
+            echo "$key => $val<br/>";
             if ($key == 'array')
                 while ( list( $key2, $val2 ) = each( $val ) ) {
-                    echo "-- $key2 => $val2<br>";
+                    echo "-- $key2 => $val2<br/>";
                 }
         }
     }

@@ -15,7 +15,7 @@
 
 /**
  * Initialise the installed XML-RPC server APIs
- * <br>
+ * 
  * Carries out a number of initialisation tasks to get various
  * XML-RPC libraries up and running.
  * @param none

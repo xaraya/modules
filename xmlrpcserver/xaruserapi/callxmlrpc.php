@@ -15,7 +15,7 @@
 
 /**
  * Call a remote XML-RPC method
- * <br>
+ * 
  * Opens a XML-RPC connection
  * with the specified parameters.
  * @returns resultrarray
