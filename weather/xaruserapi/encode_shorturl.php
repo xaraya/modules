@@ -1,7 +1,7 @@
 <?php
 function weather_userapi_encode_shorturl(&$params) 
 {
-	// Get arguments from argument array
+    // Get arguments from argument array
     if (!isset($params['func'])) { return; }
     
     // default path is empty -> no short URL
