@@ -27,7 +27,7 @@
 // Purpose of file:  Table information for images module
 // ----------------------------------------------------------------------
 
-function images_pntables()
+function images_xartables()
 {
     // Initialise table array
     $pntable = array();
