@@ -5,7 +5,7 @@
         <xar:else />
             <input name="multi_homed" type="checkbox" value="true" id="multi_homed_#$bid#" />
         </xar:if>
-        <label for="multi_homed_#$bid#"><xar:mlstring>Multi-homed (hides top root page)</xar:mlstring></label>
+        <label for="multi_homed_#$bid#"><xar:mlstring>Hide the root page</xar:mlstring></label>
     </div>
 
     <div>
@@ -47,7 +47,7 @@
         <p>
             <xar:mlstring>
                 If root pages are set, then the menus will be limited to those trees alone.
-                A current page outside any root will suppress the block.
+                If the current page is not under one of these roots, the block will be hidden.
             </xar:mlstring>
         </p>
         <label for="new_root_pid_#$bid#"><xar:mlstring>Add Root Page</xar:mlstring></label>
