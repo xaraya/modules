@@ -1,5 +1,8 @@
-<tr><td colspan=2>
-<h3 align="center">#$object->label#:</h3>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		#$object->label#:
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
 <table cellpadding=4 width="100%">
 <thead>
 <tr>
@@ -43,4 +46,6 @@
 </tr>
 </tbody>
 </table>
-</td></tr>
+	</span>
+</div>
+
