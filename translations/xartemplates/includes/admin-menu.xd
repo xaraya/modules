@@ -4,11 +4,16 @@
     <xar:mlstring>Translations administration</xar:mlstring>
   </span>
 </div>
-
 <xar:set name="$menu_dntype">#xarSessionGetVar('translations_dnType')#</xar:set>
+
+<xar:if condition="isset($menu_dntype)">
+<!-- <xar:set name="$menu_dntype">#xarSessionGetVar('translations_dnType')#</xar:set> -->
 <xar:if condition="$menu_dntype == 1"><xar:set name="$menu_dntypetext">'core'</xar:set></xar:if>
 <xar:if condition="$menu_dntype == 2"><xar:set name="$menu_dntypetext">'theme'</xar:set></xar:if>
 <xar:if condition="$menu_dntype == 3"><xar:set name="$menu_dntypetext">'module'</xar:set></xar:if>
+<xar:else />
+<xar:set name="$menu_dntypetext">''</xar:set>
+</xar:if>
 
 <div>
   <span><xar:mlstring>Translating</xar:mlstring></span>
