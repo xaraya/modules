@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Ping initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -13,6 +13,7 @@
 $modversion['name']           = 'Ping';
 $modversion['id']             = '810';
 $modversion['version']        = '1.0.3';
+$modversion['displayname']    = xarML('Ping');
 $modversion['description']    = 'Pings various weblog tracking sites to notify them of recently added content';
 $modversion['credits']        = '';
 $modversion['help']           = '';
