@@ -6,7 +6,7 @@
 <!-- some status given by the function using this template -->
 
 <xar:if condition="!empty($status)">
-    #$status#</b>
+    <strong>#$status#</strong>
 </xar:if>
 <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
         <div class="xar-mod-head"><span class="xar-mod-title">
@@ -29,8 +29,10 @@
              <xar:if condition="empty($item)">
              <xar:else />
                <p align="center">#$item#</p>
-               <p align="center"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border='0' valign='middle' ></p>
-               <p align="center"><textarea rows="6" name="L1" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border='0' valign='middle' ></a><!-- end link --></textarea></p>
+               <p align="center"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border="0" valign="middle" /></p>
+               <p align="center">
+                <textarea rows="6" name="L1" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border="0" valign="middle" /></a><!-- end link --></textarea>
+               </p>
             </xar:if><hr />
          </div>
     </xar:foreach>
