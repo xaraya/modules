@@ -38,30 +38,34 @@ function & uploads_userapi_transform ( $body )
         switch ( $type )  {
             case 'ulid':
                 // DEPRECATED
-                $replacement = "index.php?module=uploads&func=download&fileId=$id";
+                //$replacement = "index.php?module=uploads&func=download&fileId=$id";
+                $replacement = xarModAPIFunc('uploads','user','showoutput',
+                                             array('value' => $id));
                 break;
             case 'ulidd':
                 // DEPRECATED
-                $replacement = "index.php?module=uploads&func=download&fileId=$id";
+                //$replacement = "index.php?module=uploads&func=download&fileId=$id";
+                $replacement = xarModAPIFunc('uploads','user','showoutput',
+                                             array('value' => $id));
                 break;
             case 'ulfn': // ULFN is DEPRECATED
             case 'fileLinkedIcon':
-                $list = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
                 $replacement = xarTplModule('uploads', 'user', 'attachment-list', 
                                              array('Attachments' => $list));
                 break;
             case 'fileIcon':
-                $file = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $file = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
                 $file = end($file);
                 $replacement = $file['mimeImage'];
                 break;
             case 'fileURL':
-                $file = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $file = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
                 $file = end($file);
                 $replacement = $file['fileDownload'];
                 break;
             case 'fileName':
-                $file = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $file = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
                 $file = end($file);
                 $replacement = $file['fileName'];
                 break;

@@ -1,14 +1,18 @@
 <xar:if condition="isset($Attachments) AND is_array($Attachments) AND count($Attachments)">
-    <xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
+    <xar:if condition="!empty($format) and $format eq 'textupload'">
+        <xar:loop name="$Attachments">#ulid:#$loop:item['fileId']## </xar:loop>
+    <xar:else/>
+        <xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
 
-    <xar:loop name="$Attachments">
-        <div class="xar-uploads-icon">
-            <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
-                    <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
-                    #$loop:item['fileName']#
-            </a>
-        </div>
-    </xar:loop>
-    <div class="xar-uploads-clearer">&nbsp;</div>
+        <xar:loop name="$Attachments">
+            <div class="xar-uploads-icon">
+                <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
+                        <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
+                        #$loop:item['fileName']#
+                </a>
+            </div>
+        </xar:loop>
+        <div class="xar-uploads-clearer">&nbsp;</div>
+    </xar:if>
 </xar:if>
 

@@ -3,7 +3,7 @@
  * show output for uploads module (used in DD properties)
  * 
  * @param  $args ['value'] string the current value(s)
- * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
+ * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload'
  * @returns string
  * @return string containing the uploads output
  */
@@ -27,7 +27,7 @@ function uploads_userapi_showoutput($args)
         $data['Attachments'] = '';
     } 
 
-// TODO: different formats ?
+    $data['format'] = $format;
     return xarTplModule('uploads', 'user', 'attachment-list', $data, NULL);        
 }
 
