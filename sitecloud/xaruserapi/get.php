@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * get a specific headline
  * @poaram $args['id'] id of headline to get

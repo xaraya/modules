@@ -1,4 +1,4 @@
-<?
+<?php
 function sitecloud_adminapi_getmenulinks()
 {
     // Security Check

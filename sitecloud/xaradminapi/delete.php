@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * delete an site
  * @param $args['id'] ID of the headline

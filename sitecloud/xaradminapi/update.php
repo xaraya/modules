@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * update an site
  * @param $args['id'] the ID of the link

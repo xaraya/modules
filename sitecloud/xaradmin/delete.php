@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * delete item
  * @param 'id' the id of the item to be deleted

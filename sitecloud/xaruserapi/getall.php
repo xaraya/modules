@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * get all sitecloud
  * @returns array

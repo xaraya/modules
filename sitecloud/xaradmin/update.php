@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * This is a standard function that is called with the results of the
  * form supplied by sitecloud_admin_modify() to update a current item

@@ -1,4 +1,4 @@
-<?
+<?php
 function sitecloud_admin_create()
 {
 	if(!xarSecurityCheck('Addsitecloud')) return;

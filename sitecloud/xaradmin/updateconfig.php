@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * update configuration
  */
