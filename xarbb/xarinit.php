@@ -375,6 +375,7 @@ function xarbb_upgrade($oldversion)
                 $settings['forumsperpage']      = 20;
                 $settings['hottopic']           = 20;
                 $settings['allowhtml']          = false;
+                $settings['allowbbcode']        = false;
                 $settings['showcats']           = false;
                 $settings['linknntp']           = false;
                 $settings['nntpport']           = 119;
@@ -663,7 +664,7 @@ function xarbb_convertdates()
 
           //Copy to temp fields
           $docopy = "UPDATE $xbbforumstable
-                      SET xar_fpostid = $newfposttime
+                      SET xar_nfpostid = $newfposttime
                      WHERE xar_fid   = $fid";
            $doupdate =& $dbconn->Execute($docopy);
            if(!$doupdate) return;
