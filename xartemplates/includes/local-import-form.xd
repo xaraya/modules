@@ -81,6 +81,7 @@
                                     <img src="#xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $loop:item['fileType']))#"
                                          width="16" height="18" />&nbsp;
                                     #$loop:item['fileName']#
+                                </xar:if>
                             </xar:if>
                         </td>
                         <xar:if condition="is_array($loop:item['fileSize'])">
