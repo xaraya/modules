@@ -208,7 +208,7 @@ function dyn_example_init()
                 FROM $dynproptable
            LEFT JOIN $dyndatatable
                   ON xar_prop_id=xar_dd_propid
-               WHERE xar_prop_objectid=".xarVarPrepForStore($objectid);
+               WHERE xar_prop_objectid= $objectid";
 
     // Note : we could add some other fields in here too, based on the properties we imported above
     $instances = array(
