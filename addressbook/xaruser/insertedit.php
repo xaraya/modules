@@ -154,15 +154,7 @@ function AddressBook_user_insertedit() {
 /**
  * Format data that is displayed across all sub-templates
  */
-    $cats = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormCategories');
-    $output['cats'] = array();
-    $output['cats'][] = array('id'=>'0',
-                          'name'=>_AB_UNFILED);
-
-    foreach($cats as $cat) {
-        $output['cats'][] = array('id'=>$cat['nr'],
-                              'name'=>$cat['name']);
-    }
+    $output['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormCategories');
 
 /**
  * Perform custom processing per sub-template
