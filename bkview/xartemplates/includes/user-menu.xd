@@ -8,15 +8,14 @@
         </span>
     </div>
 
-<!-- temporarily include module level styling until we're done -->
-<xar:if condition="xarTplAddStyleLink('bkview','bkweb')">
-    <div class="bktabnav">
-        <div class="bknavhelp help" title="#xarML('Click on a tab to display different repository information')#">
-            <xar:if condition="!empty($name_value)">
-                #$name_value# : 
-            </xar:if>
+<!-- Use the standard tabbed navigation -->
+<xar:if condition="xarTplAddStyleLink('bkview','bkweb')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('base','navtabs')">
+    <div class="tabnav">
+        <div class="navhelp help" title="#xarML('Click on a tab to display different repository information')#">
+            <xar:mlstring>Repository navigation:</xar:mlstring>
         </div>
-        <div class="bktabnav-hairline"><!-- nothing here, just a clearing div really --></div>
+        <div class="tabnav-hairline"><!-- nothing here, just a clearing div really --></div>
         <ul class="navlist">
             <xar:if condition="$_bl_module_func eq 'view'">
                 <li class="active">
@@ -116,9 +115,13 @@
                 </xar:if>
             </xar:if>
         </ul>
-        <div class="bktabnav-hairline" />
+        <div class="tabnav-hairline" ><!-- nothing here, just a clearing div really --></div>
   </div>
 </xar:if>
+
 <div class="xar-mod-title">
+    <xar:if condition="!empty($name_value)">
+        #$name_value# : 
+    </xar:if>
     #$pageinfo# 
 </div>
