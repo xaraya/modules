@@ -33,8 +33,9 @@ function sniffer_userapi_get($args)
     extract($args);
 
     // Argument check
-    if (!isset($sortby) || !is_string($sortby)) {
-        $invalid[] = 'id';
+    $valid = array('id','agent','osnam','osver','agnam','agver','cap','quirk');
+    if (!isset($sortby) || !in_array($sortby,$valid)) {
+        $sortby = 'id';
     }
 
     if(!isset($startnum)) {
