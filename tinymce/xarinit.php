@@ -39,9 +39,9 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyencode','');
    xarModSetVar('tinymce', 'tinyinlinestyle','true');
    xarModSetVar('tinymce', 'tinyundolevel',10);
-   xarModSetVar('tinymce', 'tinyplugins', 'emotions,zoom,preview');
-   xarModSetVar('tinymce', 'tinybuttons', '');
-   xarModSetVar('tinymce', 'tinybuttons2','preview,zoom');
+   xarModSetVar('tinymce', 'tinyplugins', 'emotions,zoom,preview,searchreplace,print');
+   xarModSetVar('tinymce', 'tinybuttons', 'search,replace');
+   xarModSetVar('tinymce', 'tinybuttons2','preview,zoom,print');
    xarModSetVar('tinymce', 'tinybuttons3','emotions');
    xarModSetVar('tinymce', 'tinybuild1', '');
    xarModSetVar('tinymce', 'tinybuild2', '');
@@ -141,6 +141,10 @@ function tinymce_upgrade($oldversion)
     return tinymce_upgrade('0.3.0');
     break;
     case '0.3.0':
+    //database or var changes
+    return tinymce_upgrade('0.3.1');
+    break;
+    case '0.3.1':
     // Current version
     break;
     }

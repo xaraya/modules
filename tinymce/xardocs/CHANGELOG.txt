@@ -1,3 +1,21 @@
+* Version 0.3.1 10 Jan 05
+- Incorporating tinymce version 1.40
+- New Search and Replace plugin - search, search next, replace
+- New Print plugin
+- Fix Firefox icon display problem in editor
+- Fix so there is an editor prompt to use on Tab to textarea if Ask set true
+- Many other bug fixes
+
+* Version 0.3.0 5 Jan 05
+- Incorporates tinymce version 1.391 with many bug fixes and added features.
+- New and improved language packs.
+- Style/tag path browser in Advanced theme
+- Force to p or br tags for IE and Gecko browsers
+- Fix major bug where text is lost in Firefox if the editor is activated after text entry has begun.
+- Improved auto configration settings for the Imagebrowser/uploader for sites in root doc dir and also those in subdirectories.
+- New Save plug in, enhanced image plug in with rollovers, advanced link entry with popups, new tags for fore and background colour, and much more.
+- Many bug fixes
+
 * Version 0.2.1 29 Nov 04
 - Update with TinyMCE 1.3.8 version
 - Fixes for a number of prior bugs with popups
@@ -5,7 +23,7 @@
 - Updated image browser integration so config file is in /var/ibrowser dir
   and now configurable by site. Only relative paths tho still till full integration.
 - Updated symbol and character map
-- A few other things i forgot. 
+- A few other things i forgot.
 - Check the original TinyMCE changelog for their changes for 1.3.8
 - No database changes or new modvars
 

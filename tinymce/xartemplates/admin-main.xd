@@ -101,6 +101,8 @@
                  to the Additional Tags configuration</xar:mlstring></li>
                 <li><xar:mlstring>Advanced Link - allows insert of extended link tags, plus popup windows. Add <strong>advlink</strong> to Plugins, and <strong>a[id|name|href|style|title|onclick]</strong> to Additional Tags configuration.</xar:mlstring></li>
                 <li><xar:mlstring>Save - allows insert of a Save button. Add <strong>save</strong> to Plugins, and <strong>save</strong> to Additional Tags configuration.</xar:mlstring></li>
+               <li><xar:mlstring>Print - displays a Print function button. Add <strong>print</strong> to Plugins, and <strong>print</strong> to Additional Tags configuration.</xar:mlstring></li>
+               <li><xar:mlstring>Search and Replace - Search, Search Next and Replace function. Add <strong>searchreplace</strong> to Plugins, and <strong>search</strong> and/or <strong>replace</strong> to Additional Tags configuration.</xar:mlstring></li>
 
             </ol>
 

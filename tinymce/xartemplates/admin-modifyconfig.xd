@@ -440,7 +440,7 @@
             <span style="float: right; width: 68%; text-align: left;">
                 <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="60" maxlength="240" />
                     <p><xar:mlstring>Available plugins: save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
-                     advimage, advlink, flash, advhr</xar:mlstring></p>
+                     advimage, advlink, flash, advhrm, searchreplace, print</xar:mlstring></p>
             </span>
         </div>
 
@@ -586,7 +586,7 @@
             You DO NOT have to change anything on this page. If you do wish to change the defaults then you can add buttons, remove them, or define
             exactly what buttons appear. Valid button names are (separate names by comma - no spaces):</xar:mlstring>
             <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, backcolor, charmap, visualaid, spacer, cut, copy, paste, advhr
-              (and for plugins - save, ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime, advhr, flash)
+              (and for plugins - save, ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime, advhr, flash, search, replace, print)
                </xar:mlstring>
             </p>
         </div>
