@@ -208,7 +208,10 @@ function uploads_upgrade($oldversion)
             $linkagetable =& $xartable['uploads'];
 
             xarDBLoadTableMaintenanceAPI();
-
+            /* 
+            // If we're here, then don't worry about altering the table 
+            // we'll generate the mime type later
+            
             // add the xar_itemtype column
             $query = xarDBAlterTable($linkagetable,
                                      array('command' => 'add',
@@ -219,6 +222,7 @@ function uploads_upgrade($oldversion)
                                            'default' => 'application/octet-stream'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
+               */
         case '0.1.0':
 
             //Not needed anymore with the dependency checks.
@@ -249,8 +253,7 @@ function uploads_upgrade($oldversion)
                              xar_ulfile,
                              xar_ulhash,
                              xar_ulapp,
-                             xar_ultype,
-                             xar_ulmime
+                             xar_ultype
                         FROM $uploads_table";
 
             $result  =& $dbconn->Execute($query);
@@ -267,7 +270,7 @@ function uploads_upgrade($oldversion)
                 $entry['xar_location']      = $row['xar_ulhash'];
                 $entry['xar_status']        = ($row['xar_ulapp']) ? _UPLOADS_STATUS_APPROVED : _UPLOADS_STATUS_SUBMITTED;
                 $entry['xar_filesize']      = @filesize($row['xar_ulhash']) ? filesize($row['xar_ulhash']) : 0;
-
+                
                 switch(strtolower($row['xar_ultype'])) {
                     case 'd':
                                 $entry['xar_store_type'] = _UPLOADS_STORE_DATABASE;
@@ -499,9 +502,8 @@ function uploads_upgrade($oldversion)
             if (!$result)
                 return;
 
-            break;
-            
         case '0.7.5':
+            xarModAPILoad('uploads', 'user');
             xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
             break;
             

@@ -1,5 +1,5 @@
-<div id="attach_upload" style="display: none;">
+<div id="#$id#_attach_upload" style="display: none;">
     <xar:mlstring>Attach File: </xar:mlstring><br />
-    <input type="file" name="attach_upload" />
+    <input type="file" name="#$id#_attach_upload" />
     <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#" />
 </div>

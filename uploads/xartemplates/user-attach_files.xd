@@ -5,26 +5,26 @@
 <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
 <p>
     <xar:if condition="xarModGetVar('uploads', 'dd.fileupload.trusted') eq TRUE">
-        <a class="xar-uploads-action" onClick="javascript:switchImport(1, #$getAction['LOCAL']#);true;" 
+        <a class="xar-uploads-action" onClick="javascript:switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
            name="attach_trusted" title="#xarML('Attach file from Trusted Directory')#">Trusted</a> |
     </xar:if>
     
     <xar:if condition="xarModGetVar('uploads', 'dd.fileupload.external') eq TRUE">
-        <a class="xar-uploads-action" onClick="javascript:switchImport(2, #$getAction['EXTERNAL']#);true;" 
+        <a class="xar-uploads-action" onClick="javascript:switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;" 
            name="attach_external" title="#xarML('Attach file from external source (http(s)|ftp)')#">External</a> |
     </xar:if>
     
     <xar:if condition="xarModGetVar('uploads', 'dd.fileupload.upload') eq TRUE">
-        <a class="xar-uploads-action" onClick="javascript:switchImport(3, #$getAction['UPLOAD']#);true;" 
+        <a class="xar-uploads-action" onClick="javascript:switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;" 
            name="attach_upload" title="#xarML('Attach uploaded file')#">Upload</a> |
     </xar:if>
     
     <xar:if condition="(xarModGetVar('uploads', 'dd.fileupload.stored') eq TRUE) AND (isset($storedList) AND count($storedList))">
-        <a class="xar-uploads-action" onClick="javascript:switchImport(4, #$getAction['STORED']#);true;" 
+        <a class="xar-uploads-action" onClick="javascript:switchImport(4, #$getAction['STORED']#, '#$id#');true;" 
            name="attach_stored" title="#xarML('Attach previously stored file')#">Stored</a> |
     </xar:if>
     
-    <a class="xar-uploads-action" onClick="javascript:switchImport(5, -1);true;" 
+    <a class="xar-uploads-action" onClick="javascript:switchImport(5, -1, '#$id#');true;" 
        name="attach_reset" title="#xarML('Reset')#">Reset</a> 
     <br />
     
@@ -33,5 +33,5 @@
     <xar:template file="attach_upload" type="module" />
     <xar:template file="attach_stored" type="module" />
     
-    <input type="hidden" name="attach_type" value="#$getAction['STORED']#" />
+    <input type="hidden" name="#$id#_attach_type" value="#$getAction['STORED']#" />
 </p>

@@ -1,7 +1,7 @@
 <xar:if condition="isset($fileList) AND count($fileList)">
-    <div id="attach_trusted" style="display: none;">
+    <div id="#$id#_attach_trusted" style="display: none;">
         <xar:mlstring>Attach from Trusted directory:</xar:mlstring><br />
-        <select name="attach_trusted[]" multiple="multiple">
+        <select name="#$id#_attach_trusted[]" multiple="multiple">
             <xar:loop name="$fileList">
                 <option value="#$loop:item['relativePath']#">#$loop:item['relativePath']#</option>
             </xar:loop>

@@ -1,4 +1,4 @@
-<div id="attach_external" style="display: none;">
+<div id="#$id#_attach_external" style="display: none;">
     <xar:mlstring>Attach External File: </xar:mlstring><br />
-    <input type="text" name="attach_external" value="" size="40" maxlength="128" />
+    <input type="text" name="#$id#_attach_external" value="" size="40" maxlength="128" />
 </div>
