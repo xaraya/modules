@@ -2,6 +2,9 @@
 
 /**
  * get all topics
+ *
+ * @param $args['fid'] forum id, or
+ * @param $args['tids'] array of topic ids
  * @returns array
  * @return array of links, or false on failure
  */
@@ -17,7 +20,7 @@ function xarbb_userapi_getalltopics($args)
         $numitems = -1;
     }
 
-    if (!isset($fid)) {
+    if (empty($fid) && empty($tids)) {
         $msg = xarML('Invalid Parameter Count',
                     '', 'userapi', 'get', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -39,6 +42,8 @@ function xarbb_userapi_getalltopics($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => array(),
                                         'modid' => xarModGetIDFromName('xarbb')));
+// CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
+//          Do we want to support that in the future ?
     // make only one query to speed up
     // Get links
     $query = "SELECT xar_tid,
@@ -60,19 +65,13 @@ function xarbb_userapi_getalltopics($args)
             FROM $xbbtopicstable LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = $xbbforumstable.xar_fid
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
-            WHERE {$categoriesdef['where']} AND $xbbforumstable.xar_fid = " . xarVarPrepForStore($fid);
+            WHERE {$categoriesdef['where']} ";
+    if (isset($fid)) {
+        $query .= "AND $xbbforumstable.xar_fid = " . xarVarPrepForStore($fid);
+    } else {
+        $query .= "AND xar_tid IN (" . join(', ', $tids) . ")";
+    }
 
-   /* // Get links
-    $query = "SELECT xar_tid,
-                     xar_fid,
-                     xar_ttitle,
-                     xar_tpost,
-                     xar_tposter,
-                     xar_ttime,
-                     xar_treplies,
-                     xar_tstatus
-            FROM $xbbtopicstable
-            WHERE xar_tid = " . xarVarPrepForStore($tid);   */
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
