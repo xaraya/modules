@@ -20,30 +20,34 @@ function autolinks_admin_createtype()
     // Get parameters from whatever input we need
     if (!xarVarFetch('type_name', 'str:1:', $type_name)) {
         $errorcount += 1;
-        $data['type_name_error'] = xarErrorRender('text');
-        if (isset($data['type_name_error']['short'])) {$data['type_name_error'] = $data['type_name_error']['short'];}
+        $errorstack = xarErrorGet();
+        $errorstack = array_shift($errorstack);
+        $data['type_name_error'] = $errorstack['short'];
         xarErrorHandled();
     }
 
     // TODO: better validation on template name
     if (!xarVarFetch('template_name', 'str:1:', $template_name)) {
         $errorcount += 1;
-        $data['template_name_error'] = xarErrorRender('text');
-        if (isset($data['template_name_error']['short'])) {$data['template_name_error'] = $data['template_name_error']['short'];}
+        $errorstack = xarErrorGet();
+        $errorstack = array_shift($errorstack);
+        $data['template_name_error'] = $errorstack['short'];
         xarErrorHandled();
     }
 
     if (!xarVarFetch('dynamic_replace', 'int:0:1', $dynamic_replace, '0')) {
         $errorcount += 1;
-        $data['dynamic_replace_error'] = xarErrorRender('text');
-        if (isset($data['dynamic_replace_error']['short'])) {$data['dynamic_replace_error'] = $data['dynamic_replace_error']['short'];}
+        $errorstack = xarErrorGet();
+        $errorstack = array_shift($errorstack);
+        $data['dynamic_replace_error'] = $errorstack['short'];
         xarErrorHandled();
     }
 
     if (!xarVarFetch('type_desc', 'str:0:400', $type_desc)) {
         $errorcount += 1;
-        $data['type_desc_error'] = xarErrorRender('text');
-        if (isset($data['type_desc_error']['short'])) {$data['type_desc_error'] = $data['type_desc_error']['short'];}
+        $errorstack = xarErrorGet();
+        $errorstack = array_shift($errorstack);
+        $data['type_desc_error'] = $errorstack['short'];
         xarErrorHandled();
     }
 
@@ -66,8 +70,9 @@ function autolinks_admin_createtype()
     // Error in creating the item.
     if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
         $errorcount += 1;
-        $data['global_error'] = xarErrorRender('text');
-        if (isset($data['global_error']['short'])) {$data['global_error'] = $data['global_error']['short'];}
+        $errorstack = xarErrorGet();
+        $errorstack = array_shift($errorstack);
+        $data['global_error'] = $errorstack['short'];
         xarErrorHandled();
     }
 

@@ -16,22 +16,23 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
     // are passed to the relevant template. Errors are handled here.
 
     // Execute the template.
-    //set_error_handler(null);
+    set_error_handler('autolinks_userapi__transform_errhandler');
     $replace = xarTplModule(
         'Autolinks',
         xarModGetVar('autolinks', 'templatebase'),
         $template_name,
         $template_vars
     );
-    //restore_error_handler();
+    restore_error_handler();
 
     // Catch any exceptions.
     if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
         // The template errored.
 
         // 'text' rendering returns the exception as an array.
-        $error_text = xarErrorRender('text');
-        if (isset($error_text['short'])) {$error_text = $error_text['short'];}
+        $errorstack = xarErrorGet();
+        $errorstack = array_shift($errorstack);
+        $error_text = $errorstack['short'];
 
         if (xarModGetVar('autolinks', 'showerrors') || xarVarIsCached('autolinks', 'showerrors')) {
             // Pass the error through the error template if required.
@@ -65,6 +66,15 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
 
     // Put a placeholder in the word boundaries so we don't match it again.
     return preg_replace('/\b/', "$munger", $replace);
+}
+
+// Divert PHP errors to the normal error stack
+function autolinks_userapi__transform_errhandler($errorType, $errorString, $file, $line)
+{
+    if (!error_reporting()) {return;}
+    $msg = "File: " . $file. "; Line: " . $line . "; ". $errorString;
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+    return;
 }
 
 

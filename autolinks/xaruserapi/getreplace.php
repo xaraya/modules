@@ -1,5 +1,15 @@
 <?php
 
+
+// Divert PHP errors to the normal error stack
+function autolinks_userapi__getreplace_errhandler($errorType, $errorString, $file, $line)
+{
+    if (!error_reporting()) {return;}
+    $msg = "File: " . $file. "; Line: " . $line . "; ". $errorString;
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+    return;
+}
+
 /**
  * get the replacement text for an autolink
  * @param $args['lid'] id of the link to fetch; or
@@ -109,19 +119,20 @@ function autolinks_userapi_getreplace($args)
         // Non-dynamic templates can be executed and cached for later use.
 
         // Execute the template.
-        //set_error_handler(null);
+        set_error_handler('autolinks_userapi__getreplace_errhandler');
         $result = xarTplModule(
             'autolinks',
             xarModGetVar('autolinks', 'templatebase'),
             $template_name = $link['template_name'],
             $template_data
         );
-        //restore_error_handler();
+        restore_error_handler();
 
         // Catch any exceptions.
         if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
-            $error_text = xarErrorRender('text');
-            if (isset($error_text['short'])) {$error_text = $error_text['short'];}
+            $errorstack = xarErrorGet();
+            $errorstack = array_shift($errorstack);
+            $error_text = $errorstack['short'];
 
             // Handle the exception since we have rendered it.
             xarErrorHandled();
