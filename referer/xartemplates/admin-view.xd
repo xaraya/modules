@@ -4,26 +4,25 @@
 <div class="xar-mod-body">
 <h2>Recent Referers</h2>
 <p><a href="#$deleteurl#" onClick="#$javascript#"><xar:mlstring>Delete Referers</xar:mlstring></a></p>
-<div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
-<div class="xar-norm" style="padding: 3px;">
-	<span style="float: left; text-align: left; width: 89%;"><xar:mlstring>Url</xar:mlstring></span>
-	<span style="float: right; text-align: right; width: 9%;"><xar:mlstring>Frequency</xar:mlstring></span><br />
-</div>
-<xar:loop name="$items">
-	<xar:if condition="(($loop:index + 1) % 2)">
-	<div class="xar-norm" style="padding: 3px;">
-		<span style="float: left; text-align: left; width: 89%;"><a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a></span>
-		<span style="float: right; text-align: right; width: 9%;">#$loop:item['frequency']#</span><br />
+	<div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
+		<div class="xar-norm" style="padding: 3px;">
+			<span style="float: left; text-align: left; width: 89%;"><xar:mlstring>Url</xar:mlstring></span>
+			<span style="float: right; text-align: right; width: 9%;"><xar:mlstring>Frequency</xar:mlstring></span><br />
+		</div>
+	<xar:loop name="$items">
+		<xar:if condition="(($loop:index + 1) % 2)">
+		<div class="xar-norm" style="padding: 3px;">
+			<span style="float: left; text-align: left; width: 89%;"><a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a></span>
+			<span style="float: right; text-align: right; width: 9%;">#$loop:item['frequency']#</span><br />
+		</div>
+		<xar:else />
+		<div class="xar-accent" style="padding: 3px;">
+			<span style="float: left; text-align: left; width: 89%;"><a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a></span>
+			<span style="float: right; text-align: right; width: 9%;">#$loop:item['frequency']#</span><br />
+		</div>
+		</xar:if>
+	</xar:loop>
 	</div>
-	<xar:else />
-	<div class="xar-accent" style="padding: 3px;">
-		<span style="float: left; text-align: left; width: 89%;"><a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a></span>
-		<span style="float: right; text-align: right; width: 9%;">#$loop:item['frequency']#</span><br />
-	</div>
-	</xar:if>
-</xar:loop>
-</div>
 	<!-- add the pager here -->
 	<div style="text-align: center;">#$pager#</div>
-</div>
 </div>
