@@ -931,17 +931,17 @@ global $HTTP_HOST,$SERVER_NAME;
 	    $output->FormHidden('authid', xarSecGenAuthKey());
 
 		// explain what is going to happen
-	    $output->TableStart(_MULTISITES_CREATION);
+	    $output->TableStart(xarML("Initialization of multisites"));
 
     	$output->TableRowStart('left', 'top');
     	$output->TableColStart( 2, 'left', 'top');
-    	$output->Text(_MULTISITES_EXPLAIN);
+    	$output->Text(xarML("This operation is going to transform your installation from 'monosite' to a 'multisites' with only one site.<br />This operation cannot be reversed or modified, except by hacking the sources.<br />So ... "));
 		$output->TableColEnd();
 		$output->TableRowEnd();
 
     	$output->TableRowStart('left', 'top');
     	$output->TableColStart( 2, 'left', 'top');
-    	$output->Text(_MULTISITES_SERVERNAME);
+    	$output->Text(xarML("Multisites are uses 2 possible variables, HTTP_HOST, or SERVER_NAME. One or the other may not always work on your system, depending the way your server is configured. If the domain name you see below in front of the checked box is ok, do not change anything. Otherwise ..."));
 		$output->TableColEnd();
 		$output->TableRowEnd();
 
@@ -965,13 +965,13 @@ global $HTTP_HOST,$SERVER_NAME;
 
     	$output->TableRowStart('left', 'top');
     	$output->TableColStart( 2, 'left', 'top');
-    	$output->Text(_MULTISITES_WHEREIS);
+    	$output->Text(xarML("You will have to say where you want to install the folder which is going to hold all your subsites informations. Originally, it was the folder 'parameters'. Dont forget the last /, 'folder name/' for a folder installed in the root of the site.<br /><strong>Unfortunately</strong>, this folder HAS TO BE created before, for question of rights, difficult to manage as 'nobody' on a http server. And it has to be writable by this software. I noticed it has to be 777 chmoded, not 755 ..."));
 		$output->TableColEnd();
 		$output->TableRowEnd();
 
 	    $row = array();
 	    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-	    $row[] = $output->Text(xarVarPrepForDisplay(_MULTISITESWHEREIS));
+	    $row[] = $output->Text(xarVarPrepForDisplay(xarML("The sites' configurations will be in: ")));
 	    $row[] = $output->FormText('cWhereIsPerso', 'msdata/', 40, 40);
 	    $output->SetOutputMode(_PNH_KEEPOUTPUT);
 	    $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -981,11 +981,11 @@ global $HTTP_HOST,$SERVER_NAME;
     	$output->TableColStart( 2, 'left', 'top');
 // I dont understand why that function cleanDN does not work here ...		
     	$output->Text( 	
-				_MULTISITES_SUITE1 .
+				xarML("We are going to create a folder with the name defined as above, and in this folder, we will create an other folder for this precises site, '") .
 				cleanDN($HTTP_HOST) . 
-				_MULTISITES_SUITE2 . 
+				xarML("', and in this one, a folder 'images', a folder 'themes', in the folder 'images', we will create a folder 'topics'.<br />Then we will create a script named 'whoisit.inc.php', in the top folder (sitesettings).<br />In the folder '") . 
 				cleanDN($HTTP_HOST) . 
-				_MULTISITES_SUITE3
+				xarML("', we are going to copy the original config.php and make a backup of it<br />Then we will write a new config.php in the top, for that reason, <strong>the original config.php must have a 666 authorisation.</strong>")
 			);
 			
 		$output->TableColEnd();
@@ -1014,13 +1014,13 @@ global $HTTP_HOST,$SERVER_NAME;
 
     	$output->TableRowStart('left', 'top');
     	$output->TableColStart( 2, 'left', 'top');
-    	$output->Text(_MULTISITES_MASTER_EXPLAIN);
+    	$output->Text(xarML("Here you will be able to create new sub sites.<br />You already know the name of the domain you are installing, with all its levels, IS www.domain.com or sub.domain.com.<br />You have already created the database which is going to be used for this one.<br />We are going to create, in the folder <strong>".xarModGetVar('multisites','whereisperso')."</strong>, a folder with the name of your new domain, without its extension and without the 3 level 'www.'.<br />Then we will copy the complete folder ".xarModGetVar('multisites','masterfolder')." in the folder ".xarModGetVar('multisites','whereisperso')." changing its name. At the same time, we will modify the value of \$xarconfig['dbuname'] to give it the name of the database created.<br />Finally, you will have a new site, identical to the master site, ready to be administred normally."));
 		$output->TableColEnd();
 		$output->TableRowEnd();
 
 	    $row = array();
 	    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-	    $row[] = $output->Text(_MULTISITES_DN_EXPLAIN);
+	    $row[] = $output->Text(xarML("The complete domain name to use, ie: www2.domain.com:"));
 	    $row[] = $output->FormText('domaine_a_creer', '', 40, 40);
 	    $output->SetOutputMode(_PNH_KEEPOUTPUT);
 	    $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1028,7 +1028,7 @@ global $HTTP_HOST,$SERVER_NAME;
 
 	    $row = array();
 	    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-	    $row[] = $output->Text(_MULTISITES_DATABASE_EXPLAIN);
+	    $row[] = $output->Text(xarML("The name of the database used by this domain:"));
 	    $row[] = $output->FormText('database_utilisee', '', 40, 40);
 	    $output->SetOutputMode(_PNH_KEEPOUTPUT);
 	    $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1036,7 +1036,7 @@ global $HTTP_HOST,$SERVER_NAME;
 		
 	    $row = array();
 	    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-	    $row[] = $output->Text(_MULTISITES_PREFIX_EXPLAIN);
+	    $row[] = $output->Text(xarML("The name of the prefix used by this domain:"));
 	    $row[] = $output->FormText('prefix_utilise', 'nuke', 40, 40);
 	    $output->SetOutputMode(_PNH_KEEPOUTPUT);
 	    $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -1052,7 +1052,7 @@ global $HTTP_HOST,$SERVER_NAME;
 		
     	$output->TableRowStart('left', 'top');
     	$output->TableColStart( 2, 'left', 'top');
-    	$output->Text(xarVarPrepForDisplay(_MULTISITES_SORRY));
+    	$output->Text(xarVarPrepForDisplay(xarML('Sorry, already initialized.')));
 		$output->TableColEnd();
 		$output->TableRowEnd();
 		}
@@ -1063,7 +1063,7 @@ global $HTTP_HOST,$SERVER_NAME;
 
     // End form
     $output->Linebreak(2);
-    $output->FormSubmit(_MULTISITES_UPDATE);
+    $output->FormSubmit(xarML('Confirm the creation of this sub site'));
     $output->FormEnd();
     // Return the output that has been generated by this function
     return $output->GetOutput();
@@ -1176,7 +1176,7 @@ function multisites_admin_initconfig() {
 	else {
 		//	echo "The directory does not exist";
 	    $output = new pnHTML();
-        $output->Text( _MULTISITES_CREATEFOLDER.": ".$cWhereIsPerso );
+        $output->Text( xarML("This folder MUST have been created before").": ".$cWhereIsPerso );
         return $output->GetOutput();
 		}
 
@@ -1335,13 +1335,13 @@ function multisites_admin_initconfig() {
 			fwrite($lOk, "	if (is_file( \"".$cWhereIsPerso."\".\$serverName.\"/config.php\" )) { \n");
 			fwrite($lOk, "	{ include(\"".$cWhereIsPerso."\".\$serverName.\"/config.php\");}\n");
 			fwrite($lOk, "} else { \n");
-			fwrite($lOk, _MULTISITES_UNDECLARED);
+			fwrite($lOk, xarML(" die(\"This domain name:<ul type='circle'><li>HTTP_HOST: \".\$HTTP_HOST.\",<li>SERVER_NAME: \".\$SERVER_NAME.\"</ul>has not been declared as the sub-site of\".\$xarconfig['masterURL'].\", which is a multiste.<p>In order to do this, first you have to create a database, wich is going to be used for this domain name, and it has to be a .71 database.<br />This mean it can be a new database, or an old updated database. <p>Then go back on <a href=http://\".\$xarconfig['masterURL'].\">http://\".\$xarconfig['masterURL'].\"</a> in order to register it, if you are an administrator of course! Thanks.\");"));
 			fwrite($lOk, "} \n");
 			fwrite($lOk, "?>\n");
 			fclose($lOk);
 		} else {
 		    $output = new pnHTML();
-			$output->Text(str_replace('#NOM_FICHIER#','config.php',_MULTISITES_UNABLE_MODIF_CONFIG));
+			$output->Text(str_replace('#NOM_FICHIER#','config.php',xarML('Not able to create that file: <strong>#NOM_FICHIER#</strong>. Mod needed: <strong>666</strong>')));
 	        return $output->GetOutput();
 			}
 	}
