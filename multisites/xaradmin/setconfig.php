@@ -76,7 +76,8 @@ global $HTTP_SERVER_VARS;
             xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
             return $msg;
         }
-    $sitedir=$sitedir['sitedn'];
+    //$sitedir=$sitedir['sitedn']; //TODO: later when other changes complete
+    $sitedir='master';
 
     if (($lIsMultisites==1) and ($lIsMaster==0)) { // first time run through
         $var = is_dir ($cWhereIsPerso.'/'.$sitedir);

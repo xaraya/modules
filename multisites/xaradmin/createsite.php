@@ -189,7 +189,8 @@ function multisites_admin_createsite($args)
             xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
             return $msg;
         }
-    $masterdir=$mastersitedir['sitedn'];
+    //$masterdir=$mastersitedir['sitedn']; //TODO: Later when changes completed
+    $masterdir='master';
 
     // copy the master config.system.php file to the new master/var directory
     $filenamein = $cWhereIsPerso.'/'.$masterdir.'/var/config.system.php';
