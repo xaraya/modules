@@ -45,8 +45,10 @@ function articles_userapi_get($args)
 
     // Fields requested by the calling function
     $required = array();
-    foreach ($fields as $field) {
-        $required[$field] = 1;
+    if (isset($fields)) {
+        foreach ($fields as $field) {
+            $required[$field] = 1;
+        }
     }
 
     $bindvars = array();
