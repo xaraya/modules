@@ -17,8 +17,8 @@
  */
 function xarcachemanager_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 
@@ -216,8 +216,8 @@ function xarcachemanager_upgrade($oldversion)
  */
 function xarcachemanager_delete()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
     
