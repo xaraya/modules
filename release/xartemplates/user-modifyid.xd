@@ -1,0 +1,54 @@
+<h2><xar:mlstring>Release Module :: Modify A Release ID</xar:mlstring></h2>
+<br /><br />
+
+<center>
+	<br /><br />
+	<form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<input type="hidden" name="phase" id="phase" value="update" />	
+		<table border="0" cellpadding="5">
+			<tr>
+				<td align= "left" valign="top">
+					<xar:mlstring>Module or Theme ID</xar:mlstring>
+				</td>
+				<td align= "left" valign="top">
+					#$rid#
+				</td>
+			</tr>
+			<tr>
+				<td align= "left" valign="top">
+					<xar:mlstring>Module or Theme Name</xar:mlstring>
+				</td>
+				<td align= "left">
+					<input type="text" name="name" id="name" value="#$name#" size="25" maxlength="60" tabindex="2" />
+				</td>
+			</tr>
+			<tr>
+				<td align= "left" valign="top">
+					<xar:mlstring>Description</xar:mlstring>
+				</td>
+				<td>
+					<textarea name="desc" id="desc" tabindex="4" rows="10" cols="30" />#$desc#</textarea> 
+				</td>
+			</tr>
+			<tr>
+				<td align= "left" valign="top">
+					<xar:mlstring>Type</xar:mlstring>
+				</td>
+				<td align= "left">
+					<select name="idtype">
+						<xar:if condition="$type eq 'Module'">
+						<option name="module" selected><xar:mlstring>Module</xar:mlstring></option>
+						<option name="theme"><xar:mlstring>Theme</xar:mlstring></option>
+						<xar:else />
+						<option name="module"><xar:mlstring>Module</xar:mlstring></option>
+						<option name="theme" selected><xar:mlstring>Theme</xar:mlstring></option>
+						</xar:if>
+					</select>
+				</td>
+			</tr>
+		</table>			
+		<br /><br />
+		<input type="submit" value="<xar:mlstring>Modify ID</xar:mlstring>" align="middle" tabindex="6" />
+	</form>
+</center>
