@@ -25,7 +25,7 @@ function keywords_adminapi_getwordslimited($args)
 
     if (!isset($moduleid) || !is_numeric($moduleid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module id', 'user', 'getwordslimited', 'keywords');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

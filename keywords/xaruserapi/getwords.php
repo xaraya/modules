@@ -31,14 +31,14 @@ function keywords_userapi_getwords($args)
     if (!isset($modid) || !is_numeric($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module id', 'user', 'getwords', 'keywords');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
     if (!isset($itemid) || !is_numeric($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'user', 'getwords', 'keywords');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

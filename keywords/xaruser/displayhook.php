@@ -29,7 +29,7 @@ function keywords_user_displayhook($args)
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'extrainfo', 'user', 'displayhook', 'keywords');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $msg;
     }
@@ -37,7 +37,7 @@ function keywords_user_displayhook($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'user', 'displayhook', 'keywords');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $msg;
     }
@@ -54,7 +54,7 @@ function keywords_user_displayhook($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name ' . $modname, 'user', 'displayhook', 'keywords');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $msg;
     }

@@ -33,7 +33,7 @@ function keywords_userapi_getitems($args)
         if (!is_numeric($id) && !is_array($id)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                          'keywords id', 'user', 'getitem', 'keywords');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return;
         }
@@ -41,7 +41,7 @@ function keywords_userapi_getitems($args)
         if (!isset($keyword)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'keyword', 'user', 'getitem', 'keywords');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return;
         }
