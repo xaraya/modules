@@ -42,6 +42,21 @@ function xarpages_adminapi_updatepage($args)
         return;
     }
 
+    // Check we have minimum privs to edit this page.
+    if (!xarSecurityCheck('EditPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+        return;
+    }
+
+    // Curtain changes can only be made if we have delete privilege on the page.
+    // Null those arguments out if we do not have the privs.
+    if (!xarSecurityCheck('DeletePage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+        // We do not allow the page to be renamed or moved if we only have edit priv.
+        // TODO: perhaps there are other [arbitrary] attibutes that we would like to
+        // prevent the user from changing?
+        unset($name);
+        $moving = 0;
+    }
+
     // Set the module alias if necessary.
     // If the name has changed, then remove any existing alias.
     if (isset($name)) {

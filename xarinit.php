@@ -82,10 +82,12 @@ function xarpages_init()
     );
     if (!$result) {return;}
 
+    // The page type must be unique.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
         $pagestable,
-        'xar_itemtype'
+        'xar_itemtype',
+        array('UNIQUE' => true)
     );
     if (!$result) {return;}
 
@@ -172,6 +174,10 @@ function xarpages_init()
     xarRegisterMask(
         'DeletePage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_DELETE',
         xarML('Remove pages')
+    );
+    xarRegisterMask(
+        'AdminPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_ADMIN',
+        xarML('Administer the module')
     );
 
     // Set up component 'Pagetype'.

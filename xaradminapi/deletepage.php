@@ -31,7 +31,9 @@ function xarpages_adminapi_deletepage($args)
     }
 
     // Security check
-    //if (!xarSecurityCheck('DeleteCategories',1,'category',"All:$cid")) return;
+    if (!xarSecurityCheck('DeletePage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+        return;
+    }
 
     // Delete any module aliases for this page.
     xarModDelAlias($page['name'], 'xarpages');

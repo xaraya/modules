@@ -16,6 +16,11 @@ function xarpages_adminapi_createtype($args)
 {
     extract($args);
 
+    // Security: allowed to create page types?
+    if (!xarSecurityCheck('AddPagetype', 1, 'Pagetype', 'All')) {
+        return;
+    }
+
     // Get the pagetype itemtype ID. The first time this is ever called,
     // the system itemtype pagetype will be created, so do it first to
     // increase the likelyhood that it will get ID number 1.

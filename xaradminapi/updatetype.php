@@ -30,6 +30,11 @@ function xarpages_adminapi_updatetype($args)
         return;
     }
 
+    // Security: allowed to create page types?
+    if (!xarSecurityCheck('EditPagetype', 1, 'Pagetype', $type['name'])) {
+        return;
+    }
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

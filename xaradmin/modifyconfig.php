@@ -9,6 +9,11 @@ function xarpages_admin_modifyconfig()
 {
     $data = array();
 
+    // Need admin priv to modify config.
+    if (!xarSecurityCheck('AdminPage', 1)) {
+        return;
+    }
+
     // Get the tree of all pages.
     $data['tree'] = xarModAPIfunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));
 

@@ -37,7 +37,7 @@ function xarpages_admin_modifypage()
         if (xarSecurityCheck('DeletePage', 0, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
             $data['delete_allowed'] = true;
         }
-    
+
         $data['ptid'] = $data['page']['pagetype']['ptid'];
 
         // We need all pages, but with the current page tree pruned.
@@ -87,6 +87,16 @@ function xarpages_admin_modifypage()
                 'xarpages', 'user', 'gettypes',
                 array('key' => 'ptid')
             );
+
+            // Check privileges of each page type: are we allowed to create
+            // pages for each type? We may actually end up with no page types
+            // but that depends on the permissions.
+            foreach($pagetypes as $key => $pagetype) {
+                if (!xarSecurityCheck('AddPage', 0, 'Page', 'All' . ':' . $pagetype['name'])) {
+                    unset($pagetypes[$key]);
+                }
+            }
+
             $data['pagetypes'] = $pagetypes;
 
             // Return to the template immediately so the page type can be selected.

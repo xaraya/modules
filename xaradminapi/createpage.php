@@ -16,7 +16,30 @@ function xarpages_adminapi_createpage($args)
 {
     extract($args);
 
-    // TODO: validate name (mand and unique)
+    // Name is mandatory, but does not have to be unique.
+    if (trim($name) == '') {
+        $msg = xarML('Missing page name');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
+
+    // Get the itemtype.
+    $pagetype = xarModAPIfunc(
+        'xarpages', 'user', 'gettype',
+        array('ptid' => $itemtype)
+    );
+
+    if (empty($pagetype)) {
+        // Error - invalid page type.
+        $msg = xarML('Invalid page type ID "#(1)"', $itemtype);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
+
+    // Security check - can we create pages of this type?
+    if (!xarSecurityCheck('AddPage', 1, 'Page', 'All' . ':' . $pagetype['name'])) {
+        return;
+    }
 
     $xartable =& xarDBGetTables();
     $dbconn =& xarDBGetConn();
@@ -38,6 +61,15 @@ function xarpages_adminapi_createpage($args)
 
     // Open a space in the pages hierarchy.
     // Position in the hierarchy defined by args: insertpoint and offset
+    // TODO: if insertpoint or offset are missing, then default them so that
+    // the page is inserted as the first root page. That would help data
+    // import, where a tree could be imported with no knowledge of existing
+    // pages.
+    if (!isset($insertpoint) || !isset($offset)) {
+        $insertpoint = 0;
+        $offset = 'before';
+    }
+
     $gap = xarModAPIfunc(
         'xarpages', 'tree', 'insertprep',
         array_merge(

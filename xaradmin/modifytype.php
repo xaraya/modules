@@ -32,6 +32,11 @@ function xarpages_admin_modifytype()
             return;
         }
 
+        // Security: check we are able to modify this page type.
+        if (!xarSecurityCheck('EditPagetype', 1, 'Pagetype', $type['name'])) {
+            return;
+        }
+
         $data['func'] = 'modify';
 
         // The modify hooks for the page type as an item.
@@ -47,6 +52,11 @@ function xarpages_admin_modifytype()
         );
     } else {
         // Adding a new page type.
+
+        // Security: allowed to create page types?
+        if (!xarSecurityCheck('AddPagetype', 1, 'Pagetype', 'All')) {
+            return;
+        }
 
         // Default data for the page type form.
         $type = array(
