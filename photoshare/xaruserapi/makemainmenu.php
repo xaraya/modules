@@ -103,6 +103,6 @@ function photoshareGetImageMenu()
                  array( 'title' => xarMl('Rotate counter clockwise'),	'image' => 'rotatecc.gif' ), 
                  array( 'title' => xarMl('Set image as main image'),	'image' => 'greendot.gif' ) );
 }
-}
+
  
 ?>
