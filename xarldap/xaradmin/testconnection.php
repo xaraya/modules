@@ -2,7 +2,7 @@
 /**
  * File: $Id$
  *
- * XarLDAP Administrative Display Functions
+ * XarLDAP Administration
  * 
  * @package authentication
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -14,16 +14,21 @@
 */
 
 /**
- * This is a standard function to modify the configuration parameters of the
- * module
- */
-function xarldap_admin_modifyconfig()
+ * xarldap_admin_testconnection: 
+ *
+ * Test the xarldap connection
+ *
+ * @author  Richard Cave <rcave@xaraya.com>
+ * @access  public
+ * @param   none 
+ * @return  returns true on success or false on failure
+ * @throws  none
+ * @todo    none
+*/
+function xarldap_admin_testconnection()
 {
     // Security check
     if(!xarSecurityCheck('AdminXarLDAP')) return;
-    
-    // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
     
     // Create LDAP object
     include_once 'modules/xarldap/xarldap.php';
@@ -40,9 +45,9 @@ function xarldap_admin_modifyconfig()
 
     // Allow anonymous bind to server (true/false)
     if ($ldap->anonymous_bind == 'true') {    
-        $data['anonymousbindvalue'] = xarVarPrepForDisplay("checked");
+        $data['anonymousbindvalue'] = xarVarPrepForDisplay("yes");
     } else {
-        $data['anonymousbindvalue'] = "";
+        $data['anonymousbindvalue'] = xarVarPrepForDisplay("no");
     }
 
     // Bind DN (default is 'o=dept')
@@ -53,9 +58,9 @@ function xarldap_admin_modifyconfig()
 
     // Search user dn (true/false)
     if ($ldap->search_user_dn == 'true') {    
-        $data['searchuserdnvalue'] = xarVarPrepForDisplay("checked");
+        $data['searchuserdnvalue'] = xarVarPrepForDisplay("yes");
     } else {
-        $data['searchuserdnvalue'] = "";
+        $data['searchuserdnvalue'] = xarVarPrepForDisplay("no");
     }
 
     // Admin Login
@@ -65,7 +70,10 @@ function xarldap_admin_modifyconfig()
     $adminpasswd = $ldap->encrypt($ldap->admin_password, 0);
     $data['adminpasswdvalue'] = xarVarPrepForDisplay($adminpasswd);
 
-    // everything else happens in Template for now
+    // Generate a one-time authorisation code for this operation
+    $data['authid'] = xarSecGenAuthKey();
+    
+    // Return the template variables defined in this function
     return $data;
 }
 

@@ -196,8 +196,7 @@ class xarldap {
         // Admin password is encrypted - so decrypt
         $admin_password = $this->encrypt($this->admin_password, 0);
 
-        return $this->bind($this->admin_login,
-                           $admin_password);
+        return $this->bind($this->admin_login, $admin_password);
     }
 
     /**

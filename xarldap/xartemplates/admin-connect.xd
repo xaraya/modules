@@ -1,0 +1,24 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Connection to LDAP Server</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:if condition="$result eq true">
+                <br />
+                <h3><xar:mlstring>Success!</xar:mlstring></h3>
+                <br /><br />
+            <xar:else />
+                <br />
+                <h3><xar:mlstring>Failure!</xar:mlstring></h3>
+                <br />
+                <xar:mlstring>The LDAP configuration is not set correctly.  You can modify your configuration in the </xar:mlstring>
+                        <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#">here</a>.
+                <br /><br />
+
+            </xar:if>
+        </div>
+    </div>
+</div>

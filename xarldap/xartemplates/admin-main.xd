@@ -25,10 +25,11 @@
             <xar:mlstring>You must configure XarLDAP before you can successfully authenticate a user with the AuthLDAP module or search the LDAP server.</xar:mlstring>
             <br /><br />
             <xar:mlstring>
-			From the menu, you have one choice.  "Modify Config". 
+			From the menu, you have the following choices:. 
 			</xar:mlstring>
 			<ul>
 				<li><xar:mlstring>Modify Config -- From here, you can configure the LDAP server.</xar:mlstring></li>
+				<li><xar:mlstring>Test Connnection -- Test the connection the LDAP server.</xar:mlstring></li>
 			</ul>
 		</div>
         <br />
@@ -40,8 +41,5 @@
 			<xar:mlstring>There are no included blocks with the XarLDAP Module</xar:mlstring>
         </div>
         <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
     </div>
 </div>

@@ -1,26 +1,20 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <div style="padding: 1px;" class="xar-norm-outline">
-    <form method="post" action="&xar-modurl-xarldap-admin-updateconfig;">
+    <form method="post" action="&xar-modurl-xarldap-admin-connect;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>LDAP Server Configuration</xar:mlstring>
+            <xar:mlstring>Test Connection to LDAP Server</xar:mlstring>
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
-                    <td colspan=2>
-                        <xar:mlstring>If you are configuring Xaraya to use LDAP for user authentication, you should configure the LDAP server within the</xar:mlstring>
-                        <a href="#xarModURL('authldap', 'admin', 'modifyconfig')#">authldap module</a>.
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
                     <td>
                         <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="ldapserver" value="#$ldapservervalue#" />
+                        #$ldapservervalue#
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -28,7 +22,7 @@
                         <xar:mlstring>LDAP Server Port Number</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="portnumber" value="#$portnumbervalue#" />
+                        #$portnumbervalue#
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -36,7 +30,7 @@
                         <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
                     </td>
                     <td>
-                        <input type="checkbox" name="anonymousbind" value="1" #$anonymousbindvalue# />
+                        #$anonymousbindvalue#
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -44,7 +38,7 @@
                         <xar:mlstring>LDAP bind DN</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="binddn" value="#$binddnvalue#" />
+                        #$binddnvalue#
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -52,7 +46,7 @@
                         <xar:mlstring>LDAP UserID Field Name</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="uidfield" value="#$uidfieldvalue#" />
+                        #$uidfieldvalue#
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -60,7 +54,7 @@
                         <xar:mlstring>Search User DN</xar:mlstring>
                     </td>
                     <td>
-                        <input type="checkbox" name="searchuserdn" value="1" #$searchuserdnvalue# />
+                        #$searchuserdnvalue#
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -68,7 +62,7 @@
                         <xar:mlstring>LDAP Admin ID</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="adminid" value="#$adminidvalue#" />
+                        #$adminidvalue#
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -76,15 +70,14 @@
                         <xar:mlstring>LDAP Admin Password</xar:mlstring>
                     </td>
                     <td>
-                        <input type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
+                        <input disabled type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
                     </td>
                 </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="submit" value="Submit" align="middle" />
+                <tr align="center">
+                    <td colspan="2">
+                        <br />
+                        <input type="submit" value="Test Connection" align="middle" />
+                        <br />
                     </td>
                 </tr>
             </table>

@@ -34,6 +34,12 @@ function xarldap_adminapi_getmenulinks()
                                                   'modifyconfig'),
                              'title' => xarML('Modify the configuration for the module'),
                              'label' => xarML('Modify Config'));
+
+        $menulinks[] = Array('url'   => xarModURL('xarldap',
+                                                  'admin',
+                                                  'testconnection'),
+                             'title' => xarML('Test the connection to the LDAP server'),
+                             'label' => xarML('Test Connection'));
     } else {
         $menulinks = '';
     }
