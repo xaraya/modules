@@ -178,17 +178,18 @@ function release_init()
 
     // Register Block types
     if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'release',
-                'blockType' => 'latest'))) return;
+                       'admin',
+                       'register_block_type',
+                       array('modName'   => 'release',
+                             'blockType' => 'latest'))) return;
     
     // Enable categories hooks for release
     xarModAPIFunc('modules','admin','enablehooks',
           array('callerModName' => 'release', 'hookModName' => 'categories'));        
 
     // Register Masks
-    xarRegisterMask('OverviewRelease','All','release','All','All','ACCESS_READ');
+    xarRegisterMask('OverviewRelease','All','release','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('EditRelease','All','release','All','All','ACCESS_EDIT');
     xarRegisterMask('DeleteRelease','All','release','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
@@ -228,7 +229,7 @@ function release_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-        break;
+            return release_upgrade('0.0.5');
         case '0.0.5':
             // let's hook cats in
             $cid = xarModAPIFunc('categories', 'admin', 'create',
@@ -241,13 +242,13 @@ function release_upgrade($oldversion)
             // Enable categories hooks for release
             xarModAPIFunc('modules','admin','enablehooks',
                   array('callerModName' => 'release', 'hookModName' => 'categories'));        
-        break;
+            return release_upgrade('0.0.6');
         case '0.0.6':
             // Set up an initial value for a module variable.
             xarModSetVar('release', 'SupportShortURLs', 0);
 
             xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
-        break;
+            return release_upgrade('0.0.7');
         case '0.0.7':
             xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
             // Register Block types
@@ -256,7 +257,7 @@ function release_upgrade($oldversion)
                     'register_block_type',
                     array('modName' => 'release',
                         'blockType' => 'latest'))) return;
-        break;
+            return release_upgrade('0.0.8');
         case '0.0.8':
             xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
 
@@ -314,8 +315,16 @@ function release_upgrade($oldversion)
                 $result->MoveNext();
             }
             $result->Close();
-        break;
+            return release_upgrade('0.0.9');
         case '0.0.9':
+            xarRegisterMask('OverviewRelease','All','release','All','All','ACCESS_OVERVIEW');
+            xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
+            xarRegisterMask('EditRelease','All','release','All','All','ACCESS_EDIT');
+            xarRegisterMask('DeleteRelease','All','release','All','All','ACCESS_DELETE');
+            xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
+            xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
+        break;
+        case '0.0.10':
     }
     return true;
 }
@@ -329,38 +338,43 @@ function release_delete()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $releasetable = $xartable['release_id'];
-
-    // Drop the table
+    // Drop the release_id table
     $query = "DROP TABLE $xartable[release_id]";
-
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Drop the table
+    // Drop the release_notes table
     $query = "DROP TABLE $xartable[release_notes]";
-
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Drop the table
+    // Drop the release_docs table
     $query = "DROP TABLE $xartable[release_docs]";
-
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
-            'admin',
-            'unregister_block_type',
-            array('modName' => 'release',
-                'blockType' => 'latest'))) return;
+                       'admin',
+                       'unregister_block_type',
+                        array('modName'   => 'release',
+                              'blockType' => 'latest'))) return;
 
-    // UnRegister Masks
-    xarUnRegisterMask('OverviewRelease');
-    xarUnRegisterMask('EditRelease');
-    xarUnRegisterMask('DeleteRelease');
-    xarUnRegisterMask('ReadReleaseBlock');
+    // Disable categories hooks for release
+    xarModAPIFunc('modules','admin','disablehooks',
+          array('callerModName' => 'release', 'hookModName' => 'categories'));        
+
+
+    // Delete cats
+    if (!xarModAPIFunc('categories', 'admin', 'deletecat',
+                         array('cid' => xarModGetVar('release', 'mastercids')))) return;
+
+    // Delete any module variables
+    xarModDelAllVars('release');
+    // Remove Masks and Instances
+    xarRemoveMasks('release');
+    xarRemoveInstances('release');
+
 
     return true;
 }
