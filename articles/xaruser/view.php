@@ -21,6 +21,8 @@ function articles_user_view($args)
     if(!xarVarFetch('numcols',  'isset', $numcols,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('authorid', 'isset', $authorid,  NULL, XARVAR_DONT_SET)) {return;}
 // This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
+//    if(!xarVarFetch('startdate','isset', $startdate, NULL, XARVAR_DONT_SET)) {return;}
+//    if(!xarVarFetch('enddate',  'isset', $enddate,   NULL, XARVAR_DONT_SET)) {return;}
 //    if(!xarVarFetch('where',    'isset', $where,     NULL, XARVAR_DONT_SET)) {return;}
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
@@ -292,7 +294,15 @@ function articles_user_view($args)
     if (xarModIsHooked('dynamicdata','articles',$ptid)) {
         $extra[] = 'dynamicdata';
     }
-    if (!isset($where)) {
+
+    $now = time();
+    if (empty($startdate) || !is_numeric($startdate) || $startdate > $now) {
+        $startdate = null;
+    }
+    if (empty($enddate) || !is_numeric($enddate) || $enddate > $now) {
+        $enddate = $now;
+    }
+    if (empty($where)) {
         $where = null;
     }
 
@@ -310,7 +320,8 @@ function articles_user_view($args)
                                    'extra' => $extra,
                                    'where' => $where,
                                    'numitems' => $numitems,
-                                   'enddate' => time()));
+                                   'startdate' => $startdate,
+                                   'enddate' => $enddate));
 
     if (!is_array($articles)) {
         // Error getting articles
@@ -686,7 +697,9 @@ function articles_user_view($args)
                                                         'ptid' => (isset($ptid) ? $ptid : null),
                                                         'authorid' => $authorid,
                                                         'status' => $status,
-                                                        'enddate' => time())),
+                                                        'where' => $where,
+                                                        'startdate' => $startdate,
+                                                        'enddate' => $enddate)),
                                     xarModURL('articles', 'user', 'view',
                                               array('ptid' => ($ishome ? null : $ptid),
                                                     'catid' => $catid,

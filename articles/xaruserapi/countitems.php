@@ -3,7 +3,8 @@
 /**
  * count number of items depending on additional module criteria
  *
- * @param $args['cids'] array of cids that we are counting for (OR/AND)
+ * @param $args['catid'] string of category id(s) that we're counting in, or
+ * @param $args['cids'] array of cids that we are counting in (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  *
  * @param $args['authorid'] the ID of the author
@@ -37,7 +38,7 @@ function articles_userapi_countitems($args)
     if (!isset($args['andcids'])) {
         $args['andcids'] = false;
     }
-    if (count($args['cids']) > 0) {
+    if (count($args['cids']) > 0 || !empty($args['catid'])) {
         // Load API
         if (!xarModAPILoad('categories', 'user')) return;
 
