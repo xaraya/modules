@@ -148,21 +148,6 @@ function headlines_user_view()
     if(!xarSecurityCheck('ReadHeadlines')) return;
     xarVarFetch('hid', 'id', $hid, XARVAR_PREP_FOR_DISPLAY);
 
-    $hooks = xarModCallHooks('item',
-                             'display',
-                             $hid,
-                             xarModURL('headlines',
-                                       'user',
-                                       'view',
-                                       array('hid' => $hid)));
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
-    } else {
-        $data['hooks'] = $hooks;
-    }
-
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');
 
@@ -256,6 +241,22 @@ function headlines_user_view()
     }
 
     $data['feedcontent'] = $feedcontent;
+
+    $data['module'] = 'headlines';
+    $data['itemtype'] = 0;
+    $data['itemid'] = $hid;
+    $data['returnurl'] = xarModURL('headlines',
+                                   'user',
+                                   'view',
+                                   array('hid' => $hid));
+    $hooks = xarModCallHooks('item', 'display', $hid, $data);
+    if (empty($hooks)) {
+        $data['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hooks'] = join('',$hooks);
+    } else {
+        $data['hooks'] = $hooks;
+    }
 
     return $data;
 }
