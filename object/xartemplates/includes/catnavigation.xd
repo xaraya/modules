@@ -1,0 +1,13 @@
+<xar:comment>
+  We specify the urlmodule, urlparam and urlvalue here, so that
+  any category URLs will point to the right place...
+</xar:comment>
+
+<xar:if condition="isset($itemid)">
+  <xar:categories-navigation layout="trails" showchildren="1" module="$modname" itemtype="$itemtype" itemid="$itemid" urlmodule="object" type="user" func="main" urlparam="object" urlvalue="$objectname" catid="$catid" showcatcount="1" />
+
+<xar:else/>
+  <xar:categories-navigation layout="trails" showchildren="1" module="$modname" itemtype="$itemtype" urlmodule="object" type="user" func="main" urlparam="object" urlvalue="$objectname" catid="$catid" showcatcount="1" />
+
+</xar:if>
+

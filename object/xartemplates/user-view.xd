@@ -1,0 +1,25 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="objectlabel">#$object:label#</xar:set>
+
+<xar:if condition="empty($objectlabel)">
+  <h2><xar:mlstring>View Object</xar:mlstring></h2>
+
+  <xar:mlstring>You can specify a default object in xaruser/main.php, or pass it via the URL as object=...</xar:mlstring>
+
+<xar:else/>
+  <h2><xar:ml><xar:mlstring>View #(1)</xar:mlstring><xar:mlvar>#$objectlabel#</xar:mlvar></xar:ml></h2>
+
+  <xar:comment>
+    Use the standard xar:data-view tag to benefit from DD's processing,
+    but specify that the object template is located in this module too.
+  </xar:comment>
+
+  <xar:data-view object="$object" tplmodule="object" urlmodule="object" />
+
+  <xar:set name="instance">#$object:moduleid . ':' . $object:itemtype . ':All'#</xar:set>
+  <xar:if condition="xarSecurityCheck('AddDynamicDataItem',0,'Item',$instance)">
+    <xar:set name="objectname">#$object:name#</xar:set>
+    <a href="#xarModURL('object','user','main',array('object' => $objectname, 'method' => 'new'))#"><xar:mlstring>Create New</xar:mlstring></a>
+  </xar:if>
+</xar:if>

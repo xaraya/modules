@@ -1,0 +1,40 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="objectid">#$object:objectid#</xar:set>
+<xar:if condition="empty($objectid)">
+  <h2><xar:mlstring>Display Object</xar:mlstring></h2>
+
+<xar:else/>
+  <h2><xar:ml><xar:mlstring>Display #(1)</xar:mlstring><xar:mlvar>#$object:label#</xar:mlvar></xar:ml></h2>
+
+  <xar:comment>
+    Use the standard xar:data-display tag to benefit from DD's processing,
+    but specify that the object template is located in this module too.
+  </xar:comment>
+
+  <xar:data-display object="$object" tplmodule="object" />
+
+  <xar:set name="instance">#$object:moduleid . ':' . $object:itemtype . ':All'#</xar:set>
+  <xar:set name="objectname">#$object:name#</xar:set>
+  <xar:if condition="xarSecurityCheck('AddDynamicDataItem',0,'Item',$instance)">
+    <a href="#xarModURL('object','user','main',array('object' => $objectname, 'method' => 'new'))#"><xar:mlstring>Create New</xar:mlstring></a>
+  </xar:if>
+  <xar:set name="instance">#$object:moduleid . ':' . $object:itemtype . ':' . $object:itemid#</xar:set>
+  <xar:set name="itemid">#$object:itemid#</xar:set>
+  <xar:if condition="xarSecurityCheck('DeleteDynamicDataItem',0,'Item',$instance)">
+    | <a href="#xarModURL('object','user','main',array('object' => $objectname, 'method' => 'modify', 'itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a>
+    | <a href="#xarModURL('object','user','main',array('object' => $objectname, 'method' => 'delete', 'itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
+  <xar:elseif condition="xarSecurityCheck('EditDynamicDataItem',0,'Item',$instance)"/>
+    | <a href="#xarModURL('object','user','main',array('object' => $objectname, 'method' => 'modify', 'itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a>
+  </xar:if>
+
+  <xar:if condition="!empty($hookoutput)">
+    <br />
+    <xar:foreach in="$hookoutput" key="$hookmodule">
+      #$hookoutput[$hookmodule]#
+      <br />
+    </xar:foreach>
+  </xar:if>
+
+</xar:if>
+

@@ -1,0 +1,63 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
+    <xar:template file="catnavigation" />
+</xar:if>
+<xar:if condition="!empty($items) and count($items) gt 0">
+    <table border="0" cellspacing="0" cellpadding="4">
+    <tr>
+        <xar:foreach in="$properties" key="$name">
+            <th align="center"><a href="#$sorturl#=#$name#"><xar:data-label property="$properties[$name]" /></a></th>
+        </xar:foreach>
+        <xar:if condition="empty($linkfield)">
+            <th>
+                &nbsp;
+            </th>
+        </xar:if>
+    </tr>
+    <xar:foreach in="$items" key="$itemid" value="$fields">
+    <tr>
+<xar:comment> ignore DD's default links for now </xar:comment>
+        <xar:set name="curlink">#xarModURL('object','user','main',array('object' => $objectname, 'itemid' => $itemid))#</xar:set>
+        <xar:foreach in="$properties" key="$name">
+            <xar:if condition="empty($fields[$name])">
+                <td valign="top">&nbsp;</td>
+            <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
+                <td valign="top"><a href="#$curlink#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
+            <xar:else />
+                <td valign="top"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+            </xar:if>
+        </xar:foreach>
+        <xar:if condition="empty($linkfield)">
+            <td valign="top" align="center">
+<xar:comment> ignore DD's default links for now
+            <xar:if condition="!empty($links[$itemid]) and count($links[$itemid]) gt 0">
+                <xar:foreach in="$links[$itemid]" value="$option">
+                    #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
+                </xar:foreach>
+            <xar:else />
+                &nbsp;
+            </xar:if>
+</xar:comment>
+                <a href="#$curlink#">#$linklabel#</a>
+            </td>
+        </xar:if>
+    </tr>
+    </xar:foreach>
+    </table>
+
+    <xar:if condition="!empty($prevurl) or !empty($nexturl)">
+        <div align="center">
+            <xar:if condition="!empty($prevurl)">
+                 <a href="#$prevurl#">&lt;&lt; </a>
+            <xar:else />
+                 ---
+            </xar:if>
+            &nbsp;&nbsp;&nbsp;
+            <xar:if condition="!empty($nexturl)">
+                 <a href="#$nexturl#"> &gt;&gt;</a>
+            <xar:else />
+                 ---
+            </xar:if>
+        </div>
+    </xar:if>
+</xar:if>

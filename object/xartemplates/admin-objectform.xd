@@ -1,0 +1,10 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="!empty($properties)">
+    <xar:foreach in="$properties" key="$name" value="$property">
+        <tr align="left" valign="middle">
+            <td><xar:data-label property="$properties[$name]" label="id" /> </td>
+            <td><xar:data-input property="$properties[$name]" /> </td>
+        </tr>
+    </xar:foreach>
+</xar:if>
