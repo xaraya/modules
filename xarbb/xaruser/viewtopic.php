@@ -287,7 +287,14 @@ function xarbb_user_viewtopic()
 
     // Let's suppress the hitcount hook from showing.
     $data['hooks']['hitcount'] = '';
-    $data['authid'] = xarSecGenAuthKey();
+
+    // Generate authid only if the current user can delete topics and replies
+    if (xarSecurityCheck('DeletexarBB',0)) {
+        // Note : this make the page un-cacheable
+        $data['authid'] = xarSecGenAuthKey('xarbb');
+    } else {
+        $data['authid'] = '';
+    }
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
