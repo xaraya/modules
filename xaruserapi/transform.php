@@ -33,8 +33,8 @@ function autolinks_userapi_transform($args)
             return $extrainfo;
         }
         $transformed = array();
-        foreach($extrainfo as $text) {
-            $transformed[] = xarModAPIFunc(
+        foreach($extrainfo as $key => $text) {
+            $transformed[$key] = xarModAPIFunc(
                 'autolinks', 'user', '_transform',
                 array($text)
             );
