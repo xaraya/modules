@@ -31,6 +31,24 @@ function bbcode_adminapi_getmenulinks()
             'title' => xarML('Modify the configuration for the bbcode module'),
             'label' => xarML('Modify Config'));
     }
+
+    if (xarSecurityCheck('EditBBCode')) {
+        if (xarModGetVar('bbcode', 'useadvanced') == true){
+            $menulinks[] = Array('url' => xarModURL('bbcode',
+                    'admin',
+                    'view'),
+                'title' => xarML('View and Edit bbcode'),
+                'label' => xarML('View'));
+
+            $menulinks[] = Array('url' => xarModURL('bbcode',
+                    'admin',
+                    'new'),
+                'title' => xarML('Add new bbcode'),
+                'label' => xarML('Add'));
+        }
+    } 
+
+
     if (empty($menulinks)) {
         $menulinks = '';
     }
