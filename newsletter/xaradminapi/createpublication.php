@@ -119,7 +119,7 @@ function newsletter_adminapi_createpublication($args)
                       (int)     $private,
                       (int)     $subject);
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;

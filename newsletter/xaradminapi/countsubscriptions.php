@@ -57,9 +57,10 @@ function newsletter_adminapi_countsubscriptions($args)
     // Get subscriptions count
     $query = "SELECT COUNT(*) 
               FROM $nwsltrSubTable
-              WHERE xar_pid = $id";
+              WHERE xar_pid = ?";
 
-    $result = $dbconn->Execute($query);
+    $bindvars[] = (int) $id;
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;
@@ -75,9 +76,10 @@ function newsletter_adminapi_countsubscriptions($args)
     // Get subscriptions count
     $query = "SELECT COUNT(*) 
               FROM $nwsltrAltSubTable
-              WHERE xar_pid = $id";
+              WHERE xar_pid = ?";
 
-    $result = $dbconn->Execute($query);
+    $bindvars[] = (int) $id;
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

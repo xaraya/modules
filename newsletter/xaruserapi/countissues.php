@@ -53,12 +53,14 @@ function newsletter_userapi_countissues($args)
     $issuesTable = $xartable['nwsltrIssues'];
 
     // Create query to select issues
+    $bindvars = array();
     if ($publicationId) {
         // Get issues for a publication
         $query = "SELECT COUNT(1)
                   FROM  $issuesTable
-                  WHERE $issuesTable.xar_pid = " . $publicationId . "
+                  WHERE $issuesTable.xar_pid = ? 
                   AND   $issuesTable.xar_pid != 0";
+        $bindvars[] = (int) $publicationId;
     } else {
         // Get all issues
         $query = "SELECT COUNT(1) FROM $issuesTable
@@ -76,10 +78,11 @@ function newsletter_userapi_countissues($args)
     }
 
     if ($owner) {
-        $query .= " AND $issuesTable.xar_ownerid = " . $owner;
+        $query .= " AND $issuesTable.xar_ownerid = ?";
+        $bindvars[] = (int) $owner;
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

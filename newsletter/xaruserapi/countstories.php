@@ -53,21 +53,28 @@ function newsletter_userapi_countstories($args)
     $storiesTable = $xartable['nwsltrStories'];
 
     // Create query to select stories
+    $bindvars = array();
     if ($issueId) {
         if ($owner) {
             $userid = xarSessionGetVar('uid');
             $query = "SELECT COUNT(1)
                       FROM  $topicsTable, $storiesTable
-                      WHERE $topicsTable.xar_issueid = " . $issueId . "
+                      WHERE $topicsTable.xar_issueid = ?
                       AND   $topicsTable.xar_storyid = $storiesTable.xar_id
-                      AND   $storiesTable.xar_ownerid = " . $userid . "
+                      AND   $storiesTable.xar_ownerid = ?
                       AND   $storiesTable.xar_pid != 0";
+
+            $bindvars[] = (int) $issueId;
+            $bindvars[] = (int) $userid;
+
         } else {
             $query = "SELECT COUNT(1)
-                      FROM $topicsTable, $storiesTable
-                      WHERE xar_issueid = " . $issueId . "
+                      FROM  $topicsTable, $storiesTable
+                      WHERE $topicsTable.xar_issueid = ?
                       AND   $topicsTable.xar_storyid = $storiesTable.xar_id
                       AND   $storiesTable.xar_pid != 0";
+
+            $bindvars[] = (int) $issueId;
         }
     } else {
         // Get all stories
@@ -86,7 +93,7 @@ function newsletter_userapi_countstories($args)
             break;
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

@@ -19,6 +19,7 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['phase'] type of item to count (ie 'story', 'publcation', etc.)
+ * @param $args['owner'] owner of item to count
  * @returns integer
  * @return number of items
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -105,6 +106,7 @@ function newsletter_userapi_countitems($args)
         }
     }
 
+    $bindvars = array();
     if ($owner) {
         // Get current uid
         $userid = xarSessionGetVar('uid');
@@ -114,10 +116,11 @@ function newsletter_userapi_countitems($args)
         } else {
             $query .= " WHERE ";
         }
-        $query .= "xar_ownerid = " . $userid;
+        $query .= "xar_ownerid = ?";
+        $bindvars[] = (int) $userid;
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

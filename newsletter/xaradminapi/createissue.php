@@ -90,7 +90,7 @@ function newsletter_adminapi_createissue($args)
                         (string) $editorNote,
                         (int) $tstmpDatePublished);
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;
