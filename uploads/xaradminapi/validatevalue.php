@@ -35,11 +35,10 @@ function uploads_adminapi_validatevalue($args)
         $methods = null;
     }
 
-
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
     if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarModAPIFunc('uplodas', 'admin', 'dd_convert_value', array('value' =>$value));
+        $newValue = xarModAPIFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -70,13 +69,13 @@ function uploads_adminapi_validatevalue($args)
         $typeCheck .= ':';
     }
 
-    if (!xarVarFetch($id . '_attach_type', $typeCheck, $action, NULL, XARVAR_NOT_REQUIRED)) return;
+    xarVarFetch($id . '_attach_type', $typeCheck, $action, -2, XARVAR_NOT_REQUIRED);
+
     if (!isset($action)) {
         $action = -2;
     }
 
     $args['action']    = $action;
-
     switch ($action) {
         case _UPLOADS_GET_UPLOAD:
 
@@ -93,7 +92,7 @@ function uploads_adminapi_validatevalue($args)
         case _UPLOADS_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
 
-            if (!xarVarFetch($id . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch($id . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, XARVAR_NOT_REQUIRED)) return;
 
             if (empty($import)) {
                 return array(true,NULL);
@@ -115,7 +114,7 @@ function uploads_adminapi_validatevalue($args)
             break;
         case _UPLOADS_GET_STORED:
 
-            if (!xarVarFetch($id . '_attach_stored', 'list:str:1:', $fileList, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch($id . '_attach_stored', 'list:str:1:', $fileList, 0, XARVAR_NOT_REQUIRED)) return;
 
             // If we've made it this far, then fileList was empty to start,
             // so don't complain about it being empty now
