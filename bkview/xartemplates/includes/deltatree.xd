@@ -1,21 +1,5 @@
 <!-- This renders a part of a delta tree -->
 
-<style type="text/css">
-ul.subtree {
-  padding: 0em 0em 0em 2em;
-}
-
-li.subtree {
-  list-style-image: url(#xarTplGetImage('dir.gif','bkview')#);
-}
-li.node {
-    list-style-image: url(#xarTplGetImage('file.gif','bkview')#);
-}
-li.delta {
-  list-style-image: none;
-}
-</style>
-
 <xar:if condition="empty($deltatree)">
   <xar:mlstring>No deltas in this changeset</xar:mlstring>
 <xar:else/>
@@ -26,7 +10,7 @@ li.delta {
          <xar:if condition="array_key_exists('type',$deltatree[$nodename]) && $deltatree[$nodename]['type']=='file'">
             <xar:set name="delta">end($deltatree[$nodename])</xar:set>
             <li class="node">
-              <a title="#xarML('View revision history of this file')#" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#">#$nodename#</a>
+              <a  onclick="return loadContent(this.href);" title="#xarML('View revision history of this file')#" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#">#$nodename#</a>
               <!-- Recursive call into this very same template!! -->
               <xar:template file="deltatree" subdata="array('deltatree' =&gt; $deltatree[$nodename])" />
             </li>
@@ -39,9 +23,9 @@ li.delta {
       <xar:else/>
         <xar:if condition="$nodename !='type'">
         <li class="delta">
-          <a title="#xarML('View annotated contents of this revision of the file')#" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#&amp;rev=#$delta-&gt;_rev#">
+          <a  onclick="return loadContent(this.href);" title="#xarML('View annotated contents of this revision of the file')#" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#&amp;rev=#$delta-&gt;_rev#">
              #$delta-&gt;_rev#</a>
-          [ <a title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-diffview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#&amp;rev=#$delta-&gt;_rev#">
+          [ <a  onclick="return loadContent(this.href);" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-diffview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#&amp;rev=#$delta-&gt;_rev#">
              <xar:mlstring>View differences</xar:mlstring></a>
           ] #$delta-&gt;_date# #$delta-&gt;_time#
           <br/>
@@ -51,7 +35,6 @@ li.delta {
       </xar:if>
     <xar:else/>
       <!-- changeset is something special -->
-      
     </xar:if>
   </xar:foreach>
 </ul>

@@ -1,8 +1,7 @@
-<div class="xar-mod-body">
-    <xar:template file="user-menu" type="module"/>
+<xar:template file="user-menu" type="module"/>
 
-    <div style="float:left; margin-top: 1em;">
-      <xar:if condition="count($csets) gt 0">
+<div style="float:left; margin-top: 1em;">
+    <xar:if condition="count($csets) gt 0">
         <table class="csets">
           <tr>
             <th><xar:mlstring>Age</xar:mlstring></th>
@@ -14,25 +13,25 @@
           <xar:loop name="$csets">
             <tr class="csets" align="top">
               <td class="csets" nowrap>
-                <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">#$loop:item['age']#</a>
+                <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">#$loop:item['age']#</a>
               </td>
               <td class="csets">
-                <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$loop:item['author']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">#$loop:item['author']#</a>
+                <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$loop:item['author']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">#$loop:item['author']#</a>
               </td>
               <xar:if condition="!empty($loop:item['tag'])">
                 <td class="bktagged">
-                  <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#">#$loop:item['rev']#</a>
+                  <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">#$loop:item['rev']#</a>
                   <br />#$loop:item['tag']#
                   <xar:else/>
                   <td class="csets">
-                    <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#">#$loop:item['rev']#</a>
+                    <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">#$loop:item['rev']#</a>
               </xar:if>
             </td>
               <td class="comments">#$loop:item['comments']#</td>
             </tr>
           </xar:loop>
         </table>
-        <xar:else/>
+    <xar:else/>
         <div>
           <xar:mlstring>I didn't find any changesets matching the criteria.</xar:mlstring>
         </div>
@@ -42,11 +41,12 @@
           </xar:if>
           <div>
             <xar:mlstring>Merge changesets were not included in this view.</xar:mlstring><br/>
-            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$user#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">        
+            <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$user#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">        
               <xar:mlstring>Retry with them turned on?</xar:mlstring>
             </a>
           </div>
         </xar:if>
-      </xar:if>
-    </div>
-  </div>
+    </xar:if>
+</div>
+
+<xar:template file="user-trailer"/>

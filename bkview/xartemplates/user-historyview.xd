@@ -12,7 +12,7 @@
 		<tr class="csets">
 			<td class="csets" nowrap>#$loop:item['age']#</td>
       <td class="csets">
-        <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$loop:item['author']#">
+        <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$loop:item['author']#">
           #$loop:item['author']#
         </a>
       </td>
@@ -21,10 +21,12 @@
       <xar:else/>
         <td class="csets">
       </xar:if>
-      <a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$loop:item['rev']#">#$loop:item['rev']#</a><br />#$loop:item['tag']#
+      <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$loop:item['rev']#">#$loop:item['rev']#</a><br />#$loop:item['tag']#
       </td>
       <td class="comments">#$loop:item['comments']#</td>
     </tr>
 	</xar:loop>
 </table>
 </div>
+
+<xar:template file="user-trailer" type="module"/>

@@ -77,7 +77,7 @@
     padding: 0 2px;
 }
 
-.bktabnav ul {
+.bktabnav > ul {
 	margin: 0;
 	padding:0;
 	float: left;
@@ -86,7 +86,7 @@
 	text-align: left;
 }
 
-.bktabnav ul li {
+.bktabnav > ul li {
 	display: block;
 	float: left;
 	text-align: center;
@@ -95,7 +95,7 @@
 	margin: 0 0 0 -1px;
 }
 
-.bktabnav ul li a {
+.bktabnav > ul li a {
 	background: #ffffff;
 	height: 18px;
 	border: 1px solid #aaaaaa;
@@ -106,7 +106,7 @@
 	text-align: center;
 }
 
-.bktabnav ul li a:hover {
+.bktabnav > ul li a:hover {
 	color: #ffffff;
 	background-color: #bbbbbb;
 	text-decoration: none;
@@ -190,5 +190,9 @@
 	width:auto;
 }
 /* end hide *
+
+
+
+
 
 

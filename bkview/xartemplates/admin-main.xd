@@ -20,7 +20,7 @@
             <li>it relies on de bk-daemon which has to be started in a specific way, the bkview module is less restrictive</li>
             <li>bkweb is packaged as is, it's not extensible, bkview is delivered as php module, so extra features are added easily</li>
             <li>bkview is embedded into xaraya, so it can use the features from any other xaraya module if necessary</li>
-            <li>bkweb requires an internet connected computer, bkview doesn't</li>
+            <li><strike>bkweb requires an internet connected computer, bkview doesn't</strike></li>
         </ol>
         <br/>
         This module has the following disadvantages:
@@ -50,7 +50,7 @@
             <li>Counting of csets isn't consistent (discrepancy with bkweb, assuming that one is correct</li>
             <li>No security is in place</li>
             <li>No check is done in admin section whether the pointed to path is actually a bk repository</li>
-            <li>The templates are horrible</li>
+            <li><strike>The templates are horrible</strike></li>
             <li>It doesn't work on windows</li>
         </ol>
     </div>

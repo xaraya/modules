@@ -14,7 +14,7 @@
       <td class="csets"nowrap>#$loop:item['age']#</td>
       <td class="csets">#$loop:item['author']#</td>
       <td class="csets">
-				<a href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">
+				<a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">
 				#$loop:item['rev']#
 				</a>
 			</td>
@@ -25,3 +25,5 @@
 	</xar:loop>
 </table>
 </div>
+
+<xar:template file="user-trailer" type="module"/>

@@ -1,5 +1,4 @@
-<div class="xar-mod-body">
-    <xar:template file="user-menu" type="module"/>
+<xar:template file="user-menu" type="module"/>
     
     <div style="float:left; margin-top: 1em;">
       
@@ -13,11 +12,11 @@
         <xar:loop name="$users">    
           <tr class="csets">
             <td class="csets">
-              <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$loop:item['user']#">#$loop:item['user']#</a></td>
+              <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$loop:item['user']#">#$loop:item['user']#</a></td>
             <td class="csets" width="33%">#$loop:item['recentcsets']#&nbsp;</td>
             <td class="csets" width="33%">#$loop:item['allcsets']#</td>
           </tr>    
         </xar:loop>
       </table>
     </div>
-  </div>
+<xar:template file="user-trailer" type="module"/>

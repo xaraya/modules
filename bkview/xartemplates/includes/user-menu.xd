@@ -1,11 +1,13 @@
-<!-- include the module header on all user pages -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            BK-view 
-        </xar:mlstring>
-    </span>
-</div>
+<div id="bkview-modbody-id" class="xar-mod-body" >
+    <!-- Experimenting with http requests only when module is surrounded by element with an id -->
+    <script src="/modules/bkview/xarincludes/xmlhttprequest.js" ></script>
+
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>BK-view</xar:mlstring>
+        </span>
+    </div>
+
 <!-- temporarily include module level styling until we're done -->
 <xar:if condition="xarTplAddStyleLink('bkview','bkweb')">
     <div class="bktabnav">
@@ -18,7 +20,7 @@
         <ul class="navlist">
             <xar:if condition="$_bl_module_func eq 'view'">
                 <li class="active">
-                    <a href="&xar-modurl-bkview-user-main;">
+                    <a href="&xar-modurl-bkview-user-main;" onclick="return loadContent(this.href);">
                         <img src="#xarTplGetImage('bkindex.gif')#" alt="#xarML('Index')#" />
                         <xar:mlstring>
                             Index 
@@ -27,7 +29,7 @@
                 </li>
                 <xar:else />
                 <li>
-                    <a href="&xar-modurl-bkview-user-main;">
+                    <a href="&xar-modurl-bkview-user-main;" onclick="return loadContent(this.href);">
                         <img src="#xarTplGetImage('bkindex.gif')#" alt="#xarML('Index')#" />
                         <xar:mlstring>
                             Index 
@@ -38,7 +40,7 @@
             <xar:if condition="!empty($repoid)">
                 <xar:if condition="$_bl_module_func eq 'display'">
                     <li class="active">
-                        <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#">
+                        <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bkcset.gif')#" alt="#xarML('Changeset activity')#" />
                             <xar:mlstring>
                                 Changeset activity 
@@ -47,7 +49,7 @@
                     </li>
                     <xar:else />
                     <li>
-                        <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#">
+                        <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bkcset.gif')#" alt="#xarML('Changeset activity')#" />
                             <xar:mlstring>
                                 Changeset activity 
@@ -57,7 +59,7 @@
                 </xar:if>
                 <xar:if condition="$_bl_module_func eq 'csetview'">
                     <li class="active">
-                        <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1">
+                        <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bktags.gif')#" alt="#xarML('Tags')#" />
                             <xar:mlstring>
                                 Tags 
@@ -66,7 +68,7 @@
                     </li>
                     <xar:else />
                     <li>
-                        <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1">
+                        <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bktags.gif')#" alt="#xarML('Tags')#" />
                             <xar:mlstring>
                                 Tags 
@@ -76,7 +78,7 @@
                 </xar:if>
                 <xar:if condition="$_bl_module_func eq 'browseview'">
                     <li class="active">
-                        <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#">
+                        <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bktree.gif')#" alt="#xarML('Browse source tree')#" />
                             <xar:mlstring>
                                 Browse source tree 
@@ -85,7 +87,7 @@
                     </li>
                     <xar:else />
                     <li>
-                        <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#">
+                        <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bktree.gif')#" alt="#xarML('Browse source tree')#" />
                             <xar:mlstring>
                                 Browse source tree 
@@ -95,7 +97,7 @@
                 </xar:if>
                 <xar:if condition="$_bl_module_func eq 'statsview'">
                     <li class="active">
-                        <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#">
+                        <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bkstats.gif')#" alt="#xarML('User statistics')#" />
                             <xar:mlstring>
                                 User statistics 
@@ -104,7 +106,7 @@
                     </li>
                     <xar:else />
                     <li>
-                        <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#">
+                        <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
                             <img src="#xarTplGetImage('bkstats.gif')#" alt="#xarML('User statistics')#" />
                             <xar:mlstring>
                                 User statistics 
@@ -115,7 +117,6 @@
             </xar:if>
         </ul>
         <div class="bktabnav-hairline" />
-    </div>
   </div>
 </xar:if>
 <div class="xar-mod-title">

@@ -11,7 +11,7 @@
   <tr class="csets">
   	<td class="csets" nowrap>#$age#</td>
     <td class="csets">#$author#@#$domain#</td>
-    <td class="csets"><a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&rev=#$rev#">#$rev#</a></td>
+    <td class="csets"><a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&rev=#$rev#">#$rev#</a></td>
     <td class="comments">#$comments#</td>
   </tr>
 </table>
@@ -22,3 +22,5 @@
 	</xar:loop>
 </div>
 </div>
+
+<xar:template file="user-trailer" type="module"/>

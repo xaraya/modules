@@ -1,4 +1,2 @@
 <!-- The user-main function doesn't have content, it redirects to user-view -->
-<div class="xar-mod-body">
-  <xar:template file="user-view" type="module"/>
-</div>
+<xar:template file="user-view" type="module"/>

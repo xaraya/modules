@@ -1,4 +1,4 @@
-<xar:template file="user-menu" type="module"/>
+<xar:template file="user-menu"/>
 
 <div style="float:left; margin-top: 1em;">
 
@@ -18,7 +18,7 @@
           <img src="#xarTplGetImage('dir.gif','bkview')#" alt="go into directory #$loop:item['dirname']#"/>
           <xar:set name="$dirtext">#$loop:item['dirname']#</xar:set>
         </xar:if>
-        <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">
+        <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/" onclick="return loadContent(this.href);">
           #$dirtext#
         </a>
       </div>
@@ -41,7 +41,7 @@
         <tr class="csets">
           <td class="csets">
           <xar:if condition="$loop:item['available']">
-            <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
+            <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#" >
               <img src="#$loop:item['icon']#" alt="file" />
             </a>
           <xar:else/>
@@ -49,7 +49,7 @@
           </xar:if>
           </td>
           <td class="csets">
-            <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
+            <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#" onclick="return loadContent(this.href);">
               #$loop:item['basename']#
             </a>
           </td>
@@ -60,25 +60,25 @@
           </xar:if>
       
           <xar:if condition="$loop:item['relfile']=='ChangeSet'">
-            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">
+            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#" onclick="return loadContent(this.href);">
           <xar:else/>
-            <a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#&amp;rev=#$loop:item['rev']#">
+            <a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#&amp;rev=#$loop:item['rev']#" onclick="return loadContent(this.href);">
               #$loop:item['rev']#<br />#$loop:item['tag']#
             </a>
           </xar:if>
           </td>
           <td class="csets">
-            <a href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
+            <a href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#" onclick="return loadContent(this.href);">
               <xar:mlstring>Csets</xar:mlstring>
             </a>
           </td>
-          <td class="csets" nowrap>
-            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#">
+          <td class="csets">
+            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#" onclick="return loadContent(this.href);">
               #$loop:item['age']#
             </a>
           </td>
-          <td class="csets" nowrap>
-            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;user=#$loop:item['author']#">
+          <td class="csets">
+            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;user=#$loop:item['author']#" onclick="return loadContent(this.href);">
               #$loop:item['author']#
             </a>
           </td>
@@ -87,3 +87,5 @@
       </xar:loop>
     </table>
 </div>
+
+<xar:template file="user-trailer"/>

@@ -3,7 +3,12 @@
 <div style="float: left; margin-top: 1em;">
 
 <style type="text/css">
+table.csetsummary {
+    width: 99%;
+}
 table.csetsummary td:first-child {
+    width: 2%;
+    white-space: nowrap;
     font-weight: bold;
     text-align: right;
     vertical-align: top;
@@ -14,16 +19,32 @@ div.csetsummary {
     padding: 5pt;
 }
 
+div.csetdetails ul.subtree {
+  padding: 0em 0em 0em 2em;
+}
+
+div.csetdetails ul li.subtree {
+  list-style-image: url(#xarTplGetImage('dir.gif','bkview')#);
+}
+
+div.csetdetails ul li.node {
+    list-style-image: url(#xarTplGetImage('file.gif','bkview')#);
+}
+
+div.csetdetails ul li.delta {
+  list-style-image: none;
+}
 </style>
+
 
 <!-- Summary of the cset -->
 <div class="xar-norm-outline xar-accent csetsummary">
   <table class="csetsummary"> 
     <tr><td><xar:mlstring>Author</xar:mlstring> :</td>
-        <td><a title="#xarML('Show the changeset activity of this user')#" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$author#">#$author#</a></td></tr>
+        <td><a title="#xarML('Show the changeset activity of this user')#" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$author#" onclick="return loadContent(this.href);">#$author#</a></td></tr>
     <tr><td><xar:mlstring>Revision</xar:mlstring> :</td><td>#$rev#</td></tr>
     <tr><td><xar:mlstring>Key</xar:mlstring> :</td><td>#$key#</td></tr>
-    <tr><td><xar:mlstring>Patch</xar:mlstring> :</td><td><a title="#xarML('View differences')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#"><xar:mlstring>View diff</xar:mlstring></a> | Download BK patch</td></tr>
+    <tr><td><xar:mlstring>Patch</xar:mlstring> :</td><td><a  onclick="return loadContent(this.href);" title="#xarML('View differences')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#"><xar:mlstring>View diff</xar:mlstring></a> | Download BK patch</td></tr>
     <xar:if condition="$tag != ''"><tr><td ><xar:mlstring>Tag</xar:mlstring> :</td><td class="xar-alt-outline">#$tag#</td></tr></xar:if>
     <tr><td><xar:mlstring>Comments</xar:mlstring> :</td><td><xar:foreach in="$comments" value="$line">#$line#<br/></xar:foreach></td></tr>
   </table>
@@ -33,7 +54,9 @@ div.csetsummary {
 <div class="xar-mod-title" style="margin-top: 1em;">
     <xar:mlstring>Modified files and included deltas by this changeset</xar:mlstring>
 </div>
-<div style="margin-left: 1em;">
+
+<div class="csetdetails" style="margin-left: 1em;">
   <xar:template file="deltatree" subdata="$deltatree"/>
 </div>
 </div>
+<xar:template file="user-trailer" type="module"/>

@@ -1,7 +1,9 @@
-<xar:template file="user-menu" type="module"/>
+<xar:template file="user-menu" />
 
 <div style="float:left; margin-top: 1em;">
   <div class="bkannotate">
     <xar:loop name="$annolines">#$loop:item['annoline']#</xar:loop>
   </div>
 </div>
+
+<xar:template file="user-trailer" />

@@ -7,8 +7,8 @@
                     <td>
                         <xar:if condition="empty($loop:item['link'])">
                             #$loop:item['reponame']# 
-                            <xar:else />
-                            <a href="#$loop:item['link']#">
+                        <xar:else />
+                            <a href="#$loop:item['link']#" onclick="return loadContent(this.href);">
                                 #$loop:item['reponame']#
                             </a>
                         </xar:if>
@@ -16,9 +16,10 @@
                 </tr>
             </xar:loop>
         </table>
-        <xar:else />
+    <xar:else />
         <xar:mlstring>
             No repositories available
         </xar:mlstring>
     </xar:if>
 </div>
+<xar:template file="user-trailer" type="module"/>
