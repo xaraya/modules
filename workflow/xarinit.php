@@ -705,8 +705,43 @@ function workflow_delete()
     xarRemoveMasks('workflow');
     xarRemoveInstances('workflow'); 
 
+    // Remove all process files
+    workflow_remove_processes();
+
     // Deletion successful
     return true;
+}
+
+function workflow_remove_processes()
+{
+    include_once('modules/workflow/tiki-setup.php');
+    $dir = GALAXIA_PROCESSES;
+    if (!is_dir($dir)) return;
+    $h = opendir($dir);
+    while(($file = readdir($h)) != false) {
+        if (is_dir($dir.'/'.$file) && $file != '.' && $file != '..') {
+            workflow_remove_directory($dir.'/'.$file);
+        }
+    }
+    closedir($h);
+}
+
+function workflow_remove_directory($dir)
+{
+    if (!is_dir($dir)) return;
+    $h = opendir($dir);
+    while(($file = readdir($h)) != false) {
+        if (is_file($dir.'/'.$file)) {
+            @unlink($dir.'/'.$file);
+        } else {
+            if (is_dir($dir.'/'.$file) && $file != '.' && $file != '..') {
+              workflow_remove_directory($dir.'/'.$file);
+            }
+        }
+    }
+    closedir($h);
+    @rmdir($dir);
+    @unlink($dir);
 }
 
 ?>
