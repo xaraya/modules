@@ -145,6 +145,9 @@ function xarcachemanager_admin_pages($args)
             touch($outputCacheDir . '/autocache.start');
             $fp = fopen($outputCacheDir . '/autocache.log', 'w');
             fclose($fp);
+
+            // make sure the xarcachemanager event handler is known to the event system
+            if (!xarModAPIFunc('modules','admin','geteventhandlers')) return;
         }
 
         if (empty($autocache['keepstats'])) {
