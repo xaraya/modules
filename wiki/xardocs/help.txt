@@ -1,0 +1,74 @@
+syntax used in wiki:
+
+Coming from [wiki site|http://phpwiki.sourceforge.net/phpwiki/index.php?TextFormattingRules].
+
+Paragraphs 
+*Don't indent paragraphs. Use blank lines as separators. 
+*Words wrap and fill automatically. 
+*Three percent signs (%) will generate a linebreak (like <br>). 
+*Four or more minus signs make a horizontal rule. 
+
+Lists 
+*Begin a line with * to create an unordered list item. 
+*Use ** for the second level, etc. 
+*Use "*" for bullet lists, "1" or "#" for numbered lists (mix at will). 
+*3spaces-Term:-3spaces Definition for definition lists 
+Use one line for each list item. %%%
+Other leading whitespace signals preformatted text, changes font. 
+
+Fonts 
+*Indent with one or more spaces to use a monospace font: 
+
+Indented Paragraphs (Quotes) 
+*You can simulate: <quote> 
+*As an element of language, a pattern is an instruction, which shows how this spatial configuration can be used, over and over again, to resolve the given system of forces, wherever the context makes it relevant. 
+
+</quote> %%%
+like this: %%%
+3spaces space ":" 3spaces %%%
+This works because: it's an HTML hack %%%
+you are realy using the <DL><DT><DD> tags to accomplish what <quote> does. The DL (Definition List) is one of the more obscure HTML features and is rarely used: 
+
+
+Emphasis 
+*Use doubled single-quotes ('') for emphasis (usually italics). 
+*Use doubled underscores (__) for emphasis (usually italics)
+
+Use tripled single-quotes (''') for strong emphasis (usually bolds). 
+Use tripled underscores (___) for strong emphasis (usually bolds)
+
+Use five single-quotes ('), or triples within doubles, for some other kind of emphasis (BoldItalic), but be careful about the bugs in the emphasis logic... you can mix underscores and quotes as well (___'') - that's the easiest way 
+
+Emphasis can be used multiple times within a line, but cannot cross line boundaries. 
+
+
+References 
+
+You can also use words or phrases in brackets [] for the same effect. 
+URLs ending with .png cause images to be inserted into the page. 
+
+Alternately, just type a full URL (this method won't create inline images): 
+http://c2.com/ 
+mailto:swain@wcsb.org 
+http://www.redhat.com/ 
+
+Mark-Up Language 
+In theory, it is possible to mix, in the same text, wiki encoding and html ...
+
+Misc:
+"!", "!!", "!!!" make headings, 
+"%%%" makes a linebreak, 
+"----" makes a horizontal rule <hr noshade>, if the tag <hr> is allowed in the settings, with parameters.
+escape "[" with "[[" 
+%%% are linebreaks (<br>)
+---this line will be centered---
+
+Links:
+A [link|http://www.domain.com] will work, in a different window.
+A [link|www.domain.com] will work, in the same window.
+A [link|user.php] will work, calling the page user.php in the same domain.
+
+Images:
+An image can be [text for alt text+http://www.domain.com|picture:folder/nameofimage.png] included with a link and an alt text. 
+The clause "picture:folder/nameofimage.png" is evident: folder is where is the image shown, folder being relative to the root.
+Attention, the html tag <img> has to be allowed in your settings, including parameters.

@@ -1,0 +1,9 @@
+This work is based on the work of phpWiki people:
+http://sourceforge.net/projects/phpwiki/
+
+The function wiki_userapitransform() is coming directly from their work. 
+
+It had been adaptated to postnuke by Sebastien Bernard. Particularly, he added some functionalities, the possibility of inserting images, or using a _target clause on a link.
+
+This version has been adapted by Jim Mc Dee to the new modules system developped for Postnuke .71.
+
