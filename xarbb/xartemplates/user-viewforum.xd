@@ -43,7 +43,7 @@
     </h1>
     <form action="#xarModUrl('xarbb', 'user', 'jump')#" method="post">
         <div class="xarbb-noteswrapper">
-            <strong>Forum Jump</strong><br />
+            <strong><xar:mlstring>Forum Jump</xar:mlstring></strong><br />
             <select name="f" onchange="this.form.submit();">
                 <optgroup label="#xarML('Options')#">
                     <option value="#$fid#" selected="selected"><xar:mlstring>Please select forum</xar:mlstring></option>
