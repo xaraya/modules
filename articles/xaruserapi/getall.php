@@ -380,7 +380,7 @@ function articles_userapi_getall($args)
             } else {
                 if (!xarSecurityCheck('ViewArticles',0,'Article',"$article[pubtypeid]:All:$article[authorid]:$article[aid]")) {
                     $delete[$key] = 1;
-                    break;
+                    continue;
                 }
             }
         }
