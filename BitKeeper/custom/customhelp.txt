@@ -1,0 +1,328 @@
+help://All
+help://All.sum
+help://bk-All
+help://bk-All.sum
+help://topics
+help://topic
+help://command
+help://commands
+help://bk
+
+All(sum)	       Custom bitkeeper commands manual 	      All(sum)
+
+
+
+NAME
+       All - summary of all custom commands
+
+COMMANDS
+       bk addcomment - add propagatable comment for a file
+
+       bk archdeleted - archive deleted files and add them to the gone file
+
+       bk chelp - get help for custom commands
+
+       bk chelptool - graphical frontend to the custom command help system.
+
+
+
+AUTHORS
+       Marcel van der Boom <marcel@hsdev.com>
+
+
+
+Xaraya group			     0.0.1			      All(sum)
+$
+help://Overview
+help://Overview.sum
+help://bk-Overview
+help://bk-Overview.sum
+
+Overview(sum)	       Custom bitkeeper commands manual 	 Overview(sum)
+
+
+
+NAME
+       Overview - Summary of the custom command system
+
+DESCRIPTION
+       The  custom  command  system allows developers to extend bitkeeper with
+       their own commands. The system is organized in the spirit of BitKeeper,
+       meaning	that the custom commands can be used in the same way as normal
+       BitKeeper commands:
+
+       bk <global-options> customcmd <cmd-options>
+
+
+       A plain vanilla BitKeeper installation has a number of places in  which
+       it looks for commands:
+
+       - internally
+
+       - in the bk.script file (macro like functionality)
+
+       - in the path
+
+
+       The custom command system adds a number of things to the command execu-
+       tion logic:
+
+       - it searches in the /BitKeeper/custom directory for executable scripts
+
+       - the scripts in this directory are in the repository so they are  ver-
+       sion controlled and will be propagated on pulls and pushes
+
+       - a bk chelp and bk chelptool command which contains help pages for the
+       custom commands.
+
+
+       The help system documents the custom  commands  implemented,  discusses
+       the  architecture  of  the  system  and contains instructions on how to
+       develop your own custom commands.
+
+FILES
+       /BitKeeper/custom/customcmd
+
+
+AUTHORS
+       Marcel van der Boom <marcel@hsdev.com>
+
+
+
+Xaraya group			     0.0.1			 Overview(sum)
+$
+help://addcomment
+help://addcomment.1
+help://bk-addcomment
+help://bk-addcomment.1
+help://addcomment
+
+addcomment(1)	       Custom bitkeeper commands manual 	 addcomment(1)
+
+
+
+NAME
+       bk addcomment -	add propagatable comment for <file>
+
+SYNTAX
+       bk addcomment [-y"<comment>"] <file>
+
+
+DESCRIPTION
+       The  bk	addcomment command creates a comment for the file specified by
+       <file>. This commands does not have the limitation of the  bk  comments
+       command that comments are not propagated.
+
+       To establish this, the command creates a delta on the file  and commits
+       a changeset which is specifically for the comment added	to  the  file.
+       This  command  can be helpful for implementing a review system directly
+       in bk or having this command as a part of a custom bk application which
+       needs a commenting function on specific content.
+
+       With  the  normal  bk  commands or the web interface these comments can
+       easily be viewed.
+
+OPTIONS
+       -y<comments>
+	      Specify the comments on the command line instead of  letting  bk
+	      ask for it.
+
+       <file> The filename for which the comments should be added.
+
+FILES
+       /BitKeeper/custom/addcomment
+
+
+EXAMPLES
+       bk addcomment -y "This comment added" testfile.txt
+
+       Adds the comment "This comment added" for the file "testfile.txt"
+
+
+AUTHORS
+       Marcel van der Boom <marcel@hsdev.com>
+
+
+
+Xaraya group			     0.0.1			 addcomment(1)
+$
+help://archdeleted
+help://archdeleted.1
+help://bk-archdeleted
+help://bk-archdeleted.1
+help://archdeleted
+
+archdeleted(1)	       Custom bitkeeper commands manual 	archdeleted(1)
+
+
+
+NAME
+       bk archdeleted - archives deleted files and add them to gone file
+
+SYNTAX
+       bk archdeleted -m <monthnr>
+
+
+DESCRIPTION
+       The   bk  archdeleted  command  archives  deleted  files  in  the  Bit-
+       Keeper/deleted folder into a tar.gz archive and adds the files  to  the
+       gone file.
+
+       Once  the  gone	file  is committed and propagated other developers can
+       simply issue a bk rmgone command to physically delete the  files  which
+       are  in the gone file. It's generally a good idea to keep deleted files
+       some time around. The -m specifier can be used to archive the files  in
+       a  certain month in the current year. The repository manager can decide
+       which files can be archived.  For  example  by  keeping	deleted  files
+       around for two months or so.
+
+
+OPTIONS
+       -f<monthnr>
+	      Archive  deleted	files  which had their lates revision in month
+	      lt;monthnr>.
+
+FILES
+       /BitKeeper/custom/archdeleted
+
+
+EXAMPLES
+       bk archdeleted -m 11
+
+       Archives the deleted files which had their latest revision in  November
+       of the current year.
+
+
+AUTHORS
+       Marcel van der Boom <marcel@hsdev.com>
+
+
+
+Xaraya group			     0.0.1			archdeleted(1)
+$
+help://chelp
+help://chelp.1
+help://bk-chelp
+help://bk-chelp.1
+help://help
+
+chelp(1)	       Custom bitkeeper commands manual 	      chelp(1)
+
+
+
+NAME
+       bk chelp - shows information about the custom help system
+
+SYNTAX
+       bk chelp [-akp] [-f <filename>] [<specific topic>]
+
+
+DESCRIPTION
+       The  bk chelp command is basically the same as bk help but it opens the
+       specific custom help file which describes the custom  commands  defined
+       in the repository. bk chelp itself is a custom command.
+
+OPTIONS
+       -a     Just search the custom help file for the string <topic>.
+
+       -k     Similar to -a but only matches whole words.
+
+       -p     disable the use of any pager just send the output to stdout.
+
+       -f<file>
+	      Use <file> as the helptext file.
+
+FILES
+       /BitKeeper/custom/chelp
+
+
+EXAMPLES
+       bk chelp topics
+
+       This displays the topics in the custom helpfile on stdout.
+
+
+AUTHORS
+       Marcel van der Boom <marcel@hsdev.com>
+
+SEE ALSO
+       bk chelptool (1)
+
+
+
+Xaraya group			     0.0.1			      chelp(1)
+$
+help://chelptool
+help://chelptool.1
+help://bk-chelptool
+help://bk-chelptool.1
+help://helptool
+
+chelptool(1)	       Custom bitkeeper commands manual 	  chelptool(1)
+
+
+
+NAME
+       bk  chelptool  -  shows information about the custom help system in the
+       graphical help viewer
+
+SYNTAX
+       bk chelptool [-akp] [-f <filename>] [<specific topic>]
+
+
+DESCRIPTION
+       The bk chelptool command is basically the same as bk  helptool  but  it
+       opens the specific custom help file which describes the custom commands
+       defined in the repository. bk chelptool itself is a custom command.
+
+OPTIONS
+       -a     Just search the custom help file for the string <topic>.
+
+       -k     Similar to -a but only matches whole words.
+
+       -p     disable the use of any pager just send the output to stdout.
+
+       -f<file>
+	      Use <file> as the helptext file.
+
+FILES
+       /BitKeeper/custom/chelptool
+
+
+EXAMPLES
+       bk chelptool topics
+
+       This displays the topics in the custom helpfile on stdout.
+
+
+AUTHORS
+       Marcel van der Boom <marcel@hsdev.com>
+
+SEE ALSO
+       bk chelp(1)
+
+
+
+Xaraya group			     0.0.1			  chelptool(1)
+$
+help://rmgone
+help://rmgone.1
+help://bk-rmgone
+help://bk-rmgone.1
+help://help
+
+rmgone(1)	       Custom bitkeeper commands manual 	     rmgone(1)
+
+
+
+NAME
+       bk rmgone - removes files in gone file
+
+DESCRIPTION
+       See  the  bk  helptool for detail on bk rmgone. It's a standard bk com-
+       mand.
+
+
+
+Xaraya group			     0.0.1			     rmgone(1)
+$
