@@ -1,5 +1,5 @@
-repository: xaraya-modules
-description: Xaraya modules repository
+repository: xaraya-timezone
+description: Xaraya timezone module
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
