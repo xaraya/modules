@@ -1,4 +1,4 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.3.2
+INSTALLATION AND USE - XarTinyMCE Version 0.3.2b
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
 In addition to being very configurable it has some nice features not
@@ -16,45 +16,51 @@ This version sees integration of a basic image browser.
 To INSTALL and get started:
 
 1. Install this module like you would any other Xaraya module. That is:
-   a. put the tinymce folder in your Xaraya modules directory
-   b. go to the Adminpanel menu -> Modules -> View All
-   c. Click on the "install" link of the tinymce module
+   - Put the tinymce folder in your Xaraya modules directory
+   - Go to the Adminpanel menu -> Modules -> View All
+   - Click on the "install" link of the tinymce module
 
 2. The XarTinyMCE editor is not turned on by default.
-   Once the tinymce module is installed it needs to be turned on by default.
-   With this version you can set XarTinyMCE as the default WYSIWYG from the module's
-   configuration.
-   In case you have other editors, you can also set the default in Base module:
-   a. go to the Adminpanels menu -> Base -> Modify Config
-   b. choose the tab "Other"
-   c. on the wysiwyg editor dropdown choose "tinymce" as the default editor
+   Once the tinymce module is installed it needs to be turned on.
 
-3. In order to make modules in Xaraya use the XarTinyMCE module to display WYSIWYG,
-    add the following snippet at the top of any of your page templates 
-    (or use an alternative method as outlined in 4. below).
-    eg usually this is default.xt in themes/yourtheme/pages directory.
-    The code will affect any textareas in the template or included in that template.
-    eg If you add it to default.xt page template it will affect all textareas
-    in all templates that are also used in the default.xt template.
-    You may wish to add it to one specific module or other template where you wish
-    to convert the textarea to WYSIWYG (eg Xarbb newreply.xt or newtopic.xt):
+   You can now do this in the XarTinyMCE Module Configuration area
 
-    <xar:if condition="xarModGetVar('base','editor') eq 'tinymce'">
-        <xar:template file="tinymce_insert" module="tinymce" type="module" />
-    </xar:if>
+   Alternatively:
+   - go to the Adminpanels menu -> Base -> Modify Config
+   - choose the tab "Other"
+   - on the wysiwyg editor dropdown choose "tinymce" as the default editor
 
-    The default Mode in the configuration settings for XarTinyMCE is "All Text Areas"
-    and enables the WYSIWYG action as described above.
+3. You can use XarTinyMCE module to enable wysiwyg in two basic ways
+   (there are variations on these):
 
-    Additional method:
-    You can become more specific by choosing the Mode of "Special Labelled Only" in
-    the configuration options.
-    You must then also add the attribute: mce_editable="true"
-    to any "textarea" or "div" tag that you wish to use as a WYSIWYG textarea.
+   a. By adding the following template snippet at the top of any of your
+      page templates and choosing the All Textareas mode in the Basic
+      Configuration page. You can add this to your site wide page template
+      (wysiwyg in all text areas on your site) or in specific templates
+      (xarbb templates, or articles new and modify templates) to only provide
+      wysiwyg in those modules or textareas. The snipped to add is:
 
-4. Alternatively, add a Dynamic Data Property - xarTinyMCE GUI textarea - to any of
-   your articles and the editor. No need to add any template tags. 
-   Just set the configuration in Modify Config screen as you need it.
+      <xar:if condition="xarModGetVar('base','editor') eq 'tinymce'">
+          <xar:template file="tinymce_insert" module="tinymce" type="module" />
+      </xar:if>
+
+   b.You can become more specific by choosing the Mode of 
+     "Special Labelled Only in the configuration options. You *do not* need to 
+     add anything to your templates.
+
+     xarTinymce will only display the WYSIWYG text area when a 
+     textarea or div is marked with the attribute:
+          mce_editable="true".
+     The xarTinyMCE module allows you to do this manually yourself, 
+     or easily by using the xarTinyMCE GUI Dynamic Data Property.
+
+     You can choose the xarTinyMCE GUI Dynamic Data Property as one of 
+     the field types in the Articles module when you define your
+     Publication types (if you have current bitkeeper code or weekly snapshots), 
+     or add a xarTinyMCE Dynamic Data GUI property to your Articles module pubtypes 
+     or your xarPages page types or any other module where you need a WYSIWYG textarea.
+     This will give you a WYSIWYG editor property where you want it without 
+     having to add any tags to your templates.
 
 IMAGE BROWSER (IBROWSER), UPLOADS MODULE, SECURITY
 ******************************

@@ -1,3 +1,10 @@
+* Version 0.3.2b ...interim version tracking
+- Added 1.42 tinymce code plus cvs fixes for 'ask' prompt bug
+- new farsi persian language pack
+- tidy up start to configuration area
+- new images for editor
+- changed fields to text areas in config area for clearer entry of values
+
 * Version 0.3.2 1 Feb 05
 - New simplified Chinese language pack
 - Update of other language packs including Thai
