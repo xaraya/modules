@@ -19,9 +19,11 @@
 </ul>
 </td><td valign="top">
 
+<xar:if condition="!empty($hooks)">
 <xar:foreach in="$hooks" key="$hookmod" value="$hookout">
 #$hookout#
 </xar:foreach>
+</xar:if>
 
 </td></tr></table>
 </div>

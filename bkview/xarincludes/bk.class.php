@@ -18,6 +18,11 @@ define('BK_ITEMTYPE_FILE',  2);
 define('BK_ITEMTYPE_CSET',  3);
 define('BK_ITEMTYPE_DELTA', 4);
 
+define('BK_SEARCH_REPO',   1);
+define('BK_SEARCH_FILE',   2);
+define('BK_SEARCH_CSET',   4);
+define('BK_SEARCH_DELTAS', 8);
+
 /**
  *  Class to model a repository
  *
@@ -213,6 +218,12 @@ class bkRepo {
         }
         $package_id = $this->_run($cmd);
         return $package_id;
+    }
+
+    function bkSearch($term,$what_to_search = BK_SEARCH_CSET) {
+        $cmd = "bk prs -f -d'\$each(:C:){:I:|(:C:)}\n' | grep $term";
+        $result = $this->_run($cmd);
+        return $result;
     }
 }
 

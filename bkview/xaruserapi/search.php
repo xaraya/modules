@@ -42,10 +42,11 @@ include_once("modules/bkview/xarincludes/bk.class.php");
 function bkview_userapi_search($args) {
     extract($args);
 
-    if($object_id) {
-        $repoinfo = xarModAPIFunc('bkview','user','get',array('repoid' => $object_id));
-        $repo = new bkRepo($repoinfo['repopath']);
-    }
+    if(empty($object_id)) return;
+
+    $repoinfo = xarModAPIFunc('bkview','user','get',array('repoid' => $object_id));
+    $repo = new bkRepo($repoinfo['repopath']);
+
 
     // Now we now which repo to search
     $searchresults = array();
@@ -56,19 +57,19 @@ function bkview_userapi_search($args) {
             switch($itemtype_id) {
                 case BK_ITEMTYPE_REPO:
                     // Search repository information
-                    $itemtype_results = _bk_search_repoinfo($repo, $terms);
+                    $itemtype_results = _bk_search_repoinfo($repo, $terms,$object_id);
                     break;
                 case BK_ITEMTYPE_FILE:
                     // Search file contents
-                    $itemtype_results = _bk_search_files($repo, $terms);
+                    $itemtype_results = _bk_search_files($repo, $terms,$object_id);
                     break;
                 case BK_ITEMTYPE_CSET:
                     // Search cset comments
-                    $itemtype_results = _bk_search_csets($repo, $terms);
+                    $itemtype_results = _bk_search_csets($repo, $terms,$object_id);
                     break;
                 case BK_ITEMTYPE_DELTA:
                     // Search delta comments
-                    $itemtype_results = _bk_search_deltas($repo, $terms);
+                    $itemtype_results = _bk_search_deltas($repo, $terms,$object_id);
                     break;
             }
             $searchresults = array_merge($searchresults, $itemtype_results);
@@ -80,8 +81,9 @@ function bkview_userapi_search($args) {
    
 }
 
-function _bk_search_repoinfo($repo, $terms) {
+function _bk_search_repoinfo($repo, $terms,$object_id) {
     return array(array('result' => 'dummy repoinfo search result',
+                       'context' => 'This contains some context of the result found, so we can higlight the search terms',
                        'link'   => xarModUrl('bkview','user','view'),
                        'itemtype' => 'Repo info',
                        'description' => 'Dummy search result for searching repository information'
@@ -89,8 +91,9 @@ function _bk_search_repoinfo($repo, $terms) {
                  );
 }
 
-function _bk_search_files($repo, $terms) {
+function _bk_search_files($repo, $terms,$object_id) {
     return array(array('result' => 'dummy file content search result',
+                       'context' => 'This contains some context of the result found, so we can higlight the search terms',
                        'link'   => xarModUrl('bkview','user','view'),
                        'itemtype' => 'Filecontent',
                        'description' => 'Dummy search result for searching file contents in a repository'
@@ -98,19 +101,30 @@ function _bk_search_files($repo, $terms) {
                  );
 }
 
-function _bk_search_csets($repo, $terms) {
-    return array(array('result' => 'dummy cset comments search result',
-                       'link'   => xarModUrl('bkview','user','view'),
-                       'itemtype' => 'Cset comments',
-                       'description' => 'Dummy search result for searching cset comments in a repository'
-                       )
-                 );
+function _bk_search_csets($repo, $terms,$object_id) {
+    // Search cset comments in $repo for $terms
+    // basic command is: bk prs -h -d'$each(:C:){:I:(:C:)}\n' ChangeSet | grep 'blah'
+    $matches = $repo->bkSearch($terms);
+    $itemtype = xarML('Changeset comment');
+    $dots = xarML('...');
+    foreach($matches as $match) {
+        list($rev,$comment) = explode('|', $match);
+        $result = array('result' => xarML('Changeset') . ' ' . $rev,
+                        'context' => $dots . substr($comment,0,80) . $dots,
+                        'link' => xarModUrl('bkview','user','deltaview', array('rev' => $rev, 'repoid' => $object_id)),
+                        'itemtype' => $itemtype,
+                        'description' => $comment
+                        );
+        $results[] = $result;
+    }
+    return $results;
 }
 
-function _bk_search_deltas($repo, $terms) {
+function _bk_search_deltas($repo, $terms,$object_id) {
     return array(array('result' => 'dummy delta comments search result',
-                 'link'   => xarModUrl('bkview','user','view'),
-                 'itemtype' => 'Delta comments')
+                       'context' => 'This contains some context of the result found, so we can higlight the search terms',
+                       'link'   => xarModUrl('bkview','user','view'),
+                       'itemtype' => 'Delta comments')
                  );
 }
 
