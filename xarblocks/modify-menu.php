@@ -32,14 +32,33 @@ function xarpages_menublock_modify($blockinfo)
     if (!isset($vars['multi_homed'])) {$vars['multi_homed'] = true;}
     if (!isset($vars['current_source'])) {$vars['current_source'] = 'AUTO';}
     if (!isset($vars['default_pid'])) {$vars['default_pid'] = 'AUTO';}
+    if (!isset($vars['max_level'])) {$vars['max_level'] = 0;}
+    if (!isset($vars['root_pids'])) {$vars['root_pids'] = array();}
 
     // Get a list of all pages for the drop-downs.
     // Get the tree of all pages, without the DD for speed.
-    $vars['all_pages'] = xarModAPIfunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));
+    $vars['all_pages'] = xarModAPIfunc(
+        'xarpages', 'user', 'getpagestree',
+        array('dd_flag' => false, 'key' => 'pid')
+    );
 
     // Implode the names for each page into a path for display.
+    // TODO: move this into getpagestree
     foreach ($vars['all_pages']['pages'] as $key => $page) {
         $vars['all_pages']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
+    }
+
+    // Get the descriptions together for the current root pids.
+    // TODO: we could prune the 'add root page' list so it only includes
+    // the pages which are not yet under one of the selected root pages.
+    // That would just be an extra little usability touch.
+    $vars['root_pids'] = array_flip($vars['root_pids']);
+    foreach($vars['root_pids'] as $key => $value) {
+        if (isset($vars['all_pages']['pages'][$key])) {
+            $vars['root_pids'][$key] = $vars['all_pages']['pages'][$key]['slash_separated'];
+        } else {
+            $vars['root_pids'][$key] = xarML('Unknown');
+        }
     }
 
     $vars['bid'] = $blockinfo['bid'];
@@ -75,6 +94,34 @@ function xarpages_menublock_update($blockinfo)
     // The default page if none found by any other method.
     if (xarVarFetch('default_pid', 'int:0', $default_pid, 0, XARVAR_NOT_REQUIRED)) {
         $vars['default_pid'] = $default_pid;
+    }
+
+    // The root pages define sections of the page landscape that this block applies to.
+    if (!isset($vars['root_pids'])) {
+        $vars['root_pids'] = array();
+    }
+    if (xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid)) {
+        $vars['root_pids'][] = $new_root_pid;
+    }
+    if (xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
+        // Easier to check with the keys and values flipped.
+        $vars['root_pids'] = array_flip($vars['root_pids']);
+        foreach($remove_root_pid as $remove) {
+            if (isset($vars['root_pids'][$remove])) {
+                unset($vars['root_pids'][$remove]);
+            }
+        }
+        // Flip keys and values back.
+        $vars['root_pids'] = array_flip($vars['root_pids']);
+        // Reorder the keys.
+        $vars['root_pids'] = array_values($vars['root_pids']);
+    }
+
+    // The maximum number of levels that are displayed.
+    // This value does not affect the tree data, but is passed to the menu rendering
+    // templates to make its own decision on how to truncate the menu.
+    if (xarVarFetch('max_level', 'int:0:999', $max_lavel, 0, XARVAR_NOT_REQUIRED)) {
+        $vars['max_level'] = $max_lavel;
     }
 
     return $blockinfo;

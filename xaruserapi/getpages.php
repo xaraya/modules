@@ -101,7 +101,8 @@ function xarpages_userapi_getpages($args)
         $query = 'SELECT COUNT(*)';
     } else {
         // The DISTINCT is needed in case use of 'tree_contains_name'
-        // matches more than one page with the same name.
+        // matches more than one page with the same name. Page names
+        // are not unique.
         $query = 'SELECT DISTINCT tpages.xar_pid, tpages.xar_name, tpages.xar_desc,'
             . ' tpages.xar_itemtype, tpages.xar_parent, tpages.xar_left, tpages.xar_right,'
             . ' tpages.xar_template, tpages.xar_status, tpages.xar_encode_url, tpages.xar_decode_url,'

@@ -22,7 +22,9 @@ function xarpages_menublock_init()
     return array(
         'multi_homed' => true,
         'current_source' => 'AUTO', // Other values: 'DEFAULT'
-        'default_pid' => 0 // 0 == 'None'
+        'default_pid' => 0, // 0 == 'None'
+        'root_pids' => array(),
+        'max_level' => 0
     );
 }
 
@@ -77,6 +79,12 @@ function xarpages_menublock_display($blockinfo)
     // Pointer to simplify referencing.
     $vars =& $blockinfo['content'];
 
+    if (!empty($vars['root_pids']) && is_array($vars['root_pids'])) {
+        $root_pids = $vars['root_pids'];
+    } else {
+        $root_pids = array();
+    }
+
     // To start with, we need to know the current page.
     // It could be set (fixed) for the block, passed in
     // via the page cache, or simply not present.
@@ -97,19 +105,11 @@ function xarpages_menublock_display($blockinfo)
     if (empty($pid) && !empty($vars['default_pid'])) {
         // Set the current page to be the default.
         $pid = $vars['default_pid'];
-
-        // Note: depending on the value of 'default_type', this pid
-        // may be treated as a current page, or the root of a default
-        // tree.
-        $default_flag = (isset($vars['default_type']) ? $vars['default_type'] : 'PAGE');
-    } else {
-        // TODO: not sure, but could a module want to call up a tree without
-        // setting a current page?
-        $default_flag = 'PAGE';
     }
 
     // The page details *may* have been cached, if
-    // we are in the xarpages module.
+    // we are in the xarpages module, or have several
+    // blocks on the same page showing the same tree.
     if (xarVarIsCached('Blocks.xarpages', 'pagedata')) {
         // Pages are cached?
         $pagedata = xarVarGetCached('Blocks.xarpages', 'pagedata');
@@ -124,6 +124,14 @@ function xarpages_menublock_display($blockinfo)
     // If there is no pid, then we have no page or tree to display.
     if (empty($pid)) {return;}
     
+    // If necessary, check whether the current page is under one of the
+    // of the allowed root pids.
+    if (!empty($root_pids)) {
+        if (!xarModAPIfunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
+            return;
+        }
+    }
+
     // If we don't have any page data, then fetch it now.
     if (empty($pagedata)) {
         // Get the page data here now.
@@ -142,42 +150,44 @@ function xarpages_menublock_display($blockinfo)
         if (empty($pagedata)) {return;}
 
         // Cache the data now we have gone to the trouble of fetching the tree.
-        // Only cache it if the cache is empty to start with.
+        // Only cache it if the cache is empty to start with. We only cache a complete
+        // tree here, so if any other blocks need it, it contains all possible
+        // pages we could need in that tree.
         if (!xarVarIsCached('Blocks.xarpages', 'pagedata')) {
             xarVarSetCached('Blocks.xarpages', 'pagedata', $pagedata);
         }
     }
 
     // TODO: handle privileges for pages somewhere. The user/display
-    // function handles it for the current page, but there is not
+    // function handles it for the current page, but there is no
     // point the block providing links to pages that cannot be
     // accessed.
     
-    // Here we add the various flags to the pagedata,
-    // assuming we have a current page.
-    if ($default_flag == 'PAGE') {
-        $pagedata = xarModAPIfunc(
-            'xarpages', 'user', 'addcurrentpageflags',
-            array('pagedata' => $pagedata, 'pid' => $pid)
-           
-         );
+    // Here we add the various flags to the pagedata, based on
+    // the current page.
+    $pagedata = xarModAPIfunc(
+        'xarpages', 'user', 'addcurrentpageflags',
+        array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
+    );
+
+    // If not multi-homed, then create a 'root root' page - a virtual page
+    // one step back from the displayed root page. This makes the template
+    // much easier to implement. The templates need never display the
+    // root page passed into them, and always start with the children of
+    // that root page.
+    if (empty($vars['multi_homed'])) {
+        $pagedata['pages'][0] = array(
+            'child_keys' => array($pagedata['root_page']['key']),
+            'has_children' => true, 'is_ancestor' => true
+        );
+        unset($pagedata['root_page']);
+        $pagedata['root_page'] =& $pagedata['pages'][0];
     }
 
     // Pass the page data into the block.
     // Merge it in with the existing block details.
-    // TODO: It may be quicker to do it the other way around?
+    // TODO: It may be quicker to do the merge the other way around?
     $vars = array_merge($vars, $pagedata);
-
-    // TODO: allow the root page to be set at a variety of points.
-    // If, for example, the root page is set several levels up the tree,
-    // then the menu will remain static and open at just one level, 
-    // until a page within that sub-tree is selected.
-    // Set the root page.
-    if (!empty($vars['ancestors'])) {
-        $vars['root_page'] =& reset($vars['ancestors']);
-    } else {
-        return;
-    }
 
     return $blockinfo;
 }

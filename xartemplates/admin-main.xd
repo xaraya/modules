@@ -79,13 +79,64 @@
   select from a range of templates.</p>
 <h2>Item Templates</h2>
 <p>Each page type uses a default item template with the same name as that type. For example, page type 'html' will use a default item template &quot;page-html.xd&quot; or &quot;page-html.xt&quot; in a theme. Any specific page may request a more specific template by name. For example, page &quot;directors&quot; of type &quot;html&quot; may define &quot;contact&quot; as its template, which come from the theme &quot;page-html-contact.xt&quot;, falling back to &quot;page-html.xt&quot; if the more specific template does not exist.</p>
-<h2>Privileges</h2>
-<p>The privileges have been designed to allow sub-editors to manage content, without being able to modify the structure of the pages.</p>
-<p>See the privileges.txt file in the documentation set of this module.</p>
-<h2>TODO List</h2>
-<p>See the <a href="modules/xarpages/xardocs/TODO.txt">TODO.txt</a> file in the documentation set of this module for a full list.</p>
-<p>The main missing functionality at this point are an import/export function, which would also be used to setup initial sample pages, and blocks to display hierarchical menus based on the current page and its position in the hierarchy.</p>
-<h2>Author</h2>
-<p>Jason Judge</p>
-<p><a href="mailto:judgej@xaraya.com">judgej@xaraya.com</a></p>
+<h2>Navigation Block</h2>
+<p>A navigation block has been designed for use with this module. The block should
+  be able to support all kinds of menus, including CSS, DHTML, nested lists,
+  multi-level, split menus etc. Each menu block has the following features:</p>
+</div>
+<ul>
+  <li>
+    <div lang="en-GB"><strong>Multi-homed flag.</strong> This determines whether the root page will be displayed
+      in the menu or hidden (just treated as a holding page). When hidden, the top
+      level of the menu consists of all the children of the root page, i.e. multiple
+      top-level pages.</div>
+  </li>
+  <li><strong>Current page source.</strong> This determines how the 'current
+    page' is determined. It can either come from a cache variable - normally
+    created when a xarpages page is displayed, or it can be fixed to a specified
+    page. If fixed, then the 'default page' is used as the current page at all
+    times.</li>
+  <li><strong>Default Page.</strong> The default page is used in two circumstances.
+    Firstly it can be used as a fixed page, always displayed as 'current' within
+    the block. Secondly it can be used as a default when no current page is defined
+    externally (i.e. not passed into the block as the 'current_pid' attribute,
+    and not set in the cache by a module). This is optional. If no xarpage page
+    is displayed, and no default page is set, then the block will not be displayed
+    at all.</li>
+  <li><strong>Root Pages.</strong> By default, when the block is set to 'automatic'
+    it will display the full menu for the tree under which the current page is
+    located. You may wish to limit that to just certain trees, i.e. for the block
+    only to display a menu if the current xarpages page is within certain bounds.
+    One or more root pages can be set, and these will be checked at runtime to
+    ensure the current page is located somewhere within the trees defined by
+    these root pages. If the current page is outside of all the root pages, then
+    the block is not displayed. If no root pages are defined, then there are
+    not bounds, and a menu will be displayed for every xarpages page. A second
+    function of the root pages is to allow menus to be split up into smaller
+    chunks. For example, a side menu may display one of five sub-menus, each
+    branches of the main page structure. The appropriate menu will be displayed
+    only when a page from that menu is being displayed. Another example could
+    be a top menu handling the first level of the main menu, and a side menu
+    handling levels 2 onwards.</li>
+  <li><strong>Max Level.</strong> Used in conjunction with the root pages, this
+    setting defines the maximum number of levels a menu block will display. Anything
+    below that level will be truncated.</li>
+</ul>
+<p>There is a simple textual nested list template set up for this block, that
+  should demonstrate how it works. A more complex example shows how the menu
+  could be formatted as a side menu. The more complex template can be invoked
+  by entering <em>;css-side-menu1</em> as the 'instance template' of the block.
+  Further menus can be built up using similar menus.</p>
+<p>If you have examples of generic menus that could be included in this module,
+  please feel free to pass them on to the author.</p>
+<div lang="en-GB">
+  <h2>Privileges</h2>
+  <p>The privileges have been designed to allow sub-editors to manage content, without being able to modify the structure of the pages.</p>
+  <p>See the privileges.txt file in the documentation set of this module.</p>
+  <h2>TODO List</h2>
+  <p>See the <a href="modules/xarpages/xardocs/TODO.txt">TODO.txt</a> file in the documentation set of this module for a full list.</p>
+  <p>The main missing functionality at this point are an import/export function, which would also be used to setup initial sample pages, and blocks to display hierarchical menus based on the current page and its position in the hierarchy.</p>
+  <h2>Author</h2>
+  <p>Jason Judge</p>
+  <p><a href="mailto:judgej@xaraya.com">judgej@xaraya.com</a></p>
 </div>

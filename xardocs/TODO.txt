@@ -6,15 +6,14 @@ Various stuff to do:
   remove the index.php/[xarpages] part of the path; if provided  by an API
   then a trigger or hook could be developed to automatically update
   mod_rewrite rules each time the pages are changed
-- Creation of sample blocks - a crumb-trail, a CSS menu etc.
 - A site map example page
 - Have a really good think about how to implement searches. This won't be
   easy as each page type could get its data from a different place, and this
   module has no inside knowledge of how to access that data - am tempted not
   to do this, but to use an external search engine on the rendered pages
 - Some good docs with examples and diagrams
-- Fix page view so that the image on the first item displays correctly - it
-  is currently displayed in the admin view screen as an empty root node
+- Fix admin page view so that the image on the first item displays correctly.
+  It is currently displayed in the admin view screen as an empty root node
   regardless of whether it has children
 - Completely templatize the selection of images in the admin tree view
 - Provide selection methods (by tree etc) on the admin/view page to help
@@ -29,7 +28,9 @@ Various stuff to do:
   #pagelink:/about/company# using Autolinks, without having to know the ID
   or even the full path of the page.
 - Add copyright notices to all scripts and templates.
+- Apply privileges to individual pages in the menu block.
 
+- Creation of sample blocks - a crumb-trail, a CSS menu etc. - DONE
 - Privileges (registered, but not yet actually used) - DONE
 - Overview of module in the 'admin/main' template - DONE
 - Write a module delete/remove function - DONE
