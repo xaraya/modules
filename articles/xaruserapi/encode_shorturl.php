@@ -164,7 +164,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= encodeUsingTitle($aid);
+                $path .= articles_encodeUsingTitle($aid);
             } else {
                 $path .= "$aid";
             }
