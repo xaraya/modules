@@ -567,7 +567,7 @@ function comments_user_search( $args ) {
     // TODO:  check 'q' and 'author' for '%' value
     //        and sterilize if found
     if (!isset($q) || strlen(trim($q)) <= 0) {
-        if (isset($author)) {
+        if (isset($author) && strlen(trim($author)) > 0) {
             $q = $author;
         } else {
             $data['header']['text']     = 1;
