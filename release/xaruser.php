@@ -292,7 +292,7 @@ function release_user_addnotes()
                 $name) = xarVarCleanFromInput('rid',
                                               'name');
 
-           if (!xarSecConfirmAuthKey()) return;
+           //if (!xarSecConfirmAuthKey()) return;
 
             xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
                                xarVarPrepForDisplay(xarML('Release'))
@@ -337,8 +337,109 @@ function release_user_addnotes()
         
         case 'preview':
 
+            list($rid,
+                 $name,
+                 $version,
+                 $pricecheck,
+                 $supportcheck,
+                 $democheck,
+                 $dllink,
+                 $price,
+                 $demolink,
+                 $supportlink,
+                 $changelog,
+                 $notes) = xarVarCleanFromInput('rid',
+                                                'name',
+                                                'version',
+                                                'pricecheck',
+                                                'supportcheck',
+                                                'democheck',
+                                                'dllink',
+                                                'price',
+                                                'demolink',
+                                                'supportlink',
+                                                'changelog',
+                                                'notes');
+            
+           //if (!xarSecConfirmAuthKey()) return;
+
+           $notesf = nl2br($notes);
+           $changelogf = nl2br($changelog);
+
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Release'))
+                       .' :: '.xarVarPrepForDisplay($name));
+
+           $authid = xarSecGenAuthKey();
+           $data = xarTplModule('release','user', 'addnote_preview',    array('rid'         => $rid,
+                                                                              'name'        => $name,
+                                                                              'authid'      => $authid,
+                                                                              'version'     => $version,
+                                                                              'pricecheck'  => $pricecheck,
+                                                                              'supportcheck'=> $supportcheck,
+                                                                              'democheck'   => $democheck,
+                                                                              'dllink'      => $dllink,
+                                                                              'price'       => $price,
+                                                                              'demolink'    => $demolink,
+                                                                              'supportlink' => $supportlink,
+                                                                              'changelog'   => $changelog,
+                                                                              'changelogf'  => $changelogf,
+                                                                              'notesf'      => $notesf,
+                                                                              'notes'       => $notes));
 
 
+
+            break;
+
+        case 'update':
+
+            list($rid,
+                 $name,
+                 $version,
+                 $pricecheck,
+                 $supportcheck,
+                 $democheck,
+                 $dllink,
+                 $price,
+                 $demolink,
+                 $supportlink,
+                 $changelog,
+                 $notes) = xarVarCleanFromInput('rid',
+                                                'name',
+                                                'version',
+                                                'pricecheck',
+                                                'supportcheck',
+                                                'democheck',
+                                                'dllink',
+                                                'price',
+                                                'demolink',
+                                                'supportlink',
+                                                'changelog',
+                                                'notes');
+            
+           //if (!xarSecConfirmAuthKey()) return;
+
+            // The user API function is called. 
+            if (!xarModAPIFunc('release',
+                               'user',
+                               'createnote',
+                                array('rid'         => $rid,
+                                      'version'     => $version,
+                                      'price'       => $pricecheck,
+                                      'supported'   => $supportcheck,
+                                      'demo'        => $democheck,
+                                      'dllink'      => $dllink,
+                                      'priceterms'  => $price,
+                                      'demolink'    => $demolink,
+                                      'supportlink' => $supportlink,
+                                      'changelog'   => $changelog,
+                                      'notes'       => $notes))) return;
+
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Release'))
+                       .' :: '.xarVarPrepForDisplay(xarML('Thank You')));
+
+           $data = xarTplModule('release','user', 'addnote_thanks');
 
             break;
     }   

@@ -1,13 +1,13 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>Release Module :: Further Details</xar:mlstring></h2>
+<h2><xar:mlstring>Release Module :: Preview</xar:mlstring></h2>
 
 <center>
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="phase" id="phase" value="preview" />	
+		<input type="hidden" name="phase" id="phase" value="update" />	
 		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
 		<input type="hidden" name="name" id="name" value="#$name#" />
 		<input type="hidden" name="version" id="version" value="#$version#" />	
@@ -40,11 +40,73 @@
 				</td>
 			</tr>
 			<tr>
+				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Download Link</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$dllink#
+				</td>
+			</tr>
+			<xar:if condition="$pricecheck eq '1'">
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Price</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$price#
+				</td>
+			</tr>
+			</xar:if>
+			<xar:if condition="$democheck eq '1'">
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Demo Link</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<a href="#$demolink#">#$demolink#</a>
+				</td>
+			</tr>
+			</xar:if>
+			<xar:if condition="$supportcheck eq '1'">
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Support Link</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<a href="#$supportlink#">#$supportlink#</a>
+				</td>
+			</tr>
+			</xar:if>
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>ChangeLog</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$changelogf#
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Additional Notes</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$notesf#
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Version Number</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<input type="text" name="version" value="#$version#" size="10" maxlength="100" />
+				</td>
+			</tr>
+			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Download Link</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="dllink" value="" size="30" maxlength="100" />
+					<input type="text" name="dllink" value="#$dllink#" size="30" maxlength="100" />
 				</td>
 			</tr>
 			<xar:if condition="$pricecheck eq '1'">
@@ -53,7 +115,7 @@
 					<xar:mlstring>Price</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="price" value="" size="10" maxlength="100" />
+					<input type="text" name="price" value="#$price#" size="10" maxlength="100" />
 				</td>
 			</tr>
 			</xar:if>
@@ -63,7 +125,7 @@
 					<xar:mlstring>Demo Link</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="demolink" value="" size="30" maxlength="100" />
+					<input type="text" name="demolink" value="#$demolink#" size="30" maxlength="100" />
 				</td>
 			</tr>
 			</xar:if>
@@ -73,7 +135,7 @@
 					<xar:mlstring>Supported Link</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="supportlink" value="" size="30" maxlength="100" />
+					<input type="text" name="supportlink" value="#$supportlink#" size="30" maxlength="100" />
 				</td>
 			</tr>
 			</xar:if>
@@ -82,7 +144,7 @@
 					<xar:mlstring>ChangeLog</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<textarea name="changelog" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
+					<textarea name="changelog" cols="60" rows="5" wrap="virtual" class="xar-normal">#$changelog#</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -90,11 +152,11 @@
 					<xar:mlstring>Additional Notes</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<textarea name="notes" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
+					<textarea name="notes" cols="60" rows="5" wrap="virtual" class="xar-normal">#$notes#</textarea>
 				</td>
 			</tr>
 		</table>			
 		<br /><br />
-		<input type="submit" value="<xar:mlstring>Continue</xar:mlstring>" align="middle" tabindex="6" />
+		<input type="submit" value="<xar:mlstring>Announce!</xar:mlstring>" align="middle" tabindex="6" />
 	</form>
 </center>

@@ -12,7 +12,7 @@
 		<input type="hidden" name="name" id="name" value="#$name#" />
 		<table border="0" cellpadding="5">
 			<tr>
-				<td align="left" valign="top" class="xar-norm">
+				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Module or Theme ID</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
@@ -20,7 +20,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="left" valign="top" class="xar-norm">
+				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Module or Theme Name</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">

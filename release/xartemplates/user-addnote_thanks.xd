@@ -1,0 +1,6 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Release Module :: Thank You</xar:mlstring></h2>
+
+<xar:mlstring>Your Release Notification has been sent for review.  It should appear on the site very shortly.  In the meantime you can begin to add online documentation.</xar:mlstring>
