@@ -55,41 +55,41 @@ Files
 
 Build
 -----
-	The unsigned IRC Engine can be built using the following javac compiler
-	commands :
-		javac -nowarn -g:none -O -target 1.1 IRCApplet.java
-		javac -nowarn -g:none -O -target 1.1 irc\style\*.java
-		javac -nowarn -g:none -O -target 1.1 irc\tree\*.java
-		javac -nowarn -g:none -O -target 1.1 irc\dcc\prv\*.java
-		javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
-		javac -nowarn -g:none -O -target 1.1 irc\gui\common\*.java
-		javac -nowarn -g:none -O -target 1.1 irc\ident\prv\*.java
-		javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
+        The unsigned IRC Engine can be built using the following javac compiler
+        commands :
+                javac -nowarn -g:none -O -target 1.1 IRCApplet.java
+                javac -nowarn -g:none -O -target 1.1 irc\style\*.java
+                javac -nowarn -g:none -O -target 1.1 irc\tree\*.java
+                javac -nowarn -g:none -O -target 1.1 irc\dcc\prv\*.java
+                javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
+                javac -nowarn -g:none -O -target 1.1 irc\gui\common\*.java
+                javac -nowarn -g:none -O -target 1.1 irc\ident\prv\*.java
+                javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
 
 Installation
 ------------
-	Just upload the files you need, in regard to the mode (signed or unsigned)
-	you want. Upload any extra files, such as language files or images and
-	sound.
+        Just upload the files you need, in regard to the mode (signed or unsigned)
+        you want. Upload any extra files, such as language files or images and
+        sound.
 
 Applet html fragment
 --------------------
-	Using signed mode and the Pixx GUI, the following minimal applet fragment
-	should work just fine :
+        Using signed mode and the Pixx GUI, the following minimal applet fragment
+        should work just fine :
 
-	<applet code=IRCApplet.class archive="irc.jar,pixx.jar" width=640
-	    height=400>
-	<param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab">
-	<param name="nick" value="Anonymous">
-	<param name="fullname" value="PJIRC User">
-	<param name="host" value="irc.diboo.net">
-	<param name="gui" value="pixx">
-	</applet>
+        <applet code=IRCApplet.class archive="irc.jar,pixx.jar" width=640
+            height=400>
+        <param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab">
+        <param name="nick" value="Anonymous">
+        <param name="fullname" value="PJIRC User">
+        <param name="host" value="irc.diboo.net">
+        <param name="gui" value="pixx">
+        </applet>
 
 Test your applet
 ----------------
-	A test tool is available at http://www.pjirc.com/check.
-	This tool will detect common errors and mistakes.
+        A test tool is available at http://www.pjirc.com/check.
+        This tool will detect common errors and mistakes.
 
 What is a server?
 -----------------
