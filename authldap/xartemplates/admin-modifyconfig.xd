@@ -81,6 +81,14 @@
                         <input type="password" name="adminpasswd" size="30" value="#$adminpasswdvalue#" />
                     </td>
                 </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="tls" value="1" #$tls# />
+                    </td>
+                </tr>
             </table>
         </div>
         <br />

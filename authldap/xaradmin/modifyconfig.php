@@ -67,6 +67,13 @@ function authldap_admin_modifyconfig()
     $adminpasswd = $ldap->encrypt($ldap->admin_password, 0);
     $data['adminpasswdvalue'] = xarVarPrepForDisplay($adminpasswd);
 
+    // Use TLS - LDAP Protocol 3 only
+    if ($ldap->tls == 'true') {
+        $data['tls'] = xarVarPrepForDisplay("checked");
+    } else {
+        $data['tls'] = "";
+    }
+
     // Add user to xar_roles
     if (xarModGetVar('authldap','add_user') == 'true') {    
         $data['adduservalue'] = xarVarPrepForDisplay("checked");

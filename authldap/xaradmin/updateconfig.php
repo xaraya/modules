@@ -28,6 +28,7 @@ function authldap_admin_updateconfig()
          $searchuserdn,
          $adminid,
          $adminpasswd,
+         $tls,
          $adduser,
          $adduseruname,
          $adduseremail,
@@ -41,6 +42,7 @@ function authldap_admin_updateconfig()
                                                 'searchuserdn',
                                                 'adminid',
                                                 'adminpasswd',
+                                                'tls',
                                                 'adduser', 
                                                 'adduseruname', 
                                                 'adduseremail', 
@@ -89,6 +91,12 @@ function authldap_admin_updateconfig()
         $ldap->set_variable('anonymous_bind', 'false');
     } else {
         $ldap->set_variable('anonymous_bind', 'true');
+    }
+
+    if(!$tls){
+        $ldap->set_variable('tls', 'false');
+    } else {
+        $ldap->set_variable('tls', 'true');
     }
 
     // Update the authldap settings
