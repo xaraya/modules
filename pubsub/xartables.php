@@ -1,11 +1,20 @@
 <?php // 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
+/**
+ * File: $Id$
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.org
+*/
 
+/**
+ * Table function
+ *
+ * @access public
+ * @param none
+ * @returns bool
+ * @raise DATABASE_ERROR
+*/
 function pubsub_xartables()
 {
     // Initialise table array

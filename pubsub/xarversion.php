@@ -1,5 +1,4 @@
 <?php 
-// 
 $modversion['name'] = 'Pubsub';
 $modversion['id'] = '181';
 $modversion['version'] = '1.0';

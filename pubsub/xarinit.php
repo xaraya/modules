@@ -124,6 +124,8 @@ function pubsub_init()
  * 
  * @access public
  * @param oldversion float "Previous version upgrading from"
+ * @returns bool
+ * @raise DATABASE_ERROR
  */
 function pubsub_upgrade($oldversion)
 {
@@ -131,6 +133,11 @@ function pubsub_upgrade($oldversion)
 }
 /**
  * delete the pubsub module
+ *
+ * @access public
+ * @param none
+ * @returns bool
+ * @raise DATABASE_ERROR
  */
 function pubsub_delete()
 {
@@ -182,61 +189,25 @@ function pubsub_delete()
     include ('includes/xarTableDDL.php');
 
     // Generate the SQL to drop the table using the API
-    $sql = xarDBDropTable($xartable['pubsub_events']);
-    if (empty($sql)) return; // throw back
+    $query = xarDBDropTable($xartable['pubsub_events']);
 
-    // Drop the table
-    $dbconn->Execute($sql);
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
-    $sql = xarDBDropTable($xartable['pubsub_reg']);
-    if (empty($sql)) return; // throw back
+    $query = xarDBDropTable($xartable['pubsub_reg']);
 
-    // Drop the table
-    $dbconn->Execute($sql);
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
     
-    $sql = xarDBDropTable($xartable['pubsub_process']);
-    if (empty($sql)) return; // throw back
+    $query = xarDBDropTable($xartable['pubsub_process']);
 
-    // Drop the table
-    $dbconn->Execute($sql);
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
-    $sql = xarDBDropTable($xartable['pubsub_template']);
-    if (empty($sql)) return; // throw back
+    $query = xarDBDropTable($xartable['pubsub_template']);
 
-    // Drop the table
-    $dbconn->Execute($sql);
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Deletion successful
     return true;

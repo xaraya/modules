@@ -1,10 +1,16 @@
 <?php 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
+/**
+ * File: $Id$
+ * 
+ * Admin interface for the pubsub module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Pubsub Module
+ * @author Chris Dudley
+*/
 
 /**
  * the main administration function
