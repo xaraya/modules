@@ -15,15 +15,23 @@
                 <table border="0" cellpadding="2">
                     <tr>
                         <td>
+                            <xar:mlstring>Enable Bulk Email:</xar:mlstring>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="bulkemail" id="bulkemail" value="1" #$bulkemail# tabindex="1"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <xar:mlstring>Enable Short URL Support:</xar:mlstring>
                         </td>
                         <td>
-                            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# tabindex="17"/>
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# tabindex="2"/>
                         </td>
                     </tr>
                 </table>
                 <center>
-                <input type="submit" value="#$updatebutton#"  tabindex="18" />
+                <input type="submit" value="#$updatebutton#"  tabindex="3" />
                 </center>
             </form>
             <table border="0" cellpadding="5">

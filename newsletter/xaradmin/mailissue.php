@@ -119,7 +119,253 @@ function newsletter_admin_mailissue()
         // Just in case...
         $issueText = strip_tags($issueText);
     }
-            
+    
+    // Send as either bulk email to all subscribers or single email
+    // to each individual subscriber
+    if (xarModGetVar('newsletter', 'bulkemail')) {
+        $emailResultArray = newsletter__bulk_email(array('publication' => $publication,
+                                                         'issue' => $issue,
+                                                         'issueText' => $issueText,
+                                                         'issueHTML' => $issueHTML));
+    } else {
+        $emailResultArray = newsletter__single_email(array('publication' => $publication,
+                                                           'issue' => $issue,
+                                                           'issueText' => $issueText,
+                                                           'issueHTML' => $issueHTML));
+    }
+
+    if (!$emailResultArray) {
+        return false;
+    }
+
+
+    // Merge emailResultArray and templateVarArray
+    $templateResultArray = array_merge($templateVarArray, $emailResultArray);
+
+    // Return the template variables defined in this function
+    return xarTplModule('newsletter', 'admin', 'mailissue', $templateResultArray);
+}
+
+
+/**
+ * Send an email to each individual newsletter subscriber
+ *
+ * @private
+ * @author Richard Cave
+ * @param $publication publication of the issue
+ * @param $issue issue to email
+ * @param $issueText body of issue in text format
+ * @param $issueHTML body of issue in HTML format
+ * @return array
+ * @returns $emailResultArray
+ */
+function newsletter__single_email($args)
+{
+    // Extract args
+    extract($args);
+
+    // Check args
+    if (!isset($publication) || !isset($issue) || !isset($issueText) || !isset($issueHTML)) {
+        return;
+    }
+
+    // Initialize userData array
+    $userData = array();
+
+    // Initialize issue count totals and errors
+    $issueCounts = array('total' => 0,
+                         'errors' => 0);
+
+    // Get subscription list - don't send uid
+    $subscriptions = xarModAPIFunc('newsletter',
+                                   'user',
+                                   'get',
+                                    array('id' => 0, // doesn't matter
+                                          'pid' => $issue['pid'],
+                                          'phase' => 'subscription'));
+
+    if (!empty($subscriptions)) {
+        foreach ($subscriptions as $subscription) {
+
+            // Get the user's email address from roles
+            $userData = xarModAPIFunc('roles',
+                                      'user',
+                                      'get',
+                                      array('uid' => $subscription['uid']));
+
+            if (!isset($userData)) {
+                $userData['mailerror'] = true;
+                $userData['nameurl'] = '';
+                $userData['emailurl'] = '';
+                $issueCounts['errors']++;
+                // show error for this user
+            } else {
+                $userData['mailerror'] = false;
+
+                // Set link to search user by name
+                $userData['nameurl'] = xarModURL('newsletter',
+                                                 'admin',
+                                                 'viewsubscription',
+                                                 array('search' => "publication",
+                                                       'publicationId' => $issue['pid'],
+                                                       'searchname' => $userData['name']));
+    
+                // Set link to search user by email
+                $userData['emailurl'] = xarModURL('newsletter',
+                                                  'admin',
+                                                  'viewsubscription',
+                                                  array('search' => "publication",
+                                                        'publicationId' => $issue['pid'],
+                                                        'searchname' => $userData['email']));
+    
+                // Set how the user wants the mail sent - html or text
+                $userData['htmlmail'] = $subscription['htmlmail'];
+
+                // Set email address for html or text email
+                if ($subscription['htmlmail']) {
+                    // Mail the html issue to the subscription base
+                    $result = xarModAPIFunc('newsletter',
+                                            'admin',
+                                            'mailissue',
+                                            array('publication'  => $publication,
+                                                  'issue'        => $issue,
+                                                  'recipients'   => array($userData['email
+'] => $userData['name']),
+                                                  'issueText'    => $issueText,
+                                                  'issueHTML'    => $issueHTML,
+                                                  'type'         => 'html'));
+                } else {
+                    // Mail the text issue to the subscription base
+                    $result = xarModAPIFunc('newsletter',
+                                            'admin',
+                                            'mailissue',
+                                            array('publication'  => $publication,
+                                                  'issue'        => $issue,
+                                                  'recipients'   => array($userData['email
+'] => $userData['name']),
+                                                  'issueText'    => $issueText,
+                                                  'issueHTML'    => $issueHTML,
+                                                  'type'         => 'text'));
+                }
+
+                // If mail failed, set mailerror to true
+                if (!$result) {
+                    $userData['mailerror'] = true;
+                    $issueCounts['errors']++;
+                }
+
+                // Update issue counts
+                $issueCounts['total']++;
+            }
+
+            // Add the subscription
+            $emailResultArray['subscriptions'][] = $userData;
+        }
+    }
+
+    // Get alternative subscription list - don't send uid
+    $altsubscriptions = xarModAPIFunc('newsletter',
+                                      'user',
+                                      'get',
+                                       array('id' => 0, // doesn't matter
+                                             'pid' => $issue['pid'],
+                                             'phase' => 'altsubscription'));
+
+    if (!empty($altsubscriptions)) {
+        foreach ($altsubscriptions as $subscription) {
+
+            // Set user data fields
+            $userData['name'] = $subscription['name'];
+            $userData['email'] = $subscription['email'];
+            $userData['mailerror'] = false;
+
+            // Set link to search user by name
+            $userData['nameurl'] = xarModURL('newsletter',
+                                             'admin',
+                                             'viewsubscription',
+                                             array('search' => "publication",
+                                                   'publicationId' => $issue['pid'],
+                                                   'searchname' => $userData['name']));
+    
+            // Set link to search user by email
+            $userData['emailurl'] = xarModURL('newsletter',
+                                              'admin',
+                                              'viewsubscription',
+                                              array('search' => "publication",
+                                                    'publicationId' => $issue['pid'],
+                                                    'searchname' => $userData['email']));
+    
+            // Set how the user wants the mail sent - html or text
+            $userData['htmlmail'] = $subscription['htmlmail'];
+
+            // Set email address for html or text email
+            if ($subscription['htmlmail']) {
+                // Mail the html issue to the subscription base
+                $result = xarModAPIFunc('newsletter',
+                                        'admin',
+                                        'mailissue',
+                                        array('publication'  => $publication,
+                                              'issue'        => $issue,
+                                              'recipients'   => array($userData['email'] => $userData['name']),
+                                              'issueText'    => $issueText,
+                                              'issueHTML'    => $issueHTML,
+                                              'type'         => 'html'));
+            } else {
+                // Mail the text issue to the subscription base
+                $result = xarModAPIFunc('newsletter',
+                                        'admin',
+                                        'mailissue',
+                                        array('publication'  => $publication,
+                                              'issue'        => $issue,
+                                              'recipients'   => array($userData['email'] => $userData['name']),
+                                              'issueText'    => $issueText,
+                                              'issueHTML'    => $issueHTML,
+                                              'type'         => 'text'));
+            }
+
+            // If mail failed, set mailerror to true
+            if (!$result) {
+                $userData['mailerror'] = true;
+                $issueCounts['errors']++;
+            }
+
+            // Update issue counts
+            $issueCounts['total']++;
+
+
+            // Add the subscription
+            $emailResultArray['subscriptions'][] = $userData;
+        }
+    }
+
+    $emailResultArray['issueCounts'] = $issueCounts;
+
+    return $emailResultArray;
+}
+
+
+/**
+ * Send a single email to every newsletter subscriber
+ *
+ * @private
+ * @author Richard Cave
+ * @param $publication publication of the issue
+ * @param $issue issue to email
+ * @param $issueText body of issue in text format
+ * @param $issueHTML body of issue in HTML format
+ * @return array
+ * @returns $emailResultArray
+ */
+function newsletter__bulk_email($args)
+{
+    // Extract args
+    extract($args);
+
+    // Check args
+    if (!isset($publication) || !isset($issue) || !isset($issueText) || !isset($issueHTML)) {
+        return;
+    }
+
     // Initialize arrays
     $userData = array();
     $htmlrecipients = array();
@@ -186,7 +432,7 @@ function newsletter_admin_mailissue()
             }
 
             // Add the subscription
-            $templateVarArray['subscriptions'][] = $userData;
+            $emailResultArray['subscriptions'][] = $userData;
         }
     }
 
@@ -236,7 +482,7 @@ function newsletter_admin_mailissue()
             $userData['htmlmail'] = $subscription['htmlmail'];
 
             // Add the subscription
-            $templateVarArray['subscriptions'][] = $userData;
+            $emailResultArray['subscriptions'][] = $userData;
         }
     }
 
@@ -267,11 +513,9 @@ function newsletter_admin_mailissue()
     }
 
     // Set issue counts
-    $templateVarArray['issueCounts'] = $issueCounts;
+    $emailResultArray['issueCounts'] = $issueCounts;
 
-    // Return the template variables defined in this function
-    return xarTplModule('newsletter','admin','mailissue',$templateVarArray);
+    return $emailResultArray;
 }
-
 
 ?>

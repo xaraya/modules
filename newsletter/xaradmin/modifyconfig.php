@@ -47,6 +47,7 @@ function newsletter_admin_modifyconfig()
     }
 
     // Provide encode/decode functions forshort URLs 
+    $data['bulkemail'] = xarModGetVar('newsletter','bulkemail') ? 'checked' : '';
     $data['shorturlschecked'] = xarModGetVar('newsletter','SupportShortURLs') ? 'checked' : '';
 
     // Return the template variables defined in this function

@@ -302,6 +302,7 @@ function newsletter_init()
     xarModSetVar('newsletter', 'previewbrowser', 1);
     xarModSetVar('newsletter', 'commentarysource', '');
     xarModSetVar('newsletter', 'SupportShortURLs', 0);
+    xarModSetVar('newsletter', 'bulkemail', 1);
 
     // Set default roles and privileges
     xarModSetVar('newsletter', 'publisher', 'NewsletterPublisher');
@@ -553,6 +554,7 @@ function newsletter_delete()
     xarModDelVar('newsletter', 'previewbrowser');
     xarModDelVar('newsletter', 'commentarysource');
     xarModDelVar('newsletter', 'SupportShortURLs');
+    xarModDelVar('newsletter', 'bulkemail');
 
     // Deletion successful
     return true;

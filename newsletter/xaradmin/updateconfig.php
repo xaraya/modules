@@ -18,6 +18,7 @@
  *
  * @public
  * @author Richard Cave
+ * @param 'bulkemail' send a single email to every newsletter subscriber 
  * @param 'shorturls' short URL support
  * @returns bool
  * @return true on success, false on failure
@@ -32,9 +33,11 @@ function newsletter_admin_updateconfig()
     }
 
     // Get parameters from input
+    if (!xarVarFetch('bulkemail', 'checkbox', $bulkemail, true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
 
     // Update module variables
+    xarModSetVar('newsletter', 'bulkemail', $bulkemail);
     xarModSetVar('newsletter', 'SupportShortURLs', $shorturls);
 
     // Redirect
