@@ -20,11 +20,11 @@
 			</p>
 			<p><xar:mlstring>In Xaraya the xmlrpcserver module is responsible for providing the xmlrpc transport
 			  needed for the Blogger API functionality. This module will not function without
-			  that module module activated.</xar:mlstring>
+			  that module activated.</xar:mlstring>
 			</p>
       <p>
         <xar:mlstring>In addition to that, the xmlrpcserver module needs one or more API modules
-        activated to actually do anything. The bloggerAPI is one such module. It is adviced that the
+        activated to actually do anything. The bloggerAPI is one such module. It is advised that the
         xmlrpcsystemAPI module is also activated.</xar:mlstring>
       </p>
 			<p>
@@ -45,7 +45,7 @@
 			<p>
 			  <xar:mlstring>When these modules are activated, configure the categories modules and create some
 			  categories which should hold the postings made from Blogs. While not necessary, it 
-			  is adviced to create a publication type for blog postings specifically and link this
+			  is advised to create a publication type for blog postings specifically and link this
 			  type to the category-tree you created for blog postings.</xar:mlstring>
 			</p>
 			<p>

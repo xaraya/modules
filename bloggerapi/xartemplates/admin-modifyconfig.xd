@@ -9,7 +9,7 @@
           <table border="0" width="100%">
             <tr align="left" valign="middle">
               <td>
-                <xar:mlstring>BLogger API publication type</xar:mlstring>
+                <xar:mlstring>Blogger API publication type</xar:mlstring>
               </td>
               <td>
                 <select id="bloggerpubtype" name="bloggerpubtype" tabindex="1">

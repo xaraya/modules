@@ -37,7 +37,7 @@ function bloggerapi_userapi_editpost($msg)
 	xarLogVariable('publish',$publish);
 
     if (!xarUserLogin($username,$password)) {
-        $err = xarML("Invalid user (#(1)) or password while editting post",$username);
+        $err = xarML("Invalid user (#(1)) or password while editing post",$username);
  	} else {
         // FIXME: test for exceptions
         $article = xarModAPIFunc('articles','user','get',array('aid'=>$postid));
