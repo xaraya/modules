@@ -98,7 +98,7 @@ function articles_user_display($args)
 	
 		$status = xarModAPIFunc('articles', 'user', 'getstatusname', array('status' => $article['status']));
 	
-        return xarML('You have no permission to view this item [Status: '.$status.']');
+        return xarML('You have no permission to view this item [Status: #(1)]', $status);
     }
     $data['edittitle'] = xarML('Edit');
 
