@@ -15,10 +15,16 @@
 				<xar:if condition="xarModGetVar('html', 'transformtype') eq '1'">
 					<option label="Linebreaks" value="1" selected="selected"><xar:mlstring>Linebreaks</xar:mlstring></option>
 					<option label="Paragraphs" value="2"><xar:mlstring>Paragraphs</xar:mlstring></option>
+					<option label="Paragraphs" value="3"><xar:mlstring>None</xar:mlstring></option>
 				<xar:elseif condition="xarModGetVar('html', 'transformtype') eq '2'" />
 					<option label="Linebreaks" value="1"><xar:mlstring>Linebreaks</xar:mlstring></option>
 					<option label="Paragraphs" value="2" selected="selected"><xar:mlstring>Paragraphs</xar:mlstring></option>
-				</xar:if>									
+					<option label="Paragraphs" value="3"><xar:mlstring>None</xar:mlstring></option>
+				<xar:elseif condition="xarModGetVar('html', 'transformtype') eq '3'" />
+					<option label="Linebreaks" value="1"><xar:mlstring>Linebreaks</xar:mlstring></option>
+					<option label="Paragraphs" value="2"><xar:mlstring>Paragraphs</xar:mlstring></option>
+					<option label="Paragraphs" value="3" selected="selected"><xar:mlstring>None</xar:mlstring></option>
+				</xar:if>
 			</select>
 		</span>
 		</div>

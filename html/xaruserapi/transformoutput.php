@@ -69,17 +69,19 @@ function html_userapitransformoutput($text)
         $text = preg_replace("/\n/si","<br />",$text);
     } elseif ($transformtype == 2){
         $text = preg_replace("/\n/si","</p><p>",$text);
+    } elseif ($transformtype == 3){
+        $text = $text;
     }
 	//$text = preg_replace("/(\015\012)|(\015)|(\012)/","</p><p>",$text); 
     // This call is what is driving the bugs because it is transforming more
     // than we want.  The problem without the call though, it the output from
     // this function is not xhtml compliant.
     //
-    // So, a configuration in the html script will allow a replacement of 
+    // So, a configuration in the html script will allow a replacement of
     // paragraphs or line breaks.  If paragraphs are used, the template must
     // open and close the paragraphs tags before and after the transformed output.
     //$text = "<p> " . $text . " </p>\n";
-    $text = str_replace ("<p></p>", "", $text);
+   $text = str_replace ("<p></p>", "", $text);
     return $text;
 }
 
