@@ -16,7 +16,7 @@
 
 	<input type="submit" value="#$submitlabel#"  /><br /><br />
 	
-	<a href="#$cancelurl#"><xar:mlstring>Cancel deletion of the tag</xar:mlstring>.</a>
+	<a href="#$cancelurl#"><xar:mlstring>Cancel deletion of the sniff</xar:mlstring>.</a>
 </form>        
 </div>
 </div>
