@@ -1046,7 +1046,7 @@ Bug fixes:
 Changes/Additions:
 ------------------
 * [me] Added possibility to use "auto" file name when stroking
-  directly to a file.	 
+  directly to a file.     
 
 
 * [me] Added tag 'title' to the image maps to make for better
@@ -1093,7 +1093,7 @@ Changes/Additions:
   display it's value on a line graph. Value are controlled trough
   class DisplayValue and it's instance in LinePlot.
   LinePlot->value->Show(), 
-  LinePlot->value->SetColor(),	
+  LinePlot->value->SetColor(),    
   LinePlot->value->SetFont(), 
   LinePlot->value->SetMargin(),
   LinePlot->value->SetFormat(),
@@ -1233,16 +1233,16 @@ Changes/Additions:
   is really such a good ide because you will have problem if you write code
   like
   
-  	for( .... ) {
-  		$myplot = new LinePlot(.....);
-  		$graph->Add($myplot);
-  	}
-  	
-  	Since this will not work the way you think (why?) Because the same
-  	reference to the variable $myplot will be used for all additions and
-  	hence the graph will only have multiple instances of the last added 
-  	LinePlot(). Have to think of this and what is the best way. (I will 
-  	probably never get used to PHP references....)
+      for( .... ) {
+          $myplot = new LinePlot(.....);
+          $graph->Add($myplot);
+      }
+      
+      Since this will not work the way you think (why?) Because the same
+      reference to the variable $myplot will be used for all additions and
+      hence the graph will only have multiple instances of the last added 
+      LinePlot(). Have to think of this and what is the best way. (I will 
+      probably never get used to PHP references....)
 
 
 [11-Nov-2001] JpGraph 1.4
@@ -1279,12 +1279,12 @@ Additions:
        BGIMG_COPY, BGIMG_FILLPLOT, BGIMG_FILLFRAME
 
 * [me] Added extended label formatting through either
-   	Axis::SetLabelFormatString()		C-style formatting string
-   	or
-   	Axis::SetLabelFormatCallback()	A callback function that are given the value to be displayed
-   												and should manipulate the value as it likes
-   												
- 		The use of the old style digit precision variable will be deprecated from next version.
+       Axis::SetLabelFormatString()        C-style formatting string
+       or
+       Axis::SetLabelFormatCallback()    A callback function that are given the value to be displayed
+                                                   and should manipulate the value as it likes
+                                                   
+         The use of the old style digit precision variable will be deprecated from next version.
 
 * [me] Added error check if supplied Y-data has unspecified value at index 0 to avoid
   out of bounds error when corrupted data is sent in to JpGraph.
