@@ -29,4 +29,4 @@ function reports_userapi_html_report($args)
     $output = xarTplFile($reportfile,$data);
     return $output;
 }
-?>    
+?>

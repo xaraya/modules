@@ -30,4 +30,4 @@ function reports_user_html_report($args)
     $output = xarTplFile($xmlfile,$data);
     return $output;
 }
-?>    
+?>
