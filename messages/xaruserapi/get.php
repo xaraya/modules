@@ -38,13 +38,16 @@ function messages_userapi_get( $args ) {
             $message['status_alt']   = xarML('read');
         }
 
+        $message['user_link']     = xarModURL('roles','user','display',
+                                               array('uid' => $node['xar_uid']));
         $message['view_link']     = xarModURL('messages','user', 'view',
                                                array('mid'    => $node['xar_cid']));
         $message['reply_link']    = xarModURL('messages','user','send',
                                                array('action' => 'reply',
                                                      'mid'    => $node['xar_cid']));
         $message['delete_link']   = xarModURL('messages','user','delete',
-                                               array('mid'    => $node['xar_cid']));
+                                               array('mid'    => $node['xar_cid'],
+                                                     'action' => 'check'));
 
         $messages[0] = $message;
     }
