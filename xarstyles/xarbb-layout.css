@@ -186,16 +186,16 @@ div.xarbb-topiccontrols span img {
     vertical-align: middle;
     display: inline;
 }
-
+/* Note from andyv - make button more cross-theme robust */
 div.xarbb-topiccontrols span a { padding: 0 .2em; }
-
+div#mainmodulearea div.xarbb-topiccontrols a.cssbutton,
 div.xarbb-topiccontrols a.cssbutton {
     float: left;
     height: 28px;
     line-height: 28px;
     padding: 0 10px 0 0;
     margin-right: 4px;
-    background-image: url(../xarimages/classic_set/composite_mls_button.gif);
+    background-image: url(../xarimages/classic_set/composite_mls_button.gif) !important;
     background-position: 100% 0;
     background-repeat: no-repeat;
     text-decoration: none;
