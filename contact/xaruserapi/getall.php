@@ -57,7 +57,7 @@ function contact_userapi_getall($args)
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $contacttable = $xartable['contact_persons'];
-    $contacttable2 = $xartable['contact_department_members'];
+    $contacttable2 = $xartable['contact_dept_members'];
     $contacttable3  = $xartable['contact_departments'];
 // TODO: how to select by cat ids (automatically) when needed ???
 

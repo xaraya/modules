@@ -36,7 +36,9 @@ function contact_init(){
 
     $contact_departments = $xartable['contact_departments'];
 
+    // Load table maintenance API
     xarDBLoadTableMaintenanceAPI();
+
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules
@@ -73,9 +75,7 @@ function contact_init(){
         return;
     }
 
-   $contact_department_members = $xartable['contact_department_members'];
-
-    xarDBLoadTableMaintenanceAPI();
+   $contact_dept_members = $xartable['contact_dept_members'];
 
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>FALSE,'primary_key'=>TRUE),
@@ -84,7 +84,7 @@ function contact_init(){
 
      // Create the Table - the function will return the SQL is successful or
     // FALSE if it fails to build the SQL
-    $sql = xarDBCreateTable($contact_department_members,$fields);
+    $sql = xarDBCreateTable($contact_dept_members,$fields);
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
@@ -105,8 +105,6 @@ function contact_init(){
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     $contact_titles = $xartable['contact_titles'];
-
-    xarDBLoadTableMaintenanceAPI();
 
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -135,8 +133,6 @@ function contact_init(){
     //                city_table
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     $contact_city = $xartable['contact_city'];
-
-    xarDBLoadTableMaintenanceAPI();
 
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -167,8 +163,6 @@ function contact_init(){
 
     $contact_country = $xartable['contact_country'];
 
-    xarDBLoadTableMaintenanceAPI();
-
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_name'=>array('type'=>'varchar','size'=>90, 'null'=>FALSE),
@@ -198,8 +192,6 @@ function contact_init(){
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     $contact_infotype = $xartable['contact_infotype'];
 
-    xarDBLoadTableMaintenanceAPI();
-
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_name'=>array('type'=>'varchar','size'=>40, 'null'=>FALSE),
@@ -225,11 +217,9 @@ function contact_init(){
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
-    //                  persons_table
+    //                  contact_persons
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      $contact_persons = $xartable['contact_persons'];
-
-    xarDBLoadTableMaintenanceAPI();
 
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -278,11 +268,9 @@ function contact_init(){
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
-    //                  attributes_table
+    //                  contact_attributes
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      $contact_attributes = $xartable['contact_attributes'];
-
-    xarDBLoadTableMaintenanceAPI();
 
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -331,8 +319,6 @@ function contact_init(){
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      $contact_company = $xartable['contact_company'];
 
-    xarDBLoadTableMaintenanceAPI();
-
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_name'=>array('type'=>'varchar','size'=>250, 'null'=>FALSE),
@@ -372,8 +358,6 @@ function contact_init(){
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      $contact_langmembers = $xartable['contact_langmembers'];
 
-    xarDBLoadTableMaintenanceAPI();
-
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_cid'=>array('type'=>'varchar','size'=>11, 'null'=>FALSE)
@@ -400,8 +384,6 @@ function contact_init(){
     //               countrymembers_table
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     $contact_country_members = $xartable['contact_countrymembers'];
-
-    xarDBLoadTableMaintenanceAPI();
 
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -568,34 +550,80 @@ function contact_init(){
     * Format is
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
-        $query = "SELECT
-                  $contact_attributes._xar_id,
-                  $contact_city._xar_id,
-                  $contact_company._xar_id,
-                  $contact_country._xar_id,
-                  $contact_country_members._xar_id,
-                  $contact_department_members._xar_id,
-                  $contact_departments._xar_id,
-                  $contact_infotype._xar_id,
-                  $contact_langmembers._xar_id,
-                  $contact_persons._xar_id,
-                  $contact_titles._xar_id
-                  FROM $contact_attributes,
-                       $contact_city,
-                       $contact_company,
-                       $contact_country,
-                       $contact_country_members,
-                       $contact_department_members,
-                       $contact_departments,
-                       $contact_infotype,
-                       $contact_langmembers,
-                       $contact_persons,
-                       $contact_titles";
-        $instances = array('header' => 'Contact ID:',
-                                'query' => $query,
-                                'limit' => 20);
+    // Define instance for person
+    $query1 = "SELECT DISTINCT xar_lastname FROM $contact_persons";
+    $query2 = "SELECT DISTINCT xar_mail FROM $contact_persons";
 
-        xarDefineInstance('Contact','Item', $instances);
+    $instances = array(
+                        array('header' => 'Contact Last Name:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Contact Email:',
+                                'query' => $query2,
+                                'limit' => 20
+                            )
+                    );
+
+     xarDefineInstance('contact', 'ContactPerson', $instances, 0, '', '', '', 'Security instance for Contact Persons.');
+
+    // Define Instance for company
+    $query1 = "SELECT DISTINCT xar_name FROM $contact_company";
+    $query2 = "SELECT DISTINCT xar_mail FROM $contact_company";
+
+    $instances = array(
+                        array('header' => 'Contact Company Name:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Contact Company Email:',
+                                'query' => $query2,
+                                'limit' => 20
+                            )
+                    );
+
+     xarDefineInstance('contact', 'ContactCompany', $instances, 0, '', '', '', 'Security instance for Contact Companies.');
+
+    // Define Instance for department
+    $query1 = "SELECT DISTINCT xar_name FROM $contact_departments";
+    $query2 = "SELECT DISTINCT xar_email FROM $contact_departments";
+
+    $instances = array(
+                        array('header' => 'Contact Department Name:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Contact Department Email:',
+                                'query' => $query2,
+                                'limit' => 20
+                            )
+                    );
+
+     xarDefineInstance('contact', 'ContactDepartment', $instances, 0, '', '', '', 'Security instance for Contact Departments.');
+
+    // Define Instance for city
+    $query1 = "SELECT DISTINCT xar_name FROM $contact_city";
+
+    $instances = array(
+                        array('header' => 'Contact City Name:',
+                                'query' => $query1,
+                                'limit' => 20
+                            )
+                    );
+
+     xarDefineInstance('contact', 'ContactCity', $instances, 0, '', '', '', 'Security instance for Contact Cities.');
+
+    // Define Instance for country
+    $query1 = "SELECT DISTINCT xar_name FROM $contact_country";
+
+    $instances = array(
+                        array('header' => 'Contact Country Name:',
+                                'query' => $query1,
+                                'limit' => 20
+                            )
+                    );
+
+     xarDefineInstance('contact', 'ContactCountry', $instances, 0, '', '', '', 'Security instance for Contact Countries.');
 
 
     /*********************************************************************
@@ -620,6 +648,9 @@ function contact_init(){
  */
 function contact_upgrade($oldversion)
 {
+    // Load table maintenance API
+    xarDBLoadTableMaintenanceAPI();
+
     list($dbconn)   = xarDBGetConn();
     $xartable        = xarDBGetTables();
     if(!is_array($xartable)){
@@ -629,67 +660,71 @@ function contact_upgrade($oldversion)
 
     // Upgrade dependent on old version number
     switch($oldversion) {
+        case '0.2.3':
+            $contact_attributes = $xartable['contact_attributes'];
 
-        case "0.2.3":
-            // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            // ============================== NEXT TABLE ===============================
-            //                              attributes_table
-            // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-            $templatetable = $xartable['attributes_table'];
-            $templatecolumn = &$xartable['attribute'];
+            $fields = array(
+                'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                'xar_contacttype'=>array('type'=>'varchar','size'=>2,'default'=>'P','null'=>FALSE),
+                'xar_showname'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showaddress'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showaddress2'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showcity'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showstate'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showzip'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showcountry'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showemail'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showphone'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showfax'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showmobile'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showpager'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showICQ'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showAIM'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showYIM'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showMSNM'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showtitle'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showdepartment'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
+                'xar_showimage'=>array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE)
+            );
 
-            $sql = "CREATE TABLE ".$templatetable." (
-            ".$templatecolumn['id']." INT(11) NOT NULL,
-            ".$templatecolumn['contacttype']." CHAR(1) NOT NULL DEFAULT 'P',
-            ".$templatecolumn['showname']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showaddress']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showaddress2']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showcity']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showstate']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showzip']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showcountry']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showemail']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showphone']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showfax']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showmobile']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showpager']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showICQ']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showAIM']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showYIM']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showMSNM']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showtitle']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showdepartment']." TINYINT(1) DEFAULT '0' NOT NULL,
-            ".$templatecolumn['showimage']." TINYINT(1) DEFAULT '0' NOT NULL,
-            PRIMARY KEY (attributeID,attributeContactType)
-            )";
-            $dbconn->Execute( $sql );
+            // Create the Table - the function will return the SQL is successful or
+            // FALSE if it fails to build the SQL
+            $sql = xarDBCreateTable( $contact_attributes,$fields);
+            if (empty($sql)) return; // throw back
+
+            // Pass the Table Create DDL to adodb to create the table
+            $dbconn->Execute($sql);
+
+            // Check for an error with the database code, and if so raise the
+            // appropriate exception
             if ($dbconn->ErrorNo() != 0) {
-                pnSessionSetVar('errormsg', _CREATETABLEFAILED);
-                return false;
+                $msg = xarMLByKey('DATABASE_ERROR', $query);
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                return;
             }
 
-            // ------------------------------------------------------------------------
+
             // Now comes the hard work, get all the OLD user attributes
             // into the new table and then delete the fields that is no longer in use
             //
-            $table                        = $xartable['attributes_table'];
-            $column                        = &$xartable['attribute'];
-            $contactType         = "P";
-            $showState      = 0;
-            $fields                 = $column['id'].",".$column['contacttype'].
-                ",".$column['showname'].",".$column['showaddress'].
-                ",".$column['showaddress2'].",".$column['showcity'].
-                ",".$column['showstate'].",".$column['showzip'].
-                ",".$column['showcountry'].",".$column['showemail'].
-                ",".$column['showphone'].",".$column['showfax'].
-                ",".$column['showmobile'].",".$column['showpager'].
-                ",".$column['showICQ'].",".$column['showAIM'].
-                ",".$column['showYIM'].",".$column['showMSNM'].
-                ",".$column['showtitle'].",".$column['showdepartment'].
-                ",".$column['showimage'];
+            $table = $xartable['contact_attributes'];
+            $contactType = "P";
+            $showState = 0;
+            $fields = "xar_id, xar_contacttype
+                ,xar_showname, xar_showaddress
+                ,xar_showaddress2, xar_showcity
+                ,xar_showstate, xar_showzip
+                ,xar_showcountry, xar_showemail
+                ,xar_showphone, xar_showfax
+                ,xar_showmobile, xar_showpager
+                ,xar_showICQ, xar_showAIM
+                ,xar_showYIM, xar_showMSNM
+                ,xar_showtitle, xar_showdepartment
+                ,xar_showimage";
 
             // Old table
-            $person_table        = $xartable['persons_table'];
+            $person_table        = $xartable['contact_persons'];
             $person_column        = array(
                 'id'            => $person_table . '.personID',
                 'showname'      => $person_table . '.personShowName',
@@ -712,22 +747,23 @@ function contact_upgrade($oldversion)
                 'showimage'     => $person_table . '.personShowImage'
                 );
 
-            $sql = "SELECT ".$column['id'].
-                ", ".$column['showname'].", ".$column['showaddress'].
-                ", ".$column['showaddress2'].", ".$column['showcity'].
-                ", ".$column['showzip'].", ".$column['showcountry'].
-                ", ".$column['showphone'].", ".$column['showfax'].
-                ", ".$column['showmobile'].", ".$column['showpager'].
-                ", ".$column['showemail'].", ".$column['showtitle'].
-                ", ".$column['showICQ'].", ".$column['showAIM'].
-                ", ".$column['showYIM'].", ".$column['showMSNM'].
-                ", ".$column['showdepartment'].", ".$column['showimage'].
+            $sql = "SELECT ".$person_column['id'].
+                ", ".$person_column['showname'].", ".$person_column['showaddress'].
+                ", ".$person_column['showaddress2'].", ".$person_column['showcity'].
+                ", ".$person_column['showzip'].", ".$person_column['showcountry'].
+                ", ".$person_column['showphone'].", ".$person_column['showfax'].
+                ", ".$person_column['showmobile'].", ".$person_column['showpager'].
+                ", ".$person_column['showemail'].", ".$person_column['showtitle'].
+                ", ".$person_column['showICQ'].", ".$person_column['showAIM'].
+                ", ".$person_column['showYIM'].", ".$person_column['showMSNM'].
+                ", ".$person_column['showdepartment'].", ".$person_column['showimage'].
                 " FROM ".$person_table;
 
             $result = $dbconn->Execute( $query );
             if ( $result == false ) {
-                pnSessionSetVar('errormsg', _UPDATETABLEFAILED);
-                return false;
+                xarExceptionSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
+                   new SystemException($query));
+                return false;   
             }
 
             for (; !$result->EOF; $result->MoveNext() ) {
@@ -756,99 +792,66 @@ function contact_upgrade($oldversion)
                 $sqlInsert = "INSERT INTO ".$table." (".$fields.") VALUES (".$values.")";
                 $dbconn->Execute( $sqlInsert );
                 if ($dbconn->ErrorNo() != 0) {
-                    pnSessionSetVar('errormsg', _UPDATETABLEFAILED);
+                    xarExceptionSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
+                        new SystemException($sqlInsert));
                     return false;
                 }
             }
 
-            $sql_list  = "ALTER TABLE ".$person_table." DROP ".$person_column['showname']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showaddress']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showaddress2']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showzip']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showcountry']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showphone']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showfax']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showmobile']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showpager']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showemail']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showtitle']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showICQ']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showAIM']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showYIM']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showMSNM']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showcity']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showdepartment']."\n";
-            $sql_list .= "ALTER TABLE ".$person_table." DROP ".$person_column['showimage'];
-            $sql_list = explode("\n",$sql_list);
-
-            for($i = 0;$i < count($sql_list);$i++){
-                $sql = $sql_list[$i];
-                $dbconn->Execute( $sql );
-                if ($dbconn->ErrorNo() != 0) {
-                    pnSessionSetVar('errormsg', _UPDATETABLEFAILED);
-                    return false;
-                }
-            }
-            // ------------------------------------------------------------------------
-            // At the end of the successful completion of this function we
-            // recurse the upgrade to handle any other upgrades that need
-            // to be done.  This allows us to upgrade from any version to
-            // the current version with ease
-            return Contact_upgrade("0.2.6");
-
-        case "0.2.4":
-            // ------------------------------------------------------------------------
-            // RCave - new in this version: New field in table called "state" for use in the US
-            //
+        case '0.2.4':
             // Update the person table
-            $templatetable = $xartable['persons_table'];
-            $templatecolumn = &$xartable['person'];
+            $personsTable = $xartable['contact_persons'];
+            $departmentTable = $xartable['contact_departments'];
+            $companyTable = $xartable['contact_company'];
 
-            $sql = "ALTER TABLE $templatetable ADD ".
-                $templatecolumn['state']." VARCHAR(60) NOT NULL";
+            $queries = array ();
 
-            $dbconn->Execute( $sql );
-            if ($dbconn->ErrorNo() != 0) {
-                pnSessionSetVar('errormsg', _UPDATETABLEFAILED);
-                return false;
+            $queries[] = xarDBAlterTable(
+                $personsTable,
+                array ( 
+                    'command'   => 'add',
+                    'field'     => 'state',
+                    'type'      => 'varchar',
+                    'size'      => '60',
+                    'null'      => false
+                )
+            );
+
+            $queries[] = xarDBAlterTable(
+                $departmentTable,
+                array ( 
+                    'command'   => 'add',
+                    'field'     => 'state',
+                    'type'      => 'varchar',
+                    'size'      => '60',
+                    'null'      => false
+                )
+            );
+
+            $queries[] = xarDBAlterTable(
+                $companyTable,
+                array ( 
+                    'command'   => 'add',
+                    'field'     => 'state',
+                    'type'      => 'varchar',
+                    'size'      => '60',
+                    'null'      => false
+                )
+            );
+
+             foreach ($queries as $query)
+            {
+                // Pass to ADODB, and send exception if the result isn't valid.
+                $result =& $dbconn->Execute($query);
+                if (!$result) {
+                    //return;
+                    // Until we have a better method of handling errors, it is safer to continue.
+                    xarErrorHandled();
+                }
             }
 
-            // Update the departments table
-            $templatetable = $xartable['departments_table'];
-            $templatecolumn = &$xartable['departments'];
-
-           $sql = "ALTER TABLE $templatetable ADD ".
-               $templatecolumn['state']." VARCHAR(60) NOT NULL";
-
-            $dbconn->Execute( $sql );
-            if ($dbconn->ErrorNo() != 0) {
-                pnSessionSetVar('errormsg', _UPDATETABLEFAILED);
-                return false;
-            }
-
-             // Update the company table
-            $templatetable = $xartable['company_table'];
-            $templatecolumn = &$xartable['company'];
-            $sql = "ALTER TABLE $templatetable ADD ".
-                $templatecolumn['state']." VARCHAR(60) NOT NULL";
-
-            $dbconn->Execute( $sql );
-            if ($dbconn->ErrorNo() != 0) {
-                pnSessionSetVar('errormsg', _UPDATETABLEFAILED);
-                return false;
-            }
-
-            // At the end of the successful completion of this function we
-            // recurse the upgrade to handle any other upgrades that need
-            // to be done.  This allows us to upgrade from any version to
-            // the current version with ease
-            return Contact_upgrade("0.2.7");
-
-        //case "0.2.5":
-        //    Code to upgrade from version 0.2.4 goes here
-        //    break;
-
-        Default:
+        case '0.2.5':
+            //    Code to upgrade from version 0.2.4 goes here
             break;
     }
 
@@ -871,75 +874,93 @@ function contact_delete()
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    // Drop the table - for such a simple command the advantages of separating
-    // out the SQL statement from the Execute() command are minimal, but as
-    // this has been done elsewhere it makes sense to stick to a single method
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_departments'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_department_members'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_titles'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_city'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_country'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_infotype'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_persons'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_attributes'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_langmembers'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_countrymembers'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
-    $sql = "DROP TABLE IF EXISTS ".$xartable['contact_company'];
-    $result = $dbconn->Execute( $sql );
-    if ($result == false) {
-        pnSessionSetVar('errormsg', _DROPTABLEFAILED);
-        return false;
-    }
+    // Load table maintenance API
+    xarDBLoadTableMaintenanceAPI();
+
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_departments']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_dept_members']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_titles']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_city']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_country']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_infotype']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_persons']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_attributes']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_langmembers']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_countrymembers']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['contact_company']);
+    if (empty($query)) return false; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return false;
+
+    // Remove privileges, security masks and instances
+    xarRemoveMasks('contact');
+    xarRemoveInstances('contact');
+    xarRemovePrivileges('contact');
 
     return true;
 }

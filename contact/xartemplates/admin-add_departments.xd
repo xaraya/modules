@@ -1,83 +1,73 @@
-
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Contact Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
-
-<table border="0" width="100%" cellspacing="1" cellpadding="8">
-
-    <!-- the variables used in this menu come from contact_admin_menu() -->
-
-    <tr>
-        <th align="center">&xar-var-menutitle;</th>
-    </tr>
-</table>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Add Department</xar:mlstring></h2>
 <br />
 
-<!-- the specific template for the current admin function comes here -->
-
-<table border="0" cellspacing="0" cellpadding="0">
- <tr>
-    <td colspan="2"><strong>Departments</strong></td>
-    </tr><tr>
-    <td colspan="2"><br /><br /></td>
-    </tr><tr>
-    <td colspan="2">
-
-<!--
-    // Start form - note the use of xarModURL() to create the recipient URL of
-    // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of Xaraya
--->
-<form method="post" action="&xar-modurl-contact-admin-create_departments;">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-    <input type="hidden" name="authid" value="#$authid#" />
-
-
+<div align="center">
 #$hooks#
-<table><tr><td nowrap><strong>Department Name</strong></td><td nowrap><strong>Email</strong></td>
-<td nowrap><strong>Phone</strong></td><td nowrap><strong>Fax</strong></td><td nowrap><strong>State</strong></td>
-<td nowrap><strong>Country</strong></td><td nowrap><strong>Hidden</strong></td><td><strong>Delete</strong></td></tr>
-<xar:loop name="$items">
-<input type="hidden" name="id[]" value=#$loop:item['id']#>
-<tr><td><input type="text" name="name[]" value="#$loop:item['name']#" size="20" maxlength="60"></td>
-<td><input type="text" name="email[]" value="#$loop:item['email']#" size="25" maxlength="60"></td>
-<td><input type="text" name="phone[]" value="#$loop:item['phone']#" size="14" maxlength="60"></td>
-<td><input type="text" name="fax[]" value="#$loop:item['fax']#" size="14" maxlength="60"></td>
-<td><input type="text" name="state[]" value="#$loop:item['state']#" size="3" maxlength="60"></td>
-<td><input type="text" name="country[]" value="#$loop:item['country']#" size="10" maxlength="60"></td>
-<td>
-<xar:if condition="$hide eq 1">
-<input type="checkbox" name="hide[]" value="#$loop:item['id']#" checked>
-<xar:else/>
-<input type="checkbox" name="hide[]" value="#$loop:item['id']#">
-</xar:if>
-</td>
-<td><input type="checkbox" name="cid[]" value="#$loop:item['cid']#"></td></tr>
-<input type="hidden" name="udcid[]" value="#$loop:item['cid']#">
-</xar:loop>
-</table>
-</td>
-</tr><tr><td><hr/></td>
-<tr><td colspan="2" align="right" nowrap="nowrap"><strong>#$departmentlabel#</strong></td>
-</tr><tr>
-<td colspan="2">
-<table><tr><td nowrap><strong>Department Name</strong></td><td nowrap><strong>Email</strong></td>
-<td nowrap><strong>Phone</strong></td><td nowrap><strong>Fax</strong></td><td nowrap><strong>State</strong></td>
-<td nowrap><strong>Country</strong></td><td nowrap><strong>Hidden</strong></td>
-</tr><tr><td><input type="text" size="20" maxlength="60" name="adddepartment"></td>
-<td><input type="text" size="25" maxlength="60" name="addemail"></td>
-<td><input type="text" size="14" maxlength="60" name="addphone"></td>
-<td><input type="text" size="14" maxlength="60" name="addfax"></td>
-<td><input type="text" size="3" maxlength="60" name="addstate"></td>
-<td><input type="text" size="10" maxlength="60" name="addcountry"></td>
-<td><input type="checkbox" name="addhide" value="1"></td>
-</tr></table></td></tr><tr>
-<td colspan="2"><hr/></td>
-</tr><tr>
-<td colspan="2" align="right"><input type="submit" name="addnewdepartment" value="#$adddepartmentbutton#"></td></tr>
+
+<form method="post" action="&xar-modurl-contact-admin-create_departments;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td nowrap><strong>Department Name</strong></td>
+            <td nowrap><strong>Email</strong></td>
+            <td nowrap><strong>Phone</strong></td>
+            <td nowrap><strong>Fax</strong></td>
+            <td nowrap><strong>State</strong></td>
+            <td nowrap><strong>Country</strong></td>
+            <td nowrap><strong>Hidden</strong></td>
+            <td><strong>Delete</strong></td>
+        </tr>
+        <xar:loop name="$items">
+        <input type="hidden" name="id[]" value=#$loop:item['id']#>
+        <input type="hidden" name="udcid[]" value="#$loop:item['cid']#">
+        <tr>
+            <td><input type="text" name="name[]" value="#$loop:item['name']#" size="20" maxlength="60"></td>
+            <td><input type="text" name="email[]" value="#$loop:item['email']#" size="25" maxlength="60"></td>
+            <td><input type="text" name="phone[]" value="#$loop:item['phone']#" size="14" maxlength="60"></td>
+            <td><input type="text" name="fax[]" value="#$loop:item['fax']#" size="14" maxlength="60"></td>
+            <td><input type="text" name="state[]" value="#$loop:item['state']#" size="3" maxlength="60"></td>
+            <td><input type="text" name="country[]" value="#$loop:item['country']#" size="10" maxlength="60"></td>
+            <td>
+            <xar:if condition="$loop:item['hide'] eq 1">
+                <input type="checkbox" name="hide[]" value="#$loop:item['id']#" checked>
+            <xar:else/>
+                <input type="checkbox" name="hide[]" value="#$loop:item['id']#">
+            </xar:if>
+            </td>
+            <td><input type="checkbox" name="cid[]" value="#$loop:item['cid']#"></td>
+        </tr>
+        </xar:loop>
+    </table>
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td colspan="2" align="right" nowrap="nowrap"><strong>#$departmentlabel#</strong></td>
+        </tr>
+        <tr>
+            <td nowrap><strong>Department Name</strong></td>
+            <td nowrap><strong>Email</strong></td>
+            <td nowrap><strong>Phone</strong></td>
+            <td nowrap><strong>Fax</strong></td>
+            <td nowrap><strong>State</strong></td>
+            <td nowrap><strong>Country</strong></td>
+            <td nowrap><strong>Hidden</strong></td>
+        </tr>
+        <tr>
+            <td><input type="text" size="20" maxlength="60" name="adddepartment"></td>
+            <td><input type="text" size="25" maxlength="60" name="addemail"></td>
+            <td><input type="text" size="14" maxlength="60" name="addphone"></td>
+            <td><input type="text" size="14" maxlength="60" name="addfax"></td>
+            <td><input type="text" size="3" maxlength="60" name="addstate"></td>
+            <td><input type="text" size="10" maxlength="60" name="addcountry"></td>
+            <td><input type="checkbox" name="addhide" value="1"></td>
+        </tr>
+        <tr>
+            <td colspan="7" align="right"><input type="submit" name="addnewdepartment" value="#$adddepartmentbutton#"></td
+        ></tr>
 </table>
 </form>
-</table>
+</div>
+</div>
 <br />

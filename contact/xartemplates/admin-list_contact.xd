@@ -27,7 +27,7 @@
 <div class="xar-accent xar-norm-outline" style="text-align: left;padding: 0.3em 1em 0.3em 1em; margin-top: 3px;">
   #$loop:item['firstname']#&nbsp;&nbsp;  #$loop:item['lastname']# &nbsp;&nbsp; #$loop:item['mail']# &nbsp; &nbsp; &nbsp;   #$loop:item['depname']#
 
-&nbsp;<input type ="checkbox" name="deleteuser[]" value="#$id#">
+&nbsp;<input type ="checkbox" name="deleteuser[]" value="#$loop:item['id']#">
 &nbsp;[<a href="index.php?module=contact&amp;type=admin&amp;func=edit_contact&amp;id=#$loop:item['id']#">Edit</a>]
 <div align="right"><input type="submit" value=#$addcontactbutton#></div>
 </div>

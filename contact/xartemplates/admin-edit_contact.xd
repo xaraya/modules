@@ -47,38 +47,23 @@ if(status){
 }
 //-->
 </script>
-<!-- common admin menu for this module - remove link to the current function -->
 
-<table border="0" width="100%" cellspacing="1" cellpadding="8" align="center">
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Contact Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<br />
 
-    <!-- the variables used in this menu come from contact_admin_menu() -->
+<div align="center">
+#$hooks#
 
-    <tr>
-        <th align="center">&xar-var-menutitle;</th>
-    </tr>
     <table border="1" width="50% cellspacing="0" cellpadding="0" align="center">
     <tr><td align="center">&xar-var-contactmenu;</td>
     <td align="center">&xar-var-addpersons;</td>
     <td align="center">&xar-var-listpersons;</td></tr>
    </table>
 <br />
-<!-- the specific template for the current admin function comes here -->
 
-<table width="100%" border="0" cellspacing="1" cellpadding="8" align="center">
-<!--
-    // Start form - note the use of xarModURL() to create the recipient URL of
-    // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of Xaraya
--->
 <form enctype="multipart/form-data" name="contactForm" method="post" action="&xar-modurl-contact-admin-update_contact;">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
     <input type="hidden" name="authid" value="#$authid#" />
-
-#$hooks#
 
 <table border="0" celspacing="0" cellpadding="0">
 <tr><td colspan="3" nowrap="nowrap"><strong><u>#$generalinfo_label#</u></strong></td>
@@ -89,7 +74,7 @@ if(status){
 <td valign="top" align="right" nowrap="nowrap"><strong>#$department_label#</strong>&nbsp;</td>
 <td><select name="department">
 <xar:loop name="$departments">
- <xar:if condition="$name eq $depname">
+ <xar:if condition="$loop:item['name'] eq $depname">
  <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
  <option value="#$loop:item['id']#">#$loop:item['name']#</option>
@@ -111,7 +96,7 @@ if(status){
 <td align="right" nowrap="nowrap"><strong>#$title_label#</strong></td>
 <td><select name="titleID">
 <xar:loop name="$titles">
-  <xar:if condition="$name eq $titleName">
+  <xar:if condition="$loop:item['name'] eq $titleName">
  <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
 <option value="#$loop:item['id']#">#$loop:item['name']#</option>
@@ -182,7 +167,7 @@ if(status){
 <td align="right" nowrap="nowrap"><strong>#$city_label#</strong></td>
 <td><select name="city">
 <xar:loop name="$city">
- <xar:if condition="$name eq $editcity">
+ <xar:if condition="$loop:item['name'] eq $editcity">
  <option value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
  <option value="#$loop:item['name']#">#$loop:item['name']#</option>
@@ -280,7 +265,7 @@ if(status){
 <td><select name="typephone">
 <xar:loop name="$items">
 
-<xar:if condition="$name eq $TypePhone">
+<xar:if condition="$loop:item['name'] eq $TypePhone">
  <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
  <option value = "#$loop:item['number']#">#$loop:item['name']#</option>
@@ -304,7 +289,7 @@ if(status){
 <td><select name="typefax">
 <xar:loop name="$items">
 
-<xar:if condition="$name eq $TypeFax">
+<xar:if condition="$loop:item['name'] eq $TypeFax">
  <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
  <option value = "#$loop:item['number']#">#$loop:item['name']#</option>
@@ -328,7 +313,7 @@ if(status){
 <td><select name="typemobile">
 <xar:loop name="$items">
 
-<xar:if condition="$name eq $TypeMobile">
+<xar:if condition="$loop:item['name'] eq $TypeMobile">
  <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
 
@@ -353,7 +338,7 @@ if(status){
 <td><select name="typepager">
 <xar:loop name="$items">
 
-<xar:if condition="$name eq $TypePager">
+<xar:if condition="$loop:item['name'] eq $TypePager">
  <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
 
@@ -488,5 +473,6 @@ if(status){
 </tr>
 </table>
 </form>
-</table>
+</div>
+</div>
 <br />

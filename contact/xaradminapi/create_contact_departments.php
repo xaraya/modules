@@ -28,7 +28,7 @@ function contact_adminapi_create_contact_departments($args)
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules
-    $contacttable = $xartable['contact_department_members'];
+    $contacttable = $xartable['contact_dept_members'];
 
     // Get next ID in table - this is required prior to any insert that
     // uses a unique ID, and ensures that the ID generation is carried

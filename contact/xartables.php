@@ -36,9 +36,9 @@ function contact_xartables()
     // Set the table name
     $xartable['contact_departments'] = $xar_contact_departments;
 
-    $xar_contact_department_members = xarDBGetSiteTablePrefix() . '_contact_department_members';
+    $xar_contact_dept_members = xarDBGetSiteTablePrefix() . '_contact_dept_members';
 
-    $xartable['contact_department_members'] = $xar_contact_department_members;
+    $xartable['contact_dept_members'] = $xar_contact_dept_members;
 
     $xar_contact_titles = xarDBGetSiteTablePrefix() . '_contact_titles';
 
