@@ -6,8 +6,6 @@
 */
 function helpdesk_user_summaryfooter()
 {
-    // Show totals in table at bottom of output:
-    $data['statusmsg'] = xarGetStatusMsg();
     // Security check
     if (!xarSecurityCheck('readhelpdesk')) return;
 
