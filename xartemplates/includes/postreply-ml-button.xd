@@ -1,5 +1,5 @@
 <xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
+    License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
 <xar:comment>
     using css-driven buttons, requested by miko for easier ML management, implemented by andyv 
@@ -9,7 +9,7 @@
         post reply 
     </xar:mlstring>
 </xar:set>
-<a class="cssbutton" title="#$newreplytext#" href="#xarModURL('xarbb', 'user', 'newreply', array('fid' => $fid))#">
+<a class="cssbutton" title="#$newreplytext#" href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
     <span class="postreplyicon">
     </span>
     #$newreplytext# 
