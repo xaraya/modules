@@ -148,6 +148,10 @@ function xarbb_userapi_encode_shorturl($args)
             $path .= $join . 'startnum=' . $startnum;
             $join = '&amp;';
         } 
+        if (isset($read)) {
+            $path .= $join . 'read=' . $read;
+            $join = '&amp;';
+        } 
         if (!empty($catid)) {
             $path .= $join . 'catid=' . $catid;
             $join = '&amp;';
