@@ -363,45 +363,6 @@ function articles_user_view($args)
 //        (e.g. News, Sections, ...), depending on what "view" the user
 //        selected (per category, per publication type, a combination, ...) ?
 
-    $catinfo = array();
-    if ($showcategories) {
-
-// TODO: replace with getallcatbases if/when it supports returning plain cids without
-//       all the unnecessary category lookups (or when it can return all child infos too)
-
-        // get root categories for this publication type
-        $catlinks = xarModAPIFunc('articles',
-                                  'user',
-                                  'getrootcats',
-                                  array('ptid' => $ptid,
-                                        'all' => true)); // get base categories for all if needed
-        // grab the name and link of all children too
-        foreach ($catlinks as $idx => $info) {
-            $cattree = xarModAPIFunc('articles',
-                                     'user',
-                                     'getchildcats',
-                                     array('cid' => $info['catid'],
-                                           'ptid' => $ptid,
-                                           // include current cid
-                                           'showcid' => true,
-                                           // filter on the currently selected categories
-                                           'filter' => $andcids ? $catid : '',
-                                           // we don't want counts here
-                                           'count' => false));
-            foreach ($cattree as $catitem) {
-                $catinfo[$catitem['id']] = array('name' => $catitem['name'],
-                                                 'link' => $catitem['link'],
-                                                 'image'=> $catitem['image'],
-                                                 'left' => $catitem['left'],
-                                                 'root' => $info['catid']);
-            }
-        }
-        unset($cattree);
-        unset($catlinks);
-        // needed for sort function below
-        $GLOBALS['artviewcatinfo'] = $catinfo;
-    }
-
     if (!empty($authorid)) {
         $data['author'] = xarUserGetVar('name', $authorid);
         if (empty($data['author'])) {
@@ -519,6 +480,46 @@ function articles_user_view($args)
                                      'get_countlist',
                             array('modid' => xarModGetIDFromName('articles'),
                                   'objectids' => $aidlist));
+    }
+
+    // retrieve the categories for each article
+    $catinfo = array();
+    if ($showcategories) {
+        $cidlist = array();
+        foreach ($articles as $article) {
+            if (!empty($article['cids']) && count($article['cids']) > 0) {
+                 foreach ($article['cids'] as $cid) {
+                     $cidlist[$cid] = 1;
+                 }
+            }
+        }
+        if (count($cidlist) > 0) {
+            $catinfo = xarModAPIFunc('categories','user','getcatinfo',
+                                     array('cids' => array_keys($cidlist)));
+            // get root categories for this publication type
+            $catroots = xarModAPIFunc('articles',
+                                      'user',
+                                      'getrootcats',
+                                      array('ptid' => $ptid,
+                                            'all' => true)); // get base categories for all if needed
+        }
+        foreach ($catinfo as $cid => $info) {
+            $catinfo[$cid]['name'] = xarVarPrepForDisplay($info['name']);
+            $catinfo[$cid]['link'] = xarModURL('articles','user','view',
+                                               array('ptid' => $ptid,
+                                                     'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) ));
+            // only needed when sorting by root id
+            $catinfo[$cid]['root'] = $info['left'];
+            foreach ($catroots as $rootcat) {
+                // see if we're a child category of this rootcat (cfr. Celko model)
+                if ($info['left'] >= $rootcat['catleft'] && $info['left'] < $rootcat['catright']) {
+                    $catinfo[$cid]['root'] = $rootcat['catid'];
+                    break;
+                }
+            }
+        }
+        // needed for sort function below
+        $GLOBALS['artviewcatinfo'] = $catinfo;
     }
 
     $data['titles'] = array();

@@ -291,7 +291,6 @@ function articles_user_search($args)
 
     if (!empty($q) || (!empty($author) && isset($authorid)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
         $count = 0;
-        $catinfo = array();
         // TODO: allow combination of searches ?
         foreach ($ptids as $curptid) {
             $articles = xarModAPIFunc('articles',
@@ -315,30 +314,43 @@ function articles_user_search($args)
         // TODO: re-use article output code from elsewhere (view / archive / admin)
             if (!empty($articles) && count($articles) > 0) {
 
-            // TODO: optimize this stuff a little bit...
+                // retrieve the categories for each article
+                $catinfo = array();
                 if ($showcategories) {
-                    // get root categories for this publication type
-                    $catlinks = xarModAPIFunc('articles',
-                                             'user',
-                                             'getrootcats',
-                                             array('ptid' => $curptid));
-                    // grab the name and link of all children too
-                    foreach ($catlinks as $info) {
-                        $cattree = xarModAPIFunc('articles',
-                                                'user',
-                                                'getchildcats',
-                                                array('cid' => $info['catid'],
-                                                      'ptid' => $curptid,
-                                                      // we don't want counts here
-                                                      'count' => false));
-                        foreach ($cattree as $catitem) {
-                            $catinfo[$catitem['id']] = array('name' => $catitem['name'],
-                                                             'link' => $catitem['link'],
-                                                             'left' => $catitem['left'],
-                                                             'root' => $info['catid']);
+                    $cidlist = array();
+                    foreach ($articles as $article) {
+                        if (!empty($article['cids']) && count($article['cids']) > 0) {
+                            foreach ($article['cids'] as $cid) {
+                                $cidlist[$cid] = 1;
+                            }
                         }
                     }
-                    unset($cattree);
+                    if (count($cidlist) > 0) {
+                        $catinfo = xarModAPIFunc('categories','user','getcatinfo',
+                                                 array('cids' => array_keys($cidlist)));
+                        // get root categories for this publication type
+                        $catroots = xarModAPIFunc('articles',
+                                                  'user',
+                                                  'getrootcats',
+                                                  array('ptid' => $curptid));
+
+                    }
+                    foreach ($catinfo as $cid => $info) {
+                        $catinfo[$cid]['name'] = xarVarPrepForDisplay($info['name']);
+                        $catinfo[$cid]['link'] = xarModURL('articles','user','view',
+                                                           array('ptid' => $curptid,
+                                                                 'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) ));
+                        // only needed when sorting by root id
+                        $catinfo[$cid]['root'] = $info['left'];
+                        foreach ($catroots as $rootcat) {
+                            // see if we're a child category of this rootcat (cfr. Celko model)
+                            if ($info['left'] >= $rootcat['catleft'] && $info['left'] < $rootcat['catright']) {
+                                $catinfo[$cid]['root'] = $rootcat['catid'];
+                                break;
+                            }
+                        }
+                    }
+
                 }
 
                 // needed for sort function below

@@ -84,6 +84,8 @@ function articles_userapi_getrootcats($args)
         } else {
             $item['catjoin'] = ' | ';
         }
+        $item['catleft'] = $info['left'];
+        $item['catright'] = $info['right'];
         $catlinks[] = $item;
     }
     return $catlinks;
