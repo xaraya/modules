@@ -44,7 +44,7 @@ function xarbb_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('xarbb',
                                                   'admin',
                                                   'modifyconfig'),
-                              'title' => xarML('Modify the configuration for the xarbb'),
+                              'title' => xarML('Modify the configuration for the XarBB'),
                               'label' => xarML('Modify Config'));
     }
 

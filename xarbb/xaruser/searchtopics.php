@@ -96,7 +96,7 @@ function xarbb_user_searchtopics()
                         $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
                     // Else should be a regular old boring topic
                     } else {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
                     }
                 } else {
                     // OOF, look at this topic, hot and new.
@@ -128,7 +128,7 @@ function xarbb_user_searchtopics()
                 break;
             // Locked
             case '3':
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New post').'" />';
+                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New posts').'" />';
                 break;
         }
 

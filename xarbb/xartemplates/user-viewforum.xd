@@ -233,7 +233,7 @@
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
-							No new post
+							No new posts
 						</xar:mlstring>
 					</td>
 					<td>
@@ -265,7 +265,7 @@
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
-							New post hot topic
+							New hot topic post
 						</xar:mlstring>
 					</td>
 					<td>
