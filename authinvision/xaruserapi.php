@@ -505,7 +505,8 @@ function authinvision__get_invision_publicuserdata($username)
 	//reset us back to the xaraya database.	
 	$xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
 	mysql_select_db($xardb);
-	
+    //why on earth I need this I'm not sure, but it's here to fix bug #1264.
+	if (!$invision_user_info) { return false; }  
 	return $invision_user_info;
 }
 
