@@ -1,0 +1,7 @@
+<xar:if condition="!empty($cats)">
+    <xar:loop name="$cats"><xar:if condition="$loop:number eq 1">#$loop:item.name#<xar:else/>, #$loop:item.name#</xar:if></xar:loop>
+<xar:else/>
+    <xar:if condition ="!empty($ifempty)">
+        #xarML($ifempty)#
+    </xar:if>
+</xar:if>

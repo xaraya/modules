@@ -95,7 +95,7 @@ function categories_userapi_getitemcats($args)
         // TODO: include the 'basecid' stuff directly in 'getcatinfo', or
         // leave getcatinfo to handle the raw database stuff and this to do
         // the specials?
-        $result = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cats'=>$catlist));
+        $result = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids'=>$catlist));
     }
 
     return $result;
