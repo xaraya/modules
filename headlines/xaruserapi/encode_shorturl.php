@@ -37,11 +37,11 @@ function headlines_userapi_encode_shorturl($args)
     if (!empty($path)) {
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
-            $join = '&amp;';
+            $join = '&';
         } 
         if (!empty($catid)) {
             $path .= $join . 'catid=' . $catid;
-            $join = '&amp;';
+            $join = '&';
         } elseif (!empty($cids) && count($cids) > 0) {
             if (!empty($andcids)) {
                 $catid = join('+', $cids);
@@ -49,7 +49,7 @@ function headlines_userapi_encode_shorturl($args)
                 $catid = join('-', $cids);
             } 
             $path .= $join . 'catid=' . $catid;
-            $join = '&amp;';
+            $join = '&';
         } 
     } 
 
