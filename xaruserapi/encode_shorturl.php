@@ -36,13 +36,26 @@ function images_userapi_encode_shorturl($args)
 
         $fileName = $fileId . '.' . $type[1];
     }
-
     // default path is empty -> no short URL
     $path = '';
     // if we want to add some common arguments as URL parameters below
     $join = '?';
     // we can't rely on xarModGetName() here -> you must specify the modname !
     $module = 'images';
+
+    // clean the array of the items we already have
+    // so we can add any other values to the end of the url
+    unset($args['func']);
+    unset($args['fileId']);
+
+    if (!empty($args)) {
+
+        foreach ($args as $name => $value) {
+            $extra[] = "$name=$value";
+        }
+
+        $extras = $join . implode('&', $extra);
+    }
 
     // specify some short URLs relevant to your module
     if ($func == 'display') {

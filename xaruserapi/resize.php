@@ -69,7 +69,7 @@ function images_userapi_resize($args)
     $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $src)));
     // TODO: refactor to support other libraries (ImageMagick/NetPBM)
     if (isset($fileInfo['fileLocation']) && file_exists($fileInfo['fileLocation'])) {
-        $imageInfo = getimagesize($fileInfo['fileLocation']);
+        $imageInfo = @getimagesize($fileInfo['fileLocation']);
         $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
         if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
             $notSupported = TRUE;
@@ -78,7 +78,7 @@ function images_userapi_resize($args)
         $notSupported = TRUE;
     }
     if ($notSupported) {
-        $errorMsg = xarML('Image type is not supported for resizing');
+        $errorMsg = xarML('Image type for file: #(1) is not supported for resizing', $fileInfo['fileLocation']);
         return '<img src="" alt="' . $errorMsg . '" />';
 
     }
@@ -131,7 +131,7 @@ function images_userapi_resize($args)
         }
 
         if ($constrain) {
-            $constrain_both ? $image->Constrain('both') : $image->Constrain('width');
+            $constrain_both ? $image->Constrain('both') : $image->Constrain('height');
         }
     }
 
