@@ -1,23 +1,24 @@
-<table width="100%" border="0">
-  <tr>
-    <td>
-      <xar:mlstring>Choose a report</xar:mlstring>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table width="100%" cellspacing="1" cellpadding="1" border="0">
-        <tr>
-          <th><xar:mlstring>Report name</xar:mlstring></th>
-          <th><xar:mlstring>Report description</xar:mlstring></th>
-        </tr>
-        <xar:loop name="$reportlist">
-          <tr>
-          </tr>
-        </xar:loop>
-      </table>
-    </td>
-  </tr>
-</table>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Choose a report to generate</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+  <table width="100%" cellspacing="1" cellpadding="1" border="0">
+    <tr>
+      <th><xar:mlstring>Report name</xar:mlstring></th>
+      <th><xar:mlstring>Report description</xar:mlstring></th>
+     </tr>
+     <xar:loop name="$reportlist">
+      <tr>
+        <td>
+          <a href="&xar-modurl-reports-user-generate;&rep_id=#$loop:item['id']#&xmlfile=#$loop:item['xmlfile']#&conn_id=#$loop:item['conn_id']#">#$loop:item['name']#</a>
+        </td>
+        <td>#$loop:item['description']#</td>
+      </tr>
+    </xar:loop>
+  </table>
+</div>
   
     

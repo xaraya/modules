@@ -4,7 +4,7 @@
  *
  */
 function reports_user_main() {
-    return reports_user_view();
+    return xarModFunc('reports','user','view');
 }
 
 ?>

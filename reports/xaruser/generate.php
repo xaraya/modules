@@ -44,7 +44,7 @@ function reports_user_generate($args) {
 	$sql = "SELECT $ccols[server],$ccols[type],$ccols[database],$ccols[user],$ccols[password] "
 		." FROM $ctab "
 		."WHERE $ccols[id] = '".xarVarPrepForStore($conn_id)."'";
-    echo $sql;
+    //echo $sql;
     
 	$res =& $dbconn->Execute($sql);
 	if(!$res) return;
