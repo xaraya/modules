@@ -19,7 +19,7 @@
 <tr>
     <td>#$ddobject['module']#
     <xar:if condition="isset($ddobject['modinfo'])">
-    (valid)
+        (<xar:mlstring>valid</xar:mlstring>)
     </xar:if>
     </td>
     <td>#$ddobject['itemtype']#</td>
@@ -30,8 +30,8 @@
         &bull; #$col# (#$mod#)<br />
     </xar:foreach>
     </td>
-    <td><a href="#xarModUrl('subitems','admin','ddobjectlink_edit',array('objectid' => $ddobject['objectid']))#">edit</a> | 
-    <a href="#xarModUrl('subitems','admin','ddobjectlink_delete',array('objectid' => $ddobject['objectid']))#">delete</a></td>
+    <td><a href="#xarModUrl('subitems','admin','ddobjectlink_edit',array('objectid' => $ddobject['objectid']))#"><xar:mlstring>Edit</xar:mlstring></a> | 
+    <a href="#xarModUrl('subitems','admin','ddobjectlink_delete',array('objectid' => $ddobject['objectid']))#"><xar:mlstring>Delete</xar:mlstring></a></td>
 </tr>
 </xar:foreach>
 </tbody>

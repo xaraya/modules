@@ -31,8 +31,8 @@
     </td>
     </xar:foreach>
     <td>
-        <a href="#xarModUrl('subitems','admin','item_modify',array('objectid' => $objectid,'ddid' => $uid))#">Edit</a> |
-        <a href="#xarModUrl('subitems','admin','item_delete',array('objectid' => $objectid,'ddid' => $uid))#">Delete</a>
+        <a href="#xarModUrl('subitems','admin','item_modify',array('objectid' => $objectid,'ddid' => $uid))#"><xar:mlstring>Edit</xar:mlstring></a> |
+        <a href="#xarModUrl('subitems','admin','item_delete',array('objectid' => $objectid,'ddid' => $uid))#"><xar:mlstring>Delete</xar:mlstring></a>
     </td>
     </tr>
 </xar:foreach>
@@ -42,7 +42,7 @@
 <td></td>
 </xar:foreach>
 
-    <td><a href="#xarModUrl('subitems','admin','item_new',array('objectid' => $objectid,'itemid' => $itemid))#">add Item</a></td>
+    <td><a href="#xarModUrl('subitems','admin','item_new',array('objectid' => $objectid,'itemid' => $itemid))#"><xar:mlstring>Add Item</xar:mlstring></a></td>
 </tr>
 </tbody>
 </table>

@@ -67,10 +67,10 @@ function subitems_adminapi_ddobjectlink_update($args)
     foreach($params as $vvar => $field)    {
         if(isset($$vvar)) {
             $update[] = $field ." = ?";
-            if ('itemtype' == $var) {
-                $bindvars[] = (int) $$var;
+            if ('itemtype' == $vvar) {
+                $bindvars[] = (int) $$vvar;
             } else {
-                $bindvars[] = (string) $$var;
+                $bindvars[] = (string) $$vvar;
             }
         }
     }
