@@ -49,7 +49,7 @@ function articles_userapi_leftjoin($args)
     // Note : no security checks here
 
     // Table definition
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 
     $leftjoin = array();

@@ -43,7 +43,7 @@ function articles_adminapi_deletepubtype($args)
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $pubtypestable = $xartable['publication_types'];
 
     // Delete the publication type

@@ -28,7 +28,7 @@ function articles_init()
 
     // Get database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
@@ -311,7 +311,7 @@ function articles_init()
     * Format is
     * xarDefineInstance(Module,Component,Querystring,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarModURL('articles', 'admin', 'privileges'),
@@ -413,7 +413,7 @@ function articles_delete()
 {
     // Get database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();

@@ -164,7 +164,7 @@ function blocks_related_block($row)
            ;
 
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     if(!xarSecurityCheck('ReadArticlesBlock',1,'Block',$row['title'])) return;
 

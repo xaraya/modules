@@ -104,7 +104,7 @@ function articles_adminapi_create($args)
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 
     // Get next ID in table

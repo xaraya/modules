@@ -63,7 +63,7 @@ function articles_userapi_get($args)
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 
     // Get item

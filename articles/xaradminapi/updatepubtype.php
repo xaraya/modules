@@ -70,7 +70,7 @@ function articles_adminapi_updatepubtype($args)
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $pubtypestable = $xartable['publication_types'];
 
     // Update the publication type (don't allow updates on name)

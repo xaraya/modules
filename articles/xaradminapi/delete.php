@@ -46,7 +46,7 @@ function articles_adminapi_delete($args)
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 
     // Delete item
