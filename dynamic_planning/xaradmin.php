@@ -107,7 +107,7 @@ function dynamic_planning_admin_new()
     $output->TableAddrow($row, 'left');
     $output->SetInputMode(_PNH_PARSEINPUT);
     $output->Linebreak(2);
-				    
+                    
     // Text
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
@@ -511,20 +511,20 @@ function dynamic_planning_admin_updatetask($args)
          $objectid,
          $tasktitle,
          $tasktext,
-	 $taskstart,
-	 $taskend,
-	 $taskpercent,
-	 $tasksteps,
-	 $taskteam) = pnVarCleanFromInput('taskid',
-	                                'trackid',
+     $taskstart,
+     $taskend,
+     $taskpercent,
+     $tasksteps,
+     $taskteam) = pnVarCleanFromInput('taskid',
+                                    'trackid',
                                         'objectid',
                                         'tasktitle',
                                         'tasktext',
-					'taskstart',
-					'taskend',
-					'taskpercent',
-					'tasksteps',
-					'taskteam');
+                    'taskstart',
+                    'taskend',
+                    'taskpercent',
+                    'tasksteps',
+                    'taskteam');
 
     // User functions of this type can be called by other modules.  If this
     extract($args);
@@ -554,11 +554,11 @@ function dynamic_planning_admin_updatetask($args)
                     array('taskid' => $taskid,
                           'tasktitle' => $tasktitle,
                           'tasktext' => $tasktext,
-			  'taskstart' => $taskstart,
-			  'taskend' => $taskend,
-			  'taskpercent' => $taskpercent,
-			  'tasksteps' => $tasksteps,
-			  'taskteam' => $taskteam))) {
+              'taskstart' => $taskstart,
+              'taskend' => $taskend,
+              'taskpercent' => $taskpercent,
+              'tasksteps' => $tasksteps,
+              'taskteam' => $taskteam))) {
         // Success
         pnSessionSetVar('statusmsg', xarML('Track updated'));
     }

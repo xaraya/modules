@@ -1,7 +1,7 @@
 <?php
 
 ////////////////////////////////////////////////////////////////////
-//File:	$Id: s.index.php 1.1 02/06/25 17:44:31-00:00 clnelson $	
+//File:    $Id: s.index.php 1.1 02/06/25 17:44:31-00:00 clnelson $    
 //
 //This one's for Post Nuke -- Rogue !
 //Now a module -- change from 4.4 and mutant
@@ -61,13 +61,13 @@ function viewproject()
   }
 
   echo "<div style=\"text-align: left;\">";
-  echo "<p class=\"pn-title\">Project Track Page</p>";	
+  echo "<p class=\"pn-title\">Project Track Page</p>";    
   if (authorised(0,"Dynamic::",0,ACCESS_ADMIN)) echo "<p class=\"pn-normal\"><a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=adminproject\">[Edit Project Info]</a></p>";
-  echo "<p class=\"pn-normal\">Print Project <a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=projectcomplete\">Summary</a></p>";	
+  echo "<p class=\"pn-normal\">Print Project <a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=projectcomplete\">Summary</a></p>";    
   while (list($trackid, $trackname, $tracklead, $tracktext, $trackstatus, $trackcat) = mysql_fetch_row($result)) {
     $brtt = nl2br($tracktext);
-// MOD to use local prefixes	ADS
-	
+// MOD to use local prefixes    ADS
+    
     $result2 = mysql_query("SELECT hometext FROM $local_stories WHERE catid=$trackcat ORDER BY time DESC LIMIT 1");
    list($tracknews) = mysql_fetch_row($result2);
    $tracknews = $myts->makeTareaData4Show($tracknews);
@@ -92,7 +92,7 @@ function viewproject()
 
   echo "</div>";
   include("footer.php");
-	
+    
 }
 
 function viewtrack($trackid) 
@@ -123,8 +123,8 @@ global $tracks , $tasks ;
   while (list($taskid, $title, $text, $start, $end, $last, $percent) = mysql_fetch_row($result1)) {
 
     echo "<tr style=\"background-color: white;\">
-	  <td><a class=\"pn-normal\"href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=viewsheet&amp;trackid=$trackid#$taskid\">$title</a></td><td>$start</td><td>$end</td><td>$percent %</td>
-	  </tr>";
+      <td><a class=\"pn-normal\"href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=viewsheet&amp;trackid=$trackid#$taskid\">$title</a></td><td>$start</td><td>$end</td><td>$percent %</td>
+      </tr>";
   }
   echo "</table>";
   echo "<p class=\"pn-title\">View Task Definition Sheet: <a class=\"pn-title\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=viewsheet&amp;trackid=$trackid\"> [ click here ]</a></p>";
@@ -334,7 +334,7 @@ function adminproject()
        <p>For starters, only the admin can create or add tracks, tasks, or do any editting.  You should create group or user permissions for each track leader.  For instance, I have given each track leader EDIT permission, Component: Dynamic::, and Instance: Track Name::.  This allows each track leader to edit their own track only.<p>
        <p>I hope your find this script useful.</p></div>";
   while (list($trackid, $trackname, $tracklead, $trackcat) = mysql_fetch_row($result)) {
-    echo "		
+    echo "        
     <form action=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=updateproject&amp;trackid=$trackid\" method=\"post\">
     <input type=\"hidden\" name=\"trackid\" value=\"$trackid\"></p>
     <p>Track Name: <input type=\"text\" name=\"trackname\" size=\"20\" value=\"$trackname\"></p>
@@ -478,7 +478,7 @@ global $tracks , $tasks ;
 
 function printprojectcomplete() 
 {
-	
+    
   global $sitename, $tracks , $tasks ;
   $result = mysql_query("SELECT trackid, trackname, tracklead, trackstatus FROM $tracks ORDER BY trackname");
   if(!$result) {
@@ -516,7 +516,7 @@ function printprojectcomplete()
 function printprojectsummary() 
 {
   //This function isn't really used anymore
-	
+    
   global $sitename, $tracks , $tasks ;
   $result = mysql_query("SELECT trackname, tracklead, trackstatus FROM $tracks ORDER BY trackname");
   if(!$result) {
@@ -596,7 +596,7 @@ switch($func) {
     if ($trackid == 0 OR $trackid == "") {
       Header("Location: index.php");
     }
-    updatesheet($trackid);	
+    updatesheet($trackid);    
     editsheet($trackid);
     break;
 
@@ -615,7 +615,7 @@ switch($func) {
     if ($trackid == 0 OR $trackid == "") {
       Header("Location: index.php");
     }
-    updateproject($trackid);	
+    updateproject($trackid);    
     adminproject();
     break;
 

@@ -82,17 +82,17 @@ function dynamic_planning_adminapi_create($args)
     $sql = "INSERT INTO $trackstable (
               $trackscolumn[trackid],
               $trackscolumn[trackname],
-	      $trackscolumn[tracklead],
+          $trackscolumn[tracklead],
               $trackscolumn[tracktext],
-	      $trackscolumn[trackstatus],
-	      $trackscolumn[trackcat])
+          $trackscolumn[trackstatus],
+          $trackscolumn[trackcat])
             VALUES (
               $nextId,
               '" . pnVarPrepForStore($trackname) . "',
-	      NULL,
+          NULL,
               '" . pnvarPrepForStore($tracktext) . "',
-	      NULL,
-	      NULL)";
+          NULL,
+          NULL)";
     $dbconn->Execute($sql);
 
     // Check for an error with the database code, and if so set an
@@ -285,11 +285,11 @@ function dynamic_planning_adminapi_updatetask($args)
     // Argument check - make sure that all required arguments are present,
     if ((!isset($taskid)) ||
         (!isset($tasktitle)) ||
-	(!isset($tasktext)) ||
-	(!isset($taskstart)) ||
-	(!isset($taskend)) ||
-	(!isset($taskpercent)) ||
-	(!isset($tasksteps)) ||
+    (!isset($tasktext)) ||
+    (!isset($taskstart)) ||
+    (!isset($taskend)) ||
+    (!isset($taskpercent)) ||
+    (!isset($tasksteps)) ||
         (!isset($taskteam))) {
         pnSessionSetVar('errormsg', _MODARGSERROR);
         return false;
@@ -330,11 +330,11 @@ function dynamic_planning_adminapi_updatetask($args)
     $sql = "UPDATE $taskstable
             SET $taskscolumn[tasktitle] = '" . pnVarPrepForStore($tasktitle) . "',
                 $taskscolumn[tasktext] = '" . pnVarPrepForStore($tasktext) . "',
-		$taskscolumn[taskstart] = '" . pnVarPrepForStore($taskstart) . "',
-		$taskscolumn[taskend] = '" . pnVarPrepForStore($taskend) . "',
-		$taskscolumn[taskpercent] = " . pnVarPrepForStore($taskpercent) . ",
-		$taskscolumn[tasksteps] = '" . pnVarPrepForStore($tasksteps) . "',
-		$taskscolumn[taskteam] = '" . pnVarPrepForStore($taskteam) . "'
+        $taskscolumn[taskstart] = '" . pnVarPrepForStore($taskstart) . "',
+        $taskscolumn[taskend] = '" . pnVarPrepForStore($taskend) . "',
+        $taskscolumn[taskpercent] = " . pnVarPrepForStore($taskpercent) . ",
+        $taskscolumn[tasksteps] = '" . pnVarPrepForStore($tasksteps) . "',
+        $taskscolumn[taskteam] = '" . pnVarPrepForStore($taskteam) . "'
             WHERE $taskscolumn[taskid] = " . pnVarPrepForStore($taskid);
     $dbconn->Execute($sql);
 

@@ -55,8 +55,8 @@ function dynamic_planning_userapi_getall($args)
     $sql = "SELECT $trackscolumn[trackid],
                    $trackscolumn[trackname],
                    $trackscolumn[tracklead],
-		   $trackscolumn[tracktext],
-		   $trackscolumn[trackstatus]
+           $trackscolumn[tracktext],
+           $trackscolumn[trackstatus]
             FROM $trackstable
             ORDER BY $trackscolumn[trackname]";
     $result = $dbconn->Execute($sql);
@@ -76,8 +76,8 @@ function dynamic_planning_userapi_getall($args)
         $items[] = array('trackid' => $trackid,
                          'trackname' => $trackname,
                          'tracklead' => $tracklead,
-			 'tracktext' => $tracktext,
-			 'trackstatus' => $trackstatus);
+             'tracktext' => $tracktext,
+             'trackstatus' => $trackstatus);
         
     }
 
@@ -121,10 +121,10 @@ function dynamic_planning_userapi_get($args)
     $sql = "SELECT $taskscolumn[taskid],
                    $taskscolumn[tasktitle],
                    $taskscolumn[tasktext],
-		   $taskscolumn[taskstart],
-		   $taskscolumn[taskend],
-		   $taskscolumn[tasklast],
-		   $taskscolumn[taskpercent]
+           $taskscolumn[taskstart],
+           $taskscolumn[taskend],
+           $taskscolumn[tasklast],
+           $taskscolumn[taskpercent]
             FROM $taskstable
             WHERE $taskscolumn[trackid] = " . pnVarPrepForStore($trackid);
     $result = $dbconn->Execute($sql);
@@ -148,16 +148,16 @@ function dynamic_planning_userapi_get($args)
     $item[] = array('taskid' => $taskid,
                     'tasktitle' => $tasktitle,
                     'tasktext' => $tasktext,
-		    'taskstart' => $taskstart,
-		    'taskend' => $taskend,
-		    'tasklast' => $tasklast,
-		    'taskpercent' => $taskpercent);
+            'taskstart' => $taskstart,
+            'taskend' => $taskend,
+            'tasklast' => $tasklast,
+            'taskpercent' => $taskpercent);
     }
 
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
-		
+        
     // Return the item array
     return $item;
 }
@@ -179,11 +179,11 @@ function dynamic_planning_userapi_gettrack($args)
 
     $sql = "SELECT $trackscolumn[trackname],
                    $trackscolumn[tracklead],
-		   $trackscolumn[tracktext],
-		   $trackscolumn[trackstatus],
-		   $trackscolumn[trackcat]
+           $trackscolumn[tracktext],
+           $trackscolumn[trackstatus],
+           $trackscolumn[trackcat]
             FROM $trackstable
-	    WHERE $trackscolumn[trackid] = $trackid";
+        WHERE $trackscolumn[trackid] = $trackid";
     $result = $dbconn->Execute($sql);
 
     list($trackname, $tracklead, $tracktext, $trackstatus, $trackcat) = $result->fields;
@@ -193,9 +193,9 @@ function dynamic_planning_userapi_gettrack($args)
     $item = array('trackid'   => $trackid,
                   'trackname' => $trackname,
                   'tracklead' => $tracklead,
-		  'tracktext' => $tracktext,
-		  'trackstatus' => $trackstatus,
-		  'trackcat'   => $trackcat) ;
+          'tracktext' => $tracktext,
+          'trackstatus' => $trackstatus,
+          'trackcat'   => $trackcat) ;
     return $item;
 }
 
@@ -221,8 +221,8 @@ function dynamic_planning_userapi_gettask($args)
                    $taskscolumn[taskend],
                    $taskscolumn[tasklast],
                    $taskscolumn[taskpercent],
-		   $taskscolumn[tasksteps],
-		   $taskscolumn[taskteam]
+           $taskscolumn[tasksteps],
+           $taskscolumn[taskteam]
             FROM $taskstable
             WHERE $taskscolumn[taskid] = $taskid";
     $result = $dbconn->Execute($sql);
@@ -238,9 +238,9 @@ function dynamic_planning_userapi_gettask($args)
                   'taskstart' => $taskstart,
                   'taskend' => $taskend,
                   'tasklast'   => $tasklast,
-		  'taskpercent' => $taskpercent,
-		  'tasksteps' => $tasksteps,
-		  'taskteam' => $taskteam) ;
+          'taskpercent' => $taskpercent,
+          'tasksteps' => $tasksteps,
+          'taskteam' => $taskteam) ;
     return $item;
 }
 
