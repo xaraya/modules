@@ -32,6 +32,16 @@ function mailbag_adminapi_getmenulinks()
 
 // Security Check
 	if (xarSecurityCheck('adminmailbag',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('mailbag',
+                                                  'admin',
+                                                  'runmailbag'),
+                              'title' => xarML('Run the Mailbag'),
+                              'label' => xarML('Run the Mailbag'));
+    }
+
+// Security Check
+	if (xarSecurityCheck('adminmailbag',0)) {
         $menulinks[] = Array('url'   => xarModURL('mailbag',
                                                   'admin',
                                                   'modifyconfig'),

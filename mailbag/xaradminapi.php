@@ -2,7 +2,7 @@
 
 // Run MailBag to get and process the mail
 
-function mailbag_admin_run()
+function mailbag_adminapi_run()
 {
    global $mbsocket, $msgindex;
 
@@ -910,11 +910,15 @@ if ($mailbagdebug) echo "<b>MailBag is done</b><br>";
 function mailbagreply($replyto, $mailerror) 
 {
 
-  // Prevent sending mail to own domain, send warning to postmaster
-  if (eregi(pnModGetVar('MailBag', 'emaildomain'), $replyto)) mail(pnModGetVar('MailBag', 'postmaster'), "Mail loop warning", "Prevented mail loop to ".$replyto."\n\nReply message:\n".$msgindex[$i][text], "From: ".pnModGetVar('MailBag', 'postmaster'));
-    else mail($replyto, pnConfigGetVar('sitename')." "._MAILBAGMAILERROR,
-    _MAILBAGMAILHEADER."\n\n".$mailerror."\n\n"._MAILBAGMAILFOOTER,
-    "From: ".pnConfigGetVar('sitename')." <".pnModGetVar('MailBag', 'postmaster').">");
+    // Prevent sending mail to own domain, send warning to postmaster
+    if (eregi(xarModGetVar('mailbag', 'emaildomain'), $replyto)) 
+        mail(xarModGetVar('mailbag', 'postmaster'), "Mail loop warning", 
+            "Prevented mail loop to ".$replyto."\n\nReply message:\n".$msgindex[$i][text], 
+            "From: ".xarModGetVar('mailbag', 'postmaster'));
+    else 
+        mail($replyto, pnConfigGetVar('sitename')." "._MAILBAGMAILERROR,
+            _MAILBAGMAILHEADER."\n\n".$mailerror."\n\n"._MAILBAGMAILFOOTER,
+            "From: ".xarConfigGetVar('sitename')." <".xarModGetVar('mailbag', 'postmaster').">");
 }
 
 
@@ -929,43 +933,43 @@ function mailbagreply($replyto, $mailerror)
 
 function B64QPDecode( $s )
 {
-  // Start by assuming that the final result will be unchanged
+    // Start by assuming that the final result will be unchanged
 
-  $result = $s;
-  // Loop until we can't find "=?" in the result any more (we loop
-  // because there may be multiple encoded substrings, not just one)
+    $result = $s;
+    // Loop until we can't find "=?" in the result any more (we loop
+    // because there may be multiple encoded substrings, not just one)
 
-  while( $begin = strpos( $result, "=?" ) ) {
-    // Save a lowercase copy of the current result (PHP needs stripos!)
-    $lr = strtolower( $result );
+    while( $begin = strpos( $result, "=?" ) ) {
+        // Save a lowercase copy of the current result (PHP needs stripos!)
+        $lr = strtolower( $result );
 
-    // Extract the left part (everything prior to the encoded substring)
-    $left = substr( $result, 0, $begin );
+        // Extract the left part (everything prior to the encoded substring)
+        $left = substr( $result, 0, $begin );
 
-    // If it isn't QUOTED PRINTABLE (?q?) or BASE64 (?b?) then we bail
-    // leaving things just the way they are.
+        // If it isn't QUOTED PRINTABLE (?q?) or BASE64 (?b?) then we bail
+        // leaving things just the way they are.
 
-    if( ($b = strpos( $lr, "?q?" )) == false && ($b = strpos( $lr, "?b?" )) == false )
-      break;
+        if( ($b = strpos( $lr, "?q?" )) == false && ($b = strpos( $lr, "?b?" )) == false )
+            break;
 
-    // Extract the middle part (the encoded substring)
-    $rest = substr( $result, $b + 3 );
-    $e = strpos( $rest, "?=" );
-    $middle = substr( $rest, 0, $e );
+        // Extract the middle part (the encoded substring)
+        $rest = substr( $result, $b + 3 );
+        $e = strpos( $rest, "?=" );
+        $middle = substr( $rest, 0, $e );
 
-    // Extract the right part (everything after the substring)
-    $right = substr( $rest, $e + 2 );
+        // Extract the right part (everything after the substring)
+        $right = substr( $rest, $e + 2 );
 
-    // Decode the substring and build a new result
-    if( strpos( $lr, "?q?" ) )
-      $result = $left . quoted_printable_decode( $middle ) . $right;
-    else
-      $result = $left . base64_decode( $middle ) . $right;
+        // Decode the substring and build a new result
+        if( strpos( $lr, "?q?" ) )
+            $result = $left . quoted_printable_decode( $middle ) . $right;
+        else
+            $result = $left . base64_decode( $middle ) . $right;
 
-    // Replace underscores with spaces
-    $result = str_replace( "_", " ", $result );
-  }
-  return $result;
+        // Replace underscores with spaces
+        $result = str_replace( "_", " ", $result );
+    }
+    return $result;
 }
 
 // ----------------------------------------------------------------------------
@@ -978,10 +982,10 @@ function B64QPDecode( $s )
 
 function FindBoundary( $b )
 {
-  global $mbsocket;
-  $b2 = $b . "--";
-  while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 );
-  return $line;
+    //global $mbsocket;
+    $b2 = $b . "--";
+    while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 );
+    return $line;
 }
 
 
@@ -995,15 +999,15 @@ function FindBoundary( $b )
 
 function ExtractTEXT( $b, $a, $i ) 
 {
-  global $mbsocket, $msgindex;
-  $b2 = $b . "--";
-  while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
-    if( strncmp( $line, "..", 2 ) == 0 )
-      $line = substr( $line, 1 );
-    if ($a) $msgindex[$i][text] .= htmlentities($line)."<br>\n";
-    else $msgindex[$i][text] .= $line."\n";
-  }
-  return $line;
+    //global $mbsocket, $msgindex;
+    $b2 = $b . "--";
+    while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
+        if( strncmp( $line, "..", 2 ) == 0 )
+            $line = substr( $line, 1 );
+        if ($a) $msgindex[$i][text] .= htmlentities($line)."<br>\n";
+        else $msgindex[$i][text] .= $line."\n";
+    }
+    return $line;
 }
 
 
@@ -1017,15 +1021,15 @@ function ExtractTEXT( $b, $a, $i )
 
 function ExtractQP( $b, $a, $i ) 
 {
-  global $mbsocket, $msgindex;
-  $b2 = $b . "--";
-  while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
-    if( strncmp( $line, "..", 2 ) == 0 )
-      $line = substr( $line, 1 );
-    if ($a) $msgindex[$i][text] .= htmlentities(quoted_printable_decode($line))."<br>\n";
-    else $msgindex[$i][text] .= quoted_printable_decode($line)."\n";
-  }
-  return $line;
+  //global $mbsocket, $msgindex;
+    $b2 = $b . "--";
+    while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
+        if( strncmp( $line, "..", 2 ) == 0 )
+            $line = substr( $line, 1 );
+        if ($a) $msgindex[$i][text] .= htmlentities(quoted_printable_decode($line))."<br>\n";
+        else $msgindex[$i][text] .= quoted_printable_decode($line)."\n";
+    }
+    return $line;
 }
 
 // ----------------------------------------------------------------------------
@@ -1038,11 +1042,11 @@ function ExtractQP( $b, $a, $i )
 
 function ExtractBASE64( $b, $i ) 
 {
-  global $mbsocket, $msgindex;
-  $b2 = $b . "--";
-  while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
-    $msgindex[$i][text] .= htmlentities(base64_decode($line))."<br>\n";
-  }
-  return $line;
+  //global $mbsocket, $msgindex;
+    $b2 = $b . "--";
+    while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
+        $msgindex[$i][text] .= htmlentities(base64_decode($line))."<br>\n";
+    }
+    return $line;
 }
 ?>
