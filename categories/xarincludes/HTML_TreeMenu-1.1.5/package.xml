@@ -81,7 +81,7 @@ from Chip Chapin (http://www.chipchapin.com).</description>
       <notes>Added a createFromXML() method for creating
 treeMenu structures from XML. This feature
 depends on the PEAR::XML_Tree package.
-		    
+            
 </notes>
     </release>
     <release>
@@ -93,7 +93,7 @@ and PDF formats. Moved structure import code to its own
 static method createFromStructure(), and added support
 for my own Tree class (http://phpguru.org/tree.html) as
 well as Wolfram Kriesings Tree class.
-		    
+            
 </notes>
     </release>
     <release>
@@ -101,7 +101,7 @@ well as Wolfram Kriesings Tree class.
       <date>2002-11-30</date>
       <state>stable</state>
       <notes>Updated example file
-			
+            
 </notes>
     </release>
     <release>
