@@ -1,0 +1,9 @@
+#$druidbar#
+<br />
+<xar:mlstring>Module name</xar:mlstring>: #$displayname#<br />
+<xar:mlstring>Module original name</xar:mlstring>: #$name#<br />
+<xar:mlstring>Module version</xar:mlstring>: #$version#<br />
+<br />
+<xar:mlstring>Make a choice</xar:mlstring>:<br />
+<br />
+#$opbar#

@@ -1,0 +1,28 @@
+<xar:template type="module" file="toplink" />
+<br />
+<xar:template type="module" file="druidbar" />
+<p>
+<form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarModURL('translations', 'admin', 'update_release_locale')#" method="post">
+    <xar:mlstring>Choose the locale for which you want to generate translations</xar:mlstring>:
+    <select name="locale" id="locale" onchange="document.releaseLocaleForm.submit();">
+        <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
+            <xar:if condition="$locales[$i] eq $release_locale">
+                <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
+            <xar:else />
+                <option value="#$locales[$i]#">#$locales[$i]#</option>
+            </xar:if>
+        </xar:for>
+    </select>
+</form>
+</p>
+<p>
+<xar:mlstring>Now we're going to generate translations, this operation could take several minutes. Just take a break!</xar:mlstring>
+<br />
+<xar:ml>
+  <xar:mlstring>Then we'll create a translations package using the '#(1)' archiver command.</xar:mlstring>
+  <xar:mlvar>#$archiver_path#</xar:mlvar>
+</xar:ml>
+</p>
+<a href="#xarModURL('translations', 'admin', 'generate_trans')#"><xar:mlkey>GO</xar:mlkey></a><br />
+<br />
+<xar:template type="module" file="opbar" />

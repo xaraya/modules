@@ -1,0 +1,8 @@
+<xar:template type="module" file="toplink" />
+<br />
+<xar:template type="module" file="trabar" />
+<p>
+<xar:mlstring>Choose from the upper bar which part you want translate.</xar:mlstring>
+</p>
+<br />
+<xar:template type="module" file="opbar" />

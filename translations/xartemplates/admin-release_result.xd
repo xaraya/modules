@@ -1,0 +1,11 @@
+<xar:template type="module" file="toplink" />
+<br />
+<xar:template type="module" file="druidbar" />
+<p>
+<xar:ml>
+  <xar:mlstring>Translations package successfully generated. The package is located inside your var/cache directory. You can also download it from <a href="#(1)">here</a>.</xar:mlstring>
+  <xar:mlvar>#$url#</xar:mlvar>
+</xar:ml>
+</p>
+<br />
+<xar:template type="module" file="opbar" />

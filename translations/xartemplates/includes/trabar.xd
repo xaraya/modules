@@ -1,0 +1,14 @@
+<p>
+<xar:for start="$i=0" test="$i lt count($traLabels)" iter="$i++">
+  <xar:if condition="$i gt 0">
+  |
+  </xar:if>
+  <xar:if condition="$enabledTras[$i] and $i ne $currentTra">
+    <a href="#$traURLs[$i]#">#$traLabels[$i]#</a>
+  <xar:elseif condition="$i eq $currentTra" />
+    <b>#$traLabels[$i]#</b>
+  <xar:else />
+    #$traLabels[$i]#
+  </xar:if>
+</xar:for>
+</p>

@@ -1,0 +1,112 @@
+<xar:template type="module" file="toplink" />
+<br />
+<xar:template type="module" file="trabar" />
+<form method="post" action="#$action#">
+<p>
+Strings:
+</p>
+<table width="100%">
+<xar:loop id="entries" name="$entries">
+
+<tr>
+  <td class="#$loop:entries:index % 2 ? 'string1':'string2'#">
+    <label for="tid#$loop:entries:item['tid']#">#$loop:entries:item['string']#</label>
+  </td>
+  <td class="ra">
+    <input type="text" name="tid#$loop:entries:item['tid']#" id="tid#$loop:entries:item['tid']#" value="#$loop:entries:item['translation']#" size="50" />
+  </td>
+</tr>
+<tr>
+  <td colspan="2" class="string_border">
+  <table width="100%">
+  <xar:loop name="$loop:entries:item['references']">
+    <tr>
+      <td class="#$loop:entries:index % 2 ? 'string_bg1':'string_bg2'#">
+        #$loop:item['file']#:#$loop:item['line']# --&gt;
+      </td>
+      <td class="#$loop:entries:index % 2 ? 'string_bg2':'string_bg1'#">
+        #$loop:item['source']['pre']#
+        <span class="string_src">#$loop:item['source']['code']#</span>
+        #$loop:item['source']['post']#
+      </td>
+    </tr>
+  </xar:loop>
+  <xar:if condition="$loop:entries:item['otherReferences']">
+    <tr>
+      <td colspan="2" class="#$loop:entries:index % 2 ? 'string_bg1':'string_bg2'#">
+        <xar:ml>
+          <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
+          <xar:mlvar>#$loop:entries:item['numOtherReferences']#</xar:mlvar>
+        </xar:ml>
+      </td>
+    </tr>
+  </xar:if>
+  </table>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    &nbsp;
+  </td>
+</tr>
+
+</xar:loop>
+</table>
+<p>
+Keys:
+</p>
+<table width="100%">
+<xar:loop id="keyEntries" name="$keyEntries">
+
+<tr>
+  <td class="#$loop:keyEntries:index % 2 ? 'key1':'key2'#">
+    #$loop:keyEntries:item['key']#<br /><br />
+    <span class="key_src"><label for="key#$loop:keyEntries:item['key']#">#$loop:keyEntries:item['en_translation']#</label></span>
+  </td>
+  <td class="ra">
+    <input type="text" name="key#$loop:keyEntries:item['key']#" id="key#$loop:keyEntries:item['key']#" value="#$loop:keyEntries:item['translation']#" size="50" />
+  </td>
+</tr>
+<tr>
+  <td colspan="2" class="key_border">
+  <table width="100%">
+  <xar:loop name="$loop:keyEntries:item['references']">
+    <tr>
+      <td class="#$loop:keyEntries:index % 2 ? 'key_bg1':'key_bg2'#">
+        #$loop:item['file']#:#$loop:item['line']# --&gt;
+      </td>
+      <td class="#$loop:keyEntries:index % 2 ? 'key_bg2':'key_bg1'#">
+        #$loop:item['source']['pre']#
+        <span class="key_src">#$loop:item['source']['code']#</span>
+        #$loop:item['source']['post']#
+      </td>
+    </tr>
+  </xar:loop>
+  <xar:if condition="$loop:keyEntries:item['otherReferences']">
+    <tr>
+      <td colspan="2" class="#$loop:keyEntries:index % 2 ? 'key_bg1':'key_bg2'#">
+        <xar:ml>
+          <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
+          <xar:mlvar>#$loop:keyEntries:item['numOtherReferences']#</xar:mlvar>
+        </xar:ml>
+      </td>
+    </tr>
+  </xar:if>
+  </table>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    &nbsp;
+  </td>
+</tr>
+
+</xar:loop>
+</table>
+
+<p>
+<input type="submit" name="sbt" id="sbt" value="#xarMLByKey('OK')#" />
+</p>
+</form>
+<br />
+<xar:template type="module" file="opbar" />

@@ -1,0 +1,19 @@
+<xar:template type="module" file="toplink" />
+<br />
+<xar:template type="module" file="druidbar" />
+<p>
+<xar:mlstring>Skels successfully generated. The results are shown below.</xar:mlstring>
+</p>
+<table width="100%">
+<tr><td></td><td>##Entries</td><td>##KeyEntries</td></tr>
+<xar:loop name="$statistics">
+<tr><td>#$loop:key#</td><td>#$loop:item['entries']#</td><td>#$loop:item['keyEntries']#</td></tr>
+</xar:loop>
+</table>
+<p><xar:ml>
+<xar:mlstring>The operation took #(1) seconds.</xar:mlstring>
+<xar:mlvar>#$time#</xar:mlvar>
+</xar:ml>
+</p>
+<br />
+<xar:template type="module" file="opbar" />

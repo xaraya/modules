@@ -1,0 +1,9 @@
+<xar:template type="module" file="toplink" />
+<br />
+<xar:mlstring>Xaraya version number</xar:mlstring>: #$verNum#<br />
+<xar:mlstring>Xaraya version id</xar:mlstring>: #$verId#<br />
+<xar:mlstring>Xaraya version sub</xar:mlstring>: #$verSub#<br />
+<br />
+<xar:mlstring>Make a choice</xar:mlstring>:<br />
+<br />
+<xar:template type="module" file="opbar" />

@@ -1,0 +1,13 @@
+td.ra { text-align: right }
+td.string1 { border-width: 1px; border-style: solid; border-color: #757575; padding: 10px; background-color: #ccddcc }
+td.string2 { border-width: 1px; border-style: solid; border-color: #757575; padding: 10px; background-color: #ccccdd }
+td.string_border { border-width: 1px; border-style: solid; border-color: #ddee44 }
+span.string_src { background-color: #ddee44 }
+td.string_bg1 { background-color: #ccddcc }
+td.string_bg2 { background-color: #ccccdd }
+td.key1 { border-width: 1px; border-style: solid; border-color: #757575; padding: 10px; background-color: #e9f582 }
+td.key2 { border-width: 1px; border-style: solid; border-color: #757575; padding: 10px; background-color: #cdf1f8 }
+td.key_border { border-width: 1px; border-style: solid; border-color: #dfa948 }
+span.key_src { background-color: #dfa948 }
+td.key_bg1 { background-color: #e9f582 }
+td.key_bg2 { background-color: #cdf1f8 }

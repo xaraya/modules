@@ -1,0 +1,14 @@
+<p>
+<xar:for start="$i=0" test="$i lt count($stepLabels)" iter="$i++">
+  <xar:if condition="$i gt 0">
+  &gt;&gt;
+  </xar:if>
+  <xar:if condition="$i lt $currentStep">
+    <a href="#$stepURLs[$i]#">#$stepLabels[$i]#</a>
+  <xar:elseif condition="$i eq $currentStep" />
+    <b>#$stepLabels[$i]#</b>
+  <xar:else />
+    #$stepLabels[$i]#
+  </xar:if>
+</xar:for>
+</p>
