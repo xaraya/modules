@@ -147,7 +147,8 @@ function articles_userapi_decode_shorturl($params)
                         // Decode using title
                         if( $decodeUsingTitle )
                         {
-                            return articles_decodeUsingTitle( $params, $id );
+                            $args['aid'] = articles_decodeAIDUsingTitle( $params, $args['ptid'] );
+                            return array('display', $args);
                         }
 
                         return array('view', $args);
@@ -161,7 +162,8 @@ function articles_userapi_decode_shorturl($params)
         // Decode using title
         if( $decodeUsingTitle )
         {
-            return articles_decodeUsingTitle( $params );
+            $args['aid'] = articles_decodeAIDUsingTitle( $params );
+            return array('display', $args);
         }
     }
 
@@ -169,7 +171,7 @@ function articles_userapi_decode_shorturl($params)
     // (e.g. for multiple category selections)
 }
 
-function articles_decodeUsingTitle( $params, $ptid = '' )
+function articles_decodeAIDUsingTitle( $params, $ptid = '' )
 {
     $dupeResolutionMethod = 'ALL';
 
@@ -178,21 +180,24 @@ function articles_decodeUsingTitle( $params, $ptid = '' )
     // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"
     // So lets parse the path info manually here.
     //
-    // TODO: fix this so that it still allows theme overides, ie &theme=print
-    // TODO: fix xarServer.php, line 421 to properly deal with this 
+    // DONE: fix xarServer.php, line 421 to properly deal with this 
     // xarServer.php[421] :: preg_match_all('|/([a-z0-9_ .+-]+)|i', $path, $matches);
-    
-    $pathInfo = xarServerGetVar('PATH_INFO');
-    preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
-    $params = $matches[1];                        
+    //
+    // I've movded the following code into xarServer to fix this problem.
+    // 
+    //     $pathInfo = xarServerGetVar('PATH_INFO');
+    //     preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
+    //     $params = $matches[1];                        
 
     if( isset($ptid) && !empty($ptid) ) 
     {
         $searchArgs['pubtypeid'] = $ptid;
         $decodedTitle = urldecode($params[2]);
+        $decodedTitle = str_replace("'","\'",$decodedTitle);
         $searchArgs['where']     = "title = '".$decodedTitle."'";
     } else {
         $decodedTitle = urldecode($params[1]);
+        $decodedTitle = str_replace("'","\'",$decodedTitle);
         $searchArgs['where']     = "title = '".$decodedTitle."'";
     }
     
@@ -271,8 +276,7 @@ function articles_decodeUsingTitle( $params, $ptid = '' )
     if( !empty($theArticle) )
     {
         $aid = $theArticle['aid'];
-        $args['aid'] = $aid;
-        return array('display', $args);
+        return $aid;
     }
 }
 
