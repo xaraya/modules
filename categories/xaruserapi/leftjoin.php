@@ -11,7 +11,7 @@
  *               AND $where // this includes xar_modid = <your module ID>
  *
  * @param $args['modid'] your module ID (use xarModGetIDFromName('mymodule'))
- * @param $args['itemtype'] your item type (default is none)
+ * @param $args['itemtype'] your item type (default is none) or array of itemtypes
  *
  * @param $args['iids'] optional array of item ids that we are selecting on
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
@@ -170,8 +170,23 @@ function categories_userapi_leftjoin($args)
         $where[] = $leftjoin['modid'] . ' = ' . $modid;
     }
     // Note : do not default to 0 here, because we want to be able to do things across item types
-    if (isset($itemtype) && is_numeric($itemtype)) {
-        $where[] = $leftjoin['itemtype'] . ' = ' . $itemtype;
+    if (isset($itemtype)) {
+        if (is_numeric($itemtype)) {
+            $where[] = $leftjoin['itemtype'] . ' = ' . $itemtype;
+        } elseif (is_array($itemtype) && count($itemtype) > 0) {
+            $seentype = array();
+            foreach ($itemtype as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seentype[$id] = 1;
+            }
+            if (count($seentype) == 1) {
+                $itemtypes = array_keys($seentype);
+                $where[] = $leftjoin['itemtype'] . ' = ' . $itemtypes[0];
+            } elseif (count($seentype) > 1) {
+                $itemtypes = join(', ', array_keys($seentype));
+                $where[] = $leftjoin['itemtype'] . ' IN (' . $itemtypes . ')';
+            }
+        }
     }
     if (count($cids) > 0) {
         if ($andcids) {
