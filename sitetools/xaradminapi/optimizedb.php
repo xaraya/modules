@@ -45,7 +45,7 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
   
      $classname="dbSiteTools_".$dbtype;
      $items= new $classname();
-     if (!$rowdata= $items-> optimize($dbname)) {return;}
+     if (!$rowdata= $items->_optimize($dbname)) {return;}
 
 /** Move all this to db specific classes.
  ** Remove it when we have cleaned up a little and know it is working without a hitch
