@@ -39,11 +39,11 @@
 
 if (!function_exists('xml_parser_create')) {
 // Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
-	if($WINDIR) {
-		dl("php3_xml.dll");
-	} else {
-		dl("xml.so");
-	}
+    if($WINDIR) {
+        dl("php3_xml.dll");
+    } else {
+        dl("xml.so");
+    }
 }
 
 $xmlrpcI4="i4";
@@ -70,7 +70,7 @@ $xmlrpcTypes=array(
                    $xmlrpcArray => 2,
                    $xmlrpcStruct => 3);
 
-$xmlEntities=array(	 "amp" => "&",
+$xmlEntities=array(     "amp" => "&",
                      "quot" => '"',
                      "lt" => "<",
                      "gt" => ">",
@@ -161,68 +161,68 @@ function xmlrpc_lookup_entity($ent) {
  *
  */
 function xmlrpc_se($parser, $name, $attrs) {
-	global $_xh, $xmlrpcDateTime, $xmlrpcString;
-	
-	switch($name) {
-	case "STRUCT":
-	case "ARRAY":
+    global $_xh, $xmlrpcDateTime, $xmlrpcString;
+    
+    switch($name) {
+    case "STRUCT":
+    case "ARRAY":
         $_xh[$parser]['st'].="array(";
         $_xh[$parser]['cm']++;
-		// this last line turns quoting off
-		// this means if we get an empty array we'll 
-		// simply get a bit of whitespace in the eval
-		$_xh[$parser]['qt']=0;
+        // this last line turns quoting off
+        // this means if we get an empty array we'll 
+        // simply get a bit of whitespace in the eval
+        $_xh[$parser]['qt']=0;
         break;
-	case "NAME":
+    case "NAME":
         $_xh[$parser]['st'].="'"; $_xh[$parser]['ac']="";
         break;
-	case "FAULT":
+    case "FAULT":
         $_xh[$parser]['isf']=1;
         break;
-	case "PARAM":
+    case "PARAM":
         $_xh[$parser]['st']="";
         break;
-	case "VALUE":
+    case "VALUE":
         $_xh[$parser]['st'].="new xmlrpcval("; 
-		$_xh[$parser]['vt']=$xmlrpcString;
-		$_xh[$parser]['ac']="";
-		$_xh[$parser]['qt']=0;
+        $_xh[$parser]['vt']=$xmlrpcString;
+        $_xh[$parser]['ac']="";
+        $_xh[$parser]['qt']=0;
         $_xh[$parser]['lv']=1;
         // look for a value: if this is still 1 by the
         // time we reach the first data segment then the type is string
         // by implication and we need to add in a quote
-		break;
+        break;
         
-	case "I4":
-	case "INT":
-	case "STRING":
-	case "BOOLEAN":
-	case "DOUBLE":
-	case "DATETIME.ISO8601":
-	case "BASE64":
+    case "I4":
+    case "INT":
+    case "STRING":
+    case "BOOLEAN":
+    case "DOUBLE":
+    case "DATETIME.ISO8601":
+    case "BASE64":
         $_xh[$parser]['ac']=""; // reset the accumulator
         
         if ($name=="DATETIME.ISO8601" || $name=="STRING") {
-			$_xh[$parser]['qt']=1; 
-			if ($name=="DATETIME.ISO8601")
-				$_xh[$parser]['vt']=$xmlrpcDateTime;
+            $_xh[$parser]['qt']=1; 
+            if ($name=="DATETIME.ISO8601")
+                $_xh[$parser]['vt']=$xmlrpcDateTime;
         } else if ($name=="BASE64") {
-			$_xh[$parser]['qt']=2;
-		} else {
-			// No quoting is required here -- but
-			// at the end of the element we must check
-			// for data format errors.
-			$_xh[$parser]['qt']=0;
+            $_xh[$parser]['qt']=2;
+        } else {
+            // No quoting is required here -- but
+            // at the end of the element we must check
+            // for data format errors.
+            $_xh[$parser]['qt']=0;
         }
-		break;
-	case "MEMBER":
-		$_xh[$parser]['ac']="";
         break;
-	default:
-		break;
-	}
+    case "MEMBER":
+        $_xh[$parser]['ac']="";
+        break;
+    default:
+        break;
+    }
     
-	if ($name!="VALUE") $_xh[$parser]['lv']=0;
+    if ($name!="VALUE") $_xh[$parser]['lv']=0;
 }
 
 /** 
@@ -233,107 +233,107 @@ function xmlrpc_se($parser, $name, $attrs) {
  *
  */
 function xmlrpc_ee($parser, $name) {
-	global $_xh,$xmlrpcTypes,$xmlrpcString;
+    global $_xh,$xmlrpcTypes,$xmlrpcString;
     
-	switch($name) {
-	case "STRUCT":
-	case "ARRAY":
+    switch($name) {
+    case "STRUCT":
+    case "ARRAY":
         if ($_xh[$parser]['cm'] && substr($_xh[$parser]['st'], -1) ==',') {
             $_xh[$parser]['st']=substr($_xh[$parser]['st'],0,-1);
         }
-        $_xh[$parser]['st'].=")";	
+        $_xh[$parser]['st'].=")";    
         $_xh[$parser]['vt']=strtolower($name);
         $_xh[$parser]['cm']--;
         break;
-	case "NAME":
+    case "NAME":
         $_xh[$parser]['st'].= $_xh[$parser]['ac'] . "' => ";
         break;
-	case "BOOLEAN":
-		// special case here: we translate boolean 1 or 0 into PHP
-		// constants true or false
-		if ($_xh[$parser]['ac']=='1') 
-			$_xh[$parser]['ac']="true";
-		else 
-			$_xh[$parser]['ac']="false";
-		$_xh[$parser]['vt']=strtolower($name);
-		// Drop through intentionally.
-	case "I4":
-	case "INT":
-	case "STRING":
-	case "DOUBLE":
-	case "DATETIME.ISO8601":
-		// Sloppy spec forces this exception, notice the one capital T
-		$_xh[$parser]['vt']='dateTime.iso8601';
-		// intentional fall through
-	case "BASE64":
+    case "BOOLEAN":
+        // special case here: we translate boolean 1 or 0 into PHP
+        // constants true or false
+        if ($_xh[$parser]['ac']=='1') 
+            $_xh[$parser]['ac']="true";
+        else 
+            $_xh[$parser]['ac']="false";
+        $_xh[$parser]['vt']=strtolower($name);
+        // Drop through intentionally.
+    case "I4":
+    case "INT":
+    case "STRING":
+    case "DOUBLE":
+    case "DATETIME.ISO8601":
+        // Sloppy spec forces this exception, notice the one capital T
+        $_xh[$parser]['vt']='dateTime.iso8601';
+        // intentional fall through
+    case "BASE64":
         if ($_xh[$parser]['qt']==1) {
-			// we use double quotes rather than single so backslashification works OK
-			$_xh[$parser]['st'].="\"". $_xh[$parser]['ac'] . "\""; 
-		} else if ($_xh[$parser]['qt']==2) {
-			//$_xh[$parser]['st'].="base64_decode('". $_xh[$parser]['ac'] . "')"; 
-			$_xh[$parser]['st'].="\"".$_xh[$parser]['ac']."\""; 
-		} else if ($name=="BOOLEAN") {
-			$_xh[$parser]['st'].=$_xh[$parser]['ac'];
-		} else {
-			// we have an I4, INT or a DOUBLE
-			// we must check that only 0123456789-.<space> are characters here
-			if (!ereg("^\-?[0123456789 \t\.]+$", $_xh[$parser]['ac'])) {
-				// TODO: find a better way of throwing an error
-				// than this!
-				error_log("XML-RPC: non numeric value received in INT or DOUBLE");
-				$_xh[$parser]['st'].="ERROR_NON_NUMERIC_FOUND";
-			} else {
-				// it's ok, add it on
-				$_xh[$parser]['st'].=$_xh[$parser]['ac'];
-			}
-		}
-		$_xh[$parser]['ac']=""; $_xh[$parser]['qt']=0;
-		$_xh[$parser]['lv']=3; // indicate we've found a value
+            // we use double quotes rather than single so backslashification works OK
+            $_xh[$parser]['st'].="\"". $_xh[$parser]['ac'] . "\""; 
+        } else if ($_xh[$parser]['qt']==2) {
+            //$_xh[$parser]['st'].="base64_decode('". $_xh[$parser]['ac'] . "')"; 
+            $_xh[$parser]['st'].="\"".$_xh[$parser]['ac']."\""; 
+        } else if ($name=="BOOLEAN") {
+            $_xh[$parser]['st'].=$_xh[$parser]['ac'];
+        } else {
+            // we have an I4, INT or a DOUBLE
+            // we must check that only 0123456789-.<space> are characters here
+            if (!ereg("^\-?[0123456789 \t\.]+$", $_xh[$parser]['ac'])) {
+                // TODO: find a better way of throwing an error
+                // than this!
+                error_log("XML-RPC: non numeric value received in INT or DOUBLE");
+                $_xh[$parser]['st'].="ERROR_NON_NUMERIC_FOUND";
+            } else {
+                // it's ok, add it on
+                $_xh[$parser]['st'].=$_xh[$parser]['ac'];
+            }
+        }
+        $_xh[$parser]['ac']=""; $_xh[$parser]['qt']=0;
+        $_xh[$parser]['lv']=3; // indicate we've found a value
         break;
-	case "VALUE":
-		// deal with a string value
-		if (strlen($_xh[$parser]['ac'])>0 &&
+    case "VALUE":
+        // deal with a string value
+        if (strlen($_xh[$parser]['ac'])>0 &&
             $_xh[$parser]['vt']==$xmlrpcString) {
-			$_xh[$parser]['st'].="\"". $_xh[$parser]['ac'] . "\""; 
-		}
-		// This if() detects if no scalar was inside <VALUE></VALUE>
-		// and pads an empty "".
-		if($_xh[$parser]['st'][strlen($_xh[$parser]['st'])-1] == '(') {
-			$_xh[$parser]['st'].= '""';
-		}
-		$_xh[$parser]['st'].=", '" . $_xh[$parser]['vt'] . "')";
-		if ($_xh[$parser]['cm']) $_xh[$parser]['st'].=",";
-		break;
-	case "MEMBER":
+            $_xh[$parser]['st'].="\"". $_xh[$parser]['ac'] . "\""; 
+        }
+        // This if() detects if no scalar was inside <VALUE></VALUE>
+        // and pads an empty "".
+        if($_xh[$parser]['st'][strlen($_xh[$parser]['st'])-1] == '(') {
+            $_xh[$parser]['st'].= '""';
+        }
+        $_xh[$parser]['st'].=", '" . $_xh[$parser]['vt'] . "')";
+        if ($_xh[$parser]['cm']) $_xh[$parser]['st'].=",";
+        break;
+    case "MEMBER":
         $_xh[$parser]['ac']=""; $_xh[$parser]['qt']=0;
         break;
-	case "DATA":
+    case "DATA":
         $_xh[$parser]['ac']=""; $_xh[$parser]['qt']=0;
         break;
-	case "PARAM":
+    case "PARAM":
         $_xh[$parser]['params'][]=$_xh[$parser]['st'];
         break;
-	case "METHODNAME":
+    case "METHODNAME":
         $_xh[$parser]['method']=ereg_replace("^[\n\r\t ]+", "", 
                                              $_xh[$parser]['ac']);
-		break;
-	case "BOOLEAN":
-		// special case here: we translate boolean 1 or 0 into PHP
-		// constants true or false
-		if ($_xh[$parser]['ac']=='1') 
-			$_xh[$parser]['ac']="true";
-		else 
-			$_xh[$parser]['ac']="false";
-		$_xh[$parser]['vt']=strtolower($name);
-		break;
-	default:
-		break;
-	}
-	// if it's a valid type name, set the type
-	if (isset($xmlrpcTypes[strtolower($name)])) {
-		$_xh[$parser]['vt']=strtolower($name);
-	}
-	
+        break;
+    case "BOOLEAN":
+        // special case here: we translate boolean 1 or 0 into PHP
+        // constants true or false
+        if ($_xh[$parser]['ac']=='1') 
+            $_xh[$parser]['ac']="true";
+        else 
+            $_xh[$parser]['ac']="false";
+        $_xh[$parser]['vt']=strtolower($name);
+        break;
+    default:
+        break;
+    }
+    // if it's a valid type name, set the type
+    if (isset($xmlrpcTypes[strtolower($name)])) {
+        $_xh[$parser]['vt']=strtolower($name);
+    }
+    
 }
 
 /**
@@ -344,36 +344,36 @@ function xmlrpc_ee($parser, $name) {
  *
  */
 function xmlrpc_cd($parser, $data)
-{	
+{    
     global $_xh, $xmlrpc_backslash;
     
     //if (ereg("^[\n\r \t]+$", $data)) return;
     // print "adding [${data}]\n";
     
-	if ($_xh[$parser]['lv']!=3) {
-		// "lookforvalue==3" means that we've found an entire value
-		// and should discard any further character data
-		if ($_xh[$parser]['lv']==1) {  
-			// if we've found text and we're just in a <value> then
-			// turn quoting on, as this will be a string
-			$_xh[$parser]['qt']=1; 
-			// and say we've found a value
-			$_xh[$parser]['lv']=2; 
-		}
+    if ($_xh[$parser]['lv']!=3) {
+        // "lookforvalue==3" means that we've found an entire value
+        // and should discard any further character data
+        if ($_xh[$parser]['lv']==1) {  
+            // if we've found text and we're just in a <value> then
+            // turn quoting on, as this will be a string
+            $_xh[$parser]['qt']=1; 
+            // and say we've found a value
+            $_xh[$parser]['lv']=2; 
+        }
         // replace characters that eval would
         // do special things with
-		if(isset($_xh[$parser]['ac'])) {
-			$_xh[$parser]['ac'] .= str_replace('$'    ,'\$',
+        if(isset($_xh[$parser]['ac'])) {
+            $_xh[$parser]['ac'] .= str_replace('$'    ,'\$',
                                    str_replace('"'   ,'\"', 
                                    str_replace(chr(92), $xmlrpc_backslash, $data)));
-		} else { 
-			$_xh[$parser]['ac']  = str_replace('$', '\$', 
+        } else { 
+            $_xh[$parser]['ac']  = str_replace('$', '\$', 
                                    str_replace('"', '\"', 
                                    str_replace(chr(92), $xmlrpc_backslash, $data)));
             
-		}
+        }
         
-	}
+    }
 }
 
 /**
@@ -387,11 +387,11 @@ function xmlrpc_dh($parser, $data)
 {
     global $_xh;
     if (substr($data, 0, 1) == "&" && substr($data, -1, 1) == ";") {
-		if ($_xh[$parser]['lv']==1) {  
-			$_xh[$parser]['qt']=1; 
-			$_xh[$parser]['lv']=2; 
-		}
-		$_xh[$parser]['ac'].= str_replace('$', '\$',
+        if ($_xh[$parser]['lv']==1) {  
+            $_xh[$parser]['qt']=1; 
+            $_xh[$parser]['lv']=2; 
+        }
+        $_xh[$parser]['ac'].= str_replace('$', '\$',
                               str_replace("\"", "\\\"", 
                               str_replace(chr(92), $xmlrpc_backslash, $data)));
     }
@@ -417,11 +417,11 @@ class xmlrpc_client
     
     function setDebug($in) 
     {
-		if ($in) { 
-			$this->debug=1;
-		} else {
-			$this->debug=0;
-		}
+        if ($in) { 
+            $this->debug=1;
+        } else {
+            $this->debug=0;
+        }
     }
     
     function setCredentials($u, $p) 
@@ -474,7 +474,7 @@ class xmlrpc_client
         $credentials="";
         if ($username!="") {
             $credentials="Authorization: Basic " .
-				base64_encode($username . ":" . $password) . "\r\n";
+                base64_encode($username . ":" . $password) . "\r\n";
         }
         
         $op= "POST " . $this->path. " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n" .
@@ -488,10 +488,10 @@ class xmlrpc_client
             $this->errstr="Write error";
             return 0;
         }
-		
-		if ($this->debug) {
-			print "<PRE>---REQUEST---<br/>".htmlspecialchars($op)."</PRE>";
-		}
+        
+        if ($this->debug) {
+            print "<PRE>---REQUEST---<br/>".htmlspecialchars($op)."</PRE>";
+        }
         
         $resp=$msg->parseResponseFile($fp);
         fclose($fp);
@@ -581,11 +581,11 @@ class xmlrpcresp
     
     function faultCode() 
     { 
-		if (isset($this->fn)) 
-			return $this->fn;
-		else
-			return 0; 
-	}
+        if (isset($this->fn)) 
+            return $this->fn;
+        else
+            return 0; 
+    }
     
     function faultString() 
     { 
@@ -625,11 +625,11 @@ class xmlrpcmsg
     
     function xmlrpcmsg($meth, $pars=0) 
     {
-		$this->methodname=$meth;
-		if (is_array($pars) && sizeof($pars)>0) {
-			for($i=0; $i<sizeof($pars); $i++) 
-				$this->addParam($pars[$i]);
-		}
+        $this->methodname=$meth;
+        if (is_array($pars) && sizeof($pars)>0) {
+            for($i=0; $i<sizeof($pars); $i++) 
+                $this->addParam($pars[$i]);
+        }
     }
     
     function xml_header() 
@@ -646,7 +646,7 @@ class xmlrpcmsg
     {
         $this->payload=$this->xml_header();
         $this->payload.="<methodName>" . $this->methodname . "</methodName>\n";
-        //	if (sizeof($this->params)) {
+        //    if (sizeof($this->params)) {
         $this->payload.="<params>\n";
         for($i=0; $i<sizeof($this->params); $i++) {
             $p=$this->params[$i];
@@ -669,8 +669,8 @@ class xmlrpcmsg
     
     function serialize() 
     {
-		$this->createPayload();
-		return $this->payload;
+        $this->createPayload();
+        return $this->payload;
     }
     
     function addParam($par) 
@@ -737,7 +737,7 @@ class xmlrpcmsg
         // see if we got an HTTP 200 OK, else bomb
         // but only do this if we're using the HTTP protocol.
         if (ereg("^HTTP",$data) && 
-			!ereg("^HTTP/[0-9\.]+ 200 ", $data)) {
+            !ereg("^HTTP/[0-9\.]+ 200 ", $data)) {
             $errstr= substr($data, 0, strpos($data, "\n")-1);
             error_log("HTTP error, got response: " .$errstr);
             $r=new xmlrpcresp(0, $xmlrpcerr["http_error"],
@@ -816,70 +816,70 @@ class xmlrpcval
     
     function xmlrpcval($val=-1, $type="") 
     {
-		global $xmlrpcTypes;
-		$this->me=array();
-		$this->mytype=0;
-		if ($val!=-1 || $type!="") {
-			if ($type=="") $type="string";
-			if ($xmlrpcTypes[$type]==1) {
-				$this->addScalar($val,$type);
-			}
+        global $xmlrpcTypes;
+        $this->me=array();
+        $this->mytype=0;
+        if ($val!=-1 || $type!="") {
+            if ($type=="") $type="string";
+            if ($xmlrpcTypes[$type]==1) {
+                $this->addScalar($val,$type);
+            }
             else if ($xmlrpcTypes[$type]==2)
                 $this->addArray($val);
-			else if ($xmlrpcTypes[$type]==3)
-				$this->addStruct($val);
-		}
+            else if ($xmlrpcTypes[$type]==3)
+                $this->addStruct($val);
+        }
     }
     
     function addScalar($val, $type="string") 
     {
-		global $xmlrpcTypes, $xmlrpcBoolean;
+        global $xmlrpcTypes, $xmlrpcBoolean;
         
-		if ($this->mytype==1) {
-			echo "<b>xmlrpcval</b>: scalar can have only one value<br/>";
-			return 0;
-		}
-		$typeof=$xmlrpcTypes[$type];
-		if ($typeof!=1) {
-			echo "<b>xmlrpcval</b>: not a scalar type (${typeof})<br/>";
-			return 0;
-		}
-		
-		if ($type==$xmlrpcBoolean) {
-			if (strcasecmp($val,"true")==0 || 
+        if ($this->mytype==1) {
+            echo "<b>xmlrpcval</b>: scalar can have only one value<br/>";
+            return 0;
+        }
+        $typeof=$xmlrpcTypes[$type];
+        if ($typeof!=1) {
+            echo "<b>xmlrpcval</b>: not a scalar type (${typeof})<br/>";
+            return 0;
+        }
+        
+        if ($type==$xmlrpcBoolean) {
+            if (strcasecmp($val,"true")==0 || 
                 $val==1 || ($val==true &&
                             strcasecmp($val,"false"))) {
-				$val=1;
-			} else {
-				$val=0;
-			}
-		}
-		
-		if ($this->mytype==2) {
-			// we're adding to an array here
-			$ar=$this->me["array"];
-			$ar[]=new xmlrpcval($val, $type);
-			$this->me["array"]=$ar;
-		} else {
-			// a scalar, so set the value and remember we're scalar
-			$this->me[$type]=$val;
-			$this->mytype=$typeof;
-		}
-		return 1;
+                $val=1;
+            } else {
+                $val=0;
+            }
+        }
+        
+        if ($this->mytype==2) {
+            // we're adding to an array here
+            $ar=$this->me["array"];
+            $ar[]=new xmlrpcval($val, $type);
+            $this->me["array"]=$ar;
+        } else {
+            // a scalar, so set the value and remember we're scalar
+            $this->me[$type]=$val;
+            $this->mytype=$typeof;
+        }
+        return 1;
     }
     
     function addArray($vals) 
     {
-		global $xmlrpcTypes;
-		if ($this->mytype!=0) {
-			echo "<b>xmlrpcval</b>: already initialized as a [" . 
-				$this->kindOf() . "]<br/>";
-			return 0;
-		}
+        global $xmlrpcTypes;
+        if ($this->mytype!=0) {
+            echo "<b>xmlrpcval</b>: already initialized as a [" . 
+                $this->kindOf() . "]<br/>";
+            return 0;
+        }
         
-		$this->mytype=$xmlrpcTypes["array"];
-		$this->me["array"]=$vals;
-		return 1;
+        $this->mytype=$xmlrpcTypes["array"];
+        $this->me["array"]=$vals;
+        return 1;
     }
     
     function addStruct($vals) 
@@ -926,50 +926,50 @@ class xmlrpcval
     
     function serializedata($typ, $val) 
     {
-		$rs="";
-		global $xmlrpcTypes, $xmlrpcBase64, $xmlrpcString,
-			$xmlrpcBoolean;
-		switch($xmlrpcTypes[$typ]) {
-		case 3:
-			// struct
-			$rs.="<struct>\n";
-			reset($val);
-			while(list($key2, $val2)=each($val)) {
-				$rs.="<member><name>${key2}</name>\n";
-				$rs.=$this->serializeval($val2);
-				$rs.="</member>\n";
-			}
-			$rs.="</struct>";
-			break;
-		case 2:
-			// array
-			$rs.="<array>\n<data>\n";
-			for($i=0; $i<sizeof($val); $i++) {
-				$rs.=$this->serializeval($val[$i]);
-			}
-			$rs.="</data>\n</array>";
-			break;
-		case 1:
-			switch ($typ) {
-			case $xmlrpcBase64:
-				// The data should already be base64 encoded when it hits the msg, so don't encode it again.
-				//$rs.="<${typ}>" . base64_encode($val) . "</${typ}>";
-				$rs.="<${typ}>" . $val . "</${typ}>";
-				break;
-			case $xmlrpcBoolean:
-				$rs.="<${typ}>" . ($val ? "1" : "0") . "</${typ}>";
+        $rs="";
+        global $xmlrpcTypes, $xmlrpcBase64, $xmlrpcString,
+            $xmlrpcBoolean;
+        switch($xmlrpcTypes[$typ]) {
+        case 3:
+            // struct
+            $rs.="<struct>\n";
+            reset($val);
+            while(list($key2, $val2)=each($val)) {
+                $rs.="<member><name>${key2}</name>\n";
+                $rs.=$this->serializeval($val2);
+                $rs.="</member>\n";
+            }
+            $rs.="</struct>";
+            break;
+        case 2:
+            // array
+            $rs.="<array>\n<data>\n";
+            for($i=0; $i<sizeof($val); $i++) {
+                $rs.=$this->serializeval($val[$i]);
+            }
+            $rs.="</data>\n</array>";
+            break;
+        case 1:
+            switch ($typ) {
+            case $xmlrpcBase64:
+                // The data should already be base64 encoded when it hits the msg, so don't encode it again.
+                //$rs.="<${typ}>" . base64_encode($val) . "</${typ}>";
+                $rs.="<${typ}>" . $val . "</${typ}>";
                 break;
-			case $xmlrpcString:
-				$rs.="<${typ}>" . htmlspecialchars($val). "</${typ}>";
-				break;
-			default:
-				$rs.="<${typ}>${val}</${typ}>";
-			}
-			break;
-		default:
-			break;
-		}
-		return $rs;
+            case $xmlrpcBoolean:
+                $rs.="<${typ}>" . ($val ? "1" : "0") . "</${typ}>";
+                break;
+            case $xmlrpcString:
+                $rs.="<${typ}>" . htmlspecialchars($val). "</${typ}>";
+                break;
+            default:
+                $rs.="<${typ}>${val}</${typ}>";
+            }
+            break;
+        default:
+            break;
+        }
+        return $rs;
     }
     
     function serialize() 
@@ -979,136 +979,136 @@ class xmlrpcval
     
     function serializeval($o) 
     {
-		global $xmlrpcTypes;
-		$rs="";
-		$ar=$o->me;
-		reset($ar);
-		list($typ, $val) = each($ar);
-		$rs.="<value>";
-		$rs.=$this->serializedata($typ, $val);
-		$rs.="</value>\n";
-		return $rs;
+        global $xmlrpcTypes;
+        $rs="";
+        $ar=$o->me;
+        reset($ar);
+        list($typ, $val) = each($ar);
+        $rs.="<value>";
+        $rs.=$this->serializedata($typ, $val);
+        $rs.="</value>\n";
+        return $rs;
     }
     
     function structmem($m) 
     {
-		$nv=$this->me["struct"][$m];
-		return $nv;
+        $nv=$this->me["struct"][$m];
+        return $nv;
     }
     
-	function structreset() 
+    function structreset() 
     {
-		reset($this->me["struct"]);
-	}
-	
-	function structeach() 
+        reset($this->me["struct"]);
+    }
+    
+    function structeach() 
     {
-		return each($this->me["struct"]);
-	}
+        return each($this->me["struct"]);
+    }
     
     function getval() 
     {
-		// UNSTABLE
-		global $xmlrpcBoolean, $xmlrpcBase64;
-		reset($this->me);
-		list($a,$b)=each($this->me);
-		// contributed by I Sofer, 2001-03-24
-		// add support for nested arrays to scalarval
-		// i've created a new method here, so as to
-		// preserve back compatibility
+        // UNSTABLE
+        global $xmlrpcBoolean, $xmlrpcBase64;
+        reset($this->me);
+        list($a,$b)=each($this->me);
+        // contributed by I Sofer, 2001-03-24
+        // add support for nested arrays to scalarval
+        // i've created a new method here, so as to
+        // preserve back compatibility
         
-		if (is_array($b))    {
-			foreach ($b as $id => $cont) {
-				$b[$id] = $cont->scalarval();
-			}
-		}
+        if (is_array($b))    {
+            foreach ($b as $id => $cont) {
+                $b[$id] = $cont->scalarval();
+            }
+        }
         
-		// add support for structures directly encoding php objects
-		if (is_object($b))  {
-			$t = get_object_vars($b);
-			foreach ($t as $id => $cont) {
-				$t[$id] = $cont->scalarval();
-			}
-			foreach ($t as $id => $cont) {
-				eval('$b->'.$id.' = $cont;');
-			}
-		}
-		// end contrib
-		return $b;
+        // add support for structures directly encoding php objects
+        if (is_object($b))  {
+            $t = get_object_vars($b);
+            foreach ($t as $id => $cont) {
+                $t[$id] = $cont->scalarval();
+            }
+            foreach ($t as $id => $cont) {
+                eval('$b->'.$id.' = $cont;');
+            }
+        }
+        // end contrib
+        return $b;
     }
     
     function scalarval() 
     {
-		global $xmlrpcBoolean, $xmlrpcBase64;
-		reset($this->me);
-		list($a,$b)=each($this->me);
-		return $b;
+        global $xmlrpcBoolean, $xmlrpcBase64;
+        reset($this->me);
+        list($a,$b)=each($this->me);
+        return $b;
     }
     
     function scalartyp() 
     {
-		global $xmlrpcI4, $xmlrpcInt;
-		reset($this->me);
-		list($a,$b)=each($this->me);
-		if ($a==$xmlrpcI4) 
-			$a=$xmlrpcInt;
-		return $a;
+        global $xmlrpcI4, $xmlrpcInt;
+        reset($this->me);
+        list($a,$b)=each($this->me);
+        if ($a==$xmlrpcI4) 
+            $a=$xmlrpcInt;
+        return $a;
     }
     
     function arraymem($m) 
     {
-		$nv=$this->me["array"][$m];
-		return $nv;
+        $nv=$this->me["array"][$m];
+        return $nv;
     }
     
     function arraysize() 
     {
-		reset($this->me);
-		list($a,$b)=each($this->me);
-		return sizeof($b);
+        reset($this->me);
+        list($a,$b)=each($this->me);
+        return sizeof($b);
     }
 }
 
 // date helpers
 function iso8601_encode($timet, $utc=0) 
 {
-	// return an ISO8601 encoded string
-	// really, timezones ought to be supported
-	// but the XML-RPC spec says:
-	//
-	// "Don't assume a timezone. It should be specified by the server in its
+    // return an ISO8601 encoded string
+    // really, timezones ought to be supported
+    // but the XML-RPC spec says:
+    //
+    // "Don't assume a timezone. It should be specified by the server in its
     // documentation what assumptions it makes about timezones."
-	// 
-	// these routines always assume localtime unless 
-	// $utc is set to 1, in which case UTC is assumed
-	// and an adjustment for locale is made when encoding
-	if (!$utc) {
-		$t=strftime("%Y%m%dT%H:%M:%S", $timet);
-	} else {
-		if (function_exists("gmstrftime")) 
-			// gmstrftime doesn't exist in some versions
-			// of PHP
-			$t=gmstrftime("%Y%m%dT%H:%M:%S", $timet);
-		else {
-			$t=strftime("%Y%m%dT%H:%M:%S", $timet-date("Z"));
-		}
-	}
-	return $t;
+    // 
+    // these routines always assume localtime unless 
+    // $utc is set to 1, in which case UTC is assumed
+    // and an adjustment for locale is made when encoding
+    if (!$utc) {
+        $t=strftime("%Y%m%dT%H:%M:%S", $timet);
+    } else {
+        if (function_exists("gmstrftime")) 
+            // gmstrftime doesn't exist in some versions
+            // of PHP
+            $t=gmstrftime("%Y%m%dT%H:%M:%S", $timet);
+        else {
+            $t=strftime("%Y%m%dT%H:%M:%S", $timet-date("Z"));
+        }
+    }
+    return $t;
 }
 
 function iso8601_decode($idate, $utc=0) 
 {
-	// return a timet in the localtime, or UTC
-	$t=0;
-	if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})",
+    // return a timet in the localtime, or UTC
+    $t=0;
+    if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})",
              $idate, $regs)) {
-		if ($utc) {
-			$t=gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-		} else {
-			$t=mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-		}
-	} 
-	return $t;
+        if ($utc) {
+            $t=gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
+        } else {
+            $t=mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
+        }
+    } 
+    return $t;
 }
 
 /****************************************************************
