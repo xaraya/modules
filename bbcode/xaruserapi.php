@@ -78,17 +78,7 @@ function bbcode_encode($message, $is_html_disabled)
     // This is important; bbencode_quote(), bbencode_list(), and bbencode_code() all depend on it.
     $message = " " . $message;
 
-    // change newlines to <br />'s
-    $dotransform = xarModGetVar('bbcode', 'dolinebreak');
-    if ($dotransform == 1){
-        $transformtype = xarModGetVar('bbcode', 'transformtype');
-        if ($transformtype == 1){
-            $message = preg_replace("/\n/si","<br />",$message);
-        } elseif ($transformtype == 2){
-            $message = preg_replace("/\n/si","</p><p>",$message);
-        }
-        $message = str_replace ("<p></p>", "", $message);
-    }
+    // BBClick functionality
 
     // matches an "xxxx://yyyy" URL at the start of a line, or after a space. 
     // xxxx can only be alpha characters. 
@@ -105,87 +95,94 @@ function bbcode_encode($message, $is_html_disabled)
     // Note: Only the followed chars are valid; alphanums, "-", "_" and or ".".
     $message = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $message);
 
-    
-    // First: If there isn't a "[" and a "]" in the message, don't bother.
-    if (! (strpos($message, "[") && strpos($message, "]"))){
-        // Remove padding, return.
-        $message = substr($message, 1);
-        return $message;    
-    }
+    // BBCode functionality
 
-    $advancedbbcode = xarModGetVar('bbcode', 'useadvanced');
-    if ($advancedbbcode) {
+    if (strpos($message, "[") && strpos($message, "]")){
 
-        $codes = xarModAPIFunc('bbcode',
-                               'user',
-                               'getall');
+        $advancedbbcode = xarModGetVar('bbcode', 'useadvanced');
+        if ($advancedbbcode) {
 
-        foreach ($codes as $code) {
-            if (strpos(strtolower($message), $code['tag'])) {
-                $message = xarModAPIFunc('bbcode',
-                                         'user',
-                                         $code['name'],
-                                         array('message' => $message));
+            $codes = xarModAPIFunc('bbcode',
+                                   'user',
+                                   'getall');
+
+            foreach ($codes as $code) {
+                if (strpos(strtolower($message), $code['tag'])) {
+                    $message = xarModAPIFunc('bbcode',
+                                             'user',
+                                             $code['name'],
+                                             array('message' => $message));
+                }
             }
+
+        } else {
+
+            // [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.    
+            $message = bbcode_encode_quote($message);
+            $message = bbcode_encode_code($message, $is_html_disabled);
+            // Remove the list function for a bit.  Need to work on this one.
+            //$message = bbcode_encode_list($message);
+
+            // [u] and [/u] for underline text.
+            $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
+
+            // [b] and [/b] for bolding text.
+            $message = preg_replace("/\[b\](.*?)\[\/b\]/si", "<span style='font-weight: bold;'>\\1</span>", $message);
+
+            // [i] and [/i] for italicizing text.
+            $message = preg_replace("/\[i\](.*?)\[\/i\]/si", "<span style='font-style: italic;'>\\1</span>", $message);
+
+            // [color=xxx] [/color] for text color
+            $message = preg_replace("/\[color\=([a-zA-Z0-9_-]+)\](.*?)\[\/color\]/si", "<span style='color: \\1;'>\\2</span>", $message);
+
+            // [size=xxx] [/size] for text size
+            $message = preg_replace("/\[size\=([a-zA-Z0-9.-]+)\](.*?)\[\/size\]/si", "<span style='font-size: \\1;'>\\2</span>", $message);
+
+            // [img]image_url_here[/img] code..
+            $message = preg_replace("#\[img\](http://)?(.*?)\[/img\]#si", "<img src=\"http://\\2\" />", $message);
+            //$message = preg_replace("/\[img\](.*?)\[\/img\]/si", "<img src=\"\\1\" border=\"0\" />", $message);
+
+            // Patterns and replacements for URL and email tags..
+            $patterns = array();
+            $replacements = array();
+
+            // [url]xxxx://www.phpbb.com[/url] code..
+            $patterns[0] = "#\[url\]([a-z]+?://){1}(.*?)\[/url\]#si";
+            $replacements[0] = '<a href="\1\2">\1\2</a>';
+
+            // [url]www.phpbb.com[/url] code.. (no xxxx:// prefix).
+            $patterns[1] = "#\[url\](.*?)\[/url\]#si";
+            $replacements[1] = '<a href="http://\1">\1</a>';
+
+            // [url=xxxx://www.phpbb.com]phpBB[/url] code..
+            $patterns[2] = "#\[url=([a-z]+?://){1}(.*?)\](.*?)\[/url\]#si";
+            $replacements[2] = '<a href="\1\2">\3</a>';
+
+            // [url=www.phpbb.com]phpBB[/url] code.. (no xxxx:// prefix).
+            $patterns[3] = "#\[url=(.*?)\](.*?)\[/url\]#si";
+            $replacements[3] = '<a href="http://\1">\2</a>';
+
+            $message = preg_replace($patterns, $replacements, $message);
+
         }
 
-        // Remove our padding from the string..
-        $message = substr($message, 1);
-        return $message;
-
-    } else {
-
-        // [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.    
-        $message = bbcode_encode_quote($message);
-        $message = bbcode_encode_code($message, $is_html_disabled);
-        // Remove the list function for a bit.  Need to work on this one.
-        //$message = bbcode_encode_list($message);
-
-        // [u] and [/u] for underline text.
-        $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
-
-        // [b] and [/b] for bolding text.
-        $message = preg_replace("/\[b\](.*?)\[\/b\]/si", "<span style='font-weight: bold;'>\\1</span>", $message);
-
-        // [i] and [/i] for italicizing text.
-        $message = preg_replace("/\[i\](.*?)\[\/i\]/si", "<span style='font-style: italic;'>\\1</span>", $message);
-
-        // [color=xxx] [/color] for text color
-        $message = preg_replace("/\[color\=([a-zA-Z0-9_-]+)\](.*?)\[\/color\]/si", "<span style='color: \\1;'>\\2</span>", $message);
-
-        // [size=xxx] [/size] for text size
-        $message = preg_replace("/\[size\=([a-zA-Z0-9.-]+)\](.*?)\[\/size\]/si", "<span style='font-size: \\1;'>\\2</span>", $message);
-
-        // [img]image_url_here[/img] code..
-        $message = preg_replace("#\[img\](http://)?(.*?)\[/img\]#si", "<img src=\"http://\\2\" />", $message);
-        //$message = preg_replace("/\[img\](.*?)\[\/img\]/si", "<img src=\"\\1\" border=\"0\" />", $message);
-
-        // Patterns and replacements for URL and email tags..
-        $patterns = array();
-        $replacements = array();
-
-        // [url]xxxx://www.phpbb.com[/url] code..
-        $patterns[0] = "#\[url\]([a-z]+?://){1}(.*?)\[/url\]#si";
-        $replacements[0] = '<a href="\1\2">\1\2</a>';
-
-        // [url]www.phpbb.com[/url] code.. (no xxxx:// prefix).
-        $patterns[1] = "#\[url\](.*?)\[/url\]#si";
-        $replacements[1] = '<a href="http://\1">\1</a>';
-
-        // [url=xxxx://www.phpbb.com]phpBB[/url] code..
-        $patterns[2] = "#\[url=([a-z]+?://){1}(.*?)\](.*?)\[/url\]#si";
-        $replacements[2] = '<a href="\1\2">\3</a>';
-
-        // [url=www.phpbb.com]phpBB[/url] code.. (no xxxx:// prefix).
-        $patterns[3] = "#\[url=(.*?)\](.*?)\[/url\]#si";
-        $replacements[3] = '<a href="http://\1">\2</a>';
-
-        $message = preg_replace($patterns, $replacements, $message);
-
-        // Remove our padding from the string..
-        $message = substr($message, 1);
-        return $message;
     }
+
+    // Change newlines to <br />'s
+    $dotransform = xarModGetVar('bbcode', 'dolinebreak');
+    if ($dotransform == 1){
+        $transformtype = xarModGetVar('bbcode', 'transformtype');
+        if ($transformtype == 1){
+            $message = preg_replace("/\n/si","<br />",$message);
+        } elseif ($transformtype == 2){
+            $message = preg_replace("/\n/si","</p><p>",$message);
+        }
+        $message = str_replace ("<p></p>", "", $message);
+    }
+
+    // Remove our padding from the string..
+    $message = substr($message, 1);
+    return $message;
 } 
 
 /* completely reworked bbcode quote function to improve performance.
