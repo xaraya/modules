@@ -485,6 +485,14 @@ function xarcachemanager_delete()
     return true;
 } 
 
+/**
+ * Setup the config.caching file and the output directories
+ *
+ * @param string $args['varCacheDir']
+ * @return bool Returns true on success, false on failure
+ * @throws FUNCTION_FAILED
+ * @todo special handling for "repair" during upgrades
+ */
 function xarcachemanager_fs_setup($args)
 {
     extract($args);

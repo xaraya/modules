@@ -3,7 +3,8 @@
 /**
  * Update the configuration parameters of the module based on data from the modification form
  * 
- * @author Jon Haworth | jsb <jsb@xaraya.com>
+ * @author Jon Haworth
+ * @author jsb <jsb@xaraya.com>
  * @access public 
  * @param string $args['starttime'] (seconds or hh:mm:ss)
  * @param string $args['direction'] (from or to) 
@@ -14,8 +15,6 @@
 function xarcachemanager_adminapi_convertseconds($args)
 {
     extract($args);
-
-    if (!xarSecurityCheck('AdminXarCache')) return;
 
     $convertedtime = '';
     
