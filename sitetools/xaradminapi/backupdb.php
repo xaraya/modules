@@ -325,7 +325,7 @@ function sitetools_adminapi_backupdb ($args)
     				    }
 
 	    			    if ((++$currentrow % 1000) == 0) {
-		    			    //  set_time_limit(60);
+		    			    // @set_time_limit(60);
                             $runningstatus[]['message']='<b>'.$SelectedTables["$dbname"]["$t"].' ('.number_format($rows["$t"]).' records, ['.number_format(($currentrow / $rows["$t"])*100).'%])</b>';
     			    		$elapsedtime = getmicrotime() - $starttime;
 					    	$percentprocessed = ($processedrows + $currentrow) / $overallrows;
