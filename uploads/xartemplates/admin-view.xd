@@ -11,9 +11,10 @@
 <xar:if condition="count($items) gt 0">
 <table summary="Uploads" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
 <tr>
-	<th><xar:mlstring>Source Module</xar:mlstring></th>
+<!---	<th><xar:mlstring>Source Module</xar:mlstring></th>--->
+	<th><xar:mlstring>HitCount</xar:mlstring></th>
 	<th><xar:mlstring>Upload Code</xar:mlstring></th>
-	<th><xar:mlstring>Mod Item ID</xar:mlstring></th>
+<!---	<th><xar:mlstring>Mod Item ID</xar:mlstring></th>--->
 	<th><xar:mlstring>Uploaded by</xar:mlstring></th>
 	<th><xar:mlstring>User Given File Name</xar:mlstring></th>
 	<th><xar:mlstring>Current File Name</xar:mlstring></th>
@@ -22,9 +23,10 @@
 <xar:loop name="$items">
 <xar:if condition="(($loop:index + 1) % 2)">
 	<tr>
-		<td class="xar-norm">#$loop:item['ulmod']#</td>
+<!---		<td class="xar-norm">#$loop:item['ulmod']#</td>--->
+		<td class="xar-norm">#$loop:item['uldownloadcount']#</td>
 		<td class="xar-norm">#ulid:#$loop:item['ulid']##</td>
-		<td class="xar-norm">#$loop:item['ulmodid']#</td>
+<!---		<td class="xar-norm">#$loop:item['ulmodid']#</td>--->
 		<td class="xar-norm">#$loop:item['uluid']#</td>
 		<td class="xar-norm">#$loop:item['ulfile']#</td>
 		<td class="xar-norm">#$loop:item['ulhash']#</td>
@@ -40,9 +42,10 @@
 	</tr>
 <xar:else />
 	<tr>
-		<td class="xar-accent">#$loop:item['ulmod']#</td>
+<!---		<td class="xar-accent">#$loop:item['ulmod']#</td>--->
+		<td class="xar-accent">#$loop:item['uldownloadcount']#</td>
+<!---		<td class="xar-accent">#ulid:#$loop:item['ulid']##</td>--->
 		<td class="xar-accent">#ulid:#$loop:item['ulid']##</td>
-		<td class="xar-accent">#$loop:item['ulmodid']#</td>
 		<td class="xar-accent">#$loop:item['uluid']#</td>
 		<td class="xar-accent">#$loop:item['ulfile']#</td>
 		<td class="xar-accent">#$loop:item['ulhash']#</td>
