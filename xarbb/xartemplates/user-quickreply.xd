@@ -7,7 +7,7 @@
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<script language="JavaScript">
+<script type="text/javascript">
 <!--
     // Enter name of mandatory fields
     var fieldRequired = Array("ttitle", "tpost");
