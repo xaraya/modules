@@ -18,13 +18,13 @@ function xarcachemanager_adminapi_getqueries($args)
 // TODO: enable $dbconn->LogSQL() and check expensive SQL queries for new candidates
 
     $candidates = array(
-                        'articles' => array('userapi.getall'),
+                        'articles' => array('userapi.getall'), // TODO: round off current pubdate
                         'categories' => array('userapi.getcat'),
                         'comments' => array('userapi.get_author_count',
                                             'userapi.get_multiple'),
                         'dynamicdata' => array(), // TODO: make dependent on arguments
                         'privileges' => array(),
-                        'roles' => array(),
+                        'roles' => array('userapi.getall'),
                         'xarbb' => array('userapi.countposts',
                                          'userapi.getalltopics'),
                        );
