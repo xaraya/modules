@@ -15,7 +15,7 @@
  * initialise the module
  */
 function uploads_init()
-{    
+{
     //Not needed anymore with the dependency checks.
     if (!xarModIsAvailable('mime')) {
         $msg = xarML('The mime module should be activated first');
@@ -44,7 +44,7 @@ function uploads_init()
     xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
     xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
     xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
-    
+
     $data['filters']['inverse']                     = FALSE;
     $data['filters']['mimetypes'][0]['typeId']      = 0;
     $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
@@ -60,24 +60,24 @@ function uploads_init()
     $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = 'Rejected';
     $filter['fileType']     = '%';
     $filter['fileStatus']   = '';
-    
+
     $mimetypes =& $data['filters']['mimetypes'];
     $mimetypes += xarModAPIFunc('mime','user','getall_types');
 
     xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
     unset($mimetypes);
-    
+
     // Get datbase setup
     $dbconn =& xarDBGetConn();
 
     $xartable =& xarDBGetTables();
-    
+
     $file_entry_table = $xartable['file_entry'];
     $file_data_table  = $xartable['file_data'];
     $file_assoc_table = $xartable['file_associations'];
-    
+
     xarDBLoadTableMaintenanceAPI();
-    
+
     $file_entry_fields = array(
         'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
@@ -88,41 +88,41 @@ function uploads_init()
         'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny',     'null'=>FALSE),
         'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
     );
-        
-        
+
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
     $query   =  xarDBCreateTable($file_entry_table, $file_entry_fields);
     $result  =& $dbconn->Execute($query);
-    
+
     $file_data_fields = array(
         'xar_fileData_id'  => array('type'=>'integer','size'=>'big','null'=>FALSE,'increment'=>TRUE, 'primary_key'=>TRUE),
         'xar_fileEntry_id' => array('type'=>'integer','size'=>'big','null'=>FALSE),
         'xar_fileData'     => array('type'=>'blob','size'=>'medium','null'=>FALSE)
     );
-        
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
     $query  =  xarDBCreateTable($file_data_table, $file_data_fields);
     $result =& $dbconn->Execute($query);
- 
+
     $file_assoc_fields = array(
         'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
         'xar_modid'        => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
         'xar_itemtype'     => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE, 'default'=>'0'),
         'xar_objectid'       => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE, 'default'=>'0'),
     );
-        
-        
+
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
     $query   =  xarDBCreateTable($file_assoc_table, $file_assoc_fields);
     $result  =& $dbconn->Execute($query);
-    
+
     $instances[0]['header'] = 'external';
     $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
     $instances[0]['limit']  = 0;
-    
+
     xarDefineInstance('uploads', 'File', $instances);
 
     xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
@@ -139,10 +139,10 @@ function uploads_init()
          xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
     }
-    
-    
+
+
     if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
-        // if there was an error, make sure to remove the tables 
+        // if there was an error, make sure to remove the tables
         // so the user can try the install again
         uploads_delete();
         return;
@@ -182,21 +182,21 @@ function uploads_upgrade($oldversion)
             xarModUnregisterHook('item', 'new', 'GUI','uploads', 'admin', 'newhook');
             xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook');
             xarModUnregisterHook('item', 'display', 'GUI', 'uploads', 'user', 'formdisplay');
-            
-            
+
+
             // Had problems with unregister not working in beta testing... So forcefully removing these
             $dbconn =& xarDBGetConn();
 
             $hookstable = xarDBGetSiteTablePrefix() . '_hooks';
             $query = "DELETE FROM $hookstable
-                            WHERE xar_tmodule='uploads' 
-                              AND (xar_tfunc='formdisplay' 
-                               OR xar_tfunc='createhook' 
+                            WHERE xar_tmodule='uploads'
+                              AND (xar_tfunc='formdisplay'
+                               OR xar_tfunc='createhook'
                                OR xar_tfunc='newhook')";
-        
+
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
         case '0.0.4':
         case '0.04':
         case '0.0.5':
@@ -211,10 +211,10 @@ function uploads_upgrade($oldversion)
             $linkagetable =& $xartable['uploads'];
 
             xarDBLoadTableMaintenanceAPI();
-            /* 
-            // If we're here, then don't worry about altering the table 
+            /*
+            // If we're here, then don't worry about altering the table
             // we'll generate the mime type later
-            
+
             // add the xar_itemtype column
             $query = xarDBAlterTable($linkagetable,
                                      array('command' => 'add',
@@ -361,16 +361,24 @@ function uploads_upgrade($oldversion)
                 $entry['xar_user_id']       = $row['xar_uluid'];
                 $entry['xar_filename']      = $row['xar_ulfile'];
                 $entry['xar_location']      = $path_uploads_directory . '/' . $row['xar_ulhash'];
+
+                // If the file doesn't exist, then skip the entry
+                // no reason to add a 'dead' file
+                if (!file_exists($entry['xar_location'])) {
+                    $result->MoveNext();
+                    continue;
+                }
+
                 $entry['xar_status']        = ($row['xar_ulapp']) ? _UPLOADS_STATUS_APPROVED : _UPLOADS_STATUS_SUBMITTED;
-                $entry['xar_filesize']      = filesize($entry['xar_location']) ? filesize($entry['xar_location']) : 0;
-                
+                $entry['xar_filesize']      = @filesize($entry['xar_location']) ? @filesize($entry['xar_location']) : 0;
+
                 switch(strtolower($row['xar_ultype'])) {
                     case 'd':
-                                $entry['xar_store_type'] = _UPLOADS_STORE_DATABASE;
+                                $entry['xar_store_type'] = _UPLOADS_STORE_DB_FULL;
                                 break;
                     default:
                     case 'f':
-                                $entry['xar_store_type'] = _UPLOADS_STORE_FILESYSTEM;
+                                $entry['xar_store_type'] = _UPLOADS_STORE_FSDB;
                                 break;
                 }
                 $entry['xar_mime_type']     = xarModAPIFunc('mime','user','analyze_file', array('fileName' => $entry['xar_location']));
@@ -483,25 +491,26 @@ function uploads_upgrade($oldversion)
              * We wait to do this until the very end so that, in the event there
              * was a problem, we can retry at some point in time
              */
-            $query = xarDBDropTable($uploads_table);
-            $result =& $dbconn->Execute($query);
-            if (!$result)
-                return;
-
             $query = xarDBDropTable($uploads_blobs_table);
             $result =& $dbconn->Execute($query);
             if (!$result)
                 return;
 
+            $query = xarDBDropTable($uploads_table);
+            $result =& $dbconn->Execute($query);
+            if (!$result)
+                return;
+
+
         case '0.7.5':
             xarModAPILoad('uploads', 'user');
             xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
             break;
-            
+
         default:
             return true;
     }
-    
+
     return true;
 }
 
@@ -523,8 +532,8 @@ function uploads_delete()
     xarModDelVar('uploads', 'dd.fileupload.upload');
     xarModDelVar('uploads', 'dd.fileupload.trusted');
     xarModDelVar('uploads', 'file.auto-approve');
-    xarModDelVar('uploads', 'view.filter');    
-    
+    xarModDelVar('uploads', 'view.filter');
+
     xarUnregisterMask('ViewUploads');
     xarUnregisterMask('AddUploads');
     xarUnregisterMask('EditUploads');
