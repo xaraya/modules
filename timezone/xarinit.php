@@ -336,9 +336,8 @@ function timezone_init($keepSettings = false)
         // we need to get the next ID for the rules table
         $rules_id = $dbconn->GenId($rules_table);
         // insert the Rule Name into the rules table
-        $name = xarVarPrepForStore($name);
-        $sql_rules = "INSERT INTO $rules_table (id, name) VALUES ('$rules_id', '$name')";
-        $result =& $dbconn->Execute($sql_rules);
+        $sql_rules = "INSERT INTO $rules_table (id, name) VALUES (?,?)";
+        $result =& $dbconn->Execute($sql_rules,array($rules_id,$name));
         //TODO::return an exception
         if(!$result) return false;
         // grab the last inserted rules_id
@@ -350,19 +349,18 @@ function timezone_init($keepSettings = false)
             
             // set the initial sql parameters
             $rules_data_insert_fields = 'id,rules_id';
-            $rules_data_insert_values = xarVarPrepForStore($rules_data_id).','.xarVarPrepForStore($rules_id);
+            $rules_data_insert_values = $dbconn->qstr($rules_data_id).','.$dbconn->qstr($rules_id);
             
             // create the insert statement
             $p = 0;
             foreach($rule_data[$i] as $data) {
-                $rules_data_insert_fields .= ',' . xarVarPrepForStore($rules_data_field_names[$p]);
-                $rules_data_insert_values .= ',\'';
+                $rules_data_insert_fields .= ',' . $dbconn->qstr($rules_data_field_names[$p]);
+                $rules_data_insert_values .= ',';
                 if($rules_data_field_names[$p] == 'rule_in') {
-                    $rules_data_insert_values .= xarVarPrepForStore(timezone__getMonth($data));
+                    $rules_data_insert_values .= $dbconn->qstr(timezone__getMonth($data));
                 } else {
-                    $rules_data_insert_values .= xarVarPrepForStore($data);
+                    $rules_data_insert_values .= $dbconn->qstr($data);
                 }
-                $rules_data_insert_values .= '\'';
                 $p++;
             }
 
@@ -385,9 +383,8 @@ function timezone_init($keepSettings = false)
     // loop over the Zones
     foreach($Zones as $name => $zones_data) {
         $zones_id = $dbconn->GenID($zones_table);
-        $name = xarVarPrepForStore($name);
-        $sql_zones = "INSERT INTO $zones_table (id, name) VALUES ('$zones_id', '$name')";
-        $result =& $dbconn->Execute($sql_zones);
+        $sql_zones = "INSERT INTO $zones_table (id, name) VALUES (?,?)";
+        $result =& $dbconn->Execute($sql_zones,array($zones_id, $name));
         //TODO::return an exception
         if(!$result) return false;
         $result->Close();
@@ -400,27 +397,27 @@ function timezone_init($keepSettings = false)
             $zones_data_id = $dbconn->GenId($zones_data_table);
             // set the initial sql parameters
             $zones_data_insert_fields = 'id,zones_id';
-            $zones_data_insert_values = xarVarPrepForStore($zones_data_id).','.xarVarPrepForStore($zones_id);
+            $zones_data_insert_values = $dbconn->qstr($zones_data_id).','.$dbconn->qstr($zones_id);
             $p = 0; // pointer
             // reset our flags
             $hasRule = false;
             $rule_id = 0;
             foreach($zones_data[$i] as $data) {
                 if($zones_data_field_names[$p] == 'rules') {
-                    $zones_data_insert_fields .= ',' . xarVarPrepForStore($zones_data_field_names[$p]);
+                    $zones_data_insert_fields .= ',' . $dbconn->qstr($zones_data_field_names[$p]);
                     
                     if(preg_match('/[\d]+:[\d]+/',$data)) {
                         // this is a time element and not a rule name
                         // insert it into the zone table
-                        $zones_data_insert_values .= ',\'';
-                        $zones_data_insert_values .= xarVarPrepForStore($data);
-                        $zones_data_insert_values .= '\'';
+                        $zones_data_insert_values .= ',';
+                        $zones_data_insert_values .= $dbconn->qstr($data);
+                        $zones_data_insert_values .= '';
                     } else {
                         // insert a null value so we load the rule
                         $zones_data_insert_values .= ',NULL';
                         // grab the rule id or set to 0 when no rule applies
-                        $getRuleSql = "SELECT id FROM $rules_table WHERE name = '".xarVarPrepForStore($data)."'";
-                        $result =& $dbconn->Execute($getRuleSql);
+                        $getRuleSql = "SELECT id FROM $rules_table WHERE name = ?";
+                        $result =& $dbconn->Execute($getRuleSql,array($data));
                         if($result && !$result->EOF) {
                             $hasRule = true;
                             $rule_id = $result->fields[0];
@@ -429,12 +426,12 @@ function timezone_init($keepSettings = false)
                         $result->Close();
                     }
                 } else {
-                    $zones_data_insert_fields .= ',' . xarVarPrepForStore($zones_data_field_names[$p]);
+                    $zones_data_insert_fields .= ',' . $dbconn->qstr($zones_data_field_names[$p]);
                     $zones_data_insert_values .= ',\'';
                     if($zones_data_field_names[$p] == 'untilmonth') {
-                        $zones_data_insert_values .= xarVarPrepForStore(timezone__getMonth($data));
+                        $zones_data_insert_values .= $dbconn->qstr(timezone__getMonth($data));
                     } else {
-                        $zones_data_insert_values .= xarVarPrepForStore($data);
+                        $zones_data_insert_values .= $dbconn->qstr($data);
                     }
                     $zones_data_insert_values .= '\'';
                 }
@@ -467,8 +464,8 @@ function timezone_init($keepSettings = false)
     // POPULATE THE LINKS TABLE
     //======================================================================
     foreach($Links as $name => $zone) {
-        $sqlGetZone = "SELECT id FROM $zones_table WHERE name = '".xarVarPrepForStore($zone)."'";
-        $result_sqlGetZone =& $dbconn->Execute($sqlGetZone);
+        $sqlGetZone = "SELECT id FROM $zones_table WHERE name = ?";
+        $result_sqlGetZone =& $dbconn->Execute($sqlGetZone,array($zone));
         if(!$result_sqlGetZone || $result_sqlGetZone->EOF) {
             // we don't have anything to link
             continue;
@@ -476,19 +473,17 @@ function timezone_init($keepSettings = false)
             // insert the Link into the links table
             $links_id = $dbconn->GenId($links_table);
             $sql_links = "INSERT INTO $links_table (id,name)
-                          VALUES ('".xarVarPrepForStore($links_id)."',
-                                  '".xarVarPrepForStore($name)."')";
-            $result_sql_links =& $dbconn->Execute($sql_links);
+                          VALUES (?,?)";
+            $result_sql_links =& $dbconn->Execute($sql_links,array($links_id, $name));
             if(!$result_sql_links) return false;
             $result_sql_links->Close();
             
             // insert the zones_id and links_id into the relation table
             $links_id = $dbconn->PO_Insert_ID($links_table,'id');
             $sql_zones_has_links = "INSERT INTO $zones_has_links_table (zones_id, links_id)
-                                    VALUES ('".xarVarPrepForStore($result_sqlGetZone->fields[0])."',
-                                            '".xarVarPrepForStore($links_id)."')";
+                                    VALUES (?,?)";
             $result_sqlGetZone->Close();
-            $result_zones_has_links =& $dbconn->Execute($sql_zones_has_links);
+            $result_zones_has_links =& $dbconn->Execute($sql_zones_has_links,array($result_sqlGetZone->fields[0],$links_id));
             if(!$result_zones_has_links) return false;
             $result_zones_has_links->Close();
         }
