@@ -1133,7 +1133,8 @@
      * @return mixed
      * @access public
      */
-     function serializeTypeDef($type){
+     function serializeTypeDef($type)
+	 {
      	//print "in sTD() for type $type<br />";
  	if($typeDef = $this->getTypeDef($type)){
  		$str .= '<'.$type;
