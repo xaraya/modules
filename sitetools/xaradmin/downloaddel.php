@@ -27,7 +27,7 @@ function sitetools_admin_downloaddel ($args)
    if ((!isset($savefile)) || (empty($savefile))) {
        // Handle the user exceptions yourself
        $status = xarML('The file to delete does not exist.');
-       $reason = xarExceptionValue();
+       $reason = xarCurrentError();
        if (!empty($reason)) {
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }
@@ -44,7 +44,7 @@ function sitetools_admin_downloaddel ($args)
   if (!file_exists($filetodelete)) {
         // Handle the user exceptions yourself
        $status = xarML('The file to delete does not exist.');
-       $reason = xarExceptionValue();
+       $reason = xarCurrentError();
        if (!empty($reason)) {
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }

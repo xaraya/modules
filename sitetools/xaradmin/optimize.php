@@ -56,7 +56,7 @@ function sitetools_admin_optimize()
             }
             // Handle the user exceptions yourself
             $status = xarML('Optimizing database failed');
-            $reason = xarExceptionValue();
+            $reason = xarCurrentError();
             if (!empty($reason)) {
                 $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
             }

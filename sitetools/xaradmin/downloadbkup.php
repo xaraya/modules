@@ -27,7 +27,7 @@ function sitetools_admin_downloadbkup ($args)
   if ((!isset($savefile)) || (empty($savefile))) {
        // Handle the user exceptions yourself
        $status = xarML('The file to download does not exist.');
-       $reason = xarExceptionValue();
+       $reason = xarCurrentError();
        if (!empty($reason)) {
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }
@@ -45,7 +45,7 @@ function sitetools_admin_downloadbkup ($args)
   if (!file_exists($filetodownload)) {
        // Handle the user exceptions yourself
        $status = xarML('The file to download does not exist.');
-       $reason = xarExceptionValue();
+       $reason = xarCurrentError();
        if (!empty($reason)) {
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }

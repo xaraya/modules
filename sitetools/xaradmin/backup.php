@@ -85,7 +85,7 @@ function sitetools_admin_backup($args)
                 }
                 // Handle the user exceptions yourself
                 $status = xarML('Unable to access database table information');
-                $reason = xarExceptionValue();
+                $reason = xarCurrentError();
                 if (!empty($reason)) {
                     $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
                 }
@@ -125,7 +125,7 @@ function sitetools_admin_backup($args)
             }
             // Handle the user exceptions yourself
             $status = xarML('Unable to backup database');
-            $reason = xarExceptionValue();
+            $reason = xarCurrentError();
             if (!empty($reason)) {
                 $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
             }
