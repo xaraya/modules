@@ -69,52 +69,39 @@
     </div>
     
     
-    <h2><xar:mlstring>Add Subscriber</xar:mlstring></h2>
-    <div align="center">
+    <h2><xar:mlstring>Add Subscribers</xar:mlstring></h2>
 
     <form action="#xarModURL('pubsub','admin','addsubscriber')#" method="post">
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
-            <tr>
-                <th>
-                    <xar:mlstring>Module Name</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Item Type</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Category</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>EMail</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Action</xar:mlstring>
-                </th>
-            </tr>
-             <tr>
-                <td><xar:data-input name="sub_module" type="19" /></td>
-                <td><input type="text" name="sub_itemtype"></td>
-                <td>
-                    
-<xar:set name="categories">xarModAPIFunc('categories','user','getcat')</xar:set>                    
-                    <select name="sub_category">
-                        <xar:foreach in="$categories" value="$category">
-                            <xar:set name="indent">$category['indentation'] - 1</xar:set>
-                            <xar:set name="indent">str_repeat("&nbsp;&nbsp;&nbsp;", $indent)</xar:set>
+        <div>
+            <span style="font-weight:bold;"><xar:mlstring>Module Name</xar:mlstring></span>
+            <span><xar:data-input name="sub_module" type="19" /></span>
+        </div>
+        <div>
+            <span style="font-weight:bold;"><xar:mlstring>Item Type</xar:mlstring></span>
+            <span><input type="text" name="sub_itemtype"></span>
+        </div>
+        <div>
+            <span style="font-weight:bold;"><xar:mlstring>Category</xar:mlstring></span>
+            <span>
+                <xar:set name="categories">xarModAPIFunc('categories','user','getcat')</xar:set>                    
+                <select name="sub_category">
+                    <xar:foreach in="$categories" value="$category">
+                        <xar:set name="indent">$category['indentation'] - 1</xar:set>
+                        <xar:set name="indent">str_repeat("&nbsp;&nbsp;&nbsp;", $indent)</xar:set>
 
-                            <option value="#$category['cid']#">#$indent# #$category['name']#</option>
-                        </xar:foreach>
-                    </select>
-
-                </td>
-                <td><input type="text" name="sub_email"></td>
-                <td><input type="submit" value="Add Subscriber"></td>
-             </tr>
-        </table>
-
+                        <option value="#$category['cid']#">#$indent# #$category['name']#</option>
+                    </xar:foreach>
+                </select>
+            </span>
+        </div>
+        <div>
+            <span style="font-weight:bold;"><xar:mlstring>EMail Addresses</xar:mlstring></span>
+            <span><textarea name="sub_email" cols="64" rows="6"></textarea></span>
+            
+        </div>
+        <input type="submit" value="Add Subscriber">
     </form>
 
-</div>
 </div>
 <!-- add the pager here -->
 #$pager#
