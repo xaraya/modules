@@ -112,7 +112,12 @@ function translations_grab_source_code($references, $maxReferences = NULL)
     for ($i = 0; $i < count($references) && $i < $maxReferences; $i++) {
         $ref = $references[$i];
         if (!isset($files[$ref['file']])) {
-            $files[$ref['file']] = file($ref['file']);
+            if (file_exists($ref['file']))  {
+                $files[$ref['file']] = file($ref['file']);
+            } else {
+            	// FIXME need more information about outdated references
+                $files[$ref['file']] = array();
+            }
         }
         $j = $ref['line'] - 3;
         if ($j < 0) $j = 0;
