@@ -82,9 +82,14 @@ function xarbb_userapi_updatetopic($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    $data = xarModAPIFunc('xarbb',
+                          'user',
+                          'gettopic',
+                          array('tid' => $tid));
+
     // Let any hooks know that we have created a new topic
     $args['module'] = 'xarbb';
-    $args['itemtype'] = 2; // topic
+    $args['itemtype'] = $data['fid']; // topic
     $args['itemid'] = $tid;
     xarModCallHooks('item', 'update', $tid, $args);
 

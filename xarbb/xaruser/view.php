@@ -21,5 +21,4 @@ function xarbb_user_view()
 
  return true;
 }
-
 ?>

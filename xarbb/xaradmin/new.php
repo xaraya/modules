@@ -99,6 +99,20 @@ function xarbb_admin_new()
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter))) return;
 
+            // Let's hook to hitcount and comments here instead of the init, since we are not creating
+            // predetermined forums on install.
+
+            // Enable hitcount hooks for xarbb topics (= item type 2)
+            xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
+                                                                     'callerItemType'   => $forum['fid'],
+                                                                     'hookModName'      => 'hitcount'));
+
+            // Enable comment hooks for xarbb topics (= item type 2)
+            //<jojodee> not sure why this is here after being commented out above
+            xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
+                                                                     'callerItemType'   => $forum['fid'],
+                                                                     'hookModName'      => 'comments'));
+
             $settings = array();
             $settings['postsperpage']       = $postsperpage;
             $settings['topicsperpage']      = $topicsperpage;

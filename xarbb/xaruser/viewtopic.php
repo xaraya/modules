@@ -54,7 +54,8 @@ function xarbb_user_viewtopic()
                                                       'transform',
                                                        $tid,
                                                  array($data['tpost'],
-                                                       $data['ttitle']));
+                                                       $data['ttitle']),
+                                                       'xarbb');
 
     // The user API function is called
     // <jojodee> Do we need to call this? - is not same data returned in gettopic call above
@@ -107,7 +108,8 @@ function xarbb_user_viewtopic()
                                                            'transform',
                                                             $tid,
                                                             array($comment['xar_text'],
-                                                                  $comment['xar_title']));
+                                                                  $comment['xar_title']),
+                                                            'xarbb');
         if ($allowhtml){
             $comments[$i]['xar_text']=xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
             $comments[$i]['xar_title']=xarVarPrepHTMLDisplay($comments[$i]['xar_title']);
@@ -180,7 +182,7 @@ function xarbb_user_viewtopic()
 
     $item = array();
     $item['module'] = 'xarbb';
-    $item['itemtype'] = 2; // Forum Topics
+    $item['itemtype'] = $data['fid']; // Forum Topics
     $item['itemid'] = $tid;
 
 

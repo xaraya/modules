@@ -66,7 +66,7 @@ function xarbb_user_newtopic()
                 $data = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid));
                 $item = $data;
                 $item['module'] = 'xarbb';
-                $item['itemtype'] = 2; // Forum Topics
+                $item['itemtype'] = $data['fid']; // Forum Topics
                 $item['itemid'] = $tid;
                 $data['hooks'] = xarModCallHooks('item','modify',$tid,$item);
             } else  {
@@ -82,7 +82,7 @@ function xarbb_user_newtopic()
                 }
                 $item = $data;
                 $item['module'] = 'xarbb';
-                $item['itemtype'] = 2; // Forum Topics
+                $item['itemtype'] = $data['fid']; // Forum Topics
                 $item['itemid'] = '';
                 $data['hooks'] = xarModCallHooks('item','new','',$item);
             }

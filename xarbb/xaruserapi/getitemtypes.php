@@ -24,13 +24,21 @@ function xarbb_userapi_getitemtypes($args)
 
     // Get publication types
 
-    $itemtypes[1] = array('label' => "Forum",
-    				      'title' => "Display Forum",
+    $itemtypes[0] = array('label' => xarML('Main Forum Configuration'),
+    				      'title' => xarML('Main Forum Configuration'),
                           'url' => xarModURL('xarbb','user','main',array()));
 
-    $itemtypes[2] = array('label' => "Forum Topics",
-    				      'title' => "Display Forum Topics",
-                          'url' => xarModURL('xarbb','user','main',array()));
+    $forums = xarModAPIFunc('xarbb',
+                            'user',
+                            'getallforums');
+
+    foreach($forums as $forum){
+        $itemtypevalue = $forum['fid'];
+        $itemtypes[$itemtypevalue] = array('label' => $forum['fname'] . ' ' . xarML('Topics'),
+                                           'title' => xarML('Individual Forum Configuration'),
+                                           'url' => xarModURL('xarbb','user','viewforums',array('fid' => $forum['fid'])));
+    }
+
     return $itemtypes;
 }
 

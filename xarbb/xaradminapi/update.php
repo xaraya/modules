@@ -39,18 +39,13 @@ function xarbb_adminapi_update($args)
                           'user',
                           'getforum',
                           array('fid' => $fid));
-
     if (empty($data)) return;
-
     // Security Check
     if(!xarSecurityCheck('EditxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
-
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $xbbforumstable = $xartable['xbbforums'];
-
     // Update the forum
     $query = "UPDATE $xbbforumstable
             SET xar_fname   = '" . xarVarPrepForStore($fname) . "',
@@ -59,14 +54,11 @@ function xarbb_adminapi_update($args)
             WHERE xar_fid = " . xarVarPrepForStore($fid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
     // Let any hooks know that we have updated a forum
     $args['module'] = 'xarbb';
     $args['itemtype'] = 1; // forum
     xarModCallHooks('item', 'update', $fid, $args);
-
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

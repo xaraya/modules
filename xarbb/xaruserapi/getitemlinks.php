@@ -45,7 +45,7 @@ function xarbb_userapi_getitemlinks($args)
          }
 
     // topics
-    } elseif ($itemtype == 2) {
+    } else {
          $topics = xarModAPIFunc('xarbb','user','getalltopics',
                                  array('tids' => $itemids));
          if (empty($topics)) {

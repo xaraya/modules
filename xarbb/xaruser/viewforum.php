@@ -192,7 +192,7 @@ function xarbb_user_viewforum()
                                     xarModURL('xarbb', 'user', 'viewforum', array('startnumitem' => '%%',
                                                                                   'fid'          => $fid)),
                                     $settings['topicsperpage']);
-
+//$pre = var_export($data, true); echo "<pre>$pre</pre>"; return;
     // Return the template variables defined in this function
     return $data;
 }

@@ -12,7 +12,6 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
-
 /**
  * delete a forum
  * @param $args['tids'] Array( IDs ) of the forum   or $args['tid'] ID
@@ -22,7 +21,6 @@
 function xarbb_adminapi_deletetopics($args)
 {
     extract($args);
-
     // Argument check
     if ( (!isset($tids) || !is_array($tids) || count($tids) == 0) &&
     	 (!isset($tid) || !($tid > 0)) ) {
@@ -30,40 +28,30 @@ function xarbb_adminapi_deletetopics($args)
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
     if(!isset($tids))
     	$tids = Array($tid);
-
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $xbbtopicstable = $xartable['xbbtopics'];
-
     foreach($tids as $tid)	{
     	// get forum id
         if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;		
-
 	    // Item Specific Security Check
 	    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;
-
 		// Delete comments
         if(!xarModAPIFunc('xarbb', 'admin', 'deleteallreplies', array('tid' => $tid))) return;
-
 	    // Delete the item
 	    $query = "DELETE FROM $xbbtopicstable
 	              WHERE xar_tid = $tid";
 	    $result =& $dbconn->Execute($query);
 	    if (!$result) return;
-
         // Let any hooks know that we have deleted a topic
         $args['module'] = 'xarbb';
-	    $args['itemtype'] = 2; // topic
+	    $args['itemtype'] = $topic['fid']; // topic
 	    xarModCallHooks('item', 'delete', $tid, $args);
 	}
-
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

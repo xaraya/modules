@@ -68,7 +68,7 @@ function xarbb_adminapi_deletealltopics($args)
     // Let any hooks know that we have deleted topics
 	foreach($topics as $topic)	{
 	    $args['module'] = 'xarbb';
-	    $args['itemtype'] = 2; // topic
+	    $args['itemtype'] = $fid; // topic
 	    xarModCallHooks('item', 'delete', $topic["tid"], $args);
     }
 
