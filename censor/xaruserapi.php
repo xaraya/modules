@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * File: $Id$
  * 
@@ -164,7 +164,7 @@ function censor_userapi_transform($args)
             $transformed[] = censor_userapitransform($text);
         }
     } else {
-        $transformed = censor_userapitransform($text);
+        $transformed = censor_userapitransform($extrainfo);
     }
 
     return $transformed;
