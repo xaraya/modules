@@ -15,7 +15,7 @@
 
 /**
  * Initialise the installed SOAP server APIs
- * <br>
+ * 
  * Carries out a number of initialisation tasks to get SOAP up and
  * running.
  * @param none

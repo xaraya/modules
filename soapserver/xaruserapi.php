@@ -21,7 +21,7 @@
 
 /**
  * Call any Xaraya API through SOAP
- * <br>
+ * 
  * Passes the API request to the indicated Xaraya API, and gets back
  * the result.
  * @param $params['username'] a user authorized to call the API

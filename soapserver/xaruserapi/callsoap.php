@@ -15,7 +15,7 @@
 
 /**
  * Call a remote SOAP method
- * <br>
+ * 
  * Opens a SOAP connection
  * with the specified parameters.
  * @returns resultrarray
