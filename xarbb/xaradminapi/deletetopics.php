@@ -21,18 +21,13 @@
  */
 function xarbb_adminapi_deletetopics($args)
 {
-
-    // BIG FIXME HERE
-    // Get arguments from argument array
     extract($args);
 
     // Argument check
     if ( (!isset($tids) || !is_array($tids) || count($tids) == 0) &&
     	 (!isset($tid) || !($tid > 0)) ) {
-        $msg = xarML('Invalid Parameter count',
-                    '', 'admin', 'delete', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter count in #(1), #(2), #(3)', 'admin', 'delete', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -53,9 +48,8 @@ function xarbb_adminapi_deletetopics($args)
 	    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;
 
 		// Delete comments
-        if(!xarModAPIFunc("xarbb","admin","deleteallreplies",array(
-        			"tid" => $tid
-				))) return;
+        if(!xarModAPIFunc('xarbb', 'admin', 'deleteallreplies', array('tid' => $tid))) return;
+
 	    // Delete the item
 	    $query = "DELETE FROM $xbbtopicstable
 	              WHERE xar_tid = $tid";

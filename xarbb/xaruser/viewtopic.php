@@ -176,7 +176,7 @@ function xarbb_user_viewtopic()
     $data['editimg']     = '<img src="' . xarTplGetImage('new/icon_edit.gif') . '" alt="'.xarML('Edit').'" />';
     $data['deleteimg']   = '<img src="' . xarTplGetImage('new/icon_delete.gif') . '" alt="'.xarML('Edit').'" />';
     $data['ipimg']       = '<img src="' . xarTplGetImage('new/icon_ip.gif') . '" alt="'.xarML('IP').'" />';
-
+    $data['closed']      = '<img src="' . xarTplGetImage('new/reply-locked.gif') . '" alt="'.xarML('Closed Topic').'" />';
 
     $item = array();
     $item['module'] = 'xarbb';
@@ -193,6 +193,7 @@ function xarbb_user_viewtopic()
 
     // Let's suppress the hitcount hook from showing.
     $data['hooks']['hitcount'] = '';
+    $data['authid'] = xarSecGenAuthKey();
     
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.

@@ -18,12 +18,23 @@ function xarbb_user_updatetopic()
 // We do this by updating both tables at once and then giving the poster a chance to reply to the
 // topic or go back to the forum of which he came.
 
-  if (!xarVarFetch('tid','int:1:',$tid,$tid,XARVAR_NOT_REQUIRED)) return;
-  if (!xarVarFetch('modify','int:1:',$modify, 0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid','int:1:',$tid)) return;
+    if (!xarVarFetch('modify','int:1:',$modify, 0,XARVAR_NOT_REQUIRED)) return;
+
+    // Need to handle locked topics
+    $data = xarModAPIFunc('xarbb',
+                          'user',
+                          'gettopic',
+                          array('tid' => $tid));
+
+    if ($data['tstatus'] == 3) {
+        $msg = xarML('Topic -- #(1) -- has been locked by administrator', $data['ttitle']);
+        xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
+        return;
+    }
 
     // Start by updating the topic stats.
     $modid        = xarModGetIDFromName('xarbb');
-
     $comments = xarModAPIFunc('comments',
                               'user',
                               'get_multiple',

@@ -47,7 +47,7 @@ function xarbb_userapi_updateforumview($args)
 	//    if(!xarSecurityCheck('ReadxarBB')) return;
 
     //oof, i needs to clean this up.  logic is getting murky around here.
-    if ((empty($reply)) AND (empty($deletetopic))){
+    if ((empty($reply)) AND (empty($deletetopic)) AND (empty($deletereply))){
         $ftopics = $link['ftopics'] + 1;
         $fposts = $link['fposts'] +1;
     } elseif (!empty($reply)) {
@@ -55,6 +55,9 @@ function xarbb_userapi_updateforumview($args)
         $fposts = $link['fposts'] +1;
     } elseif (!empty($deletetopic)){
         $ftopics = $link['ftopics'] - 1;
+        $fposts = $link['fposts'] - 1;
+    } elseif (!empty($deletereply)){
+        $ftopics = $link['ftopics'];
         $fposts = $link['fposts'] - 1;
     }
 

@@ -27,6 +27,12 @@ function xarbb_user_newreply()
                               'gettopic',
                               array('tid' => $tid));
 
+        if ($data['tstatus'] == 3) {
+            $msg = xarML('Topic -- #(1) -- has been locked by administrator', $data['ttitle']);
+            xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
+            return;
+        }
+
         $package['title'] = xarVarPrepForDisplay($data['ttitle']);
         if ($phase == 'quote'){
             $package['text'] = '[quote]'. $data['tpost'] .'[/quote]';
@@ -48,6 +54,10 @@ function xarbb_user_newreply()
                 $package['text'] = $comment['xar_text'];
             }
         }
+        $data = xarModAPIFunc('xarbb',
+                      'user',
+                      'gettopic',
+                      array('tid' => $tid));
     }
 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;

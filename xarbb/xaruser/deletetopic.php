@@ -17,7 +17,7 @@ function xarbb_user_deletetopic()
     // Get parameters
     if (!xarVarFetch('tid','int:1:',$tid)) return;
     if (!xarVarFetch('obid','str:1:',$obid,$tid,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','int',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
 
 	// for sec check
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;

@@ -61,7 +61,7 @@ function xarbb_userapi_updatetopicsview($args)
 
     if(isset($treplier)) {
         $param["treplier"] = $treplier;
-        $param["time"] = date('Y-m-d G:i:s');
+        $param["time"] = time();
     }
 
     // Update the topic: call api func
@@ -70,5 +70,4 @@ function xarbb_userapi_updatetopicsview($args)
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

@@ -47,6 +47,14 @@ function xarbb_user_deletereply()
                        'deletereplies',
                         array('cid' => $cid))) return;
 
+    // Need to update the forum page to show one less reply
+    if (!xarModAPIFunc('xarbb',
+                       'user',
+                       'updateforumview',
+                       array('fid'      => $topic['fid'],
+                             'deletereply'  => 1,
+                             'fposter'  => $topic['tposter']))) return;
+
     // Redirect
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic',array(
     	"tid" => $tid

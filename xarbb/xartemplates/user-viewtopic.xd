@@ -28,6 +28,7 @@
          #$rsstopic#   topicsubscribe.gif Subscribe to a topic
          
 --->
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 	<tr>
 		<td colspan="2">
@@ -58,19 +59,25 @@
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
 	<tr> 
-		<xar:sec mask="PostxarBB" catch="false">
-			<td align="left" valign="bottom" nowrap="nowrap">
-				<span>
-					<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-						#$newtopic#
-					</a>
-					&nbsp;&nbsp;&nbsp;
-					<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
-						#$newreply#
-					</a>
-				</span>
-			</td>
-		</xar:sec>
+		<xar:if condition="$tstatus ne 3">
+			<xar:sec mask="PostxarBB" catch="false">
+				<td align="left" valign="bottom" nowrap="nowrap">
+					<span>
+						<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+							#$newtopic#
+						</a>
+						&nbsp;&nbsp;&nbsp;
+						<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
+							#$newreply#
+						</a>
+					</span>
+				</td>
+			</xar:sec>
+		<xar:else />
+			<xar:sec mask="PostxarBB" catch="false">
+				#$closed#
+			</xar:sec>
+		</xar:if>
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
@@ -157,20 +164,22 @@
 						</span>
 					</td>
 					<td valign="top" nowrap="nowrap">
-						<xar:sec mask="PostxarBB" catch="false">
-							<xar:if condition="xarModIsAvailable('bbcode')">
-								<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#">
-									#$quoteimg#
+						<xar:if condition="$tstatus ne 3">
+							<xar:sec mask="PostxarBB" catch="false">
+								<xar:if condition="xarModIsAvailable('bbcode')">
+									<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#">
+										#$quoteimg#
+									</a>
+								</xar:if>
+							</xar:sec>
+							<xar:sec mask="ModxarBB" catch="false">
+								<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
+									#$editimg#
 								</a>
-							</xar:if>
-						</xar:sec>
-						<xar:sec mask="ModxarBB" catch="false">
-							<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
-								#$editimg#
-							</a>
-						</xar:sec>
+							</xar:sec>
+						</xar:if>
 						<xar:sec mask="DeletexarBB" catch="false">
-							<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
+							<a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onClick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')">
 								#$deleteimg#
 							</a>
 						</xar:sec>
@@ -337,20 +346,22 @@
 						</span>
 					</td>
 					<td valign="top" nowrap="nowrap">
-						<xar:sec mask="PostxarBB" catch="false">
-							<xar:if condition="xarModIsAvailable('bbcode')">
-								<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#">
-									#$quoteimg#
+						<xar:if condition="$tstatus ne 3">
+							<xar:sec mask="PostxarBB" catch="false">
+								<xar:if condition="xarModIsAvailable('bbcode')">
+									<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#">
+										#$quoteimg#
+									</a>
+								</xar:if>
+							</xar:sec>
+							<xar:sec mask="ModxarBB" catch="false">
+								<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#">
+									#$editimg#
 								</a>
-							</xar:if>
-						</xar:sec>
-						<xar:sec mask="ModxarBB" catch="false">
-							<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#">
-								#$editimg#
-							</a>
-						</xar:sec>
+							</xar:sec>
+						</xar:if>
 						<xar:sec mask="DeletexarBB" catch="false">
-							<a href="#xarModUrl('xarbb','user','deletereply',array('cid' => $item['xar_cid']))#">
+							<a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onClick="return xar_base_confirmLink(this, '#xarML('Delete this reply?').' '.xarVarPrepfordisplay($item['xar_title'])#?')">
 								#$deleteimg#
 							</a>
 						</xar:sec>
@@ -455,19 +466,25 @@
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
 	<tr> 
-		<xar:sec mask="PostxarBB" catch="false">
-			<td align="left" valign="bottom" nowrap="nowrap">
-				<span>
-					<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-						#$newtopic#
-					</a>
-					&nbsp;&nbsp;&nbsp;
-					<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
-						#$newreply#
-					</a>
-				</span>
-			</td>
-		</xar:sec>
+		<xar:if condition="$tstatus ne 3">
+			<xar:sec mask="PostxarBB" catch="false">
+				<td align="left" valign="bottom" nowrap="nowrap">
+					<span>
+						<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+							#$newtopic#
+						</a>
+						&nbsp;&nbsp;&nbsp;
+						<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
+							#$newreply#
+						</a>
+					</span>
+				</td>
+			</xar:sec>
+		<xar:else />
+			<xar:sec mask="PostxarBB" catch="false">
+				#$closed#
+			</xar:sec>
+		</xar:if>
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
