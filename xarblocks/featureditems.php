@@ -139,7 +139,9 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'featureddesc'      => $featuredart['summary'],
                 'featuredbody'      => $featuredart['body'],
                 'featuredcids'      => $featuredart['cids'],
-                'pubtypeid'         => $featuredart['pubtypeid']
+                'pubtypeid'         => $featuredart['pubtypeid'],
+                'featureaid'        => $featuredart['aid'],
+                'featureddate'      => $featuredart['pubdate']
             );
 
             // Get rid of the default fields so all we have left are the DD ones
@@ -245,16 +247,16 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'count' => $count,
                 'cids' => $cids,
                 'pubdate' => $pubdate,
-                'desc' => ((!empty($vars['showsummary']) && !empty($article['summary'])) ? $article['summary'] : '')
+                'desc' => ((!empty($vars['showsummary']) && !empty($article['summary'])) ? $article['summary'] : ''),
+                'aid' => $article['aid']
             );
         }
     }
-
     if (empty($data['feature']) && empty($data['items'])) {
         // Nothing to display.
         return;
     }
-
+    
     // Set the data to return.
     $blockinfo['content'] = $data;
     return $blockinfo;
