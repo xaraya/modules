@@ -475,7 +475,8 @@ function newsletter_userapi_get($args)
                              $publicationsTable.xar_description,
                              $publicationsTable.xar_disclaimerid,
                              $publicationsTable.xar_introduction,
-                             $publicationsTable.xar_private
+                             $publicationsTable.xar_private,
+                             $publicationsTable.xar_subject
                       FROM  $publicationsTable, $categoriesTable, $rolesTable
                       WHERE $publicationsTable.xar_ownerid = $rolesTable.xar_uid
                       AND $publicationsTable.xar_cid = $categoriesTable.xar_cid";
@@ -516,7 +517,8 @@ function newsletter_userapi_get($args)
                      $description, 
                      $disclaimerId,
                      $introduction,
-                     $private) = $result->fields;
+                     $private,
+                     $subject) = $result->fields;
 
                 // The user API function is called.
                 $userData = xarModAPIFunc('roles',
@@ -551,7 +553,8 @@ function newsletter_userapi_get($args)
                                  'description' => $description,
                                  'disclaimerId' => $disclaimerId,
                                  'introduction' => $introduction,
-                                 'private' => $private);
+                                 'private' => $private,
+                                 'subject' => $subject);
             }
 
             // Close result set

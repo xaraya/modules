@@ -32,6 +32,7 @@
  * @param $args['description'] description of the publication 
  * @param $args['introduction'] introduction of the publication 
  * @param $args['private'] publication is open for subscription or private
+ * @param $args['subject'] email subject (title) of an issue
  * @returns int
  * @return publication ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -98,7 +99,8 @@ function newsletter_adminapi_createpublication($args)
               xar_description,
               xar_disclaimerid,
               xar_introduction,
-              xar_private)
+              xar_private,
+              xar_subject)
             VALUES (
               $nextId,
               " . xarVarPrepForStore($ownerId) .",
@@ -113,7 +115,8 @@ function newsletter_adminapi_createpublication($args)
               '" . xarVarPrepForStore($description) ."',
               '" . xarVarPrepForStore($disclaimerId) . "',
               '" . xarvarPrepForStore($introduction) . "',
-              " . xarVarPrepForStore($private) . " )";
+              " . xarVarPrepForStore($private) . ",
+              " . xarVarPrepForStore($subject) . " )";
 
     $result =& $dbconn->Execute($query);
 

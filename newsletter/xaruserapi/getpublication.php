@@ -59,7 +59,8 @@ function newsletter_userapi_getpublication($args)
                      xar_description,
                      xar_disclaimerid,
                      xar_introduction,
-                     xar_private
+                     xar_private,
+                     xar_subject
               FROM $nwsltrTable
               WHERE xar_id = " . xarVarPrepForStore($id);
 
@@ -91,7 +92,8 @@ function newsletter_userapi_getpublication($args)
          $description,
          $disclaimerId,
          $introduction,
-         $private) =  $result->fields;
+         $private,
+         $subject) =  $result->fields;
 
     // Close result set
     $result->Close();
@@ -133,7 +135,8 @@ function newsletter_userapi_getpublication($args)
                   'description' => $description,
                   'disclaimerId' => $disclaimerId,
                   'introduction' => $introduction,
-                  'private' => $private);                  
+                  'private' => $private,                  
+                  'subject' => $subject);                  
 
     // Return the publication array
     return $publication;

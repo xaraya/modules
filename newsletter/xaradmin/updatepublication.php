@@ -31,6 +31,7 @@
  * @param 'introduction' introduction of the publication
  * @param 'description' description of the publication (used on subscription page)
  * @param 'private' publication is open for subscription or private
+ * @param 'subject' email subject (title) for an issue
  * @author Richard Cave
  * @returns bool
  * @return true on success, false on failure
@@ -83,7 +84,8 @@ function newsletter_admin_updatepublication()
     if (!xarVarFetch('introduction', 'str:1:', $introduction, '')) return;
     if (!xarVarFetch('altcids', 'array:1:', $altcids, array())) return;
     if (!xarVarFetch('private', 'int:0:1:', $private, 0)) return;
-    
+    if (!xarVarFetch('subject', 'id', $subject, 0)) return;
+
     // Update the disclaimer
     if (!empty($editdisclaimer)) {
         // Check if disclaimer is empty and add
@@ -154,7 +156,8 @@ function newsletter_admin_updatepublication()
                             'description' => $description,
                             'disclaimerId' => $disclaimerId,
                             'introduction' => $introduction,
-                            'private' => $private))) {
+                            'private' => $private,
+                            'subject' => $subject))) {
         return; // throw back
     }
 

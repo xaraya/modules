@@ -14,7 +14,7 @@
 
 $modversion['name'] = 'Newsletter';
 $modversion['id'] = '1655';
-$modversion['version'] = '1.0.0';
+$modversion['version'] = '1.1.0';
 $modversion['description'] = 'Newsletter publication.';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

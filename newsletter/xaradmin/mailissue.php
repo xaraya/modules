@@ -120,8 +120,10 @@ function newsletter_admin_mailissue()
         $issueText = strip_tags($issueText);
     }
             
-    // Initialize userData array
+    // Initialize arrays
     $userData = array();
+    $htmlrecipients = array();
+    $textrecipients = array();
 
     // Initialize issue count totals and errors
     $issueCounts = array('total' => 0,
@@ -153,6 +155,13 @@ function newsletter_admin_mailissue()
             } else {
                 $userData['mailerror'] = false;
 
+                // Set email address for html or text email
+                if ($subscription['htmlmail']) {
+                    $htmlrecipients[$userData['email']] = $userData['name'];
+                } else {
+                    $textrecipients[$userData['email']] = $userData['name'];
+                }
+
                 // Set link to search user by name
                 $userData['nameurl'] = xarModURL('newsletter',
                                                  'admin',
@@ -172,24 +181,8 @@ function newsletter_admin_mailissue()
                 // Set how the user wants the mail sent - html or text
                 $userData['htmlmail'] = $subscription['htmlmail'];
 
-                // Mail the issue to the user
-                $result = xarModAPIFunc('newsletter',
-                                        'admin',
-                                        'mailissue',
-                                        array('publication' => $publication,
-                                              'issue' => $issue,
-                                              'subscription' => $userData,
-                                              'issueText' => $issueText,
-                                              'issueHTML' => $issueHTML));
-
                 // Update issue counts
                 $issueCounts['total']++;
- 
-                // If mail failed, set mailerror to true
-                if (!$result) {
-                    $userData['mailerror'] = true;
-                    $issueCounts['errors']++;
-                }
             }
 
             // Add the subscription
@@ -213,6 +206,13 @@ function newsletter_admin_mailissue()
             $userData['email'] = $subscription['email'];
             $userData['mailerror'] = false;
 
+            // Set email address for html or text email
+            if ($subscription['htmlmail']) {
+                $htmlrecipients[$userData['email']] = $userData['name'];
+            } else {
+                $textrecipients[$userData['email']] = $userData['name'];
+            }
+
             // Set link to search user by name
             $userData['nameurl'] = xarModURL('newsletter',
                                              'admin',
@@ -229,33 +229,44 @@ function newsletter_admin_mailissue()
                                                     'publicationId' => $issue['pid'],
                                                     'searchname' => $userData['email']));
     
-            // Set how the user wants the mail sent - html or text
-            $userData['htmlmail'] = $subscription['htmlmail'];
-
-            // Mail the issue to the user
-            $result = xarModAPIFunc('newsletter',
-                                    'admin',
-                                    'mailissue',
-                                    array('publication' => $publication,
-                                          'issue' => $issue,
-                                          'subscription' => $userData,
-                                          'issueText' => $issueText,
-                                          'issueHTML' => $issueHTML));
-
             // Update issue counts
             $issueCounts['total']++;
 
-            // If mail failed, set mailerror to true
-            if (!$result) {
-                $userData['mailerror'] = true;
-                $issueCounts['errors']++;
-            }
+            // Set how the user wants the mail sent - html or text
+            $userData['htmlmail'] = $subscription['htmlmail'];
 
             // Add the subscription
             $templateVarArray['subscriptions'][] = $userData;
         }
     }
 
+    // Mail the html issue to the subscription base
+    if (!empty($htmlrecipients)) {
+        $result = xarModAPIFunc('newsletter',
+                                'admin',
+                                'mailissue',
+                                array('publication'  => $publication,
+                                      'issue'        => $issue,
+                                      'recipients'   => $htmlrecipients,
+                                      'issueText'    => $issueText,
+                                      'issueHTML'    => $issueHTML,
+                                      'type'         => 'html'));
+    }
+
+    // Mail the text issue to the subscription base
+    if (!empty($textrecipients)) {
+        $result = xarModAPIFunc('newsletter',
+                                'admin',
+                                'mailissue',
+                                array('publication'  => $publication,
+                                      'issue'        => $issue,
+                                      'recipients'   => $textrecipients,
+                                      'issueText'    => $issueText,
+                                      'issueHTML'    => $issueHTML,
+                                      'type'         => 'text'));
+    }
+
+    // Set issue counts
     $templateVarArray['issueCounts'] = $issueCounts;
 
     // Return the template variables defined in this function

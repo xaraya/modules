@@ -31,7 +31,7 @@ function newsletter_init()
     // Load table maintenance API
     xarDBLoadTableMaintenanceAPI();
 
-    // Create the issues area publication table and column definitions
+    // Create the newsletter publication table and column definitions
     $nwsltrPublications = $xartable['nwsltrPublications'];
     $nwsltrPublicationsColumn = &$xartable['nwsltrPublications_column'];
 
@@ -49,7 +49,8 @@ function newsletter_init()
         'xar_description'   => array('type'=>'text','null'=>TRUE),
         'xar_disclaimerid'  => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'xar_introduction'  => array('type'=>'text','null'=>TRUE),
-        'xar_private'       => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0')
+        'xar_private'       => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
+        'xar_subject'       => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0')
     );
     
     // Create the table DDL
@@ -355,13 +356,38 @@ function newsletter_upgrade($oldversion)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     
+    // Get the newsletter publication table
     $nwsltrPublications = $xartable['nwsltrPublications'];
     
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
+
+            // Add the column 'xar_subject' to the publications table
+            $query = xarDBAlterTable($nwsltrPublications,
+                                     array('command' => 'add',
+                                           'field' => 'xar_subject',
+                                           'type' => 'integer',
+                                           'size' => 'tiny',
+                                           'null' => false,
+                                           'default' => 0));
+                                           
+            $result = & $dbconn->Execute($query);
+            if (!$result) return;
+            
+            // Set current subject to 0
+            $query = "UPDATE $nwsltrPublications 
+                      SET xar_subject = 0";
+
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            
             // fall through to the next upgrade
+
+        case '1.1.0':
+            // Code to upgrade from version 1.1.0 goes here
+            break;
             
         default:
             // Couldn't find a previous version to upgrade

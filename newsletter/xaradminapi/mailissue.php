@@ -20,9 +20,10 @@
  * @param $args an array of arguments (if called by other modules)
  * @param $args['publication'] publication of the issue to mail
  * @param $args['issue'] issue to mail 
- * @param $args['subscription'] subscription that is getting issue 
+ * @param $args['recipients'] recipients that are getting issue 
  * @param $args['issueText'] text version of the issue 
  * @param $args['issueHTML'] HTML version of the issue 
+ * @param $args['type'] version of the issue to send ('html' or 'text')
  * @author Richard Cave
  * @returns bool
  * @return true on success, false on failure
@@ -35,16 +36,21 @@ function newsletter_adminapi_mailissue($args)
      // Argument check
     $invalid = array();
 
-    if (!isset($publication))
+    if (!isset($publication)) {
         $invalid[] = 'publication';
-    if (!isset($issue))
+    }
+    if (!isset($issue)) {
         $invalid[] = 'issue';
-    if (!isset($subscription))
-        $invalid[] = 'subscription';
-    if (!isset($issueText))
+    }
+    if (!isset($recipients)) {
+        $invalid[] = 'recipients';
+    }
+    if (!isset($issueText)) {
         $invalid[] = 'issueText';
-    if (!isset($issueHTML))
+    } 
+    if (!isset($issueHTML)) {
         $invalid[] = 'issueHTML';
+    }
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -53,36 +59,43 @@ function newsletter_adminapi_mailissue($args)
         return;
     }
 
-    // Set info - email address we are sending to
-    $info = $subscription['email'];
+    // Set the subject/title of the email
+    switch($publication['subject']) {
+        case 1:
+        // Set to publication title
+        $subject = $publication['title'];
+        break;
 
-    if (empty($info))
-        return; // throw back
+        case 2:
+        // Set to publication and issue title
+        $subject = $publication['title'] . " : " . $issue['title'];
+        break;
 
-    // Set name of email recipient
-    $name = $subscription['name'];
-
-    // Set subject of email to publication and issue title
-    $subject = $publication['title'] . " : " . $issue['title'];
+        default:
+        // Set to issue title
+        $subject = $issue['title'];
+        break;
+    }
 
     // Set args for sendmail
-    $mailargs =  array('info'       => $info,
-                      'name'        => $name,
-                      'subject'     => $subject,
-                      'message'     => $issueText,
-                      'htmlmessage' => $issueHTML,
-                      'from'        => $publication['ownerEmail'],
-                      'fromname'    => $publication['ownerName']);
+    $mailargs =  array('recipients'   => $recipients,
+                       'name'         => $publication['title'],
+                       'subject'      => $subject,
+                       'message'      => $issueText,
+                       'htmlmessage'  => $issueHTML,
+                       'from'         => $publication['ownerEmail'],
+                       'fromname'     => $publication['ownerName'],
+                       'usetemplates' => false);
 
-    // Check if this user requested a text only message
-    if ($subscription['htmlmail']) {
-        // Send the mail using the mail module
+    // Check type of email to send
+    if ($type == 'html') {
+        // Send the mail as HTML using the mail module
         $result = xarModAPIFunc('mail',
                                 'admin',
                                 'sendhtmlmail',
                                 $mailargs);
     } else {
-        // Send the mail using the mail module
+        // Send the mail as text using the mail module
         $result = xarModAPIFunc('mail',
                                 'admin',
                                 'sendmail',

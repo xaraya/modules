@@ -32,6 +32,7 @@
  * @param $args['disclaimerId'] disclaimer for the publication
  * @param $args['description'] description of the publication 
  * @param $args['private'] publication is open for subscription or private
+ * @param $args['subject'] email subject (title) of an issue
  * @returns int
  * @return publication ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -97,7 +98,8 @@ function newsletter_adminapi_updatepublication($args)
               xar_description = '" .  xarVarPrepForStore($description) . "',
               xar_disclaimerid = " .  xarVarPrepForStore($disclaimerId) . ",
               xar_introduction = '" .  xarVarPrepForStore($introduction) . "',
-              xar_private = " .  xarVarPrepForStore($private) . "
+              xar_private = " .  xarVarPrepForStore($private) . ",
+              xar_subject = " .  xarVarPrepForStore($subject) . "
               WHERE xar_id = " . xarVarPrepForStore($id);
 
     // Execute query
