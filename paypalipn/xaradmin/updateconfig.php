@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Update the configuration parameters of the module based on data from the modification form
  *
