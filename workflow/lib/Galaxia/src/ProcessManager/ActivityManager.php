@@ -233,7 +233,7 @@ class ActivityManager extends BaseManager {
     // Pre rule no cricular activities
     $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where pId=$pId and actFromId=actToId");
     if($cant) {
-      $errors[] = tra('Circular reference found some activty has a transition leading to itself');
+      $errors[] = tra('Circular reference found some activity has a transition leading to itself');
     }
 
     // Rule 1 must have exactly one start and end activity
@@ -278,7 +278,7 @@ class ActivityManager extends BaseManager {
     
     if(!$this->_node_in_list($start_node,$nodes)) {
       // Start node is NOT reachable from the end node
-      $errors[] = tra('End activity is not reachable from start activty');
+      $errors[] = tra('End activity is not reachable from start activity');
     }
     
     //Rule 3: interactive activities must have a role
@@ -797,9 +797,13 @@ class ActivityManager extends BaseManager {
     $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=$cant+1 where pId=$pId";
     $this->query($query);
     
+    $seen = array();
     while(count($nodes)) {
       $newnodes = Array();
       foreach($nodes as $node) {
+        // avoid endless loops
+        if (isset($seen[$node])) continue;
+        $seen[$node] = 1;
         $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=$num where activityId=$node";
         $this->query($query);
         $query = "select actFromId from ".GALAXIA_TABLE_PREFIX."transitions where actToId=".$node;
