@@ -136,10 +136,10 @@ function sitecontact_user_contactus()
 
 
         //prepare the text message to user
-        $textsubject = html_entity_decode($requesttext);
-        $textcompany = html_entity_decode($company);
-        $textusermessage = html_entity_decode($usermessage);
-        $textnotetouser = $notetouser;
+        $textsubject = strtr($requesttext,$trans);
+        $textcompany = strtr($company,$trans);
+        $textusermessage = strtr($usermessage,$trans);
+        $textnotetouser = strtr($notetouser,$trans);
         $usertextmessage= xarTplModule('sitecontact',
                                    'user',
                                    'usermail',
