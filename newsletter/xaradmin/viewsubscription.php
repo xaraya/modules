@@ -22,7 +22,6 @@
  * @param 'search' the type of search to perform ('publication', 'email' or 'name')
  * @param 'publicationId' the id of the publication to search in
  * @param 'searchname' the email or name to search for
- * @param 'sortby' sort subscriptions by 'publication', 'name', 'username' or 'email'
  * @returns array
  * @return $data
  */
@@ -39,7 +38,6 @@ function newsletter_admin_viewsubscription($args)
     if (!xarVarFetch('search', 'str:1:', $search, 'name')) return;
     if (!xarVarFetch('publicationId', 'id', $publicationId, 0)) return;
     if (!xarVarFetch('searchname', 'str:1:', $searchname, '')) return;
-    if (!xarVarFetch('sortby', 'str:1:', $sortby, 'name')) return;
 
     // If searching by publication, make sure something was selected
     if ($search == 'publication' && $publicationId == 0) {
@@ -56,7 +54,6 @@ function newsletter_admin_viewsubscription($args)
     $data['search'] = $search;
     $data['publicationId'] = $publicationId;
     $data['searchname'] = $searchname;
-    $data['sortby'] = $sortby;
 
     // Switch to requested view
     switch(strtolower($search)) {
@@ -186,7 +183,7 @@ function newsletter_admin_viewsubscription($args)
     $data['subscriptions'] = $subscriptions;
 
     // Sort arrays
-    switch ($sortby) {
+    switch ($search) {
         case 'name':
             usort( $data['subscriptions'], "nwsltr_vs__sortsubscriptionbyname" );
             break;
@@ -202,54 +199,50 @@ function newsletter_admin_viewsubscription($args)
     }
 
     // Create sort by URLs
-    if ($sortby != 'name' ) {
+    if ($search != 'name' ) {
         $data['nameurl'] = xarModURL('newsletter',
                                      'admin',
                                      'viewsubscription',
                                      array('startnum' => 1,
-                                           'search' => $search,
+                                           'search' => 'name',
                                            'publicationId' => $publicationId,
-                                           'searchname' => $searchname,
-                                           'sortby' => 'name'));
+                                           'searchname' => $searchname));
     } else {
         $data['nameurl'] = '';
     }
 
-    if ($sortby != 'username' ) {
+    if ($search != 'username' ) {
         $data['usernameurl'] = xarModURL('newsletter',
                                          'admin',
                                          'viewsubscription',
                                          array('startnum' => 1,
-                                               'search' => $search,
+                                               'search' => 'uname',
                                                'publicationId' => $publicationId,
-                                               'searchname' => $searchname,
-                                               'sortby' => 'username'));
+                                               'searchname' => $searchname));
     } else {
         $data['usernameurl'] = '';
     }
 
-    if ($sortby != 'email' ) {
+    if ($search != 'email' ) {
         $data['emailurl'] = xarModURL('newsletter',
                                       'admin',
                                       'viewsubscription',
                                       array('startnum' => 1,
-                                            'search' => $search,
+                                            'search' => 'email',
                                             'publicationId' => $publicationId,
-                                            'searchname' => $searchname,
-                                            'sortby' => 'email'));
+                                            'searchname' => $searchname));
     } else {
         $data['emailurl'] = '';
     }
 
-    if ($sortby != 'publication' ) {
+    if ($search != 'publication' ) {
         $data['publicationurl'] = xarModURL('newsletter',
                                             'admin',
                                             'viewsubscription',
                                             array('startnum' => 1,
-                                                  'search' => $search,
+                                                  'search' => 'publication',
                                                   'publicationId' => $publicationId,
-                                                  'searchname' => $searchname,
-                                                  'sortby' => 'publication'));
+                                                  'searchname' => $searchname));
     } else {
         $data['publicationurl'] = '';
     }
@@ -260,15 +253,14 @@ function newsletter_admin_viewsubscription($args)
                                                   'admin',
                                                   'countsubscriptions',
                                                   array('id' => $publicationId)),
-                                          xarModURL('newsletter', 
-                                                    'admin', 
-                                                    'viewsubscription', 
-                                                    array('startnum' => '%%',
-                                                          'search' => $search,
-                                                          'publicationId' => $publicationId,
-                                                          'searchname' => $searchname,
-                                                          'sortby' => $sortby)),
-                                          xarModGetVar('newsletter', 'subscriptionsperpage'));
+                                    xarModURL('newsletter', 
+                                              'admin', 
+                                              'viewsubscription', 
+                                              array('startnum' => '%%',
+                                                    'search' => $search,
+                                                    'publicationId' => $publicationId,
+                                                    'searchname' => $searchname)),
+                                    xarModGetVar('newsletter', 'subscriptionsperpage'));
 
     // Return the template variables defined in this function
     return $data;

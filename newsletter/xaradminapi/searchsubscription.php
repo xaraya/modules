@@ -118,7 +118,7 @@ function newsletter_adminapi_searchsubscription($args)
                 $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
             }
    
-            $query .= " ORDER by xar_name";
+            $query .= " ORDER BY xar_pid";
 
             break;
 
@@ -138,7 +138,7 @@ function newsletter_adminapi_searchsubscription($args)
                       AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
 
             if (!empty($searchname)) {
-                $query .= " AND $nwsltrSubTable.xar_email LIKE  '%" . $searchname . "%'";
+                $query .= " AND $rolesTable.xar_email LIKE  '%" . $searchname . "%'";
             }
 
             // Union
@@ -161,7 +161,7 @@ function newsletter_adminapi_searchsubscription($args)
                 $query .= " AND $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%'";
             }
 
-            $query .= " ORDER by xar_name";
+            $query .= " ORDER BY xar_email";
 
             break;
 
@@ -182,8 +182,10 @@ function newsletter_adminapi_searchsubscription($args)
                       AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
 
             if (!empty($searchname)) {
-                $query .= " AND ($rolesTable.xar_uname LIKE '%" . $searchname . "%' OR
-                                 $rolesTable.xar_name LIKE  '%" . $searchname . "%')";
+                // Do we want to search both the uname and name columns?
+                //$query .= " AND ($rolesTable.xar_uname LIKE '%" . $searchname . "%' OR
+                //                 $rolesTable.xar_name LIKE  '%" . $searchname . "%')";
+                $query .= " AND ($rolesTable.xar_name LIKE  '%" . $searchname . "%')";
             }
 
             // Union
@@ -206,7 +208,7 @@ function newsletter_adminapi_searchsubscription($args)
                 $query .= " AND $nwsltrAltSubTable.xar_name LIKE  '%" . $searchname . "%'";
             }
 
-            $query .= " ORDER by xar_name";
+            $query .= " ORDER BY xar_name";
 
             break;
     }

@@ -44,7 +44,7 @@ function newsletter_admin_newpublication()
                                      array('phase' => 'owner'));
 
     if (empty($data['owners'])) {
-        $msg = xarML('You must add an Newsletter user before creating a publication.  Please go to Admin -> Newsletter -> Add Newsletter User.');
+        $msg = xarML('You must add an Newsletter user before creating a publication.  Please add a user through Modify Users in the Newsletter administration configuration.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }

@@ -56,7 +56,7 @@
         <div style="text-align: left;margin: auto;">        
             <xar:if condition="$creategroups==0">
                 <span class="xar-title"><b><xar:mlstring>There are no Newsletter groups.  Please click on </xar:mlstring>&nbsp;
-                <a href="&xar-modurl-newsletter-admin-modifyconfig;">Modify Config</a>&nbsp;
+                <a href="&xar-modurl-newsletter-admin-modifyprivileges;">Modify Privileges</a>&nbsp;
                 <xar:mlstring>and create the default groups.</xar:mlstring></span>
                 <br /><br />
             <xar:else />
