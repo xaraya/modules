@@ -1,5 +1,1 @@
-<h2>TimeZone Data</h2>
-UTC=#$utc# #xarLocaleFormatUTCDate('%Y-%m-%d %I:%M:%S %p',$utc)#<br />
-ST Offset=#$st_offset# Name=#$st_name# UTC=#$st_utc# #xarLocaleFormatUTCDate('%Y-%m-%d %I:%M:%S %p',$st_utc)#<br />
-DT Offset=#$dt_offset# Name=#$dt_name# UTC=#$dt_utc# #xarLocaleFormatUTCDate('%Y-%m-%d %I:%M:%S %p',$dt_utc)#<br />
 

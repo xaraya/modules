@@ -1,0 +1,18 @@
+<xar:set name="$_tz_null">#xarVarFetch('timezone','str::',$tz,'Etc/UTC',XARVAR_NOT_REQUIRED)#</xar:set>
+<p><b>TimeZone selected :</b> #$tz#</p>
+<p><b>Date UTC :</b> #xarLocaleGetFormattedUTCDate('medium')# #xarLocaleGetFormattedUTCTime('medium')#</p>
+<xar:set name="$localts">#xarModAPIFunc('timezone','user','get_time',array('timezone'=>$tz))#</xar:set>
+<p><b>Local Time:</b> #xarLocaleGetFormattedDate('medium',$localts)# #xarLocaleGetFormattedTime('medium',$localts)#</p>
+<form method="post" name="timezone" id="timezone">
+Timezone:
+<select name="timezone">
+<xar:foreach in="$timezones" key="$k" value="$v">
+    <xar:if condition="$v == $tz">
+        <option value="#$v#" selected="selected">#$v#</option>
+    <xar:else />
+        <option value="#$v#">#$v#</option>
+    </xar:if>
+</xar:foreach>
+</select>
+<input type="submit" name="submit" value="change" />
+</form>
