@@ -143,6 +143,9 @@ function articles_topitemsblock_display($blockinfo)
         }
     }
 
+	// Get publication types
+	$pubtypes = xarModAPIFunc('articles','user','getpubtypes');  //MarieA - moved to always get pubtypes.
+
     if ($vars['nopublimit'] == 1) {
         //don't limit by pubtype
         $ptid = 0;
@@ -165,8 +168,7 @@ function articles_topitemsblock_display($blockinfo)
             // MikeC: Admin Specified a publication type, use it.
             $ptid = $vars['pubtypeid'];
         }
-        // Get publication types
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        
         if (!empty($ptid) && isset($pubtypes[$ptid]['descr']) && ($vars['dynamictitle'] == 1)) {
             $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
         }
@@ -244,7 +246,10 @@ function articles_topitemsblock_display($blockinfo)
         } else {
             $article['summary'] = '';
         }
-
+		//MarieA: Bring the pubtype description back as $descr
+		if ($vars['nopublimit'] == 1) {
+			$article['pubtypedescr'] = $pubtypes[$article['pubtypeid']]['descr'];
+		}
         // this will also pass any dynamic data fields (if any)
         $items[] = $article;
     }
