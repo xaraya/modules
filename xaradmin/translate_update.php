@@ -59,12 +59,14 @@ function translations_admin_translate_update()
     if (!$gen->bindDomain($dnType, $dnName)) return;
     if (!$gen->create($ctxType, $ctxName)) return;
 
-    require_once "includes/transforms/xarCharset.php";
     if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) return false;
     if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) return false;
     $workingCharset = $parsedWorkingLocale['charset'];
     $siteCharset = $parsedSiteLocale['charset'];
-    $newEncoding = new xarCharset;
+    if ($siteCharset != $workingCharset) {
+        require_once "includes/transforms/xarCharset.php";
+        $newEncoding = new xarCharset;
+    }
 
     for ($i = 0; $i < $numEntries; $i++) {
         unset($translation);

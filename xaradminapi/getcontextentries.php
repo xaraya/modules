@@ -58,12 +58,14 @@ function translations_adminapi_getcontextentries($args)
 
     $maxReferences = xarModGetVar('translations', 'maxreferences');
 
-    require_once "includes/transforms/xarCharset.php";
     if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) return false;
     if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) return false;
     $workingCharset = $parsedWorkingLocale['charset'];
     $siteCharset = $parsedSiteLocale['charset'];
-    $newEncoding = new xarCharset;
+    if ($siteCharset != $workingCharset) {
+        require_once "includes/transforms/xarCharset.php";
+        $newEncoding = new xarCharset;
+    }
 
     $numEntries = 0;
     $numEmptyEntries = 0;
