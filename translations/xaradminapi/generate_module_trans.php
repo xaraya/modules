@@ -41,12 +41,13 @@ function translations_adminapi_generate_module_trans($args)
     $startTime = $time[1] + $time[0];
 
     $l = xarLocaleGetInfo($locale);
-    if ($l['charset'] == 'utf-8') {
+//    if ($l['charset'] == 'utf-8') {
+//        $ref_locale = $locale;
+//    } else {
+//        $l['charset'] = 'utf-8';
+//        $ref_locale = xarLocaleGetString($l);
+//    }
         $ref_locale = $locale;
-    } else {
-        $l['charset'] = 'utf-8';
-        $ref_locale = xarLocaleGetString($l);
-    }
 
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;

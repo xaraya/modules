@@ -8,7 +8,7 @@
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage translations
  * @author Marco Caninin
  * @author Marcel van der Boom <marcel@xaraya.com>
@@ -22,7 +22,7 @@ function translations_adminapi_generate_core_trans($args)
 
     // Argument check
     assert('isset($locale)');
-    
+
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
@@ -30,18 +30,20 @@ function translations_adminapi_generate_core_trans($args)
     $startTime = $time[1] + $time[0];
 
     $l = xarLocaleGetInfo($locale);
-    if ($l['charset'] == 'utf-8') {
+//    if ($l['charset'] == 'utf-8') {
+//        $ref_locale = $locale;
+//    } else {
+//        $l['charset'] = 'utf-8';
+//        $ref_locale = xarLocaleGetString($l);
+//    }
         $ref_locale = $locale;
-    } else {
-        $l['charset'] = 'utf-8';
-        $ref_locale = xarLocaleGetString($l);
-    }
 
     // Load core translations
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;
+
     if (!$backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
-        $msg = xarML('Before generating translations you must first generate skels.');
+        $msg = xarML('Before generating translations you must first generate skels for locale ' . $ref_locale);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('ctxtype' => 'core')));
         xarExceptionSet(XAR_USER_EXCEPTION, 'MissingSkels', new DefaultUserException($msg, $link));
         return;
