@@ -40,8 +40,8 @@ function release_adminapi_deletenote($args)
 
     // Delete the item
     $query = "DELETE FROM $releasenotetable
-            WHERE xar_rnid = " . xarVarPrepForStore($rnid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_rnid = ?";
+    $result =& $dbconn->Execute($query,array($rnid));
     if (!$result) return;
 
     // Let any hooks know that we have deleted a link

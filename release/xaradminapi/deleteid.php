@@ -40,8 +40,8 @@ function release_adminapi_deleteid($args)
 
     // Delete the item
     $query = "DELETE FROM $releasetable
-            WHERE xar_rid = " . xarVarPrepForStore($rid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_rid = ?";
+    $result =& $dbconn->Execute($query,array($rid));
     if (!$result) return;
 
     // Let any hooks know that we have deleted a link

@@ -368,8 +368,6 @@ function release_upgrade($oldversion)
             if (!$result) return;
 
             return release_upgrade('0.0.11');
-
-        break;
         case '0.0.11':
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -477,9 +475,17 @@ function release_upgrade($oldversion)
             $query = xarDBCreateIndex($releasetable,$index);
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-
-        break;
+            return release_upgrade('0.0.12');
         case '0.0.12':
+
+     if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
+                           'release', 'admin', 'waitingcontent')) {
+        return false;
+    }
+        break;
+        case '0.1.0':
+        return false;
+
     }
     return true;
 }

@@ -62,6 +62,11 @@ function release_admin_modifynote()
             $data['changelogf'] = nl2br($data['changelog']);
             $data['notesf'] = nl2br($data['notes']);
             $data['authid'] = xarSecGenAuthKey();
+            if ($data['type']==0) {
+              $data['idtype']='Module';
+            }else {
+              $dadta['idtype']='Theme';
+            }
 
             break;
         

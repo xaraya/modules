@@ -31,7 +31,7 @@ function release_adminapi_updatenote($args)
 
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
-
+    $enotes = !empty($enotes)? $enotes :'';
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -40,20 +40,24 @@ function release_adminapi_updatenote($args)
 
     // Update the link
     $query = "UPDATE $releasenotetable
-            SET xar_version = '" . xarVarPrepForStore($version) . "',
-                xar_priceterms = '" . xarVarPrepForStore($priceterms) . "',
-                xar_demolink = '" . xarVarPrepForStore($demolink) . "',
-                xar_priceterms = '" . xarVarPrepForStore($priceterms) . "',
-                xar_dllink = '" . xarVarPrepForStore($dllink) . "',
-                xar_supportlink = '" . xarVarPrepForStore($supportlink) . "',
-                xar_changelog = '" . xarVarPrepForStore($changelog) . "',
-                xar_notes = '" . xarVarPrepForStore($notes) . "',
-                xar_enotes = '" . xarVarPrepForStore($enotes) . "',
-                xar_certified = '" . xarVarPrepForStore($certified) . "',
-                xar_approved = '" . xarVarPrepForStore($approved) . "',
-                xar_rstate = '" . xarVarPrepForStore($rstate) . "'
-            WHERE xar_rnid = " . xarVarPrepForStore($rnid);
-    $result =& $dbconn->Execute($query);
+            SET xar_version = ?,
+                xar_price = ?,
+                xar_supported = ?,
+                xar_demo = ?,
+                xar_dllink = ?,
+                xar_demolink = ?,
+                xar_priceterms = ?,
+                xar_supportlink = ?,
+                xar_changelog = ?,
+                xar_notes = ?,
+                xar_enotes = ?,
+                xar_certified = ?,
+                xar_approved = ?,
+                xar_rstate = ?
+            WHERE xar_rnid = ?";
+    $bindvars=array($version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
+                    $changelog,$notes,$enotes,$certified,$approved,$rstate,$rnid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Let the calling process know that we have finished successfully
