@@ -4,6 +4,7 @@
 $modversion['name']           = 'overlib';
 $modversion['id']             = '4';
 $modversion['version']        = '0.1.3';
+$modversion['displayname']    = xarML('OverLib');
 $modversion['description']    = 'overlib javascript module for blocklayout';
 $modversion['credits']        = 'credits.txt';
 $modversion['help']           = 'help.txt';
