@@ -76,9 +76,6 @@ function articles_admin_updatestatus()
     }
     unset($article);
 
-    // Success
-    xarSessionSetVar('statusmsg', xarML('Article Status Updated'));
-
     // Return to the original admin view
     $lastview = xarSessionGetVar('Articles.LastView');
     if (isset($lastview)) {

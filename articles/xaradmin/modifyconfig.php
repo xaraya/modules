@@ -43,6 +43,7 @@ function articles_admin_modifyconfig()
         $data['showmap'] = !empty($settings['showmap']) ? 'checked' : '';
         $data['showpublinks'] = !empty($settings['showpublinks']) ? 'checked' : '';
         $data['dotransform'] = !empty($settings['dotransform']) ? 'checked' : '';
+        $data['titletransform'] = !empty($settings['titletransform']) ? 'checked' : '';
         $data['prevnextart'] = !empty($settings['prevnextart']) ? 'checked' : '';
         $data['page_template'] = isset($settings['page_template']) ? $settings['page_template'] : '';
         $data['defaultstatus'] = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
@@ -82,6 +83,9 @@ function articles_admin_modifyconfig()
     }
     if (!isset($data['dotransform'])) {
         $data['dotransform'] = '';
+    }
+    if (!isset($data['titletransform'])) {
+        $data['titletransform'] = '';
     }
     if (!isset($data['prevnextart'])) {
         $data['prevnextart'] = '';

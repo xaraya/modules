@@ -161,7 +161,10 @@
         <td><label for="dotransform"><xar:mlstring>Call transform hooks in summaries</xar:mlstring></label></td>
         <td><input type="checkbox" name="dotransform" id="dotransform" value="1" #$dotransform# /></td>
     </tr>
-
+    <tr>
+        <td><label for="titletransform"><xar:mlstring>Call transform hooks on titles</xar:mlstring></label></td>
+        <td><input type="checkbox" name="titletransform" id="titletransform" value="1" #$titletransform# /></td>
+    </tr>
     <tr>
         <td colspan="2"><h3><xar:mlstring>Article Display Configuration</xar:mlstring></h3></td>
     </tr>

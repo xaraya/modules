@@ -346,7 +346,13 @@ function articles_user_display($args)
     // smilies, bbcode, ...).
     $data['itemtype'] = $pubtypeid;
 // TODO: what about transforming DD fields ?
-    $data['transform'] = array('title','summary','body','notes');
+    if (!isset($titletransform)) {
+        if (empty($settings['titletransform'])) {
+            $data['transform'] = array('summary','body','notes');
+        } else {
+            $data['transform'] = array('title','summary','body','notes');
+        }
+    }
     $data = xarModCallHooks('item', 'transform', $aid, $data, 'articles');
 
     // Navigation links

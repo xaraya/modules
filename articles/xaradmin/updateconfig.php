@@ -31,7 +31,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('usealias',          'isset', $usealias,          0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('ptid',              'isset', $ptid,              0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('dotransform',       'isset', $dotransform,       0,  XARVAR_NOT_REQUIRED)) {return;}
-
+    if(!xarVarFetch('titletransform',    'isset', $titletransform,    0,  XARVAR_NOT_REQUIRED)) {return;}
 
     if (empty($ptid)) {
         xarModSetVar('articles', 'SupportShortURLs', $shorturls);
@@ -40,22 +40,23 @@ function articles_admin_updateconfig()
     }
 
     $settings = array();
-    $settings['itemsperpage'] = $itemsperpage;
-    $settings['number_of_columns'] = $number_of_columns;
-    $settings['defaultview'] = $defaultview;
-    $settings['showcategories'] = $showcategories;
-    $settings['showprevnext'] = $showprevnext;
-    $settings['showcomments'] = $showcomments;
-    $settings['showhitcounts'] = $showhitcounts;
-    $settings['showratings'] = $showratings;
-    $settings['showarchives'] = $showarchives;
-    $settings['dotransform'] = $dotransform;
-    $settings['showmap'] = $showmap;
-    $settings['showpublinks'] = $showpublinks;
-    $settings['dotransform'] = $dotransform;
-    $settings['prevnextart'] = $prevnextart;
-    $settings['page_template'] = $page_template;
-    $settings['defaultstatus'] = $defaultstatus;
+    $settings['itemsperpage']       = $itemsperpage;
+    $settings['number_of_columns']  = $number_of_columns;
+    $settings['defaultview']        = $defaultview;
+    $settings['showcategories']     = $showcategories;
+    $settings['showprevnext']       = $showprevnext;
+    $settings['showcomments']       = $showcomments;
+    $settings['showhitcounts']      = $showhitcounts;
+    $settings['showratings']        = $showratings;
+    $settings['showarchives']       = $showarchives;
+    $settings['dotransform']        = $dotransform;
+    $settings['titletransform']     = $titletransform;
+    $settings['showmap']            = $showmap;
+    $settings['showpublinks']       = $showpublinks;
+    $settings['dotransform']        = $dotransform;
+    $settings['prevnextart']        = $prevnextart;
+    $settings['page_template']      = $page_template;
+    $settings['defaultstatus']      = $defaultstatus;
 
     if (!empty($ptid)) {
         xarModSetVar('articles', 'settings.'.$ptid, serialize($settings));
