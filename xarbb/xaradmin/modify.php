@@ -22,6 +22,7 @@ function xarbb_admin_modify()
     // Get parameters
     if (!xarVarFetch('fid','id', $fid)) return;
 	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
 
     switch(strtolower($phase)) {
         case 'form':
@@ -127,7 +128,8 @@ function xarbb_admin_modify()
                                array('fid'      => $fid,
                                      'fname'    => $fname,
                                      'fdesc'    => $fdesc,
-                                     'fstatus'  => $fstatus))) return;
+                                     'fstatus'  => $fstatus,
+                                     'cids'     => $cids))) return;
 
             $settings = array();
             $settings['postsperpage']       = $postsperpage;

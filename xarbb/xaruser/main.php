@@ -105,7 +105,7 @@ function xarbb_user_main()
         }
     }
     // Debug
-    //$pre = var_export($items, true); echo "<pre>$pre</pre>"; return;
+    // $pre = var_export($items, true); echo "<pre>$pre</pre>"; return;
     // Add the array of items to the template variables
     $data['items'] = $items;
     // Add a pager

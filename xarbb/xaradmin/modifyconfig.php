@@ -100,7 +100,7 @@ function xarbb_admin_modifyconfig()
             xarModSetVar('xarbb', 'settings', serialize($settings));
 
             // call modifyconfig hooks with module
-            $hooks = xarModCallHooks('module', 'modifyconfig', 'xarbb');
+            $hooks = xarModCallHooks('module', 'updateconfig', 'xarbb', array('module' => 'xarbb'));
 
            if (empty($hooks)) {
                $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for xarbb...'));
