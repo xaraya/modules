@@ -136,6 +136,9 @@ function categories_navigationblock_display($blockinfo)
             $mastercids = explode(';',$cidlist);
             sort($mastercids,SORT_NUMERIC);
         }
+        if (!empty($startmodule)) {
+            $rootcids = $mastercids;
+        }
     }
 
     // See if we need to show a count per category
