@@ -13,7 +13,7 @@
 */
 
 $modversion['name'] = 'tasks';
-$modversion['id'] = '666';
+$modversion['id'] = '667';
 $modversion['version'] = '0.2';
 $modversion['description'] = 'Basic Task/ Manager';
 $modversion['credits'] = 'docs/credits.txt';
