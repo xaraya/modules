@@ -53,7 +53,6 @@
                     <a href="http://http://www.xmlrpc.com/metaWeblogApi">MetaWeblog API</a> : <xar:mlstring>An extension of the Blogger API which adds more rich support for the message content and the ability to upload media objects
                     (Note: the categories support in this API is limited and the metaWeblog.newMediaObject method hasn't been implemented yet.</xar:mlstring></li>
               </ol>
-              </ul>
             </p>
 
             <p>
@@ -64,6 +63,7 @@
                 <li>The Moveable Type API</li>
                 <li>The Xaraya API over XML-RPC</li>
               </ol>
+            </p>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
