@@ -30,7 +30,12 @@ function comments_userapi_get_childcountlist($args)
     $sql = "SELECT P1.xar_cid, COUNT(P2.xar_cid) AS numitems
               FROM $xartable[comments] AS P1,
                    $xartable[comments] AS P2
-             WHERE P2.xar_left >= P1.xar_left
+             WHERE (
+                         P1.xar_modid    = P2.xar_modid
+                     AND P1.xar_objectid = P2.xar_objectid
+                     AND P1.xar_itemtype = P2.xar_itemtype
+                   )
+               AND P2.xar_left >= P1.xar_left
                AND P2.xar_left <= P1.xar_right
                AND P1.xar_left >= $left
                AND P1.xar_right <= $right
