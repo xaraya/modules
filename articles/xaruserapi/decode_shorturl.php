@@ -14,7 +14,7 @@ function articles_userapi_decode_shorturl($params)
 
     $module = 'articles';
 
-
+    
     // Check if we're dealing with an alias here
     if ($params[0] != $module) {
         $alias = xarModGetAlias($params[0]);
@@ -43,7 +43,6 @@ function articles_userapi_decode_shorturl($params)
     // check if we want to decode URLs using their titles rather then their ID
     $decodeUsingTitle = (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
 
-
     if (empty($params[1])) {
         return array('view', $args);
 
@@ -59,8 +58,8 @@ function articles_userapi_decode_shorturl($params)
             $args['catid'] = $catid;
         }
         return array('search', $args);
-
-    } elseif (preg_match('/^(\d+)/',$params[1],$matches)) {
+ 
+    } elseif (preg_match('/^(\d+)$/',$params[1],$matches)) {
         $aid = $matches[1];
         $args['aid'] = $aid;
         return array('display', $args);
@@ -218,7 +217,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
         $decodedTitle = str_replace("'","\'",$decodedTitle);
         $searchArgs['where']     = "title = '".$decodedTitle."'";
     }
-    
+
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     
     if( (count($articles) == 0) && (strpos($decodedTitle,'_') != false) )
