@@ -108,7 +108,8 @@ function translations_adminapi_getcontextentries($args)
 
 function translations_grab_source_code($references, $maxReferences = NULL)
 {
-    static $files = array();
+    //static $files = array(); <-- this just takes too much memory
+    $files = array();
     $result = array();
     if ($maxReferences == NULL) {
         $maxReferences = count($references);
