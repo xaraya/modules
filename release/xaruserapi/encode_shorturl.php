@@ -22,7 +22,7 @@
  * @return path to be added to index.php for a short URL, or empty if failed
  */
 function release_userapi_encode_shorturl($args)
-{ 
+{
     // Get arguments from argument array
     extract($args);
     // Check if we have something to work with
@@ -47,7 +47,13 @@ function release_userapi_encode_shorturl($args)
     } elseif ($func == 'display') {
         // check for required parameters
         if (isset($rid) && is_numeric($rid)) {
-            $path = '/' . $module . '/' . $rid . '.html';
+           if (isset($phase) && $phase=='version'){
+                $path = '/' . $module . '/version/' . $rid . '.html';
+           }elseif (isset($phase) && $phase=='view'){
+                $path = '/' . $module . '/' . $rid . '.html';
+           }else {
+                $path = '/' . $module . '/' . $rid . '.html';
+           }
         } else {
 
         }

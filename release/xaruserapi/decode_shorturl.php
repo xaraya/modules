@@ -75,10 +75,19 @@ function release_userapi_decode_shorturl($params)
             $args['rid']=$matches[1];
             return array('modifyid', $args);
         }
+    } elseif ($params[1] == 'version') {
+        if (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
+        // something that starts with a number must be for the display function
+            $rid = $matches[1];
+            $args['rid'] = (int)$rid;
+            $args['phase']='version';
+        }
+        return array('display', $args);
     } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
         // something that starts with a number must be for the display function
         $rid = $matches[1];
         $args['rid'] = $rid;
+        $args['phase']='view';
         return array('display', $args);
     } else {
         $cid = xarModGetVar('release','mastercids');

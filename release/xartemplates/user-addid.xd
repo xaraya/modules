@@ -1,5 +1,9 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Extensions &amp; Releases</xar:mlstring>
+    </span>
+</div>
+
 <div class="xar-mod-body">
 <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
 <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
@@ -7,11 +11,11 @@
 <h2><xar:mlstring>Reserve an ID</xar:mlstring></h2>
 <xar:if condition="!empty($message)">
  <div style="margin-top:20px; margin-bottom:20px;">
- <span style="float:left; text-align:center; width:90%;">
-    #$message#<br />
-    <a href="javascript:history.back(-1)"><xar:mlstring>Return to try again</xar:mlstring></a>,
-    <xar:mlstring>or </xar:mlstring><a href="#$retryID#"><xar:mlstring>check current registered names.</xar:mlstring></a>.
- </span>
+     <span style="float:left; text-align:center; width:90%;">
+         #$message#<br />
+         <a href="#$retryurl#"><xar:mlstring>Return to try again</xar:mlstring></a>,
+         <xar:mlstring>or </xar:mlstring><a href="#$retryID#"><xar:mlstring>check current registered names.</xar:mlstring></a>.
+     </span>
  </div>
 <xar:else />
 
@@ -100,6 +104,7 @@
 
             <input type="submit" value="#$createid#"  tabindex="6" />
         </form>
+    </div>
     </xar:if>
-</div>
+
 </div>

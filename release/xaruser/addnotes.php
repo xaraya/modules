@@ -1,11 +1,12 @@
 <?php
 
-function release_user_addnotes()
+function release_user_addnotes($args)
 {
+
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
-
-    $phase = xarVarCleanFromInput('phase');
+    xarVarFetch('phase', 'enum:getmodule:start:getbasics:getdetails:preview:update',
+                         $phase, 'getmodule', XARVAR_NOT_REQUIRED);
 
     if (empty($phase)){
         $phase = 'getmodule';
@@ -34,8 +35,7 @@ function release_user_addnotes()
         case 'start':
             // First we need to get the module that we are adding the release note to.
             // This will be done in several stages so that the information is accurate.
-
-            $rid = xarVarCleanFromInput('rid');
+            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
 
             // The user API function is called.
             $data = xarModAPIFunc('release',
@@ -70,12 +70,10 @@ function release_user_addnotes()
 
         case 'getbasics':
 
-           list($rid,
-                $regname) = xarVarCleanFromInput('rid',
-                                                 'regname');
+           if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
 
            //if (!xarSecConfirmAuthKey()) return;
-           //<jojodee> Set some defaults
            $democheck=1;
            $supportcheck=1;
            $pricecheck=1;
@@ -91,19 +89,13 @@ function release_user_addnotes()
             break;
 
         case 'getdetails':
+           if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
+           if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('supportcheck', 'int:1:2', $supportcheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('democheck', 'int:1:2', $democheck, null, XARVAR_NOT_REQUIRED)) {return;}
 
-            list($rid,
-                 $regname,
-                 $version,
-                 $pricecheck,
-                 $supportcheck,
-                 $democheck) = xarVarCleanFromInput('rid',
-                                                    'regname',
-                                                    'version',
-                                                    'pricecheck',
-                                                    'supportcheck',
-                                                    'democheck');
-            
            //if (!xarSecConfirmAuthKey()) return;
 
             xarTplSetPageTitle(xarVarPrepForDisplay($regname));
@@ -121,33 +113,20 @@ function release_user_addnotes()
             break;
         
         case 'preview':
+           if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
+           if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('supportcheck', 'int:1:2', $supportcheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('democheck', 'int:1:2', $democheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('dllink', 'str:1:', $dllink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('price', 'str', $price, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('demolink', 'str:1:254', $demolink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('supportlink', 'str:1:254', $supportlink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('changelog', 'str', $changelog, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('notes', 'str', $notes, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('rstate', 'int:0:6', $rstate, null, XARVAR_NOT_REQUIRED)) {return;}
 
-            list($rid,
-                 $regname,
-                 $version,
-                 $pricecheck,
-                 $supportcheck,
-                 $democheck,
-                 $dllink,
-                 $price,
-                 $demolink,
-                 $supportlink,
-                 $changelog,
-                 $notes,
-                 $rstate) = xarVarCleanFromInput('rid',
-                                                 'regname',
-                                                 'version',
-                                                 'pricecheck',
-                                                 'supportcheck',
-                                                 'democheck',
-                                                 'dllink',
-                                                 'price',
-                                                 'demolink',
-                                                 'supportlink',
-                                                 'changelog',
-                                                 'notes',
-                                                 'rstate');
-            
            //if (!xarSecConfirmAuthKey()) return;
            //Get some info for the extensions state
            foreach ($stateoptions as $key => $value) {
@@ -155,7 +134,6 @@ function release_user_addnotes()
                    $extstate=$stateoptions[$key];
                }
            }
-
            $notesf = nl2br($notes);
            $changelogf = nl2br($changelog);
 
@@ -186,33 +164,20 @@ function release_user_addnotes()
             break;
 
         case 'update':
+       if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
+           if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('supportcheck', 'int:1:2', $supportcheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('democheck', 'int:1:2', $democheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('dllink', 'str:1:', $dllink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('price', 'float', $price, 0, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('demolink', 'str:1:254', $demolink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('supportlink', 'str:1:254', $supportlink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('changelog', 'str:1:', $changelog, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('notes', 'str:1:', $notes, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('rstate', 'int:0:6', $rstate, 0, XARVAR_NOT_REQUIRED)) {return;}
 
-            list($rid,
-                 $regname,
-                 $version,
-                 $pricecheck,
-                 $supportcheck,
-                 $democheck,
-                 $dllink,
-                 $price,
-                 $demolink,
-                 $supportlink,
-                 $changelog,
-                 $notes,
-                 $rstate) = xarVarCleanFromInput('rid',
-                                                'regname',
-                                                'version',
-                                                'pricecheck',
-                                                'supportcheck',
-                                                'democheck',
-                                                'dllink',
-                                                'price',
-                                                'demolink',
-                                                'supportlink',
-                                                'changelog',
-                                                'notes',
-                                                'rstate');
-            
            //if (!xarSecConfirmAuthKey()) return;
             // The user API function is called.
             $data = xarModAPIFunc('release',
@@ -223,6 +188,10 @@ function release_user_addnotes()
                 $exttype='Module';
             } elseif ($data['type'] == 1)  {
                 $exttype='Theme';
+            } elseif ($data['type'] ==2) {
+                $exttype='PubType';
+            } elseif ($data['type']==3) {
+                $exttype='Enhancement';
             }
 
             // The user API function is called.

@@ -7,7 +7,7 @@ function release_admin_deletenote()
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
     
-    extract($args);
+
 
     if (!empty($obid)) {
         $rnid = $obid;

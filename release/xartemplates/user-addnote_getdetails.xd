@@ -7,12 +7,12 @@
     <br /><br />
     <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="phase" id="phase" value="preview" />    
+        <input type="hidden" name="phase" id="phase" value="preview" />
         <input type="hidden" name="rid" id="rid" value="#$rid#" />    
         <input type="hidden" name="regname" id="regname" value="#$regname#" />
-        <input type="hidden" name="version" id="version" value="#$version#" />    
-        <input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />    
-        <input type="hidden" name="democheck" id="democheck" value="#$democheck#" />    
+        <input type="hidden" name="version" id="version" value="#$version#" />
+        <input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />
+        <input type="hidden" name="democheck" id="democheck" value="#$democheck#" />
         <input type="hidden" name="supportcheck" id="supportcheck" value="#$supportcheck#" />
         <table border="0" cellpadding="5">
             <tr>
@@ -47,16 +47,7 @@
                     <input type="text" name="dllink" value="" size="30" maxlength="100" />
                 </td>
             </tr>
-            <xar:if condition="$pricecheck eq '2'">
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="price"><xar:mlstring>Price</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="price" value="" size="10" maxlength="100" />
-                </td>
-            </tr>
-            </xar:if>
+
             <xar:if condition="$democheck eq '2'">
             <tr>
                 <td align="left" valign="top" class="xar-norm">
@@ -77,7 +68,16 @@
                 </td>
             </tr>
             </xar:if>
-
+            <xar:if condition="$pricecheck eq '2'">
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="price"><xar:mlstring>Price</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="price" value="" size="10" maxlength="100" />
+                </td>
+            </tr>
+            </xar:if>
                 <tr>
                     <td align="left" valign="top" class="xar-norm">
                     <label for="rstate" class="help" title="#xarML('Current development status of your extension')#">
@@ -87,9 +87,8 @@
                     <td align="left" valign="top" class="xar-norm">
                    <select name="rstate" id="rstate" size="1">
                       <xar:foreach in="$stateoptions" value="$v" key="$k">
-                                       <option name="rstate.#$k#" value="#$k#">#$v#</option>
-
-                   </xar:foreach>
+                         <option name="rstate.#$k#" value="#$k#">#$v#</option>
+                      </xar:foreach>
                    </select>
                    </td>
                 </tr>

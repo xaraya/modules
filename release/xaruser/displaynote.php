@@ -71,8 +71,8 @@ function release_user_displaynote()
     $item['class'] = $id['class'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $item['realname'] = $getuser['name'];
-
-
+    $item['notes'] = nl2br($item['notes']);
+    $item['changelog'] = nl2br($item['changelog']);
     return $item;
 }
 

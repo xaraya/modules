@@ -7,10 +7,10 @@ function release_user_display($args)
 
     extract($args);
 
-    if (!xarVarFetch('rid', 'int', $rid, null)) {return;}
+    if (!xarVarFetch('rid', 'int:1:', $rid, null)) {return;}
     if (!xarVarFetch('startnum', 'int', $startnum, 0, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('phase', 'str', $phase, 'view', XARVAR_NOT_REQUIRED)) {return;}
-
+    if (!xarVarFetch('phase', 'str:1:7', $phase, 'view', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'display', XARVAR_NOT_REQUIRED)) return;
     // The user API function is called. 
     $id = xarModAPIFunc('release',
                          'user',
