@@ -95,3 +95,4 @@ $return_form_element = $formpart . ".elements[\"" . $elmpart . "\"]";
         close();
     }
 </script>
+<?php ?>

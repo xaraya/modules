@@ -39,4 +39,4 @@ include realpath( 'header.php' );
 
 </body>
 </html>
-
+<?php ?>

@@ -81,3 +81,5 @@ if( $del_result )
                ldap_error( $ds ), 
                ldap_errno( $ds ) );
 }
+
+?>

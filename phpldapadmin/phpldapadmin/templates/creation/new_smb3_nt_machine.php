@@ -28,7 +28,7 @@ if( get_schema_objectclass( $server_id, 'sambaSamAccount' ) == null )
 ?>
 <script type="text/javascript">
 
-    function autoFillSambaRID( form ){
+    function autoFillSambaRID(form){
         var sambaSID;
         var uidNumber;
 

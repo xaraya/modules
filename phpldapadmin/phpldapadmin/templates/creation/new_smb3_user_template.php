@@ -173,7 +173,7 @@
             <option value="<?php echo $samba3_domain['sid']; ?>-512">Domain Admins (<?php echo $samba3_domain['sid']; ?>-512)</option>
             <option value="<?php echo $samba3_domain['sid']; ?>-513">Domain Users  (<?php echo $samba3_domain['sid']; ?>-513)</option>
             <option value="<?php echo $samba3_domain['sid']; ?>-514">Domain Guests (<?php echo $samba3_domain['sid']; ?>-514)</option>
-            <?
+            <?php
             }
             ?>                           
         </select></td>
