@@ -18,7 +18,8 @@ function html_xartables()
     // Initialise table array
     $xartable = array();
     $prefix = xarDBGetSiteTablePrefix();
-    // Get the name for the autolinks item table
+
+    // Set the prefix name for the html item table
     $html = $prefix . '_html';
 
     // Set the table name

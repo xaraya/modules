@@ -1,44 +1,111 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body"><h2><xar:mlstring>Set HTML Tag Attributes</xar:mlstring></h2>
-	<div style="margin: auto;">
-	<form method="post" action="#xarModURL('html','admin','updateset')#" method="post" enctype="application/x-www-form-urlencoded">
-		<xar:loop name="$items">
-		<xar:set name="$allowed">#$loop:item['allowed']#</xar:set>
-
-		<div style="clear: both; padding-top: 10px;">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<span style="float: left; width: 20%; text-align: right;">
-			#$loop:item['htmltag']# </label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-
-				<xar:if condition="$allowed eq 1">
-				   <span class="help" title="#xarML('This HTML Tag will not be allowed at all with this setting.')#"><label for="htmlnotallow#$loop:item['htmltag']#tag"><xar:mlstring>Not Allowed</xar:mlstring></label></span><input type=radio value="0" name="htmlallow#$loop:item['htmltag']#tag" id="htmlnotallow#$loop:item['htmltag']#tag" checked="checked" />
+<div class="xar-mod-body">
+<h2><xar:mlstring>Set HTML Tags</xar:mlstring></h2>
+<div align="center">
+<form method="post" action="#xarModURL('html','admin','updateset')#" method="post" enctype="application/x-www-form-urlencoded">
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent">
+    <tr>
+        <th>
+			 <xar:mlstring>HTML Tag</xar:mlstring>
+		</th>
+        <th>
+			<xar:mlstring>Not Allowed</xar:mlstring>
+		</th>
+        <th>
+			<xar:mlstring>Allowed</xar:mlstring>
+		</th>
+        <th>
+			<xar:mlstring>Allowed With Parameters</xar:mlstring>
+		</th>
+        <th>
+			<xar:mlstring>Options</xar:mlstring>
+		</th>
+	</tr>
+    <xar:loop name="$items">
+		<xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+    <tr>
+        <td class="xar-norm">
+           <xar:if condition="empty($loop:item['editurl'])">
+			    #$loop:item['htmltag']#
+           <xar:else />
+                <a href="#$loop:item['editurl']#">#$loop:item['htmltag']#</a>
+           </xar:if>
+		</td>
+		<td class="xar-norm">
+           <xar:if condition="$loop:item['allowed'] eq 0">
+				   <span class="help" title="#xarML('This HTML Tag will not be allowed at all with this setting.')#"></span><input type=radio value="0" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" checked="checked" />
 				<xar:else />
-					<span class="help" title="#xarML('This HTML Tag will not be allowed at all with this setting.')#"><label for="htmlnotallow#$loop:item['htmltag']#tag"><xar:mlstring>Not Allowed</xar:mlstring></label></span><input type=radio value="0" name="htmlallow#$loop:item['htmltag']#tag" id="htmlnotallow#$loop:item['htmltag']#tag" />
-				</xar:if>
-
-				<xar:if condition="$allowed eq 2">
-				    <span class="help" title="#xarML('This HTML Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"><label for="htmlallow#$loop:item['htmltag']#tag"><xar:mlstring>Allowed</xar:mlstring></label></span><input type=radio value="1" name="htmlallow#$loop:item['htmltag']#tag" id="htmlallow#$loop:item['htmltag']#tag" checked="checked" />
+					<span class="help" title="#xarML('This HTML Tag will not be allowed at all with this setting.')#"></span><input type=radio value="0" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" />
+           </xar:if>
+		</td>
+		<td class="xar-norm">
+           <xar:if condition="$loop:item['allowed'] eq 1">
+				    <span class="help" title="#xarML('This HTML Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span><input type=radio value="1" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" checked="checked" />
 				<xar:else />
-					<span class="help" title="#xarML('This HTML Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"><label for="htmlallow#$loop:item['htmltag']#tag"><xar:mlstring>Allowed</xar:mlstring></label></span><input type=radio value="1" name="htmlallow#$loop:item['htmltag']#tag" id="htmlallow#$loop:item['htmltag']#tag" />
-				</xar:if>
-
-				<xar:if condition="$allowed eq 3">
-					<span class="help" title="#xarML('This HTML Tag will be allowed with any parameter.')#"><label for="htmlallowparameters#$loop:item['htmltag']#tag"><xar:mlstring>Allowed With Parameters</xar:mlstring></label></span><input type=radio value="2" name="htmlallow#$loop:item['htmltag']#tag" id="htmlallowparameters#$loop:item['htmltag']#tag" checked="checked" />
+					<span class="help" title="#xarML('This HTML Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span><input type=radio value="1" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" />
+           </xar:if>
+		</td>
+		<td class="xar-norm">
+           <xar:if condition="$loop:item['allowed'] eq 2">
+					<span class="help" title="#xarML('This HTML Tag will be allowed with any parameter.')#"></span><input type=radio value="2" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" checked="checked" />
 				<xar:else />
-					<span class="help" title="#xarML('This HTML Tag will be allowed with any parameter.')#"><label for="htmlallowparameters#$loop:item['htmltag']#tag"><xar:mlstring>Allowed With Parameters</xar:mlstring></label></span><input type=radio value="2" name="htmlallow#$loop:item['htmltag']#tag" id="htmlallowparameters#$loop:item['htmltag']#tag" />
-				</xar:if>
-		</span>
-		</div>
-		</xar:loop>
-
-		<br /><br />
-		<span style="float: left; width: 30%; text-align: right;">
-			<input type="hidden" name="authid" value="#$authid#" />
-			<input type="submit" value="#$submitlabel#" />
-		</span>
-	</form>
-	</div>
+					<span class="help" title="#xarML('This HTML Tag will be allowed with any parameter.')#"></span><input type=radio value="2" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" />
+           </xar:if>
+		</td class="xar-norm">
+		<td align="center" class="xar-norm"> 
+           <xar:if condition="empty($loop:item['deleteurl'])">
+               <xar:mlstring>Delete</xar:mlstring>
+               <xar:else />
+                   <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+           </xar:if>
+        </td>
+    </tr>
+	<xar:else />
+    <tr>
+        <td class="xar-accent">
+           <xar:if condition="empty($loop:item['editurl'])">
+			    #$loop:item['htmltag']#
+           <xar:else />
+                <a href="#$loop:item['editurl']#">#$loop:item['htmltag']#</a>
+           </xar:if>
+		</td>
+		<td class="xar-accent">
+           <xar:if condition="$loop:item['allowed'] eq 0">
+				   <span class="help" title="#xarML('This HTML Tag will not be allowed at all with this setting.')#"></span><input type=radio value="0" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" checked="checked" />
+				<xar:else />
+					<span class="help" title="#xarML('This HTML Tag will not be allowed at all with this setting.')#"></span><input type=radio value="0" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" />
+           </xar:if>
+		</td>
+		<td class="xar-accent">
+           <xar:if condition="$loop:item['allowed'] eq 1">
+				    <span class="help" title="#xarML('This HTML Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span><input type=radio value="1" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" checked="checked" />
+				<xar:else />
+					<span class="help" title="#xarML('This HTML Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span><input type=radio value="1" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" />
+           </xar:if>
+		</td>
+		<td class="xar-accent">
+           <xar:if condition="$loop:item['allowed'] eq 2">
+					<span class="help" title="#xarML('This HTML Tag will be allowed with any parameter.')#"></span><input type=radio value="2" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" checked="checked" />
+				<xar:else />
+					<span class="help" title="#xarML('This HTML Tag will be allowed with any parameter.')#"></span><input type=radio value="2" name="htmltags[#$loop:item['htmltag']#]" id="#$loop:item['htmltag']#" />
+           </xar:if>
+		</td>
+		<td align="center" class="xar-accent"> 
+           <xar:if condition="empty($loop:item['deleteurl'])">
+               <xar:mlstring>Delete</xar:mlstring>
+               <xar:else />
+                   <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+           </xar:if>
+        </td>
+    </tr>
+    </tr>
+	</xar:if>
+    </xar:loop>
+</table>
+<br /><br />
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="submit" value="#$submitlabel#" />
+</form>
+<br />
+</div>
 </div>

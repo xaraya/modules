@@ -10,7 +10,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>The HTML module is a utility module for setting allowed html tags.</xar:mlstring></em>
+            <xar:mlstring>The HTML module is a utility module for setting allowed HTML tags.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -18,7 +18,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Using the adminstration menu you are allowed to set and view allowed html tags.  In addition, you are allowed to set the number of tags that are going to be shown per page in the view portion.  You can also add new tags into the system.</xar:mlstring>
+            <xar:mlstring>Using the adminstration menu, you are allowed to view and set allowed HTML tags.  You can also add new tags, edit current tags and delete tags from the system.</xar:mlstring>
 
         </div>
         <br />
@@ -35,7 +35,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included hooks with this module.</xar:mlstring>
+            <xar:mlstring>Create, delete, and update hooks are included in the module.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">

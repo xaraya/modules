@@ -1,13 +1,12 @@
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var html_fieldRequired = Array("tag");
-	// Enter field description to appear in the dialog box
-	var html_fieldDescription = Array("HTML Tag");
+    // Enter name of mandatory fields
+    var html_fieldRequired = Array("tag");
+    // Enter field description to appear in the dialog box
+    var html_fieldDescription = Array("HTML Tag");
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body"><h2><xar:mlstring>Add HTML Tag</xar:mlstring></h2>
 	<div style="margin: auto;">
 
