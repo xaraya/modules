@@ -54,7 +54,6 @@ function xarldap_admin_search()
                 $xml = xarldap_array_to_xml($result);
                 $data['result'] = $xml;
             } else {
-error_log("HERE");
                 $data['result'] = false;
             }
             break;
