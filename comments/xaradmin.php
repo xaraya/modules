@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File: $Id$
+ * File: $Id: xaradmin.php 1.37 04/06/30 09:47:33-04:00 John.Cox@mcnabb. $
  *
  * Comments administration display functions
  *
@@ -40,6 +40,9 @@ function comments_admin_main()
  */
 function comments_admin_modifyconfig()
 {
+	$editstamp=xarModGetVar('comments','editstamp');
+    $output['editstamp']       = !isset($editstamp) ? 1 :$editstamp;
+
     // Security Check
     if(!xarSecurityCheck('Comments-Admin'))
         return;
@@ -71,6 +74,9 @@ function comments_admin_view()
  */
 function comments_admin_updateconfig()
 {
+
+  if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
+
     // Security Check
     if(!xarSecurityCheck('Comments-Admin'))
         return;
@@ -122,6 +128,7 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'render', $xar_render);
     xarModSetVar('comments', 'sortby', $xar_sortby);
     xarModSetVar('comments', 'order', $xar_order);
+    xarModSetVar('comments', 'editstamp', $editstamp);
 
     if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
