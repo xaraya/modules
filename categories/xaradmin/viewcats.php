@@ -56,6 +56,8 @@ function categories_admin_viewcats()
         foreach ($categories as $category) {
             $category['xar_pid'] = $category['parent'];
             $category['xar_cid'] = $category['cid'];
+            //What is used in the renderer? Do we need all this extra information in the array?
+            //$category['depth'] = $category['indentation'];
 
 /*
     // Note : extending category information with other fields is possible via DD,
@@ -76,7 +78,7 @@ function categories_admin_viewcats()
             $cats[] = $category;
         }
         $categories = $cats;
-   
+
         categories_renderer_array_markdepths_bypid($categories);
         $categories = categories_renderer_array_maptree($categories);
 

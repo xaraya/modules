@@ -192,12 +192,28 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
         }
 
         $prep_list[$key] = $node;
-        $prep_list[$key]['depth'] = $parents["PID_".$node['xar_pid']];
+         if (isset($comments_list[$key]['indentation'])) {
+            $prep_list[$key]['depth'] =  $comments_list[$key]['indentation'] - 1;
+         } else {
+            $prep_list[$key]['depth'] = $parents["PID_".$node['xar_pid']];
+    //        $prep_list[$key]['depth'] =  0;
+         }
+
+         //Allow parents to appear as so even if their children is only in the next page.
+         if (isset($comments_list[$key]['right']) && ($comments_list[$key]['right'] - $comments_list[$key]['left']) > 1) {
+            $prep_list[$key]['children'] = 1;
+         } else {
+            $prep_list[$key]['children'] = 0;
+         }
+         
+         
     }
     // now we go through and find all the nodes that were marked
     // as parent nodes and add the 'haschildren' field to them
     // setting it to true -- otherwise, if the node wasn't a
     // parent ID we set it's 'haschildren' equal to false
+    /*
+
     foreach ($prep_list as $node) {
         if (isset($parents["PID_".$node['xar_cid']])) {
             $node['children'] = 1;
@@ -207,12 +223,13 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
         }
         $new_list[] = $node;
     }
-    
+    */
+
     $comments_list = '';
    
     // remove any items that aren't really a part of the array
     // and are just excess baggage from previous code
-    foreach ($new_list as $node) {
+    foreach ($prep_list as $node) {
         if (!array_key_exists('remove',$node)) {
             $comments_list[] = $node;
         }
