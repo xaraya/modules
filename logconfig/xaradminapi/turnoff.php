@@ -16,7 +16,7 @@ function logconfig_adminapi_turnoff ()
 
          if (file_exists($filename)) {
             $msg = xarML('Unable to delete file (#(1))', $filename);
-            xarExceptionSet(XAR_SYSTEM_MESSAGE, 'UNABLE_DELETE_FILE', $msg);
+            xarErrorSet(XAR_SYSTEM_MESSAGE, 'UNABLE_DELETE_FILE', $msg);
             return;
          }
     }
