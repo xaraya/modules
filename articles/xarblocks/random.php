@@ -113,8 +113,9 @@ function articles_randomblock_display($blockinfo)
         $cid = 0;
         $cidsarray = array();
     }
-    
-    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles')) {
+
+    // check if dynamicdata is hooked for all pubtypes or the current one (= defaults to 0 anyway here)
+    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles', $vars['pubtypeid'])) {
         array_push($fields, 'dynamicdata');
     }
 
