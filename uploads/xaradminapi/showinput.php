@@ -51,23 +51,6 @@ function uploads_adminapi_showinput($args)
 
     xarModAPILoad('uploads','user');
 
-    $trusted_dir = xarModGetVar('uploads', 'path.imports-directory');
-    $descend = TRUE;
-
-    $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
-    $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
-    $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
-    $data['getAction']['STORED']      = _UPLOADS_GET_STORED;
-    $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
-    $data['id']                       = $id;
-    $data['file_maxsize'] = xarModGetVar('uploads', 'file.maxsize');;
-    $data['fileList']     = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
-                                           array('descend' => $descend, 'fileLocation' => $trusted_dir));
-    $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
-
-    // used to allow selection of multiple files
-    $data['multiple_' . $id] = $multiple;
-
     if (isset($methods) && count($methods) == 4) {
         $data['methods'] = array(
             'trusted'  => $methods['trusted']  ? TRUE : FALSE,
@@ -83,6 +66,31 @@ function uploads_adminapi_showinput($args)
             'stored'   => xarModGetVar('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
         );
     }
+
+    $trusted_dir = xarModGetVar('uploads', 'path.imports-directory');
+    $descend = TRUE;
+
+    $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
+    $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
+    $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
+    $data['getAction']['STORED']      = _UPLOADS_GET_STORED;
+    $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
+    $data['id']                       = $id;
+    $data['file_maxsize'] = xarModGetVar('uploads', 'file.maxsize');
+    if ($data['methods']['trusted']) {
+        $data['fileList']     = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
+                                              array('descend' => $descend, 'fileLocation' => $trusted_dir));
+    } else {
+        $data['fileList']     = array();
+    }
+    if ($data['methods']['stored']) {
+        $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+    } else {
+        $data['storedList']   = array();
+    }
+
+    // used to allow selection of multiple files
+    $data['multiple_' . $id] = $multiple;
 
     if (!empty($value)) {
         // We use array_filter to remove any values from
