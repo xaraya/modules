@@ -12,6 +12,15 @@
   </p>
 </div>
 
+<!-- Set the things we want to have in the form again -->
+<xar:set name="$searchterms" scope="theme">#$searchterms#</xar:set>
+
+<div id="searchform" style="float:right;">
+  <span class="xar-mod-title"><xar:mlstring>Search again</xar:mlstring></span>
+  <xar:foreach in="$searchform" key="$module" value="$form">
+    #$form#
+</div>
+
 <div>#$pager#</div>
 
 <style type="text/css">
@@ -29,11 +38,6 @@
   </xar:ml>
 </span>
   
-<div id="searchform" style="float:right;">
-  <span class="xar-mod-title"><xar:mlstring>Search again</xar:mlstring></span>
-  <xar:foreach in="$searchform" key="$module" value="$form">
-    #$form#
-</div>
 
 <!-- TODO: set the values of the searchform to the values searched on -->
 

@@ -28,6 +28,7 @@ function search_user_handlesearch() {
     // The module we want to search and the search terms are required.
     xarVarFetch('formodule','str:1:',$search_in_module);
     xarVarFetch('searchterms','str:0:',$search_terms);
+    xarSessionSetVar('searchterms', $search_terms);
     xarVarFetch('startnum','int::',$startnum,1,XARVAR_NOT_REQUIRED);
     
     // Some modules allow searching only specific itemtypes, the generic

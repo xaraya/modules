@@ -8,7 +8,8 @@
 <form  action="#$formaction#" method="post">
     <!-- However we do stuff, the search form needs an input field to enter the keywords to search on -->
     <label for="searchterms"><xar:mlstring>Search for</xar:mlstring>:</label>
-    <input id="searchterms" size="26" type="text" name="searchterms"><br/>
+    <xar:set name="$searchterms"><xar:var name="searchterms" scope="session"/></xar:set>
+    <input id="searchterms" size="26" type="text" name="searchterms" value="#$searchterms#" ><br/>
 
     <!-- For which module are we displaying a search form -->
     <input type="hidden" name="formodule" value="#$callingmodule#"/>
