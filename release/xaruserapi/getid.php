@@ -6,7 +6,7 @@ function release_userapi_getid($args)
 
     if (!isset($rid)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'get', 'Autolinks');
+                    join(', ',$invalid), 'userapi', 'getid', 'Release');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

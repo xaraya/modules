@@ -8,7 +8,7 @@ function release_adminapi_updatenote($args)
     // Argument check
     if  (!isset($rnid)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'Autolinks');
+                    join(', ',$invalid), 'admin', 'updatenote', 'Release');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

@@ -6,7 +6,7 @@ function release_userapi_getdoc($args)
 
     if (!isset($rdid)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'get', 'Autolinks');
+                    join(', ',$invalid), 'userapi', 'getdoc', 'Release');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

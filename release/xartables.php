@@ -6,7 +6,7 @@
 // http://www.xaraya.org
 // ----------------------------------------------------------------------
 // Original Author of file: Jim McDonald
-// Purpose of file:  Table information for autolinks module
+// Purpose of file:  Table information for release module
 // ----------------------------------------------------------------------
 
 function release_xartables()
