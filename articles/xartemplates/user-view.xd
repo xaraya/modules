@@ -59,7 +59,18 @@
 <xar:template file="alphapager" type="module" />
 
 <div style="text-align: center;">
-    #$pager# 
+<xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
+    #$viewpager# 
+    <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
+        <br/><br/><xar:mlstring>Sort by</xar:mlstring>
+        <xar:foreach in="$sortlinks" value="$sortitem">
+            <xar:if condition="!empty($sortitem['slink'])">
+                <a href="#$sortitem['slink']#">#$sortitem['stitle']#</a>
+            <xar:else/>
+                #$sortitem['stitle']#
+            </xar:if>
+        </xar:foreach>
+    </xar:if>
 </div>
 
 <xar:if condition="!empty($showprevnext)">

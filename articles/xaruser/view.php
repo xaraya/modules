@@ -249,13 +249,13 @@ function articles_user_view($args)
     }
 
     $data['pager'] = '';
+    $data['viewpager'] = '';
 
-	// Add Sort to data passed to template so that we can automatically turn on alpha pager, if needed
-	$data['sort'] = $sort;	
-	
-	// Add current display letter, so that we can highlight the current filter in the alpha pager
-	$data['displayletter']=$displayletter;
-	
+    // Add Sort to data passed to template so that we can automatically turn on alpha pager, if needed
+    $data['sort'] = $sort;	
+
+    // Add current display letter, so that we can highlight the current filter in the alpha pager
+    $data['displayletter']=$displayletter;
 
     // Get the users requested number of stories per page.
     // If user doesn't care, use the site default
@@ -360,49 +360,49 @@ function articles_user_view($args)
     }
 
 
-	// Modify the where clause if an Alpha filter has been specified.
-	if (!empty($displayletter))
-	{
-		$displayletter = strtoupper($displayletter);
-		if( preg_match("/^[a-z|A-Z]$/",$displayletter) )
-		{
-			$extrawhere = "title LIKE '$displayletter%'";
-		} else {
-			$extrawhere= " title NOT LIKE 'a%'"
-			            ." and title NOT LIKE 'b%'"
-			            ." and title NOT LIKE 'c%'"
-			            ." and title NOT LIKE 'd%'"
-			            ." and title NOT LIKE 'e%'"
-			            ." and title NOT LIKE 'f%'"
-			            ." and title NOT LIKE 'g%'"
-			            ." and title NOT LIKE 'h%'"
-			            ." and title NOT LIKE 'i%'"
-			            ." and title NOT LIKE 'j%'"
-			            ." and title NOT LIKE 'k%'"
-			            ." and title NOT LIKE 'l%'"
-			            ." and title NOT LIKE 'm%'"
-			            ." and title NOT LIKE 'n%'"
-			            ." and title NOT LIKE 'o%'"
-			            ." and title NOT LIKE 'p%'"
-			            ." and title NOT LIKE 'q%'"
-			            ." and title NOT LIKE 'r%'"
-			            ." and title NOT LIKE 's%'"
-			            ." and title NOT LIKE 't%'"
-			            ." and title NOT LIKE 'u%'"
-			            ." and title NOT LIKE 'v%'"
-			            ." and title NOT LIKE 'w%'"
-			            ." and title NOT LIKE 'x%'"
-			            ." and title NOT LIKE 'y%'"
-			            ." and title NOT LIKE 'z%'";
-		}
-		if( $where == null )
-		{
-			$where = $extrawhere;
-		} else {
-			$where .= $extrawhere;
-		}
-		
-	}
+    // Modify the where clause if an Alpha filter has been specified.
+    if (!empty($displayletter))
+    {
+        $displayletter = strtoupper($displayletter);
+        if( preg_match("/^[a-z|A-Z]$/",$displayletter) )
+        {
+            $extrawhere = "title LIKE '$displayletter%'";
+        } else {
+            $extrawhere= " title NOT LIKE 'a%'"
+                        ." and title NOT LIKE 'b%'"
+                        ." and title NOT LIKE 'c%'"
+                        ." and title NOT LIKE 'd%'"
+                        ." and title NOT LIKE 'e%'"
+                        ." and title NOT LIKE 'f%'"
+                        ." and title NOT LIKE 'g%'"
+                        ." and title NOT LIKE 'h%'"
+                        ." and title NOT LIKE 'i%'"
+                        ." and title NOT LIKE 'j%'"
+                        ." and title NOT LIKE 'k%'"
+                        ." and title NOT LIKE 'l%'"
+                        ." and title NOT LIKE 'm%'"
+                        ." and title NOT LIKE 'n%'"
+                        ." and title NOT LIKE 'o%'"
+                        ." and title NOT LIKE 'p%'"
+                        ." and title NOT LIKE 'q%'"
+                        ." and title NOT LIKE 'r%'"
+                        ." and title NOT LIKE 's%'"
+                        ." and title NOT LIKE 't%'"
+                        ." and title NOT LIKE 'u%'"
+                        ." and title NOT LIKE 'v%'"
+                        ." and title NOT LIKE 'w%'"
+                        ." and title NOT LIKE 'x%'"
+                        ." and title NOT LIKE 'y%'"
+                        ." and title NOT LIKE 'z%'";
+        }
+        if( $where == null )
+        {
+            $where = $extrawhere;
+        } else {
+            $where .= $extrawhere;
+        }
+        
+    }
 
     // Get articles
     $articles = xarModAPIFunc('articles',
@@ -827,6 +827,9 @@ function articles_user_view($args)
                                                     'startnum' => '%%')),
                                     $numitems);
 
+    $data['viewpager'] = $data['pager'];
+    $data['sortlinks'] = array();
+
 // TODO: sorting on other fields ?
     if (strlen($data['pager']) > 5) {
         $data['pager'] .= '<br /><br />' . xarML('Sort by');
@@ -841,10 +844,14 @@ function articles_user_view($args)
         }
         foreach ($sortlist as $sname => $stitle) {
             if (empty($sort) && $sname == $defaultsort) {
-                $data['pager'] .= '&nbsp;' . xarML($stitle) . '&nbsp;';
+                $data['pager'] .= '&nbsp;' . $stitle . '&nbsp;';
+                $data['sortlinks'][] = array('stitle' => $stitle,
+                                             'slink'  => '');
                 continue;
             } elseif ($sname == $sort) {
-                $data['pager'] .= '&nbsp;' . xarML($stitle) . '&nbsp;';
+                $data['pager'] .= '&nbsp;' . $stitle . '&nbsp;';
+                $data['sortlinks'][] = array('stitle' => $stitle,
+                                             'slink'  => '');
                 continue;
             }
             // Note: 'sort' is used to override the default start view too
@@ -859,7 +866,9 @@ function articles_user_view($args)
                                            'sort' => $sname));
             }
             $data['pager'] .= '&nbsp;<a href="' . $sortlink . '">' .
-                              xarML($stitle) . '</a>&nbsp;';
+                              $stitle . '</a>&nbsp;';
+            $data['sortlinks'][] = array('stitle' => $stitle,
+                                         'slink'  => $sortlink);
         }
     }
 
