@@ -8,7 +8,7 @@
  * @subpackage opentracker
  * @author Chris "Alley" van de Steeg
  */
-require_once("phpOpenTracker.php");
+require_once(dirname(__FILE__) . '/phpOpenTracker.php');
 require_once POT_INCLUDE_PATH . 'LoggingEngine.php';
 
 class xarOpenTracker extends phpOpenTracker

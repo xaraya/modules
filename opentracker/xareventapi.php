@@ -9,7 +9,7 @@
  * @author Chris "Alley" van de Steeg
  */
 
-require_once("xarOpenTracker.php");
+require_once(dirname(__FILE__) . '/xarOpenTracker.php');
 
 function _opentracker_exit_urls($buffer) {
 	return preg_replace(
