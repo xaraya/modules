@@ -14,19 +14,31 @@
 /*******************************************
  *  Modified for Xaraya xarTinyMCE
  *  Updated with fixes for Firefox 1.0 Preview +
- *  Integrated to xarTinyMCE 2004/11/08 
+ *  Integrated to xarTinyMCE 2004/11/08
  *  xarTinyMCE pagackage - jojodee@xaraya.com
  * ******************************************/
 
 // unset $tinyMCE_imglib_include
 unset($tinyMCE_imglib_include);
 
-// include image library config settings
-if (is_file('../../../../../../../../../var/ibrowser/ibrowserconfig.inc')) {
-    include '../../../../../../../../../var/ibrowser/ibrowserconfig.inc';
+/**** START XARAYA MODIFICATION ****/
+// we need to find the directory our server is opperating in
+// hopefully this is complete :)
+if(isset($_SERVER['DOCUMENT_ROOT'])) {
+    $root_path = $_SERVER['DOCUMENT_ROOT'];
+} elseif(isset($HTTP_SERVER_VARS['DOCUMENT_ROOT'])) {
+    $root_path = $HTTP_SERVER_VARS['DOCUMENT_ROOT'];
 } else {
-     include '../../../../../ibrowserconfig.inc';
+    $root_path = getenv('DOCUMENT_ROOT');
 }
+// include image library config settings
+if (is_file($root_path.'/var/ibrowser/ibrowserconfig.inc')) {
+    include_once $root_path.'/var/ibrowser/ibrowserconfig.inc';
+} else {
+    // look in the templates directory of this module for the default file
+    include_once '../../../../../ibrowserconfig.inc';
+}
+/**** END XARAYA MODIFICATION ****/
 
 $tinyMCE_dir = 'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/';
 
@@ -88,7 +100,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <script language="JavaScript" type="text/JavaScript">
     // click ok - select picture or save changes
-    function selectClick() 
+    function selectClick()
     {
         if (validateParams()) {
             if (document.forms[0].src.value !='') {
@@ -108,7 +120,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // validate input values
-        function validateParams() 
+        function validateParams()
         {
 
         // check numeric values for attributes
@@ -142,7 +154,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // delete image
-    function deleteClick() 
+    function deleteClick()
     {
     if (document.libbrowser.imglist.selectedIndex>=0) {
             if (confirm(tinyMCE.getLang('lang_ibrowser_confirmdelete')))  {
@@ -153,7 +165,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
 // set picture attributes on change
-    function selectChange(obj) 
+    function selectChange(obj)
     {
         var formObj = document.forms[0];
 
@@ -168,7 +180,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // init functions
-    function init() 
+    function init()
     {
         // if existing image (image properties)
         if (tinyMCE.getWindowArg('src') != '') {
@@ -198,7 +210,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // updates style settings
-    function updateStyle() 
+    function updateStyle()
     {
         if (validateParams()) {
             document.getElementById('wrap').align = document.libbrowser.align.value;
@@ -212,7 +224,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     var oheight; // original width
     var owidth;  // original height
 
-    function changeDim(sel) 
+    function changeDim(sel)
     {
         var formObj = document.forms[0];
         if (formObj.src.value!=''){
@@ -224,7 +236,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
         }
     }
 
-    function resetDim() 
+    function resetDim()
     {
          var formObj = document.forms[0];
         formObj.width.value = owidth;
@@ -436,7 +448,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 </body>
 </html>
 <?php
-function liboptions($arr, $prefix = '', $sel = '') 
+function liboptions($arr, $prefix = '', $sel = '')
 {
   $buf = '';
   foreach($arr as $lib) {
@@ -445,7 +457,7 @@ function liboptions($arr, $prefix = '', $sel = '')
   return $buf;
 }
 // upload image
-function uploadImg($img) 
+function uploadImg($img)
 {
 
   global $HTTP_POST_FILES;
@@ -493,7 +505,7 @@ function uploadImg($img)
   return false;
 }
 
-function deleteImg() 
+function deleteImg()
 {
   global $HTTP_SERVER_VARS;
   global $imglib;
@@ -523,7 +535,7 @@ function deleteImg()
 // @param int $size a file size
 // @param int $dec a number of decimal places
 
-function filesize_h($size, $dec = 1) 
+function filesize_h($size, $dec = 1)
 {
     $sizes = array('byte(s)', 'kb', 'mb', 'gb');
     $count = count($sizes);
