@@ -86,6 +86,7 @@ function articles_userapi_getall($args)
     $required['aid'] = 1;
     $required['title'] = 1;
     $required['pubtypeid'] = 1;
+    $required['pubdate'] = 1;
     $required['authorid'] = 1; // not to be confused with author (name) :-)
     // force cids as required when categories are given
     if (count($cids) > 0) {
