@@ -58,8 +58,8 @@ function sniffer_userapi_getsniff($args)
                      xar_ua_cap,
                      xar_ua_quirk
               FROM $snifferTable
-              WHERE xar_ua_id = " . xarVarPrepForStore($id);
-    $result = $dbconn->Execute($query);
+              WHERE xar_ua_id = ?";
+    $result = $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

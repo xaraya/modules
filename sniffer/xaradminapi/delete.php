@@ -62,8 +62,9 @@ function sniffer_adminapi_delete($args)
 
     // Delete the tag
     $query = "DELETE FROM $snifferTable
-              WHERE xar_ua_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+              WHERE xar_ua_id = ?";
+
+    $result =& $dbconn->Execute($query, array((int) $id));
     if (!$result) return;
 
     // Let any hooks know that we have deleted a sniff 

@@ -44,23 +44,22 @@ function sniffer_userapi_sniffbasic($args)
 
     $sql = "SELECT xar_ua_id
             FROM $sniffertable
-            WHERE xar_ua_agent = '" . xarVarPrepForStore($client->get_property('ua')) . "'";
-    $result =& $dbconn->Execute($sql);
+            WHERE xar_ua_agent = ?";
+    $result =& $dbconn->Execute($sql, array((string) $client->get_property('ua')));
     if (!$result) return;
 
     if (!$result->EOF) {
         $uaid = $result->fields[0];
     } else {
         $nextID = $dbconn->GenId($sniffertable);
-        $insarr = array($nextID, xarVarPrepForStore($client->get_property('ua')),
-                        $client->property('platform'), $client->property('os'),
-                        $client->getname('browser'), $client->property('version'));
+        $insarr = array((int) $nextID, (string) $client->get_property('ua'),
+                        (string) $client->property('platform'), (string) $client->property('os'),
+                        (string) $client->getname('browser'), (string) $client->property('version'));
 
         $query = "INSERT INTO $sniffertable
-                  VALUES ({$insarr[0]},  '{$insarr[1]}', '{$insarr[2]}',
-                         '{$insarr[3]}', '{$insarr[4]}', '{$insarr[5]}', '', '')";
+                  VALUES (?, ?, ?, ?, ?, ?, '', '')";
 //      last 2 are reserved for caps and quirks, supported by the sniffers cvs-version
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query, $insarr);
         if (!$result) return;        
         $uaid = $dbconn->PO_Insert_ID($sniffertable, 'xar_ua_id');
     }
