@@ -109,6 +109,15 @@ function articles_adminapi_update($args)
     }
 
     // Call update hooks for categories etc.
+    // We need to tell some hooks that we are coming from the update status screen
+    // and not the update the actual article screen.  Right now, the keywords vanish
+    // into thin air.  Bug 1960
+    if (empty($statusflag)){
+        $args['statusflag'] = '';
+    } else {
+        $args['statusflag'] = true;
+    }
+
     $args['module'] = 'articles';
     $args['itemtype'] = $ptid;
     $args['cids'] = $cids;

@@ -68,6 +68,10 @@ function articles_admin_updatestatus()
 
         // Update the status now
         $article['status'] = $status;
+        // We need to tell some hooks that we are coming from the update status screen
+        // and not the update the actual article screen.  Right now, the keywords vanish
+        // into thin air.  Bug 1960
+        $article['statusflag'] = true;
 
         // Pass to API
         if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
