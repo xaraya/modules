@@ -25,7 +25,7 @@ function translations_admin_theme_overview()
 
     if (!($tplData = xarThemeGetInfo($themeid))) return;
 
-    xarSessionSetVar('translations_dnName', $tplData['name']);
+    xarSessionSetVar('translations_dnName', $tplData['directory']);
 
     $druidbar = translations_create_choose_a_theme_druidbar(OVERVIEW);
     $opbar = translations_create_opbar(OVERVIEW);

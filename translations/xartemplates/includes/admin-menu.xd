@@ -32,6 +32,7 @@
 		<td width="45%" valign="top">
 			<span><xar:mlstring>Translating</xar:mlstring></span>
 			<span class="xar-title">
+        <!-- TODO: we are using the session var here, but it is really the directory, to cater for name/dir independence -->
 				#$menu_dntypetext#&nbsp;#xarSessionGetVar('translations_dnName')#
 			</span>
 			<span><xar:mlstring>to:</xar:mlstring></span>

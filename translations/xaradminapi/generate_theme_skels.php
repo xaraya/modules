@@ -86,7 +86,7 @@ function translations_adminapi_generate_theme_skels($args)
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
 
-    if ($backend->bindDomain(XARMLS_DNTYPE_THEME, $themename)) {
+    if ($backend->bindDomain(XARMLS_DNTYPE_THEME, $themedir)) {
         if ($backend->hasContext('themes:','common')){
             if (!$backend->loadContext('themes:','common')) return;
         }
@@ -116,7 +116,7 @@ function translations_adminapi_generate_theme_skels($args)
     $subnames = array_keys($transEntriesCollection);
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
-    if (!$gen->bindDomain(XARMLS_DNTYPE_THEME, $themename)) return;
+    if (!$gen->bindDomain(XARMLS_DNTYPE_THEME, $themedir)) return;
 
     foreach ($subnames as $subname) {
         if (preg_match('/(.*)::(.*)/', $subname, $matches)) {
