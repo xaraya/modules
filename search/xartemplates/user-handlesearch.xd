@@ -12,16 +12,28 @@
   </p>
 </div>
 
+<div>#$pager#</div>
+
 <style type="text/css">
 .xar-search-match { 
   font-weight: bold;
 }
 </style>
-<span class="xar-mod-title">Results</span>
+
+<span class="xar-mod-title">
+  <xar:ml>
+    <xar:mlstring>Results #(1) to #(2) out of #(3)</xar:mlstring>
+    <xar:mlvar>#$searchstart#</xar:mlvar>
+    <xar:mlvar>#$searchend#</xar:mlvar>
+    <xar:mlvar>#$searchtotal#</xar:mlvar>
+  </xar:ml>
+</span>
   
 <div id="searchform" style="float:right;">
   <span class="xar-mod-title"><xar:mlstring>Search again</xar:mlstring></span>
-  #$searchform#
+  <xar:foreach in="$searchform" key="$module" value="$form">
+    #$form#
+  
 </div>
 <!-- TODO: set the values of the searchform to the values searched on -->
 
@@ -41,3 +53,4 @@
     <xar:mlstring>No results found</xar:mlstring>
   </xar:if>
 </div>
+#$pager#

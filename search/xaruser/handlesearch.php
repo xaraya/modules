@@ -28,6 +28,7 @@ function search_user_handlesearch() {
     // The module we want to search and the search terms are required.
     xarVarFetch('formodule','str:1:',$search_in_module);
     xarVarFetch('searchterms','str:0:',$search_terms);
+    xarVarFetch('startnum','int::',$startnum,1,XARVAR_NOT_REQUIRED);
     
     // Some modules allow searching only specific itemtypes, the generic
     // searchform supports this.
@@ -54,9 +55,8 @@ function search_user_handlesearch() {
     // to implement their function as a regular API function as well
     
     $data = array();
-    // Test if the module is hooked at all
+    // Test if the module is hooked at generic level
     if(xarModIsHooked($search_in_module)) {
-        // At least it's hooked
         // Now call the item:search:api function of the calling module and present
         // the search results with the template belonging to this function.
         
@@ -86,11 +86,24 @@ function search_user_handlesearch() {
     // Display the search form again, can we count on the array having one element?
     $searchform = xarModCallHooks('item','search',$object_id,array(),$search_in_module);
  
+    $total = count($searchresults);
+    $itemsperpage = xarModGetUserVar('search','resultsperpage');
+    $searchresults = array_slice($searchresults,$startnum, $itemsperpage); 
+    $urltemplate = xarModUrl('search','user','handlesearch',array('startnum' => '%%',
+                                                                  'formodule' => $search_in_module,
+                                                                  'searchterms' => $search_terms,
+                                                                  'object_id' => $object_id,
+                                                                  'itemtypes' => $item_types));
+    $data['pager'] =  xarTplGetPager($startnum, $total, $urltemplate, $itemsperpage);
+
     // Pass data to template
     $data['searchform'] = $searchform;
     $data['searchmodule'] = $search_in_module;
     $data['searchterms'] = $search_terms;
     $data['searchresults'] = $searchresults;
+    $data['searchtotal'] = $total;
+    $data['searchstart'] = $startnum;
+    $data['searchend'] = $startnum + $itemsperpage;
     return $data;
 }
 
