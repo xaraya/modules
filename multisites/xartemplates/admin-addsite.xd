@@ -47,6 +47,7 @@
 						<td><xar:mlstring>Prefix of tables for new site (system prefix is&nbsp; </xar:mlstring>'#$sysPrefix#').
 						</td>
 					</tr>
+<!--- TO DO: Add later when site - system prefix sharing is fixed
 					<tr align="left" valign="middle">
 						<td>
 							<xar:mlstring>Shared tables prefix:</xar:mlstring>
@@ -57,7 +58,7 @@
 						<td><xar:mlstring>Change to the same SITE prefix for a standalone site.</xar:mlstring>
 						</td>
 					</tr>
-
+--->
 					<tr align="left" valign="middle">
 						<td>
 							<xar:mlstring>Site Database:</xar:mlstring>

@@ -481,10 +481,11 @@ global $HTTP_SERVER_VARS;
              $newConfig[$line_num]="\$systemConfiguration['DB.TablePrefix']='".$msPrefix."';";
              $line                ="\$systemConfiguration['DB.TablePrefix']='".$msPrefix."';";
         }
-        if (strstr($line,"\$siteConfiguration['DB.TablePrefix']")) {
-             $newConfig[$line_num]="\$siteConfiguration['DB.TablePrefix']='".$sharedTables."';";
-             $line                ="\$siteConfiguration['DB.TablePrefix']='".$sharedTables."';";
-        }
+        //This needs to be added later after prefix sharing is fixed
+        //if (strstr($line,"\$siteConfiguration['DB.TablePrefix']")) {
+        //     $newConfig[$line_num]="\$siteConfiguration['DB.TablePrefix']='".$msPrefix."';";
+        //     $line                ="\$siteConfiguration['DB.TablePrefix']='".$msPrefix."';";
+        //}
         if (strstr($line,"?>")) {
              $newConfig[$line_num]="// Multisites: Set this Multisite SubSite Active.\n\$systemConfiguration['MS.Active'] = '1';\n\n?>";
                $line                ="// Multisites: Set this Multisite SubSite Active.\n\$systemConfiguration['MS.Active'] = '1';\n\n?>";
@@ -785,8 +786,9 @@ global $HTTP_SERVER_VARS;
         while (list ($line_num, $line) = each($holdConfig)) {
             fwrite($IOk,$line);
         }
-        fwrite($IOk,"// Multisites: Set site prefix (same as system).\n");
-        fwrite($IOk,"\$siteConfiguration['DB.TablePrefix'] = '".xarDBGetSiteTablePrefix()."';\n");
+        // TO DO: when site prefix - system prefix issues is fixed, update this
+        //fwrite($IOk,"// Multisites: Set site prefix (same as system).\n");
+        //fwrite($IOk,"\$siteConfiguration['DB.TablePrefix'] = '".xarDBGetSiteTablePrefix()."';\n");
         fwrite($IOk,"// Multisites: Set this as the Multisite Master.\n");
         fwrite($IOk,"\$systemConfiguration['MS.Master'] = '1';\n");
         fwrite($IOk,"// Multisites: Set multisite flag on.\n");
