@@ -30,7 +30,7 @@
 		<label for="template"><xar:mlstring>Email Template</xar:mlstring></label>:<br />
 		<textarea name="template" id="template" rows="20" cols="80" tabindex="1">#$template#</textarea>
 		<br /><br />
-		<input type="submit" value="#$submitlabel#" align="middle" tabindex="2" />
+		<input type="submit" value="#$submitlabel#"  tabindex="2" />
 	</form>
 </div>
 </div>
