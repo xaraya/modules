@@ -74,9 +74,9 @@ function paypalipn_user_main()
                                  'subject' => xarML('IPN Notification'),
                                  'message' => $mail['message']))) return;
     }
-    
-
     fclose ($fp);
+
+
 
     return true;
 } 
