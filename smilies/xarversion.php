@@ -16,7 +16,7 @@
 
 $modversion['name'] = 'Smilies';
 $modversion['id'] = '153';
-$modversion['version'] = '1.0';
+$modversion['version'] = '1.0.0';
 $modversion['description'] = 'Transform smilies to images';
 $modversion['credits'] = 'pndocs/credits.txt';
 $modversion['help'] = 'pndocs/help.txt';

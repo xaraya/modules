@@ -124,6 +124,14 @@ function smilies_init()
     return true;
 }
 
+
+function smilies_upgrade($oldversion){
+    switch($oldversion){
+       case '1.0':
+    }
+    return true;
+}
+
 /**
  * delete the smiley module
  */
