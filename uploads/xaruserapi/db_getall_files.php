@@ -84,8 +84,9 @@ function uploads_userapi_db_getall_files( /* VOID */ ) {
             $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         }
         
-        $fileInfo['fileHashName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
-               
+        $fileInfo['fileHashName']     = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
+        $fileInfo['fileHashRealName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileName'];
+        
         switch($fileInfo['fileStatus']) {
             case _UPLOADS_STATUS_REJECTED:
                 $fileInfo['fileStatusName'] = xarML('Rejected');
@@ -107,8 +108,7 @@ function uploads_userapi_db_getall_files( /* VOID */ ) {
     
     $result->Close();
 
-                                                                    
-   return $fileList;
+    return $fileList;
 }
 
 ?>

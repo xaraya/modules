@@ -30,3 +30,11 @@
     width:       36px;
     height:      39px;
 }
+
+.xar-uploads-action:hover
+{
+    cursor: pointer;
+    color: #F12600;
+    text-decoration: underline;
+
+}

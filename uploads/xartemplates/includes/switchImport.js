@@ -5,48 +5,83 @@ function switchImport(sType, iTypeId) {
     switch ( sType ) {
 		case 1: // turn on trusted import and off everything else
 			if (document.getElementById) {
-				document.getElementById("file_import_trusted").style.visibility = "visible";
-				document.getElementById("file_import_external").style.visibility = "hidden";
-				document.getElementById("file_import_upload").style.visibility = "hidden";
+				document.getElementById("attach_trusted").style.display = "block";
+				document.getElementById("attach_external").style.display = "none";
+				document.getElementById("attach_upload").style.display = "none";
+				document.getElementById("attach_stored").style.display = "none";
 			} else {
-				document.file_import_trusted.style.visibility = "visible";
-				document.file_import_external.style.visibility = hidden;
-				document.file_import_upload.style.visibility = "hidden";
+				document.attach_trusted.style.display = "block";
+				document.attach_external.style.display = "none";
+				document.attach_upload.style.display = "none";
+				document.attach_stored.style.display = "none";
 			}
 
-			oForm.file_import_external.value = null;
-			oForm.dd_file_import_type.value = iTypeId;
+			oForm.attach_external.value = null;
+			oForm.attach_type.value = iTypeId;
 			break;
 		case 2: // turn on external import and off everything else
 			if (document.getElementById) {
-				document.getElementById("file_import_external").style.visibility = "visible";
-				document.getElementById("file_import_trusted").style.visibility = "hidden";
-				document.getElementById("file_import_upload").style.visibility = "hidden";
+				document.getElementById("attach_external").style.display = "block";
+				document.getElementById("attach_trusted").style.display = "none";
+				document.getElementById("attach_upload").style.display = "none";
+				document.getElementById("attach_stored").style.display = "none";
 			} else {
-				document.file_import_external.style.visibility = "visible";
-				document.file_import_trusted.style.visibility = "hidden";
-				document.file_import_upload.style.visibility = "hidden";
+				document.attach_external.style.display = "block";
+				document.attach_trusted.style.display = "none";
+				document.attach_upload.style.display = "none";
+				document.attach_stored.style.display = "none";
 			}
 
-			oForm.elements['file_import_trusted[]'].value = null;
-			oForm.dd_file_import_type.value = iTypeId
+			oForm.elements['attach_trusted[]'].value = null;
+			oForm.attach_type.value = iTypeId
 			break;
 		case 3: // turn on upload import and off everything else
 			if (document.getElementById) {
-				document.getElementById("file_import_upload").style.visibility = "visible";
-				document.getElementById("file_import_external").style.visibility = "hidden";
-				document.getElementById("file_import_trusted").style.visibility = "hidden";
+				document.getElementById("attach_upload").style.display = "block";
+				document.getElementById("attach_external").style.display = "none";
+				document.getElementById("attach_trusted").style.display = "none";
+				document.getElementById("attach_stored").style.display = "none";
 			} else {
-				document.file_import_upload.style.visibility = "visible";
-				document.file_import_external.style.visibility = "hidden";
-				document.file_import_trusted.style.visibility = "hidden";
+				document.attach_upload.style.display = "block";
+				document.attach_external.style.display = "none";
+				document.attach_trusted.style.display = "none";
+				document.attach_stored.style.display = "none";
 			}
 
-			oForm.elements['file_import_trusted[]'].value = null;
-			oForm.file_import_external.value = null;
-			oForm.dd_file_import_type.value = iTypeId
+			oForm.elements['attach_trusted[]'].value = null;
+			oForm.attach_external.value = null;
+			oForm.attach_type.value = iTypeId
+			break;
+		case 4: // turn on upload import and off everything else
+			if (document.getElementById) {
+				document.getElementById("attach_stored").style.display = "block";
+				document.getElementById("attach_upload").style.display = "none";
+				document.getElementById("attach_external").style.display = "none";
+				document.getElementById("attach_trusted").style.display = "none";
+			} else {
+				document.attach_stored.style.display = "block";
+				document.attach_upload.style.display = "none";
+				document.attach_external.style.display = "none";
+				document.attach_trusted.style.display = "none";
+			}
+
+			oForm.elements['attach_stored[]'].value = null;
+			oForm.attach_external.value = null;
+			oForm.attach_type.value = iTypeId
 			break;
 		default: 
+			if (document.getElementById) {
+				document.getElementById("attach_stored").style.display = "none";
+				document.getElementById("attach_upload").style.display = "none";
+				document.getElementById("attach_external").style.display = "none";
+				document.getElementById("attach_trusted").style.display = "none";
+			} else {
+				document.attach_stored.style.display = "none";
+				document.attach_upload.style.display = "none";
+				document.attach_external.style.display = "none";
+				document.attach_trusted.style.display = "none";
+			}
+			oForm.attach_type.value = 0;
 			break;
 	}
 

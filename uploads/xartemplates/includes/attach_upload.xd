@@ -1,4 +1,5 @@
-<div id="attach_upload" style="visibility: hidden; display: inline;">
-    Upload File: <input type="file" name="attach_upload" />
+<div id="attach_upload" style="display: none;">
+    <xar:mlstring>Attach Uploaded File: </xar:mlstring><br />
+    <input type="file" name="attach_upload" />
     <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#" />
 </div>

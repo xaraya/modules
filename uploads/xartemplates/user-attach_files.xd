@@ -1,22 +1,23 @@
 <xar:base-include-javascript filename="switchImport.js" />
+<xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
 
 <div class="xar-uploads-clearer">&nbsp;</div>
+<xar:mlstring>Attach files from source:</xar:mlstring><br />
 <p>
-    <a style="cursor: pointer;" 
-    onClick="javascript:switchImport(1, #$getAction['LOCAL']#);" 
-    name="import_trusted" 
-    title="#xarML('Import file from Trusted Directory')#">Import Trusted</a> |
-    <a style="cursor: pointer;" 
-    onClick="javascript:switchImport(2, #$getAction['EXTERNAL']#);" 
-    name="import_external" 
-    title="#xarML('Import file from external source (http(s)|ftp)')#">Import External</a> |
-    <a style="cursor: pointer;" 
-    onClick="javascript:switchImport(3, #$getAction['UPLOAD']#);" 
-    name="import_upload" 
-    title="#xarML('Import file via upload')#">Import Uploaded File</a> 
+    <a class="xar-uploads-action" onClick="javascript:switchImport(1, #$getAction['LOCAL']#);true;" 
+       name="attach_trusted" title="#xarML('Attach file from Trusted Directory')#">Trusted</a> |
+    <a class="xar-uploads-action" onClick="javascript:switchImport(2, #$getAction['EXTERNAL']#);true;" 
+       name="attach_external" title="#xarML('Attach file from external source (http(s)|ftp)')#">External</a> |
+    <a class="xar-uploads-action" onClick="javascript:switchImport(3, #$getAction['UPLOAD']#);true;" 
+       name="attach_upload" title="#xarML('Attach uploaded file')#">Upload</a> |
+    <a class="xar-uploads-action" onClick="javascript:switchImport(4, #$getAction['STORED']#);true;" 
+       name="attach_stored" title="#xarML('Attach previously stored file')#">Stored</a> |
+    <a class="xar-uploads-action" onClick="javascript:switchImport(5, -1);true;" 
+       name="attach_reset" title="#xarML('Reset')#">Reset</a> 
     <br />
     <xar:template file="attach_upload" type="module" />
     <xar:template file="attach_external" type="module" />
     <xar:template file="attach_trusted" type="module" />
-    <input type="hidden" name="file_import_type" value="0" />
+    <xar:template file="attach_stored" type="module" />
+    <input type="hidden" name="attach_type" value="#$getAction['STORED']#" />
 </p>

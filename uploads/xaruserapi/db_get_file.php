@@ -153,7 +153,8 @@ function uploads_userapi_db_get_file( $args )  {
             $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         }
         
-        $fileInfo['fileHashName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
+        $fileInfo['fileHashName']     = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
+        $fileInfo['fileHashRealName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileName'];
                
         switch($fileInfo['fileStatus']) {
             case _UPLOADS_STATUS_REJECTED:

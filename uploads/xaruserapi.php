@@ -40,6 +40,7 @@ define('_UPLOADS_GET_EXT_FTP',       3);
 define('_UPLOADS_GET_EXT_HTTP',      4);
 define('_UPLOADS_GET_LOCAL',         5);
 define('_UPLOADS_GET_REFRESH_LOCAL', 6);
-define('_UPLOADS_GET_NOTHING',       7);
+define('_UPLOADS_GET_STORED',        7);
+define('_UPLOADS_GET_NOTHING',       8);
 
 ?>
