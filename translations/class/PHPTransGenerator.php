@@ -61,7 +61,13 @@ class PHPTranslationsGenerator {
             case XARMLS_DNTYPE_THEME:
             $this->baseDir = "$themes_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
-            if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
+            //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
+            $dirnames = xarModAPIFunc('translations','admin','get_theme_dirs',array('themedir'=>$dnName));
+            foreach ($dirnames as $dirname) {
+                if (file_exists($this->baseDir.$dirname)) continue;
+                if (!file_exists("themes/$dnName/$dirname")) continue;
+                mkdir($this->baseDir.$dirname, 0777);
+            }
             break;
             case XARMLS_DNTYPE_CORE:
             $this->baseDir = $core_dir.'/';
