@@ -99,7 +99,7 @@
     <td class="xar-accent">
       <table border="0" cellpadding="2" cellspacing="0" width="100%">
         <tr>
-          <td width="50%"><b><xar:mlstring>Posted</xar:mlstring>:</b> #$ttime#&nbsp;&nbsp;</td>
+          <td width="50%"><b><xar:mlstring>Posted</xar:mlstring>:</b> #$tftime#&nbsp;&nbsp;</td>
           <td width="50%" align="right">&nbsp;</td>
         </tr>
       </table>
@@ -150,6 +150,7 @@
 				<xar:sec mask="ModxarBB" catch="false">
 					<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
 				</xar:sec>
+          </td>
         </tr>
       </table>
 
