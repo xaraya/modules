@@ -66,9 +66,9 @@
                             </span>
                         </xar:if>
                         <xar:if condition="isset($body)">
-                            <textarea wrap="virtual" cols="57" rows="10" name="body" id="body" tabindex="2">#$body#</textarea>
+                            <textarea cols="57" rows="10" name="body" id="body" tabindex="2">#$body#</textarea>
                         <xar:else />
-                            <textarea wrap="virtual" cols="57" rows="10" name="body" id="body" tabindex="2"></textarea>
+                            <textarea cols="57" rows="10" name="body" id="body" tabindex="2"></textarea>
                         </xar:if>
                     </td>
                 </tr>
