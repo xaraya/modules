@@ -14,28 +14,28 @@
           <tr>
             <td align="right"><xar:mlstring>Address</xar:mlstring>:</td>
             <td>
-              <input name="address_1" type="text" id="address_1" value="#$address_1#" size="60" maxlength="100">
+              <input name="address_1" type="text" id="address_1" value="#$address_1#" size="60" maxlength="100" />
             </td>
             </tr>
           <tr>
             <td align="right">&nbsp;</td>
-            <td><input name="address_2" type="text" id="address_2" value="#$address_2#" size="60" maxlength="100"></td>
+            <td><input name="address_2" type="text" id="address_2" value="#$address_2#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="right"><xar:mlstring>City</xar:mlstring>:</td>
-            <td><input name="city" type="text" id="city" value="#$city#" size="60" maxlength="100"></td>
+            <td><input name="city" type="text" id="city" value="#$city#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="right"><xar:mlstring>State</xar:mlstring>:</td>
-            <td><input name="state" type="text" id="state" value="#$state#" size="60" maxlength="100"></td>
+            <td><input name="state" type="text" id="state" value="#$state#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="right"><xar:mlstring>Zip</xar:mlstring>:</td>
-            <td><input name="zip" type="text" id="zip" value="#$zip#" size="60" maxlength="100"></td>
+            <td><input name="zip" type="text" id="zip" value="#$zip#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="right"><xar:mlstring>Country</xar:mlstring>:</td>
-            <td><input name="country" type="text" id="country" value="#$country#" size="60" maxlength="100"></td>
+            <td><input name="country" type="text" id="country" value="#$country#" size="60" maxlength="100" /></td>
             </tr>
       </table></td>
 </tr>

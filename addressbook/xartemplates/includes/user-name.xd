@@ -22,7 +22,7 @@
                     <xar:if condition="$prefix['id'] ne $prfx">
                   <option value="#$prefix['id']#">#$prefix['name']#</option>
                     <xar:else />
-                  <option selected value="#$prefix['id']#">#$prefix['name']#</option>
+                  <option selected="selected" value="#$prefix['id']#">#$prefix['name']#</option>
                     </xar:if>
                 </xar:foreach>
         </select>
@@ -34,20 +34,20 @@
           <tr>
             <td align="right" valign="middle"><xar:mlstring>Last Name</xar:mlstring>:</td>
             <td align="left" valign="middle">
-              <input name="lname" type="text" id="lname" value="#$lname#" size="60" maxlength="100">
+              <input name="lname" type="text" id="lname" value="#$lname#" size="60" maxlength="100" />
             </td>
             </tr>
           <tr>
             <td align="right" valign="middle"><xar:mlstring>First Name</xar:mlstring>:</td>
-            <td align="left" valign="middle"><input name="fname" type="text" id="fname" value="#$fname#" size="60" maxlength="100"></td>
+            <td align="left" valign="middle"><input name="fname" type="text" id="fname" value="#$fname#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="right" valign="middle"><xar:mlstring>Title</xar:mlstring>:</td>
-            <td align="left" valign="middle"><input name="title" type="text" id="title" value="#$title#" size="60" maxlength="100"></td>
+            <td align="left" valign="middle"><input name="title" type="text" id="title" value="#$title#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="right" valign="middle"><xar:mlstring>Company</xar:mlstring>:</td>
-            <td align="left" valign="middle"><input name="company" type="text" id="company" value="#$company#" size="60" maxlength="100"></td>
+            <td align="left" valign="middle"><input name="company" type="text" id="company" value="#$company#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="right" valign="middle">&nbsp;</td>
@@ -70,7 +70,7 @@
                         <xar:if condition="$imgFile['id'] ne $img">
                   <option value="#$imgFile['id']#">#$imgFile['name']#</option>
                         <xar:else />
-                  <option selected value="#$imgFile['id']#">#$imgFile['name']#</option>
+                  <option selected="selected" value="#$imgFile['id']#">#$imgFile['name']#</option>
                         </xar:if>
                     </xar:foreach>
                 </select>

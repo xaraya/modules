@@ -11,22 +11,22 @@
     <div class="xar-alt-outline" style="padding:.25; text-align:center;">
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
 <!-- START MENUVALUES -->
-<input name="id" type="hidden" value="#$id#" id="id">
-<input name="formcall" type="hidden" value="#$formcall#" id="formcall">
-<input name="authid" type="hidden" value="#$authid#" id="authid">
-<input name="catview" type="hidden" value="#$catview#" id="catview">
-<input name="sortview" type="hidden" value="#$sortview#" id="sortview">
-<input name="formSearch" type="hidden" value="#$formSearch#" id="formSearch">
-<input name="all" type="hidden" value="#$all#" id="all">
-<input name="menuprivate" type="hidden" value="#$menuprivate#" id="menuprivate">
-<input name="total" type="hidden" value="#$total#" id="total">
-<input name="page" type="hidden" value="#$page#" id="page">
-<input name="char" type="hidden" value="#$char#" id="char">
+<input name="id" type="hidden" value="#$id#" id="id" />
+<input name="formcall" type="hidden" value="#$formcall#" id="formcall" />
+<input name="authid" type="hidden" value="#$authid#" id="authid" />
+<input name="catview" type="hidden" value="#$catview#" id="catview" />
+<input name="sortview" type="hidden" value="#$sortview#" id="sortview" />
+<input name="formSearch" type="hidden" value="#$formSearch#" id="formSearch" />
+<input name="all" type="hidden" value="#$all#" id="all" />
+<input name="menuprivate" type="hidden" value="#$menuprivate#" id="menuprivate" />
+<input name="total" type="hidden" value="#$total#" id="total" />
+<input name="page" type="hidden" value="#$page#" id="page" />
+<input name="char" type="hidden" value="#$char#" id="char" />
 <!-- END MENUVALUES -->
 
-<input name="action" type="hidden" value="#$action#" id="action">
-<input name="user_id" type="hidden" value="#$user_id#" id="user_id">
-<input name="formSubmitted" type="hidden" value="true" id="formSubmitted">
+<input name="action" type="hidden" value="#$action#" id="action" />
+<input name="user_id" type="hidden" value="#$user_id#" id="user_id" />
+<input name="formSubmitted" type="hidden" value="true" id="formSubmitted" />
 <table>
 <tr>
   <td>
@@ -91,7 +91,7 @@
                   <xar:if condition="$cat['id'] ne $cat_id">
                     <option value="#$cat['id']#">#$cat['name']#</option>
                   <xar:else />
-                    <option selected value="#$cat['id']#">#$cat['name']#</option>
+                    <option selected="selected" value="#$cat['id']#">#$cat['name']#</option>
                   </xar:if>
                 </xar:foreach>
         </select>
@@ -107,12 +107,12 @@
         <td align="left" valign="middle">
                 <xar:if condition="!$globalprotect">
                     <xar:if condition="$private">
-                        <input type="checkbox" name="private" id="private" checked value="1">
+                        <input type="checkbox" name="private" id="private" checked="checked" value="1" />
           <xar:else />
-                        <input type="checkbox" name="private" id="private" value="1">
+                        <input type="checkbox" name="private" id="private" value="1" />
           </xar:if>
                 <xar:else />
-                    <input type="hidden" name="private" value="0">
+                    <input type="hidden" name="private" value="0" />
                 </xar:if>
         </td>
       </tr>
@@ -123,9 +123,8 @@
   <td>
         <br />
     <div style="text-align:center;">
-      <input name="#$btnCommitID#" type="submit" id="#$btnCommitID#" value="#$btnCommitTitle#">
-&nbsp;&nbsp;&nbsp;
-      <input name="cancel" type="submit" id="cancel" value="Cancel">
+      <input name="#$btnCommitID#" type="submit" id="#$btnCommitID#" value="#$btnCommitTitle#" />&nbsp;&nbsp;&nbsp;
+      <input name="cancel" type="submit" id="cancel" value="Cancel" />
     </div>
   </td>
 </tr>

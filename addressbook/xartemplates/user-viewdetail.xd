@@ -66,7 +66,7 @@
 </xar:if>
         </div>
         </td>
-        <td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
+        <td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt="" /></td>
         <td align="left" valign="top">
         <div style="padding:0em 1em 0em 1em;">
           <strong><xar:mlstring>Contact</xar:mlstring>:</strong><br />
@@ -85,10 +85,10 @@
         </div>
         </td>
 <xar:if condition="$img">
-        <td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
+        <td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt="" /></td>
         <td align="center" valign="middle">
         <div style="padding:0em 1em 0em 1em;">
-          <img src="modules/#$abModInfo['directory']#/xarimages/#$img#" border="0" alt="">
+          <img src="modules/#$abModInfo['directory']#/xarimages/#$img#" border="0" alt="" />
         </div>
         </td>
 </xar:if>

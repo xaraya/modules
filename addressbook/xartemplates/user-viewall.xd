@@ -26,6 +26,7 @@
           <xar:mlstring>We're sorry. You do not have authorization to access the #(1).</xar:mlstring>
           <xar:mlvar>#xarModGetVar(__ADDRESSBOOK__,'abtitle')#</xar:mlvar>
       </xar:ml>
+      </p>
       <p>
       <xar:ml>
           <xar:mlstring>Please contact the <a href="mailto:#(1)">Site Admin</a> for further assistance</xar:mlstring>
@@ -73,7 +74,7 @@
                   <xar:if condition="$cat['id'] ne $catview">
                 <option value="#$cat['id']#">#$cat['name']#</option>
                   <xar:else />
-                <option selected value="#$cat['id']#">#$cat['name']#</option>
+                <option selected="selected" value="#$cat['id']#">#$cat['name']#</option>
                   </xar:if>
                 </xar:foreach>
               </select>
@@ -98,7 +99,7 @@
                   <xar:if condition="$sb['id'] ne $sortview">
                 <option value="#$sb['id']#">#$sb['name']#</option>
                   <xar:else />
-                <option selected value="#$sb['id']#">#$sb['name']#</option>
+                <option selected="selected" value="#$sb['id']#">#$sb['name']#</option>
                   </xar:if>
                 </xar:foreach>
               </select>

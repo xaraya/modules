@@ -37,21 +37,21 @@
                 </td>
                 <td style="text-align:center; padding:.25em;">
                 <xar:if condition="$guestmode_1">
-                  <input type="checkbox" name="guestmode_1" id="guestmode_1" value="1" checked tabindex="1" />
+                  <input type="checkbox" name="guestmode_1" id="guestmode_1" value="1" checked="checked" tabindex="1" />
                 <xar:else />
                   <input type="checkbox" name="guestmode_1" id="guestmode_1" value="1" tabindex="1" />
                 </xar:if>
                 </td>
                 <td style="text-align:center; padding:.25em;">
                 <xar:if condition="$guestmode_2">
-                  <input type="checkbox" name="guestmode_2" id="guestmode_2" checked value="1" tabindex="2" />
+                  <input type="checkbox" name="guestmode_2" id="guestmode_2" checked="checked" value="1" tabindex="2" />
                 <xar:else />
                   <input type="checkbox" name="guestmode_2" id="guestmode_2" value="1" tabindex="2" />
                 </xar:if>
                 </td>
                 <td style="text-align:center; padding:.25em;">
                 <xar:if condition="$guestmode_3">
-                  <input type="checkbox" name="guestmode_3" id="guestmode_3" checked value="1" tabindex="3" />
+                  <input type="checkbox" name="guestmode_3" id="guestmode_3" checked="checked" value="1" tabindex="3" />
                 <xar:else />
                   <input type="checkbox" name="guestmode_3" id="guestmode_3" value="1" tabindex="3" />
                 </xar:if> 
@@ -63,21 +63,21 @@
                 </td>
                 <td style="text-align:center; padding:.25em;">
                 <xar:if condition="$usermode_1">
-                  <input type="checkbox" name="usermode_1" id="usermode_1" value="1" checked tabindex="4" />
+                  <input type="checkbox" name="usermode_1" id="usermode_1" value="1" checked="checked" tabindex="4" />
                 <xar:else />
                   <input type="checkbox" name="usermode_1" id="usermode_1" value="1" tabindex="4" />
                 </xar:if>
                 </td>
                 <td style="text-align:center; padding:.25em;">
                 <xar:if condition="$usermode_2">
-                  <input type="checkbox" name="usermode_2" id="usermode_2" value="1" checked tabindex="5" />
+                  <input type="checkbox" name="usermode_2" id="usermode_2" value="1" checked="checked" tabindex="5" />
                 <xar:else />
                   <input type="checkbox" name="usermode_2" id="usermode_2" value="1" tabindex="5" />
                 </xar:if>
                 </td>
                 <td style="text-align:center; padding:.25em;">
                 <xar:if condition="$usermode_3">
-                  <input type="checkbox" name="usermode_3" id="usermode_3" value="1" checked tabindex="6" />
+                  <input type="checkbox" name="usermode_3" id="usermode_3" value="1" checked="checked" tabindex="6" />
                 <xar:else />
                   <input type="checkbox" name="usermode_3" id="usermode_3" value="1" tabindex="6" />
                 </xar:if>
@@ -116,7 +116,7 @@
                       <xar:if condition="$sortoption['id'] ne $defSortCols[0]">
                     <option value="#$sortoption['id']#">#$sortoption['name']#</option>
                       <xar:else />
-                    <option value="#$sortoption['id']#" selected>#$sortoption['name']#</option>
+                    <option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
                       </xar:if> 
                     </xar:foreach>
                   </select>
@@ -126,7 +126,7 @@
                       <xar:if condition="$sortoption['id'] ne $defSortCols[1]">
                     <option value="#$sortoption['id']#">#$sortoption['name']#</option>
                       <xar:else />
-                    <option value="#$sortoption['id']#" selected>#$sortoption['name']#</option>
+                    <option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
                       </xar:if> 
                     </xar:foreach>
                   </select>
@@ -142,7 +142,7 @@
                       <xar:if condition="$sortoption['id'] ne $altSortCols[0]">
                     <option value="#$sortoption['id']#">#$sortoption['name']#</option>
                       <xar:else />
-                    <option value="#$sortoption['id']#" selected>#$sortoption['name']#</option>
+                    <option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
                       </xar:if>
                     </xar:foreach>
                   </select>
@@ -152,7 +152,7 @@
                       <xar:if condition="$sortoption['id'] ne $altSortCols[1]">
                     <option value="#$sortoption['id']#">#$sortoption['name']#</option>
                       <xar:else />
-                    <option value="#$sortoption['id']#" selected>#$sortoption['name']#</option>
+                    <option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
                       </xar:if>
                     </xar:foreach>
                   </select>
@@ -168,7 +168,7 @@
                       <xar:if condition="$option['id'] ne $name_order_selected">
                     <option value="#$option['id']#">#$option['name']#</option>
                       <xar:else />
-                    <option value="#$option['id']#" selected>#$option['name']#</option>
+                    <option value="#$option['id']#" selected="selected">#$option['name']#</option>
                       </xar:if>
                     </xar:foreach>
                   </select>
@@ -189,7 +189,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                 <xar:if condition="$globalprotect">
-                  <input type="checkbox" name="globalprotect" id="globalprotect" value="1" checked tabindex="15" />
+                  <input type="checkbox" name="globalprotect" id="globalprotect" value="1" checked="checked" tabindex="15" />
                 <xar:else />
                   <input type="checkbox" name="globalprotect" id="globalprotect" value="1" tabindex="15" />
                 </xar:if>
@@ -201,7 +201,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                 <xar:if condition="$use_prefix">
-                  <input type="checkbox" name="use_prefix" id="use_prefix" value="1" checked tabindex="16" />
+                  <input type="checkbox" name="use_prefix" id="use_prefix" value="1" checked="checked" tabindex="16" />
                 <xar:else />
                   <input type="checkbox" name="use_prefix" id="use_prefix" value="1" tabindex="16" />
                 </xar:if>
@@ -213,7 +213,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                 <xar:if condition="$use_img">
-                  <input type="checkbox" name="use_img" id="use_img" value="1" checked tabindex="17" />
+                  <input type="checkbox" name="use_img" id="use_img" value="1" checked="checked" tabindex="17" />
                 <xar:else />
                   <input type="checkbox" name="use_img" id="use_img" value="1" tabindex="17" />
                 </xar:if>
@@ -229,7 +229,7 @@
                     <xar:if condition="$option['id'] ne $menu_off_selected">
                     <option value="#$option['id']#">#$option['name']#</option>
                     <xar:else />
-                    <option value="#$option['id']#" selected>#$option['name']#</option>
+                    <option value="#$option['id']#" selected="selected">#$option['name']#</option>
                     </xar:if>
                   </xar:foreach>
                   </select>
@@ -241,7 +241,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                   <xar:if condition="$menu_semi">
-                  <input type="checkbox" name="menu_semi" id="menu_semi" value="1" checked tabindex="19" />
+                  <input type="checkbox" name="menu_semi" id="menu_semi" value="1" checked="checked" tabindex="19" />
                   <xar:else />
                   <input type="checkbox" name="menu_semi" id="menu_semi" value="1" tabindex="19" />
                   </xar:if>
@@ -253,7 +253,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                   <xar:if condition="$zipbeforecity">
-                  <input type="checkbox" name="zipbeforecity" id="zipbeforecity" value="1" checked tabindex="20" />
+                  <input type="checkbox" name="zipbeforecity" id="zipbeforecity" value="1" checked="checked" tabindex="20" />
                   <xar:else />
                   <input type="checkbox" name="zipbeforecity" id="zipbeforecity" value="1" tabindex="20" />
                   </xar:if>
@@ -273,7 +273,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                   <xar:if condition="$hidecopyright">
-                  <input type="checkbox" name="hidecopyright" id="hidecopyright" value="1" checked tabindex="22" />
+                  <input type="checkbox" name="hidecopyright" id="hidecopyright" value="1" checked="checked" tabindex="22" />
                   <xar:else />
                   <input type="checkbox" name="hidecopyright" id="hidecopyright" value="1" tabindex="22" />
                   </xar:if>
@@ -314,7 +314,7 @@
                       <xar:if condition="$option['id'] ne $dateformat_selected">
                     <option value="#$option['id']#">#$option['name']#</option>
                       <xar:else />
-                    <option value="#$option['id']#" selected>#$option['name']#</option>
+                    <option value="#$option['id']#" selected="selected">#$option['name']#</option>
                       </xar:if>
                     </xar:foreach>
                   </select>
@@ -330,7 +330,7 @@
                   <xar:if condition="$option['id'] ne $numformat_selected">
                     <option value="#$option['id']#">#$option['name']#</option>
                   <xar:else />
-                    <option value="#$option['id']#" selected>#$option['name']#</option>
+                    <option value="#$option['id']#" selected="selected">#$option['name']#</option>
                   </xar:if>
                 </xar:foreach>
                   </select> 
@@ -351,7 +351,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                 <xar:if condition="$rptErrAdminFlag">
-                  <input name="rptErrAdminFlag" type="checkbox" id="rptErrAdminFlag" tabindex="27" value="1" checked />
+                  <input name="rptErrAdminFlag" type="checkbox" id="rptErrAdminFlag" tabindex="27" value="1" checked="checked" />
                 <xar:else />
                   <input type="checkbox" name="rptErrAdminFlag" id="rptErrAdminFlag" value="1" tabindex="27" />
                 </xar:if>
@@ -373,7 +373,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                 <xar:if condition="$rptErrDevFlag">
-                  <input name="rptErrDevFlag" type="checkbox" id="rptErrDevFlag" tabindex="29" value="1" checked />
+                  <input name="rptErrDevFlag" type="checkbox" id="rptErrDevFlag" tabindex="29" value="1" checked="checked" />
                 <xar:else />
                   <input type="checkbox" name="rptErrDevFlag" id="rptErrDevFlag" value="1" tabindex="29" />
                 </xar:if>

@@ -1,1 +1,1 @@
-<input name="note" type="hidden" id="note" value="#$note#">
+<input name="note" type="hidden" id="note" value="#$note#" />

@@ -44,7 +44,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                         <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     <xar:elseif condition="$custUserData[$i]['type'] eq 'varchar(120) default NULL'" />
                     <td align="left" valign="middle">
@@ -58,7 +58,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                         <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     <xar:elseif condition="$custUserData[$i]['type'] eq 'varchar(240) default NULL'" />
                     <td align="left" valign="middle">
@@ -72,7 +72,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                         <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     <xar:elseif condition="$custUserData[$i]['type'] eq 'decimal(10,2) default NULL'" />
                     <td align="left" valign="middle">
@@ -86,7 +86,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                         <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     <xar:elseif condition="$custUserData[$i]['type'] eq 'int default NULL'" />
                     <td align="left" valign="middle">
@@ -100,7 +100,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                         <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     <xar:elseif condition="$custUserData[$i]['type'] eq 'int(1) default NULL'" />
                     <td align="left" valign="middle">
@@ -108,13 +108,13 @@ function LimitText(fieldObj,maxChars) {
                     </td>
                     <td align="left" valign="middle">
                     <xar:if condition="!empty($custUserData[$i]['userData'])">
-                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" checked value="1" />
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" checked="checked" value="1" />
                     <xar:else />
                         <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" value="1"/>
                     </xar:if>
                         <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     <xar:elseif condition="$custUserData[$i]['type'] eq 'date default NULL'" />
                     <td align="left" valign="middle">
@@ -131,7 +131,7 @@ function LimitText(fieldObj,maxChars) {
                                 </xar:if>
                                     <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                                     <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                                <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                                <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                                 </td>
                                 <td>
                                 <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
@@ -150,7 +150,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                     <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     <xar:else />
                     <td align="left" valign="middle">
@@ -164,7 +164,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                         <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
                         <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden" />
                     </td>
                     </xar:if>
                 </tr>

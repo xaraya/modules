@@ -14,9 +14,9 @@
           <tr>
             <td align="center" valign="top">
                 <xar:if condition="$c_main eq 0">
-                    <input name="c_main" type="radio" value="0" checked>
+                    <input name="c_main" type="radio" value="0" checked="checked" />
                 <xar:else />
-                    <input type="radio" name="c_main" value="0">
+                    <input type="radio" name="c_main" value="0" />
                 </xar:if>
                 </td>
             <td align="left" valign="middle">
@@ -25,21 +25,21 @@
                         <xar:if condition="$label['id'] ne $c_label_1">
                             <option value="#$label['id']#">#$label['name']#</option>
                         <xar:else />
-                            <option selected value="#$label['id']#">#$label['name']#</option>
+                            <option selected="selected" value="#$label['id']#">#$label['name']#</option>
                         </xar:if>
                     </xar:foreach>
             </select>
                 </td>
             <td align="left" valign="top">
-              <input name="contact_1" type="text" id="contact_1" value="#$contact_1#" size="60" maxlength="100">
+              <input name="contact_1" type="text" id="contact_1" value="#$contact_1#" size="60" maxlength="100" />
             </td>
             </tr>
           <tr>
             <td align="center" valign="top">
                 <xar:if condition="$c_main eq 1">
-                    <input name="c_main" type="radio" value="1" checked>
+                    <input name="c_main" type="radio" value="1" checked="checked" />
                 <xar:else />
-                    <input type="radio" name="c_main" value="1">
+                    <input type="radio" name="c_main" value="1" />
                 </xar:if>
                 </td>
             <td align="left" valign="middle">
@@ -48,19 +48,19 @@
                         <xar:if condition="$label['id'] ne $c_label_2">
                             <option value="#$label['id']#">#$label['name']#</option>
                         <xar:else />
-                            <option selected value="#$label['id']#">#$label['name']#</option>
+                            <option selected="selected" value="#$label['id']#">#$label['name']#</option>
                         </xar:if>
                     </xar:foreach>
         </select>
                 </td>
-            <td align="left" valign="top"><input name="contact_2" type="text" id="contact_2" value="#$contact_2#" size="60" maxlength="100"></td>
+            <td align="left" valign="top"><input name="contact_2" type="text" id="contact_2" value="#$contact_2#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="center" valign="top">
                 <xar:if condition="$c_main eq 2">
-                    <input name="c_main" type="radio" value="2" checked>
+                    <input name="c_main" type="radio" value="2" checked="checked" />
                 <xar:else />
-                    <input type="radio" name="c_main" value="2">
+                    <input type="radio" name="c_main" value="2" />
                 </xar:if>
                 </td>
             <td align="left" valign="middle">
@@ -69,19 +69,19 @@
                         <xar:if condition="$label['id'] ne $c_label_3">
                             <option value="#$label['id']#">#$label['name']#</option>
                         <xar:else />
-                            <option selected value="#$label['id']#">#$label['name']#</option>
+                            <option selected="selected" value="#$label['id']#">#$label['name']#</option>
                         </xar:if>
                     </xar:foreach>
         </select>
                 </td>
-            <td align="left" valign="top"><input name="contact_3" type="text" id="contact_3" value="#$contact_3#" size="60" maxlength="100"></td>
+            <td align="left" valign="top"><input name="contact_3" type="text" id="contact_3" value="#$contact_3#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="center" valign="top">
                 <xar:if condition="$c_main eq 3">
-                    <input name="c_main" type="radio" value="3" checked>
+                    <input name="c_main" type="radio" value="3" checked="checked" />
                 <xar:else />
-                    <input type="radio" name="c_main" value="3">
+                    <input type="radio" name="c_main" value="3" />
                 </xar:if>
                 </td>
             <td align="left" valign="middle">
@@ -90,18 +90,18 @@
                         <xar:if condition="$label['id'] ne $c_label_4">
                             <option value="#$label['id']#">#$label['name']#</option>
                         <xar:else />
-                            <option selected value="#$label['id']#">#$label['name']#</option>
+                            <option selected="selected" value="#$label['id']#">#$label['name']#</option>
                         </xar:if>
                     </xar:foreach>
         </select></td>
-            <td align="left" valign="top"><input name="contact_4" type="text" id="contact_4" value="#$contact_4#" size="60" maxlength="100"></td>
+            <td align="left" valign="top"><input name="contact_4" type="text" id="contact_4" value="#$contact_4#" size="60" maxlength="100" /></td>
             </tr>
           <tr>
             <td align="center" valign="top">
                 <xar:if condition="$c_main eq 4">
-                    <input name="c_main" type="radio" value="4" checked>
+                    <input name="c_main" type="radio" value="4" checked="checked" />
                 <xar:else />
-                    <input type="radio" name="c_main" value="4">
+                    <input type="radio" name="c_main" value="4" />
                 </xar:if>
                 </td>
             <td align="left" valign="middle">
@@ -110,11 +110,11 @@
                         <xar:if condition="$label['id'] ne $c_label_5">
                             <option value="#$label['id']#">#$label['name']#</option>
                         <xar:else />
-                            <option selected value="#$label['id']#">#$label['name']#</option>
+                            <option selected="selected" value="#$label['id']#">#$label['name']#</option>
                         </xar:if>
                     </xar:foreach>
         </select></td>
-            <td align="left" valign="top"><input name="contact_5" type="text" id="contact_5" value="#$contact_5#" size="60" maxlength="100"></td>
+            <td align="left" valign="top"><input name="contact_5" type="text" id="contact_5" value="#$contact_5#" size="60" maxlength="100" /></td>
             </tr>
       </table></td>
 </tr>

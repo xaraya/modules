@@ -13,7 +13,6 @@
         <div style="width:60%;">
         <form name="modcustfield" id="modcustfield" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifycustomfields')#"><!-- enctype="application/x-www-form-urlencoded"> -->
         <div id="tableContainer">
-        <div id="tableContainer">
           <table style="width:60%; border:0em; padding:.5em;">
           <tr>
             <td style="text-align:center; padding:.25em;">
@@ -42,7 +41,7 @@
                 <xar:if condition="$datatype['id'] ne $cf['custType']">
                 <option value="#$datatype['id']#">#$datatype['name']#</option>
                 <xar:else />
-                <option value="#$datatype['id']#" selected>#$datatype['name']#</option>
+                <option value="#$datatype['id']#" selected="selected">#$datatype['name']#</option>
                 </xar:if>
               </xar:foreach>
               </select>
@@ -57,12 +56,12 @@
             </td>
             <td style="text-align:center; padding:.25em;">
             <xar:if condition="$cf['position'] eq 1">
-              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4"></a>
+              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4" /></a>
             <xar:else />
               <xar:if condition="$cf['position'] eq sizeof($custfields)">
-              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4"></a>
+              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4" /></a>
               <xar:else />
-              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4"></a><a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4"></a>
+              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4" /></a><a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4" /></a>
               </xar:if>
             </xar:if>
             </td>
@@ -73,7 +72,7 @@
 <!-- START Logic for displaying new custom field -->
           <tr>
             <td style="text-align:center; padding:.25em;">
-              <input name="newname" id="newname" type="text" size="20" maxlength="30" >
+              <input name="newname" id="newname" type="text" size="20" maxlength="30" />
             </td>
             <td style="text-align:center; padding:.25em;">
               <select name="newtype" id="newtype" size="1">
@@ -93,11 +92,11 @@
         </table>
         </div>
         <div style="margin:1em;">
-            <input type="submit" name="btnSubmit" value="#$btnCommitText#">
-            <input name="authid" type="hidden" id="authid" value="#$authid#">
-            <input name="incID" type="hidden" id="incID" value="">
-            <input name="decID" type="hidden" id="decID" value="">
-            <input name="formSubmit" type="hidden" id="formSubmit" value="1">
+            <input type="submit" name="btnSubmit" value="#$btnCommitText#" />
+            <input name="authid" type="hidden" id="authid" value="#$authid#" />
+            <input name="incID" type="hidden" id="incID" value="" />
+            <input name="decID" type="hidden" id="decID" value="" />
+            <input name="formSubmit" type="hidden" id="formSubmit" value="1" />
         </div>
         </form>
       </div>
