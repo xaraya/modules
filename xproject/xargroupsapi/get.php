@@ -10,7 +10,7 @@ function xproject_groupsapi_get($args)
     }
 
     if (!xarSecAuthAction(0, 'groups::', "::", ACCESS_READ)) {
-        xarSessionSetVar('errormsg', _XPROJECTNOAUTH);
+        xarSessionSetVar('errormsg', xarML('Not authorised to access Tasks module'));
         return false;
     }
 
