@@ -31,7 +31,7 @@
             to explaining it another time.  In the meantime, please take a look at the user-main.xd template for some examples.
             <br />
             <br />
-            <a href="index.php?module=overlib&func=main">overLIB Test</a>
+            <a href="index.php?module=overlib&amp;func=main">overLIB Test</a>
             </xar:mlstring>
         </div>
         <br />

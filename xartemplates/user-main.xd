@@ -71,7 +71,7 @@
    
 <xar:comment> Change the look and feel </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
-    caption="look & feel : example 1" 
+    caption="look &amp; feel : example 1" 
     text="pretty"
     fgcolor="#ffffff"
     bgcolor="#000000"
@@ -82,11 +82,11 @@
 
 <p><a href="javascript:void(0);" 
    onmouseover="#$olopen#" 
-   onmouseout="#$olclose#">Look & Feel : Example 1</a></p>
+   onmouseout="#$olclose#">Look &amp; Feel : Example 1</a></p>
    
 <xar:comment> Change the look and feel </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
-    caption="look & feel : example 2" 
+    caption="look &amp; feel : example 2" 
     text="pretty"
     fgcolor="#ffffff"
     bgcolor="#000000"
@@ -99,11 +99,11 @@
 
 <p><a href="javascript:void(0);" 
    onmouseover="#$olopen#" 
-   onmouseout="#$olclose#">Look & Feel : Example 2</a></p>
+   onmouseout="#$olclose#">Look &amp; Feel : Example 2</a></p>
    
 <xar:comment> Change the look and feel </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
-    caption="look & feel : example 3" 
+    caption="look &amp; feel : example 3" 
     text="pretty"
     fgcolor="#ffffff"
     bgcolor="#000000"
@@ -116,5 +116,5 @@
 
 <p><a href="javascript:void(0);" 
    onmouseover="#$olopen#" 
-   onmouseout="#$olclose#">Look & Feel : Example 3</a></p>
+   onmouseout="#$olclose#">Look &amp; Feel : Example 3</a></p>
    
