@@ -49,7 +49,19 @@ function xarbb_userapi_createtopic($args)
 
     // Get next ID in table
     $nextId = $dbconn->GenId($xbbtopicstable);
-    $time = date('Y-m-d G:i:s');
+    // let's set times only if times are not passed in
+    if (!isset($ttime) || empty($ttime)) {
+        $ttime = date('Y-m-d G:i:s');
+    }
+    if (!isset($tftime) || empty($tftime)) {
+        $tftime = date('Y-m-d G:i:s');
+    }
+    if (!isset($treplies) || empty($treplies)) {
+        $treplies=0;
+    }
+    if (!isset($treplier) || empty($treplier)) {
+        $treplier=0;
+    }
     // Add item
     $query = "INSERT INTO $xbbtopicstable (
               xar_tid,
@@ -58,15 +70,22 @@ function xarbb_userapi_createtopic($args)
               xar_tpost,
               xar_tposter,
               xar_ttime,
-              xar_tftime)
+              xar_tftime,
+              xar_treplies,
+              xar_treplier,
+              xar_tstatus)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($fid) . "',
               '" . xarVarPrepForStore($ttitle) . "',
               '" . xarVarPrepForStore($tpost) . "',
               '" . xarVarPrepForStore($tposter) . "',
-              '$time',
-              '$time')";
+              '$ttime',
+              '$tftime',
+              '" . xarVarPrepForStore($treplies) . "',
+              '" . xarVarPrepForStore($treplier) . "',
+              '" . xarVarPrepForStore($tstatus) . "')";
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

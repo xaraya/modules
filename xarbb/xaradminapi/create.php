@@ -36,6 +36,14 @@ function xarbb_adminapi_create($args)
                        new SystemException($msg));
         return;
     }
+    //Let's set defaults so we can pass in values if necessary
+    if ((!isset($ftopics)) || (empty($ftopics))){
+        $ftopics=0;
+    }
+    if ((!isset($fposts))|| (empty($fposts))){
+        $fposts=0;
+    }
+
 
     // Security Check
     if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
@@ -48,7 +56,7 @@ function xarbb_adminapi_create($args)
         // for security check below
         $args['cids'] = $cids;
     } else {
-        $data['cids'] = array_values(preg_grep('/\d+/',$cids));
+        $args['cids'] = array_values(preg_grep('/\d+/',$cids));
     }
 
     // Get datbase setup
@@ -61,8 +69,9 @@ function xarbb_adminapi_create($args)
     $nextId = $dbconn->GenId($xbbforumstable);
 
     // Get Time
-    $time = date('Y-m-d G:i:s');
-
+    if ((!isset($fpostid)) || (empty($fpostid))){
+        $fpostid= date('Y-m-d G:i:s');
+    }
     // Add item
     $query = "INSERT INTO $xbbforumstable (
               xar_fid,
@@ -76,10 +85,10 @@ function xarbb_adminapi_create($args)
               $nextId,
               '" . xarVarPrepForStore($fname) . "',
               '" . xarVarPrepForStore($fdesc) . "',
-              '1',
-              '1',
+              '" . xarVarPrepForStore($ftopics) . "',
+              '" . xarVarPrepForStore($fposts) . "',
               '" . xarVarPrepForStore($fposter) . "',
-              '$time')";
+              '$fpostid')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

@@ -66,7 +66,9 @@ function xarbb_admin_new()
                                array('fname'    => $data['fname'],
                                      'fdesc'    => $data['fdesc'],
                                      'cids'     => $data['cids'],
-                                     'fposter'  => $tposter))) return;
+                                     'fposter'  => $tposter,
+                                     'ftopics'  => 1,
+                                     'fposts'   => 1))) return;
 
             // Get New Forum ID
             $forum = xarModAPIFunc('xarbb',
