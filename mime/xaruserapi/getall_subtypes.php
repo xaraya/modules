@@ -9,7 +9,8 @@
   *  returns array      An array of (typeid, subtypeId, subtypeName) or an empty array
   */
   
-function mime_userapi_getall_subtypes( $args ) {
+function mime_userapi_getall_subtypes( $args ) 
+{
 
     extract($args);
     

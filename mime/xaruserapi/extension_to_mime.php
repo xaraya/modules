@@ -13,7 +13,8 @@
  *
  * @return string||boolean  mime-type or FALSE with exception on error, FALSE and no exception if unknown mime-type
  */
-function mime_userapi_extension_to_mime( $args ) {
+function mime_userapi_extension_to_mime( $args ) 
+{
 
     extract($args);
 

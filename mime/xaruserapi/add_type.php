@@ -9,7 +9,8 @@
   *  returns array      An array of (typeId, typeName) or an empty array
   */
   
-function mime_userapi_add_type( $args ) {
+function mime_userapi_add_type( $args ) 
+{
 
     extract( $args );
     

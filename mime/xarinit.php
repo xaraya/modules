@@ -24,7 +24,8 @@
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function mime_init() {
+function mime_init() 
+{
 
     $error = FALSE;
     

@@ -10,7 +10,8 @@
   *  returns array      An array of (typeId, typeName) or an empty array
   */
   
-function mime_userapi_getall_types( /* VOID */ ) {
+function mime_userapi_getall_types( /* VOID */ ) 
+{
 
     // Get database setup
     $dbconn =& xarDBGetConn();

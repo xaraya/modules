@@ -10,7 +10,8 @@
   *  returns array      false on error, the sub type id otherwise
   */
   
-function mime_userapi_add_subtype( $args ) {
+function mime_userapi_add_subtype( $args ) 
+{
 
     extract($args);
     

@@ -10,7 +10,8 @@
   *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
   */
   
-function mime_userapi_get_magic( $args ) {
+function mime_userapi_get_magic( $args ) 
+{
 
     extract($args);
     

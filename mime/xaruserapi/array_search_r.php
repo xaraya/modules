@@ -31,7 +31,8 @@
  *    @access        public
  */
 
-function mime_userapi_array_search_r($args) {
+function mime_userapi_array_search_r($args) 
+{
     extract($args);
 
     static $indent = 0;

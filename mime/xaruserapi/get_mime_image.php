@@ -11,7 +11,8 @@
  * @returns string
  */
 
-function mime_userapi_get_mime_image( $args ) {
+function mime_userapi_get_mime_image( $args ) 
+{
 
     extract ( $args );
 

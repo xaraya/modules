@@ -9,7 +9,8 @@
   *  returns array      An array of (subtypeId, extension) or an empty array
   */
   
-function mime_userapi_getall_extensions( $args ) {
+function mime_userapi_getall_extensions( $args ) 
+{
 
     extract($args);
     

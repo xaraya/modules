@@ -11,7 +11,8 @@
  * @param   string      $mime_type MIME type to be mapped to a file extension.
  * @return  string      The file extension of the MIME type.
  */
-function mime_userapi_mime_to_extension( $args ) {
+function mime_userapi_mime_to_extension( $args ) 
+{
 
     extract($args);
 
