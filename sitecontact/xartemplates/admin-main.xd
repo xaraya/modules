@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration 
+    - SiteContact</xar:mlstring></span></div>
+	<div class="xar-mod-body" style="display:block;"> 
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div>
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;"> 
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" /> 
+        </div><div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;"> 
+            <xar:mlstring>What is it?</xar:mlstring> </div><br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <em><xar:mlstring>SiteContact 
+            is a simple module that allows visitors to easily contact the Site 
+            Administrator by email.</xar:mlstring></em> </div><br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;"> 
+            <xar:mlstring>How to use it?</xar:mlstring> </div><br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Install 
+            from the administration module listing. There are no tables involved. 
+            Once installed, setup the module configuration in Modify Config option.</xar:mlstring> 
+            <p>There are a number of variables you can set in the Modify Config 
+                option. If any are left blank, a default is provided. </p>
+            <p>You can use HTML in your emails or in the configurable text that 
+                displays in SiteContact pages. But, please, if you do, make sure 
+                you have HTML allowed in your site, and you have configured the 
+                Mail module to use HTML if you put HTML in the email text.</p>
+            <p>By default, all emails are sent to the administrator email address 
+                specified in the Mail module. You can override this for each of 
+                the Subject options of your feedback form. Just add the subject 
+                option and alternative email in the form:</p>
+        </div></div>
+<blockquote>
+    <div class="xar-mod-body" style="display:block;">
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"><strong>Subject-line<span style="color:#FF0000;">;</span>optional-email<span style="color:#FF0000;">,</span></strong>
+        </div>
+</div>
+</blockquote>
+<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p>The line <strong>must end with a comma</strong>. The semi-colon 
+                and optional email can be omitted. Don't forget to test your setup 
+                by sending yourself an email through SiteContact!</p>
+        </div><br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;"> 
+            <xar:mlstring>Included Blocks</xar:mlstring> 
+		</div>
+		<div style="margin-left: 1em; margin-right: 1em; text-align:left; margin-top: 10px;"> 
+            None at this stage 
+		</div><br />
+        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;"> 
+            <xar:mlstring>Extended information about this module can be found 
+            at <a href="http://xaraya.athomeandabout.com" title="http://xaraya.athomeandabout.com" target="_blank">http://xaraya.athomeandabout.com</a></xar:mlstring>
+		</div>
+	</div>
