@@ -1,0 +1,1 @@
+<title>#$publication['title']# :: #$issue['title']#</title><br /><br /><table border="0" width="100%" cellpadding="5"><xar:loop name="$issue['headlines']"><xar:loop name="$loop:item['stories']"><font face="Arial, Helvetica, sans-serif">#$loop:item['content']#</font></xar:loop></xar:loop></td></tr></table>

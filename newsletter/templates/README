@@ -10,6 +10,8 @@ The default templates are located the directory "modules/newsletter/templates"
 The default templates are:
     publication-template-html.xd    - default HTML template
     publication-template-text.xd    - default text template 
+    singlestory-template-html.xd    - an example of a single story issue HTML template
+    singlestory-template-text.xd    - an example of a single story issue text template
 
 Once a new template has been created, edit the publication to use the new template. When viewing an issue, the HTML publication template will be used to display the issue.
 
