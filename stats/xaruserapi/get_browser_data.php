@@ -13,50 +13,56 @@ function stats_userapi_get_browser_data($args)
 												  $args);
 	$browsers = array();
 	foreach($brdata as $browser){
-		if ($top10) {
-            $brname = $browser['agent'];
-		} else {
-            $brname = $browser['agent'].' '.$browser['agver'];
-		}
 		switch ($browser['agent']) {
 			case 'Microsoft Internet Explorer': //TODO: is this really only on MAC??
                 $brpic = 'ie5mac.png';
-				break;
+                $brname = xarML('Microsoft Internet Explorer');
+                break;
 			case 'Msie':
 				$brpic = 'msie.png';
-				break;
+                $brname = xarML('Microsoft Internet Explorer');
+                break;
             case 'Mozilla':
 				$brpic  = 'mozilla.png';
-				break;
+                $brname = xarML('Mozilla');
+                break;
 			case 'Opera':
 				$brpic = 'opera.png';
-				break;
+                $brname = xarML('Opera');
+                break;
 			case 'ns':         //TODO: is this used like this?
 			case 'Netscape':
 			case 'Netscape6':
 				$brpic = 'netscape7.png';
-				break;
+                $brname = xarML('Netscape');
+                break;
             case 'Safari':
 				$brpic = 'safari.png';
-				break;
+                $brname = xarML('Safari');
+                break;
             case 'Chimera':
             case 'Camino':
 				$brpic = 'camino.png';
-				break;				
+                $brname = xarML('Camino');
+                break;				
             case 'Galeon':
 				$brpic = 'galeon.png';
-				break;
+                $brname = xarML('Galeon');
+                break;
             case 'Phoenix':
             case 'Mozilla Firebird':
 				$brpic = 'px.png';
-				break;
+                $brname = xarML('Mozilla Firebird');
+                break;
 			case 'Konqueror':
 				$brpic = 'konqueror.png';
-				break;
+                $brname = xarML('Konqueror');
+                break;
             default:
 				//$brname = xarML('Unknown');
 				$brpic  = 'question.gif';
 		}
+        if(!$top10) $brname .= " $browser[agver]";
 		$browsers[] = array('name' => $brname,
 							'rel'  => sprintf('%01.2f',(100*$browser['hits']/$brsum)),
 							'abs'  => $browser['hits'],
