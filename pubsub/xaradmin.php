@@ -27,13 +27,8 @@ function pubsub_admin_main()
         return;
     }
 
-    $welcome = '';
-    // TODO: make directory non-hardcoded
-    @include('modules/pubsub/xarlang/eng/admindoc.php');
-    
     // Return the template variables defined in this function
-    return array('menu' => pubsub_admin_getmenu(),
-                 'welcome' => $welcome);
+    return array();
 }
 
 /**
