@@ -315,7 +315,7 @@ function articles_featureditemsblock_modify($blockinfo)
         $vars['filtereditems'][$idx]['selected'] = '';
         for($mx=0; $mx < count($vars['moreitems']); ++$mx) {
             if (($vars['moreitems'][$mx]) == ($vars['filtereditems'][$idx]['aid'])) {
-                $vars['filtereditems'][$idx]['selected'] = 'selected';
+                $vars['filtereditems'][$idx]['selected'] = 'selected="selected"';
             }
         }
     }
