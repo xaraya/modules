@@ -18,7 +18,7 @@ function trackback_adminapi_ping($args)
 
     if (!isset($pingurl) || !is_string($pingurl)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'ping url', 'admin', 'ping', 'trackback');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -50,12 +50,12 @@ function trackback_adminapi_ping($args)
       break;
     default:
         $msg = xarML('Invalid Schema for Ping Url #(1) :  Should be either http:// or ssl://', $target["scheme"]);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (!is_resource($fp)){
         $msg = xarML('Could not connect to #(1)', $fp);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
