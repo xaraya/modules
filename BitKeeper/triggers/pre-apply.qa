@@ -171,7 +171,7 @@ passed 2.19
 failed=0
 test="No use of xarExceptionMajor"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarexceptionmajor' $i`
+    result=`grep -ni '[^function] .*xarexceptionmajor' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.1 "in $i" $result
     fi
@@ -182,7 +182,7 @@ passed 3.10.1
 failed=0
 test="No use of xarExceptionSet"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarexceptionset' $i`
+    result=`grep -ni '[^function] .*xarexceptionset' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.2 "in $i" $result
     fi
@@ -193,7 +193,7 @@ passed 3.10.2
 failed=0
 test="No use of xarVarCleanFromInput (use xarVarFetch)"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarvarcleanfrominput' $i`
+    result=`grep -ni '[^function] .*xarvarcleanfrominput' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.3 "in $i" $result
     fi
@@ -204,7 +204,7 @@ passed 3.10.3
 failed=0
 test="No use of xarVarPrepForStore (use bindvars or qstr method)"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarvarprepforstore' $i`
+    result=`grep -ni '[^function] .*xarvarprepforstore' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.4 "in $i" $result
     fi
@@ -215,7 +215,7 @@ passed 3.10.4
 failed=0
 test="No use of xarExceptionID (use xarCurrentErrorId)"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarexceptionid' $i`
+    result=`grep -ni '[^function] .*xarexceptionid' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.5 "in $i" $result
     fi
@@ -226,7 +226,7 @@ passed 3.10.5
 failed=0
 test="No use of xarExceptionValue (use xarCurrentError)"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarexceptionvalue' $i`
+    result=`grep -ni '[^function] .*xarexceptionvalue' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.6 "in $i" $result
     fi
@@ -237,7 +237,7 @@ passed 3.10.6
 failed=0
 test="No use of xarExceptionFree (use xarErrorFree)"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarexceptionfree' $i`
+    result=`grep -ni '[^function] .*xarexceptionfree' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.7 "in $i" $result
     fi
@@ -248,7 +248,7 @@ passed 3.10.7
 failed=0
 test="No use of xarExceptionHandled (use xarErrorHandled)"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarexceptionhandled' $i`
+    result=`grep -ni '[^function] .*xarexceptionhandled' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.8 "in $i" $result
     fi
@@ -259,7 +259,7 @@ passed 3.10.8
 failed=0
 test="No use of xarExceptionRender (use xarErrorRender)"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[^function] .*xarexceptionrender' $i`
+    result=`grep -ni '[^function] .*xarexceptionrender' $i`
     if [ $? -ne 1 ] ; then
         failed 3.10.9 "in $i" $result
     fi
