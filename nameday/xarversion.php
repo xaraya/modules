@@ -11,6 +11,7 @@ $modversion['official'] = 0;
 $modversion['author'] = 'Volodymyr Metenchuk';
 $modversion['contact'] = 'http://www.xaraya.ru/';
 $modversion['admin'] = 1;
+$modversion['user'] = 0;
 $modversion['securityschema'] = array('nameday::' => 'nameday::nameday ID');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content'; 

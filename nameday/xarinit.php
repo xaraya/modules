@@ -73,6 +73,7 @@ function nameday_upgrade($oldversion)
             // upgrade versions
             break;
         case '1.3':
+        case '1.3.0':
         case '2.0.0':
             // upgrade versions
             break;
@@ -80,6 +81,9 @@ function nameday_upgrade($oldversion)
             // upgrade versions
             break;
     }
+
+    // Upgrade successful
+    return true;
 }
 
 /**
