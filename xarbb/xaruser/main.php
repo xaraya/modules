@@ -35,7 +35,15 @@ function xarbb_user_main()
                                    'startnum' => $startnum,
                                     'numitems' => xarModGetVar('xarbb',
                                                             'forumsperpage')));
+/*
+    $categories = xarModAPIFunc('categories',
+                                'user',
+                                'getitemcats',
+                             array('module' => 'xarbb'));
 
+
+    var_dump($categories); return;
+*/
     $totalforums = count($forums);
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];

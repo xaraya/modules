@@ -70,6 +70,16 @@ function xarbb_userapi_createtopic($args)
     if (!isset($tstatus) || empty($tstatus)) {
         $tstatus = 0;
     }
+
+    if (!isset($thostname)) {
+        $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
+        if (!empty($forwarded)) {
+            $thostname = preg_replace('/,.*/', '', $forwarded);
+        } else {
+            $thostname = xarServerGetVar('REMOTE_ADDR');
+        }
+    }
+
     // Add item
     $query = "INSERT INTO $xbbtopicstable (
               xar_tid,
@@ -81,7 +91,8 @@ function xarbb_userapi_createtopic($args)
               xar_tftime,
               xar_treplies,
               xar_treplier,
-              xar_tstatus)
+              xar_tstatus,
+              xar_thostname)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($fid) . "',
@@ -92,7 +103,8 @@ function xarbb_userapi_createtopic($args)
               '$tftime',
               '" . xarVarPrepForStore($treplies) . "',
               '" . xarVarPrepForStore($treplier) . "',
-              '" . xarVarPrepForStore($tstatus) . "')";
+              '" . xarVarPrepForStore($tstatus) . "',
+              '" . xarVarPrepForStore($thostname) . "')";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

@@ -22,7 +22,6 @@
  */
 function xarbb_userapi_updatetopic($args)
 {
-
     // Get arguments from argument array
     extract($args);
 
@@ -69,10 +68,7 @@ function xarbb_userapi_updatetopic($args)
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $xbbtopicstable = $xartable['xbbtopics'];
-
-    // now
     $time = time();
 
     foreach($params as $vvar => $field)	{
@@ -95,5 +91,4 @@ function xarbb_userapi_updatetopic($args)
     // Return the id of the newly created link to the calling process
     return true;
 }
-
 ?>

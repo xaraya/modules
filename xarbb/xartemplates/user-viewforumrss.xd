@@ -3,7 +3,9 @@
 <item>
 <title>#$loop:item['ttitle']#</title>
 <link>#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#</link>
-<pubDate>#$loop:item['ttime']#</pubDate>
+<pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$loop:item['ttime'])#</pubDate>
+<content:encoded>&lt;![CDATA[ #$loop:item['tpost']# ]]&gt;</content:encoded>
+<description>#$loop:item['tpostrss']#</description>
 <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
 </item>
 </xar:loop>

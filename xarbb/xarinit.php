@@ -71,7 +71,8 @@ function xarbb_init()
     'xar_fid'          => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment'=>false,'primary_key'=>false),
     'xar_ttitle'       => array('type'=>'varchar', 'null'=>false, 'default'=>'','size'=>255 ),
     'xar_tpost'        => array('type'=>'text'),
-    'xar_tposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>false,'primary_key'=>false),
+    'xar_tposter'      => array('type'=>'integer', 'null'=>false, 'default'=> '0', 'increment' => false, 'primary_key' =>false),
+    'xar_thostname'    => array('type'=>'varchar',  'null' => FALSE,  'size'=>255),
     'xar_ttime'        => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
     'xar_tftime'       => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
     //'xar_ttime'        => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
@@ -294,8 +295,25 @@ function xarbb_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return; 
             break;
-        case '1.0.1':
+        case '1.0.3':
             xarModSetVar('xarbb', 'allowhtml', 1);
+            break;
+        case '1.0.4':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $topicstable = $xartable['xbbtopics'];
+
+             xarDBLoadTableMaintenanceAPI();
+            // Update the topics table with a first post date tfpost field
+           $query = xarDBAlterTable($topicstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_thostname',
+                                    'type'    => 'varchar',
+                                    'null'    => false,
+                                    'size'    => '255'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return; 
             break;
         default:
             break;
@@ -331,13 +349,7 @@ function xarbb_delete()
     if (!$result) return;
 
     // Delete any module variables
-    xarModDelVar('xarbb', 'SupportShortURLs');
-    xarModDelVar('xarbb', 'hottopic');
-    xarModDelVar('xarbb', 'redhottopic');
-    xarModDelVar('xarbb', 'topicsperpage');
-    xarModDelVar('xarbb', 'forumsperpage');
-    xarModDelVar('xarbb', 'postsperpage');    
-
+    xarModDelAllVars('xarbb');
     // Remove Masks and Instances
     xarRemoveMasks('xarbb');
     xarRemoveInstances('xarbb');

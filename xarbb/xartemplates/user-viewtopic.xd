@@ -175,9 +175,9 @@
 							</a>
 						</xar:sec>
 						<xar:sec mask="AdminxarBB" catch="false">
-							<xar:if condition="xarModIsAvailable('overlib')"> 
-								<xar:template file="overlib-ipt" type="module" />
-							</xar:if>
+							<a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $thostname))#">
+								#$ipimg#
+							</a>
 						</xar:sec>
 					</td>
 				</tr>
@@ -355,9 +355,9 @@
 							</a>
 						</xar:sec>
 						<xar:sec mask="AdminxarBB" catch="false">
-							<xar:if condition="xarModIsAvailable('overlib')"> 
-								<xar:template file="overlib-ipc" type="module" />
-							</xar:if>
+							<a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $item['xar_hostname']))#">
+								#$ipimg#
+							</a>
 						</xar:sec>
 					</td>
 				</tr>

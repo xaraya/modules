@@ -48,7 +48,7 @@ function xarbb_user_viewtopic()
         $data['tpost'] = xarVarPrepForDisplay($data['tpost']);
         $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
     }
-
+    xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
                                                       'transform',

@@ -23,10 +23,8 @@ function xarbb_userapi_gettopic($args)
     extract($args);
 
     if (!isset($tid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'userapi', 'get', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -54,6 +52,7 @@ function xarbb_userapi_gettopic($args)
                      xar_treplies,
                      xar_treplier,
                      xar_tstatus,
+                     xar_thostname,
                    	 xar_fname,
                      xar_fdesc,
                      xar_ftopics,
@@ -76,30 +75,31 @@ function xarbb_userapi_gettopic($args)
         return;
     }
 
-    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus,
+    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname,
     	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
 
-    $topic = array('tid'     => $tid,
-                   'fid'     => $fid,
-                   'ttitle'  => $ttitle,
-                   'tpost'   => $tpost,
-                   'tposter' => $tposter,
-                   'ttime'   => $ttime,
-                   'tftime'  => $tftime,
-                   'treplies'=> $treplies,
-                   'tstatus' => $tstatus,
-                   'treplier' => $treplier,
-                   'fname'   => $fname,
-                   'fdesc'   => $fdesc,
-                   'ftopics' => $ftopics,
-                   'fposts'  => $fposts,
-                   'fposter' => $fposter,
-                   'fpostid' => $fpostid,
-                   'fstatus' => $fstatus,
-                   'catid'   => $catid);
+    $topic = array('tid'        => $tid,
+                   'fid'        => $fid,
+                   'ttitle'     => $ttitle,
+                   'tpost'      => $tpost,
+                   'tposter'    => $tposter,
+                   'ttime'      => $ttime,
+                   'tftime'     => $tftime,
+                   'treplies'   => $treplies,
+                   'tstatus'    => $tstatus,
+                   'treplier'   => $treplier,
+                   'thostname'  => $thostname,
+                   'fname'      => $fname,
+                   'fdesc'      => $fdesc,
+                   'ftopics'    => $ftopics,
+                   'fposts'     => $fposts,
+                   'fposter'    => $fposter,
+                   'fpostid'    => $fpostid,
+                   'fstatus'    => $fstatus,
+                   'catid'      => $catid);
 
     return $topic;
 }

@@ -34,10 +34,17 @@ function xarbb_user_viewforumrss()
                             'getalltopics',
                             array('fid' => $fid));
 
+    $totaltopics=count($topics);
+    for ($i = 0; $i < $totaltopics; $i++) {
+        $topic = $topics[$i];
+        $topics[$i]['tpostrss'] = xarVarPrepForDisplay($topic['tpost']);
+        $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
+    }
+
     // Add the array of items to the template variables
     $data['fid'] = $fid;
     $data['items'] = $topics;
-
+    xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
     // Return the template variables defined in this function
     return $data;
 }

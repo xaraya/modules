@@ -31,7 +31,7 @@ function xarbb_user_viewforum()
         xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
         return;
     }
-
+    xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 

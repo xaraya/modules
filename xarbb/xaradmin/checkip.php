@@ -12,43 +12,38 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
-function xarbb_user_searchtopics()
+function xarbb_admin_checkip()
 {
     // Get parameters from whatever input we need
     if(!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('by', 'id', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('replies', 'id', $replies, NULL, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('from', 'int', $from, NULL, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('ip', 'str', $ip)) return;
     // Security Check PROLLY Not good enough as is.
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    if(!xarSecurityCheck('AdminxarBB')) return;
 
     $data['items'] = array();
-    $hotTopic       = xarModGetVar('xarbb', 'hottopic');
     // The user API function is called
-    if (!empty($uid)){
-        $data['message'] = xarML('Your topics');
-        $topics = xarModAPIFunc('xarbb',
-                                'user',
-                                'getalltopics_byuid',
-                                array('uid' => $uid,
-                                      'startnum' => $startnumitem,
-                                      'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
-    } elseif (!empty($replies)){
-        $data['message'] = xarML('Unanswered topics');
-        $topics = xarModAPIFunc('xarbb',
-                                'user',
-                                'getalltopics_byunanswered',
-                                array('startnum' => $startnumitem,
-                                      'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
-    } elseif (!empty($from)){
-        $data['message'] = xarML('Topics since your last visit');
-        $topics = xarModAPIFunc('xarbb',
-                                'user',
-                                'getalltopics_bytime',
-                                array('from' => $from,
-                                      'startnum' => $startnumitem,
-                                      'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
-    }
+
+    $data['message'] = xarML('Your topics');
+
+    $topics = xarModAPIFunc('xarbb',
+                            'user',
+                            'getalltopics_byip',
+                            array('ip' => $ip,
+                                  'startnum' => $startnumitem,
+                                  'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
+
+    $replies = xarModAPIFunc('xarbb',
+                             'user',
+                             'getallreplies_byip',
+                            array('modid'    => xarModGetIDFromName('xarbb'),
+                                  'hostname' => $ip,
+                                  'startnum' => $startnumitem,
+                                  'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
+
+    $allresults = array_merge($topics, $replies);
+    var_dump($allresults); return;
+
+
 
     $totaltopics=count($topics);
     for ($i = 0; $i < $totaltopics; $i++) {
