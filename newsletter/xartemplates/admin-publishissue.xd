@@ -1,40 +1,77 @@
 <div class="xar-mod-head">
-    <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
 </div>
-<div class="xar-mod-body"><h2><xar:mlstring>Publish Issue</xar:mlstring></h2><br />
-    <div style="text-align: center;margin: auto;">
-        <form action="#xarModURL('newsletter', 'admin', 'publishissue')#" method="post" enctype="application/x-www-form-urlencoded" >
-        <input type="hidden" name="authid" value="#$authid#" />
-        <input type="hidden" name="issueId" id="issueIdd" value="#$issueId#" />
-        <input type="hidden" name="confirm" id="confirm" value="1"/>
-        <table width="100%" border="0" cellpadding="5">
-            <tr>
-                <td>
-                    <span class="xar-title"><xar:mlstring>You are about to publish an issue.</xar:mlstring></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="xar-title"><xar:mlstring>Confirm publication of issue:</xar:mlstring></span>
-            <br />
-            <span class="xar-title"><xar:mlstring>Publication:</xar:mlstring></span>&nbsp;&nbsp;
-            #$publicationtitle#
-            <br />
-            <span class="xar-title"><xar:mlstring>Issue:</xar:mlstring></span>&nbsp;&nbsp;
-            #$issuetitle#
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="#$confirmbutton#"  tabindex="1" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="&xar-modurl-newsletter-admin-viewissue;"><xar:mlstring>Cancel publication of the issue</xar:mlstring></a>
-                </td>
-            </tr>
-        </table>
-        </form>        
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">
+            <b><xar:mlstring>Publish Issue</xar:mlstring></b>
+        </div>
+        <xar:if condition="$published eq 1">
+            <div style="text-align: center;margin: auto;">
+                <span class="xar-title">
+                    <xar:mlstring>This issue has already been published.</xar:mlstring>
+                </span>
+                <br />
+                <br />
+                <span class="xar-title">
+                    <xar:mlstring>Issue:</xar:mlstring>
+                </span>
+                #$issuetitle#
+                <br />
+                <span class="xar-title">
+                    <xar:mlstring>Publication Date:</xar:mlstring>
+                </span>
+                #$datePublished['mon']#&nbsp;-&nbsp;#$datePublished['day']#&nbsp;-&nbsp;#$datePublished['year']#
+                <br />
+                <br />
+                <span class="xar-title">
+                    <xar:mlstring>To publish this issue again, you must remove the publication date.</xar:mlstring>
+                </span>
+                <br />
+                <br />
+                <a href="#$editurl#">Edit Issue</a>
+            </div>
+        <xar:else />
+            <div style="text-align: center;margin: auto;">
+                <br />
+                <form action="#xarModURL('newsletter', 'admin', 'publishissue')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <input type="hidden" name="authid" value="#$authid#" />
+                <input type="hidden" name="issueId" id="issueIdd" value="#$issueId#" />
+                <input type="hidden" name="confirm" id="confirm" value="1"/>
+                <table width="100%" border="0" cellpadding="5">
+                    <tr>
+                        <td>
+                            <span class="xar-title"><xar:mlstring>You are about to publish an issue.</xar:mlstring></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="xar-title"><xar:mlstring>Confirm publication of issue:</xar:mlstring></span>
+                    <br />
+                    <span class="xar-title"><xar:mlstring>Publication:</xar:mlstring></span>&nbsp;&nbsp;
+                    #$publicationtitle#
+                    <br />
+                    <span class="xar-title"><xar:mlstring>Issue:</xar:mlstring></span>&nbsp;&nbsp;
+                    #$issuetitle#
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" value="#$confirmbutton#"  tabindex="1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="&xar-modurl-newsletter-admin-viewissue;"><xar:mlstring>Cancel publication of the issue</xar:mlstring></a>
+                        </td>
+                    </tr>
+                </table>
+                </form>        
+            </div>
+        </xar:if>
     </div>
 </div>

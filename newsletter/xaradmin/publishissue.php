@@ -31,6 +31,10 @@ function newsletter_admin_publishissue()
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
     if (!xarVarFetch('issueId', 'id', $issueId)) return;
 
+    // Get the admin edit menu
+    $data = array();
+    $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
+
     // Get the issue for display
     $issue = xarModAPIFunc('newsletter',
                            'user',
@@ -51,16 +55,30 @@ function newsletter_admin_publishissue()
     if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
     
+    // Determine if issue was already published
+    if ($issue['datePublished']['timestamp'] != 0) {
+        // If this issue was already published, then display a warning
+        // to the publisher and indicate that they must clear the
+        // publication date of the issue to re-publish
+        $data['publicationtitle'] = xarVarPrepForDisplay($publication['title']);
+        $data['issuetitle'] = xarVarPrepForDisplay($issue['title']);
+        $data['editurl'] = xarModURL('newsletter',
+                                     'admin',
+                                     'modifyissue',
+                                     array('id' => $issue['id']));
+        $data['published'] = true;
+        $data['datePublished'] = $issue['datePublished'];
+        return $data;
+    }
+
     // Check for confirmation.
     if (!$confirm) {
-        // Get the admin menu
-        $data = xarModAPIFunc('newsletter', 'admin', 'menu');
-
         // Specify for which story you want confirmation
         $data['issueId'] = $issueId;
         $data['confirmbutton'] = xarML('Confirm');
         $data['publicationtitle'] = xarVarPrepForDisplay($publication['title']);
         $data['issuetitle'] = xarVarPrepForDisplay($issue['title']);
+        $data['published'] = false;
 
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
