@@ -1,0 +1,119 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Comments Administration</xar:mlstring>
+    </span>
+</div>
+
+<div align="center">
+    <h2>
+        <xar:mlstring>Comments Module Statistics</xar:mlstring>
+    </h2>
+</div>
+
+<br />
+
+<div class="xar-mod-body xar-norm-outline" style="padding: 1px;">
+
+    <div align="center">
+        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <th align="center" valign="center" width="20%">
+                    <xar:mlstring><b>Module<br />Name</b></xar:mlstring>
+                </th>
+                <th align="center" valign="center" width="20%">
+                    <xar:mlstring><b>Module<br />Pages</b></xar:mlstring>
+                </th>
+                <th align="center" valign="center" width="20%">
+                    <xar:mlstring><b>Total<br />Comments</b></xar:mlstring>
+                </th>
+                <th align="center" valign="center" width="20%">
+                    <xar:mlstring><b>Inactive<br />Comments</b></xar:mlstring>
+                </th>
+                <th align="center" valign="center" width="20%">
+                    <xar:mlstring><b>Action</b></xar:mlstring>
+                </th>
+            </tr>
+
+            <tr>
+                <td colspan="5">
+                    &nbsp;
+                </td>
+            </tr>
+
+            <xar:if condition="!isset($data) or empty($data) or count($data) eq '0'">
+                <tr>
+                    <td colspan="5" align="center">
+                        <br />
+                        <xar:mlstring>
+                            There are currently no comments in the database...
+                        </xar:mlstring>
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            <xar:else />
+                <tr>
+                    <td colspan="5">
+                        <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                    </td>
+                </tr>
+                <xar:loop name="$data">
+                    <tr>
+                        <td align="center" valign="center" width="20%">
+                            <a href="#$loop:item['module_url']#">#$loop:item['modname']#</a>
+                        </td>
+                        <td align="center" valign="center" width="20%">
+                            #$loop:item['pages']#
+                        </td>
+                        <td align="center" valign="center" width="20%">
+                            #$loop:item['total']#
+                        </td>
+                        <td align="center" valign="center" width="20%">
+                            #$loop:item['inactive']#
+                        </td>
+                        <td align="center" valign="center" width="20%">
+                            <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                        </td>
+                    </tr>
+                </xar:loop>
+                <tr>
+                    <td align="center" valign="center" width="20%">
+                        <b><xar:mlstring>Grand Total</xar:mlstring></b>
+                    </td>
+                    <td align="center" valign="center" width="20%">
+                        <b>#$gt_pages#</b>
+                    </td>
+                    <td align="center" valign="center" width="20%">
+                        <b>#$gt_total#</b>
+                    </td>
+                    <td align="center" valign="center" width="20%">
+                        <b>#$gt_inactive#</b>
+                    </td>
+                    <td align="center" valign="center" width="20%">
+                        <a href="#$delete_all_url#">Delete All</a>
+                    </td>
+                </tr>
+            </xar:if>
+
+            <tr>
+                <td colspan="5">
+                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+                        <xar:mlstring>
+                            By clicking on <b>Delete</b> you can delete all comments associated with a particular
+                            module. Clicking on a module will take you to that module's statistics page containing
+                            the figures for each of that module's pages that have comments associated with them.
+                            From there you can delete all comments associated with a particular page.
+                        </xar:mlstring>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<br />
+<br />

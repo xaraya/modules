@@ -1,0 +1,95 @@
+ <table cellspacing="0" cellpadding="0" width="100%" border="0">
+    <tr>
+        <th nowrap width="60%">
+            <xar:mlstring>Title</xar:mlstring> <img src="modules/comments/xarimages/n_spacer.gif" alt="" width="1" height="1" border="0" align="absmiddle" />
+        </th>
+        <th nowrap width="15%">
+            <xar:mlstring>Author</xar:mlstring>
+        </th>
+        <th nowrap width="25%" align="center">
+            <xar:mlstring>Date</xar:mlstring>
+        </th>
+    </tr>
+    <xar:loop name="$package['comments']">
+        <xar:if condition="(($loop:index + 1) % 2)">
+            <tr valign="center">
+                <td class="xar-norm" nowrap="nowrap">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td>
+                                &nbsp;
+                                <xar:if condition="$loop:item['childcount'] gt 0">
+                                    <a href="">
+                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                    </a>
+                                <xar:else />
+                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                </xar:if>
+                                &nbsp;&nbsp;
+                            </td>
+                            <td>
+                                <xar:if condition="$loop:item['xar_branchout'] eq 0">
+                                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[objectid]=#$header['objectid']#&amp;header[selected_cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']#
+                                <xar:else />
+                                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']# #$loop:item['thread_text']#
+                                </xar:if>
+                                </a>&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="xar-norm">
+                    <xar:if condition="$loop:item['xar_postanon'] eq 0 and strtolower($loop:item['xar_author']) ne 'anonymous'">
+                        #$loop:item['xar_author']#
+                        <xar:else />
+                        <xar:mlstring>
+                            Anonymous
+                        </xar:mlstring>
+                    </xar:if>
+                </td>
+                <td class="xar-norm" nowrap="nowrap" align="right">
+                    #$loop:item['xar_date']#
+                </td>
+            </tr>
+        <xar:else />
+            <tr valign="center">
+                <td class="xar-accent">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td>
+                                &nbsp;
+                                <xar:if condition="$loop:item['childcount'] gt 0">
+                                    <a href="">
+                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                    </a>
+                                <xar:else />
+                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                </xar:if>
+                                &nbsp;&nbsp;
+                            </td>
+                            <td>
+                                <xar:if condition="$loop:item['xar_branchout'] eq 0">
+                                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[objectid]=#$header['objectid']#&amp;header[selected_cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']#
+                                <xar:else />
+                                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']# #$loop:item['thread_text']#
+                                </xar:if>
+                                </a>&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="xar-accent">
+                    <xar:if condition="$loop:item['xar_postanon'] eq 0 and strtolower($loop:item['xar_author']) ne 'anonymous'">
+                        #$loop:item['xar_author']#
+                        <xar:else />
+                        <xar:mlstring>
+                            Anonymous
+                        </xar:mlstring>
+                    </xar:if>
+                </td>
+                <td class="xar-accent" align="right">
+                    #$loop:item['xar_date']#
+                </td>
+            </tr>
+        </xar:if>
+    </xar:loop>

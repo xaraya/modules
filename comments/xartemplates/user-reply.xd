@@ -1,0 +1,4 @@
+<xar:sec mask="Comments-Reply" >
+    <xar:template file="view-flat" type="module" />
+    <xar:template file="input-box" type="module" />
+</xar:sec>

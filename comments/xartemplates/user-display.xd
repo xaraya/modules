@@ -1,0 +1,29 @@
+<xar:sec mask="Comments-Read">
+    <br /><br />
+    <xar:if condition="$package['settings']['render'] ne 'nocomments'">
+        <xar:if condition="!isset($header['selected_cid'])">
+            <xar:template file="option_bar" type="module" />
+        </xar:if>
+        <xar:if condition="count($package['comments']) and $package['settings']['render'] ne 'nocomments'">
+            <br />
+            <div class="xar-norm">
+                <xar:if condition="$package['settings']['render'] eq 'nested'">
+                    <xar:template file="view-nested" type="module" />
+                <xar:elseif condition="$package['settings']['render'] eq 'threaded'" />
+                    <xar:template file="view-threaded" type="module" />
+                <xar:elseif condition="$package['settings']['render'] eq 'flat'" />
+                    <xar:template file="view-flat" type="module" />
+                </xar:if>
+            </div>
+        <xar:elseif condition="$package['settings']['render'] ne 'nocomments'" />
+           <br />
+            <div class="xar-norm">
+                <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
+            </div>
+        </xar:if>
+        <br />
+        <xar:if condition="!isset($header['selected_cid'])">
+            <xar:template file="input-box" type="module" />
+        </xar:if>
+    </xar:if>
+</xar:sec>
