@@ -65,9 +65,9 @@ function articles_topitemsblock_display($blockinfo)
         $curaid = -1;
     }
     
-    if ($vars['dynamictitle']) {
+    if (!empty($vars['dynamictitle'])) {
         if ($vars['toptype'] == 'rating') {
-                $blockinfo['title'] = xarML('Top Rated');
+            $blockinfo['title'] = xarML('Top Rated');
         } elseif ($vars['toptype'] == 'hits') {
             $blockinfo['title'] = xarML('Top');
         } else {
@@ -75,7 +75,7 @@ function articles_topitemsblock_display($blockinfo)
         }
     }
 
-    if ($vars['nocatlimit']) {
+    if (!empty($vars['nocatlimit'])) {
         // don't limit by category
         $cid = 0;
         $cidsarray = array();
@@ -118,18 +118,19 @@ function articles_topitemsblock_display($blockinfo)
                 array('cid' => $cid, 'return_itself' => 'return_itself')
             );
         }
-        if ((!empty($cidsarray)) && (isset($thiscategory[0]['name'])) && ($vars['dynamictitle'])) {
+        if ((!empty($cidsarray)) && (isset($thiscategory[0]['name'])) && !empty($vars['dynamictitle'])) {
             $blockinfo['title'] .= ' ' . $thiscategory[0]['name'];
         }
     }
 
 	// Get publication types
-	$pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');  //MarieA - moved to always get pubtypes.
+    // MarieA - moved to always get pubtypes.
+	$pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
 
-    if ($vars['nopublimit']) {
+    if (!empty($vars['nopublimit'])) {
         //don't limit by pubtype
         $ptid = 0;
-        if (empty($vars['nocatlimit']) || empty($vars['nopublimit']) || ($vars['dynamictitle'])) {
+        if (empty($vars['nocatlimit']) || empty($vars['nopublimit']) || !empty($vars['dynamictitle'])) {
             $blockinfo['title'] .= ' ' . xarML('Content');
         }
     } else {
@@ -149,7 +150,7 @@ function articles_topitemsblock_display($blockinfo)
             $ptid = $vars['pubtypeid'];
         }
         
-        if (!empty($ptid) && isset($pubtypes[$ptid]['descr']) && ($vars['dynamictitle'])) {
+        if (!empty($ptid) && isset($pubtypes[$ptid]['descr']) && !empty($vars['dynamictitle'])) {
             $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
         }
     }
@@ -176,12 +177,11 @@ function articles_topitemsblock_display($blockinfo)
         $sort = 'date';
     }
 
-    // MikeC: Added the 'summary' field to the field list
-    if ($vars['showsummary']) {
+    if (!empty($vars['showsummary'])) {
         array_push($fields, 'summary');
     }
 
-    if ($vars['showdynamic'] && xarModIsHooked('dynamicdata', 'articles')) {
+    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles')) {
         array_push($fields, 'dynamicdata');
     }
 
@@ -218,7 +218,7 @@ function articles_topitemsblock_display($blockinfo)
             $article['link'] = '';
         }
 
-        if ($vars['showvalue']) {
+        if (!empty($vars['showvalue'])) {
             if ($vars['toptype'] == 'rating') {
                 $article['value'] = intval($article['rating']);
             } elseif ($vars['toptype'] == 'hits') {
@@ -226,7 +226,7 @@ function articles_topitemsblock_display($blockinfo)
             } else {
                 // TODO: make user-dependent
                 if (!empty($article['pubdate'])) {
-                    $article['value'] = strftime("%Y-%m-%d",$article['pubdate']);
+                    $article['value'] = strftime("%Y-%m-%d", $article['pubdate']);
                 } else {
                     $article['value'] = 0;
                 }
@@ -236,14 +236,14 @@ function articles_topitemsblock_display($blockinfo)
         }
 
         // MikeC: Bring the summary field back as $desc
-        if ($vars['showsummary']) {
+        if (!empty($vars['showsummary'])) {
             $article['summary']  = xarVarPrepHTMLDisplay($article['summary']);
         } else {
             $article['summary'] = '';
         }
 
-        //MarieA: Bring the pubtype description back as $descr
-		if ($vars['nopublimit']) {
+        // MarieA: Bring the pubtype description back as $descr
+		if (!empty($vars['nopublimit'])) {
 			$article['pubtypedescr'] = $pubtypes[$article['pubtypeid']]['descr'];
 		}
         // this will also pass any dynamic data fields (if any)
