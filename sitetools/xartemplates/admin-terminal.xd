@@ -16,30 +16,30 @@
         </form>
     </div>
     <div style="height: 250pt; font-family: monospace, monaco; overflow: auto; ">
-       <h2>Output</h2>
-       <xar:if condition="!empty($term_output)">
-       <table style="cellpadding:0; cellspacing:0; border:0;">
+        <h2>Output</h2>
+        <xar:if condition="!empty($term_output)">
+        <table style="cellpadding:0; cellspacing:0; border:0;">
         <xar:loop name="$term_output">
-           <xar:if condition="(($loop:index+1) % 2)">
-               <xar:set name="myclass">'xar-norm'</xar:set>
-           <xar:else />
-               <xar:set name="myclass">'xar-accent'</xar:set>
-           </xar:if>
-          <xar:if condition="$loop:index == 0">
-           <tr>
-               <th>Seq</th>
-               <xar:foreach in="$loop:item" key="$field">
-               <th>#$field#</th>
-               </xar:foreach>
-           </tr>
-           </xar:if>
+            <xar:if condition="(($loop:index+1) % 2)">
+                <xar:set name="myclass">'xar-norm'</xar:set>
+            <xar:else />
+                <xar:set name="myclass">'xar-accent'</xar:set>
+            </xar:if>
+            <xar:if condition="$loop:index == 0">
+            <tr>
+                <th>Seq</th>
+                <xar:foreach in="$loop:item" key="$field">
+                    <th>#$field#</th>
+                </xar:foreach>
+            </tr>
+            </xar:if>
             <tr class="#$myclass#">
-               <td class="#$myclass#">#$loop:index#</td>
-               <xar:foreach in="$loop:item" value="$value">
-                   <td class="#$myclass#">#$value#</td>
-               </xar:foreach>
-           </tr>
-         </xar:loop>
+                <td class="#$myclass#">#$loop:index#</td>
+                <xar:foreach in="$loop:item" value="$value">
+                    <td class="#$myclass#">#$value#</td>
+                </xar:foreach>
+            </tr>
+        </xar:loop>
         </table>
         </xar:if>
     </div>
