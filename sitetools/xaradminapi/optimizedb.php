@@ -26,8 +26,8 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
 {
 	//To do: setup for db type
 
-    // Security check
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    // Security check  - allow scheduler api funcs to run as anon bug #2802
+    // if (!xarSecurityCheck('AdminSiteTools')) return;
        $items=array();
 
     if (($dbname='') || (empty($dbname))){

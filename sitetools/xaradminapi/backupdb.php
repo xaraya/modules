@@ -21,8 +21,8 @@ function sitetools_adminapi_backupdb ($args)
 
 {
     extract($args);
-    // Security check
-    if (!xarSecurityCheck('AdminSiteTools')) return;
+    // Security check - allow scheduler api funcs to run as anon bug #2802
+    //if (!xarSecurityCheck('AdminSiteTools')) return;
  
     $items=array();
     $items['startbackup']=$startbackup;
