@@ -33,11 +33,12 @@ function tasks_adminapi_update($args)
     $taskstable = $xartable['tasks'];
 
     $sql = "UPDATE $taskstable
-              SET xar_name = '" . xarVarPrepForStore($name) . "',
-                  xar_status = " . xarVarPrepForStore($status) . ",
-                  xar_priority = " . xarVarPrepForStore($priority) . ",
-                  xar_description = '" . xarVarPrepForStore($description) . "'
+              SET xar_name = ?,
+                  xar_status = ?,
+                  xar_priority = ?,
+                  xar_description = ?
             WHERE xar_id = $id";
+    $bindvars = array($name, $status, $priority, $description);
 
     $res =& $dbconn->Execute($sql);
     if (!$res) return;

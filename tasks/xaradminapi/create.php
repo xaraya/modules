@@ -48,32 +48,54 @@ function tasks_adminapi_create($args)
                xar_hours_spent,
                xar_hours_remaining)
             VALUES (
-              $nextId,
-              " . ($parentid ? $parentid : 0) . ",
-              '" . xarVarPrepForStore($modname) . "',
-              " . ($objectid ? $objectid : 0) . ",
-              '" . xarVarPrepForStore($name) . "',
-              " . xarVarPrepForStore($status) . ",
-              " . xarVarPrepForStore($priority) . ",
-              '" . xarVarPrepForStore($description) . "',
-              " . ($private ? $private : "0") . ",
-              " . xarSessionGetVar('uid') . ",
-              " . xarSessionGetVar('uid') . ",
-              " . xarSessionGetVar('uid') . ",
-              " . time() . ",
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?)";              
+    $bindvars = array($nextId,
+              ($parentid ? $parentid : 0),
+              $modname,
+              ($objectid ? $objectid : 0),
+              $name,
+              $status,
+              $priority,
+              $description,
+              ($private ? $private : "0"),
+              xarSessionGetVar('uid'),
+              xarSessionGetVar('uid'),
+              xarSessionGetVar('uid'),
+              time(),
               0,
-              " . time() . ",
+              time(),
               0,
               0,
               0,
               0,
               '',
               '',
-              '')";              
+              '');
 
     // PRIVATE INITIALLY SET BASED ON USER PREFERENCE
     
-    $res =& $dbconn->Execute($sql);
+    $res =& $dbconn->Execute($sql, $bindvars);
     if (!$res) return;
 
     $id = $dbconn->PO_Insert_ID($taskstable, 'xar_id');

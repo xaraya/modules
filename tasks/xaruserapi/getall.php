@@ -29,6 +29,7 @@ function tasks_userapi_getall($args)
 
     $taskstable = $xartable['tasks'];
 
+    $bindvars = array();
     $sql = "SELECT xar_id,
                    xar_parentid,
                    xar_modname,
@@ -52,8 +53,9 @@ function tasks_userapi_getall($args)
                    xar_hours_spent,
                    xar_hours_remaining
             FROM $taskstable
-            WHERE xar_modname = '" . xarVarPrepForStore($modname) . "'
+            WHERE xar_modname = ?
             " . ((!empty($objectid)) ? " AND xar_objectid = " . $objectid : "");
+    $bindvars[] = $modname;
 
     // IMPLEMENT FILTER CODE FOR WHERE CLAUSE
     // FORCING PARENT ID CHECK FOR USE IN DRILLDOWNS
@@ -95,7 +97,7 @@ function tasks_userapi_getall($args)
     
     }
 
-    $result =& $dbconn->SelectLimit($sql, -1, 0);
+    $result =& $dbconn->SelectLimit($sql, -1, 0, $bindvars);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
