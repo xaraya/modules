@@ -178,7 +178,9 @@ function autolinks_upgrade($oldversion)
                 // Pass to ADODB, and send exception if the result isn't valid.
                 $result =& $dbconn->Execute($query);
                 if (!$result) {
-                    return;
+                    //return;
+                    // Until we have a better method of handling errors, it is safer to continue.
+                    xarExceptionFree();
                 }
             }
 
@@ -248,7 +250,9 @@ function autolinks_upgrade($oldversion)
                 // Pass to ADODB, and send exception if the result isn't valid.
                 $result =& $dbconn->Execute($query);
                 if (!$result) {
-                    return;
+                    //return;
+                    // Until we have a better method of handling errors, it is safer to continue.
+                    xarExceptionFree();
                 }
             }
 
