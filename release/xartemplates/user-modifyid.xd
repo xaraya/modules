@@ -22,9 +22,10 @@
 					<label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-                    <xar:sec id="checkregname" mask="AdminRelease" catch="false" component="release" >
+                    <xar:sec id="checkregname" mask="AdminRelease" catch="false" >
                         <input type="text" name="regname" id="regname" value="#$regname#" size="25" maxlength="60" tabindex="2" />
                     <xar:else/>
+                        <input type="hidden" name="regname" id="regname" value="#$regname#" />
                         #$regname#
                     </xar:sec>
 				</td>
@@ -35,17 +36,19 @@
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 				<xar:if condition="$type eq '0'">
-                    <xar:sec id="checktype1" mask="AdminRelease" catch="false" component="release" >
+                    <xar:sec id="checktype1" mask="AdminRelease" catch="false">
                         <input type="radio" name="idtype" value="0" checked="checked" /><xar:mlstring>Module</xar:mlstring>
                         <input type="radio" name="idtype" value="1" /><xar:mlstring>Theme</xar:mlstring>
                     <xar:else/>
                         <xar:mlstring>Module</xar:mlstring>
+                    	<input type="hidden" name="idtype" id="idtype" value="0" />
                     </xar:sec>
 				<xar:else />
                     <xar:sec id="checktype2" mask="AdminRelease" catch="false" component="release" >
                         <input type="radio" name="idtype" value="0" /><xar:mlstring>Module</xar:mlstring>
                         <input type="radio" name="idtype" value="1" checked="checked" /><xar:mlstring>Theme</xar:mlstring>
                     <xar:else/>
+                    	<input type="hidden" name="idtype" id="idtype" value="1" />
                         <xar:mlstring>Theme</xar:mlstring>
                     </xar:sec>
 				</xar:if>
