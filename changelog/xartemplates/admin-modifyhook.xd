@@ -1,11 +1,12 @@
-<tr align="left" valign="middle">
-    <td>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
         <xar:if condition="!empty($link)">
             <a href="#$link#"><xar:mlstring>Change Log</xar:mlstring></a>
         <xar:else />
             <xar:mlstring>Change Log</xar:mlstring>
         </xar:if>
-    </td>
-    <td><input type="text" name="changelog_remark" value="#$remark#" size="40" /> </td>
-</tr>
-
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="changelog_remark" value="#$remark#" size="40" />
+	</span>
+	</div>
