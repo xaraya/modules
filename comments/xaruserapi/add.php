@@ -190,6 +190,11 @@ function comments_userapi_add($args) {
             // we could flush "$modinfo[name]-" to remove all output cache associated with a module
             xarPageFlushCached("$modinfo[name]-user-display-");
         }
+        // Call create hooks for categories, hitcount etc.
+        $args['module'] = 'comments';
+        $args['itemtype'] = 0;
+        $args['itemid'] = $id;
+        xarModCallHooks('item', 'create', $id, $args);
         return $id;
     }
 }

@@ -69,7 +69,13 @@ function comments_userapi_modify($args) {
     if (!$result) {
         return;
     }
+    // Call update hooks for categories etc.
+    $args['module'] = 'comments';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $cid;
+    xarModCallHooks('item', 'update', $cid, $args);
 
+    return true;
 }
 
 ?>
