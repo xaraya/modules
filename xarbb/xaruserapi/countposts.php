@@ -30,7 +30,6 @@ function xarbb_userapi_countposts($args)
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $xbbtopicstable = $xartable['xbbtopics'];
 
     $query = "SELECT COUNT(1)
@@ -38,12 +37,11 @@ function xarbb_userapi_countposts($args)
               WHERE xar_tposter = $uid";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
     list($numitems) = $result->fields;
-
     $result->Close();
-
-    return $numitems;
+    // While we are here, how many replies have been made as well?
+    $replies = xarModAPIFunc('comments', 'user', 'get_author_count', array('modid' => xarModGetIdFromName('xarbb'), 'author' => $uid));
+    $total = $numitems + $replies;
+    return $total;
 }
-
 ?>

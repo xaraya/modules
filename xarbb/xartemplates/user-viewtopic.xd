@@ -133,7 +133,7 @@
 					Joined
 				</xar:mlstring>: #$posterdate#<br />
 				<xar:mlstring>
-					Topics
+					Posts
 				</xar:mlstring>: #$usertopics#<br />
 				<xar:if condition="isset($properties) and count($properties) gt 0">
 					<xar:set name="$location">$properties['location']->value</xar:set>
@@ -314,7 +314,7 @@
 						Joined
 					</xar:mlstring>: #$item['commenterdate']#<br />
 					<xar:mlstring>
-						Topics
+						Posts
 					</xar:mlstring>: #$item['usertopics']#<br />
 					<xar:if condition="isset($properties) and count($properties) gt 0">
 						<xar:set name="$location">$properties['location']->value</xar:set>
