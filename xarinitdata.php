@@ -119,7 +119,7 @@ function create_flagstable()
         $query = "INSERT INTO $FlagsTable
                 (flag_id, flagnum, keyword, fontclr, backclr, lookup_1, lookup_2)
                 VALUES (?,?,?,?,?,?,?)";
-        $bindvars = array((int)$id, (int)$flagnum, (string)$keyword, (string)$fontclr, (string)$backclr, (string)$lookup_1,(string)$lookkup_2);
+        $bindvars = array((int)$id, (int)$flagnum, (string)$keyword, (string)$fontclr, (string)$backclr, (string)$lookup_1,(string)$lookup_2);
         $result =& $dbconn->Execute($query,$bindvars);
     }
 
@@ -344,7 +344,7 @@ function create_lgroutertable()
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $bindvars = array(
               (int)$router_id, (string)$router, (string)$address, (string)$username, (string)$password, (int)$zebra, (int)$zebra_port, (string)$zebra_password,
-              (int)$ripd, (int)ripd_port, (string)$ripd_password, (int)$ripngd, (int)$ripngd_port, (string)$ripngd_password, (int)$ospfd, (int)$ospfd_port,
+              (int)$ripd, (int)$ripd_port, (string)$ripd_password, (int)$ripngd, (int)$ripngd_port, (string)$ripngd_password, (int)$ospfd, (int)$ospfd_port,
               (string)$ospfd_password, (int)$bgpd, (int)$pgpd_port, (string)$pgpd_password, (int)$ospf6d, (int)$ospf6d_port, (string)$ospf6d_password, (int)$use_argc);
         $result =& $dbconn->Execute($query,$bindvars);
     }
