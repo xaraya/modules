@@ -12,8 +12,12 @@
 			<br />
 			<br />
 			<br />
-			<xar:set name="$msg">xarML("Please click <a href=\"#(1)\">here</a> return to the start.",xarModURL(__ADDRESSBOOK__,'user','viewall'))</xar:set>
-			<strong>#$msg#</strong>
+			<strong>
+                        <xar:ml>
+                            <xar:mlstring>Please click <a href="#(1)">here</a> return to the start.</xar:mlstring>
+                            <xar:mlvar>#xarModURL(__ADDRESSBOOK__,'user','viewall')#</xar:mlvar>
+                        </xar:ml>
+			</strong>
 			<br />
 			<br />
 			<br />

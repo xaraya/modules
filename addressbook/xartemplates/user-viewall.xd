@@ -5,18 +5,48 @@
   <xar:if condition="!$userIsLoggedIn and $globalprotect">
     <div style="text-align:center;">
       <br />
-      <p><xar:set name="$text">xarML("You must be a registered user before you can view the #(1).",xarModGetVar(__ADDRESSBOOK__,'abtitle'))</xar:set>#$text#</p>
-      <p><xar:set name="$text">xarML("<a href=\"#(1)\">Register</a> for free, or <a href=\"#(2)\">log in</a> if you are already registered.",xarModURL('roles', 'user', 'register'),xarModURL('roles', 'user', 'showloginform'))</xar:set>#$text#</p>
+      <p>
+      <xar:ml>
+          <xar:mlstring>You must be a registered user before you can view the #(1).</xar:mlstring>
+          <xar:mlvar>#xarModGetVar(__ADDRESSBOOK__,'abtitle')#</xar:mlvar>
+      </xar:ml>
+      </p>
+      <p>
+      <xar:ml>
+          <xar:mlstring><a href="#(1)">Register</a> for free, or <a href="#(2)">log in</a> if you are already registered.</xar:mlstring>
+          <xar:mlvar>#xarModURL('roles', 'user', 'register')#</xar:mlvar>
+          <xar:mlvar>#xarModURL('roles', 'user', 'showloginform')#</xar:mlvar>
+      </xar:ml>
+      </p>
     </div>
     <xar:elseif condition="!$userCanViewModule" />
     <div style="text-align:center;">
-      <p><xar:set name="$text">xarML("We're sorry. You do not have authorization to access the #(1).",xarModGetVar(__ADDRESSBOOK__,'abtitle'))</xar:set>#$text#</p>
-      <p><xar:set name="$text">xarML("Please contact the <a href=\"mailto:#(1)\">Site Admin</a> for further assistance",xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail'))</xar:set>#$text#</p>
+      <p>
+      <xar:ml>
+          <xar:mlstring>We're sorry. You do not have authorization to access the #(1).</xar:mlstring>
+          <xar:mlvar>#xarModGetVar(__ADDRESSBOOK__,'abtitle')#</xar:mlvar>
+      </xar:ml>
+      <p>
+      <xar:ml>
+          <xar:mlstring>Please contact the <a href="mailto:#(1)">Site Admin</a> for further assistance</xar:mlstring>
+          <xar:mlvar>#xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail')#</xar:mlvar>
+      </xar:ml>
+      </p>
     </div>
     <xar:elseif condition="!$userCanViewEntries" />
     <div style="text-align:center;">
-      <p><xar:set name="$text">xarML("We're sorry. You do not have authorization to view #(1) entries",xarModGetVar(__ADDRESSBOOK__,'abtitle'))</xar:set>#$text#</p>
-      <p><xar:set name="$text">xarML("Please contact the <a href=\"mailto:#(1)\">Site Admin</a> for further assistance",xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail'))</xar:set>#$text#</p>
+      <p>
+      <xar:ml>
+          <xar:mlstring>We're sorry. You do not have authorization to view #(1) entries</xar:mlstring>
+          <xar:mlvar>#xarModGetVar(__ADDRESSBOOK__,'abtitle')#</xar:mlvar>
+      </xar:ml>
+      </p>
+      <p>
+      <xar:ml>
+          <xar:mlstring>Please contact the <a href="mailto:#(1)">Site Admin</a> for further assistance</xar:mlstring>
+          <xar:mlvar>#xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail')#</xar:mlvar>
+      </xar:ml>
+      </p>
     </div>
     <xar:else />
 	<!-- START: display the menu & data -->
