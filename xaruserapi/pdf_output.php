@@ -15,7 +15,7 @@ function reports_userapi_pdf_output($args)
                         'xmldata'      => $xmldata);
     
     // Push output to client
-    xarModApiFunc('reports','user','push_output',$arguments);
+    if(!xarModApiFunc('reports','user','push_output',$arguments)) return;
     exit;
 }
 ?>

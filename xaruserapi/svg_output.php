@@ -15,9 +15,7 @@ function reports_userapi_svg_output($args)
                         'xmldata'      => $xmldata);
     
     // Push output to client
-    if(!xarModApiFunc('reports','user','push_output',$arguments)) {
-        return;
-    }
+    if(!xarModApiFunc('reports','user','push_output',$arguments)) return;
     exit;
 }
 ?>
