@@ -61,5 +61,4 @@ function xarbb_userapi_getitemlinks($args)
 
     return $itemlinks;
 }
-
 ?>
