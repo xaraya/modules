@@ -136,6 +136,11 @@ function navigator_user_menutype_branch( $args )
     }
 
     $navigator_styleSheets = @unserialize(xarModGetVar('navigator', 'style.list.files'));
+
+    if (!is_array($navigator_styleSheets)) {
+        $navigator_styleSheets = array();
+    }
+    
     $navigator_styleName = "navigator-branchmenu";
     if (is_array($navigator_styleSheets) && !in_array($navigator_styleName, $navigator_styleSheets)) {
         $navigator_styleSheets[] = $navigator_styleName;

@@ -52,6 +52,11 @@ function navigator_captionblock_display($blockinfo)
     $args['itemid']   = $blockinfo['bid'];
 
     $navigator_styleSheets = @unserialize(xarModGetVar('navigator', 'style.list.files'));
+
+    if (!is_array($navigator_styleSheets)) {
+        $navigator_styleSheets = array();
+    }
+    
     $navigator_styleName = "navigator-caption";
     if (is_array($navigator_styleSheets) && !in_array($navigator_styleName, $navigator_styleSheets)) {
         $navigator_styleSheets[] = $navigator_styleName;
