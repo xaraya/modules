@@ -20,7 +20,8 @@
  * it uses no database tables yet.
  *
  */
-function bloggerapi_init() {
+function bloggerapi_init() 
+{
 
     // Publication type for blogger api 0 = no pubtype
     xarModSetVar('bloggerapi','bloggerpubtype','0');
@@ -32,7 +33,10 @@ function bloggerapi_init() {
  * upgrade the bloggerapi module from an old version
  * This function can be called multiple times
  */
-function bloggerapi_upgrade($oldversion) { return true; }
+function bloggerapi_upgrade($oldversion) 
+{ 
+    return true; 
+}
 
 /**
  * delete the bloggerapi module

@@ -24,7 +24,8 @@
  *                     on success or errormessage on failure
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  */
-function bloggerapi_userapi_editpost($msg) { 
+function bloggerapi_userapi_editpost($msg) 
+{ 
     xarLogMessage("blogger api: editPost");
 
     // get the params, we skip appkey

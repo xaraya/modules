@@ -24,7 +24,8 @@
  *                     user info on success or errormessage on failure
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  */
-function bloggerapi_userapi_getuserinfo($msg) {
+function bloggerapi_userapi_getuserinfo($msg) 
+{
 	xarLogMessage("blogger api: getUserInfo");
 	// get the params, we skip appkey for now..
 	$sn1=$msg->getParam(1); $username= $sn1->scalarval();

@@ -25,7 +25,8 @@
  *                     articles on success or errormessage on failure
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  */
-function bloggerapi_userapi_getrecentposts($msg) {
+function bloggerapi_userapi_getrecentposts($msg) 
+{
     xarLogMessage("blogger api: getRecentPosts");
     // get the params, we skip appkey for now..
     $sn1=$msg->getParam(1);  $blogid   = $sn1->scalarval();

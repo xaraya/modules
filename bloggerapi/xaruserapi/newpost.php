@@ -24,7 +24,8 @@
 *                     article-id on success or errormessage on failure
 * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
 */
-function bloggerapi_userapi_newpost($msg) {
+function bloggerapi_userapi_newpost($msg) 
+{
     xarLogMessage("blogger api: newPost");
 	setlocale(LC_TIME, xarConfigGetVar('locale'));
 	// get the params, we skip appkey

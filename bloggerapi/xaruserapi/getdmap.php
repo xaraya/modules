@@ -13,7 +13,8 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function bloggerapi_userapi_getdmap() {
+function bloggerapi_userapi_getdmap() 
+{
     // Data types for xmlrpc
     $xmlrpcI4="i4";
     $xmlrpcInt="int";

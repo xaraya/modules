@@ -24,7 +24,8 @@
  *                     article on success or errormessage on failure
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  */
-function bloggerapi_userapi_getpost($msg) {
+function bloggerapi_userapi_getpost($msg) 
+{
     xarLogMessage("blogger api: getPost");
 
 	// get the params, we skip appkey for now..
@@ -61,7 +62,7 @@ function bloggerapi_userapi_getpost($msg) {
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                    array('module'  => 'bloggerapi',
                          'command' => 'getpost',
-                         'params'  => $data))
+                         'params'  => $data));
 	}
     return $output;
 	

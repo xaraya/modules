@@ -25,7 +25,8 @@
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  * @todo   should we only return categories to which user has access rights?
  */
-function bloggerapi_userapi_getusersblogs($msg) {
+function bloggerapi_userapi_getusersblogs($msg) 
+{
     xarLogMessage("blogger api: getUsersBlogs");
 	// get the params, we skip appkey for now..
 	$sn1=$msg->getParam(1);  $username = $sn1->scalarval();
