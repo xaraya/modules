@@ -31,20 +31,20 @@ function pubsub_user_display($args)
 // If they are logged in and have already subscribed it will display an
 // unsubscribe icon.
 
-    // Create new output object
-    $output = new pnHTML();
-     
     extract($args);
 
     // Load API
     if (!pnModAPILoad('pubsub', 'user')) {
-        $output->Text(_LOADFAILED);
-        return $output->GetOutput();
+        $msg = pnML('API Failed to Load',
+	            'pubsub');
+	pnExceptionSet(PN_SYSTEM_EXCEPTION,
+	            'LOAD_FAILED',
+	            new SystemException($msg));
+	return;
     }
 
     // TODO: make it actually do what the comment says it will :-)
-    $output->Text('<IMG SRC=modules/pubsub/pnimages/subscribe.png">');
-    return $output->GetOutput();
+    return $data;
 }
 
 ?>

@@ -103,11 +103,27 @@ function pubsub_init()
         return false;
     }
     if (!pnModRegisterHook('item',
+                           'delete',
+                           'API',
+                           'pubsub',
+                           'admin',
+                           'delevent')) {
+        return false;
+    }
+    if (!pnModRegisterHook('item',
                            'create',
                            'API',
                            'pubsub',
                            'user',
-                           'adduser')) {
+                           'subscribe')) {
+        return false;
+    }
+    if (!pnModRegisterHook('item',
+                           'delete',
+                           'API',
+                           'pubsub',
+                           'user',
+                           'unsubscribe')) {
         return false;
     }
     if (!pnModRegisterHook('category',
@@ -116,22 +132,6 @@ function pubsub_init()
                            'pubsub',
                            'user',
                            'display')) {
-        return false;
-    }
-    if (!pnModRegisterHook('item',
-                           'delete',
-                           'API',
-                           'pubsub',
-                           'user',
-                           'deluser')) {
-        return false;
-    }
-    if (!pnModRegisterHook('item',
-                           'delete',
-                           'API',
-                           'pubsub',
-                           'admin',
-                           'delevent')) {
         return false;
     }
 

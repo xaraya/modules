@@ -81,7 +81,7 @@ function pubsub_adminapi_addevent($args)
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_adminapi_deleteevent($args)
+function pubsub_adminapi_delevent($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -93,7 +93,7 @@ function pubsub_adminapi_deleteevent($args)
     }
     if (count($invalid) > 0) {
         $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'deleteevent', 'Pubsub');
+                    join(', ',$invalid), 'admin', 'delevent', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -394,8 +394,10 @@ function pubsub_adminapi_runjob($args)
 	    // might not be able to use the normal BL user vars as they would 
 	    // probabaly expand to currently logged in user, not the user for 
 	    // this event.
-	    // do something with the template to parse it and generate the HTML
-	    $html = SOME_BL_FUNCTION($template); 
+	    // need to create the $tplData array with all the information in it
+
+	    // call BL with the template to parse it and generate the HTML
+	    $html = pnTplString($template, $tplData);
 	    $plaintext = strip_tags($html);
 	    if ($action = "htmlmail") { 
 	       $boundary = "b" . md5(uniqid(time()));
@@ -460,7 +462,7 @@ function pubsub_adminapi_deljob($args)
     }
     if (count($invalid) > 0) {
         $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'deletejob', 'Pubsub');
+                    join(', ',$invalid), 'admin', 'deljob', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -638,7 +640,7 @@ function pubsub_adminapi_addtemplate($args)
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_adminapi_deletetemplate($args)
+function pubsub_adminapi_deltemplate($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -650,7 +652,7 @@ function pubsub_adminapi_deletetemplate($args)
     }
     if (count($invalid) > 0) {
         $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'deletetemplate', 'Pubsub');
+                    join(', ',$invalid), 'admin', 'deltemplate', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
