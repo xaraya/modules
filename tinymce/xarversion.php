@@ -15,6 +15,7 @@ $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Miscellaneous';
+// this module depends on the html module
 $modversion['dependency'] = array(779);
 
 ?>
