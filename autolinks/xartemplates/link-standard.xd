@@ -14,7 +14,7 @@
       set up to supply different parts of the matched string, using a RE match.
 --->
 <xar:set name="$stdattributes['href']">#$url#</xar:set>
-<xar:set name="$stdattributes['title']">#$title#</xar:set>
+<xar:set name="$stdattributes['title']">#xarML($title)#</xar:set>
 <xar:if condition="!empty($target)">
     <xar:set name="$stdattributes['target']">#$target#</xar:set>
 </xar:if>

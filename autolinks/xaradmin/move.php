@@ -124,6 +124,7 @@ function autolinks_admin_move()
             if ($dd_updates) {
                 // Some data was copied - update the properties.
                 // We won't test the result here yet, until we know how we could handle it.
+
                 $result = xarModAPIfunc(
                     'dynamicdata', 'admin', 'update',
                     array(

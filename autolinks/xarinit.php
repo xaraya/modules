@@ -401,15 +401,22 @@ function autolinks_upgrade($oldversion)
             xarModSetVar('autolinks', 'showsamples', 1);
 
         case '1.4':
-            // Changes to upgrade from 1.4 to 1.5
+        case '1.5':
+            // Changes to upgrade from 1.4 or 1.5 to 1.6
+            // There was an error in the orignal 1.4 to 1.5 upgrade.
 
             // New itemtype for the autolink types themselves.
-            xarModSetVar('autolinks', 'typeitemtype', 1);
+            $typeitemtype = xarModGetVar('autolinks', 'typeitemtype');
+            if (empty($typeitemtype)) {
+                xarModSetVar('autolinks', 'typeitemtype', 1);
+            }
 
             // The security instance 'keyword' has changed to 'name'. Only
             // need to update the query and the header.
+            // There are no APIs for updating security instances, so this is
+            // just a bit of a hack.
             $sitePrefix = xarDBGetSiteTablePrefix();
-            $query = 'update ' . $sitePrefix . '_privileges'
+            $query = 'update ' . $sitePrefix . '_security_instances'
                 . ' set xar_header = \'Autolink Name:\','
                 . ' xar_query = \'SELECT DISTINCT xar_name FROM ' . $autolinkstable . '\''
                 . ' where xar_module = \'autolinks\''
@@ -421,11 +428,14 @@ function autolinks_upgrade($oldversion)
                 xarExceptionHandled();
             }
 
-        case '1.5':
+        case '1.6':
             // The current version.
 
             // Create or update sample data.
-            autolinks_init_upgrade_data();
+            $result = xarModAPIfunc(
+                'autolinks', 'admin', 'samples',
+                array('action'=>'create')
+            );
 
             return true;
     }
@@ -440,12 +450,10 @@ function autolinks_upgrade($oldversion)
 function autolinks_delete()
 {
     // Remove module hooks
-    if (!xarModUnregisterHook('item',
-                             'transform',
-                             'API',
-                             'autolinks',
-                             'user',
-                             'transform')) {return;}
+    if (!xarModUnregisterHook(
+        'item', 'transform', 'API',
+        'autolinks', 'user', 'transform')
+    ) {return;}
 
     // Drop the table
     list($dbconn) = xarDBGetConn();
@@ -478,159 +486,6 @@ function autolinks_delete()
     xarRemoveInstances('autolinks');
 
     // Deletion successful
-    return true;
-}
-
-// If required, create default autolink type and update unlinked autolinks to point to it.
-// TODO: revisit error handling when a better upgrade model is available.
-// TODO: structure so each new sample autolink type can be added for each upgrade.
-
-function autolinks_init_upgrade_data()
-{
-    $setuptypes = array(
-        array(
-            'type_name' => xarML('Standard autolink'),
-            'template_name' => 'standard',
-            'default' => true,
-            'links' => array(
-                array(
-                    'name' => xarML('Xaraya home'),
-                    'keyword' => 'xaraya[\'s]*',
-                    'match_re' => '1',
-                    'title' => 'Xaraya - Content Management System',
-                    'url' => 'http://www.xaraya.com/',
-                    'comment' => 'Xaraya home page.',
-                    'enabled' => '1'
-                )
-            )
-        ),
-        array(
-            'type_name' => xarML('Sample autolink type 1'),
-            'template_name' => 'sample1',
-            'type_desc' => xarML('URL in [square brackets] after the matched keyword.')
-        ),
-        array(
-            'type_name' => xarML('External'),
-            'template_name' => 'external',
-            'type_desc' => xarML('External URLs. Opens in an "external" window. These URLs are marked up with a "WWW" world icon.'
-                .' To extend this, you can create a DD field named "icon" and enter a different icon file name.'),
-            'links' => array(
-                array(
-                    'name' => xarML('Any external HTTP URL'),
-                    'keyword' => '(http://(?!demo.xaraya.com)[-.a-z]+/)[^\s.;?!]*',
-                    'match_re' => '1',
-                    'title' => 'Visit the site: $2',
-                    'url' => '$1',
-                    'comment' => 'Matches any URL to an external website home page. Does not match the current site (demo.xaraya.com) - which is left up to other links to catch.',
-                    'sample' => 'http://demo.xaraya.com/ http://www.xaraya.com/. http://xxx/abc/123 text',
-                    'enabled' => '0'
-                )
-            )
-        ),
-        array(
-            'type_name' => xarML('Articles'),
-            'template_name' => 'article',
-            'dynamic_replace' => '1',
-            'type_desc' => xarML('Various links for fetching articles links. You must set up a DD property named "aid" with a default value of "$2" for these link types to work. Also create a DD property named "ptid" with a default value "$3". A DD property "text" will allow you to use alternative text for the link.'),
-            'links' => array(
-                array(
-                    'name' => xarML('Article title by article ID'),
-                    'keyword' => '\[article:title:aid:([\d]+)\]',
-                    'match_re' => '1',
-                    'title' => '',
-                    'url' => 'display',
-                    'comment' => 'Use format: [article:title:aid:<article-id>]',
-                    'sample' => 'Valid article: [article:title:aid:1]; invalid: [article:title:aid:9999]',
-                    'enabled' => '0'
-                ),
-                array(
-                    'name' => xarML('readfirst'),
-                    'keyword' => '\[readfirst:([\d]+)\]',
-                    'match_re' => '1',
-                    'title' => '',
-                    'url' => 'readfirst',
-                    'comment' => 'Use format: [readfirst:<article-id>]',
-                    'sample' => '[readfirst:1]',
-                    'enabled' => '0'
-                ),
-                array(
-                    'name' => xarML('readfirst2'),
-                    'keyword' => '\[readfirst:([\d]+):([\d]+)\]',
-                    'match_re' => '1',
-                    'title' => '',
-                    'url' => 'readfirst',
-                    'comment' => 'Use format: [readfirst:<aid>:<ptid>]',
-                    'sample' => '[readfirst:1:2]',
-                    'enabled' => '0'
-                ),
-                array(
-                    'name' => xarML('readnext'),
-                    'keyword' => '\[readnext:([\d]+)\]',
-                    'match_re' => '1',
-                    'title' => '',
-                    'url' => 'readnext',
-                    'comment' => 'Use format: [readnext:<article-id>]',
-                    'sample' => '[readnext:1]',
-                    'enabled' => '0'
-                ),
-                array(
-                    'name' => xarML('readlast'),
-                    'keyword' => '\[readlast:([\d]+)\]',
-                    'match_re' => '1',
-                    'title' => '',
-                    'url' => 'readlast',
-                    'comment' => 'Use format: [readfirst:<article-id>]',
-                    'sample' => '[readlast:1]',
-                    'enabled' => '0'
-                ),
-            )
-        )
-    );
-
-    // Create some autolink types where they do not exist.
-
-    foreach ($setuptypes as $setuptype) {
-        // Check if a type for that template exists.
-        $links = xarModAPIfunc(
-            'autolinks', 'user', 'getalltypes',
-            array('template_name' => $setuptype['template_name'])
-        );
-
-        if (!$links) {
-            // Create the autolink type
-            $tid = xarModAPIfunc('autolinks', 'admin', 'createtype', $setuptype);
-            if ($tid) {
-                // Now if this is the default type, point existing links to it.
-                if (!empty($setuptype['default'])) {
-                    // Scan the current autolinks for tids to be updated.
-                    $links = xarModAPIfunc('autolinks', 'user', 'getall');
-                    if (is_array($links)) {
-                        foreach ($links as $lid => $link) {
-                            if ($links['tid'] == 0 || $links['type_name'] == '') {
-                                // Update the tid in this link.
-                                $result = xarModAPIfunc('autolinks', 'admin', 'update',
-                                    array('lid'=>$lid, 'tid'=>$tid));
-                            }
-                        }
-                    }
-                }
-
-                // If there are example links to add, do them.
-                if (isset($setuptype['links'])) {
-                    foreach ($setuptype['links'] as $samplelink) {
-                        $samplelink['tid'] = $tid;
-                        $result = xarModAPIfunc('autolinks', 'admin', 'create', $samplelink);
-                        //if (!$result) {return;}
-                    }
-                }
-            } else {
-                if (xarExceptionMajor()) {
-                    xarExceptionHandled();
-                }
-            }
-        }
-    }
-
     return true;
 }
 

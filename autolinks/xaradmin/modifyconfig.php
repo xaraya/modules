@@ -20,6 +20,15 @@ function autolinks_admin_modifyconfig()
         'module', 'modifyconfig', 'autolinks',
         array('itemtype' => $typeitemtype, 'module' => 'autolinks'));
     $data['hooks'] = $hooks;
+
+    // Get the samples.
+    $sample_data = xarModAPIfunc(
+        'autolinks', 'admin', 'samples', array('action' => 'get')
+    );
+
+    if (!is_array($sample_data)) {$sample_data = array();}
+
+    $data['sample_data'] = $sample_data;
     
     return $data;
 }

@@ -13,7 +13,6 @@
  */
 function autolinks_adminapi_create($args)
 {
-
     // Get arguments from argument array
     extract($args);
 
@@ -71,7 +70,10 @@ function autolinks_adminapi_create($args)
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
-        $msg = xarML('The matching keyword or name already has an entry.');
+        $msg = xarML(
+            'The link matching keyword "#(1)" or name "#(2)" already exists.',
+            $keyword, $name
+        );
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
@@ -125,7 +127,8 @@ function autolinks_adminapi_create($args)
     // Let any hooks know that we have created a new link
     xarModCallHooks(
         'item', 'create', $lid,
-        array('itemtype' => $tid, 'module' => 'autolinks'));
+        array('itemtype' => $tid, 'module' => 'autolinks', 'urlparam' => 'lid')
+    );
 
     // Return the id of the newly created link to the calling process
     return $lid;

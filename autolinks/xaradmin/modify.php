@@ -9,6 +9,15 @@ function autolinks_admin_modify($args)
 {
     extract($args);
 
+    // If we have come here using a tid, then redirect to the correct function.
+    if (!xarVarFetch('tid',  'id', $tid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!empty($tid)) {
+        xarResponseRedirect(
+            xarModURL('autolinks', 'admin', 'modifytype', array('tid' => $tid))
+        );
+        return true;
+    }
+
     // Get parameters from whatever input we need
     if (!xarVarFetch('lid',  'id', $lid,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('obid', 'id', $obid, NULL, XARVAR_DONT_SET)) {return;}

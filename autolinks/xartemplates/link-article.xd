@@ -29,7 +29,7 @@
         <!--- Fetch the article from its API. --->
         <xar:set name="$article">#xarModAPIfunc('articles','user','get',$aidarray)#</xar:set>
         <xar:if condition="!empty($article['title'])">
-            <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay($title)#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
+            <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
         <xar:else/>
             <!--- Display error if the article could not be fetched (invalid number or no permission. --->
             <span class="xar-error">[<xar:mlstring>Article not available:</xar:mlstring> ID #$aid#]</span>
@@ -51,7 +51,7 @@
         </xar:if>
 
         <xar:if condition="!empty($title)">
-            <a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay($title)#">#xarVarPrepForDisplay($text)#</a>
+            <a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepForDisplay($text)#</a>
         <xar:else/>
             <a href="#xarModURL('articles','user','display',$aidarray)#" >#xarVarPrepForDisplay($text)#</a>
         </xar:if>

@@ -109,15 +109,19 @@ function autolinks_userapi_getreplace($args)
         // Non-dynamic templates can be executed and cached for later use.
 
         // Execute the template.
+        //set_error_handler(null);
         $result = xarTplModule(
             'autolinks',
             xarModGetVar('autolinks', 'templatebase'),
             $template_name = $link['template_name'],
             $template_data
         );
+        //restore_error_handler();
 
         // Catch any exceptions.
         if (xarExceptionMajor()) {
+            $error_text = xarExceptionRender('text');
+
             // Handle the exception since we have rendered it.
             xarExceptionHandled();
 
@@ -130,7 +134,7 @@ function autolinks_userapi_getreplace($args)
                         'match' => '$1',
                         'template_base' => xarModGetVar('autolinks', 'templatebase'),
                         'template_name' => $link['template_name'],
-                        'error_text' => xarExceptionRender('text')
+                        'error_text' => $error_text
                     )
                 );
                 // Even the error template errored.

@@ -20,7 +20,7 @@
                 <td>
                     <select name="tid" id="tid" size="1">
                         <xar:foreach in="$types" value="$v" key="$k">
-                            <xar:if condition="$v['tid'] eq (isset($tid) ? $tid : 0)">
+                            <xar:if condition="$v['tid'] eq $tid or $v['itemtype'] eq $itemtype">
                                 <option value="#$k#" selected="selected">#$v['type_name']#</option>
                             <xar:else/>
                                 <option value="#$k#">#$v['type_name']#</option>

@@ -106,7 +106,11 @@ function autolinks_adminapi_createtype($args)
     // Let any hooks know that we have created a new link type
     xarModCallHooks(
         'item', 'create', $tid,
-        array('itemtype' => 1, 'module' => 'autolinks')
+        array(
+            'itemtype' => xarModGetVar('autolinks', 'typeitemtype'),
+            'module' => 'autolinks',
+            'urlparam' => 'tid'
+        )
     );
 
     // Return the id of the newly created link to the calling process

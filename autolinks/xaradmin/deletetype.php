@@ -13,6 +13,7 @@ function autolinks_admin_deletetype($args)
     if (!xarVarFetch('obid',         'isset', $obid,         NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('confirmation', 'isset', $confirmation, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('cascade',      'isset', $cascade,      0,    XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ddremove',     'isset', $ddremove,     0,    XARVAR_NOT_REQUIRED)) {return;}
 
     // Security Check
     if(!xarSecurityCheck('DeleteAutolinks')) {return;}
@@ -42,6 +43,8 @@ function autolinks_admin_deletetype($args)
     
     // Check for confirmation.
     if (empty($confirmation)) {
+        // Is dd hooked?
+        $type['ddhooked'] = xarModIsHooked('dynamicdata', 'autolinks', $type['itemtype']);
         $type['linkcount'] = $linkcount;
         $type['authid'] = xarSecGenAuthKey();
         return $type;
@@ -55,15 +58,34 @@ function autolinks_admin_deletetype($args)
     }
 
     // The API function is called
-    if (!xarModAPIFunc('autolinks', 'admin', 'deletetype',
+    if (xarModAPIFunc('autolinks', 'admin', 'deletetype',
         array('tid' => $tid, 'cascade' => $cascade))
     ) {
+        // Remove the DD object too?
+        if (xarModIsHooked('dynamicdata', 'autolinks', $type['itemtype']) && !empty($ddremove)) {
+            // Get the object information.
+            $objectinfo = xarModAPIFunc(
+                'dynamicdata', 'user', 'getobjectinfo',
+                array(
+                    'moduleid' => xarModGetIDFromName('autolinks'),
+                    'itemtype' => $type['itemtype']
+                )
+            );
+
+            // Delete the object if it exists.
+            if (isset($objectinfo['objectid'])) {
+                $result = xarModAPIFunc(
+                    'dynamicdata', 'admin', 'deleteobject',
+                    array('objectid' => $objectinfo['objectid'])
+                );
+            }
+        }
+    } else {
         return;
     }
 
+    // Return to the link type view page.
     xarResponseRedirect(xarModURL('autolinks', 'admin', 'viewtype'));
-
-    // Return
     return true;
 }
 

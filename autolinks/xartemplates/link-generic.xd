@@ -1,0 +1,68 @@
+<!---
+    Traditional autolink anchor tag.
+    The default attributes passed into this template are:
+    #$url#      - default URL if the calculated URL fails
+    #$title#    - the title field of the link (optional)
+    #$style#    - the global or over-ridden autolinks 'style' setting (optional)
+    #$class#    - puts a class on the link (optional)
+    #$target#   - the global or over-ridden autolinks 'target' setting (optional)
+    #$module#   - the module name (mandatory)
+    #$type#     - the function type (default 'user')
+    #$func#     - the function name (default 'display')
+    #$idname#   - the item ID name
+    #$idvalue#  - the item ID value
+    #$idname2#  - extra item ID name
+    #$idvalue2# - extra item ID value
+    #$text#     - text to display as the link (default 'click here')
+--->
+
+<xar:if condition="empty($text)">
+    <xar:set name="$text"><xar:mlstring>click here</xar:mlstring></xar:set>
+</xar:if>
+
+<xar:if condition="empty($func)">
+    <xar:set name="$func">'display'</xar:set>
+</xar:if>
+
+<xar:if condition="empty($type)">
+    <xar:set name="$func">'user'</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($idname) and !empty($idvalue)">
+    <xar:set name="$params[$idname]">#$idvalue#</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($idname2) and !empty($idvalue2)">
+    <xar:set name="$params[$idname2]">#$idvalue2#</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($module)">
+    <xar:if condition="!empty($params)">
+        <xar:set name="$attributes['href']">#xarModURL($module,$type,$func,$params)#</xar:set>
+    <xar:else/>
+        <xar:set name="$attributes['href']">#xarModURL($module,$type,$func)#</xar:set>
+    </xar:if>
+</xar:if>
+
+<xar:if condition="empty($attributes['href'])">
+    <xar:set name="$attributes['href']">#$url#</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($title)">
+    <xar:set name="$attributes['title']">#xarML($title)#</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($target)">
+    <xar:set name="$attributes['target']">#$target#</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($style)">
+    <xar:set name="$attributes['style']">#$style#</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($class)">
+    <xar:set name="$attributes['class']">#$class#</xar:set>
+</xar:if>
+
+<!--- Now create the actual link, based on the attributes we have defined above. --->
+<a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $attributes)#>#xarML($text)#</a>

@@ -16,12 +16,14 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
     // are passed to the relevant template. Errors are handled here.
 
     // Execute the template.
+    //set_error_handler(null);
     $replace = xarTplModule(
         'Autolinks',
         xarModGetVar('autolinks', 'templatebase'),
         $template_name,
         $template_vars
-     );
+    );
+    //restore_error_handler();
 
     // Catch any exceptions.
     if (xarExceptionMajor()) {

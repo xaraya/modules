@@ -19,14 +19,14 @@
 <!--- First set used if a target is specified (either the global default, or over-ridden with DD). --->
 <xar:if condition="!empty($target)">
     <xar:if condition="empty($imgurl)">
-        <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay($title)#">#$match#</a>
+        <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay(xarML($title))#">#$match#</a>
     <xar:else/>
-        <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay($title)#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay($imgalt)#" hspace="4">#$match#</a>
+        <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay(xarML($title))#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" hspace="4">#$match#</a>
     </xar:if>
 <xar:else/>
     <xar:if condition="empty($imgurl)">
-        <a href="#$url#" title="#xarVarPrepForDisplay($title)#">#$match#</a>
+        <a href="#$url#" title="#xarVarPrepForDisplay(xarML($title))#">#$match#</a>
     <xar:else/>
-        <a href="#$url#" title="#xarVarPrepForDisplay($title)#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay($imgalt)#" hspace="4">#$match#</a>
+        <a href="#$url#" title="#xarVarPrepForDisplay(xarML($title))#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" hspace="4">#$match#</a>
     </xar:if>
 </xar:if>

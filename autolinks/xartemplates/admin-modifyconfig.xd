@@ -21,7 +21,10 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Configure Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto;">
 <form method="post" action="#xarModURL('autolinks', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <p>
+        <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+        <input type="submit" name="submit" id="submit" value="#$submit#" align="middle"/>
+    </p>
 
 	<h3><xar:mlstring>Matching Rule Options</xar:mlstring></h3>
 
@@ -109,7 +112,34 @@
     </xar:if>
     </p>
 
-    <input type="submit" value="#$submit#" align="middle" />
+    <p><input type="submit" name="submit" id="submit" value="#$submit#" align="middle"/></p>
+
+    <h2><xar:mlstring>Create Sample Data</xar:mlstring></h2>
+    <p>
+        <xar:mlstring>
+        Create sample link types, links and dynamic data objects and properties.
+        For the samples to work correctly, you must hook the Dyanamic Data module services
+        into the Autolinks module.
+        </xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+        Samples to be created are listed below. The samples will only be created where the
+        autolink type name does not exist and the template name is not used in any existing
+        autolink type. Delete or rename existing link types if you want to restore the samples.
+        </xar:mlstring>
+    </p>
+
+    <div style="float: left; width: 30%"><strong><xar:mlstring>Autolink Type Name</xar:mlstring></strong></div>
+    <div style="float: left; width: 70%"><strong><xar:mlstring>Template Name</xar:mlstring></strong></div>
+    <xar:foreach in="$sample_data" key="$samplekey">
+        <div style="float: left; width: 30%">#$sample_data[$samplekey]['type_name']#</div>
+        <div style="float: left; width: 70%">#$sample_data[$samplekey]['template_name']#</div>
+    </xar:foreach>
+    <br style="clear :both;"/><br/>
+
+    <xar:set name="$submitsamples"><xar:mlstring>Create sample data</xar:mlstring></xar:set>
+    <p><input type="submit" name="createsamples" id="createsamples" value="#$submitsamples#" align="middle"/></p>
 </form>
 </div>
 </div>

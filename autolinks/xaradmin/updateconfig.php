@@ -10,6 +10,9 @@ function autolinks_admin_updateconfig()
 
     if (!xarSecConfirmAuthKey()) {return;}
 
+    // Check if we need to create sample data.
+    if (!xarVarFetch('createsamples', 'str', $createsamples, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    
     $old_newwindow = xarModGetVar('autolinks', 'newwindow');
     $old_showerrors = xarModGetVar('autolinks', 'showerrors');
 
@@ -63,8 +66,17 @@ function autolinks_admin_updateconfig()
         }
     }
 
-    xarResponseRedirect(xarModURL('autolinks', 'admin', 'modifyconfig'));
+    // Create sample data if required.
+    if (!empty($createsamples)) {
+        $result = xarModAPIfunc('autolinks', 'admin', 'samples', array('action' => 'create'));
+    }
 
+    // Check for errors.
+    if (xarExceptionMajor()) {
+        return;
+    }
+
+    xarResponseRedirect(xarModURL('autolinks', 'admin', 'modifyconfig'));
     return true;
 }
 

@@ -7,7 +7,8 @@ function autolinks_admin_new($args)
 {
     extract($args);
 
-    if (!xarVarFetch('tid', 'id', $tid, NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('tid', 'id', $tid, 0, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED)) {return;}
 
     // Prepare each parameter for re-presentation in the form.
     foreach(array('tid', 'tid_error',
@@ -40,9 +41,12 @@ function autolinks_admin_new($args)
             .'return ($a["type_name"] < $b["type_name"]) ? -1 : 1;'
         );
         uasort($types, $sortfunc);
+
+        // Set the types for display in the template.
         $data['types'] = $types;
     }
 
+    $data['itemtype'] = $itemtype;
     $data['authid'] = xarSecGenAuthKey();
 
     // Return the output

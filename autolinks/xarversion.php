@@ -10,12 +10,12 @@
  * @link http://www.xaraya.org
  *
  * @subpackage Autolinks Module
- * @author Jim McDonald
+ * @author Jason Judge/Jim McDonald
 */
 
 $modversion['name'] = 'Autolinks';
 $modversion['id'] = '11';
-$modversion['version'] = '1.5';
+$modversion['version'] = '1.6';
 $modversion['description'] = 'Automatically link key words';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
@@ -23,8 +23,8 @@ $modversion['changelog'] = 'xardocs/changelog.txt';
 $modversion['license'] = 'xardocs/license.txt';
 $modversion['coding'] = 'xardocs/coding.txt';
 $modversion['official'] = 1;
-$modversion['author'] = 'Jim McDonald';
-$modversion['contact'] = 'Jim@mcdee.net';
+$modversion['author'] = 'Jason Judge/Jim McDonald';
+$modversion['contact'] = 'jason.xaraya@acadweb.co.uk,Jim@mcdee.net';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array();

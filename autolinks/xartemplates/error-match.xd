@@ -5,5 +5,11 @@ Variables available in this template:
     template_name - the template main name
     error_text - the full error text
 --->
-<xar:set name="$error_desc"><xar:mlstring>Dynamic Autolink Error in template</xar:mlstring></xar:set>
-<strong><a href="#" title="#$error_desc#: #$template_base#-#$template_name#:- #xarVarPrepHTMLdisplay($error_text)#" style="color:red;">#$match#</a></strong>
+<xar:set name="$error_desc"><xar:ml>
+        <xar:mlstring>
+            Dynamic Autolink Error in template #(1)-#(2):
+        </xar:mlstring>
+        <xar:mlvar>#$template_base#</xar:mlvar>
+        <xar:mlvar>#$template_name#</xar:mlvar>
+    </xar:ml></xar:set>
+<strong><span class="xar-error" title="#$error_desc# #xarVarPrepForDisplay($error_text)#">#$match#</span></strong>
