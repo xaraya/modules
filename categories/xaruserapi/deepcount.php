@@ -18,6 +18,7 @@ function categories_userapi_deepcount($args)
     $count = array();
 
     // Get the non-zero counts.
+    // These are the leaf nodes that we then extend back to the top ancestor(s).
     $catcount = xarModAPIfunc(
         'categories', 'user', 'groupcount',
         array('modid' => $modid, 'itemtype' => $itemtype)
@@ -29,13 +30,16 @@ function categories_userapi_deepcount($args)
     $catlist = array_keys($catcount);
 
     // Get the ancestors (including self).
-    $ancestors = xarModAPIfunc('categories', 'user', 'getancestors', array('cids'=>$catlist, 'return_itself'=>true));
+    $ancestors = xarModAPIfunc('categories', 'user', 'getancestors', array('cids'=>$catlist, 'self'=>true));
 
-    // For each non-zero category count, traverse the ancestors and add in the counts.
+    // For each non-zero category count, traverse the ancestors and add on the counts.
     $allcounts[0] = 0;
     foreach ($catcount as $cat => $count) {
+        // Keep track of categories visited to avoid infinite loops.
+        $done = array();
         $nextcat = $ancestors[$cat]['parent'];
-        while ($nextcat > 0) {
+        while ($nextcat > 0 && !isset($done[$nextcat])) {
+            $done[$nextcat] = $nextcat;
             if (!isset($allcounts[$nextcat])) {
                 $allcounts[$nextcat] = $count;
             } else {
