@@ -1,6 +1,6 @@
 <xar:template file="publinks" type="module" />
 <xar:if condition="!empty($ptid) or !empty($catid)">
-    <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" />
+    <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="0" showempty="1" />
 </xar:if>
 <xar:if condition="!empty($author)">
 <h2><xar:ml><xar:mlstring>By Author : #(1)</xar:mlstring><xar:mlvar>#$author#</xar:mlvar></xar:ml></h2>
