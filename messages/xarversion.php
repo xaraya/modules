@@ -3,6 +3,7 @@
 $modversion['name'] = 'Xaraya Messages';
 $modversion['id'] = '6';
 $modversion['version'] = '1.8.0';
+$modversion['displayname']    = xarML('Messages');
 $modversion['description'] = 'Xaraya Messages module';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
