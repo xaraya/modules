@@ -583,7 +583,7 @@ function articles_user_view()
                     I am processing the RSS values for the RSS theme here for the time being, until we have the work around;) -- jc*/
 
         $article['rsstitle'] = htmlspecialchars($article['title']);
-        $article['rssdate'] = strtotime($article['date']);
+        //$article['rssdate'] = strtotime($article['date']);
         $article['rsssummary'] = preg_replace('<br />',"\n",$article['summary']);
         $article['rsssummary'] = xarVarPrepForDisplay(strip_tags($article['rsssummary']));
         $article['rsscomment'] = xarModURL('comments','user','display',array('modid' => xarModGetIDFromName('articles'),'objectid' => $article['aid']));
