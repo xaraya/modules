@@ -18,7 +18,7 @@ function dyn_example_user_usermenu($args)
     // variable is set, we will load the correct page in the loop.
     $phase = xarVarCleanFromInput('phase');
 
-    // Lets set the phase variable in case we are on the icon page.  
+    // Lets set the phase variable in case we are on the icon page.
     // E_ALL fix so we don't have undefined variable.
     if (empty($phase)){
         $phase = 'menu';
@@ -26,7 +26,7 @@ function dyn_example_user_usermenu($args)
 
     switch(strtolower($phase)) {
         case 'menu':
-            
+
             // We need to define the icon that will go into the page.
             $icon = 'modules/example/xarimages/admin.gif';
 
@@ -36,14 +36,14 @@ function dyn_example_user_usermenu($args)
             break;
 
         case 'form':
-            
-            // Its good practice for the user menu to be personalized.  In order to do so, we 
+
+            // Its good practice for the user menu to be personalized.  In order to do so, we
             // need to get some information about the user.
-            $name = xarUserGetVar('name'); 
-            
-            // We also need to set the SecAuthKey, in order to stop hackers from setting user 
+            $name = xarUserGetVar('name');
+
+            // We also need to set the SecAuthKey, in order to stop hackers from setting user
             // vars off site.
-            $authid = xarSecGenAuthKey();
+            $authid = xarSecGenAuthKey('dyn_example');
 
             $submitlabel = xarML('Submit');
             // Now lets send the data to the template which name we choose here.
@@ -54,7 +54,7 @@ function dyn_example_user_usermenu($args)
 
         case 'update':
             // First we need to get the data back from the template in order to process it.
-            // The example module is not setting any user vars at this time, but an example 
+            // The example module is not setting any user vars at this time, but an example
             // might be the number of items to be displayed per page.
             list($uid,
                  $name) = xarVarCleanFromInput('uid',
@@ -62,15 +62,15 @@ function dyn_example_user_usermenu($args)
 
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
-            
-            // Redirect back to the account page.  We could also redirect back to our form page as 
+
+            // Redirect back to the account page.  We could also redirect back to our form page as
             // well by adding the phase variable to the array.
             xarResponseRedirect(xarModURL('roles', 'user', 'account'));
 
             break;
     }
 
-    // Finally, we need to send our variables to block layout for processing.  Since we are 
+    // Finally, we need to send our variables to block layout for processing.  Since we are
     // using the data var for processing above, we need to do the same with the return.
     return $data;
 }
