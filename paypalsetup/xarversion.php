@@ -1,18 +1,19 @@
 <?php
 /**
  * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
- * 
+ *
  * PayPal Set-up
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * @subpackage paypalsetup module
- * @author John Cox <niceguyeddie@xaraya.com> 
+ * @author John Cox <niceguyeddie@xaraya.com>
  */
 $modversion['name']           = 'PayPal Setup';
 $modversion['id']             = '805';
 $modversion['version']        = '1.0.0';
+$modversion['displayname']    = xarML('PayPalSetup');
 $modversion['description']    = 'Set-Up Variables Required by PayPal';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
