@@ -27,30 +27,29 @@
 <xar:else />
     <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" #$formhooks['formaction']#>
 </xar:if>
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
 
 <xar:foreach in="$fields" value="$field">
-<div style="margin: 5pt;">
-    <div style="width: 100px; float:left;">
-    <span style="vertical-align:top;"><label for="#$field['id']#">#$field['label']#</label></span>
-    </div>
-    <span><xar:articles-field definition="$field['definition']" /></span>
-</div>
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('#$field['label']#')#"><label for="#$field['id']#">#$field['label']#</label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<xar:articles-field definition="$field['definition']" />
+	</span>
+	</div>
 </xar:foreach>
 
 <xar:if condition="!empty($formhooks['formdisplay'])">
-<div>
-	<span style="vertical-align:top;"><xar:mlstring>Form Controls</xar:mlstring></span>
-	<span>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Form Controls')#"><xar:mlstring>Form Controls</xar:mlstring>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
 		#$formhooks['formdisplay']#
 	</span>
-</div>
+	</div>
 </xar:if>
 
 <!-- put the hooks in, each hook should be a block level element thus keeping the form valid -->
@@ -60,20 +59,23 @@
 	</xar:foreach>
 </xar:if>
 
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('This is the allowed HTML tags that have been registered on this site.')#"><xar:mlstring>Allowed HTML tags</xar:mlstring>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		#$allowedhtml#
+	</span>
+	</div>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="2">
-<tr>
-    <td style="vertical-align:top;"><xar:mlstring>Allowed HTML tags</xar:mlstring></td>
-    <td>#$allowedhtml#</td>
-</tr>
-
-<tr><td colspan="2" style="text-align: center;"><br />
-    <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
-    &nbsp;&nbsp;&nbsp;
-    <input type="submit" value="#$addlabel#" /></td></tr>
+	<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 30%; text-align: right;">    
+		<input type="submit" name="preview" id="preview" value="#$previewlabel#" />
+			&nbsp;&nbsp;&nbsp;
+		<input type="submit" value="#$addlabel#" /</span>
+	</div>
 
 </form>
-</table>
 </xar:if>
 <br />
 </div>
