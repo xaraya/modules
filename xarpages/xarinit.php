@@ -112,12 +112,23 @@ function xarpages_init()
     xarModSetVar('xarpages', 'defaultpage', 0);
     xarModSetVar('xarpages', 'errorpage', 0);
     xarModSetVar('xarpages', 'notfoundpage', 0);
-    xarModSetVar('xarpages', 'SupportShortURLs', 0);
+
+    // Switch short URL support on by default, as that is largely
+    // the purpose of this module.
+    xarModSetVar('xarpages', 'SupportShortURLs', 1);
 
     // Privileges.
 
     // Set up component 'Page'.
-    // Each page will have a page name and a unique page type name.
+    // Each page will have a page name and a unique page type name, i.e. two instances
+    // that can define a specific page or group of pages.
+    // The page names are not unique, but it is up to the administrator to decide how
+    // to handle that.
+    // We are not supporting IDs to identify pages or page types - the name alone
+    // will do. With the correct permissions, a user will not be allowed to rename a
+    // page, so that should not be a problem.
+    // Note page names beginning with '@' are system pages - not editable by a user
+    // with any permissions.
     $instances = array (
         array (
             'header' => 'Page Name',
@@ -182,23 +193,42 @@ function xarpages_init()
     // are made:
     // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
     // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
+
+    // Allow the user to view the page types that are available.
     xarRegisterMask(
         'ModeratePagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_MODERATE',
         xarML('Overview of page types')
     );
+    // Allow the user to change the description and any hooks on the page type,
+    // but not to rename it, delete it or create any new ones.
     xarRegisterMask(
         'EditPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_EDIT',
         xarML('Modify page type description and hooks')
     );
-    // Since creation of templates are involved here, we go straight to admin level.
+    // Since creation of templates are involved here (each page type requires at least
+    // one [default] template), we go straight to admin level to make any changes in that area.
+    // This access allows creation, deletion and renaming of page types.
     xarRegisterMask(
         'AdminPagetype', 'All', 'xarpages', 'Pagetype', 'All', 'ACCESS_ADMIN',
         xarML('Administer page types')
     );
 
     // TODO: Create some default types and DD objects.
-    // This would probably best be done via an import after
+    // NOTE: This would probably best be done via an import after
     // the module is installed.
+
+    // Switch on all hooks from DD.
+    if (xarModIsAvailable('dynamicdata')) {
+        xarModAPIFunc('modules', 'admin', 'enablehooks',
+            array('callerModName' => 'xarpages', 'hookModName' => 'dynamicdata')
+        );
+    }
+
+    // Create the 'pagetype' page. This provides us with the itemtype
+    // for pagetypes. NOTE: this is now done the first time a page
+    // type is created.
+
+    // TODO: create blocks
 
     // Initialisation successful.
     return true;
@@ -225,6 +255,12 @@ function xarpages_upgrade($oldversion)
  */
 function xarpages_delete()
 {
+    // TODO: delete module aliases?
+    // TODO: drop tables
+    // TODO: remove blocks
+    // TODO: delete module variables
+    // TODO: drop privileges etc.
+
     // Deletion successful.
     return true;
 }

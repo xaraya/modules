@@ -29,7 +29,7 @@ function xarpages_userapi_getpagestree($args)
     $children_keys = array();
     $children_names = array();
     $children_pages = array();
-    $levelstack = array();
+    $depthstack = array();
     $pathstack = array();
 
     // Create some additional arrays to help navigate the [flat] pages array.
@@ -57,20 +57,19 @@ function xarpages_userapi_getpagestree($args)
         }
 
         // Calculate the relative nesting level. Top level (root node) is zero.
-        if (!empty($levelstack)) {
-            while (!empty($levelstack) && end($levelstack) < $page['right']) {
-                array_pop($levelstack);
+        if (!empty($depthstack)) {
+            while (!empty($depthstack) && end($depthstack) < $page['right']) {
+                array_pop($depthstack);
                 array_pop($pathstack);
             }
         }
 
-        // 'level' is 1-based and 'depth' is 0-based
-        $levelstack[$page['pid']] = $page['right'];
-        $pages[$key]['level'] = count($levelstack);
-        $pages[$key]['depth'] = count($levelstack) - 1;
+        // 'depth' is 0-based
+        $depthstack[$page['pid']] = $page['right'];
+        $pages[$key]['depth'] = (empty($depthstack) ? 0 : count($depthstack) - 1);
         // This item is the path for each page, based on IDs.
         // FIXME: some paths seem to get a '0' root ID. They should only have real page IDs.
-        $pages[$key]['pidpath'] = array_keys($levelstack);
+        $pages[$key]['pidpath'] = array_keys($depthstack);
 
         $pathstack[] = $page['name'];
         // This item is the path for each page, based on names.

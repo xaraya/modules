@@ -66,7 +66,7 @@ function xarpages_admin_modifyconfig()
     // Clear out any empty hooks.
     foreach($confighooks as $key => $confighook) {
         if (trim($confighook) == '') {
-            unset($confighook[$key]);
+            unset($confighooks[$key]);
         } else {
             $confighooks[$key] = trim($confighook);
         }

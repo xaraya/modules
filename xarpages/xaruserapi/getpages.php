@@ -1,10 +1,6 @@
 <?php
 
 // Get all matching pages.
-// TODO: support DD and groups of IDs.
-// TODO: do the item counts from here too, making use of where-clause.
-// TODO: allow fetch of page ranges.
-// TODO: support a 'prune' flag?
 // Retrieve the page type details here too
 // pid: page ID (optional)
 // name: page name
@@ -15,6 +11,8 @@
 // key: string indicates the key used for pages ('pid', 'index', 'name')
 // dd_flag: include dynamic data if available (default true)
 // count: boolean return just a count of records if true
+// tree_contains_name: limit the search to the tree of pages containing the page(s) of the given name
+// tree_contains_pid: limit the search to the tree of pages containing the page of the given ID
 
 function xarpages_userapi_getpages($args)
 {
@@ -38,47 +36,47 @@ function xarpages_userapi_getpages($args)
     }
 
     if (isset($name)) {
-        $where[] = 'xar_name = ?';
+        $where[] = 'tpages.xar_name = ?';
         $bind[] = (string)$name;
     }
 
     if (isset($status)) {
-        $where[] = 'xar_status = ?';
+        $where[] = 'tpages.xar_status = ?';
         $bind[] = strtoupper($status);
     }
 
     if (isset($pid)) {
-        $where[] = 'xar_pid = ?';
+        $where[] = 'tpages.xar_pid = ?';
         $bind[] = (int)$pid;
     }
 
     if (isset($itemtype)) {
-        $where[] = 'xar_itemtype = ?';
+        $where[] = 'tpages.xar_itemtype = ?';
         $bind[] = (int)$itemtype;
     }
 
     if (isset($parent)) {
-        $where[] = 'xar_parent = ?';
+        $where[] = 'tpages.xar_parent = ?';
         $bind[] = (int)$parent;
     }
 
     // Used to retrieve descendants.
     if (isset($left_range) && is_array($left_range)) {
-        $where[] = 'xar_left between ? AND ?';
+        $where[] = 'tpages.xar_left between ? AND ?';
         $bind[] = (int)$left_range[0];
         $bind[] = (int)$left_range[1];
     }
 
     // Used to prune a single branch of the tree.
     if (isset($left_exclude) && is_array($left_exclude)) {
-        $where[] = 'xar_left NOT between ? AND ?';
+        $where[] = 'tpages.xar_left NOT between ? AND ?';
         $bind[] = (int)$left_exclude[0];
         $bind[] = (int)$left_exclude[1];
     }
 
     // Used to retrieve ancestors.
     if (isset($wrap_range) && is_numeric($wrap_range)) {
-        $where[] = 'xar_left <= ? AND xar_right >= ?';
+        $where[] = 'tpages.xar_left <= ? AND tpages.xar_right >= ?';
         $bind[] = (int)$wrap_range;
         $bind[] = (int)$left_range;
     }
@@ -95,15 +93,43 @@ function xarpages_userapi_getpages($args)
     if ($count) {
         $query = 'SELECT COUNT(*)';
     } else {
-        $query = 'SELECT xar_pid, xar_name, xar_desc,'
-            . ' xar_itemtype, xar_parent, xar_left, xar_right,'
-            . ' xar_template, xar_status, xar_encode_url, xar_decode_url,'
-            . ' xar_theme, xar_function';
+        // The DISTINCT is needed in case use of 'tree_contains_name'
+        // matches more than one page with the same name.
+        $query = 'SELECT DISTINCT tpages.xar_pid, tpages.xar_name, tpages.xar_desc,'
+            . ' tpages.xar_itemtype, tpages.xar_parent, tpages.xar_left, tpages.xar_right,'
+            . ' tpages.xar_template, tpages.xar_status, tpages.xar_encode_url, tpages.xar_decode_url,'
+            . ' tpages.xar_theme, tpages.xar_function';
     }
 
-    $query .= ' FROM ' . $xartable['xarpages_pages']
-        . (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
-        . ' ORDER BY xar_left ASC';
+    $query .= ' FROM ' . $xartable['xarpages_pages'] . ' AS tpages';
+    
+    // If the request is to fetch a tree that *contains* a particular
+    // page, then add the extra sub-queries in here.
+
+    if (!empty($tree_contains_pid) || !empty($tree_contains_name)) {
+        // Join to get the member page.
+        $query .= ' INNER JOIN ' . $xartable['xarpages_pages'] . ' AS tpages_member';
+
+        if (!empty($tree_contains_pid)) {
+            $query .= ' ON tpages_member.xar_pid = ?';
+            array_unshift($bind, (int)$tree_contains_pid);
+        }
+
+        if (!empty($tree_contains_name)) {
+            $query .= ' ON tpages_member.xar_name = ?';
+            array_unshift($bind, (string)$tree_contains_name);
+        }
+
+        // Join to find the root page of the tree containing the required page.
+        $query .= ' INNER JOIN ' . $xartable['xarpages_pages'] . ' AS tpages_root'
+            . ' ON tpages_root.xar_left <= tpages_member.xar_left'
+            . ' AND tpages_root.xar_right >= tpages_member.xar_right'
+            . ' AND tpages.xar_left BETWEEN tpages_root.xar_left AND tpages_root.xar_right'
+            . ' AND tpages_root.xar_parent = 0';
+    }
+
+    $query .= (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
+        . ' ORDER BY tpages.xar_left ASC';
 
     $result = $dbconn->execute($query, $bind);
     if (!$result) return;
@@ -139,9 +165,9 @@ function xarpages_userapi_getpages($args)
             // pages array.
             $id2key[(int)$pid] = $$key;
             if ($key == 'pid') {
-                $parent = (int)$parent_pid;
+                $parent_key = (int)$parent_pid;
             } else {
-                $parent = $id2key[$parent_pid];
+                $parent_key = $id2key[$parent_pid];
             }
 
             $pages[$$key] = array(
@@ -149,7 +175,7 @@ function xarpages_userapi_getpages($args)
                 'name' => $name,
                 'desc' => $desc,
                 'itemtype' => (int)$itemtype,
-                'parent' => $parent,
+                'parent' => $parent_key,
                 'parent_pid' => (int)$parent_pid,
                 'left' => (int)$left,
                 'right' => (int)$right,

@@ -16,6 +16,13 @@ function xarpages_adminapi_createtype($args)
 {
     extract($args);
 
+    // Get the pagetype itemtype ID. The first time this is ever called,
+    // the system itemtype pagetype will be created, so do it first to
+    // increase the likelyhood that it will get ID number 1.
+    if ($name[0] != '@') {
+        $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+    }
+
     // TODO: validate name (mandatory and unique)
 
     $xartable =& xarDBGetTables();
@@ -29,8 +36,8 @@ function xarpages_adminapi_createtype($args)
 
     // Include the optional parameters.
     foreach(array('desc') as $colname) {
-        if (isset($$colname) && is_string($$colname)) {
-            $bind[] = $$colname;
+        if (isset($$colname)) {
+            $bind[] = (string)$$colname;
             $cols[] = 'xar_' . $colname;
         }
     }
@@ -55,17 +62,21 @@ function xarpages_adminapi_createtype($args)
     // Hooks: we have created an instance of the 'page type' type.
 
     // Get the itemtype of the page type.
-    $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
-
-    // Create hooks.
-    xarModCallHooks(
-        'item', 'create', $ptid,
-        array(
-            'itemtype' => $type_itemtype,
-            'module' => 'xarpages',
-            'urlparam' => 'ptid'
-        )
-    );
+    // Only do this for the non-system page types. The 'system' page types
+    // are just placeholders for various type IDs. They are created as
+    // substantive rows to ensure a complete set of unique itemtype IDs
+    // across the whole module.
+    if (!empty($type_itemtype)) {
+        // Create hooks.
+        xarModCallHooks(
+            'item', 'create', $ptid,
+            array(
+                'itemtype' => $type_itemtype,
+                'module' => 'xarpages',
+                'urlparam' => 'ptid'
+            )
+        );
+    }
 
     return $ptid;
 }

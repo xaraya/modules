@@ -68,7 +68,7 @@ function xarpages_admin_modifytype()
     // Clear out any empty hooks, trim the remainder.
     foreach($modifyhooks as $key => $modifyhook) {
         if (trim($modifyhook) == '') {
-            unset($modifyhook[$key]);
+            unset($modifyhooks[$key]);
         } else {
             $modifyhooks[$key] = trim($modifyhook);
         }
@@ -78,7 +78,7 @@ function xarpages_admin_modifytype()
     // Clear out any empty hooks, trim the remainder.
     foreach($confighooks as $key => $confighook) {
         if (trim($confighook) == '') {
-            unset($confighook[$key]);
+            unset($confighooks[$key]);
         } else {
             $confighooks[$key] = trim($confighook);
         }

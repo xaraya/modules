@@ -22,17 +22,30 @@
 
                     <tr>
                         <td align="left" class="#$row_class#">
+                            <xar:if condition="$loop:item.status eq 'ACTIVE'">
+                                <img src="#xarTplGetImage('enabled.gif','xarpages')#" alt="Active" />
+                            </xar:if>
+                            <xar:if condition="$loop:item.status eq 'INACTIVE'">
+                                <img src="#xarTplGetImage('disabled.gif','xarpages')#" alt="Inactive" />
+                            </xar:if>
+                            <xar:if condition="$loop:item.status eq 'TEMPLATE'">
+                                <img src="#xarTplGetImage('template.gif','xarpages')#" alt="Template" />
+                            </xar:if>
                             #$loop:item.xar_map#
                             #xarVarPrepForDisplay($loop:item.name)#
                         </td>
                         <td class="#$row_class#">#xarVarPrepForDisplay($loop:item.pagetype.name)#: #xarVarPrepForDisplay($loop:item.desc)#</td>
                         <td class="#$row_class#" style="text-align: center;">
-                            <a href="#xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $loop:item.pid))#">
+                            <a href="#xarModURL('xarpages', 'admin', 'modifypage', array('pid' =&gt; $loop:item.pid))#">
                                 <xar:mlstring>Modify</xar:mlstring>
                             </a>
                             &nbsp;|&nbsp;
-                            <a href="#xarModURL('xarpages', 'admin', 'deletepage', array('pid' => $loop:item.pid))#">
+                            <a href="#xarModURL('xarpages', 'admin', 'deletepage', array('pid' =&gt; $loop:item.pid))#">
                                 <xar:mlstring>Delete</xar:mlstring>
+                            </a>
+                            &nbsp;|&nbsp;
+                            <a href="#xarModURL('xarpages', 'user', 'display', array('pid' =&gt; $loop:item.pid))#">
+                                <xar:mlstring>Display</xar:mlstring>
                             </a>
                         </td>
                     </tr>

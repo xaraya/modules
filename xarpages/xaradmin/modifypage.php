@@ -121,7 +121,7 @@ function xarpages_admin_modifypage()
     // Clear out any empty hooks, and truncate the remainder.
     foreach($hooks as $key => $hook) {
         if (trim($hook) == '') {
-            unset($hook[$key]);
+            unset($hooks[$key]);
         } else {
             $hooks[$key] = trim($hook);
         }

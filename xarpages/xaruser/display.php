@@ -62,28 +62,19 @@ function xarpages_user_display($args)
     // Get the root page for the current page tree.
     // The current page may be a root page, so check that first.
     // TODO: allow relevent privileges to overlook the status.
-    if ($current_page['parent'] == 0) {
-        $root_page = $current_page;
-    } else {
-        $root_page = xarModAPIfunc(
-            'xarpages', 'user', 'getpage',
-            array(
-                'wrap_range' => $current_page['left'],
-                'parent' => 0,
-                'status' => 'ACTIVE'
-            )
-        );
-    }
-
     // Get the complete tree for this section of pages.
     $data = xarModAPIfunc(
         'xarpages', 'user', 'getpagestree',
         array(
-            'left_range' => array($root_page['left'], $root_page['right']),
+            'tree_contains_pid' => $pid,
             'dd_flag' => true,
-            'key' => 'pid'
+            'key' => 'pid',
+            'status' => 'ACTIVE'
         )
     );
+
+    // Point the current page at the page in the tree.
+    $current_page =& $data['pages'][$pid];
 
     // Create an ancestors array.
     // We don't do that in getpagestree() since that function does not
@@ -92,7 +83,7 @@ function xarpages_user_display($args)
     // in the hierarchy.
     $ancestors = array();
     $pid_ancestor = $pid;
-    while ($data['pages'][$pid_ancestor]['parent'] <> 0) {
+    while ($data['pages'][$pid_ancestor]['parent_pid'] != 0) {
         array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
         $pid_ancestor = $data['pages'][$pid_ancestor]['parent'];
     }
@@ -104,14 +95,14 @@ function xarpages_user_display($args)
     // i.e. all ancestors and the current page layered over each other.
     // TODO: we could save each step here in an array indexed by pid or key - 
     // just have a hunch it would be useful, but not sure how at this stage.
-    $rolled = array();
+    $inherited = array();
     foreach ($ancestors as $ancestor) {
-        $rolled = xarModAPIfunc(
+        $inherited = xarModAPIfunc(
             'xarpages', 'user', 'arrayoverlay',
-            array($rolled, $ancestor)
+            array($inherited, $ancestor)
         );
     }
-    $data['rolled'] =& $rolled;
+    $data['inherited'] =& $inherited;
 
     // Add remaining values to the tree.
     $data['pid'] = $pid;
@@ -128,9 +119,9 @@ function xarpages_user_display($args)
     //  true    continue processing (the function executed successuly, but did not change the data)
     //  false   stop processing now (the function raised an explicit error)
     //  array   updated data returned (the function changed the data)
-    if (!empty($rolled['function'])) {
+    if (!empty($inherited['function'])) {
         // Allow a pipeline of functions (e.g. func1;func2;func3)
-        $functions = explode(';', $rolled['function']);
+        $functions = explode(';', $inherited['function']);
         foreach($functions as $function) {
             // Call up the function, suppressing errors in case it does not exist.
             $data2 = xarModAPIfunc('xarpages', 'func', $function, $data, false);
@@ -152,8 +143,8 @@ function xarpages_user_display($args)
     // Use rolled-up page here so the theme is inherited.
     // The special case theme name 'default' will disable this feature
     // and just use the default theme.
-    if (!empty($rolled['theme']) && $rolled['theme'] != 'default') {
-        xarTplSetThemeName($rolled['theme']);
+    if (!empty($inherited['theme']) && $inherited['theme'] != 'default') {
+        xarTplSetThemeName($inherited['theme']);
     }
 
     // TODO: provide an alternative, configurable, default template, for when none found,
@@ -166,7 +157,7 @@ function xarpages_user_display($args)
     // Use rolled-up page here so templates are inherited, i.e. so that setting a
     // template on a branch will apply to all pages within that branch, except
     // where sub-branches are explicitly over-ridden.
-    $content = xarTplModule('xarpages', 'page', $rolled['pagetype']['name'], $data, $rolled['template']);
+    $content = xarTplModule('xarpages', 'page', $inherited['pagetype']['name'], $data, $inherited['template']);
 
     return "$content";
 }

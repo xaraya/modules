@@ -79,6 +79,10 @@
                             </xar:loop>
                         </select>
                     </p>
+                    <p class="param">
+                        <label for="status_recurse"><xar:mlstring>Status recursive</xar:mlstring></label>
+                        <input type="checkbox" name="status_recurse" id="status_recurse" value="true" checked="checked" />(TODO)
+                    </p>
 
                     <p class="param">
                         <label for="template"><xar:mlstring>Template</xar:mlstring></label>
