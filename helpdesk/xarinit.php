@@ -440,7 +440,7 @@ function helpdesk_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
 
-    $objectid = xarModGetVar('helpdesk','representativeobjectid');
+    $objectid = xarModGetVar('helpdesk','representativesobjectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
