@@ -1,6 +1,7 @@
 <?php
 
-function messages_userapi_encode_shorturl( $args ) {
+function messages_userapi_encode_shorturl( $args ) 
+{
 
     $func       = NULL;
     $module     = NULL;

@@ -1,5 +1,6 @@
 <?php
- function messages_admin_reply( $args ) {
+ function messages_admin_reply( $args ) 
+{
 
     list( $itemtype, $itemid, $cancel, $authid, $subject, $from_id, $preview ) =
         xarVarCleanFromInput('itemtype', 'itemid', 'cancel', 'authid', 'subject', 'from_id', 'preview' );

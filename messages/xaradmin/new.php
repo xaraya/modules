@@ -1,5 +1,6 @@
 <?php
-function messages_admin_new( $args ) {
+function messages_admin_new( $args ) 
+{
 
     list( $authid, $preview, $itemtype, $cancel ) =
         xarVarCleanFromInput( 'authid', 'preview', 'itemtype', 'cancel' );

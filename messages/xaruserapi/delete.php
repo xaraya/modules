@@ -9,7 +9,8 @@
  * @returns bool true on success, false otherwise
  */
 
-function messages_userapi_delete( $args ) {
+function messages_userapi_delete( $args ) 
+{
 
     extract($args);
 

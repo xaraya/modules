@@ -1,5 +1,6 @@
 <?php
-function messages_admin_view($args) {
+function messages_admin_view($args) 
+{
 
     list( $itemtype ) = xarVarCleanFromInput('itemtype' );
 

@@ -1,6 +1,7 @@
 <?php
 
-function messages_userapi_get( $args ) {
+function messages_userapi_get( $args ) 
+{
 
     extract( $args );
 

@@ -1,5 +1,6 @@
 <?php
-function messages_adminapi_modify( $args ) {
+function messages_adminapi_modify( $args ) 
+{
 
     if (!xarSecurityCheck( 'ViewMessages')) return;
 

@@ -1,5 +1,6 @@
 <?php
-function messages_user_send() {
+function messages_user_send() 
+{
 
     // Security check
     if (!xarSecurityCheck( 'AddMessages', 0)) {

@@ -1,5 +1,6 @@
 <?php
-function messages_adminpriv_configmenu() {
+function messages_adminpriv_configmenu() 
+{
 
     /*
      * Build the configuration submenu

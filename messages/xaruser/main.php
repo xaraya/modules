@@ -1,5 +1,6 @@
 <?php
-function messages_user_main() {
+function messages_user_main() 
+{
 
     xarResponseRedirect(xarModURL('messages','user','display'));
 

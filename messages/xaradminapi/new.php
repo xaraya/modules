@@ -1,5 +1,6 @@
 <?php
-function messages_adminapi_new( $args ) {
+function messages_adminapi_new( $args ) 
+{
     if (!xarSecurityCheck( 'AddMessages')) return;
 
     list ( $authid, $itemtype ) = xarVarCleanFromInput( 'authid', 'itemtype' );

@@ -1,5 +1,6 @@
 <?php
-function messages_userapi_getall( $args ) {
+function messages_userapi_getall( $args ) 
+{
 
     $list =& xarModAPIFunc('comments',
                            'user',

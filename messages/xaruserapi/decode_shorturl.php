@@ -1,6 +1,7 @@
 <?php
 
-function messages_userapi_decode_shorturl( $params ) {
+function messages_userapi_decode_shorturl( $params ) 
+{
 
 
     if ( $params[0] != 'messages' )

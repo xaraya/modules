@@ -1,5 +1,6 @@
 <?php
-function messages_user_display( ) {
+function messages_user_display( ) 
+{
 
     // Security check
     if (!xarSecurityCheck('ViewMessages', 0)) {

@@ -1,5 +1,6 @@
 <?php
-function messages_adminapi_config( $args ) {
+function messages_adminapi_config( $args ) 
+{
 
     $data = messages_admin_common( 'messages Configuration' );
 

@@ -13,4 +13,4 @@ function messages_xartables()
     // no tables to worry about here :)
     return array();
 }
-
+?>

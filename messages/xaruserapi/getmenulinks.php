@@ -1,5 +1,6 @@
 <?php
-function messages_userapi_getmenulinks ( $args ) {
+function messages_userapi_getmenulinks ( $args ) 
+{
 
 
     // First we need to do a security check to ensure that we only return menu items

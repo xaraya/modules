@@ -2,7 +2,8 @@
 /**
  * Administration for the mybookmarks module.
  */
-function messages_admin_config( $args ) {
+function messages_admin_config( $args ) 
+{
 
     list( $cancel, $itemtype ) = xarVarCleanFromInput( 'cancel', 'itemtype' );
     extract( $args );
@@ -40,7 +41,8 @@ function messages_admin_config( $args ) {
 /**
  * Administration for the mybookmarks module.
  */
-function messages_adminpriv_config( $args ) {
+function messages_adminpriv_config( $args ) 
+{
 
 //    $data = messages_admin_common( 'Module Configuration' );
 
@@ -109,7 +111,8 @@ function messages_adminpriv_config( $args ) {
 
 }
 
-function messages_adminpriv_configmenu() {
+function messages_adminpriv_configmenu() 
+{
 
     /*
      * Build the configuration submenu

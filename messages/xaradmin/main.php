@@ -1,5 +1,6 @@
 <?php
-function messages_admin_main() {
+function messages_admin_main() 
+{
 
     if (!xarSecurityCheck( 'EditMessages')) return;
 
@@ -25,7 +26,8 @@ function messages_admin_main() {
 
 }
 
-function messages_admin_common( $title = 'Undefined' ) {
+function messages_admin_common( $title = 'Undefined' ) 
+{
          $common = array();
          $common['menu'] = array();
 

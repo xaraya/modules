@@ -7,7 +7,8 @@
  * @access  public
  */
 
-function messages_user_delete() {
+function messages_user_delete() 
+{
 
     // Security check
     if (!xarSecurityCheck( 'DeleteMessages', 0)) {

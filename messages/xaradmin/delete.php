@@ -1,6 +1,7 @@
 <?php
 
-function messages_admin_delete( $args ) {
+function messages_admin_delete( $args ) 
+{
 
     if (!xarSecurityCheck( 'AddMessages')) return;
 
@@ -62,7 +63,8 @@ function messages_admin_delete( $args ) {
  * Confirm the deletion of a mybookmarks object.
  *
  */
-function messages_admin_confirmdelete( $args ) {
+function messages_admin_confirmdelete( $args ) 
+{
 
     if (!xarSecurityCheck( 'AddMessages')) return;
 

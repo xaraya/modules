@@ -1,6 +1,7 @@
 <?php
 
-function messages_adminapi_create( $args ) {
+function messages_adminapi_create( $args ) 
+{
 
     if (!xarSecurityCheck( 'AddMessages')) return;
 
