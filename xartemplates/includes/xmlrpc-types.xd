@@ -8,7 +8,7 @@
           <xar:if condition="is_array($member['value'])">
             <xar:template file="xmlrpc-types" subdata="$member['value']"/>
           <xar:else/>
-            &lt;#$member['type']#&gt;#$member['value']#&lt;/#$member['type']#&gt;
+            <xar:template file="xmlrpc-types" subdata="$member"/>
           </xar:if>
         </value>
       </member>
@@ -23,13 +23,24 @@
           <xar:if condition="is_array($member['value'])">
             <xar:template file="xmlrpc-types" subdata="$member['value']"/>
           <xar:else/>
-            &lt;#$member['type']#&gt;#$member['value']#&lt;/#$member['type']#&gt;
+            <xar:template file="xmlrpc-types" subdata="$member"/>
           </xar:if>
         </value>
       </xar:foreach>
     </data>
   </array>
+<xar:elseif condition="$type == 'string'"/>
+  <string>#$value#</string>
+<xar:elseif condition="$type == 'boolean'"/>
+  <boolean>#$value#</boolean>
+<xar:elseif condition="$type == 'i4'"/>
+  <i4>#$value#</i4>
+<xar:elseif condition="$type == 'double'"/>
+  <double>#$value#</double>
+<xar:elseif condition="$type == 'dateTime.iso8601'"/>
+  <dateTime.iso8601>#$value#</dateTime.iso8601>
+<xar:elseif condition="$type == 'base64'"/>
+  <base64>#$value#</base64>
 <xar:else/>
-  <xar:comment> Scalar types (type 1) </xar:comment>
-  &lt;#$type#&gt;#$value#&lt;/#$type#&gt;
+  <string>ERROR: #$type# not recognized</string>
 </xar:if>
