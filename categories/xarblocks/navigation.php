@@ -180,11 +180,11 @@ function categories_navigationblock_display($blockinfo)
 
     // Get current categories
     if (xarVarIsCached('Blocks.categories','catid')) {
-       $catcid = xarVarGetCached('Blocks.categories','catid');
+       $catid = xarVarGetCached('Blocks.categories','catid');
     }
-    if (empty($catcid)) {
+    if (empty($catid)) {
         // try to get catid from input
-        xarVarFetch('catid', 'isset', $catcid, NULL, XARVAR_DONT_SET);
+        xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET);
     }
     // turn $catid into $cids array (and set $andcids flag)
     if (!empty($catid)) {
