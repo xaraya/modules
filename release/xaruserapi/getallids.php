@@ -27,7 +27,7 @@ function release_userapi_getallids($args)
     $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_id'];
-
+    $bindvars=array();
     $query = "SELECT xar_rid,
                      xar_uid,
                      xar_regname,
@@ -41,10 +41,11 @@ function release_userapi_getallids($args)
             FROM $releasetable
             ORDER BY xar_rid";
     if (!empty($certified)) {
-        $query .= " WHERE xar_certified = '" . xarVarPrepForStore($certified). "'";
+        $query .= " WHERE xar_certified = ?";
+      $bindvars[]=($certified);
     }
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
     if (!$result) return;
 
     // Put users into result array
