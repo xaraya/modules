@@ -4,7 +4,7 @@
  *
  * Initialise the tinymce module
  *
- * @package Xaraya eXtensible Management System
+* @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -79,8 +79,8 @@ function tinymce_upgrade($oldVersion)
  */
 function tinymce_delete()
 {
-	xarModDelAllVars('tinymce');
-  // Remove Masks and Instances
+    xarModDelAllVars('tinymce');
+    // Remove Masks and Instances
     xarRemoveMasks('tinymce');
     xarRemoveInstances('tinymce');
     return true;
