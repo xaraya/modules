@@ -20,7 +20,7 @@
 function search_user_searchform($args) 
 {
     extract($args);
-
+    
     // The extrainfo now contains guaranteed the calling module
     $callingmodule = $extrainfo['module'];
     
@@ -44,6 +44,7 @@ function search_user_searchform($args)
     // Pass information to the template
     $data['callingmodule'] = $callingmodule;
     $data['itemtypes'] = $typestoinclude;
+    $data['object_id'] = $objectid;
     return $data;
 }
 

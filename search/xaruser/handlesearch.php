@@ -32,16 +32,41 @@ function search_user_handlesearch() {
     // Some modules allow searching only specific itemtypes, the generic
     // searchform supports this.
     xarVarFetch('itemtypes','array:1:',$item_types,array(), XARVAR_NOT_REQUIRED);
+    xarVarFetch('object_id','id',$object_id,0,XARVAR_NOT_REQUIRED);
     
+    // This may seem strange, but it it intentional.
+    function get_search_hook($list) 
+    {
+        // Bit of a trick to get the module name again, apparently php
+        // scoping doesn't give me access to $search_in_module
+        xarVarFetch('formodule','str:1:',$search_in_module);
+        return ($list['module'] == $search_in_module) && ($list['area'] == "API");
+    }
+
     // The actual search itself, needs to be handled by the module itself, because
     // that is the only one who has knowledge how to do that.
     // The actual search *SHOULD* be implemented as item:search:API function so
     // it's convenient to use the function in several ways. Modules could decide 
     // to implement their function as a regular API function as well
     
+    $data = array();
     // Test if the module is hooked at all
     if(xarModIsHooked($search_in_module)) {
         // At least it's hooked
+        // Now call the item:search:api function of the calling module and present
+        // the search results with the template belonging to this function.
+        
+        // Which modules are hooked in on search:api?
+        $hooklist = xarModGetHooklist('search','item','search');
+        // reduce it to the module we're interested in
+        $the_hook = array_filter($hooklist, 'get_search_hook');
+        $the_hook = $the_hook[0];
+        $searchresults = xarModAPIFunc($search_in_module,
+                                       $the_hook['type'],
+                                       $the_hook['func'],
+                                       array('terms' => $search_terms,
+                                             'itemtypes' => $item_types,
+                                             'object_id' => $object_id));
     } else {
         // If module is not hooked how are we going to get results, not possible
         // set a user exception for this
@@ -49,6 +74,8 @@ function search_user_handlesearch() {
         xarExceptionSet(XAR_USER_EXCEPTION, 'NOT_HOOKED',$msg);
         return;
     }
+
+    return $data;
 }
 
 ?>

@@ -12,6 +12,7 @@
 
     <!-- For which module are we displaying a search form -->
     <input type="hidden" name="formodule" value="#$callingmodule#"/>
+    <input type="hidden" name="object_id" value="#$object_id#"/>
 
     <!-- Depending how the hook was enabled several itemtypes need searching -->
     <xar:if condition="!empty($itemtypes)">
