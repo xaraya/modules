@@ -258,15 +258,15 @@ function articles_user_archive($args)
 
     // sort articles as requested
     if ($sort == 2 && count($catlist) > 1) {
-        usort($articles,'articles_user_sortbycat10');
+        usort($articles,'articles_archive_sortbycat10');
     } elseif ($sort == 1) {
         if (count($catlist) > 1) {
-            usort($articles,'articles_user_sortbycat01');
+            usort($articles,'articles_archive_sortbycat01');
         } elseif (count($catlist) > 0) {
-            usort($articles,'articles_user_sortbycat0');
+            usort($articles,'articles_archive_sortbycat0');
         }
     } elseif ($sort == 't') {
-        usort($articles,'articles_user_sortbytitle');
+        usort($articles,'articles_archive_sortbytitle');
     } else {
         // default sort by date is already done in getall() function
     }
@@ -378,12 +378,12 @@ function articles_user_archive($args)
  * sorting functions for archive
  */
 
-function articles_user_sortbycat0 ($a,$b)
+function articles_archive_sortbycat0 ($a,$b)
 {
     return strcmp($a['cats'][0]['list'],$b['cats'][0]['list']);
 }
 
-function articles_user_sortbycat01 ($a,$b)
+function articles_archive_sortbycat01 ($a,$b)
 {
     if ($a['cats'][0]['list'] == $b['cats'][0]['list']) {
         return strcmp($a['cats'][1]['list'],$b['cats'][1]['list']);
@@ -392,7 +392,7 @@ function articles_user_sortbycat01 ($a,$b)
     }
 }
 
-function articles_user_sortbycat10 ($a,$b)
+function articles_archive_sortbycat10 ($a,$b)
 {
     if ($a['cats'][1]['list'] == $b['cats'][1]['list']) {
         return strcmp($a['cats'][0]['list'],$b['cats'][0]['list']);
@@ -401,7 +401,7 @@ function articles_user_sortbycat10 ($a,$b)
     }
 }
 
-function articles_user_sortbytitle ($a,$b)
+function articles_archive_sortbytitle ($a,$b)
 {
     return strcmp($a['title'],$b['title']);
 }

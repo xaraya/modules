@@ -381,6 +381,8 @@ function articles_user_view($args)
         }
         unset($cattree);
         unset($catlinks);
+        // needed for sort function below
+        $GLOBALS['artviewcatinfo'] = $catinfo;
     }
 
     if (!empty($authorid)) {
@@ -599,7 +601,7 @@ function articles_user_view($args)
 
             // order cids by root category (to be improved)
             $cidlist = $article['cids'];
-            usort($cidlist,'articles_user_sortbyroot');
+            usort($cidlist,'articles_view_sortbyroot');
 
             $isfirst = 1;
             foreach ($cidlist as $cid) {
@@ -679,6 +681,9 @@ function articles_user_view($args)
     }
     
     unset($articles);
+    if ($showcategories) {
+        unset($GLOBALS['artviewcatinfo']);
+    }
 
     $data['number'] = $number;
     $data['columns'] = $columns;
@@ -772,11 +777,10 @@ function articles_user_view($args)
  * sorting function for article categories
  */
 
-function articles_user_sortbyroot ($a,$b) 
+function articles_view_sortbyroot ($a,$b) 
 {
-    global $catinfo;
-    if ($catinfo[$a]['root'] == $catinfo[$b]['root']) return 0;
-    return ($catinfo[$a]['root'] > $catinfo[$b]['root']) ? -1 : 1;
+    if ($GLOBALS['artviewcatinfo'][$a]['root'] == $GLOBALS['artviewcatinfo'][$b]['root']) return 0;
+    return ($GLOBALS['artviewcatinfo'][$a]['root'] > $GLOBALS['artviewcatinfo'][$b]['root']) ? 1 : -1;
 }
 
 ?>

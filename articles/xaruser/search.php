@@ -340,6 +340,9 @@ function articles_user_search($args)
                     unset($cattree);
                 }
 
+                // needed for sort function below
+                $GLOBALS['artsearchcatinfo'] = $catinfo;
+
                 $items = array();
                 foreach ($articles as $article) {
                     $count++;
@@ -365,7 +368,7 @@ function articles_user_search($args)
 
                         // order cids by root category (to be improved)
                         $cidlist = $article['cids'];
-                        usort($cidlist,'articles_user_sortbyroot');
+                        usort($cidlist,'articles_search_sortbyroot');
 
                         $join = '';
                         foreach ($cidlist as $cid) {
@@ -447,9 +450,9 @@ function articles_user_search($args)
                                            'pager' => $pager);
             }
         }
-        unset($articles);
         unset($catinfo);
         unset($items);
+        unset($GLOBALS['artsearchcatinfo']);
 
         if ($count > 0) {
             // bail out, we have what we needed
@@ -465,10 +468,10 @@ function articles_user_search($args)
 /**
  * sorting function for article categories
  */
-function articles_user_sortbyroot ($a,$b) {
-    global $catinfo;
-    if ($catinfo[$a]['root'] == $catinfo[$b]['root']) return 0;
-    return ($catinfo[$a]['root'] > $catinfo[$b]['root']) ? -1 : 1;
+function articles_search_sortbyroot ($a,$b)
+{
+    if ($GLOBALS['artsearchcatinfo'][$a]['root'] == $GLOBALS['artsearchcatinfo'][$b]['root']) return 0;
+    return ($GLOBALS['artsearchcatinfo'][$a]['root'] > $GLOBALS['artsearchcatinfo'][$b]['root']) ? 1 : -1;
 }
 
 ?>
