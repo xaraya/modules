@@ -87,7 +87,10 @@ function sitecontact_user_contactus()
 
    //Get the existing value of htmlmail module
     $oldhtmlvalue=xarModGetVar('mail','html');
-    if ($usehtmlemail) {
+    if (!isset($oldhtmlvalue) ) {
+        $oldhtmlvalue=false;
+    }
+    if ($usehtmlemail ==1) {
     //temporarily set the use of html in mail.
         xarModSetVar('mail','html',1);
     } else {
