@@ -45,6 +45,15 @@
             <xar:mlstring>DNS Dig</xar:mlstring>
             </option>
           </xar:if>
+           <xar:if condition="$email_check_enabled">
+            <xar:if condition="$blockquery eq 'email'">
+                <option value="email" selected="selected">
+            <xar:else/>
+                <option value="email">
+            </xar:if>
+            <xar:mlstring>Validate Email</xar:mlstring>
+            </option>
+          </xar:if>
           <xar:if condition="$port_check_enabled">
             <xar:if condition="$blockquery eq 'port'">
                 <option value="port" selected="selected">

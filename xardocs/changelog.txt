@@ -20,3 +20,8 @@ Version 2.2 2005-01-28
    - verfied CSS and XHTML Strict validation
    - new user interface with query type selection
    - special handling for whois.denic.de lookups
+Version 2.3 2005-02-15
+   - added "Netquery Quick" blocks feature
+   - added email address validation feature
+   - added comparison popup for admin editing of port entries
+   - updated ports services and category flags data

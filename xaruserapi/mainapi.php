@@ -8,6 +8,9 @@ function netquery_userapi_mainapi()
     $data['whoisip_enabled'] = xarModGetVar('netquery', 'whoisip_enabled');
     $data['dns_lookup_enabled'] = xarModGetVar('netquery', 'dns_lookup_enabled');
     $data['dns_dig_enabled'] = xarModGetVar('netquery', 'dns_dig_enabled');
+    $data['email_check_enabled'] = xarModGetVar('netquery', 'email_check_enabled');
+    $data['query_email_server'] = xarModGetVar('netquery', 'query_email_server');
+    $data['use_win_nslookup'] = xarModGetVar('netquery', 'use_win_nslookup');
     $data['port_check_enabled'] = xarModGetVar('netquery', 'port_check_enabled');
     $data['http_req_enabled'] = xarModGetVar('netquery', 'http_req_enabled');
     $data['ping_enabled'] = xarModGetVar('netquery', 'ping_enabled');
@@ -32,6 +35,7 @@ function netquery_userapi_mainapi()
     $data['lookuplabel'] = xarVarPrepForDisplay(xarML('Lookup IP Address or Host Name'));
     $data['diglabel'] = xarVarPrepForDisplay(xarML('Lookup (Dig) IP or Host Name'));
     $data['digparamlabel'] = xarVarPrepForDisplay(xarML('Parameter'));
+    $data['emaillabel'] = xarVarPrepForDisplay(xarML('Validate Email Address'));
     $data['serverlabel'] = xarVarPrepForDisplay(xarML('Port Check Host (Optional)'));
     $data['portnumlabel'] = xarVarPrepForDisplay(xarML('Port'));
     $data['httpurllabel'] = xarVarPrepForDisplay(xarML('HTTP Request Object URL'));
@@ -69,6 +73,7 @@ function netquery_userapi_mainapi()
     $data['digoptions'] = $digoptions;
     xarVarFetch('maxp', 'int:1:10', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
     xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('email', 'str:1:', $data['email'], 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']), XARVAR_NOT_REQUIRED);
     xarVarFetch('server', 'str:1:', $data['server'], 'None', XARVAR_NOT_REQUIRED);
     xarVarFetch('portnum', 'int:1:100000', $data['portnum'], '80', XARVAR_NOT_REQUIRED);
     xarVarFetch('httpurl', 'str:1:', $data['httpurl'], 'http://'.$_SERVER['SERVER_NAME'].'/', XARVAR_NOT_REQUIRED);
@@ -90,6 +95,7 @@ function netquery_userapi_mainapi()
     if (isset($_REQUEST['b9']) || isset($_REQUEST['b9_x'])) {$data['formtype'] = 'trace';}
     if (isset($_REQUEST['b10']) || isset($_REQUEST['b10_x'])) {$data['formtype'] = 'tracerem';}
     if (isset($_REQUEST['b11']) || isset($_REQUEST['b11_x'])) {$data['formtype'] = 'lgquery';}
+    if (isset($_REQUEST['b12']) || isset($_REQUEST['b12_x'])) {$data['formtype'] = 'email';}
     $logfile = $data['logfile'];
     if ($data['formtype'] == 'none') {$data['formtype'] = $logfile['exec_remote_t'];}
     $data['b1class']  = ($data['formtype'] == 'whois') ? 'inset' : 'outset';
@@ -103,6 +109,7 @@ function netquery_userapi_mainapi()
     $data['b9class']  = ($data['formtype'] == 'trace') ? 'inset' : 'outset';
     $data['b10class'] = ($data['formtype'] == 'tracerem') ? 'inset' : 'outset';
     $data['b11class'] = ($data['formtype'] == 'lgquery') ? 'inset' : 'outset';
+    $data['b12class'] = ($data['formtype'] == 'email') ? 'inset' : 'outset';
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('formtype' => $data['formtype'])),
                              'title' => xarML('Clear results and return'),
                              'label' => xarML('Clear'));
@@ -113,5 +120,52 @@ function netquery_userapi_mainapi()
                              'title' => xarML('Netquery online user manual'),
                              'label' => xarML('Online Manual'));
     return $data;
+}
+if (!function_exists('checkdnsrr')) {
+  function checkdnsrr($host, $type = '') {
+    if(!empty($host)) {
+      if($type == '') $type = "MX";
+      $output = '';
+      $k = '';
+      $line = '';
+      @exec("nslookup -type=$type $host", $output);
+      while(list($k, $line) = each($output)) {
+        if(eregi("^$host", $line)) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+}
+if (!function_exists('getmxrr')) {
+  function getmxrr($hostname, &$mxhosts) {
+    if (!is_array($mxhosts)) $mxhosts = array();
+    if (!empty($hostname )) {
+      $output = '';
+      $ret = '';
+      $k = '';
+      $line = '';
+      @exec("nslookup -type=MX $hostname", $output, $ret);
+      while (list($k, $line) = each($output)) {
+        if (ereg("^$hostname\tMX preference = ([0-9]+), mail exchanger = (.*)$", $line, $parts)) {
+          $mxhosts[$parts[1]]=$parts[2];
+        }
+      }
+      if (count($mxhosts)) {
+        reset($mxhosts);
+        ksort($mxhosts);
+        $i = 0;
+        while (list($pref,$host) = each($mxhosts)) {
+          $mxhosts2[$i] = $host;
+          $i++;
+        }
+        $mxhosts = $mxhosts2;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 }
 ?>

@@ -1,0 +1,13 @@
+
+Ports table updates downloaded from http://www.virtech.org/tools/
+will work with Netquery v2.x and later. Simply replace the existing
+source files (xaports.php and xaports2.php) and select the Build New
+Table option in the Netquery administrator's main configuration panel.
+
+Please note that building a new table involves replacing all data in
+both the port services table and its related category flags table.
+Unless it has been backed up, all of the previously entered data will
+be lost.
+
+Data for the port services table and updates is provided courtesy of
+Colin Tinker, Nick Cross and other contributors at g1gsw.org.

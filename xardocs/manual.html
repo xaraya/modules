@@ -113,16 +113,15 @@ td {
 
 <p>Netquery, the complete PHP/SQL toolkit of network information utilities, includes the following
 major features:</p><ul>
-<li>multidomain and IP/AS whois lookups,</li>
+<li>multidomain &amp; IP/AS whois with autodiscovery,</li>
 <li>DNS and Dig (ANY, SOA, NS, MX) queries,</li>
-<li>port services and exploits lookup with status check,</li>
+<li>email address format &amp; MX validation,</li>
+<li>port services &amp; exploits lookup with status check,</li>
 <li>HTTP HEAD and GET requests,</li>
 <li>ICMP pings (local and/or remote),</li>
 <li>traceroutes (local and/or remote),</li>
-<li>looking glass router interrogation,</li>
-<li>whois lookup server autodiscovery,</li>
-<li>data table updates independent of module updating, and</li>
-<li>user submissions with admin notification and approval.</li></ul>
+<li>looking glass router interrogation, and</li>
+<li>user submissions with admin notice &amp; approval.</li></ul>
 
 <p>The administrator can enable or disable each feature individually and can configure local execution
 and/or a remote server script for the ping and traceroute features. The administrator can also edit
@@ -178,11 +177,11 @@ is the routing they depend on most.</p>
 
 <p>Have you ever wondered who owns that disturbing web site that your child stumbled upon while
 browsing, and would you like to have some accurate contact information to complain about its lack of
-COPA protections?  Or maybe you've joined the rapidly growing world of "always connected" Internet
-access and are concerned about whether your newly bought "firewall" software really has closed all of
-the entry ports to your system. Perhaps you're an ardent gamer who worries about "lag times" and
-would like to know where those game-losing extra milliseconds are coming from.  Netquery can answer
-all those questions and more.  Read on.</p>
+COPA protections?  Want to know if an email address is valid?  Or maybe you've joined the rapidly
+growing world of "always connected" Internet access and are concerned about whether your newly bought
+"firewall" software really has closed all of the entry ports to your system. Perhaps you're an ardent
+gamer who worries about "lag times" and would like to know where those game-losing extra milliseconds
+are coming from.  Netquery can answer all those questions and more.  Read on.</p>
 
 <h2><a name="startup">Getting Started</a></h2>
 
@@ -263,6 +262,10 @@ reconfigured to suit your needs and preferences.</p>
     <tr>
         <td class="item">Enable DNS (Dig) Query</td>
         <td class="item-desc">DNS queries using the *nix dig function. (Not available on Windows servers.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Email Check</td>
+        <td class="item-desc">Checks email address for valid format and (if *nix or Win nslookup) DNS MX records.</td>
     </tr>
     <tr>
         <td class="item">Enable Port Check</td>
@@ -347,8 +350,8 @@ reconfigured to suit your needs and preferences.</p>
     <tr><td class="item-heading" colspan="2">Important Notes</td></tr>
     <tr>
         <td class="help-desc" colspan="2">
-        - Netquery's local ping and traceroute options require read/execute permission for your
-          server OS executables.<br />
+        - Netquery's local ping and traceroute options and the use of Windows nslookup for email
+          validation require read/execute permission for your server OS executables.<br />
         - The Netquery Log option requires write permission for the specified path/filename.<br />
         - The port services data table is not installed automatically. Select "Build New Table" to install it.<br />
         - Port services flag #99 is reserved for user submissions pending admin reflagging.<br />
@@ -366,9 +369,10 @@ reconfigured to suit your needs and preferences.</p>
 <p>In many cases, unless you need to use other external scripts or have special path requirements, you
 won't need to change any configuration settings. <b>However</b>, unless you run your own web server and
 can set permissions on its system executables, you will probably need to disable the local execution ping
-and traceroute features. Very few hosting services allow the read/execute permissions required for those
-local functions. A listing of alternative server scripts for use with the external traceroute and ping
-features can be found at <a href="http://www.traceroute.org/" target="_blank">Traceroute.org</a></p>
+and traceroute features and not enable Windows nslookup for email checking. Very few hosting services allow
+the read/execute permissions required for those local functions. A listing of alternative server scripts
+for use with the external traceroute and ping features can be found at <a href="http://www.traceroute.org/"
+target="_blank">Traceroute.org</a></p>
 
 <p>In Netquery's administrator interface for Whois TLD-Server links, if the server entry is left blank
 when adding or editing items, Netquery will try autodiscovery using whois-servers.net data.  Autodiscovery
@@ -392,7 +396,13 @@ server until the blockage expires or is removed by the server operator.</p>
 <p>All user submissions of new port services/exploits are initially classified with flag #99 and are
 NOT displayed in the listing for any port.  Initally, until accepted and reflagged by the administrator,
 they may be accessed ONLY via the [Allow User Submissions ~ ## New for Reflagging] item on the main
-Netquery admin panel.</p>
+Netquery admin panel.  For comparison and variants checking, a popup list of other entries for the same
+port is available while reflagging and editing new submissions.</p>
+
+<p>Ports table updates are available from <a href="http://www.virtech.org/tools/" target="_blank">VIRtech
+Tools</a> and will work with Netquery v2.x and later. Please note that the Build New Table option involves
+replacing all data in both the port services table and its related category flags table.  Unless it has
+been backed up, all of the previously entered data will be lost.</p>
 
 <p>Because Netquery's looking glass configuration provides both default and individual router settings
 it is important to understand their order of operational precedence.  For entered items (username,
@@ -467,6 +477,17 @@ as the DNS lookup feature, but uses the UNIX/Linux command set to execute the ac
 <p>More info:
 <a href="http://www.oreilly.com/catalog/dns3/chapter/ch02.html" target="_blank">oreilly</a>
 <a href="http://www.isi.edu/in-notes/rfc1591.txt" target="_blank">ISI Text</a></p>
+
+<h3><a name="port">Validate Email Address</a></h3>
+<p>This allows site administrators and users to check the validity of any email address.  The first test
+checks for a properly formatted address.  Then, if running on a UNIX/Linux system or if Windows nslookup
+is accessible, it checks the domain name system for proper MX and other DNS records.  Lastly, if the
+option has been enabled by the site administrator, it queries the mail exchange server itself to accept
+or reject the address entered.  Note that no email message is actually sent to anyone.</p>
+
+<p>More info:
+<a href="http://www.faqs.org/rfcs/rfc822.html" target="_blank">RFC822</a>
+<a href="http://www.private.org.il/harvest.html" target="_blank">Spammers</a></p>
 
 <h3><a name="port">Port Checks</a></h3>
 <p>Port checks can be an important part of securing your computing system, especially for those who

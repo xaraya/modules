@@ -27,10 +27,12 @@ function netquery_netquickblock_display($blockinfo)
     }
     $httpurl = 'http://'.$_SERVER['SERVER_NAME'];
     $host = $_SERVER['REMOTE_ADDR'];
+    $email = 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $links = array();
     $links = xarModAPIFunc('netquery','user','getlinks');
     $blockinfo['content'] = array('links'   => $links,
                                   'host'    => $host,
+                                  'email'   => $email,
                                   'httpurl' => $httpurl,
                                   'vars'    => $vars);
     return $blockinfo;

@@ -6,21 +6,9 @@ Autodiscovery is NOT available for compound domain extensions
 (such as .co.uk) for which the server name must be entered
 manually based on that found for the top level domain (TLD).
 #
-Below is a list of whois servers for some domains.  It is not
+Below is a list of whois servers for some such domains.  It is not
 comprehensive and may not be currently accurate in all cases.
 #
-.us -> whois.nic.us - Not found
-.org -> whois.publicinterestregistry.net - NOT FOUND
-.biz -> whois.neulevel.biz - Not found
-.info -> whois.afilias.info - NOT FOUND
-.ws -> whois.website.ws - No match
-#
-com,whois.crsnic.net,No match,
-net,whois.crsnic.net,No match,
-org,whois.crsnic.net,No match,
-co.uk,whois.nic.uk,No match,
-org.uk,whois.nic.uk,No match,
-ca,whois.cira.ca,AVAIL,Canada
 ab.ca,whois.cira.ca,AVAIL,Canada Regional
 bc.ca,whois.cira.ca,AVAIL,Canada Regional
 mb.ca,whois.cira.ca,AVAIL,Canada Regional
@@ -33,8 +21,6 @@ pe.ca,whois.cira.ca,AVAIL,Canada Regional
 qc.ca,whois.cira.ca,AVAIL,Canada Regional
 sk.ca,whois.cira.ca,AVAIL,Canada Regional
 yk.ca,whois.cira.ca,AVAIL,Canada Regional
-edu,whois.crsnic.net,No match,
-mil,whois.crsnic.net,No match,
 br.com,whois.centralnic.com,No match,
 cn.com,whois.centralnic.com,No match,
 eu.com,whois.centralnic.com,No match,
@@ -47,15 +33,10 @@ se.net,whois.centralnic.com,No match,
 us.com,whois.centralnic.com,No match,
 uy.com,whois.centralnic.com,No match,
 za.com,whois.centralnic.com,No match,
-ac,whois.ripe.net,No entries found,
 ac.ac,whois.ripe.net,No entries found,
 co.ac,whois.ripe.net,No entries found,
 gv.ac,whois.ripe.net,No entries found,
 or.ac,whois.ripe.net,No entries found,
-af,whois.netnames.net,No Match,Afghanistan
-am,whois.nic.am,No information available,Armenia
-as,whois.nic.as,Domain Not Found,American Somoa
-at,whois.nic.at,No entries found,Austria General
 ac.at,whois.nic.at,No entries found,Austria Academic
 co.at,whois.nic.at,No entries found,Austria Commercial
 gv.at,whois.nic.at,No entries found,Austria Government
@@ -65,9 +46,7 @@ com.au,whois.aunic.net,No entries found,Australia Commercial
 edu.au,whois.aunic.net,No entries found,Australia Educational
 org.au,whois.aunic.net,No entries found,Australia Organization
 net.au,whois.net.au,AUNIC -T domain,Australia ISP
-be,whois.ripe.net,No entries found,Belgium
 ac.be,whois.ripe.net,No entries found,Belgium Academic
-br,whois.nic.br,No match for,Entidades de pesquisa e/ou ensino superior
 adm.br,whois.nic.br,No match for,Administradores
 adv.br,whois.nic.br,No match for,Advogados
 am.br,whois.nic.br,No match for,Empresas de radiodifusão sonora
@@ -109,9 +88,6 @@ tur.br,whois.nic.br,No match for,Entidades da área de turismo
 tv.br,whois.nic.br,No match for,Empresas de radiodifusão de sons e imagens
 vet.br,whois.nic.br,No match for,Veterinários
 zlg.br,whois.nic.br,No match for,Zoólogos
-bt,whois.nic.bt,shrubbery.com,Bhutan
-cc,whois.nic.cc,No match,ISC International
-ch,whois.nic.ch,No entries found,Switzerland
 ac.cn,whois.cnnic.cn,No entries,China Academic
 com.cn,whois.cnnic.cn,No entries,China Commercial
 edu.cn,whois.cnnic.cn,No entries,China Educational
@@ -147,10 +123,6 @@ xj.cn,whois.cnnic.cn,No entries,China Regional
 tw.cn,whois.cnnic.cn,No entries,China Regional
 hk.cn,whois.cnnic.cn,No entries,China Regional
 mo.cn,whois.cnnic.cn,No entries,China Regional
-cx,whois.nic.cx,No match for,Christmas Island
-cz,whois.ripe.net,No entries found,Czech Republic
-de,whois.nic.de,No entries found,Germany
-dk,whois.ripe.net,No entries found,Denmark
 com.ec,whois.lac.net,No match found,Ecuador Commercial
 org.ec,whois.lac.net,No match found,Ecuador Organization
 net.ec,whois.lac.net,No match found,Ecuador ISP
@@ -158,14 +130,10 @@ gov.ec,whois.lac.net,No match found,Ecuador Government
 mil.ec,whois.lac.net,No match found,Ecuador Military
 fin.ec,whois.lac.net,No match found,Ecuador Finance
 med.ec,whois.lac.net,No match found,Ecuador Medical
-fo,whois.ripe.net,No entries found,Faroe Islands
-fr,whois.nic.fr,No entries found,France General
 tm.fr,whois.nic.fr,No entries found,France Trade Mark
 com.fr,whois.nic.fr,No entries found,France Commercial
 asso.fr,whois.nic.fr,No entries found,France Asso
 presse.fr,whois.nic.fr,No entries found,France Presse
-gf,whois.nplus.gf,not found in our database,French Guiana
-gs,whois.adamsnames.tc,is not registered,South Georgia and South Sandwich islands
 co.il,whois.ripe.net,NOT in the RIPE database.,Israel Commercial
 org.il,whois.ripe.net,NOT in the RIPE database.,Israel Organization
 net.il,whois.ripe.net,NOT in the RIPE database.,Israel Network
@@ -179,8 +147,6 @@ ernet.in,whois.iisc.ernet.in,no entries found,India ERNET
 gov.in,whois.iisc.ernet.in,no entries found,India Government
 net.in,whois.iisc.ernet.in,no entries found,India Network
 res.in,whois.iisc.ernet.in,no entries found,India Research
-is,whois.ripe.net,No entries found,Iceland
-it,whois.ripe.net,No entries found,Italy
 ac.jp,whois.nic.ad.jp,No match,Japan Academic
 co.jp,whois.nic.ad.jp,No match,Japan Commercial
 go.jp,whois.nic.ad.jp,No match,Japan Government
@@ -193,9 +159,6 @@ ne.kr,whois.nic.or.kr,is not registered,Korea Network
 nm.kr,whois.nic.or.kr,is not registered,Korea Nm
 or.kr,whois.nic.or.kr,is not registered,Korea Organization
 re.kr,whois.nic.or.kr,is not registered,Korea Research
-li,whois.nic.li,No entries found,Liechtenstein
-lt,whois.ripe.net,No entries found,Lithuania
-lu,whois.ripe.net,No entries found,Luxembourg
 asso.mc,whois.ripe.net,No entries found,Monaco Organization
 tm.mc,whois.ripe.net,No entries found,Monaco Commercial
 com.mm,whois.nic.mm,No domains matched,Myanmar Commercial
@@ -203,21 +166,14 @@ org.mm,whois.nic.mm,No domains matched,Myanmar Organization
 net.mm,whois.nic.mm,No domains matched,Myanmar Network
 edu.mm,whois.nic.mm,No domains matched,Myanmar Educational
 gov.mm,whois.nic.mm,No domains matched,Myanmar Government
-ms,whois.adamsnames.tc,is not registered,Montserrat
-mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico General
 com.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Commercial
 net.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Network
 org.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Organization
 edu.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Educational
 gov.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Government
-nl,whois.domain-registry.nl,not a registered domain,Netherlands
-no,whois.norid.no,no matches,Norway
-nu,whois.nic.nu,Match for,Niue
-pl,whois.dns.pl,No information about,Poland General
 com.pl,whois.dns.pl,No information about,Poland Commercial
 net.pl,whois.dns.pl,No information about,Poland Network
 org.pl,whois.dns.pl,No information about,Poland Organization
-pt,whois.ripe.net,No entries found,Portugal
 com.ro,whois.ripe.net,No entries found,Romania Commercial
 org.ro,whois.ripe.net,No entries found,Romania Organization
 store.ro,whois.ripe.net,No entries found,Romania Store
@@ -229,29 +185,19 @@ rec.ro,whois.ripe.net,No entries found,Romania Recreational
 info.ro,whois.ripe.net,No entries found,Romania Informational
 nom.ro,whois.ripe.net,No entries found,Romania Personal
 nt.ro,whois.ripe.net,No entries found,Romania Nt
-ru,whois.ripn.net,No entries found,Russian Companies Only
 com.ru,whois.ripn.net,No entries found,Russia Commercial
 net.ru,whois.ripn.net,No entries found,Russia Network
 org.ru,whois.ripn.net,No entries found,Russia Organization
-se,whois.nic-se.se,No data found,Sweden
-si,whois.arnes.si,No entries found,Slovenia
 com.sg,whois.nic.net.sg,NO entry found,Singapore Commercial
 org.sg,whois.nic.net.sg,NO entry found,Singapore Organization
 net.sg,whois.nic.net.sg,NO entry found,Singapore Network
 gov.sg,whois.nic.net.sg,NO entry found,Singapore Government
-sk,whois.ripe.net,No entries found,Slovak Republic
-st,whois.nic.st,No entries found,Sao Tome and Principe
-tc,whois.adamsnames.tc,is not registered,Turks and Caicos islands
-tf,whois.adamsnames.tc,is not registered,French Southern Territories
 ac.th,whois.thnic.net,No entries,Thailand Academic
 co.th,whois.thnic.net,No entries,Thailand Commercial
 go.th,whois.thnic.net,No entries,Thailand Government
 mi.th,whois.thnic.net,No entries,Thailand Military
 net.th,whois.thnic.net,No entries,Thailand Network
 or.th,whois.thnic.net,No entries,Thailand Organization
-tj,whois.nic.tj,No match,Tajikistan
-tm,whois.nic.tm,No Match,Turkmenistan
-to,monarch.tonic.to,Not found,Tonga
 bbs.tr,whois.metu.edu.tr,Not found in database,Turkey BBS
 com.tr,whois.metu.edu.tr,Not found in database,Turkey Commercial
 edu.tr,whois.metu.edu.tr,Not found in database,Turkey Educational
@@ -264,15 +210,16 @@ com.tw,whois.twnic.net,No Records Found,Taiwan Commercial
 net.tw,whois.twnic.net,No Records Found,Taiwan Network
 org.tw,whois.twnic.net,No Records Found,Taiwan Organization
 ac.uk,whois.ja.net,Sorry - no,UK Academic
-net.uk,whois.nic.uk,No match,UK Network
+co.uk,whois.nic.uk,No match,
 ltd.uk,whois.nic.uk,No match,UK Ltd
+net.uk,whois.nic.uk,No match,UK Network
+org.uk,whois.nic.uk,No match,
 plc.uk,whois.nic.uk,No match,UK Plc
 uk.co,whois.uk.co,NO MATCH,UK Commercial Alternative
 uk.com,whois.nomination.net,No match for,Alternative UK Name
 uk.net,whois.nomination.net,No match for,Alternative UK Name
 gb.com,whois.nomination.net,No match for,Alternative UK Name
 gb.net,whois.nomination.net,No match for,Alternative UK Name
-vg,whois.adamsnames.tc,is not registered,British Virgin islands
 ac.za,whois.co.za,No information available,South Africa Academic
 alt.za,whois.co.za,No information available,South Africa Alternative
 co.za,whois.co.za,No information available,South Africa Commercial

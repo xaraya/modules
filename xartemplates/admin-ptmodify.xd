@@ -1,3 +1,5 @@
+<script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
@@ -65,6 +67,7 @@
         <td colspan="4">
         <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
         <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
+        <input type="button" value="#$hlplink.label#" onclick="popUp('#$hlplink.url#','console','400','600');return false;" />
         </td>
     </tr>
 </form>

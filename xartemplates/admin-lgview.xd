@@ -1,3 +1,5 @@
+<script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
@@ -5,7 +7,7 @@
 <div class="xar-mod-body">
 
 <h2><xar:mlstring>Netquery Looking Glass Configuration</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href='javascript:openwindow("#$hlplink.url#");'><img style="vertical-align:top;" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img style="vertical-align:top;" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
 </h2>
 
 <div class="xar-accent">
@@ -73,10 +75,5 @@
 
 <p><a href="#$lgalink.url#">#$lgalink.title#</a> -
 <a href="#$cfglink.url#">#$cfglink.title#</a></p>
-<script type="text/javascript">
-    function openwindow(hlpfile)
-    {
-        window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
-    }
-</script>
+
 </div>

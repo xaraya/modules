@@ -1,0 +1,42 @@
+<div style=\"text-align:center\">
+<h4><xar:mlstring>List of Services and Exploits for Port </xar:mlstring>#$portnum#</h4>
+<table>
+  <tr>
+    <th>
+    <xar:mlstring>Protocol</xar:mlstring>
+    </th>
+    <th>
+    <xar:mlstring>Service</xar:mlstring>
+    </th>
+    <th>
+    <xar:mlstring>Notes</xar:mlstring>
+    </th>
+    <th>
+    <xar:mlstring>Flag</xar:mlstring>
+    </th>
+  </tr>
+  <xar:foreach in="$ports" value="$port">
+    <xar:if condition="!empty($port.port_id)">
+      <tr>
+        <td>
+        #$port.protocol#
+        </td>
+        <td>
+        #$port.service#
+        </td>
+        <td>
+        #$port.comment#
+        </td>
+        <td>
+        #$port.flag#
+        </td>
+      </tr>
+    </xar:if>
+  </xar:foreach>
+</table>
+<p>
+  <form>
+    <input type=button value="Close Window" onClick="javascript:window.close();">
+  </form>
+</p>
+</div>

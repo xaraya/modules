@@ -39,6 +39,13 @@
     <br /><input type="text" name="host" id="host" value="#$host#" size="18" maxlength="100" />
     <input style="vertical-align:top;" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
     </form>
+  <xar:elseif condition="$vars['blockquery'] eq 'email'" />
+    <form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="querytype" id="querytype" value="email" />
+    <label for="host"><xar:mlstring>Validate Email</xar:mlstring></label>
+    <br /><input type="text" name="email" id="email" value="#$email#" size="18" maxlength="100" />
+    <input style="vertical-align:top;" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
+    </form>
   <xar:elseif condition="$vars['blockquery'] eq 'port'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="port" />

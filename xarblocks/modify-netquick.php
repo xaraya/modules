@@ -14,6 +14,8 @@ function netquery_netquickblock_modify($blockinfo)
                      'whoisip_enabled'       => xarModGetVar('netquery', 'whoisip_enabled'),
                      'dns_lookup_enabled'    => xarModGetVar('netquery', 'dns_lookup_enabled'),
                      'dns_dig_enabled'       => xarModGetVar('netquery', 'dns_dig_enabled'),
+                     'email_check_enabled'   => xarModGetVar('netquery', 'email_check_enabled'),
+                     'use_win_nslookup'      => xarModGetVar('netquery', 'use_win_nslookup'),
                      'port_check_enabled'    => xarModGetVar('netquery', 'port_check_enabled'),
                      'http_req_enabled'      => xarModGetVar('netquery', 'http_req_enabled'),
                      'ping_enabled'          => xarModGetVar('netquery', 'ping_enabled'),
@@ -29,7 +31,7 @@ function netquery_netquickblock_modify($blockinfo)
 }
 function netquery_netquickblock_update($blockinfo)
 {
-    if (!xarVarFetch('blockquery','str:0:',$vars['blockquery'],'',XARVAR_NOT_REQUIRED)) return;
+    xarVarFetch('blockquery', 'str:1:', $vars['blockquery'], 'whois', XARVAR_NOT_REQUIRED);
     $blockinfo['content'] = serialize($vars);
     return $blockinfo;
 }

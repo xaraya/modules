@@ -7,6 +7,9 @@ function netquery_init()
     xarModSetVar('netquery', 'whoisip_enabled', 1);
     xarModSetVar('netquery', 'dns_lookup_enabled', 1);
     xarModSetVar('netquery', 'dns_dig_enabled', 1);
+    xarModSetVar('netquery', 'email_check_enabled', 1);
+    xarModSetVar('netquery', 'query_email_server', 0);
+    xarModSetVar('netquery', 'use_win_nslookup', 0);
     xarModSetVar('netquery', 'port_check_enabled', 1);
     xarModSetVar('netquery', 'http_req_enabled', 1);
     xarModSetVar('netquery', 'ping_enabled', 1);
@@ -40,6 +43,9 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'user_submissions', 1);
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
@@ -51,6 +57,9 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'user_submissions', 1);
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
@@ -59,6 +68,9 @@ function netquery_upgrade($oldversion)
         case '1.2.0':
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'user_submissions', 1);
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
@@ -66,30 +78,43 @@ function netquery_upgrade($oldversion)
             break;
         case '1.3.0':
             xarModSetVar('netquery', 'user_submissions', 1);
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
             break;
         case '1.3.1':
             xarModSetVar('netquery', 'user_submissions', 1);
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
             break;
         case '2.0.0':
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             break;
         case '2.1.0':
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             break;
         case '2.2.0':
+        default:
+            xarModSetVar('netquery', 'email_check_enabled', 1);
+            xarModSetVar('netquery', 'query_email_server', 0);
+            xarModSetVar('netquery', 'use_win_nslookup', 0);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
             xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
-            break;
-        case '2.3.0':
-        default:
             break;
     }
     return true;
@@ -105,6 +130,9 @@ function netquery_delete()
     xarModDelVar('netquery', 'ping_enabled');
     xarModDelVar('netquery', 'http_req_enabled');
     xarModDelVar('netquery', 'port_check_enabled');
+    xarModDelVar('netquery', 'use_win_nslookup');
+    xarModDelVar('netquery', 'query_email_server');
+    xarModDelVar('netquery', 'email_check_enabled');
     xarModDelVar('netquery', 'dns_dig_enabled');
     xarModDelVar('netquery', 'dns_lookup_enabled');
     xarModDelVar('netquery', 'whoisip_enabled');

@@ -23,7 +23,7 @@ function netquery_user_main()
             $msg = ('<p><b>Whois Results '.$j.' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
             if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)){
                 unset($sock);
-                $msg .= "Timed-out connecting to $whois_server (port 43)";
+                $msg .= "Cannot connect to ".$whois_server." (".$error.")";
             } else {
                 fputs($sock, "$target\n");
                 while (!feof($sock)) {
@@ -47,7 +47,7 @@ function netquery_user_main()
                 $readbuf = "";
                 if (! $sock = @fsockopen($nextServer, 43, $errnum, $error, 10)) {
                     unset($sock);
-                    $msg .= "Timed-out connecting to $nextServer (port 43)";
+                    $msg .= "Cannot connect to ".$nextServer." (".$error.")";
                 } else {
                     fputs($sock, "$target\n");
                     while (!feof($sock)) {
@@ -75,7 +75,7 @@ function netquery_user_main()
         } else {
             if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)) {
                 unset($sock);
-                $msg .= "Timed-out connecting to $whois_server (port 43)";
+                $msg .= "Cannot connect to ".$whois_server." (".$error.")";
             } else {
                 fputs($sock, "$target\n");
                 while (!feof($sock)) {
@@ -97,7 +97,7 @@ function netquery_user_main()
                 $readbuf = "";
                 if (! $sock = @fsockopen($nextServer, 43, $errnum, $error, 10)) {
                     unset($sock);
-                    $msg .= "Timed-out connecting to $nextServer (port 43)";
+                    $msg .= "Cannot connect to ".$nextServer." (".$error.")";
                 } else {
                     fputs($sock, "$target$extra\n");
                     while (!feof($sock)) {
@@ -139,6 +139,57 @@ function netquery_user_main()
             if (! eregi("[a-zA-Z]", $target) ) $target = $ntarget;
             if (! $msg .= trim(nl2br(`dig $digparam '$target'`)))
                 $msg .= "The <i>dig</i> command is not working on your system.";
+        }
+        $msg .= '<br /><hr /></p>';
+        $data['results'] .= $msg;
+    }
+    else if ($data['querytype'] == 'email')
+    {
+        $target = $data['email'];
+        $msg = ('<p><b>Email Validation Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
+        if ((preg_match('/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/', $target)) || (preg_match('/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/',$target))) {
+          $addmsg = "Format Check: Correct format.";
+          $msg .= $addmsg;
+          list ($username,$domain) = split ("@",$target,2);
+          if (!$data['winsys'] || $data['use_win_nslookup']) {
+            if (checkdnsrr($domain.'.', 'MX') ) $addmsg = "<br />DNS Record Check: MX record returned OK.";
+            else if (checkdnsrr($domain.'.', 'A') ) $addmsg = "<br />DNS Record Check: A record returned OK.";
+            else if (checkdnsrr($domain.'.', 'CNAME') ) $addmsg = "<br />DNS Record Check: CNAME record returned OK.";
+            else $addmsg = "<br />DNS Record Check: DNS record not returned.)";
+            $msg .= $addmsg;
+            if ($data['query_email_server']) {
+              if (getmxrr($domain, $mxhost))  {
+                $address = $mxhost[0];
+              } else {
+                $address = $domain;
+              }
+              $addmsg = "<br />MX Server Address Check: Address accepted by ".$address;
+              if (!$sock = @fsockopen($address, 25, $errnum, $error, 10)) {
+                unset($sock);
+                $addmsg = "<br />MX Server Address Check: Cannot connect to ".$address." (".$error.")";
+              } else {
+                if (ereg("^220", $out = fgets($sock, 1024))) {
+                  fputs ($sock, "HELO ".$_SERVER['HTTP_HOST']."\r\n");
+                  $out = fgets ( $sock, 1024 );
+                  fputs ($sock, "MAIL FROM: <{$target}>\r\n");
+                  $from = fgets ( $sock, 1024 );
+                  fputs ($sock, "RCPT TO: <{$target}>\r\n");
+                  $to = fgets ($sock, 1024);
+                  fputs ($sock, "QUIT\r\n");
+                  fclose($sock);
+                  if (!ereg ("^250", $from) || !ereg ( "^250", $to )) {
+                  	$addmsg = "<br />MX Server Address Check: Address rejected by ".$address;
+                  }
+                } else {
+                	$addmsg = "<br />MX Server Address Check: No response from ".$address;
+                }
+              }
+              $msg .= $addmsg;
+            }
+          }
+        } else {
+          $addmsg = "Format check: Incorrect format.";
+          $msg .= $addmsg;
         }
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
@@ -196,7 +247,7 @@ function netquery_user_main()
         $msg = ('<p><b>HTTP Request Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p><pre>');
         if (! $sock = @fsockopen($url_Host, $url_Port, $errnum, $error, 10)) {
             unset($sock);
-            $msg .= 'Unable to connect to host: '.$url_Host.' port: '.$url_Port.'.';
+            $msg .= "Cannot connect to host: ".$url_Host." port: ".$url_Port." (".$error.")";
         } else {
             fputs($sock, "$fp_Send\n");
             while (!feof($sock)) {
@@ -291,7 +342,7 @@ function netquery_user_main()
         else if (!$sock = @fsockopen($lgaddress, $lgport, $errnum, $error, 10))
         {
             unset($sock);
-            $msg .= 'Error connecting to router. ' .$lgaddress . ':' . $lgport;
+            $msg .= "Cannot connect to router ".$lgaddress.":".$lgport." (".$error.")";
         }
         else
         {

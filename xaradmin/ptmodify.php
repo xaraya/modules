@@ -3,6 +3,7 @@ function netquery_admin_ptmodify()
 {
     if (!xarSecurityCheck('EditNetquery')) return;
     if (!xarVarFetch('port_id', 'int:1:100000', $port_id)) return;
+//    if (!xarVarFetch('portnum', 'int:1:100000', $portnum, '80', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('pflag', 'int:0:200', $pflag, '-1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -17,6 +18,9 @@ function netquery_admin_ptmodify()
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');
             $data['cancellabel']    = xarML('Cancel');
+            $data['hlplink'] = Array('url'   => xarModURL('netquery', 'admin', 'portlist', array('theme' => 'print', 'portnum' => $data['port'])),
+                                     'title' => xarML('List port services data'),
+                                     'label' => xarML('Port '.$data['port'].' List'));
             break;
         case 'update':
             if (!xarVarFetch('port_port', 'int:1:100000', $port_port)) return;

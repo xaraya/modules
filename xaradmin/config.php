@@ -21,6 +21,9 @@ function netquery_admin_config()
             if (!xarVarFetch('whoisip_enabled', 'checkbox', $whoisip_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('dns_lookup_enabled', 'checkbox', $dns_lookup_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('dns_dig_enabled', 'checkbox', $dns_dig_enabled, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('email_check_enabled', 'checkbox', $email_check_enabled, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('query_email_server', 'checkbox', $query_email_server, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('use_win_nslookup', 'checkbox', $use_win_nslookup, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('port_check_enabled', 'checkbox', $port_check_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('http_req_enabled', 'checkbox', $http_req_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('ping_enabled', 'checkbox', $ping_enabled, '0', XARVAR_NOT_REQUIRED)) return;
@@ -63,6 +66,9 @@ function netquery_admin_config()
             xarModSetVar('netquery', 'whoisip_enabled', $whoisip_enabled);
             xarModSetVar('netquery', 'dns_lookup_enabled', $dns_lookup_enabled);
             xarModSetVar('netquery', 'dns_dig_enabled', $dns_dig_enabled);
+            xarModSetVar('netquery', 'email_check_enabled', $email_check_enabled);
+            xarModSetVar('netquery', 'query_email_server', $query_email_server);
+            xarModSetVar('netquery', 'use_win_nslookup', $use_win_nslookup);
             xarModSetVar('netquery', 'port_check_enabled', $port_check_enabled);
             xarModSetVar('netquery', 'http_req_enabled', $http_req_enabled);
             xarModSetVar('netquery', 'ping_enabled', $ping_enabled);
