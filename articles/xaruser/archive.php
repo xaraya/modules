@@ -12,6 +12,7 @@ function articles_user_archive($args)
     if (!xarVarFetch('ptid',  'isset', $ptid,  xarModGetVar('articles','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('sort',  'isset', $sort,  'd',                                       XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('month', 'isset', $month, '',                                        XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('cids',  'isset', $cids,   NULL, XARVAR_DONT_SET)) {return;}
 
     if (empty($ptid)) {
         $ptid = null;
@@ -23,6 +24,23 @@ function articles_user_archive($args)
     }
 
     $status = array(2,3);
+
+    $seencid = array();
+    $andcids = false;
+    if (isset($cids) && is_array($cids)) {
+        foreach ($cids as $cid) {
+            if (!empty($cid)) {
+                $seencid[$cid] = 1;
+            }
+        }
+        $cids = array_keys($seencid);
+        sort($cids,SORT_NUMERIC);
+        if (count($cids) > 1) {
+            $andcids = true;
+        }
+    } else {
+        $cids = null;
+    }
 
 // TODO: make configurable
     // show the number of articles for each publication type
@@ -49,7 +67,13 @@ function articles_user_archive($args)
     if (!empty($ptid) && !empty($pubtypes[$ptid]['config']['pubdate']['label'])) {
         $showdate = 1;
     } else {
-        $showdate = 0;
+        $showdate = 1;
+        foreach (array_keys($pubtypes) as $pubid) {
+            if (empty($pubtypes[$pubid]['config']['pubdate']['label'])) {
+                $showdate = 0;
+                break;
+            }
+        }
     }
 
     // Get monthly statistics
@@ -108,6 +132,7 @@ function articles_user_archive($args)
     }
     $catlist = array();
     $catinfo = array();
+    $catsel = array();
     if (!empty($rootcats)) {
 // TODO: do this in categories API ?
         $count = 1;
@@ -128,7 +153,9 @@ function articles_user_archive($args)
                 $item['root'] = $cid;
                 $catinfo[$info['cid']] = $item;
             }
-            if ($sort == $count || $month == 'all') {
+            // don't allow sorting by category when viewing all articles
+            //if ($sort == $count || $month == 'all') {
+            if ($sort == $count) {
                 $link = '';
             } else {
                 $link = xarModURL('articles','user','archive',
@@ -142,6 +169,14 @@ function articles_user_archive($args)
                 $catlist[] = array('cid' => $cid,
                                    'name' => $catinfo[$cid]['name'],
                                    'link' => $link);
+                $catsel[] = xarModAPIFunc('categories',
+                                          'visual',
+                                          'makeselect',
+                                          Array('cid' => $cid,
+                                                'return_itself' => true,
+                                                'select_itself' => true,
+                                                'values' => &$seencid,
+                                                'multiple' => 0));
                 $count++;
             }
         }
@@ -156,6 +191,8 @@ function articles_user_archive($args)
                                        'startdate' => $startdate,
                                        'enddate' => $enddate,
                                        'status' => $status,
+                                       'cids' => $cids,
+                                       'andcids' => false,
                                        'fields' => array('aid','title',
                                                   'pubdate','pubtypeid','cids')
                                       )
@@ -235,7 +272,7 @@ function articles_user_archive($args)
     }
 
     // add title header
-    if ($sort == 't' || $month == 'all') {
+    if ($sort == 't') {
         $link = '';
     } else {
         $link = xarModURL('articles','user','archive',
@@ -246,9 +283,11 @@ function articles_user_archive($args)
     $catlist[] = array('cid' => 0,
                        'name' => xarML('Title'),
                        'link' => $link);
+    $catsel[] = '<input type="submit" value="' . xarML('Filter') . '" />';
+
     if ($showdate) {
         // add date header
-        if ($sort == 'd' || $month == 'all') {
+        if ($sort == 'd') {
             $link = '';
         } else {
             $link = xarModURL('articles','user','archive',
@@ -258,6 +297,7 @@ function articles_user_archive($args)
         $catlist[] = array('cid' => 0,
                            'name' => xarML('Date'),
                            'link' => $link);
+        $catsel[] = '&nbsp;';
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
@@ -288,7 +328,13 @@ function articles_user_archive($args)
     $data = array('months' => $months,
                  'articles' => $articles,
                  'catlist' => $catlist,
+                 'catsel' => $catsel,
                  'ptid' => $ptid,
+                 'month' => $month,
+                 'curlink' => xarModURL('articles','user','archive',
+                                        array('ptid' => $ptid,
+                                              'month' => $month,
+                                               'sort' => $sort)),
                  'showdate' => $showdate,
                  'showpublinks' => $showpublinks,
                  'publabel' => xarML('Publication'),

@@ -15,7 +15,7 @@
 </xar:foreach>
 </ul>
 
-<xar:if condition="count($articles) gt 0">
+<form method="post" action="#$curlink#">
 <table border="0" cellpadding="3" width="100%">
 <tr>
     <xar:foreach in="$catlist" value="$cat">
@@ -43,8 +43,13 @@
     </xar:if>
 </tr>
 </xar:foreach>
+<tr>
+    <xar:foreach in="$catsel" value="$sel">
+        <td align="center">#$sel#</td>
+    </xar:foreach>
+</tr>
 </table>
-</xar:if>
+</form>
 
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
 <div style="text-align: left; padding: 10px">
