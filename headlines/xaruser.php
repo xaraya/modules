@@ -16,7 +16,7 @@
 function headlines_user_main()
 {
     xarVarFetch('startnum', 'id', $startnum, '1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
-    xarVarFetch('catid', 'id', $data['catid'], '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
+    xarVarFetch('catid', 'str:0:', $data['catid'], '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
 
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
@@ -177,6 +177,10 @@ function headlines_user_view()
                           'get',
                           array('hid' => $hid));
 
+    if (isset($links['catid'])) {
+        $data['catid'] = $links['catid'];
+    }
+    $data['hid'] = $hid;
 
     // Check and see if a feed has been supplied to us.
     if(isset($links['url'])) {
@@ -250,7 +254,7 @@ function headlines_user_view()
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-    
+
     $data['feedcontent'] = $feedcontent;
 
     return $data;

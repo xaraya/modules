@@ -2,7 +2,7 @@
 
 /**
  * get a specific headline
- * @poaram $args['lid'] id of link to get
+ * @poaram $args['hid'] id of headline to get
  * @returns array
  * @return link array, or false on failure
  */
@@ -10,8 +10,8 @@ function headlines_userapi_get($args)
 {
     extract($args);
 
-    if (!isset($hid)) {
-        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'userapi', 'get', 'Headlines');
+    if (empty($hid) || !is_numeric($hid)) {
+        $msg = xarML('Invalid Headline ID');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -24,22 +24,14 @@ function headlines_userapi_get($args)
 
     $headlinestable = $xartable['headlines'];
 
-    // Get link
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                   array('cids' => array(),
-                                         'modid' => xarModGetIDFromName('headlines')));
-
-    // Get link
+    // Get headline
     $query = "SELECT xar_hid,
                      xar_title,
                      xar_desc,
                      xar_url,
-                     xar_order,
-                     {$categoriesdef['cid']}
+                     xar_order
             FROM $headlinestable
-            LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $headlinestable.xar_hid
-            {$categoriesdef['more']}
-            WHERE {$categoriesdef['where']} AND xar_hid = " . xarVarPrepForStore($hid);
+            WHERE xar_hid = " . xarVarPrepForStore($hid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -49,8 +41,21 @@ function headlines_userapi_get($args)
     $link = array('hid'     => $hid,
                   'title'   => $title,
                   'desc'    => $desc,
-                   'url'     => $url,
+                  'url'     => $url,
                   'order'   => $order);
+
+    // Get categories (if any)
+    if (xarModIsHooked('categories','headlines')) {
+        $cids = xarModAPIFunc('categories','user','getlinks',
+                              array('iids' => array($hid),
+                                    //'itemtype' => 0, // not needed here
+                                    'modid' => xarModGetIDFromName('headlines'),
+                                    'reverse' => 1));
+        if (isset($cids[$hid]) && is_array($cids[$hid])) {
+            $link['cids'] = $cids[$hid];
+            $link['catid'] = join('+',$cids[$hid]);
+        }
+    }
 
     return $link;
 }

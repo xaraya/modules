@@ -2,7 +2,9 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Syndicated Headlines</xar:mlstring></h2>
 <div style="margin: auto;">
 
-<xar:categories-navigation layout="trails" showchildren="0" module="headlines" func="main" />
+<xar:if condition="xarModIsHooked('categories','headlines')">
+<xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" />
+</xar:if>
 
 <xar:loop name="$indlinks">
 <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">

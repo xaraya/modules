@@ -36,7 +36,7 @@ function headlines_userapi_getall($args)
                      xar_order
             FROM $headlinestable";
 
-    if (!empty($catid) && xarModIsHooked('categories','headlines',1)) {
+    if (!empty($catid) && xarModIsHooked('categories','headlines')) {
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('cids' => array($catid),
                                             'modid' => xarModGetIDFromName('headlines')));
