@@ -1,0 +1,56 @@
+<?php
+
+// Class to model a bitkeeper delta
+class bkDelta 
+{
+    var $cset;     // in which cset is this delta
+    var $file;     // which file
+    var $rev;      // what revision?
+    var $author;   // who authored it?
+    var $age;      // how long ago?
+    var $domain;   // from where?
+    var $comments; // what were the comments?
+    var $date;     // exact date of the delta
+    
+    function bkDelta(&$cset,$file,$rev) 
+   {
+        $file = __fileproper($file);
+        $this->file=$file;
+        $this->rev=$rev;
+        $this->cset=$cset;
+        $cmd ="bk prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
+        
+        $info = $this->cset->_repo->_run($cmd);
+        list($date,$time,$age, $author,$domain, $comments) = explode('|',$info[0]);
+        $this->date = $date;
+        $this->time = $time;
+        $this->age=$age;
+        $this->author=$author;
+        $this->domain=$domain;
+        $this->comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
+   }
+    
+    function bkDiffs() 
+   {
+        $cmd="bk diffs -hu -R".$this->rev." ".$this->file;
+        return $this->cset->_repo->_run($cmd);
+   }
+    
+    function bkAnnotate() 
+   {
+        $cmd="bk annotate -aum -r".$this->rev." ".$this->file;
+        return $this->cset->_repo->_run($cmd);
+   }
+    
+    function bkFile() 
+   {
+        return $this->file;
+   }
+    
+    function bkRev() 
+   {
+        return $this->rev;
+   }
+}
+
+?>
