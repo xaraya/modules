@@ -403,14 +403,14 @@ function release_delete()
                               'blockType' => 'latest'))) return;
 
     // Disable categories hooks for release
-    xarModAPIFunc('modules','admin','disablehooks',
-          array('callerModName' => 'release', 'hookModName' => 'categories'));        
+       xarModAPIFunc('modules','admin','disablehooks',
+          array('callerModName' => 'release', 'hookModName' => 'categories'));
 
-
-    // Delete cats
+    /* jojodee: this is a problem as categories are used by other modules on the site
+     // Delete cats
     if (!xarModAPIFunc('categories', 'admin', 'deletecat',
                          array('cid' => xarModGetVar('release', 'mastercids')))) return;
-
+    */
     // Delete any module variables
     xarModDelAllVars('release');
     // Remove Masks and Instances
