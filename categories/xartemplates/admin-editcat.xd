@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td style="vertical-align: top;"><label for="description[#$cid#]"><xar:mlstring>Description</xar:mlstring></label></td>
-            <td><textarea wrap="virtual" name="description[#$cid#]" id="description[#$cid#]" cols="40" rows="3" maxlength="255">#$category['description']#</textarea></td>
+            <td><textarea name="description[#$cid#]" id="description[#$cid#]" cols="40" rows="3" maxlength="255">#$category['description']#</textarea></td>
         </tr>
         <xar:template file="localization" type="module" />
         <tr>
