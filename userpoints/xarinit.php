@@ -146,9 +146,10 @@ function userpoints_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             break;
-        case 1.1:
+        case '1.1.0':
             // Code to upgrade from version 1.1 goes here
             // delete/initialize the whole thing again
             userpoints_delete();

@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Userpoints';
 $modversion['id']             = '4579';
-$modversion['version']        = '1.0';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'Earn Points For Participating';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
