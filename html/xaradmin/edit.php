@@ -65,7 +65,7 @@ function html_admin_edit()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for editing #(1) HTML tag #(2)',
                     'HTML', xarVarPrepForDisplay($cid));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }

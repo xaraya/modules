@@ -40,7 +40,7 @@ function html_admin_create($args)
     // Check arguments
     if (empty($tag)) {
         $msg = xarML('No tag Provided, Please go back and provide a tag');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

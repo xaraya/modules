@@ -35,7 +35,7 @@ function html_admin_createtype($args)
     // Check arguments
     if (empty($tagtype)) {
         $msg = xarML('No tag type provided, Please go back and provide a tag type.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

@@ -33,7 +33,7 @@ function html_admin_updateset()
     // Get parameters from the input
     if (!xarVarFetch('tags', 'array:1:', $tags)) {
         $msg = xarML('No HTML tags were selected.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return false;
     }
 
