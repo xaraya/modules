@@ -81,16 +81,17 @@ function release_user_addid()
                     return $data;
                 }
 
-                xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
+                xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$newrid)));
 
                 return true;
 
                 break;
+                
         }
     } else {
         $data['message'] = xarML('You Must Be Logged In to Assign an ID');
     }
-    
+
     return $data;
 }
 
