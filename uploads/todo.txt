@@ -22,6 +22,10 @@ Low Priority: (won't necessarily get done anytime soon)
 3. Consolidate and standardize uploads nomenclature
     a. change 'Uploads Directory' references to 'Untrusted Directory'
     b. change 'local import sandbox' references to 'Trusted Directory'
+4. Link directory structure in trusted location to categories to a base
+   category and replicate the structure there through scheduler for example.
+5. provide a user view into the uploads.
+
 
 
 File Attributes (xar_store_type values):
