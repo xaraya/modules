@@ -19,7 +19,7 @@
             </tr>
         </table>
         <br /><br />
-        <input type="submit" value="Begin Release Notification"  tabindex="6" />
+        <input type="submit" value="#xarML('Begin Release Notification')#"  tabindex="6" />
         </form>
     </div>
 </div>

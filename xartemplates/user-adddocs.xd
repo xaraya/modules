@@ -50,6 +50,6 @@
             </tr>
         </table>
         <br />
-        <input type="submit" value="Create General Documentation"  tabindex="6" />
+        <input type="submit" value="#xarML('Create General Documentation')#"  tabindex="6" />
     </form>
 </div>

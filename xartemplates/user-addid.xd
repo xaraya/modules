@@ -13,8 +13,8 @@
  <div style="margin-top:20px; margin-bottom:20px;">
      <span style="float:left; text-align:center; width:90%;">
          #$message#<br />
-         <a href="#$retryurl#"><xar:mlstring>Return to try again</xar:mlstring></a>,
-         <xar:mlstring>or </xar:mlstring><a href="#$retryID#"><xar:mlstring>check current registered names.</xar:mlstring></a>.
+         <a href="#$retryurl#"><xar:mlstring>Return to try again.</xar:mlstring></a>&nbsp;
+         <a href="#$retryID#"><xar:mlstring>Check current registered names.</xar:mlstring></a>
      </span>
  </div>
 <xar:else />

@@ -185,7 +185,7 @@
             </tr>
         </table>            
         <br /><br />
-        <input type="submit" value="Announce!"  tabindex="6" />
+        <input type="submit" value="#xarML('Announce!')#"  tabindex="6" />
     </form>
 </div>
 </div>

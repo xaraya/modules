@@ -118,7 +118,7 @@
             </tr>
         </table>            
         <p>
-            <input type="submit" value="Modify ID"  tabindex="6" />
+            <input type="submit" value="#xarML('Modify ID')#"  tabindex="6" />
         </p>
     </form>
 </div>

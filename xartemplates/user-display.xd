@@ -8,7 +8,7 @@
 <xar:if condition="$general eq 2" >
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            Extension No:</span>
+            <xar:mlstring>Extension No:</xar:mlstring></span>
         </span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             <strong>#$rid#</strong></span>
@@ -28,21 +28,21 @@
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            Name:</span>
+            <xar:mlstring>Name:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             #$displname#
         </span>
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            Description:</span>
+            <xar:mlstring>Description:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             #$desc#
         </span>
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            Class:
+            <xar:mlstring>Class:</xar:mlstring>
         </span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
         <xar:if condition="$class == 0">
@@ -54,21 +54,21 @@
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            Author:</span>
+            <xar:mlstring>Author:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             <a href="#$contacturl#">#$realname#</a>
         </span>
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            Ext State:</span>
+            <xar:mlstring>Ext State:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             #$rstatesel#
         </span>
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            Categories:</span>
+            <xar:mlstring>Categories:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             <xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />
         </span>
@@ -81,9 +81,8 @@
             <dl class="xar-tabs">
                 <dt class="help" title="#xarML('Click on a tab to explore further')#">
                     <xar:mlstring>
-                        Options
+                        Options:
                     </xar:mlstring>
-                    : 
                 </dt>
                <xar:if condition="$tab eq 'basic'">
                    <dd class="active">
@@ -164,15 +163,15 @@
             <h3><a href="#$loop:item['displaylink']#">#$loop:item['regname']#</a></h3>
             <div class="xar-accent" style="padding: 2px;">
             <span class="xar-sub">
-                <xar:mlstring>Author</xar:mlstring>:
+                <xar:mlstring>Author:</xar:mlstring>
                 <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
-                <xar:mlstring>on</xar:mlstring>
+                <xar:mlstring>Date:</xar:mlstring>
                 #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
             </span>
             </div>
             <div style="clear: both; padding-top:5px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Release Version:</b>
+                <b><xar:mlstring>Release Version:</xar:mlstring></b>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 #$loop:item['version']#
@@ -181,7 +180,7 @@
             <xar:if condition="!empty($loop:item['demolink'])">
             <div style="clear: both; padding-top: 5px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Demo Link:</b>
+                <b><xar:mlstring>Demo Link:</xar:mlstring></b>
             </span>
               <span style="float: right; width: 68%; text-align: left;">
                 <a href="#$loop:item['demolink']#">#$loop:item['demolink']#</a>
@@ -190,7 +189,7 @@
             </xar:if>
             <div style="clear: both; padding-top: 5px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Download Link:</b>
+                <b><xar:mlstring>Download Link:</xar:mlstring></b>
             </span>
              <span style="float: right; width: 68%; text-align: left;">
                 <a href="#$loop:item['dllink']#">#$loop:item['dllink']#</a>
@@ -199,7 +198,7 @@
             <xar:if condition="$loop:item['price'] eq 2">
             <div style="clear: both; padding-top: 5px;">
                 <span style="float: left; width: 30%; text-align: left;">
-                <b>Price:</b>
+                <b><xar:mlstring>Price:</xar:mlstring></b>
             </span>
                <span style="float: right; width: 68%; text-align: left;">
                #$loop:item['priceterms']#<br />
@@ -208,7 +207,7 @@
             </xar:if>
             <div style="clear: both; padding-top: 5px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Certified:</b>
+                <b><xar:mlstring>Certified:</xar:mlstring></b>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 #$loop:item['certifiedstatus']#<br />
@@ -216,7 +215,7 @@
             </div>
             <div style="clear: both; padding-top: 5px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Extension State:</b>
+                <b><xar:mlstring>Extension State:</xar:mlstring></b>
             </span>
              <span style="float: right; width: 68%; text-align: left;">
                 #$loop:item['rstatesel']#
@@ -224,7 +223,7 @@
             </div>
             <div style="clear: both; padding-top: 5px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Changelog:</b>
+                <b><xar:mlstring>Changelog:</xar:mlstring></b>
             </span>
                <span style="float: right; width: 68%; text-align: left;">
                 #$loop:item['changelog']#
@@ -232,7 +231,7 @@
             </div>
             <div style="clear: both; padding-top: 5px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Additional Notes:</b>
+                <b><xar:mlstring>Additional Notes:</xar:mlstring></b>
             </span>
              <span style="float: right; width: 68%; text-align: left;">
                 #$loop:item['notes']#
@@ -240,7 +239,7 @@
             </div>
             <div style="clear: both; padding-top: 5px; padding-bottom:20px;">
             <span style="float: left; width: 30%; text-align: left;">
-                <b>Editor Notes:</b>
+                <b><xar:mlstring>Editor Notes:</xar:mlstring></b>
             </span>
                <span style="float: right; width: 68%; text-align: left;">
                 <i> #$loop:item['enotes']# </i>

@@ -25,10 +25,10 @@
 <div style="float: left; margin-top:10px; margin-bottom:10px; text-align: left;">
         <ol >
             <li><strong><xar:mlstring>Tracking Module and Theme ID's</xar:mlstring></strong>
-                <p style="margin-bottom:20px;"><xar:mlstring>You can view all Registered Extensions in the </xar:mlstring><a href="#$extlisturl#"><xar:mlstring>Extension List View Page</xar:mlstring></a>. <xar:mlstring>You can also </xar:mlstring><a href="#$extregisterurl#"><xar:mlstring>register your own extensions</xar:mlstring></a><xar:mlstring> with the link from that page.</xar:mlstring></p>
+                <p style="margin-bottom:20px;"><xar:mlstring>You can view all Registered Extensions in the <a href="#$extlisturl#">Extension List View Page</a>.You can also <a href="#$extregisterurl#">register your own extensions</a> with the link from that page.</xar:mlstring></p>
             </li>
             <li><strong><xar:mlstring>Tracking Version Release and History of Modules and Themes</xar:mlstring></strong>
-                <p style="margin-bottom:20px;"><xar:mlstring>Extensions that have already been release can be viewed on the </xar:mlstring><a href="#$extreleaseurl#"><xar:mlstring>Recent Extension Release page</xar:mlstring></a></p>
+                <p style="margin-bottom:20px;"><xar:mlstring>Extensions that have already been release can be viewed on the <a href="#$extreleaseurl#">Recent Extension Release page</a>.</xar:mlstring></p>
             </li>
             <li><strong><xar:mlstring>Providing Extension IDs for Documentation of Modules and Themes</xar:mlstring></strong>
                 <p style="margin-bottom:20px;"><xar:mlstring>Xaraya Extension Documentation is linked directly to a relevant extension via the Extension ID on any relevant document.

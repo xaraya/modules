@@ -39,7 +39,7 @@
            <xar:comment>
            <span style="float:right; text-align:right; width:20%;">
                <xar:if condition="xarUserIsLoggedIn()">
-                   <a href="#$addextension#">[Add Extension]</a>
+                   <a href="#$addextension#"><xar:mlstring>[Add Extension]</xar:mlstring></a>
                </xar:if>
            </span>
            </xar:comment>

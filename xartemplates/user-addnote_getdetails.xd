@@ -112,7 +112,7 @@
 
         </table>            
         <br /><br />
-        <input type="submit" value="Continue"  tabindex="6" />
+        <input type="submit" value="#xarML('Continue')#"  tabindex="6" />
     </form>
 </div>
 </div>
