@@ -9,9 +9,18 @@
 function uploads_userapi_createthumbimg($args)
 {
 	extract($args);
-	echo "Hello World";
-	createthumb( $file, $thumbwidth, $thumbheight, $newfile );
+	$usePBM = false;
+	
+	if( $usePBM )
+	{
+		createthumb( $file, $thumbwidth, $thumbheight, $newfile );
+	} else {
+		createthumbNetPBM( $file, $thumbwidth, $thumbheight, $newfile );
+	}
+	
 }
+
+
 
 
 function ImageCreateFrom($file)
@@ -46,10 +55,11 @@ function ImageCreateFrom($file)
 
 
 
-function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE){
+function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE)
+{
 
-  $BACKUP_FILE = $OUTPUT_FILE . "_backup.jpg";
-  copy($IMAGE_SOURCE,$BACKUP_FILE);
+	$BACKUP_FILE = $OUTPUT_FILE . "_backup.jpg";
+	copy($IMAGE_SOURCE,$BACKUP_FILE);
 
 
     $SRC_IMAGE = ImageCreateFrom($BACKUP_FILE);
@@ -57,7 +67,6 @@ function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE){
     $SRC_Y = ImageSY($SRC_IMAGE);
 
     if (($THUMB_Y == "0") AND ($THUMB_X == "0")) {
-
       return(0);
     } elseif ($THUMB_Y == "0") {
       $SCALEX = $THUMB_X/($SRC_X-1);
@@ -81,10 +90,12 @@ function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE){
       return(0);
     } else {
       imagedestroy($SRC_IMAGE);
-      if (ImageJPEG($DEST_IMAGE,$OUTPUT_FILE)) {
-        imagedestroy($DEST_IMAGE);
-        return(1);
-      }
+
+	if (ImageJPEG($DEST_IMAGE,$OUTPUT_FILE)) 
+	{
+	   imagedestroy($DEST_IMAGE);
+	   return(1);
+	}
       imagedestroy($DEST_IMAGE);
     }
     return(0);
@@ -191,5 +202,76 @@ function ImageCopyResampleBicubic (&$dst_img, &$src_img, $dst_x,
         }
 		return true;
     } 
+
+// **********************
+// ** NetPBM Support
+// *****************
+				     
+function createThumb( $file, $thumbwidth, $thumbheight, $newfile );
+{	
+	// Path to NetPBM installation
+	$bin_path = "/data/playground/sites/190/docs/netpbm/";		
+
+	// Create thumb from $file and store it as $newfile
+	$absname = $file;		
+	$thumbname = $newfile;
+
+
+	// Get image info
+	$info = getimagesize($absname);			
+	$imagewidth = $info[0];			
+	$imageheight = $info[1];			
+	
+	// Workout thumbnail width/height	
+	$new_w = $thumbwidth;			
+	$new_h = $thumbheight;
+	if( !isset( $new_h ) )
+	{
+		$scale = ($imagewidth / $new_w);			
+		$new_h = round($imageheight / $scale);			
+	}
+	
+	if( !isset( $new_w ) )
+	{
+		$scale = ($thumbheight / $new_h);			
+		$new_w = round($imagewidth / $scale);			
+	}
+	
+	// determine file formats
+	switch($info[2]) 
+	{			
+		// GIF			
+		case 1:				
+			$topnm = "giftopnm";				
+			$tothumb = "ppmtogif";				
+			$quant = "ppmquant 256";				
+			break;			
+		// JPEG			
+		case 2:				
+			$topnm = "jpegtopnm";				
+			$tothumb = "ppmtojpeg";				
+			$quant = "";				
+			break;			
+		// PNG			
+		case 3:				
+			$topnm = "pngtopnm";				
+			$tothumb = "pnmtopng";				
+			$quant = "ppmquant 256";				
+			break;		
+	}	
+	// switch on file type to figure out which executables we need		
+	// build the shell command		
+	$cmd = $bin_path . $topnm . " \"" . $absname . "\" | ";		
+	$cmd .= $bin_path . "pnmscale -xysize " . $new_w . " " . $new_h . " | ";		
+	if( $quant != "" ) 
+	{
+		$cmd .= $bin_path . $quant . " | ";		
+	}
+	$cmd .= $bin_path . $tothumb . " > \"" . $thumbname . "\"";		
+	// create the path to the thumbnail, if necessary, and execute the shell command		
+	// to create the thumbnail file		
+	exec($cmd);	
+}
+
 
 ?>
