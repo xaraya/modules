@@ -11,7 +11,7 @@ function ping_adminapi_update($args)
     if ((!isset($id)) ||
         (!isset($url))) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // The user API function is called

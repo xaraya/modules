@@ -11,7 +11,7 @@ function ping_userapi_get($args)
     extract($args);
     if (empty($id) || !is_numeric($id)) {
         $msg = xarML('Invalid Ping ID');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // Security Check
