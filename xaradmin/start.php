@@ -16,7 +16,9 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  require_once 'includes/classes/carp.php';
+  function commerce_admin_start()
+  {
+/*  require_once 'includes/classes/carp.php';
 CarpConf('linkdiv', '<div class="dataTableHeadingRow"">');
 CarpConf('linkstyle', 'text-decoration:none');
 CarpConf('linkclass', 'newslink');
@@ -39,5 +41,39 @@ CarpConf('postitems','');
 CarpConf('poweredby','');
 //CarpShow("http://www.xt-commerce.com/modules/xp_syndication/mods/mylinks_rss.php","xt-links.cache");
 CarpConfReset();
+*/
+    // Hide the categories block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecategories'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the search block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercesearch'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the information block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceinformation'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the language block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the manufacturers block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercemanufacturers'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the currencies block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecurrencies'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the shopping cart block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecart'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Show  the exit menu
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceexit'));
+    if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
+
+    xarResponseRedirect(xarModURL('commerce', 'admin', 'configuration',array('gID' => 1)));
 }
 ?>

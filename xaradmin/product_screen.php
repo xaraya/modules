@@ -284,6 +284,7 @@ if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
 
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $data['configuration'] = $configuration;
+//    echo var_dump($configuration);exit;
     return $data;
 }
 ?>

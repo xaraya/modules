@@ -22,11 +22,12 @@ function commerce_admin_categories()
     include_once 'modules/commerce/xarclasses/split_page_results.php';
     $xartables = xarDBGetTables();
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
-//    $data['configuration'] = $configuration;
+    $data['configuration'] = $configuration;
 
-    if(!xarVarFetch('move_to_category_id',    'int',  $move_to_category_id, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('current_category_id',    'int',  $current_category_id, 0, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('action', 'str',  $action, '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page',   'int',  $page, 1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('cPath',    'str',  $cPath, '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('cID',    'int',  $cID, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pID',    'int',  $pID, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('search', 'str',  $search, '', XARVAR_DONT_SET)) {return;}
@@ -51,6 +52,8 @@ function commerce_admin_categories()
                 xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath)));
                 break;
             case 'new_category':
+            echo "SS";exit;
+                xarResponseRedirect(xarModURL('commerce','admin','categories_screen'));
             case 'edit_category':
                 if ($configuration['allow_category_descriptions'] == true)
                     $action =$action . '_ACD';
@@ -121,6 +124,18 @@ function commerce_admin_categories()
                         xtc_remove_product($product_id);
                     }
                 }
+
+        $product_categories_string = '';
+        $product_categories = xtc_generate_category_path($pInfo.products_id, 'product');
+        for ($i = 0, $n = sizeof($product_categories); $i < $n; $i++) {
+          $category_path = '';
+          for ($j = 0, $k = sizeof($product_categories[$i]); $j < $k; $j++) {
+            $category_path .= $product_categories[$i][$j]['text'] . '&nbsp;&gt;&nbsp;';
+          }
+          $category_path = substr($category_path, 0, -16);
+          $product_categories_string .= xtc_draw_checkbox_field('product_categories[]', $product_categories[$i][sizeof($product_categories[$i])-1]['id'], true) . '&nbsp;' . $category_path . '<br />';
+        }
+        $data['product_categories_string'] = substr($product_categories_string, 0, -4);
 
                 xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath)));
                 break;
@@ -387,7 +402,7 @@ function commerce_admin_categories()
     $items =$q->output();
     $limit = count($items);
     for ($i=0;$i<$limit;$i++) {
-        $categories_count++;
+//        $categories_count++;
         $rows++;
         if ((!isset($cID) && !isset($pID)|| $cID == $item[$i]['categories_id']) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
             $category_childs = array('childs_count' => xtc_childs_in_category_count($items[$i]['categories_id']));
@@ -401,9 +416,9 @@ function commerce_admin_categories()
             $items[$i]['url'] = xarModURL('commerce','admin','categories',array('page' => $page, 'cID' => $items[$i]['categories_id']));
         }
     }
+    $data['categories_count'] = $limit;
 
-
-    $products_count = 0;
+//    $products_count = 0;
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['commerce_products_description'],'pd');
     $q->addtable($xartables['commerce_products'],'p');
@@ -412,7 +427,7 @@ function commerce_admin_categories()
     $q->join('p.products_id','pd.products_id');
     $q->join('p.products_id','p2c.products_id');
     $q->eq('pd.language_id',$currentlang['id']);
-    $q->setorder('c.sort_order');
+//    $q->setorder('pd.sort_order');
     $q->addorder('pd.products_name');
     if (isset($search)) {
         $q->like('pd.products_name','%" . $search . "%');
@@ -425,7 +440,7 @@ function commerce_admin_categories()
     $items1 =$q->output();
     $limit = count($items1);
     for ($i=0;$i<$limit;$i++) {
-        $products_count++;
+//        $products_count++;
         $rows++;
         // Get categories_id for product if search
         if (isset($search)) $cPath=$items1['categories_id'];
@@ -445,32 +460,11 @@ function commerce_admin_categories()
             $items[$i]['url'] = xarModURL('commerce','admin','categories',array('page' => $page, 'cID' => $items[$i]['categories_id']));
         }
     }
+    $data['products_count'] = $limit;
 
 //    <div id="spiffycalendar" class="text"></div>
 
-    //----- new_category / edit_category (when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
-    if ($action == 'new_category_ACD' || $action == 'edit_category_ACD') {
-        include('new_categorie.php');
-    //----- new_category_preview (active when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
-    }
-    elseif ($action == 'new_category_preview') {
-    // removed
-    }
-    elseif ($action == 'new_product') {
-        include('new_product.php');
-    }
-    elseif ($action == 'new_product_preview') {
-    // preview removed
-    }
-    else {
-        $data = array();
-        return xarTplModule('commerce','admin', 'categories_view',$data);
-        include('categories_view.php');
-    }
-
-}
-/*    }
-    if ($cPath_array) {
+    if (isset($cPath_array)) {
       $cPath_back = '';
       for($i = 0, $n = sizeof($cPath_array) - 1; $i < $n; $i++) {
         if ($cPath_back == '') {
@@ -480,6 +474,72 @@ function commerce_admin_categories()
         }
       }
     }
-</xar:comment>
-    $cPath_back = ($cPath_back) ? 'cPath=' . $cPath_back : '';*/
+    $cPath_back = (isset($cPath_back)) ? 'cPath=' . $cPath_back : '';
+
+    $data['dropdown'] = xarModAPIFunc('commerce','user','draw_pull_down_menu',array(
+                                        'name' =>'cPath',
+                                        'values' => xarModAPIFunc('commerce','user','get_category_tree'),
+                                        'default' => $current_category_id,
+                                        'parameters' => 'onChange="this.form.submit();"')
+                            );
+    $data['items'] = $items;
+    $data['items1'] = $items1;
+    $data['rows'] = $rows;
+    $data['cInfo'] = isset($cInfo) ? get_object_vars($cInfo) : '';
+    $data['page'] = $page;
+    $data['action'] = $action;
+    $data['search'] = $search;
+    $data['cPath'] = $cPath;
+    $data['cPath_back'] = $cPath_back;
+    $data['current_category_id'] = $current_category_id;
+
+    //----- new_category / edit_category (when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
+    if ($action == 'new_category_ACD' || $action == 'edit_category_ACD') {
+        xarResponseRedirect(xarModURL('commerce','admin','categories_screen'));
+    //----- new_category_preview (active when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
+    }
+    elseif ($action == 'new_category_preview') {
+    // removed
+    }
+    elseif ($action == 'new_product') {
+        xarResponseRedirect(xarModURL('commerce','admin','product_screen'));
+    }
+    elseif ($action == 'new_product_preview') {
+    // preview removed
+    }
+    else {
+        return xarTplModule('commerce','admin', 'categories_view',$data);
+//        include('categories_view.php');
+    }
+}
+/*    }
+
+
+        <xar:comment>                     // START IN-SOLUTION Berechung des Bruttopreises</xar:comment>
+                $price=$pInfo.products_price;
+                $price=xtc_round($price,PRICE_PRECISION);
+                $price_string=TEXT_PRODUCTS_PRICE_INFO . ' ' . $currencies->format($price);
+                if (PRICE_IS_BRUTTO=='true' && ($_GET['read'] == 'only' || $_GET['action'] != 'new_product_preview') ){
+                    $price_netto=xtc_round($price,PRICE_PRECISION);
+                    $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $pInfo.products_tax_class_id . "' ");
+          $q = new xenQuery();
+          if(!$q->run()) return;
+                    $tax = $q->output();
+                    $price= ($price*($tax[tax_rate]+100)/100);
+
+                    $price_string=TEXT_PRODUCTS_PRICE_INFO . ' ' . $currencies->format($price) . ' - ' . TXT_NETTO . $currencies->format($price_netto);
+
+              }
+
+
+                <br />
+                #$price_string#
+                <br />
+                <xar:mlstring>Max. allowed Discount</xar:mlstring>:
+                #$pInfo.products_discount_allowed#
+                <br />
+                <xar:mlstring>Quantity</xar:mlstring>:
+                #$pInfo.products_quantity#
+    <xar:comment> END IN-SOLUTION</xar:comment>
+*/
 ?>

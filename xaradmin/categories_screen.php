@@ -12,9 +12,10 @@
 
 function commerce_admin_categories_screen()
 {
+    include_once 'modules/commerce/xarclasses/object_info.php';
 
     if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cInfo',  'int',  $cID, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('cInfo',  'int',  $data['cInfo'], '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('cID',    'int',  $data['cID'],   0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('cPath',  'str',  $data['cPath'], '', XARVAR_NOT_REQUIRED)) {return;}
 
@@ -99,11 +100,11 @@ function commerce_admin_categories_screen()
                 }
                 xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath, 'cID' => $categories_id)));
             }
-            break;
     }
 
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $data['configuration'] = $configuration;
+//    echo var_dump($configuration);exit;
     return $data;
 }
 ?>
