@@ -45,10 +45,9 @@ function keywords_keywordsarticlesblock_update($blockinfo)
     
     if (!xarVarFetch('ptid', 'id', $vars['ptid'],NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('cid', 'int:1:', $vars['cid'],NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('status', 'int:1:', $vars['status'], XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('status', 'str:1:', $vars['status'], XARVAR_DONT_SET)) return;
     if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'],1,XARVAR_DONT_SET)) return;
     
-
     $vars = _keywords_keywordsarticlesblock_checkdefaults($vars);
     $blockinfo['content'] = serialize($vars);
 
