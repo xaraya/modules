@@ -35,7 +35,10 @@
 				<xar:if condition="!empty($words)">
 			<!-- Note : you can use $bytes here too if you prefer the geeky way of counting :) -->
 					<a href="#$link#"><xar:mlstring>Read More</xar:mlstring></a> 
-					(#$words# <xar:mlstring>words</xar:mlstring>)
+          <xar:ml>
+            <xar:mlstring> ((#1) words) </xar:mlstring>
+            <xar:mlvar>#$word#</xar:mlvar>
+          </xar:mlvar>
 				</xar:if>
 				<xar:if condition="!empty($comments)">
 					#$comments#
