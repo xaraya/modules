@@ -10,7 +10,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>The Hitcount module is a simple utility module to count the number of hitson an item.</xar:mlstring></em>
+            <em><xar:mlstring>The Hitcount module is a simple utility module to count the number of hits on an item.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Collects and displays hit detail on items in Xaraya.</xar:mlstring></li>
