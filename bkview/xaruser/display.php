@@ -13,9 +13,6 @@
  * @author Marcel van der Boom <marcel@hsdev.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.php");
-
-
 /**
  * display an item
  * This is a standard function to provide detailed informtion on a single item
@@ -40,8 +37,8 @@ function bkview_user_display($args)
     
     $data['name_value'] = $item['reponame'];
     $data['repoid'] = xarVarPrepForDisplay($repoid);
-    
-    $repo = new bkRepo($item['repopath']);
+    $repo =& $item['repo'];
+
     // Now construct the count array
     // FIXME: Do mktime and bk range agree on what time is??? (especially in first 4 entries this is sensitive)
     $times=array('1h' => date("YmdHis",mktime(date("H")-1,date("i"),date("s"),date("m"),date("d"),date("Y"))),

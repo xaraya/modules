@@ -13,6 +13,9 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
+// This should be the only place where we include the class file
+include_once("modules/bkview/xarincludes/bk.class.php");
+
 /**
  * get a specific item
  *
@@ -24,6 +27,8 @@
  */
 function bkview_userapi_get($args)
 {
+    if (!xarSecurityCheck('ViewAllRepositories')) return;
+
     extract($args);
     if (!isset($repoid) || !is_numeric($repoid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -60,14 +65,13 @@ function bkview_userapi_get($args)
     // set should be closed when it has been finished with
     $result->Close();
 
-    if (!xarSecurityCheck('ViewAllRepositories')) return;
-
     // Create the item array
+    $repo = new bkRepo($repopath);
     $item = array('repoid' => $repoid,
                   'reponame' => $reponame,
-                  'repopath' => $repopath);
-
-    // Return the item array
+                  'repopath' => $repopath,
+                  'repo' => $repo);
+    // Return the item 
     return $item;
 }
 ?>

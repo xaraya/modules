@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.php");
-
 function bkview_user_csetview($args) 
 {
     xarVarFetch('repoid','id',$repoid);
@@ -31,7 +29,7 @@ function bkview_user_csetview($args)
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
-    $repo = new bkRepo($item['repopath']);
+    $repo =& $item['repo'];
     $formatstring = "'";
     if($taggedonly) $formatstring .= "\$if(:TAG:){";
     $formatstring .= ":TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";

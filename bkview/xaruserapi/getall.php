@@ -35,19 +35,17 @@ function bkview_userapi_getall($args)
 
     $bkviewtable = $xartable['bkview'];
 
-    $sql = "SELECT xar_repoid,
-                   xar_name,
-                   xar_path
-            FROM $bkviewtable
-            ORDER BY xar_repoid";
-    $result = $dbconn->Execute($sql);
+    $sql = "SELECT xar_repoid  FROM $bkviewtable  ORDER BY xar_repoid";
+    $result =& $dbconn->Execute($sql);
     if(!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($repoid, $reponame, $repopath) = $result->fields;
-        $items[] = array('repoid' => $repoid,
-                         'reponame' => $reponame,
-                         'repopath' => $repopath);
+        list($repoid) = $result->fields;
+        $repo = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid);
+        $items[] = array('repoid'   => $repo['repoid'],
+                         'reponame' => $repo['reponame'],
+                         'repopath' => $repo['repopath'],
+                         'repo'     => $repo['repo']);
         
     }
     

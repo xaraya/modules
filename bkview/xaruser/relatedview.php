@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.php");
-
 function bkview_user_relatedview($args)
 {
     xarVarFetch('repoid','id',$repoid);
@@ -23,7 +21,7 @@ function bkview_user_relatedview($args)
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    $repo= new bkRepo($item['repopath']);
+    $repov =& $item['repo'];
     $the_file = new bkFile($repo,$file);
 
     $changesets=$the_file->bkChangeSets();

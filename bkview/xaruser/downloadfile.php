@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.php");
-
 function bkview_user_downloadfile($args) 
 {
     xarVarFetch('file','str::',$filename);
@@ -23,7 +21,7 @@ function bkview_user_downloadfile($args)
 
     // Get the file from the repo and sent it to the browser
     $repo_info = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
-    $repo = new bkRepo($repo_info['repopath']);
+    $repo =& $repo_info['repo']);
     
     // Gather info about the file and download it
     $fullname = $repo->_root . $filename;

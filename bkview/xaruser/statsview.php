@@ -25,10 +25,11 @@ function bkview_user_statsview($args)
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    $repo= new bkRepo($item['repopath']);
+    $repo=& $item['repo'];
     
     // Get a sorted array of timestamp=>user combo's
-    $stats = $repo->bkGetStats($user);
+    //$stats = $repo->bkGetStats($user);
+    $stats = xarModAPIFunc('bkview','user','getstats',array('repo' => $repo));
    
     // :UTC: is like 20021003152103 
     //               yyyymmddhhmmss

@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.php");
-
 function bkview_user_deltaview($args) 
 {
     xarVarFetch('repoid','id',$repoid);
@@ -29,7 +27,8 @@ function bkview_user_deltaview($args)
     $deltalist=array();
     $counter=1;
     $formatstring="':TAG:|:GFILE:|:REV:|:D:|:T:|:USER:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}'";
-    $repo = new bkRepo($item['repopath']);
+    $repo =& $item['repo'];
+    // FIXME: do we need to do this as a method of $repo ? Now it's really a coincedence it works
     $changeset= new bkChangeSet($repo,$rev);
     $deltas=$changeset->bkDeltas($formatstring);
     while (list($key,$val) = each($deltas)){
