@@ -79,12 +79,14 @@ function articles_randomblock_display($blockinfo)
     if (!empty($vars['showpubdate'])) {
             array_push($fields, 'pubdate');
     }
-    
     if (!empty($vars['showsummary'])) {
             array_push($fields, 'summary');
     }
     if (!empty($vars['alttitle'])) {
             $blockinfo['title'] = $vars['alttitle'];
+    }
+    if (!empty($vars['pubtypeid'])) {
+            $vars['pubtypeid'] = 0;
     }
     
     
