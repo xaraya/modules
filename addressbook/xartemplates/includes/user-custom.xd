@@ -1,4 +1,4 @@
-<script language="JavaScript">
+<script type="text/javascript">
 <!--
 function TrackCount(fieldObj,maxChars) {
     var diff = maxChars - fieldObj.value.length;
