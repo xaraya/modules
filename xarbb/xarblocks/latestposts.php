@@ -68,6 +68,7 @@ function xarbb_latestpostsblock_display($blockinfo)
     }
     if (empty($vars['forumid'])) {
         $vars['forumid'] = Array('All forums');
+        $vars['forumid'][0]='all';        
     }
     if (!isset($vars['addauthor'])) {   
         $vars['addauthor'] = '2';
