@@ -1,5 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<xar:if condition="xarTplAddStyleLink('sitecontact', 'forms')"></xar:if>
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -14,127 +15,121 @@
     <xar:set name="contacttitle">#$customtitle#</xar:set>
 </xar:if>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">#$contacttitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Site Contact
+        </xar:mlstring>        
+    </span>
 </div>
-<div style="margin: auto; width:99%;">
+<div class="xar-mod-body">
+    <xar:if id="title_condition" condition="!empty($message)">
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 95%; text-align: center; padding:20px;">
+             #$messagetxt#
+            </span>
+        </div>
+    <xar:else />
+        <p>
+            #$customtext#
+        </p>
 
-<xar:if id="title_condition" condition="!empty($message)">
-    <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 95%; text-align: center; padding:20px;">
-         #$messagetxt#
-        </span>
-    </div>
-<xar:else />
-    <form id="post" action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
-        <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
-        <div class="xar-norm" style="padding: 20px;">
+        <form class="xar-formwidget" action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+            <fieldset class="formelements xar-norm">
+                <legend>
+                    <strong>
+                        #$contacttitle#
+                    </strong>
+                </legend>
+            <input type="hidden" name="useripaddress" value="#$useripaddress#" />
+            <input type="hidden" name="userreferer" value="#$userreferer#" />
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="message" id="message" value="1" />
-    <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 95%; text-align: left; padding-top: 10px; padding-bottom:20px;">
-                  #$customtext#
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%;">
-                    <label for="username"><xar:mlstring>Your Name</xar:mlstring></label>:<span style="color:red;">*</span>
-                </span>
-                <span style="float: left; width:75%; margin-top:10px;">
-                        <xar:if condition = "xarUserIsLoggedIn()">
+             <p class="param">
+                <label for="username" class="required">
+                    <span class="help" title="#xarML('Enter your name')#">
+                        <xar:mlstring>
+                            Your Name
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition = "xarUserIsLoggedIn()">
                     <input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
                     #xarUserGetVar('name')#
                 <xar:else />
                     <input type="text" name="username" id="username" value="" size="25" maxlength="25" />
                 </xar:if>
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%;">
-                   <label for="useremail"><xar:mlstring>Your Email</xar:mlstring></label>:
-                   <span style="color:red;">*</span>
-               </span>
-               <span style="float: left; width:75%; margin-top:10px;">
-               <xar:if condition = "xarUserIsLoggedIn()">
+            </p>    
+            <p class="param">
+                <label for="useremail" class="required">
+                    <span class="help" title="#xarML('Enter your email')#">
+                        <xar:mlstring>
+                            Your Email
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition = "xarUserIsLoggedIn()">
                    <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
                        #xarUserGetVar('email')#
-               <xar:else />
+                <xar:else />
                     <input type="text" name="useremail" id="useremail" value="" size="25" maxlength="40" />
-               </xar:if>
-
-               </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%;">
-                    <span class="help" title="#xarML('Select the topic of your message')#">
-                        <label for="requesttext">
-                            <xar:mlstring>Subject:</xar:mlstring>
-                        </label>
-                         <span style="color:red;">*</span>
+                </xar:if>
+            </p>   
+            <p class="param">
+                <label for="requesttext" class="required">
+                    <span class="help" title="#xarML('Subject')#">
+                        <xar:mlstring>
+                            Subject
+                        </xar:mlstring>
                     </span>
-                </span>
-                <span style="float: left; width: 75%; text-align: left;">
-                    <select id="requesttext" name="requesttext">
-                    <xar:foreach in="$optionitems" value="$optionrequest" key="$key" >
-                        <xar:if condition="$optionrequest[0] eq $requesttext">
-                            <option value="#$optionrequest[0]#" selected="selected">#$optionrequest[0]#</option>
-                        <xar:else />
-                            <option value="#$optionrequest[0]#">#$optionrequest[0]#</option>
-                        </xar:if>
-                    </xar:foreach>
-                    </select>
-                </span>
-            </div>
-
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; ">
-                <span class="help" title="#xarML('Please enter your organization name.')#">
-                    <label for="company"><xar:mlstring>Organization</xar:mlstring></label>:
-                </span>
-                </span>
-                <span style="float: left; width: 75%; text-align: left;">
-                    <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
-                </span>
-            </div>
-
-            <div style="clear: both; padding-top: 10px;">
-            <span style="float: left; width: 20%;margin-top:10px;">
-                <span class="help" title="#xarML('Type in your message.')#"><label for="usermessage">
-                <xar:mlstring>Your message:</xar:mlstring></label></span><span style="color:red;">*</span>
-            </span>
-
-            <span style="float: left; width:75%;">
+                </label>
+                <select id="requesttext" name="requesttext">
+                <xar:foreach in="$optionitems" value="$optionrequest" key="$key" >
+                    <xar:if condition="$optionrequest[0] eq $requesttext">
+                        <option value="#$optionrequest[0]#" selected="selected">#$optionrequest[0]#</option>
+                    <xar:else />
+                        <option value="#$optionrequest[0]#">#$optionrequest[0]#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </p>   
+            <p class="param">
+                <label for="company">
+                    <span class="help" title="#xarML('Please enter your organization name.')#">
+                        <xar:mlstring>
+                            Organization
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
+            </p> 
+            <p class="param">
+                <label for="usermessage" class="required">
+                    <span class="help" title="#xarML('Type in your message')#">
+                        <xar:mlstring>
+                            Message
+                        </xar:mlstring>
+                    </span>
+                </label>
                 <textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea>
-            </span>
-            </div>
-            <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%;">
-                    <span class="help" title="#xarML('Would you like to have a copy of the message sent to your email')#">
-                        <label for="sendcopy">
-                            <xar:mlstring>Copy email to you?</xar:mlstring>
-                        </label>
-                    </span>
-                </span>
-                <span style="float: left; width:75%;">
-                    <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
-                </span>
-            </div>
-            </xar:if>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; text-align: left;margin-top:10px;">
-                    <span style="color:red;">*</span><xar:mlstring>Required field.</xar:mlstring>
-                </span>
-            </div>
-            <input type="hidden" name="useripaddress" value="#$useripaddress#" />
-            <input type="hidden" name="userreferer" value="#$userreferer#" />
-            <div style="clear: both; padding-top: 10px;">
-                <span style="text-align: center;">
-                    <input type="submit" value="#$submit#" />
-                </span>
-            </div>
-        </div>
-        </div>
-    </form>
-</xar:if>
-</div>
+            </p>   
 
+            <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
+                <p class="param">
+                    <label for="sendcopy">
+                        <span class="help" title="#xarML('Would you like to have a copy of the message sent to your email')#">
+                            <xar:mlstring>
+                                Copy email to you
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                    <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+                </p>   
+            </xar:if>
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
+    </form>
+</div>
+</xar:if>
