@@ -61,11 +61,14 @@ function bloggerapi_userapi_newpost($msg)
         if(empty($status)) $status = 0; // Submitted
         // FIXME: Test for exceptions
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
+        // FIXME: This shouldn't be necessary, but articles makes this into 01011970 
+        $pubDate = time();
         $postid = xarModAPIFunc('articles','admin','create',array('ptid'=>$pubType,
                                                                   'title'=>$title,'summary'=>$summary,
                                                                   'cids' => $cids,'bodytype'=>$bodytype, 'bodytext'=>$bodytext,
                                                                   'language'=>$language,
-                                                                  'status' => $status));
+                                                                  'status' => $status,
+                                                                  'pubdate' => $pubbDate));
         xarLogMessage("Created article $postid in category $category with status $status ($publish) ");
         if (!$postid) {
             xarExceptionFree();
