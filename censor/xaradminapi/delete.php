@@ -24,14 +24,14 @@ function censor_adminapi_delete($args)
     // Argument check
     if (!isset($cid)) {
         $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2).php', 'admin', 'delete', 'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } 
     // The user API function is called
     $link = xarModAPIFunc('censor', 'user', 'get', array('cid' => $cid));
     if ($link == false) {
         $msg = xarML('No Such Word Present');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     } 
     // Security Check

@@ -25,7 +25,7 @@ function censor_userapi_transform($args)
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid Parameter Count',
                     join(', ',$invalid), 'userapi', 'transform', 'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

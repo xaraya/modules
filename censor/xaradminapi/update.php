@@ -26,7 +26,7 @@ function censor_adminapi_update($args)
             (!isset($keyword))) {
         $msg = xarML('Invalid Parameter Count',
             join(', ', $invalid), 'admin', 'update', 'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
@@ -38,7 +38,7 @@ function censor_adminapi_update($args)
 
     if ($link == false) {
         $msg = xarML('No Such Censored Word Present', 'censor');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     } 
     // Security Check

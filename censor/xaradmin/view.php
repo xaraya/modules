@@ -46,7 +46,7 @@ function censor_admin_view()
     if (empty($censors)) {
         $msg = xarML('No censor in database.',
                     'censor');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
             'MISSING_DATA',
             new DefaultUserException($msg));
         return;

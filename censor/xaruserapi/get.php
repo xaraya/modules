@@ -22,7 +22,7 @@ function censor_userapi_get($args)
 
     if (!isset($cid)) {
         $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2).php', 'userapi', 'get', 'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

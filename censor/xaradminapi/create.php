@@ -25,7 +25,7 @@ function censor_adminapi_create($args)
     // if not then set an appropriate error message and return
     if (!isset($keyword)) {
         $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2).php', 'admin', 'create', 'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } 
     // Security Check
