@@ -284,7 +284,7 @@ function html_upgrade($oldversion)
 
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case '1.0':
+        case '1.0.0':
             // Code to upgrade from version 1.0 goes here
             // Set up module hooks
             if (!xarModRegisterHook('item',
@@ -292,35 +292,36 @@ function html_upgrade($oldversion)
                                    'API',
                                    'html',
                                    'user',
-                                   'transforminput')) return false;
+                                   'transforminput')) return;
 
             if (!xarModRegisterHook('item',
                                    'transform',
                                    'API',
                                    'html',
                                    'user',
-                                   'transformoutput')) return false;
+                                   'transformoutput')) return;
 
             // fall through to the next upgrade
-        case '1.1':
+        case '1.0.1':
+        case '1.1.0':
             // Code to upgrade from version 1.1 goes here
 
             // Align the allowed values in xar_html to allowed
             // values in Site.Core.AlloweableHTML
             $query = "UPDATE $htmltable SET xar_allowed=0 WHERE xar_allowed=1";
             $result =& $dbconn->Execute($query);
-            if (!$result) return false;
+            if (!$result) return;
 
             $query = "UPDATE $htmltable SET xar_allowed=1 WHERE xar_allowed=2";
             $result =& $dbconn->Execute($query);
-            if (!$result) return false;
+            if (!$result) return;
 
             $query = "UPDATE $htmltable SET xar_allowed=2 WHERE xar_allowed=3";
             $result =& $dbconn->Execute($query);
-            if (!$result) return false;
+            if (!$result) return;
 
             // fall through to the next upgrade
-        case '1.2':
+        case '1.2.0':
             // Code to upgrade from version 1.2 goes here
             
             // Create htmltypes table
@@ -393,7 +394,7 @@ function html_upgrade($oldversion)
                       SET xar_tid = " . $htmltypeid;
 
             $result =& $dbconn->Execute($query);
-            if (!$result) return false;
+            if (!$result) return;
             
             // Create new index on xar_html table
             $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html',
@@ -406,9 +407,13 @@ function html_upgrade($oldversion)
             if (!$result) return;
 
             // fall through to the next upgrade
-        case '1.3':
+        case '1.3.0':
             // Code to upgrade from version 1.3 goes here
             break;
+
+        default:
+            // Couldn't find a previous version to upgrade
+            return;
     }
 
     return true;
