@@ -20,7 +20,7 @@ function ratings_userapi_rate($args)
         (!isset($rating) || !is_numeric($rating) || $rating < 0 || $rating > 100)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     xarML('value'), 'user', 'rate', 'ratings');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -28,7 +28,7 @@ function ratings_userapi_rate($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     xarML('module id'), 'user', 'rate', 'ratings');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
