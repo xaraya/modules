@@ -525,7 +525,7 @@ function converter_adminapi_simulateheader($theme)
 {
 
     global
-	$index,
+    $index,
         $artpage,
         $topic,
         $hlpfile,
