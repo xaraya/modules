@@ -641,20 +641,19 @@ function articles_user_view($args)
             switch ($value['format']) {
                 case 'calendar':
                     if (!empty($article[$field])) {
-                        if($field!='pubdate') {
-                            // only convert this timestamp if it's NOT the pubdate
-                            // we want the pubdate field to remain a UTC Unix TimeStamp
-                            $article[$field] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",($article[$field])));
+                        // legacy support for $date variable in templates
+                        if ($field == 'pubdate') {
+                            // the date for this field is represented in the user's timezone for display
+                            $article['date'] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",$article[$field]));
                         }
                     } else {
                         $article[$field] = '';
+                        // legacy support for $date variable in templates
+                        if ($field == 'pubdate') {
+                            $article['date'] = '';
+                        }
                     }
-
-                    // legacy support for $date variable in templates
-                    if ($field == 'pubdate') {
-                        // the date for this field is represented in the user's timezone for display
-                        $article['date'] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",$article[$field]));
-                    }
+                    // all calendar fields are now passed "as is", so you can format them in the templates
                     break;
                 case 'urltitle':
                     // fall through
