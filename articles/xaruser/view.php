@@ -31,7 +31,7 @@ function articles_user_view($args)
 //    if(!xarVarFetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 
-	// Added to impliment an Alpha Pager
+    // Added to impliment an Alpha Pager
     if(!xarVarFetch('displayletter', 'str', $displayletter,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
@@ -259,7 +259,7 @@ function articles_user_view($args)
     $data['viewpager'] = '';
 
     // Add Sort to data passed to template so that we can automatically turn on alpha pager, if needed
-    $data['sort'] = $sort;	
+    $data['sort'] = $sort;    
 
     // Add current display letter, so that we can highlight the current filter in the alpha pager
     $data['displayletter']=$displayletter;

@@ -56,7 +56,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if (!is_array($vars['status'])) {
         $statusarray = array($vars['status']);
     } else {
-	    $statusarray = $vars['status'];
+        $statusarray = $vars['status'];
     }
 
     if(!empty($vars['catfilter'])) {

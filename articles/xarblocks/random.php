@@ -110,7 +110,7 @@ function articles_randomblock_display($blockinfo)
             'cids' => $cidsarray,
             'andcids' => 'false',
             'status' => $statusarray,
-            'fields' => $fields	)
+            'fields' => $fields    )
     );
     $nbarticles = count($articles);
     if (empty($vars['numitems'])) $vars['numitems'] = $nbarticles;

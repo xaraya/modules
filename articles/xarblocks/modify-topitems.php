@@ -40,11 +40,11 @@ function articles_topitemsblock_modify($blockinfo)
         array('id' => 'date', 'name' => xarML('Date'))
     );
 
-	$vars['statusoptions'] = array(
+    $vars['statusoptions'] = array(
         array('id' => '2,3', 'name' => xarML('All Published')),
         array('id' => '3', 'name' => xarML('Frontpage')),
         array('id' => '2', 'name' => xarML('Approved'))
-    );									   
+    );                                       
 
     $vars['blockid'] = $blockinfo['bid'];
 
