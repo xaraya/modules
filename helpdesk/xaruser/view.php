@@ -64,18 +64,6 @@ function helpdesk_user_view($args)
                                                    'startnum'  => $startnum,
                                                    'statusfilter' => $statusfilter));
     $totaltickets = sizeOf($data['mytickets_data']);    
-
-    if(empty($catid))
-    {
-        $cat  = xarModAPIFunc('categories', 'user', 'getcatbase', 
-                               array('modid'    => 910,
-                                     'itemtype' => '1',
-                                     'bid' => 1));
-        if(!empty($cat['cid']))                                     
-        {
-            $catid = $cat['cid'];
-        }
-    }    
     
     //Setup args for pager so we don't lose our place
     $args = array('selection' => $selection,

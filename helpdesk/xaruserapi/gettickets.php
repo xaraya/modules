@@ -28,7 +28,7 @@ function helpdesk_userapi_gettickets($args)
                               array('modid'    => 910,
                                     'itemtype' => 1,
                                     'cids'     => array($catid),
-                                    'andcids'  => 0));
+                                    'andcids'  => 1));
     }
     
     // Get items Ticket Number/Date/Subject/Status/Last Update
@@ -49,13 +49,14 @@ function helpdesk_userapi_gettickets($args)
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
-        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_id';
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_helpdesk_tickets.xar_id';
         
         if (!empty($categoriesdef['more'])) 
         {
-            $from = '(' . $from . ')';
+            //$from = ' ( ' . $from . ' ) ';
             $from .= $categoriesdef['more'];
         }
+        
         $where[] = $categoriesdef['where'];
         $sql .= $from;
     }
@@ -196,7 +197,7 @@ function helpdesk_userapi_gettickets($args)
     
     $results = $dbconn->Execute($sql);
     if (!$results) { return false; }
-    
+
     $fieldresults = array();
     while(list($ticket_id,  $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
         $assignedto, $openedby,   $closedby) = $results->fields) {
