@@ -1,5 +1,59 @@
 <xar:template file="admin-menu" type="module"/>
 
-<div>
-  <span >#$welcome#</span> 
+<div style="padding: 1px;" class="xar-norm-outline">
+    <div style="float:right;padding:10px;">
+        <xar:if condition="file_exists('modules/bkview/xarimages/admin.gif')" >
+            <img src="modules/base/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <xar:else />
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <xar:mlstring>What is it?</xar:mlstring>
+    </div>
+
+    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        The BKView module provides a web view into bitkeeper repositories. The BKWeb included
+        with BK does essentially the same with these differences:
+        <ol>
+            <li>it's not templateable, which makes it hard to embed into a site</li>
+            <li>it relies on de bk-daemon which has to be started in a specific way, the bkview module is less restrictive</li>
+            <li>bkweb is packaged as is, it's not extensible, bkview is delivered as php module, so extra features are added easily</li>
+            <li>bkview is embedded into xaraya, so it can use the features from any other xaraya module if necessary</li>
+            <li>bkweb requires an internet connected computer, bkview doesn't</li>
+        </ol>
+        <br/>
+        This module has the following disadvantages:
+        <ol>
+            <li>It's probably very hard to get it working reliably under windows</li>
+            <li>bkview is slower than bkweb, because it adds another level of abstraction (the php layer)</li>
+            <li>It relies on spawning bk commands on the server, parsing the output those commands generate, this is
+                far from ideal, both in terms of performancs and security</li>
+        </ol>
+    </div>
+
+    <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </div>
+    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        In the admin part of the module add the paths to the repositories you want to expose, give them
+        a meaningfull name. That's about it. The user part of the module currently mimics the interface
+        of bkweb, giving roughly the same functionality.
+    </div>
+
+    <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <xar:mlstring>Issues</xar:mlstring>
+    </div>
+    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        The following issues are known and part of the todo-list:
+        <ol>
+            <li>Counting of csets isn't consistent (discrepancy with bkweb, assuming that one is correct</li>
+            <li>Searching is not enabled yet</li>
+            <li>No security is in place</li>
+            <li>No check is done in admin section whether the pointed to path is actually a bk repository</li>
+            <li>The templates are horrible</li>
+            <li>It doesn't work on windows</li>
+        </ol>
+    </div>
+
 </div>
