@@ -8,14 +8,17 @@
           <h1><a class="xar-title" href="#$link#">#$title#</a></h1>
 
           <div class="xar-accent" style="padding: 2px;"><span class="xar-sub">
-            <xar:mlstring>Posted by</xar:mlstring>: 
-            #$author#
-            <xar:mlstring>on</xar:mlstring>
-            #$date#
-                    <xar:if condition="!empty($counter)">
-                       (#$counter# <xar:mlstring>Reads</xar:mlstring>)
-                    </xar:if>
-
+          <xar:ml>
+              <xar:mlstring>Posted by: #(1) on #(2)</xar:mlstring>
+              <xar:mlvar>#$author#</xar:mlvar>
+              <xar:mlvar>#$date#</xar:mlvar>
+          </xar:ml>
+          <xar:if condition="!empty($counter)">
+              <xar:ml>
+                  <xar:mlstring>(#(1) Reads)</xar:mlstring>
+                  <xar:mlvar>#$counter#</xar:mlvar>
+              </xar:ml>
+          </xar:if>
           </span></div>
           <div style="text-align: right;">
             <span class="xar-sub">
