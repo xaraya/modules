@@ -14,7 +14,8 @@
 
 // the hook function
 //
-function figlet_userapi_transform($args) {
+function figlet_userapi_transform($args) 
+{
 
     extract($args);
     require("modules/figlet/xarclass/phpfiglet_class.php");
@@ -50,7 +51,8 @@ function figlet_userapi_transform($args) {
 
 // the wrapper for a string var (simple up to now)
 //
-function figlet_transform($text) {
+function figlet_transform($text) 
+{
 	// pad it with a space so we can match things at the start of the 1st line.
 	$ret = " " . $text;
 
