@@ -55,7 +55,7 @@ function smilies_user_main()
 
     if (empty($links)) {
         $msg = xarML('There are no smilies registered');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     // Add the array of items to the template variables
