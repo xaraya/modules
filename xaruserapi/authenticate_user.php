@@ -128,7 +128,8 @@ function authinvision2_userapi_authenticate_user($args)
     return $rid;
 }
 
-function db_switch() {
+function db_switch() 
+{
     mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);
 }
 ?>
