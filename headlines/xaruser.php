@@ -21,9 +21,6 @@ function headlines_user_main()
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
 
-    // Get parameters from whatever input we need
-    $startnum = xarVarCleanFromInput('startnum');
-
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');
 
@@ -60,9 +57,10 @@ function headlines_user_main()
                                         'cached' => true,
                                         'cachedir' => 'cache/rss',
                                         'refresh' => 3600,
-                                        'extension' => '.xml'));
+                                        'extension' => '.xml',
+                                        'superrors' => TRUE));
         if (!$feeddata) {
-            return; // throw back
+            //return; // throw back
         }
 
         // Create a need feedParser object
@@ -79,6 +77,7 @@ function headlines_user_main()
             }
             if (!empty($link['desc'])){
                 $links[$i]['chandesc'] = $link['desc'];
+
             } else {
                 $links[$i]['chandesc']   =   $info['channel']['description'];
             }
@@ -147,7 +146,6 @@ function headlines_user_view()
 {
     // Security Check
     if(!xarSecurityCheck('ReadHeadlines')) return;
-
     xarVarFetch('hid', 'id', $hid, XARVAR_PREP_FOR_DISPLAY);
 
     $hooks = xarModCallHooks('item',
@@ -261,5 +259,4 @@ function headlines_user_view()
 
     return $data;
 }
-
 ?>

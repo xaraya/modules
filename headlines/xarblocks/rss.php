@@ -91,12 +91,14 @@ function headlines_rssblock_display($blockinfo)
             'cached' => true,
             'cachedir' => 'cache/rss',
             'refresh' => 3600,
-            'extension' => '.xml'
+            'extension' => '.xml',
+            'superrors'=> TRUE
         )
     );
 
     if (!$feeddata) {
-        return; // throw back
+        $blockinfo['content'] = xarML('Problem with supplied feed');
+        return $blockinfo;
     }
 
     // Create a need feedParser object
