@@ -22,6 +22,7 @@ function xarbb_user_newreply()
     // Let's get the title, and check to see if we are
     if ((!empty($tid)) && (empty($cid))){
         // The user API function is called
+
         $data = xarModAPIFunc('xarbb',
                               'user',
                               'gettopic',
@@ -32,18 +33,31 @@ function xarbb_user_newreply()
             xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
             return;
         }
-
         $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$data['fid']));
         $data['allowhtml']      = $settings['allowhtml'];
-        $data['allowbbcode']    = $settings['allowbbcode']; 
- 
+        $data['allowbbcode']    = $settings['allowbbcode'];
+        $allowhtml= isset($data['allowhtml']) ? $data['allowhtml'] : false;
+        $allowbbcode= isset($data['allowbbcode']) ? $data['allowbbcode'] : false;
+
         $package['title'] = xarVarPrepForDisplay($data['ttitle']);
-        if ($phase == 'quote'){
+        if (($phase == 'quote') && ($allowbbcode==true)){
             $package['text'] = '[quote]'. $data['tpost'] .'[/quote]';
+        }elseif (($phase == 'quote') && ($allowhtml==true)){
+            $package['text'] = '<blockquote>'. $data['tpost'] .'</blockquote>';
         } elseif ($phase == 'edit') {
             $package['text'] = $data['tpost'];
         }
     } elseif (!empty($cid)){
+        $topic = xarModAPIFunc('xarbb',
+                      'user',
+                      'gettopic',
+                      array('tid' => $tid));
+        $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));
+        $data['allowhtml']      = $settings['allowhtml'];
+        $data['allowbbcode']    = $settings['allowbbcode'];
+        $allowhtml= isset($data['allowhtml']) ? $data['allowhtml'] : false;
+        $allowbbcode= isset($data['allowbbcode']) ? $data['allowbbcode'] : false;
+
         // The user API function is called
         $data = xarModAPIFunc('comments',
                               'user',
@@ -51,19 +65,16 @@ function xarbb_user_newreply()
                               array('cid' => $cid));
 
         foreach ($data as $comment){
-            $package['title'] = $comment['xar_title']; //prepped in template 
-            if ($phase == 'quote'){
+            $package['title'] = $comment['xar_title']; //prepped in template
+            if (($phase == 'quote') && ($allowbbcode==true)){
                 $package['text'] = '[quote]'. $comment['xar_text'] .'[/quote]';
-            } elseif ($phase == 'edit') {
+            }elseif (($phase == 'quote') && ($allowhtml==true)){
+                $package['text'] = '<blockquote>'. $comment['xar_text'] .'</blockquote>';
+             } elseif ($phase == 'edit') {
                 $package['text'] = $comment['xar_text'];
             }
         }
-        $topic = xarModAPIFunc('xarbb',
-                      'user',
-                      'gettopic',
-                      array('tid' => $tid));
     }
- 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
 
     // Security Check
@@ -92,7 +103,6 @@ function xarbb_user_newreply()
                   'user',
                   'gettopic',
                   array('tid' => $tid));
-
 
     // Var Set-up
     $header['input-title']  = xarML('Post a Reply');

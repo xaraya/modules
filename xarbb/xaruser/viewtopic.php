@@ -311,6 +311,8 @@ function xarbb_user_viewtopic($args)
     }
     //pass the bbcodeswitch
     $data['allowbbcode'] = $allowbbcode;
+    //pass the htmlmod switch
+    $data['allowhtml'] = $allowhtml;
 
     // Let's suppress the hitcount hook from showing.
     $data['hooks']['hitcount'] = '';
