@@ -58,7 +58,6 @@ function uploads_admin_get_files() {
             foreach ($fileList as $file) {
                 $args['fileList']["$cwd/$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata', 
                                                                  array('fileLocation' => "$cwd/$file"));
-                $args['fileList']["$cwd/$file"]['fileSize'] = $args['fileList']["$cwd/$file"]['fileSize']['long'];
             }
             $args['getAll'] = $file_all;
         
@@ -83,8 +82,8 @@ function uploads_admin_get_files() {
             $data['external_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
             $data['upload_post_url'] = xarModURL('uploads', 'admin', 'get_files');
             $data['fileList'] = xarModAPIFunc('uploads', 'user', 'import_get_filelist', 
-                                               array('fileLocation' => $cwd));
-            
+                                               array('fileLocation' => $cwd, 'onlyNew' => TRUE));
+
             $data['curDir'] = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '', $cwd);
             $data['noPrevDir'] = (xarModGetVar('uploads', 'path.imports-directory') == $cwd) ? TRUE : FALSE;
             // reset the CWD for the local import

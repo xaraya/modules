@@ -47,7 +47,7 @@ function uploads_admin_updateconfig()
     // Now update the 'current working imports directory' in case the 
     // imports directory was changed. We do this by first deleting the modvar
     // and then recreating it to ensure that the user's version is cleared
-    xarModDelVar('uploads', 'path.imports-cwd');
+    // xarModDelVar('uploads', 'path.imports-cwd');
     xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
 
     xarModCallHooks('module',

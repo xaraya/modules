@@ -14,8 +14,16 @@ function uploads_userapi_import_get_filelist( $args ) {
     
     extract($args);
     
+    // Whether or not to descend into any directory
+    // that is found while creating the list of files
     if (!isset($descend)) {
         $descend = FALSE;
+    }
+    
+    // Whether or not to only add files that are -not- already 
+    // stored with entries in the database
+    if (!isset($onlyNew)) {
+        $onlyNew = FALSE;
     }
     
     $fileList = array();    
@@ -42,9 +50,15 @@ function uploads_userapi_import_get_filelist( $args ) {
     }
     switch ($type) {
         case _INODE_TYPE_FILE:
+            if ($onlyNew) {
+                $file = xarModAPIfunc('uploads', 'user', 'db_get_file', array('fileLocation' => $fileLocation));
+                if (count($file)) {
+                    break;
+                }
+            } 
             $fileName = $fileLocation;
             $fileList["$type:$fileName"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata', 
-                                                  array('fileLocation' => $fileLocation));
+                                                          array('fileLocation' => $fileLocation));
             break;
         case _INODE_TYPE_DIRECTORY:
             if ($fp = opendir($fileLocation)) {
@@ -71,6 +85,13 @@ function uploads_userapi_import_get_filelist( $args ) {
                     } 
                     if (is_file($fileLocation. '/' . $inode)) {
                         $fileName = $fileLocation . '/' . $inode;
+                        
+                        if ($onlyNew) {
+                            $file = xarModAPIfunc('uploads', 'user', 'db_get_file', array('fileLocation' => $fileName));
+                            if (count($file)) {
+                                break;
+                            } 
+                        } 
                         $file = xarModAPIFunc('uploads', 'user', 'file_get_metadata', array('fileLocation' => $fileName));
                         $fileList["$file[inodeType]:$fileName"] = $file;
                     }

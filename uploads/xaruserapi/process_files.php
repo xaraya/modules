@@ -78,7 +78,6 @@ function uploads_userapi_process_files( $args ) {
                 $fileList += $list;
                 unset($list);
             }
-            // echo "<br /><pre>fileList => "; print_r($fileList); echo "</pre>";exit();
             break;
         case _UPLOADS_GET_EXTERNAL:
         
@@ -104,13 +103,16 @@ function uploads_userapi_process_files( $args ) {
                     $fileList = xarModAPIFunc('uploads', 'user', 'import_external_http', array('uri' => $uri));
                     break;
                 case 'file':
+                    // If we'ere using the file scheme then just store a db entry only
+                    // as there is really no sense in moving the file around
+                    $storeType = _UPLOADS_STORE_DB_ENTRY;
+                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_file', array('uri' => $uri));
+                    break;
                 case 'gopher':
                 case 'wais':
                 case 'news':
                 case 'nntp':
                 case 'prospero':
-                case 'wais':
-                case 'gopher':
                 default:
                     // ERROR
                     $msg = xarML('Import via scheme \'#(1)\' is not currently supported', $uri['scheme']);
