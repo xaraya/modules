@@ -71,7 +71,7 @@ function nameday_namedayblock_display($blockinfo)
                               WHERE $namedaycolumn[did]='".pnVarPrepForStore($nd_day)."' AND $namedaycolumn[mid]='".pnVarPrepForStore($nd_month)."' $querylang");
     $output = new pnHTML();
     $output->SetInputMode(_PNH_VERBATIMINPUT);
-    $output->Text('<span class="pn-normal"><b>'._NAMEDAYBLOCK_ONEDAY.'</b></span>');
+    $output->Text('<span class="pn-normal"><b>'.xarML('Today is the nameday of').'</b></span>');
     $output->LineBreak(2);
 
     while(list($content) = $result->fields) {
@@ -81,7 +81,7 @@ function nameday_namedayblock_display($blockinfo)
     $output->SetInputMode(_PNH_PARSEINPUT);
 
     if (empty($blockinfo['title'])) {
-        $blockinfo['title'] = _NAMEDAYBLOCK_NAMEDAYS;
+        $blockinfo['title'] = xarML('Nameday');
     }
     $blockinfo['content'] = $output->GetOutput();
     return themesideblock($blockinfo);
