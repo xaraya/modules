@@ -12,7 +12,7 @@
 </div>
 <div id="top">
     <strong>
-        #$ttitle# 
+        #$ttitle#
     </strong>
 </div>
 <xar:if condition="!empty($pager)">
@@ -130,7 +130,8 @@
                         <div class="rightnote">
                             <xar:if condition="$tstatus ne 3">
                                 <xar:sec mask="PostxarBB" catch="false">
-                                    <xar:if condition="xarModIsAvailable('bbcode')">
+                                    <xar:if condition="isset($allowbbcode) and ($allowbbcode eq 'true')">
+                                   <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                         <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#">
                                             #$quoteimg# 
                                         </a>
@@ -339,7 +340,8 @@
                         <div class="rightnote">
                             <xar:if condition="$tstatus ne 3">
                                 <xar:sec mask="PostxarBB" catch="false">
-                                    <xar:if condition="xarModIsAvailable('bbcode')">
+                                    <xar:if condition="isset($allowbbcode) and ($allowbbcode eq 'true')">
+                                   <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                         <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#">
                                             #$quoteimg# 
                                         </a>
