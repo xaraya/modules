@@ -17,9 +17,9 @@ function smilies_xartables()
 {
     // Initialise table array
     $xartable = array();
-
+    $prefix = xarDBGetSiteTablePrefix();
     // Get the name for the autolinks item table
-    $smilies = xarConfigGetVar('prefix') . '_smilies';
+    $smilies = $prefix . '_smilies';
 
     // Set the table name
     $xartable['smilies'] = $smilies;
