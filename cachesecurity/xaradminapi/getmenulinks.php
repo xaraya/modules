@@ -15,38 +15,8 @@ function cachesecurity_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('cachesecurity',
                                                   'admin',
                                                   'view'),
-                             'title' => xarML('Views the state of the security cache'),
-                             'label' => xarML('View cache state'));
-
-        $menulinks[] = Array('url'   => xarModURL('cachesecurity',
-                                                  'admin',
-                                                  'syncall'),
-                             'title' => xarML('Synchronize all the parts of the security cache'),
-                             'label' => xarML('Synchronize all'));
-
-        $menulinks[] = Array('url'   => xarModURL('cachesecurity',
-                                                  'admin',
-                                                  'syncprivs'),
-                             'title' => xarML('Synchronize the privileges cache'),
-                             'label' => xarML('Synchronize privileges'));
-
-        $menulinks[] = Array('url'   => xarModURL('cachesecurity',
-                                                  'admin',
-                                                  'syncmasks'),
-                             'title' => xarML('Synchronize the masks cache'),
-                             'label' => xarML('Synchronize masks'));
-
-        $menulinks[] = Array('url'   => xarModURL('cachesecurity',
-                                                  'admin',
-                                                  'syncprivsstruct'),
-                             'title' => xarML('Synchronize the privileges structure cache'),
-                             'label' => xarML('Sync privs structure'));
-
-        $menulinks[] = Array('url'   => xarModURL('cachesecurity',
-                                                  'admin',
-                                                  'syncmasksstruct'),
-                             'title' => xarML('Synchronize the masks structure cache'),
-                             'label' => xarML('Sync masks structure'));
+                             'title' => xarML('Central control for the security caching system.'),
+                             'label' => xarML('Security cache control'));
 
         if (!xarModAPIFunc('cachesecurity','admin','ison')) {
             $menulinks[] = Array('url'   => xarModURL('cachesecurity',

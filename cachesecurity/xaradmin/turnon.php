@@ -7,17 +7,15 @@
 
 function cachesecurity_admin_turnon()
 {
-    if (!xarModAPIFunc('logconfig','admin','issynchronized')) {
+    if (!xarModAPIFunc('cachesecurity','admin','issynchronized')) {
         xarResponseRedirect(xarModURL('cachesecurity', 'admin', 'view', array(
             'error' => xarML('Not all parts of the security cache system are synchronized.'))));
         return true;
     }
 
-    if (!xarModAPIFunc('logconfig','admin','turnon')) {
-        xarResponseRedirect(xarModURL('cachesecurity', 'admin', 'view', array(
-            'error' => xarML('Unable to create the file (#(1)) to turn on the security cache.'))));
-    }
-  
+    if (!xarModAPIFunc('cachesecurity','admin','turnon')) return;
+
+     xarResponseRedirect(xarModURL('cachesecurity', 'admin', 'view'));
      return true;
 }
 

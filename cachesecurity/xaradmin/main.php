@@ -18,7 +18,7 @@ function cachesecurity_admin_main()
         // Return the output
         return array();
     } else {
-        xarResponseRedirect(xarModURL('xarcachemanager', 'admin', 'view'));
+        xarResponseRedirect(xarModURL('cachesecurity', 'admin', 'view'));
     } 
     // success
     return true;

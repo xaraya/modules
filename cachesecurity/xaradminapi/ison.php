@@ -5,7 +5,7 @@
  */
 function cachesecurity_adminapi_ison()
 {
-    $filename = xarModAPIFunc('logconfig','admin','filename', array('part'=>'general'));
+    $filename = xarModAPIFunc('cachesecurity','admin','filename', array('part'=>'on'));
 
     if (file_exists($filename)) {
         return true;

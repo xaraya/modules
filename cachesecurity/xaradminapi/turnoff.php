@@ -5,7 +5,7 @@
  */
 function cachesecurity_adminapi_turnoff ()
 {
-    $filename = xarModAPIFunc('logconfig','admin','filename', array('part'=>'general'));
+    $filename = xarModAPIFunc('cachesecurity','admin','filename', array('part'=>'on'));
     
     if (file_exists($filename)) {
         //Turn off

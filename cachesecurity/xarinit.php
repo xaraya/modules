@@ -18,8 +18,8 @@
 function cachesecurity_init()
 {
     // set up the output cache directory
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
-    $cacheSecurityDir = xarCoreGetVarDirPath() . '/cache/security';
+    $varCacheDir = xarCoreGetVarDirPath();
+    $cacheSecurityDir = xarCoreGetVarDirPath() . '/security';
 
     if (is_writable($varCacheDir) || is_dir($cacheSecurityDir)) {
         if (!is_dir($cacheSecurityDir)) {
@@ -373,8 +373,8 @@ function cachesecurity_upgrade($oldversion)
 function cachesecurity_delete()
 {
     //if still there, remove the cache.touch file, this turns everything off
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
-    $cacheSecurityDir = xarCoreGetVarDirPath() . '/cache/security';
+    $varCacheDir = xarCoreGetVarDirPath();
+    $cacheSecurityDir = xarCoreGetVarDirPath() . '/security';
 
     if (file_exists($cacheSecurityDir) && is_dir($cacheSecurityDir)) {
 

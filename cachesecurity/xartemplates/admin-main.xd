@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - CacheSecurity</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <h2><xar:mlstring>Security Cache Control</xar:mlstring></h2>
     <div style="padding: 1px;" class="xar-norm-outline">
         <div style="float:right;padding:10px;">
             <xar:if condition="file_exists('modules/xarcachemanager/xarimages/admin.gif')" >
