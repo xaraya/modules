@@ -1,0 +1,75 @@
+# Author: Roger Raymond
+# Created: 31 December 2004
+# Purpose: pull or push a group of repositories.
+#          The repositories could be nested
+
+usage()
+{
+    echo "Usage: "
+    echo ""
+    echo "    bk deep pull"
+    echo "    bk deep push"
+    #echo "    bkdeep clone /path/to/parent/repository /path/to/local/repository"
+    echo ""
+    exit 65
+}
+
+# check for the BK Command Argument
+if [ -z "$1" ]
+then
+    usage
+fi
+
+# Grab the BK Root Directory
+BKROOT=`bk root`
+
+bkpullpush() {
+   for repos in $(find $BKROOT -name BitKeeper -type d)
+    do
+        # make sure we have a BitKeeper/etc directory
+        test -d $BKROOT/BitKeeper/etc && {
+            # Get the root directory for the repository
+            REPODIR=`dirname $repos`
+            echo "Found $REPODIR"
+            # change to the repo's directory
+            cd $REPODIR
+            # perform the command
+            bk "$BKCMD"
+            # change back to our root directory
+            cd $REPOROOT
+        }
+    done 
+}
+
+bkclone() {
+    echo "not yet implemented"
+}
+
+case "$1" in
+    "pull"  ) 
+        BKCMD="pull"
+        bkpullpush
+        ;;
+        
+    "push"  ) 
+        BKCMD="push"
+        bkpullpush
+        ;;
+        
+    "clone" ) 
+        BKCMD="clone"
+        if [ -z "$3" ]
+        then
+            usage
+        else
+            LOCALDIR=$3
+        fi
+        bkclone
+        ;;
+        
+    *       ) 
+        usage;;
+esac
+
+# goodbye
+exit 0
