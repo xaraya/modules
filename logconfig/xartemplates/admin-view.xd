@@ -1,14 +1,14 @@
 <xar:template file="menu" />
 
 <xar:if condition="$fallbackOn">
-	<br />
-	<div style="color: #9ACD32">
-		<xar:ml>
-			<xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
-			<xar:mlvar>#$fallbackFile#</xar:mlvar>
-		</xar:ml>
-	</div>
-	<br />
+    <br />
+    <div style="color: #9ACD32">
+        <xar:ml>
+            <xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
+            <xar:mlvar>#$fallbackFile#</xar:mlvar>
+        </xar:ml>
+    </div>
+    <br />
 </xar:if>
 
 <h2><xar:mlstring>List of Loggers</xar:mlstring></h2>
@@ -21,9 +21,9 @@
                 <th><xar:mlstring>Configuration</xar:mlstring></th>
                 <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
-    
+
         <xar:for start="$i = 1" test="$i le $itemsnum" iter="$i++">
-    
+
             <xar:data-getitems name="$properties" value="$values" module="logconfig" itemtype="$i" />
 
             <xar:foreach in="$values" key="$itemid" value="$fields">
@@ -64,25 +64,24 @@
                         </tr>
                     </table></td>
                     <td>
-                        <a href="#xarModURL('logconfig','admin','modify',array('itemtype'=>$i, 'itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> 
+                        <a href="#xarModURL('logconfig','admin','modify',array('itemtype'=>$i, 'itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a>
                         <br />
                         <a href="#xarModURL('logconfig','admin','delete',array('itemtype'=>$i, 'itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
                     </td>
 
                 </tr>
             </xar:foreach>
-        
+
         </xar:for>
     </table>
     </div>
-	
-	<br />
-	<br />
 
-	<xar:ml>    
-		<xar:mlstring>There exists a fallback mechanism which will log to file #(1) even if the logging is turned off, so admins can still log if unable to install/use the logconfig module.</xar:mlstring>
-		<xar:mlvar>#$fallbackFile#</xar:mlvar>
-	</xar:ml>
-	<br />
-	<xar:mlstring>For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user.</xar:mlstring>
-		
+    <br />
+    <br />
+
+    <xar:ml>
+        <xar:mlstring>There exists a fallback mechanism which will log to file #(1) even if the logging is turned off, so admins can still log if unable to install/use the logconfig module.</xar:mlstring>
+        <xar:mlvar>#$fallbackFile#</xar:mlvar>
+    </xar:ml>
+    <br />
+    <xar:mlstring>For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user.</xar:mlstring>
