@@ -77,7 +77,7 @@ function ratings_admin_modifyconfig()
         array('id' => 'outoffivestars', 'name' => xarML('Stars out of five')),
         array('id' => 'outoften', 'name' => xarML('Number out of ten')),
         array('id' => 'outoftenstars', 'name' => xarML('Stars out of ten')),
-        array('id' => 'customised', 'name' => xarML('Customised : see the user-display template')),
+        array('id' => 'customised', 'name' => xarML('Customized : see the user-display template')),
         );
 
     $data['secleveloptions'] = array(

@@ -10,7 +10,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Ratings is Xaraya Utility Module.</xar:mlstring></em>
+            <em><xar:mlstring>Ratings is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>The ratings module is a utility module that allows you to add a rating type to any content module that supports hooks.</xar:mlstring></li>
