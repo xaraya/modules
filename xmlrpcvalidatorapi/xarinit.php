@@ -20,28 +20,27 @@
  * it uses no database tables yet.
  *
  */
-function xmlrpcvalidatorapi_init() { 
-    // The xmlrpcvalidatorapii needs xmlrpcserver
-    if(!xarModIsAvailable('xmlrpcserver')) {
-        $msg=xarML('The xmlrpcserver module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',$msg);
-        return;
-    }
-
-    return true; }
+function xmlrpcvalidatorapi_init() 
+{ 
+    return true; 
+}
 
 /**
  * upgrade the xmlrpcvalidatorapi module from an old version
  * This function can be called multiple times
  */
-function xmlrpcvalidatorapi_upgrade($oldversion) { return true; }
+function xmlrpcvalidatorapi_upgrade($oldversion) 
+{ 
+    return true; 
+}
 
 /**
  * delete the xmlrpcvalidatorapi module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function xmlrpcvalidatorapi_delete() { 
+function xmlrpcvalidatorapi_delete() 
+{ 
     return true; 
 }
 
