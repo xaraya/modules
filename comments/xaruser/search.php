@@ -106,7 +106,8 @@ function comments_user_search( $args )
                 // call the item transform hooks
                 // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
                 $comment = xarModCallHooks('item', 'transform', $comment['xar_cid'], $comment, 'comments');
-                $package['comments'][$key]['xar_text'] = xarVarPrepHTMLDisplay($comment['xar_text']);
+                // Index appears to be empty on the transform.  Is this line needed?
+                //$package['comments'][$key]['xar_text'] = xarVarPrepHTMLDisplay($comment['xar_text']);
             }
             if ($header['title']) {
                 $package['comments'][$key]['xar_title'] = xarVarPrepForDisplay($comment['xar_title']);
