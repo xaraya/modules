@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Scheduler';
 $modversion['id']             = '189';
-$modversion['version']        = '1.1';
+$modversion['version']        = '1.1.0';
 $modversion['description']    = 'Schedule Xaraya jobs at certain times of the day/week/month (cron)';
 $modversion['credits']        = '';
 $modversion['help']           = '';
