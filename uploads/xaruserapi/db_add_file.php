@@ -81,8 +81,8 @@ function uploads_userapi_db_add_file( $args ) {
                         $userId,'" .
                         xarVarPrepForStore($fileName) . "', '" .
                         xarVarPrepForStore($fileLocation) . "', 
-                        $fileStatus, " .
-                        filesize($fileLocation) . ", 
+                        $fileStatus, 
+                        $fileSize, 
                         $store_type, '" .
                         xarVarPrepForStore($fileType) . "'
                       )";

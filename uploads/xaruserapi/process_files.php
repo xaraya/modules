@@ -68,10 +68,12 @@ function uploads_userapi_process_files( $args ) {
      */
 
      
-    $fileList = xarModAPIFunc('uploads','user','process_upload', 
+    $fileList = xarModAPIFunc('uploads','user','prepare_uploads', 
                                array('savePath'  => $upload_directory,
                                      'obfuscate' => $upload_obfuscate));
     
+    //   TESTING LINE BELOW.
+    //   echo "<br /><pre> fileList => "; print_r($fileList); echo "</pre>"; 
     /**
      * Prepare the imported files file list
      */    
@@ -95,11 +97,11 @@ function uploads_userapi_process_files( $args ) {
         // If the file has errors, add the file to the storeList (with it's errors intact),
         // and continue to the next file in the list. Note: it's up to the calling function 
         // to deal with the error (or not) - however, we won't be adding the file with errors :-)
-        if (isset($fileInfo['error'])) {
+        if (isset($fileInfo['errors'])) {
             $storeList[] = $fileInfo;
             continue;
         }
-    
+            echo "<br />CALLING file_store()...";
         $storeList[] = xarModAPIFunc('uploads', 'user', 'file_store',
                                       array('fileInfo'  => $fileInfo,
                                             'storeType' => $store_type));

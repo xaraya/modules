@@ -7,24 +7,15 @@ function uploads_user_purge_rejected( $args ) {
     extract ($args);
     
     // Confirm authorisation code.
-//    if (!xarSecConfirmAuthKey()) return;
-    if (!isset($args))
+    if (!xarSecConfirmAuthKey()) 
+            return;
+
+    if (!isset($confirmation))
         xarVarFetch('confirmation', 'int:1:', $confirmation, '', XARVAR_NOT_REQUIRED);
     
-    if (!isset($confirmation) || $confirmation == FALSE) {
-        $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileStatus' => _UPLOADS_STATUS_REJECTED));
-    
-        if (empty($fileList)) {
-            $data['fileList']   = array();
-        } else {
-            $data['fileList']   = $fileList;
-        }
-        $data['authid']     = xarSecGenAuthKey();
-        
-        return $data;        
-    } else {
-        echo "<br />HERE";
-        $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileStatus' => _UPLOADS_STATUS_REJECTED));
+    if (isset($confirmation) && $confirmation) {
+        $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file', 
+                                           array('fileStatus' => _UPLOADS_STATUS_REJECTED));
 
         if (empty($fileList)) {
             xarResponseRedirect(xarModURL('uploads', 'admin', 'view'));
@@ -38,6 +29,17 @@ function uploads_user_purge_rejected( $args ) {
                 return;
             } 
         }
+    } else {
+        $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file', 
+                                                                     array('fileStatus' => _UPLOADS_STATUS_REJECTED));
+        if (empty($fileList)) {
+            $data['fileList']   = array();
+        } else {
+            $data['fileList']   = $fileList;
+        }
+        $data['authid']     = xarSecGenAuthKey();
+        
+        return $data;        
     }
                         
     xarResponseRedirect(xarModURL('uploads', 'admin', 'view'));

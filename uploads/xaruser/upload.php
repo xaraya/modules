@@ -6,11 +6,8 @@ function uploads_user_upload() {
     
     $list = xarModAPIFunc('uploads','user','process_files', array('importFrom' => $importFrom));
     
-    if (count($list['errors']) > 0) {
-        return $list;
-    } else {
-        xarResponseRedirect(xarModURL('uploads', 'admin', 'view'));
-    }
+    // FIXME: return the list of files uploaded/imported and show their status (added/errors)
+    xarResponseRedirect(xarModURL('uploads', 'user', 'uploadform'));
 }
 
 ?>

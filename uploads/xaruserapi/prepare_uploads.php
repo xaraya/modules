@@ -28,7 +28,9 @@ function uploads_userapi_prepare_uploads( &$args ) {
     }
         
     extract ( $args );
-
+        
+        $fileList = array();
+        
     /**
      *  Initial variable checking / setup 
      */
@@ -42,7 +44,7 @@ function uploads_userapi_prepare_uploads( &$args ) {
         $savePath = xarModGetVar('uploads', 'path.uploads-directory');
     }
     
-    forach ($_FILES as $uploadId => $fileInfo) {
+    foreach ($_FILES as $uploadId => $fileInfo) {
          
         // If we don't have the right data structure, then we can't do much 
         // here, so return immediately with an exception set  
@@ -90,6 +92,7 @@ function uploads_userapi_prepare_uploads( &$args ) {
         unset($fileInfo['size']);
         unset($fileInfo['name']);
         unset($fileInfo['type']);
+                unset($fileInfo['error']);
 
         $fileInfo['fileType']   = xarModAPIFunc('mime','user','analyze_file', 
                                                  array('fileName' => $fileInfo['fileSrc']));
@@ -104,7 +107,7 @@ function uploads_userapi_prepare_uploads( &$args ) {
                 // set an error, but don't die - let the caller 
                 // do what they want with this.
                 $fileError['errorMesg'] = 'Unable to obfuscate filename!';
-                $fileError['errorId']   = ;_UPLOADS_ERROR_NO_OBFUSCATE;
+                $fileError['errorId']   = _UPLOADS_ERROR_NO_OBFUSCATE;
                 $fileInfo['errors']      = array($fileError);
             } else {
                 $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;

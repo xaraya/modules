@@ -16,6 +16,8 @@
  *                      process. If the file wasn't added successfully, fileInfo.errors is set appropriately
  */
 
+xarModAPILoad('uploads', 'user');
+
 function uploads_userapi_file_store( $args ) {
 
     extract ( $args );
@@ -27,16 +29,22 @@ function uploads_userapi_file_store( $args ) {
         return FALSE;
     }
 
+    if (!isset($store_type)) {
+            $store_type = _UPLOADS_STORE_FSDB;
+    }
+        
+        echo "<br /><pre> inside: fileInfo => ";print_r($fileInfo); echo "</pre>";
+        echo"<br />STORE_TYPE: $store_type";
     // first, make sure the file isn't already stored in the db/filesystem
     // if it is, then don't add it.
     // FIXME: need to rethink how this is handled - maybe give the user a choice
     //        to rename the file ... (rabbitt)
     $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', 
                             array('fileName' => $fileInfo['fileName'],
-                                'fileSize' => $fileInfo['fileSize']));
+                                  'fileSize' => $fileInfo['fileSize']));
     
     // If we already have the file, then return the info we have on it
-    if (is_array($fInfo)) {
+    if (is_array($fInfo) && count($fInfo)) {
         return $fInfo;
     }
     
@@ -62,7 +70,7 @@ function uploads_userapi_file_store( $args ) {
         $args = array('fileSrc'    => $fileInfo['fileSrc'], 
                       'fileDest'   => $fileInfo['fileDest']);
 
-        if (($fileInfo['fileSrc'] != $fileInfo['fileDest'])) {
+        if ($fileInfo['fileSrc'] != $fileInfo['fileDest']) {
             $result = xarModAPIFunc('uploads','user','file_move', $args);            
         } else {
             $result = TRUE;
@@ -90,7 +98,7 @@ function uploads_userapi_file_store( $args ) {
             if (isset($fileId) && !empty($fileId))  {
                 xarModAPIFunc('uploads', 'user' ,'db_delete_file', array('fileId' => $fileId));
             }
-        
+        }
     }
 
     // If there were any errors generated while attempting to add this file, 
@@ -120,5 +128,4 @@ function uploads_userapi_file_store( $args ) {
     
     return $fileInfo;
 }
-    
 ?>
