@@ -119,7 +119,7 @@ function bbcode_userapi_code($args)
                     highlight_string($after_replace, TRUE);
                 }
                 
-                $message = preg_replace("/$str_to_match/si", xarML('Code') . ": <div style='width: 90%; overflow: auto;'><pre> " . bbcode_br2nl($after_replace) . "</pre></div>", $message);
+                $message = preg_replace("/$str_to_match/si", xarML('Code') . ": <div class='bbcode_code' style=' padding: 5px; white-space: normal'> " . bbcode_br2nl($after_replace) . "</div>", $message);
             }
         }
     }
