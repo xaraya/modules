@@ -158,10 +158,16 @@
                         <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tpost']))#">
                             #$loop:item['ttitle']# 
                         </a>
+                        <xar:if condition="!empty($loop:item['topicpager'])">
+                            <span class="xar-sub">#$loop:item['topicpager']#</span>
+                        </xar:if>
                         <xar:else />
                         <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#">
                             #$loop:item['ttitle']# 
                         </a>
+                        <xar:if condition="!empty($loop:item['topicpager'])">
+                            <span class="xar-sub">#$loop:item['topicpager']#</span>
+                        </xar:if>
                     </xar:if>
                 </td>
                 <td class="xar-accent authorname">

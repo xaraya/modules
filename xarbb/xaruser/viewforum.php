@@ -48,8 +48,9 @@ function xarbb_user_viewforum()
     $data['showcats']       = $settings['showcats'];
     $data['xbbname']        = xarModGetVar('themes', 'SiteName');
     // Login
-    $data['return_url']      = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
-    $data['submitlabel']     = xarML('Submit');
+    $data['return_url']     = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
+    $data['submitlabel']    = xarML('Submit');
+    $postperpage            = $settings['postsperpage'];
     // TODO, should be a forum setting
     $hotTopic               = $settings['hottopic'];
 
@@ -196,6 +197,19 @@ function xarbb_user_viewforum()
         } else {
             $topics[$i]['replyname'] = '-';
         }
+
+        $topics[$i]['topicpager'] = xarTplGetPager(1,
+                                                   xarModAPIFunc('comments', 'user', 'get_count',
+                                                        array('modid'       => xarModGetIDFromName('xarbb'),
+                                                              'itemtype'    => $fid,
+                                                              'objectid'    => $topic['tid'])),
+                                        xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',
+                                                                                      'tid'          => $topic['tid'])),
+                                        $postperpage,
+                                        array(),
+                                        'multipage');
+
+
     }
     sort_topics($topics);
     $data['items'] = $topics;
