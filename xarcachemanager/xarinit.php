@@ -346,7 +346,22 @@ function xarcachemanager_upgrade($oldversion)
         case '0.3.3':
             // Code to upgrade from the 0.3.3 version (use xar_cache_data as optional replacement for filesystem)
             xarcachemanager_create_cache_data();
-// TODO: add new entries to config file too (or is that done via updateconfig too now ?)
+
+            // Bring the config file up to current version
+            if (file_exists($cachingConfigFile)) {
+                $configSettings = xarModAPIFunc('xarcachemanager',
+                                                'admin',
+                                                'get_cachingconfig',
+                                                array('from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile));
+                @unlink($cachingConfigFile);
+                copy($defaultConfigFile, $cachingConfigFile); 
+                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                  array('configSettings' => $configSettings,
+                        'cachingConfigFile' => $cachingConfigFile));                
+            } else {
+                copy($defaultConfigFile, $cachingConfigFile);
+            }
 
         case '0.4.0':
             // Code to upgrade from the 0.4.0 version (base module level caching)

@@ -209,6 +209,20 @@
                     <xar:else/>
                         <option value="memcached"><xar:mlstring>Memcache</xar:mlstring></option>
                     </xar:if>
+                    <xar:if condition="!function_exists('mmcache')">
+                        <option value="mmcache" disabled="disabled"><xar:mlstring>Turck MMCache</xar:mlstring></option>
+                    <xar:elseif condition="$settings['PageCacheStorage'] eq 'mmcache'"/>
+                        <option value="mmcache" selected="selected"><xar:mlstring>Turck MMCache</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="mmcache"><xar:mlstring>Turck MMCache</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="!function_exists('eaccelerator')">
+                        <option value="eaccelerator" disabled="disabled"><xar:mlstring>eAccelerator</xar:mlstring></option>
+                    <xar:elseif condition="$settings['PageCacheStorage'] eq 'eaccelerator'"/>
+                        <option value="eaccelerator" selected="selected"><xar:mlstring>eAccelerator</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="eaccelerator"><xar:mlstring>eAccelerator</xar:mlstring></option>
+                    </xar:if>
                 </select>
             </td>
         </tr>
@@ -278,6 +292,20 @@
                         <option value="memcached" selected="selected"><xar:mlstring>Memcache</xar:mlstring></option>
                     <xar:else/>
                         <option value="memcached"><xar:mlstring>Memcache</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="!function_exists('mmcache')">
+                        <option value="mmcache" disabled="disabled"><xar:mlstring>Turck MMCache</xar:mlstring></option>
+                    <xar:elseif condition="$settings['BlockCacheStorage'] eq 'mmcache'"/>
+                        <option value="mmcache" selected="selected"><xar:mlstring>Turck MMCache</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="mmcache"><xar:mlstring>Turck MMCache</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="!function_exists('eaccelerator')">
+                        <option value="eaccelerator" disabled="disabled"><xar:mlstring>eAccelerator</xar:mlstring></option>
+                    <xar:elseif condition="$settings['BlockCacheStorage'] eq 'eaccelerator'"/>
+                        <option value="eaccelerator" selected="selected"><xar:mlstring>eAccelerator</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="eaccelerator"><xar:mlstring>eAccelerator</xar:mlstring></option>
                     </xar:if>
                 </select>
             </td>
