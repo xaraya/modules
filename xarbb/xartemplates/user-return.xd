@@ -9,32 +9,30 @@
 <h4>
 	<a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
 		#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
-		<xar:mlstring>
-			Forum Index 
-		</xar:mlstring>
+		<xar:mlstring>Forum Index</xar:mlstring>
 	</a>
 </h4>
 <div class="xarbb-tablewrapper">
 	<table>
 		<tr> 
 			<th>
-				Information
+				<xar:mlstring>Information</xar:mlstring>
 			</th>
 		</tr>
 		<tr> 
 			<td class="xar-norm"> 
 				<p>
-					Your message has been entered successfully.
+					<xar:mlstring>Your message has been entered successfully.</xar:mlstring>
 				</p>
 				<p>
 					<a href="#$topicreturn#">
-						Click Here
-					</a> to view your message
+						<xar:mlstring>Click Here</xar:mlstring>
+					</a> <xar:mlstring>to view your message</xar:mlstring>
 				</p>
 				<p>
 					<a href="#$forumreturn#">
-						Click Here
-					</a> to return to the forum
+						<xar:mlstring>Click Here</xar:mlstring>
+					</a> <xar:mlstring>to return to the forum</xar:mlstring>
 				</p>
 			</td>
 		</tr>
