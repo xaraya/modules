@@ -85,7 +85,7 @@ function netquery_admin_config()
                     exec_remote   = ?,
                     exec_remote_t = ?
                 WHERE exec_type = 'ping'";
-            $bindvars=array($pingexec_local, $pingexec_winsys, $pingexec_remote, $pingexec_remote_t);
+            $bindvars=array($pingexec_local, (int)$pingexec_winsys, $pingexec_remote, $pingexec_remote_t);
             $result =& $dbconn->Execute($query,$bindvars);
             $query = "UPDATE $ExecTable
                 SET exec_local    = ?,
@@ -93,9 +93,8 @@ function netquery_admin_config()
                     exec_remote   = ?,
                     exec_remote_t = ?
                 WHERE exec_type = 'trace'";
-           $bindvars=array($traceexec_local, $traceexec_winsys, $traceexec_remote, $traceexec_remote_t);
+            $bindvars=array($traceexec_local, (int)$traceexec_winsys, $traceexec_remote, $traceexec_remote_t);
             $result =& $dbconn->Execute($query,$bindvars);
-
             $query = "UPDATE $LGRouterTable
                 SET username        = ?,
                     password        = ?,
@@ -119,14 +118,15 @@ function netquery_admin_config()
                     ospf6d_password = ?,
                     use_argc        = ?
                 WHERE router = 'default'";
-           $bindvars=array($lgdefault_username, $lgdefault_password, $lgdefault_zebra, $lgdefault_zebra_port,
-                           $lgdefault_zebra_password, $lgdefault_ripd, $lgdefault_ripd_port, $lgdefault_ripd_password,
-                           $lgdefault_ripngd, $lgdefault_ripngd_port, $lgdefault_ripngd_password, $lgdefault_ospfd,
-                           $lgdefault_ospfd_port, $lgdefault_ospfd_password, $lgdefault_bgpd, $lgdefault_bgpd_port,
-                           $lgdefault_bgpd_password,$lgdefault_ospf6d, $lgdefault_ospf6d_port, $lgdefault_ospf6d_password,
-                           $lgdefault_use_argc);
+            $bindvars=array($lgdefault_username, $lgdefault_password,
+                            (int)$lgdefault_zebra, (int)$lgdefault_zebra_port, $lgdefault_zebra_password,
+                            (int)$lgdefault_ripd, (int)$lgdefault_ripd_port, $lgdefault_ripd_password,
+                            (int)$lgdefault_ripngd, (int)$lgdefault_ripngd_port, $lgdefault_ripngd_password,
+                            (int)$lgdefault_ospfd, (int)$lgdefault_ospfd_port, $lgdefault_ospfd_password,
+                            (int)$lgdefault_bgpd, (int)$lgdefault_bgpd_port, $lgdefault_bgpd_password,
+                            (int)$lgdefault_ospf6d, (int)$lgdefault_ospf6d_port, $lgdefault_ospf6d_password,
+                            (int)$lgdefault_use_argc);
             $result =& $dbconn->Execute($query,$bindvars);
-
             $result->Close();
             xarResponseRedirect(xarModURL('netquery', 'admin', 'config'));
             return true;

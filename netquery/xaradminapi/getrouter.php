@@ -39,7 +39,7 @@ function netquery_adminapi_getrouter($args)
                      use_argc
               FROM $LGRouterTable
               WHERE router_id = ?";
-    $bindvars=array($router_id);
+    $bindvars=array((int)$router_id);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     list($router_id,

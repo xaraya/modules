@@ -14,7 +14,7 @@ function netquery_adminapi_getlink($args)
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
     $query = "SELECT * FROM $WhoisTable WHERE whois_id = ?";
-    $bindvars=array($whois_id);
+    $bindvars=array((int)$whois_id);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     list($whois_id, $whois_ext, $whois_server) = $result->fields;

@@ -10,7 +10,7 @@ function netquery_adminapi_wiupdate($args)
     $data = xarModAPIFunc('netquery',
                           'admin',
                           'getlink',
-                          array('whois_id' => $whois_id));
+                          array('whois_id' => (int)$whois_id));
     if ($data == false) {
         $msg = xarML('No Such Whois Lookup Link Present', 'netquery');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -24,7 +24,7 @@ function netquery_adminapi_wiupdate($args)
             SET whois_ext    = ?,
                 whois_server = ?
             WHERE whois_id = ?";
-    $bindvars=array($whois_ext, $whois_server, $whois_id);
+    $bindvars=array($whois_ext, $whois_server, (int)$whois_id);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     return true;

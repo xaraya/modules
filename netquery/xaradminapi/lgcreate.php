@@ -43,11 +43,14 @@ function netquery_adminapi_lgcreate($args)
               use_argc)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars=array($nextId, $router_router, $router_address, $router_username, $router_password, $router_zebra,
-                    $router_zebra_port, $router_zebra_password, $router_ripd, $router_ripd_port,$router_ripd_password,
-                    $router_ripngd,$router_ripngd_port, $router_ripngd_password, $router_ospfd, $router_ospfd_port,
-                    $router_ospfd_password, $router_bgpd, $router_bgpd_port, $router_bgpd_password, $router_ospf6d,
-                    $router_ospf6d_port, $router_ospf6d_password, $router_use_argc );
+    $bindvars=array((int)$nextId, $router_router, $router_address, $router_username, $router_password,
+                    (int)$router_zebra, (int)$router_zebra_port, $router_zebra_password,
+                    (int)$router_ripd, (int)$router_ripd_port,$router_ripd_password,
+                    (int)$router_ripngd, (int)$router_ripngd_port, $router_ripngd_password,
+                    (int)$router_ospfd, (int)$router_ospfd_port, $router_ospfd_password,
+                    (int)$router_bgpd, (int)$router_bgpd_port, $router_bgpd_password,
+                    (int)$router_ospf6d, (int)$router_ospf6d_port, $router_ospf6d_password,
+                    (int)$router_use_argc);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     $router_id = $dbconn->PO_Insert_ID($LGRouterTable, 'router_id');

@@ -10,7 +10,7 @@ function netquery_adminapi_lgupdate($args)
     $data = xarModAPIFunc('netquery',
                           'admin',
                           'getrouter',
-                          array('router_id' => $router_id));
+                          array('router_id' => (int)$router_id));
     if ($data == false) {
         $msg = xarML('No Such Looking Glass Router Present', 'netquery');
          xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -45,11 +45,14 @@ function netquery_adminapi_lgupdate($args)
             ospf6d_password = ?,
             use_argc        = ?
         WHERE router_id = ?";
-    $bindvars=array($router_router, $router_address, $router_username, $router_password, $router_zebra, $router_zebra_port,
-                    $router_zebra_password, $router_ripd, $router_ripd_port, $router_ripd_password, $router_ripngd, $router_ripngd_port,
-                    $router_ripngd_password, $router_ospfd, $router_ospfd_port, $router_ospfd_password, $router_bgpd,
-                    $router_pgpd_port, $router_bgpd_password, $router_ospf6d, $router_ospf6d_port, $router_ospf6d_password,
-                    $router_usr_argc, $router_id);
+    $bindvars=array($router_router, $router_address, $router_username, $router_password,
+                    (int)$router_zebra, (int)$router_zebra_port, $router_zebra_password,
+                    (int)$router_ripd, (int)$router_ripd_port, $router_ripd_password,
+                    (int)$router_ripngd, (int)$router_ripngd_port, $router_ripngd_password,
+                    (int)$router_ospfd, (int)$router_ospfd_port, $router_ospfd_password,
+                    (int)$router_bgpd, (int)$router_bgpd_port, $router_bgpd_password,
+                    (int)$router_ospf6d, (int)$router_ospf6d_port, $router_ospf6d_password,
+                    (int)$router_use_argc, (int)$router_id);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     return true;

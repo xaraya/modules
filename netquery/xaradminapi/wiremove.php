@@ -10,7 +10,7 @@ function netquery_adminapi_wiremove($args)
     $data = xarModAPIFunc('netquery',
                           'admin',
                           'getlink',
-                          array('whois_id' => $whois_id));
+                          array('whois_id' => (int)$whois_id));
     if (empty($data)) {
         $msg = xarML('No Such Whois Lookup Link Present', 'netquery');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -22,8 +22,7 @@ function netquery_adminapi_wiremove($args)
     $WhoisTable = $xartable['netquery_whois'];
     $query = "DELETE FROM $WhoisTable
             WHERE whois_id = ?";
-    $bindvars=array($whois_id);
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result =& $dbconn->Execute($query, array((int)$whois_id));
     if (!$result) return;
     return true;
 }
