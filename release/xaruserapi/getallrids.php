@@ -19,6 +19,8 @@ function release_userapi_getallrids($args)
     if (!isset($idtypes)) {
         $idtypes = 1;
     }
+
+
     if (empty($sort)) {
         $sortlist = array('rids');
     } elseif (is_array($sort)) {
@@ -26,6 +28,8 @@ function release_userapi_getallrids($args)
     } else {
         $sortlist = explode(',',$sort);
     }
+
+
     $releaseinfo = array();
 
     // Security Check
@@ -89,7 +93,10 @@ function release_userapi_getallrids($args)
     if (!empty($certified)) {
         $where[] = " xar_certified = '" . xarVarPrepForStore($certified). "'";
     }
-
+   if (count($where) > 0)
+    {
+        $query .= ' WHERE ' . join(' AND ', $where);
+    }
     if (count($sortlist) > 0) {
         $sortparts = array();
       foreach ($sortlist as $criteria) {
@@ -118,10 +125,7 @@ function release_userapi_getallrids($args)
         $query .= ' ORDER BY  xar_rid ASC';
     }
 
-    if (count($where) > 0)
-    {
-        $query .= ' WHERE ' . join(' AND ', $where);
-    }
+
 
   //  $query .= " ORDER BY xar_rid";
 
