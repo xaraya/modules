@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Id: s.functions.inc.php 1.4 02/07/03 09:50:19-00:00 mikespub $
 /**
  * Functions library
  */

@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Id: s.xaruser.php 1.4 02/12/01 14:26:19+01:00 marcel@hsdev.com $
 /*  main page - switch routines etc */
 
 function todolist_user_main()

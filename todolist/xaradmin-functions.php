@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Id: s.xaradmin-functions.php 1.3 02/12/01 14:39:54+00:00 miko@miko.homelinux.org $
 /**
  * creates a HTML-dropdownbox with the availible Users
  *
