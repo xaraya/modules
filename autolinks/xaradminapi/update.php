@@ -90,15 +90,20 @@ function autolinks_adminapi_update($args)
     $result =& $dbconn->Execute($query);
     if (!$result) {return;}
 
-    // Now recompile the cache for autolink.
-    $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('lid' => $lid));
-    if (!$result) {return;}
-
+    // Call hooks to update DD etc.
     xarModCallHooks(
         'item', 'update', $lid,
         array('itemtype' => $link['itemtype'], 'module' => 'autolinks')
     );
     
+    // Now recompile the cache for autolink. Do this after the hooks
+    // are called as the cache may make use of DD property values.
+    $result = xarModAPIfunc(
+        'autolinks', 'admin', 'updatecache',
+        array('lid' => $lid)
+    );
+    if (!$result) {return;}
+
     // Let the calling process know that we have finished successfully
     return true;
 }

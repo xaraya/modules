@@ -124,11 +124,15 @@ function autolinks_userapi__transform($args)
             if ($tmpautolink['match_re'])
             {
                 // The keyword has been entered as an RE, so use it as it comes.
-                // Strip off /slashes/ and options/ims that may have been entered by the user.
-                $keywordre = preg_replace(array('/^\//', '/\/[\w]*$/'), '', $tmpautolink['keyword']);
+                // All the special characters can be retained except for the preg
+                // enclosing character ('/') so escape just that character.
+                $keywordre = preg_replace(
+                    '#/#', '\/',
+                    $tmpautolink['keyword']
+                );
             } else {
-                // The keyword has not been entered as an RE, so make it into one.
-                // Quote special characters.
+                // The keyword has not been entered as an RE, so treat it as a pure
+                // string by quoting and escaping special preg characters.
                 $keywordre = preg_quote($tmpautolink['keyword'], '/');
 
                 // Allow whitespace matching to be a bit looser.

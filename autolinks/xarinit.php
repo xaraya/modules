@@ -501,7 +501,20 @@ function autolinks_init_upgrade_data()
         array(
             'type_name' => xarML('External'),
             'template_name' => 'external',
-            'type_desc' => xarML('External URLs. Opens in an "external" window. These URLs are marked up with a "WWW" world icon.')
+            'type_desc' => xarML('External URLs. Opens in an "external" window. These URLs are marked up with a "WWW" world icon.'
+                .' To extend this, you can create a DD field named "icon" and enter a different icon file name.'),
+            'links' => array(
+                array(
+                    'name' => xarML('Any external HTTP URL'),
+                    'keyword' => '(http://(?!demo.xaraya.com)[-.a-z]+/)[^\s.;?!]*',
+                    'match_re' => '1',
+                    'title' => 'Visit the site: $2',
+                    'url' => '$1',
+                    'comment' => 'Matches any URL to an external website home page. Does not match the current site (demo.xaraya.com) - which is left up to other links to catch.',
+                    'sample' => 'http://demo.xaraya.com/ http://www.xaraya.com/. http://xxx/abc/123 text',
+                    'enabled' => '0'
+                )
+            )
         ),
         array(
             'type_name' => xarML('Articles'),
@@ -517,7 +530,7 @@ function autolinks_init_upgrade_data()
                     'url' => 'display',
                     'comment' => 'Use format: [article:title:aid:<article-id>]',
                     'sample' => 'Valid article: [article:title:aid:1]; invalid: [article:title:aid:9999]',
-                    'enabled' => '1'
+                    'enabled' => '0'
                 )
             )
         )

@@ -8,7 +8,7 @@
     <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#$linktitle#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
     <xar:else/>
     <!--- Display error if the article could not be fetched (invalid number or no permission. --->
-    <span class="xar-error">[article number #$title# not available]</span>
+    <span class="xar-error">[<xar:mlstring>article ID not available:</xar:mlstring> #$title#]</span>
     </xar:if>
 <xar:else/>
     <!--- No recognised trigger - just return what was matched. --->
