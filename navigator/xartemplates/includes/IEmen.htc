@@ -2,17 +2,16 @@
 <attach event="onmouseout" handler="rollOff" />
 <script type="text/javascript">
 function rollOver() {
-	//change display of child
-	for( var x = 0; element.childNodes[x]; x++ ){
-		if( element.childNodes[x].tagName == 'UL' ) { element.childNodes[x].className += (element.childNodes[x].className?' ':'') + 'xar-navigator-show-submenu'; }
-	}
+    //change display of child
+    for( var x = 0; element.childNodes[x]; x++ ){
+        if( element.childNodes[x].tagName == 'UL' ) { element.childNodes[x].className += (element.childNodes[x].className?' ':'') + 'xar-navigator-show-submenu'; }
+    }
 }
 
 function rollOff() {
-	//change display of child
-	for( var x = 0; element.childNodes[x]; x++ ){
-		if( element.childNodes[x].tagName == 'UL' ) { element.childNodes[x].className = element.childNodes[x].className.replace(/ ?xar-navigator-show-submenu$/,''); }
-	}
+    //change display of child
+    for( var x = 0; element.childNodes[x]; x++ ){
+        if( element.childNodes[x].tagName == 'UL' ) { element.childNodes[x].className = element.childNodes[x].className.replace(/ ?xar-navigator-show-submenu$/,''); }
+    }
 }
 </script>
-
