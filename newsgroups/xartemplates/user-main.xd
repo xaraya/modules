@@ -8,6 +8,9 @@
     <!-- <span style="float: right; text-align: right; width: 19%;"><xar:mlstring>Number of Posts</xar:mlstring></span>--><br /> 
 </div>
 <xar:loop name="$items">
+    <xar:if condition="empty($loop:item['group'])">
+        <xar:continue/>
+    </xar:if>
     <xar:if condition="(($loop:index + 1) % 2)">
     <div class="xar-norm" style="padding: 3px;">
         <span style="float: left; text-align: left; width: 98%;"><a href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $loop:item['group']))#"> #$loop:item['group']#</a> <xar:if condition="!empty($loop:item['desc'])"> -- #$loop:item['desc']#</xar:if></span>
