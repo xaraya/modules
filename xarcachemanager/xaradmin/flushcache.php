@@ -62,7 +62,7 @@ function xarcachemanager_admin_flushcache($args)
         //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
         if (!file_exists($outputcachedir . 'cache.touch')) {
             include_once('includes/xarCache.php');
-            xarCache_init(array('cacheDir' => 'var/cache/output'));
+            xarCache_init(array('cacheDir' => $outputcachedir));
         }
 
         //Make sure their is an authkey selected
