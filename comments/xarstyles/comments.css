@@ -144,25 +144,44 @@ input.xar-ib-field, textarea.xar-ib-fieldtext {
 .xar-tr-title {
 	float: left;
 	width: 50%;
+	height: 21px;
+	line-height:1.5em;
+	overflow:hidden;
 }
 
 .xar-tr-title a {
-	margin-left:5px;
+	margin-left:.5em;
+	margin-right:.5em;
 }
 
 .xar-tr-author {
 	float: left;
 	width: 20%;
-	white-space: nowrap;
+/* 	white-space: nowrap; */
+	line-height:1.5em;
+	overflow:hidden;
+	text-align:right;
 }
 
 .xar-tr-date {
 	float: left;
-    width:30%;
+    width:29%;
+/*     font-size: 90%; */
     white-space: nowrap;
+    text-align:right;
 }
 
 .xar-tr-collapsed {
 	display: none;
 	margin-top: 5px;
+}
+
+label.xar-tr-title,
+label.xar-tr-author,
+label.xar-tr-date
+{
+	font-weight: bold;
+/* 	font-size: 1em; */
+	margin:0;
+	padding:0;
 }

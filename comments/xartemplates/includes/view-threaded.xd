@@ -1,7 +1,7 @@
 <div class="xar-tr-wrapper xar-accent">
-    <span class="xar-tr-title"><h4><xar:mlstring>Title</xar:mlstring></h4></span>
-    <span class="xar-tr-author"><h4><xar:mlstring>Author</xar:mlstring></h4></span>
-    <span class="xar-tr-date"><h4><xar:mlstring>Date</xar:mlstring></h4></span>
+    <label class="xar-tr-title"><xar:mlstring>Title</xar:mlstring></label>
+    <label class="xar-tr-author"><xar:mlstring>Author</xar:mlstring></label>
+    <label class="xar-tr-date"><xar:mlstring>Date-Time</xar:mlstring></label>
 </div>
 
 <xar:loop name="$package['comments']">
