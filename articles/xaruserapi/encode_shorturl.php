@@ -319,7 +319,10 @@ function articles_encodeUsingTitle( $aid )
     $searchArgs = array();
     $conn =& xarDBGetConn();
     $qtitle = $conn->qstr($article['title']);
-    $searchArgs['where'] = "title = {$qtitle}";
+    //$searchArgs['where'] = "title = {$qtitle}";
+    $searchArgs['search'] = $qtitle;
+    $searchArgs['searchfields'] = array('title');
+    $searchArgs['searchtype'] = 'eq';
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
 
     if( strpos($article['title'],'_') === FALSE )
