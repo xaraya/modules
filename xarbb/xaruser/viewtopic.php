@@ -125,6 +125,9 @@ function xarbb_user_viewtopic()
                                    array('tid' => $tid));
     $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
 
+    //var_dump($data['hooks']); return;
+    // Let's suppress the hitcount hook from showing.
+    $data['hooks']['hitcount'] = '';
     // Return the template variables defined in this function
     return $data;
 }
