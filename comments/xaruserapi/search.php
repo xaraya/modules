@@ -22,9 +22,10 @@ function comments_userapi_search($args)
     $ctable = &$xartable['comments_column'];
     $where = '';
 
-
     // initialize the commentlist array
     $commentlist = array();
+
+    $bindvars = array();
 
     $sql = "SELECT  $ctable[title] AS xar_title,
                     $ctable[cdate] AS xar_date,
@@ -38,18 +39,20 @@ function comments_userapi_search($args)
                     $ctable[itemtype]  AS xar_itemtype,
                     $ctable[objectid] as xar_objectid
               FROM  $xartable[comments]
-             WHERE  $ctable[status]='"._COM_STATUS_ON."'
+             WHERE  $ctable[status]= "._COM_STATUS_ON."
                AND  (";
 
     if (isset($title)) {
-        $sql .= "$ctable[title] LIKE '$title'";
+        $sql .= "$ctable[title] LIKE ?";
+        $bindvars[] = $title;
     }
 
     if (isset($text)) {
         if (isset($title)) {
             $sql .= " OR ";
         }
-        $sql .= "$ctable[comment] LIKE '$text'";
+        $sql .= "$ctable[comment] LIKE ?";
+        $bindvars[] = $text;
     }
 
     if (isset($author)) {
@@ -57,15 +60,19 @@ function comments_userapi_search($args)
             $sql .= " OR ";
         }
         if ($author == 'anonymous') {
-            $sql .= " $ctable[author] = '$uid' OR $ctable[postanon] = '1'";
+            $sql .= " $ctable[author] = ? OR $ctable[postanon] = ?";
+            $bindvars[] = $uid;
+            $bindvars[] = 1;
         } else {
-            $sql .= " $ctable[author] = '$uid' AND $ctable[postanon] != '1'";
+            $sql .= " $ctable[author] = ? AND $ctable[postanon] != ?";
+            $bindvars[] = $uid;
+            $bindvars[] = 1;
         }
     }
 
     $sql .= ") ORDER BY $ctable[left]";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql, $bindvars);
     if (!$result) return;
 
     // if we have nothing to return
