@@ -496,7 +496,10 @@ function articles_user_view()
             switch ($value['format']) {
                 case 'calendar':
                     if (!empty($article[$field])) {
-                        $article[$field] = strftime('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
+                        //$article[$field] = strftime('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
+                        // we're assuming timestamps in the db are GMT/UTC
+                        // if they are not, we should make it so
+                        $article[$field] = xarLocaleFormatDate('%a, %d %b %Y %H:%M:%S GMT',$article[$field]);
                     } else {
                         $article[$field] = '';
                     }
