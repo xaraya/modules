@@ -6,7 +6,7 @@
         <tr>
             <td><label for="supportshorturls">Short URL Support</label></td>
             <td>
-				    <xar:data-input type="checkbox" name="supportshorturls" value="$supportshorturls"/>
+                    <xar:data-input type="checkbox" name="supportshorturls" value="$supportshorturls"/>
             </td>
         </tr>
     </table>
