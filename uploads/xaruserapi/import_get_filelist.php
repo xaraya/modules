@@ -159,10 +159,10 @@ function uploads_userapi_import_get_filelist( $args )
                                 $fileList += $files;
                             } else {
 
-                                if ((isset($search) && preg_match("/$search/", $fileName)) &&
-                                    (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
+                                if ((isset($search) && preg_match("/$search/", $dirName)) &&
+                                    (!isset($exclude) || !preg_match("/$exclude/", $dirName))) {
                                         $files = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
-                                                            array('fileLocation' => $fileName));
+                                                            array('fileLocation' => $dirName));
                                         $fileList["$files[inodeType]:$inode"] = $files;
                                 }
                             }
@@ -190,4 +190,3 @@ function uploads_userapi_import_get_filelist( $args )
     return $fileList;
 }
 
-?>
