@@ -57,6 +57,7 @@
     <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
         #$hooks['polls']# 
     </xar:if>
+    <xar:data-getitems name="$properties" value="$posterdata" module="roles" itemids="$posterlist" />
     <table>
         <tr>
             <th>
@@ -84,9 +85,8 @@
                         </strong>
                     </div>
                     <div class="xar-sub">
-                        <xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
-                        <xar:if condition="isset($properties['avatar']) and count($properties) gt 0">
-                            <xar:data-output property="$properties['avatar']" />
+                        <xar:if condition="isset($properties['avatar']) and !empty($posterdata[$tposter]['avatar'])">
+                            <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
                         </xar:if>
                         <xar:mlstring>
                             Joined 
@@ -97,17 +97,12 @@
                             Posts 
                         </xar:mlstring>
                         : #$usertopics# 
-                        <xar:if condition="isset($properties['location']) and count($properties) gt 0">
-                            <xar:set name="$location">
-                                $properties['location']->value 
-                            </xar:set>
-                            <xar:if condition="$location">
-                                <xar:mlstring>
-                                    Location 
-                                </xar:mlstring>
-                                : 
-                                <xar:data-output property="$properties['location']" />
-                            </xar:if>
+                        <xar:if condition="isset($properties['location']) and !empty($posterdata[$tposter]['location'])">
+                            <xar:mlstring>
+                               Location 
+                            </xar:mlstring>
+                            : 
+                            <xar:data-output property="$properties['location']" value="$posterdata[$tposter]['location']" />
                         </xar:if>
                     </div>
                 </td>
@@ -163,15 +158,10 @@
                     </div>
                     <div>
                         #$transformedtext# 
-                        <xar:if condition="isset($properties['signature']) and count($properties) gt 0">
-                            <xar:set name="$hide">
-                                $properties['signature']->value 
-                            </xar:set>
-                            <xar:if condition="$hide">
-                                <p class="hiddensignature">
-                                    <xar:data-output property="$properties['signature']" />
-                                </p>
-                            </xar:if>
+                        <xar:if condition="isset($properties['signature']) and !empty($posterdata[$tposter]['signature'])">
+                            <p class="hiddensignature">
+                               <xar:data-output property="$properties['signature']" value="$posterdata[$tposter]['signature']" />
+                            </p>
                         </xar:if>
                     </div>
                 </td>
@@ -206,47 +196,30 @@
                             <img src="#xarTplGetImage('new/icon_pm.gif')#" alt="#xarML('Private Message')#" />
                         </a>
                     </xar:if>
-                    <xar:if condition="isset($properties['website']) and count($properties) gt 0">
-                        <xar:set name="$website">
-                            $properties['website']->value 
-                        </xar:set>
-                        <xar:if condition="$website">
-                            <a href="#$website#">
-                                <img src="#xarTplGetImage('new/icon_www.gif')#" alt="#xarML('Website')#" />
-                            </a>
-                        </xar:if>
-                        <xar:set name="$icq">
-                            $properties['icq']->value 
-                        </xar:set>
-                        <xar:if condition="$icq">
-                            <a href="http://wwp.icq.com/#$icq##pager">
-                                <img src="#xarTplGetImage('new/icon_icq_add.gif')#" alt="#xarML('ICQ')#" />
-                            </a>
-                        </xar:if>
-                        <xar:set name="$msn">
-                            $properties['msnm']->value 
-                        </xar:set>
-                        <xar:if condition="$msn">
-                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
-                                <img src="#xarTplGetImage('new/icon_msnm.gif')#" alt="#xarML('MSN')#" />
-                            </a>
-                        </xar:if>
-                        <xar:set name="$yim">
-                            $properties['yim']->value 
-                        </xar:set>
-                        <xar:if condition="$yim">
-                            <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$yim#&.src=pg">
-                                <img src="#xarTplGetImage('new/icon_yim.gif')#" alt="#xarML('Yahoo!')#" />
-                            </a>
-                        </xar:if>
-                        <xar:set name="$aim">
-                            $properties['aim']->value 
-                        </xar:set>
-                        <xar:if condition="$aim">
-                            <a href="aim:goim?screenname=#$aim#&message=Hello+Are+you+there?">
-                                <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
-                            </a>
-                        </xar:if>
+                    <xar:if condition="isset($properties['website']) and !empty($posterdata[$tposter]['website'])">
+                        <a href="#$posterdata[$tposter]['website']#">
+                            <img src="#xarTplGetImage('new/icon_www.gif')#" alt="#xarML('Website')#" />
+                        </a>
+                    </xar:if>
+                    <xar:if condition="isset($properties['icq']) and !empty($posterdata[$tposter]['icq'])">
+                        <a href="http://wwp.icq.com/#$posterdata[$tposter]['icq']##pager">
+                            <img src="#xarTplGetImage('new/icon_icq_add.gif')#" alt="#xarML('ICQ')#" />
+                        </a>
+                    </xar:if>
+                    <xar:if condition="isset($properties['msnm']) and !empty($posterdata[$tposter]['msnm'])">
+                        <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
+                            <img src="#xarTplGetImage('new/icon_msnm.gif')#" alt="#xarML('MSN')#" />
+                        </a>
+                    </xar:if>
+                    <xar:if condition="isset($properties['yim']) and !empty($posterdata[$tposter]['yim'])">
+                        <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$posterdata[$tposter]['yim']#&.src=pg">
+                            <img src="#xarTplGetImage('new/icon_yim.gif')#" alt="#xarML('Yahoo!')#" />
+                        </a>
+                    </xar:if>
+                    <xar:if condition="isset($properties['aim']) and !empty($posterdata[$tposter]['aim'])">
+                        <a href="aim:goim?screenname=#$posterdata[$tposter]['aim']#&message=Hello+Are+you+there?">
+                            <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
+                        </a>
                     </xar:if>
                 </td>
             </tr>
@@ -288,10 +261,10 @@
                         </xar:if>
                     </strong>
                     <span class="xar-sub">
-                        <xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
                         <xar:if condition="$item['xar_postanon'] eq 0">
-                            <xar:if condition="isset($properties['avatar']) and count($properties) gt 0">
-                                <xar:data-output property="$properties['avatar']" />
+                            <br />
+                            <xar:if condition="isset($properties['avatar']) and !empty($posterdata[$item['xar_uid']]['avatar'])">
+                                <xar:data-output property="$properties['avatar']" value="$posterdata[$item['xar_uid']]['avatar']" />
                                 <br />
                             </xar:if>
                             <xar:mlstring>
@@ -304,19 +277,14 @@
                             </xar:mlstring>
                             : #$item['usertopics']# 
                             <br />
-                            <xar:if condition="isset($properties['location']) and count($properties) gt 0">
-                                <xar:set name="$location">
-                                    $properties['location']->value 
-                                </xar:set>
-                                <xar:if condition="$location">
-                                    <xar:mlstring>
-                                        Location 
-                                    </xar:mlstring>
-                                    : 
-                                    <xar:data-output property="$properties['location']" />
-                                    <br />
-                                    <br />
-                                </xar:if>
+                            <xar:if condition="isset($properties['location']) and !empty($posterdata[$item['xar_uid']]['location'])">
+                                <xar:mlstring>
+                                    Location 
+                                </xar:mlstring>
+                                : 
+                                <xar:data-output property="$properties['location']" value="$posterdata[$item['xar_uid']]['location']" />
+                                <br />
+                                <br />
                             </xar:if>
                         </xar:if>
                     </span>
@@ -375,15 +343,10 @@
                         #$item['xar_text']# 
                         <br />
                         <xar:if condition="$item['xar_postanon'] eq 0">
-                            <xar:if condition="isset($properties['signature']) and count($properties) gt 0">
-                                <xar:set name="$hide">
-                                    $properties['signature']->value 
-                                </xar:set>
-                                <xar:if condition="$hide">
-                                    <p class="hiddensignature">
-                                        <xar:data-output property="$properties['signature']" />
-                                    </p>
-                                </xar:if>
+                            <xar:if condition="isset($properties['signature']) and !empty($posterdata[$item['xar_uid']]['signature'])">
+                                <p class="hiddensignature">
+                                    <xar:data-output property="$properties['signature']" value="$posterdata[$item['xar_uid']]['signature']" />
+                                </p>
                             </xar:if>
                         </xar:if>
                     </div>
@@ -420,49 +383,32 @@
                                 <img src="#xarTplGetImage('new/icon_pm.gif')#" alt="#xarML('Private Message')#" />
                             </a>
                         </xar:if>
-                        <xar:if condition="isset($properties['website']) and count($properties) gt 0">
-                            <xar:set name="$website">
-                                $properties['website']->value 
-                            </xar:set>
-                            <xar:if condition="$website">
-                                <a href="#$website#">
-                                    <img src="#xarTplGetImage('new/icon_www.gif')#" alt="#xarML('Website')#" />
-                                </a>
-                            </xar:if>
-                            <xar:set name="$icq">
-                                $properties['icq']->value 
-                            </xar:set>
-                            <xar:if condition="$icq">
-                                <a href="http://wwp.icq.com/#$icq##pager">
-                                    <img src="#xarTplGetImage('new/icon_icq_add.gif')#" alt="#xarML('ICQ')#" />
-                                </a>
-                            </xar:if>
-                            <xar:set name="$msn">
-                                $properties['msnm']->value 
-                            </xar:set>
-                            <xar:if condition="$msn">
-                                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
-                                    <img src="#xarTplGetImage('new/icon_msnm.gif')#" alt="#xarML('MSN')#" />
-                                </a>
-                            </xar:if>
-                            <xar:set name="$yim">
-                                $properties['yim']->value 
-                            </xar:set>
-                            <xar:if condition="$yim">
-                                <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$yim#&.src=pg">
-                                    <img src="#xarTplGetImage('new/icon_yim.gif')#" alt="#xarML('Yahoo!')#" />
-                                </a>
-                            </xar:if>
-                            <xar:set name="$aim">
-                                $properties['aim']->value 
-                            </xar:set>
-                            <xar:if condition="$aim">
-                                <a href="aim:goim?screenname=#$aim#&message=Hello+Are+you+there?">
-                                    <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
-                                </a>
-                            </xar:if>
+                        <xar:if condition="isset($properties['website']) and !empty($posterdata[$item['xar_uid']]['website'])">
+                            <a href="#$posterdata[$item['xar_uid']]['website']#">
+                                <img src="#xarTplGetImage('new/icon_www.gif')#" alt="#xarML('Website')#" />
+                            </a>
                         </xar:if>
-                        <xar:else />
+                        <xar:if condition="isset($properties['icq']) and !empty($posterdata[$item['xar_uid']]['icq'])">
+                            <a href="http://wwp.icq.com/#$posterdata[$item['xar_uid']]['icq']##pager">
+                                <img src="#xarTplGetImage('new/icon_icq_add.gif')#" alt="#xarML('ICQ')#" />
+                            </a>
+                        </xar:if>
+                        <xar:if condition="isset($properties['msnm']) and !empty($posterdata[$item['xar_uid']]['msnm'])">
+                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
+                                <img src="#xarTplGetImage('new/icon_msnm.gif')#" alt="#xarML('MSN')#" />
+                            </a>
+                        </xar:if>
+                        <xar:if condition="isset($properties['yim']) and !empty($posterdata[$item['xar_uid']]['yim'])">
+                            <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$posterdata[$item['xar_uid']]['yim']#&.src=pg">
+                                <img src="#xarTplGetImage('new/icon_yim.gif')#" alt="#xarML('Yahoo!')#" />
+                            </a>
+                        </xar:if>
+                        <xar:if condition="isset($properties['aim']) and !empty($posterdata[$item['xar_uid']]['aim'])">
+                            <a href="aim:goim?screenname=#$posterdata[$item['xar_uid']]['aim']#&message=Hello+Are+you+there?">
+                                <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
+                            </a>
+                        </xar:if>
+                    <xar:else />
                     </xar:if>
                 </td>
             </tr>
