@@ -80,7 +80,7 @@ function articles_featureditemsblock_display($blockinfo)
 
     // Load articles user API
     if (!xarModAPILoad('articles','user')) return;
-    
+
     $featuredaid = $vars['featuredaid'];
 
     $alttitle = $vars['alttitle'];
@@ -194,7 +194,7 @@ function articles_featureditemsblock_display($blockinfo)
                                     );
         }
     }
-    
+
     // Populate block info and pass to theme
     if (!empty($vars['featuredaid'])) {
         if (empty($blockinfo['template'])) {
@@ -320,6 +320,7 @@ function articles_featureditemsblock_modify($blockinfo)
         }
     }
     $vars['morearticles'] = $vars['filtereditems'];
+    $vars['blockid'] = $blockinfo['bid'];
 
     // Return output
     return xarTplBlock('articles','featureditemsAdmin',$vars);
