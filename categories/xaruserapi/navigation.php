@@ -438,6 +438,9 @@ function categories_userapi_navigation($args)
                     $curcat['returnurl'] = xarModURL($modname,$type,$func,
                                                      array('itemtype' => $itemtype,
                                                            'catid' => $cids[0]));
+                    // pass along the current module & itemtype for pubsub (urgh)
+                    $curcat['current_module'] = $modname;
+                    $curcat['current_itemtype'] = $itemtype;
                     // calling item display hooks *for the categories module* here !
                     $data['cathooks'] = xarModCallHooks('item','display',$cid,$curcat,'categories');
                     // saving the current cat id for use e.g. with DD tags (<xar:data-display module="categories" itemid="$catid" />)
