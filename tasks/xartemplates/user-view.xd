@@ -54,7 +54,7 @@
           <th><xar:mlstring>?</xar:mlstring></th>
           <th><xar:mlstring>!</xar:mlstring></th>
           <th><xar:mlstring>X</xar:mlstring></th>
-          <th><xar:mlstring>X/##</xar:mlstring></th>
+          <th><xar:mlstring>X/%</xar:mlstring></th>
           <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
         <xar:loop name="$tasks">
