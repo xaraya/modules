@@ -54,23 +54,25 @@ function stats_userapi_get_browser_data($args)
                 $brname = xarML('Galeon');
                 break;
             case 'Phoenix':
-            case 'Firefox':
-                $brname = 'Mozilla Firefox';
-                // fallthrough => no break;
-            case 'Mozilla Firebird':
-            case 'Firebird':
                 $brpic = 'px.png';
-                if (empty($brname)) {
-                    $brname = xarML('Mozilla Firebird');
-                }
+                $brname = xarML('Phoenix');
+            case 'Firebird':
+            case 'Mozilla Firebird':
+                $brpic = 'firebird.png';
+                $brname = xarML('Mozilla Firebird');
+                break;
+            case 'Firefox':
+            case 'Mozilla Firefox':
+                $brpic  = 'firefox.png';
+                $brname = xarML('Mozilla Firefox');
                 break;
             case 'Konqueror':
                 $brpic = 'konqueror.png';
                 $brname = xarML('Konqueror');
                 break;
             default:
-                $brname = xarML('Unknown');
                 $brpic  = 'question.gif';
+                $brname = xarML('Unknown');
         }
         if(!$top10) $brname .= " $browser[agver]";
         $browsers[] = array('name' => $brname,
