@@ -185,6 +185,7 @@ function categories_userapi_getcat($args)
 
     $categories = Array();
 
+    $index = -1;
     while (!$result->EOF) {
         list($indentation,
                 $cid,
@@ -204,7 +205,7 @@ function categories_userapi_getcat($args)
         if ($indexby == 'cid') {
             $index = $cid;
         } else {
-            $index = $result->currentrow() - 1;
+            $index++;
         }
 
         $categories[$index] = Array(
