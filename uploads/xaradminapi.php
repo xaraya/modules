@@ -391,20 +391,4 @@ function uploads_adminapi_reject($args)
     
     return True;
 }
-
-
-function uploads_adminapi_newhook( $args )
-{
-    extract($args);
-    // TODO: update the upload's module-ID to correspond to the article's ID
-    return $extrainfo;    
-}
-
-function uploads_adminapi_createhook( $args )
-{
-    extract($args);
-    // TODO: update the upload's module-ID to correspond to the article's ID
-    return $extrainfo;    
-}
-
 ?>

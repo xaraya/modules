@@ -147,6 +147,18 @@ function articles_upgrade($oldversion)
 			xarModUnregisterHook('item', 'new', 'GUI','uploads', 'admin', 'newhook'));
 			xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook'));
 			xarModUnregisterHook('item', 'display', 'GUI', 'uploads', 'user', 'formdisplay'));
+			
+			
+			// Had problems with unregister not working in beta testing... So forcefully removing these
+			list($dbconn) = xarDBGetConn();
+		
+			$hookstable = xarDBGetSiteTablePrefix() . '_hooks';
+			$query = "DELETE FROM $hookstable
+					  WHERE xar_tmodule='uploads' AND (xar_tfunc='formdisplay' OR xar_tfunc='createhook' OR xar_tfunc='newhook')";
+		
+			$result =& $dbconn->Execute($query);
+			if (!$result) return;
+			
             break;
     }
     return true;
