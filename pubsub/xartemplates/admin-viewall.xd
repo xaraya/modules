@@ -1,0 +1,64 @@
+<!---
+  File: $Id$
+
+  Pubsub Admin->View Template
+
+  @package Xaraya eXtensible Management System
+  @copyright (C) 2002 by the Xaraya Development Team.
+  @license GPL <http://www.gnu.org/licenses/gpl.html>
+  @link http://www.xaraya.org
+
+  @subpackage Pubsub Module
+  @author Chris Dudley <miko@xaraya.com>
+  @author Garrett Hunter <garrett@blacktower.com>
+--->
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$namelabel#</span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Subscription Summary</xar:mlstring></h2>
+    <div align="center">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <th>
+            #$modnamelabel#
+        </th>
+        <th>
+            #$categorylabel#
+        </th>
+        <th>
+            #$numsubscriberslabel#
+        </th>
+        <th>
+            #$actionlabel#
+        </th>
+    </tr>
+    <xar:if condition="count($items) gt 0">
+    <xar:loop name="$items">
+    <tr>
+        <td>
+            #$modname#
+        </td>
+        <td>
+            #$catname#
+        </td>
+        <td>
+            #$numsubscribers#
+        </td>
+        <td>
+            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('catname'=>$catname,'cid'=>$cid))#"><xar:mlstring>Subscribers</xar:mlstring></a>
+        </td>
+     </tr>
+     </xar:loop>
+    <xar:else />
+    <tr>
+      <td colspan="5" align="left">
+      <br />
+      <strong><xar:mlstring>No subscriptions found</xar:mlstring></strong>
+      </td>
+    </tr>
+    </xar:if>
+</table>
+</div>
+</div>
+<!-- add the pager here -->
+#$pager#

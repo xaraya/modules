@@ -11,6 +11,7 @@
  *
  * @subpackage Pubsub Module
  * @author Chris Dudley <miko@xaraya.com>
+ * @author Garrett Hunter <garrett@blacktower.com>
 */
 
 /**
@@ -258,85 +259,4 @@ function pubsub_userapi_delsubscriptions($args)
     return true;
 }
 
-/**
- * Get all events
- *
- * @returns array
- * @return array of events
-*/
-function pubsub_userapi_getall($args)
-{
-    extract($args);
-    $events = array();
-    if (!xarSecurityCheck('ReadPubSub', 0)) {
-        return $events;
-    }
-
-    // Load categories API
-    if (!xarModAPILoad('categories', 'user')) {
-        $msg = xarML('Unable to load #(1) #(2) API','categories','user');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
-        return;
-    }
-
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $modulestable = $xartable['modules'];
-    $categoriestable = $xartable['categories'];
-    $pubsubtemplatetable = $xartable['pubsub_template'];
-    $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
-    $pubsubregtable = $xartable['pubsub_reg'];
-
-    $query = "SELECT $modulestable.xar_name AS ModuleName,
-                     $categoriestable.xar_name AS Category,
-                     COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers
-                FROM $pubsubeventstable,
-                     $pubsubeventcidstable,
-                     $modulestable,
-                     $categoriestable,
-                     $pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
-                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
-                 AND $pubsubeventcidstable.xar_cid = $categoriestable.xar_cid
-                 AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-            GROUP BY $pubsubeventstable.xar_eventid";
-
-// FIXME: <garrett> will deprecate once we confirm template table goes bye bye
-/*    $query = "SELECT $modulestable.xar_name AS ModuleName,
-                     $categoriestable.xar_name AS Category,
-                     COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers,
-                     $pubsubtemplatetable.xar_template AS Template
-              FROM $pubsubeventstable,
-                   $pubsubeventcidstable,
-                   $modulestable,
-                   $categoriestable,
-                   $pubsubtemplatetable,
-                   $pubsubregtable
-              WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
-              AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
-              AND   $pubsubeventcidstable.xar_cid = $categoriestable.xar_cid
-              AND   $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-              AND   $pubsubtemplatetable.xar_eventid = $pubsubeventstable.xar_eventid
-              GROUP BY $pubsubeventstable.xar_eventid";
-*/
-// ???         $pubsubeventstable.xar_itemtype = $itemstable.xar_id
-
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($modname, $category, $numsubscribers) = $result->fields;
-        if (xarSecurityCheck('ReadPubSub', 0)) {
-            $events[] = array('modname'       => $modname
-                             ,'category'       => $category
-                             ,'numsubscribers' => $numsubscribers
-                             );
-        }
-    }
-
-    $result->Close();
-
-    return $events;
-}
 ?>

@@ -11,6 +11,7 @@
  *
  * @subpackage Pubsub Module
  * @author Chris Dudley <miko@xaraya.com>
+ * @author Garrett Hunter <garrett@blacktower.com>
 */
 
 /**
@@ -783,13 +784,12 @@ function pubsub_adminapi_updatetemplate($args)
  */
 function pubsub_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('EditPubSub', 0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('Pubsub',
+    if (xarSecurityCheck('AdminPubSub', 0)) {
+        $menulinks[] = Array('url'   => xarModURL('pubsub',
                                                   'admin',
-                                                  'view'),
-                              'title' => xarML('View and Edit Pubsub Events'),
-                              'label' => xarML('View'));
+                                                  'viewall'),
+                             'title' => xarML('View all Pubsub Subscriptions'),
+                             'label' => xarML('View All'));
     }
 
     if (empty($menulinks)){

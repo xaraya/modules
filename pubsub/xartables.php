@@ -1,6 +1,8 @@
-<?php // 
+<?php //
 /**
  * File: $Id$
+ *
+ * Pubsub Table declarations
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
@@ -9,6 +11,7 @@
  *
  * @subpackage Pubsub Module
  * @author Chris Dudley <miko@xaraya.com>
+ * @author Garrett Hunter <garrett@blacktower.com>
 */
 
 /**
@@ -47,12 +50,6 @@ function pubsub_xartables()
 
     // Table name
     $xartable['pubsub_process'] = $pubsub_process;
-
-    // Name for pubsub template database entities
-    $pubsub_template = xarDBGetSiteTablePrefix() . '_pubsub_template';
-
-    // Table name
-    $xartable['pubsub_template'] = $pubsub_template;
 
     // Return table information
     return $xartable;

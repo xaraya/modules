@@ -1,3 +1,17 @@
+<!---
+  File: $Id$
+
+  Pubsub User->DisplayIcon Template
+
+  @package Xaraya eXtensible Management System
+  @copyright (C) 2002 by the Xaraya Development Team.
+  @license GPL <http://www.gnu.org/licenses/gpl.html>
+  @link http://www.xaraya.org
+
+  @subpackage Pubsub Module
+  @author Chris Dudley <miko@xaraya.com>
+  @author Garrett Hunter <garrett@blacktower.com>
+--->
 <xar:if condition="$modname eq 'articles'">
     <xar:if condition="isset($subscribe)">
     <p><xar:mlstring>Subscribe</xar:mlstring>: <a href="#xarModURL('pubsub','user','subscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#xarML('Subscribe')#" /></a></p>

@@ -73,16 +73,6 @@ function pubsub_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $pubsubtemplatetable = $xartable['pubsub_template'];
-    $templatefields = array(
-        'xar_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'xar_template'=>array('type'=>'text','size'=>'long','null'=>FALSE)
-    );
-    $query = xarDBCreateTable($pubsubtemplatetable,$templatefields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
     // Set up module hooks
     if (!xarModRegisterHook('item',
                            'create',
@@ -137,7 +127,6 @@ function pubsub_init()
     $query1 = "SELECT DISTINCT xar_pubsubid FROM " . $pubsubregtable;
     $query2 = "SELECT DISTINCT xar_eventid FROM " . $pubsubeventstable;
     $query3 = "SELECT DISTINCT xar_handlingid FROM " . $pubsubprocesstable;
-    $query4 = "SELECT DISTINCT xar_templateid FROM " . $pubsubtemplatetable;
 
     $instances = array(
                         array('header' => 'Pubsub ID:',
@@ -150,10 +139,6 @@ function pubsub_init()
                             ),
                         array('header' => 'Handling ID:',
                                 'query' => $query3,
-                                'limit' => 20
-                            ),
-                        array('header' => 'Template ID:',
-                                'query' => $query4,
                                 'limit' => 20
                             )
                     );
@@ -273,13 +258,6 @@ function pubsub_delete()
     if (!$result) return;
 
     $query = xarDBDropTable($xartable['pubsub_process']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDBDropTable($xartable['pubsub_template']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
