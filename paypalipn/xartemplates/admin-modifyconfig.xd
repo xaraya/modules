@@ -1,36 +1,36 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>PayPal IPN</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify PayPal IPN Configuration</xar:mlstring></h2><br />
-	<div style="margin: auto;">
-	<form method="post" action="#xarModUrl('paypalipn', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
-		<div style="clear: both; padding-top: 10px;">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('You can test your IPN setup at http://www.eliteweaver.co.uk.')#"><label for="testmode"><xar:mlstring>Test Mode</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="xarModGetVar('paypalipn', 'testmode')">
-			<input type="checkbox" name="testmode" checked />
-			<xar:else />
-			<input type="checkbox" name="testmode" />
-			</xar:if>
-		</span>
-		</div>
+    <div style="margin: auto;">
+    <form method="post" action="#xarModUrl('paypalipn', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <div style="clear: both; padding-top: 10px;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('You can test your IPN setup at http://www.eliteweaver.co.uk.')#"><label for="testmode"><xar:mlstring>Test Mode</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="xarModGetVar('paypalipn', 'testmode')">
+            <input type="checkbox" name="testmode" checked />
+            <xar:else />
+            <input type="checkbox" name="testmode" />
+            </xar:if>
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('The IPN Module can email the results from the IPN post to you.')#"><label for="email"><xar:mlstring>Email IPN</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="xarModGetVar('paypalipn', 'email')">
-			<input type="checkbox" name="email" checked>
-			<xar:else />
-			<input type="checkbox" name="email">
-			</xar:if>
-		</span>
-		</div>
-		<div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
-			<input type="submit" value="#$createlabel#" />
-		</div>
-		</form>
-	</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The IPN Module can email the results from the IPN post to you.')#"><label for="email"><xar:mlstring>Email IPN</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="xarModGetVar('paypalipn', 'email')">
+            <input type="checkbox" name="email" checked>
+            <xar:else />
+            <input type="checkbox" name="email">
+            </xar:if>
+        </span>
+        </div>
+        <div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
+            <input type="submit" value="#$createlabel#" />
+        </div>
+        </form>
+    </div>
 </div>

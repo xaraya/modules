@@ -15,7 +15,7 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>The Paypal IPN module will provide an instant payment notification for Xaraya in the event that someone has purchased something and paid through Paypal.  The module itself only notifies any other module that are hooked to it based on a create hook that an event has happened.  It is up to the individual modules themselves to track whether the event was correct as in payment price, etc.  This is a utility module to be used with multiple modules as a pass through for collecting payment information.</xar:mlstring>
-		</div>
+        </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>How to use it?</xar:mlstring>
@@ -31,7 +31,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>There are no blocks included at this time.</xar:mlstring>
+            <xar:mlstring>There are no blocks included at this time.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
