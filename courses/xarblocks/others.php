@@ -102,7 +102,7 @@ function courses_othersblock_display($blockinfo)
         list($courseid, $name) = $result->fields;
 
         if (xarSecurityCheck('ViewCourses', 0, 'Item', "$name:All:$courseid")) {
-            if (xarSecurityCheck('ReadCourses', 0, 'Item', "$name:All:$courseid"")) {
+            if (xarSecurityCheck('ReadCourses', 0, 'Item', "$name:All:$courseid")) {
                 $item = array();
                 $item['link'] = xarModURL(
                     'courses', 'user', 'display',
