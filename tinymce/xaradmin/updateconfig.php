@@ -169,10 +169,10 @@ function tinymce_admin_updateconfig()
         }
 
     if (xarModGetVar('tinymce','tinywidth') > 0) {
-        $jstext .='width : "'.xarModGetVar('tinymce','tinywidth').'px",';
+        $jstext .='width : "'.xarModGetVar('tinymce','tinywidth').' px",';
     }
     if (xarModGetVar('tinymce','tinyheight') > 0) {
-        $jstext .='height : "'.xarModGetVar('tinymce','tinyheight').'px",';
+        $jstext .='height : "'.xarModGetVar('tinymce','tinyheight').' px",';
     }
 
     if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
