@@ -40,9 +40,9 @@ function xarldap_admin_modifyconfig()
 
     // Allow anonymous bind to server (true/false)
     if ($ldap->anonymous_bind == 'true') {    
-        $data['anonymousbindvalue'] = xarVarPrepForDisplay("checked");
+        $data['anonymousbindvalue'] = true;
     } else {
-        $data['anonymousbindvalue'] = "";
+        $data['anonymousbindvalue'] = false;
     }
 
     // Bind DN (default is 'o=dept')
@@ -53,9 +53,9 @@ function xarldap_admin_modifyconfig()
 
     // Search user dn (true/false)
     if ($ldap->search_user_dn == 'true') {    
-        $data['searchuserdnvalue'] = xarVarPrepForDisplay("checked");
+        $data['searchuserdnvalue'] = true;
     } else {
-        $data['searchuserdnvalue'] = "";
+        $data['searchuserdnvalue'] = false;
     }
 
     // Admin Login
@@ -67,9 +67,9 @@ function xarldap_admin_modifyconfig()
 
     // Use TLS - LDAP Protocol 3 only
     if ($ldap->tls == 'true') {    
-        $data['tls'] = xarVarPrepForDisplay("checked");
+        $data['tls'] = true;
     } else {
-        $data['tls'] = "";
+        $data['tls'] = false;
     }
 
     // everything else happens in Template for now

@@ -70,7 +70,7 @@
                         <xar:mlstring>LDAP Admin Password</xar:mlstring>
                     </td>
                     <td>
-                        <input disabled type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
+                        <input disabled="disabled" type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">

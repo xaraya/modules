@@ -10,7 +10,7 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
-                    <td colspan=2>
+                    <td colspan="2">
                         <xar:mlstring>If you are configuring Xaraya to use LDAP for user authentication, you should configure the LDAP server within the</xar:mlstring>
                         <a href="#xarModURL('authldap', 'admin', 'modifyconfig')#">authldap module</a>.
                     </td>
@@ -41,7 +41,11 @@
                         <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
                     </td>
                     <td>
-                        <input type="checkbox" name="anonymousbind" value="1" #$anonymousbindvalue# />
+                        <xar:if condition="$anonymousbindvalue">
+                            <input type="checkbox" name="anonymousbind" value="1" checked="checked"/>
+                        <xar:else/>
+                            <input type="checkbox" name="anonymousbind" value="1" />
+                        </xar:if>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -65,7 +69,11 @@
                         <xar:mlstring>Search User DN</xar:mlstring>
                     </td>
                     <td>
-                        <input type="checkbox" name="searchuserdn" value="1" #$searchuserdnvalue# />
+                        <xar:if condtion="$searchuserdnvalue">
+                            <input type="checkbox" name="searchuserdn" value="1" checked="checked"/>
+                        <xar:else/>
+                            <input type="checkbox" name="searchuserdn" value="1" />
+                        </xar:if>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -89,7 +97,11 @@
                         <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
                     </td>
                     <td>
-                        <input type="checkbox" name="tls" value="1" #$tls# />
+                        <xar:if condition="$tls">
+                            <input type="checkbox" name="tls" value="1" checked="checked"/>
+                        <xar:else/>
+                            <input type="checkbox" name="tls" value="1" />
+                        </xar:if>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
