@@ -117,6 +117,7 @@ function xarbb_latestpostsblock_display($blockinfo)
     //Get all latest topics for given forums
     foreach ($alltopics as $topics) {
         foreach ($topics as $topic) {
+            $forum=array();                                    	
             $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
 
             if ($vars['addtopics']=='on'){
@@ -133,7 +134,7 @@ function xarbb_latestpostsblock_display($blockinfo)
                           'title'     => substr($topic['ttitle'],0,$vars['truncate']),
                           'poster'    => $topic['tposter'],
                           'postername'=> $posterdata['name'],
-                          'ptime'     => $topic['ttime'],
+                          'ptime'     => $topic['tftime'],
                           'ptext'     => substr($topic['tpost'],0,$vars['truncate']),
                           'anon'      => 0,
                           'link'      => xarModURL('xarbb','user','viewtopic',array('tid'=>$topic['tid'])),
@@ -152,6 +153,7 @@ function xarbb_latestpostsblock_display($blockinfo)
                                    'get_allposts',
                                    array('objectid'    => $topic['tid'],
                                          'numitems'    => $vars['howmany']));
+                $forum=array();
                 $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
                  //Put post data in suitable list
                  if (count($posts) >0 ) {
@@ -167,7 +169,7 @@ function xarbb_latestpostsblock_display($blockinfo)
                                           'fname'     => $forum['fname'],
                                           'title'     => substr($post['xar_title'],0,$vars['truncate']),
                                           'poster'    => $post['xar_uid'],
-                                          'postername'=> $posterdata['uname'],
+                                          'postername'=> $post['xar_author'],
                                           'ptime'     => $post['xar_datetime'],
                                           'ptext'     => substr($post['xar_text'],0,$vars['truncate']),
                                           'anon'      => $post['xar_postanon'],
