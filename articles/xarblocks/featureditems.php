@@ -106,18 +106,19 @@ function articles_featureditemsblock_display($blockinfo)
     }*/
 
     if(($featuredaid)>0) {
-        $featuredart = xarModAPIFunc('articles','user','get',
-                                     array('aid' => $featuredaid,
-                                           'fields' => $fields
-                                          )
-                                    );
+        $featuredart = xarModAPIFunc(
+            'articles','user','get',
+            array(
+                'aid' => $featuredaid,
+                'fields' => $fields
+            )
+        );
         $featuredlabel = xarVarPrepForDisplay($featuredart['title']);
 
-        $featuredlink = xarModURL('articles',
-                                  'user',
-                                  'display',
-                                  array('aid' => $featuredart['aid'])
-                                 );
+        $featuredlink = xarModURL(
+            'articles', 'user', 'display',
+            array('aid' => $featuredart['aid'], 'itemtype' => $featuredart['pubtypeid'])
+        );
 
         if ($vars['showfeaturedsum'] == 1) {
             $featureddesc  = xarVarPrepHTMLDisplay($featuredart['summary']);
@@ -132,13 +133,16 @@ function articles_featureditemsblock_display($blockinfo)
                                   );
     }
     if (!empty($vars['moreitems'])) {
-        $articles = xarModAPIFunc('articles','user','getall',
-                                  array('aids' => $vars['moreitems'],
-                                        'enddate' => time(),
-                                        'fields' => $fields,
-                                        'sort' => $sort,
-                                       )
-                                 );
+        $articles = xarModAPIFunc(
+            'articles','user','getall',
+            array(
+                'aids' => $vars['moreitems'],
+                'enddate' => time(),
+                'fields' => $fields,
+                'sort' => $sort
+            )
+        );
+
         /*if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
             return;
         }*/
@@ -154,11 +158,10 @@ function articles_featureditemsblock_display($blockinfo)
         foreach ($articles as $article) {
             $label = xarVarPrepForDisplay($article['title']);
             if ($article['aid'] != $curaid) {
-                $link = xarModURL('articles',
-                                  'user',
-                                  'display',
-                                  array('aid' => $article['aid'])
-                                 );
+                $link = xarModURL(
+                    'articles', 'user', 'display',
+                    array('aid' => $article['aid'], 'itemtype' => $article['pubtypeid'])
+                );
             } else {
                 $link = '';
             }
