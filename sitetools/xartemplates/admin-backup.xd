@@ -9,9 +9,11 @@
 <xar:set name="$screenhelp"><xar:mlstring>If checked, a running status of backup progresss is displayed.</xar:mlstring></xar:set>
 <xar:set name="$usegzlabel"><xar:mlstring>Create GZ backup file(if gz available)?</xar:mlstring></xar:set>
 <xar:set name="$usegzhelp"><xar:mlstring>If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.</xar:mlstring></xar:set>
-<xar:set name="$securitymessage"><xar:mlstring><b>WARNING:</b><br />Do not leave your backup file in a web browsable directory.
+<xar:set name="$securitymessage"><xar:mlstring><b>WARNING:</b><br />Do not leave your backup file in a web browsable directory.<br />
                                  Remember to delete it, or move it to a secure directory.</xar:mlstring></xar:set>
-<xar:set name="$savefile"><xar:mlstring>For TEXT sql file, right click on backup file link to save.</xar:mlstring></xar:set>
+<xar:set name="$savefile"><xar:mlstring>To save the file from the above link, right click on backup file link and save.<br />
+                                        A GZ encoded file will uncompress and save as an uncompressed text file with this method,<br />or if you download by clicking on the link.<br />
+                                        So change the file extension to .sql only for the saved file - not .gz</xar:mlstring></xar:set>
 <div style="margin: auto;">
     <!-- First get choice of backup type -->
 <xar:if condition="$warning eq 1">
@@ -76,6 +78,7 @@
     </form>
 
     </div>
+     <p><a href="javascript:history.back(-1)">#$goback#</a></p>
   <!-- Start partial database table selection display -->
 <xar:elseif condition="$startbackup eq 'partial'" />
     <span style="float: left; width: 98%; text-align: right;">
@@ -113,18 +116,39 @@
 	       <input type="submit" name="SelectedTablesOnly" value="#$confirmbutton#" />
         </span>
      </form>
+     <p><a href="javascript:history.back(-1)">#$goback#</a></p>     
 <xar:elseif condition="$startbackup" />
+
     <xar:loop name="$runningstatus">
            #$loop:item['message']# <br />
     </xar:loop>
+    <div style="margin-top:20px;">
+    <table width='90%' align='center' border='1'>
+    <tr><th valign='middle' colspan='2'><xar:mlstring>Backup Summary</xar:mlstring>
+    </tr>
+    <tr>
+        <td valign='middle' align='left'><xar:mlstring>Completed in:</xar:mlstring></td>
+        <td valign='middle' align='left'>#$completetime#</td>
+    </tr>
+    <tr>
+        <td valign='middle' align='left'><xar:mlstring>Backup type:</xar:mlstring></td>
+        <td valign='middle' align='left'>#$btype#</td>
+    </tr>
+    <tr>
+        <td valign='middle' align='left'><xar:mlstring>File:</xar:mlstring></td>
+        <td valign='middle' align='left'>
+           <a href="#$bkfilename#" onclick="window.open(this.href, 'popupwindow', 'width=640,height=300,scrollbars,resizable'); return false;">#$bkname#</a> (#$bkfilesize#)</p>
+        </td>
+    </tr>
+    <tr><td valign='middle' colspan='2' align='center'>#$savefile#</td></tr>
+    <tr><td valign='middle' colspan='2' align='center'>#$securitymessage#</td></tr>
+    </table>
+    </div>
+    <br />
+    <!--#$deleteurl# -->//TODO: Download GZ, delete and move functions. More configs and tidy up.
 
-    <p><xar:mlstring>Completed in:</xar:mlstring> #$completetime#</p>
-    <p><xar:mlstring>File:</xar:mlstring>
-    <a href="#$bkfilename#" onclick="window.open(this.href, 'popupwindow', 'width=640,height=300,scrollbars,resizable'); return false;">#$bkname# #$bkfilesize#</a></p>
-    <p class="xar-accent">#$savefile#</p>
-    <div>#$securitymessage#</div>  #$deleteurl# //TO DO
 </xar:if>
-     <p><a href="javascript:history.back(-1)">#$goback#</a></p>
+
 
 </div>
 </div>
