@@ -56,8 +56,8 @@ function sniffer_adminapi_delete($args)
 	if(!xarSecurityCheck('DeleteSniffer')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $snifferTable = $xartable['sniffer'];
 
     // Delete the tag

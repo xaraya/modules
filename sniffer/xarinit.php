@@ -24,8 +24,8 @@
 function sniffer_init()
 { 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI(); 
     // Create the Table
@@ -95,8 +95,8 @@ function sniffer_init()
 function sniffer_upgrade($oldversion)
 { 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
     // load the table maintenance API
     xarDBLoadTableMaintenanceAPI(); 
     // Upgrade dependent on old version number
@@ -128,8 +128,8 @@ function sniffer_delete()
     xarModDelVar('sniffer', 'itemsperpage');
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
 
     // load the table maintenance API
     xarDBLoadTableMaintenanceAPI(); 

@@ -33,8 +33,8 @@ function sniffer_userapi_countitems($args)
     if(!xarSecurityCheck('ReadSniffer')) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Set roles and categories table
     $snifferTable = $xartable['sniffer'];

@@ -49,8 +49,8 @@ function sniffer_userapi_get($args)
     if(!xarSecurityCheck('ReadSniffer')) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Set roles and categories table
     $snifferTable = $xartable['sniffer'];

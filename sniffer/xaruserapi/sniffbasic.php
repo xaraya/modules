@@ -35,8 +35,8 @@ function sniffer_userapi_sniffbasic($args)
     $client->init();
 
 	// Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
 
 	// set some variables used in the database call
     $sniffertable  =  $xartable['sniffer'];
