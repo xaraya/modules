@@ -43,6 +43,7 @@ function xslt_userapi_transform($args)
         if (!empty($extrainfo['itemtype'])) {
             $itemtype = $extrainfo['itemtype'];
         }
+        xarLogVariable('itemtype',$itemtype);
         if (empty($itemtype)) {
             $xsl = xarModGetVar('xslt',$modname);
         } else {
@@ -143,7 +144,8 @@ function xslt_userapi_transform($args)
 /**
  * XSLT error trapping (cfr. http://www.php.net/manual/en/function.xslt-set-error-handler.php)
  */
-function xslt_trap_error($parser, $errorno, $level, $fields) {
+function xslt_trap_error($parser, $errorno, $level, $fields) 
+{
     $M = "Error Number $errorno, Level $level, Fields;\n";
     if(is_array($fields)) {
         while(list($key, $value) = each($fields)) {
