@@ -27,7 +27,8 @@ function navigator_admin_updateconfig()
     if (!xarSecConfirmAuthKey()) return;
 
     // Get parameters from input
-    if (!xarVarFetch('matrix',   'checkbox',    $matrix,        1)) return;
+    if (!xarVarFetch('matrix',         'checkbox',    $matrix,        0)) return;
+    if (!xarVarFetch('resetStyles',    'checkbox',    $resetStyles,   0)) return;
     if (!xarVarFetch('primary_cids',   'list:int:0:', $primary_cid,   0, XARVAR_GET_OR_POST, 0)) return;
     if (!xarVarFetch('secondary_cids', 'list:int:0:', $secondary_cid, 0, XARVAR_NOT_REQUIRED, 0)) return;
     if (!xarVarFetch('secdef_cids',    'list:int:0:', $secDef,        0, XARVAR_NOT_REQUIRED, 0)) return;
@@ -36,6 +37,11 @@ function navigator_admin_updateconfig()
 
     if (!isset($matrix) || empty($matrix)) {
         $secondary_cid = NULL;
+    }
+
+    if (isset($resetStyles) && $resetStyles) {
+        xarModSetVar('navigator', 'style.list.files',  serialize(array()));
+        xarModSetVar('navigator', 'style.list.inline', serialize(array()));
     }
 
     if (!empty($primary_cid)) {

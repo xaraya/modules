@@ -51,6 +51,13 @@ function navigator_captionblock_display($blockinfo)
     $args['objectid'] = $blockinfo['bid'];
     $args['itemid']   = $blockinfo['bid'];
 
+    $navigator_styleSheets = @unserialize(xarModGetVar('navigator', 'style.list.files'));
+    $navigator_styleName = "navigator-caption";
+    if (is_array($navigator_styleSheets) && !in_array($navigator_styleName, $navigator_styleSheets)) {
+        $navigator_styleSheets[] = $navigator_styleName;
+        xarModSetVar('navigator', 'style.list.files', serialize($navigator_styleSheets));
+    }
+
     // Make sure the fileupload property is using the uploads functions
     xarVarSetCached('Hooks.uploads', 'ishooked', TRUE);
 

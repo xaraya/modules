@@ -50,6 +50,14 @@ function navigator_user_menutype_list( $args )
         $list = array();
     }
 
+    $navigator_styleSheets = @unserialize(xarModGetVar('navigator', 'style.list.files'));
+    $navigator_styleName = "navigator-listmenu";
+    if (is_array($navigator_styleSheets) && !in_array($navigator_styleName, $navigator_styleSheets)) {
+        $navigator_styleSheets[] = $navigator_styleName;
+        xarModSetVar('navigator', 'style.list.files', serialize($navigator_styleSheets));
+    }
+
+
     $data['matrix']   = $matrix;
     $data['primary']  = $primary;
     $data['tree']     = $list;

@@ -1,0 +1,43 @@
+/*
+   Concept gleaned from: http://www.howtocreate.co.uk/tutorials/testMenu.html
+*/
+
+ul.xar-navigator-tree, ul.xar-navigator-tree ul {
+  background-color: #fff;
+  padding-left: 0px;
+  margin-left: 10px;
+}
+
+ul.xar-navigator-tree li {
+  list-style-type: none;
+  margin: 0px;
+}
+ul.xar-navigator-tree li > ul {
+  display: none;
+  margin-left: 20px;
+
+}
+
+ul.xar-navigator-tree ul.xar-navigator-show-submenu {
+  display: block;
+  z-index: 10;
+}
+
+ul.xar-navigator-tree li:hover > ul {
+  display: block;
+  z-index: 10;
+}
+/* and some link styles */
+ul.xar-navigator-tree li a {
+    display: block;
+    width: 100%;
+}
+ul.xar-navigator-tree li a:hover,
+ul.xar-navigator-tree li a.xar-navigator-anchor-hilight {
+    color: #000;
+}
+
+ul.xar-navigator-tree li:hover > a {
+    color: #000;
+}
+

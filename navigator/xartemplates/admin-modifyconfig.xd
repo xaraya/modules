@@ -33,7 +33,8 @@
                 #$primarySelect#
                 <br />
                 <xar:mlstring>
-                    [ ENTER DESCRIPTION HERE ]
+                    This is the primary tree of categories. In a Matrix setup, it used as the X coordinate in and,
+                    in the Heirarchy setup, it is used as the whole tree.
                 </xar:mlstring>
             </p>
 
@@ -63,6 +64,20 @@
                 </p>
             </xar:if>
             <p>
+
+                <label for="resetStyles">
+                    <strong><xar:mlstring>Reset stored styles?</xar:mlstring>:</strong>&nbsp;&nbsp;
+                    <input id="resetStyles" type="checkbox" name="resetStyles" value="true"
+                           onChange="javascript:this.form.submit()">
+                </label>
+                <br />
+                <xar:mlstring>
+                    Resets the stored styles internally - which be rebuilt next time a page is loaded that
+                    contains any of the tags that require those.<br />
+                </xar:mlstring>
+
+            </p>
+            <p>
                 <input type="submit" name="update" value="#xarMl('Update Configuration')#">
             </p>
         </form>
@@ -72,23 +87,14 @@
                 <xar:mlstring>
                     Secondary Category List:
                 </xar:mlstring>
-                <ul>
-                <xar:foreach in="$secondary_list" key="$catId" value="$type">
-                    <li style="list-style-type: none;">
-                        <xar:if condition="isset($type['startpoint']) AND $type['startpoint']">
-                            <span style="margin-left: #$type['indent'] * 20#px; color: red;">
-                        <xar:else />
-                            <span style="margin-left: #$type['indent'] * 20#px;">
-                        </xar:if>
-                            <xar:if condition="isset($type['parent']) AND $type['parent']">
-                                <strong>#$type['name']#</strong>
-                            <xar:else />
-                                #$type['name']#
-                            </xar:if>
-                        </span>
-                    </li>
-                </xar:foreach>
-                </ul>
+                #xarModAPIFunc('navigator', 'user', 'menu_branch_descend', array('tree' => $secondary_list,'showStartPoint' => $secondary_default_start))#
+            </p>
+        <xar:elseif condition="!empty($primary_list) AND !$matrix" />
+            <p>
+                <xar:mlstring>
+                    Primary Category List:
+                </xar:mlstring>
+                #xarModAPIFunc('navigator', 'user', 'menu_branch_descend', array('tree' => $primary_list))#
             </p>
         </xar:if>
     </div>

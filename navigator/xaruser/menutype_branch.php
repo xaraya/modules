@@ -135,6 +135,12 @@ function navigator_user_menutype_branch( $args )
          return;
     }
 
+    $navigator_styleSheets = @unserialize(xarModGetVar('navigator', 'style.list.files'));
+    $navigator_styleName = "navigator-branchmenu";
+    if (is_array($navigator_styleSheets) && !in_array($navigator_styleName, $navigator_styleSheets)) {
+        $navigator_styleSheets[] = $navigator_styleName;
+        xarModSetVar('navigator', 'style.list.files', serialize($navigator_styleSheets));
+    }
 
 
     $data['primary']  = $primary;
