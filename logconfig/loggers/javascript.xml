@@ -1,0 +1,63 @@
+<object name="javascript_logger">
+  <label>Javascript Logger</label>
+  <moduleid>6969</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>Logs to a new browser window (requires javascript).</config>
+  <isalias>0</isalias>
+  <properties>
+
+    <property name="id">
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+
+    <property name="loggerType">
+      <label>Logger Type</label>
+      <type>static</type>
+      <default>javascript</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+
+    <property name="description">
+      <label>Logger Description</label>
+      <type>static</type>
+      <default>This logger will open a helper browser window, where debug information will be displayed.</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+
+    <property name="timeFormat">
+      <label>Time Format</label>
+      <type>dateformat</type>
+      <default>%b %d %H:%M:%S</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+
+    <property name="logLevel">
+      <label>Log Level</label>
+      <type>loglevel</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+
+  </properties>
+
+</object>

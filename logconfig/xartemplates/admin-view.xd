@@ -1,0 +1,66 @@
+<xar:template file="menu" />
+
+<h2><xar:mlstring>List of Loggers</xar:mlstring></h2>
+
+	<div style="text-align: center;">
+	<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    	<tr>
+            	<th><xar:mlstring>Type</xar:mlstring></th>
+            	<th width="100"><xar:mlstring>Description</xar:mlstring></th>
+            	<th><xar:mlstring>Configuration</xar:mlstring></th>
+            	<th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+	
+		<xar:for start="$i = 1" test="$i le $itemsnum" iter="$i++">
+	
+			<xar:data-getitems name="$properties" value="$values" module="logconfig" itemtype="$i" />
+
+	    	<xar:foreach in="$values" key="$itemid" value="$fields">
+		    	<tr>
+		    		<td>
+	    		        <xar:if condition="!empty($fields['loggerType'])">
+   		    			    <xar:data-output property="$properties['loggerType']" value="$fields['loggerType']" /></td>
+			            <xar:else />
+   	    				    &nbsp;
+		        	    </xar:if>
+		        	</td>
+		        	<td>
+	    		        <xar:if condition="!empty($fields['description'])">
+   			    			<xar:data-output property="$properties['description']" value="$fields['description']" /></td>
+		    	        <xar:else />
+   	    					&nbsp;
+			            </xar:if>
+		            </td>
+
+		    		<td><table border="1">
+		    			<tr>
+			        		<xar:foreach in="$properties" key="$name">
+			        			<xar:if condition="($name ne 'loggerType') && ($name ne 'description')">
+	        			    		<th><xar:data-label property="$properties[$name]" /></th>
+		        			    </xar:if>
+				    	    </xar:foreach>
+  			    	    </tr>
+  			    	    <tr>
+				        	<xar:foreach in="$properties" key="$name">
+				        		<xar:if condition="($name ne 'loggerType') && ($name ne 'description')">
+				    		        <xar:if condition="!empty($fields[$name])">
+   	    							    <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+						            <xar:else />
+   	    							    <td>&nbsp;</td>
+						            </xar:if>
+	        				    </xar:if>
+			    	    	</xar:foreach>
+		    			</tr>
+		    		</table></td>
+		        	<td>
+    		        	<a href="#xarModURL('logconfig','admin','modify',array('itemtype'=>$i, 'itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> 
+    		        	<br />
+        		    	<a href="#xarModURL('logconfig','admin','delete',array('itemtype'=>$i, 'itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
+	    	    	</td>
+
+			    </tr>
+		    </xar:foreach>
+		
+	    </xar:for>
+    </table>
+    </div>

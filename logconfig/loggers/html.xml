@@ -1,0 +1,83 @@
+<object name="html_logger">
+  <label>HTML File Logger</label>
+  <moduleid>6969</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>Logs to a file in HTML format.</config>
+  <isalias>0</isalias>
+  <properties>
+
+    <property name="id">
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+
+    <property name="loggerType">
+      <label>Logger Type</label>
+      <type>static</type>
+      <default>html</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+
+    <property name="description">
+      <label>Logger Description</label>
+      <type>static</type>
+      <default>This logger will put the log into a file with the HTML Format. You will need to enter its path and name.</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+
+    <property name="fileName">
+      <label>File</label>
+      <type>textbox</type>
+      <default>var/logs/log.html</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>1:60</validation>
+    </property>
+
+    <property name="mode">
+      <label>File Mode</label>
+      <type>integerbox</type>
+      <default>644</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>0:777</validation>
+    </property>
+
+    <property name="timeFormat">
+      <label>Time Format</label>
+      <type>dateformat</type>
+      <default>%b %d %H:%M:%S</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+
+    <property name="logLevel">
+      <label>Log Level</label>
+      <type>loglevel</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+
+  </properties>
+
+</object>

@@ -1,0 +1,17 @@
+<xar:template file="menu" />
+
+<h2><xar:mlstring>Switched Log State: On/Off</xar:mlstring></h2>
+
+<br />
+<div style="text-align: center;">
+<xar:if condition="$islogon">
+	<h3>Logging now ON!</h3>
+	<!---
+   	<img src="modules/logconfig/xarimages/lit-lightbulb.png" name="lightbulb_on" id="lightbulb_on" alt="#xarML('Logging currently on')#" />
+   	-->
+<xar:else />
+	<h3>Logging now OFF!</h3>
+	<!---
+   	<img src="modules/logconfig/xarimages/lightbulb.png" name="lightbulb_off" id="lightbulb_off" alt="#xarML('Logging currently off')#" />
+   	-->
+</xar:if>

@@ -1,0 +1,23 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+</xar:if>
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+
+<br />
+
+<div id="tabnav">
+	<div class="help" title="#xarML('Menu links for this module')#"><xar:mlstring>Actions</xar:mlstring> :</div>
+    <xar:foreach in="$menulinks" value="$linkarray">
+		<div>
+			<xar:if condition="$linkarray['func'] == $activelink">
+				<a href="#$linkarray['url']#" class="active" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
+			<xar:else />
+				<a href="#$linkarray['url']#" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
+			</xar:if>
+		</div>	
+    </xar:foreach>
+</div>

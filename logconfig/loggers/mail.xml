@@ -1,0 +1,93 @@
+<object name="mail_logger">
+  <label>Mail Logger</label>
+  <moduleid>6969</moduleid>
+  <itemtype>6</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+
+    <property name="id">
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+
+    <property name="loggerType">
+      <label>Logger Type</label>
+      <type>static</type>
+      <default>mail</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+
+    <property name="description">
+      <label>Logger Description</label>
+      <type>static</type>
+      <default>This logger will sent all log messages thru e-mail.</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+
+    <property name="from">
+      <label>From</label>
+      <type>textbox</type>
+      <default>xaraya-log@site.com</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>1:60</validation>
+    </property>
+
+    <property name="to">
+      <label>Send to</label>
+      <type>textbox</type>
+      <default>yourself@here.com</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>1:60</validation>
+    </property>
+
+    <property name="subject">
+      <label>Subject</label>
+      <type>textbox</type>
+      <default>[XARAYA_LOG]</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>1:60</validation>
+    </property>
+
+    <property name="timeFormat">
+      <label>Time Format</label>
+      <type>dateformat</type>
+      <default>%b %d %H:%M:%S</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+
+    <property name="logLevel">
+      <label>Log Level</label>
+      <type>loglevel</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+
+  </properties>
+
+</object>

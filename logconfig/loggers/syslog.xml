@@ -1,0 +1,84 @@
+<object name="syslog_logger">
+  <label>System Logger</label>
+  <moduleid>6969</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+
+    <property name="id">
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+
+    <property name="loggerType">
+      <label>Logger Type</label>
+      <type>static</type>
+      <default>syslog</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+
+    <property name="description">
+      <label>Logger Description</label>
+      <type>static</type>
+      <default>This logger will sent all log messages to your own operational system logging system. Please look at http://br2.php.net/manual/en/function.openlog.php to figure out how to configure this logger.</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+
+    <property name="facility">
+      <label>Facility</label>
+      <type>textbox</type>
+      <default>LOG_LOCAL0</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>1:15</validation>
+    </property>
+
+    <property name="options">
+      <label>Options</label>
+      <type>textbox</type>
+      <default>LOG_CONS | LOG_ODELAY | LOG_PID</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>1:40</validation>
+    </property>
+
+
+    <property name="timeFormat">
+      <label>Time Format</label>
+      <type>dateformat</type>
+      <default>%b %d %H:%M:%S</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+
+    <property name="logLevel">
+      <label>Log Level</label>
+      <type>loglevel</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+
+  </properties>
+
+</object>

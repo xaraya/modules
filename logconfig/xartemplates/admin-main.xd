@@ -1,0 +1,3 @@
+<xar:template file="menu" />
+
+<div align="center"><b> <xar:mlstring>Welcome to the Configuration of the Logging System</xar:mlstring> </b></div>

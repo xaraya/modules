@@ -1,0 +1,73 @@
+<object name="sql_logger">
+  <label>SQL Table Logger</label>
+  <moduleid>6969</moduleid>
+  <itemtype>7</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+
+    <property name="id">
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+
+    <property name="loggerType">
+      <label>Logger Type</label>
+      <type>static</type>
+      <default>sql</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+
+    <property name="description">
+      <label>Logger Description</label>
+      <type>static</type>
+      <default>This logger will log messages into a SQL table using Xaraya's main Database.</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+
+    <property name="table">
+      <label>SQL Table</label>
+      <type>textbox</type>
+      <default>xar_log_messages</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>1:20</validation>
+    </property>
+
+    <property name="timeFormat">
+      <label>Time Format</label>
+      <type>dateformat</type>
+      <default>%b %d %H:%M:%S</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+
+    <property name="logLevel">
+      <label>Log Level</label>
+      <type>loglevel</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+
+  </properties>
+
+</object>
