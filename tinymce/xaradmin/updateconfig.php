@@ -35,7 +35,7 @@ function tinymce_admin_updateconfig()
     if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarSecConfirmAuthKey()) return;
     //set mode to all textareas for now
-    xarModSetVar('tinymce', 'tinymode', 'textareas');
+    xarModSetVar('tinymce', 'tinymode', $tinymode);
     xarModSetVar('tinymce', 'tinyask', $tinyask);
     xarModSetVar('tinymce', 'tinybuttons', $tinybuttons);
     xarModSetVar('tinymce', 'tinybuttonsremove', $tinybuttonsremove);

@@ -31,13 +31,24 @@ To INSTALL and get started:
 3. In order to make modules in Xaraya use the XarTinyMCE module to display WYSIWYG,
     you need to add the following snippet at the top of any of your page templates.
     eg usually this is default.xt in themes/yourtheme/pages directory.
-    You may have more than one page template and can choose to add it to one or more.
+    The code will affect any textareas in the template or included in that template.
+    eg If you add it to default.xt page template it will affect all textareas
+    in all templates that are also used in the default.xt template.
     You may wish to add it to one specific module or other template where you wish
     to convert the textarea to WYSIWYG (eg Xarbb newreply.xt or newtopic.xt):
 
     <xar:if condition="xarModGetVar('base','editor') eq 'tinymce'">
         <xar:template file="tinymce_insert" module="tinymce" type="module" />
     </xar:if>
+
+    The default Mode in the configuration settings for XarTinyMCE is "All Text Areas" 
+    and enables the WYSIWYG action as described above.
+
+    Additional method:
+    You can become more specific by choosing the Mode of "Special Labelled Only" in
+    the configuration options.
+    You must then also add the attribute: mce_editable="true"
+    to any "textarea" or "div" tag that you wish to use as a WYSIWYG textarea.
 
 ******************************
 To UPGRADE:

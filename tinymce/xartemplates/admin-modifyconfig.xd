@@ -85,11 +85,21 @@
      <div style="clear: both; width: 98%; padding-top: 10px;">
         <span style="float: left; width: 30%; text-align: right;">
         <span class="help" title="#xarML('Select default replacement mode for TinyMCE')#">
-            <label for="tinymode"><xar:mlstring>Default action mode (only All supported atm)</xar:mlstring></label>
+            <label for="tinymode"><xar:mlstring>Default action mode</xar:mlstring></label>
         </span>
         </span>
-        <span style="float: right; width: 68%; text-align: left;">
+
+        <span style="float:right; width: 68%; text-align: left;">
          <select name="tinymode" id="tinymode" size="1">
+            <xar:if condition="$tinymode eq 'specific_textareas'">
+               <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
+               <option value="specific_textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+            <xar:else />
+               <option value="textareas" selected="selected"><xar:mlstring>All Text areas</xar:mlstring></option>
+               <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+            </xar:if>
+
+            <xar:comment> Use the following instead of above when all 3 modes are supported
             <xar:if condition="$tinymode eq 'specific_textareas'">
                <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
                <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
@@ -103,9 +113,22 @@
                <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
                <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
             </xar:if>
+            </xar:comment>
         </select>
        </span>
     </div>
+    <div style="clear: both; width: 98%; padding-top: 10px;">
+        <p><span style="float:left; width: 30%; text-align: right;"><xar:mlstring><strong>All text areas</strong> :</xar:mlstring></span>
+           <span style="float: right; width: 68%; text-align: left;"><xar:mlstring>will convert all textareas contained or included in the template where you have the tinymce
+        tags (default value)</xar:mlstring></span>
+        </p>
+        <p style="clear:both;"><span style="float:left; width: 30%; text-align: right;"><xar:mlstring><strong>Special Labelled only</strong> :  </xar:mlstring>
+          </span>
+          <span style="float: right; width: 68%; text-align: left;">
+              <xar:mlstring>will convert all text areas in the template where you have the tinymce tags that are <strong>specifically marked</strong> with the attribute in the textarea or div tag of <code>mce_editable="true"</code></xar:mlstring>
+          </span>
+        </p>
+   </div>
      <div style="clear: both; width: 98%; padding-top: 10px;">
         <span style="float: left; width: 30%; text-align: right;">
         <span class="help" title="#xarML('Ask user if they wish to use WYSIWYG for each text area?')#">

@@ -4,6 +4,8 @@
 - Ability to set number of Undo levels - better for performance
 - Configuration for ensuring Inline styles using style="" rather than eg border=0
   This makes for XHTML 1.0 Strict compliance, and useful when the Class drop down box is not available
+- Add the Special Labelled Only mode that only convert textareas of divs 
+  labelled with the attribute: mce_editable = "true" 
 - Known issue in IE on Windows when short URLS are used on a page where an editor
   instance is created or used to modify a document
   eg Comments creation to an article which uses short URLS.
