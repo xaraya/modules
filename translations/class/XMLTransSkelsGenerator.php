@@ -22,26 +22,73 @@ class XMLTranslationsSkelsGenerator {
     function bindDomain($dnType, $dnName='xaraya')
     {
         $varDir = xarCoreGetVarDirPath();
-
         $locales_dir = "$varDir/locales";
-        if (!file_exists($locales_dir) || !is_writeable($locales_dir)) {
-            $msg = xarML("The directory #(1) must be writeable by PHP.", $locales_dir);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'WrongPermissions', new DefaultUserException($msg));
-            return;
-        }
-
         $locale_dir = "$locales_dir/{$this->locale}";
         $xml_dir = "$locale_dir/xml";
         $modules_dir = "$xml_dir/modules";
         $themes_dir = "$xml_dir/themes";
         $core_dir = "$xml_dir/core";
 
-        // FIXME: <marco> Remove 0777 later!
-        if (!file_exists($locale_dir)) mkdir($locale_dir, 0777);
-        if (!file_exists($xml_dir)) mkdir($xml_dir, 0777);
-        if (!file_exists($modules_dir)) mkdir($modules_dir, 0777);
-        if (!file_exists($themes_dir)) mkdir($themes_dir, 0777);
-        if (!file_exists($core_dir)) mkdir($core_dir, 0777);
+        $canWrite = 1;
+        if (file_exists($locales_dir)) {
+            if (file_exists($locale_dir)) {
+                if (file_exists($xml_dir)) {
+                    if (file_exists($modules_dir) && file_exists($themes_dir) &&
+                        file_exists($core_dir)) {
+                        if (!is_writeable($modules_dir)) $canWrite = 0;
+                        if (!is_writeable($themes_dir)) $canWrite = 0;
+                        if (!is_writeable($core_dir)) $canWrite = 0;
+                    } else {
+                        if (is_writeable($xml_dir)) {
+                            if (file_exists($modules_dir)) {
+                                if (!is_writeable($modules_dir)) $canWrite = 0;
+                            } else {
+                                mkdir($modules_dir, 0777);
+                            }
+                            if (file_exists($themes_dir)) {
+                                if (!is_writeable($themes_dir)) $canWrite = 0;
+                            } else {
+                                mkdir($themes_dir, 0777);
+                            }
+                            if (file_exists($core_dir)) {
+                                if (!is_writeable($core_dir)) $canWrite = 0;
+                            } else {
+                                mkdir($core_dir, 0777);
+                            }
+                        } else {
+                            $canWrite = 0; // var/locales/LOCALE/xml is unwriteable
+                        }
+                    }
+                } else {
+                    if (is_writeable($locale_dir)) {
+                        mkdir($xml_dir, 0777);
+                        mkdir($modules_dir, 0777);
+                        mkdir($themes_dir, 0777);
+                        mkdir($core_dir, 0777);
+                    } else {
+                        $canWrite = 0; // var/locales/LOCALE is unwriteable
+                    }
+                }
+            } else {
+                if (is_writeable($locales_dir)) {
+                    mkdir($locale_dir, 0777);
+                    mkdir($xml_dir, 0777);
+                    mkdir($modules_dir, 0777);
+                    mkdir($themes_dir, 0777);
+                    mkdir($core_dir, 0777);
+                } else {
+                    $canWrite = 0; // var/locales is unwriteable
+                }
+            }
+        } else {
+            $canWrite = 0; // var/locales missed
+        }
+
+        if (!$canWrite) {
+            $msg = xarML("The directories under #(1) must be writeable by PHP.", $locales_dir);
+            xarExceptionSet(XAR_USER_EXCEPTION, 'WrongPermissions', new DefaultUserException($msg));
+            return;
+        }
 
         switch ($dnType) {
             case XARMLS_DNTYPE_MODULE:
