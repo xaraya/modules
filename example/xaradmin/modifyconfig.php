@@ -30,7 +30,7 @@ function example_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey(); 
     // Specify some labels and values for display
     $data['boldlabel'] = xarVarPrepForDisplay(xarML('Display Example Items In Bold?'));
-    $data['boldchecked'] = xarModGetVar('example', 'bold') ? 'checked' : '';
+    $data['boldchecked'] = xarModGetVar('example', 'bold') ? true : false;
     $data['itemslabel'] = xarVarPrepForDisplay(xarML('Example Items Per Page?'));
     $data['itemsvalue'] = xarModGetVar('example', 'itemsperpage');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration')); 
@@ -38,8 +38,7 @@ function example_admin_modifyconfig()
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
     $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ?
-    'checked' : '';
+    $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',
         array('module' => 'example'));
