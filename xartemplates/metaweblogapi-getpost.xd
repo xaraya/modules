@@ -3,18 +3,20 @@
     <param>
       <value>
         <struct>
-          <member>
-            <name>categories</name>
-            <value>
-              <array>
-                <data>
-                  <xar:loop name="$categories">
-                    <value><string>#$loop:item.name#</string></value>
-                  </xar:loop>
-                </data>
-              </array>
-            </value>
-          </member>
+          <xar:if condition="!empty($categories)">
+            <member>
+              <name>categories</name>
+              <value>
+                <array>
+                  <data>
+                    <xar:loop name="$categories">
+                      <value><string>#$loop:item.name#</string></value>
+                    </xar:loop>
+                  </data>
+                </array>
+              </value>
+            </member>
+          </xar:if>
           <member>
             <name>dateCreated</name>
             <value>
@@ -38,11 +40,11 @@
           <member>
             <name>link</name>
             <value><string>#$link#</string></value>
-          </member
+          </member>
           <member>
             <name>permaLink</name>
             <value><string>#$link#</string></value>
-          </member
+          </member>
           <member>
             <name>userid</name>
             <value>

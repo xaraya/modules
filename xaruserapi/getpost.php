@@ -32,7 +32,7 @@ function metaweblogapi_userapi_getpost($args)
         $data['dateCreated'] = iso8601_encode($article['pubdate']);
         $data['link']        = xarModUrl('articles','user','display',array('aid' => $postid));
         // Get the categories for this article.
-        $data['categories'] = array();
+        $data['categories'] = array(); $catnames = array();
         if(!empty($article['cids'])) {
             foreach($article['cids'] as $catid) {
                 // Get the base categories for the itemtype (in this context, this means: the blogs)
