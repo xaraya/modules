@@ -15,14 +15,12 @@
  */
 
 /**
- * Utility function to pass individual menu items to the main menu.
- *
- * This function is invoked by the core to retrieve the items for the
- * usermenu.
+ * Helper function to invoke registered functions for Create Hook
  *
  * @returns array
- * @return  array containing the menulinks for the main menu items
+ * @return  array containing possibly modified $extrainfo
  */
+
 
 function hookbridge_hookapi_item_delete ( $args ) 
 {
@@ -31,6 +29,14 @@ function hookbridge_hookapi_item_delete ( $args )
     if (!isset($extrainfo)) {
         $extrainfo = array();
     }
+
+    // Check to see if the site admin has enabled hookbridge for this type of hook
+    $hookenabled_delete = xarModGetVar('hookbridge', 'hookenabled_delete' );
+    if( !$hookenabled_delete )
+    {
+        return $extrainfo;
+    }
+
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
