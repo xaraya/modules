@@ -1,2 +1,64 @@
-<table cellspacing="0" cellpadding="1" width="100%" border="0">
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Ad
+ministration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>View Headlines</xar:mlstring></h2>
+<div align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <th>
+                        #$modnamelabel#
+                </th>
+                <th>
+                        #$categorylabel#
+                </th>
+        <th>
+                        #$itemlabel#
+                </th>
+        <th>
+                        #$numsubscriberslabel#
+                </th>
+        <th>
+                        #$templatelabel#
+                </th>
+        <th>
+                        #$optionslabel#
+                </th>
+        </tr>
+    <xar:loop name="$items">
+    <tr>
+        <td>
+			#$modname#
+  	</td>
+        <td>
+			#$category#
+  	</td>
+        <td>
+			#$item#
+  	</td>
+        <td>
+			#$numsubscribers#
+  	</td>
+        <td>
+			#$template#
+  	</td>
+         <td align="center">[
+           <xar:if condition="empty($editurl)">
+               #$edittitle#
+               <xar:else />
+                   <a href="#$editurl#">#$edittitle#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($deleteurl)">
+               #$deletetitle#
+               <xar:else />
+                   <a href="#$deleteurl#">#$deletetitle#</a>
+           </xar:if> ]
+        </td>
+     </tr>
+     </xar:loop>
 </table>
+</div>
+</div>
+<!-- add the pager here -->
+#$pager#

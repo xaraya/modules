@@ -284,4 +284,58 @@ function pubsub_userapi_delsubscriptions($args)
 
     return true;
 }
+
+/*
+ * Get all events
+ *
+ * @returns array
+ * @return array of events
+*/
+function pubsub_userapi_getall()
+{
+    extract($args);
+    $events = array();
+    if (!xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_READ)) {
+        return $events;
+    }
+
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $modulestable = $xartable['modules'];
+    $categoriestable = $xartable['categories'];
+    $itemstable = $xartable['items'];
+    $pubsubtemplatetable = $xartable['pubsub_template'];
+    $pubsubeventstable = $xartable['pubsub_events'];
+    $pubsubregtable = $xartable['pubsub_reg'];
+
+    $query = "SELECT $modulestable.xar_name AS ModuleName,     
+               $categoriestable.xar_name AS Category,        
+               $itemstable.xar_item_name AS Item,        
+               COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers, 
+               $pubsubtemplatetable.xar_template AS Template        
+       FROM $pubsubeventstable, $modulestable, $categoriestable, $itemstable, $pubsubtemplatetable 
+       WHERE $pubsubeventstable.xar_modid = $modulestable.xar_id AND     
+               $pubsubeventstable.xar_cid = $categoriestable.xar_cid AND     
+               $pubsubeventstable.xar_iid = $itemstable.xar_id       
+               $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid AND
+               $pubsubtemplatetable.xar_eventid = $pubsubeventstable.xar_eventid
+       GROUP BY $pubsubeventstable.xar_eventid 
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($modname, $category, $item, $numsubscribers, $template) = $result->fields;
+        if (xarSecAuthAction(0, 'Pubsub::', "::", ACCESS_READ)) {
+            $events[] = array('modname'        => $modname,
+                             'category'       => $category,
+                             'item'           => $item,
+                             'numsubscribers' => $numsubscribers,
+                             'template'       => $template);
+        }
+    }
+
+    $result->Close();
+
+    return $events;
+}
 ?>

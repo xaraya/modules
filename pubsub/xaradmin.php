@@ -44,16 +44,57 @@ function pubsub_admin_view()
     $data = pubsub_admin_menu();
     $data['items'] = array();
     $data['namelabel'] = xarVarPrepForDisplay(xarMLByKey('PUBSUBNAME'));
+    $data['modnamelabel'] = xarVarPrepForDisplay(xarMLByKey('Module Name'));
+    $data['categorylabel'] = xarVarPrepForDisplay(xarMLByKey('Category'));
+    $data['itemlabel'] = xarVarPrepForDisplay(xarMLByKey('Item'));
+    $data['numsubscriberslabel'] = xarVarPrepForDisplay(xarMLByKey('Number of Subscribers'));
+    $data['templatelabel'] = xarVarPrepForDisplay(xarMLByKey('Template'));
+    $data['optionslabel'] = xarVarPrepForDisplay(xarMLByKey('Options'));
+    $data['authid'] = xarSecGenAuthKey();
     $data['pager'] = '';
 
     if (!xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
-        $msg = xarML('Not authorized to access to #(1)',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
+    // Load API
+    if (!xarModAPILoad('pubsub', 'user')) return;
+    // The user API function is called
+    $events = xarModAPIFunc('pubsub',
+                          'user',
+                          'getall');
+
+    if (empty($events)) return;
     
+    // Check individual permissions for Edit / Delete
+    for ($i = 0; $i < count($events); $i++) {
+        $event = $events[$i];
+        if (xarSecAuthAction(0, 'Pubsub::', "::", ACCESS_EDIT)) {
+            $events[$i]['editurl'] = xarModURL('pubsub',
+                                              'admin',
+                                              'modify',
+                                              array('hid' => $event['hid']));
+        } else {
+            $events[$i]['editurl'] = '';
+        }
+        $events[$i]['edittitle'] = xarML('Edit');
+        if (xarSecAuthAction(0, 'Pubsub::', "::", ACCESS_DELETE)) {
+            $events[$i]['deleteurl'] = xarModURL('pubsub',
+                                                'admin',
+                                                'delete',
+                                                array('hid' => $event['hid']));
+        } else {
+            $events[$i]['deleteurl'] = '';
+        }
+        $events[$i]['deletetitle'] = xarML('Delete');
+    }
+    $data['items'] = $events;
+
+    // TODO: add a pager (once it exists in BL)
+    $data['pager'] = '';
+    
+    // return the template variables defined in this template
+    return $data;   
 }
 /**
  * Main administrative menu labels
