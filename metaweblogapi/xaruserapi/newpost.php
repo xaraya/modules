@@ -19,6 +19,7 @@ function metaweblogapi_userapi_newpost($args)
     $sn4=$msg->getParam(4);  $publish   = $sn4->scalarval();
 
     // Get the members from the struct which represents the content
+    // TODO: move this to an api function
     $sn3=$msg->getParam(3);
     $struct = $sn3->getval();
     
