@@ -97,19 +97,19 @@ function uploads_userapi_db_add_file( $args )
                         xar_store_type,
                         xar_mime_type
                       )
-               VALUES
-                      (
-                        $file_id,
-                        $userId,'" .
-                        xarVarPrepForStore($fileName) . "', '" .
-                        xarVarPrepForStore($fileLocation) . "',
-                        $fileStatus,
-                        $fileSize,
-                        $store_type, '" .
-                        xarVarPrepForStore($fileType) . "'
-                      )";
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $result = &$dbconn->Execute($sql);
+    $bindvars = array((int) $file_id,
+                      (int) $userId,
+                      (string) $fileName, 
+                      (string) $fileLocation, 
+                      (int) $fileStatus,
+                      (int) $fileSize,
+                      (int) $store_type,
+                      (string) $fileType);
+
+    $result = &$dbconn->Execute($sql, $bindvars);
+
 
     if (!$result) {
         return FALSE;
