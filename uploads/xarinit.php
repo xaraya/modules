@@ -51,7 +51,7 @@ function uploads_init()
     $filter['fileStatus']   = '';
     
     $mimetypes =& $data['filters']['mimetypes'];
-    $mimetypes += xarModAPIFunc('mime','user','getall_types');
+    $mimetypes .= xarModAPIFunc('mime','user','getall_types');
 
     xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
     unset($mimetypes);
@@ -389,7 +389,7 @@ function uploads_upgrade($oldversion)
             // Now set up the new ones :)
             xarModSetVar('uploads','path.uploads-directory', $path_uploads_directory);
             xarModSetVar('uploads','path.imports-directory', $path_imports_directory);
-            xarModSetVar('uploads','file.maxsize', ($file_maxsize >= 0) $file_maxsize : 1000000);
+            xarModSetVar('uploads','file.maxsize', ($file_maxsize >= 0) ? $file_maxsize : 1000000);
             xarModSetVar('uploads','file.obfuscate-on-import', ($file_obfuscate_on_import) ? $file_obfuscate_on_import : FALSE);
             xarModSetVar('uploads','file.obfuscate-on-upload', ($file_obfuscate_on_upload) ? $file_obfuscate_on_upload : FALSE);
             xarModSetVar('uploads','file.delete-confirmation', ($file_delete_confirmation) ? $file_delete_confirmation : FALSE);
