@@ -124,8 +124,7 @@ function xarcachemanager_adminapi_deletehook($args)
     }
 
     if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-        //xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
-        @exec('php modules/xarcachemanager/xarscripts/regenerate_static.php > /dev/null &');
+        xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
 
     // Return the extra info

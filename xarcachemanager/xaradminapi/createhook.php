@@ -109,8 +109,7 @@ function xarcachemanager_adminapi_createhook($args)
     }
 
     if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-        //xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
-        @exec('php modules/xarcachemanager/xarscripts/regenerate_static.php > /dev/null &');
+        xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
     
     return $extrainfo;
