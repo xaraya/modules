@@ -152,6 +152,10 @@ function xarbb_userapi_encode_shorturl($args)
             $path .= $join . 'read=' . $read;
             $join = '&';
         } 
+        if (isset($view)) {
+            $path .= $join . 'view=' . $view;
+            $join = '&';
+        } 
         if (!empty($catid)) {
             $path .= $join . 'catid=' . $catid;
             $join = '&';

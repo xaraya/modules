@@ -18,6 +18,30 @@ function xarbb_user_viewtopic()
    // Get parameters from whatever input we need
     if(!xarVarFetch('startnum', 'id', $startnum,1, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('tid', 'id', $tid)) return;
+    if(!xarVarFetch('view', 'str', $view,'', XARVAR_NOT_REQUIRED)) return;
+
+    // redirect to previous/next topic
+    if (!empty($view)) {
+        if ($view == 'next') {
+            $nextid = xarModAPIFunc('xarbb','user','getnexttopicid',
+                                    array('tid' => $tid));
+            if (!isset($nextid)) return;
+            if (!empty($nextid)) {
+                xarResponseRedirect(xarModURL('xarbb','user','viewtopic',
+                                              array('tid' => $nextid)));
+                return true;
+            }
+        } elseif ($view == 'previous' || $view == 'prev') {
+            $previousid = xarModAPIFunc('xarbb','user','getprevioustopicid',
+                                        array('tid' => $tid));
+            if (!isset($previousid)) return;
+            if (!empty($previousid)) {
+                xarResponseRedirect(xarModURL('xarbb','user','viewtopic',
+                                              array('tid' => $previousid)));
+                return true;
+            }
+        }
+    }
 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 

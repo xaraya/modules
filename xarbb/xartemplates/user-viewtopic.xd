@@ -52,6 +52,14 @@
             #$fname# 
         </a>
     </span>
+<xar:comment>
+    FIXME: insert link to previous/next topic here with the right CSS stuff ?
+    <span class="xar-sub">
+    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#"><xar:mlstring>Previous Topic</xar:mlstring></a>
+    |
+    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#"><xar:mlstring>Next Topic</xar:mlstring></a>
+    </span>
+</xar:comment>
 </div>
 <div class="xarbb-tablewrapper">
     <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
@@ -448,6 +456,14 @@
             #$fname# 
         </a>
     </span>
+<xar:comment>
+    FIXME: insert link to previous/next topic here with the right CSS stuff ?
+    <span class="xar-sub">
+    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#"><xar:mlstring>Previous Topic</xar:mlstring></a>
+    |
+    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#"><xar:mlstring>Next Topic</xar:mlstring></a>
+    </span>
+</xar:comment>
     <xar:if condition="!empty($pager)">
         <span class="xar-sub">
             <strong>
