@@ -5,6 +5,7 @@
  *
  * @param $args['itemtype'] item type (optional)
  * @param $args['itemids'] array of item ids to get
+ * @param $args['field'] field to return as label in the list (default 'title')
  * @returns array
  * @return array containing the itemlink(s) for the item(s).
  */
@@ -18,6 +19,17 @@ function articles_userapi_getitemlinks($args)
     }
     // get cids for security check in getall
     $fields = array('aid','title','pubtypeid','cids');
+
+    // make sure we have the title field we want here
+    if (empty($field)) {
+        $field = 'title';
+    } elseif (!in_array($field,$fields)) {
+        $fields[] = $field;
+    }
+    if (empty($sort)) {
+        $sort = null;
+    }
+
 // CHECKME: make sure we don't need other statuses somewhere
     // get approved and frontpage articles only
     $status = array(2, 3);
@@ -26,12 +38,28 @@ function articles_userapi_getitemlinks($args)
                                    'ptid' => $itemtype,
                                    'fields' => $fields,
                                    'status' => $status,
+                                   'sort' => $sort,
                                   )
                             );
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
        return $itemlinks;
     }
 
+    // if we didn't have a list of itemids, return all the articles we found
+    if (empty($itemids)) {
+        foreach ($articles as $article) {
+            $itemid = $article['aid'];
+            if (!isset($article[$field])) continue;
+            $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
+                                                             array('ptid' => $article['pubtypeid'],
+                                                                   'aid' => $article['aid'])),
+                                        'title' => xarML('Display Article'),
+                                        'label' => xarVarPrepForDisplay($article[$field]));
+        }
+        return $itemlinks;
+    }
+
+    // if we had a list of itemids, return only those articles
     $itemid2key = array();
     foreach ($articles as $key => $article) {
         $itemid2key[$article['aid']] = $key;
@@ -39,11 +67,12 @@ function articles_userapi_getitemlinks($args)
     foreach ($itemids as $itemid) {
         if (!isset($itemid2key[$itemid])) continue;
         $article = $articles[$itemid2key[$itemid]];
+        if (!isset($article[$field])) continue;
         $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
                                                                  array('ptid' => $article['pubtypeid'],
                                                                        'aid' => $article['aid'])),
                                             'title' => xarML('Display Article'),
-                                            'label' => xarVarPrepForDisplay($article['title']));
+                                            'label' => xarVarPrepForDisplay($article[$field]));
     }
     return $itemlinks;
 }
