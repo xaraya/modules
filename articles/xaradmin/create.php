@@ -7,7 +7,7 @@ function articles_admin_create()
 {
     // Get parameters
     if (!xarVarFetch('ptid',     'notempty', $ptid)) {return;}
-    if (!xarVarFetch('cids',     'isset',    $cids,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('new_cids', 'isset',    $cids,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('preview',  'isset',    $preview, NULL, XARVAR_DONT_SET)) {return;}
 
     // Confirm authorisation code
