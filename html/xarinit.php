@@ -165,6 +165,14 @@ function html_init()
     xarRegisterMask('DeleteHTML','All','html','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminHTML','All','html','All','All','ACCESS_ADMIN');
 
+    // Set up module hooks
+    if (!xarModRegisterHook('item',
+                           'transform-input',
+                           'API',
+                           'html',
+                           'user',
+                           'transforminput')) return;
+
 
     // Initialisation successful
     return true;
@@ -175,7 +183,24 @@ function html_init()
  */
 function html_upgrade($oldversion)
 {
-    return true;
+
+    // Upgrade dependent on old version number
+    switch ($oldversion) {
+
+        // TODO: version numbers - normalise.
+        case '1.0':
+            // Set up module hooks
+            if (!xarModRegisterHook('item',
+                                   'transform-input',
+                                   'API',
+                                   'html',
+                                   'user',
+                                   'transforminput')) return;
+            return true;
+            break;
+    }
+
+    return false;
 }
 
 /**
