@@ -28,6 +28,7 @@ Various stuff to do:
   make adding links to pages in a document easier, e.g. by matching
   #pagelink:/about/company# using Autolinks, without having to know the ID
   or even the full path of the page.
+- Add copyright notices to all scripts and templates.
 
 - Privileges (registered, but not yet actually used) - DONE
 - Overview of module in the 'admin/main' template - DONE
