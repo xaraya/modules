@@ -19,10 +19,15 @@
 function bloggerapi_admin_updateconfig()
 {
     if (!xarVarFetch('bloggerpubtype','int:1:',$bloggerPubType,'0')) return;
+    if (!xarVarFetch('publishstatus','int:1:',$bloggerStatePublish,'0')) return;
+    if (!xarVarFetch('draftstatus','int:1:',$bloggerStateDraft,'0')) return;
+     
     if (!xarSecConfirmAuthKey()) return;
     if(!xarSecurityCheck('AdminBloggerAPI')) return;
 
     xarModSetVar('bloggerapi','bloggerpubtype',$bloggerPubType);
+    xarModSetVar('bloggerapi','publishstatus',$bloggerStatePublish);
+    xarModSetVar('bloggerapi','draftstatus',$bloggerStateDraft);
 
     // lets update status and display updated configuration
     xarResponseRedirect(xarModURL('bloggerapi', 'admin', 'modifyconfig'));

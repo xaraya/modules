@@ -24,7 +24,43 @@
                 </select>
               </td>
             </tr>
-	  </table>
+            <xar:if condition="!empty($states)">
+            <tr>
+              <td>
+                <xar:mlstring>'Draft' entry mapped to state:</xar:mlstring>
+              </td>
+              <td>
+                <select id="draftstatus" name="draftstatus" tabindex="2">
+                  <xar:foreach in="$states" key="$state_id" value="$state_name">
+                    <xar:if condition="xarModGetVar('bloggerapi','draftstatus') eq $state_id">
+                      <option value="#$state_id#" selected="selected">
+                    <xar:else/>
+                      <option value="#$state_id#">
+                    </xar:if>
+                    #$state_name#
+                  </xar:foreach>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <xar:mlstring>'Published' entry mapped to state:</xar:mlstring>
+              </td>
+              <td>
+                <select id="publishstatus" name="publishstatus" tabindex="2">
+                  <xar:foreach in="$states" key="$state_id" value="$state_name">
+                    <xar:if condition="xarModGetVar('bloggerapi','publishstatus') eq $state_id">
+                      <option value="#$state_id#" selected="selected">
+                    <xar:else/>
+                      <option value="#$state_id#">
+                    </xar:if>
+                    #$state_name#
+                  </xar:foreach>
+                </select>
+              </td>
+            </tr>
+            </xar:if>
+      	  </table>
         </td>
       </tr>
     </table>

@@ -19,13 +19,17 @@
 function bloggerapi_admin_modifyconfig()
 {
     if(!xarSecurityCheck('AdminBloggerAPI')) return;
-
-    // Get the article publication types to link to the blogger api
+    
+    $states = array();
+    // Get the article publication types to link to the bloggerapi
     if (xarModIsAvailable('articles')) {
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         foreach ($pubtypes as $key=>$pubtype) {
             $pubtypes[$key]['ptid']=$key;
         }
+        // Get the states an articles can be be in.
+        $states = xarModAPIFunc('articles','user','getstates');
+        
     } 
     $pubtypes[0]['ptid']=0;
     $pubtypes[0]['name']=xarML('None');
@@ -33,7 +37,8 @@ function bloggerapi_admin_modifyconfig()
     $pubtypes[0]['config']='';
 
     $data['authid']= xarSecGenAuthKey();
-    $data['pubtypes']=$pubtypes;
+    $data['pubtypes'] = $pubtypes;
+    $data['states'] = $states;
     $data['metakeywords'] = htmlspecialchars(xarConfigGetVar('metakeywords'));
     $data['metadescription'] = htmlspecialchars(xarConfigGetVar('metadescription'));
 
