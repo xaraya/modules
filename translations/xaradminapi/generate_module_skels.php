@@ -102,8 +102,8 @@ function translations_adminapi_generate_module_skels($args)
             $parser = new TPLParser();
             $parser->parse("modules/$moddir/xartemplates/$filename");
 
-            $transEntriesCollection['template::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['template::'.$matches[1]] = $parser->getTransKeyEntries();
+            $transEntriesCollection['templates::'.$matches[1]] = $parser->getTransEntries();
+            $transKeyEntriesCollection['templates::'.$matches[1]] = $parser->getTransKeyEntries();
         }
         closedir($dd);
     }
@@ -118,8 +118,8 @@ function translations_adminapi_generate_module_skels($args)
             $parser = new TPLParser();
             $parser->parse("modules/$moddir/xartemplates/includes/$filename");
 
-            $transEntriesCollection['incltempl::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['incltempl::'.$matches[1]] = $parser->getTransKeyEntries();
+            $transEntriesCollection['templateincludes::'.$matches[1]] = $parser->getTransEntries();
+            $transKeyEntriesCollection['templateincludes::'.$matches[1]] = $parser->getTransKeyEntries();
         }
         closedir($dd);
     }
@@ -134,8 +134,8 @@ function translations_adminapi_generate_module_skels($args)
             $parser = new TPLParser();
             $parser->parse("modules/$moddir/xartemplates/blocks/$filename");
 
-            $transEntriesCollection['blktempl::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['blktempl::'.$matches[1]] = $parser->getTransKeyEntries();
+            $transEntriesCollection['templateblocks::'.$matches[1]] = $parser->getTransEntries();
+            $transKeyEntriesCollection['templateblocks::'.$matches[1]] = $parser->getTransKeyEntries();
         }
         closedir($dd);
     }
@@ -150,8 +150,8 @@ function translations_adminapi_generate_module_skels($args)
             $parser = new PHPParser();
             $parser->parse("modules/$moddir/xarblocks/$filename");
 
-            $transEntriesCollection['block::'.$matches[1]] = $parser->getTransEntries();
-            $transKeyEntriesCollection['block::'.$matches[1]] = $parser->getTransKeyEntries();
+            $transEntriesCollection['blocks::'.$matches[1]] = $parser->getTransEntries();
+            $transKeyEntriesCollection['blocks::'.$matches[1]] = $parser->getTransKeyEntries();
         }
         closedir($dd);
     }
@@ -184,35 +184,6 @@ function translations_adminapi_generate_module_skels($args)
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
 // TODO: <marc> it seesm to me that if a file does not exist it should be created, rather than dies
-/*    if ($backend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
-        foreach ($subnames as $subname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_FILE, $subname)) return;
-        }
-        foreach ($tplnames as $tplname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_TEMPLATE, $tplname)) return;
-        }
-        foreach ($incltplnames as $incltplname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_INCLTEMPL, $incltplname)) return;
-        }
-        foreach ($blktplnames as $blktplname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_BLKTEMPL, $blktplname)) return;
-        }
-        foreach ($blocknames as $blockname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_BLOCK, $blockname)) return;
-        }
-        foreach ($adminnames as $adminname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_ADMIN, $adminname)) return;
-        }
-        foreach ($adminapinames as $adminapiname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_ADMINAPI, $adminapiname)) return;
-        }
-        foreach ($usernames as $username) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_USER, $username)) return;
-        }
-        foreach ($userapinames as $userapiname) {
-            if (!$backend->loadContext(XARMLS_CTXTYPE_USERAPI, $userapiname)) return;
-        }
-    }*/
     // Load KEYS
     $filename = "modules/$moddir/KEYS";
     $KEYS = array();
@@ -237,11 +208,11 @@ function translations_adminapi_generate_module_skels($args)
 
         if (preg_match('/^template::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_TEMPLATE, $matches[1])) return;
-        } elseif (preg_match('/^incltempl::(.*)/', $subname, $matches)) {
+        } elseif (preg_match('/^templateincludes::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_INCLTEMPL, $matches[1])) return;
-        } elseif (preg_match('/^blktempl::(.*)/', $subname, $matches)) {
+        } elseif (preg_match('/^templateblocks::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_BLKTEMPL, $matches[1])) return;
-        } elseif (preg_match('/^block::(.*)/', $subname, $matches)) {
+        } elseif (preg_match('/^blocks::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_BLOCK, $matches[1])) return;
         } elseif (preg_match('/^admin::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_ADMIN, $matches[1])) return;

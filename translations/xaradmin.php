@@ -319,14 +319,15 @@ define('RELEASE', 4);
         return;
     }
     $tplData['subnames'] = $backend->getContextNames($context->getType());
+    $tplData['subtype'] = $context->getName();
 
     $opbar = translations_create_opbar(TRANSLATE);
-    $trabar = translations_create_trabar($name, '');
+    $trabar = translations_create_trabar($name, '',$backend);
 
     $tplData = array_merge($tplData, $opbar, $trabar);
     $tplData['dnType'] = translations__dnType2Name($dnType);
 
-    return xarTplModule('translations','admin', 'translate_' . $name,$tplData);
+    return xarTplModule('translations','admin', 'translate_template',$tplData);
 }
 
 /* FUNC */function translations_admin_test()
@@ -446,7 +447,7 @@ function translations_create_opbar($currentOp)
     return array('opLabels'=>$opLabels, 'opURLs'=>$opURLs, 'enabledOps'=>$enabledOps, 'currentOp'=>$currentOp);
 }
 
-function translations_create_trabar($subtype, $subname)
+function translations_create_trabar($subtype, $subname, $backend=NULL)
 {
     $dnType = xarSessionGetVar('translations_dnType');
     $dnName = xarSessionGetVar('translations_dnName');
@@ -477,14 +478,17 @@ function translations_create_trabar($subtype, $subname)
         }
 
 
-        $contexts = $GLOBALS['MLS']->getContexts();
-        foreach ($contexts as $context) {
-            $traLabels[$j] = $context->getLabel();
-            $enabledTras[$j] = true;
-            $traURLs[$j] = xarModURL('translations', 'admin', 'translate_context',array('name'=>$context->getName()));
-            $j++;
+        if ($backend != NULL) {
+            $contexts = $GLOBALS['MLS']->getContexts();
+            foreach ($contexts as $context) {
+                if ($context->getName() != "file" && count($backend->getContextNames($context->getType())) >0) {
+                    $traLabels[$j] = $context->getLabel();
+                    $enabledTras[$j] = true;
+                    $traURLs[$j] = xarModURL('translations', 'admin', 'translate_context',array('name'=>$context->getName()));
+                    $j++;
+                }
+            }
         }
-        // $enabledTras = array(true, true, true, true, true, true, true, true);
 
         if ($subtype !="") {
                 if($subtype =="file") {
