@@ -39,7 +39,8 @@
 
 include_once("modules/bkview/xarincludes/bk.class.php");
 
-function bkview_userapi_search($args) {
+function bkview_userapi_search($args) 
+{
     extract($args);
 
     // We can't do anything without an object id, fail silently by
@@ -64,7 +65,8 @@ function bkview_userapi_search($args) {
    
 }
 
-function _bk_search($repo, $terms,$object_id,$itemtype_id) {
+function _bk_search($repo, $terms,$object_id,$itemtype_id) 
+{
     // Get the raw data
     $matches = $repo->bkSearch($terms,$itemtype_id);
     $results=array();

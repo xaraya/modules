@@ -6,7 +6,7 @@
  * Classes to model bitkeeper repository objects
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2004 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * 
  * @subpackage bkview
@@ -31,14 +31,16 @@ define('BK_NEWLINE_MARKER','<nl/>');
  *  Class to model a repository
  *
  */
-class bkRepo {
+class bkRepo 
+{
     var $_root;     // where is the root of the repository
     var $_desc;     // what is the description of the repository
     var $_config;   // array with the configuration parameters
     var $_tagcsets; // array with the csets which have tags
     
     // Constructor
-    function bkRepo($root='') {
+    function bkRepo($root='') 
+    {
         if ($root!='') {
             $this->_root=$root;
             $this->_getconfig();
@@ -51,14 +53,17 @@ class bkRepo {
     }
     
     // FIXME: protect this somehow, so no arbitrary commands can be run.
-    function _run($cmd='echo "No command given.."') {
+    function _run($cmd='echo "No command given.."') 
+    {
         // Save the current directory
         $savedir = getcwd();
         chdir($this->_root);
         
         $out=array();$retval='';
         $out = shell_exec($cmd);
-        xarLogMessage("BK: $cmd");
+        if(function_exists('xarLogMessage')) {
+            xarLogMessage("BK: $cmd");
+        }
         $out = str_replace("\r\n","\n",$out);
         $out = explode("\n", $out);
         $out = array_filter($out,'notempty');
@@ -68,7 +73,8 @@ class bkRepo {
     }
     
     // Private method
-    function _getconfig() {
+    function _getconfig() 
+    {
         // Read configuration of this repository and store in properties
         $config=$this->_root."/BitKeeper/etc/config";
         $cmd = "bk get -qS $config";
@@ -95,18 +101,21 @@ class bkRepo {
     
     
     // Operations on a repository
-    function bkGetConfigVar($var='name') {
+    function bkGetConfigVar($var='name') 
+    {
         return $this->_config[$var];
     }
     
-    function bkChangeSet($file,$rev) {
+    function bkChangeSet($file,$rev) 
+    {
         $file = __fileproper($file);
         $cmd="bk r2c -r".$rev." ".$file;
         $cset = $this->_run($cmd);
         return $cset;
     } 
     
-    function bkGetChangeSets($range='',$merge=false,$user='') {
+    function bkGetChangeSets($range='',$merge=false,$user='') 
+    {
         $params='';
         if ($user!='') {
             $params .= " -u$user ";
@@ -124,14 +133,16 @@ class bkRepo {
 
     }
     // Changeset counts
-    function bkCountChangeSets($range='',$merge=false,$user='') {
+    function bkCountChangeSets($range='',$merge=false,$user='') 
+    {
         $out = $this->bkGetChangeSets($range,$merge,$user);
         
         return count($out);
     }
 
     // Count the number of changed lines in a list of changesets
-    function bkCountChangedLines($csets = Array()) {
+    function bkCountChangedLines($csets = Array()) 
+    {
         $lines=0;
         foreach ($csets as $cset) {
             $cmd="bk prs -r$cset -d\":LI:\"";
@@ -144,7 +155,8 @@ class bkRepo {
     }
 
     // Get changesets
-    function bkChangeSets($revs, $range,$dspec='\":REV:\",\":C:\"',$showmerge='',$sort=0,$user='') {
+    function bkChangeSets($revs, $range,$dspec='\":REV:\",\":C:\"',$showmerge='',$sort=0,$user='') 
+    {
         // FIXME: apparently -e and -r don't work together
         // FIXME: This sets too many non logical restrictions on how dspec should look
         $params='-n ';
@@ -166,7 +178,8 @@ class bkRepo {
         return $this->_run($cmd);
     }
     
-    function bkGetUsers() {
+    function bkGetUsers() 
+    {
         $cmd="bk users";
 
         //Although bk treats users only by the username, which is present
@@ -194,7 +207,8 @@ class bkRepo {
         return $users;
     }
     
-    function bkDirList($dir='/') {
+    function bkDirList($dir='/') 
+    {
         // First construct the array elements for directories
         $ret=array();
         $savedir = getcwd();
@@ -212,14 +226,16 @@ class bkRepo {
         return $ret;
     }
     
-    function bkFileList($dir='/') {
+    function bkFileList($dir='/') 
+    {
         $cmd="bk prs -hn -r+ -d':TAG:|:GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
         $filelist = $this->_run($cmd);
         asort($filelist);
         return $filelist;
     }
 
-    function bkGetId($type='package') {
+    function bkGetId($type='package') 
+    {
         if($type =='package') {
             $cmd="bk id";
         } else {
@@ -229,7 +245,8 @@ class bkRepo {
         return $package_id;
     }
 
-    function bkSearch($term,$what_to_search = BK_SEARCH_CSET) {
+    function bkSearch($term,$what_to_search = BK_SEARCH_CSET) 
+    {
         $result = array();
         switch($what_to_search) {
         case BK_SEARCH_CSET:
@@ -249,7 +266,8 @@ class bkRepo {
         return $result;
     }
     
-    function bkGetStats($user='') {
+    function bkGetStats($user='') 
+    {
         $params = '';
         if($user!='') {
             $params.='-u'.$user.' ';
@@ -273,12 +291,14 @@ class bkRepo {
 }
 
 // Class to model a changeset
-class bkChangeSet  {
+class bkChangeSet  
+{
     var $_repo;   // in which repository is this changeset?
     var $_rev;    // which changeset to instantiate?
     var $_deltas; // array of file/rev combos which hold the deltas in this cset
     
-    function bkChangeset($repo,$rev='+') {
+    function bkChangeset($repo,$rev='+') 
+    {
         $this->_repo=$repo;
         $this->_rev=$rev;   // changeset revision number
         // Fill delta array with identification of deltas
@@ -287,7 +307,8 @@ class bkChangeSet  {
     }
     
     // Private function to initialize delta array
-    function _deltas() {
+    function _deltas() 
+    {
         $cmd="bk changes -vn -r".$this->_rev." -d':GFILE:|:REV:'";
         $tmp = $this->_repo->_run($cmd);
         while (list(,$did) = each($tmp)) {
@@ -298,23 +319,27 @@ class bkChangeSet  {
         }
     }
     
-    function bkDeltaList() {
+    function bkDeltaList() 
+    {
         return $this->_deltas;
     }
     
    
-    function bkDeltas($formatstring="':GFILE:|:REV:'") {
+    function bkDeltas($formatstring="':GFILE:|:REV:'") 
+    {
         $cmd="bk changes -vn -r".$this->_rev." -d$formatstring";
         return $this->_repo->_run($cmd);
     }
     
-    function bkRev() {
+    function bkRev() 
+    {
         return $this->_rev;
     }
 }
 
 // Class to model a delta
-class bkDelta {
+class bkDelta 
+{
     var $_cset;     // in which cset is this delta
     var $_file;     // which file
     var $_rev;      // what revision?
@@ -323,7 +348,8 @@ class bkDelta {
     var $_domain;   // from where?
     var $_comments; // what were the comments?
     
-    function bkDelta($cset='',$file,$rev) {
+    function bkDelta($cset='',$file,$rev) 
+    {
         $file = __fileproper($file);
         $this->_file=$file;
         $this->_rev=$rev;
@@ -338,33 +364,39 @@ class bkDelta {
         $this->_comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
     }
     
-    function bkDiffs() {
+    function bkDiffs() 
+    {
         $cmd="bk diffs -hu -R".$this->_rev." ".$this->_file;
         return $this->_cset->_repo->_run($cmd);
     }
     
-    function bkAnnotate() {
+    function bkAnnotate() 
+    {
         $cmd="bk annotate -aum -r".$this->_rev." ".$this->_file;
         return $this->_cset->_repo->_run($cmd);
     }
     
-    function bkFile() {
+    function bkFile() 
+    {
         return $this->_file;
     }
     
-    function bkRev() {
+    function bkRev() 
+    {
         return $this->_rev;
     }
 }
 
 /* Class to model a file in the repository */
-class bkFile {
+class bkFile 
+{
     var $_repo;               // in which repository is this file?
     var $_file;               // filename
     var $_csets = array();   // array of csets in which deltas of this file were
     var $_tagrevs;            // array of revision numbers->csets which have tags and this file was in it
     
-    function bkFile($repo,$file='ChangeSet') {
+    function bkFile($repo,$file='ChangeSet') 
+    {
         $this->_repo=$repo;
         // if / is first char, strip it
         $this->_file = (substr($file,0,1) =='/')?substr($file,1):$file;
@@ -383,19 +415,22 @@ class bkFile {
         return $this;
     }
     
-    function bkHistory($formatstring) {
+    function bkHistory($formatstring) 
+    {
         $cmd="bk prs -nh -d$formatstring ".$this->_file;
         return $this->_repo->_run($cmd);
     }
     
-    function bkChangeSets() {
+    function bkChangeSets() 
+    {
         if(!empty($this->_csets)) return $this->_csets;
         
         $cmd="bk f2csets $this->_file";
         return $this->_repo->_run($cmd);
     }
     
-    function bkTag($rev) {
+    function bkTag($rev) 
+    {
         // Because the ChangeSet file has all tags, it's kinda silly to include it
         // besides, nobody is interested in the ChangeSet file but me
         if ($this->_file != "/ChangeSet") {
@@ -423,12 +458,14 @@ class bkFile {
  * callback function for the array_filter on line 46
  *
  */
-function notempty($item) {
+function notempty($item) 
+{
     return (strlen($item)!=0);
 }
 
 
-function __fileproper($file) {
+function __fileproper($file) 
+{
     if(substr($file,0,1) == "/") {
         $file=substr($file,1,strlen($file)-1);
     }
@@ -440,7 +477,8 @@ function __fileproper($file) {
  *
  * Currently maintained on ad-hoc basis
  */
-function bkRangeToText($range='') {
+function bkRangeToText($range='') 
+{
   // FIXME: this is FAR FROM COMPLETE
   $text='';
   if ($range=='') return '';

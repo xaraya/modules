@@ -81,3 +81,4 @@ function bkview_user_downloadfile($args)
     // in the module area with inline if we can.
     exit();
 }
+?>

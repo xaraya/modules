@@ -71,7 +71,8 @@ function bkview_user_statsview($args)
  * Utility function to sort multidimensional array
  *
  */
-function array_csort($marray, $column, $flags) {
+function array_csort($marray, $column, $flags) 
+{
  foreach ($marray as $row) {
    $sortarr[] = $row[$column];
  }

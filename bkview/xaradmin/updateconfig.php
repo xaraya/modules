@@ -12,7 +12,8 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function bkview_admin_updateconfig($args) {
+function bkview_admin_updateconfig($args) 
+{
     
     // Get the variables
     xarVarFetch('enablesearch','str::',$enablesearch,"");
@@ -37,3 +38,4 @@ function bkview_admin_updateconfig($args) {
     xarResponseRedirect(xarModUrl('bkview','admin','modifyconfig'));
     return true; 
 }
+?>

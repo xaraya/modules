@@ -48,3 +48,4 @@ function bkview_adminapi_getmenulinks()
     return $menulinks;
 }
   
+?>

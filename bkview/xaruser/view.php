@@ -44,3 +44,4 @@ function bkview_user_view()
     $data['pageinfo']=xarML('View available bitkeeper repositories');
     return $data;
 }
+?>

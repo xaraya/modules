@@ -23,3 +23,4 @@ function bkview_user_main()
     $data = xarModFunc('bkview','user','view');
     return $data;
 }
+?>

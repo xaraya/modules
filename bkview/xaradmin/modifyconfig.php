@@ -15,7 +15,8 @@
 */
 
 
-function bkview_admin_modifyconfig() {
+function bkview_admin_modifyconfig() 
+{
     $data = array();
 
     // Check whether the search functionality is enabled
@@ -31,3 +32,4 @@ function bkview_admin_modifyconfig() {
     $data['formaction'] = xarModUrl('bkview','admin','updateconfig');
     return $data;
 }
+?>
