@@ -4,9 +4,11 @@
 <h3><xar:ml><xar:mlstring>Export Definition for #(1)</xar:mlstring><xar:mlvar>#$descr#</xar:mlvar></xar:ml></h3>
 
 <form>
+<p>
 <textarea name="xml" rows="30" cols="80">
 #$xml#
 </textarea>
+</p>
 </form>
 
 </div>

@@ -4,6 +4,7 @@
 <xar:if condition="isset($action) and $action eq 'new'">
 <h3 style="text-align: left;"><xar:mlstring>New Publication Type</xar:mlstring></h3>
 <form method="post" action="#$link#">
+<div>
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <table width="100%" border="0" cellpadding="2" cellspacing="0">
     <tr>
@@ -20,11 +21,11 @@
 
 <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
     <tr>
-        <th><xar:mlstring>Field</xar:mlstring></td>
-        <th><xar:mlstring>Label</xar:mlstring></td>
-        <th><xar:mlstring>Format</xar:mlstring></td>
-        <th><xar:mlstring>Input</xar:mlstring></td>
-        <th><xar:mlstring>Type</xar:mlstring></td>
+        <th><xar:mlstring>Field</xar:mlstring></th>
+        <th><xar:mlstring>Label</xar:mlstring></th>
+        <th><xar:mlstring>Format</xar:mlstring></th>
+        <th><xar:mlstring>Input</xar:mlstring></th>
+        <th><xar:mlstring>Type</xar:mlstring></th>
     </tr>
     <xar:foreach in="$fields" value="$field">
     <tr>
@@ -38,12 +39,14 @@
 </table>
 <p><xar:mlstring><b>Note:</b> articles of this publication type will use the templates <i>user-display-[publicationtype].xd</i> and <i>user-summary-[publicationtype].xd</i> by default.<br />Don't forget to provide those templates before trying to add new articles...</xar:mlstring></p>
 <br /><input type="submit" value="#$buttonlabel#" />
+</div>
 </form>
 </xar:if>
 
 <xar:if condition="isset($action) and $action eq 'modify'">
 <h3 style="text-align: left;"><xar:mlstring>Edit Publication Type</xar:mlstring></h3>
 <form method="post" action="#$link#">
+<div>
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
 <table width="100%" border="0" cellpadding="2" cellspacing="0">
@@ -60,11 +63,11 @@
 (<xar:mlstring>leave Label empty if you don't want to use a field</xar:mlstring>)</p>
 <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
     <tr>
-        <th><xar:mlstring>Field</xar:mlstring></td>
-        <th><xar:mlstring>Label</xar:mlstring></td>
-        <th><xar:mlstring>Format</xar:mlstring></td>
-        <th><xar:mlstring>Input</xar:mlstring></td>
-        <th><xar:mlstring>Type</xar:mlstring></td>
+        <th><xar:mlstring>Field</xar:mlstring></th>
+        <th><xar:mlstring>Label</xar:mlstring></th>
+        <th><xar:mlstring>Format</xar:mlstring></th>
+        <th><xar:mlstring>Input</xar:mlstring></th>
+        <th><xar:mlstring>Type</xar:mlstring></th>
     </tr>
     <xar:foreach in="$fields" value="$field">
     <tr>
@@ -77,6 +80,7 @@
     </xar:foreach>
 </table>
 <br /><input type="submit" value="#$buttonlabel#" />
+</div>
 </form>
 <h3 style="text-align: left;"><a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#"><xar:mlstring>Export Definition to XML</xar:mlstring></a></h3>
 </xar:if>
@@ -84,6 +88,7 @@
 <xar:if condition="isset($action) and $action eq 'delete'">
 <h3><xar:mlstring>Delete this Publication Type?</xar:mlstring></h3>
 <form method="post" action="#$link#">
+<div>
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
 <table border="0" cellpadding="2" cellspacing="0" style="margin: auto;">
@@ -98,6 +103,7 @@
 </table>
 <br /><input type="submit" value="#$buttonlabel#" /><br /><br />
 <a href="&xar-modurl-articles-admin-pubtypes;"><xar:mlstring>Cancel Delete</xar:mlstring></a>
+</div>
 </form>
 </xar:if>
 

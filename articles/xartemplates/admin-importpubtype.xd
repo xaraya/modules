@@ -7,6 +7,7 @@
 <br />
 
 <form method="post" action="#xarModURL('articles','admin','importpubtype')#">
+<p>
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <xar:mlstring>Filter</xar:mlstring> : <b>modules/articles/*.xml</b><br /><br />
 <xar:mlstring>File</xar:mlstring> :
@@ -20,6 +21,7 @@
 <br /><br />
 <xar:mlstring>Select a file in the list above, or paste the definition in here</xar:mlstring> :<br/>
 <textarea name="xml" id="xml" rows="30" cols="80"></textarea>
+</p>
 </form>
 </div>
 </div>

@@ -11,6 +11,7 @@
 </xar:foreach></p>
 
 <form method="post" action="&xar-modurl-articles-admin-updateconfig;">
+<div>
 <input type="hidden" name="authid" id="authid"value="#$authid#" />
 <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
 
@@ -213,6 +214,7 @@
     </tr>
 
 </table>
+</div>
 </form>
 </div>
 </div>

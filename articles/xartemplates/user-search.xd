@@ -3,6 +3,7 @@
     <table border="0" cellpadding="4" cellspacing="0">
 <xar:if condition="empty($ishooked)">
 <form method="post" action="&xar-modurl-articles-user-search;">
+<div>
     <tr>
         <td><label for="q"><xar:mlstring>Search for</xar:mlstring></label></td>
         <td><input type="text" name="q" id="q" value="#$q#" size="20" />
@@ -63,6 +64,7 @@
     </table>
 </xar:if>
 <xar:if condition="empty($ishooked)">
+  </div>
   </form>
 </xar:if>
 

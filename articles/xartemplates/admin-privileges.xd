@@ -3,6 +3,7 @@
 <div style="margin: auto;">
 
 <form method="post" action="&xar-modurl-articles-admin-privileges;">
+<div>
     <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
     <input type="hidden" name="extname" id="extname" value="#$extname#" />
     <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
@@ -114,6 +115,7 @@
 (Instance Definition #$extinstance#)
 <br /><br />
 <input type="submit" name="apply" value="#$applylabel#" />
+</div>
 </form>
 <br />
 

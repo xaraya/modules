@@ -17,11 +17,13 @@
 
 <table border="0" cellpadding="3" width="100%">
 <form method="post" action="#$curlink#">
+<div>
 <tr>
     <xar:foreach in="$catsel" value="$sel">
         <td>#$sel#</td>
     </xar:foreach>
 </tr>
+</div>
 </form>
 <tr>
     <xar:foreach in="$catlist" value="$cat">

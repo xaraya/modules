@@ -85,7 +85,7 @@
             (#$pubtype['pubcount']#)
         </xar:if>
         </div>
-        <ul>
+        <div style="padding-left: 3em"><p>
         <xar:foreach in="$pubtype['cats']" value="$childcats">
             <xar:foreach in="$childcats" value="$cat">
                 #$cat['beforetags']#
@@ -100,7 +100,7 @@
                #$cat['aftertags']#
             </xar:foreach>
         </xar:foreach>
-        </ul>
+        </p></div>
         </div><br />
     </xar:foreach>
 
