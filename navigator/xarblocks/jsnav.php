@@ -1,23 +1,25 @@
 <?php
 /**
- * chsfmenunav 
+ * jsnav
  * modification of the base/menu block to
  * use DHTML-Menu for layout
  * Based on:
       - basic menu block of Xaraya
- *    - chsfmenunav-block from the Content Express module for Postnuke 
+ *    - jsnav-block from the Content Express module for Postnuke
  *      http://xexpress.sourceforge.net
- *    - DHTML Functionality: 
+ *    - DHTML Functionality:
           HVMenu by Ger Versluis http://www.burmees.nl
- * 
- * CHSF Content Navigation Block
+ *    - Additional Modifications by Carl P. Corliss
+ *
+ * Navigator Block
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2004 by the Schwab Foundation
  * @link http://wwwk.schwabfoundation.org
  *
- * @subpackage chsfnav module
+ * @subpackage navigator
  * @author Richard Cave <caveman : rcave@xaraya.com>
+ * @author Carl P. Corliss <ccorliss@schwabfoundation.org>
 */
 
 /**
@@ -29,7 +31,7 @@
  * @throws  no exceptions
  * @todo    nothing
 */
-function chsfnav_chsfmenunavblock_init()
+function navigator_jsnavblock_init()
 {
     return true;
 }
@@ -43,11 +45,11 @@ function chsfnav_chsfmenunavblock_init()
  * @throws  no exceptions
  * @todo    nothing
 */
-function chsfnav_chsfmenunavblock_info()
+function navigator_jsnavblock_info()
 {
-    return array('text_type' => 'CHSFMenu',
-         'module' => 'chsfnav',
-         'text_type_long' => 'CHSF Javascript Menu',
+    return array('text_type' => 'NavigatorMenu',
+         'module' => 'navigator',
+         'text_type_long' => 'Navigator Javascript Menu',
          'allow_multiple' => false,
          'form_content' => false,
          'form_refresh' => false,
@@ -63,36 +65,37 @@ function chsfnav_chsfmenunavblock_info()
  * @throws  no exceptions
  * @todo    implement centre and right menu position
 */
-function chsfnav_chsfmenunavblock_display($blockinfo)
-{  
+function navigator_jsnavblock_display($blockinfo)
+{
     // Security Check
     if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"menu:$blockinfo[title]:All")) return;
 
-    $param_cache = xarCoreGetVarDirPath() . "/cache/chsfmenunav_par_$blockinfo[bid].js";
-    $cache = xarCoreGetVarDirPath() . "/cache/chsfmenunav_$blockinfo[bid].js";
-    
+    $param_cache = xarCoreGetVarDirPath() . "/cache/jsnav_conf_$blockinfo[name].js";
+    $cache = xarCoreGetVarDirPath() . "/cache/jsnav_$blockinfo[name].js";
+
     // Get current content
     $vars = unserialize($blockinfo['content']);
 
     if (empty($blockinfo['template'])) {
-        $template = 'chsfmenunav';
+        $template = 'jsnav';
     } else {
         $template = $blockinfo['template'];
     }
-        
-    $width = xarModGetVar('chsfnav', 'jmbwidth') * $vars['menumaxwidth'];
-    $height = xarModGetVar('chsfnav', 'jmbheight') * $vars['menumaxheight'];
-      
-    //set flag that chsfmenunav block has been defined
+
+    $width = xarModGetVar('navigator', 'jmbwidth') * $vars['menumaxwidth'];
+    $height = xarModGetVar('navigator', 'jmbheight') * $vars['menumaxheight'];
+
+    //set flag that jsnav block has been defined
     //for conditional include of the main javascript file for the menu at the end of the theme
-    xarVarSetCached('Base.blocks','chsfmenunav',true);
-        
-    $data = xarTplBlock('chsfnav',$template, array('param_cache' => $param_cache,
-                                                   'targetloc'   => $vars['targetloc'],
-                                                   'cache'       => $cache,
-                                                   'width'       => $width,
-                                                   'height'      => $height));
-              
+    xarVarSetCached('Base.blocks','jsnav',true);
+
+    $data = xarTplBlock('navigator',$template,
+                         array('param_cache' => $param_cache,
+                               'targetloc'   => $vars['targetloc'],
+                               'cache'       => $cache,
+                               'width'       => $width,
+                               'height'      => $height));
+
     // Return data, not rendered content.
     $blockinfo['content'] = $data;
 
@@ -111,7 +114,7 @@ function chsfnav_chsfmenunavblock_display($blockinfo)
  * @throws  no exceptions
  * @todo    nothing
 */
-function chsfnav_chsfmenunavblock_modify($blockinfo)
+function navigator_jsnavblock_modify($blockinfo)
 {
     // Break out options from our content field
     $vars = unserialize($blockinfo['content']);
@@ -154,10 +157,10 @@ function chsfnav_chsfmenunavblock_modify($blockinfo)
     if (empty($vars['bordersubcolor'])) {
         $vars['bordersubcolor']='#000000'; // Border color for subs
     }
-    if (empty($vars['borderwidth'])) {
+    if (!isset($vars['borderwidth']) || !is_numeric($vars['borderwidth'])) {
         $vars['borderwidth']=1; // Border width
     }
-    if (empty($vars['borderbtwnelmnts'])) {
+    if (!isset($vars['borderbtwnelmnts']) || !is_numeric($vars['borderbtwnelmnts'])) {
         $vars['borderbtwnelmnts']=1; // Border between elements 1 or 0
     }
     if (empty($vars['fontfamily'])) {
@@ -166,10 +169,10 @@ function chsfnav_chsfmenunavblock_modify($blockinfo)
     if (empty($vars['fontsize'])) {
         $vars['fontsize']=9; // Font size menu items
     }
-    if (empty($vars['fontbold'])) {
+    if (!isset($vars['fontbold']) || !is_numeric($vars['fontbold'])) {
         $vars['fontbold']=1; // Bold menu items 1 or 0
     }
-    if (empty($vars['fontitalic'])) {
+    if (!isset($vars['fontitalic']) || !is_numeric($vars['fontitalic'])) {
         $vars['fontitalic']=0; // Italic menu items 1 or 0
     }
     if (empty($vars['menutextcentered'])) {
@@ -199,6 +202,15 @@ function chsfnav_chsfmenunavblock_modify($blockinfo)
     if (empty($vars['startleft'])) {
         $vars['startleft']=0; // Menu offset y coordinate
     }
+    if (!isset($vars['hidetop']) || !is_numeric($vars['hidetop'])) {
+        $vars['hidetop']=0; // SET TO 1 FOR HORIZONTAL MENU, 0 FOR VERTICAL
+    }
+    if (!isset($vars['menuwrap']) || !is_numeric($vars['menuwrap'])) {
+        $vars['menuwrap']=0; // SET TO 1 FOR HORIZONTAL MENU, 0 FOR VERTICAL
+    }
+    if (!isset($vars['righttoleft']) || !is_numeric($vars['righttoleft'])) {
+        $vars['righttoleft']=0; // SET TO 1 FOR HORIZONTAL MENU, 0 FOR VERTICAL
+    }
     if (empty($vars['vercorrect'])) {
         $vars['vercorrect']=0; // Multiple frames y correction
     }
@@ -211,19 +223,19 @@ function chsfnav_chsfmenunavblock_modify($blockinfo)
     if (empty($vars['toppadding'])) {
         $vars['toppadding']=2; // Top padding
     }
-    if (empty($vars['firstlinehorizontal'])) {
+    if (!isset($vars['firstlinehorizontal']) || !is_numeric($vars['firstlinehorizontal'])) {
         $vars['firstlinehorizontal']=0; // SET TO 1 FOR HORIZONTAL MENU, 0 FOR VERTICAL
-    }    
+    }
     if (empty($vars['targetloc'])) {
         $vars['targetloc']=''; // span id for relative positioning
-    }      
+    }
     if (empty($vars['disappeardelay'])) {
         $vars['disappeardelay']=1000; // delay before menu folds in
-    }    
+    }
     if (empty($vars['unfoldsonclick'])) {
         $vars['unfoldsonclick']=0; // Level 1 unfolds onclick/ onmouseover
     }
-    if (empty($vars['webmastercheck'])) {
+    if (!isset($vars['webmastercheck']) || !is_numeric($vars['webmastercheck'])) {
         $vars['webmastercheck']=0; // menu tree checking on or off 1 or 0
     }
     if (empty($vars['keephilite'])) {
@@ -236,7 +248,7 @@ function chsfnav_chsfmenunavblock_modify($blockinfo)
         $vars['arrowgif']['name']='tri.gif'; // Arrow gif
         $vars['arrowgif']['width']=5; // Arrow gif width
         $vars['arrowgif']['height']=10; // Arrow gif height
-    }    
+    }
     if (empty($vars['downarrowgif']['name'])) {
         $vars['downarrowgif']['name']='tridown.gif'; // Down arrow gif
         $vars['downarrowgif']['width']=5; // Down arrow gif width
@@ -248,18 +260,18 @@ function chsfnav_chsfmenunavblock_modify($blockinfo)
         $vars['leftarrowgif']['height']=10; // Left arrow gif height
     }
 
-    
+
     // Prepare output array
     if (!empty($vars['menu'])) {
         $menulines = explode("LINESPLIT", $vars['menu']);
         $vars['menulines'] = array();
         foreach ($menulines as $menuline) {
             $link = explode('|', $menuline);
-            $vars['menulines'][] = $link; 
+            $vars['menulines'][] = $link;
         }
     }
-    
-    return xarTplBlock('chsfnav', 'chsfmenunavadmin', $vars);
+
+    return xarTplBlock('navigator', 'jsnavadmin', $vars);
 }
 
 /**
@@ -271,7 +283,7 @@ function chsfnav_chsfmenunavblock_modify($blockinfo)
  * @throws  no exceptions
  * @todo    nothing
 */
-function chsfnav_chsfmenunavblock_update($blockinfo)
+function navigator_jsnavblock_update($blockinfo)
 {
     xarVarFetch('menumaxheight',        'isset', $vars['menumaxheight'],20);
     xarVarFetch('menumaxwidth',         'isset', $vars['menumaxwidth'],150);
@@ -298,18 +310,21 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
     xarVarFetch('childverticaloverlap', 'isset', $vars['childverticaloverlap'],0);
     xarVarFetch('starttop',             'isset', $vars['starttop'],0);
     xarVarFetch('startleft',            'isset', $vars['startleft'],0);
+    xarVarFetch('hidetop',              'isset', $vars['hidetop'],0);
+    xarVarFetch('menuwrap',             'isset', $vars['menuwrap'],0);
+    xarVarFetch('righttoleft',          'isset', $vars['righttoleft'],0);
     xarVarFetch('vercorrect',           'isset', $vars['vercorrect'],0);
     xarVarFetch('horcorrect',           'isset', $vars['horcorrect'],0);
     xarVarFetch('leftpadding',          'isset', $vars['leftpadding'],3);
-    xarVarFetch('toppadding',           'isset', $vars['toppadding'],2);     
+    xarVarFetch('toppadding',           'isset', $vars['toppadding'],2);
     xarVarFetch('targetloc',            'isset', $vars['targetloc'],'');
     xarVarFetch('disappeardelay',       'isset', $vars['disappeardelay'],1000);
     xarVarFetch('firstlinehorizontal',  'isset', $vars['firstlinehorizontal'],0);  // 1 - horizontal, 0 - vertical
     xarVarFetch('unfoldsonclick',       'isset', $vars['unfoldsonclick'],0);
     xarVarFetch('webmastercheck',       'isset', $vars['webmastercheck'],0);
     xarVarFetch('showarrow',            'isset', $vars['showarrow'],0);
-    xarVarFetch('keephilite',           'isset', $vars['keephilite'],0);    
-    
+    xarVarFetch('keephilite',           'isset', $vars['keephilite'],0);
+
     xarVarFetch('arrowgifname',         'isset', $vars['arrowgif']['name'],'tri.gif');
     xarVarFetch('arrowgifwidth',        'isset', $vars['arrowgif']['width'],5);
     xarVarFetch('arrowgifheight',       'isset', $vars['arrowgif']['height'],10);
@@ -318,11 +333,12 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
     xarVarFetch('downarrowgifheight',   'isset', $vars['downarrowgif']['height'],10);
     xarVarFetch('leftarrowgifname',     'isset', $vars['leftarrowgif']['name'],'tri.gif');
     xarVarFetch('leftarrowgifwidth',    'isset', $vars['leftarrowgif']['width'],5);
-    xarVarFetch('leftarrowgifheight',   'isset', $vars['leftarrowgif']['height'],10);  
+    xarVarFetch('leftarrowgifheight',   'isset', $vars['leftarrowgif']['height'],10);
 
-    $param_cache = xarCoreGetVarDirPath() . "/cache/chsfmenunav_par_$blockinfo[bid].js";
-    $cache = xarCoreGetVarDirPath() . "/cache/chsfmenunav_$blockinfo[bid].js";
+    $param_cache = xarCoreGetVarDirPath() . "/cache/jsnav_conf_$blockinfo[name].js";
+    $cache = xarCoreGetVarDirPath() . "/cache/jsnav_$blockinfo[name].js";
 
+    //xarDerefData('$vars', $vars, TRUE);
     // Write parameter cache file
     if( file_exists( $param_cache )) {
         unlink( $param_cache );
@@ -330,47 +346,47 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
 
     if( $fh = @fopen( $param_cache, "w" )) {
         // Dump the settings from $vars
-        fwrite( $fh, "var LowBgColor=\"$vars[lowbgcolor]\";\n" );
-        fwrite( $fh, "var LowSubBgColor=\"$vars[lowsubbgcolor]\";\n" );
-        fwrite( $fh, "var HighBgColor=\"$vars[highbgcolor]\";\n" );
-        fwrite( $fh, "var HighSubBgColor=\"$vars[highsubbgcolor]\";\n" );
-        fwrite( $fh, "var FontLowColor=\"$vars[fontlowcolor]\";\n" );
-        fwrite( $fh, "var FontSubLowColor=\"$vars[fontsublowcolor]\";\n" );
-        fwrite( $fh, "var FontHighColor=\"$vars[fonthighcolor]\";\n" );
-        fwrite( $fh, "var FontSubHighColor=\"$vars[fontsubhighcolor]\";\n" );
-        fwrite( $fh, "var BorderColor=\"$vars[bordercolor]\";\n" );
-        fwrite( $fh, "var BorderSubColor=\"$vars[bordersubcolor]\";\n" );
+        fwrite( $fh, "var LowBgColor='$vars[lowbgcolor]';\n" );
+        fwrite( $fh, "var LowSubBgColor='$vars[lowsubbgcolor]';\n" );
+        fwrite( $fh, "var HighBgColor='$vars[highbgcolor]';\n" );
+        fwrite( $fh, "var HighSubBgColor='$vars[highsubbgcolor]';\n" );
+        fwrite( $fh, "var FontLowColor='$vars[fontlowcolor]';\n" );
+        fwrite( $fh, "var FontSubLowColor='$vars[fontsublowcolor]';\n" );
+        fwrite( $fh, "var FontHighColor='$vars[fonthighcolor]';\n" );
+        fwrite( $fh, "var FontSubHighColor='$vars[fontsubhighcolor]';\n" );
+        fwrite( $fh, "var BorderColor='$vars[bordercolor]';\n" );
+        fwrite( $fh, "var BorderSubColor='$vars[bordersubcolor]';\n" );
         fwrite( $fh, "var BorderWidth=$vars[borderwidth];\n" );
         fwrite( $fh, "var BorderBtwnElmnts=$vars[borderbtwnelmnts];\n" );
-        fwrite( $fh, "var FontFamily=\"$vars[fontfamily]\";\n" );
+        fwrite( $fh, "var FontFamily='$vars[fontfamily]';\n" );
         fwrite( $fh, "var FontSize=$vars[fontsize];\n" );
         fwrite( $fh, "var FontBold=$vars[fontbold];\n" );
         fwrite( $fh, "var FontItalic=$vars[fontitalic];\n" );
-        fwrite( $fh, "var MenuTextCentered=\"$vars[menutextcentered]\";\n" );
-        fwrite( $fh, "var MenuCentered=\"$vars[menucentered]\";\n" );
-        fwrite( $fh, "var MenuVerticalCentered=\"$vars[menuvertcentered]\";\n" );
+        fwrite( $fh, "var MenuTextCentered='$vars[menutextcentered]';\n" );
+        fwrite( $fh, "var MenuCentered='$vars[menucentered]';\n" );
+        fwrite( $fh, "var MenuVerticalCentered='$vars[menuvertcentered]';\n" );
         fwrite( $fh, "var ChildOverlap=$vars[childoverlap];\n" );
         fwrite( $fh, "var ChildVerticalOverlap=$vars[childverticaloverlap];\n" );
         fwrite( $fh, "var StartTop=$vars[starttop];\n" );
         fwrite( $fh, "var StartLeft=$vars[startleft];\n" );
         fwrite( $fh, "var VerCorrect=$vars[vercorrect];\n" );
         fwrite( $fh, "var HorCorrect=$vars[horcorrect];\n" );
-        fwrite( $fh, "var LeftPaddng=$vars[leftpadding];\n" ); 
-        fwrite( $fh, "var TopPaddng=$vars[toppadding];\n" );               
+        fwrite( $fh, "var LeftPaddng=$vars[leftpadding];\n" );
+        fwrite( $fh, "var TopPaddng=$vars[toppadding];\n" );
         if( trim($vars['targetloc']) == '' ) {
-            $vars['targetloc'] = "chsfmenunav_$blockinfo[bid]";
+            $vars['targetloc'] = "jsnav_$blockinfo[name]";
         }
-        fwrite( $fh, "var TargetLoc=\"$vars[targetloc]\";\n" );        
+        fwrite( $fh, "var TargetLoc='$vars[targetloc]';\n" );
         fwrite( $fh, "var DissapearDelay=$vars[disappeardelay];\n" );
-        fwrite( $fh, "var TakeOverBgColor=1;\n" );            
-        fwrite( $fh, "var FirstLineHorizontal=$vars[firstlinehorizontal];\n" );       
-        fwrite( $fh, "var MenuFramesVertical=0;\n" );  // Ignoring frames in menu        
-        fwrite( $fh, "var FirstLineFrame=\"\";\n" ); // Ignoring frames in menu
-        fwrite( $fh, "var SecLineFrame=\"\";\n" ); // Ignoring frames in menu
-        fwrite( $fh, "var DocTargetFrame=\"\";\n" ); // Ignoring frames in menu
-        fwrite( $fh, "var HideTop=$vars[firstlinehorizontal];\n" );
-        fwrite( $fh, "var MenuWrap=$vars[firstlinehorizontal];\n" );
-        fwrite( $fh, "var RightToLeft=$vars[firstlinehorizontal];\n" );            
+        fwrite( $fh, "var TakeOverBgColor=0;\n" );
+        fwrite( $fh, "var FirstLineHorizontal=$vars[firstlinehorizontal];\n" );
+        fwrite( $fh, "var MenuFramesVertical=0;\n" );  // Ignoring frames in menu
+        fwrite( $fh, "var FirstLineFrame='self';\n" ); // Ignoring frames in menu
+        fwrite( $fh, "var SecLineFrame='self';\n" ); // Ignoring frames in menu
+        fwrite( $fh, "var DocTargetFrame='self';\n" ); // Ignoring frames in menu
+        fwrite( $fh, "var HideTop=$vars[hidetop];\n" );
+        fwrite( $fh, "var MenuWrap=$vars[menuwrap];\n" );
+        fwrite( $fh, "var RightToLeft=$vars[righttoleft];\n" );
         fwrite( $fh, "var UnfoldsOnClick=$vars[unfoldsonclick];\n" );
         fwrite( $fh, "var WebMasterCheck=$vars[webmastercheck];\n" );
         fwrite( $fh, "var ShowArrow=$vars[showarrow];\n" );
@@ -378,7 +394,7 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
         fwrite( $fh, "var Arrws=['".$vars['arrowgif']['name']."',".$vars['arrowgif']['width'].",".$vars['arrowgif']['height'].",'".$vars['downarrowgif']['name']."',".$vars['downarrowgif']['width'].",".$vars['downarrowgif']['height'].",'".$vars['leftarrowgif']['name']."',".$vars['leftarrowgif']['width'].",".$vars['leftarrowgif']['height']."];\n" );
         @fclose( $fh );
     }
-    
+
     // User links
     if (!xarVarFetch('linkurl', 'array:1:', $linkurl, array())) {return;}
     if (!xarVarFetch('linkname', 'array:1:', $linkname, array())) {return;}
@@ -391,7 +407,7 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
         if (!isset($linkdelete[$idx])) {
             @$menu[] = "$linkurl[$idx]|$linkname[$idx]|$linkdesc[$idx]|$linkchild[$idx]";
         }
-    } 
+    }
 
     // Get new menu
     xarVarFetch('new_linkurl',   'str:1:', $new_linkurl,   '');
@@ -402,11 +418,11 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
     if (!empty($new_linkname)) {
        $menu[] = $new_linkurl.'|'.$new_linkname.'|'.$new_linkdesc.'|'.$new_linkchild;
     }
-    
+
     $vars['menu'] = implode("LINESPLIT", $menu);
     $blockinfo['content']= serialize($vars);
 
-    // Write menu to cache file 
+    // Write menu to cache file
     if (!empty($vars['menu'])) {
         $usermenu = array();
         $menulines = $menu;
@@ -423,12 +439,12 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
             $child = xarVarPrepForDisplay($child);
             $usermenu[] = array('title' => $title, 'url' => $url, 'comment' => $comment, 'child'=> $child, 'children'=>array());
         } // foreach
-                
+
         //build 2level menu tree
         $parent_id=0;
         $top_menus=0;
         $tree = array();
-        
+
         foreach($usermenu as $id => $item ) {
             if(!empty($item['child']) && isset($usermenu[$parent_id])) {
                 array_push( $usermenu[$parent_id]['children'], $id );
@@ -440,34 +456,34 @@ function chsfnav_chsfmenunavblock_update($blockinfo)
             }
         }
 
-        if ($vars['firstlinehorizontal'] == 0 ) { 
+        if ($vars['firstlinehorizontal'] == 0 ) {
             // Vertical
-            xarModSetVar('chsfnav', 'jmbheight', $parent_id);
-            xarModSetVar('chsfnav', 'jmbwidth', 1);
-        } else { 
+            xarModSetVar('navigator', 'jmbheight', $parent_id);
+            xarModSetVar('navigator', 'jmbwidth', 1);
+        } else {
             // Horizontal
-            xarModSetVar('chsfnav', 'jmbheight', 1);
-            xarModSetVar('chsfnav', 'jmbwidth', $parent_id);
+            xarModSetVar('navigator', 'jmbheight', 1);
+            xarModSetVar('navigator', 'jmbwidth', $parent_id);
         }
 
         if( file_exists( $cache )) {
             unlink( $cache );
         }
-        
+
         if( $fh = @fopen( $cache, "w" )) {
             fwrite( $fh, "var NoOffFirstLineMenus=$top_menus;\n" );
-            
+
             // Dump the menu items from $menus
             foreach( $usermenu as $id => $menuitem ) {
                 fwrite( $fh, "Menu$tree[$id]=new Array(\"$menuitem[title]\",\"$menuitem[url]\",\"\",".count($menuitem['children']).", $vars[menumaxheight], $vars[menumaxwidth],\"\",\"\",\"\",\"\",\"\");\n" );
             }
-            
+
             fwrite( $fh, "function BeforeStart(){return}\n" );
             fwrite( $fh, "function AfterBuild(){return}\n" );
             fwrite( $fh, "function BeforeFirstOpen(){return}\n" );
             fwrite( $fh, "function AfterCloseAll(){return}\n" );
             @fclose( $fh );
-        }                
+        }
     }
 
     // Ensure we have a title for the block.

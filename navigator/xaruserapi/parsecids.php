@@ -58,7 +58,7 @@ function navigator_userapi_parsecids($args)
         $primary_list = array();
     }
 
-    // Check if default parents is empty
+    // Check if default parent list is empty
     if (empty($primary_list)) {
         // Assume that the first cid is the primary group and the
         // second cid is the secondary group

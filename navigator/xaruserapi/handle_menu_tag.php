@@ -29,7 +29,7 @@ function navigator_userapi_handle_menu_tag( $args )
         $args['rename'] = '';
     }
 
-    if (!isset($intersects) || empty($intersects)) {
+    if (!isset($intersects)) {
         $args['intersects'] = '';
     }
 

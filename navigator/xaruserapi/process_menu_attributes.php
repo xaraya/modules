@@ -40,6 +40,11 @@ function navigator_userapi_process_menu_attributes( $args )
 
 
     if (isset($intersects) && !empty($intersects)) {
+
+        if ('none' == $intersects) {
+            $intersects = (int) -1;
+        }
+
         $intersects = xarModAPIFunc('navigator', 'user',
                                     'check_current_intersections',
                                      array('intersections' =>
@@ -69,6 +74,12 @@ function navigator_userapi_process_menu_attributes( $args )
     $tree = unserialize(xarModGetVar('navigator', 'categories.list.'.$base));
     $current_cids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
 
+    if (xarModGetVar('navigator', 'style.matrix')) {
+        $matrix = TRUE;
+    } else {
+        $matrix = FALSE;
+    }
+
     // if we don't have a valid list of cids or a valid tree
     // then return don't display anything....
     if (empty($current_cids) || empty($tree)) {
@@ -79,16 +90,29 @@ function navigator_userapi_process_menu_attributes( $args )
                 echo "<br />Configuration base: " . key($current_cids);
                 echo "<br />Tag attribute base: $base";
             }
+        } elseif (!empty($tree) && empty($current_cids)) {
+            // Otherwise,
+            $primary['id'] = 0;
+            $primary['name'] = '';
+
+            if ($matrix) {
+                $secDef = xarModGetVar('navigator', 'categories.secondary.default');
+                if (!isset($secDef) || empty($secDef)) {
+                    $secondary['id'] = 0;
+                } else {
+                    $secondary['id'] = $secDef;
+                }
+                $secondary['name'] = 'Home';
+                $cids = explode(';',$primary['id'] . ';' . $secondary['id']);
+            } else {
+                $cids = explode(';',$primary['id']);
+            }
+            xarVarSetCached('Blocks.articles', 'cids', $cids);
+        } else {
+            return;
         }
-        return;
     } else {
         extract($current_cids);
-    }
-
-    if (xarModGetVar('navigator', 'style.matrix')) {
-        $matrix = TRUE;
-    } else {
-        $matrix = FALSE;
     }
 
     if ($matrix) {

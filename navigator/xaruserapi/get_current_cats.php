@@ -19,7 +19,7 @@
  * @returns array, or false on failure
  * @raise BAD_DATA
  */
-function navigator_userapi_get_current_cats( /* VOID */ ) 
+function navigator_userapi_get_current_cats( /* VOID */ )
 {
 
     // set up the list to be cached
@@ -88,11 +88,6 @@ function navigator_userapi_get_current_cats( /* VOID */ )
             if (isset($list['primary'])) {
                 $secondary = xarModGetVar('navigator', 'categories.secondary.default');
                 $list['secondary'] = array('id' => $secondary, 'name' => $secondary_list[$secondary]['name']);
-            } elseif (isset($list['secondary'])) {
-                $list['primary']   = $list['secondary'];
-                unset($list['secondary']);
-                // Turn matrix off for this page.
-                xarVarSetCached('Mod.Variables.navigator', 'style.matrix', FALSE);
             } else {
                 $list = array();
             }

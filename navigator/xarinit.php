@@ -37,13 +37,20 @@ function navigator_init()
     $intersects   = new xarTemplateAttribute('intersects',  $optional_string);
     $emptygroups  = new xarTemplateAttribute('emptygroups', $optional_string);
 
-    $attr['inline-styles'] = array($id);
     $attr['image']         = array($id);
     $attr['location']      = array($id, $type);
     $attr['menu']          = array($id, $base, $type,
                                    $exclude, $rename,
                                    $maxdepth, $intersects,
                                    $emptygroups);
+
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                        array('modName' => 'navigator',
+                              'blockType' => 'jsnav'))) return;
+
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                        array('modName' => 'navigator',
+                              'blockType' => 'newsletter_sub'))) return;
 
     xarTplRegisterTag('navigator', 'navigator-menu',
                       $attr['menu'],
@@ -57,10 +64,6 @@ function navigator_init()
                       $attr['location'],
                       'navigator_userapi_handle_location_tag');
 
-    xarTplRegisterTag('navigator', 'navigator-inline-styles',
-                      $attr['inline-styles'],
-                      'navigator_userapi_handle_inline_styles_tag');
-
     // Initialisation successful
     return true;
 }
@@ -73,6 +76,13 @@ function navigator_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case '1.0.0':
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                                array('modName' => 'navigator',
+                                      'blockType' => 'jsnav'))) return;
+
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                                array('modName' => 'navigator',
+                                      'blockType' => 'newsletter_sub'))) return;
             break;
 
         default:
@@ -99,9 +109,16 @@ function navigator_delete()
     xarTplUnregisterTag('navigator-menu');
     xarTplUnregisterTag('navigator-image');
     xarTplUnregisterTag('navigator-location');
-    xarTplUnregisterTag('navigator-inline-styles');
 
     xarModDelAllVars('navigator');
+
+    if (!xarModAPIFunc('blocks', 'admin', 'delete_type',
+                       array('modName' => 'navigator',
+                             'blockType' => 'jsnav'))) return;
+
+    if (!xarModAPIFunc('blocks', 'admin', 'delete_block_type',
+                       array('modName' => 'navigator',
+                             'blockType' => 'newsletter_sub'))) return;
 
     // Deletion successful
     return true;

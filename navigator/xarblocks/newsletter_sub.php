@@ -8,14 +8,14 @@
  * @copyright (C) 2004 by the Schwab Foundation
  * @link http://wwwk.schwabfoundation.org
  *
- * @subpackage chsfnav module
+ * @subpackage navigator module
  * @author Richard Cave <caveman : rcave@xaraya.com>
 */
 
 /**
  * initialise block
  */
-function chsfnav_chsfsubscribeblock_init()
+function navigator_newsletter_subblock_init()
 {
     return true;
 }
@@ -23,12 +23,12 @@ function chsfnav_chsfsubscribeblock_init()
 /**
  * get information on block
  */
-function chsfnav_chsfsubscribeblock_info()
+function navigator_newsletter_subblock_info()
 {
     // Values
     return array('text_type' => 'Navigation',
-                 'module' => 'chsfnav',
-                 'text_type_long' => 'Show subscription for Issue Area Publication',
+                 'module' => 'navigator',
+                 'text_type_long' => 'Show subscription Block based on chosen primary categories for NewsLetter',
                  'allow_multiple' => true,
                  'form_content' => false,
                  'form_refresh' => false,
@@ -38,14 +38,14 @@ function chsfnav_chsfsubscribeblock_info()
 /**
  * display block
  */
-function chsfnav_chsfsubscribeblock_display($blockinfo)
+function navigator_newsletter_subblock_display($blockinfo)
 {
     // Security Check
     if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:All")) return;
 
     // Initialize data array
     $data = array();
-    
+
     // Get the cat ids from input
     $cids = xarVarGetCached('Blocks.articles','cids');
 
@@ -58,41 +58,33 @@ function chsfnav_chsfsubscribeblock_display($blockinfo)
 
 
     // Get program area and content type cids
-    $cids_array = xarModAPIFunc('chsfnav',
-                                'user',
-                                'parsecids',
-                                array('cids' => $cids));
+    $cids_array = xarModAPIFunc('navigator', 'user', 'parsecids', array('cids' => $cids));
+    $primary_cid = $cids_array[0];
+    $secondary_cid = $cids_array[1];
 
-    $program_area_cid = $cids_array[0];
-    $content_area_cid = $cids_array[1];
-    
-    if (!$program_area_cid) {
+    if (!$primary_cid) {
         return; // throw back
     }
 
     // Return if we're not on the program area home page
-    if ($content_area_cid != xarModGetVar('chsfnav', 'category.default-home')) {
+    if ($secondary_cid != xarModGetVar('navigator', 'categories.secondary.default')) {
         return; // throw back
     }
 
     // Get program area information
-    $research_cat = xarModAPIFunc('categories',
-                                  'user',
-                                  'getcat',
-                                  array('cid' => $program_area_cid,
-                                        'return_itself' => true,
-                                        'getparents' => false,
-                                        'getchildren' => false));
+    $research_cat = xarModAPIFunc('categories', 'user', 'getcat',
+                                   array('cid' => $primary_cid,
+                                         'return_itself' => true,
+                                         'getparents' => false,
+                                         'getchildren' => false));
 
     // Check for exceptions
     if (!isset($research_cat) && xarExceptionMajor() != XAR_NO_EXCEPTION) {
         return; // throw back
     }
-    
+
     // Get issue area publications
-    $publications = xarModAPIFunc('newsletter',
-                                  'user',
-                                  'get',    
+    $publications = xarModAPIFunc('newsletter', 'user', 'get',
                                    array('phase' => 'publication'));
 
     // Check for exceptions
@@ -111,11 +103,11 @@ function chsfnav_chsfsubscribeblock_display($blockinfo)
     // Loop through publications
     foreach ($publications as $publication) {
         // Check if a publication has been assigned to the program area
-        if (in_array($program_area_cid, $publication['altcids'])) {
+        if (in_array($primary_cid, $publication['altcids'])) {
             // Get the publication subscription information
             $description = $publication['description'];
 
-            // Create title 
+            // Create title
             $title = xarVarPrepForDisplay($research_cat[0]['name'] . ' News');
 
             // Get current user
@@ -124,9 +116,7 @@ function chsfnav_chsfsubscribeblock_display($blockinfo)
                 $uid = xarUserGetVar('uid');
 
                 // The user API function is called
-                $subscriptions = xarModAPIFunc('newsletter',
-                                               'user',
-                                               'get',
+                $subscriptions = xarModAPIFunc('newsletter', 'user', 'get',
                                                 array('id' => 0, // doesn't matter
                                                       'uid' => $uid,
                                                       'pid' => $publication['id'],
@@ -168,8 +158,8 @@ function chsfnav_chsfsubscribeblock_display($blockinfo)
             break;
         }
     }
-   
-    if ($found) { 
+
+    if ($found) {
         // Set title and subscription text
         $data['title'] = $title;
         $data['description'] = $description;

@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Navigator';
 $modversion['id']             = '16466418';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '1.0.1';
 $modversion['description']    = 'This module provides category based navigation elements.';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

@@ -8,7 +8,7 @@
  * @copyright 2004 (c) The Charles and Helen Schwab Foundation
  */
 
-function navigator_userapi_check_current_intersections( $args ) 
+function navigator_userapi_check_current_intersections( $args )
 {
     extract($args);
 
@@ -20,8 +20,12 @@ function navigator_userapi_check_current_intersections( $args )
 
     // if we don't have a valid list of cids or a valid tree
     // then return don't display anything....
-    if (empty($current_cids)) {
-        return;
+    if (empty($current_cids) || !count($current_cids)) {
+        if (in_array((int) -1, $intersections)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     } else {
         extract($current_cids);
     }

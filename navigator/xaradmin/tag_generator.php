@@ -155,7 +155,10 @@ function navigator_admin_tag_generator()
         $data['tagtype']  = $tagtype;
         $data['matrix']   = $matrix;
 
-        $cids = explode(';','30;188');
+        ksort($primary_list);
+        $primary_cids = array_keys($primary_list);
+        $cids = array(current($primary_cids));
+
         xarVarSetCached('Blocks.articles', 'cids', $cids);
 
         $attributes['id']         = 'sample_block';
@@ -163,7 +166,6 @@ function navigator_admin_tag_generator()
 
         $data['sample_block'] = xarModFunc('navigator', 'user', $function,
                                            $attributes);
-
     } else {
         $current_tag = 'navigator-image';
         $attributes['id'] = 'left';
@@ -189,6 +191,5 @@ function navigator_admin_tag_generator()
     // Return the template variables defined in this function
     return $data;
 }
-
 
 ?>

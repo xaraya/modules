@@ -64,11 +64,14 @@ function navigator_userapi_count_articles_bycat($args)
                LEFT JOIN $catLinkTable as sec
                          ON pri.xar_iid = sec.xar_iid AND pri.xar_modid = sec.xar_modid
                    WHERE $artTable.xar_status IN (3, 2)
-                         AND $artTable.xar_pubdate < $now
-                         AND pri.xar_modid = $articlesId
-                         AND pri.xar_cid = $primary[id]
+                         AND $artTable.xar_pubdate < ?
+                         AND pri.xar_modid = ?
+                         AND pri.xar_cid = ?
                          AND sec.xar_cid IN ($secondary_list)
                GROUP BY  pri.xar_cid, sec.xar_cid";
+
+        $query_args = array($now, $articlesId, $primary['id']);
+
     } else {
 
         $tmpList = unserialize(xarModGetVar('navigator', 'categories.list.primary'));
@@ -91,14 +94,16 @@ function navigator_userapi_count_articles_bycat($args)
                LEFT JOIN $catLinkTable AS catlink
                          ON catlink.xar_iid = art.xar_aid
                    WHERE art.xar_status IN (3, 2)
-                         AND art.xar_pubdate < $now
-                         AND catlink.xar_modid = $articlesId
+                         AND art.xar_pubdate < ?
+                         AND catlink.xar_modid = ?
                          AND catlink.xar_cid IN ($primary_list)
                 GROUP BY catlink.xar_cid";
+
+        $query_args = array($now, $articlesId);
     }
 
     // Run the query - finally :-)
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $query_args);
     if (!$result) return;
 
     if ($result->EOF) {

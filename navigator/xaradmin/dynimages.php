@@ -142,7 +142,9 @@ function navigator_admin_dynimages()
                                             'search' => '.*'.$data['Id'].'.*'));
 
         if (empty($fileList) || !count($fileList)) {
-            $data['secondary_list']['error'] = xarML('No images to select. Please add images to the images directory for this Program Area.');
+            $msg  = xarML('No images to select.');
+            $msg .= xarML('Please add images to the themes/[your theme]/images/navigator directory.');
+            $data['secondary_list']['error'] = $msg;
         } else {
 
             foreach($fileListAll as $key => $file) {
