@@ -86,6 +86,7 @@ function multisites_upgrade($oldversion)
             // Code to upgrade from version 1.0 goes here
             break;
         case '0.21':
+        case '0.21.0':
             break;
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
