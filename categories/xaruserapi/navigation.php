@@ -336,50 +336,52 @@ function categories_userapi_navigation($args)
             break;
 
         case 2: // crumbtrails
-            $template = 'trails';
             if (empty($cids) || count($cids) == 0) {
                 $template = 'rootcats';
                 $data['cattitle'] = xarML('Browse in');
                 $data['catitems'] = array();
 
                 // Get root categories
-                $catlist = xarModAPIFunc('categories','user','getcatinfo',
-                                        array('cids' => $mastercids));
+                $catlist = xarModAPIFunc(
+                    'categories','user','getcatinfo',
+                    array('cids' => $mastercids)
+                );
                 $join = '';
-                if (empty($catlist) || !is_array($catlist)) {
-                    return '';
-                }
+
+                if (empty($catlist) || !is_array($catlist)) {return '';}
+
                 foreach ($catlist as $cat) {
-                // TODO: now this is a tricky part...
-                    $link = xarModURL($modname,$type,$func,
-                                     array('itemtype' => $itemtype,
-                                           'catid' => $cat['cid']));
+                    // TODO: now this is a tricky part...
+                    $link = xarModURL(
+                        $modname,$type,$func,
+                        array('itemtype' => $itemtype, 'catid' => $cat['cid'])
+                    );
                     $label = xarVarPrepForDisplay($cat['name']);
-                    $data['catitems'][] = array('catlabel' => $label,
-                                                'catid' => $cat['cid'],
-                                                'catlink' => $link,
-                                                'catjoin' => $join);
+                    $data['catitems'][] = array(
+                        'catlabel' => $label,
+                        'catid' => $cat['cid'],
+                        'catlink' => $link,
+                        'catjoin' => $join
+                    );
                     $join = ' | ';
                 }
             } else {
                 $template = 'trails';
+
                 if (!empty($andcids)) {
                     $data['cattitle'] = xarML('Browse in');
                 } else {
                     $data['cattitle'] = xarML('Browse in');
                 }
                 $data['cattrails'] = array();
-
                 $descriptions = array();
-
-                // TODO: stop at root categories
 
                 // Loop for each category assigned to the item.
                 // A separate trail will be created for each assigned.
                 foreach ($cids as $cid) {
-                    // Get category information
+                    // Get category information.
                     $parents = xarModAPIFunc(
-                        'categories','user','getancestors',
+                        'categories', 'user', 'getancestors',
                         array('cid' => $cid, 'self' => true)
                     );
 
@@ -391,17 +393,38 @@ function categories_userapi_navigation($args)
                     $catitems = array();
                     $curcount = 0;
 
-                    // TODO: now this is a tricky part...
-
                     // Create the top-level link.
-                    // TODO: make this optional or flag it so the template can decide.
-                    // Re TODO: 'baseflag' = 0 for 'All'; 1 for cids below the 'base';
-                    //          2 at the base and 3 above.
+                    // 'baseflag' = 0 for 'All'; 1 for cids below the 'base';
+                    // 2 at the base and 3 above, with 4 for the current cid.
+                    // Also 5 for the pseudo-trails: 'All Cats' and 'Any Cats'.
+                    //
+                    // Explanation of how the 'baseflag' works:-
+                    // Each category item in the trail has a 'baseflag' set, with a value
+                    // that indicates its position in the trail. The template can use the
+                    // flag to decide whether each item should be displayed. How the template
+                    // uses the flag will depend in the effect the site designer is trying
+                    // to achieve.
+                    // A typical trail will look like this:
+                    // All > Cat1 > Cat1.1 > Cat1.1.1 > Cat1.1.1.1 > CatCurrent
+                    // Supposing Cat1.1 is a base category for the current selection, then
+                    // the baseflag values will be set like this:
+                    // 0 > 1 > 2 > 3 > 3 > 4
+                    // Here: 0 is the top level; 1 is below the base; 2 is the base and 3 for
+                    // the two items below the base. By checking the flag in the template, you
+                    // can decide which levels to display (e.g. everything, stop at the base,
+                    // only items above the base etc).
+                    // Flag values are assigned in order, from 'All' to the current category,
+                    // with a higher value always taking precendence.
+
+                    // Initialise variables for a single trail.
                     $label = xarML('All');
-                    $link = xarModURL($modname,$type,$func,
-                                     array('itemtype' => $itemtype));
+                    $link = xarModURL(
+                        $modname,$type,$func,
+                        array('itemtype' => $itemtype)
+                    );
                     $join = '';
                     $baseflag = 0;
+                    $trailbasecid = 0;
 
                     $catitems[] = array(
                         'catlabel' => $label,
@@ -411,6 +434,10 @@ function categories_userapi_navigation($args)
                         'baseflag' => $baseflag
                     );
 
+                    // TODO: The join value only makes sense if the complete trail is
+                    // displayed. If only a partial trail is displayed, then the join
+                    // value will be wrong. To alleviate this, the join string value
+                    // should be calculated entirely within the template.
                     $join = ' &gt; ';
                     $baseflag = 1;
 
@@ -420,35 +447,51 @@ function categories_userapi_navigation($args)
 
                         // Is this cid a base cid?
                         if ($baseflag == 1 && in_array($cat['cid'], $mastercids)) {
+                            // This is a base cid.
                             $baseflag = 2;
+                            // Set the base cid for this trail (only set the first base we come across).
+                            $trailbasecid = ($trailbasecid ? $trailbasecid : $cat['cid']);
                         }
 
+                        // TODO: move the prep to the template.
                         $label = xarVarPrepForDisplay($cat['name']);
+                        // TODO: make the link always available to the template, but make the
+                        // template use the baseflag to determine whether to display the link
+                        // or not.
                         if ($cat['cid'] == $cid && empty($itemid) && empty($andcids) && empty($istree)) {
                             $link = '';
+                            // The end of the trail is flagged as level 4.
+                            $baseflag = 4;
                         } else {
-                        // TODO: now this is a tricky part...
-                            $link = xarModURL($modname,$type,$func,
-                                             array('itemtype' => $itemtype,
-                                                   'catid' => $cat['cid']));
+                            $link = xarModURL(
+                                $modname, $type, $func,
+                                array(
+                                    'itemtype' => $itemtype,
+                                    'catid' => $cat['cid']
+                                )
+                            );
                         }
+
                         if ($cat['cid'] == $cid) {
                             // show optional count
                             if (isset($catcount[$cat['cid']])) {
                                 $curcount = $catcount[$cat['cid']];
                             }
+                            // TODO: the preps should be in the template, as not everyone will
+                            // want the descriptions prepped (they may contain required HTML).
+                            // Normally the the description will go into a 'title' attribute,
+                            // but not always. As it is, the HTML display prep is the wrong one
+                            // to use for an attribute anyway.
                             if (!empty($cat['description'])) {
                                 $descriptions[] = xarVarPrepHTMLDisplay($cat['description']);
                             } else {
                                 $descriptions[] = xarVarPrepForDisplay($cat['name']);
                             }
-                            // save current category info for icon etc.
+                            // Save current category info for icon etc.
                             if (count($cids) == 1) {
                                 $curcat = $cat;
                             }
                         }
-                        // Flag up those within the base categories.
-                        // Let the template decide whether to display them.
 
                         $catitems[] = array(
                             'catlabel' => $label,
@@ -459,55 +502,71 @@ function categories_userapi_navigation($args)
                         );
                     }
 
+                    // TODO: move to template.
                     if (!empty($istree)) {
                         $viewall = '';
                     } else {
-                        $viewall = xarModURL($modname,$type,$func,
-                                             array('itemtype' => $itemtype,
-                                                   'catid' => '_' . $cid));
+                        $viewall = xarModURL(
+                            $modname, $type, $func,
+                            array('itemtype' => $itemtype, 'catid' => '_' . $cid)
+                        );
                     }
-                    $data['cattrails'][] = array('catitems' => $catitems,
-                                                 'catcount' => $curcount,
-                                                 'viewall' => $viewall);
+                    $data['cattrails'][] = array(
+                        'catitems' => $catitems,
+                        'catcount' => $curcount,
+                        'viewall' => $viewall,
+                        'basecatid' => $trailbasecid
+                    );
                 }
 
-                // Add filters to select on all categories or any categories
+                // Add filters to select on 'all categories' or 'any categories'
                 if (count($cids) > 1) {
                     $catitems = array();
                     if (!empty($itemid) || !empty($andcids)) {
                         $label = xarML('Any of these categories');
-                        $link = xarModURL($modname,$type,$func,
-                                          array('itemtype' => $itemtype,
-                                                'catid' => join('-',$cids)));
+                        $link = xarModURL(
+                            $modname,$type,$func,
+                            array('itemtype' => $itemtype, 'catid' => join('-', $cids))
+                        );
                         $join = '';
-                        $catitems[] = array('catlabel' => $label,
-                                            'catid' => join('-',$cids),
-                                            'catlink' => $link,
-                                            'catjoin' => $join,
-                                            'baseflag' => 4);
+                        $catitems[] = array(
+                            'catlabel' => $label,
+                            'catid' => join('-', $cids),
+                            'catlink' => $link,
+                            'catjoin' => $join,
+                            'baseflag' => 5
+                        );
                     }
                     if (empty($andcids)) {
                         $label = xarML('All of these categories');
-                        $link = xarModURL($modname,$type,$func,
-                                          array('itemtype' => $itemtype,
-                                                'catid' => join('+',$cids)));
+                        $link = xarModURL(
+                            $modname, $type, $func,
+                            array(
+                                'itemtype' => $itemtype,
+                                'catid' => join('+',$cids)
+                            )
+                        );
                         if (!empty($itemid)) {
                             $join = '-';
                         } else {
                             $join = '';
                         }
-                        $catitems[] = array('catlabel' => $label,
-                                            'catid' => join('+',$cids),
-                                            'catlink' => $link,
-                                            'catjoin' => $join,
-                                            'baseflag' => 4);
+                        $catitems[] = array(
+                            'catlabel' => $label,
+                            'catid' => join('+', $cids),
+                            'catlink' => $link,
+                            'catjoin' => $join,
+                            'baseflag' => 5
+                        );
                     }
                     $curcount = 0;
-                    $data['cattrails'][] = array('catitems' => $catitems,
-                                                 'catcount' => $curcount);
+                    $data['cattrails'][] = array(
+                        'catitems' => $catitems,
+                        'catcount' => $curcount
+                    );
                 }
 
-            // TODO: move off to nav-trails template ?
+                // TODO: move off to nav-trails template ?
                 // Build category description
                 if (!empty($itemid)) {
                     $data['catdescr'] = join(' + ', $descriptions);
@@ -525,9 +584,13 @@ function categories_userapi_navigation($args)
                     $curcat['module'] = 'categories';
                     $curcat['itemtype'] = 0;
                     $curcat['itemid'] = $cids[0];
-                    $curcat['returnurl'] = xarModURL($modname,$type,$func,
-                                                     array('itemtype' => $itemtype,
-                                                           'catid' => $cids[0]));
+                    $curcat['returnurl'] = xarModURL(
+                        $modname, $type, $func,
+                        array(
+                            'itemtype' => $itemtype,
+                            'catid' => $cids[0]
+                        )
+                    );
                     // pass along the current module & itemtype for pubsub (urgh)
                     $curcat['current_module'] = $modname;
                     $curcat['current_itemtype'] = $itemtype;
@@ -541,8 +604,8 @@ function categories_userapi_navigation($args)
                 if (empty($itemid)) {
                     // Get current title
                     if (empty($title)) {
-                        if (xarVarIsCached('Blocks.categories','title')) {
-                            $title = xarVarGetCached('Blocks.categories','title');
+                        if (xarVarIsCached('Blocks.categories', 'title')) {
+                            $title = xarVarGetCached('Blocks.categories', 'title');
                         }
                     }
                     if (!empty($curcat['name'])) {
@@ -551,16 +614,18 @@ function categories_userapi_navigation($args)
                     xarTplSetPageTitle($title);
                 }
 
-            // TODO: don't show icons when displaying items ?
+                // TODO: don't show icons when displaying items?
                 if (!empty($curcat['image'])) {
                     // find the image in categories (we need to specify the module here)
-                    $data['catimage'] = xarTplGetImage($curcat['image'],'categories');
+                    $data['catimage'] = xarTplGetImage($curcat['image'], 'categories');
                     $data['catname'] = xarVarPrepForDisplay($curcat['name']);
                 }
                 if ($showchildren == 2) {
                     // Get child categories (all sub-levels)
-                    $childlist = xarModAPIFunc('categories','visual','listarray',
-                                              array('cid' => $cids[0]));
+                    $childlist = xarModAPIFunc(
+                        'categories', 'visual', 'listarray',
+                        array('cid' => $cids[0])
+                    );
                     if (empty($childlist) || count($childlist) == 0) {
                         break;
                     }
@@ -569,48 +634,45 @@ function categories_userapi_navigation($args)
                             continue;
                         }
                         $label = xarVarPrepForDisplay($info['name']);
-                    // TODO: now this is a tricky part...
-                        $link = xarModURL($modname,$type,$func,
-                                         array('itemtype' => $itemtype,
-                                               'catid' => $info['id']));
+                        $link = xarModURL(
+                            $modname, $type, $func,
+                            array(
+                                'itemtype' => $itemtype,
+                                'catid' => $info['id']
+                            )
+                        );
                         if (!empty($catcount[$info['id']])) {
                             $count = $catcount[$info['id']];
                         } else {
-                            // JJ: TODO: check hiding.
                             $count = 0;
                         }
-    /* don't show descriptions in (potentially) multi-level trees
-                        if (!empty($info['description'])) {
-                            $descr = xarVarPrepHTMLDisplay($info['description']);
-                        } else {
-                            $descr = '';
-                        }
-    */
-                        $data['catlines'][] = array('catlabel' => $label,
-                                                    'catid' => $info['id'],
-                                                    'catlink' => $link,
-                                                  //  'catdescr' => $descr,
-                                                    'catdescr' => '',
-                                                    'catcount' => $count,
-                                                    'beforetags' => $info['beforetags'],
-                                                    'aftertags' => $info['aftertags']);
-
+                        $data['catlines'][] = array(
+                            'catlabel' => $label,
+                            'catid' => $info['id'],
+                            'catlink' => $link,
+                            'catdescr' => '',
+                            'catcount' => $count,
+                            'beforetags' => $info['beforetags'],
+                            'aftertags' => $info['aftertags']
+                        );
                     }
                     unset($childlist);
                 } elseif ($showchildren == 1) {
                     // Get child categories (1 level only)
-                    $children = xarModAPIFunc('categories','user','getchildren',
-                                             array('cid' => $cids[0]));
+                    $children = xarModAPIFunc(
+                        'categories', 'user', 'getchildren',
+                        array('cid' => $cids[0])
+                    );
                     if (empty($children) || count($children) == 0) {
                         break;
                     }
                     $data['catlines'] = array();
-                // TODO: don't show icons when displaying items ?
+
+                    // TODO: don't show icons when displaying items?
+                    // TODO: move the HTML to the template.
                     $data['caticons'] = array();
                     $numicons = 0;
                     foreach ($children as $cat) {
-                    // TODO: now this is a tricky part...
-					
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -621,15 +683,19 @@ function categories_userapi_navigation($args)
                                 // We are not hiding empty categories - set count to zero.
                                 $count = 0;
                             } else {
-                                // We want to hide empty categories - so skip this loop.
+                                // We want to hide empty categories - so skip this loop iteration.
                                 continue;
                             }
                         }
 						
                         $label = xarVarPrepForDisplay($cat['name']);
-                        $link = xarModURL($modname,$type,$func,
-                                         array('itemtype' => $itemtype,
-                                               'catid' => $cat['cid']));
+                        $link = xarModURL(
+                            $modname, $type, $func,
+                            array(
+                                'itemtype' => $itemtype,
+                                'catid' => $cat['cid']
+                            )
+                        );
 						if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
                                 $descr = xarVarPrepHTMLDisplay($cat['description']);
                             } else {
@@ -637,40 +703,42 @@ function categories_userapi_navigation($args)
                             }
                         if (!empty($cat['image'])) {
                             // find the image in categories (we need to specify the module here)
-                            $image = xarTplGetImage($cat['image'],'categories');
+                            $image = xarTplGetImage($cat['image'], 'categories');
                             $numicons++;
-                            $data['caticons'][] = array('catlabel' => $label,
-                                                        'catid' => $cat['cid'],
-                                                        'catlink' => $link,
-														'catdescr' => $descr,
-                                                        'catimage' => $image,
-                                                        'catcount' => $count,
-                                                        'catnum' => $numicons);
+                            $data['caticons'][] = array(
+                                'catlabel' => $label,
+                                'catid' => $cat['cid'],
+                                'catlink' => $link,
+                                'catdescr' => $descr,
+                                'catimage' => $image,
+                                'catcount' => $count,
+                                'catnum' => $numicons
+                            );
                         } else {
                             $beforetags = '<li>';
                             $aftertags = '</li>';
-                            $data['catlines'][] = array('catlabel' => $label,
-                                                        'catid' => $cat['cid'],
-                                                        'catlink' => $link,
-                                                        'catdescr' => $descr,
-                                                        'catcount' => $count,
-                                                        'beforetags' => $beforetags,
-                                                        'aftertags' => $aftertags);
+                            $data['catlines'][] = array(
+                                'catlabel' => $label,
+                                'catid' => $cat['cid'],
+                                'catlink' => $link,
+                                'catdescr' => $descr,
+                                'catcount' => $count,
+                                'beforetags' => $beforetags,
+                                'aftertags' => $aftertags
+                            );
                         }
                     }
                     unset($children);
                     if (count($data['catlines']) > 0) {
                         $numitems = count($data['catlines']);
                         // add leading <ul> tag
-                        $data['catlines'][0]['beforetags'] = '<ul>' .
-                                                   $data['catlines'][0]['beforetags'];
+                        $data['catlines'][0]['beforetags'] = '<ul>' . $data['catlines'][0]['beforetags'];
                         // add trailing </ul> tag
                         $data['catlines'][$numitems - 1]['aftertags'] .= '</ul>';
                         // add new column
                         if ($numitems > 7) {
                             $miditem = round(($numitems + 0.5) / 2) - 1;
-                            $data['catlines'][$miditem]['aftertags'] .=
-                                                   '</ul></td><td valign="top"><ul>';
+                            $data['catlines'][$miditem]['aftertags'] .= '</ul></td><td valign="top"><ul>';
                         }
                     }
                 }
