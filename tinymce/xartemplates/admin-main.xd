@@ -100,6 +100,8 @@
                  and <strong>img[class|style|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout]</strong>
                  to the Additional Tags configuration</xar:mlstring></li>
                 <li><xar:mlstring>Advanced Link - allows insert of extended link tags, plus popup windows. Add <strong>advlink</strong> to Plugins, and <strong>a[id|name|href|style|title|onclick]</strong> to Additional Tags configuration.</xar:mlstring></li>
+                <li><xar:mlstring>Save - allows insert of a Save button. Add <strong>save</strong> to Plugins, and <strong>save</strong> to Additional Tags configuration.</xar:mlstring></li>
+
             </ol>
 
         </div>

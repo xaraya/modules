@@ -1,11 +1,11 @@
 /* Import theme specific language pack */
-tinyMCE.importPluginLanguagePack('zoom', 'uk,se');
+tinyMCE.importPluginLanguagePack('zoom', 'uk,se,pt');
 
 /**
  * Returns the HTML contents of the zoom control.
  */
 function TinyMCE_zoom_getControlHTML(control_name) {
-	if (!tinyMCE.isMSIE)
+	if (!tinyMCE.isMSIE || tinyMCE.isMSIE5_0)
 		return "";
 
 	switch (control_name) {

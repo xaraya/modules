@@ -324,6 +324,25 @@
                 <xar:mlstring>Currently only works with IE</xar:mlstring>
             </span>
         </div>
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#xarML('Force all carriage returns to &lt;p /&gt; tags instead of &lt;br /&gt; tags')#">
+                    <label for="tinybr"><xar:mlstring>Force all Returns to &lt;p /&gt;:</xar:mlstring></label>
+                </span>
+            </span>
+           <span style="float: right; width: 68%; text-align: left;">
+                <select name="tinypara" id="tinypara" size="1">
+                <xar:if condition="$tinypara eq 'false'">
+                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
+                <xar:elseif condition="$tinypara eq 'true'" />
+                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                </xar:if>
+                </select>
+                <xar:mlstring>Gecko browsers only (Mozilla, Firefox)</xar:mlstring>
+            </span>
+        </div>
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
             <input type="submit" value="#$updatebutton#" />
         </div>
@@ -416,9 +435,8 @@
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="60" maxlength="240" />
-                    <p><xar:mlstring>Plugins requiring button addition: ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
+                    <p><xar:mlstring>Available plugins: save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
                      advimage, advlink, flash, advhr</xar:mlstring></p>
-                    <p><xar:mlstring>Plugins requiring additional tags: advimage, advlink.</xar:mlstring></p>
             </span>
         </div>
 
@@ -512,7 +530,24 @@
                 </select>
             </span>
         </div>
-
+        <div style="clear: both; padding-top: 10px;">
+           <span style="float: left; width: 30%; text-align: right;">
+               <span class="help" title="#xarML('Position of the style path display  at top or bottom of text input area')#">
+                   <label for="tinyshowpath"><xar:mlstring>Path display position:</xar:mlstring></label>
+               </span>
+            </span>
+            <span style="float: right; width: 68%; text-align: left;">
+                <select name="tinyshowpath" id="tinyshowpath" size="1">
+                <xar:if condition="$tinyshowpath eq 'top'">
+                    <option value="top" selected="selected"><xar:mlstring>Top</xar:mlstring></option>
+                    <option value="bottom"><xar:mlstring>Bottom</xar:mlstring></option>
+                <xar:else />
+                    <option value="top"><xar:mlstring>Top</xar:mlstring></option>
+                    <option value="bottom" selected="selected"><xar:mlstring>Bottom</xar:mlstring></option>
+                </xar:if>
+                </select>
+            </span>
+        </div>
         <xar:comment>jojodee - Fix this when i get time
         <div style="clear: both; padding-top: 10px;">
             <span style="float: left; width: 30%; text-align: right;">
@@ -547,7 +582,7 @@
             You DO NOT have to change anything on this page. If you do wish to change the defaults then you can add buttons, remove them, or define
             exactly what buttons appear. Valid button names are (separate names by comma - no spaces):</xar:mlstring>
             <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, charmap, visualaid, spacer, cut, copy, paste, advhr
-              (and for plugins - ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime, advhr, flash)
+              (and for plugins - save, ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime, advhr, flash)
                </xar:mlstring>
             </p>
         </div>

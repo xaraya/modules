@@ -3,22 +3,22 @@
 <title>{$lang_insert_anchor_title}</title>
 <script language="javascript" src="../../tiny_mce_popup.js"></script>
 <script language="javascript">
-	function init() {
-		document.forms[0].anchorName.value = tinyMCE.getWindowArg('name');
-		document.forms[0].insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action')); 
-		window.focus();
-	}
+    function init() {
+        document.forms[0].anchorName.value = tinyMCE.getWindowArg('name');
+        document.forms[0].insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action')); 
+        window.focus();
+    }
 
-	function insertAnchor() {
-		if (window.opener) {
-			tinyMCE.execInstanceCommand(tinyMCE.getWindowArg('editor_id'), 'mceAnchor', false, document.forms[0].anchorName.value);
-			top.close();
-		}
-	}
+    function insertAnchor() {
+        if (window.opener) {
+            tinyMCE.execInstanceCommand(tinyMCE.getWindowArg('editor_id'), 'mceAnchor', false, document.forms[0].anchorName.value);
+            top.close();
+        }
+    }
 
-	function cancelAction() {
-		top.close();
-	}
+    function cancelAction() {
+        top.close();
+    }
 </script>
 </head>
 <body onload="init();">

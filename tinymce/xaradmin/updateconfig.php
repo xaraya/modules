@@ -36,6 +36,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyheight','str:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinypara','str:1:',$tinypara,'false',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinymode', $tinymode);
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', $tinyask);
@@ -46,6 +47,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinyheight', $tinyheight);
                xarModSetVar('tinymce', 'tinylang', $tinylang);
                xarModSetVar('tinymce', 'tinybr', $tinybr);
+               xarModSetVar('tinymce', 'tinypara', $tinypara);
 
             break;
         case 'cssplug':
@@ -81,7 +83,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinybuild2','str:1:',$tinybuild2,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybuild3','str:1:',$tinybuild3,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyadvformat','str:1:',$tinyadvformat,'',XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('tinyshowpath','str:1:',$tinyshowpath,'',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinyexstyle', $tinyexstyle); //not used at this stage
                xarModSetVar('tinymce', 'tinytoolbar', $tinytoolbar);
                xarModSetVar('tinymce', 'tinybuttons', $tinybuttons);
@@ -91,6 +93,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinybuild2', $tinybuild2);
                xarModSetVar('tinymce', 'tinybuild3', $tinybuild3);
                xarModSetVar('tinymce', 'tinyadvformat', $tinyadvformat);
+               xarModSetVar('tinymce', 'tinyshowpath', $tinyshowpath);
                xarModSetVar('tinymce', 'tinybuttonsremove', $tinybuttonsremove);
 
            break;
@@ -191,6 +194,9 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinybr')=='true'){
         $jstext .='force_br_newlines: "true",';
     }
+    if (xarModGetVar('tinymce','tinypara')=='true'){
+        $jstext .='force_p_newlines: "true",';
+    }
    if (trim(xarModGetVar('tinymce','tinyinvalid')) <> '') {
           $jstext .='invalid_elements  : "'.trim(xarModGetVar('tinymce','tinyinvalid')).'", ';
     }
@@ -203,6 +209,7 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinytheme') =='advanced') {
     //set a few advanced theme options
         $jstext .='theme_advanced_toolbar_location : "'.xarModGetVar('tinymce','tinytoolbar').'", ';
+        $jstext .='theme_advanced_path_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
 
      // $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",';
 

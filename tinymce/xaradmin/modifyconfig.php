@@ -46,12 +46,14 @@ function tinymce_admin_modifyconfig()
     $data['tinyinlinestyle'] = xarModGetVar('tinymce', 'tinyinlinestyle');
     $data['tinyundolevel'] = xarModGetVar('tinymce', 'tinyundolevel');
     $data['defaulteditor'] = xarModGetVar('base','editor');
-    $data['tinydirection'] = xarModGetVar('tinymce','tinydirection');    
+    $data['tinydirection'] = xarModGetVar('tinymce','tinydirection');
+    $data['tinyshowpath'] = xarModGetVar('tinymce','tinyshowpath');
     $data['tinyencode'] = xarModGetVar('tinymce','tinyencode');
     $data['tinyplugins'] = xarModGetVar('tinymce','tinyplugins');
     $data['tinydate']=xarModGetVar('tinymce', 'tinydate');
     $data['tinytime']=xarModGetVar('tinymce', 'tinytime');
     $data['tinybr']=xarModGetVar('tinymce', 'tinybr');
+    $data['tinypara'] = xarModGetVar('tinymce','tinypara');
     $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');    
     $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');     
     $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser');              

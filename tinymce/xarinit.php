@@ -32,6 +32,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyinstances','summary,body');
    xarModSetVar('tinymce', 'tinycsslist','modules/tinymce/xarstyles/editor.css');
    xarModSetVar('tinymce', 'tinytoolbar','bottom');
+   xarModSetVar('tinymce', 'tinyshowpath','bottom');
    xarModSetVar('tinymce', 'tinywidth','');
    xarModSetVar('tinymce', 'tinyheight','');
    xarModSetVar('tinymce', 'tinydirection','ltr');
@@ -48,6 +49,7 @@ function tinymce_init()
     xarModSetVar('tinymce','tinydate', '');
     xarModSetVar('tinymce','tinytime', '');
     xarModSetVar('tinymce', 'tinybr', 'false');
+    xarModSetVar('tinymce', 'tinypara', 'true');
     xarModSetVar('tinymce', 'tinyinvalid', '');    
     xarModSetVar('tinymce', 'tinyadvformat', '');
     xarModSetVar('tinymce', 'useibrowser', 0);
@@ -132,8 +134,13 @@ function tinymce_upgrade($oldversion)
     return tinymce_upgrade('0.2.0');
     case '0.2.0':
     return tinymce_upgrade('0.2.1');
-    break;    break;
+    break;
     case '0.2.1':
+    xarModSetVar('tinymce', 'tinypara', 'true');
+    xarModSetVar('tinymce', 'tinyshowpath','bottom');
+    return tinymce_upgrade('0.3.0');
+    break;
+    case '0.3.0':
     // Current version
     break;
     }
