@@ -32,7 +32,6 @@ function paypalipn_user_main()
         $value = urlencode(stripslashes($value));
         $req .= "&$key=$value";
     }
-
     
     // Config Option to test the post vars
     if (!xarModGetVar('paypalipn', 'testmode')){
@@ -40,7 +39,6 @@ function paypalipn_user_main()
     } else {
         $domain = 'www.eliteweaver.co.uk';
     }
-
 
     // post back to PayPal system to validate
     $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
@@ -52,30 +50,10 @@ function paypalipn_user_main()
     $fp = fsockopen ($domain, 80, $errno, $errstr, 30);
     
     if (!$fp) return;
-
     fputs($fp, $header . $req);
-
-
-    // Send an email of the vars
-    if (xarModGetVar('paypalipn', 'email')){
-        // Config Option
-        // Send Mail Confirmation to Site Admin
-        $mail['message'] = xarML('Your Recieved an IPN.  The variables sent are as followed');
-        $mail['message'] .= "\n\n";
-        foreach ($_POST as $key => $value) {
-            $mail['message'] .= "$key = $value\n";
-        }
-        $mail['admin_mail'] = xarModGetVar('mail', 'adminmail');
-        $mail['admin_name'] = xarModGetVar('mail', 'adminname');
-        // Send email
-        if (!xarModAPIFunc('mail', 'admin', 'sendmail',
-                           array('info' => $mail['admin_mail'],
-                                 'name' => $mail['admin_name'],
-                                 'subject' => xarML('IPN Notification'),
-                                 'message' => $mail['message']))) return;
-    }
     fclose ($fp);
 
+    $extrainfo['payment'] = $_POST;
 
 
     return true;
