@@ -159,7 +159,22 @@
                     <xar:mlstring>Commentary Source:</xar:mlstring>
                 </td>
                 <td>
-                    <input type="text" name="commentarySource" id="commentarySource" size="50" maxlength="255" value="#xarVarPrepForDisplay($story['commentarySource'])#" tabindex="16" />
+                    <xar:if condition="!empty($story['commentarySourceArray'])">
+                        <select name="commentarySource" tabindex="16">
+                            <option value=''>Choose Source</option>
+                            <xar:loop name="$story['commentarySourceArray']">
+                                <xar:if condition="$loop:item['source'] eq $story['commentarySource']">
+                                        <option name="source" value="#$loop:item['source']#" selected >#$loop:item['source']#</option>
+                                <xar:else />
+                                        <option name="source" value="#$loop:item['source']#">#$loop:item['source']#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                        <br /><br />
+                    </xar:if>
+                    <xar:mlstring>Add a new commentary source:</xar:mlstring></b>
+                    <br /><br />
+                    <input type="text" name="newCommentarySource" id="newCommentarySource" value="" size="50" maxlength="255" tabindex="17" />
                 </td>
             </tr>
             <tr>

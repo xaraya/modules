@@ -87,7 +87,7 @@ function newsletter_admin_deletealtsubscription($args)
     xarSessionSetVar('statusmsg', xarML('Subscription Deleted'));
 
     // Redirect
-    xarResponseRedirect(xarModURL('newsletter', 'admin', 'viewsubscription'));
+    xarResponseRedirect(xarModURL('newsletter', 'admin', 'searchsubscription'));
 }
 
 ?>

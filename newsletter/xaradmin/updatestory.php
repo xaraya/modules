@@ -91,9 +91,32 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('linkExpiration', 'int:0:', $linkExpiration, -1)) return;
     if (!xarVarFetch('commentary', 'str:1:', $commentary, '')) return;
     if (!xarVarFetch('commentarySource', 'str:1:', $commentarySource, '')) return;
+    if (!xarVarFetch('newCommentarySource', 'str:1:', $newCommentarySource, '')) return;
     if (!xarVarFetch('datePublishedMon', 'int:0:', $datePublishedMon, 0)) return;
     if (!xarVarFetch('datePublishedDay', 'int:0:', $datePublishedDay, 0)) return;
     if (!xarVarFetch('datePublishedYear', 'int:0:', $datePublishedYear, 0)) return;
+
+    // If commentary exists, then check that a commentary source 
+    // was entered
+    if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
+        xarExceptionFree();
+        $msg = xarML('You must enter a commentary source for the commentary.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
+    // Add new commentary source if field isn't empty
+    if (!empty($newCommentarySource)) {
+            $newcommsource = xarModAPIFunc('newsletter',
+                                    'admin',
+                                    'newcommentarysource',
+                                    array('publicationId' => $publicationId,
+                                          'newCommentarySource' => $newCommentarySource));
+            
+            if (!empty($newcommsource)) {
+                $commentarySource = $newcommsource;
+        }
+    }
 
     // Check and format storyDate - dates are stored as UNIX timestamp
     if ($storyDateMon == 0 || $storyDateDay == 0 || $storyDateYear == 0) {

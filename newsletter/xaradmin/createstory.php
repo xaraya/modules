@@ -82,43 +82,25 @@ function newsletter_admin_createstory()
     // Get submit button
     if (!xarVarFetch('submit', 'str:1:', $submitbutton, '')) return;
 
+    // If commentary exists, then check that a commentary source 
+    // was entered
+    if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
+        xarExceptionFree();
+        $msg = xarML('You must enter a commentary source for the commentary.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
     // Add new commentary source if field isn't empty
     if (!empty($newCommentarySource)) {
-        // Get the list of commentary sources from module var
-        $commsource = xarModGetVar('newsletter', 'commentarysource');
-        if (!empty($commsource)) {
-            if (!is_array($commsource = @unserialize($commsource))) {
-                $commsource = array();
-            }
-        } else {
-            $commsource = array();
-        }
-
-        // Check if publication is in commentary source array
-        $foundSource = false;
-        if (isset($commsource[$publicationId])) {
-            // See if source has already been added to array
-            foreach ($commsource[$publicationId] as $pubsource) {
-                if ($pubsource['source'] == $newCommentarySource) {
-                    $foundSource = true;
-                    break;
-                }
-            }
-            if (!$foundSource) {
-                $commsource[$publicationId][] = array('source' => $newCommentarySource);
-                // Set commentary source
-                $commentarySource = $newCommentarySource;
-            }
-        } else {
-            $commsource[$publicationId][] = array('source' => $newCommentarySource);
-            // Set commentary source
-            $commentarySource = $newCommentarySource;
-        }
-
-        if (!$foundSource) {
-            // Set module var
-            $commsource = serialize($commsource);
-            xarModSetVar('newsletter', 'commentarysource', $commsource);
+            $newcommsource = xarModAPIFunc('newsletter',
+                                    'admin',
+                                    'newcommentarysource',
+                                    array('publicationId' => $publicationId,
+                                          'newCommentarySource' => $newCommentarySource));
+            
+            if (!empty($newcommsource)) {
+                $commentarySource = $newcommsource;
         }
     }
 
@@ -208,7 +190,8 @@ function newsletter_admin_createstory()
     // the user to an appropriate page for them to carry on their work
     $templateVarArray = array('publicationId' => $publicationId,
                               'issueId' => $issueId,
-                              'ownerId' => $ownerId);
+                              'ownerId' => $ownerId,
+                              'categoryId' => $categoryId);
                               
     // If creating another story
     if ($submitbutton == 'Add Another Story') {

@@ -31,6 +31,7 @@ function newsletter_admin_newstory()
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
     if (!xarVarFetch('ownerId', 'int:0:', $ownerId, 0)) return;
     if (!xarVarFetch('issueId', 'int:0:', $issueId, 0)) return;
+    if (!xarVarFetch('categoryId', 'int:0:', $categoryId, 0)) return;
 
     // Get the admin menu
     $data = xarModAPIFunc('newsletter', 'admin', 'menu');
@@ -75,6 +76,10 @@ function newsletter_admin_newstory()
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
+
+    // Set category id - this will allow the category to be "sticky"
+    // from one story to the next
+    $data['categoryId'] = $categoryId; 
 
     // Get categories
     $data['number_of_categories'] = xarModGetVar('newsletter', 'number_of_categories');

@@ -154,16 +154,22 @@ function newsletter_admin_modifystory()
         return; // throw back
 
     // Get the list of commentary sources from module var
-    $commsource = xarModGetVar('newsletter', 'commentarysource');
-    if (!empty($commsource)) {
-        if (!is_array($commsource = @unserialize($commsource))) {
-            $commsource = array();
+    $commentarySourceArray = xarModGetVar('newsletter', 'commentarysource');
+    if (!empty($commentarySourceArray)) {
+        if (!is_array($commentarySourceArray = @unserialize($commentarySourceArray))) {
+            $commentarySourceArray = array();
         }
     } else {
-        $commsource = array();
+        $commentarySourceArray = array();
     }
-        
-    // Get the list of publications
+
+    // Check if publication is in commentary source array
+    if (array_key_exists($publicationId, $commentarySourceArray)) {
+        $story['commentarySourceArray'] = $commentarySourceArray[$publicationId];
+    } else {
+        $story['commentarySourceArray'] = array();
+    }
+
     // Set hook variables
     $story['module'] = 'newsletter';
     $hooks = xarModCallHooks('story','modify',$id,$story);
