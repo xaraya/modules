@@ -94,9 +94,9 @@
 
             // if we haven't hit an exception, then go ahead and close everything up
             if (xarCurrentErrorType() === XAR_NO_EXCEPTION) {
-				if (is_resource($tmpId)) {
-					@fclose($tmpId);
-				}
+                if (is_resource($tmpId)) {
+                    @fclose($tmpId);
+                }
                 $fileInfo['fileType'] = xarModAPIFunc('mime', 'user', 'analyze_file', 
                                                        array('fileName' => $fileInfo['fileLocation']));
     

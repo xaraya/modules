@@ -42,12 +42,12 @@ function uploads_userapi_file_get_metadata( $args ) {
             $size = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $size);
         }
 
-		$relative_path = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '/trusted', $file);
+        $relative_path = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '/trusted', $file);
         
         $fileInfo = array('inodeType'    => $type,
                           'fileName'     => $name,
                           'fileLocation' => $file,
-						  'relativePath' => $relative_path,
+                          'relativePath' => $relative_path,
                           'fileType'     => $mime,
                           'fileSize'     => $size);
 

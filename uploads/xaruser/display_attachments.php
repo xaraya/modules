@@ -65,7 +65,7 @@ function uploads_user_display_attachments($args)
 
     $data = $args;    
     $data['Attachments']              = $Attachments;
-	$data['local_import_post_url']    = xarModURL('uploads', 'user', 'display_attachments');    
+    $data['local_import_post_url']    = xarModURL('uploads', 'user', 'display_attachments');    
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
     $data['authid'] = xarSecGenAuthKey('uploads');
     return $data;

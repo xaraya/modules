@@ -72,7 +72,7 @@ function uploads_userapi_import_get_filelist( $args ) {
                     if (is_file($fileLocation. '/' . $inode)) {
                         $fileName = $fileLocation . '/' . $inode;
                         $file = xarModAPIFunc('uploads', 'user', 'file_get_metadata', array('fileLocation' => $fileName));
-						$fileList["$file[inodeType]:$fileName"] = $file;
+                        $fileList["$file[inodeType]:$fileName"] = $file;
                     }
                 }
             }
