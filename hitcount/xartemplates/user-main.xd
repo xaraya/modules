@@ -2,6 +2,7 @@
 <br />
 <ul>
 <xar:foreach in="$moditems" value="$moditem">
+	<ul>
     <li> <a href="#$moditem['link']#">#$moditem['name']#</a> =&gt; #$moditem['numitems']# items </li>
     <xar:if condition="!empty($moditem['toplinks'])">
     <xar:foreach in="$moditem['toplinks']" value="$toplink">
