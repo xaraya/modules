@@ -1,7 +1,21 @@
 #!/bin/sh
 
+# PROBLEMS with this trigger:
+#  - on bk push -a (merge changesets) the message is really meaningless
+#    and it seems there are other changesets listed in the message
+#    msgs given by bk:
+#    BitKeeper/triggers/post-incoming.notice: $BK_CSETLIST: ambiguous redirect
+#    BitKeeper/triggers/post-incoming.notice: [: -gt: unary operator expected
+
+
 # Only run this script on the server
 if [ $BK_SIDE != server ]
+then exit 0
+fi
+
+# Only run this script on *this* server (the xaraya one)
+THISHOST=`bk gethost`
+if [ $THISHOST != sasquatch.pulpcontent.com ]
 then exit 0
 fi
 
@@ -13,8 +27,9 @@ then exit 0
 fi
 
 # url to web interface
-BKURL=http://www.xaraya.com:15010
 REPO=$(basename ${BKD_ROOT})
+BKURL=http://www.xaraya.com:15000/$REPO
+
 # post-incoming event, send out notices, changes have
 # already been applied so we don't need to test for
 # CONFLICT variable. (see other trigger)
@@ -40,8 +55,9 @@ then (
 		echo
 		bk changes -v - < $BK_CSETLIST
      ) | sed 's/^/    /'
+		# FIXME: when pushing a merge changest this gives an ambigious redirect
+		# BK_CSETLIST is not empty we check for that, what's happening?
 		echo Links for the differences:
 		echo $(cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //')
 fi
-# FIXME: subject spec should be" n changeset(s) pushed to <repo>, <firstcomment_trimmed>
 ) | mail -s "${NUMSETS} ${CHANGETEXT} pushed to ${REPO}: ${CSCOMMENT:0:40}..." xaraya_bk-notices@lists.xaraya.com
