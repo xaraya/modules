@@ -41,10 +41,28 @@ class bkFile
         return $this;
    }
     
-    function bkHistory($formatstring) 
+    function bkHistory($user) 
    {
+        $formatstring="'";
+        if($user != '') $formatstring .="\$if(:P:=$user){";
+        $formatstring .= ":AGE:|:P:|:REV:|\$each(:C:){(:C:)}";
+        if($user != '') $formatstring .= "}";
+        $formatstring .= "'";
+        
         $cmd="bk prs -nh -d$formatstring ".$this->_file;
-        return $this->_repo->_run($cmd);
+        $history = $this->_repo->_run($cmd);
+            
+        while (list(,$row) = each($history)) {
+            list($age, $author, $filerev, $comments) = explode('|',$row);
+            $delta = (object) null;
+            $delta->rev = $filerev;
+            $delta->age = $age;
+            $delta->author = $author;
+            $delta->file = $this->_file;
+            $delta->comments = $comments;
+            $deltas[$filerev] = $delta;
+        }
+        return $deltas;
    }
     
     function bkChangeSets() 

@@ -43,28 +43,15 @@ function bkview_user_historyview($args)
         $checkedout = false;
     }
     
-    $formatstring="'";
-    if($user != '') $formatstring .="\$if(:P:=$user){";
-    $formatstring .= ":AGE:|:P:|:REV:|\$each(:C:){(:C:)}";
-    if($user != '') $formatstring .= "}";
-    $formatstring .= "'";
-    $history= $the_file->bkHistory($formatstring);
-    $data['history']=array();
-    $histlist=array();
-    $counter=1;
-    while (list(,$row) = each($history)) {
-        list($age, $author, $filerev, $comments) = explode('|',$row);
-        $histlist[$counter]['age']=$age;
-        $histlist[$counter]['author']=$author;
-        $histlist[$counter]['rev']=$filerev;
-        $histlist[$counter]['comments']=xarVarPrepForDisplay($comments);
-        $histlist[$counter]['repoid'] = $repoid;
-        $histlist[$counter]['file'] = $file;
-        $histlist[$counter]['icon'] = $icon;
-        $histlist[$counter]['checkedout'] = $checkedout;
-        $counter++;
+    // Get an array of delta's
+    $history= $the_file->bkHistory($user);
+    foreach($history as $rev => $delta) {
+        $delta->repoid = $repoid;
+        $delta->icon = $icon;
+        $delta->checkedout = $checkedout;
+        $histlist[$rev] = (array) $delta;
     }
-    
+
     // Return data to BL
     if($user != '') {
         $data['pageinfo'] = xarML('Revision history for #(1) by #(2)',$file, $user);
