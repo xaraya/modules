@@ -12,10 +12,10 @@
     <xar:loop name="$dirlist">
       <div style="float:left; min-width: #$maxlen#em;">
         <xar:if condition="trim($loop:item['dirname']) == '..'">
-          <img src="#$imgloc#/back.gif" alt="parent directory"/>
+          <img src="#xarTplGetImage('back.gif','bkview')#" alt="parent directory"/>
           <xar:set name="$dirtext"><xar:mlstring>Up</xar:mlstring></xar:set> 
         <xar:else/>
-          <img src="#$imgloc#/dir.gif" alt="go into directory #$loop:item['dirname']#"/>
+          <img src="#xarTplGetImage('dir.gif','bkview')#" alt="go into directory #$loop:item['dirname']#"/>
           <xar:set name="$dirtext">#$loop:item['dirname']#</xar:set>
         </xar:if>
         <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">
@@ -41,7 +41,7 @@
         <tr class="csets">
           <td class="csets">
             <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
-              <img src="#$imgloc#/file.gif" alt="file" />
+              <img src="#$loop:item['icon']#" alt="file" />
             </a>
           </td>
           <td class="csets">
