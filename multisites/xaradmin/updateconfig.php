@@ -28,7 +28,7 @@ function multisites_admin_updateconfig($args)
 
     // Security
     if (!xarSecurityCheck('AdminMultisites')) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
 
@@ -48,7 +48,7 @@ function multisites_admin_updateconfig($args)
     $var = is_dir($masterfolder);
     if ($var != true) {
         $msg = xarML("You master site directory \"".$masterfolder."\" does not exist! Please create it first and make sure it is writeable chmod 777!.");
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DIRECTORY', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DIRECTORY', new DefaultUserException($msg));
             return $msg;
     }
 
@@ -61,7 +61,7 @@ function multisites_admin_updateconfig($args)
 
     if (!$setconfig) {
         $msg = xarML('Unable to configure Master Multisite, check all directories exist and are writeable, and database tables are available.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
        return false;
     }
 

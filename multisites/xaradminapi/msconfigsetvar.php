@@ -8,7 +8,7 @@ function multisites_adminapi_msconfigsetvar($args)
     extract($args);
     if (empty($name)) {
         $msg = xarML('Empty name.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
     return $msg;
     }

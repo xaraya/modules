@@ -34,7 +34,7 @@ function multisites_adminapi_create($args)
         (!isset($msdb)))   {
         $msg = xarML('Invalid Parameter Count',
                     join(', ',$invalid), 'admin', 'create', 'multisites');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -56,7 +56,7 @@ function multisites_adminapi_create($args)
 
     if ($result->RecordCount() > 0) {
         $msg = xarML('The subsite already exists!');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

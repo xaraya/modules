@@ -39,7 +39,7 @@ function multisites_admin_delete($args)
 
        if (!$subsite) {
             $msg = xarML("Cannot delete subsite '".$siteDB);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'NO_DATA_RECORD', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'NO_DATA_RECORD', new DefaultUserException($msg));
             return $msg;
        }
 

@@ -24,7 +24,7 @@ function multisites_adminapi_delete($args)
     if (!isset($msid)) {
       $msg = xarML('Invalid Parameter',
             'item ID', 'admin', 'delete', 'Multisites');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -38,7 +38,7 @@ function multisites_adminapi_delete($args)
     if ($subsite == false) {
         $msg = xarML('No Such Subsite Exists',
                     'multisites');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
         return;

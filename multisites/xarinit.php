@@ -170,7 +170,7 @@ global $HTTP_HOST;
         umask($oldumask);
     } else {
           $msg = xarML("Could not write /var/config.system.php! Please manually copy back your original single site config.system.php file!");
-          xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
+          xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
           return $msg;
     }
 

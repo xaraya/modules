@@ -22,12 +22,12 @@ function multisites_admin_createsite($args)
 
     if (!xarVarFetch('siteDN', 'str:2:', $siteDN)) {
                  $msg = xarML('Please enter a name for the new site');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'DATA_MISSING', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'DATA_MISSING', new DefaultUserException($msg));
             return $msg;
     }
     if (!xarVarFetch('msPrefix', 'str:2:', $msPrefix)) {
             $msg = xarML('Please enter a unique Table Prefix for this site.');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'DATA_MISSING', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'DATA_MISSING', new DefaultUserException($msg));
             return $msg;
     }
     if (!xarVarFetch('siteDB', 'str:1:', $siteDB)) return;
@@ -50,13 +50,13 @@ function multisites_admin_createsite($args)
 
     // Security
     if (!xarSecurityCheck('AddMultisites')) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
      $sitedir = xarModAPIFunc('multisites','admin','cleandn', array('sitedn' => $siteDN));
         if (!$sitedir) {
             $msg = xarML("Could not clean #(1)", $siteDN);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
             return $msg;
         }
    $sitedir=$sitedir['sitedn'];
@@ -69,7 +69,7 @@ function multisites_admin_createsite($args)
 
     if ($prefixexists) {
             $msg = xarML("Sorry, a site with domain name #(1) already exists. Please use a different site (sub)domain name", $sitedir);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'ALREADY_EXISTS', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_EXISTS', new DefaultUserException($msg));
             return $msg;
     }
 
@@ -82,7 +82,7 @@ function multisites_admin_createsite($args)
 
     if ($prefixexists) {
             $msg = xarML("Sorry, a subsite already exists in database #(1) with database prefix #(2) Please use a different table prefix.", $siteDB, $msPrefix);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'ALREADY_EXISTS', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_EXISTS', new DefaultUserException($msg));
             return $msg;
     }
     $data=array();
@@ -113,7 +113,7 @@ function multisites_admin_createsite($args)
                                       'newdbtype'    => $newdbtype));
     if (!$setmultisitevar) {
        $msg = xarML('Unable to set configuration vars for #(1) Check your database and tables exist and try again.', $sitedn);
-       xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE', new DefaultUserException($msg));
+       xarErrorSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE', new DefaultUserException($msg));
     return;
     }
 
@@ -131,7 +131,7 @@ function multisites_admin_createsite($args)
 
     if (!$setmultisiteprefix) {
        $msg = xarML('Unable to set configuration vars for #(1) Check your database and tables exist and try again.', $sitedn);
-       xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE '.$siteDB, new DefaultUserException($msg));
+       xarErrorSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE '.$siteDB, new DefaultUserException($msg));
        return;
     }
     //set the shared tables prefix(system)
@@ -148,7 +148,7 @@ function multisites_admin_createsite($args)
                                       'newdbtype'    => $newdbtype));
     if (!$setmultisiteshare) {
        $msg = xarML('Unable to set configuration vars for #(1) Check your database and tables exist and try again.', $sitedn);
-       xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE '.$siteDB, new DefaultUserException($msg));
+       xarErrorSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE '.$siteDB, new DefaultUserException($msg));
        return;
     }
 
@@ -159,13 +159,13 @@ function multisites_admin_createsite($args)
     if ($var == true) { // Now, we have checked in the database for existance - enough - else also maybe exist due to some error
     //     $msg = xarML("The subsite folder #(1)/#(2) already exists!\nRemove this subsite and recreate, or edit the exising subsite.",
     //            $cWhereIsPerso, $sitedir);
-    //            xarExceptionSet(XAR_USER_EXCEPTION, 'EXISTING_DIRECTORY', new DefaultUserException($msg));
+    //            xarErrorSet(XAR_USER_EXCEPTION, 'EXISTING_DIRECTORY', new DefaultUserException($msg));
     //            return $msg;
     } else {
          $oldumask = umask(0);
          if (!mkdir($cWhereIsPerso."/".$sitedir,0755)) {
             $msg = xarML("The subsite directory #(1)/#(2) was not created!", $cWhereIsPerso, $sitedir);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
             return $msg;
          }
 
@@ -177,7 +177,7 @@ function multisites_admin_createsite($args)
         if (!mkdir($cWhereIsPerso."/".$sitedir."/var",0755)) {
             $msg = xarML("The subsite var directory #(1)/#(2)/var was not created!", 
                 $cWhereIsPerso, $sitedir);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
             return $msg;
         }
         umask($oldumask);
@@ -188,7 +188,7 @@ function multisites_admin_createsite($args)
     $mastersitedir = xarModAPIFunc('multisites','admin','cleandn', array('sitedn' => $sitedn));
         if (!$mastersitedir) {
             $msg = xarML("Could not clean #(1)", $mastersitedn);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
             return $msg;
         }
     //$masterdir=$mastersitedir['sitedn']; //TODO: Later when changes completed
@@ -199,7 +199,7 @@ function multisites_admin_createsite($args)
     $filenameout= $cWhereIsPerso.'/'.$sitedir.'/var/config.system.php';
     if (!copy($filenamein,$filenameout)) {
         $msg = xarML("Unable to copy master config to #(1)/#(2)/var", $cWhereIsPerso, $sitedir);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT COPY FILE', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'CANNOT COPY FILE', new DefaultUserException($msg));
         return;
     }
 
@@ -283,7 +283,7 @@ function multisites_admin_createsite($args)
         $dbtype =xarDBGetType();
         if (!xarModAPIFunc('installer', 'admin', 'createdb', array('dbName' => $siteDB, 'dbType' =>$dbtype ))) {
              $msg = 'The database cannot be created. Please create the database '.$siteDB. ' first and return to configure your site';
-             xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT CREATE DATABSE', new DefaultUserException($msg));
+             xarErrorSet(XAR_USER_EXCEPTION, 'CANNOT CREATE DATABSE', new DefaultUserException($msg));
           return;
         }
     }

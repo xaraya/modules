@@ -24,7 +24,7 @@ function multisites_userapi_get($args)
     if (!isset($msid)) {
         $msg = xarML('Invalid Parameter Count',
                     'userapi', 'get', 'multisites');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

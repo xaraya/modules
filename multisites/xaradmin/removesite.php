@@ -32,7 +32,7 @@ function multisites_admin_removesite($args)
 
     // Security
     if (!xarSecurityCheck('DeleteMultisites')) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
 
@@ -42,7 +42,7 @@ function multisites_admin_removesite($args)
         $sitedir = xarModAPIFunc('multisites','admin','cleandn', array('sitedn' => $mssite));
         if (!$sitedir) {
             $msg = xarML("Could not clean #(1)", $mssite);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
             return $msg;
         }
 
@@ -53,13 +53,13 @@ function multisites_admin_removesite($args)
             chmod($sitedirpath,0755);
             if (!is_writable($sitedirpath)) {
                 $msg = xarML("The subsite directory #(1) could not be deleted!", $sitedirpath);
-                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
                     return $msg;
             } else {
                $removesite= xarModAPIFunc('multisites','admin','recdeldir', array('sitedirpath' => $sitedirpath));
                 if (!$removesite){
                     $msg = xarML("The subsite directory #(1) could not be deleted!", $sitedirpath);
-                    xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
+                    xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
                     return $msg;
                 }
             }
@@ -71,7 +71,7 @@ function multisites_admin_removesite($args)
 
     if (!$site) {
         $msg = xarML("Cannot delete subsite '#(1)", $msid);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'NO_DATA_RECORD', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'NO_DATA_RECORD', new DefaultUserException($msg));
         return $msg;
     }
     // remove the site specific tables from the database

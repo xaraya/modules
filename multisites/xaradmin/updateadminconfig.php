@@ -21,7 +21,7 @@ function multisites_admin_updateadminconfig()
 
     // Security
     if (!xarSecurityCheck('AdminMultisites')) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
     }
 

@@ -42,7 +42,7 @@ function multisites_userapi_getall($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid - function getall() in module Multisites');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }

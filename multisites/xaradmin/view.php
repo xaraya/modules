@@ -65,7 +65,7 @@ global $HTTP_SERVER_VARS;
        $data['siteno']=count($sites);
         if (empty($sites)) {
            $msg = xarML('No sites in database.', 'multisites');
-           xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+           xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
            return;
        }
 

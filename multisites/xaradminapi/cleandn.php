@@ -6,7 +6,7 @@ function multisites_adminapi_cleandn($sitedn)
 
   if (!isset($sitedn) || empty($sitedn)){
     $msg = xarML("Could not clean ".$sitedn);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-API CLEANDN', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'ERROR-API CLEANDN', new DefaultUserException($msg));
             return $msg;
   }
 
