@@ -7,7 +7,7 @@
 <div class="xar-mod-body">
     <h2>Read Message</h2>
     <xar:if condition="isset($error_message)">
-        <p> News Server Error: 
+        <p> News Server Error:
             <span style="color: red;">
                 #$error_message#
             </span>
@@ -19,11 +19,16 @@
             </p>
             <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
                 <div class="xar-norm" style="padding: 3px;">
-                    <xar:mlstring>Subject</xar:mlstring>:&nbsp;&nbsp;<b>#$Subject#</b><br />
-                    <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#$From#</b><br />
-                    <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b>#$Organization#</b><br />
-                    <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#$Date#</b><br />
-                    <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#$Newsgroups#</b><br /><br />
+
+                    <xar:mlstring>Subject</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['Subject']#</b><br />
+                    <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['From']#</b><br />
+                    <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['Organization']#</b><br />
+                    <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['Date']#</b><br />
+                    <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['Newsgroups']#</b><br /><br />
+
+
+                    <br />
+                    <br />
                     #$article#
                 </div>
             </div>
