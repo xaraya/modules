@@ -2,6 +2,7 @@
 $modversion['name'] = 'Nameday';
 $modversion['id'] = '502';
 $modversion['version'] = '1.3.0';
+$modversion['displayname']    = xarML('Nameday');
 $modversion['description'] = "A 'Name day' type module.";
 $modversion['credits'] = '';
 $modversion['help'] = '';
@@ -14,5 +15,5 @@ $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array('nameday::' => 'nameday::nameday ID');
 $modversion['class'] = 'Complete';
-$modversion['category'] = 'Content'; 
+$modversion['category'] = 'Content';
 ?>
