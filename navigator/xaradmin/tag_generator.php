@@ -143,6 +143,15 @@ function navigator_admin_tag_generator()
             $data['primary_list'] = $primary_list;
             $data['intersects'] = $intersects;
         } else {
+            $plist = xarModGetVar('navigator', 'categories.list.primary');
+            $plist = @unserialize($plist);
+
+            xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$plist);
+            foreach ($plist as $key => $node) {
+                $primary_list[$node['cid']] = $node;
+                unset($plist[$key]);
+            }
+
             $types = implode(':', $locTypes);
             $funcName = 'location_';
             $current_tag = 'navigator-location';
