@@ -1,7 +1,7 @@
 <p>
    <xar:mlstring>Submitted By:</xar:mlstring> #$username#
 </p>
-<hr>
+<hr />
 <p>
     <xar:mlstring>Email:</xar:mlstring> #$useremail#
 </p>
@@ -15,9 +15,9 @@
 <xar:mlstring>Comments:</xar:mlstring>
 </p>
 <p>
-#$usermessage#
+    #$usermessage#
 </p>
-<hr>
+<hr />
 <p>
     <xar:mlstring>User information:</xar:mlstring>
 </p>
@@ -27,7 +27,7 @@
 <p>
     <xar:mlstring>Referer:</xar:mlstring> #$userreferer#
 </p>
-<hr>
+<hr />
 <p>
 <xar:mlstring>Site Name:</xar:mlstring> #$sitename#
 </p>

@@ -15,7 +15,7 @@
 <p>
     <xar:mlstring>Comments:</xar:mlstring> #$usermessage#
 </p>
-<hr>
+<hr />
 <p>
     #$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
 </p>
