@@ -1,6 +1,6 @@
 <?php
 $modversion['name'] = 'window';
-$modversion['id'] = '3003';
+$modversion['id'] = '3002';
 $modversion['version'] = '1.0';
 $modversion['description'] = 'Incorporate external sites or standalone apps';
 $modversion['credits'] = 'docs/credits.txt';
