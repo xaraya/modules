@@ -1,7 +1,7 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * SiteContact configuration modification
  * 
  * @package Xaraya eXtensible Management System
@@ -63,5 +63,4 @@ function sitecontact_admin_modifyconfig()
     // Return the template variables defined in this function
     return $data;
 }
-
 ?>
