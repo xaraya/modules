@@ -27,17 +27,17 @@
 <p>
   <ul>
     <li>
-      <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'core'))#">
+      <a href="#xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core'))#">
         <xar:mlstring>Translate the core</xar:mlstring>
       </a>
     </li>
     <li>
-      <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'module'))#">
+      <a href="#xarModURL('translations', 'admin', 'update_info', array('dntype'=>'module'))#">
         <xar:mlstring>Translate a module</xar:mlstring>
       </a>
     </li>
     <li>
-      <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'theme'))#">
+      <a href="#xarModURL('translations', 'admin', 'update_info', array('dntype'=>'theme'))#">
         <xar:mlstring>Translate a theme</xar:mlstring>
       </a>
     </li>

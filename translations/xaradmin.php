@@ -248,7 +248,7 @@ function translations_release_locale($locale = NULL)
     }
 }
 
-function translations__dntype2name ($tran_type)
+function translations__dnType2Name ($tran_type)
 {
     switch($tran_type) {
     case XARMLS_DNTYPE_CORE:

@@ -40,17 +40,6 @@ function translations_adminapi_get_module_phpfiles($args)
         }
         closedir($dd);
     }
-//  no longer applicable
-/*
-    $names2 = array('admin','user','adminapi','userapi');
-    foreach ($names2 as $name2) {
-        if (!file_exists("modules/$moddir/xar$name2.php")) {
-            if (file_exists("modules/$moddir/xar$name2")) {
-                $names[] = $name2;
-            }
-        }
-    }
-*/
     return $names;
 }
 

@@ -28,3 +28,5 @@ function translations_admin_main()
 {
     return array();
 }
+
+?>

@@ -20,7 +20,7 @@ function translations_admin_update_info()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!xarVarFetch('ctxtype', 'regexp:/^(core|module|theme)$/', $type)) return;
+    if (!xarVarFetch('dntype', 'regexp:/^(core|module|theme)$/', $type)) return;
 
     switch ($type) {
         case 'core':
@@ -38,3 +38,5 @@ function translations_admin_update_info()
     }
     xarResponseRedirect($url);
 }
+
+?>

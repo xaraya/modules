@@ -32,3 +32,5 @@ function translations_admin_start()
 
     return $tplData;
 }
+
+?>

@@ -49,7 +49,7 @@ function translations_adminapi_generate_module_skels($args)
     if (!isset($core_backend)) return;
     if (!$core_backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) module, you must first generate skels for the core.', $modname);
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'core')));
+        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         xarExceptionSet(XAR_USER_EXCEPTION, 'MissingCoreSkels', new DefaultUserException($msg, $link));
         return;
     }
@@ -74,36 +74,11 @@ function translations_adminapi_generate_module_skels($args)
 
     }
 
-    $allowedcontexts = array("templates", "templateincludes", "templateblocks");
-
-    foreach($allowedcontexts as $allowedcontext) {
-        ${$allowedcontext . "names"} = array();
-        $thiscontext = $GLOBALS['MLS']->getContextByName($allowedcontext);
-        $alloweddir = $thiscontext->getDir();
-        if (file_exists("modules/$moddir/xar$alloweddir")) {
-            $dd = opendir("modules/$moddir/xar$alloweddir");
-            while ($filename = readdir($dd)) {
-                if (!preg_match('/^([a-z\-_]+)\.xd$/i', $filename, $matches)) continue;
-                ${$allowedcontext . "names"}[] = $matches[1];
-
-                $parser = new TPLParser();
-                $parser->parse("modules/$moddir/xar$alloweddir/$filename");
-
-                $transEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransEntries();
-                $transKeyEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransKeyEntries();
-            }
-            closedir($dd);
-        }
-    }
-
-//    $allowedcontexts = array("blocks", "admin", "adminapi", "user", "userapi", "visualapi");
     $allowedcontexts = array();
     $allcontexts = $GLOBALS['MLS']->getContexts();
     foreach ($allcontexts as $context) {
         $contextName = $context->getName();
-        if ($contextName == 'core' || $contextName == 'file' ||
-            $contextName == 'templates' || $contextName == 'templateincludes' ||
-            $contextName == 'templateblocks') continue;
+        if ($contextName == 'core' || $contextName == 'file') continue;
         $allowedcontexts[] = $contextName;
     }
 
@@ -111,19 +86,23 @@ function translations_adminapi_generate_module_skels($args)
         ${$allowedcontext . "names"} = array();
         $thiscontext = $GLOBALS['MLS']->getContextByName($allowedcontext);
         $alloweddir = $thiscontext->getDir();
-        if (file_exists("modules/$moddir/xar$alloweddir")) {
-            $dd = opendir("modules/$moddir/xar$alloweddir");
-            while ($filename = readdir($dd)) {
-                if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
-                ${$allowedcontext . "names"}[] = $matches[1];
+        $xtype = $thiscontext->getXtype();
 
-                $parser = new PHPParser();
-                $parser->parse("modules/$moddir/xar$alloweddir/$filename");
+        if ($xtype == 'php') $pattern = '/^([a-z\-_]+)\.php$/i';
+        elseif ($xtype == 'xd') $pattern = '/^([a-z\-_]+)\.xd$/i';
+        else $pattern = '/^([a-z\-_]+)\.php$/i'; // php files as default
+        
+        $subnames = xarModAPIFunc('translations','admin','get_module_files',
+                                  array('moddir'=>"modules/$moddir/xar$alloweddir",'pattern'=>$pattern));
 
-                $transEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransEntries();
-                $transKeyEntriesCollection[$allowedcontext.'::'.$matches[1]] = $parser->getTransKeyEntries();
-            }
-            closedir($dd);
+        foreach ($subnames as $subname) {
+            if ($xtype == 'php') $parser = new PHPParser();
+            elseif ($xtype == 'xd') $parser = new TPLParser();
+            else $parser = new PHPParser(); // php files as default
+            $parser->parse("modules/$moddir/xar$alloweddir/$subname.$xtype");
+            ${$allowedcontext . "names"}[] = $subname;
+            $transEntriesCollection[$allowedcontext.'::'.$subname] = $parser->getTransEntries();
+            $transKeyEntriesCollection[$allowedcontext.'::'.$subname] = $parser->getTransKeyEntries();
         }
     }
 

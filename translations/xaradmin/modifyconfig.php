@@ -24,3 +24,5 @@ function translations_admin_modifyconfig()
     return $data;
 
 }
+
+?>

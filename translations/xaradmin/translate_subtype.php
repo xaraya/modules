@@ -28,8 +28,10 @@ function translations_admin_translate_subtype()
         $i++;
     }
     $regexstring = 'regexp:/^(' . $regexstring . ')$/';
-//    if (!xarVarFetch('subtype', 'regexp:/^(file|core|templates|templateincludes|templateblocks|blocks|admin|adminapi|user|userapi)$/', $subtype)) return;
-    if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+
+// FIXME 
+//    if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+    if (!xarVarFetch('subtype', 'str:1:', $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
 
     $args = array();
