@@ -2,7 +2,7 @@
 
 function contact_admin_create_contact($args)
 {
-
+     //TODO: type checking and default values
     // Get parameters from whatever input we need.
      if (!xarVarFetch('id', 'isset', $id, '', XARVAR_NOT_REQUIRED)) return;
      if (!xarVarFetch('department', 'str:1:', $department, '', XARVAR_NOT_REQUIRED)) return;
