@@ -191,8 +191,8 @@ function hookbridge_upgrade($oldversion)
     switch($oldversion) {
 
         // TODO // IMPLEMENT YOUR UPGRADES
-		case '0.0.1':
-			return true;
+        case '0.0.1':
+            return true;
 
         default:
             // TODO // throw appropriate exception

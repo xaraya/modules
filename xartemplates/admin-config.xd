@@ -24,7 +24,7 @@
             </td>
         </tr>
 
-		<tr>
+        <tr>
             <td><label for="supportshorturls"><xar:mlstring>Path to HookBridge Functions</xar:mlstring></label></td>
             <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
                 <xar:data-input id="hookbridge_functionpath" type="textbox" name="hookbridge_functionpath" value="$hookbridge_functionpath"/>

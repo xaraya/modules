@@ -24,7 +24,7 @@
 function hookbridge_adminapi_getmenulinks ( $args ) 
 {
     if (xarSecurityCheck('Adminhookbridge')) 
-	{
+    {
 
         $menulinks[] = array(
             'url'       => xarModURL(
@@ -49,13 +49,13 @@ function hookbridge_adminapi_getmenulinks ( $args )
         
 
         $menulinks[] = array(
-								'url'       => xarModURL(
-									'hookbridge'
-									,'admin'
-									,'config' )
-								,'title'    => 'Modify the configuration'
-								,'label'    => 'Modify Config' 
-							);
+                                'url'       => xarModURL(
+                                    'hookbridge'
+                                    ,'admin'
+                                    ,'config' )
+                                ,'title'    => 'Modify the configuration'
+                                ,'label'    => 'Modify Config' 
+                            );
     }
 
 
