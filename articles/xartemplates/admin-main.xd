@@ -116,10 +116,8 @@
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ul>
-                <li><xar:mlstring>big</xar:mlstring></li>
                 <li><xar:mlstring>featured items</xar:mlstring></li>
                 <li><xar:mlstring>glossary</xar:mlstring></li>
-                <li><xar:mlstring>past</xar:mlstring></li>
                 <li><xar:mlstring>random</xar:mlstring></li>
                 <li><xar:mlstring>related</xar:mlstring></li>
                 <li><xar:mlstring>top items</xar:mlstring></li>
