@@ -47,7 +47,7 @@
             <div class="xar-norm" style="padding: 1px; text-align: left;">
 				<p>
                 <xar:sec catch="false" mask="Comments-Reply" instance="$header[modid]:$header[objectid]:ALL">
-                    <form action="#xarModUrl('comments', 'user', 'reply')#" method="post">
+                    <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;">
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" /> 
 						<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
 						<input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
@@ -58,7 +58,7 @@
                 </xar:sec>
                 <xar:if condition="xarUserIsLoggedIn()">
                     <xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$loop:item['xar_cid']) or $loop:item['xar_uid'] eq $package['uid']">
-                        <form action="#xarModUrl('comments', 'user', 'modify')#" method="post">
+                        <form action="#xarModUrl('comments', 'user', 'modify')#" method="post" style="display: inline;">
                             <input type="hidden" name="header[modid]" value="#$header['modid']#" />
 							<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
 							<input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
@@ -70,7 +70,7 @@
                     </xar:if>
                 </xar:if>
                 <xar:sec catch="false" mask="Comments-Delete" instance="$header[modid]:$header[objectid]:#$loop:item[xar_cid]#">
-                    <form action="#xarModUrl('comments', 'user', 'delete')#" method="post">
+                    <form action="#xarModUrl('comments', 'user', 'delete')#" method="post" style="display: inline;">
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" />
 						<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
 						<input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
