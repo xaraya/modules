@@ -127,8 +127,8 @@ function comments_user_modify()
                                                                         $package['title']));
 
             $package['transformed-text']  = xarVarPrepHTMLDisplay($package['transformed-text']);
-            $package['transformed-title'] = xarVarPrepForDisplay($package['transformed-title']);
-            $package['text']              = xarVarPrepHTMLDisplay($package['text']);
+            $package['transformed-title'] = xarVarPrepHTMLDisplay($package['transformed-title']);
+            $package['text']              = xarVarPrepForDisplay($package['text']);
             $package['title']             = xarVarPrepForDisplay($package['title']);
 
             $comments[0]['xar_text']     = $package['text'];
