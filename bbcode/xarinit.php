@@ -17,7 +17,9 @@ function bbcode_init() {
 
     // Set up module variables
     //
-
+    xarModSetVar('bbcode', 'dolinebreak', 0);
+    xarModSetVar('bbcode', 'transformtype', 1);
+    xarRegisterMask('EditBBCode','All','bbcode','All','All','ACCESS_EDIT');
     // Set up module hooks
     if (!xarModRegisterHook('item',
                            'transform',
@@ -30,7 +32,6 @@ function bbcode_init() {
         return;
         
     }
-
     if (!xarModRegisterHook('item',
                            'formheader',
                            'GUI',
@@ -42,7 +43,6 @@ function bbcode_init() {
         return;
         
     }
-
     if (!xarModRegisterHook('item',
                            'formaction',
                            'GUI',
@@ -52,9 +52,7 @@ function bbcode_init() {
         $msg = xarML('Could not register hook');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
-        
     }
-
     if (!xarModRegisterHook('item',
                            'formdisplay',
                            'GUI',
@@ -64,9 +62,7 @@ function bbcode_init() {
         $msg = xarML('Could not register hook');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
-        
     }
-
     if (!xarModRegisterHook('item',
                            'formarea',
                            'GUI',
@@ -76,32 +72,51 @@ function bbcode_init() {
         $msg = xarML('Could not register hook');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
-        
     }
-
-    if (!xarModRegisterHook('item',
-                           'formfooter',
-                           'GUI',
-                           'bbcode',
-                           'user',
-                           'formfooter')) {
-        $msg = xarML('Could not register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-        
-    }
-
     // Initialisation successful
     return true;
 }
 
-function bbcode_upgrade($oldversion) {
+function bbcode_upgrade($oldversion) 
+{
+    switch ($oldversion) {
+        case '1.0':
+        case '1.0.0':
+            $modversion['admin']            = 1;
+            xarModSetVar('bbcode', 'dolinebreak', 0);
+            xarModSetVar('bbcode', 'transformtype', 1);
+            xarRegisterMask('EditBBCode','All','bbcode','All','All','ACCESS_EDIT');
+            // Code to upgrade from version 1.3 goes here
+            // Remove module hooks
+            if (!xarModUnregisterHook('item',
+                                      'formfooter',
+                                      'GUI',
+                                      'bbcode',
+                                      'user',
+                                      'formfooter')) {
+                $msg = xarML('Could not un-register hook');
+                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+                return;
+            }
+            break;
 
+        case '1.1':
+        case '1.1.0':
+            // Code to upgrade from version 1.3 goes here
+            break;
+        default:
+            // Couldn't find a previous version to upgrade
+            return;
+    }
     return true;
 }
 
-function bbcode_delete() {
-
+function bbcode_delete() 
+{
+    // Drop all ModVars
+    xarModDelAllVars('bbcode');
+    xarRemoveMasks('bbcode');
+    xarRemoveInstances('bbcode');
     // Remove module hooks
     if (!xarModUnregisterHook('item',
                              'transform',
@@ -149,22 +164,7 @@ function bbcode_delete() {
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-
-    // Remove module hooks
-    if (!xarModUnregisterHook('item',
-                              'formfooter',
-                              'GUI',
-                              'bbcode',
-                              'user',
-                              'formfooter')) {
-        $msg = xarML('Could not un-register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
-
-
     // Deletion successful
     return true;
 }
-
 ?>

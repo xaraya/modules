@@ -1,0 +1,35 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>BBCode Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/mail/xarimages/admin.gif')" >
+                <img src="modules/mail/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/mail/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>What is it?</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The BBCode module allows you to use BBCode style mark-up in your content instead of, or with, HTML mark-up.</xar:mlstring></p>
+		</div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Blocks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<p><xar:mlstring>The BBCode Module has no blocks included at this time.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Hooks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The BBCode has transform hooks on the output, and form control hooks on the input to allow insertion of BBCode in content.</xar:mlstring></p>
+        </div>
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <p><xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring></p>
+        </div>
+    </div>
+</div>

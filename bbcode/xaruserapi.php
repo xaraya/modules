@@ -83,7 +83,17 @@ function bbcode_encode($message, $is_html_disabled) {
     $message = bbcode_encode_code($message, $is_html_disabled);
 
     // change newlines to <br />'s
-    // $message = preg_replace("/\n/si","\n<br />\n",$message);
+    $dotransform = xarModGetVar('bbcode', 'dotransform');
+    if ($dotransform == 1){
+        $transformtype = xarModGetVar('bbcode', 'transformtype');
+        if ($transformtype == 1){
+            $message = preg_replace("/\n/si","<br />",$message);
+        } elseif ($transformtype == 2){
+            $message = preg_replace("/\n/si","</p><p>",$message);
+        }
+        $message = str_replace ("<p></p>", "", $message);
+    }
+
     
     // First: If there isn't a "[" and a "]" in the message, don't bother.
     if (! (strpos($message, "[") && strpos($message, "]")) )

@@ -16,7 +16,7 @@
 */
 
 $modversion['name']             = 'bbcode';
-$modversion['version']          = '1.0.0';
+$modversion['version']          = '1.1.0';
 $modversion['id']                 = '778';
 $modversion['description']      = 'BBCode Hook';
 $modversion['credits']          = 'xardocs/credits.txt';
@@ -27,7 +27,7 @@ $modversion['coding']           = 'xardocs/coding.txt';
 $modversion['official']         = 1;
 $modversion['author']           = 'larsneo';
 $modversion['contact']          = 'http://www.pncommunity.de';
-$modversion['admin']            = 0;
+$modversion['admin']            = 1;
 $modversion['user']             = 0;
 $modversion['securityschema']   = array();
 $modversion['class']            = 'Utility';
