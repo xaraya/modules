@@ -20,6 +20,9 @@
             <xar:if condition="!empty($loop:trails:item['catcount'])">
                 (#$loop:trails:item['catcount']#)
             </xar:if>
+            <xar:if condition="!empty($loop:trails:item['viewall']) and ((!empty($caticons) and count($caticons) gt 0) or (!empty($catlines) and count($catlines) gt 0))">
+                [<a href="#$loop:trails:item['viewall']#"><xar:mlstring>include children</xar:mlstring></a>]
+            </xar:if>
             <br />
         </xar:loop>
     </td>

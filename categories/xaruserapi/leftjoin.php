@@ -15,6 +15,9 @@
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['groupcids'] the number of categories you want items grouped by
+ *
+ * @param $args['cidtree'] get items in cid or anywhere below it (= slower than cids, usually)
+ *
  * @returns array
  * @return array('table' => 'nuke_categories_linkage',
  *               'field' => 'nuke_categories_linkage.xar_iid',
@@ -86,6 +89,12 @@ function categories_userapi_leftjoin($args)
         $isdummy = 0;
     }
 
+    // trick : cids = array(_NN) corresponds to cidtree = NN
+    if (count($cids) == 1 && preg_match('/^_(\d+)$/',$cids[0],$matches)) {
+        $cidtree = $matches[1];
+        $cids = array();
+    }
+
     // Table definition
     $xartable = xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
@@ -124,6 +133,11 @@ function categories_userapi_leftjoin($args)
                                      $catlinks[$i] . '.xar_modid ';
             $leftjoin['cids'][] = $catlinks[$i] . '.xar_cid';
         }
+    } elseif (!empty($cidtree)) {
+        $leftjoin['table'] = $categorieslinkagetable;
+        $categoriestable = $xartable['categories'];
+        $leftjoin['more'] = ' LEFT JOIN ' . $categoriestable .
+                            ' ON ' . $categoriestable . '.xar_cid = ' .  $leftjoin['cid'] . ' ';
     } else {
         $leftjoin['table'] = $categorieslinkagetable;
         $leftjoin['more'] = '';
@@ -159,6 +173,13 @@ function categories_userapi_leftjoin($args)
             $allcids = join(', ', $cids);
             $where[] = $leftjoin['cid'] . ' IN (' .
                        xarVarPrepForStore($allcids) . ')';
+        }
+    }
+    if (!empty($cidtree)) {
+        $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $cidtree));
+        if (!empty($cat)) {
+            $where[] = $categoriestable . '.xar_left >= ' . $cat['left'];
+            $where[] = $categoriestable . '.xar_left <= ' . $cat['right'];
         }
     }
     if (count($iids) > 0) {

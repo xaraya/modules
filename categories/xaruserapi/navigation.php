@@ -167,7 +167,13 @@ function categories_userapi_navigation($args)
         xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET);
     }
     // turn $catid into $cids array (and set $andcids flag)
+    $istree = 0;
     if (!empty($catid)) {
+        // if we're viewing all items below a certain category, i.e. catid = _NN
+        if (strstr($catid,'_')) {
+             $catid = preg_replace('/_/','',$catid);
+             $istree = 1;
+        }
         if (strpos($catid,' ')) {
             $cids = explode(' ',$catid);
             $andcids = true;
@@ -206,7 +212,7 @@ function categories_userapi_navigation($args)
     if (count($cids) > 0) {
         $seencid = array();
         foreach ($cids as $cid) {
-            if (empty($cid) || ! is_numeric($cid)) {
+            if (empty($cid) || !is_numeric($cid)) {
                 continue;
             }
             $seencid[$cid] = 1;
@@ -216,6 +222,7 @@ function categories_userapi_navigation($args)
 
     $data = array();
     $data['cids'] = $cids;
+    $data['istree'] = $istree;
 
     switch ($layout) {
 
@@ -334,7 +341,7 @@ function categories_userapi_navigation($args)
                     $join = ' &gt; ';
                     foreach ($parents as $cat) {
                         $label = xarVarPrepForDisplay($cat['name']);
-                        if ($cat['cid'] == $cid && empty($itemid) && empty($andcids)) {
+                        if ($cat['cid'] == $cid && empty($itemid) && empty($andcids) && empty($istree)) {
                             $link = '';
                         } else {
                         // TODO: now this is a tricky part...
@@ -362,8 +369,16 @@ function categories_userapi_navigation($args)
                                             'catlink' => $link,
                                             'catjoin' => $join);
                     }
+                    if (!empty($istree)) {
+                        $viewall = '';
+                    } else {
+                        $viewall = xarModURL($modname,$type,$func,
+                                             array('itemtype' => $itemtype,
+                                                   'catid' => '_' . $cid));
+                    }
                     $data['cattrails'][] = array('catitems' => $catitems,
-                                                 'catcount' => $curcount);
+                                                 'catcount' => $curcount,
+                                                 'viewall' => $viewall);
                 }
 
                 // Add filters to select on all categories or any categories
