@@ -1,12 +1,10 @@
-<xar:if condition="xarTplAddStyleLink('navigator','navigator-listmenu')"></xar:if>
-
 <xar:set name="$total">count($tree)</xar:set>
 
 <xar:for start="$index = 1" test="isset($tree[$index]) AND $index le $total" iter="">
     <div class="navigator-listmenu-wrapper">
 
         <xar:if condition="!$tree[$index]['indent']">
-            <span class="xar-contentnav-title">
+            <span class="navigator-listmenu-title">
                 #$tree[$index]['name']#
             </span>
         </xar:if>

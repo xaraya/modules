@@ -12,10 +12,10 @@
         <xar:if condition="isset($tag) AND ($tag eq 'menu') AND ($tagtype eq 'images')">
             <p>
                 <xar:mlstring>
-                    <strong>Note:</strong> In order for the Menu Images tag to display properly
+                    <strong>Note:</strong> In order for the Menu Images and List tags to display properly
                     you <strong>must</strong> have the following tag in the HEAD section of both your
                     default and admin page template (and any other page templates in which this tag
-                    might appear):  <strong>&lt;xar:navigator-inline-styles id="some_id" /&gt;</strong>
+                    might appear):  <strong>&lt;xar:navigator-inline-styles id="navigator_styles" /&gt;</strong>
                 </xar:mlstring>
             </p>
         </xar:if>
