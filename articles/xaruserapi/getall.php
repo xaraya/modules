@@ -315,11 +315,21 @@ function articles_userapi_getall($args)
 
         // Inserting the corresponding Category ID in the Article Description
         $delete = array();
+        $cachesec = array();
         foreach ($articles as $key => $article) {
             if (isset($cids[$article['aid']]) && count($cids[$article['aid']]) > 0) {
                 $articles[$key]['cids'] = $cids[$article['aid']];
                 foreach ($cids[$article['aid']] as $cid) {
                     if (!xarSecurityCheck('ViewArticles',0,'Article',"$article[pubtypeid]:$cid:$article[authorid]:$article[aid]")) {
+                        $delete[$key] = 1;
+                        break;
+                    }
+                    if (!isset($cachesec[$cid])) {
+                    // TODO: combine with ViewCategoryLink check when we can combine module-specific
+                    // security checks with "parent" security checks transparently ?
+                        $cachesec[$cid] = xarSecurityCheck('ReadCategories',0,'Category',"All:$cid");
+                    }
+                    if (!$cachesec[$cid]) {
                         $delete[$key] = 1;
                         break;
                     }

@@ -128,6 +128,9 @@ function articles_userapi_get($args)
 // TODO: do we want all-or-nothing access here, or is one access enough ?
         foreach ($article['cids'] as $cid) {
             if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:$cid:$authorid:$aid")) return;
+        // TODO: combine with ViewCategoryLink check when we can combine module-specific
+        // security checks with "parent" security checks transparently ?
+            if (!xarSecurityCheck('ReadCategories',0,'Category',"All:$cid")) return;
         }
     } else {
         if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:All:$authorid:$aid")) return;

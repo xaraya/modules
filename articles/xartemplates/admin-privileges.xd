@@ -132,5 +132,11 @@ access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", an
 <br /><br />
 </xar:mlstring>
 
+<xar:mlstring>
+Note: if you want to deny access to all articles in a particular category with ID 123, you can also define a privilege
+for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category
+from the articles map and categories navigation as well.
+</xar:mlstring>
+
 </div>
 </div>
