@@ -245,6 +245,7 @@
 </table>
 <table width="100%" cellspacing="1" cellpadding="3" border="0">
 </xar:if>
+    <!--- add alternating row colors --->
     <xar:foreach in="$items" value="$item" key="$key">
         <xar:if condition="(($key+1) % 2)">
             <xar:set name="myclass">'xar-alt'</xar:set>
