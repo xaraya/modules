@@ -71,13 +71,11 @@ function comments_userapi_modify($args)
                    xarUserGetVar('name'),
                    xarUserGetVar('uname'),
                    $modified_date);
-    $text .= "\n</p>\n";
-   }
+    }
     if (xarModIsHooked('changelog', 'comments', 0)){
         $text .= '</a>';
-        $text .= "\n</p>\n";
     }
-
+    $text .= "\n</p>\n"; //ah, that's why it's here - some content ;)
 
 
     $sql =  "UPDATE $xartable[comments]
