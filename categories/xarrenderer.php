@@ -175,6 +175,10 @@ function categories_renderer_array_markdepths_bypid(&$comments_list) {
                 $parents["PID_".$node['xar_pid']] = -1;                
             }
             $ppidkey = "PID_".$comments_list[$node['xar_pid']]['xar_pid'];
+        // CHECKME: when we start with a category 2+ levels deep, $parents['PID_0'] is undefined here
+            if (!isset($parents[$ppidkey])) {
+                $parents[$ppidkey] = -1;
+            }
             $parents["PID_".$node['xar_pid']] = $parents[$ppidkey] + 1;
         }
 
