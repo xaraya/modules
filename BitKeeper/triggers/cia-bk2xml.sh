@@ -64,6 +64,6 @@ Subject: DeliverXML
     </body>
 </message>
 EOF
-) | tee ~/sendmailcmd.$$ | $sendmail_command
+) | $sendmail_command
 
 ### The End ###
