@@ -30,7 +30,7 @@ function authurl_init()
     xarModSetVar('authurl','add_user', 'true');
     xarModSetVar('authurl','auth_url', 'http://someplace.net/login/');
     if (xarFindRole('Users')) {
-	    xarModSetVar('authurl','default_group', 'Users');
+        xarModSetVar('authurl','default_group', 'Users');
     }// if
     xarModSetVar('authurl','debug_level', 0);
 
