@@ -31,7 +31,7 @@
     </xar:if>
 </xar:if>
 <br />
-<div align="center">#$pager#</div>
+<div style="text-align: center;">#$pager#</div>
 <br />
 
 <xar:if condition="!empty($showprevnext)">
@@ -39,20 +39,20 @@
 </xar:if>
 
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
-<table border="0" width="95%">
+<table border="0" style="text-align: left; padding: 50px">
 <tr>
     <xar:if condition="!empty($maplink)">
-    <td align="left">
+    <td>
         <a href="#$maplink#">#$maplabel#</a>
     </td>
     </xar:if>
     <xar:if condition="!empty($submitlink)">
-    <td align="center">
+    <td>
         <a href="#$submitlink#" title="Submit Article"><xar:mlstring>Contribute</xar:mlstring></a>
     </td>
     </xar:if>
     <xar:if condition="!empty($archivelink)">
-    <td align="right">
+    <td>
         <a href="#$archivelink#">#$archivelabel#</a>
     </td>
     </xar:if>
@@ -60,4 +60,3 @@
 </table>
 </xar:if>
 <br />
-
