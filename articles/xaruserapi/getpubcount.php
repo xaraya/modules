@@ -8,11 +8,17 @@
  */
 function articles_userapi_getpubcount($args)
 {
-    static $pubcount = array();
-
-    if (count($pubcount) > 0) {
-        return $pubcount;
+    if (empty($args['status'])) {
+        $key = 'all';
+    } else {
+        sort($args['status']);
+        $key = join('+',$args['status']);
     }
+    if (xarVarIsCached('Articles.PubCount',$key)) {
+        return xarVarGetCached('Articles.PubCount',$key);
+    }
+
+    $pubcount = array();
 
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -30,6 +36,7 @@ function articles_userapi_getpubcount($args)
     if (!$result) return;
 
     if ($result->EOF) {
+        xarVarSetCached('Articles.PubCount',$key,$pubcount);
         return $pubcount;
     }
     while (!$result->EOF) {
@@ -38,6 +45,7 @@ function articles_userapi_getpubcount($args)
         $result->MoveNext();
     }
 
+    xarVarSetCached('Articles.PubCount',$key,$pubcount);
     return $pubcount;
 }
 
