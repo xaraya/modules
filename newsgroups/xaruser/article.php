@@ -17,14 +17,18 @@ function newsgroups_user_article()
 
     $newsgroups = new Net_NNTP();
     $newsgroups -> connect($server, $port);
-    $data               = $newsgroups->splitHeaders($articleid);
-    $data['article']    = $newsgroups->getBody($articleid);
-    $newsgroups -> quit();
-    
-    $data['article']        = nl2br(xarVarPrepForDisplay($data['article']));
-    $data['group']          = $group;
-    $data['articleid']      = $articleid;
+    $article               = $newsgroups->splitHeaders($articleid);
+    if (PEAR::isError($article)) {
+        $data['error_message'] = $article->message;
+    } else {
 
+        $data['article']    = $newsgroups->getBody($articleid);
+        $newsgroups -> quit();
+    
+        $data['article']        = nl2br(xarVarPrepForDisplay($data['article']));
+        $data['group']          = $group;
+        $data['articleid']      = $articleid;
+    }
     // Debug
     //var_dump($data['headers']);
 
