@@ -134,7 +134,7 @@ function newsletter_adminapi_createstory($args)
                       (string) $commentary,
                       (string) $commentarySource);
 
-    $result =& $dbconn->Execute($query. $bindvars);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;
