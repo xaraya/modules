@@ -1,0 +1,71 @@
+<object name="mybookmarks">
+
+    <objectid>0</objectid>
+    <label>Bookmarks</label>
+    <moduleid>178</moduleid>
+    <itemtype>1</itemtype>
+    <urlparam>itemid</urlparam>
+    <maxid>0</maxid>
+    <config/>
+    <isalias>1</isalias>
+    <properties>
+
+
+
+        <property name="bm_id">
+            <id>0</id>
+
+            <label>Id</label>
+            <type>21</type>
+            <default/>
+            <source>xar_mybookmarks_mybookmarks.xar_bm_id</source>
+            <status/>
+            <order/>
+            <validation></validation>
+        </property>
+
+
+
+        <property name="user_name">
+            <id>0</id>
+
+            <label>UserName</label>
+            <type>7</type>
+            <default/>
+            <source>xar_mybookmarks_mybookmarks.xar_user_name</source>
+            <status/>
+            <order/>
+            <validation></validation>
+        </property>
+
+
+
+        <property name="bm_name">
+            <id>0</id>
+
+            <label>Link Name</label>
+            <type>2</type>
+            <default/>
+            <source>xar_mybookmarks_mybookmarks.xar_bm_name</source>
+            <status/>
+            <order/>
+            <validation></validation>
+        </property>
+
+
+
+        <property name="bm_url">
+            <id>0</id>
+
+            <label>URL</label>
+            <type>11</type>
+            <default/>
+            <source>xar_mybookmarks_mybookmarks.xar_bm_url</source>
+            <status/>
+            <order/>
+            <validation></validation>
+        </property>
+
+    </properties>
+
+</object>

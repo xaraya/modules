@@ -1,0 +1,30 @@
+
+
+<xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="admin-header" type="module"/>
+
+<xar:if xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" condition="!empty($preview)">
+   #$preview#
+</xar:if>
+
+
+<form xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" method="post" action="#$action#">
+
+    <xar:if condition="isset($related)">
+    <div>#$related#</div>
+    </xar:if>
+
+    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+    <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
+
+    <table>
+        <xar:data-form object="$object"/>
+    </table>
+
+    
+    
+
+        <input type="submit" value="Modify"/>
+        <input type="submit" name="preview" value="Preview"/>
+        <input type="submit" name="cancel" value="Cancel"/>
+</form>
+

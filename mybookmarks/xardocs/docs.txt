@@ -1,0 +1,51 @@
+/**
+ * File: $Id$
+ *
+ * Bookmarks docs
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage My Bookmarks module
+ * @author Scot Gardner
+*/
+
+05/28/2003
+
+First release :)
+
+TODO: Complete TopBookmarks, Cleanup
+
+Docs:
+/**INSTALL
+**
+*/
+Un-zip into your modules directory, click the cjeckmark for Regenerate and click Reload button
+Initilize the mybookmarks module, then activate it.
+
+Module is now installed, but you are not done yet. You will need to create a new privilage so users
+can add personal bookmarks.
+
+Go to Privlegas module, click on Add Privilage
+Enter Addmybookmarks in the name text box and click the roadio button "with rights"
+Another screen will refresh with more entries in it.
+Select Mybookmarks from the module dropdown box and wait for the screen to refresh again
+Select Add from the Level dropdown box.
+Click the Add button
+
+Almost done :)
+
+Now Click on Roles from the admin menu
+Click on View all Group/User
+Click on the Show Privilages icon for the group Users
+Select Addmybookmarks from the privilages dropdown and click the Add button.
+
+Now you are done. :)
+
+If you need help drop me a note at XarayaGeek@XarayaGeek.com
+
+INSTRUCTIONS:
+
+TODO :)
+

@@ -1,0 +1,33 @@
+
+
+<xar:if xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" condition="!empty($common)">
+
+    <div class="xar-mod-head"><span class="xar-mod-title">#$common['type']#</span></div>
+
+    <div class="xar-mod-body">
+
+        <h2>#$common['pagetitle']#</h2>
+
+        <xar:if condition="count( $common['menu'])">
+
+        <xar:set name="$common_menu">#$common['menu']#</xar:set>
+
+        <div>
+            #$common['menu_label']#:
+            <xar:loop name="$common_menu">
+            <a href="#$loop:item['url']#">#$loop:item['label']#</a> |
+            </xar:loop>
+        </div>
+
+        </xar:if>
+
+    </div>
+
+    <xar:if condition="!empty($common['statusmsg'])">
+    <div class="xar-mod-message" style="margin: 20px 10px 20px 20px; background-color: ##EEEEEE; text-align: center;">
+        #$common['statusmsg']#
+    </div>
+    </xar:if>
+
+</xar:if>
+

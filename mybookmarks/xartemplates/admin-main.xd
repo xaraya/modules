@@ -1,0 +1,56 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>MyBookmarks Administration</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>MyBookmarks Module Overview</xar:mlstring></h2>
+<p><xar:mlstring>If this is your first visit to this part of your Xaraya site,
+please take a minute to read through the following introduction,
+in order to explore the different possibilities offered by the
+Contact module.</xar:mlstring></p>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+            <xar:if condition="file_exists('modules/mybookmarks/xarimages/admin.gif')" >
+                <img src="modules/mybookmarks/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/mybookmarks/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>"The MyBookmarks module gives your users a way to add their favorite bookmarks to a sitewide database. The Bookmarks block with each users own bookmarks, will be displayed on thier Roles MyAccount page. The Random Bookmarks block will pull a random link from the master database of all users bookmarks."</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>"You will need to create a new Privilege Called Addmybookmarks with Add rights and assign it to the Users Group, this will allow each user to add bookmarks."</xar:mlstring>
+            <xar:mlstring>"From the Admin menu you will see a listing of all bookmarks added by all users, so you have access to modify, or delete bookmarks."</xar:mlstring>
+            <br />
+
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+            <xar:mlstring>"Random Bookmarks"</xar:mlstring>
+            <xar:mlstring>"Bookmarks"</xar:mlstring>
+            <xar:mlstring>"Top Bookmarks"</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The Booksmarks Module has three blocks included at this time.</xar:mlstring>
+            <xar:mlstring>Random Bookmarks -> Display's a random bookmark from the entire collection of Bookmarks'</xar:mlstring>
+            <xar:mlstring>Bookmarks -> Display's users bookmarks, when on the Roles Your Account page.'</xar:mlstring>
+            <xar:mlstring>Top Bookmarks -> Display's the top rated bookmarks'.</xar:mlstring>
+            
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+
+        <br />
+
+</div>
+
+
+</div>

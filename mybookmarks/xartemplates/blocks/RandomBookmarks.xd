@@ -1,0 +1,9 @@
+<div xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd">
+<xar:if condition="!empty($noquote)">
+    <center>#$nobookmarks#</center>
+<xar:else/>
+    <xar:loop name="$content">
+      <br /> <a href='#$loop:item['bm_url']#' target="_blank">#$loop:item['bm_name']#</a><br />
+      </xar:loop>
+    <br />
+</xar:if>

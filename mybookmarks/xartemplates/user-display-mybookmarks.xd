@@ -1,0 +1,52 @@
+
+
+    <xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="user-header" type="module"/>
+
+    <table xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" border="0" cellspacing="0" cellpadding="4">
+    
+        <!--FIELD bm_id-->
+        <tr align="left" valign="middle">
+            <td align="right">
+                <b xmlns:xar="http://www.w3.org/TR/xhtml1/strict"><xar:data-label property="$object_props['bm_id']"/> :</b>
+            </td>
+            <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict" align="left">
+                <xar:data-output property="$object_props['bm_id']"/>
+            </td>
+        </tr>
+    
+        <!--FIELD user_name-->
+        <tr align="left" valign="middle">
+            <td align="right">
+                <b xmlns:xar="http://www.w3.org/TR/xhtml1/strict"><xar:data-label property="$object_props['user_name']"/> :</b>
+            </td>
+            <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict" align="left">
+                <xar:data-output property="$object_props['user_name']"/>
+            </td>
+        </tr>
+    
+        <!--FIELD bm_name-->
+        <tr align="left" valign="middle">
+            <td align="right">
+                <b xmlns:xar="http://www.w3.org/TR/xhtml1/strict"><xar:data-label property="$object_props['bm_name']"/> :</b>
+            </td>
+            <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict" align="left">
+                <xar:data-output property="$object_props['bm_name']"/>
+            </td>
+        </tr>
+    
+        <!--FIELD bm_url-->
+        <tr align="left" valign="middle">
+            <td align="right">
+                <b xmlns:xar="http://www.w3.org/TR/xhtml1/strict"><xar:data-label property="$object_props['bm_url']"/> :</b>
+            </td>
+            <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict" align="left">
+                <xar:data-output property="$object_props['bm_url']"/>
+            </td>
+        </tr>
+    
+
+    
+    
+    </table>
+
+

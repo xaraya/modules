@@ -1,0 +1,8 @@
+
+    <xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="user-header" type="module"/>
+
+    <div style="margin-center: 1em; margin-right: 1em; text-align:center;">
+    <a href='index.php?module=mybookmarks&func=view&itemtype=1'>
+    <h3><xar:mlstring>View My Bookmarks</xar:mlstring></a></h3><br />
+    </div>
+    

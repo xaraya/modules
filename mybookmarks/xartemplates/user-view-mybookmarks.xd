@@ -1,0 +1,51 @@
+
+
+<xar:template xmlns:xar="dd" xmlns:html="http://www.w3.org/TR/xhtml1/strict" xmlns="http://www.w3.org/TR/xhtml1/strict" file="user-header" type="module"/>
+
+
+    <xar:set xmlns:xar="dd" xmlns:html="http://www.w3.org/TR/xhtml1/strict" xmlns="http://www.w3.org/TR/xhtml1/strict" name="$count">count($objects_props)</xar:set>
+
+    <table xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:html="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <xar:foreach in="$objects_props" key="$name">
+            <th align="center"><xar:data-label property="$objects_props[$name]"/></th>
+        </xar:foreach>
+
+        <th align="center"><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:foreach in="$objects_values" key="$itemid" value="$fields">
+    <tr>
+        <xar:foreach in="$objects_props" key="$name">
+            <xar:if condition="!empty($fields[$name])">
+            <td><xar:data-output property="$objects_props[$name]" value="$fields[$name]"/></td>
+            <xar:else/>
+            <td> </td>
+            </xar:if>
+        </xar:foreach>
+         <td>
+
+            <xar:set name="$test">array('itemid' => $itemid, 'itemtype' => 1 )</xar:set>
+            <a href="#xarModURL('mybookmarks','user','display', $test )#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="#xarModURL('mybookmarks','admin','modify',$test)#"><xar:mlstring>Modify</xar:mlstring></a> |
+            <a href="#xarModURL('mybookmarks','admin','delete',$test)#"><xar:mlstring>Delete</xar:mlstring></a>
+        </td>
+    </tr>
+    </xar:foreach>
+    <tr>
+        <xar:foreach in="$objects_props" key="$name">
+            <td> </td>
+        </xar:foreach>
+        <td>
+                <xar:set name="$test">array( 'itemtype' => 1 )</xar:set>
+            <a href="#xarModURL('mybookmarks','admin','new',$test )#"><xar:mlstring>New</xar:mlstring></a>
+        </td>
+    </tr>
+    <xar:if condition="!empty( $pager )">
+    <tr>
+        <xar:set name="$count">count($objects_props) + 1</xar:set>
+        <td colspan="#$count#" align="center">
+            #$pager#
+        </td>
+    </tr>
+    </xar:if>
+    </table>

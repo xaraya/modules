@@ -1,0 +1,21 @@
+
+
+<xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="admin-header" type="module"/>
+
+<form xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" method="post" action="#$action#">
+
+    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+    <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
+
+    <table>
+        <xar:data-form object="$object"/>
+    </table>
+
+    
+    
+
+        <input type="submit" name="confirm" value="Delete"/>
+        <input type="submit" name="cancel" value="Cancel"/>
+
+</form>
+

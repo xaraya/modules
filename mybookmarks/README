@@ -1,0 +1,20 @@
+/**
+ * File: $Id$
+ *
+ * Bookmarks docs
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage My Bookmarks module
+ * @author Scot Gardner
+*/
+
+05/28/2003
+
+First release :)
+
+TODO: Complete TopBookmarks, Cleanup
+
+For install instructions see the docs.txt in the xardocs directory
