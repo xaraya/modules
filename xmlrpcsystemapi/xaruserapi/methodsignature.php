@@ -16,7 +16,8 @@
 /**
  * MethodSignatur
  */
-function xmlrpcsystemapi_userapi_methodsignature($args) {
+function xmlrpcsystemapi_userapi_methodsignature($args) 
+{
     extract($args);
 
 	$methName=$msg->getParam(0);

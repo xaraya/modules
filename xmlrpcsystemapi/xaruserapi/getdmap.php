@@ -17,7 +17,8 @@
  * Register the dmap for the system api
  *
  */
-function xmlrpcsystemapi_userapi_getdmap() {
+function xmlrpcsystemapi_userapi_getdmap() 
+{
     // Data types for xmlrpc
     // FIXME: should go to userapi of xmlrpc server module
     $xmlrpcI4="i4";

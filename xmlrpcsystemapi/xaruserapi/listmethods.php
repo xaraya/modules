@@ -23,7 +23,8 @@
  * @param string $msg    not used (but required)
  * @retun XML-RPC formatted message
  */
-function xmlrpcsystemapi_userapi_listmethods($args) {
+function xmlrpcsystemapi_userapi_listmethods($args) 
+{
     extract($args);
     // listmethods has no parameters, so $msg can be ignored
 	$dmap=$server->dmap;

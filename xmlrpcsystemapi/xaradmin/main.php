@@ -18,7 +18,8 @@
  * Main admin entry function
  *
 */
-function xmlrpcsystemapi_admin_main() {
+function xmlrpcsystemapi_admin_main() 
+{
     // Return the template for the overview
     return array();
 }
