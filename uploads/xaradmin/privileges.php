@@ -101,7 +101,7 @@ function uploads_admin_privileges($args)
             // If the mimetype is the same and the subtype is either
             // the same or ALL (0) then add the file to the list
             // otherwise reset the fileId to ALL (0)
-            if ($fileTypeInfo['typeId'] == $mimetype &&
+            if (($fileTypeInfo['typeId'] == $mimetype || $mimetype == 0) &&
                 ($fileTypeInfo['subtypeId'] == $subtype || $subtype == 0)) {
                     $fileList = $fileInfo;
             } else {
