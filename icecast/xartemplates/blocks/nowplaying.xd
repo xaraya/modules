@@ -1,0 +1,18 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>copyright</xar:comment>
+<xar:comment>TODO: add stream name/Genre/Description</xar:comment>
+<p>
+    <xar:if condition="$mounts ge 1">
+        <xar:foreach in="$mounts" key="$mount" value="$stats">
+            #$mount#
+            <br />
+            #$mounts[$mount]['artist']# - #$mounts[$mount]['title']#
+            <br />
+            <a href="#$mounts[$mount]['listen_url']#"><xar:mlstring>Listen Here</xar:mlstring></a>
+            <br />
+        </xar:foreach>
+    <xar:else/>
+        <xar:mlstring>Server is currently inactive or not working correctly.</xar:mlstring>
+    </xar:if>
+ 
+</p>

@@ -16,9 +16,6 @@
 /**
  * Initialise the icecast module
  *
- * This function is only ever called once during the lifetime of a particular
- * module instance
- *
  * @return bool
  */
 function icecast_init()
@@ -33,32 +30,24 @@ function icecast_init()
     }*/
     xarModSetVar('icecast', 'DefaultServer', 'localhost');
     xarModSetVar('icecast', 'DefaultPort', 8000);
-    //xarModSetVar('icecast', 'itemsperpage', 10);
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     //xarModSetVar('icecast', 'SupportShortURLs', 0);
-    // Register Block types (this *should* happen at activation/deactivation)
-    //if (!xarModAPIFunc('blocks',
-    //        'admin',
-    //        'register_block_type',
-    //        array('modName' => 'icecast',
-    //            'blockType' => 'others'))) return;
+    
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                        array('modName' => 'icecast',
+                             'blockType' => 'nowplaying'))) return;
 
-
-    /**
-     * Register the module components that are privileges objects
-     * Format is
-     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-     */
-
-    //xarRegisterMask('ReadicecastBlock', 'All', 'icecast', 'Block', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadIcecastBlock', 'All', 'icecast', 'Block', 'All', 'ACCESS_OVERVIEW');
     //xarRegisterMask('Viewicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     //xarRegisterMask('Readicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_READ');
     //xarRegisterMask('Editicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_EDIT');
     //xarRegisterMask('Addicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_ADD');
     //xarRegisterMask('Deleteicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminIcecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-    // Initialisation successful
+ 
     return true;
 }
 
@@ -75,22 +64,14 @@ function icecast_upgrade($oldVersion)
     // Upgrade dependent on old version number
     switch ($oldVersion) {
 
-        case '1.0.0':
-            // Code to upgrade from version 1.0 goes here
-            break;
-        case '2.0.0':
-            // Code to upgrade from version 2.0 goes here
-            break;
+        
     }
-    // Update successful
+
     return true;
 }
 
 /**
  * Delete the icecast module
- *
- * This function is only ever called once during the lifetime of a particular
- * module instance
  *
  * @return bool
  */
@@ -102,12 +83,11 @@ function icecast_delete()
 
 
     //xarModDelVar('icecast', 'SupportShortURLs');
-    // UnRegister blocks
-    //if (!xarModAPIFunc('blocks',
-    //        'admin',
-    //        'unregister_block_type',
-    //        array('modName' => 'icecast',
-    //            'blockType' => 'first'))) return;
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                        array('modName' => 'icecast',
+                    'blockType' => 'nowplaying'))) return;
 
     xarRemoveMasks('icecast');
 
