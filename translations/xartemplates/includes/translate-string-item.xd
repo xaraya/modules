@@ -1,7 +1,11 @@
 <table width="100%">
  <tr>
   <td class="xar-alt">
-    <label for="tid#$tid#">#$string#</label>
+    <xar:if condition="strlen($translation) eq 0">
+      <label for="tid#$tid#"><span class="xar-error">#$string#</span></label>
+    <xar:else />
+      <label for="tid#$tid#">#$string#</label>
+    </xar:if>
   </td>
  </tr>
  <tr>

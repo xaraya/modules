@@ -35,6 +35,7 @@ function translations_admin_updateconfig()
             if (!xarVarFetch('defaultlocale','str:1:',$defaultLocale)) return;
             if (!xarVarFetch('active','isset',$active)) return;
             if (!xarVarFetch('mlsmode','str:1:',$MLSMode,'SINGLE',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('translationsbackend','str:1:',$translationsBackend)) return;
 
             $localesList = array();
             foreach($active as $activelocale) $localesList[] = $activelocale;
@@ -51,14 +52,7 @@ function translations_admin_updateconfig()
             xarConfigSetVar('Site.MLS.MLSMode', $MLSMode);
             xarConfigSetVar('Site.MLS.DefaultLocale', $defaultLocale);
             xarConfigSetVar('Site.MLS.AllowedLocales', $localesList);
-            break;
-        case 'backends':
-            if (!xarVarFetch('translationsbackend','str:1:',$translationsBackend)) return;
-            if (!xarVarFetch('releasebackend','str:1:',$releaseBackend)) return;
-            
             xarConfigSetVar('Site.MLS.TranslationsBackend', $translationsBackend);
-            // xarModSetVar('translations', 'release_backend_type', $releaseBackend);
-
             break;
         case 'display':
             if (!xarVarFetch('showcontext','checkbox',$showContext,false,XARVAR_NOT_REQUIRED)) return;
@@ -68,6 +62,12 @@ function translations_admin_updateconfig()
             xarModSetVar('translations', 'showcontext',$showContext);
             xarModSetVar('translations', 'maxreferences',$maxReferences);
             xarModSetVar('translations', 'maxcodelines',$maxCodeLines);
+
+            break;
+        case 'release':
+            if (!xarVarFetch('releasebackend','str:1:',$releaseBackend)) return;
+            
+            // xarModSetVar('translations', 'release_backend_type', $releaseBackend);
 
             break;
     }

@@ -22,19 +22,6 @@
             </a>
         </div>    
     </xar:if>
-    <xar:if condition="$tab eq 'backends'">
-        <div>
-            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'backends'))#" class="active">
-                <xar:mlstring>Translations Backends</xar:mlstring>
-            </a>
-        </div>    
-    <xar:else />
-        <div>
-            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'backends'))#">    
-                <xar:mlstring>Translations Backends</xar:mlstring>
-            </a>
-        </div>    
-    </xar:if>
     <xar:if condition="$tab eq 'display'">
         <div>
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
@@ -45,6 +32,19 @@
         <div>
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">    
                 <xar:mlstring>Translations Display</xar:mlstring>
+            </a>
+        </div>    
+    </xar:if>
+    <xar:if condition="$tab eq 'release'">
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#" class="active">
+                <xar:mlstring>Translations Release</xar:mlstring>
+            </a>
+        </div>    
+    <xar:else />
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#">    
+                <xar:mlstring>Translations Release</xar:mlstring>
             </a>
         </div>    
     </xar:if>
@@ -66,62 +66,13 @@
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="tab" id="tab" value="#$tab#" />
 
-                              <xar:template file="modifyconfig-locales" module="base" type="module"/>
+            <xar:template file="modifyconfig-locales" module="base" type="module"/>
 
             <div style="clear: both; padding-top: 10px;">
                 <input type="submit" value="#$updatelabel#" />
             </div>
         </form>
     
-<xar:comment> ----------------- Begin Backends Options ------------------- </xar:comment>
-    <xar:elseif condition="$tab eq 'backends'" />
-        <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="tab" id="tab" value="#$tab#" />
-            <div style="clear: both; padding-top: 10px;">
-                <h4><xar:mlstring>Translations storage</xar:mlstring></h4>
-                <p><xar:mlstring>The translated information for xaraya and her modules can be stored in different back-ends. The following back-ends are supported:</xar:mlstring></p>
-            </div>
-
-            <div style="clear: both; padding-top: 10px;">
-            <span style="float: left; width: 20%; text-align: right;">
-                <span class="help" title="#xarML('Translations Backend')#"><label for="translationsbackend"><xar:mlstring>Translations Backend</xar:mlstring></label>:</span>
-            </span>
-            <span style="float: right; width: 78%; text-align: left;">
-                      <select name="translationsbackend" id="translationsbackend" size="1">
-                                        <xar:if condition="xarConfigGetVar('Site.MLS.TranslationsBackend') eq 'xml'">
-                                                  <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
-                                                  <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
-                                        <xar:elseif condition="xarConfigGetVar('Site.MLS.TranslationsBackend') eq 'php'" />
-                                                  <option value="xml"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
-                                                  <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
-                                        </xar:if>
-                                        </select>
-            </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-            <span style="float: left; width: 20%; text-align: right;">
-                <span class="help" title="#xarML('Release Backend')#"><label for="releasebackend"><xar:mlstring>Release Backend</xar:mlstring></label>:</span>
-            </span>
-            <span style="float: right; width: 78%; text-align: left;">
-                                        <select name="releasebackend" id="releasebackend" size="1">
-                                        <xar:if condition="xarModGetVar('translations', 'release_backend_type') eq 'xml'">
-                                                  <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
-                                                  <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
-                                        <xar:elseif condition="xarModGetVar('translations', 'release_backend_type') eq 'php'" />
-                                                  <option value="xml"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
-                                                  <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
-                                        </xar:if>
-                                        </select>
-                                        <xar:mlstring>(only PHP allowed for now)</xar:mlstring>
-            </span>
-            </div>
-
-            <div style="clear: both; padding-top: 10px;">
-                <input type="submit" value="#$updatelabel#" />
-            </div>
-        </form>
-
 <xar:comment> ----------------- Begin Display Options ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'display'" />
         <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
@@ -160,6 +111,39 @@
             </span>
             <span style="float: right; width: 78%; text-align: left;">
                 <input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3" />
+            </span>
+            </div>
+
+            <div style="clear: both; padding-top: 10px;">
+                <input type="submit" value="#$updatelabel#" />
+            </div>
+        </form>
+
+<xar:comment> ----------------- Begin Release Options ------------------- </xar:comment>
+    <xar:elseif condition="$tab eq 'release'" />
+        <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="tab" id="tab" value="#$tab#" />
+            <div style="clear: both; padding-top: 10px;">
+                <h4><xar:mlstring>Translations storage</xar:mlstring></h4>
+                <p><xar:mlstring>The translated information for xaraya and her modules can be stored in different back-ends. The following back-ends are supported:</xar:mlstring></p>
+            </div>
+
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Release Backend')#"><label for="releasebackend"><xar:mlstring>Release Backend</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                                        <select name="releasebackend" id="releasebackend" size="1">
+                                        <xar:if condition="xarModGetVar('translations', 'release_backend_type') eq 'xml'">
+                                                  <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
+                                                  <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
+                                        <xar:elseif condition="xarModGetVar('translations', 'release_backend_type') eq 'php'" />
+                                                  <option value="xml"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
+                                                  <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
+                                        </xar:if>
+                                        </select>
+                                        <xar:mlstring>(only PHP allowed for now)</xar:mlstring>
             </span>
             </div>
 
