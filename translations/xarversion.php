@@ -3,6 +3,7 @@
 $modversion['name'] = 'Translations';
 $modversion['id'] = '77';
 $modversion['version'] = '0.1.1';
+$modversion['displayname']    = xarML('Translations');
 $modversion['description'] = 'Translations handling';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
