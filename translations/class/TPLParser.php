@@ -51,7 +51,8 @@ class TPLParser
         return $this->transKeyEntries;
     }
 
-    function _get_token() {
+    function _get_token() 
+    {
         $found = false;
         // if (defined('TPLPARSERDEBUG'))
            // printf("Getting line %d\n"."for %s token %d<br />\n", $this->_line, $this->_right?'end':'begin', $this->_token);

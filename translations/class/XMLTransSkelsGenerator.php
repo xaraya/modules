@@ -9,7 +9,8 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class XMLTranslationsSkelsGenerator {
+class XMLTranslationsSkelsGenerator 
+{
 
     var $locale;
     var $fp;

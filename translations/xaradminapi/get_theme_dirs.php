@@ -19,7 +19,8 @@
 
 $staticNames = array();
 
-function searchDir($path, $prefix) {
+function searchDir($path, $prefix) 
+{
   global $staticNames;
 
   $fileModules = array();

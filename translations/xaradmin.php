@@ -35,7 +35,8 @@ define('RELEASE', 4);
 
 // PRIVATE STUFF
 
-function translations_create_generate_skels_druidbar($currentStep) {
+function translations_create_generate_skels_druidbar($currentStep) 
+{
     $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepURLs[INFO] = xarModURL('translations', 'admin', 'generate_skels_info');
@@ -44,7 +45,8 @@ function translations_create_generate_skels_druidbar($currentStep) {
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
 }
 
-function translations_create_translate_druidbar($currentStep) {
+function translations_create_translate_druidbar($currentStep) 
+{
     $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepLabels[TRAN] = xarML('Translate');
@@ -54,7 +56,8 @@ function translations_create_translate_druidbar($currentStep) {
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
 }
 
-function translations_create_generate_trans_druidbar($currentStep) {
+function translations_create_generate_trans_druidbar($currentStep) 
+{
     $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepLabels[REL] = xarML('Release');
@@ -67,7 +70,8 @@ function translations_create_generate_trans_druidbar($currentStep) {
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
 }
 
-function translations_create_choose_a_module_druidbar($currentStep) {
+function translations_create_choose_a_module_druidbar($currentStep) 
+{
     // This + 1 is actually an "hack"
     $stepLabels[CHOOSE + 1] = xarML('Choose a module');
     $stepLabels[OVERVIEW + 1] = xarML('Overview');
@@ -77,7 +81,8 @@ function translations_create_choose_a_module_druidbar($currentStep) {
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep + 1);
 }
 
-function translations_create_choose_a_theme_druidbar($currentStep) {
+function translations_create_choose_a_theme_druidbar($currentStep) 
+{
     // This + 1 is actually an "hack"
     $stepLabels[CHOOSE + 1] = xarML('Choose a theme');
     $stepLabels[OVERVIEW + 1] = xarML('Overview');

@@ -10,7 +10,8 @@
 //                  translations backend
 // ----------------------------------------------------------------------
 
-class PHPTranslationsGenerator {
+class PHPTranslationsGenerator 
+{
 
     var $locale;
     var $fp;
