@@ -59,11 +59,6 @@ function authsso_userapi_authenticate_user($args)
     $ssoconfig['ldapdisplayname'] = xarModGetVar('authsso', 'ldapdisplayname');
     $ssoconfig['ldapmail'] = xarModGetVar('authsso', 'ldapmail');
 
-    if($ssoconfig['getfromldap'] == 'true') {
-        // Include xarldap class
-        include_once 'modules/xarldap/xarldap.php';
-    }
-
     // match the remote_user to a xaraya uname
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -83,6 +78,10 @@ function authsso_userapi_authenticate_user($args)
             $email = '';
 
             if (($ssoconfig['getfromldap'] == 'true') && (xarModIsAvailable('xarldap') == 'true')) {
+
+                // Include xarldap class
+                include_once 'modules/xarldap/xarldap.php';
+
                 $ldap = new xarLDAP();
                 $ldap->open();
                 $bindResult = $ldap->bind_to_server();
