@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateitems.php,v 1.4 2003/07/09 01:09:20 garrett Exp $
+ * File: $Id: updateitems.php,v 1.6 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook adminapi updateItems()
  *

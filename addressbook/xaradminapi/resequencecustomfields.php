@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: resequencecustomfields.php,v 1.2 2003/07/05 23:08:37 garrett Exp $
+ * File: $Id: resequencecustomfields.php,v 1.3 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook admin resequenceCustomFields
  *

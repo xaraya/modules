@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: deccustomfields.php,v 1.2 2003/07/05 23:27:28 garrett Exp $
+ * File: $Id: deccustomfields.php,v 1.4 2003/12/22 07:12:49 garrett Exp $
  *
  * AddressBook admin decCustomfields
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: additems.php,v 1.2 2003/07/18 19:44:13 garrett Exp $
+ * File: $Id: additems.php,v 1.4 2003/12/22 07:12:49 garrett Exp $
  *
  * AddressBook admin addItems
  *
