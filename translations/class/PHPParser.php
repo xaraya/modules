@@ -60,8 +60,8 @@ class PHPParser
         while (!feof($fd)) {
             $buf = fgets($fd, 1024);
             $line++;
-            if (preg_match_all('/xarML\s*\(\s*(.*)[,|\)]/', $buf, $matches)) {
-                foreach ($matches[1] as $match) {
+            if (preg_match_all('/(xarML|xarMLByKey)\s*\(\s*\'(.*)\'[,|\)]/', $buf, $matches)) {
+                foreach ($matches[2] as $match) {
                     if ($string = $this->parseString($match)) {
                         if (!isset($this->transEntries[$string])) {
                             $this->transEntries[$string] = array();
@@ -70,13 +70,13 @@ class PHPParser
                     }
                 }
             }
-            if (preg_match_all('/xarMLByKey\s*\(\s*(.*)[,|\)]/', $buf, $matches)) {
-                foreach ($matches[1] as $match) {
+            if (preg_match_all('/(xarML|xarMLByKey)\s*\(\s*\"(.*)\"[,|\)]/', $buf, $matches)) {
+                foreach ($matches[2] as $match) {
                     if ($string = $this->parseString($match)) {
-                        if (!isset($this->transKeyEntries[$string])) {
-                            $this->transKeyEntries[$string] = array();
+                        if (!isset($this->transEntries[$string])) {
+                            $this->transEntries[$string] = array();
                         }
-                        $this->transKeyEntries[$string][] = array('line' => $line, 'file' => $filename);
+                        $this->transEntries[$string][] = array('line' => $line, 'file' => $filename);
                     }
                 }
             } elseif (preg_match('!^\s*//\s*\{(ML_dont_parse|ML_include|ML_add_string|ML_add_key)\s*(.*)\}!', $buf, $match)) {
@@ -103,12 +103,13 @@ class PHPParser
                 }
             }
         }
-        
+
         fclose($fd);
     }
 
     function parseString($buf)
     {
+        return $buf;
         $pos = 0;
         $len = strlen($buf);
         while ($pos < $len) {
