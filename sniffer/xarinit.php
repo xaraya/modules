@@ -87,7 +87,7 @@ function sniffer_init()
  * 
  * @author Frank Besler 
  * @access public 
- * @param  $oldVersion 
+ * @param  $oldversion 
  * @return true on success or false on failure
  * @throws no exceptions
  * @todo nothing
@@ -100,7 +100,7 @@ function sniffer_upgrade($oldversion)
     // load the table maintenance API
     xarDBLoadTableMaintenanceAPI(); 
     // Upgrade dependent on old version number
-    switch ($oldVersion) {
+    switch ($oldversion) {
         case 0.01:
             break;
             // case '0.0.1':
