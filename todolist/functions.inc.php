@@ -450,10 +450,10 @@ function generateMail($id,$action)
     }
 
     $message_html .= '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-        <HTML><HEAD>
-        <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-        </HEAD>
-        <BODY>';
+        <html><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        </head>
+        <body>';
     if ($responsible_users[0]!="") {
         // responsible users found: generate mail-text
         $result->Close();
@@ -510,7 +510,7 @@ function generateMail($id,$action)
 
         if ($result->PO_RecordCount() > 0 ) {
             $message_text .= "\n\nNotes:\n";
-            $message_html .='<br><b>Notes:</b><table>';
+            $message_html .='<br /><b>Notes:</b><table>';
             $message_html .='<tr><th>Text</th><th>user</th><th>date</th></tr>';
 
             for (;!$result->EOF;$result->MoveNext()) {
@@ -543,7 +543,7 @@ function generateMail($id,$action)
         $result = $dbconn->Execute($query);
 
         $message_text .="\n";
-        $message_html .="</BODY></HTML>\n";
+        $message_html .="</bODY></HTML>\n";
 
         $message .= $message_preamble;
         $message .= $message_boundary;
@@ -699,7 +699,7 @@ function makeUserDropdown($myname,$selected_names,$selected_project, $emty_choic
 
     if ($emty_choice) {
         if ("$selected_names[0]" == "")  {
-            $str .= '<option selected="selected" VALUE="">';
+            $str .= '<option selected="selected" value="">';
         } else {
             $str .= '<option value="">';
         }
