@@ -110,11 +110,11 @@
             <tr>
                 <td colspan="2" align="center">
                     <br /><br />
-                    <!-- <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+ '&articleid='+document.chooseArticleForm.articleid.value;self.close();">test</A> -->
+                    <!-- <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+ '&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">test</A> -->
                     <xar:if condition="!empty($notNew)">
-                        <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'modifystory')#'+'&id=#$id#&articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</A>
+                        <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'modifystory')#'+'&amp;id=#$id#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</A>
                     <xar:else/>
-                        <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+'&publicationId=#$publicationId#&issueId=#$issueId#&articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</A>
+                        <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+'&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</A>
                     </xar:if>
                      - 
                     <a HREF="javascript:void(0);" onClick="self.close();">Cancel</A>

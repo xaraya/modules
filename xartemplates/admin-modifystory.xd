@@ -60,11 +60,11 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                     <td>
                         <xar:if condition="isSet($articletitle)">
                             #$articletitle# <br>
-                            <a href="#xarModURL('newsletter', 'admin', 'modifystory')#&id=#$story['id']#&articleid=0" tabindex="2">None</a> - 
+                            <a href="#xarModURL('newsletter', 'admin', 'modifystory')#&amp;id=#$story['id']#&amp;articleid=0" tabindex="2">None</a> - 
                             <a href="javascript:newwindow('#xarModURL('articles', 'user', 'display', array('aid' => $articleid))#?theme=print')" tabindex="3" >Preview</a> - 
                             <input type="hidden" name="articleid" id="articleid" value="#$articleid#" />   
                         </xar:if>
-                        <a href="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&id=#$story['id']#&notNew=true')" tabindex="4" >Choose</a>
+                        <a href="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;id=#$story['id']#&amp;notNew=true')" tabindex="4" >Choose</a>
                         
                         
                     </td>

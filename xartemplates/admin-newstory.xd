@@ -57,14 +57,14 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                     <td>
                         <xar:if condition="isSet($articletitle)">
                             #$articletitle# <br>
-                            <a href="#xarModURL('newsletter', 'admin', 'newstory')#&publicationId=#$publicationId#&issueId=#$issueId#&articleid=0" tabindex="2">None</a> - 
+                            <a href="#xarModURL('newsletter', 'admin', 'newstory')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#&amp;articleid=0" tabindex="2">None</a> - 
                             
                                 
                             <A HREF="javascript:newwindow('#xarModURL('articles', 'user', 'display', array('aid' => $articleid))#?theme=print')" tabindex="3" >Preview</A> - 
                             <input type="hidden" name="articleid" id="articleid" value="#$articleid#" />   
                         </xar:if>
-                        <!--<A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&publicationId=#$publicationId#&issueId=#$issueId#','Choose Article','600','400')" >Choose</A>-->
-                        <A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&publicationId=#$publicationId#&issueId=#$issueId#')"  tabindex="4">Choose</A>
+                        <!--<A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#','Choose Article','600','400')" >Choose</A>-->
+                        <A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#')"  tabindex="4">Choose</A>
                         
                         
                     </td>
