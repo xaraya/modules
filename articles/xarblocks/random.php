@@ -18,15 +18,17 @@ function articles_randomblock_init()
 {
     // Default values to initialize the block.
     return array(
-        'ptid' => '',
-        'cid' => '',
+        'pubtypeid' => 0,
+        'catfilter' => 0,
         'status' => '3,2',
-        'refreshtime' => 60*24,
+        'numitems' => 1,
+        'alttitle' => '',
+        'altsummary' => '',
         'showtitle' => true,
+        'showsummary' => true,
         'showpubdate' => false,
-        'showauthor' => false,
         'showsubmit' => false,
-        'showsummary' => true
+        'showdynamic' => false
     );
 }
 
@@ -61,120 +63,76 @@ function articles_randomblock_display($blockinfo)
     } else {
         $vars = $blockinfo['content'];
     }
-
-    // Allow refresh by setting refreshrandom variable
-    xarVarFetch('refreshrandom', 'checkbox', $refreshrandom, false, XARVAR_NOT_REQUIRED);
-    if ($refreshrandom) {
-        $vars['refreshtime'] = 0;
-    }
-
-    // Check cache 
-    $refresh = time() - ($vars['refreshtime'] * 60);
-    $varDir = xarCoreGetVarDirPath();
-    $cacheKey = md5('block-articles-random-' . $blockinfo['bid']);
-    $cachedFileName = $varDir . '/cache/templates/' . $cacheKey;
-    if ($vars['refreshtime'] > 0 && file_exists($cachedFileName) && filemtime($cachedFileName) > $refresh) {
-        $fp = @fopen($cachedFileName, 'r');
-
-        // Read From Our Cache
-        $vars = unserialize(fread($fp, filesize($cachedFileName)));
-        fclose($fp);
+    
+    // frontpage or approved status
+    if (empty($vars['status'])) {
+            $statusarray = array(2,3);
+    } elseif (!is_array($vars['status'])) {
+            $statusarray = split(',', $vars['status']);
     } else {
-        // count number of articles and pick a random number
-        $count = xarModAPIFunc(
-            'articles', 'user', 'countitems',
-            array(
-                'ptid' => $vars['ptid'],
-                'cid' => $vars['cid'],
-                'status' => explode(",", $vars['status'])
-            )
-        );
+            $statusarray = $vars['status'];
+    }
+    
+    // get cids for security check in getall
+    $fields = array('aid', 'title', 'pubtypeid', 'cids', 'authorid');
 
-        mt_srand((double) microtime() * 1000000);
-
-        // Don't show block if there are no articles.
-        if ($count == 0) {return;}
-        $random = mt_rand(0, $count) - 1;
-
-        // Database information
-        xarModDBInfoLoad('articles');
-
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
-        $articlestable = $xartable['articles'];
-
-        // Create WHERE field from non empty parameters
-        $andlist = array();
-        $orlist = array();
-        foreach (explode(",", $vars['status']) as $status) {
-            $orlist[] = "xar_status = " . $dbconn->qstr($status);
-        }
-        if (!empty($vars['ptid'])) {
-            $andlist[] = "xar_pubtypeid = " . $dbconn->qstr($vars['ptid']);
-        }
-
-        /* TODO fix to check categories
-        if (!empty($vars['cid'])) {
-            $andlist[] = "cid=". $dbconn->qstr($vars['cid']);
-        }*/
-
-        // create sql where string from AND and OR lists
-        if (count($andlist) > 0) {
-            $wherestring = ' WHERE ' . join(' AND ', $andlist);
-            if (count($orlist) > 0) {
-                $wherestring .= ' AND (' . join(' OR ', $orlist) . ")";
-            }
-        } else {
-            if (count($orlist) > 0) {
-                $wherestring = ' WHERE ' . join(' OR ', $orlist);
-            }
-        }
-
-        // Create SQL query
-        $query = 'SELECT xar_aid, xar_title, xar_summary, xar_pubdate, xar_authorid'
-            . ' FROM ' . $articlestable . $wherestring;
-        $msg = xarML(
-            'Getting random article #(1) of #(2) with query #(3) ',
-            $random, $count, $query
-        );
-        xarLogMessage($msg, XARLOG_LEVEL_DEBUG);
-
-        // Execute the query.
-        $result =& $dbconn->SelectLimit($query, 1, $random);
-        if (!$result) {
+    if (!empty($vars['showpubdate'])) {
+            array_push($fields, 'pubdate');
+    }
+    
+    if (!empty($vars['showsummary'])) {
+            array_push($fields, 'summary');
+    }
+    if (!empty($vars['alttitle'])) {
+            $blockinfo['title'] = $vars['alttitle'];
+    }
+    
+    
+    if (!empty($vars['catfilter'])) {
+            // use admin defined category 
+            $cidsarray = array($vars['catfilter']);
+            $cid = $vars['catfilter'];
+    } else {
+        $cid = 0;
+        $cidsarray = array();
+    }
+    
+    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles')) {
+            array_push($fields, 'dynamicdata');
+    }
+    
+    $articles = xarModAPIFunc(
+    'articles','user','getall',
+    array(
+            'ptid' => $vars['pubtypeid'],
+            'cids' => $cidsarray,
+            'andcids' => 'false',
+            'status' => $statusarray,
+            'fields' => $fields	)
+    );
+    $nbarticles = count($articles);
+    if (!isset($articles) || !is_array($articles) || $nbarticles == 0) {
             return;
-        }
+    } else {
+            if ($nbarticles <= $vars['numitems']) $randomarticle = array_rand($articles, $nbarticles);
+            else $randomarticle = array_rand($articles, $vars['numitems']);
+            if(!is_array($randomarticle)) $randomarticle = array($randomarticle);
 
-        // Populate block info and pass to rendering engine.
-        if (!$result->EOF) {
-            list(
-                $vars['aid'], 
-                $vars['title'],
-                $vars['summary'], 
-                $vars['pubdate'], 
-                $vars['authorid']) = $result->fields;
-                $vars['pubdate'] = strftime('%d %b %y', $vars['pubdate']
-            );
-            if ($vars['showauthor']) {
-                $author = xarModAPIFunc(
-                    'roles', 'user', 'get',
-                    array('uid' => $vars['authorid'])
-                );
-                $vars['authorname'] = $author['name'];
+            foreach ($randomarticle as $randomaid) {
+                if (!empty($articles[$randomaid]['authorid']) && !empty($vars['showauthor'])) {
+                    $articles[$randomaid]['authorname'] = xarUserGetVar('name', $articles[$randomaid]['authorid']);
+                    if (empty($articles[$randomaid]['authorname'])) {
+                        xarExceptionHandled();
+                        $articles[$randomaid]['authorname'] = xarML('Unknown');
+                    }
+                }
+                $vars['items'][] = $articles[$randomaid];
             }
-        }
-
-        // Write to cache
-        // TODO: handle cache in core?
-        if ($vars['refreshtime'] > 0) {
-            $fp = fopen("$cachedFileName", "wt");
-            fwrite($fp, serialize($vars));
-            fclose($fp);
-        }
-    } /* check cache */
-
+                
+    }
+    
     // Pass details back for rendering.
-    if (!empty($vars['aid'])) {
+    if (count($vars['items']) > 0) {
         $blockinfo['content'] = $vars;
         return $blockinfo;
     }
@@ -182,67 +140,14 @@ function articles_randomblock_display($blockinfo)
     // Nothing to render.
     return;
 }
-
-
 /**
- * modify block settings
+ * built-in block help/information system.
  */
- // TODO: move this to a separate script.
-function articles_randomblock_modify($blockinfo)
+
+function articles_randomblock_help()
 {
-    // Get current content
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-
-    // Defaults
-    //$vars = _articles_randomblock_checkdefaults($vars);
-
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
-    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
-    $vars['statusoptions'] = array(
-        array('id' => '3,2', 'name' => xarML('All Published')),
-        array('id' => '3', 'name' => xarML('Frontpage')),
-        array('id' => '2', 'name' => xarML('Approved'))
-    );
-
-    // TODO: provide core alternative to doing this.
-    $vars['blockid'] = $blockinfo['bid'];
-
-    // Return output
-    return $vars;
-}
-
-/**
- * update block settings
- */
-function articles_randomblock_update($blockinfo)
-{
-    if (!xarVarFetch('ptid', 'id', $vars['ptid'], '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('cid', 'id', $vars['cid'], '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('status', 'strlist:,:int:1:3', $vars['status'], '3,2', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('refreshtime', 'int:0:', $vars['refreshtime'], 60*24, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showtitle', 'checkbox', $vars['showtitle'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showpubdate', 'checkbox', $vars['showpubdate'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showauthor', 'checkbox', $vars['showauthor'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showsubmit', 'checkbox', $vars['showsubmit'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED)) {return;}
-
-    $blockinfo['content'] = $vars;
-
-    // Clear the cache.
-    // TODO: centralise this facility for all blocks.
-    $varDir = xarCoreGetVarDirPath();
-    $cacheKey = md5('block-articles-random-' . $blockinfo['bid']);
-    $cachedFileName = $varDir . '/cache/templates/' . $cacheKey;
-    if ($vars['refreshtime'] > 0 && file_exists($cachedFileName)) {
-        // Delete the file.
-        @unlink($cachedFileName);
-    }
-
-    return $blockinfo;
+    // No information yet.
+    return '';
 }
 
 ?>

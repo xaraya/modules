@@ -1,20 +1,25 @@
-<xar:if condition="!empty($showtitle)">
-    <a href="#xarModURL('articles', 'user', 'display', array('aid' => $aid))#">#$title#</a>
-</xar:if>
-<br/>
+ <xar:if condition="!empty($altsummary)">
+     #$altsummary#
+ </xar:if><br />
 
-<xar:if condition="!empty($showsummary)">#$summary#</xar:if><br/>
-<div>
+<xar:foreach in="$items" value="$item">
+    <xar:if condition="!empty($showtitle)">
+        <a href="#xarModURL('articles', 'user', 'display', array('aid' => $item['aid']))#">#$item['title']#</a>
+    </xar:if><br />
+    <xar:if condition="!empty($showsummary) && !empty($item['summary'])">#$item['summary']#
+    </xar:if><br />
     <xar:if condition="!empty($showauthor)">
-        <xar:mlstring>Author:</xar:mlstring>
-        <a href="#xarModURL('roles', 'user', 'view', array('uid' => $authorid))#">#$authorname#</a>
+       #$item['authorname']#<br />
     </xar:if>
-    <xar:if condition="!empty($showpubdate)">(#$pubdate#)</xar:if>
-</div>
+    <xar:if condition="!empty($showpubdate)">
+       #xarLocaleGetFormattedDate('medium',$item['pubdate'])#<br />
+    </xar:if>
+</xar:foreach>
 
 <xar:if condition="!empty($showsubmit)">
     <div>
-        <a href="#xarModURL('articles', 'admin', 'new', array('ptid' => $ptid))#"><xar:mlstring>Submit new</xar:mlstring></a>
+        <a href="#xarModURL('articles', 'admin', 'new', array('ptid' => $pubtypeid))#"><xar:mlstring>Submit new</xar:mlstring></a>
     </div>
 </xar:if>
-<xar:comment> TODO: link to submit new article (and option to control this) </xar:comment>
+
+<xar:comment> DD are configurable in block configuration</xar:comment>
