@@ -24,7 +24,7 @@ class currencies extends xenCommerceObject
         $this->currencies = array();
         $currency_fields =  array('code', 'title', 'symbol_left', 'symbol_right', 'decimal_point', 'thousands_point', 'decimal_places', 'value');
         $q = new xenQuery("SELECT",$xartables['commerce_currencies'],$currency_fields);
-        $q->run();
+        if(!$q->run()) return;
         foreach ($q->output() as $currencies) {
         $this->currencies[$currencies['code']] = array('title' => $currencies['title'],
                                                        'symbol_left' => $currencies['symbol_left'],

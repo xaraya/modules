@@ -201,7 +201,7 @@ class xenCommerceObject extends xenObject
     {
 //        echo $q->getstatement();exit;
         $q->open();
-        $q->run();
+        if(!$q->run()) return;
         $items = array();
         foreach ($q->output() as $out)
             $items[] = array_pop($out);

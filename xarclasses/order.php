@@ -37,12 +37,12 @@
       $order_query = new xenQuery("select customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_country, customers_telephone, customers_email_address, customers_address_format_id, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_country, delivery_address_format_id, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_country, billing_address_format_id, payment_method, cc_type, cc_owner, cc_number, cc_expires, comments, currency, currency_value, date_purchased, orders_status, last_modified,
                                   customers_status, customers_status_name, customers_status_image, customers_status_discount from " . TABLE_ORDERS . " where orders_id = '" . xtc_db_input($order_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $order = $q->output();
 
       $totals_query = new xenQuery("select title, text from " . TABLE_ORDERS_TOTAL . " where orders_id = '" . xtc_db_input($order_id) . "' order by sort_order");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($totals = $q->output()) {
         $this->totals[] = array('title' => $totals['title'],
                                 'text' => $totals['text']);
@@ -106,7 +106,7 @@
                                                  orders_id ='" . xtc_db_input($order_id) . "'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($orders_products = $q->output()) {
         $this->products[$index] = array('qty' => $orders_products['products_quantity'],
                                         'name' => $orders_products['products_name'],
@@ -121,7 +121,7 @@
         $attributes_query = new xenQuery("select products_options, products_options_values, options_values_price, price_prefix from " . TABLE_ORDERS_PRODUCTS_ATTRIBUTES . " where orders_id = '" . xtc_db_input($order_id) . "' and orders_products_id = '" . $orders_products['orders_products_id'] . "'");
         if ($attributes_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($attributes = $q->output()) {
             $this->products[$index]['attributes'][$subindex] = array('option' => $attributes['products_options'],
                                                                      'value' => $attributes['products_options_values'],
