@@ -79,7 +79,7 @@ function hitcount_userapi_getitems($args)
     }
 
     if (!empty($numitems) && !empty($startnum)) {
-        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1,$bindvars);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum - 1,$bindvars);
     } else {
         $result =& $dbconn->Execute($query,$bindvars);
     }
