@@ -50,12 +50,12 @@ function mime_userapi_add_magic( $args )
               INTO $magic_table
                  ( 
                    xar_mime_subtype_id,
-                   xar_mime_magic_id, 
-                   xar_mime_magic_value, 
+                   xar_mime_magic_id,
+                   xar_mime_magic_value,
                    xar_mime_magic_offset,
                    xar_mime_magic_length
                  ) 
-            VALUES (?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?)";
 
     $bindvars = array((int) $subtypeId, (int) $magicId, (string) $magicValue, (int) $magicOffset, (int) $magicLength);
 
