@@ -33,11 +33,11 @@
     <xar:foreach in="$items" value="$item">
     <tr>
         <td>
-			<xar:if condition="$item['displayname'] == ''">
-	            #$item['username']#
-			<xar:else />
-	            #$item['displayname']# (#$item['username']#)
-			</xar:if>
+            <xar:if condition="$item['displayname'] == ''">
+                #$item['username']#
+            <xar:else />
+                #$item['displayname']# (#$item['username']#)
+            </xar:if>
         </td>
         <td>
             #$item['subdate']#
