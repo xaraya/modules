@@ -130,10 +130,14 @@
                             <tr>
                                 <td align="center">
                                     <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#"> 
-                                        <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
-                                             height="#$fileInfo['image']['height']#" 
-                                             width="#$fileInfo['image']['width']#" 
-                                             alt="#$fileInfo['fileName']#" />
+                                        <xar:if condition="xarModIsAvailable('images')">
+                                            <xar:image-resize src="$fileInfo[fileId]" width="200px" constrain="1" label="$fileInfo[fileName]" />
+                                        <xar:else />
+                                            <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
+                                                 height="#$fileInfo['image']['height']#" 
+                                                 width="#$fileInfo['image']['width']#" 
+                                                 alt="#$fileInfo['fileName']#" />
+                                        </xar:if>
                                     </a>
                                 </td>
                             </tr>

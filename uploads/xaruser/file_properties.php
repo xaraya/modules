@@ -83,23 +83,27 @@ function uploads_user_file_properties( $args ) {
             $fileInfo['size'] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
 
             if (ereg('^image', $fileInfo['fileType'])) {
-                $imageInfo = getimagesize($fileInfo['fileLocation']);
-                if (is_array($imageInfo)) {
-                    if ($imageInfo['0'] > 100 || $imageInfo[1] > 400) {
-                        $oWidth  = $imageInfo[0];
-                        $oHeight = $imageInfo[1];
-
-                        $ratio = $oHeight / $oWidth;
-
-                        // MAX WIDTH is 200 for this preview.
-                        $newWidth  = 100;
-                        $newHeight = round($newWidth * $ratio, 0);
-
-                        $fileInfo['image']['height'] = $newHeight;
-                        $fileInfo['image']['width']  = $newWidth;
-                    } else {
-                        $fileInfo['image']['height'] = $imageInfo[1];
-                        $fileInfo['image']['width']  = $imageInfo[0];
+                if (xarModIsAvailable('images')) {
+                    $fileInfo['image'] = TRUE;
+                } else {
+                    $imageInfo = getimagesize($fileInfo['fileLocation']);
+                    if (is_array($imageInfo)) {
+                        if ($imageInfo['0'] > 100 || $imageInfo[1] > 400) {
+                            $oWidth  = $imageInfo[0];
+                            $oHeight = $imageInfo[1];
+    
+                            $ratio = $oHeight / $oWidth;
+    
+                            // MAX WIDTH is 200 for this preview.
+                            $newWidth  = 100;
+                            $newHeight = round($newWidth * $ratio, 0);
+    
+                            $fileInfo['image']['height'] = $newHeight;
+                            $fileInfo['image']['width']  = $newWidth;
+                        } else {
+                            $fileInfo['image']['height'] = $imageInfo[1];
+                            $fileInfo['image']['width']  = $imageInfo[0];
+                        }
                     }
                 }
             }
