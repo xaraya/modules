@@ -1,0 +1,62 @@
+Encoding of the data to pass to the create response template can be quite a 
+nightmare. Here is the somewhat formal spec what the format of the array is:
+
+[TPLDATA] : array (
+              'params' => [MSG],
+              'fault'  => 1  <- set only when fault msg should be generated
+            )
+            
+[MSG]    : array([PARAM]*)
+
+[PARAM]  : [VALUE] | [ARRAY] | [STRUCT]
+
+[VALUE]  : array(
+            'type'  => [TYPE]
+            'value' => [STRING]
+           ) 
+          
+[TYPE]   : 'string'|'boolean'|'int'|'i4'|'double'|'dateTime.iso8601'|'base64'
+
+[STRING] : <normal string>
+
+[ARRAY]  : array(
+            'type'    => 'array',
+            'members' => array([PARAM]*)
+           )
+          
+[STRUCT] : array(
+            'type'    => 'struct',
+            'members' => array([MEMBER]*)
+           )
+
+[MEMBER] : array(
+            'name'  => [STRING],
+            'type'  => [TYPE],
+            'value' => [STRING]
+           )
+           
+The assigning of the associative names happens automatically so you only have
+to construct the right nested array. So using that shorter notation, this is 
+what you have to create before calling the createresponse api function:
+
+[TPLDATA] : array (
+              'params' => [MSG],
+              'fault'  => 1  <- set only when fault msg should be generated
+            )
+            
+[MSG]    : array([PARAM]+)
+
+[PARAM]  : [VALUE] | [ARRAY] | [STRUCT]
+
+[VALUE]  : array([TYPE], [STRING]) 
+
+[TYPE]   : 'string'|'boolean'|'int'|'i4'|'double'|'dateTime.iso8601'|'base64'
+
+[STRING] : <normal php string value >
+
+[ARRAY]  : array('array',array([PARAM]*))
+
+[STRUCT] : array('struct',array([MEMBER]*))
+
+[MEMBER] : array([STRING],[TYPE],[STRING])
+           
