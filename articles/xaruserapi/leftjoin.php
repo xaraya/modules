@@ -99,12 +99,13 @@ function articles_userapi_leftjoin($args)
         $allaids = join(', ', $aids);
         $whereclauses[] = $articlestable . '.xar_aid IN (' . $allaids .')';
     }
+	
     if (!empty($where)) {
         // find all single-quoted pieces of text and replace them first, to allow where clauses
         // like : title eq 'this and that' and body eq 'here or there'
         $idx = 0;
         $found = array();
-        if (preg_match_all("/'(.*?)'/",$where,$matches)) {
+		if (preg_match_all("/'(.*?)(?<!\\\)'/",$where,$matches)) {
             foreach ($matches[1] as $match) {
                 $found[$idx] = $match;
                 $match = preg_quote($match);
@@ -157,6 +158,7 @@ function articles_userapi_leftjoin($args)
             $whereclauses[] = '(' . $mywhere . ')';
         }
     }
+
     if (!empty($search)) {
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
         // 1. find quoted text
