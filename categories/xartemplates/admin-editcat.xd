@@ -39,7 +39,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                * <xar:mlstring>in modules/categories/xarimages</xar:mlstring><br /><xar:mlstring>(theme-dependent versions can then be placed in</xar:mlstring><br /><xar:mlstring>themes/[theme name]/modules/categories/images)</xar:mlstring>
+                * <xar:mlstring>in modules/categories/xarimages</xar:mlstring><br /><xar:mlstring>(theme-dependent versions can then be placed in <br />themes/[theme name]/modules/categories/images)</xar:mlstring>
              </td>
         </tr>
         <xar:if condition="!empty($hooks)">
@@ -64,7 +64,7 @@
     </tr>
     <xar:if condition="$func eq 'create' AND count($categories) ne 0">
         <tr>
-            <td><label for="repeat"><xar:mlstring>Create in a Batch</xar:mlstring></label></td>
+            <td><label for="repeat"><xar:mlstring>Create in a batch</xar:mlstring></label></td>
             <td><input type="text" name="repeat" id="repeat" value="#$repeat#" /></td>
         </tr>
         <tr>

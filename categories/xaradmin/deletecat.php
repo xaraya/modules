@@ -18,7 +18,7 @@ function categories_admin_deletecat()
                               array('cid' => $cid));
 
         if ($cat == false) {
-            $msg = xarML('The category to be deleted doesnt exist', 'categories');
+            $msg = xarML('The category to be deleted does not exist', 'categories');
             xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }

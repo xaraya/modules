@@ -25,7 +25,7 @@
 
 		<div style="clear: both; padding-top: 10px;">
 		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('The categories can be navigated in an explorer style interface.')#"><label for="useJSdisplayYes"><xar:mlstring>Windows Explorer like tree</xar:mlstring></label>:</span>
+			<span class="help" title="#xarML('The categories can be navigated in an explorer style interface.')#"><label for="useJSdisplayYes"><xar:mlstring>Windows Explorer style tree</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
 			<xar:if condition="$useJSdisplay">

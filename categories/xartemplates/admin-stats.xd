@@ -5,19 +5,19 @@
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <th valign="center" width="40%">
-                    <xar:mlstring><b>Module Name</b></xar:mlstring>
+                    <b><xar:mlstring>Module Name</xar:mlstring></b>
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <xar:mlstring><b>Module<br />Items</b></xar:mlstring>
+                    <b><xar:mlstring>Module<br />Items</xar:mlstring></b>
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <xar:mlstring><b>Distinct<br />Categories</b></xar:mlstring>
+                    <b><xar:mlstring>Distinct<br />Categories</xar:mlstring></b>
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <xar:mlstring><b>Total<br />Links</b></xar:mlstring>
+                    <b><xar:mlstring>Total<br />Links</xar:mlstring></b>
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <xar:mlstring><b>Action</b></xar:mlstring>
+                    <b><xar:mlstring>Action</xar:mlstring></b>
                 </th>
             </tr>
 
@@ -107,16 +107,16 @@
             <tr>
                 <th valign="center" width="50%">
                     <xar:if condition="empty($sortlink['itemid'])">
-                        <xar:mlstring><b>Item Id</b></xar:mlstring>
+                        <b><xar:mlstring>Item Id</xar:mlstring></b>
                     <xar:else/>
-                        <a href="#$sortlink['itemid']#"><xar:mlstring><b>Item Id</b></xar:mlstring></a>
+                        <a href="#$sortlink['itemid']#"><b><xar:mlstring>Item Id</xar:mlstring></b></a>
                     </xar:if>
                 </th>
                 <th align="center" valign="center" width="30%">
-                    <xar:mlstring><b>Category<br/>Links</b></xar:mlstring>
+                    <b><xar:mlstring>Category<br/>Links</xar:mlstring></b>
                 </th>
                 <th align="center" valign="center" width="20%">
-                    <xar:mlstring><b>Action</b></xar:mlstring>
+                    <b><xar:mlstring>Action</xar:mlstring></b>
                 </th>
             </tr>
 

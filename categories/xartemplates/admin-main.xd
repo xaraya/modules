@@ -10,10 +10,10 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Categories is Xaraya Utility Module.</xar:mlstring></em>
+            <em><xar:mlstring>Categories is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
-                <li><xar:mlstring>Allows the use of site wide categories for content module to use as needed.</xar:mlstring></li>
+                <li><xar:mlstring>Allows the use of site wide categories for content modules to use as needed.</xar:mlstring></li>
             </ul>
         </div>
         <br />
@@ -24,7 +24,7 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>From the menu, you have two choices.  'Add a New Category', and 'View Categories'.</xar:mlstring>
             <ul>
-                <li><xar:mlstring>Add a new category -- Allows you to add a new category to your's site categories tree.</xar:mlstring></li>
+                <li><xar:mlstring>Add a new category -- Allows you to add a new category to your site categories tree.</xar:mlstring></li>
                 <li><xar:mlstring>View Categories -- This area allows you to view the entire categorization tree, allowing a easy way to modify it.</xar:mlstring></li>
             </ul>
         </div>
@@ -34,7 +34,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The Navigation block allows navigation when on a module that is using the category hooks.</xar:mlstring>
+            <xar:mlstring>The Navigation block allows navigation of any module using the category hooks.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -42,7 +42,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Categories provide all the hooks necessary to allow categories to be present from within modules.</xar:mlstring>
+            <xar:mlstring>Categories provides all the hooks necessary to allow categories to be available within other modules.</xar:mlstring>
         </div>
     </div>
 </div>
