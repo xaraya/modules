@@ -66,6 +66,9 @@
 </xar:comment>
 <xar:comment>
   Approach 3 : retrieve the previous/next topic id here
+</xar:comment>
+</div>
+<div class="xarbb-topiccontrols">
     <span class="xar-sub">
     <xar:set name="previd">#xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' => $fid, 'ttime' => $ttime))#</xar:set>
     <xar:if condition="!empty($previd)">
@@ -81,7 +84,6 @@
         <xar:mlstring>Next Topic</xar:mlstring>
     </xar:if>
     </span>
-</xar:comment>
 </div>
 <div class="xarbb-tablewrapper">
     <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
