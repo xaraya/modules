@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * CrossLink initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -13,6 +13,7 @@
 $modversion['name']           = 'CrossLink';
 $modversion['id']             = '186';
 $modversion['version']        = '1.1.0';
+$modversion['displayname']    = xarML('CrossLink');
 $modversion['description']    = 'Establish relationship between module items and some independent identifier, e.g. for shortcut or foreign key';
 $modversion['credits']        = '';
 $modversion['help']           = '';
