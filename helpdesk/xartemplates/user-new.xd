@@ -81,9 +81,9 @@
         <td colspan="3"><input name="subject" size="45" maxlength="255">(required)</td>
     </tr>
     <tr>
-    <!---
+    <xar:comment>
         <td colspan="1"><xar:mlstring>Category:</xar:mlstring></td>
-    --->
+    </xar:comment>
         <td colspan="4">
 	    #$hooks['categories']#
         </td>
