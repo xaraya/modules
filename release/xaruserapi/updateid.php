@@ -35,7 +35,7 @@ function release_userapi_updateid($args)
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -57,9 +57,16 @@ function release_userapi_updateid($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    if (empty($cids)) {
+        $cids = array();
+    }
+    $args['module'] = 'release';
+    $args['cids'] = $cids;
+
     // Let the calling process know that we have finished successfully
     // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'update', $rid, 'rid');
+    //xarModCallHooks('item', 'update', $rid, 'rid');
+    xarModCallHooks('item', 'update', $rid, $args);
 
     // Return the id of the newly created user to the calling process
     return $rid;

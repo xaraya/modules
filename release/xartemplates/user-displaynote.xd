@@ -15,7 +15,7 @@
             #$type# <xar:mlstring> Author</xar:mlstring>: 
                     <a href="#$contacturl#">#$realname#</a>
             <xar:mlstring>on</xar:mlstring>
-            #$time#
+            #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
 			&nbsp;&nbsp;::&nbsp;&nbsp;<b>Version:</b>&nbsp;&nbsp; #$version#<br />
           </span>
 <h3>Description of #$type#:</h3>&nbsp;&nbsp; #$desc#

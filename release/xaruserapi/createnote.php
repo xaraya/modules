@@ -32,7 +32,7 @@ function release_userapi_createnote($args)
 
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
-    $time = date('Y-m-d G:i:s');
+    $time = time();
     $query = "INSERT INTO $releasetable (
                      xar_rnid,
                      xar_rid,
@@ -64,7 +64,7 @@ function release_userapi_createnote($args)
               '" . xarVarPrepForStore($supportlink) . "',
               '" . xarVarPrepForStore($changelog) . "',
               '" . xarVarPrepForStore($notes) . "',
-              '$time',
+              $time,
               '" . xarVarPrepForStore($certified) . "',
               '" . xarVarPrepForStore($approved) . "',
               '" . xarVarPrepForStore($type) . "')";

@@ -9,9 +9,17 @@ function release_userapi_createid($args)
     if ((!isset($name)) ||
         (!isset($type))) {
 
-        $msg = xarML('Wrong arguments to release_userapi_create.');
+        $msg = xarML('Wrong arguments to release_userapi_createid.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,
                         'BAD_PARAM',
+                        new SystemException($msg));
+        return false;
+    }
+
+    if ($rid >= 10000 AND $rid < 11000) {
+        $msg = xarML('You have requested the private ID (1000-10999).');
+        xarExceptionSet(XAR_USER_EXCEPTION,
+                        'MISSING_DATA',
                         new SystemException($msg));
         return false;
     }
@@ -24,12 +32,17 @@ function release_userapi_createid($args)
 
     // Check if that username exists
     $query = "SELECT xar_rid FROM $releasetable
-            WHERE xar_name='".xarVarPrepForStore($name)."';";
+            WHERE xar_name='".xarVarPrepForStore($name)."'
+            OR xar_rid='".xarVarPrepForStore($rid)."'";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
-        return; 
+        $msg = xarML('Requested ID or name already registered earlier.');
+        xarExceptionSet(XAR_USER_EXCEPTION,
+                        'MISSING_DATA',
+                        new SystemException($msg));
+        return false;
     }
 
     if (empty($approved)){

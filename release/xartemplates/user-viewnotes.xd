@@ -31,7 +31,7 @@
               <xar:mlstring>Author</xar:mlstring>: 
               <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
               <xar:mlstring>on</xar:mlstring>
-              #$loop:item['time']#
+              #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
 		          <xar:if condition="!empty($loop:item['counter'])">
 		            (#$loop:item['hitcount']# <xar:mlstring>Reads</xar:mlstring>)
 		          </xar:if>

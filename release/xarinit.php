@@ -112,12 +112,13 @@ function release_init()
                                                                  'default'     => ''),
                                    'xar_notes'          => array('type'        => 'text',
                                                                  'default'     => ''),
-                                   'xar_time'           => array('type'        => 'datetime',
+                                   'xar_time'           => array('type'        => 'integer',
+                                                                 'unsigned'    => TRUE,
                                                                  'null'        => false,
-                                                                 'default'     => '0000-00-00 00:00:00'),
+                                                                 'default'     => '0'),
                                    'xar_enotes'         => array('type'        => 'text',
                                                                  'default'     => ''),
-                                       'xar_type'        => array('type'        => 'varchar',
+                                   'xar_type'           => array('type'        => 'varchar',
                                                                   'size'        => 100,
                                                                   'null'        => false,
                                                                   'default'     => ''),
@@ -155,9 +156,10 @@ function release_init()
                                                                  'size'        => 100,
                                                                  'null'        => false,
                                                                  'default'     => ''),
-                                   'xar_time'           => array('type'        => 'datetime',
+                                   'xar_time'           => array('type'        => 'integer',
+                                                                 'unsigned'    => TRUE,
                                                                  'null'        => false,
-                                                                 'default'     => '0000-00-00 00:00:00'),
+                                                                 'default'     => '0'),
                                    'xar_approved'       => array('type'        => 'integer',
                                                                  'null'        => false,
                                                                  'default'     => '1',
@@ -165,16 +167,38 @@ function release_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    // let's hook cats in
+    $cid = xarModAPIFunc('categories', 'admin', 'create',
+                         array('name' => 'Release',
+                               'description' => 'Main Release Cats.',
+                               'parent_id' => 0));
+    xarModSetVar('release', 'number_of_categories', 1);
+    xarModSetVar('release', 'mastercids', $cid);
+    xarModSetVar('release', 'SupportShortURLs', 0);
+
+    // Register Block types
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'release',
+                'blockType' => 'latest'))) return;
+    
+    // Enable categories hooks for release
+    xarModAPIFunc('modules','admin','enablehooks',
+          array('callerModName' => 'release', 'hookModName' => 'categories'));        
+
     // Register Masks
     xarRegisterMask('OverviewRelease','All','release','All','All','ACCESS_READ');
     xarRegisterMask('EditRelease','All','release','All','All','ACCESS_EDIT');
     xarRegisterMask('DeleteRelease','All','release','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
 
     return true;
 }
 
 /**
- * upgrade the example module from an old version
+ * upgrade the release module from an old version
  * This function can be called multiple times
  */
 function release_upgrade($oldversion)
@@ -193,22 +217,106 @@ function release_upgrade($oldversion)
 
             $query = xarDBAlterTable($releaseidtable,
                 array(
-                                           'command' => 'add',
-                                           'field' => 'xar_type',
-                                           'type'  => 'varchar',
-                                           'size'        => 100,
-                                           'null'        => false,
-                                           'default'     => 'module'));
+                      'command' => 'add',
+                      'field' => 'xar_type',
+                      'type'  => 'varchar',
+                      'size'        => 100,
+                      'null'        => false,
+                      'default'     => 'module'));
 
             // Pass to ADODB, and send exception if the result isn't valid.
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
         break;
-        case '0.05':
+        case '0.0.5':
+            // let's hook cats in
+            $cid = xarModAPIFunc('categories', 'admin', 'create',
+                                 array('name' => 'Release',
+                                       'description' => 'Main Release Cats.',
+                                       'parent_id' => 0));
+            xarModSetVar('release', 'number_of_categories', 1);
+            xarModSetVar('release', 'mastercids', $cid);
+    
+            // Enable categories hooks for release
+            xarModAPIFunc('modules','admin','enablehooks',
+                  array('callerModName' => 'release', 'hookModName' => 'categories'));        
+        break;
+        case '0.0.6':
+            // Set up an initial value for a module variable.
+            xarModSetVar('release', 'SupportShortURLs', 0);
 
+            xarRegisterMask('AdminRelease','All','release','All','All','ACCESS_ADMIN');
+        break;
+        case '0.0.7':
+            xarRegisterMask('ReadReleaseBlock', 'All', 'release', 'Block', 'All', 'ACCESS_OVERVIEW');
+            // Register Block types
+            if (!xarModAPIFunc('blocks',
+                    'admin',
+                    'register_block_type',
+                    array('modName' => 'release',
+                        'blockType' => 'latest'))) return;
+        break;
+        case '0.0.8':
+            xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
+
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+
+            $releasetable = $xartable['release_notes'];
+            // FIXME: non-portable SQL
+            $query = "select xar_rnid,xar_time from $releasetable";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // FIXME: non-portable SQL
+            $query = "ALTER TABLE $releasetable
+                         CHANGE xar_time xar_time INT UNSIGNED DEFAULT '0' NOT NULL";
+            $altresult =& $dbconn->Execute($query);
+            if (!$altresult) return;
+            $altresult->Close();
+
+            while (!$result->EOF) {
+                $newtime = strtotime($result->fields[1]);
+                $newid = $result->fields[0];
+
+                $query = "update $releasetable set xar_time=$newtime where xar_rnid=$newid";
+                $result2 =& $dbconn->Execute($query);
+                if (!$result2) return;
+                $result2->Close();
+
+                $result->MoveNext();
+            }
+            $result->Close();
+
+            $releasetable = $xartable['release_docs'];
+            // FIXME: non-portable SQL
+            $query = "select xar_rdid,xar_time from $releasetable";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // FIXME: non-portable SQL
+            $query = "ALTER TABLE $releasetable
+                         CHANGE xar_time xar_time INT UNSIGNED DEFAULT '0' NOT NULL";
+            $altresult =& $dbconn->Execute($query);
+            if (!$altresult) return;
+            $altresult->Close();
+
+            while (!$result->EOF) {
+                $newtime = strtotime($result->fields[1]);
+                $newid = $result->fields[0];
+
+                $query = "update $releasetable set xar_time=$newtime where xar_rdid=$newid";
+                $result2 =& $dbconn->Execute($query);
+                if (!$result2) return;
+                $result2->Close();
+
+                $result->MoveNext();
+            }
+            $result->Close();
+        break;
+        case '0.0.9':
     }
-
     return true;
 }
 /**
@@ -241,10 +349,18 @@ function release_delete()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'unregister_block_type',
+            array('modName' => 'release',
+                'blockType' => 'latest'))) return;
+
     // UnRegister Masks
     xarUnRegisterMask('OverviewRelease');
     xarUnRegisterMask('EditRelease');
     xarUnRegisterMask('DeleteRelease');
+    xarUnRegisterMask('ReadReleaseBlock');
 
     return true;
 }

@@ -31,7 +31,7 @@ function release_userapi_createdoc($args)
 
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
-    $time = date('Y-m-d G:i:s');
+    $time = time();
     $query = "INSERT INTO $releasetable (
               xar_rdid,
               xar_rid,
@@ -47,7 +47,7 @@ function release_userapi_createdoc($args)
               '" . xarVarPrepForStore($title) . "',
               '" . xarVarPrepForStore($doc) . "',
               '" . xarVarPrepForStore($type) . "',
-              '$time',
+              $time,
               '" . xarVarPrepForStore($approved) . "')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;

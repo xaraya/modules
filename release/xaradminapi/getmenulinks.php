@@ -28,6 +28,12 @@ function release_adminapi_getmenulinks()
                              'title' => xarML('View Release Docs'),
                              'label' => xarML('View Documentation'));
 
+        $menulinks[] = Array('url'   => xarModURL('release',
+                                                  'admin',
+                                                  'modifyconfig'),
+                             'title' => xarML('Modify the configuration for the module'),
+                             'label' => xarML('Modify Config'));
+
      }
 
     if (empty($menulinks)){

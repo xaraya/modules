@@ -20,6 +20,15 @@ function release_user_addid()
                 $data['uid'] = xarUserGetVar('uid');
                 $data['authid'] = xarSecGenAuthKey();
 
+                $item['module'] = 'release';
+                $hooks = xarModCallHooks('item', 'new', '', $item);
+                if (empty($hooks['categories'])) {
+                    $cathook = '';
+                } else {
+                    $cathook = $hooks['categories'];
+                } 
+                $data['cathook'] = $cathook;
+
                 break;
             
             case 'update':
@@ -28,11 +37,13 @@ function release_user_addid()
                      $uid,
                      $name,
                      $desc,
-                     $idtype) = xarVarCleanFromInput('rid',
-                                                     'uid',
-                                                     'name',
-                                                     'desc',
-                                                     'idtype');
+                     $idtype,
+                     $cids) = xarVarCleanFromInput('rid',
+                                                   'uid',
+                                                   'name',
+                                                   'desc',
+                                                   'idtype',
+                                                   'modify_cids');
                 
                 // Get the UID of the person submitting the module
                 $uid = xarUserGetVar('uid');
@@ -49,7 +60,8 @@ function release_user_addid()
                                           'name' => $name,
                                           'desc' => $desc,
                                           'certified' => '1',
-                                          'type' => $idtype))) return;
+                                          'type' => $idtype,
+                                          'cids' => $cids))) return;
 
                 xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
 

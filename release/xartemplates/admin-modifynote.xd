@@ -29,7 +29,7 @@
 					<xar:mlstring>Date Added</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					#$time#
+					#xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
 				</td>
 			</tr>
 			<tr>

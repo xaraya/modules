@@ -36,7 +36,7 @@
 <xar:mlstring>Author</xar:mlstring>: 
 <a href="#$contacturl#">#$realname#</a>
 <xar:mlstring>on</xar:mlstring>
-#$time#
+#xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
 </span></div>
 <h3>Description of #$type#:</h3>&nbsp;&nbsp; #$desc#<br /><br />
 <h3>Version:</h3>&nbsp;&nbsp; #$version#<br />
@@ -72,5 +72,11 @@
 	<h3>#$type# Author:</h3>&nbsp;&nbsp; <a href="#$contacturl#">#$realname#</a><br />
 	<h3>#$type# Description:</h3> &nbsp;&nbsp; #$desc#
 	<br /><br />
+
+    <h3><xar:mlstring>Categories:</xar:mlstring></h3><br />
+	<xar:categories-navigation layout="" module="release" itemtype="1" itemid="$rid" />
+    <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="1" itemid="$rid" />
+	<br /><br />
+
 	#$hooks#
 </xar:if>

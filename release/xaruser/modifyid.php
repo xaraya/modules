@@ -35,6 +35,15 @@ function release_user_modifyid()
                 $message = xarML('You are not allowed to add a release notification to this module');               
             }
 
+            $item['module'] = 'release';
+            $hooks = xarModCallHooks('item', 'modify', $rid, $item);
+            if (empty($hooks['categories'])) {
+                $cathook = '';
+            } else {
+                $cathook = $hooks['categories'];
+            } 
+            $data['cathook'] = $cathook;
+
             $data['authid'] = xarSecGenAuthKey();
 
             break;
@@ -46,12 +55,14 @@ function release_user_modifyid()
                  $name,
                  $desc,
                  $certified,
-                 $idtype) = xarVarCleanFromInput('rid',
-                                                 'uid',
-                                                 'name',
-                                                 'desc',
-                                                 'certified',
-                                                 'idtype');
+                 $idtype,
+                 $cids) = xarVarCleanFromInput('rid',
+                                               'uid',
+                                               'name',
+                                               'desc',
+                                               'certified',
+                                               'idtype',
+                                               'modify_cids');
             
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -65,7 +76,8 @@ function release_user_modifyid()
                                       'name' => $name,
                                       'desc' => $desc,
                                       'certified' => $certified,
-                                      'type' => $idtype))) return;
+                                      'type' => $idtype,
+                                      'cids' => $cids))) return;
 
             xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
 

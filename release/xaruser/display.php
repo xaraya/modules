@@ -35,13 +35,15 @@ function release_user_display()
             $hooks = xarModCallHooks('item',
                                      'display',
                                      $rid,
-                                     array('itemtype'  => '1',
+                                     array('module' => 'release',
+                                           'itemtype'  => '1',
                                            'returnurl' => xarModURL('release',
                                                                     'user',
                                                                     'display',
                                                                      array('rid' => $rid))
-                                                 )
-                                            );
+                                          ),
+                                     'release'
+                                     );
 
             if (empty($hooks)) {
                 $data['hooks'] = '';
@@ -50,6 +52,7 @@ function release_user_display()
             } else {
                 $data['hooks'] = $hooks;
             }
+
             $data['version'] = 0;
             $data['docs'] = 0;
             $data['general'] = 2;

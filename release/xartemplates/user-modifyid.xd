@@ -59,6 +59,11 @@
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-norm" colspan="2">
+                    #$cathook#
+				</td>
+			</tr>
 		</table>			
 		<br /><br />
 		<input type="submit" value="Modify ID"  tabindex="6" />
