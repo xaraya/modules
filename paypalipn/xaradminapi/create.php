@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * create a new item
  * @param $args['args'] Paypal Transaction Post Vars
@@ -12,7 +12,7 @@ function paypalipn_adminapi_create($args)
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
     if (!isset($args)) {
-        $msg = xarML('Invalid Parameter Count);
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
