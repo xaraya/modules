@@ -142,6 +142,9 @@ function articles_user_display($args)
                 unset($pages);
             // TODO: use BL widget ?
                 if ($page > 1) {
+                    // only count first page hits
+                    xarVarSetCached('Hooks.hitcount','nocount',1);
+
                     $data['previous'] = '<a href="' . xarModURL('articles','user','display',
                                                                array('aid' => $aid))
                                         . '">&lt;&lt; </a>&nbsp;&nbsp;';
