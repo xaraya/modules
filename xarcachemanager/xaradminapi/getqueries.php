@@ -24,7 +24,10 @@ function xarcachemanager_adminapi_getqueries($args)
                                             'userapi.get_multiple'),
                         'dynamicdata' => array(), // TODO: make dependent on arguments
                         'privileges' => array(),
-                        'roles' => array('userapi.getall'),
+                        'roles' => array('userapi.countall',
+                                         'userapi.getall',
+                                         'userapi.countallactive',
+                                         'userapi.getallactive'),
                         'xarbb' => array('userapi.countposts',
                                          'userapi.getalltopics'),
                        );
