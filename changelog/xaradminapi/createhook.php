@@ -121,7 +121,7 @@ function changelog_adminapi_createhook($args)
                       (int) $itemtype,
                       (int) $objectid,
                       (int) $editor,
-                      (string) $hostname.
+                      (string) $hostname,
                       (int) $date,
                       (string) $status,
                       (string) $remark,
