@@ -1,38 +1,124 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
+<xar:set name="extlisturl">xarModURL('release','user','viewids')</xar:set>
+<xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
+<xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
+<xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
+<xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
 <div class="xar-mod-body">
-<h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
+<h2><xar:mlstring>Extension Release Details</xar:mlstring></h2>
 
-<table width="95%" border="0" cellspacing="1" cellpadding="0" class="xar-alt"><tr><td>
-  <table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent"><tr><td>
-    <table width="100%" border="0" cellspacing="0" cellpadding="3" align="center" class="xar-norm">
+<table style="width:95%; border:0; cellspacing:0; cellpadding:3; align:center;" class="xar-alt"><tr><td>
+  <table style="width:100%; border:0; cellspacing:0; cellpadding:3; align"center;" class="xar-accent"><tr><td>
+    <table style="width:100%; border:0; cellspacing:1; cellpadding:1; align"center;" class="xar-norm">
       <tr>
-        <td align="left" valign="top" class="xar-normal">
-             <span class="xar-title">
-                 <h3>#$name#</h3>
+        <td class="xar-normal">
+        <div style="width:100%; padding-left:5px;padding-top:5px; padding-;bottom:10px;padding-right:5px;">
+            <div style="clear: both; ">
+            <span style="float: left; width: 70%; text-align: left;">
+                <h3>#$type# :: #$name#</h3>
+            </span>
+             <span style="float: right; width: 30%;text-align: right;">
+                 <h3>Version: #$version#</h3>
              </span>
-             <span class="xar-sub">
-                 #$type# <xar:mlstring> Author</xar:mlstring>:
+            </div>
+             <div style="clear: both; width:98%; align:middle;">
+             <span style="float: left; width:50%; text-align: left;">
+                  #$type# <xar:mlstring> Author</xar:mlstring>:
                  <a href="#$contacturl#">#$realname#</a>
-                 <xar:mlstring>on</xar:mlstring>
-                 #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
-	 	 	     &nbsp;&nbsp;::&nbsp;&nbsp;<b>Version:</b>&nbsp;&nbsp; #$version#<br />
              </span>
-             <h3>Description of #$type#:</h3>&nbsp;&nbsp; #$desc#
-             <h3>Additional Notes:</h3>&nbsp;&nbsp; #$notes#
-             <h3>Changelog:</h3>&nbsp;&nbsp; #$changelog#
+             <span style="float: right; width: 50%; text-align: right;">
+                 <xar:mlstring>Released </xar:mlstring>
+                 #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#</p>
+             </span>
+             </div>
+             <div style="clear: both;">
+                 <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                 Description:</span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                    #$desc#
+                 </span>
+             </div>
+             <div style="clear: both;">
+                 <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                     Additional Notes:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     #$notes#
+                 </span>
+             </div>
+             <div style="clear: both; ">
+                 <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                     Changelog:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     #$changelog#
+                 </span>
+             </div>
              <xar:if condition="!empty($enotes)">
-	             <h3>Editor Notes:</h3>&nbsp;&nbsp;<i> #$enotes# </i></p>
+             <div style="clear: both;">
+                  <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                     Editor notes:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     #$enotes#
+                 </span>
+             </div>
              </xar:if>
              <xar:if condition="!empty($demolink)">
-                 <h3>Demo Link:</h3>&nbsp;&nbsp; <a href="#$demolink#">#$demolink#</a><br />
-             </xar:if>
-             <h3>Download Link:</h3>&nbsp;&nbsp; <a href="#$dllink#">#$dllink#</a><br />
+              <div style="clear: both; ">
+                 <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                     Demo Link:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     <a href="#$demolink#">#$demolink#</a>
+                 </span>
+             </div>
+            </xar:if>
+              <div style="clear: both; ">
+                  <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                    Download Link:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     <a href="#$dllink#">#$dllink#</a>
+                 </span>
+             </div>
+              <div style="clear: both; ">
+                  <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                    Support Link:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     <a href="#$supportlink#">#$supportlink#</a>
+                 </span>
+             </div>
+
              <xar:if condition="$price eq 2">
-                 <h3>Price:</h3>&nbsp;&nbsp; #$priceterms#<br />
+              <div style="clear: both; ">
+                 <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                    Price:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     #$priceterms#
+                 </span>
+             </div>
              </xar:if>
-             <h3>Certified:</h3>&nbsp;&nbsp; #$certifiedstatus#<br />
-	         <h3>Status:</h3>&nbsp;&nbsp; #$stateoption#<br />
+              <div style="clear: both; ">
+                 <span style="float: left; width: 30%; margin-top:10px; text-align: left; font-size:larger; font-weight:bold;">
+                     Certified:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     #$certifiedstatus#
+                 </span>
+             </div>
+              <div style="clear: both; ">
+                 <span style="float: left; width: 30%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+                    Status:
+                 </span>
+                 <span style="float: right; width: 68%; margin-top:10px;text-align: left;">
+                     #$stateoption#
+                 </span>
+             </div>
+             </div>
          </td>
       </tr>
     </table>
@@ -40,7 +126,19 @@
 </tr>
 </table>
 </td></tr></table>
-
-#$hooks#
+<div style="clear: both; width:98%; ">
+<span style="float: left; width: 100%; margin-top:10px; margin-bottom:20px; text-align: center;">
+    <a href="#$extlisturl#"><xar:mlstring>Extension List</xar:mlstring></a> ::
+    <a href="#$extreleaseurl#"><xar:mlstring>Recent Releases</xar:mlstring></a>
+<span>
+<span style="float: left; width: 100%; margin-top:10px; margin-bottom:20px; text-align: center;">
+<a href="#$extdocsurldev#"><xar:mlstring>API Guides</xar:mlstring></a> ::
+<a href="#$extdocsurladm#"><xar:mlstring>Module User Guides</xar:mlstring></a>  ::
+<a href="#$extdocsurlthm#"><xar:mlstring>Theme Guides</xar:mlstring></a> 
+    </span>
+</div>
+<div style="clear: both; width:98%; ">
+       #$hooks#
+</div>
 </div>
 </div>

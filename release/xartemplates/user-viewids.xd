@@ -1,14 +1,19 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span></div>
+<xar:set name="addextension">xarModURL('release','user','addid')</xar:set>
+<xar:set name="extlisturl">xarModURL('release','user','viewids')</xar:set>
+<xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
+<xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
+<xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
+<xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
+
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-  <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
- 
-  <div style="margin-top:20px; margin-bottom:20px;">
-
-  <span style="float:left; text-align:left; width:15%;">
+      <h2><xar:mlstring>Registered Extension List: Modules and Themes</xar:mlstring></h2>
+ <div style="margin-top:20px; margin-bottom:20px;">
+  <span style="float:left; text-align:left; width:20%;">
     <strong><xar:mlstring>Filter By</xar:mlstring>:</strong>
   </span>
-  <span style="float:left; text-align:left; width:85%;">
+  <span style="float:left; text-align:left; width:60%;">
   <form action="#xarModURL('release', 'user', 'viewids')#" method="post" enctype="application/x-www-form-urlencoded">
 	  <input type="radio" name="phase" id="phase" value="themes"  />
 	  <xar:mlstring>Themes</xar:mlstring>
@@ -19,7 +24,12 @@
 	  &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
   </form>
   </span>
-</div>
+  <span style="float:right; text-align:right; width:20%;">
+      <xar:if condition="xarUserIsLoggedIn()">
+         <a href="#$addextension#">[Add Extension]</a>
+      </xar:if>
+  </span>
+  </div>
 <xar:if condition="!isset($phase) or empty($phase)">
     <xar:set name="displayphase"><xar:mlstring>All</xar:mlstring></xar:set>
 <xar:else />
@@ -125,10 +135,22 @@
 <!-- add the pager here -->
 #$pager#
 </p>
+<div style="clear: both;">
+    <span style="float: left; width: 50%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+        <h3><xar:mlstring>Syndicate this list</xar:mlstring></h3>
+        <ol>
+    	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#"><xar:mlstring>Entire List</xar:mlstring></a></li>
+	    <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#"><xar:mlstring>Modules</xar:mlstring></a></li>
+    	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#"><xar:mlstring>Themes</xar:mlstring></a></li>
+        </ol>
+    </span>
+    <span style="float: right; width: 50%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+        <h3><xar:mlstring>Check the Documentation</xar:mlstring></h3>
+        <ol>
+    	<li><a href="#$extdocsurldev#"><xar:mlstring>Module API Guides</xar:mlstring></a></li>
+	    <li><a href="#$extdocsurladm#"><xar:mlstring>Module User Guides</xar:mlstring></a></li>
+    	<li><a href="#$extdocsurlthm#"><xar:mlstring>Theme Guides</xar:mlstring></a></li>
+        </ol>
+   </span>
+</div>
 
-<h3><xar:mlstring>Syndicate this list</xar:mlstring></h3>
-<ol>
-	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#"><xar:mlstring>Entire List</xar:mlstring></a></li>
-	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#"><xar:mlstring>Modules</xar:mlstring></a></li>
-	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#"><xar:mlstring>Themes</xar:mlstring></a></li>
-</ol>
