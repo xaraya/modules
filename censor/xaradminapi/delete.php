@@ -1,8 +1,19 @@
 <?php
+/*
+ * Censor Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage  Censor Module
+ * @author John Cox
+*/
+
 /**
  * delete an censored word
  * 
- * @param  $args ['cid'] ID of the link
+ * @param  $args ['cid'] ID of the censored word to delete
  * @returns bool
  * @return true on success, false on failure
  */

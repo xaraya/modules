@@ -1,4 +1,15 @@
 <?php
+/*
+ * Censor Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage  Censor Module
+ * @author John Cox
+*/
+
 /**
  * transform text
  * @param $args['extrainfo'] string or array of text items
@@ -45,7 +56,7 @@ function transform($text)
     static $alreplace = array();
     static $gotcensor = 0;
     
-    $local = xarConfigGetVar('Site.MLS.DefaultLocale');
+    $local = xarSessionGetVar('navigationLocale');
     
     if (empty($gotcensor)) {
         $gotcensor = 1;
@@ -87,9 +98,9 @@ function transform($text)
         }
     }
      
-    // FIXME: <alberto>  why this ?
-    // Step 1 - move all tags out of the text and replace them with placeholders
-    preg_match_all('/(<a\s+.*?\/a>|<[^>]+>)/i', $text, $matches);
+   
+    preg_match_all('/(<a\s+.*?\/a>|<("[^"]*"|\'[^\']*\'|[^\'">])*>)/i', $text, $matches);
+    
     $matchnum = count($matches[1]);
     for ($i = 0; $i <$matchnum; $i++) {
         $text = preg_replace('/' . preg_quote($matches[1][$i], '/') . '/', "ALPLACEHOLDER{$i}PH", $text, 1);
@@ -103,8 +114,8 @@ function transform($text)
     // Step 4 - replace the HTML tags that we removed in step 1
     for ($i = 0; $i <$matchnum; $i++) {
         $text = preg_replace("/ALPLACEHOLDER{$i}PH/", $matches[1][$i], $text, 1);
-    }
-
+   
+ }
 
     return $text;
 }

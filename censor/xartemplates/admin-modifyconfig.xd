@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
@@ -19,7 +20,7 @@
             <span class="help" title="#xarML('This is what will the replacement for the keywords that you specify.')#"><label for="group_name"><xar:mlstring>Replace String</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="replace" id="replace" value="#xarModGetVar('censor', 'replace', 1)#" size="32" maxlength="100" />
+			<input type="text" name="replace" id="replace" value="#$replace#" size="32" maxlength="100" />
         </span>
         </div>
 
@@ -28,7 +29,7 @@
             <span class="help" title="#xarML('This is the number of items shown on the individual admin view page.')#"><label for="group_template"><xar:mlstring>Items Per Page</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('censor', 'itemsperpage', 1)#" />
+			<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" />
         </span>
         </div>
         <br /><br /><span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$submitlabel#" /></span>

@@ -1,4 +1,15 @@
 <?php
+/*
+ * Censor Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage  Censor Module
+ * @author John Cox
+*/
+
 /**
  * get all links
  * @returns array
@@ -41,7 +52,7 @@ function censor_userapi_getall($args)
                            'keyword' => $keyword,
                             'case_sensitive' => $case_sensitive,
                             'match_case' => $match_case,
-                            'locale' => $locale);
+                            'locale' => unserialize($locale));
         }
     }
     $result->Close();

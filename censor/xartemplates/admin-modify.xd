@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
@@ -42,24 +43,24 @@
         </span>
         <span style="float: right; width: 78%; text-align: left;">
             <xar:if condition="$match_case eq 0">
-            <input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring><br />
+			<p><input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring></p>
                 <xar:else />
-                <input type="radio" name="matchcase" id="matchcase" value="0" /><xar:mlstring>Exact</xar:mlstring><br />
+		        <p><input type="radio" name="matchcase" id="matchcase" value="0" /><xar:mlstring>Exact</xar:mlstring></p>
                 </xar:if>
                 <xar:if condition="$match_case eq 1">
-            <input type="radio" name="matchcase" id="matchcase" value="1" checked="checked" /><xar:mlstring>Start with</xar:mlstring> ...<br />
+			<p><input type="radio" name="matchcase" id="matchcase" value="1" checked="checked" /><xar:mlstring>Start with</xar:mlstring> ...</p>
                 <xar:else />
-                <input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...<br />
+		        <p><input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...</p>
                 </xar:if>
                 <xar:if condition="$match_case eq 2">
-            <input type="radio" name="matchcase" id="matchcase" value="2" checked="checked" /><xar:mlstring>End with</xar:mlstring> ...<br />
+			<p><input type="radio" name="matchcase" id="matchcase" value="2" checked="checked" /><xar:mlstring>End with</xar:mlstring> ...</p>
                 <xar:else />
-                <input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...<br />
+		        <p><input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...</p>
                 </xar:if>
                 <xar:if condition="$match_case eq 3">
-            <input type="radio" name="matchcase" id="matchcase" value="3" checked="checked" /><xar:mlstring>Everywhere</xar:mlstring><br />
+			<p><input type="radio" name="matchcase" id="matchcase" value="3" checked="checked" /><xar:mlstring>Everywhere</xar:mlstring></p>
                 <xar:else />
-                <input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring><br />
+		        <p><input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring></p>
                 </xar:if>
         </span>
         </div>
@@ -69,23 +70,19 @@
             <span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Locale</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-        <select name="locale" id="locale">
-            <xar:if condition="$locale eq 'ALL'">
-            <option value="ALL" selected="selected"><xar:mlstring>ALL</xar:mlstring></option>
+		<select multiple size="5" name="locale[]" id="locale">
+		<xar:loop name="$locales">
+		<xar:if condition="$loop:item['check'] eq 1">
+		<option value="#$loop:item['value']#" selected="selected">#$loop:item['name']#</option>
         <xar:else />
-        <option value="ALL"><xar:mlstring>ALL</xar:mlstring></option>
+					<option value="#$loop:item['value']#">#$loop:item['name']#</option>
         </xar:if>
-        <xar:foreach in="$locales" value="$dlocale">
-           <xar:if condition="$locale eq $dlocale['value']">
-            <option value="#$dlocale['value']#" selected="selected">#$dlocale['name']#</option>
-               <xar:else />
-               <option value="#$dlocale['value']#">#$dlocale['name']#</option>
-               </xar:if>
-            </xar:foreach>
+		</xar:loop>
                 </select>
                 </span>
-        <br /><br />
+		<div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span>
+	        </div>
     </form>
     </div>
 </div>

@@ -1,10 +1,21 @@
 <?php
+/*
+ * Censor Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage  Censor Module
+ * @author John Cox
+*/
+
 /**
  * create a new censored word
  * 
- * @param  $args ['keyword'] keyword of the item
+ * @param  $args ['keyword'] new censored word
  * @returns int
- * @return censor ID on success, false on failure
+ * @return censored word ID on success, false on failure
  */
 function censor_adminapi_create($args)
 {
@@ -37,6 +48,7 @@ function censor_adminapi_create($args)
               ?,
               ?)";
     $bindvars = array($nextId, $keyword, $case, $matchcase, $locale);
+   
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted

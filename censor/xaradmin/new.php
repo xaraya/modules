@@ -1,6 +1,17 @@
 <?php
+/*
+ * Censor Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage  Censor Module
+ * @author John Cox
+*/
+
 /**
- * add new item
+ * add new censored word
  */
 function censor_admin_new()
 { 
@@ -12,8 +23,7 @@ function censor_admin_new()
     }
     $data['createlabel'] = xarML('Submit');
     $data['authid'] = xarSecGenAuthKey(); 
-    // Return the output
-    //var_dump($data);
+
     return $data;
 } 
 

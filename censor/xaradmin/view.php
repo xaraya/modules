@@ -1,6 +1,17 @@
 <?php
+/*
+ * Censor Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage  Censor Module
+ * @author John Cox
+*/
+
 /**
- * view items
+ * view censored words
  */
 function censor_admin_view()
 { 
@@ -67,11 +78,13 @@ function censor_admin_view()
         } 
 
         $censors[$i]['deletetitle'] = xarML('Delete');
+        $censors[$i]['locale'] = implode(", ", $censor['locale']);
+       
     } 
     // Add the array of items to the template variables
     $data['items'] = $censors; 
 
-// alberto -> where we can set this?
+// ftb -> where we can set this?
     $data['selstyle']  = xarModGetUserVar('censor', 'selstyle');
     if (empty($data['selstyle'])){
         $data['selstyle'] = 'plain';
@@ -82,5 +95,6 @@ function censor_admin_view()
     $data['style']['icons'] = xarML('Icons');
     // Return the template variables defined in this function
     return $data;
+
 } 
 ?>

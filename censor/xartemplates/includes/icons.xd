@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <br />
 <div class="xar-norm-outline" style="padding: 0px 0px 5px 0px;">
     <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -41,7 +42,7 @@
             <img src="modules/censor/xarimages/ever.gif" alt="#xarML('Everywhere')#"  />
             </xar:if>
             </td>
-            <td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+			<td class="xar-norm-outline" style="text-align: center; width: 200px;border-width: 0px 0px 1px 0px;border-style: dotted;">
             #$loop:item['locale']#
             </td>
             <td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">

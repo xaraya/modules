@@ -1,9 +1,20 @@
 <?php
+/*
+ * Censor Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage  Censor Module
+ * @author John Cox
+*/
+
 /**
  * update an censored word
  * 
- * @param  $args ['cid'] the ID of the link
- * @param  $args ['keyword'] the new keyword of the link
+ * @param  $args ['cid'] the ID of the censored word
+ * @param  $args ['keyword'] the new censored word
  */
 function censor_adminapi_update($args)
 {
@@ -26,7 +37,7 @@ function censor_adminapi_update($args)
                           array('cid' => $cid));
 
     if ($link == false) {
-        $msg = xarML('No Such Link Present', 'censor');
+        $msg = xarML('No Such Censored Word Present', 'censor');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     } 
