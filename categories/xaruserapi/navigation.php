@@ -594,6 +594,20 @@ function categories_userapi_navigation($args)
                         'catitems' => $catitems,
                         'catcount' => $curcount
                     );
+                    // add a hit for the categories we're viewing here
+                    if (empty($itemid) && xarModIsHooked('hitcount','categories')) {
+                        foreach ($cids as $cid) {
+                            if (empty($cid)) {
+                                continue;
+                            }
+                            // if we're viewing all items below a certain category, i.e. catid = _NN
+                            $cid = str_replace('_', '', $cid);
+                            // FIXME: if this fails, an exception will be set, so it needs to be cleared?
+                            xarModAPIFunc('hitcount','admin','update',
+                                          array('modname' => 'categories',
+                                                'objectid' => $cid));
+                        }
+                    }
                 }
 
                 // TODO: move off to nav-trails template ?
@@ -625,7 +639,11 @@ function categories_userapi_navigation($args)
                     $curcat['current_module'] = $modname;
                     $curcat['current_itemtype'] = $itemtype;
                     // calling item display hooks *for the categories module* here !
-                    $data['cathooks'] = xarModCallHooks('item','display',$cid,$curcat,'categories');
+                // FIXME: if hitcount is hooked to categories, this will also increase the hitcount
+                //        of the category when displaying an article that belongs to that single category
+                // Possible solution : extend xarVarIsCached('Hooks.hitcount','nocount') mechanism to take
+                // into account the module ???
+                    $data['cathooks'] = xarModCallHooks('item','display',$cids[0],$curcat,'categories');
                     // saving the current cat id for use e.g. with DD tags (<xar:data-display module="categories" itemid="$catid" />)
                     $data['catid'] = $curcat['cid'];
                 }
