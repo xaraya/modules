@@ -6,15 +6,14 @@
 function tasks_user_display($args)
 {
     $data=array();
-    list($modname, $mainid, $filter,$objectid,$module,$type,$func) = 
-        xarVarCleanFromInput('modname',
-                             'id',
-                             'filter',
-                             'objectid',
-                             'module',
-                             'type',
-                             'func');
-    
+    if (!xarVarFetch('modname', 'str:1:', $modname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id', 'int:1', $mainid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'int:1', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('module', 'str:1:', $module, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type', 'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('func', 'str:1:', $func, '', XARVAR_NOT_REQUIRED)) return;
+
     // how to get module id of calling module?
     // check if output has already been displayed
     // if not, use xarvarcleanfrominput('module') to get mod id

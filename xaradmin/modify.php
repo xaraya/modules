@@ -6,7 +6,7 @@
 function tasks_admin_modify($args)
 {
     $data=array();
-    $id = xarVarCleanFromInput('id');
+    if (!xarVarFetch('id', 'int:1', $id)) return;
                            
     extract($args);
 

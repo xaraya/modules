@@ -5,17 +5,12 @@
  */
 function tasks_admin_gantt($args)
 {
-    list($parentid,
-        $module,
-        $type,
-        $func,
-        $filter,
-        $displaydepth) = xarVarCleanFromInput('parentid',
-                                    'module',
-                                    'type',
-                                    'func',
-                                    'filter',
-                                    'displaydepth');
+    if (!xarVarFetch('parentid', 'int:1', $parentid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('module', 'str:1:', $module, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type', 'str:1:', $type, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('func', 'str:1:', $func, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter', 'str:1:', $filter, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('displaydepth', 'int:1', $displaydepth, NULL, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
     

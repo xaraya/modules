@@ -6,14 +6,13 @@
 function tasks_admin_new($args)
 {
     $data=array();
-    list($module,$type,    $func) = xarVarCleanFromInput('module',
-                                    'type',
-                                    'func');
-
+    if (!xarVarFetch('module', 'str:1:', $module, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type', 'str:1:', $type, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('func', 'str:1:', $func, NULL, XARVAR_NOT_REQUIRED)) return;
+             
     extract($args);
-    
 
-  // DISPLAY ONLY IF COMMENT AUTH FOR BASETASKID, OR MOD AUTH FOR NO BASETASKID
+// DISPLAY ONLY IF COMMENT AUTH FOR BASETASKID, OR MOD AUTH FOR NO BASETASKID
 //     if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_ADD)) {
 //         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
 //         pnRedirect(pnModURL('tasks','user','view'));
