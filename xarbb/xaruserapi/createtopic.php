@@ -21,6 +21,11 @@
  */
 function xarbb_userapi_createtopic($args)
 {
+    // Topic Status
+    // 0 Normal status 
+    // 1 Announcement
+    // 2 Sticky
+    // 3 Locked
 
     // Get arguments from argument array
     extract($args);

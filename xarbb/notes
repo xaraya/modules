@@ -2,3 +2,7 @@ IP on Topic
 Delete Topic
 
 still waiting on permission for the images.  may need to change, but should not be a biggie.
+-- got permission for the images.  Need to leave credit for them in the overview.
+
+New topic creation is going to be a little more difficult than I had thought.  Lots of configuration options to get to, so little time.
+<!-- Uggghhh, here is the tough one.  Need to be able to show the options for this forum.  Also need to be able to turn off (selective) different option.  DB design is going to need to change to allow for a serialized entry here, and then a ton of new code I would imagine.  We are going to need this for the nntp integration.  Also, we need to add the data types to allow hooking to each individual module.  UGGGHHHH freaking UGGGHHHH -->

@@ -17,19 +17,15 @@
  */
 function xarbb_user_newtopic()
 {
-    list($phase,
-         $ttitle,
-         $tpost,
-         $warning,
-         $fid,
-         $tid,
-         $redirect) = xarVarCleanFromInput('phase',
-                                      'ttitle',
-                                      'tpost',
-                                      'warning',
-                                      'fid',
-                                      'tid',
-                                      'redirect');
+	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+	if (!xarVarFetch('ttitle', 'str:1:100', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('tpost', 'str:1:100', $tpost, '', XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('tstatus', 'int', $tstatus, '', XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
+	if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_DONT_SET)) return;
+	if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
+	if (!xarVarFetch('redirect', 'str', $redirect, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+
     if(isset($tid))    {
         // The user API function is called.
         $data = xarModAPIFunc('xarbb',
@@ -43,6 +39,7 @@ function xarbb_user_newtopic()
                               'getforum',
                               array('fid' => $fid));
     }
+    $data['fid'] = $fid;
 
 
     if (empty($data)) return;
@@ -96,27 +93,21 @@ function xarbb_user_newtopic()
             } else {
                 $data['warning'] = $warning;
             }
-            if(empty($redirect))
+
+            if(empty($redirect)) {
                 $data['redirect'] = 'forum';
-            else
+            } else {
                 $data['redirect'] = $redirect;
+            }
 
             $formhooks = xarModAPIFunc('xarbb','user','formhooks');
-            $data['formhooks'] = $formhooks;
+            $data['formhooks']      = $formhooks;
+            $data['submitlabel']    = xarML('Submit');
+            $data['previewlabel']   = xarML('Preview');
 
             break;
 
         case 'update':
-
-            // Check arguments
-            if (empty($ttitle)) {
-                $warning = xarML('No Topic Subject Entered');
-                xarResponseRedirect(xarModURL('xarbb', 'user', 'newtopic', array('fid' => $data['fid'], 'tpost' => $tpost, 'warning' => $warning)));
-            }
-            if (empty($tpost)) {
-                $warning = xarML('No Topic Text Entered');
-                xarResponseRedirect(xarModURL('xarbb', 'user', 'newtopic', array('fid' => $data['fid'], 'ttitle' => $ttitle, 'warning' => $warning)));
-            }
 
             if(isset($tid))    {
                  $modified_date= time();
@@ -132,8 +123,9 @@ function xarbb_user_newtopic()
                                array('tid' => $tid,
                                      'fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
-                                     'tpost'    => $tpost))) return;
-             } else    {
+                                     'tpost'    => $tpost,
+                                     'tstatus'  => $tstatus))) return;
+             } else {
                  //Only update the user if new topic, not edited
                  $tposter = xarUserGetVar('uid');
 
@@ -143,7 +135,8 @@ function xarbb_user_newtopic()
                                array('fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
-                                     'tposter'  => $tposter))) return;
+                                     'tposter'  => $tposter,
+                                     'tstatus'  => $tstatus))) return;
 
                  // We don't want to update the forum counter on an updated reply.
                  if (!xarModAPIFunc('xarbb',
@@ -161,12 +154,7 @@ function xarbb_user_newtopic()
             break;
 
     }
-    //Add images
-    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
-
     // Return the output
     return $data;
 }
-
-//TODO FInish this function.
 ?>

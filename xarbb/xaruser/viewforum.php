@@ -35,9 +35,29 @@ function xarbb_user_viewforum()
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
+    // While we are here, lets do the hot topics, etc.
+    $hotTopic       = xarModGetVar('xarbb', 'hottopic');
+
+    // Take this outside the loop for efficiency
+    // Monitor the cookie so we can do the images in the loop
+    if (isset($_COOKIE["xarbb_all"])){
+        $allforumtimecompare = unserialize($_COOKIE["xarbb_all"]);
+    } else {
+        $allforumtimecompare = '';
+    }
+    if (isset($_COOKIE["xarbb_f_$fid"])){
+        $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
+    } else {
+        $forumtimecompare = '';
+    }
+    if ($forumtimecompare > $allforumtimecompare){
+        $alltimecompare = $forumtimecompare;
+    } else {
+        $alltimecompare = $allforumtimecompare;
+    }
+
     // This is needed for the redirect function to set the cookie for the main page.
     $data['fid']    = $fid;
-
     $data['items'] = array();
 
     // The user API function is called
@@ -53,63 +73,56 @@ function xarbb_user_viewforum()
         $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
         $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
 
-        // While we are here, lets do the hot topics, etc.
-        // $redhotTopic    = xarModGetVar('xarbb', 'redhottopic');
-        $hotTopic       = xarModGetVar('xarbb', 'hottopic');
         // Images
-        if (isset($_COOKIE["xarbb_all"])){
-            $allforumtimecompare = unserialize($_COOKIE["xarbb_all"]);
-        } else {
-            $allforumtimecompare = '';
-        }
-        if (isset($_COOKIE["xarbb_f_$fid"])){
-            $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
-        } else {
-            $forumtimecompare = '';
-        }
-        if ($forumtimecompare > $allforumtimecompare){
-            $alltimecompare = $forumtimecompare;
-        } else {
-            $alltimecompare = $allforumtimecompare;
-        }
+        // Finish our cookie look-up here.
         $tid = $topic['tid'];
         if (isset($_COOKIE["xarbb_t_$tid"])){
             $topictimecompare = unserialize($_COOKIE["xarbb_t_$tid"]);
         } else {
             $topictimecompare = '';
         }
-        // We also have to get the status fields in.
-        // First lets look at the non-new items
-        if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
-            // More comments than our hottopic setting, therefore should be hot, but not new.
-            if ($topics[$i]['comments'] > $hotTopic){
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-            // Else should be a regular old boring topic
-            } else {
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
-            }
-        } else {
-            // OOF, look at this topic, hot and new.
-            if ($topics[$i]['comments'] > $hotTopic){
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-            // Else should be a regular old boring topic that has a new post
-            } else {
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
-            }
+        switch(strtolower($topic['tstatus'])) {
+            // Just a regular old topic
+            case '0':
+            default:
+
+                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
+                    // More comments than our hottopic setting, therefore should be hot, but not new.
+                    if ($topics[$i]['comments'] > $hotTopic){
+                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+                    // Else should be a regular old boring topic
+                    } else {
+                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+                    }
+                } else {
+                    // OOF, look at this topic, hot and new.
+                    if ($topics[$i]['comments'] > $hotTopic){
+                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+                    // Else should be a regular old boring topic that has a new post
+                    } else {
+                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+                    }
+                }
+                break;
+            // Announcement topic
+            case '1':
+
+                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce.gif') . '" alt="'.xarML('Announcement').'" />';
+                } else {
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce_new.gif') . '" alt="'.xarML('New Announcement').'" />';
+                }
+
+                break;
+            // Sticky topic
+            case '2':
+
+                break;
+            // Locked
+            case '3':
+                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New post').'" />';
+                break;
         }
-        
-
-/*
-        if (($topics[$i]['comments']) >= ($hotTopic)){
-            $topics[$i]['folder']       = '<img src="' . xarTplGetImage('hot_folder.gif') . '" />';
-        } else if (($topics[$i]['comments']) >= ($redhotTopic)){
-            $topics[$i]['folder']       = '<img src="' . xarTplGetImage('hot_red_folder.gif') . '" />';
-        } else {
-            $topics[$i]['folder']       = '<img src="' . xarTplGetImage('folder.gif') . '" />';
-        }
-
-*/
-
 
         $topics[$i]['hitcount'] = xarModAPIFunc('hitcount',
                                                 'user',

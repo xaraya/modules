@@ -177,10 +177,7 @@ function xarbb_init()
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('xarbb', 'SupportShortURLs', 0);
-
-    // Personal Configuration
-    xarModSetVar('xarbb', 'lastvisitdate', '');
-
+    xarModSetVar('xarbb', 'allowhtml', 1);
     $xarbbcid = xarModAPIFunc('categories',
         'admin',
         'create',
@@ -296,6 +293,9 @@ function xarbb_upgrade($oldversion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return; 
+            break;
+        case '1.0.1':
+            xarModSetVar('xarbb', 'allowhtml', 1);
             break;
         default:
             break;

@@ -16,7 +16,12 @@
 <xar:else />
     <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
 </xar:if></p>
-
+<p><xar:mlstring>Allow HTML?</xar:mlstring>:&nbsp;&nbsp;
+<xar:if condition="xarModGetVar('xarbb', 'allowhtml')">
+    <input type="checkbox" name="allowhtml" id="allowhtml" value="1" checked="checked" />
+<xar:else />
+    <input type="checkbox" name="allowhtml" id="allowhtml" value="1" />
+</xar:if></p>
 #$hooks#
 
 <xar:set name="$mlupdateconf"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>

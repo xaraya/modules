@@ -50,13 +50,13 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('forumsperpage','int:1:',$forumsperpage,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('supportshorturls','checkbox', $supportshorturls,false,XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('allowhtml','checkbox', $allowhtml,false,XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 
             // Update module variables
             xarModSetVar('xarbb', 'hottopic', $hotTopic);
-            xarModSetVar('xarbb', 'redhottopic', $redhotTopic);
+            xarModSetVar('xarbb', 'allowhtml', $allowhtml);
             xarModSetVar('xarbb', 'topicsperpage', $topicsperpage);
             xarModSetVar('xarbb', 'postsperpage', $postsperpage);
             xarModSetVar('xarbb', 'forumsperpage', $forumsperpage);

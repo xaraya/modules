@@ -132,10 +132,15 @@
 			#$loop:item['timeimage']#
 		</td>
 		<td class="xar-norm" width="100%">
-			<span>
-				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => $loop:item['tid']))#">
+			<span class="xar-title">
+				<!-- Moderators need to have access here.  Need to add a check. -->
+				<xar:if condition="$loop:item['tstatus'] ne 3">
+					<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => $loop:item['tid']))#">
 					#$loop:item['ttitle']#
-				</a>
+					</a>
+				<xar:else />
+					#$loop:item['ttitle']#
+				</xar:if>
 			</span>
 		</td>
 		<td class="xar-accent" align="center" valign="middle">
@@ -245,6 +250,17 @@
 				</tr>
 				<tr> 
 					<td width="20" align="left">
+						#$newannouncetopic#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							New announcement
+						</xar:mlstring>
+					</td>
+					<td>
+						&nbsp;&nbsp;
+					</td>
+					<td width="20" align="left">
 						#$newhottopic#
 					</td>
 					<td class="xar-sub">
@@ -266,6 +282,8 @@
 					<td>
 						&nbsp;&nbsp;
 					</td>
+				</tr>
+				<tr>
 					<td width="20" align="center">
 						#$stickytopic#
 					</td>
@@ -274,8 +292,9 @@
 							Sticky
 						</xar:mlstring>
 					</td>
-				</tr>
-				<tr>
+					<td>
+						&nbsp;&nbsp;
+					</td>
 					<td class="xar-sub">
 						#$newstickytopic#
 					</td>
