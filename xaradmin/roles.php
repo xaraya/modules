@@ -34,41 +34,35 @@ if ($tiki_p_admin_workflow != 'y') {
     die;
 }
 
-if (!isset($_REQUEST['pid'])) {
-    $tplData['msg'] =  xarML("No process indicated");
+    if (!xarVarFetch('pid','id',$pid)) return;
+    if (empty($pid)) {
+        $tplData['msg'] =  xarML("No process indicated");
+        return xarTplModule('workflow', 'admin', 'error', $tplData);
+    }
+    $tplData['pid'] =  $pid;
 
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-    die;
-}
-
-$tplData['pid'] =  $_REQUEST['pid'];
-
-$proc_info = $processManager->get_process($_REQUEST['pid']);
-$proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
+    $proc_info = $processManager->get_process($pid);
+    $proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
 
 
-// Retrieve activity info if we are editing, assign to 
-// default values when creating a new activity
-if (!isset($_REQUEST['roleId']))
-    $_REQUEST['roleId'] = 0;
+    if (!xarVarFetch('roleId','id',$roleId,0,XARVAR_NOT_REQUIRED)) return;
+    if ($roleId) {
+        $info = $roleManager->get_role($pid, $roleId);
+    } else {
+        $info = array(
+                      'name' => '',
+                      'description' => '',
+                      'roleId' => 0
+                     );
+    }
 
-if ($_REQUEST["roleId"]) {
-    $info = $roleManager->get_role($_REQUEST['pid'], $_REQUEST["roleId"]);
-} else {
-    $info = array(
-        'name' => '',
-        'description' => '',
-        'roleId' => 0
-    );
-}
-
-$tplData['roleId'] =  $_REQUEST['roleId'];
-$tplData['info'] =  $info;
+    $tplData['roleId'] =  $roleId;
+    $tplData['info'] =  $info;
 
 // Delete roles
 if (isset($_REQUEST["delete"])) {
     foreach (array_keys($_REQUEST["role"])as $item) {
-        $roleManager->remove_role($_REQUEST['pid'], $item);
+        $roleManager->remove_role($pid, $item);
     }
 }
 
@@ -79,7 +73,7 @@ if (isset($_REQUEST['save'])) {
         'description' => $_REQUEST['description'],
     );
 
-    $roleManager->replace_role($_REQUEST['pid'], $_REQUEST['roleId'], $vars);
+    $roleManager->replace_role($pid, $roleId, $vars);
 
     $info = array(
         'name' => '',
@@ -113,7 +107,7 @@ if (isset($_REQUEST['save'])) {
 
     $tplData['groups'] = xarModAPIFunc('roles','user','getallgroups');
 
-$roles = $roleManager->list_roles($_REQUEST['pid'], 0, -1, 'name_asc', '');
+$roles = $roleManager->list_roles($pid, 0, -1, 'name_asc', '');
 $tplData['roles'] =&  $roles['data'];
 
 if (isset($_REQUEST["delete_map"])) {
@@ -129,7 +123,7 @@ if (isset($_REQUEST['mapg'])) {
                 $users = xarModAPIFunc('roles','user','getusers',
                                        array('uid' => $_REQUEST['group']));
         foreach ($users as $a_user) {
-            $roleManager->map_user_to_role($_REQUEST['pid'], $a_user['uid'], $_REQUEST['role']);
+            $roleManager->map_user_to_role($pid, $a_user['uid'], $_REQUEST['role']);
         }
     } else {
                 $users = xarModAPIFunc('roles','user','getusers',
@@ -147,7 +141,7 @@ if (isset($_REQUEST['save_map'])) {
                 $a_user = _XAR_ID_UNREGISTERED;
             }
             foreach ($_REQUEST['role'] as $role) {
-                $roleManager->map_user_to_role($_REQUEST['pid'], $a_user, $role);
+                $roleManager->map_user_to_role($pid, $a_user, $role);
             }
         }
     }
@@ -176,7 +170,7 @@ if (isset($_REQUEST["find"])) {
 
 $tplData['find'] =  $find;
 $tplData['sort_mode'] =&  $sort_mode;
-$mapitems = $roleManager->list_mappings($_REQUEST['pid'], $offset - 1, $maxRecords, $sort_mode, $find);
+$mapitems = $roleManager->list_mappings($pid, $offset - 1, $maxRecords, $sort_mode, $find);
 
 // trick : replace userid by user here !
 foreach (array_keys($mapitems['data']) as $index) {
@@ -186,6 +180,8 @@ foreach (array_keys($mapitems['data']) as $index) {
         $mapitems['data'][$index]['userId'] = $role['uid'];
         $mapitems['data'][$index]['user'] = $role['name'];
         $mapitems['data'][$index]['login'] = $role['uname'];
+    } else {
+        unset($mapitems['data'][$index]);
     }
 }
 
@@ -214,10 +210,10 @@ if (!isset($_REQUEST['sort_mode2']))
 
 $tplData['sort_mode2'] =  $_REQUEST['sort_mode2'];
 // Get all the process roles
-$all_roles = $roleManager->list_roles($_REQUEST['pid'], 0, -1, $_REQUEST['sort_mode2'], '');
+$all_roles = $roleManager->list_roles($pid, 0, -1, $_REQUEST['sort_mode2'], '');
 $tplData['items'] =&  $all_roles['data'];
 
-$valid = $activityManager->validate_process_activities($_REQUEST['pid']);
+$valid = $activityManager->validate_process_activities($pid);
 $proc_info['isValid'] = $valid ? 'y' : 'n';
 $errors = array();
 
@@ -243,7 +239,7 @@ $tplData['mid'] =  'tiki-g-admin_roles.tpl';
 
     $tplData['feature_help'] = $feature_help;
     $tplData['direct_pagination'] = $direct_pagination;
-    $url = xarServerGetCurrentURL(array('offset' => '%%'));
+    $url = xarModURL('workflow','admin','roles',array('pid' => $tplData['pid'],'offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $mapitems['cant'],
                                        $url,
