@@ -129,14 +129,37 @@ function categories_userapi_navigation($args)
     if (empty($showcatcount)) {
         $catcount = array();
     } elseif (empty($catcount)) {
-        if (xarVarIsCached('Blocks.categories','catcount')) {
-            $catcount = xarVarGetCached('Blocks.categories','catcount');
+        // A 'deep count' sums the totals at each node with the totals of all descendants.
+        if ($showcatcount > 1 || empty($showempty)) {
+            if (xarVarIsCached('Blocks.categories', 'deepcount')) {
+                $deepcount = xarVarGetCached('Blocks.categories', 'deepcount');
+            } else {
+                $deepcount = xarModAPIFunc(
+                    'categories', 'user', 'deepcount',
+                    array('modid' => $modid, 'itemtype' => $itemtype)
+                );
+                xarVarSetCached('Blocks.categories','deepcount', $deepcount);
+            }
+        }
+
+        if (xarVarIsCached('Blocks.categories', 'catcount')) {
+            $catcount = xarVarGetCached('Blocks.categories', 'catcount');
         } else {
-            // get number of items per category (for this module)
-            $catcount = xarModAPIFunc('categories','user','groupcount',
-                                     array('modid' => $modid,
-                                           'itemtype' => $itemtype));
-            xarVarSetCached('Blocks.categories','catcount',$catcount);
+            // Get number of items per category (for this module).
+            // If showcatcount == 2 then add in all descendants too.
+
+            if ($showcatcount == 1) {
+                // We want to display only children category counts.
+                $catcount = xarModAPIFunc(
+                    'categories','user', 'groupcount',
+                    array('modid' => $modid, 'itemtype' => $itemtype)
+                );
+            } else {
+                // We want to display the deep counts.
+                $catcount =& $deepcount;
+            }
+
+            xarVarSetCached('Blocks.categories', 'catcount', $catcount);
         }
     }
 
@@ -526,15 +549,26 @@ function categories_userapi_navigation($args)
                     $numicons = 0;
                     foreach ($children as $cat) {
                     // TODO: now this is a tricky part...
+
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            // Note: when hiding empty categories, check the deep count
+                            // as a child category may be empty, but it could still have
+                            // descendants with items.
+                            if (!empty($showempty) || !empty($deepcount[$cat['cid']])) {
+                                // We are not hiding empty categories - set count to zero.
+                                $count = 0;
+                            } else {
+                                // We want to hide empty categories - so skip this loop.
+                                continue;
+                            }
+                        }
+
                         $label = xarVarPrepForDisplay($cat['name']);
                         $link = xarModURL($modname,$type,$func,
                                          array('itemtype' => $itemtype,
                                                'catid' => $cat['cid']));
-                        if (!empty($catcount[$cat['cid']])) {
-                            $count = $catcount[$cat['cid']];
-                        } else {
-                            $count = 0;
-                        }
                         if (!empty($cat['image'])) {
                             // find the image in categories (we need to specify the module here)
                             $image = xarTplGetImage($cat['image'],'categories');

@@ -54,7 +54,7 @@ function categories_userapi_groupcount($args)
         $num = array_pop($fields);
 // TODO: use multi-level array for multi-category grouping ?
         $id = join('+',$fields);
-        $count[$id] = $num;
+        $count[$id] = (int)$num;
         $result->MoveNext();
     }
 
