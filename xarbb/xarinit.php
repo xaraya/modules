@@ -148,28 +148,6 @@ function xarbb_init()
                                                          'callerItemType'   => 1,
                                                          'hookModName'      => 'categories'));
 
-
-// xarbb is already calling the comments module directly via API, using itemtype 0 (for now ?)
-// So you don't want to hook comments to itemtype 2 here as well...
-// Dealing with comments once (either via API or via hooks) is enough :-)
-/*
-    // Enable comments hooks for xarbb topics (= item type 2)
-    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
-                                                             'callerItemType'   => 2,
-                                                             'hookModName'      => 'comments'));
-*/
-
-    // Enable hitcount hooks for xarbb topics (= item type 2)
-    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
-                                                             'callerItemType'   => 2,
-                                                             'hookModName'      => 'hitcount'));
-
-    // Enable comment hooks for xarbb topics (= item type 2)
-    //<jojodee> not sure why this is here after being commented out above
-    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
-                                                             'callerItemType'   => 2,
-                                                             'hookModName'      => 'comments'));
-
     // modvars
     xarModSetVar('xarbb', 'hottopic', 10);
     xarModSetVar('xarbb', 'redhottopic', 20);
@@ -205,8 +183,6 @@ function xarbb_init()
                 'description'   => $subcat['description'],
                 'parent_id'     => $xarbbcid));
     }
-
-
 
     return true;
 }
