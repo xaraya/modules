@@ -46,7 +46,7 @@ function scheduler_triggerblock_display($blockinfo)
         $vars = array();
     }
     // Defaults
-    if (empty($vars['showstatus'])) {
+    if (empty($vars['showstatus']) || !xarSecurityCheck('Adminscheduler',0)) {
         $vars['showstatus'] = 0;
     }
 
