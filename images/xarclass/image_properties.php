@@ -2,16 +2,30 @@
 
 class Image_Properties {
 
+    var $fileName;
+    var $fileLocation;
+    var $_thumbsdir;
     var $height;
     var $width;
-    var $_oheight;         
+    var $_oheight;
     var $_owidth;
     var $_percent;
     var $mime;
-
-    function __constructor($fileLocation) {
-
-        $imageInfo = getimagesize($fileLocation);
+    var $_tmpFile;
+    
+    function __constructor($fileLocation, $thumbsdir = NULL) {
+        
+        $this->fileLocation = $fileLocation;
+        $this->fileName = basename($fileLocation);
+        
+        if (NULL == $thumbsdir || empty($thumbsdir)) {
+            $this->_thumbsdir = './'; // xarModGetVar('images', 'path.derivatives');
+        } else {
+            $this->_thumbsdir = $thumbsdir;
+        }
+        
+        $imageInfo = getimagesize($this->fileLocation);
+        
         if (is_array($imageInfo)) {
             $this->_owidth  = $this->width  = $imageInfo[0];
             $this->_oheight = $this->height = $imageInfo[1];
@@ -25,21 +39,30 @@ class Image_Properties {
 
     }
 
-    function Image_Properties($fileLocation) {
-        return $this->__constructor($fileLocation);
+    function Image_Properties($fileLocation, $thumbsdir = NULL) {
+        return $this->__constructor($fileLocation, $thumbsdir);
     }
 
     function _getMimeType($mimeType) {
         if (is_numeric($mimeType)) {
             switch ($mimeType) {
-                case 1:
-                    return 'image/gif';
-                case 2:
-                    return 'image/jpg';
-                case 3:
-                    return 'image/png';
-                default:
-                    return FALSE;
+                case 1:  return array('text' => 'image/gif', 'id' => 1);
+                case 2:  return array('text' => 'image/jpg', 'id' => 2);
+                case 3:  return array('text' => 'image/png', 'id' => 3);
+                case 4:  return array('text' => 'application/x-shockwave-flash', 'id' => 4);
+                case 5:  return array('text' => 'image/psd', 'id' => 5);
+                case 6:  return array('text' => 'image/bmp', 'id' => 6);
+                case 7:
+                case 8:  return array('text' => 'image/tiff', 'id' => 8);
+                case 9:  return array('text' => 'application/octet-stream', 'id' => 9);
+                case 10: return array('text' => 'image/jp2', 'id' => 10);
+                case 11: return array('text' => 'application/octet-stream', 'id' => 11);
+                case 12: return array('text' => 'application/octet-stream', 'id' => 12);
+                case 13: return array('text' => 'application/x-shockwave-flash', 'id' => 13);
+                case 14: return array('text' => 'image/iff', 'id' => 14);
+                case 15: return array('text' => 'image/vnd.wap.wbmp', 'id' => 15);;
+                case 16: return array('text' => 'image/xbm', 'id' => 16);
+                default: return 'application/octet-stream';
             }
         } else {
             return $mimeType;
@@ -156,6 +179,33 @@ class Image_Properties {
         $this->_percent['height'] = $hpercent;
         return $this->setHeight($this->_oheight * ($hpercent / 100));
     }
+    
+    function save() {
+        if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
+            copy($this->_tmpFile, $this->fileLocation);
+            unlink($this->_tmpFile);
+        }
+        return TRUE;
+    }
+    
+    function saveDerivative() {
+        if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
+            $derivName = $this->_thumbsdir . '/' . $this->fileName . "-{$this->width}x{$this->height}.jpg";
+            copy($this->_tmpFile, $derivName);
+            unlink($this->_tmpFile);
+        }
+        return TRUE;
+    }
+    
+    function getDerivative() {
+        $derivName = $this->_thumbsdir . '/' . $this->fileName . "-{$this->width}x{$this->height}.jpg";
+        if (file_exists($derivName)) {
+            return $derivName;
+        } else {
+            return NULL;
+        }
+    }
+
 }
 
 ?>
