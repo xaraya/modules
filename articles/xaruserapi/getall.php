@@ -183,7 +183,11 @@ function articles_userapi_getall($args)
     $select[] = $articlesdef['pubdate'];
     
     // we need distinct for multi-category OR selects where articles fit in more than 1 category
-    $query = 'SELECT DISTINCT ' . join(', ', $select);
+    if (count($cids) > 0) {
+        $query = 'SELECT DISTINCT ' . join(', ', $select);
+    } else {
+        $query = 'SELECT ' . join(', ', $select);
+    }
 
     // Create the FROM ... [LEFT JOIN ... ON ...] part
     $from = $articlesdef['table'];
