@@ -325,14 +325,14 @@
             $transKeyEntriesCollection[$subname] = $parser->getTransKeyEntries();
         }
 
-        $partnames = array();
+        //$partnames = array();
         if (file_exists("modules/$moddir/xar$subname")) {
             $dd = opendir("modules/$moddir/xar$subname");
             while ($filename = readdir($dd)) {
                 if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
-                $partnames[] = $matches[1];
+                //$partnames[] = $matches[1];
 
-                $parser = new PHPParser();
+                //$parser = new PHPParser();
                 $parser->parse("modules/$moddir/xar$subname/$filename");
 
                 $transEntriesCollection[$subname] = $parser->getTransEntries();

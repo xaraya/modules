@@ -110,6 +110,8 @@ class XMLTranslationsSkelsGenerator {
         // string and translation are already encoded in utf-8
         /*$string = utf8_encode(htmlspecialchars($string));
         $translation = utf8_encode($translation);*/
+	//Allow html tags
+	$translation = htmlspecialchars($translation);
         $string = htmlspecialchars($string);
         fwrite($this->fp, "\t<entry>\n");
         fwrite($this->fp, "\t\t<string>".$string."</string>\n");
