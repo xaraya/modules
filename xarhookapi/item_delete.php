@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Hook Bridge
@@ -6,7 +6,7 @@
  * @copyright   by Michael Cortez
  * @license     GPL (http://www.gnu.org/licenses/gpl.html)
  * @author      Michael Cortez
- * @link        
+ * @link
  *
  * @package     Xaraya eXtensible Management System
  * @subpackage  Hook Bridge
@@ -22,7 +22,7 @@
  */
 
 
-function hookbridge_hookapi_item_delete ( $args ) 
+function hookbridge_hookapi_item_delete ( $args )
 {
     extract( $args );
 
@@ -56,6 +56,26 @@ function hookbridge_hookapi_item_delete ( $args )
     /*
      * ADD YOUR CODE HERE
      */
+
+    // Get the list of active hookbridge functions for the Create Hook
+    $hookfunctions_delete = unserialize(xarModGetVar('hookbridge', 'hookfunctions_delete' ));
+
+    if( isset($hookfunctions_delete) && (count($hookfunctions_delete) > 0) )
+    {
+        // Get the path to where the hookbridge functions are stored
+        $hookbridge_functionpath = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
+
+        // Loop through'em
+        foreach( $hookfunctions_delete as $bridgefunctionfile )
+        {
+            $includeFile = $hookbridge_functionpath.'/'.$bridgefunctionfile;
+
+            $functionName = 'hookbridge_'.str_replace(".php","",$bridgefunctionfile);
+            include_once($includeFile);
+
+            $extrainfo = call_user_func($functionName, $modname, $modid, $extrainfo);
+        }
+    }
 
     return $extrainfo;
 }
