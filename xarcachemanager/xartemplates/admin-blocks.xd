@@ -18,7 +18,9 @@
 </tr>
 <xar:foreach in="$blocks" value="$block">
 <tr>
-  <td>#$block['name']#</td>
+  <td>
+      <a href="#xarModUrl('blocks', 'admin', 'modify_instance', array('bid' => $block['bid']))#">#$block['name']#</a>
+  </td>
   <td>#$block['module']#</td>
   <td>#$block['type']#</td>
   <td><xar:if condition="!empty($block['nocache'])">
