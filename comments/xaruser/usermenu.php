@@ -1,6 +1,6 @@
 <?php
 
-function comments_user_usermenu($args) 
+function comments_user_usermenu($args)
 {
     extract($args);
 
@@ -27,7 +27,7 @@ function comments_user_usermenu($args)
 
             $settings = xarModAPIFunc('comments','user','getoptions');
             $settings['max_depth'] = _COM_MAX_DEPTH - 1;
-            $authid = xarSecGenAuthKey();
+            $authid = xarSecGenAuthKey('comments');
             $data = xarTplModule('comments','user', 'usermenu_form', array('authid'   => $authid,
                                                                            'settings' => $settings));
             break;
