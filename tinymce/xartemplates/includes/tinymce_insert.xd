@@ -11,7 +11,7 @@
 
 <xar:set name="tinyaskfirst">xarModGetVar('tinymce','tinyask')</xar:set>
 <xar:if condition="$tinyaskfirst eq 'true'">
-    <xar:set name="tinyaskit">'ask : "true",'</xar:set>
+    <xar:set name="tinyaskit">'ask : "true"'</xar:set>
 <xar:else />
     <xar:set name="tinyaskit">''</xar:set>
 </xar:if>
@@ -24,11 +24,11 @@
         tinyMCE.init({
          mode : "textareas",
         theme : "#$tinythemevalue#",
-          #$tinyaskit#
      language : "#$localeinfo#",
-   content_css: "#$tinycsslistvalue#",
+  content_css : "#$tinycsslistvalue#",
   extended_valid_elements : "#$tinyextendvalue#",
- theme_advanced_buttons2: "#$tinybuttonvalue#"
+ theme_advanced_buttons3: "#$tinybuttonvalue#",
+          #$tinyaskit#
 
     });
     </script>
@@ -37,8 +37,9 @@
         tinyMCE.init({
          mode : "#$tinymodevalue#",
         theme : "#$tinythemevalue#",
+     language : "#$localeinfo#",
           #$tinyaskit#
-     language : "#$localeinfo#"
+
        });
     </script>
 </xar:if>
