@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertedit.php,v 1.3 2003/07/09 00:08:40 garrett Exp $
+ * File: $Id: insertedit.php,v 1.4 2003/07/09 02:50:51 garrett Exp $
  *
  * AddressBook user insertEdit
  *
@@ -22,7 +22,7 @@ function AddressBook_user_insertedit() {
 	$output = array();
 
 	// Get the form values
-	$output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues',array('data'=>$output));
+	$output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues',array('output'=>$output));
 
     /**
      * read in the menu values for preservation & display
@@ -204,7 +204,7 @@ function AddressBook_user_insertedit() {
             break;
 
         case _AB_TEMPLATE_CONTACT:
-            $labels = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormLabels');
+            $output['labels'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormLabels');
             break;
 
         case _AB_TEMPLATE_CUST:

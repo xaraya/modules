@@ -30,57 +30,59 @@ function AddressBook_userapi_checksubmitvalues($args) {
 		$checkResult = FALSE;
     } else {
 	    // check for type of custom fields
-	    foreach($custUserData as $cus) {
-	        switch ($cus['type']) {
-	                case 'decimal(10,2) default NULL':
-	                    if ((!empty($cus['userData'])) && (!ereg("^[+|-]{0,1}[0-9.,]{0,8}[.|,]{0,1}[0-9]{0,2}$",$cus['userData'],$regs))) {
-							xarExceptionSet(XAR_USER_EXCEPTION, 
-											_AB_ERR_WARN, 
-											new abUserException(xarML(_AB_ERRMSG_FALSENUM_CUST_TAB)));
-							$checkResult = FALSE;
-	                    }	
-	                    break;
-	                case 'int default NULL':
-	                    if ((!empty($cus['userData'])) && (!ereg("^[0-9]{1,9}$",$cus['userData'],$regs))) {
-							xarExceptionSet(XAR_USER_EXCEPTION, 
-											_AB_ERR_WARN, 
-											new abUserException(xarML(_AB_ERRMSG_INVALNUM_CUST_TAB)));
-							$checkResult = FALSE;
-	                    }
-	                    break;
-	                case 'date default NULL':
-	                    if (!empty($cus['userData'])) {
-	                        $dateformat = xarModGetVar(__ADDRESSBOOK__,'dateformat');
-	                        $token = "-./ ";
-	                        $p1 = strtok($cus['userData'],$token);
-	                        $p2 = strtok($token);
-	                        $p3 = strtok($token);
-	                        $p4 = strtok($token);
-	                        $date = ""; $y = ""; $m = ""; $d = "";
-	                        if ($dateformat == 1) {
-	                            $y = $p3;
-	                            $m = $p2;
-	                            $d = $p1;
-	                        }
-	                        else {
-	                            $y = $p3;
-	                            $m = $p1;
-	                            $d = $p2;
-	                        }
-	                        if ($y != "" && $y <= 99) {
-	                            if ($y >= 70) $y = $y + 1900;
-	                            if ($y < 70) $y = $y + 2000;
-	                        }
-	                        if (!checkdate($m, $d, $y)) {
+	    if (isset($custUserData) && is_array($custUserData)) {
+		    foreach($custUserData as $cus) {
+		        switch ($cus['type']) {
+		                case 'decimal(10,2) default NULL':
+		                    if ((!empty($cus['userData'])) && (!ereg("^[+|-]{0,1}[0-9.,]{0,8}[.|,]{0,1}[0-9]{0,2}$",$cus['userData'],$regs))) {
 								xarExceptionSet(XAR_USER_EXCEPTION, 
 												_AB_ERR_WARN, 
-												new abUserException(xarML(_AB_ERRMSG_INVALDATE_CUST_TAB)));
+												new abUserException(xarML(_AB_ERRMSG_FALSENUM_CUST_TAB)));
 								$checkResult = FALSE;
-	                        }
-	                    }
-	                    break;
-	            }
-	    } // END foreach
+		                    }	
+		                    break;
+		                case 'int default NULL':
+		                    if ((!empty($cus['userData'])) && (!ereg("^[0-9]{1,9}$",$cus['userData'],$regs))) {
+								xarExceptionSet(XAR_USER_EXCEPTION, 
+												_AB_ERR_WARN, 
+												new abUserException(xarML(_AB_ERRMSG_INVALNUM_CUST_TAB)));
+								$checkResult = FALSE;
+		                    }
+		                    break;
+		                case 'date default NULL':
+		                    if (!empty($cus['userData'])) {
+		                        $dateformat = xarModGetVar(__ADDRESSBOOK__,'dateformat');
+		                        $token = "-./ ";
+		                        $p1 = strtok($cus['userData'],$token);
+		                        $p2 = strtok($token);
+		                        $p3 = strtok($token);
+		                        $p4 = strtok($token);
+		                        $date = ""; $y = ""; $m = ""; $d = "";
+		                        if ($dateformat == 1) {
+		                            $y = $p3;
+		                            $m = $p2;
+		                            $d = $p1;
+		                        }
+		                        else {
+		                            $y = $p3;
+		                            $m = $p1;
+		                            $d = $p2;
+		                        }
+		                        if ($y != "" && $y <= 99) {
+		                            if ($y >= 70) $y = $y + 1900;
+		                            if ($y < 70) $y = $y + 2000;
+		                        }
+		                        if (!checkdate($m, $d, $y)) {
+									xarExceptionSet(XAR_USER_EXCEPTION, 
+													_AB_ERR_WARN, 
+													new abUserException(xarML(_AB_ERRMSG_INVALDATE_CUST_TAB)));
+									$checkResult = FALSE;
+		                        }
+		                    }
+		                    break;
+		            }
+		    } // END foreach
+	    } // END if
     } // END if
 
     return $checkResult;
