@@ -87,9 +87,9 @@ function xarbb_user_viewtopic()
                                               array('uid' => $comment['xar_uid']));
 
         //format reply poster's registration date
-        $comments[$i]['commenterdate'] = xarLocaleFormatDate('%m/%d/%Y',$comments[$i]['userdata']['date_reg']);
+        $comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y/%m/%d',$comments[$i]['userdata']['date_reg']);
         //format the post reply date consistently with topic post date
-        $comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_date']);
+        $comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
     }
 
     $data['items'] = $comments;
@@ -105,7 +105,7 @@ function xarbb_user_viewtopic()
     else {
         $thisdate->DBtoTS($posterdata['date_reg']);
     }
-    $regdate = $thisdate->display("m-d-Y");
+    $regdate = $thisdate->display("Y-m-d");
 
     //Forum Name and Links
    // $data['fname']      = $forumdata['fname']; //No need to reassign here
