@@ -3,15 +3,21 @@
       <xar:if condition="$adddaysep=='on'">
         <xar:if condition="$comment['daychange']">
           <!-- DAY SEPARATOR --> 
-          <xar:comment>Close the list only if not the first message</xar:comment>
+          <xar:comment>If not the first message, close the least and later reopen it</xar:comment>
           <xar:if condition="$key ge 1">
             </ul>
           </xar:if>
           <div class="xar-title">
              #$comment['daychange']# 
           </div>
-          <ul>
+          <xar:if condition="$key ge 1">
+            <ul>
+          </xar:if>
         </xar:if>          
+      </xar:if>
+      <xar:comment>Open the list if it is the first message</xar:comment>
+      <xar:if condition="$key eq 0">
+        <ul>
       </xar:if>
       <li>
         <xar:if condition="$addcomment eq 1">
