@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Censor';
 $modversion['id']             = '776';
-$modversion['version']        = '1.0';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'Censor Bad Words';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
