@@ -33,6 +33,12 @@ function headlines_userapi_encode_shorturl($args)
             $path = '/' . $module . '/' . $hid; 
         }
 
+    } elseif ($func == 'my') {
+        $path = '/' . $module . '/my/'; 
+        if (!empty($config)) {
+            $path .= 'config';
+        }
+
     }
     if (!empty($path)) {
         if (isset($startnum)) {

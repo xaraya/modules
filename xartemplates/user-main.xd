@@ -35,5 +35,11 @@
 
 <p>#$pager#</p>
 
+<xar:comment>
+<p>
+<a href="&xar-modurl-headlines-user-my;"><xar:mlstring>My headlines</xar:mlstring></a>
+</p>
+</xar:comment>
+
 </div>
 </div>

@@ -88,6 +88,7 @@ function headlines_init()
     // Set up module variables
     xarModSetVar('headlines', 'itemsperpage', 20);
     xarModSetVar('headlines','importpubtype', 0);
+    xarModSetVar('headlines','showfeeds', '');
 
     // Register Masks
     xarRegisterMask('OverviewHeadlines','All','headlines','All','All','ACCESS_OVERVIEW');

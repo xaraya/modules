@@ -24,6 +24,12 @@ function headlines_userapi_decode_shorturl($params)
         // some search engine/someone tried using index.html (or similar)
         // -> we'll go to the main function
         return array('main', $args);
+    } elseif (preg_match('/^my/i', $params[1])) {
+        // my headlines
+        if (!empty($params[2]) && preg_match('/^config/i', $params[2])) {
+            $args['config'] = 1;
+        }
+        return array('my', $args);
     } elseif (preg_match('/^(\d+)/',$params[1],$matches)) {
         // something that starts with a number must be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)

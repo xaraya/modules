@@ -1,0 +1,45 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>My Headlines</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:if condition="!empty($config)">
+    <form method="POST" action="&xar-modurl-headlines-user-my;">
+        <input type="hidden" name="config" value="2" />
+        <select name="feedlist[]" id="feedlist" multiple="multiple">
+            <xar:foreach in="$links" key="$hid" value="$url">
+                <xar:if condition="!empty($feedlist) and in_array($hid,$feedlist)">
+                    <option value="#$hid#" selected="selected">#$url#</option>
+                <xar:else/>
+                    <option value="#$hid#">#$url#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+        <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+        <br/>
+        <input type="submit" name="confirm" value="#xarML('Submit')#" />
+    </form>
+</xar:if>
+
+<xar:if condition="empty($feedlist)">
+    <xar:mlstring>No headlines selected</xar:mlstring>
+<xar:else/>
+    <xar:comment> arrange the layout of the different blocks as you prefer </xar:comment>
+    <xar:foreach in="$feedlist" value="$feed">
+        <xar:if condition="!empty($links[$feed])">
+            <div>
+            <xar:comment> adapt the block parameters as you prefer </xar:comment>
+            <xar:block module="headlines" type="rss" rssurl="$links[$feed]" maxitems="5" show_chantitle="0" show_chandesc="0" showdescriptions="0" />
+            </div>
+        </xar:if>
+    </xar:foreach>
+</xar:if>
+
+<p>
+[
+<a href="#xarModURL('headlines','user','my',array('config' => 1))#"><xar:mlstring>Configure my headlines</xar:mlstring></a>
+|
+<a href="#xarModURL('headlines', 'user', 'main')#"><xar:mlstring>Back to main headlines</xar:mlstring></a>
+]
+</p>
+</div>
+</div>
