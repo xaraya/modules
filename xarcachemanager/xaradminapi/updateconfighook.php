@@ -90,6 +90,8 @@ function xarcachemanager_adminapi_updateconfighook($args)
             // nothing fancy yet, just flush it out
             $cacheKey = "$modname-";
             xarOutputFlushCached($cacheKey);
+            // since we're modifying the config, we might get a new admin menulink
+            xarOutputFlushCached('adminpanels');
             break;
     }
 

@@ -143,7 +143,8 @@ function xarcachemanager_adminapi_updatehook($args)
             // no break because we want it to keep going and flush it's own cacheKey too
             // incase it's got a user view, like categories.
         case 'articles': // fall-through
-            //nothing special yet
+            // a status update might mean a new menulink
+            xarOutputFlushCached('base-block');
         default:
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out

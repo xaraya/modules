@@ -107,6 +107,8 @@ function xarcachemanager_adminapi_deletehook($args)
                 // nothing fancy yet, just flush it out
                 $cacheKey = "$modname-";
                 xarOutputFlushCached($cacheKey);
+                // a deleted item might mean a menulink goes away
+                xarOutputFlushCached('base-block');
                 break;
     }
 

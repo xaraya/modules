@@ -109,6 +109,8 @@ function xarcachemanager_adminapi_createhook($args)
             // nothing fancy yet, just flush it out
             $cacheKey = "$modname-";
             xarOutputFlushCached($cacheKey);
+            // a new item might mean a new menulink
+            xarOutputFlushCached('base-block');
             break;
     }
     
