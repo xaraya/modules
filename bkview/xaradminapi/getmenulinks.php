@@ -43,7 +43,7 @@ function bkview_adminapi_getmenulinks()
                                               'admin',
                                               'modifyconfig'),
                          'title' => xarML('Confgure module bkview'),
-                         'label' => xarML('Mofify config'));
+                         'label' => xarML('Modify config'));
 
     return $menulinks;
 }
