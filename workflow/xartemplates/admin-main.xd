@@ -1,0 +1,36 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<xar:template file="monitor_bar" type="module"/>
+
+<xar:mlstring>
+<p>See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction and user manual of Galaxia</a> for more details on what this module is all about, and how to use it.</p>
+<p>Then you should :
+<ol>
+<li>make sure that the webserver can write to the directory modules/workflow/lib/Galaxia/processes (chmod 777 or equivalent)</li>
+<li>install <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> if you want to generate some nice process graphs, and adapt GRAPHVIZ_DIR in modules/workflow/tiki-setup.php if necessary</li>
+<li>go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import Object Definition</a> page and paste the content of the file <a href="modules/workflow/cdcollection3_dd.xml">cdcollection3_dd.xml</a> in the text area
+to create the sample database table</li>
+<li>go to <a href="index.php?module=workflow&amp;type=admin&amp;func=processes">Admin Processes</a> and upload the file <a href="modules/workflow/cdcollection3.xml">cdcollection3.xml</a> to create a sample process</li>
+<li>map some Xaraya users to the 'admin' and 'user' workflow roles for that process, or add all current users from a Xaraya group to one of the workflow roles 
+[TODO: Galaxia does not support a permanent mapping between Xaraya groups and workflow roles at the moment]</li>
+<li>mark the process as <i>active</i> once you no longer have the errors "Role: ... is not mapped"
+<li>go to the <a href="index.php?module=workflow">Workflow User Interface</a> and play around :-)</li>
+<li>come back here and try some of the monitoring and administration options</li>
+<li>create your own fancy processes and submit them back to the open source community</li>
+</ol>
+</p>
+<p>Note: this is mostly a 1-to-1 conversion of the current Galaxia interface scripts from TikiWiki, and a quick &amp; dirty conversion of the templates that go with them. 
+The sample CD Loan process has been modified a bit to be more representative of actual processes, but is otherwise unchanged.</p>
+<p><b>Patches and contributions are most welcome ;-)</b></p>
+</xar:mlstring>
+
+<p><i><xar:mlstring>Based on the</xar:mlstring> <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
+<pre><xar:mlstring>
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See <a href="modules/workflow/lib/copyright.txt">copyright.txt</a> for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See <a href="modules/workflow/lib/license.txt">license.txt</a> for details.
+</xar:mlstring></pre>
+</div>
+</div>

@@ -1,0 +1,71 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#xarML('Browsing Workitem')#
+
+<!-- the help link info --->
+  
+      <xar:if condition="$feature_help eq 'y'">
+<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaViewWorkitem" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia Monitor Activities')#">
+<img border='0' src='modules/workflow/lib/Galaxia/img/icons/help.gif' alt='help' /></xar:if>
+                        <xar:if condition="$feature_help eq 'y'"></a></xar:if>
+</h2><br />
+<div style="margin: auto;">
+<!--- beginning of next bit --->
+
+
+<xar:template file="monitor_bar" type="module"/>
+<h3>#xarML('Workitem information')#</h3>
+<table class="normal">
+<tr>
+	<td  class="odd"><b>id</b></td>
+	<td  class="odd">#$wi['itemId']#</td>
+</tr>
+<tr>
+	<td  class="odd"><b>#</b></td>
+	<td  class="odd">#$wi['orderId']#</td>
+</tr>
+<tr>
+	<td class="odd"><b>Process</b></td>
+	<td class="odd">#$wi['procname']# #$wi['version']#</td>
+</tr>
+<tr>
+	<td class="odd"><b>Activity</b></td>
+	<td class="odd">#$wi['type']# #$wi['name']#</td>
+</tr>
+<tr>
+	<td class="odd"><b>User</b></td>
+	<td class="odd">#$wi['user']#</td>
+</tr>
+<tr>
+	<td class="odd"><b>Started</b></td>
+	<td class="odd">#$wi['started']#</td>
+</tr>
+<tr>
+	<td class="odd"><b>Duration</b></td>
+	<td class="odd">#$wi['duration']#</td>
+</tr>
+
+
+</table>
+<h3>#xarML('Properties')#</h3>
+<table class="normal">
+<tr>
+	<td  class="heading">#xarML('Property')#</td>
+	<td  class="heading">#xarML('Value')#</td>
+</tr>
+<xar:foreach in="$wi['properties']" key="$key" value="$item">
+<tr>
+	<td class="odd">
+	 <b>#$key#</b>
+	 </td>
+	<td class="odd">
+	#$item#
+	</td>
+</tr>
+</xar:foreach>
+</table>
+
+<xar:template file="monitor_stats" type="module"/>
+
+<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
+</div>
+</div>

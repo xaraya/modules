@@ -1,0 +1,283 @@
+<?xml version="1.0"?><process>
+  <name>Music CD Loans 3</name>
+  <isValid>y</isValid>
+  <version>1.0</version>
+  <isActive>n</isActive>
+   <description>Borrow CD's, browse CDs, etc...</description>
+  <lastModif>27/09/2003 [05:38:38]</lastModif>
+  <sharedCode><![CDATA[<?php
+
+?>  ]]></sharedCode>
+  <activities>
+    <activity>
+      <name>end</name>
+      <type>end</type>
+      <description>default end activity</description>
+      <lastModif>26/09/2003 [07:26:00]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+      </roles>
+      <code><![CDATA[<?php
+?>      ]]></code>    </activity>
+    <activity>
+      <name>Browse CDs</name>
+      <type>standalone</type>
+      <description>The user can browse CDs. The title and status is displayed for each CD. A button to request a CD is displayed.</description>
+      <lastModif>26/09/2003 [07:26:00]</lastModif>
+      <isInteractive>y</isInteractive>
+      <isAutoRouted>n</isAutoRouted>
+      <roles>
+        <role>user</role>
+      </roles>
+      <code><![CDATA[<?php
+
+$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                      array('name' => 'cdcollection'));
+
+if (isset($_REQUEST['status'])) {
+    $object['itemid'] = $_REQUEST['cdId'];
+    $object['getobject'] = 1;
+    $cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
+    if ($_REQUEST['status']=='available') {
+        $cd->updateItem(array('status' => 'not available',
+                                           'user' => $user));
+    } elseif ($_REQUEST['status'] == 'not available') {
+        $cd->updateItem(array('status' => 'available',
+                                           'user' => 0));
+    }
+    unset($object['itemid']);
+    unset($object['getobject']);
+}
+
+// Get the CDs
+$items = xarModAPIFunc('dynamicdata','user','getitems', $object);
+foreach (array_keys($items) as $index) {
+    if (empty($items[$index]['user'])) {
+        $items[$index]['user'] = '-';
+    } else {
+        $items[$index]['user'] = xarUserGetVar('name', $items[$index]['user']);
+    }
+}
+$tplData['cds'] = $items;
+
+// Find the activity id for requesting CDs
+$pId = $activity->pId;
+$actname = 'Request CD';
+$aid = $process->getOne("select `activityId` from `galaxia_activities` where `pId`=? and `name`=?",array($pId,$actname));
+$tplData['aid'] = $aid;
+
+?>      ]]></code>      <template><![CDATA[<h3>Listing CDs</h3>
+<table class="normal">
+  <tr>
+    <td class="heading">Title</td>
+    <td class="heading">Status</td>
+    <td class="heading">Loaner</td>
+    <td class="heading">Action</td>
+  </tr>
+<xar:if condition="!empty($cds) and count($cds) gt 0">
+<xar:foreach in="$cds" value="$cd">
+  <tr>
+    <td class="odd">#$cd['title']#</td>
+    <td class="odd">#$cd['status']#</td>
+    <td class="odd">#$cd['user']#</td>
+    <td class="odd">
+<xar:if condition="$cd['status'] eq 'available'">
+    <a class="link" href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$aid#&amp;cdId=#$cd['cdid']#" >
+Request CD
+    </a>
+</xar:if>
+    </td>
+  </tr>
+</xar:foreach>
+</xar:if>
+</table>      ]]></template>    </activity>
+    <activity>
+      <name>Request CD</name>
+      <type>start</type>
+      <description>The user requests a CD</description>
+      <lastModif>27/09/2003 [01:20:19]</lastModif>
+      <isInteractive>y</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+        <role>user</role>
+      </roles>
+      <code><![CDATA[<?php
+
+$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                      array('name' => 'cdcollection'));
+
+$object['where'] = "status eq 'available'";
+$items = xarModAPIFunc('dynamicdata','user','getitems', $object);
+$tplData['cds'] = $items;
+
+if(isset($_REQUEST['request'])) {
+    $instance->set('user',$user);
+    $instance->set('cdId',$_REQUEST['cd']);
+    $instance->complete();
+}
+
+$tplData['cdId'] = isset($_REQUEST['cdId']) ? $_REQUEST['cdId'] : '';
+
+?>      ]]></code>      <template><![CDATA[<h3>Request a CD</h3>
+<form method="post">
+CD to request:
+<xar:if condition="!empty($cds) and count($cds) gt 0">
+<select name="cd">
+<xar:foreach in="$cds" value="$cd">
+<xar:if condition="$cd['cdid'] eq $cdId">
+<option value="#$cd['cdid']#" selected="selected">#$cd['title']#</option>
+<xar:else/>
+<option value="#$cd['cdid']#">#$cd['title']#</option>
+</xar:if>
+</xar:foreach>
+</select>
+<input type="submit" name="request" value="request" />
+<xar:else/>
+There are no CDs available at the moment...
+</xar:if>
+</form>      ]]></template>    </activity>
+    <activity>
+      <name>Approve CD request</name>
+      <type>switch</type>
+      <description>Approve or reject the CD request</description>
+      <lastModif>27/09/2003 [02:02:03]</lastModif>
+      <isInteractive>y</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+        <role>admin</role>
+      </roles>
+      <code><![CDATA[<?php
+
+// Get the CD that is requested and assign CD info to info
+$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                      array('name' => 'cdcollection'));
+$object['itemid'] = $instance->get('cdId');
+$cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
+$instance->set('title',$cd['title']);
+$tplData['info'] = $cd;
+$tplData['requestedby'] = xarUserGetVar('name',$instance->get('user'));
+
+if(isset($_REQUEST['approved'])) {
+    $instance->set('reason',$_REQUEST['reason']);
+    $instance->setNextActivity('Approve CD');
+    $instance->complete();
+}
+
+if(isset($_REQUEST['rejected'])) {
+    $instance->set('reason',$_REQUEST['reason']);
+    $instance->setNextActivity('Reject CD');
+    $instance->complete();
+}
+?>      ]]></code>      <template><![CDATA[<h3>Approve or reject CD loan</h3>
+CD: #$info['title']# <br/>
+Requested by: #$requestedby# <br/>
+Status: #$info['status']# <br/>
+<form method="post">
+<textarea name="reason" cols="40" rows="4"></textarea>
+<br/><br/>
+<input type="submit" name="rejected" value="rejected" />
+<input type="submit" name="approved" value="approved" />
+</form>      ]]></template>    </activity>
+    <activity>
+      <name>Approve CD</name>
+      <type>activity</type>
+      <description>Approve the request</description>
+      <lastModif>26/09/2003 [07:26:00]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+      </roles>
+      <code><![CDATA[<?php
+
+$instance->set('status','approved');
+$sendto = $instance->get('user');
+if (!empty($sendto)) {
+    $instance->setNextUser($sendto);
+} else {
+    $sendto = 0;
+}
+$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                      array('name' => 'cdcollection'));
+$object['itemid'] = $instance->get('cdId');
+$object['getobject'] = 1;
+$cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
+$cd->updateItem(array('status' => 'not available',
+                      'user' => $sendto));
+?>      ]]></code>    </activity>
+    <activity>
+      <name>Reject CD</name>
+      <type>activity</type>
+      <description>Reject the loan request</description>
+      <lastModif>26/09/2003 [07:26:00]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+      </roles>
+      <code><![CDATA[<?php
+
+$instance->set('status','rejected');
+
+$sendto = $instance->get('user');
+if (!empty($sendto)) {
+    $instance->setNextUser($sendto);
+}
+
+?>
+      ]]></code>    </activity>
+    <activity>
+      <name>Ack result</name>
+      <type>activity</type>
+      <description>The user gets the response</description>
+      <lastModif>26/09/2003 [07:26:00]</lastModif>
+      <isInteractive>y</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+        <role>user</role>
+      </roles>
+      <code><![CDATA[<?php
+
+if(isset($_REQUEST['ack'])) {
+    $instance->complete();
+}
+
+$tplData['title'] = $instance->get('title');
+$tplData['status'] = $instance->get('status');
+$tplData['reason'] = $instance->get('reason');
+
+?>      ]]></code>      <template><![CDATA[<h3>Loan result</h3>
+Your request for #$title# was #$status#
+<xar:if condition="!empty($reason)">
+<p>Reason: #$reason#</p>
+</xar:if>
+<form method="post">
+<input type="submit" name="ack" value="OK" />
+</form>      ]]></template>    </activity>
+  </activities>
+  <transitions>
+     <transition>
+       <from>Request CD</from>
+       <to>Approve CD request</to>
+     </transition>
+     <transition>
+       <from>Approve CD request</from>
+       <to>Approve CD</to>
+     </transition>
+     <transition>
+       <from>Approve CD request</from>
+       <to>Reject CD</to>
+     </transition>
+     <transition>
+       <from>Approve CD</from>
+       <to>Ack result</to>
+     </transition>
+     <transition>
+       <from>Reject CD</from>
+       <to>Ack result</to>
+     </transition>
+     <transition>
+       <from>Ack result</from>
+       <to>end</to>
+     </transition>
+  </transitions>
+</process>

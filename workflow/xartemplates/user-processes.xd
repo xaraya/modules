@@ -1,0 +1,100 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Module</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#xarML('User Processes')#
+<!-- the help link info --->
+  
+      <xar:if condition="$feature_help eq 'y'">
+<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaUserProcesses" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia User Processes')#">
+<img border='0' src='modules/workflow/lib/Galaxia/img/icons/help.gif' alt='help' /></xar:if>
+                        <xar:if condition="$feature_help eq 'y'"></a></xar:if>
+
+</h2><br />
+<div style="margin: auto;">
+<!--- beginning of next bit --->
+
+
+
+
+<xar:template file="user_bar" type="module"/>
+<h3>#xarML('List of processes')# (#$cant#)</h3>
+
+<form action="&xar-modurl-workflow-user-processes;" method="post">
+<input type="hidden" name="offset" value="#$offset#" />
+<input type="hidden" name="sort_mode" value="#$sort_mode#" />
+<table>
+<tr>
+<td>
+	<small>#xarML('find')#</small>
+</td>
+<td >
+	&nbsp;
+</td>	
+</tr>
+
+<tr>
+<td >
+	<input size="8" type="text" name="find" value="#$find#" />
+</td>
+<td >	
+	<input type="submit" name="filter" value="#xarML('filter')#" />
+</td>
+</tr>
+</table>	
+</form>
+
+<form action="&xar-modurl-workflow-user-processes;" method="post">
+<input type="hidden" name="offset" value="#$offset#" />
+<input type="hidden" name="find" value="#$find#" />
+<input type="hidden" name="where" value="#$where#" />
+<input type="hidden" name="sort_mode" value="#$sort_mode#" />
+<table class="normal">
+<tr>
+<xar:if condition="$sort_mode eq 'procname_desc'">
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_asc'))#">#xarML('Process')#</a></td>
+<xar:else/>
+<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_desc'))#">#xarML('Process')#</a></td>
+</xar:if>
+<td  class="heading" >#xarML('Activities')#</td>
+<td  class="heading" >#xarML('Instances')#</td>
+</tr>
+<xar:if condition="!empty($items) and count($items) gt 0">
+<xar:foreach in="$items" key="$ix">
+<tr>
+	<td>
+	  <a class="link" href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['procname']# #$items[$ix]['version']#</a>
+	</td>
+	<td style="text-align:right;">
+		<a class="link" href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['activities']#</a>
+	</td>
+	<td style="text-align:right;">
+		<a class="link" href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['instances']#</a>
+	</td>
+</tr>
+</xar:foreach>
+<xar:else/>
+<tr>
+	<td colspan="3">
+	#xarML('No processes defined yet')#
+	</td>
+</tr>	
+</xar:if>
+</table>
+</form>
+
+<div class="mini">
+<div align="center">
+<xar:if condition="$prev_offset ge 0">
+[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $prev_offset))#">#xarML('prev')#</a>]&nbsp;
+</xar:if>
+#xarML('Page')#: #$actual_page#/#$cant_pages#
+<xar:if condition="$next_offset ge 0">
+&nbsp;[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $next_offset))#">#xarML('next')#</a>]
+</xar:if>
+<xar:if condition="$direct_pagination eq 'y'">
+<br/>
+#$pager#
+</xar:if>
+</div>
+</div> 
+<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
+</div>
+</div>

@@ -1,0 +1,3 @@
+<a class="link" href="&xar-modurl-workflow-user-processes;"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Process.gif' alt='#xarML('processes')#' title='#xarML('user processes')#' /></a>
+<a class="link" href="&xar-modurl-workflow-user-activities;"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Activity.gif' alt='#xarML('processes')#' title='#xarML('user activities')#' /></a>
+<a class="link" href="&xar-modurl-workflow-user-instances;"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Instance.gif' alt='#xarML('processes')#' title='#xarML('user instances')#' /></a>

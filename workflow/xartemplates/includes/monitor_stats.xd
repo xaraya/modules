@@ -1,0 +1,8 @@
+<div style="padding-bottom:3px; padding-left:4px; padding-top:1px; margin-top:20px; background-color:white; border:1px solid black;">
+<small>#$stats['processes']# #xarML('processes')# (#$stats['active_processes']# #xarML('active')#) (#$stats['running_processes']# #xarML('being run')#)</small>
+<br/>
+<small>#xarML('Instances')#: [<a style="color:green;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_status=active">#$stats['active_instances']# #xarML('active')#</a>]</small>
+<small>[<a style="color:black;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_status=completed">#$stats['completed_instances']# #xarML('completed')#</a>]</small>
+<small>[<a style="color:grey;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_status=aborted">#$stats['aborted_instances']# #xarML('aborted')#</a>]</small>
+<small>[<a style="color:red;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_status=exception">#$stats['exception_instances']# #xarML('exceptions')#</a>]</small>
+</div>

@@ -1,0 +1,266 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Module</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#xarML('User Instances')#
+<!-- the help link info --->
+  
+      <xar:if condition="$feature_help eq 'y'">
+<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaUserInstances" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia User Instances')#">
+<img border='0' src='modules/workflow/lib/Galaxia/img/icons/help.gif' alt='help' /></xar:if>
+                        <xar:if condition="$feature_help eq 'y'"></a></xar:if>
+</h2><br />
+<div style="margin: auto;">
+<!--- beginning of next bit --->
+
+
+
+
+<xar:template file="user_bar" type="module"/>
+<h3>#xarML('List of instances')# (#$cant#)</h3>
+
+<form action="&xar-modurl-workflow-user-instances;" method="post">
+<input type="hidden" name="offset" value="#$offset#" />
+<input type="hidden" name="sort_mode" value="#$sort_mode#" />
+<table>
+<tr>
+<td>
+	<small>#xarML('find')#</small>
+</td>
+<td >
+	<small>#xarML('proc')#</small>
+</td>
+<td >
+	<small>#xarML('status')#</small>
+</td>
+<td >
+	<small>#xarML('act status')#</small>
+</td>
+<td >
+	<small>#xarML('user')#</small>
+</td>
+<td >
+	&nbsp;
+</td>	
+</tr>
+
+<tr>
+<td >
+	<input size="8" type="text" name="find" value="#$find#" />
+</td>
+<td >
+	<select name="filter_process">
+<xar:if condition="'' eq $filter_process">
+	<option selected="selected" value="">#xarML('All')#</option>
+<xar:else/>
+	<option value="">#xarML('All')#</option>
+</xar:if>
+	<xar:foreach in="$all_procs" key="$ix">
+<xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
+	<option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']# #$all_procs[$ix]['version']#</option>
+<xar:else/>
+	<option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']# #$all_procs[$ix]['version']#</option>
+</xar:if>
+	</xar:foreach>
+	</select>
+</td>
+<td >
+	<select name="filter_status">
+<xar:if condition="'' eq $filter_status">
+	<option selected="selected" value="">#xarML('All')#</option>
+<xar:else/>
+	<option value="">#xarML('All')#</option>
+</xar:if>
+	<xar:foreach in="$statuses" key="$ix">
+<xar:if condition="$statuses[$ix] eq $filter_status">
+	<option selected="selected" value="#$statuses[$ix]#">#xarML($statuses[$ix])#</option>
+<xar:else/>
+	<option value="#$statuses[$ix]#">#xarML($statuses[$ix])#</option>
+</xar:if>
+	</xar:foreach>
+	</select>
+</td>
+<td >
+	<select name="filter_act_status">
+<xar:if condition="'' eq $filter_act_status">
+	<option selected="selected" value="">#xarML('All')#</option>
+<xar:else/>
+	<option value="">#xarML('All')#</option>
+</xar:if>
+<xar:if condition="'y' eq $filter_act_status">
+	<option value="running" selected="selected">#xarML('running')#</option>
+<xar:else/>
+	<option value="running">#xarML('running')#</option>
+</xar:if>
+<xar:if condition="'n' eq $filter_act_status">
+	<option value="completed" selected="selected">#xarML('completed')#</option>
+<xar:else/>
+	<option value="completed">#xarML('completed')#</option>
+</xar:if>
+	</select>
+</td>
+<td >
+<select name="filter_user">
+<xar:if condition="'' eq $filter_user">
+	<option selected="selected" value="">#xarML('All')#</option>
+<xar:else/>
+	<option value="">#xarML('All')#</option>
+</xar:if>
+<xar:if condition="'*' eq $filter_user">
+	<option selected="selected" value="*">*</option>
+<xar:else/>
+	<option value="*">*</option>
+</xar:if>
+<xar:if condition="$user eq $filter_user">
+	<option selected="selected" value="#$user#">#$user#</option>
+<xar:else/>
+	<option value="#$user#">#$user#</option>
+</xar:if>
+	</select>
+</td>
+
+<td >	
+	<input type="submit" name="filter" value="#xarML('filter')#" />
+</td>
+</tr>
+</table>	
+</form>
+
+<form action="&xar-modurl-workflow-user-instances;" method="post">
+<input type="hidden" name="offset" value="#$offset#" />
+<input type="hidden" name="find" value="#$find#" />
+<input type="hidden" name="where" value="#$where#" />
+<input type="hidden" name="sort_mode" value="#$sort_mode#" />
+<table class="normal">
+<tr>
+<xar:if condition="$sort_mode eq 'instanceId_desc'">
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'instanceId_asc'))#">#xarML('Id')#</a></td>
+<xar:else/>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'instanceId_desc'))#">#xarML('Id')#</a></td>
+</xar:if>
+<xar:if condition="$sort_mode eq 'owner_desc'">
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'owner_asc'))#">#xarML('Owner')#</a></td>
+<xar:else/>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'owner_desc'))#">#xarML('Owner')#</a></td>
+</xar:if>
+<xar:if condition="$sort_mode eq 'status_desc'">
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'status_asc'))#">#xarML('Inst Status')#</a></td>
+<xar:else/>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'status_desc'))#">#xarML('Inst Status')#</a></td>
+</xar:if>
+<xar:if condition="$sort_mode eq 'procname_desc'">
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_asc'))#">#xarML('Process')#</a></td>
+<xar:else/>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_desc'))#">#xarML('Process')#</a></td>
+</xar:if>
+<xar:if condition="$sort_mode eq 'name_desc'">
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#">#xarML('Activity')#</a></td>
+<xar:else/>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_desc'))#">#xarML('Activity')#</a></td>
+</xar:if>
+<xar:if condition="$sort_mode eq 'user_desc'">
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'user_asc'))#">#xarML('User')#</a></td>
+<xar:else/>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'user_desc'))#">#xarML('User')#</a></td>
+</xar:if>
+<xar:if condition="$sort_mode eq 'actstatus_desc'">
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'actstatus_asc'))#">#xarML('Act status')#</a></td>
+<xar:else/>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'actstatus_desc'))#">#xarML('Act status')#</a></td>
+</xar:if>
+<td class="heading" >#xarML('Action')#</td>
+</tr>
+<xar:if condition="!empty($items) and count($items) gt 0">
+<xar:foreach in="$items" key="$ix">
+<tr>
+	<td>
+	  #$items[$ix]['instanceId']#</a>
+	</td>
+	<td>
+	  #$items[$ix]['owner']#</a>
+	</td>
+	<td>
+	  #$items[$ix]['status']#</a>
+	</td>
+	<td>
+	  #$items[$ix]['procname']# #$items[$ix]['version']#</a>
+	</td>
+	<td>
+	<xar:if condition="$items[$ix]['type'] eq 'start'">
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:else/>
+		#$items[$ix]['type']# 
+	</xar:if>
+	  #$items[$ix]['name']#</a>
+	</td>
+	<td>
+	  #$items[$ix]['user']#
+	</td>
+	<td>
+	  #$items[$ix]['actstatus']#</a>
+	</td>
+	<td>
+	  <table>
+	  <tr>
+	  <xar:if condition="$items[$ix]['status'] ne 'aborted' and $items[$ix]['status'] ne 'exception' and $items[$ix]['userId'] eq $user">
+	  <td><a href="&xar-modurl-workflow-user-instances;&amp;abort=1&amp;iid=#$items[$ix]['instanceId']#&amp;aid=#$items[$ix]['activityId']#"><img border='0' title='#xarML('exception instance')#' alt='#xarML('exceptions instance')#' src='modules/workflow/lib/Galaxia/img/icons/stop.gif'></a></td>
+	  </xar:if>
+	  <xar:if condition="$items[$ix]['isAutoRouted'] eq 'n' and $items[$ix]['actstatus'] eq 'completed'">
+	  <td><a href="&xar-modurl-workflow-user-instances;&amp;send=1&amp;iid=#$items[$ix]['instanceId']#&amp;aid=#$items[$ix]['activityId']#"><img border='0' title='#xarML('send instance')#' alt='#xarML('send instance')#' src='modules/workflow/lib/Galaxia/img/icons/linkto.gif'></a></td>
+	  </xar:if>
+	  <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and $items[$ix]['status'] eq 'active'">
+	  <td><a href="&xar-modurl-workflow-user-run_activity;&amp;iid=#$items[$ix]['instanceId']#&amp;activityId=#$items[$ix]['activityId']#"><img border='0' title='#xarML('run instance')#' alt='#xarML('run instance')#' src='modules/workflow/lib/Galaxia/img/icons/next.gif'></a></td>
+	  </xar:if>
+	  <xar:if condition="$items[$ix]['status'] ne 'aborted' and $items[$ix]['userId'] eq $user">
+	  <td><a href="&xar-modurl-workflow-user-instances;&amp;abort=1&amp;iid=#$items[$ix]['instanceId']#&amp;aid=#$items[$ix]['activityId']#"><img border='0' title='#xarML('abort instance')#' alt='#xarML('abort instance')#' src='modules/workflow/lib/Galaxia/img/icons/trash.gif'></a></td>
+	  </xar:if>
+	  <xar:if condition="$items[$ix]['user'] eq '*' and $items[$ix]['status'] eq 'active'">
+	  <td><a href="&xar-modurl-workflow-user-instances;&amp;grab=1&amp;iid=#$items[$ix]['instanceId']#&amp;aid=#$items[$ix]['activityId']#"><img border='0' title='#xarML('grab instance')#' alt='#xarML('grab instance')#' src='modules/workflow/lib/Galaxia/img/icons/fix.gif'></a></td>
+	  <xar:else/>
+	  <xar:if condition="$items[$ix]['status'] eq 'active'">
+	  <td><a href="&xar-modurl-workflow-user-instances;&amp;release=1&amp;iid=#$items[$ix]['instanceId']#&amp;aid=#$items[$ix]['activityId']#"><img border='0' title='#xarML('release instance')#' alt='#xarML('release instance')#' src='modules/workflow/lib/Galaxia/img/icons/float.gif'></a></td>
+	  </xar:if>
+	  </xar:if>
+	  </tr>
+	  </table>
+	</td>
+
+</tr>
+</xar:foreach>
+<xar:else/>
+<tr>
+	<td colspan="8">
+	#xarML('No instances defined yet')#
+	</td>
+</tr>	
+</xar:if>
+</table>
+</form>
+
+<div class="mini">
+<div align="center">
+<xar:if condition="$prev_offset ge 0">
+[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $prev_offset))#">#xarML('prev')#</a>]&nbsp;
+</xar:if>
+#xarML('Page')#: #$actual_page#/#$cant_pages#
+<xar:if condition="$next_offset ge 0">
+&nbsp;[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $next_offset))#">#xarML('next')#</a>]
+</xar:if>
+<xar:if condition="$direct_pagination eq 'y'">
+<br/>
+#$pager#
+</xar:if>
+</div>
+</div> 
+<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
+</div>
+</div>
