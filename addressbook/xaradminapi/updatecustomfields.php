@@ -142,8 +142,7 @@ function addressbook_adminapi_updatecustomfields($args)
                                                VALUES (?,?,?,9999999999)"
                                       ,'bindvars'=>array ($nextID,$newname,$newtype)));
 
-            //TODO: Not sure how to lost xarVarPrep... in this instance. $modType contains the composite ALTER parameters e.g. 'varchar(60) default NULL'
-            array_push($inserts,array('sql'=>"ALTER TABLE $adr_table ADD custom_".$nextID." ".xarVarPrepForStore($newtype),'bindvars'=>array()));
+            array_push($inserts,array('sql'=>"ALTER TABLE $adr_table ADD custom_".$nextID." ".$newtype,'bindvars'=>array()));
 
             if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addcustomfields',array('inserts'=>$inserts))) {
                 xarErrorSet(XAR_USER_EXCEPTION,
