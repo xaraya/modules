@@ -123,7 +123,7 @@ class Album {
 		global $gallery;
 
 		if (!strcmp($this->version, $gallery->album_version)) {
-			print "Album up to date.<br>";
+			print "Album up to date.<br/>";
 			return 0;
 		}
 
@@ -187,7 +187,7 @@ class Album {
 			$changed = 1;
 		}
 
-		print "done.<br>";
+		print "done.<br/>";
 
 		/* 
 		* Check all items 
@@ -204,7 +204,7 @@ class Album {
 				$this->updateSerial = 1;
 			}
 
-			print "done.<br>";
+			print "done.<br/>";
 		}
 
 		if (strcmp($this->version, $gallery->album_version)) {
@@ -255,7 +255,7 @@ class Album {
 			$func .= "\$arrayTimeB = \$objB->getItemCaptureDate(); ";
 			$func .= "\$timeA = \"\${arrayTimeA['year']}\${arrayTimeA['mon']}\${arrayTimeA['mday']}\${arrayTimeA['hours']}\${arrayTimeA['minutes']}\${arrayTimeA['seconds']}\";";
 			$func .= "\$timeB = \"\${arrayTimeB['year']}\${arrayTimeB['mon']}\${arrayTimeB['mday']}\${arrayTimeB['hours']}\${arrayTimeB['minutes']}\${arrayTimeB['seconds']}\";";
-			//$func .= "print \"\$timeA \$timeB<br>\";";
+			//$func .= "print \"\$timeA \$timeB<br/>\";";
 			$func .= "if (\$timeA == \$timeB) return 0; ";
 			if (!$order) {
 				$func .= "if (\$timeA < \$timeB) return -1; else return 1;";
