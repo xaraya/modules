@@ -1,7 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Comments Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2><br />
 
-<form method="post" action="#xarModUrl('comments', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+<form method="post" action="#xarModUrl('comments', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 
     <div style="clear: both; padding-top: 10px;">
@@ -183,8 +183,8 @@
                <option value="0"><xar:mlstring>None</xar:mlstring></option>
                <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
                <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
-            </xar:if> </select>
-                </select>
+            </xar:if> 
+            </select>
 
         </span>
     </div>

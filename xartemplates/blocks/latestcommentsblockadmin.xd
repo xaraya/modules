@@ -29,13 +29,13 @@
         <xar:mlstring>Include comments from the following modules</xar:mlstring>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-        <select name="modid[]" tabindex="3" multiple size="3"/>
+        <select name="modid[]" tabindex="3" multiple="multiple" size="3">
         <xar:foreach in="$modlist" key="$key" value="$value">
-        <xar:if condition="in_array($key,$modid)">
-            <option value="#$key#" selected="selected">#$value#</option>
-        <xar:else/>
-            <option value="#$key#">#$value#</option>
-        </xar:if>
+            <xar:if condition="in_array($key,$modid)">
+                <option value="#$key#" selected="selected">#$value#</option>
+            <xar:else/>
+                <option value="#$key#">#$value#</option>
+            </xar:if>
         </xar:foreach>
         </select>        
     </span>

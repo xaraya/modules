@@ -8,7 +8,7 @@
           <xar:mlstring>from</xar:mlstring>  
           <xar:foreach in="$modarray" key="$i">
             #$modlist[$modarray[$i]]#
-            <xar:if condition= "($i ge 0) and ($i<count($modarray)-1)">
+            <xar:if condition= "($i ge 0) and ($i lt count($modarray)-1)">
               ,   
             </xar:if>
           </xar:foreach>
@@ -16,7 +16,7 @@
           <xar:mlstring>from all modules</xar:mlstring>
         </xar:if>
         <xar:comment> NEXT COMMENTS LINK </xar:comment>
-        (<a href=#$decoded_nexturl#><xar:mlstring>next</xar:mlstring></a>)              
+        (<a href="#$decoded_nexturl#"><xar:mlstring>next</xar:mlstring></a>)              
       </span>
       <p />
     </td>
@@ -40,7 +40,7 @@
         <xar:if condition="$adddaysep=='on'">
           <xar:if condition="$comment['daychange']">
             <xar:comment> DAY SEPARATOR </xar:comment>
-            </td></tr><td align=center>
+            </td></tr><td align="center">
               - <b>#$comment['daychange']#</b> -
             </td></tr><tr><td>
           </xar:if>
@@ -108,7 +108,7 @@
   </tr>
   <xar:comment> FORM SELECTING DISPLAY OPTIONS (should add a module variable here) </xar:comment>
   <tr>
-    <td valign="middle" align=center width="100%">
+    <td valign="middle" align="center" width="100%">
       <br />
       <form action="#$decoded_returnurl#" method="POST">
         <xar:comment> CHOOSE HOW MANY TO DISPLAY </xar:comment>                    
@@ -120,7 +120,7 @@
         <xar:comment> SELECT FROM WHICH MODULES </xar:comment>
         <xar:if condition="sizeof($modlist) ge 2">
           <xar:mlstring>from</xar:mlstring>                              
-    <select name="modid[]" tabindex="3" multiple size="3"/>
+    <select name="modid[]" tabindex="3" multiple="multiple" size="3"/>
     <xar:foreach in="$modlist" key="$key" value="$value">
     <xar:if condition="in_array($key,$modarray)">
         <option value="#$key#" selected="selected">#$value#</option>

@@ -37,7 +37,7 @@
             ?
         </xar:if>
         <form method="post" action="#$delete_url#">
-            <input type="hidden" name="authid" value="#$authid#">
+            <input type="hidden" name="authid" value="#$authid#"/>
             <b><xar:mlstring>Yes</xar:mlstring></b>
                 <input type="radio" name="choice" id="yes" value="yes" />
             <b><xar:mlstring>No</xar:mlstring></b>
