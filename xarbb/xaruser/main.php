@@ -48,6 +48,8 @@ function xarbb_user_main()
     $data['now']        = time();
     $data['items']      = array();
     $sitename           = xarModGetVar('themes', 'SiteName', 0);
+    $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
+    $data['xarbbtitle'] = isset($xarbbtitle) ? $xarbbtitle :'';
     // Login
     $data['return_url'] = xarModURL('xarbb', 'user', 'main');
     $data['submitlabel']= xarML('Submit');

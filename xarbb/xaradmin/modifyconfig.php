@@ -75,6 +75,7 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('cookiename', 'str:1:', $cookiename, 'xarbb', XARVAR_NOT_REQUIRED)) return;
             //if (!xarVarFetch('cookiedomain', 'str:1:', $cookiepath, ' ', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cookiepath', 'str:1:', $cookiepath, '/', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('xarbbtitle', 'str:1:', $xarbbtitle, '', XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -83,6 +84,7 @@ function xarbb_admin_modifyconfig()
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
             xarModSetVar('xarbb', 'cookiename', $cookiename);
             xarModSetVar('xarbb', 'cookiepath', $cookiepath);
+            xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);            
             //xarModSetVar('xarbb', 'cookiedomain', $cookiedomain);
             xarModSetVar('xarbb', 'forumsperpage', $forumsperpage); //only required for admin view
             // default settings for xarbb
