@@ -34,8 +34,7 @@ function trackback_user_main()
         $data['moditems'][] = $moditem;
     }
 
-    xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
-                       xarVarPrepForDisplay(xarML('Trackback Items')));
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Trackback Items')));
 
     // Return output
     return $data;
