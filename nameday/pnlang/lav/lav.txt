@@ -1,0 +1,365 @@
+ 1| 1|Laimnesis, Solvija, Solvita
+ 1| 2|Indulis, Iva, Ivis, Ivo
+ 1| 3|Miervalda, Miervaldis, Ringolds
+ 1| 4|Ilva, Spodra
+ 1| 5|Sîmanis, Zintis
+ 1| 6|Arnita, Spulga
+ 1| 7|Digmârs, Juliâns, Rota, Zigmârs
+ 1| 8|Gatis, Ivanda
+ 1| 9|Aksels, Alta, Kaspars
+ 1|10|Dorisa, Tatjana
+ 1|11|Franciska, Smaida
+ 1|12|Reina, Reinholds, Reinis, Renâts
+ 1|13|Aira, Ârijs, Âris, Harijs
+ 1|14|Raitis, Raits, Roberta, Roberts
+ 1|15|Fçlikss, Felicita
+ 1|16|Lida, Lidija
+ 1|17|Dravis, Tenis
+ 1|18|Antis, Antons
+ 1|19|Alnis, Andulis
+ 1|20|Aïìirts, Aïìis, Oïìerts, Orests
+ 1|21|Agne, Agnese, Agnija
+ 1|22|Austris
+ 1|23|Grieta, Strauta
+ 1|24|Eglons, Kriðs, Ksenija
+ 1|25|Sigurds, Zigurds
+ 1|26|Agneta, Agnis, Ansis
+ 1|27|Ildze, Ilze, Izolde
+ 1|28|Kârlis
+ 1|29|Aivars, Valçrija
+ 1|30|Dâvids, Pârsla, Tîna, Valentîna
+ 1|31|Tekla, Violeta
+ 2| 1|Brigita, Indars, Indra, Indris
+ 2| 2|Sonora, Spîdola
+ 2| 3|Aîda, Ida, Vida
+ 2| 4|Daila, Deila, Veronika
+ 2| 5|Agate, Austra, Selga, Silga, Sinilga
+ 2| 6|Dace, Dârta, Dora
+ 2| 7|Nelda, Rièards, Rihards
+ 2| 8|Aldona
+ 2| 9|Apolonija, Simona
+ 2|10|Paula, Paulîne
+ 2|11|Laima, Laimdota
+ 2|12|Karlîna, Lîna
+ 2|13|Malda, Melita
+ 2|14|Valentîns
+ 2|15|Aloizs, Alvis, Olafs, Olavs
+ 2|16|Dþulijeta, Jûlija
+ 2|17|Donats, Konstance
+ 2|18|Kintija, Kora
+ 2|19|Zane, Zuzanna
+ 2|20|Smuidra, Smuidris, Vitauts
+ 2|21|Araidne, Eleonora
+ 2|22|Ârija, Rigonda
+ 2|23|Almants, Haralds
+ 2|24|Diâna, Dina, Dins
+ 2|25|Alma, Annemarija
+ 2|26|Aurçlija, Evelîna, Mçtra
+ 2|27|Andra, Lîva, Lîvija
+ 2|28|Justs, Skaidra, Skaidrîte
+ 3| 1|Ilgvars, Ivars
+ 3| 2|Laila, Lavîze, Luîze
+ 3| 3|Marts, Tâlavs, Tâlis
+ 3| 4|Alise, Auce
+ 3| 5|Aurora
+ 3| 6|Centis, Gotfrîds, Vents
+ 3| 7|Ella, Elmîra
+ 3| 8|Dagmâra, Marga, Margita
+ 3| 9|Çvalds
+ 3|10|Laimrota, Liliâna, Silvija
+ 3|11|Agita, Konstantîns
+ 3|12|Aija, Aiva, Aivis
+ 3|13|Balvis, Ernests
+ 3|14|Matilde, Ulrika
+ 3|15|Amalda, Amilda, Imalda
+ 3|16|Guntars, Guntis, Guntris
+ 3|17|Gerda, Ìertrûde
+ 3|18|Adelîna, Ilona
+ 3|19|Jâzeps
+ 3|20|Irbe, Made
+ 3|21|Benedikts, Dzelme, Una, Unigunde
+ 3|22|Dziedra, Tamâra
+ 3|23|Mirdza, Þanete, Þanna
+ 3|24|Kazimirs
+ 3|25|Mâra, Marita, Mârîte
+ 3|26|Eiþenija, Þenija
+ 3|27|Gustavs, Gusts, Tâlrîts
+ 3|28|Ginta, Gunda, Gunta
+ 3|29|Agija, Aldonis
+ 3|30|Ilgmârs, Nanija
+ 3|31|Atvars, Gvido
+ 4| 1|Dagne, Dagnis
+ 4| 2|Irmgarde
+ 4| 3|Daira, Dairis
+ 4| 4|Ârvalda, Ârvalds, Herta, Valda
+ 4| 5|Aivija, Vidaga, Vija
+ 4| 6|Filips, Vilips, Zinta
+ 4| 7|Helmuts, Zina, Zinaîda
+ 4| 8|Dans, Danute, Edgars
+ 4| 9|Valerija, Þubîte
+ 4|10|Anita, Anitra, Zîle
+ 4|11|Hermanis, Vilmârs
+ 4|12|Ainis, Jûlijs
+ 4|13|Egils, Egîls, Nauris
+ 4|14|Gudrîte, Strauja
+ 4|15|Aelita, Gastons
+ 4|16|Alfs, Mintauts
+ 4|17|Rûdolfs, Viviâna
+ 4|18|Jadviga, Laura
+ 4|19|Fanija, Vçsma
+ 4|20|Mirta, Ziedîte
+ 4|21|Anastasija, Marìers
+ 4|22|Armanda, Armands
+ 4|23|Georgs, Jurìis, Juris
+ 4|24|Nameda, Visvaldis
+ 4|25|Bârbala, Lîksma
+ 4|26|Alîna, Rûsiòð, Sandris
+ 4|27|Raimonda, Raina, Tâle
+ 4|28|Gundega, Terçze
+ 4|29|Laine, Raimonds, Vilnis
+ 4|30|Liâna, Lilia
+ 5| 1|Ziedonis
+ 5| 2|Sigmunds, Zigismunds, Zigmunds
+ 5| 3|Gints, Uvis
+ 5| 4|Viola, Vizbulîte
+ 5| 5|Ìederts, Ìirts
+ 5| 6|Didzis, Gaidis
+ 5| 7|Henriete, Henrijs, Jete
+ 5| 8|Staòislava, Staòislavs, Stefânija
+ 5| 9|Einârs, Ervîns, Klâvs
+ 5|10|Maija
+ 5|11|Karmena, Manfreds, Milda
+ 5|12|Ina, Inâra, Inârs, Valija
+ 5|13|Ira, Iraîda, Irçna, Irîna
+ 5|14|Aivita, Elfa, Elvita, Kriðjânis
+ 5|15|Airita, Arita, Sofija, Taiga
+ 5|16|Edijs, Edvîns
+ 5|17|Dailis, Herberts, Umberts
+ 5|18|Çriks, Inese, Inesis
+ 5|19|Lita, sibilla, Teika
+ 5|20|Salvis, Selva, Venta
+ 5|21|Ernestîne, Ingmârs
+ 5|22|Emîlija
+ 5|23|Leokâdija, Leontîne, Ligita, Lonija
+ 5|24|Ilvija, Marlçna, Ziedone
+ 5|25|Anðlavs, Junora
+ 5|26|Eduards, Edvards, Varis
+ 5|27|Dzidra, Gunita, Loreta
+ 5|28|Vilhelms, Vilis
+ 5|29|Maksis, Raivis, Raivo
+ 5|30|Lolita, Vitolds
+ 5|31|Alida, Jûsma
+ 6| 1|Bernadîne, Biruta, Mairita
+ 6| 2|Emma, Lîba
+ 6| 3|Ineta, Inta
+ 6| 4|Elfrîds, Sindija, Sintija
+ 6| 5|Igors, Ingvars, Margots
+ 6| 6|Ardis, Ingrîda
+ 6| 7|Arnis, Gaida
+ 6| 8|Frîda, Frîdis, Mundra
+ 6| 9|Gita
+ 6|10|Anatols, Malva
+ 6|11|Ingus, Mairis, Vidvuds
+ 6|12|Ija, Lenora, Nora
+ 6|13|Ainârs, Uva, Zigfrîds
+ 6|14|Saiva, Santis, Sentis, Tija
+ 6|15|Baòuta, Vilija, Vits, Þarmçna
+ 6|16|Justîne, Juta
+ 6|17|Artis, Artûrs
+ 6|18|Alberts, Madis
+ 6|19|Nils, Viktors
+ 6|20|Maira, Rasa, Rasma
+ 6|21|Egita, Emîls, Monvîds
+ 6|22|Laimdots, Ludmila
+ 6|23|Lîga
+ 6|24|Jânis
+ 6|25|Maiga, Milija
+ 6|26|Ausma, Inguna, Inguns
+ 6|27|Malvîne, Malvis
+ 6|28|Kitija, Viesturs
+ 6|29|Paulis, Pauls, Pâvils, Pçteris
+ 6|30|Mareks, Tâlivaldis
+ 7| 1|Imants, Ingars, Intars
+ 7| 2|Helina, Ilvars, Lauma
+ 7| 3|Benita, Everita, Verita
+ 7| 4|Sandis, Uldis, Ulvis
+ 7| 5|Andþejs, Andþs, Edîte, Esmeralda
+ 7| 6|Anrijs, Arkâdijs
+ 7| 7|Alda, Maruta
+ 7| 8|Ada, Adele, Antra
+ 7| 9|Asna, Asne, Zaiga
+ 7|10|Lija, Olîvija
+ 7|11|Leonora, Svens
+ 7|12|Indriíis, Ints
+ 7|13|Margarita, Margrieta
+ 7|14|Anvars, Oskars, Ritvars
+ 7|15|Egija, Egmonts, Egons, Heinrihs, Henriks
+ 7|16|Estere, Hermîne
+ 7|17|Aleksejs, Aleksis
+ 7|18|Rozâlija, Roze
+ 7|19|Digna, Jautrîte, Kamila
+ 7|20|Ramona, Ritma
+ 7|21|Meldra, Meldris, Melisa
+ 7|22|Marija, Marika, Marina
+ 7|23|Magda, Magone, Mçrija
+ 7|24|Krista, Kristiâna, Kristiâns, Kristîne
+ 7|25|Jçkabs, Þaklîna
+ 7|26|Ance, Anna, Annija
+ 7|27|Dita, Marta
+ 7|28|Cecîlija, Cilda
+ 7|29|Edmunds, Edþus, Vidmants
+ 7|30|Renârs, Valters
+ 7|31|Angelika, Ruta, Rûta, Sigita
+ 8| 1|Albîna, Albîns
+ 8| 2|Normunds, Stefans
+ 8| 3|Augusts
+ 8| 4|Româns, Romualds
+ 8| 5|Arvils, Osvalds
+ 8| 6|Aisma, Askolds
+ 8| 7|Alfrçds, Madars
+ 8| 8|Mudîte, Vladislava, Vladislavs
+ 8| 9|Genoveva, Madara
+ 8|10|Audris, Brencis, Inuta
+ 8|11|Liega, Olga, Zita
+ 8|12|Klâra, Vizma
+ 8|13|Elvîra, Velga
+ 8|14|Zelma, Zemugs
+ 8|15|Dzelde, Zenta
+ 8|16|Astra, Astrîda
+ 8|17|Oïegs, Vineta
+ 8|18|Elena, Ellena, Helçna, Liene
+ 8|19|Imanta, Melânija
+ 8|20|Bernhards, Boriss
+ 8|21|Janîna, Linda
+ 8|22|Everts, Rudîte
+ 8|23|Ralfs, Valgudis, Vitâlijs
+ 8|24|Bçrtulis, Boïeslavs
+ 8|25|Ivonna, Ludis, Ludvigs, Patrîcija
+ 8|26|Broòislava, Broòislavs, Natâlija, Tâlija
+ 8|27|Alens, Jorens, Þanis
+ 8|28|Auguste, Guste
+ 8|29|Aiga, Armîns, Vismants
+ 8|30|Jolanta, Samanta
+ 8|31|Aigars, Vilma
+ 9| 1|Austrums, Ilmârs, Iluta
+ 9| 2|Eliza, Lizete, Zete
+ 9| 3|Bella, Berta
+ 9| 4|Dzintara, Dzintars, Dzintra
+ 9| 5|Klaudija, Persijs
+ 9| 6|Magnuss, Maigonis, Mariuss
+ 9| 7|Ermîns, Regîna
+ 9| 8|Ilga
+ 9| 9|Bruno, Telma
+ 9|10|Albertîne, Jausma
+ 9|11|Signe, Signija
+ 9|12|Erna, Eva, Evita
+ 9|13|Iza, Izabella
+ 9|14|Sanda, Sanija, Sanita, Santa
+ 9|15|Gunvaldis, Gunvaris, Sandra
+ 9|16|Asja, Asnate, Dâgs
+ 9|17|Vaira, Vairis, Vera
+ 9|18|Elita, Liesma
+ 9|19|Muntis, Verners
+ 9|20|Gitners, Guntra, Marianna
+ 9|21|Matîss, Modris
+ 9|22|Maigurs, Mârcis, Mâris
+ 9|23|Vanda, Veneranda, Venija
+ 9|24|Agris, Agrita
+ 9|25|Rauls, Rodrigo
+ 9|26|Gundars, Knuts, Kurts
+ 9|27|Âdolfs, Ilgonis
+ 9|28|Lana, Sergejs, Svetlana
+ 9|29|Mihails, Miíelis, Miks, Mikus
+ 9|30|Elma, Menarda
+10| 1|Lâsma, Zanda
+10| 2|Ilma, Skaidris
+10| 3|Elza, Ilizana
+10| 4|Francis, Modra
+10| 5|Amâlija
+10| 6|Monika, Zilga, Zilgma
+10| 7|Daumants, Druvvaldis
+10| 8|Aina, Anete
+10| 9|Elga, Elgars, Helga
+10|10|Arvîds, Arvis, Druvis
+10|11|Monta, Silva, Tince
+10|12|Kira, Valfrîds
+10|13|Irma
+10|14|Minna, Vilhelmîne
+10|15|Eda, Hedviga, Helvijs
+10|16|Daiga, Dinija
+10|17|Gaitis, Karîna
+10|18|Erlends, Rolanda, Rolands, Ronalds
+10|19|Drosma, Drosmis, Elîna
+10|20|Leonîda, Leonîds
+10|21|Severîns, Urzula
+10|22|Irîda, Îrisa
+10|23|Dainida, Dainis
+10|24|Modrîte, Mudrîte, Renâte
+10|25|Beâte, Beatrise
+10|26|Amanda, Kaiva
+10|27|Irita, Ita, Lilita
+10|28|Antoòina, Ninona, Òina, Oksana
+10|29|Elva, Elvijs, Elvis, Laimis, Laimonis
+10|30|Nadîna, Ulla
+10|31|Rinalds, Valts
+11| 1|Ikars
+11| 2|Dzile, Viva, Vivita
+11| 3|Çrika, Dagnija
+11| 4|Atis, Oto, Otomârs
+11| 5|Klaudijs, Lote, Sabine, Sarma, Ðarlote
+11| 6|Leo, Leonards, Leons, Linards
+11| 7|Helma, Lotârs
+11| 8|Agra, Aleksandra
+11| 9|Teodors
+11|10|Markuss, Mârtiòð
+11|11|Nellija, Ojârs, Reiners
+11|12|Kaija, Kornçlija
+11|13|Eiþens, Jevgeòija, Jevgeòijs
+11|14|Fricis, Vikentijs
+11|15|Leopolds, Unda, Undine
+11|16|Banga, Glorija
+11|17|Hugo, Uga, Uìis
+11|18|Aleksandrs, Doloresa
+11|19|Elizabete, Liza, Lîze
+11|20|Anda, Andîna
+11|21|Andis, Zeltîte
+11|22|Aldis, Alfons
+11|23|Zigfrîda, Zigrîda
+11|24|Velta
+11|25|Kadrija, Kate, Katrîna
+11|26|Konrâds, Sebastians
+11|27|Lauris, Norberts
+11|28|Olita, Rita, Vita
+11|29|Ignats
+11|30|Andrejs, Andrievs, Andris
+12| 1|Arnolds, Emanuels
+12| 2|Meta, Sniedze
+12| 3|Evija, Jogita, Raita
+12| 4|Baiba, Barba, Barbara
+12| 5|Sabîne, Sarma, Klaudijs
+12| 6|Niklâvs, Nikolajs, Niks
+12| 7|Anta, Antonija, Dzirkstîte
+12| 8|Gunârs, Gunis, Vladimirs
+12| 9|Sarmîte, Tabita
+12|10|Guna, Judîte
+12|11|Valdemârs, Valdis, Voldemârs
+12|12|Iveta, Otîlija
+12|13|Lûcija, Veldze
+12|14|Auseklis, Gaisma
+12|15|Hanna, Jana, Johanna
+12|16|Alvîne
+12|17|Hilda, Teiksma
+12|18|Klinta, Kristaps, Kristofers, Krists
+12|19|Lelde, Sarmis
+12|20|Arta, Minjona
+12|21|Saulcerîte, Tomass, Toms
+12|22|Saulvedis
+12|23|Balva, Viktorija
+12|24|Âdams, Ieva
+12|25|Larisa, Stella
+12|26|Dainuvîte, Gija, Megija
+12|27|Elmârs, Inita
+12|28|Inga, Irvita, Ivita
+12|29|Ilgona, Solveiga
+12|30|Dâniela, Dâniels, Dâvis
+12|31|Kalvis, Silvestrs, Silvis

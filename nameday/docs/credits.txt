@@ -1,0 +1,32 @@
+Nameday Module Credits
+======================
+
+   Nameday was originally a fork of Ephemerids by Francisco Burzi.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Volodymyr Metenchuk (voll)
+
+     Based in Latvia, is responsible for module converting. In his free time,
+    drinks lots of wine - Bordeaux is his favourite, works as netadmin and
+    programmes yet another pn modules ;)
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Translation Teams Credits
+
+* Russian Translation Team:
+    Volodymyr Metenchuk http://www.solidno.ru/
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+Everyone Else (The nameless fixers and translators, and especially the
+                            docs and support people)
+
+    Thanks To all of you who have contributed to this module, it certainly
+    could not have been done without you.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+If you feel you were not credited for any work that you did, please contact
+staff-relations@postnuke.com
