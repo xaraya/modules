@@ -14,38 +14,38 @@
 	<xar:if condition="(($_bl_loop_index1 + 1) % 2)">
     <tr class="xar-norm">
         <td>
-			#$keyword#
+			#$loop:item['keyword']#
 		</td>
 		<td align="center">[ 
-           <xar:if condition="empty($editurl)">
-               #$edittitle#
+           <xar:if condition="empty($loop:item['editurl'])">
+               #$loop:item['edittitle']#
                <xar:else />
-                   <a href="#$editurl#">#$edittitle#</a>
+                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
            </xar:if>
            |
-           <xar:if condition="empty($deleteurl)">
-               #$deletetitle#
+           <xar:if condition="empty($loop:item['deleteurl'])">
+               #$loop:item['deletetitle']#
                <xar:else />
-                   <a href="#$deleteurl#">#$deletetitle#</a>
+                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
            </xar:if> ]
         </td>
     </tr>
 	<xar:else />
     <tr class="xar-accent">
         <td>
-			#$keyword#
+			#$loop:item['keyword']#
 		</td>
 		<td align="center">[ 
-           <xar:if condition="empty($editurl)">
-               #$edittitle#
+           <xar:if condition="empty($loop:item['editurl'])">
+               #$loop:item['edittitle']#
                <xar:else />
-                   <a href="#$editurl#">#$edittitle#</a>
+                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
            </xar:if>
            |
-           <xar:if condition="empty($deleteurl)">
-               #$deletetitle#
+           <xar:if condition="empty($loop:item['deleteurl'])">
+               #$loop:item['deletetitle']#
                <xar:else />
-                   <a href="#$deleteurl#">#$deletetitle#</a>
+                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
            </xar:if> ]
         </td>
     </tr>
