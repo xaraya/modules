@@ -119,7 +119,7 @@ function xarbb_user_viewtopic()
         $comments[$i]['commenterdatestamp'] =$comments[$i]['userdata']['date_reg'];
 
         //format the post reply date consistently with topic post date
-        $comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
+        //$comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
         //Add datestamp so users can format in template, existing templates are still OK
         $comments[$i]['xar_datestamp']=$comments[$i]['xar_datetime'];
     }
@@ -153,16 +153,15 @@ function xarbb_user_viewtopic()
     //Pager data - to prevent topic should on every additional pager page
     $data['startnum'] = $startnum;
 
-    //images - add some alt text
-    $data['newtopic']   = '<img src="' . xarTplGetImage('newpost.gif') . '" alt="'.xarML('New Topic').'" />';
-    $data['emailicon']  = '<img src="' . xarTplGetImage('emailicon.gif') . '" alt="'.xarML('Email').'" />';
-    $data['newreply']   = '<img src="' . xarTplGetImage('replypost.gif') . '" alt="'.xarML('New Reply').'" />';
-    $data['quote']      = '<img src="' . xarTplGetImage('quote.gif') . '" alt="'.xarML('Quote').'" />';
-    $data['edit']       = '<img src="' . xarTplGetImage('edit.gif') . '" alt="'.xarML('Edit').'" />';
-    $data['delete']     = '<img src="' . xarTplGetImage('delete.gif') . '" alt="'.xarML('Delete').'" />';
-    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
-    $data['pm']         = '<img src="' . xarTplGetImage('pm.gif') . '" alt="'.xarML('PM').'" />';
-    $data['rsstopic']   = '<img src="' . xarTplGetImage('topicsubscribe.gif') . '" alt="'.xarML('Subscribe to this topic').'" />';
+    // Images
+    // These are dependant on the time functions being changed
+    $data['newtopic']    = '<img src="' . xarTplGetImage('new/post.gif') . '" alt="'.xarML('New topic').'" />';
+    $data['newreply']    = '<img src="' . xarTplGetImage('new/reply.gif') . '" alt="'.xarML('New reply').'" />';
+    $data['quoteimg']    = '<img src="' . xarTplGetImage('new/icon_quote.gif') . '" alt="'.xarML('Quote').'" />';
+    $data['editimg']     = '<img src="' . xarTplGetImage('new/icon_edit.gif') . '" alt="'.xarML('Edit').'" />';
+    $data['deleteimg']   = '<img src="' . xarTplGetImage('new/icon_delete.gif') . '" alt="'.xarML('Edit').'" />';
+    $data['ipimg']       = '<img src="' . xarTplGetImage('new/icon_ip.gif') . '" alt="'.xarML('IP').'" />';
+
 
     $item = array();
     $item['module'] = 'xarbb';

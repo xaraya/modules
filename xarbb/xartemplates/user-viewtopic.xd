@@ -29,338 +29,484 @@
          
 --->
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-  <tr>
-    <td colspan="2">
-	<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
-    </td>
-  </tr>
-  <tr>
-    <td class="xar-accent">
-      <b><xar:mlstring>Forum Title</xar:mlstring>: #$fname#</b>
-    </td>
-    <td class="xar-accent" align="right">
-      <a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid))#"><xar:mlstring>Back to Forum View</xar:mlstring></a>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2"><xar:mlstring>Logged in as</xar:mlstring>: #xarUserGetVar('name')# / 
-	<xar:if condition="xarUserIsLoggedIn()">
-		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Your Account</xar:mlstring></a>
-	<xar:else />
-		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Log In | Register</xar:mlstring></a>
-	</xar:if>
-    </td>
-  </tr>
-  <tr><td colspan="2">&nbsp;</td></tr>
-  <tr>
-    <td class="xar-accent">
-      <b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b>
-    </td>
-	<xar:sec mask="ModxarBB" catch="false">
-    <td class="xar-accent" align="right">
-      [ 
-      <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
-      ]&nbsp;
-      <xar:if condition="true">[ 
-      <a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $tid))#" ><xar:mlstring>Delete</xar:mlstring></a> 
-      ]</xar:if>
-    </td>
-	</xar:sec>
-  </tr>
+	<tr>
+		<td colspan="2">
+			<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+		</td>
+	</tr>
 </table>
-<table border="0" cellpadding="0" cellspacing="5" width="100%">
-  <tr>
-    <td style="width:60%;">
-	<xar:sec mask="PostxarBB" catch="false">
-      <table cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-        <tr>
-          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>New Topic</xar:mlstring></a></td>
-          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#"><xar:mlstring>Post Reply</xar:mlstring></a></td>
-        </tr>
-      </table>
-	 </xar:sec>
-	</td>
-    <td width="40%" align="right" valign="bottom">
-<!-- Need the forum picker API.
-      <form method="POST">
-        <table border="0" cellpadding="3" cellspacing="0">
-          <tr>
-            <td align="right"><b><font face="Verdana" size="2">Forums : </b></td>
-            <td align="center">
-              <select>
-                <option>Forum Title One</option>
-                <option>Forum Title Two</option>
 
-                <option>Forum Title Three</option>
-                <option>Forum Title Four</option>
-                <option>Forum Title Five</option>
-              </select>
-            </td>
-            <td>
-            <input type="image" name="I1" src="images/go.gif" width="34" height="25"></td>
-
-          </tr>
-        </table>
-      </form> -->
-    </td>
-  </tr>
-</table>
-<xar:if condition="!empty($pager)">
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-  <tr>
-    <td class="xar-accent">
-      <table border="0" cellpadding="4" cellspacing="0" width="100%">
-        <tr>
-          <td width="45%"><b>#$pager#</b></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-</xar:if>
-<!--- insert polls hook at the top for a nicer display --->
-<xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
-    #$hooks['polls']#
-</xar:if>
-<br />
-<!--- Display the topic post itself --->
-<xar:if condition="$startnum eq 1">
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-  <tr>
-    <td width="100" align="center" class="xar-accent">&nbsp;</td>
-    <td class="xar-accent">
-      <table border="0" cellpadding="2" cellspacing="0" width="100%">
-        <tr>
-          <td width="50%"><b><xar:mlstring>Posted</xar:mlstring>:</b> #$tftime#&nbsp;&nbsp;</td>
-          <td width="50%" align="right">&nbsp;</td>
-        </tr>
-      </table>
-
-    </td>
-  </tr>
-  <tr>
-    <td width="150" class="xar-accent" valign="top" align="center">
-      <table border="0" cellpadding="3" cellspacing="0" width="100%">
-        <tr>
-          <td width="100%" align="center"><a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">#$postername#</a></td>
-        </tr>
-		<xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
-		<xar:if condition="isset($properties) and count($properties) gt 0">
-        <tr>
-          <td width="100%" align="center">
-				<xar:data-output property="$properties['avatar']" />
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+	<tr> 
+		<td align="left" valign="bottom" colspan="2">
+			<div id="top">
+				<b>
+					#$ttitle#
+				</b>
+			</div>
+			<xar:if condition="!empty($pager)">
+			<span class="xar-sub">
+				<b>
+					#$pager#
+				</b><br />
+				&nbsp; 
+			</span>
 			</xar:if>
-		  </td>
-        </tr>
-        <tr>
-          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br />#$posterdate#</td>
-        </tr>
-        <tr>
-          <td width="100%" align="center"><xar:mlstring>Topics Started</xar:mlstring>: #$usertopics#</td>
-        </tr>
-      </table>
-    </td>
-    <td valign="top">
-		#$transformedtext#<br /><br />
-		<xar:if condition="isset($properties) and count($properties) gt 0">
-			<p>&nbsp;&nbsp;<i>	
-			<xar:data-output property="$properties['signature']" /></i></p>
-		</xar:if>
-	</td>
-  </tr>
-  <tr>
-    <td width="100" class="xar-accent">&nbsp;</td>
-    <td class="xar-accent">
-
-      <table border="0" cellpadding="2" cellspacing="0" width="100%">
-        <tr>
-          <td width="50%">&nbsp;
-<!---  Uncomment to display user property icons at bottom of the topic area
-		<xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
-          <xar:if condition="isset($properties) and count($properties) gt 0">
-				<xar:data-output property="$properties['website']" />
-                <xar:data-output property="$properties['icq']" />
-                <xar:data-output property="$properties['msnm']" />
-                <xar:data-output property="$properties['aim']" />
-                <xar:data-output property="$properties['yim']" />
-            </xar:if>
---->
-          </td>
-          <td width="50%" align="right">
-              <xar:sec mask="PostxarBB" catch="false">
-          		<xar:if condition="xarModIsAvailable('bbcode')">
- 		           <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a>&nbsp;
-                </xar:if>
-              </xar:sec>
-				<xar:sec mask="ModxarBB" catch="false">
-					|&nbsp;<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a>
-				</xar:sec>
-          </td>
-        </tr>
-      </table>
-
-    </td>
-  </tr>
+		</td>
+	</tr>
 </table>
-</xar:if>
-<!--- Display each post reply --->
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+	<tr> 
+		<td align="left" valign="bottom" nowrap="nowrap">
+			<span>
+				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+					#$newtopic#
+				</a>
+				&nbsp;&nbsp;&nbsp;
+				<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
+					#$newreply#
+				</a>
+			</span>
+		</td>
+		<td align="left" valign="middle" width="100%">
+			<span class="xar-sub">
+				&nbsp;&nbsp;&nbsp;
+				<a href="#xarModUrl('xarbb', 'user', 'main')#">
+					#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
+					<xar:mlstring>
+						Forum Index
+					</xar:mlstring>
+				</a> 
+				-> 
+				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+					#$fname#
+				</a>
+			</span>
+		</td>
+	</tr>
+</table>
+
+<table width="100%" cellspacing="1" cellpadding="3" border="0">
+	<xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
+		#$hooks['polls']#
+	</xar:if>
+	<tr>
+		<th width="150" height="26" nowrap="nowrap">
+			<xar:mlstring>
+			    Author
+			</xar:mlstring>
+		</th>
+		<th nowrap="nowrap">
+			<xar:mlstring>
+			    Message
+			</xar:mlstring>
+		</th>
+	</tr>
+	<!-- BEGIN postrow -->
+	<tr> 
+		<td width="150" align="left" valign="top">
+			<span>
+				<b>
+					<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
+						#$postername#
+					</a>
+				</b>
+			</span><br />
+			<span class="xar-sub">
+				<!-- user point hook <br /> -->
+				<!-- user point image <br /> -->
+				<xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
+				<xar:if condition="isset($properties) and count($properties) gt 0">
+					<xar:data-output property="$properties['avatar']" /><br /><br />
+				</xar:if>
+				<xar:mlstring>
+					Joined
+				</xar:mlstring>: #$posterdate#<br />
+				<xar:mlstring>
+					Topics
+				</xar:mlstring>: #$usertopics#<br />
+				<xar:if condition="isset($properties) and count($properties) gt 0">
+					<xar:mlstring>
+						Location
+					</xar:mlstring>:
+					<xar:data-output property="$properties['location']" /><br /><br />
+				</xar:if>
+			</span><br />
+		</td>
+		<td width="100%" height="28" valign="top">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="100%">
+						<span>
+						<xar:mlstring>
+							Posted
+						</xar:mlstring>: #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $tftime)# 
+							<span class="xar-title">&nbsp; &nbsp; &nbsp;
+								<xar:mlstring>
+									Subject
+								</xar:mlstring>:
+								<a name="#top"></a>
+								#$ttitle#
+							</span>
+						</span>
+					</td>
+					<td valign="top" nowrap="nowrap">
+						<xar:sec mask="PostxarBB" catch="false">
+							<xar:if condition="xarModIsAvailable('bbcode')">
+								<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#">
+									#$quoteimg#
+								</a>
+							</xar:if>
+						</xar:sec>
+						<xar:sec mask="ModxarBB" catch="false">
+							<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
+								#$editimg#
+							</a>
+						</xar:sec>
+						<xar:sec mask="DeletexarBB" catch="false">
+							<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
+								#$deleteimg#
+							</a>
+						</xar:sec>
+						<xar:sec mask="AdminxarBB" catch="false">
+							<xar:if condition="xarModIsAvailable('overlib')"> 
+								<xar:overlib-init />
+								<xar:overlib-popup-open name="$olopen" 
+									caption="IP Address of $postername" 
+									text="Not Implemented"
+									width="100"
+									fgcolor="#ffffff"
+									bgcolor="#000000"
+									textcolor="#ff0000"
+									capcolor="#ffffff"
+									/>
+								<xar:overlib-popup-close name="$olclose"/>
+								<a href="javascript:void(0);" 
+								   onmouseover="#$olopen#" 
+								   onmouseout="#$olclose#">
+									#$ipimg#
+								</a>
+							</xar:if>
+						</xar:sec>
+					</td>
+				</tr>
+				<tr> 
+					<td colspan="2"><hr /></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<span>
+							#$transformedtext#<br /><br />
+							<xar:if condition="isset($properties) and count($properties) gt 0">
+								<xar:set name="$hide">$properties['signature']->value</xar:set>
+								<xar:if condition="$hide">
+									<p>
+										-----------------------------	<br />
+										<xar:data-output property="$properties['signature']" />
+									</p>
+								</xar:if>
+							</xar:if>
+						</span>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr> 
+		<td width="150" align="left" valign="middle">
+			<span>
+				<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
+					<xar:mlstring>
+					    Back to top
+					</xar:mlstring>
+				</a>
+			</span>
+		</td>
+		<td width="100%" height="28" valign="bottom" nowrap="nowrap">
+			<hr />
+			<table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+				<tr> 
+					<td valign="middle" nowrap="nowrap">
+						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
+							<img src="#xarTplGetImage('new/icon_profile.gif')#" alt="'.xarML('Profile').'" />
+						</a>
+						<a href="#xarModUrl('roles', 'user', 'email', array('uid' => $tposter))#">
+							<img src="#xarTplGetImage('new/icon_email.gif')#" alt="'.xarML('Email').'" />
+						</a>
+						<xar:if condition="xarModIsAvailable('messages')">
+							<a href="#xarModUrl('messages', 'user', 'outbox')#">
+								<img src="#xarTplGetImage('new/icon_pm.gif')#" alt="'.xarML('Private Message').'" />
+							</a>
+						</xar:if>
+						<xar:if condition="isset($properties) and count($properties) gt 0">
+							<xar:set name="$website">$properties['website']->value</xar:set>
+							<xar:if condition="$website">
+								<a href="#$website#">
+									<img src="#xarTplGetImage('new/icon_www.gif')#" alt="'.xarML('Website').'" />
+								</a>
+							</xar:if>
+							<xar:set name="$icq">$properties['icq']->value</xar:set>
+							<xar:if condition="$icq">
+								<a href="http://wwp.icq.com/#$icq##pager">
+									<img src="#xarTplGetImage('new/icon_icq_add.gif')#" alt="'.xarML('ICQ').'" />
+								</a>
+							</xar:if>
+							<xar:set name="$msn">$properties['msnm']->value</xar:set>
+							<xar:if condition="$msn">
+								<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
+									<img src="#xarTplGetImage('new/icon_msnm.gif')#" alt="'.xarML('MSN').'" />
+								</a>
+							</xar:if>
+							<xar:set name="$yim">$properties['yim']->value</xar:set>
+							<xar:if condition="$yim">
+								<a href="http://edit.yahoo.com/config/send_webmesg?.target=#$yim#&.src=pg">
+									<img src="#xarTplGetImage('new/icon_yim.gif')#" alt="'.xarML('Yahoo!').'" />
+								</a>
+							</xar:if>
+							<xar:set name="$aim">$properties['aim']->value</xar:set>
+							<xar:if condition="$aim">
+								<a href="aim:goim?screenname=#$aim#&message=Hello+Are+you+there?">
+									<img src="#xarTplGetImage('new/icon_aim.gif')#" alt="'.xarML('AOL Instant Messenger').'" />
+								</a>
+							</xar:if>
+						</xar:if>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<hr />
+
 <xar:foreach in="$items" value="$item" key="$key">
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-  <tr>
-    <td width="100" align="center" class="xar-accent">&nbsp;</td>
-    <td class="xar-accent">
-      <table border="0" cellpadding="2" cellspacing="0" width="100%">
-        <tr>
-          <td width="50%"><b><xar:mlstring>Posted</xar:mlstring>:</b> #$item['xar_date']#&nbsp;&nbsp;</td>
-          <td width="50%" align="right">
-          <xar:sec catch="false" mask="ModxarBB">
-          #$item['xar_hostname']#
-          </xar:sec>
-          </td>
-        </tr>
-      </table>
-
-    </td>
-  </tr>
-  <tr>
-    <td width="150" class="xar-accent" valign="top" align="center">
-      <table border="0" cellpadding="3" cellspacing="0" width="100%">
-           <tr>
-            <td width="100%" align="center">
-            <!--- Reply post could be anonymous - need to check --->
-                <xar:if condition="$item['xar_postanon'] eq 0">
-                    <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">#$item['xar_author']#</a>
-                <xar:else />
-                    <xar:sec catch="false" mask="modXarBB">
-                        <xar:mlstring>
-                            Anonymous
-                        </xar:mlstring>
-                        (#$item['xar_author']#)
-                        <xar:else />
-                        <xar:mlstring>
-                            Anonymous
-                        </xar:mlstring>
-                    </xar:sec>                
-                </xar:if>
-            </td>
-          </tr>
-	  	  <xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
-          <tr>
-          <td width="100%" align="center">
-            <xar:if condition="$item['xar_postanon'] eq 0">
-
-          	  <xar:if condition="isset($properties) and count($properties) gt 0">
-				<xar:data-output property="$properties['avatar']" />
-			  </xar:if>
-            </xar:if>&nbsp;
-		  </td>
-        </tr>
-        <xar:if condition="$item['xar_postanon'] eq 0">
-        <tr>
-          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br />#$item['commenterdate']#</td>
-        </tr>
-        <tr>
-          <td width="100%" align="center"><xar:mlstring>Topics Started</xar:mlstring>: #$item['usertopics']#</td>
-        </tr>
-        </xar:if>
-      </table>
-    </td>
-    <td valign="top">
-		#$item['xar_text']#<br />
-       <xar:if condition="$item['xar_postanon'] eq 0">
-		<xar:if condition="isset($properties) and count($properties) gt 0">
-			<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
-		</xar:if>
-       </xar:if>
-	</td>
-  </tr>
-  <tr>
-    <td width="100" class="xar-accent">&nbsp;</td>
-    <td class="xar-accent">
-
-      <table border="0" cellpadding="2" cellspacing="0" width="100%">
-        <tr>
-          <td width="50%">&nbsp;
-<!---  Uncomment to display user property icons at bottom of each post  reply area
-            <xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
-     		<xar:if condition="isset($properties) and count($properties) gt 0 and ($item['xar_postanon'] eq 0)">
-				<xar:data-output property="$properties['website']" />
-                <xar:data-output property="$properties['icq']" />
-                <xar:data-output property="$properties['msnm']" />
-                <xar:data-output property="$properties['aim']" />
-                <xar:data-output property="$properties['yim']" />
-          </xar:if>
---->
-          </td>
-          <td width="50%" align="right">
-				<xar:sec mask="Comments-Reply" catch="false">
-				  <xar:if condition="xarModIsAvailable('bbcode')">
-					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a>&nbsp;
-				  </xar:if>
-				</xar:sec>
-				<xar:sec mask="ModxarBB" catch="false">
-					|&nbsp;<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;
-					|&nbsp;<a href="#xarModUrl('xarbb','user','deletereply',array('cid' => $item['xar_cid']))#"><xar:mlstring>Delete</xar:mlstring></a>
-				</xar:sec>
-			</td>
-        </tr>
-      </table>
-
-    </td>
-  </tr>
+<table width="100%" cellspacing="1" cellpadding="3" border="0">
+	<tr> 
+		<td width="150" align="left" valign="top" nowrap="nowrap">
+			<span>
+				<b>
+					<!--- Reply post could be anonymous - need to check --->
+					<xar:if condition="$item['xar_postanon'] eq 0">
+						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">#$item['xar_author']#</a>
+					<xar:else />
+						<xar:sec catch="false" mask="modXarBB">
+							<xar:mlstring>
+								Anonymous
+							</xar:mlstring>
+							(#$item['xar_author']#)
+							<xar:else />
+							<xar:mlstring>
+								Anonymous
+							</xar:mlstring>
+						</xar:sec>                
+					</xar:if>
+				</b>
+			</span><br />
+			<span class="xar-sub">
+				<!-- user point hook <br /> -->
+				<!-- user point image <br /> -->
+				<xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
+				<xar:if condition="$item['xar_postanon'] eq 0">
+					<xar:if condition="isset($properties) and count($properties) gt 0">
+						<xar:data-output property="$properties['avatar']" /><br /><br />
+					</xar:if>
+					<xar:mlstring>
+						Joined
+					</xar:mlstring>: #$item['commenterdate']#<br />
+					<xar:mlstring>
+						Topics
+					</xar:mlstring>: #$item['usertopics']#<br />
+					<xar:if condition="isset($properties) and count($properties) gt 0">
+						<xar:mlstring>
+							Location
+						</xar:mlstring>:
+						<xar:data-output property="$properties['location']" /><br /><br />
+					</xar:if>
+				</xar:if>
+			</span><br />
+		</td>
+		<td width="100%" height="28" valign="top">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="100%">
+						<span>
+						<xar:mlstring>
+							Posted
+						</xar:mlstring>: #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['xar_datetime'])# 
+							<span class="xar-title">&nbsp; &nbsp; &nbsp;
+								<xar:mlstring>
+									Subject
+								</xar:mlstring>:
+								<a name="#top"></a>
+								#$ttitle#
+							</span>
+						</span>
+					</td>
+					<td valign="top" nowrap="nowrap">
+						<xar:sec mask="PostxarBB" catch="false">
+							<xar:if condition="xarModIsAvailable('bbcode')">
+								<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#">
+									#$quoteimg#
+								</a>
+							</xar:if>
+						</xar:sec>
+						<xar:sec mask="ModxarBB" catch="false">
+							<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#">
+								#$editimg#
+							</a>
+						</xar:sec>
+						<xar:sec mask="DeletexarBB" catch="false">
+							<a href="#xarModUrl('xarbb','user','deletereply',array('cid' => $item['xar_cid']))#">
+								#$deleteimg#
+							</a>
+						</xar:sec>
+						<xar:sec mask="AdminxarBB" catch="false">
+							<xar:if condition="xarModIsAvailable('overlib')"> 
+								<xar:overlib-init />
+								<xar:overlib-popup-open name="$olopen" 
+									caption="IP Address of $item[xar_author]" 
+									text="$item[xar_hostname]"
+									width="150"
+									offsetx="100"
+									fgcolor="#ffffff"
+									bgcolor="#000000"
+									textcolor="#ff0000"
+									capcolor="#ffffff"
+									/>
+								<xar:overlib-popup-close name="$olclose"/>
+								<a href="javascript:void(0);" 
+								   onmouseover="#$olopen#" 
+								   onmouseout="#$olclose#">
+									#$ipimg#
+								</a>
+							</xar:if>
+						</xar:sec>
+					</td>
+				</tr>
+				<tr> 
+					<td colspan="2"><hr /></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<span>
+							#$item['xar_text']#<br /><br />
+							<xar:if condition="$item['xar_postanon'] eq 0">
+								<xar:if condition="isset($properties) and count($properties) gt 0">
+									<xar:set name="$hide">$properties['signature']->value</xar:set>
+									<xar:if condition="$hide">
+										<p>
+											-----------------------------	<br />
+											<xar:data-output property="$properties['signature']" />
+										</p>
+									</xar:if>
+								</xar:if>
+							</xar:if>
+						</span>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr> 
+		<td width="150" align="left" valign="middle">
+			<span>
+				<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
+					<xar:mlstring>
+					    Back to top
+					</xar:mlstring>
+				</a>
+			</span>
+		</td>
+		<td width="100%" height="28" valign="bottom" nowrap="nowrap">
+			<hr />
+			<table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+				<tr> 
+					<td valign="middle" nowrap="nowrap">
+						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
+							<img src="#xarTplGetImage('new/icon_profile.gif')#" alt="'.xarML('Profile').'" />
+						</a>
+						<a href="#xarModUrl('roles', 'user', 'email', array('uid' => $item['xar_uid']))#">
+							<img src="#xarTplGetImage('new/icon_email.gif')#" alt="'.xarML('Email').'" />
+						</a>
+						<xar:if condition="xarModIsAvailable('messages')">
+							<a href="#xarModUrl('messages', 'user', 'outbox')#">
+								<img src="#xarTplGetImage('new/icon_pm.gif')#" alt="'.xarML('Private Message').'" />
+							</a>
+						</xar:if>
+							<xar:if condition="isset($properties) and count($properties) gt 0">
+								<xar:set name="$website">$properties['website']->value</xar:set>
+								<xar:if condition="$website">
+									<a href="#$website#">
+										<img src="#xarTplGetImage('new/icon_www.gif')#" alt="'.xarML('Website').'" />
+									</a>
+								</xar:if>
+								<xar:set name="$icq">$properties['icq']->value</xar:set>
+								<xar:if condition="$icq">
+									<a href="http://wwp.icq.com/#$icq##pager">
+										<img src="#xarTplGetImage('new/icon_icq_add.gif')#" alt="'.xarML('ICQ').'" />
+									</a>
+								</xar:if>
+								<xar:set name="$msn">$properties['msnm']->value</xar:set>
+								<xar:if condition="$msn">
+									<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
+										<img src="#xarTplGetImage('new/icon_msnm.gif')#" alt="'.xarML('MSN').'" />
+									</a>
+								</xar:if>
+								<xar:set name="$yim">$properties['yim']->value</xar:set>
+								<xar:if condition="$yim">
+									<a href="http://edit.yahoo.com/config/send_webmesg?.target=#$yim#&.src=pg">
+										<img src="#xarTplGetImage('new/icon_yim.gif')#" alt="'.xarML('Yahoo!').'" />
+									</a>
+								</xar:if>
+								<xar:set name="$aim">$properties['aim']->value</xar:set>
+								<xar:if condition="$aim">
+									<a href="aim:goim?screenname=#$aim#&message=Hello+Are+you+there?">
+										<img src="#xarTplGetImage('new/icon_aim.gif')#" alt="'.xarML('AOL Instant Messenger').'" />
+									</a>
+								</xar:if>
+						</xar:if>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 </table>
+
+<hr />
 </xar:foreach>
-<br />
-<xar:if condition="!empty($pager)">
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-  <tr>
-    <td class="xar-accent">
-      <table border="0" cellpadding="4" cellspacing="0" width="100%">
-        <tr>
-          <td width="45%"><b>#$pager#</b></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-</xar:if>
-<table border="0" cellpadding="0" cellspacing="5" width="100%">
-  <tr>
-    <td width="60%">
-	<xar:sec mask="Comments-Reply" catch="false">
-      <table cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-        <tr>
-          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>New Topic</xar:mlstring></a></td>
-          <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#"><xar:mlstring>Post Reply</xar:mlstring></a></td>
-        </tr>
-      </table>
-	</xar:sec>
-    </td>
-    <td width="40%" align="right" valign="bottom">
-<!-- Need the forum picker API.
-      <form method="POST">
-        <table border="0" cellpadding="3" cellspacing="0">
-          <tr>
-            <td align="right"><b><font face="Verdana" size="2">Forums : </b></td>
-            <td align="center">
-              <select>
-                <option>Forum Title One</option>
-                <option>Forum Title Two</option>
 
-                <option>Forum Title Three</option>
-                <option>Forum Title Four</option>
-                <option>Forum Title Five</option>
-              </select>
-            </td>
-            <td>
-            <input type="image" name="I1" src="images/go.gif" width="34" height="25"></td>
-
-          </tr>
-        </table>
-      </form> -->
-    </td>
-  </tr>
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+	<tr> 
+		<td align="left" valign="bottom" nowrap="nowrap">
+			<span>
+				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+					#$newtopic#
+				</a>
+				&nbsp;&nbsp;&nbsp;
+				<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
+					#$newreply#
+				</a>
+			</span>
+		</td>
+		<td align="left" valign="middle" width="100%">
+			<span class="xar-sub">
+				&nbsp;&nbsp;&nbsp;
+				<a href="#xarModUrl('xarbb', 'user', 'main')#">
+					#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
+					<xar:mlstring>
+						Forum Index
+					</xar:mlstring>
+				</a> 
+				-> 
+				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+					#$fname#
+				</a>
+			</span>
+		</td>
+	</tr>
 </table>
+
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
     <xar:foreach in="$hooks" key="$hookmodule">
     <!--- xarbb already deals with comments directly via API, using itemtype 0 (for now ?) --->
@@ -370,4 +516,3 @@
         </xar:if>
     </xar:foreach>
 </xar:if>
-

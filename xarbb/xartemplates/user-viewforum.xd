@@ -49,11 +49,13 @@
 		</xar:if>
 	</tr>
 	<tr> 
-		<td align="left" valign="middle" width="50">
-			<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-				#$newtopic#
-			</a>
-		</td>
+		<xar:sec mask="PostxarBB" catch="false">
+			<td align="left" valign="middle" width="50">
+				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+					#$newtopic#
+				</a>
+			</td>
+		</xar:sec>
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
@@ -71,7 +73,7 @@
 		</td>
 		<td align="right" valign="bottom" nowrap="nowrap">
 			<span class="xar-sub">
-				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+				<a href="#xarModUrl('xarbb', 'user', 'redirect', array('fid' => $fid))#">
 					<xar:mlstring>
 					    Mark all topics as read
 					</xar:mlstring>
@@ -165,11 +167,13 @@
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr> 
-		<td align="left" valign="middle" width="50">
-			<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-				#$newtopic#
-			</a>
-		</td>
+		<xar:sec mask="PostxarBB" catch="false">
+			<td align="left" valign="middle" width="50">
+				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+					#$newtopic#
+				</a>
+			</td>
+		</xar:sec>
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
@@ -296,3 +300,49 @@
 		</td>
 	</tr>
 </table>
+
+<xar:if condition="!xarUserIsLoggedIn()">
+	<form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
+		<table width="100%" cellpadding="3" cellspacing="1">
+			<tr> 
+				<th height="28" align="left">
+					<span class="xar-title">
+						<xar:mlstring>
+							Log in
+						</xar:mlstring>
+					</span>
+				</th>	
+			</tr>
+			<tr> 
+				<td align="center" valign="middle" height="28">
+					<span class="xar-sub">
+						<label for="uname">
+							<xar:mlstring>
+								Username
+							</xar:mlstring>: 
+						</label>
+						<input type="text" name="uname" id="uname" maxlength="64" size="10" />
+						&nbsp;&nbsp;&nbsp;
+						<label for="pass">
+							<xar:mlstring>
+								Password
+							</xar:mlstring>: 
+						</label>
+						<input type="password" name="pass" id="pass" maxlength="64" size="10" />
+						<xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
+							<label for="rememberme">
+								<xar:mlstring>
+									Remember me
+								</xar:mlstring>
+							</label>
+							<input type="checkbox" name="rememberme" id="rememberme" value="1" />
+						</xar:if>
+						&nbsp;&nbsp;&nbsp; 
+						<input type="hidden" name="redirecturl" id="returnurl" value="#$return_url#" />
+						<input type="submit" value="#$submitlabel#" />
+					</span> 
+				</td>
+			</tr>
+		</table>
+	</form>
+</xar:if>

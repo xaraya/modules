@@ -181,6 +181,10 @@ function xarbb_user_viewforum()
                                                                                   'fid'          => $fid)),
                                     xarModGetVar('xarbb', 'topicsperpage'));
 
+    // Login
+    $data['return_url']      = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
+    $data['submitlabel']    = xarML('Submit');
+
     // Return the template variables defined in this function
     return $data;
 }
