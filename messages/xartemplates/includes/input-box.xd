@@ -3,7 +3,7 @@
         <h3 style="display: inline;">#$input_title#</h3>
     </div>
     <div class="xar-norm" style="padding: 4px;">
-        <form action="#$post_url#" method="post" enctype="multipart/form-data" style="display: inline;">
+        <form name="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data" style="display: inline;">
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>
                     <td width="70">
@@ -76,8 +76,9 @@
                     <td colspan="2">
                         <br />
                         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                        <input type="submit" name="action" id="preview" value="#xarML('preview')#" />&nbsp;&nbsp;
-                        <input type="submit" name="action" id="submit" value="#xarML('submit')#" />&nbsp;&nbsp;
+                        <input type=hidden name="action">
+                        <input type="submit" id="preview" value="#xarML('preview')#" onClick="document.inputbox.action.value='preview'" />&nbsp;&nbsp;
+                        <input type="submit" id="submit" value="#xarML('submit')#" onClick="document.inputbox.action.value='submit'" />&nbsp;&nbsp;
                     </td>
                 </tr>
             </table>
