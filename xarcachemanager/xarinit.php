@@ -219,6 +219,17 @@ function xarcachemanager_init()
     xarRegisterMask('ReadXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AdminXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
+    if (xarCore_getSystemVar('DB.UseADODBCache')){
+        // Enable query caching for categories getcat
+        if (xarModIsAvailable('categories')) {
+            xarModSetVar('categories','cache.userapi.getcat',60);
+        }
+        // Enable query caching for comments get_author_count
+        if (xarModIsAvailable('comments')) {
+            xarModSetVar('comments','cache.userapi.get_author_count',60);
+        }
+    }
+
     // Initialisation successful
     return true;
 }
