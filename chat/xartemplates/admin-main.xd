@@ -1,23 +1,24 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Censor Module</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Chat Module</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
     <div style="padding: 1px;" class="xar-norm-outline">
         <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/censor/xarimages/admin.gif')" >
-                <img src="modules/censor/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:if condition="file_exists('modules/chat/xarimages/pjirclogo.gif')" >
+                <img src="modules/chat/xarimages/pjirclogo.gif" alt="official icon" width="131" height="102" />
             <xar:else />
-                <img src="modules/modules/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+                <img src="modules/modules/xarimages/admin_generic.gif" alt="official icon" width="131" height="102" />
             </xar:if></div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>What is it?</xar:mlstring>
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>The Censor Module is a utility module</xar:mlstring></em>
+            <em><xar:mlstring>The Chat Module is a content module</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
-                <li><xar:mlstring>Censoring words and phrases that you do not find appropriate for your website</xar:mlstring></li>
+                <li><xar:mlstring>Allowing a user to attach to an IRC server via their browser.</xar:mlstring></li>
+                <li><xar:mlstring>Chat module is based on PJIRC, and opensource chat client.  All source and credits are included in this distribution under xarjava directory.</xar:mlstring></li>
             </ul>
         </div>
         <br />
@@ -26,7 +27,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>You have the ability to add, delete, modify and view the censor words that you find offensive on your website.  In addition, in the modify config portion of your module, you can decide what to replace the words with, and the number of censor items to view at once.</xar:mlstring>
+            <xar:mlstring>Configure the server, port (6667 is standard) and channel that you want to open when the chat is launched.</xar:mlstring>
 
         </div>
         <br />
@@ -43,7 +44,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Transform hook allows you to choose which modules you want to censor and which you do not.</xar:mlstring>
+            <xar:mlstring>There are no included hooks.</xar:mlstring>
         </div>
     </div>
 </div>

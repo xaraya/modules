@@ -5,13 +5,20 @@
 
         <applet code=IRCApplet.class archive="irc.jar,pixx.jar" codebase="modules/chat/xarjava" width=640 height=400>
         <param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab">
+        <xar:if condition="xarUserIsLoggedIn()">
+            <param name="nick" value="#xarUserGetVar('uname')#">
+            <param name="name" value="#xarUserGetVar('name')#">
+        <xar:else />
+            <param name="nick" value="Anonymous">
+            <param name="alternatenick" value="Anon???">
+            <param name="name" value="Xaraya User">
+        </xar:if>
 
-        <param name="nick" value="Anonymous">
-        <param name="alternatenick" value="Anon???">
-        <param name="name" value="Java User">
         <param name="host" value="#$server#">
+        <param name="port" value="#$port#">
+        <param name="command1" value="/join #$channel#">
+
         <param name="gui" value="pixx">
-        <param name="quitmessage" value="PJIRC forever!">
         <param name="asl" value="true">
 
         <param name="style:bitmapsmileys" value="true">

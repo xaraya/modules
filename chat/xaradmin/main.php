@@ -16,7 +16,7 @@
  * @returns output
  * @return output with censor Menu information
  */
-function censor_admin_main()
+function chat_admin_main()
 { 
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return; 

@@ -1,0 +1,52 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Chat Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Chat Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<form method="post" action="#xarModURL('chat', 'admin', 'modifyconfig', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <label for="server"><xar:mlstring>Server</xar:mlstring></label>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="server" id="server" value="#xarModGetVar('chat', 'server', 1)#" size="25" maxlength="255" />
+    </span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <label for="port"><xar:mlstring>Port</xar:mlstring></label>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="port" id="port" value="#xarModGetVar('chat', 'port', 1)#" size="2" maxlength="4" />
+    </span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <label for="channel"><xar:mlstring>Default Channel</xar:mlstring></label>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="channel" id="channel" value="#xarModGetVar('chat', 'channel', 1)#" size="25" maxlength="255" />
+    </span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <xar:if condition="xarModGetVar('newsgroups','SupportShortURLs')">
+            <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
+        <xar:else/>
+            <input type="checkbox" name="isalias" id="isalias" value="1" />
+        </xar:if>
+    </span>
+</div>
+
+#$hooks#
+
+<div style="clear: both; padding-top: 10px;">
+<p><input type="submit" value="#xarML('Update Configuration')#" /></p>
+</div>
+</form>
+</div>
+</div>
