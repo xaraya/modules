@@ -41,7 +41,7 @@ function multisites_admin_removesite($args)
         // Get site folder name
         $sitedir = xarModAPIFunc('multisites','admin','cleandn', array('sitedn' => $mssite));
         if (!$sitedir) {
-            $msg = xarML("Could not clean ".$mssite);
+            $msg = xarML("Could not clean #(1)", $mssite);
             xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
             return $msg;
         }
@@ -52,13 +52,13 @@ function multisites_admin_removesite($args)
         if ($var) {
             chmod($sitedirpath,0755);
             if (!is_writable($sitedirpath)) {
-                $msg = xarML("The subsite directory ".$sitedirpath." could not be deleted!");
+                $msg = xarML("The subsite directory #(1) could not be deleted!", $sitedirpath);
                 xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
                     return $msg;
             } else {
                $removesite= xarModAPIFunc('multisites','admin','recdeldir', array('sitedirpath' => $sitedirpath));
                 if (!$removesite){
-                    $msg = xarML("The subsite directory ".$sitedirpath." could not be deleted!");
+                    $msg = xarML("The subsite directory #(1) could not be deleted!", $sitedirpath);
                     xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
                     return $msg;
                 }
@@ -70,7 +70,7 @@ function multisites_admin_removesite($args)
                                  array('msid' => $msid));
 
     if (!$site) {
-        $msg = xarML("Cannot delete subsite '".$msid);
+        $msg = xarML("Cannot delete subsite '#(1)", $msid);
         xarExceptionSet(XAR_USER_EXCEPTION, 'NO_DATA_RECORD', new DefaultUserException($msg));
         return $msg;
     }

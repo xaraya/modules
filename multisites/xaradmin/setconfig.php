@@ -35,7 +35,7 @@ global $HTTP_SERVER_VARS;
     //Check the site folder exists
     $var = is_dir($cWhereIsPerso);
     if ($var != true) {
-        $msg = xarML("You master site directory ".$cWhereIsPerso." does not exist! Please create it first!.");
+        $msg = xarML("You master site directory #(1) does not exist! Please create it first!", $cWhereIsPerso);
             xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DIRECTORY', new DefaultUserException($msg));
             return $msg;
     }
@@ -44,8 +44,7 @@ global $HTTP_SERVER_VARS;
     if ($var == true) {
           // echo "The directory is writable";
     } else {
-            $msg = xarML("The Site Data Directory ".$cWhereIsPerso." is not writeable!\n
-                          Please chmod 777 and try again.");
+            $msg = xarML("The Site Data Directory #(1) is not writeable!\nPlease chmod 777 and try again.", $cWhereIsPerso);
             xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
     return $msg;
     }
@@ -72,7 +71,7 @@ global $HTTP_SERVER_VARS;
 	//Get the 'cleaned' name for site directory creation
     $sitedir = xarModAPIFunc('multisites','admin','cleandn', array('sitedn' => $masterurl));
         if (!$sitedir) {
-            $msg = xarML("Could not clean ".$mssite);
+            $msg = xarML("Could not clean #(1)", $mssite);
             xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
             return $msg;
         }
@@ -84,7 +83,7 @@ global $HTTP_SERVER_VARS;
         if ($var == false) {
             $oldumask = umask(0);
             if (!mkdir($cWhereIsPerso.'/'.$sitedir,0777)) {
-                $msg = xarML('The Site Data Directory '.$cWhereIsPerso.'/'.$sitedir.'/var is not writeable!');
+                $msg = xarML('The Site Data Directory #(1)/#(2)/var is not writeable!', $cWhereIsPerso, $sitedir);
                 xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
                 return false;
             }
@@ -94,7 +93,7 @@ global $HTTP_SERVER_VARS;
         if ($var == false) {
             $oldumask = umask(0);
             if (!mkdir($cWhereIsPerso.'/'.$sitedir.'/var',0777)) {
-                $msg = xarML('The Site Data Directory '.$cWhereIsPerso.'/'.$sitedir.'/var is not writeable!');
+                $msg = xarML('The Site Data Directory #(1)/#(2)/var is not writeable!', $cWhereIsPerso, $sitedir);
                 xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
                 return false;
             }
@@ -105,7 +104,7 @@ global $HTTP_SERVER_VARS;
         $filenamein = "var/config.system.php";
         $filenameout=$cWhereIsPerso.'/'.$sitedir.'/var/config.system.php';
         if (!copy($filenamein,$filenameout)) {
-            $msg = xarML('Unable to copy master config to '.$cWhereIsPerso.'/'.$sitedir.'/var');
+            $msg = xarML('Unable to copy master config to #(1)/#(2)/var', $cWhereIsPerso, $sitedir);
             xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT COPY FILE', new DefaultUserException($msg));
             return false;
         }
