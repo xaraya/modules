@@ -4,43 +4,43 @@
 <form method="post" action="#xarModURL('ratings', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-	<table border="0" cellpadding="8" cellspacing="0">
-	<xar:foreach in="$settings" key="$modname" value="$config">
-		<tr>
-			<td colspan="2"><b>#$config['label']#</b></td>
-		</tr>
-		<tr>
-			<td><xar:mlstring>Rating Style</xar:mlstring></td>
-			<td>
-				<select name="style[#$modname#]" id="style[#$modname#]">
-				<xar:foreach in="$styleoptions" value="$option">
-					<xar:if condition="$option['id'] eq $config['style']">
-						<option value="#$option['id']#" selected>#$option['name']#</option>
-					<xar:else />
-						<option value="#$option['id']#">#$option['name']#</option>
-					</xar:if>
-				</xar:foreach>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td><xar:mlstring>Security Level</xar:mlstring></td>
-			<td>
-				<select name="seclevel[#$modname#]" id="seclevel[#$modname#]">
-				<xar:foreach in="$secleveloptions" value="$option">
-					<xar:if condition="$option['id'] eq $config['seclevel']">
-						<option value="#$option['id']#" selected>#$option['name']#</option>
-					<xar:else />
-						<option value="#$option['id']#">#$option['name']#</option>
-					</xar:if>
-				</xar:foreach>
-				</select>
-			</td>
-		</tr>
-	</xar:foreach>
-	</table>
-	<br /><br />
-	<input type="submit" value="Update Ratings Configuration" />
+    <table border="0" cellpadding="8" cellspacing="0">
+    <xar:foreach in="$settings" key="$modname" value="$config">
+        <tr>
+            <td colspan="2"><b>#$config['label']#</b></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Rating Style</xar:mlstring></td>
+            <td>
+                <select name="style[#$modname#]" id="style[#$modname#]">
+                <xar:foreach in="$styleoptions" value="$option">
+                    <xar:if condition="$option['id'] eq $config['style']">
+                        <option value="#$option['id']#" selected>#$option['name']#</option>
+                    <xar:else />
+                        <option value="#$option['id']#">#$option['name']#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Security Level</xar:mlstring></td>
+            <td>
+                <select name="seclevel[#$modname#]" id="seclevel[#$modname#]">
+                <xar:foreach in="$secleveloptions" value="$option">
+                    <xar:if condition="$option['id'] eq $config['seclevel']">
+                        <option value="#$option['id']#" selected>#$option['name']#</option>
+                    <xar:else />
+                        <option value="#$option['id']#">#$option['name']#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
+    <br /><br />
+    <input type="submit" value="Update Ratings Configuration" />
 </form>
 </div>
 </div>
