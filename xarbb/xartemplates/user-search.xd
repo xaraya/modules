@@ -41,9 +41,7 @@
                 #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['xar_ttime'])# 
             </li>
         </xar:loop>
-    <xar:if condition="empty($replies)">
-        </ul>
-    </xar:if>
+    </ul>
 </xar:if>
 
 
@@ -56,8 +54,8 @@
             </xar:mlstring>
             :
         </h3>
-        <ul>
     </xar:if>
+    <ul>
     <xar:loop name="$replies">
             <li>
                 <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_objectid']))#">
@@ -85,7 +83,7 @@
 : 
 </p>
 <xar:if condition="$header['title'] eq '1'">
-    <input type="checkbox" name="header[title]" value="1" checked />
+    <input type="checkbox" name="header[title]" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="header[title]" value="1" />
 </xar:if>
@@ -96,7 +94,7 @@
 </label>
 <br />
 <xar:if condition="$header['text'] eq '1'">
-    <input type="checkbox" name="header[text]" value="1" checked />
+    <input type="checkbox" name="header[text]" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="header[text]" value="1" />
 </xar:if>
@@ -107,7 +105,7 @@
 </label>
 <br />
 <xar:if condition="$header['author'] eq '1'">
-    <input type="checkbox" name="header[author]" value="1" checked />
+    <input type="checkbox" name="header[author]" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="header[author]" value="1" />
 </xar:if>

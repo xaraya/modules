@@ -29,7 +29,7 @@
         <option value="All">All(-)</option>
         <xar:foreach in="$fids" value="$forum">
             <xar:if condition="$forum['fid'] eq $fid">
-                <option value="#$forum['fid']#" selected>#$forum['fname']#(#$forum['fid']#)</option>
+                <option value="#$forum['fid']#" selected="selected">#$forum['fname']#(#$forum['fid']#)</option>
             <xar:else />
                 <option value="#$forum['fid']#">#$forum['fname']#(#$forum['fid']#)</option>
             </xar:if>

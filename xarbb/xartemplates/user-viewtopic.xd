@@ -284,12 +284,12 @@ functions.js is deprecated and replicates confirmlink.js
                             </a>
                         </xar:if>
                         <xar:if condition="isset($properties['yim']) and !empty($posterdata[$tposter]['yim'])">
-                            <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$posterdata[$tposter]['yim']#&.src=pg">
+                            <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$posterdata[$tposter]['yim']#&amp;.src=pg">
                                 <img src="#xarTplGetImage('new/icon_yim.gif')#" alt="#xarML('Yahoo!')#" />
                             </a>
                         </xar:if>
                         <xar:if condition="isset($properties['aim']) and !empty($posterdata[$tposter]['aim'])">
-                            <a href="aim:goim?screenname=#$posterdata[$tposter]['aim']#&message=Hello+Are+you+there?">
+                            <a href="aim:goim?screenname=#$posterdata[$tposter]['aim']#&amp;message=Hello+Are+you+there?">
                                 <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
                             </a>
                         </xar:if>
@@ -480,12 +480,12 @@ functions.js is deprecated and replicates confirmlink.js
                                 </a>
                             </xar:if>
                             <xar:if condition="isset($properties['yim']) and !empty($posterdata[$item['xar_uid']]['yim'])">
-                                <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$posterdata[$item['xar_uid']]['yim']#&.src=pg">
+                                <a href="http://edit.yahoo.com/config/send_webmesg?.target=#$posterdata[$item['xar_uid']]['yim']#&amp;.src=pg">
                                     <img src="#xarTplGetImage('new/icon_yim.gif')#" alt="#xarML('Yahoo!')#" />
                                 </a>
                             </xar:if>
                             <xar:if condition="isset($properties['aim']) and !empty($posterdata[$item['xar_uid']]['aim'])">
-                                <a href="aim:goim?screenname=#$posterdata[$item['xar_uid']]['aim']#&message=Hello+Are+you+there?">
+                                <a href="aim:goim?screenname=#$posterdata[$item['xar_uid']]['aim']#&amp;message=Hello+Are+you+there?">
                                     <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
                                 </a>
                             </xar:if>
@@ -569,8 +569,8 @@ functions.js is deprecated and replicates confirmlink.js
         </xar:if>
     </div>
     <xar:sec mask="ModxarBB" catch="false">
-        <xar:if condition="$tstatus ne 3">
-            <div>
+        <div>
+            <xar:if condition="$tstatus ne 3">
                 <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'tid' => $tid))#">
                     <img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
                 </a>

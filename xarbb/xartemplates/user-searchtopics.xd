@@ -106,7 +106,7 @@
             </td>
             <td class="xar-accent" align="center" valign="middle" nowrap="nowrap" style="border: 1px solid #000;">
                 #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
-                <strong><xar:mlstring>By: </xar:mlstring></strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">#$loop:item['replyname']#<a>
+                <strong><xar:mlstring>By: </xar:mlstring></strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">#$loop:item['replyname']#</a>
             </td>
         </tr>
     </xar:loop>
@@ -118,21 +118,19 @@
 
     <table width="98%" align="center">
         <tr> 
-            <xar:if condition="!empty($pager)">
-                <td align="right" valign="bottom" nowrap="nowrap">
+            <td align="right" valign="bottom" nowrap="nowrap">
+                <xar:if condition="!empty($pager)">
                     <span class="xar-sub">
-                        <b>
-                            #$pager#
-                        </b>  
+                        <b>#$pager#</b>  
                     </span>
-            </xar:if>
-            <span class="xar-sub">
-                <xar:mlstring>
-                    All times are GMT
-                </xar:mlstring>
-            </span>
-        </td>
-      </tr>
+                </xar:if>
+                <span class="xar-sub">
+                    <xar:mlstring>
+                        All times are GMT
+                    </xar:mlstring>
+                </span>
+            </td>
+        </tr>
     </table>
 <xar:else />
 <xar:set name="displaymessage">strtolower($message)</xar:set>

@@ -4,7 +4,7 @@
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
 
-<meta http-equiv="refresh" content="3;url=#$topicreturn#">
+<meta http-equiv="refresh" content="3;url=#$topicreturn#"/>
 
 <h4>
     <a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
