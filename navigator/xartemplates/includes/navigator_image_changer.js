@@ -6,9 +6,9 @@ function navigator_image_changer(sURL, iTypeId, sSide) {
 
     for (var i = 0; i < oFormLength; i++) { 
         if (oForm.elements[i].value != null) {
-    		if (oForm.elements[i].name == sName) {
+            if (oForm.elements[i].name == sName) {
                 var iSelectValue = oForm.elements[i].value;
-			} 
+            } 
         }
     } 
     
