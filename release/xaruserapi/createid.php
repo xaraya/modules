@@ -12,7 +12,7 @@ function release_userapi_createid($args)
         (!isset($type))) {
 
         $msg = xarML('Wrong arguments to release_userapi_createid.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,
                         'BAD_PARAM',
                         new SystemException($msg));
         return false;
@@ -23,7 +23,7 @@ function release_userapi_createid($args)
     // Argument check
     if (!ereg("^[a-z0-9][a-z0-9_-]*[a-z0-9]$", $regname)) {
         $msg = xarML('Registered name may only contain alphanumeric characters, included underscore or hypen, and no spaces.');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                         'BAD_PARAM',
                         new SystemException($msg));
         return false;
@@ -45,7 +45,7 @@ function release_userapi_createid($args)
 
     if ($result->RecordCount() > 0) {
         $msg = xarML('Sorry, requested name for that extension type is already registered.');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                         'BAD_PARAM',
                         new SystemException($msg));
         return false;

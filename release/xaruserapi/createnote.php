@@ -10,7 +10,7 @@ function release_userapi_createnote($args)
         (!isset($version))) {
 
         $msg = xarML('Wrong arguments to release_userapi_create.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,
                         'BAD_PARAM',
                         new SystemException($msg));
         return false;

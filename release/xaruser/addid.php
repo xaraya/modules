@@ -83,11 +83,11 @@ function release_user_addid()
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                         return; // throw back
                     }
-                    $reason = xarExceptionValue();
+                    $reason = xarErrorValue();
                     if (!empty($reason)) {
                        $data['message'] = substr(strrchr($reason->toString(), '|'), 1);
                     }
-                    xarExceptionFree();
+                    xarErrorFree();
                     return $data;
                 }
 

@@ -9,7 +9,7 @@ function release_adminapi_deletenote($args)
     if (!isset($rnid)) {
         $msg = xarML('Invalid Parameter Count',
                     join(', ',$invalid), 'admin', 'deletenote', 'Release');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -23,7 +23,7 @@ function release_adminapi_deletenote($args)
     if ($link == false) {
         $msg = xarML('No Such Release Note Present',
                     'release');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
+        xarErrorSet(XAR_USER_EXCEPTION, 
                     'MISSING_DATA',
                      new DefaultUserException($msg));
         return; 

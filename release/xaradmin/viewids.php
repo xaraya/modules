@@ -35,7 +35,7 @@ function release_admin_viewids()
 
     if (empty($items)) {
         $msg = xarML('There are no items to display in the release module');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

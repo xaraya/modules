@@ -13,7 +13,7 @@ function release_userapi_createdoc($args)
         (!isset($approved))) {
 
         $msg = xarML('Wrong arguments to release_userapi_createdoc.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,
                         'BAD_PARAM',
                         new SystemException($msg));
         return false;
