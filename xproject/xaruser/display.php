@@ -70,14 +70,14 @@ function xproject_user_display($args)
 								  'get',
 								  array('taskid' => $task['parentid']));
 		} else {
-			$data['roottask'] = xarMLByKey('project overview');
+			$data['roottask'] = xarML('project overview');
 		}
 		
 		if (isset($parent) && xarExceptionMajor() == XAR_NO_EXCEPTION) {
 			$data['taskparent_name'] = $parent['name'];
 			$data['taskparent_id'] = $parent['taskid'];
 		}
-		$data['taskroot_name'] = xarMLByKey('Project Top');
+		$data['taskroot_name'] = xarML('Project Top');
 	}
 
     $hooks = xarModCallHooks('item',
@@ -102,12 +102,12 @@ function xproject_user_display($args)
 		$data['projectid'] = $project['projectid'];
 		$data['parentid'] = $taskid;
 	
-		if(!isset($taskid) || $taskid == 0) $data['tasknamelabel'] = xarVarPrepForDisplay(xarMLByKey('New Task'));
-		else $data['tasknamelabel'] = xarVarPrepForDisplay(xarMLByKey('New Sub-Task'));
+		if(!isset($taskid) || $taskid == 0) $data['tasknamelabel'] = xarVarPrepForDisplay(xarML('New Task'));
+		else $data['tasknamelabel'] = xarVarPrepForDisplay(xarML('New Sub-Task'));
 		
 		$statusoptions = array();    
-		$statusoptions[] = array('id'=>0,'name'=>xarMLByKey('Open'));
-		$statusoptions[] = array('id'=>1,'name'=>xarMLByKey('Closed'));
+		$statusoptions[] = array('id'=>0,'name'=>xarML('Open'));
+		$statusoptions[] = array('id'=>1,'name'=>xarML('Closed'));
 		$data['statusoptions'] = $statusoptions;
 
 		$data['prioritydropdown'] = array();
@@ -115,7 +115,7 @@ function xproject_user_display($args)
 			$data['prioritydropdown'][] = array('id' => $x, 'name' => $x);
 		}
 
-		$data['addbutton'] = xarVarPrepForDisplay(xarMLByKey('Add'));
+		$data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
 	
 		$item = array();
 		$item['module'] = 'xproject';
@@ -129,11 +129,11 @@ function xproject_user_display($args)
                 }
 	}
 	
-	$filteroptions = array(xarMLByKey('default'),
-							xarMLByKey('My Tasks'),
-							xarMLByKey('Available Tasks'),
-							xarMLByKey('Priority List'),
-							xarMLByKey('Recent Activity'),
+	$filteroptions = array(xarML('default'),
+							xarML('My Tasks'),
+							xarML('Available Tasks'),
+							xarML('Priority List'),
+							xarML('Recent Activity'),
 							"");
 	$data['filteroptions'] = array();
 	foreach($filteroptions as $id=>$name) {
@@ -141,7 +141,7 @@ function xproject_user_display($args)
 										'name' => $name,
 										'selected' => ($id == $filter ? 1 : 0));
 	}
-	$data['filterbutton'] = xarVarPrepForDisplay(xarMLByKey('Filter'));
+	$data['filterbutton'] = xarVarPrepForDisplay(xarML('Filter'));
 	// BUILD TASKS ARRAY
 	$data['tasks'] = array();
 	$data['tasklistfilter'] = $filter;
@@ -182,9 +182,9 @@ function xproject_user_display($args)
 		$numtasks = count($data['tasks']);
 	}
 		
-	$taskoptionslist = array(1 => xarMLByKey('Surface'),
-							2 => xarMLByKey('Delete') . ' (' . xarMLByKey('delete subtasks') . ')',
-							3 => xarMLByKey('Delete') . ' (' . xarMLByKey('move subtasks up') . ')');
+	$taskoptionslist = array(1 => xarML('Surface'),
+							2 => xarML('Delete') . ' (' . xarML('delete subtasks') . ')',
+							3 => xarML('Delete') . ' (' . xarML('move subtasks up') . ')');
 	$taskoptions = array();
 	foreach($taskoptionslist as $optionid=>$option) {
 		$taskoptions[] = array('id' => $optionid,

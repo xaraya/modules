@@ -48,7 +48,7 @@ function xproject_admin_delete($args)
                      array('projectid' => $projectid))) {
         return;
     }
-    xarSessionSetVar('statusmsg', xarMLByKey('Project Deleted'));
+    xarSessionSetVar('statusmsg', xarML('Project Deleted'));
 
     xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
 

@@ -44,7 +44,7 @@ function xproject_admin_update($args)
 	}
 
 
-	xarSessionSetVar('statusmsg', xarMLByKey('Project Updated'));
+	xarSessionSetVar('statusmsg', xarML('Project Updated'));
 
     xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
 //    xarResponseRedirect(xarModURL('xproject', 'user', 'display', array('projectid' => $projectid)));

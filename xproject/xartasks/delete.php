@@ -57,7 +57,7 @@ function xproject_tasks_delete($args)
                      array('taskid' => $taskid))) {
         return;
     }
-    xarSessionSetVar('statusmsg', xarMLByKey('Task Deleted'));
+    xarSessionSetVar('statusmsg', xarML('Task Deleted'));
 
     xarResponseRedirect(xarModURL('xproject', 'user', 'display', array('projectid' => $task['projectid'], 'taskid' => $task['parentid'])));
 

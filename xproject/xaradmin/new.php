@@ -23,7 +23,7 @@ function xproject_admin_new()
     $sendmailoptions[] = array('id'=>4,'name'=>xarMLBYKey("Do NOT send email"));
 	$data['sendmailoptions'] = $sendmailoptions;
 	
-    $data['addbutton'] = xarVarPrepForDisplay(xarMLByKey('Add'));
+    $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
 
     $item = array();
     $item['module'] = 'xproject';

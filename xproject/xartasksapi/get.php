@@ -48,7 +48,7 @@ function xproject_tasksapi_get($args)
     $result = $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $sql);
+        $msg = xarML('DATABASE_ERROR', $sql);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;

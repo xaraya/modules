@@ -104,7 +104,7 @@ function xproject_userapi_getall($args)
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $sql);
+        $msg = xarML('DATABASE_ERROR', $sql);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;

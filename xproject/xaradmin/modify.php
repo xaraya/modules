@@ -51,7 +51,7 @@ function xproject_admin_modify($args)
 	$sendmailoptions[$project['sendmailfreq']]['selected'] = "1";
 	$data['sendmailoptions'] = $sendmailoptions;
 	
-    $data['updatebutton'] = xarVarPrepForDisplay(xarMLByKey('Update'));
+    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
 
     $item = array();
 	$item['module'] = 'xproject';

@@ -21,10 +21,10 @@ function xproject_adminapi_menu()
 
     $menu['menutitle'] = xarML('XProject Administration');
 
-    $menu['menulabel_new'] = xarMLByKey('New Project');
-    $menu['menulabel_view'] = xarMLByKey('Projects');
-    $menu['menulabel_search'] = xarMLByKey('Search');
-    $menu['menulabel_config'] = xarMLByKey('Config');
+    $menu['menulabel_new'] = xarML('New Project');
+    $menu['menulabel_view'] = xarML('Projects');
+    $menu['menulabel_search'] = xarML('Search');
+    $menu['menulabel_config'] = xarML('Config');
 
     $menu['status'] = '';
 

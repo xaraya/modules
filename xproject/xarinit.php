@@ -47,7 +47,7 @@ function xproject_init()
     // Check for an error with the database code, and if so raise the
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $sql);
+        $msg = xarML('DATABASE_ERROR', $sql);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
@@ -92,7 +92,7 @@ function xproject_init()
     // Check for an error with the database code, and if so raise the
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $sql2);
+        $msg = xarML('DATABASE_ERROR', $sql2);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
@@ -230,7 +230,7 @@ function xproject_delete()
     // Check for an error with the database code, and if so raise the
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        $msg = xarML('DATABASE_ERROR', $query);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;

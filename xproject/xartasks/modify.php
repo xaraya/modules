@@ -56,14 +56,14 @@ function xproject_tasks_modify($args)
 							  'get',
 							  array('taskid' => $task['parentid']));
 	} else {
-		$data['roottask'] = xarMLByKey('project overview');
+		$data['roottask'] = xarML('project overview');
 	}
 	
 	if (isset($parent) && xarExceptionMajor() == XAR_NO_EXCEPTION) {
 		$data['taskparent'] = $parent['name'];
 		$data['taskparent_id'] = $parent['taskid'];
 	} else {
-		$data['taskparent'] = xarMLByKey('Project Top');
+		$data['taskparent'] = xarML('Project Top');
 		$data['taskparent_id'] = 0;
 	}
 
@@ -76,14 +76,14 @@ function xproject_tasks_modify($args)
 	$data['description'] = $task['description'];
 
 	$statusoptions = array();    
-	$statusoptions[] = array('id'=>0,'name'=>xarMLByKey('Open'),'value'=>0);
-	$statusoptions[] = array('id'=>1,'name'=>xarMLByKey('Closed'),'value'=>1);
+	$statusoptions[] = array('id'=>0,'name'=>xarML('Open'),'value'=>0);
+	$statusoptions[] = array('id'=>1,'name'=>xarML('Closed'),'value'=>1);
 	$data['statusoptions'] = $statusoptions;
 	$data['status'] = $task['status'];
 
 	$data['priority'] = $task['priority'];
 
-	$data['updatebutton'] = xarVarPrepForDisplay(xarMLByKey('Modify'));
+	$data['updatebutton'] = xarVarPrepForDisplay(xarML('Modify'));
 
     $item = array();
 	$item['module'] = 'xproject';

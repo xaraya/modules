@@ -31,7 +31,7 @@ function xproject_admin_migrate($args)
 									'submit' 		=> $submit,
 									'taskfocus'		=> $taskfocus))) {
 
-		xarSessionSetVar('statusmsg', xarMLByKey('Project(s) Migrated'));
+		xarSessionSetVar('statusmsg', xarML('Project(s) Migrated'));
 	}
 
     xarResponseRedirect(xarModURL('xproject',
