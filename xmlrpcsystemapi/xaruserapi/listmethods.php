@@ -25,7 +25,8 @@
  */
 function xmlrpcsystemapi_userapi_listmethods($args) 
 {
-    extract($args);
+    extract($args); 
+    extract($msg);
     // listmethods has no parameters, so $msg can be ignored
     $dmap=$server->dmap;
     $elements = array();

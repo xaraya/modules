@@ -19,6 +19,7 @@
 function xmlrpcsystemapi_userapi_methodsignature($args) 
 {
     extract($args);
+    extract($msg);
 
     $methName=$msg->getParam(0);
     $methName=$methName->scalarval();

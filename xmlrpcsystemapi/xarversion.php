@@ -3,7 +3,7 @@
 $modversion['name'] = 'XML-RPC system API';
 $modversion['id'] = '744';
 $modversion['version'] = '1.0.0';
-$modversion['displayname']    = xarML('XML-RPC-API');
+$modversion['displayname']    = xarML('XML-RPC system API');
 $modversion['description'] = 'System API for XML-RPC server, implements the system.* methods';
 $modversion['official'] = 1;
 $modversion['author'] = 'Marcel van der Boom';

@@ -16,7 +16,8 @@
 function xmlrpcsystemapi_userapi_methodhelp($args) 
 {
     extract($args);
-       $methName=$msg->getParam(0);
+    extract($msg);
+    $methName=$msg->getParam(0);
     $methName=$methName->scalarval();
     $dmap = $server->dmap;
     if (ereg("^system\.", $methName)) {
