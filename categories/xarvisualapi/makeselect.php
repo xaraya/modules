@@ -43,10 +43,10 @@ function categories_visualapi_makeselect ($args)
 
 // TODO: templatize !
 
-    $select = "<select name='cids[]'".(($args['multiple'] == 1)?" multiple":'').
-               (!empty($args['javascript']) ? ' ' . $args['javascript'] : '').">";
+    $select = '<select name="cids[]"' . (($args['multiple'] == 1)?' multiple="multiple"':'').
+               (!empty($args['javascript']) ? ' ' . $args['javascript'] : '').'>'."\n";
     if (!empty($args['select_itself'])) {
-        $select .= '<option value="">'.xarML('Select :');
+        $select .= '<option value="">' . xarML('Select :') . '</option>'."\n";
     }
     $already_passed = false;
     $current_id = 0;
@@ -56,9 +56,9 @@ function categories_visualapi_makeselect ($args)
             $name = $option['name'];
             if (!empty($args['select_itself'])) {
                 if (!empty($args['values'][$option['id']])) {
-                    $select .= '<option value="'.$option['id'].'" selected>'.$name;
+                    $select .= '<option value="'.$option['id'].'" selected="selected">' . $name . '</option>'."\n";
                 } else {
-                    $select .= '<option value="'.$option['id'].'">'.$name;
+                    $select .= '<option value="'.$option['id'].'">' . $name . '</option>'."\n";
                 }
             } else {
                 $name = preg_replace('/&nbsp;/','',$name);
@@ -75,15 +75,15 @@ function categories_visualapi_makeselect ($args)
             ($args['multiple'] == 1 || !$already_passed) &&
             ($args['values'][$option['id']]>0))
         {
-            $select .= "selected ";
+            $select .= 'selected="selected" ';
             $args['values'][$option['id']]--;
             $already_passed = true;
             $current_id = $option['id'];
         }
-        $select .= "value='".$option['id']."'>".$option['name'];
+        $select .= 'value="'.$option['id'].'">'.$option['name'] . '</option>'. "\n";
     }
     unset($tree_array);
-    $select .= "</select>";
+    $select .= "</select>\n";
 
     if (!empty($args['show_edit']) && !empty($current_id) &&
 		xarSecurityCheck('EditCategories',0,'All',"All:$current_id")) {
