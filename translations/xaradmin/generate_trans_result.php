@@ -25,7 +25,8 @@ function translations_admin_generate_trans_result()
     }
     xarSessionDelVar('translations_result');
 
-    $druidbar = translations_create_generate_trans_druidbar(GEN);
+    $tran_type = xarSessionGetVar('translations_dnType');
+    $druidbar = translations_create_generate_trans_druidbar(GEN, $tran_type);
     $opbar = translations_create_opbar(GEN_TRANS);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 

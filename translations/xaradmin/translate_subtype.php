@@ -54,8 +54,7 @@ function translations_admin_translate_subtype()
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar($subtype,$subname);
-    $druidbar = translations_create_translate_druidbar(TRANSLATE);
-
+    $druidbar = translations_create_translate_druidbar(TRAN, $dnType);
     $tplData = array_merge($tplData, $opbar, $trabar, $druidbar);
     $tplData['dnType'] = translations__dnType2Name($dnType);
 

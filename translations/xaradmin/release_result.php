@@ -27,7 +27,8 @@ function translations_admin_release_result()
 
     $tplData['url'] = xarServerGetBaseURL().xarCoreGetVarDirPath().'/cache/'.$filename;
 
-    $druidbar = translations_create_generate_trans_druidbar(REL);
+    $tran_type = xarSessionGetVar('translations_dnType');
+    $druidbar = translations_create_generate_trans_druidbar(REL, $tran_type);
     $opbar = translations_create_opbar(GEN_TRANS);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 

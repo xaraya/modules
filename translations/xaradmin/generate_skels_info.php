@@ -19,10 +19,10 @@ function translations_admin_generate_skels_info()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $druidbar = translations_create_generate_skels_druidbar(INFO);
+    $tran_type = xarSessionGetVar('translations_dnType');
+    $druidbar = translations_create_generate_skels_druidbar(INFO,$tran_type);
     $opbar = translations_create_opbar(GEN_SKELS);
     $tplData = array_merge($druidbar, $opbar);
-    $tran_type = xarSessionGetVar('translations_dnType');
     $tplData['dnType'] = translations__dnType2Name($tran_type);
 
     return $tplData;

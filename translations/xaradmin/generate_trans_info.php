@@ -23,7 +23,8 @@ function translations_admin_generate_trans_info()
     $tplData['release_locale'] = translations_release_locale();
     $tplData['archiver_path'] = xarModAPIFunc('translations','admin','archiver_path');
 
-    $druidbar = translations_create_generate_trans_druidbar(INFO);
+    $tran_type = xarSessionGetVar('translations_dnType');
+    $druidbar = translations_create_generate_trans_druidbar(INFO, $tran_type);
     $opbar = translations_create_opbar(GEN_TRANS);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 

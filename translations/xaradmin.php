@@ -9,12 +9,12 @@
 // Purpose of file: translations admin GUI
 // ----------------------------------------------------------------------
 
-define('CHOOSE', -1);
-define('INFO', 0);
-define('GEN', 1);
-define('TRAN',2);
-define('REL', 2);
-define('DOWNLOAD', 3);
+define('CHOOSE', 0);
+define('INFO', 1);
+define('GEN', 2);
+define('TRAN',3);
+define('REL', 3);
+define('DOWNLOAD', 4);
 
 define('OVERVIEW', 0);
 define('GEN_SKELS', 1);
@@ -35,8 +35,22 @@ define('RELEASE', 4);
 
 // PRIVATE STUFF
 
-function translations_create_generate_skels_druidbar($currentStep) 
+function translations_create_generate_skels_druidbar($currentStep, $tran_type) 
 {
+    switch($tran_type) {
+    case XARMLS_DNTYPE_MODULE:
+        $stepLabels[CHOOSE] = xarML('Choose a module');
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
+        break;
+    case XARMLS_DNTYPE_THEME:
+        $stepLabels[CHOOSE] = xarML('Choose a theme');
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
+        break;
+    default:
+        $stepLabels[CHOOSE] = xarML('Wrong translation type!');
+        $stepURLs[CHOOSE] = NULL;
+        break;
+    }
     $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepURLs[INFO] = xarModURL('translations', 'admin', 'generate_skels_info');
@@ -45,8 +59,22 @@ function translations_create_generate_skels_druidbar($currentStep)
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
 }
 
-function translations_create_translate_druidbar($currentStep) 
+function translations_create_translate_druidbar($currentStep, $tran_type) 
 {
+    switch($tran_type) {
+    case XARMLS_DNTYPE_MODULE:
+        $stepLabels[CHOOSE] = xarML('Choose a module');
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
+        break;
+    case XARMLS_DNTYPE_THEME:
+        $stepLabels[CHOOSE] = xarML('Choose a theme');
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
+        break;
+    default:
+        $stepLabels[CHOOSE] = xarML('Wrong translation type!');
+        $stepURLs[CHOOSE] = NULL;
+        break;
+    }
     $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepLabels[TRAN] = xarML('Translate');
@@ -56,38 +84,51 @@ function translations_create_translate_druidbar($currentStep)
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
 }
 
-function translations_create_generate_trans_druidbar($currentStep) 
+function translations_create_generate_trans_druidbar($currentStep, $tran_type) 
 {
+    switch($tran_type) {
+    case XARMLS_DNTYPE_MODULE:
+        $stepLabels[CHOOSE] = xarML('Choose a module');
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
+        break;
+    case XARMLS_DNTYPE_THEME:
+        $stepLabels[CHOOSE] = xarML('Choose a theme');
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
+        break;
+    default:
+        $stepLabels[CHOOSE] = xarML('Wrong translation type!');
+        $stepURLs[CHOOSE] = NULL;
+        break;
+    }
     $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepLabels[REL] = xarML('Release');
     //$stepLabels[DOWNLOAD] = xarML('Download');
     $stepURLs[INFO] = xarModURL('translations', 'admin', 'generate_trans_info');
     $stepURLs[GEN] = xarModURL('translations', 'admin', 'generate_trans');
+    $stepURLs[REL] = NULL;
     //$stepURLs[REL] = xarModURL('translations', 'admin', 'generate_release');
-    $stepURLs[DOWNLOAD] = NULL;
+    //$stepURLs[DOWNLOAD] = NULL;
 
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
 }
 
 function translations_create_choose_a_module_druidbar($currentStep) 
 {
-    // This + 1 is actually an "hack"
-    $stepLabels[CHOOSE + 1] = xarML('Choose a module');
-    $stepLabels[OVERVIEW + 1] = xarML('Overview');
-    $stepURLs[CHOOSE + 1] = xarModURL('translations', 'admin', 'choose_a_module');
-    $stepURLs[OVERVIEW + 1] = NULL;
+    $stepLabels[CHOOSE] = xarML('Choose a module');
+    $stepLabels[INFO] = xarML('Overview');
+    $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
+    $stepURLs[INFO] = NULL;
 
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep + 1);
 }
 
 function translations_create_choose_a_theme_druidbar($currentStep) 
 {
-    // This + 1 is actually an "hack"
-    $stepLabels[CHOOSE + 1] = xarML('Choose a theme');
-    $stepLabels[OVERVIEW + 1] = xarML('Overview');
-    $stepURLs[CHOOSE + 1] = xarModURL('translations', 'admin', 'choose_a_theme');
-    $stepURLs[OVERVIEW + 1] = NULL;
+    $stepLabels[CHOOSE] = xarML('Choose a theme');
+    $stepLabels[INFO] = xarML('Overview');
+    $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
+    $stepURLs[INFO] = NULL;
 
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep + 1);
 }

@@ -19,9 +19,10 @@ function translations_admin_translate()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
+    $tran_type = xarSessionGetVar('translations_dnType');
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar('', '');
-    $druidbar = translations_create_translate_druidbar(TRAN);
+    $druidbar = translations_create_translate_druidbar(TRAN, $tran_type);
     $tplData = array_merge($opbar, $trabar, $druidbar);
 
     return $tplData;
