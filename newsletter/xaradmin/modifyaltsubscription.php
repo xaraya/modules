@@ -6,7 +6,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003-2004 by the Xaraya Development Team
- * @link http://xavier.schwabfoundation.org
+ * @link http://www.xaraya.com
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>

@@ -6,7 +6,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003-2004 by the Xaraya Development Team
- * @link http://xavier.schwabfoundation.org
+ * @link http://www.xaraya.com
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
@@ -22,7 +22,7 @@ $modversion['changelog'] = 'xardocs/changelog.txt';
 $modversion['license'] = 'xardocs/license.txt';
 $modversion['official'] = 1;
 $modversion['author'] = 'Richard Cave';
-$modversion['contact'] = 'rcave@xaraya.org';
+$modversion['contact'] = 'rcave@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
 $modversion['securityschema'] = array('newsletter::All' => '::');
