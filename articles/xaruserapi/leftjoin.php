@@ -101,6 +101,9 @@ function articles_userapi_leftjoin($args)
             foreach ($matches[1] as $match) {
                 $found[$idx] = $match;
                 $match = preg_quote($match);
+				
+				$match = str_replace("#","\#",$match);
+				
                 $where = trim(preg_replace("#'$match'#","'~$idx~'",$where));
                 $idx++;
             }
