@@ -67,7 +67,7 @@ function sitecontact_user_contactus()
     if (!isset($setmail) ) {
        $setmail = xarModGetVar('sitecontact','scdefaultemail');
    }
-   $data['setmal']=$setmail;
+   $data['setmail']=$setmail;
     $today = getdate();
     $month = $today['month'];
     $mday = $today['mday'];
