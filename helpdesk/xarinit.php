@@ -25,68 +25,7 @@
 * initialise the helpdesk module
 */
 function helpdesk_init()
-{
-    // this module can't work without the dynamicdata module
-    $testmod = xarModIsAvailable('dynamicdata');
-    if (!isset($testmod)) return; // some other exception got in our way [locale for instance :)]
-
-    if (!$testmod) {
-        $msg = xarML('Please activate the Dynamic Data module first...');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
-                        new DefaultUserException($msg));
-        return;
-    }
-    
-    // this module can't work without the comments module
-    $testmod = xarModIsAvailable('comments');
-    if (!isset($testmod)) return; // some other exception got in our way [locale for instance :)]
-
-    if (!$testmod) {
-        $msg = xarML('Please activate the Comments module first...');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
-                        new DefaultUserException($msg));
-        return;
-    }
-    
-    // this module can't work without the comments module
-    $testmod = xarModIsAvailable('categories');
-    if (!isset($testmod)) return; // some other exception got in our way [locale for instance :)]
-
-    if (!$testmod) {
-        $msg = xarML('Please activate the Categories module first...');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
-                        new DefaultUserException($msg));
-        return;
-    }else{
-        // let's hook it in
-        $cid = xarModAPIFunc('categories', 'admin', 'create',
-                             array('name' => 'Helpdesk',
-                                   'description' => 'Main Helpdesk Cats.',
-                                   'parent_id' => 0));
-        // Note: you can have more than 1 mastercid (cfr. articles module)
-        xarModSetVar('helpdesk', 'number_of_categories', 1);
-        xarModSetVar('helpdesk', 'mastercids', $cid);
-        $categories = array();
-        $categories[] = array('name' => "General Helpdesk",
-                              'description' => "General helpdesk");
-        $categories[] = array('name' => "Networking",
-                              'description' => "Networking");
-        $categories[] = array('name' => "Tech Support",
-                              'description' => "Tech Support");
-        $categories[] = array('name' => "Software",
-                              'description' => "Software");
-        foreach($categories as $subcat) {
-            $subcid = xarModAPIFunc('categories', 'admin', 'create',
-                                    array('name' => $subcat['name'],
-                                          'description' => $subcat['description'],
-                                          'parent_id' => $cid));
-        }
-        // Enable categories hooks for articles
-        xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));        
-   
-    }
-    
+{   
     // Get database information
     list($dbconn) = xarDBGetConn();
     $xartable     = xarDBGetTables();
@@ -161,7 +100,36 @@ function helpdesk_init()
     xarRegisterMask('addhelpdesk',    'All','helpdesk','helpdesk','All', 'ACCESS_ADD');
     xarRegisterMask('deletehelpdesk', 'All','helpdesk','helpdesk','All', 'ACCESS_DELETE');
     xarRegisterMask('adminhelpdesk',  'All','helpdesk','helpdesk','All', 'ACCESS_ADMIN');
-     
+
+    
+    // let's hook cats in
+    $cid = xarModAPIFunc('categories', 'admin', 'create',
+                         array('name' => 'Helpdesk',
+                               'description' => 'Main Helpdesk Cats.',
+                               'parent_id' => 0));
+    // Note: you can have more than 1 mastercid (cfr. articles module)
+    xarModSetVar('helpdesk', 'number_of_categories', 1);
+    xarModSetVar('helpdesk', 'mastercids', $cid);
+    $categories = array();
+    $categories[] = array('name' => "General Helpdesk",
+                          'description' => "General helpdesk");
+    $categories[] = array('name' => "Networking",
+                          'description' => "Networking");
+    $categories[] = array('name' => "Tech Support",
+                          'description' => "Tech Support");
+    $categories[] = array('name' => "Software",
+                          'description' => "Software");
+    foreach($categories as $subcat) {
+        $subcid = xarModAPIFunc('categories', 'admin', 'create',
+                                array('name' => $subcat['name'],
+                                    'description' => $subcat['description'],
+                                    'parent_id' => $cid));
+    }
+    // Enable categories hooks for articles
+    xarModAPIFunc('modules','admin','enablehooks',
+                array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));        
+    
+         
     /**
     * Ok, Now lets create all of our dd objects
     */
@@ -301,9 +269,10 @@ function helpdesk_upgrade($oldversion)
             xarModAPIFunc('modules','admin','enablehooks',
                           array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));
             }
+            
+        case '.3.3':
+        case '0.3.3':
                       
-        default:   
-            break;    
             
     }
     // If all else fails, return true so the module no longer shows "Upgrade" in module administration

@@ -39,4 +39,6 @@ $modversion['admin'] = 1;
 $modversion['securityschema'] = array('helpdesk::' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
+
+$modversion['dependency'] = array(14, 147, 182);
 ?>
