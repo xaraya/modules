@@ -16,7 +16,6 @@
 </xar:foreach>
 </ul>
 
-<br />
 <xar:if condition="count($articles) gt 0">
 <table border="0" cellpadding="3" width="100%">
 <tr>
@@ -62,5 +61,5 @@
     </xar:if>
 </div>
 </xar:if>
-
-
+</div>
+</div>
