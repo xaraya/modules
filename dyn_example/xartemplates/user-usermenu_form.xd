@@ -5,5 +5,5 @@
 
 <p><xar:mlstring>This is only an example of hooking the user menu.  You may or may not need this functionality for your module.</xar:mlstring></p>
 
-<input type="submit" value="#$submitlabel#" align="middle" tabindex="2" />
+<input type="submit" value="#$submitlabel#"  tabindex="2" />
 </form>
