@@ -92,7 +92,7 @@
     } else {
       $check_email_query = new xenQuery("select count(*) as total from " . TABLE_CUSTOMERS . " where customers_email_address = '" . xtc_db_input($email_address) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check_email = $q->output();
       if ($check_email['total'] > 0) {
         $error = true;
@@ -129,7 +129,7 @@
       $zone_id = 0;
       $check_query = new xenQuery("select count(*) as total from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check = $q->output();
       $entry_state_has_zones = ($check['total'] > 0);
       if ($entry_state_has_zones == true) {
@@ -139,7 +139,7 @@
         }
         if ($zone_query->getrows() >= 1) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $zone = $q->output();
           $zone_id = $zone['zone_id'];
         } else {
@@ -264,7 +264,7 @@
     }
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_CREATE_ACCOUNT, xarModURL('commerce','user','create_account', '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_CREATE_ACCOUNT, xarModURL('commerce','user','create_account'));
 
  require(DIR_WS_INCLUDES . 'header.php');
 

@@ -44,7 +44,7 @@
     // verify the selected shipping address
     $check_address_query = new xenQuery("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . $_SESSION['customer_id'] . "' and address_book_id = '" . $_SESSION['sendto'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $check_address = $q->output();
 
     if ($check_address['total'] != '1') {
@@ -149,8 +149,8 @@
   if ( !isset($_SESSION['shipping']) || ( isset($_SESSION['shipping']) && ($_SESSION['shipping'] == false) && (xtc_count_shipping_modules() > 1) ) ) $_SESSION['shipping'] = $shipping_modules->cheapest();
 
 
-  $breadcrumb->add(NAVBAR_TITLE_1_CHECKOUT_SHIPPING, xarModURL('commerce','user',(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_CHECKOUT_SHIPPING, xarModURL('commerce','user',(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_CHECKOUT_SHIPPING, xarModURL('commerce','user','checkout_shipping'));
+  $breadcrumb->add(NAVBAR_TITLE_2_CHECKOUT_SHIPPING, xarModURL('commerce','user','checkout_shipping'));
 
  require(DIR_WS_INCLUDES . 'header.php');
 

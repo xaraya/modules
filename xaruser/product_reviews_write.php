@@ -32,7 +32,7 @@
     if ($valid_product == true) { // We got to the process but it is an illegal product, don't write
       $customer = new xenQuery("select customers_firstname, customers_lastname from " . TABLE_CUSTOMERS . " where customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $customer_values = $q->output();
       $date_now = date('Ymd');
       if ($customer_values['customers_lastname']=='') $customer_values['customers_lastname']=TEXT_GUEST ;
@@ -55,11 +55,11 @@
   }
 
 
-  $breadcrumb->add(NAVBAR_TITLE_REVIEWS_WRITE, xarModURL('commerce','user','product_reviews', $get_params));
+  $breadcrumb->add(NAVBAR_TITLE_REVIEWS_WRITE, xarModURL('commerce','user','product_reviews', array('x' => $get_params));
 
   $customer_info_query = new xenQuery("select customers_firstname, customers_lastname from " . TABLE_CUSTOMERS . " where customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $customer_info = $q->output();
 
  require(DIR_WS_INCLUDES . 'header.php');
@@ -69,7 +69,7 @@
 
   } else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product_info = $q->output()($product_query);
     $name = $customer_info['customers_firstname'] . ' ' . $customer_info['customers_lastname'];
     if ($name==' ') $customer_info['customers_lastname'] = TEXT_GUEST;

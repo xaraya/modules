@@ -29,15 +29,15 @@
 
   $customer_info_query = new xenQuery("select customers_id from " . TABLE_ORDERS . " where orders_id = '". (int)$_GET['order_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $customer_info = $q->output();
   if ($customer_info['customers_id'] != $_SESSION['customer_id']) {
     xarRedirectResponse(xarModURL('commerce','user',(FILENAME_ACCOUNT_HISTORY, '', 'SSL'));
   }
 
 
-  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_HISTORY_INFO, xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_HISTORY_INFO, xarModURL('commerce','user',(FILENAME_ACCOUNT_HISTORY, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_HISTORY_INFO, xarModURL('commerce','user','account'));
+  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_HISTORY_INFO, xarModURL('commerce','user','account_history'));
   $breadcrumb->add(sprintf(NAVBAR_TITLE_3_ACCOUNT_HISTORY_INFO, $_GET['order_id']), xarModURL('commerce','user',(FILENAME_ACCOUNT_HISTORY_INFO, 'order_id=' . $_GET['order_id'], 'SSL'));
 
   require(DIR_WS_CLASSES . 'order.php');
@@ -127,7 +127,7 @@ $total_block='<table>';
 $history_block='<table>';
   $statuses_query = new xenQuery("select os.orders_status_name, osh.date_added, osh.comments from " . TABLE_ORDERS_STATUS . " os, " . TABLE_ORDERS_STATUS_HISTORY . " osh where osh.orders_id = '" . (int)$_GET['order_id'] . "' and osh.orders_status_id = os.orders_status_id and os.language_id = '" . (int)$_SESSION['languages_id'] . "' order by osh.date_added");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($statuses = $q->output()) {
     $history_block.= '              <tr>' . "\n" .
          '                <td class="main" valign="top" width="70">' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$statuses['date_added']))

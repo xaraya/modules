@@ -48,7 +48,7 @@
     if ($error == false) {
       $check_customer_query = new xenQuery("select customers_password from " . TABLE_CUSTOMERS . " where customers_id = '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check_customer = $q->output();
 
       if (xtc_validate_password($password_current, $check_customer['customers_password'])) {
@@ -67,8 +67,8 @@
     }
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_PASSWORD, xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_PASSWORD, xarModURL('commerce','user',(FILENAME_ACCOUNT_PASSWORD, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_PASSWORD, xarModURL('commerce','user','account'));
+  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_PASSWORD, xarModURL('commerce','user','account_password'));
 
  require(DIR_WS_INCLUDES . 'header.php');
 

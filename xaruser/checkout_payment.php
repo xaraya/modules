@@ -70,7 +70,7 @@
     // verify the selected billing address
     $check_address_query = new xenQuery("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . $_SESSION['customer_id'] . "' and address_book_id = '" . $_SESSION['billto'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $check_address = $q->output();
 
     if ($check_address['total'] != '1') {
@@ -95,8 +95,8 @@
   $payment_modules = new payment;
 
 
-  $breadcrumb->add(NAVBAR_TITLE_1_CHECKOUT_PAYMENT, xarModURL('commerce','user',(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_CHECKOUT_PAYMENT, xarModURL('commerce','user',(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_CHECKOUT_PAYMENT, xarModURL('commerce','user','checkout_shipping'));
+  $breadcrumb->add(NAVBAR_TITLE_2_CHECKOUT_PAYMENT, xarModURL('commerce','user','checkout_payment'));
 
 $data['ADDRESS_LABEL'] = xarModAPIFunc('commerce','user','address_label',array(
     'address_format_id' =>$_SESSION['customer_id'],
@@ -230,7 +230,7 @@ $payment_block .= '
                     WHERE content_group='3'
                     AND languages_id='".$_SESSION['languages_id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $shop_content_data=$q->output();
 
 

@@ -36,7 +36,7 @@
       $_GET['login'] = 'fail';
     } else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check_customer = $q->output();
       // Check that password is good
       if (!xtc_validate_password($password, $check_customer['customers_password'])) {
@@ -48,7 +48,7 @@
 
         $check_country_query = new xenQuery("select entry_country_id, entry_zone_id from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . $check_customer['customers_id'] . "' and address_book_id = '" . $check_customer['customers_default_address_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $check_country = $q->output();
 
         $_SESSION['customer_gender'] = $check_customer['customers_gender'];
@@ -78,7 +78,7 @@
 
 
 
-  $breadcrumb->add(NAVBAR_TITLE_LOGIN, xarModURL('commerce','user','login', '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_LOGIN, xarModURL('commerce','user','login'));
  require(DIR_WS_INCLUDES . 'header.php');
 
 

@@ -14,7 +14,7 @@
   // include boxes
   require(DIR_WS_INCLUDES.'boxes.php');
 
-  $breadcrumb->add(NAVBAR_TITLE_COOKIE_USAGE, xarModURL('commerce','user',(FILENAME_COOKIE_USAGE));
+  $breadcrumb->add(NAVBAR_TITLE_COOKIE_USAGE, xarModURL('commerce','user','cookie_usage');
 
  require(DIR_WS_INCLUDES . 'header.php');
 

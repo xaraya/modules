@@ -25,7 +25,7 @@
     $check_customer_query = new xenQuery("select customers_firstname, customers_lastname, customers_password, customers_id from " . TABLE_CUSTOMERS . " where customers_email_address = '" . $_POST['email_address'] . "' and account_type!=1");
     if ($check_customer_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check_customer = $q->output();
       // Crypted password mods - create a new password, update the database and mail it to them
       $newpass = xtc_create_random_value(ENTRY_PASSWORD_MIN_LENGTH);
@@ -61,8 +61,8 @@
       xarRedirectResponse(xarModURL('commerce','user',(FILENAME_PASSWORD_FORGOTTEN, 'email=nonexistent', 'SSL'));
     }
   } else {
-    $breadcrumb->add(NAVBAR_TITLE_1_PASSWORD_FORGOTTEN, xarModURL('commerce','user','login', '', 'SSL'));
-    $breadcrumb->add(NAVBAR_TITLE_2_PASSWORD_FORGOTTEN, xarModURL('commerce','user',(FILENAME_PASSWORD_FORGOTTEN, '', 'SSL'));
+    $breadcrumb->add(NAVBAR_TITLE_1_PASSWORD_FORGOTTEN, xarModURL('commerce','user','login'));
+    $breadcrumb->add(NAVBAR_TITLE_2_PASSWORD_FORGOTTEN, xarModURL('commerce','user','filenam_password_forgotten'));
 
  include(DIR_WS_INCLUDES . 'header.php');
 

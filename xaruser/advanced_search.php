@@ -23,7 +23,7 @@
   require_once(DIR_FS_INC . 'xtc_checkdate.inc.php');
 
 
-  $breadcrumb->add(NAVBAR_TITLE_ADVANCED_SEARCH, xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH));
+  $breadcrumb->add(NAVBAR_TITLE_ADVANCED_SEARCH, xarModURL('commerce','user','advanced_search');
 
  require(DIR_WS_INCLUDES . 'header.php');
 

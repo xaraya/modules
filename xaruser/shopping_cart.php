@@ -47,7 +47,7 @@
                                        and popt.language_id = '" . $_SESSION['languages_id'] . "'
                                        and poval.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $attributes_values = $q->output();
 
           $products[$i][$option]['products_options_name'] = $attributes_values['products_options_name'];

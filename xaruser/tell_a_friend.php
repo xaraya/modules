@@ -22,7 +22,7 @@
   if (isset($_SESSION['customer_id'])) {
     $account = new xenQuery("select customers_firstname, customers_lastname, customers_email_address from " . TABLE_CUSTOMERS . " where customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $account_values = $q->output();
   } elseif (ALLOW_GUEST_TO_TELL_A_FRIEND == 'false') {
   //
@@ -37,7 +37,7 @@
 
 
 
-  $breadcrumb->add(NAVBAR_TITLE_TELL_A_FRIEND, xarModURL('commerce','user','tell_a_friend', 'send_to=' . $_GET['send_to'] . '&products_id=' . $_GET['products_id']));
+  $breadcrumb->add(NAVBAR_TITLE_TELL_A_FRIEND, xarModURL('commerce','user','tell_a_friend', array('send_to' =>$_GET['send_to'], 'products_id' => $_GET['products_id']));
 
  require(DIR_WS_INCLUDES . 'header.php');
 
@@ -59,7 +59,7 @@
 <?php
   } else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product_info = $q->output();
     $data['heading_tell_a_friend'] = sprintf(HEADING_TITLE_TELL_A_FRIEND, $product_info['products_name']);
 

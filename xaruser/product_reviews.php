@@ -29,11 +29,11 @@
   $product_info_query = new xenQuery("select pd.products_name from " . TABLE_PRODUCTS_DESCRIPTION . " pd left join " . TABLE_PRODUCTS . " p on pd.products_id = p.products_id where pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_status = '1' and pd.products_id = '" . (int)$_GET['products_id'] . "'");
   if (!$product_info_query->getrows()) xarRedirectResponse(xarModURL('commerce','user','reviews'));
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $product_info = $q->output();
 
 
-  $breadcrumb->add(NAVBAR_TITLE_PRODUCT_REVIEWS, xarModURL('commerce','user','product_reviews', $get_params));
+  $breadcrumb->add(NAVBAR_TITLE_PRODUCT_REVIEWS, xarModURL('commerce','user','product_reviews', array('x' => $get_params));
 
  require(DIR_WS_INCLUDES . 'header.php');
 
@@ -45,7 +45,7 @@ $data_reviews=array();
   if ($reviews_query->getrows()) {
     $row = 0;
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($reviews = $q->output()) {
       $row++;
       $data_reviews[]=array(

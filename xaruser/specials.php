@@ -29,7 +29,7 @@ $module_content='';
     $row = 0;
     $specials_query = new xenQuery($specials_split->sql_query);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($specials = $q->output()) {
       $row++;
       $products_price = xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$specials['products_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));

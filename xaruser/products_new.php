@@ -47,7 +47,7 @@ $module_content='';
   if ($products_new_split->number_of_rows > 0) {
     $products_new_query = new xenQuery($products_new_split->sql_query);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($products_new = $q->output()) {
       if (xarModAPIFunc('commerce','user','not_null',array('arg' => $products_new['specials_new_products_price']))) {
         $products_price = xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$products_new['products_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));

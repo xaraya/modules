@@ -44,19 +44,19 @@
 
   $global_query = new xenQuery("select global_product_notifications from " . TABLE_CUSTOMERS_INFO . " where customers_info_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $global = $q->output();
 
   if ($global['global_product_notifications'] != '1') {
     $orders_query = new xenQuery("select orders_id from " . TABLE_ORDERS . " where customers_id = '" . $_SESSION['customer_id'] . "' order by date_purchased desc limit 1");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $orders = $q->output();
 
     $products_array = array();
     $products_query = new xenQuery("select products_id, products_name from " . TABLE_ORDERS_PRODUCTS . " where orders_id = '" . $orders['orders_id'] . "' order by products_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($products = $q->output()) {
       $products_array[] = array('id' => $products['products_id'],
                                 'text' => $products['products_name']);

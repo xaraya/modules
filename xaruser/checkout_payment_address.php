@@ -93,14 +93,14 @@
         $zone_id = 0;
         $check_query = new xenQuery("select count(*) as total from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $check = $q->output();
         $entry_state_has_zones = ($check['total'] > 0);
         if ($entry_state_has_zones == true) {
           $zone_query = new xenQuery("select distinct zone_id from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country . "' and (zone_name like '" . xtc_db_input($state) . "%' or zone_code like '%" . xtc_db_input($state) . "%')");
           if ($zone_query->getrows() == 1) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $zone = $q->output();
             $zone_id = $zone['zone_id'];
           } else {
@@ -168,7 +168,7 @@
 
       $check_address_query = new xenQuery("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . $_SESSION['customer_id'] . "' and address_book_id = '" . $_SESSION['billto'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check_address = $q->output();
 
       if ($check_address['total'] == '1') {
@@ -190,8 +190,8 @@
     $_SESSION['billto'] = $_SESSION['customer_default_address_id'];
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_1_PAYMENT_ADDRESS, xarModURL('commerce','user',(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_PAYMENT_ADDRESS, xarModURL('commerce','user',(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_PAYMENT_ADDRESS, xarModURL('commerce','user','checkout_payment'));
+  $breadcrumb->add(NAVBAR_TITLE_2_PAYMENT_ADDRESS, xarModURL('commerce','user','checkout_payment_address'));
 
   $addresses_count = xtc_count_customer_address_book_entries();
  require(DIR_WS_INCLUDES . 'header.php');
@@ -217,7 +217,7 @@ $address_content='<table border="0" width="100%" cellspacing="0" cellpadding="0"
 
       $addresses_query = new xenQuery("select address_book_id, entry_firstname as firstname, entry_lastname as lastname, entry_company as company, entry_street_address as street_address, entry_suburb as suburb, entry_city as city, entry_postcode as postcode, entry_state as state, entry_zone_id as zone_id, entry_country_id as country_id from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($addresses = $q->output()) {
         $format_id = xtc_get_address_format_id($address['country_id']);
  $address_content.=' <tr>

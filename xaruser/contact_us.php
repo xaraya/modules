@@ -28,7 +28,7 @@
                     WHERE content_group='4'
                     AND languages_id='".$_SESSION['languages_id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $shop_content_data=$q->output();
 
 
@@ -49,7 +49,7 @@
 
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_CONTACT_US, xarModURL('commerce','user',(FILENAME_CONTACT_US));
+  $breadcrumb->add(NAVBAR_TITLE_CONTACT_US, xarModURL('commerce','user','contact_us');
  require(DIR_WS_INCLUDES . 'header.php');
  $data['CONTACT_HEADING'] = $shop_content_data['content_title'];
 

@@ -76,7 +76,7 @@
 
     $check_email_query = new xenQuery("select count(*) as total from " . TABLE_CUSTOMERS . " where customers_email_address = '" . xtc_db_input($email_address) . "' and customers_id != '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $check_email = $q->output();
     if ($check_email['total'] > 0) {
       $error = true;
@@ -114,12 +114,12 @@
   } else {
     $account_query = new xenQuery("select customers_gender, customers_firstname, customers_lastname, customers_dob, customers_email_address, customers_telephone, customers_fax from " . TABLE_CUSTOMERS . " where customers_id = '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $account = $q->output();
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_EDIT, xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_EDIT, xarModURL('commerce','user',(FILENAME_ACCOUNT_EDIT, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_EDIT, xarModURL('commerce','user','account'));
+  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_EDIT, xarModURL('commerce','user', 'account_edit'));
 
 require(DIR_WS_INCLUDES . 'header.php');
 

@@ -100,14 +100,14 @@
       $zone_id = 0;
       $check_query = new xenQuery("select count(*) as total from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check = $q->output();
       $entry_state_has_zones = ($check['total'] > 0);
       if ($entry_state_has_zones == true) {
         $zone_query = new xenQuery("select distinct zone_id from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country . "' and (zone_name like '" . xtc_db_input($state) . "%' or zone_code like '%" . xtc_db_input($state) . "%')");
         if ($zone_query->getrows() == 1) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $zone = $q->output();
           $zone_id = $zone['zone_id'];
         } else {
@@ -202,7 +202,7 @@
     }
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $entry = $q->output();
   } elseif (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     if ($_GET['delete'] == $_SESSION['customer_default_address_id']) {
@@ -212,7 +212,7 @@
     } else {
       $check_query = new xenQuery("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where address_book_id = '" . (int)$_GET['delete'] . "' and customers_id = '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check = $q->output();
 
       if ($check['total'] < 1) {
@@ -233,15 +233,15 @@
     }
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_1_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user',(FILENAME_ADDRESS_BOOK, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user','account'));
+  $breadcrumb->add(NAVBAR_TITLE_2_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user','address_book'));
 
   if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
-    $breadcrumb->add(NAVBAR_TITLE_MODIFY_ENTRY_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user',(FILENAME_ADDRESS_BOOK_PROCESS, 'edit=' . $_GET['edit'], 'SSL'));
+    $breadcrumb->add(NAVBAR_TITLE_MODIFY_ENTRY_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user','address_book_process', array('edit' => $_GET['edit'], 'SSL'));
   } elseif (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-    $breadcrumb->add(NAVBAR_TITLE_DELETE_ENTRY_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user',(FILENAME_ADDRESS_BOOK_PROCESS, 'delete=' . $_GET['delete'], 'SSL'));
+    $breadcrumb->add(NAVBAR_TITLE_DELETE_ENTRY_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user',address_book_process', array('delete' => $_GET['delete'], 'SSL'));
   } else {
-    $breadcrumb->add(NAVBAR_TITLE_ADD_ENTRY_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user',(FILENAME_ADDRESS_BOOK_PROCESS, '', 'SSL'));
+    $breadcrumb->add(NAVBAR_TITLE_ADD_ENTRY_ADDRESS_BOOK_PROCESS, xarModURL('commerce','user',address_book_process'));
   }
 
  require(DIR_WS_INCLUDES . 'header.php');

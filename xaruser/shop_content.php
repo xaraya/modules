@@ -28,10 +28,10 @@
                     WHERE content_group='".$_GET['coID']."'
                     AND languages_id='".$_SESSION['languages_id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $shop_content_data=$q->output();
 
-  $breadcrumb->add($shop_content_data['content_title'], xarModURL('commerce','user',(FILENAME_CONTENT.'coID='.$_GET['coID']));
+  $breadcrumb->add($shop_content_data['content_title'], xarModURL('commerce','user','content', array('coID' => $_GET['coID']));
 
 
  require(DIR_WS_INCLUDES . 'header.php');

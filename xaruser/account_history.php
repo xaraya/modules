@@ -24,8 +24,8 @@
   }
 
 
-  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_HISTORY, xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_HISTORY, xarModURL('commerce','user',(FILENAME_ACCOUNT_HISTORY, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_HISTORY, xarModURL('commerce','user','account'));
+  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_HISTORY, xarModURL('commerce','user','account_history'));
 
  require(DIR_WS_INCLUDES . 'header.php');
 
@@ -36,11 +36,11 @@
     $history_query = new xenQuery($history_split->sql_query);
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($history = $q->output()) {
       $products_query = new xenQuery("select count(*) as count from " . TABLE_ORDERS_PRODUCTS . " where orders_id = '" . $history['orders_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $products = $q->output();
 
       if (xarModAPIFunc('commerce','user','not_null',array('arg' => $history['delivery_name']))) {

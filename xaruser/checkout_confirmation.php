@@ -102,7 +102,7 @@
   }
 
 
-  $breadcrumb->add(NAVBAR_TITLE_1_CHECKOUT_CONFIRMATION, xarModURL('commerce','user',(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_CHECKOUT_CONFIRMATION, xarModURL('commerce','user','checkout_shipping'));
   $breadcrumb->add(NAVBAR_TITLE_2_CHECKOUT_CONFIRMATION);
 
 
@@ -184,7 +184,7 @@ $total_block='<table>';
   if (MODULE_ORDER_TOTAL_INSTALLED) {
     $order_total_modules->process();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $total_block.= $q->output();
   }
   $total_block.='</table>';

@@ -26,7 +26,7 @@
 
   $global_query = new xenQuery("select global_product_notifications from " . TABLE_CUSTOMERS_INFO . " where customers_info_id = '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $global = $q->output();
 
   if (isset($_POST['action']) && ($_POST['action'] == 'process')) {
@@ -53,7 +53,7 @@
       if (sizeof($products_parsed) > 0) {
         $check_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_NOTIFICATIONS . " where customers_id = '" . (int)$_SESSION['customer_id'] . "' and products_id not in (" . implode(',', $products_parsed) . ")");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $check = $q->output();
 
         if ($check['total'] > 0) {
@@ -63,7 +63,7 @@
     } else {
       $check_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_NOTIFICATIONS . " where customers_id = '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check = $q->output();
 
       if ($check['total'] > 0) {
@@ -76,8 +76,8 @@
     xarRedirectResponse(xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_NOTIFICATIONS, xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
-  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_NOTIFICATIONS, xarModURL('commerce','user',(FILENAME_ACCOUNT_NOTIFICATIONS, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_NOTIFICATIONS, xarModURL('commerce','user','account'));
+  $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_NOTIFICATIONS, xarModURL('commerce','user','account_notifications'));
 
  require(DIR_WS_INCLUDES . 'header.php');
 
@@ -93,7 +93,7 @@ $data['GLOBAL_NOTIFICATION'] = '1';
 
     $products_check_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_NOTIFICATIONS . " where customers_id = '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $products_check = $q->output();
     if ($products_check['total'] > 0) {
 
@@ -101,7 +101,7 @@ $data['GLOBAL_NOTIFICATION'] = '1';
       $notifications_products='<table width="100%" border="0" cellspacing="0" cellpadding="0">';
       $products_query = new xenQuery("select pd.products_id, pd.products_name from " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_PRODUCTS_NOTIFICATIONS . " pn where pn.customers_id = '" . (int)$_SESSION['customer_id'] . "' and pn.products_id = pd.products_id and pd.language_id = '" . (int)$_SESSION['languages_id'] . "' order by pd.products_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products = $q->output()) {
       $notifications_products.= '
 

@@ -27,7 +27,7 @@
 
   $newsletter_query = new xenQuery("select customers_newsletter from " . TABLE_CUSTOMERS . " where customers_id = '" . (int)$_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $newsletter = $q->output();
 
   if (isset($_POST['action']) && ($_POST['action'] == 'process')) {
@@ -48,7 +48,7 @@
     xarRedirectResponse(xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
   }
 
-  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_NEWSLETTERS, xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL'));
+  $breadcrumb->add(NAVBAR_TITLE_1_ACCOUNT_NEWSLETTERS, xarModURL('commerce','user','account'));
   $breadcrumb->add(NAVBAR_TITLE_2_ACCOUNT_NEWSLETTERS, xarModURL('commerce','user',(FILENAME_ACCOUNT_NEWSLETTERS, '', 'SSL'));
 
  require(DIR_WS_INCLUDES . 'header.php');

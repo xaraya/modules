@@ -23,11 +23,11 @@
   $reviews_query = new xenQuery("select rd.reviews_text, r.reviews_rating, r.reviews_id, r.products_id, r.customers_name, r.date_added, r.last_modified, r.reviews_read, p.products_id, pd.products_name, p.products_image from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd left join " . TABLE_PRODUCTS . " p on (r.products_id = p.products_id) left join " . TABLE_PRODUCTS_DESCRIPTION . " pd on (p.products_id = pd.products_id and pd.language_id = '". $_SESSION['languages_id'] . "') where r.reviews_id = '" . (int)$_GET['reviews_id'] . "' and r.reviews_id = rd.reviews_id and p.products_status = '1'");
   if (!$reviews_query->getrows()) xarRedirectResponse(xarModURL('commerce','user','reviews'));
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $reviews = $q->output();
 
 
-  $breadcrumb->add(NAVBAR_TITLE_PRODUCT_REVIEWS, xarModURL('commerce','user','product_reviews', $get_params));
+  $breadcrumb->add(NAVBAR_TITLE_PRODUCT_REVIEWS, xarModURL('commerce','user','product_reviews', array('x' => $get_params));
 
   new xenQuery("update " . TABLE_REVIEWS . " set reviews_read = reviews_read+1 where reviews_id = '" . $reviews['reviews_id'] . "'");
 
