@@ -28,6 +28,6 @@ $modversion['contact'] = 'admin@dinerminor.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array();
-$modversion['class'] = 'Core Admin';
+$modversion['class'] = 'General Admin';
 $modversion['category'] = 'Global';
 ?>
