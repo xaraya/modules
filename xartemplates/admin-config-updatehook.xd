@@ -18,16 +18,16 @@
     
 
         <tr>
-            <td><label for="supportshorturls"><xar:mlstring>Enable Create Hooks</xar:mlstring></label></td>
+            <td><label for="supportshorturls"><xar:mlstring>Enable Update Hooks</xar:mlstring></label></td>
             <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
-                <xar:data-input id="hookenabled_create" type="checkbox" name="hookenabled_create" value="$hookenabled_create"/>
+                <xar:data-input id="hookenabled_update" type="checkbox" name="hookenabled_update" value="$hookenabled_update"/>
             </td>
         </tr>
 
         <tr>
-            <td><label for="supportshorturls"><xar:mlstring>Create Hooks Function</xar:mlstring></label></td>
+            <td><label for="supportshorturls"><xar:mlstring>Update Hooks Function</xar:mlstring></label></td>
             <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
-                <xar:data-input id="hookfunctions_create" type="checkboxlist" name="hookfunctions_create" value="$hookfunctions_create" validation="$available_hook_functions"/>
+                <xar:data-input id="hookfunctions_update" type="checkboxlist" name="hookfunctions_update" value="$hookfunctions_update" validation="$available_hook_functions"/>
             </td>
         </tr>
     
