@@ -67,7 +67,6 @@ function uploads_userapi_file_dump( $args )
         }
         
         // Now we copy the contents of the file into the database
-        echo "<br />HERE";
         if (($srcId = fopen($fileSrc, 'rb')) !== FALSE) {
             
             do {
