@@ -16,9 +16,6 @@
  */
 function categories_visualapi_treearray ($args)
 {
-    // Load User API
-    if (!xarModAPILoad('categories', 'user')) return;
-
     if (!isset($args['maximum_depth'])) {
         $args['maximum_depth'] = null;
     }

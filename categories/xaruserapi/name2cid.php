@@ -12,6 +12,8 @@ function categories_userapi_name2cid ($args)
     if (empty($name) || !is_string($name)) {
         $name = 'Top';
     }
+
+    //Todo: shouldnt be xar_name in here?
     $query = "SELECT xar_parent, xar_cid FROM $categoriestable WHERE xar_description = '"
              . xarVarPrepForStore($name) . "'";
     $result = $dbconn->Execute($query);
