@@ -5,7 +5,8 @@ function release_user_displaynote()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    $rnid = xarVarCleanFromInput('rnid');
+    if (!xarVarFetch('rnid', 'int:1:', $rnid, null)) {return;}
+
 
     // The user API function is called.
     $item = xarModAPIFunc('release',
