@@ -48,6 +48,10 @@ function headlines_rssblock_display($blockinfo)
     $vars = unserialize($blockinfo['content']);
     $blockinfo['content'] = '';
 
+    if (empty($blockinfo['bid'])){
+        $blockinfo['bid'] = '';
+    }
+
     // Check and see if a feed has been supplied to us.
     if(empty($vars['rssurl'])) {
         $blockinfo['title'] = xarML('Headlines');
