@@ -37,7 +37,7 @@
                                 </xar:mlstring>
                             </label> 
                         </th>
-                        <th nowrap="nowrap" colspan="3">
+                        <th colspan="3" style="word-wrap: nowrap;">
                             <label class="xar-mod-title" for="reload"> 
                                 <xar:mlstring>
                                     Specific Actions 

@@ -1,7 +1,7 @@
  <table cellspacing="0" cellpadding="0" width="100%" border="0">
     <tr>
         <th nowrap width="60%">
-            <xar:mlstring>Title</xar:mlstring> <img src="modules/comments/xarimages/n_spacer.gif" alt="" width="1" height="1" border="0" align="absmiddle" />
+            <xar:mlstring>Title</xar:mlstring> <img src="modules/comments/xarimages/n_spacer.gif" alt="" width="1" height="1" align="absmiddle" alt="" />
         </th>
         <th nowrap width="15%">
             <xar:mlstring>Author</xar:mlstring>
