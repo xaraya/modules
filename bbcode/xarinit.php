@@ -104,6 +104,9 @@ function bbcode_upgrade($oldversion)
         case '1.1.0':
             $modversion['user']             = 1;
             break;
+        case '1.1.1':
+            $modversion['user']             = 0;
+            break;
         default:
             // Couldn't find a previous version to upgrade
             return;
