@@ -60,7 +60,7 @@
 		</td>
 	</tr>
 </table>
-<table width="100%" cellpadding="4" cellspacing="1" border="0">
+<table width="100%">
 	<tr style="border: 1px solid #000;">
 		<th colspan="2" nowrap="nowrap">
 			<h4>
@@ -186,7 +186,7 @@
   <!-- END catrow -->
 </table>
 
-<table width="100%" cellspacing="0" border="0" align="center" cellpadding="2">
+<table width="100%">
 	<tr> 
 		<td align="left">
 			<span class="xar-sub">
@@ -208,7 +208,7 @@
 </table>
 <xar:if condition="!xarUserIsLoggedIn()">
 	<form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
-		<table width="100%" cellpadding="3" cellspacing="1">
+		<table width="100%">
 			<tr> 
 				<th height="28" align="left">
 					<span class="xar-title">
@@ -254,7 +254,7 @@
 
 <br clear="all" />
 
-<table cellspacing="3" border="0" align="center" cellpadding="0">
+<table align="center">
 	<tr> 
 		<td width="20" align="center">
 			<img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post in forum')#" />
