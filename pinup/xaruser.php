@@ -15,15 +15,16 @@
  */
 function pinup_user_main()
 {
-//  basic data
+
+	// basic data
     $url    = "http://coolpick.com/way/cool/syn/babe.html";
     $needle = '7babpol.shtml"\n><img src="';
 
-//  get actual site sources
+	// get actual site sources
     $lines_array = file($url);
     $lines = implode('', $lines_array);
 
-//  retriev the image location
+	// retriev the image location
     $match_flg = preg_match("°".$needle."([^\"]+)(\")°", $lines, $matches);
 
     return array('piclocation' => $matches[1]);
