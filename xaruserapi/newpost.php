@@ -16,67 +16,58 @@ function metaweblogapi_userapi_newpost($args)
     $sn0=$msg->getParam(0);  $blogid   = $sn0->scalarval();
     $sn1=$msg->getParam(1);  $username = $sn1->scalarval();
     $sn2=$msg->getParam(2);  $password = $sn2->scalarval();
+    $sn3=$msg->getParam(3);  $struct   = $sn3->getval();
     $sn4=$msg->getParam(4);  $publish  = $sn4->scalarval();
-
-    // Get the members from the struct which represents the content
-    $sn3=$msg->getParam(3); $struct = $sn3->getval();
     
     // TODO: add support for more members
-    $title = $struct['title'];
-    $content = $struct['description'];
-    if(array_key_exists('dateCreated', $struct)) {
-        $dateCreated = iso8601_decode($struct['dateCreated']);
-    } else {
+    extract($struct); // Get all members of the struct
+    
+    // Title field, we map this to articles['title']
+    if(!isset($title)) $title = xarML("Post from #(1) on: #(2)",$username,date("Y-m-d"));
+    // Main entry, we map this to articles['summary']
+    if(!isset($description)) $description ='';
+    // dateCreated, we map this to article['pubdate']
+    if(!isset($dateCreated)) {
         $dateCreated = time();
+    } else {   
+        $dateCreated = iso8601_decode($dateCreated);
     }
+    // publish, we map this to article['status']
+    if ($publish) {
+        $status ='publishstatus'; 
+    } else {
+        $status = 'draftstatus';
+    }
+    // Retrieve our mapping
+    $status = xarModGetVar('bloggerapi',$status);
+    if(empty($status)) $status = 0; // Submitted   
     
     // categories are optional
-    $categories = array();
-    if(array_key_exists('categories', $struct)) {
-        foreach($struct['categories'] as $index => $category) {
-            $categories[] = $category->scalarval();
+    $cids[] = $blogid;
+    if(isset($categories)) {
+        foreach($categories as $index => $category) {
+            $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $category->scalarval()));
         }
     }
+    // See if we got the MT extras
+    if(isset($mt_text_more)) {
+        $body = $mt_text_more;
+    } else {
+        $body ='';
+    }
+       
     // We now have gathered all our stuff, use this to post to xaraya through the API
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
     } else {
-        // Deal with the title
-        if (empty($title)){
-            $title = xarML("Post from #(1) on: #(2)",$username,date("Y-m-d"));
-        }
-        
-        // Deal with the summary
-        $summary = $content;
-        
-        // Deal with the categories, make sure the post is in the main category at least.
-        $cids[] = $blogid; 
-        if(!empty($categories)) {
-            // Match the names we got from the client to ids, we only have to
-            // consider the subcats of blogid
-            foreach($categories as $index => $name) {
-                $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $name));
-            }
-        }
-        $bodytype = ' ';  $bodytext = $content; $language = ' ';
-        
-        if ($publish) {
-            $status ='publishstatus'; 
-        } else {
-            $status = 'draftstatus';
-        }
-        $status = xarModGetVar('bloggerapi',$status);
-        if(empty($status)) $status = 0; // Submitted
-                                        // FIXME: Test for exceptions
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
-        // FIXME: This shouldn't be necessary, but articles makes this into 01011970 
-        $pubDate = $dateCreated;
-        $postid = xarModAPIFunc('articles','admin','create',array('ptid'=>$pubType,
-                                                                  'title'=>$title,'summary'=>$summary,
-                                                                  'cids' => $cids,'bodytype'=>$bodytype, 'bodytext'=>$bodytext,
-                                                                  'language'=>$language,
-                                                                  'status' => $status,
-                                                                  'pubdate' => $pubDate));
+        $postid = xarModAPIFunc('articles','admin','create',array('ptid'    => $pubType,
+                                                                  'title'   =>  $title,
+                                                                  'summary' => $description,
+                                                                  'cids'    => $cids, 
+                                                                  'body'    => $body,
+                                                                  'status'  => $status,
+                                                                  'pubdate' => $dateCreated));
         xarLogMessage("Created article $postid with status $status ($publish) in (".join(',',$cids).")");
         if (!$postid) {
             xarErrorFree();

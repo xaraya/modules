@@ -32,6 +32,12 @@
                     <name>description</name>
                     <value><string>#$loop:item.content#</string></value>
                   </member>
+                  <xar:if condition="isset($body)">
+                    <member>
+                      <name>mt_text_more</name>
+                      <value><string>#$body#</string></value>
+                    </member>
+                  </xar:if>
                   <member>
                     <name>postid</name>
                     <value>

@@ -23,69 +23,74 @@ function metaweblogapi_userapi_editpost($args)
     $sn0=$msg->getParam(0);  $postid   = $sn0->scalarval();
     $sn1=$msg->getParam(1);  $username = $sn1->scalarval();
     $sn2=$msg->getParam(2);  $password = $sn2->scalarval();
+    $sn3=$msg->getParam(3);  $struct   = $sn3->getval();
     $sn4=$msg->getParam(4);  $publish  = $sn4->scalarval();
     
-    // Get the members from the struct which represents the content
-    // TODO: move this to an api function
-    $sn3=$msg->getParam(3);
-    $struct = $sn3->getval();
-    
-    $title = $struct['title'];
-    $content = $struct['description'];
-    if(array_key_exists('dateCreated', $struct)) {
-        $dateCreated = iso8601_decode($struct['dateCreated']);
-    } else {
-        $dateCreated = time();
+    // Before we do anything, see if we should
+    if (!xarUserLogin($username,$password)) {
+        $err = xarML("Invalid user (#(1)) or password while editing post",$username);
+        return xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
     }
-    $usingMT=false;
-    if(array_key_exists('mt_allow_comments', $struct)) {
-        $usingMT =true;
+    
+    extract($struct);
+    // Process further, first get the current article
+    // Should we check?
+    $article = xarModAPIFunc('articles','user','get',array('aid' => $postid, 'withcids' => true));
+   
+    // Title field
+    if(!isset($title)) $title = $article['title'];
+    // Main content
+    if(!isset($description)) $description = $article['summary'];
+    // Publication date
+    if(!isset($dateCreated)) {
+        $dateCreated = $article['pubdate'];
+    } else {
+        $dateCreated = iso8601_decode($struct['dateCreated']);
+    } 
+    
+    // See if we got MT stuff
+    $usingMT = isset($mt_allow_comments);
+    // Extended entry
+    if(!isset($mt_text_more)) {
+        $body = $article['body'];
+    } else {
+        $body = $mt_text_more;
     }
     
     // categories are optional
-    $categories = array();
-    if(array_key_exists('categories', $struct)) {
-        foreach($struct['categories'] as $index => $category) {
-            $categories[] = $category->scalarval();
+    $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
+    $itemCats = $article['cids'];
+    $cids = array();
+    if($usingMT) {
+        $cids = $itemCats; // MT does this separately
+    } elseif(isset($categories)) {
+        // We got some through the request
+        foreach($categories as $index => $category) {
+            $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $category->scalarval()));
         }
+        // Now we have all but the base cat
+        $rootCats = array();
+        $rootCats = xarModGetVar('articles','mastercids.'.$pubType);
+        if(!empty($rootCats)) $rootCats = explode(';',$rootCats); 
+        $blogCat = array_intersect($rootCats, $itemCats);
+        $cids[] = $blogCat[0];
     }
- 
-    if (!xarUserLogin($username,$password)) {
-        $err = xarML("Invalid user (#(1)) or password while editing post",$username);
+
+    $status = 0; // Submitted
+    if ($publish) {
+        $status = xarModGetVar('bloggerapi','publishstatus'); 
     } else {
-        // FIXME: test for exceptions
-        $article = xarModAPIFunc('articles','user','get',array('aid' => $postid, 'withcids' => true));
-        $iids = array(); $iids[] = $postid;
-        
-        // Should we error out here maybe?
-        if (empty($title)) {
-            $title = $article['title'];
-        }
-        
-        // FIXME: test for exceptions
-        $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
-        $modId = 151;
-        $cids = array();
-        if($usingMT) {
-            // MT has a separate method for setting the post categories, just copy them over here
-            $cids = $article['cids'];
-        } else {
-            foreach($categories as $catname) {
-                $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $catname));
-            }
-        }
-        if ($publish) {
-            $status ='publishstatus'; 
-        } else {
-            $status = 'draftstatus';
-        }
-        $status = xarModGetVar('bloggerapi',$status);
-        if(empty($status)) $status = 0; // Submitted
-        if (!xarModAPIFunc('articles','admin','update',array('aid'=>$article['aid'], 'title'=>$title,
-                                                             'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids, 'status' => $status,
-                                                             'bodytype'=>'normal', 'bodytext'=>$article['body'],'language'=>' '))) {
-            $err = "Failed to update post: $postid";
-        }
+        $status = xarModGetVar('bloggerapi','draftstatus');
+    }
+
+    if (!xarModAPIFunc('articles','admin','update',array('aid'      => $article['aid'], 
+                                                         'title'    => $title,
+                                                         'summary'  => $description, 
+                                                         'body'     => $body,
+                                                         'ptid'     => $pubType, 
+                                                         'cids'     => $cids, 
+                                                         'status'   => $status))) {
+        $err = "Failed to update post: $postid";
     }
     
     if (!empty($err)) {

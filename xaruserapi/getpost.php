@@ -49,6 +49,7 @@ function metaweblogapi_userapi_getpost($args)
         }
         $data['categories'] = $catnames;
         $data['content']    = xarVarPrepForDisplay($article['summary']);
+        $data['body']       = xarVarPrepForDisplay($article['body']);
         $data['postid']     = $article['aid'];
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                                 array('module'  => 'metaweblogapi',
