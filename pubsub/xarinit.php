@@ -370,7 +370,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
 
             // fall through to the next upgrade
         case '1.3':
-
+            $modversion['user'] = 0;
         default:
             break;
     } // END switch
