@@ -1,0 +1,118 @@
+<h3>#$message#</h3>
+<xar:if condition="$totalitems gt 0">
+	<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+		<tr> 
+			<xar:if condition="!empty($pager)">
+				<td align="left" valign="middle" nowrap="nowrap">
+					<span class="xar-sub">
+						<b>
+							#$pager#
+						</b>  
+					</span>
+				</td>
+			</xar:if>
+			<td align="left" valign="middle" width="100%">
+				<span class="xar-sub">
+					&nbsp;&nbsp;&nbsp;
+					<a href="#xarModUrl('xarbb', 'user', 'main')#">
+						#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
+						<xar:mlstring>
+							Forum Index
+						</xar:mlstring>
+					</a> 
+				</span>
+			</td>
+		</tr>
+	</table>
+
+	<table width="100%" cellpadding="4" cellspacing="1" border="0">
+		<tr> 
+			<th width="4%" height="25" nowrap="nowrap">&nbsp;</th>
+			<th nowrap="nowrap">&nbsp;
+				<xar:mlstring>
+					Forum
+				</xar:mlstring>
+			&nbsp;</th>
+			<th nowrap="nowrap">&nbsp;
+				<xar:mlstring>
+					Topic
+				</xar:mlstring>
+			&nbsp;</th>
+			<th nowrap="nowrap">&nbsp;
+				<xar:mlstring>
+					Author
+				</xar:mlstring>
+			&nbsp;</th>
+			<th nowrap="nowrap">&nbsp;
+				<xar:mlstring>
+					Replies
+				</xar:mlstring>
+			&nbsp;</th>
+			<th nowrap="nowrap">&nbsp;
+				<xar:mlstring>
+					Views
+				</xar:mlstring>
+			&nbsp;</th>
+			<th nowrap="nowrap">&nbsp;
+				<xar:mlstring>
+					Last post
+				</xar:mlstring>
+			&nbsp;</th>
+		</tr>
+	<xar:loop name="$items">
+		<tr> 
+			<td class="xar-norm" align="center" valign="middle">
+				#$loop:item['timeimage']#
+			</td>
+			<td class="xar-norm">
+				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $loop:item['fid']))#">
+					#$loop:item['fname']#
+				</a>
+			</td>
+			<td class="xar-norm">
+				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $loop:item['fid'], 'tid' => $loop:item['tid']))#">
+					#$loop:item['ttitle']#
+				</a>
+			</td>
+			<td class="xar-accent" align="center" valign="middle">
+				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
+					#$loop:item['replyname']#
+				</a>
+			</td>
+			<td class="xar-norm" align="center" valign="middle">
+				 #$loop:item['treplies']#
+			</td>
+			<td class="xar-accent" align="center" valign="middle">
+				#$loop:item['hitcount']#
+			</td>
+			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
+				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
+				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
+			</td>
+		</tr>
+	</xar:loop>
+		<tr> 
+			<td  class="xar-accent" colspan="7" height="28" valign="middle">&nbsp; 
+			</td>
+		</tr>
+	</table>
+
+	<table width="100%" cellspacing="2" border="0" align="center" cellpadding="2">
+		<tr> 
+			<xar:if condition="!empty($pager)">
+				<td align="right" valign="bottom" nowrap="nowrap">
+					<span class="xar-sub">
+						<b>
+							#$pager#
+						</b>  
+					</span>
+			</xar:if>
+			<span class="xar-sub">
+				<xar:mlstring>
+					All times are GMT
+				</xar:mlstring>
+			</span>
+		</td>
+	  </tr>
+	</table>
+</xar:if>

@@ -52,9 +52,19 @@ function xarbb_user_viewforum()
         $hotTopic       = xarModGetVar('xarbb', 'hottopic');
         // Images
         if (isset($_COOKIE["xarbb_all"])){
-            $alltimecompare = unserialize($_COOKIE["xarbb_all"]);
+            $allforumtimecompare = unserialize($_COOKIE["xarbb_all"]);
         } else {
-            $alltimecompare = '';
+            $allforumtimecompare = '';
+        }
+        if (isset($_COOKIE["xarbb_f_$fid"])){
+            $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
+        } else {
+            $forumtimecompare = '';
+        }
+        if ($forumtimecompare > $allforumtimecompare){
+            $alltimecompare = $forumtimecompare;
+        } else {
+            $alltimecompare = $allforumtimecompare;
         }
         $tid = $topic['tid'];
         if (isset($_COOKIE["xarbb_t_$tid"])){

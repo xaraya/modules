@@ -38,19 +38,19 @@
 		<td align="right" valign="bottom" class="xar-sub">
 			<p>
 				<xar:if condition="xarUserIsLoggedIn()">
-					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('from' => $lastvisitdate, 'to' => $now))#">
+					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('from' => $lastvisitdate))#">
 						<xar:mlstring>
-						    View topics since last visit (TODO)
+						    View topics since last visit
 						</xar:mlstring>
 					</a><br />
 					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $uid))#">
 						<xar:mlstring>
-						    View your topics (TODO)
+						    View your topics
 						</xar:mlstring>
 					</a><br />
-					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('replies' => 0))#">
+					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('replies' => 1))#">
 						<xar:mlstring>
-						    View unanswered topics (TODO)
+						    View unanswered topics
 						</xar:mlstring>
 					</a>
 				</xar:if>
@@ -58,7 +58,7 @@
 		</td>
 	</tr>
 </table>
-<table width="100%" cellpadding="2" cellspacing="1">
+<table width="100%" cellpadding="4" cellspacing="1">
 	<tr> 
 		<th colspan="2" nowrap="nowrap">
 			<xar:mlstring>
@@ -75,7 +75,7 @@
 				Posts
 			</xar:mlstring>
 		</th>
-		<th nowrap="nowrap">
+		<th width="250" nowrap="nowrap">
 			<xar:mlstring>
 				Last Post
 			</xar:mlstring>
@@ -117,7 +117,7 @@
 				#$loop:item['ftopics']#
 			</span>
 		</td>
-		<td class="xar-accent" align="center" valign="middle">
+		<td class="xar-norm" align="center" valign="middle">
 			<span class="xar-sub">
 				#$loop:item['fposts']#
 			</span>

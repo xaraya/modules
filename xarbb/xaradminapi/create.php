@@ -80,7 +80,8 @@ function xarbb_adminapi_create($args)
               xar_ftopics,
               xar_fposts,
               xar_fposter,
-              xar_fpostid)
+              xar_fpostid,
+              xar_fstatus   )
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($fname) . "',
@@ -88,7 +89,8 @@ function xarbb_adminapi_create($args)
               '" . xarVarPrepForStore($ftopics) . "',
               '" . xarVarPrepForStore($fposts) . "',
               '" . xarVarPrepForStore($fposter) . "',
-              '$fpostid')";
+              '$fpostid',
+              '" . xarVarPrepForStore($fstatus) . "')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

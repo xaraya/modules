@@ -20,7 +20,7 @@
  * @returns array
  * @return array of links, or false on failure
  */
-function xarbb_userapi_getalltopics($args)
+function xarbb_userapi_getalltopics_byuid($args)
 {
     extract($args);
 
@@ -35,8 +35,8 @@ function xarbb_userapi_getalltopics($args)
         $cids = array();
     }
 
-    if (empty($fid) && empty($tids)) {
-        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+    if (empty($uid)) {
+        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'getalltopics_byuid', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -76,11 +76,8 @@ function xarbb_userapi_getalltopics($args)
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} ";
-    if (isset($fid)) {
-        $query .= "AND $xbbforumstable.xar_fid = " . xarVarPrepForStore($fid);
-    } else {
-        $query .= "AND xar_tid IN (" . join(', ', $tids) . ")";
-    }
+    // Get by UID
+    $query .= "AND $xbbtopicstable.xar_tposter = " . xarVarPrepForStore($uid);
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 

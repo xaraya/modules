@@ -83,7 +83,12 @@ function xarbb_user_main()
     $data['now']    = time();
     //xarModSetVar('xarbb', 'lastvisitdate', $data['now']);
     $sitename = xarModGetVar('themes', 'SiteName', 0);
-    $data['lastvisitdate'] = xarModGetUserVar('xarbb', 'lastvisitdate', $data['uid']); 
+
+    if (isset($_COOKIE["xarbb_lastvisit"])){
+        $data['lastvisitdate'] = unserialize($_COOKIE["xarbb_lastvisit"]);
+    } else {
+        $data['lastvisitdate'] = 1;
+    }
 
     // Images
     // These are dependant on the time functions being changed

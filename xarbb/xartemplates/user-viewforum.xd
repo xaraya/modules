@@ -132,31 +132,31 @@
 			#$loop:item['timeimage']#
 		</td>
 		<td class="xar-norm" width="100%">
-			<span class="topictitle">
+			<span>
 				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => $loop:item['tid']))#">
 					#$loop:item['ttitle']#
 				</a>
 			</span>
 		</td>
 		<td class="xar-accent" align="center" valign="middle">
-			<span class="postdetails">
+			<span>
 				#$loop:item['comments']#
 			</span>
 		</td>
 		<td class="xar-norm" align="center" valign="middle">
-			<span class="name">
+			<span>
 				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
 					#$loop:item['replyname']#
 				</a>
 			</span>
 		</td>
 		<td class="xar-accent" align="center" valign="middle">
-			<span class="postdetails">
+			<span>
 				#$loop:item['hitcount']#
 			</span>
 		</td>
 		<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
-			<span class="postdetails">
+			<span>
 				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
 				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
 			</span>

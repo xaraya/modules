@@ -44,7 +44,8 @@ function xarbb_userapi_getallforums($args)
                    xar_ftopics,
                    xar_fposts,
                    xar_fposter,
-                   xar_fpostid
+                   xar_fpostid,
+                   xar_fstatus
             FROM $xbbforumstable";
     if (!empty($catid) && xarModIsHooked('categories','xarbb',1)) {
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
@@ -68,7 +69,7 @@ function xarbb_userapi_getallforums($args)
 
     $forums = array();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid) = $result->fields;
+        list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus) = $result->fields;
         if (xarSecurityCheck('ViewxarBB', 0,'Forum',"$fid:All")) {
             $forums[] = array('fid'     => $fid,
                               'fname'   => $fname,
@@ -76,7 +77,8 @@ function xarbb_userapi_getallforums($args)
                               'ftopics' => $ftopics,
                               'fposts'  => $fposts,
                               'fposter' => $fposter,
-                              'fpostid' => $fpostid);
+                              'fpostid' => $fpostid,
+                              'fstatus' => $fstatus);
         }
     }
 

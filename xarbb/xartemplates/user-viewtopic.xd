@@ -58,17 +58,19 @@
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
 	<tr> 
-		<td align="left" valign="bottom" nowrap="nowrap">
-			<span>
-				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-					#$newtopic#
-				</a>
-				&nbsp;&nbsp;&nbsp;
-				<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
-					#$newreply#
-				</a>
-			</span>
-		</td>
+		<xar:sec mask="PostxarBB" catch="false">
+			<td align="left" valign="bottom" nowrap="nowrap">
+				<span>
+					<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+						#$newtopic#
+					</a>
+					&nbsp;&nbsp;&nbsp;
+					<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
+						#$newreply#
+					</a>
+				</span>
+			</td>
+		</xar:sec>
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
@@ -127,10 +129,13 @@
 					Topics
 				</xar:mlstring>: #$usertopics#<br />
 				<xar:if condition="isset($properties) and count($properties) gt 0">
-					<xar:mlstring>
-						Location
-					</xar:mlstring>:
-					<xar:data-output property="$properties['location']" /><br /><br />
+					<xar:set name="$location">$properties['location']->value</xar:set>
+					<xar:if condition="$location">
+						<xar:mlstring>
+							Location
+						</xar:mlstring>:
+						<xar:data-output property="$properties['location']" /><br /><br />
+					</xar:if>
 				</xar:if>
 			</span><br />
 		</td>
@@ -318,10 +323,13 @@
 						Topics
 					</xar:mlstring>: #$item['usertopics']#<br />
 					<xar:if condition="isset($properties) and count($properties) gt 0">
-						<xar:mlstring>
-							Location
-						</xar:mlstring>:
-						<xar:data-output property="$properties['location']" /><br /><br />
+						<xar:set name="$location">$properties['location']->value</xar:set>
+						<xar:if condition="$location">
+							<xar:mlstring>
+								Location
+							</xar:mlstring>:
+							<xar:data-output property="$properties['location']" /><br /><br />
+						</xar:if>
 					</xar:if>
 				</xar:if>
 			</span><br />
@@ -478,17 +486,19 @@
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
 	<tr> 
-		<td align="left" valign="bottom" nowrap="nowrap">
-			<span>
-				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-					#$newtopic#
-				</a>
-				&nbsp;&nbsp;&nbsp;
-				<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
-					#$newreply#
-				</a>
-			</span>
-		</td>
+		<xar:sec mask="PostxarBB" catch="false">
+			<td align="left" valign="bottom" nowrap="nowrap">
+				<span>
+					<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+						#$newtopic#
+					</a>
+					&nbsp;&nbsp;&nbsp;
+					<a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
+						#$newreply#
+					</a>
+				</span>
+			</td>
+		</xar:sec>
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;

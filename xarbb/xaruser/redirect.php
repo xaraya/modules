@@ -23,14 +23,17 @@ function xarbb_user_redirect($args)
     $data['now']    = serialize(time());
     if ((empty($fid)) && (empty($tid))){
         $sitename = xarModGetVar('themes', 'SiteName', 0);
-        setcookie('xarbb_all', $data['now'], time()+10000, "/", "", 0);
+        setcookie('xarbb_all', $data['now'], time()+300000, "/", "", 0);
+        setcookie('xarbb_lastvisit', $data['now'], time()+300000, "/", "", 0);
         xarResponseRedirect(xarModURL('xarbb', 'user', 'main'));
     } elseif ((!empty($fid)) && (empty($tid))) {
-        setcookie('xarbb_f_'.$fid, $data['now'], time()+10000, "/", "", 0);
+        setcookie('xarbb_f_'.$fid, $data['now'], time()+300000, "/", "", 0);
+        setcookie('xarbb_lastvisit', $data['now'], time()+300000, "/", "", 0);
         xarResponseRedirect(xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid)));
     } elseif (!empty($tid)) {
-        setcookie('xarbb_f_'.$fid, $data['now'], time()+10000, "/", "", 0);
-        setcookie('xarbb_t_'.$tid, $data['now'], time()+10000, "/", "", 0);
+        setcookie('xarbb_f_'.$fid, $data['now'], time()+300000, "/", "", 0);
+        setcookie('xarbb_t_'.$tid, $data['now'], time()+300000, "/", "", 0);
+        setcookie('xarbb_lastvisit', $data['now'], time()+300000, "/", "", 0);
         xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
     }
     return true;

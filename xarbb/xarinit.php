@@ -42,7 +42,8 @@ function xarbb_init()
     'xar_ftopics'      => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_fposts'       => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_fposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment' => false, 'primary_key' => false),
-    'xar_fpostid'      => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
+    'xar_fpostid'      => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0')//,
+    //'xar_fstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny')
     //'xar_fpostid'      => array('type'=>'datetime','null'=>false,'default'=>'1970-01-01 00:00')
     );
 
@@ -274,7 +275,27 @@ function xarbb_upgrade($oldversion)
 
             break;
         case '1.0.1':
-            xarModSetVar('xarbb', 'lastvisitdate', '');
+            // Upgrade Path TODO
+            // Time Fields
+            // Forum Status
+            break;
+        case '1.0.2':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $topicstable = $xartable['xbbforums'];
+
+             xarDBLoadTableMaintenanceAPI();
+            // Update the topics table with a first post date tfpost field
+           $query = xarDBAlterTable($topicstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_fstatus',
+                                    'type'    => 'integer',
+                                    'null'    => false,
+                                    'default' => '0',
+                                    'size'    => 'tiny'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return; 
             break;
         default:
             break;

@@ -53,8 +53,9 @@ function xarbb_adminapi_update($args)
 
     // Update the forum
     $query = "UPDATE $xbbforumstable
-            SET xar_fname = '" . xarVarPrepForStore($fname) . "',
-                xar_fdesc = '" . xarVarPrepForStore($fdesc) . "'
+            SET xar_fname   = '" . xarVarPrepForStore($fname) . "',
+                xar_fdesc   = '" . xarVarPrepForStore($fdesc) . "',
+                xar_fstatus = '" . xarVarPrepForStore($fstatus) . "'
             WHERE xar_fid = " . xarVarPrepForStore($fid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;

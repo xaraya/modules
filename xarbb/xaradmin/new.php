@@ -23,6 +23,7 @@ function xarbb_admin_new()
     // Get parameters
 	if (!xarVarFetch('fname', 'str:1:', $data['fname'], '', XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fstatus','checkbox', $data['fstatus'],false,XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cids',     'isset',    $cids,    NULL, XARVAR_DONT_SET)) return;
 
@@ -68,7 +69,8 @@ function xarbb_admin_new()
                                      'cids'     => $data['cids'],
                                      'fposter'  => $tposter,
                                      'ftopics'  => 1,
-                                     'fposts'   => 1))) return;
+                                     'fposts'   => 1,
+                                     'fstatus'  => $data['fstatus']))) return;
 
             // Get New Forum ID
             $forum = xarModAPIFunc('xarbb',
@@ -79,6 +81,8 @@ function xarbb_admin_new()
             // Need to create a topic so we don't get the nasty empty error when viewing the forum.
             $ttitle = xarML('First Post');
             $tpost = xarML('This is your first topic');
+            $data['now']    = time();
+            xarModSetVar('xarbb', 'lastvisitdate.'.$forum['fid'], $data['now']);
 
             if (!xarModAPIFunc('xarbb',
                                'user',
