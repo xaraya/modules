@@ -3,7 +3,7 @@
 $modversion['name'] = 'Events';
 $modversion['id'] = '69';
 $modversion['version'] = '0.1';
-$modversion['description'] = 'Events showcase & tickets booking module for Xaraya';
+$modversion['description'] = 'Events showcase &amp; tickets booking module for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
 $modversion['changelog'] = 'xardocs/changelog.txt';
