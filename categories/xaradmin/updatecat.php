@@ -68,7 +68,7 @@ function categories_admin_updatecat()
 
         // Pass to API
         if (!$creating) {
-            if (xarModAPIFunc('categories',
+            if (!xarModAPIFunc('categories',
                              'admin',
                              'updatecat',
                              array('cid'         => $cid,
@@ -79,16 +79,10 @@ function categories_admin_updatecat()
                                    'refcid'      => $refcid[$cid],
                                    'inorout'     => $inorout,
                                    'rightorleft' => $rightorleft
-                               )))
-            {
-                // Success
-                xarSessionSetVar('statusmsg', xarML('Category updated'));
-            } else {
-                xarSessionSetVar('errormsg', xarML('Could not update the category'));
-            }
+                               ))) return;
         } else {
             // Pass to API
-            if (xarModAPIFunc('categories',
+            if (!xarModAPIFunc('categories',
                               'admin',
                               'createcat',
                               array(
@@ -99,9 +93,7 @@ function categories_admin_updatecat()
                                     'refcid'      => $refcid[$cid],
                                     'inorout'     => $inorout,
                                     'rightorleft' => $rightorleft
-                                   ))) {
-                xarSessionSetVar('statusmsg', xarML('Created category'));
-            }
+                                   ))) return;
         }
     }
 
