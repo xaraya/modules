@@ -1,50 +1,47 @@
 <xar:template file="publinks" type="module" />
-<strong>
-<xar:mlstring>Note : when you create a new publication type, the articles module will automatically
-use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em>
-<br /><br />
-If those templates don't exist when you try to preview or display a new article, you'll get this warning :-)</xar:mlstring>
-</strong><br /><br />
-
-<table border="0" cellspacing="0" cellpadding="4">
-    <tr>
-        <td><xar:mlstring>Title</xar:mlstring></td>
-        <td>#$title#</td>
-    </tr>
-    <tr>
-        <td><xar:mlstring>Summary</xar:mlstring></td>
-        <td>#$summary#</td>
-    </tr>
-    <tr>
-        <td><xar:mlstring>Author</xar:mlstring></td>
-        <td>#$author#</td>
-    </tr>
-    <tr>
-        <td><xar:mlstring>Date</xar:mlstring></td>
-        <td>#$date#</td>
-    </tr>
-    <tr>
-        <td><xar:mlstring>Body</xar:mlstring></td>
-        <td>#$body#</td>
-    </tr>
-    <tr>
-        <td><xar:mlstring>Notes</xar:mlstring></td>
-        <td>#$notes#</td>
-    </tr>
-    <xar:if condition="!empty($previous) and !empty($next)">
-    <tr>
-    <td colspan="2" align="right">
-        #$pager#
-    </td>
-    </tr>
+<xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" />
+<div class="xar-error">
+    <p>
+        <xar:mlstring>
+            <strong>Note:</strong> when you create a new publication type, 
+            the articles module will automatically use the templates 
+            <em>user-display-[publicationtype].xd</em>
+            and <em>user-summary-[publicationtype].xd</em>. 
+            If those templates don't exist when you try to preview or display a new article, 
+            you'll get this warning :-)
+        </xar:mlstring>
+    </p>
+</div>
+<div class="xar-norm" style="padding: 3px;">
+    <h1><strong><xar:mlstring>Title</xar:mlstring>:</strong>&nbsp;#$title#</h1>
+    <xar:if condition="isset($author)">
+    <p><strong><xar:mlstring>Author</xar:mlstring>:</strong>&nbsp;#$author#</p>
     </xar:if>
-</table>
+    <xar:if condition="isset($date)">
+    <p>
+        <xar:ml>
+            <xar:mlstring><strong>Date:</strong> #(1) #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long',$date)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('long',$date)#</xar:mlvar>
+        </xar:ml>
+    </p>
+    </xar:if>
+    <xar:if condition="isset($summary)">
+    <p><strong><xar:mlstring>Summary</xar:mlstring>:</strong>&nbsp;#$summary#</p>
+    </xar:if>
+    <xar:if condition="isset($body)">
+    <p><strong><xar:mlstring>Body</xar:mlstring>:</strong>&nbsp;#$body#</p>
+    </xar:if>
+    <xar:if condition="isset($notes)">
+    <p><strong><xar:mlstring>Notes</xar:mlstring>:</strong>&nbsp;#$notes#</p>
+    </xar:if>
+    <xar:if condition="!empty($previous) and !empty($next)">
+    <p>#$pager#</p>
+    </xar:if>
+    <p><xar:mlstring><em>More fields may be available via dynamicdata ..</em></xar:mlstring></p>
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+        <p>#$hooks[$hookmodule]#</p>
+        </xar:foreach>
+    </xar:if>
 
-<xar:mlstring>More fields may be available via dynamicdata...</xar:mlstring><br />
-
-<xar:if condition="!empty($hooks)">
-<br />
-<xar:foreach in="$hooks" key="$hookmodule">
-#$hooks[$hookmodule]#
-</xar:foreach>
-</xar:if>

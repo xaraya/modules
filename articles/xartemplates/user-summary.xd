@@ -1,23 +1,30 @@
-<br /><br /><b>
-<xar:mlstring>Note : when you create a new publication type, the articles module will automatically
-use the templates <i>user-display-[publicationtype].xd</i> and <i>user-summary-[publicationtype].xd</i>
-<br /><br />
-If those templates don't exist when you try to preview or display a new article, you'll get this warning :-)</xar:mlstring>
-</b><br /><br />
-
-<table border="1" cellspacing="0" cellpadding="4">
-    <tr>
-        <td colspan="2">#$title#</td>
-    </tr>
-    <tr>
-        <td>#$author#</td>
-        <td>#$date#</td>
-    </tr>
-    <tr>
-        <td colspan="2">#$summary#</td>
-    </tr>
-    <tr>
-        <td colspan="2">#$notes#</td>
-    </tr>
-</table>
-
+<div class="xar-error">
+    <p>
+        <xar:mlstring>
+            <strong>Note:</strong> when you create a new publication type, 
+            the articles module will automatically use the templates 
+            <em>user-display-[publicationtype].xd</em>
+            and <em>user-summary-[publicationtype].xd</em>. 
+            If those templates don't exist when you try to preview or display a new article, 
+            you'll get this warning :-)
+        </xar:mlstring>
+    </p>
+</div>
+<div class="xar-norm" style="padding: 3px;">
+    <h1><a href="#$link#">#$title#</a></h1>
+    <xar:if condition="isset($author)">
+    <p>#$author#</p>
+    </xar:if>
+    <xar:if condition="isset($date)">
+    <p>
+        <xar:ml>
+            <xar:mlstring>#(1) #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long',$date)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('long',$date)#</xar:mlvar>
+        </xar:ml>
+    </p>
+    </xar:if>
+    <xar:if condition="isset($summary)">
+    <p>#$summary#</p>
+    </xar:if>
+</div>
