@@ -101,7 +101,9 @@ function newsgroups_user_post()
 
 
             // Redirect
-            xarResponseRedirect(xarModURL('newsgroups', 'user', 'displaygroup',array('group' => $group)));
+            xarResponseRedirect(xarModURL('newsgroups', 'user', 'group',array('group' => $group)));
+
+            return true;
 
     }
 
