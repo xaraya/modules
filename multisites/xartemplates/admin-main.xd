@@ -10,8 +10,8 @@
 <br />
 <br />
 
-<center>
+<div align="center">
 
 <b><xar:var scope="session" name="$multisites_statusmsg" /></b>
 
-</center>
+</div>
