@@ -14,32 +14,32 @@
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>The Window module is a port of the popular PostWrap module (for PostNuke) to Xaraya. It lets you display standalone external web pages from within your Xaraya site.</xar:mlstring>:
-			<ul>
-			<li><xar:mlstring>Window uses the center block to display the external page(s).</xar:mlstring></li>
-			<li><xar:mlstring>Pages correspond to URLs. You can display pages off your local server, or from the Internet.</xar:mlstring></li>
-			<li><xar:mlstring>You can define a number of different options for your external page(s), among them the height and width of the display, whether only registered users may see them, and so on.</xar:mlstring></li>
-			<li><xar:mlstring>You can display as many pages as you like, each with its own settings.</xar:mlstring></li>
-			</ul>
-		</div>
+            <ul>
+            <li><xar:mlstring>Window uses the center block to display the external page(s).</xar:mlstring></li>
+            <li><xar:mlstring>Pages correspond to URLs. You can display pages off your local server, or from the Internet.</xar:mlstring></li>
+            <li><xar:mlstring>You can define a number of different options for your external page(s), among them the height and width of the display, whether only registered users may see them, and so on.</xar:mlstring></li>
+            <li><xar:mlstring>You can display as many pages as you like, each with its own settings.</xar:mlstring></li>
+            </ul>
+        </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>How to use it?</xar:mlstring>
         </div>
          <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>There are two administration pages, one for general and one for URL specific settings.</xar:mlstring>
-			<p><xar:mlstring>General settings are valid for all URLs.</xar:mlstring> 
+            <p><xar:mlstring>General settings are valid for all URLs.</xar:mlstring> 
             <xar:mlstring>The general settings available are:</xar:mlstring>:
-			<ul>
-			<li><xar:mlstring>Display only pages off the local server, or also from other servers on the Internet.</xar:mlstring></li>
-			<li><xar:mlstring>Buffer the output before displaying it.</xar:mlstring></li>
-			<li><xar:mlstring>Allow direct input from the browser address bar.</xar:mlstring></li>
-			<li><xar:mlstring>Allow only pages from a list of URLs you define.</xar:mlstring></li>
-			<li><xar:mlstring>Let only registered users, or all users, see the pages.</xar:mlstring></li>
-			<li><xar:mlstring>Display the page directly, or display a link that lets you open the page in a separate window.</xar:mlstring></li>
-			<li><xar:mlstring>Use a standard title for the page(s) or use a different title for each page.</xar:mlstring></li>
-			<li><xar:mlstring>Allow only pages from a list of URLs you define.</xar:mlstring></li>
-			<li><xar:mlstring>Automatically adjust the size of the display to fill your available space, or not.</xar:mlstring></li>
-			<li><xar:mlstring>Define the height and width of the display.</xar:mlstring></li>
-			</ul>
+            <ul>
+            <li><xar:mlstring>Display only pages off the local server, or also from other servers on the Internet.</xar:mlstring></li>
+            <li><xar:mlstring>Buffer the output before displaying it.</xar:mlstring></li>
+            <li><xar:mlstring>Allow direct input from the browser address bar.</xar:mlstring></li>
+            <li><xar:mlstring>Allow only pages from a list of URLs you define.</xar:mlstring></li>
+            <li><xar:mlstring>Let only registered users, or all users, see the pages.</xar:mlstring></li>
+            <li><xar:mlstring>Display the page directly, or display a link that lets you open the page in a separate window.</xar:mlstring></li>
+            <li><xar:mlstring>Use a standard title for the page(s) or use a different title for each page.</xar:mlstring></li>
+            <li><xar:mlstring>Allow only pages from a list of URLs you define.</xar:mlstring></li>
+            <li><xar:mlstring>Automatically adjust the size of the display to fill your available space, or not.</xar:mlstring></li>
+            <li><xar:mlstring>Define the height and width of the display.</xar:mlstring></li>
+            </ul>
         </div>
          <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>You can also define specific settings for different pages.</xar:mlstring> <xar:mlstring>URL specific settings, such as the dimensions of the display, will override the general settings.</xar:mlstring> 
@@ -50,13 +50,13 @@
             <pre>
             index.php?module=window&page=&lt;your page&gt;
             </pre> 
-			<xar:mlstring>&lt;your page&gt; can be an actual URL, such as <b>http://www.xaraya.com</b>, or an alias you define via your URL specific settings.</xar:mlstring>
-			<xar:mlstring>You can also add other parameters, as in the following example. See the docs/install.txt for more details.</xar:mlstring>			
+            <xar:mlstring>&lt;your page&gt; can be an actual URL, such as <b>http://www.xaraya.com</b>, or an alias you define via your URL specific settings.</xar:mlstring>
+            <xar:mlstring>You can also add other parameters, as in the following example. See the docs/install.txt for more details.</xar:mlstring>            
             <pre>
-			index.php?module=window&page=http://www.xaraya.com/&height=1000&width=90%
-			&resize=1&title=foobar
+            index.php?module=window&page=http://www.xaraya.com/&height=1000&width=90%
+            &resize=1&title=foobar
             <pre>
-		</div>
+        </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>
         </div>
