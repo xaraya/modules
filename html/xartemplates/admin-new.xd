@@ -1,10 +1,9 @@
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
 	// Enter name of mandatory fields
-	var fieldRequired = Array("tag");
+	var html_fieldRequired = Array("tag");
 	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("HTML Tag");
+	var html_fieldDescription = Array("HTML Tag");
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
@@ -12,7 +11,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Add HTML Tag</xar:mlstring></h2>
 	<div style="margin: auto;">
 
-	<form method="post" action="#xarModURL('html', 'admin', 'create')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" />
+	<form method="post" action="#xarModURL('html', 'admin', 'create')#" method="post" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded" />
 
 		<div style="clear: both; padding-top: 10px;">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
