@@ -114,7 +114,9 @@ function pubsub_user_subscribe($args)
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubeventcidstable = $xartable['pubsub_eventcids'];
 
-// TODO: make sure event is created if necessary
+    // make sure event exists, create it if necessary
+    if (!xarModAPILoad('pubsub','admin')) return;    
+    pubsub_adminapi_createhook($cid, $itemtype, $modid);
 
     // fetch eventid to subscribe to
     $query = "SELECT $pubsubeventstable.xar_eventid
@@ -130,7 +132,8 @@ function pubsub_user_subscribe($args)
 
     if (!xarModAPILoad('pubsub','user')) return;    
 // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
-    pubsub_userapi_adduser($eventid);
+// AM hardcoding actionid to 'mail' for now, will have to work out options for htmlmail etc. later
+    pubsub_userapi_adduser($eventid,'mail');
 
     return;
 }

@@ -70,10 +70,7 @@ function pubsub_adminapi_createhook($args)
     $result = $dbconn->Execute($query);
     if (!$result) return;
     if (count($result) > 0) {
-        $msg = xarML('Item already exists in function #(1)() in module #(2)',
-                    'addevent', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                      new SystemException($msg));
+	// if event already exists then just return;
         return;
     }
     
@@ -417,7 +414,7 @@ function pubsub_adminapi_runjob($args)
     $info = xarUserGetVar('email',$userid);
     $name = xarUserGetVar('uname',$userid);
 
-    if ($action = "mail" || $action = "htmlmail") {
+    if ($actionid = "mail" || $actionid = "htmlmail") {
        	// Database information
     	$pubsubtemplatetable = $xartable['pubsub_template'];
     	// Get info on job to run
