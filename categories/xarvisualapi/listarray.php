@@ -60,6 +60,7 @@ function categories_visualapi_listarray ($args)
         $items[$category['cid']]['id'] = $category['cid'];
         $items[$category['cid']]['name'] = $category['name'];
         $items[$category['cid']]['image'] = $category['image'];
+        $items[$category['cid']]['left'] = $category['left'];
         $items[$category['cid']]['beforetags'] = '';
         $items[$category['cid']]['aftertags'] = '';
 // TODO: build icon table instead of text list if there are images...
