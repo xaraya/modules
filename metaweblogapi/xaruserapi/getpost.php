@@ -27,17 +27,13 @@ function metaweblogapi_userapi_getpost($args)
     if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
     }    else {
-        // Construct the proper response
-        $title = $article['title'];
-        $content = $article['summary'];
-        $dateCreated = iso8601_encode($article['pubdate']);
+        // Get the categories for this article.
         
-        // create a struct for the response
         $data['title'] = $article['title'];
         $data['userid']=$article['authorid'];
-        $data['dateCreated']=$dateCreated;
+        $data['dateCreated']=iso8601_encode($article['pubdate']);
         $data['categories'] = array();
-        $data['content']=xarVarPrepForDisplay($content);
+        $data['content']=xarVarPrepForDisplay($article['summary'];);
         $data['postid']=$article['aid'];
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                                 array('module'  => 'metaweblogapi',

@@ -53,14 +53,11 @@ function metaweblogapi_userapi_getrecentposts($args)
         $articlelist=array(); $i = 0;
         $data=array();
         foreach ($articles as $article) {
-            // convert date to iso date code
-            $t = iso8601_encode($article['pubdate']);
             $article_list[$i]['title'] = $article['title'];
             $article_list[$i]['authorid']=$article['authorid'];
-            $article_list[$i]['dateCreated'] = $t;
+            $article_list[$i]['dateCreated'] = iso8601_encode($article['pubdate']);
             $article_list[$i]['content'] = xarVarPrepForDisplay($article['summary']);
             $article_list[$i]['postid'] = $article['aid'];
-            
             $i++;
         }
         
