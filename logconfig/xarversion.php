@@ -16,4 +16,5 @@ $modversion['user'] = 0;
 $modversion['securityschema'] = array('logconfig::' => '');
 $modversion['class']          = 'Admin';
 $modversion['category']       = 'Global';
+
 ?>
