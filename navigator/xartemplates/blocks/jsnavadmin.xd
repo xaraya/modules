@@ -17,12 +17,12 @@
         <span style="float: right; width: 40%; text-align: left;">
             <select name="firstlinehorizontal">
                 <xar:if condition="$firstlinehorizontal eq 0">
-                    <option name="id" value="0" selected>vertical</option>
+                    <option name="id" value="0" selected="selected">vertical</option>
                 <xar:else />
                     <option name="id" value="0">vertical</option>
                 </xar:if>
                 <xar:if condition="$firstlinehorizontal eq 1">
-                    <option name="id" value="1" selected>horizontal</option>
+                    <option name="id" value="1" selected="selected">horizontal</option>
                 <xar:else />
                     <option name="id" value="1">horizontal</option>
                 </xar:if>
@@ -321,17 +321,17 @@
         <span style="float: right; width: 40%; text-align: left;">
             <select name="menutextcentered">
                 <xar:if condition="$menutextcentered eq 'left'">
-                    <option name="id" value="left" selected>left</option>
+                    <option name="id" value="left" selected="selected">left</option>
                 <xar:else />
                     <option name="id" value="left">left</option>
                 </xar:if>
                 <xar:if condition="$menutextcentered eq 'center'">
-                    <option name="id" value="center" selected>center</option>
+                    <option name="id" value="center" selected="selected">center</option>
                 <xar:else />
                     <option name="id" value="center">center</option>
                 </xar:if>
                 <xar:if condition="$menutextcentered eq 'right'">
-                    <option name="id" value="right" selected>right</option>
+                    <option name="id" value="right" selected="selected">right</option>
                 <xar:else />
                     <option name="id" value="right">right</option>
                 </xar:if>
@@ -352,17 +352,17 @@
         <span style="float: right; width: 40%; text-align: left;">
             <select name="menucentered">
                 <xar:if condition="$menucentered eq 'left'">
-                    <option name="id" value="left" selected>left</option>
+                    <option name="id" value="left" selected="selected">left</option>
                 <xar:else />
                     <option name="id" value="left">left</option>
                 </xar:if>
                 <xar:if condition="$menucentered eq 'center'">
-                    <option name="id" value="center" selected>center</option>
+                    <option name="id" value="center" selected="selected">center</option>
                 <xar:else />
                     <option name="id" value="center">center</option>
                 </xar:if>
                 <xar:if condition="$menucentered eq 'right'">
-                    <option name="id" value="right" selected>right</option>
+                    <option name="id" value="right" selected="selected">right</option>
                 <xar:else />
                     <option name="id" value="right">right</option>
                 </xar:if>
@@ -382,17 +382,17 @@
         <span style="float: right; width: 40%; text-align: left;">
             <select name="menuvertcentered">
                 <xar:if condition="$menuvertcentered eq 'top'">
-                    <option name="id" value="top" selected>top</option>
+                    <option name="id" value="top" selected="selected">top</option>
                 <xar:else />
                     <option name="id" value="top">top</option>
                 </xar:if>
                 <xar:if condition="$menuvertcentered eq 'middle'">
-                    <option name="id" value="middle" selected>middle</option>
+                    <option name="id" value="middle" selected="selected">middle</option>
                 <xar:else />
                     <option name="id" value="middle">middle</option>
                 </xar:if>
                 <xar:if condition="$menuvertcentered eq 'bottom'">
-                    <option name="id" value="bottom" selected>bottom</option>
+                    <option name="id" value="bottom" selected="selected">bottom</option>
                 <xar:else />
                     <option name="id" value="bottom">bottom</option>
                 </xar:if>

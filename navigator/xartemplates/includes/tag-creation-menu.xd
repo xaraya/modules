@@ -15,7 +15,7 @@
                         name="base"
                         value="primary"
                         checked="checked"
-                        onChange="javascript:this.form.submit()">
+                        onChange="javascript:this.form.submit()"/>
             <xar:else />
                 <label for="basePrimary">Primary</label>
                 <br />
@@ -23,7 +23,7 @@
                         type="radio"
                         name="base"
                         value="primary"
-                        onChange="javascript:this.form.submit()">
+                        onChange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
         <span style="width: 75px; display: block; float: left;">
@@ -36,7 +36,7 @@
                             name="base"
                             value="secondary"
                             checked="checked"
-                            onChange="javascript:this.form.submit()">
+                            onChange="javascript:this.form.submit()"/>
                 <xar:else />
                     <label for="baseSecondary">Secondary</label>
                     <br />
@@ -44,7 +44,7 @@
                             type="radio"
                             name="base"
                             value="secondary"
-                            onChange="javascript:this.form.submit()">
+                            onChange="javascript:this.form.submit()"/>
                 </xar:if>
             <xar:else />
                 <label for="baseSecondary">Secondary</label>
@@ -54,7 +54,7 @@
                         type="radio"
                         name="base"
                         value="secondary"
-                        onChange="javascript:this.form.submit()">
+                        onChange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
     </span>
@@ -70,14 +70,14 @@
         </span>
         <span style="width: 75px; display: block; float: left;">
             <xar:if condition="isset($tagtype) AND $tagtype eq 'list'">
-                <label for=tagtypeList"><span style="color: blue;">List</span></label>
+                <label for="tagtypeList"><span style="color: blue;">List</span></label>
                 <br />
                 <input id="tagtypeList"
                         type="radio"
                         name="tagtype"
                         value="list"
                         checked="checked"
-                        onChange="javascript:this.form.submit()">
+                        onChange="javascript:this.form.submit()"/>
             <xar:else />
                 <label for="tagtypeList">List</label>
                 <br />
@@ -85,7 +85,7 @@
                         type="radio"
                         name="tagtype"
                         value="list"
-                        onChange="javascript:this.form.submit()">
+                        onChange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
         <span style="width: 75px; display: block; float: left;">
@@ -97,7 +97,7 @@
                         name="tagtype"
                         value="images"
                         checked="checked"
-                        onChange="javascript:this.form.submit()">
+                        onChange="javascript:this.form.submit()"/>
             <xar:else />
                 <label for="tagtypeImages">Images</label>
                 <br />
@@ -105,7 +105,7 @@
                         type="radio"
                         name="tagtype"
                         value="images"
-                        onChange="javascript:this.form.submit()">
+                        onChange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
     </span>
