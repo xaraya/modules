@@ -78,7 +78,7 @@ function uploads_userapi_prepare_uploads( $args )
     // meets any requirements we might have for it. If it doesn't pass the tests,
     // then return FALSE
     if (!xarModAPIFunc('uploads','user','validate_upload', array('fileInfo' => $fileInfo))) {
-        $errorObj = xarErrorValue();
+        $errorObj = xarCurrentError();
 
         if (is_object($errorObj)) {
             $fileError['errorMesg'] = $errorObj->getShort();

@@ -123,7 +123,7 @@ function uploads_userapi_file_store( $args )
     // we run through and grab them, adding them to this file
     while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
-        $errorObj = xarErrorValue();
+        $errorObj = xarCurrentError();
 
         if (is_object($errorObj)) {
             $fileError = array('errorMesg'   => $errorObj->getShort(),

@@ -53,7 +53,7 @@ function uploads_userapi_prepare_imports( $args )
 
             while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
-                $errorObj = xarErrorValue();
+                $errorObj = xarCurrentError();
 
                 if (is_object($errorObj)) {
                     $fileError = array('errorMesg'   => $errorObj->getShort(),
