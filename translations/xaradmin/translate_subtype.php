@@ -51,7 +51,6 @@ function translations_admin_translate_subtype()
     $tplData = array_merge($tplData, $opbar, $trabar, $druidbar);
     $tplData['dnType'] = translations__dnType2Name($dnType);
 
-    xarTplAddStyleLink('translations', 'translate_subtype');
     return $tplData;
 }
 
