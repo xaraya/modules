@@ -363,8 +363,10 @@ function authinvision__open_invision_connection()
 	$server = xarModGetVar('authinvision','server');
 	$uname = xarModGetVar('authinvision','username');
 	$pwd = xarModGetVar('authinvision','password');  
-	
-	$connect = mysql_connect($server, $uname, $pwd);
+
+// TODO: use xarDBNewConn() and ADODB methods everywhere in this module
+
+	$connect = @mysql_connect($server, $uname, $pwd);
 
     if (!$connect) {
         $msg = "Invision: Connection to $server has failed: " & mysql_error();
