@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'subitems';
 $modversion['id']             = '9356';
-$modversion['version']        = '1.0';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'Dynamic data subitems';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

@@ -296,6 +296,7 @@ function subitems_upgrade($oldversion)
             // the current version with ease
             return subitems_upgrade(1.0);
         case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             break;
         case 2.0:
