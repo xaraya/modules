@@ -141,13 +141,14 @@
         </li>
        <li style="margin-top:20px;">
            <xar:mlstring>Choose the <strong>Manual - auto disable</strong> and add the specific template tag code below to the head section (after the javascript tag) of your page templates (default.xt or any other page template). All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG. You can be more specific and only add to a module or other template where you want the wysiwyg. Alternatively, replace the variable "jstring" in an override for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring>
-            </li>
+       </li>
+               </ol>
             <pre>
             &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
                 &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
             &lt;/xar:if&gt;
            </pre>
-        </ol>
+
         <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring></p>
 
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
