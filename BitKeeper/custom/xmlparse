@@ -23,7 +23,7 @@ fi
 
 FAILED=0
 for template in $FILELIST; do
-  TEMPFILE=`mktemp` || exit 1
+  TEMPFILE=`mktemp tmp.XXXXXXX` || exit 1
   bk get -Sq $template
   #echo '<!DOCTYPE blocklayout SYSTEM "'$CMDDIR'/xar.dtd">' >> $TEMPFILE
   TPLDIR=$(basename $(dirname $template))
