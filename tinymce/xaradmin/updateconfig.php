@@ -30,7 +30,9 @@ function tinymce_admin_updateconfig()
     if (!xarVarFetch('tinytoolbar','str:1:',$tinytoolbar,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('tinywidth','int:1:',$tinywidth,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('tinyinlinestyle','str:1:',$tinyinlinestyle,'true',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'10',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarSecConfirmAuthKey()) return;
     //set mode to all textareas for now
     xarModSetVar('tinymce', 'tinymode', 'textareas');
@@ -45,7 +47,11 @@ function tinymce_admin_updateconfig()
     xarModSetVar('tinymce', 'tinyexstyle', $tinyexstyle);
     xarModSetVar('tinymce', 'tinytoolbar', $tinytoolbar);
     xarModSetVar('tinymce', 'tinywidth', $tinywidth);
-    
+    xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
+    xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
+    if ($defaulteditor =='true') {
+       xarModSetVar('base','editor','tinymce');
+    }
     //Turn our settings into javascript for insert into template
     //Let's call the variable jstext
     $jstext='';
@@ -83,6 +89,12 @@ function tinymce_admin_updateconfig()
     }
     if (xarModGetVar('tinymce','tinyask')){
         $jstext .='ask : "true",';
+    }
+   if (xarModGetVar('tinymce','tinyinlinestyle')){
+        $jstext .='inline_styles : "'.xarModGetVar('tinymce','tinyinlinestyle').'",';
+    }
+   if (xarModGetVar('tinymce','tinyundolevel') > 0){
+        $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'",';
     }
     //add known requirement last to ensure proper syntax with no trailing comma
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'"';

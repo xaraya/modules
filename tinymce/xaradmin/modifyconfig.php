@@ -33,8 +33,15 @@ function tinymce_admin_modifyconfig()
     $data['tinyexstyle'] = xarModGetVar('tinymce', 'tinyexstyle');
     $data['tinybuttons'] = xarModGetVar('tinymce', 'tinybuttons');     
     $data['tinybuttonsremove'] = xarModGetVar('tinymce', 'tinybuttonsremove');                    
-    $data['tinytoolbar'] = xarModGetVar('tinymce', 'tinytoolbar');    
+    $data['tinytoolbar'] = xarModGetVar('tinymce', 'tinytoolbar');
     $data['tinywidth'] = xarModGetVar('tinymce', 'tinywidth');
+    $data['tinyinlinestyle'] = xarModGetVar('tinymce', 'tinyinlinestyle');
+    $data['tinyundolevel'] = xarModGetVar('tinymce', 'tinyundolevel');
+    if (xarModGetVar('base','editor') =='tinymce') {
+        $data['defaulteditor'] = 'true';
+    }else {
+        $data['defaulteditor'] = 'false'; 
+    }
     //get list of valid themes
     $tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
     $themelist=array();
