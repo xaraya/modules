@@ -9,7 +9,7 @@
         Before you continue, please make sure that you</xar:mlstring>:</p>
             <ol>
                 <li>
-                    <xar:mlstring>Create the Master Data folder '$masterfolder' in your main Xaraya install directory. This is where you (sub)site configuration information is stored.  If you wish to change the name of the Master Data Folder, make sure you update the name in the form below to your Master Data folder name. 
+                    <xar:mlstring>Create the Master Data folder '$masterfolder' in your main Xaraya install directory. This is where your(sub)site configuration information is stored.  If you wish to change the name of the Master Data Folder, make sure you update the name in the form below to your Master Data folder name.
                     Important: Make sure your Master Data folder is writable chmod777 before you continue.
                                   </xar:mlstring>
                 </li>
@@ -148,7 +148,9 @@
 
         <td colspan="2"> <xar:mlstring>The common extensions are .com, .net, .org.
           However, if for example you use a subdomain or domain such as www.domain.biz
-          as a site, you will need to add the .biz extension to the list.</xar:mlstring></td>
+          as a site, you will need to add the .biz extension to the list.</xar:mlstring><br /><br />
+          If you want to use domain extensions to discriminate your sites eg mysite.com will be a different site to mysite.net,
+          then make sure the text field box is totally blank.</td>
 		           <tr align="center" valign="middle">
                       <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#" align="middle" tabindex="3" />
                       </td>
