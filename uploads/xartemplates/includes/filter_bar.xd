@@ -1,12 +1,25 @@
 <table width="100%" border="0" class="xar-norm xar-accent-outline">
 	<tr>
-		<th colspan="5">
+		<th colspan="6">
 			<h4><xar:mlstring>Filtering Options</xar:mlstring></h4>
 		</th>
 	</tr>
 	<tr>
 		<form action="#xarModUrl('uploads','admin','view')#" method="post">
-		<td width="25%" align="center">
+		<td width="15%" align="center">
+			<label for="inverse">
+				<xar:mlstring>
+					Invert Filter
+				</xar:mlstring>
+			</label>
+			<br />
+			<xar:if condition="$filters['inverse'] eq TRUE">
+				<input type="checkbox" name="inverse" id="inverse" value="invert" checked="checked" />
+			<xar:else />
+				<input type="checkbox" name="inverse" id="inverse" value="invert" />
+			</xar:if>
+		</td>
+		<td width="10%" align="center">
 			<label for="mimetype">
 				<xar:mlstring>
 					MIME Type

@@ -12,11 +12,16 @@ function uploads_userapi_process_filters( $args ) {
     }
     
     $options   =  unserialize(xarModGetVar('uploads', 'view.filter'));
+    
     $data      =  $options['data'];
     $filter    =  $options['filter'];   
     $mimetypes =& $data['filters']['mimetypes'];
     $subtypes  =& $data['filters']['subtypes'];
     $statuses  =& $data['filters']['status'];
+    
+    $data['filters']['inverse'] = isset($inverse) ? $inverse : FALSE;
+    $filter['inverse']  = isset($inverse) ? $inverse : FALSE;
+    
     unset($options);
     /**
      *  Grab the mimetypes and setup the selected one
@@ -67,7 +72,8 @@ function uploads_userapi_process_filters( $args ) {
             $filter['fileType'] = strtolower($selected_mimetype['typeName']) . '/' . strtolower($selected_subtype['subtypeName']);
         } else {
             $filter['fileType'] = strtolower($selected_mimetype['typeName']) . '/%';
-        }
+        }    
+
     } else {
         $filter['fileType'] = '%';
     }

@@ -10,9 +10,10 @@ function uploads_admin_view( ) {
      *  Validate variables passed back
      */
      
-    if (!xarVarFetch('mimetype',    'int:0:'    , $mimetype,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('mimetype',    'int:0:',     $mimetype,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('subtype',     'int:0:',     $subtype,          NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('status',      'int:0:',     $status,           NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('inverse',     'checkbox',   $inverse,          NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('fileId',      'list:int:1', $fileId,           NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('fileDo',      'str:5:',     $fileDo,           NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('action',      'int:0:',     $action,           NULL, XARVAR_DONT_SET)) return;
@@ -20,10 +21,9 @@ function uploads_admin_view( ) {
     /**
      *  Determine the filter settings to use for this view
      */
-    if (!isset($mimetype) || !isset($subtype) || !isset($status)) {
+    if (!isset($mimetype) || !isset($subtype) || !isset($status) || !isset($inverse)) {
         // if the filter settings are empty, then 
         // grab the users last view filter
-
         $options  = unserialize(xarModGetUserVar('uploads','view.filter'));
         $data     = $options['data'];
         $filter   = $options['filter'];
@@ -31,23 +31,24 @@ function uploads_admin_view( ) {
     } else {
         // otherwise, grab whatever filter options where passed in
         // and process them to create a filter
-
         $filters['mimetype'] = $mimetype;        
         $filters['subtype']  = $subtype;
         $filters['status']   = $status;
+        $filters['inverse']  = $inverse;
 
-        $options =  xarModAPIFunc('uploads','user','process_filters', $filters);
+        $options  =  xarModAPIFunc('uploads','user','process_filters', $filters);
         $data     = $options['data'];
         $filter   = $options['filter'];
         unset($options);
     }
+    
+
     
     /**
      * Perform all actions
      */
     
     if (isset($action)) {
-        
         
         if ($action > 0) {
             if (isset($fileDo)) {

@@ -42,6 +42,7 @@ function uploads_init()
     xarModSetVar('uploads', 'file.obfuscate-on-upload', TRUE);
     xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
 
+    $data['filters']['inverse']                     = FALSE;
     $data['filters']['mimetypes'][0]['typeId']      = 0;
     $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
     $data['filters']['subtypes'][0]['subtypeId']    = 0;
@@ -451,6 +452,7 @@ function uploads_upgrade($oldversion)
             xarModSetVar('uploads','path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
 
         
+            $data['filters']['inverse']                     = FALSE;
             $data['filters']['mimetypes'][0]['typeId']      = 0;
             $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
             $data['filters']['subtypes'][0]['subtypeId']    = 0;

@@ -30,6 +30,10 @@ function uploads_userapi_db_get_file( $args )  {
     
     $where = array();
     
+    if (!isset($inverse)) {
+        $inverse = FALSE;
+    }
+    
     if (isset($fileId)) {
         if (is_array($fileId)) {
             $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileId) . ')';
@@ -63,10 +67,19 @@ function uploads_userapi_db_get_file( $args )  {
     }
 
     if (count($where) > 1) {
-        $where = implode(' AND ', $where);
+        if ($inverse)  {
+            $where = implode(' OR ', $where);
+        } else {
+            $where = implode(' AND ', $where);
+        }
     } else {
         $where = implode('', $where);
     }
+    
+    if ($inverse) {
+        $where = "NOT ($where)";
+    }
+    
     // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable     = xarDBGetTables();
