@@ -155,12 +155,14 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     // frontpage or approved status
-    if (!is_array($vars['status'])) {
+    if (empty($vars['status'])) {
+        $statusarray = array(2,3);
+    } elseif (!is_array($vars['status'])) {
         $statusarray = split(',', $vars['status']);
     } else {
-	    $statusarray = $vars['status'];
+        $statusarray = $vars['status'];
     }
-	
+
     // get cids for security check in getall
     $fields = array('aid', 'title', 'pubtypeid', 'cids');
     if ($vars['toptype'] == 'rating') {
