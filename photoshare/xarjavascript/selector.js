@@ -1,3 +1,9 @@
+/**
+ * Photoshare by Chris van de Steeg
+ * based on Jorn Lind-Nielsen 's photoshare
+ * module for PostNuke
+ */
+
 function selectorAdd1(id)
 {
   var src = document.getElementById(id);

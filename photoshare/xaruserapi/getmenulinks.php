@@ -1,11 +1,17 @@
 <?php
-
 /**
- * utility function pass individual menu items to the main menu
+ * Photoshare by Chris van de Steeg
+ * based on Jorn Lind-Nielsen 's photoshare
+ * module for PostNuke
  *
- * @returns array
- * @return array containing the menulinks for the main menu items.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage photoshare
+ * @author Chris van de Steeg
  */
+
 function photoshare_userapi_getmenulinks()
 {
     $menulinks = array();

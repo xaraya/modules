@@ -1,7 +1,9 @@
-//=============================================================================
-// Stand alone image selector for Photoshare
-// (C) Jorn Lind-Nielsen
-//=============================================================================
+/**
+ * Photoshare by Chris van de Steeg
+ * based on Jorn Lind-Nielsen 's photoshare
+ * module for PostNuke
+ */
+
 
 //=============================================================================
 // External interface functions

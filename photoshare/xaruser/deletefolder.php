@@ -1,12 +1,15 @@
 <?php
 /**
- * Photoshare by Jorn Lind-Nielsen (C) 2002.
+ * Photoshare by Chris van de Steeg
+ * based on Jorn Lind-Nielsen 's photoshare
+ * module for PostNuke
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  * @subpackage photoshare
- * @author Jorn Lind-Nielsen / Chris van de Steeg
+ * @author Chris van de Steeg
  */
 
 function photoshare_user_deletefolder()
