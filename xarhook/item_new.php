@@ -15,19 +15,24 @@
  */
 
 /**
- * Utility function to pass individual menu items to the main menu.
- *
- * This function is invoked by the core to retrieve the items for the
- * usermenu.
- *
- * @returns array
- * @return  array containing the menulinks for the main menu items
+ * Hook function called for Item New GUI Hook.
+ * 
+ * @returns string
+ * @return  GUI to be displayed
  */
 
 function hookbridge_hook_item_new ( $args ) 
 {
-    extract( $args );
+    // First check to see if the site admin has enabled hookbridge for this type of hook
+    $hookenabled_new = xarModGetVar('hookbridge', 'hookenabled_new' );
+    if( !$hookenabled_new )
+    {
+        return '';
+    }
 
+
+    extract( $args );
+    
     if (!isset($extrainfo)) {
         $extrainfo = array();
     }

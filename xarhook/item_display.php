@@ -15,17 +15,22 @@
  */
 
 /**
- * Utility function to pass individual menu items to the main menu.
- *
- * This function is invoked by the core to retrieve the items for the
- * usermenu.
- *
- * @returns array
- * @return  array containing the menulinks for the main menu items
+ * Hook function called for Item Display GUI Hook.
+ * 
+ * @returns string
+ * @return  GUI to be displayed
  */
 
 function hookbridge_hook_item_display ( $args ) 
 {
+    // First check to see if the site admin has enabled hookbridge for this type of hook
+    $hookenabled_display = xarModGetVar('hookbridge', 'hookenabled_display' );
+    if( !$hookenabled_display )
+    {
+        return '';
+    }
+
+
     extract( $args );
 
     if (!isset($extrainfo)) {
