@@ -1,3 +1,14 @@
+* Version 0.2.1 29 Nov 04
+- Update with TinyMCE 1.3.8 version
+- Fixes for a number of prior bugs with popups
+- New Flash plugin, advanced HR plugin, advimage and advlink plugins
+- Updated image browser integration so config file is in /var/ibrowser dir
+  and now configurable by site. Only relative paths tho still till full integration.
+- Updated symbol and character map
+- A few other things i forgot. 
+- Check the original TinyMCE changelog for their changes for 1.3.8
+- No database changes or new modvars
+
 * Version 0.2.0 23 Nov 04
 - Update with a few fixes eg for width bug
 

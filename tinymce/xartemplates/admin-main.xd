@@ -83,17 +83,23 @@
         </div>
 
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>There are a number of plugins available to add on to xarTinyMCE. These include:</xar:mlstring></p>
+            <p><xar:mlstring>There are a number of plugins available to add on to xarTinyMCE. Add the plugin name to the 
+            Plug in list in the Modify Configuration settings. Some plugins require an extra button added in your Advanced Theme configuration,
+            whereas others (like advimage and advlink) do not but require allowed element string added to appropriate configuration area. These include:</xar:mlstring></p>
             <ol>
                 <li><xar:mlstring>Image Browser (ibrowser) - browse your image libraries and select a file to insert to
                 your textarea. Upload a file if you have allowed uploads in the configuration. See the configuration area for more detail</xar:mlstring></li>
                 <li><xar:mlstring>Emotions - click to add fancy emoticons</xar:mlstring></li>
                 <li><xar:mlstring>Preview and Zoom</xar:mlstring></li>
                 <li><xar:mlstring>ISpell spell checker - only available for IE</xar:mlstring></li>
+                <li><xar:mlstring>Preview and Zoom - zoom is only available in IE</xar:mlstring></li>
+                <li><xar:mlstring>Time - click to add time in configured format</xar:mlstring></li>
+                <li><xar:mlstring>Date - click to add date in configured format</xar:mlstring></li>
+                <li><xar:mlstring>Flash - allows you to add flash files</xar:mlstring></li>
                 <li><xar:mlstring>Advanced Image - allows insert of rollover images. Add the <strong>advimg</strong> to Plugins,
-                 and <strong>img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout]</strong>
+                 and <strong>img[class|style|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout]</strong>
                  to the Additional Tags configuration</xar:mlstring></li>
-                <li><xar:mlstring>Advanced Link - allows insert of extended link tags, plus popup windows. Add <strong>advlink</strong> to Plugins, and <strong>a[id|name|href|title|onclick]</strong> to Additional Tags configuration.</xar:mlstring></li>
+                <li><xar:mlstring>Advanced Link - allows insert of extended link tags, plus popup windows. Add <strong>advlink</strong> to Plugins, and <strong>a[id|name|href|style|title|onclick]</strong> to Additional Tags configuration.</xar:mlstring></li>
             </ol>
 
         </div>

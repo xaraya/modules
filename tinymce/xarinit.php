@@ -130,8 +130,10 @@ function tinymce_upgrade($oldversion)
     xarModSetVar('tinymce', 'tinyheight','');
     xarModSetVar('tinymce', 'useibrowser', 0);
     return tinymce_upgrade('0.2.0');
-    break;
     case '0.2.0':
+    return tinymce_upgrade('0.2.1');
+    break;    break;
+    case '0.2.1':
     // Current version
     break;
     }

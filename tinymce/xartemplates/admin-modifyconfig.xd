@@ -416,7 +416,8 @@
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="60" maxlength="240" />
-                    <p><xar:mlstring>Plugins requiring button addition: ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom.</xar:mlstring></p>
+                    <p><xar:mlstring>Plugins requiring button addition: ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
+                     advimage, advlink, flash, advhr</xar:mlstring></p>
                     <xar:mlstring>Plugins requiring additional tags: advimage, advlink.</xar:mlstring></p>
             </span>
         </div>
@@ -545,8 +546,8 @@
             <xar:mlstring>The ADVANCED theme is defined BY DEFAULT with extra buttons and functions.
             You DO NOT have to change anything on this page. If you do wish to change the defaults then you can add buttons, remove them, or define
             exactly what buttons appear. Valid button names are (separate names by comma - no spaces):</xar:mlstring>
-            <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, charmap, visualaid
-              (and for plugins - ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime)
+            <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, charmap, visualaid, spacer, cut, copy, paste, advhr
+              (and for plugins - ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime, advhr, flash)
                </xar:mlstring>
             </p>
         </div>
