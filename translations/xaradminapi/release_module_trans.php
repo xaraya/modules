@@ -39,7 +39,7 @@ function translations_adminapi_release_module_trans($args)
 
     if ($bt != 'php') {
         $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that backend.', $bt);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'UnsupportedReleaseBackend', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'UnsupportedReleaseBackend', new DefaultUserException($msg));
         return;
     }
 
@@ -47,7 +47,7 @@ function translations_adminapi_release_module_trans($args)
     if (!file_exists($dirpath.'common.php')) {
         $msg = xarML('Before releasing translations package you must first generate translations.');
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'module')));
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MissingTranslations', new DefaultUserException($msg, $link));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MissingTranslations', new DefaultUserException($msg, $link));
         return;
     }
 

@@ -42,7 +42,7 @@ function translations_adminapi_getcontextentries($args)
         } else {
             $msg = xarML('Could not bind translation: unknown domain type');
         }
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN', $msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN', $msg);
         return;
     }
     if (!$backend->loadContext($ctxType, $ctxName)) return;

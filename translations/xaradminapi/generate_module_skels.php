@@ -53,7 +53,7 @@ function translations_adminapi_generate_module_skels($args)
     if (!$core_backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) module, you must first generate skels for the core.', $modname);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MissingCoreSkels', new DefaultUserException($msg, $link));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MissingCoreSkels', new DefaultUserException($msg, $link));
         return;
     }
     if (!$core_backend->loadContext('core:', 'core')) return;

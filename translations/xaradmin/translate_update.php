@@ -49,7 +49,7 @@ function translations_admin_translate_update()
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
     if (!isset($backend)) return;
     if (!$backend->bindDomain($dnType, $dnName)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         return;
     }
     if (!$backend->loadContext($ctxType, $ctxName)) return;

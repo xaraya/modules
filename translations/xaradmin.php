@@ -26,7 +26,7 @@ define('RELEASE', 4);
 {
     if (xarMLSGetMode() != XARMLS_UNBOXED_MULTI_LANGUAGE_MODE) {
         $msg = xarML('To execute the translations module you must set the Multi Language System mode to UNBOXED.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'WrongMLSMode', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'WrongMLSMode', new DefaultUserException($msg));
         return;
     }
     xarTplSetPageTitle(xarML('Welcome to translators\' paradise!'));

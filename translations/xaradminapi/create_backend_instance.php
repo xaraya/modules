@@ -39,7 +39,7 @@ function translations_adminapi_create_backend_instance($args)
         include_once 'includes/xarMLSXMLBackend.php';
        return new xarMLS__XMLTranslationsBackend(array($locale));
     }
-    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
 }
 
 ?>

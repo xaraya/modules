@@ -38,7 +38,7 @@ function translations_adminapi_create_generator_instance($args)
         include_once 'modules/translations/class/XMLTransSkelsGenerator.php';
         return new XMLTranslationsSkelsGenerator($locale);
     }
-    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
 }
 
 ?>

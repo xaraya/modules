@@ -189,7 +189,7 @@ class PHPParser
         $this->_fd = fopen($filename, 'r');
         if (!$this->_fd) {
             $msg = xarML('Cannot open the file #(1)',$filename);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
             return;
         }
         if (!$filesize = filesize($filename)) return;

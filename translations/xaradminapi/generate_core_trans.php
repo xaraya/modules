@@ -45,7 +45,7 @@ function translations_adminapi_generate_core_trans($args)
     if (!$backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before generating translations you must first generate skels for locale #(1)', $ref_locale);
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'core')));
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MissingSkels', new DefaultUserException($msg, $link));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MissingSkels', new DefaultUserException($msg, $link));
         return;
     }
     if (!$backend->loadContext('core:', 'core')) return;
