@@ -1,8 +1,7 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 
 <!-- This Javascript will check for required fields before the form is submitted. -->
-
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<xar:base-include-javascript module="base" filename="" position="head" />
 <script language="JavaScript">
 <!--
 	// Enter name of mandatory fields
@@ -25,7 +24,7 @@
     // this form.  All URLs should be generated through xarModURL() to ensure
     // compatibility with future versions of Xaraya
 -->
-<form method="post" action="#xarModUrl('example', 'admin', 'update')#">
+<form method="post" action="#xarModUrl('example', 'admin', 'update')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
 
 <xar:if condition="isset($name)">
 
