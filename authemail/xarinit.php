@@ -7,8 +7,6 @@
  * @author Roger Keays <r.keays@ninthave.net>
  * Jan 02 2004
  */
-
-
 /**
  * Initialize the authemail module
  */
@@ -21,8 +19,6 @@ function authemail_init()
 
     return true;
 } /* init */
-
-
 
 /**
  * Delete the authemail module
