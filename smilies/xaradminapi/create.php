@@ -38,10 +38,11 @@ function smilies_adminapi_create($args)
               xar_emotion)
             VALUES (
               $nextId,
-              '" . xarVarPrepForStore($code) . "',
-              '" . xarVarPrepForStore($icon) . "',
-              '" . xarVarPrepForStore($emotion) . "')";
-    $result =& $dbconn->Execute($query);
+              ?,
+              ?,
+              ?)";
+    $bindvars = array($code, $icon, $emotion);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted
     $sid = $dbconn->PO_Insert_ID($smiliestable, 'xar_sid');

@@ -29,8 +29,9 @@ function smilies_userapi_get($args)
                    xar_icon,
                    xar_emotion
             FROM $smiliestable
-            WHERE xar_sid = " . xarVarPrepForStore($sid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_sid = ?;
+    $bindvars = array($sid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     list($sid, $code, $icon, $emotion) = $result->fields;

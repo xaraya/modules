@@ -33,8 +33,9 @@ function smilies_adminapi_delete($args)
     $smiliestable = $xartable['smilies'];
     // Delete the item
     $query = "DELETE FROM $smiliestable
-            WHERE xar_sid = " . xarVarPrepForStore($sid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_sid = ?;
+    $bindvars = array($sid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let any hooks know that we have deleted a link
     xarModCallHooks('item', 'delete', $sid, '');

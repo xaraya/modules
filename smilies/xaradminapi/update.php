@@ -43,11 +43,12 @@ function smilies_adminapi_update($args)
 
     // Update the link
     $query = "UPDATE $smiliestable
-            SET xar_code    = '" . xarVarPrepForStore($code) . "',
-                xar_icon    = '" . xarVarPrepForStore($icon) . "',
-                xar_emotion = '" . xarVarPrepForStore($emotion) . "'
-            WHERE xar_sid = " . xarVarPrepForStore($sid);
-    $result =& $dbconn->Execute($query);
+            SET xar_code    = ?,
+                xar_icon    = ?,
+                xar_emotion = ?
+            WHERE xar_sid = ?;
+    $bindvars = array($code, $icon, $emotion, $sid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Let the calling process know that we have finished successfully
