@@ -19,52 +19,52 @@
     <input type="hidden" name="authid" value="#$authid#" />
 
 <tr>
-<td width="25%"><label for="name">#$namelabel#</label></td>
+<td width="25%"><label for="name"><xar:mlstring>Project</xar:mlstring></label></td>
 <td width="75%" colspan="3"><input type="text" name="name" id="name" size="50" maxlength="255"></td>
 </tr>
 <tr>
-<td width="25%"><label for="displaydates">#$displaydates#</label></td>
+<td width="25%"><label for="displaydates"><xar:mlstring>Use Date Fields</xar:mlstring></label></td>
 <td width="20%"><input type="checkbox" name="displaydates" id="displaydates" value="1"></td>
-<td width="25%"><label for="displayhours">#$displayhours#</label></td>
+<td width="25%"><label for="displayhours"><xar:mlstring>Use Hours Fields</xar:mlstring></label></td>
 <td width="30%"><input type="checkbox" name="displayhours" id="displayhours" value="1"></td>
 </tr>
 <tr>
-<td width="25%"><label for="displayfreq">#$displayfreq#</label></td>
+<td width="25%"><label for="displayfreq"><xar:mlstring>Use Frequency Fields</xar:mlstring></label></td>
 <td width="20%"><input type="checkbox" name="displayfreq" id="displayfreq" value="1"></td>
-<td width="25%"><label for="private">#$private#</label></td>
+<td width="25%"><label for="private"><xar:mlstring>Make Private</xar:mlstring></label></td>
 <td width="30%"><input type="checkbox" name="private" id="private" value="1"></td>
 </tr>
 <tr>
-<td width="25%"><label for="sendmails">#$sendmails#</label></td>
+<td width="25%"><label for="sendmails"><xar:mlstring>Email Group</xar:mlstring></label></td>
 <td width="75%" colspan="3"><select name="sendmails" id="sendmails">
 	<xar:loop name="$sendmailoptions">
-      	<option name="sendmails" value="#$id#">#$name#</option>
+      	<option value="#$id#">#$name#</option>
 	</xar:loop>
 	</select>
 </td>
 </tr>
 <tr>
-<td width="25%"><label for="importantdays">#$importantdays#</label></td>
+<td width="25%"><label for="importantdays"><xar:mlstring>Important Days</xar:mlstring></label></td>
 <td width="20%"><select name="importantdays" id="importantdays">
-	<xar:loop name="$importantdaysdropdown">
-      	<option name="importantdays" value="#$id#">#$name#</option>
-	</xar:loop>
+	<xar:for start="$i = 0" test="$i <= 9" iter="$i++">
+      	<option value="#$i#">#$i#</option>
+	</xar:for>
 	</select>
 </td>
-<td width="25%"><label for="criticaldays">#$criticaldays#</label></td>
+<td width="25%"><label for="criticaldays"><xar:mlstring>Critical Days</xar:mlstring></label></td>
 <td width="30%"><select name="criticaldays" id="criticaldays">
-	<xar:loop name="$criticaldaysdropdown">
-      	<option name="criticaldays" value="#$id#">#$name#</option>
-	</xar:loop>
+	<xar:for start="$i = 0" test="$i <= 9" iter="$i++">
+      	<option value="#$i#">#$i#</option>
+	</xar:for>
 	</select>
 </td>
 </tr>
 <tr>
-<td width="25%"><label for="billable">#$billable#</label></td>
+<td width="25%"><label for="billable"><xar:mlstring>Billable</xar:mlstring></label></td>
 <td width="75%" colspan="3"><input type="checkbox" name="billable" id="billable" value="1"></td>
 </tr>
 <tr>
-<td width="25%" valign="top"><label for="description">#$descriptionlabel#</label></td>
+<td width="25%" valign="top"><label for="description"><xar:mlstring>Description</xar:mlstring></label></td>
 <td width="75%" colspan="3"><textarea name="description" id="description" cols="60" rows="5"></textarea></td>
 </tr>
 <tr>

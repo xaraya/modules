@@ -1,55 +1,54 @@
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Delete Task</xar:mlstring></h2>
+<div align="center">
 
-<table border="0" width="100%" cellspacing="1" cellpadding="8">
+<table border="0" cellpadding="2" cellspacing="0" width="100%" >
 
-    <tr>
-        <th align="center">&xar-var-menutitle;</th>
-    </tr>
-    <tr><td>
-        <table border="0" width="100%" cellspacing="1" cellpadding="8">
-        <tr align="center" valign="middle">
+    <!-- the variables used in this menu come from example_user_menu() -->
+	<tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
 
-        <td><a href="&xar-modurl-xproject-admin-new;">&xar-var-menulabel_new;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-view;">&xar-var-menulabel_view;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-search;">&xar-var-menulabel_search;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-modifyconfig;">&xar-var-menulabel_config;</a></td>
+        <td><a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a></td>
+        <td><a href="&xar-modurl-xproject-user-view;"><xar:mlstring>Projects</xar:mlstring></a></td>
+        <td><a href="&xar-modurl-xproject-user-search;"><xar:mlstring>Search</xar:mlstring></a></td>
+        <td><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Modify Config</xar:mlstring></a></td>
 
-        </tr>
-        </table>
+        </tr></table>
     </td></tr>
 </table>
 <br />
 
+<h3><xar:mlstring>Confirm deleting this Task?</xar:mlstring></h3>
 
-<center>&xar-var-confirmtext;</center><br />
-
-<center>
 <form method="post" action="&xar-modurl-xproject-tasks-delete;">
-    <input type="hidden" name="authid" value="&xar-var-authid;" />
+    <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="confirm" value="true" />
-    <input type="hidden" name="taskid" value="&xar-var-taskid;" />
+    <input type="hidden" name="taskid" value="#$taskid#" />
 
-    <table border="0" width="300">
+    <table border="0" width="300" cellpadding="2" cellspacing="1">
         <tr>
             <td>
-                &xar-var-taskidlabel;:
+                <xar:mlstring>Task ID</xar:mlstring>
             </td>
             <td>
-                &xar-var-taskid;
+                #$taskid#
             </td>
         </tr>
         <tr>
             <td>
-                &xar-var-tasknamelabel;:
+                <xar:mlstring>Task Name</xar:mlstring>
             </td>
             <td>
-                &xar-var-tasknamevalue;
+                #$taskname#
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center"><br />
-                    <input type="submit" value="&xar-var-confirmbutton;" align="middle" />
+                    <input type="submit" value="#$confirmbutton#" align="middle" />
             </td>
         </tr>
     </table>
 </form>
-</center>
+</div>
+</div>

@@ -5,6 +5,14 @@
 <xar:if condition="!empty($status)">
     <div>#$status#</div>
 </xar:if>
+       <table border="0" width="100%" cellspacing="0" cellpadding="2">
+		<tr align="center" valign="middle">
+        <td width="25%"><a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xproject-user-view;"><xar:mlstring>Projects</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xproject-user-search;"><xar:mlstring>Search</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Modify Config</xar:mlstring></a></td>
+        </tr>
+		</table><br />
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent">
     <tr>
@@ -27,7 +35,7 @@
     </td>
     <td class="xar-norm" align="center">#$project_numtasks#
     </td>
-        <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($project_editurl)">#$project_edittitle#<xar:else /><a href="#$project_editurl#">#$project_edittitle#</a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($project_deleteurl)">#$project_deletetitle#<xar:else /><a href="#$project_deleteurl#">#$project_deletetitle#</a></xar:if>&nbsp;]</td>
+        <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($project_editurl)"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$project_editurl#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($project_deleteurl)"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$project_deleteurl#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
   </tr>
     </xar:loop>
 

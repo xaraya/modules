@@ -26,30 +26,14 @@ function xproject_admin_new()
 
     $data['authid'] = xarSecGenAuthKey();
 
-    $data['namelabel'] = xarVarPrepForDisplay(xarMLByKey('Project'));
-    $data['displaydates'] = xarVarPrepForDisplay(xarMLByKey('Use Date Fields'));
-    $data['displayhours'] = xarVarPrepForDisplay(xarMLByKey('Use Hours Fields'));
-    $data['displayfreq'] = xarVarPrepForDisplay(xarMLByKey('Use Frequency Fields'));
-    $data['private'] = xarVarPrepForDisplay(xarMLByKey('Make Private'));
     $sendmailoptions = array();    
-    $sendmailoptions[] = array('id'=>0,'name'=>'Please choose an email option');
-    $sendmailoptions[] = array('id'=>1,'name'=>"any changes");
-    $sendmailoptions[] = array('id'=>2,'name'=>"major changes");
-    $sendmailoptions[] = array('id'=>3,'name'=>"weekly summaries");
-    $sendmailoptions[] = array('id'=>4,'name'=>"Do NOT send email");
+    $sendmailoptions[] = array('id'=>0,'name'=>xarMLBYKey('Please choose an email option'));
+    $sendmailoptions[] = array('id'=>1,'name'=>xarMLBYKey("any changes"));
+    $sendmailoptions[] = array('id'=>2,'name'=>xarMLBYKey("major changes"));
+    $sendmailoptions[] = array('id'=>3,'name'=>xarMLBYKey("weekly summaries"));
+    $sendmailoptions[] = array('id'=>4,'name'=>xarMLBYKey("Do NOT send email"));
 	$data['sendmailoptions'] = $sendmailoptions;
-    $data['sendmails'] = xarVarPrepForDisplay(xarMLByKey('Email Group'));
-	for($x=0;$x<=9;$x++) {
-		$data['importantdaysdropdown'][] = array('id' => $x, 'name' => $x);
-	}
-    $data['importantdays'] = xarVarPrepForDisplay(xarMLByKey('Important Days'));
-	for($x=0;$x<=9;$x++) {
-		$data['criticaldaysdropdown'][] = array('id' => $x, 'name' => $x);
-	}
-    $data['criticaldays'] = xarVarPrepForDisplay(xarMLByKey('Critical Days'));
-    $data['billable'] = xarVarPrepForDisplay(xarMLByKey('Billable'));
 	
-    $data['descriptionlabel'] = xarVarPrepForDisplay(xarMLByKey('Description'));
     $data['addbutton'] = xarVarPrepForDisplay(xarMLByKey('Add'));
 
     $item = array();
@@ -290,10 +274,7 @@ function xproject_admin_delete($args)
 
         $data['projectid'] = $projectid;
 
-        $data['confirmtext'] = xarML('Confirm deleting this project?');
-        $data['itemid'] =  xarML('Project ID');
-        $data['namelabel'] =  xarMLByKey('Project');
-        $data['namevalue'] = xarVarPrepForDisplay($project['name']);
+        $data['name'] = xarVarPrepForDisplay($project['name']);
         $data['confirmbutton'] = xarML('Confirm');
 
         $data['authid'] = xarSecGenAuthKey();

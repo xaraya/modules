@@ -49,10 +49,6 @@ function xproject_user_view($args)
 
     $data = xproject_user_menu();
 
-	$data['title'] = xarVarPrepForDisplay(xarMLByKey('Projects'));
-	$data['namelabel'] = xarVarPrepForDisplay(xarMLByKey('Project'));
-
-	
 	$data['items'] = array();
 
     if (!xarSecAuthAction(0, 'xproject::', '::', ACCESS_OVERVIEW)) {
@@ -89,7 +85,6 @@ function xproject_user_view($args)
 		} else {
 			$xprojects[$i]['editurl'] = '';
 		}
-		$xprojects[$i]['edittitle'] = xarML('Edit');
 		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_DELETE)) {
 			$xprojects[$i]['deleteurl'] = xarModURL('xproject',
 											   'admin',
@@ -98,7 +93,6 @@ function xproject_user_view($args)
 		} else {
 			$xprojects[$i]['deleteurl'] = '';
 		}
-		$xprojects[$i]['deletetitle'] = xarML('Delete');
     }
 
     $data['xprojects'] = $xprojects;
@@ -145,8 +139,6 @@ function xproject_user_display($args)
     $data['name'] = xarVarCensor($project['name']);
     $data['description'] = $project['description'];
 
-	$data['curtask_edittitle'] = "Edit";
-	$data['curtask_deletetitle'] = "Delete";
 	if(is_numeric($taskid) && $taskid > 0) {
 		if (!xarModAPILoad('xproject', 'tasks')) return;
 	
@@ -185,12 +177,11 @@ function xproject_user_display($args)
 			$data['roottask'] = xarMLByKey('project overview');
 		}
 		
-		$data['taskparent_label'] = xarMLByKey('Parent Task');
 		if (isset($parent) && xarExceptionMajor() == XAR_NO_EXCEPTION) {
 			$data['taskparent_name'] = $parent['name'];
 			$data['taskparent_id'] = $parent['taskid'];
 		}
-		$data['taskroot_name'] = xarMLByKey('root');
+		$data['taskroot_name'] = xarMLByKey('Project Top');
 	}
 
     $data['hookoutput'] = xarModCallHooks('item',
@@ -212,8 +203,8 @@ function xproject_user_display($args)
 		else $data['tasknamelabel'] = xarVarPrepForDisplay(xarMLByKey('New Sub-Task'));
 		
 		$statusoptions = array();    
-		$statusoptions[] = array('id'=>0,'name'=>'Open');
-		$statusoptions[] = array('id'=>1,'name'=>'Closed');
+		$statusoptions[] = array('id'=>0,'name'=>xarMLByKey('Open'));
+		$statusoptions[] = array('id'=>1,'name'=>xarMLByKey('Closed'));
 		$data['statusoptions'] = $statusoptions;
 
 		$data['prioritydropdown'] = array();
@@ -249,12 +240,7 @@ function xproject_user_display($args)
 	// BUILD TASKS ARRAY
 	$data['tasks'] = array();
 	if (xarModAPILoad('xproject', 'tasks')) {
-		$data['tasklistname_label'] = "Task";
 		$data['tasklistfilter'] = $filter;
-		$data['tasklistpri_label'] = "!";
-		$data['taskliststatus_label'] = "X";
-		$data['tasklistsubs_label'] = "#";
-		$data['tasklistoptions_label'] = "Options";
 		$tasks = xarModAPIFunc('xproject',
 								'tasks',
 								'getall',
@@ -278,7 +264,6 @@ function xproject_user_display($args)
 				} else {
 					$tasks[$i]['editurl'] = '';
 				}
-				$tasks[$i]['edittitle'] = xarML('Edit');
 				if (xarSecAuthAction(0, 'xproject::Tasks', "$task[name]::$task[taskid]", ACCESS_DELETE)) {
 					$tasks[$i]['deleteurl'] = xarModURL('xproject',
 													   'tasks',
@@ -287,16 +272,15 @@ function xproject_user_display($args)
 				} else {
 					$tasks[$i]['deleteurl'] = '';
 				}
-				$tasks[$i]['deletetitle'] = xarML('Delete');
 			}
 			$data['tasks'] = $tasks;
 			$data['numtasks'] = count($data['tasks']);
 			$numtasks = count($data['tasks']);
 		}
 		
-		$taskoptionslist = array(1 => "Surface",
-								2 => "Delete (children drown)",
-								3 => "Delete (children surface)");
+		$taskoptionslist = array(1 => xarMLByKey('Surface'),
+								2 => xarMLByKey('Delete') . ' (' . xarMLByKey('delete subtasks') . ')',
+								3 => xarMLByKey('Delete') . ' (' . xarMLByKey('move subtasks up') . ')');
 		$taskoptions = array();
 		foreach($taskoptionslist as $optionid=>$option) {
 			$taskoptions[] = array('id' => $optionid,

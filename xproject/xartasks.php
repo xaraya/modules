@@ -48,7 +48,7 @@ function xproject_tasks_create($args)
     extract($args);
 
     if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for creating new #(1) item',
+        $msg = xarML('Invalid authorization key for creating new #(1) item'." *$authid*",
                     'xproject');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
@@ -134,10 +134,8 @@ function xproject_tasks_modify($args)
 											 $project['projectid'],
 											 array($project['name']));
 	
-		$data['name_label'] = xarMLByKey('Project');
-		$data['name_value'] = xarVarCensor($project['name']);
-		$data['description_label'] = xarMLByKey('Description');
-		$data['description_value'] = $project['description'];
+		$data['name'] = xarVarCensor($project['name']);
+		$data['description'] = xarVarCensor($project['description']);
 	}
 
     if (!xarSecAuthAction(0, 'xproject::Tasks', "$task[name]::$taskid", ACCESS_EDIT)) {
@@ -158,12 +156,10 @@ function xproject_tasks_modify($args)
 	}
 	
 	if (isset($parent) && xarExceptionMajor() == XAR_NO_EXCEPTION) {
-		$data['taskparent_label'] = xarMLByKey('Parent Task');
-		$data['taskparent_name'] = $parent['name'];
+		$data['taskparent'] = $parent['name'];
 		$data['taskparent_id'] = $parent['taskid'];
 	} else {
-		$data['taskparent_label'] = xarMLByKey('Parent Task');
-		$data['taskparent_name'] = xarMLByKey('root');
+		$data['taskparent'] = xarMLByKey('Project Top');
 		$data['taskparent_id'] = 0;
 	}
 
@@ -172,24 +168,16 @@ function xproject_tasks_modify($args)
     $data['taskid'] = $taskid;
 	$data['parentid'] = $task['parentid'];
 
-	$data['taskname_label'] = xarVarPrepForDisplay(xarMLByKey('Task Name'));
-	$data['taskname_value'] = $task['name'];
-	$data['description_value'] = $task['description'];
-	$data['prioritylabel'] = xarVarPrepForDisplay(xarMLByKey('Priority'));
-	$data['statuslabel'] = xarVarPrepForDisplay(xarMLByKey('Status'));
-	$data['description_label'] = xarVarPrepForDisplay(xarMLByKey('Description'));
+	$data['taskname'] = $task['name'];
+	$data['description'] = $task['description'];
 
 	$statusoptions = array();    
-	$statusoptions[] = array('id'=>0,'name'=>'Open','selected'=>"");
-	$statusoptions[] = array('id'=>1,'name'=>'Closed','selected'=>"");
+	$statusoptions[] = array('id'=>0,'name'=>xarMLByKey('Open'),'value'=>0);
+	$statusoptions[] = array('id'=>1,'name'=>xarMLByKey('Closed'),'value'=>1);
 	$data['statusoptions'] = $statusoptions;
-	$data['statusoptions'][$task['status']]['selected'] = "selected";
+	$data['status'] = $task['status'];
 
-	$data['prioritydropdown'] = array();
-	for($x=0;$x<=9;$x++) {
-		$data['prioritydropdown'][] = array('id' => $x, 'name' => $x, 'selected' => "");
-	}
-	$data['prioritydropdown'][$task['priority']]['selected'] = "selected";
+	$data['priority'] = $task['priority'];
 
 	$data['updatebutton'] = xarVarPrepForDisplay(xarMLByKey('Modify'));
 
@@ -220,7 +208,6 @@ function xproject_tasks_modify($args)
 			} else {
 				$tasks[$i]['editurl'] = '';
 			}
-			$tasks[$i]['edittitle'] = xarML('Edit');
 			if (xarSecAuthAction(0, 'xproject::Tasks', "$task[name]::$task[taskid]", ACCESS_DELETE)) {
 				$tasks[$i]['deleteurl'] = xarModURL('xproject',
 												   'tasks',
@@ -229,7 +216,6 @@ function xproject_tasks_modify($args)
 			} else {
 				$tasks[$i]['deleteurl'] = '';
 			}
-			$tasks[$i]['deletetitle'] = xarML('Delete');
 		}
 		$data['tasks'] = $tasks;
 		$data['numtasks'] = count($tasks);
@@ -372,10 +358,7 @@ function xproject_tasks_delete($args)
         $data['projectid'] = $task['projectid'];
         $data['taskid'] = $task['taskid'];
 
-        $data['confirmtext'] = xarML('Confirm deleting this item ?');
-        $data['taskidlabel'] =  xarML('Task ID');
-        $data['tasknamelabel'] =  xarMLByKey('Task Name');
-        $data['tasknamevalue'] = xarVarPrepForDisplay($task['name']);
+        $data['taskname'] = xarVarPrepForDisplay($task['name']);
         $data['confirmbutton'] = xarML('Confirm');
 
         $data['authid'] = xarSecGenAuthKey();
@@ -396,7 +379,7 @@ function xproject_tasks_delete($args)
                      array('taskid' => $taskid))) {
         return;
     }
-    xarSessionSetVar('statusmsg', xarMLByKey('EXAMPLEDELETED'));
+    xarSessionSetVar('statusmsg', xarMLByKey('Task Deleted'));
 
     xarResponseRedirect(xarModURL('xproject', 'user', 'display', array('projectid' => $task['projectid'], 'taskid' => $task['parentid'])));
 

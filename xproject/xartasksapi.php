@@ -523,7 +523,7 @@ function xproject_tasksapi_create($args)
     $xartable = xarDBGetTables();
 
     $taskstable = $xartable['xproject_tasks'];
-
+	$xprojecttable = $xartable['xproject'];
     $nextId = $dbconn->GenId($xprojecttable);
 
     $sql = "INSERT INTO $taskstable (
@@ -592,7 +592,7 @@ function xproject_tasksapi_create($args)
         return;
     }
 
-    $projectid = $dbconn->PO_Insert_ID($xprojecttable, 'xar_projectid');
+    $taskid = $dbconn->PO_Insert_ID($xprojecttable, 'xar_projectid');
 
     $item = $args;
     $item['module'] = 'xproject';

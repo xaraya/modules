@@ -3,7 +3,7 @@
 <h2><xar:mlstring>Delete Project</xar:mlstring></h2>
 <div align="center">
 
-<h3>#$confirmtext#</h3>
+<h3><xar:mlstring>Confirm deleting this Project?</xar:mlstring></h3>
 
 <form method="post" action="&xar-modurl-xproject-admin-delete;">
     <input type="hidden" name="authid" value="#$authid#" />
@@ -13,7 +13,7 @@
     <table border="0" cellpadding="2" cellspacing="0">
         <tr>
             <td align="right" width="50%">
-                #$itemid#:
+                <xar:mlstring>Project ID</xar:mlstring>
             </td>
             <td width="50%">
                 #$projectid#
@@ -21,10 +21,10 @@
         </tr>
         <tr>
             <td align="right" width="50%">
-                #$namelabel#:
+                <xar:mlstring>Project</xar:mlstring>
             </td>
             <td width="50%">
-                #$namevalue#
+                #$name#
             </td>
         </tr>
         <tr>
