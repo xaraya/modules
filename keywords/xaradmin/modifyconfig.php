@@ -18,7 +18,7 @@
  * @param $restricted -
  * @return true on success or void on failure
  * @throws no exceptions
- * @todo EFFETTUARE LE CHIAMATE SU RESTRICTED SOLO SE IL CASO
+ * @todo execute the calls on restricted only if necessary
  */
 function keywords_admin_modifyconfig()
 { 
