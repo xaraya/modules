@@ -93,6 +93,11 @@ $isfile = $field;
     }
     $$field = mktime($var['hour'],$var['min'],$var['sec'],
                      $var['mon'],$var['mday'],$var['year']);
+} elseif ($value['format'] == 'url' && isset($$field) && $$field == 'http://') {
+    $$field = '';
+}
+if ($field == 'bodytext' && $value['format'] == 'url' && $body == 'http://') {
+    $body = '';
 }
         if (!isset($$field)) {
             $$field = '';

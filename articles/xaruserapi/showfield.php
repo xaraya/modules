@@ -148,8 +148,11 @@ function articles_userapi_showfield($args)
             if (empty($size)) {
                 $size = 50;
             }
+            if (empty($value)) {
+                $value = 'http://';
+            }
             $output .= '<input type="text" name="'.$name.'" value="'.$value.'" size="'.$size.'"'.$id.$tabindex.' />';
-            if (!empty($value)) {
+            if (!empty($value) && $value != 'http://') {
                 $output .= ' [ <a href="'.$value.'" target="preview">'.xarML('check').'</a> ]';
             }
             break;

@@ -269,9 +269,13 @@ function articles_user_display($args)
                 break;
             case 'url':
                 $data[$field] = xarVarPrepHTMLDisplay($article[$field]);
-                $data['redirect'] = xarModURL('articles','user','redirect',
-                                             array('aid' => $aid,
-                                                   'ptid' => $ptid));
+                if (!empty($article[$field]) && $article[$field] != 'http://') {
+                    $data['redirect'] = xarModURL('articles','user','redirect',
+                                                  array('aid' => $aid,
+                                                        'ptid' => $ptid));
+                } else {
+                    $data['redirect'] = '';
+                }
                 break;
         // TEST ONLY
             case 'webpage':
