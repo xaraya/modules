@@ -43,6 +43,7 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>&nbsp;</td>
                     <td><b><xar:mlstring>User Name</xar:mlstring></b></td>
                     <td><b><xar:mlstring>Email</xar:mlstring></b></td>
                     <td><b><xar:mlstring>HTML/Text</xar:mlstring></b></td>
@@ -52,6 +53,9 @@
                 </tr>
                 <xar:loop name="$subscriptions">
                     <tr>
+                        <td>
+                            #$loop:number#.
+                        </td>
                         <td>
                             <xar:if condition="empty($loop:item['nameurl'])">
                                 #$loop:item['name']#

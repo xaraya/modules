@@ -328,7 +328,7 @@ function newsletter_userapi_get($args)
                 $query .= " WHERE xar_issueid = " . xarVarPrepForStore($issueId);
             }
 
-            $query .= " ORDER by xar_cid, xar_order";
+            $query .= " ORDER by xar_order";
 
             $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
 

@@ -11,6 +11,7 @@
             <table border="0" width="100%">
                 <xar:if condition="!empty($subscriptions)">
                     <tr>
+                        <th>&nbsp;</th>
                         <th><xar:mlstring>Publication</xar:mlstring></th>
                         <th><xar:mlstring>Name</xar:mlstring></th>
                         <th><xar:mlstring>User Name</xar:mlstring></th>
@@ -19,6 +20,9 @@
                     </tr>
                     <xar:loop name="$subscriptions">
                         <tr>
+                            <td>
+                                #$loop:number#.
+                            </td>
                             <td>
                                 #$loop:item['title']#
                             </td>
