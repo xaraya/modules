@@ -85,14 +85,14 @@
 
 				<h3><xar:mlstring>4. Managing the overview and display of articles per publication type</xar:mlstring></h3>
 
-				<p><xar:mlstring>In <strong>Articles Configuration</strong>, set start view (list/browse), ## of
-				columns and items, show category links + ## of comments (+ performance impact)</xar:mlstring></p>
+				<p><xar:mlstring>In <strong>Articles Configuration</strong>, set start view (list/browse), # of
+				columns and items, show category links + # of comments (+ performance impact)</xar:mlstring></p>
 
 				<p><xar:mlstring>+ adapt specific templates!</xar:mlstring></p>
 
 				<h3><xar:mlstring>5. Managing your 'front page'</xar:mlstring></h3>
 
-				<p><xar:mlstring>cfr. frontpage status and ## of columns and items - needs to be extended</xar:mlstring></p>
+				<p><xar:mlstring>cfr. frontpage status and # of columns and items - needs to be extended</xar:mlstring></p>
 
 				<h3><xar:mlstring>6. Adding counters, ratings, comments, smilies, bb-code etc.</xar:mlstring></h3>
 
