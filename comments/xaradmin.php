@@ -40,7 +40,7 @@ function comments_admin_main()
  */
 function comments_admin_modifyconfig()
 {
-	$editstamp=xarModGetVar('comments','editstamp');
+     $editstamp=xarModGetVar('comments','editstamp');
     $output['editstamp']       = !isset($editstamp) ? 1 :$editstamp;
 
     // Security Check
@@ -220,7 +220,7 @@ function comments_admin_stats()
 }
 
 
-function comments_admin_module_stats( ) 
+function comments_admin_module_stats( )
 {
 
     // Security Check

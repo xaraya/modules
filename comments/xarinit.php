@@ -144,7 +144,7 @@ function comments_init()
     xarModSetVar('comments','AuthorizeComments',0);
     xarModSetVar('comments','AllowCollapsableThreads',1);
     xarModSetVar('comments','CollapsedBranches',serialize(array()));
-
+    xarModSetVar('comments','editstamp',1);  
     // TODO: add delete hook
 
     // display hook
