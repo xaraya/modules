@@ -48,10 +48,11 @@ function release_user_viewids()
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
 
+        // FIXME.  Why am I having problems with this on the site?
         $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
-                                  array('uid' => $item['uid']));
+                                  array('uid' => $uid));
 
         // Author Name and Contact URL
         $items[$i]['author'] = $getuser['name'];
