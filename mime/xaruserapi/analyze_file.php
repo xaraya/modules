@@ -78,7 +78,7 @@ function mime_userapi_analyze_file( $args )
 
                 if ($magicInfo['offset'] >= 0) {
                     if (@fseek($fp, $magicInfo['offset'], SEEK_SET)) {
-                        $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]' ,
+                        $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]',
                                       $magicInfo['offset'], $fileName);
                         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SEEK', new SystemException($msg));
                         return FALSE;
@@ -86,7 +86,7 @@ function mime_userapi_analyze_file( $args )
                 }
                
                 if (!($value = @fread($fp, $magicInfo['length']))) {
-                    $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].' , 
+                    $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].', 
                                  $magicInfo['length'], $fileName);
                     xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
                     return FALSE;
