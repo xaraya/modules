@@ -14,7 +14,8 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function addressbook_admin_main() {
+function addressbook_admin_main() 
+{
 
     /**
      * Check if we want to display our overview panel.

@@ -19,7 +19,8 @@
  *
  * @return mixed
  */
-function addressbook_userapi_getAddressList($args) {
+function addressbook_userapi_getAddressList($args) 
+{
 
     extract($args);
 

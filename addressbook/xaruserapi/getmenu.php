@@ -17,7 +17,8 @@
 /**
  * Displays user menu
  */
-function addressbook_userapi_getMenu($args) {
+function addressbook_userapi_getMenu($args) 
+{
     extract ($args);
 
     $output['authid'] = xarSecGenAuthKey();

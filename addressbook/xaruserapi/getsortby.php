@@ -19,7 +19,8 @@
  * @param string $sort - type of sort
  * @return string - contcatenated sort ordering
  */
-function addressbook_userapi_getSortBy($args){
+function addressbook_userapi_getSortBy($args)
+{
     extract($args);
     if (!isset($sort)) {
         return false;

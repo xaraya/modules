@@ -20,7 +20,8 @@
  * @param N/A
  * @return array of companies
  */
-function addressbook_userapi_getCompanies() {
+function addressbook_userapi_getCompanies() 
+{
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();
     $adr_table = $xarTables['addressbook_address'];

@@ -17,7 +17,8 @@
 //=========================================================================
 //  Insert/Edit form
 //=========================================================================
-function addressbook_user_insertedit() {
+function addressbook_user_insertedit() 
+{
 
     $output = array();
 

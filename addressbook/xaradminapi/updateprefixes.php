@@ -21,7 +21,8 @@
  * @return bool
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function addressbook_adminapi_updateprefixes($args) {
+function addressbook_adminapi_updateprefixes($args) 
+{
 
     // var defines
     $dels = '';

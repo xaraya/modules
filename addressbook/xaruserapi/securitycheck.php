@@ -17,7 +17,8 @@
 /**
  * SecurityCheck
  */
-function addressbook_userapi_SecurityCheck($value) {
+function addressbook_userapi_SecurityCheck($value) 
+{
     //SecurityCheck
     $value = preg_replace("'<img(.*)src=(.*)(;|\()(.*?)>'i","*******",$value);
     $value = preg_replace("#(<[a-zA-Z])(.*)(;|\()(.*?)(/[a-zA-Z])(.*?)>#si","*******",$value);

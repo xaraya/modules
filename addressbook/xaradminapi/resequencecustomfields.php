@@ -20,7 +20,8 @@
  * @param none
  * @return bool
  */
-function addressbook_adminapi_resequenceCustomfields() {
+function addressbook_adminapi_resequenceCustomfields() 
+{
 
     /**
      * Security check

@@ -280,7 +280,8 @@ function addressbook_init()
  * upgrade the module from an old version
  * This function can be called multiple times
  */
-function addressbook_upgrade($oldversion) {
+function addressbook_upgrade($oldversion) 
+{
 
     //FIXME: until we figure out module globals
     include_once ('modules/addressbook/xarglobal.php');
@@ -336,7 +337,8 @@ function addressbook_upgrade($oldversion) {
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function addressbook_delete() {
+function addressbook_delete() 
+{
 
     //FIXME: until we figure out module globals
     include_once ('modules/addressbook/xarglobal.php');

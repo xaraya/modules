@@ -20,7 +20,8 @@
  * @param int $sort
  * @return array
  */
-function addressbook_userapi_getListHeader($args){
+function addressbook_userapi_getListHeader($args)
+{
     extract($args);
     if (!isset($sort)) {
         return false;

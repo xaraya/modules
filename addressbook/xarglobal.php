@@ -273,11 +273,13 @@ define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
 //
 ////////////////
 
-class abUserException extends DefaultUserException {
+class abUserException extends DefaultUserException 
+{
 
     var $errCollection = array();
 
-    function abUserException ($exc) {
+    function abUserException ($exc) 
+    {
 
         if (is_object($exc)) {
             if (strtolower(get_class($exc)) == 'errorcollection') {

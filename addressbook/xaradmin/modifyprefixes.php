@@ -21,7 +21,8 @@
  * @param GET / POST passed from modifyprefix form
  * @return xarTemplate data
  */
-function addressbook_admin_modifyprefixes($args) {
+function addressbook_admin_modifyprefixes($args) 
+{
     $output = array (); // template contents go here
     /**
      * Security check first

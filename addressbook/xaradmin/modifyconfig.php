@@ -21,7 +21,8 @@
  * @param GET / POST passed from modifyconfig form
  * @return xarTemplate data
  */
-function addressbook_admin_modifyconfig() {
+function addressbook_admin_modifyconfig() 
+{
 
     $output = array(); // template contents go here
 

@@ -21,7 +21,8 @@
  * @param GET / POST passed from modifycustomfields form
  * @return xarTemplate data
  */
-function addressbook_admin_modifycustomfields() {
+function addressbook_admin_modifycustomfields() 
+{
 
     $output = array(); // template contents go here
     /**

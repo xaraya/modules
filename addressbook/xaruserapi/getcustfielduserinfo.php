@@ -17,7 +17,8 @@
 /**
  * getCustFieldUserInfo
  */
-function addressbook_userapi_getCustFieldUserInfo($args) {
+function addressbook_userapi_getCustFieldUserInfo($args) 
+{
     extract($args);
 
     $custFieldUserInfo = array(); // will hold our return data

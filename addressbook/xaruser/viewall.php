@@ -19,7 +19,8 @@
  *
  * @return array of menu links
  */
-function addressbook_user_viewall() {
+function addressbook_user_viewall() 
+{
 
     $output['userIsLoggedIn'] = xarUserIsLoggedIn();
     $output['globalprotect'] = xarModGetVar(__ADDRESSBOOK__, 'globalprotect');

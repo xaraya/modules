@@ -22,7 +22,8 @@
  * @raise _AB_GLOBALPROTECTERROR, _AB_GRANTERROR, _AB_SORTERROR_1,
  *        _AB_SORTERROR_2, _AB_SPECIAL_CHARS_ERROR
  */
-function addressbook_adminapi_updateconfig($args) {
+function addressbook_adminapi_updateconfig($args) 
+{
 
     /**
      * Security check

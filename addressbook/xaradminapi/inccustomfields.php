@@ -20,7 +20,8 @@
  * @param passed in from updatecustomfields api
  * @return bool
  */
-function addressbook_adminapi_incCustomfields($args) {
+function addressbook_adminapi_incCustomfields($args) 
+{
 
     $returnCode = TRUE;
 

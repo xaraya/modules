@@ -20,7 +20,8 @@
  * @param string $email
  * @return bool true / false
  */
-function addressbook_utilapi_is_email ($args) {
+function addressbook_utilapi_is_email ($args) 
+{
     extract($args);
 
     if (empty($email)) {

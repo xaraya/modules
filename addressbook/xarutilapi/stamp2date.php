@@ -20,7 +20,8 @@
  * @param string $idate
  * @return string formated date
  */
-function addressbook_utilapi_stamp2date($args){
+function addressbook_utilapi_stamp2date($args)
+{
     extract($args);
     if( (!isset($idate)) || (empty($idate)) || ($idate=='')) {
         return '';

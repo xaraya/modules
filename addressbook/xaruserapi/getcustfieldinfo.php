@@ -25,7 +25,8 @@
  *
  * @return array custom field info
  */
-function addressbook_userapi_getCustFieldInfo($args) {
+function addressbook_userapi_getCustFieldInfo($args) 
+{
     extract ($args);
 
     $custFieldInfo = array();

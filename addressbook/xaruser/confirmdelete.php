@@ -17,7 +17,8 @@
 //=========================================================================
 //  Confirm deletion
 //=========================================================================
-function addressbook_user_confirmdelete() {
+function addressbook_user_confirmdelete() 
+{
 
     $output = array();
 

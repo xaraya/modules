@@ -20,7 +20,8 @@
  * @param string $url
  * @return bool true / false
  */
-function addressbook_utilapi_is_url ($args) {
+function addressbook_utilapi_is_url ($args) 
+{
     extract($args);
     $UrlElements = parse_url($url);
     if( (empty($UrlElements)) or (!$UrlElements) ) {

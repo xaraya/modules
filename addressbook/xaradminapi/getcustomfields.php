@@ -14,7 +14,8 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function addressbook_adminapi_getCustomfields() {
+function addressbook_adminapi_getCustomfields() 
+{
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();
     $cus_table = $xarTables['addressbook_customfields'];

@@ -21,7 +21,8 @@
  * @param GET / POST passed from modifycategories form
  * @return xarTemplate data
  */
-function addressbook_admin_modifycategories() {
+function addressbook_admin_modifycategories() 
+{
 
     $output = array();
 

@@ -20,7 +20,8 @@
  * @param string $idate - the date to format
  * @return string formated date
  */
-function addressbook_utilapi_td2stamp($args){
+function addressbook_utilapi_td2stamp($args)
+{
     extract($args);
     if( (!isset($idate)) || (empty($idate)) || ($idate=='')) {
         return 'NULL';

@@ -17,7 +17,8 @@
 /**
  * Display details
  */
-function addressbook_user_viewdetail() {
+function addressbook_user_viewdetail() 
+{
 
     $output = array();
     $output['abModInfo'] = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));

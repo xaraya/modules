@@ -19,7 +19,8 @@
  *
  * @param mixed
  */
-function addressbook_userapi_insertrecord($args) {
+function addressbook_userapi_insertrecord($args) 
+{
     extract($args);
 
     $lname = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$lname);

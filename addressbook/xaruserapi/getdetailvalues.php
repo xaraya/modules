@@ -21,7 +21,8 @@
  * @return array $detailValues
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function addressbook_userapi_getDetailValues($args) {
+function addressbook_userapi_getDetailValues($args) 
+{
 
     $detailValues = FALSE;
 

@@ -17,7 +17,8 @@
 /**
  * getCustomFieldsTypes
  */
-function addressbook_userapi_getCustFieldTypeInfo() {
+function addressbook_userapi_getCustFieldTypeInfo() 
+{
 
     $custFieldTypeInfo = array();
 

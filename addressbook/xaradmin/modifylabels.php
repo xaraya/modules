@@ -21,7 +21,8 @@
  * @param GET / POST passed from modifylabels form
  * @return xarTemplate data
  */
-function addressbook_admin_modifylabels() {
+function addressbook_admin_modifylabels() 
+{
 
     $output = array (); // template contents go here
     /**

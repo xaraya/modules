@@ -20,7 +20,8 @@
  * @param mixed
  * @return mixed
  */
-function addressbook_userapi_getsubmitvalues($args) {
+function addressbook_userapi_getsubmitvalues($args) 
+{
 
     extract($args);
 

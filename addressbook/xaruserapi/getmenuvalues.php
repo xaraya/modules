@@ -20,7 +20,8 @@
  * @param GET / POST params from viewall from
  * @return array $menuValues
  */
-function addressbook_userapi_getMenuValues() {
+function addressbook_userapi_getMenuValues() 
+{
     $menuValues = array();
 
     if (!xarVarFetch ('total','int::',          $menuValues['total'],FALSE)) return;

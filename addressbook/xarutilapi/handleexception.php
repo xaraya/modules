@@ -31,7 +31,8 @@
  * @return array abErroMsg - if an _AB_ERR_ERROR is encountered
  * @return array abDebugMsg - if an _AB_ERR_DEBUG is encountered
  */
-function addressbook_utilapi_handleexception ($args) {
+function addressbook_utilapi_handleexception ($args) 
+{
 
     extract($args);
 

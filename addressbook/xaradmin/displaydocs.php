@@ -17,7 +17,8 @@
 /**
  * Placeholder function to display a static page
  */
-function addressbook_admin_displaydocs () {
+function addressbook_admin_displaydocs () 
+{
 
     return array();
 

@@ -22,7 +22,8 @@
  * @param args['tablename'] string
  * @param args['name'] string
  * @return bool
- */function addressbook_adminapi_addItems($args)
+ */
+function addressbook_adminapi_addItems($args)
 {
     $returnCode = TRUE;
 

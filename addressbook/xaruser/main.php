@@ -14,7 +14,8 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function AddressBook_user_main() {
+function AddressBook_user_main() 
+{
 
     $output = xarModFunc(__ADDRESSBOOK__,'user','viewall');
 

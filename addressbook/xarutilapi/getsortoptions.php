@@ -20,7 +20,8 @@
  * @param none
  * @return array
  */
-function addressbook_utilapi_getsortoptions() {
+function addressbook_utilapi_getsortoptions() 
+{
 
     $sortOptions = array();
 
