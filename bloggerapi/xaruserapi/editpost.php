@@ -54,6 +54,7 @@ function bloggerapi_userapi_editpost($msg)
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
         $modId = xarModGetIDFromName('articles');
         $cids = xarModAPIFunc('categories','user','getlinks',array('iids'=>$iids,'modid'=>$modId,'itemtype' => $pubType,'reverse'=>0));
+        xarLogVariable('Categories retrieved', $cids, XARLOG_LEVEL_WARNING);
         if (!xarModAPIFunc('articles','admin','update',array('aid'=>$article['aid'], 'title'=>$title,
                                                             'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids,
                                                             'bodytype'=>'normal', 'bodytext'=>$article['body'],'language'=>' '))) {
