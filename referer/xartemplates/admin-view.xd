@@ -18,39 +18,26 @@
 	#$message#
 <xar:else />
 
-<div class="xar-norm-outline" style="padding: 10px;">
-	<div class="xar-norm">
-		<span style="text-align: left;"><xar:mlstring>Url</xar:mlstring></span>
-		<span style="float: right;"><xar:mlstring>Frequency</xar:mlstring></span>
+<div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
+<div class="xar-norm" style="padding: 3px;">
+	<xar:mlstring>Url</xar:mlstring><span style="float: right;"><xar:mlstring>Frequency</xar:mlstring></span>
+</div>
+<xar:loop name="$items">
+	<xar:if condition="(($loop:index + 1) % 2)">
+	<div class="xar-norm" style="padding: 3px;">
+		<a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a>
+		<span style="float: right;">#$loop:item['frequency']#</span>
 	</div>
-		<xar:loop name="$items">
-			<xar:if condition="(($loop:index + 1) % 2)">
-			<div class="xar-norm">
-				<span style="text-align: left;">
-					<xar:if condition="$loop:item['url'] eq 'bookmark'">
-						#$loop:item['url']#
-					<xar:else />
-						<a href="#$loop:item['url']#" target="_BLANK">#$loop:item['urldisplay']#</a>
-					</xar:if>
-				</span>
-				<span style="text-align: right; float: right;">
-					#$loop:item['frequency']#
-				</span>
-			</div>
-			<xar:else />
-			<div class="xar-accent">
-				<span style="text-align: left;">
-					<a href="#$loop:item['url']#" target="_BLANK">#$loop:item['urldisplay']#</a>
-				</span>
-				<span style="text-align: right; float: right;">
-					#$loop:item['frequency']#
-				</span>
-			</div>
-			</xar:if>
-		</xar:loop>
+	<xar:else />
+	<div class="xar-accent" style="padding: 3px;">
+		<a href="#$loop:item['url']#" target="_BLANK">#$loop:item['urldisplay']#</a>
+		<span style="text-align: right; float: right;">#$loop:item['frequency']#</span>
+	</div>
+	</xar:if>
+</xar:loop>
 </div>
 	<!-- add the pager here -->
-	<div align="center">#$pager#</div>
+	<div style="text-align: center;">#$pager#</div>
 </xar:if>
 </div>
 </div>
