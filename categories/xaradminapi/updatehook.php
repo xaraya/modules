@@ -21,7 +21,7 @@ function categories_adminapi_updatehook($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'admin', 'createhook', 'categories');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        return;
     }
 
     // When called via hooks, the module name may be empty, so we get it from
@@ -36,7 +36,7 @@ function categories_adminapi_updatehook($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'createhook', 'categories');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        return;
     }
 
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
@@ -75,7 +75,7 @@ function categories_adminapi_updatehook($args)
                           array('iid' => $objectid,
                                 'itemtype' => $itemtype,
                                 'modid' => $modid))) {
-            return false;
+            return;
         }
     } elseif (!xarModAPIFunc('categories', 'admin', 'linkcat',
                             array('cids'  => $cids,
@@ -83,7 +83,7 @@ function categories_adminapi_updatehook($args)
                                   'itemtype' => $itemtype,
                                   'modid' => $modid,
                                   'clean_first' => true))) {
-        return false;
+        return;
     }
 
     // Return the extra info

@@ -51,7 +51,7 @@ function categories_adminapi_createhook($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'admin', 'createhook', 'categories');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        return;
     }
 
     // When called via hooks, the module name may be empty, so we get it from
@@ -66,7 +66,7 @@ function categories_adminapi_createhook($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'createhook', 'categories');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        return;
     }
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -79,7 +79,7 @@ function categories_adminapi_createhook($args)
                             'iids'  => array($objectid),
                             'itemtype' => $itemtype,
                             'modid' => $modid))) {
-        return false;
+        return;
     }
 
     // Return the extra info
