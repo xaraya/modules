@@ -362,7 +362,7 @@ function articles_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 1.4:
+        case '1.4':
             // Get current publication types
             $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
             // Get configurable fields for articles
@@ -393,11 +393,13 @@ function articles_upgrade($oldversion)
             break;
 
         // no upgrade for random block here - you can register it via blocks admin
-
-        case 2.0:
+        case '1.5':
+            // compatability upgrade, nothing to be done
+            break;
+        case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
-        case 2.5:
+        case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;
     }
