@@ -141,6 +141,7 @@ function trackback_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             break;
         case 1.1:
