@@ -34,6 +34,22 @@ function xarbb_admin_modify()
                                   'getforum',
                                   array('fid' => $fid));
             if (empty($data)) return;
+            // Recovery procedure in case the forum is no longer assigned to any category
+            if (empty($data['fid'])) {
+                $forums = xarModAPIFunc('xarbb','user','getallforums');
+                foreach ($forums as $forum) {
+                    if ($forum['fid'] == $fid) {
+                        $data = $forum;
+                        $data['catid'] = xarModGetVar('xarbb', 'mastercids');
+                        break;
+                    }
+                }
+                if (empty($data['fid'])) {
+                    $msg = xarML('Invalid Parameter Count');
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                    return;
+                }
+            }
             // Security Check
             if(!xarSecurityCheck('EditxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
             // Get the settings for this forum
