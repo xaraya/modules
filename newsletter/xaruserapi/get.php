@@ -571,7 +571,7 @@ function newsletter_userapi_get($args)
                              $subscriptionsTable.xar_pid,
                              $rolesTable.xar_name,
                              $subscriptionsTable.xar_htmlmail
-                      FROM $subscriptionsTable
+                      FROM $subscriptionsTable, $rolesTable
                       WHERE $subscriptionsTable.xar_pid = " . xarVarPrepForStore($pid) . "
                       AND $subscriptionsTable.xar_uid = $rolesTable.xar_uid";
 
