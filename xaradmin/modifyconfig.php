@@ -11,10 +11,10 @@ function xartelnet_admin_modifyconfig()
     $data['port'] = xarVarPrepForDisplay($run->port);
     $data['timeout'] = xarVarPrepForDisplay($run->timeout);
     $data['prompt'] = xarVarPrepForDisplay($run->prompt);
-    $data['add_html_to_newline'] = '';
-    $data['debug'] = '';
-    if($run->add_html_to_newline == '1') $data['add_html_to_newline'] = xarVarPrepForDisplay('checked');
-    if($run->debug == '1') $data['debug'] = xarVarPrepForDisplay('checked');
+    $data['add_html_to_newline'] = false;
+    $data['debug'] = false;
+    if($run->add_html_to_newline == '1') $data['add_html_to_newline'] = true;
+    if($run->debug == '1') $data['debug'] = true;
     return $data;
 }
 ?>

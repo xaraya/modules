@@ -30,7 +30,11 @@
                         <xar:mlstring>Turn on debugging</xar:mlstring>
                     </td>
                     <td>
-                        <input type="checkbox" name="debug" value="1" #$debug# />
+                        <xar:if condition="$debug">
+                            <input type="checkbox" name="debug" value="1" checked="checked" />
+                        <xar:else/>
+                            <input type="checkbox" name="debug" value="1" />
+                        </xar:if>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -54,7 +58,11 @@
                         <xar:mlstring>Add HTML to Newline</xar:mlstring>
                     </td>
                     <td>
-                        <input type="checkbox" name="add_html_to_newline" value="1" #$add_html_to_newline# />
+                        <xar:if condition="$add_html_to_newline">
+                            <input type="checkbox" name="add_html_to_newline" value="1" checked="checked"/>
+                        <xar:else/>
+                            <input type="checkbox" name="add_html_to_newline" value="1" />
+                        </xar:if>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
