@@ -136,17 +136,28 @@ function &findRule($rules,$gmtoff=0)
                 
                 $dst_start = gmmktime(0,0,0,$r->month,getOnDay($r,$year),$year);
                 $dst_start += $r->tod;
+                if ($r->todcode == 'u') {
+                    // convert from UTC time
+                    $dst_start += $gmtoff;
+                }
                 $dst_start_offset = $r->stdoff;
-                $dst_start_rule =& $r;
+                $dst_start_rule = $r;
             } else {
                 $dst_end = gmmktime(0,0,0,$r->month,getOnDay($r,$year),$year);
                 $dst_end += $r->tod;
-                $dst_end_rule =& $r;
+                if ($r->todcode == 'u') {
+                    // convert from UTC time
+                    $dst_end += $gmtoff;
+                }
+                $dst_end_rule = $r;
             }    
         }
     }
     // small fix to dst end
-    $dst_end -= $dst_start_offset;
+    if ($dst_end_rule->todcode == 'w') {
+        $dst_end -= $dst_start_offset;
+    }
+    // Note: this function returns start and end dates in local standard time
     return array($dst_start,$dst_end,$dst_start_rule,$dst_end_rule);
 }
 
@@ -206,9 +217,12 @@ function zonetime(&$zones, $timestamp)
     } else {
         // find out what rule we should be using
         $useRules = findRule($useZone->rules,$useZone->gmtoff);
-        
+
         // tweak the timestamp
-        if($sSecs > $useRules[0] && $sSecs < $useRules[1]) {
+        if($useRules[0] < $useRules[1] && $sSecs >= $useRules[0] && $sSecs < $useRules[1]) {
+            // we're in DST apply the DST rule's stdoff
+            $wSecs += $useRules[2]->stdoff;
+        } elseif ($useRules[0] > $useRules[1] && ($sSecs >= $useRules[0] || $sSecs < $useRules[1])) {
             // we're in DST apply the DST rule's stdoff
             $wSecs += $useRules[2]->stdoff;
         }
@@ -230,7 +244,7 @@ function timezone_userapi_getTime($args=array())
     if(!isset($timestamp) || empty($timestamp)) {
         $timestamp = time();
     }
-    
+
     return zonetime(&$timezoneData, $timestamp);
 }
 ?>

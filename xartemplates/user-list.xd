@@ -1,8 +1,17 @@
+<xar:comment>
 <xar:if condition="$tz_set">
 <div style="border: 1px solid green; background-color:lightgreen; padding:5px; margin:5px; text-align:center;">
     <xar:mlstring>TimeZone Saved</xar:mlstring>
 </div>
 </xar:if>
+</xar:comment>
+<xar:if condition="empty($selected_tz)">
+    <xar:set name="selected_tz">'America/New_York'</xar:set>
+</xar:if>
+<xar:if condition="empty($year)">
+    <xar:set name="year">gmdate('Y')</xar:set>
+</xar:if>
+
 <form method="post" name="timezone" id="timezone" action="#xarModURL('timezone','user','list')#">
 Timezone:
 <select name="timezone">
@@ -14,58 +23,115 @@ Timezone:
     </xar:if>
 </xar:foreach>
 </select>
+Year:
+<input type="text" name="year" size="5" value="#$year#" />
 <input type="submit" name="submit" value="change" />
 </form>
 
 <h1>Current time for #$selected_tz#</h1>
 <p>
-<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz))</xar:set>
-UTC = #xarLocaleGetFormattedUTCDate('long',time())#&nbsp;
-#xarLocaleGetFormattedUTCTime('long',time())#<br />
-LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
-#xarLocaleGetFormattedTime('long',$currenttime)#
+<xar:set name="timestamp">time()</xar:set>
+<xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+#xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+#xarLocaleGetFormattedUTCTime('long',$localtime)#
 </p>
 
 <hr />
+<xar:set name="timestamp">gmmktime(0,0,0,6,1,$year)</xar:set>
+<xar:set name="tzinfo">xarModAPIFunc('timezone','user','tzinfo',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+<xar:if condition="!isset($tzinfo[1])">
+    <h3>No daylight saving in #$year#</h3>
 
-<xar:set name="test_tz">'America/New_York'</xar:set>
-<h3>Hard Coded Test For #$test_tz#</h3>
-<h3>Should be -0400</h3>
-<p>
-<xar:set name="timestamp">gmmktime(5,59,0,10,31,2004)</xar:set>
-<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
-UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
-#xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
-LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
-#xarLocaleGetFormattedTime('long',$currenttime)#
-</p>
-<hr />
-<h3>Should be -0500</h3>
-<p>
-<xar:set name="timestamp">gmmktime(6,0,0,10,31,2004)</xar:set>
-<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
-UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
-#xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
-LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
-#xarLocaleGetFormattedTime('long',$currenttime)#
-</p>
-<hr />
-<h3>Should be -0500</h3>
-<p>
-<xar:set name="timestamp">gmmktime(6,59,0,4,4,2004)</xar:set>
-<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
-UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
-#xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
-LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
-#xarLocaleGetFormattedTime('long',$currenttime)#
-</p>
-<hr />
-<h3>Should be -0400</h3>
-<p>
-<xar:set name="timestamp">gmmktime(7,0,0,4,4,2004)</xar:set>
-<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
-UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
-#xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
-LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
-#xarLocaleGetFormattedTime('long',$currenttime)#
-</p>
+<xar:elseif condition="$tzinfo[1] lt $tzinfo[2]"/>
+    <h3>Start daylight saving in #$year#</h3>
+    <xar:if condition="!empty($tzinfo[1])">
+        <p>
+            <xar:set name="timestamp">$tzinfo[1]-1</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+        <p>
+            <xar:set name="timestamp">$tzinfo[1]</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+    <xar:else/>
+        None
+    </xar:if>
+
+    <h3>End daylight saving in #$year#</h3>
+    <xar:if condition="!empty($tzinfo[2])">
+        <p>
+            <xar:set name="timestamp">$tzinfo[2]-1</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+        <p>
+            <xar:set name="timestamp">$tzinfo[2]</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+    <xar:else/>
+        None
+    </xar:if>
+
+<xar:else/>
+    <h3>End daylight saving in #$year#</h3>
+    <xar:if condition="!empty($tzinfo[2])">
+        <p>
+            <xar:set name="timestamp">$tzinfo[2]-1</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+        <p>
+            <xar:set name="timestamp">$tzinfo[2]</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+    <xar:else/>
+        None
+    </xar:if>
+
+    <h3>Start daylight saving in #$year#</h3>
+    <xar:if condition="!empty($tzinfo[1])">
+        <p>
+            <xar:set name="timestamp">$tzinfo[1]-1</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+        <p>
+            <xar:set name="timestamp">$tzinfo[1]</xar:set>
+            <xar:set name="localtime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp))</xar:set>
+            UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
+            LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
+            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+        </p>
+    <xar:else/>
+        None
+    </xar:if>
+</xar:if>
+

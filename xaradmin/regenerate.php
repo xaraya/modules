@@ -50,7 +50,7 @@ function timezone_admin_regenerate()
         }
     }
 
-    $output .= "\nmodules/base/xaruserapi/dtsrules.php :\n\n";
+    $output .= "\nmodules/base/xaruserapi/dstrules.php :\n\n";
 
     ksort($keeprules);
     foreach ($keeprules as $rule => $idlist) {
