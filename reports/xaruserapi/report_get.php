@@ -7,8 +7,8 @@ function reports_userapi_report_get($args) {
 	list($rep_id) = xarVarCleanFromInput('rep_id');
 	extract($args);
     
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	$tab = $xartables['reports'];
 	$cols = &$xartables['reports_column'];
     

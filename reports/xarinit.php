@@ -15,8 +15,8 @@
 
 function reports_init() {
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
     
     // Create tables for the reports module one by one
@@ -119,8 +119,8 @@ function reports_upgrade() {
 
 function reports_delete() {
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     
     // Delete tables
     // This delete stuff is too easy, even for admins, no warning at all!!!!

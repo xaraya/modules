@@ -7,8 +7,8 @@ function reports_adminapi_create_report($args) {
 	//Get arguments
 	extract($args);
 
-	list($dbconn) = xarDbGetConn();
-	$xartables = xarDbGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	$tab = $xartables['reports'];
 	$cols = &$xartables['reports_column'];
 

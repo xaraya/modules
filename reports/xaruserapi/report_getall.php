@@ -4,8 +4,8 @@
  *
  */
 function reports_userapi_report_getall() {
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	$tab = $xartables['reports'];
 	$cols = &$xartables['reports_column'];
     

@@ -13,8 +13,8 @@ function reports_user_generate($args) {
 	// Tests:
 	// - does xmlfile exist
 	// - 
-	list($dbconn) = xarDbGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	$ctab = $xartables['report_connections'];
 	$ccols = &$xartables['report_connections_column'];
     

@@ -7,8 +7,8 @@ function reports_adminapi_update_connection($args) {
 	//Get arguments
 	extract($args);
 
-	list($dbconn) = xarDbGetConn();
-	$xartables = xarDbGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	$tab = $xartables['report_connections'];
 	$cols = &$xartables['report_connections_column'];
 

@@ -13,8 +13,8 @@ function reports_userapi_connection_get($args) {
 	list($conn_id) = xarVarCleanFromInput('conn_id');
 	extract($args);
     
-	list($dbconn) = xarDBGetConn();
-	$xartables = xarDBGetTables();
+	$dbconn =& xarDBGetConn();
+	$xartables =& xarDBGetTables();
 	$tab = $xartables['report_connections'];
 	$cols = &$xartables['report_connections_column'];
     
