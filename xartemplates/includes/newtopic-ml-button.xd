@@ -1,0 +1,16 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html 
+</xar:comment>
+<xar:comment>
+    using css-driven buttons, requested by miko for easier ML management, implemented by andyv 
+</xar:comment>
+<xar:set name="$newtopictext">
+    <xar:mlstring>
+        new topic 
+    </xar:mlstring>
+</xar:set>
+<a class="cssbutton" title="#$newtopictext#" href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+    <span class="newtopicicon">
+    </span>
+    #$newtopictext# 
+</a>

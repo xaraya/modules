@@ -188,3 +188,29 @@ div.xarbb-topiccontrols span img {
 }
 
 div.xarbb-topiccontrols span a { padding: 0 .2em; }
+
+div.xarbb-topiccontrols a.cssbutton {
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px 0 0;
+    margin-right: 4px;
+    background-image: url(../xarimages/classic_set/composite_mls_button.gif);
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    text-decoration: none;
+}
+
+div.xarbb-topiccontrols a.cssbutton span.newtopicicon,
+div.xarbb-topiccontrols a.cssbutton span.postreplyicon,
+div.xarbb-topiccontrols a.cssbutton span.closedtopicicon {
+    float:left;
+    height: 28px;
+    width:28px;
+    background-image: url(../xarimages/classic_set/composite_mls_button.gif);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+
+div.xarbb-topiccontrols a.cssbutton span.postreplyicon { background-position: -30px 0px; }
+div.xarbb-topiccontrols a.cssbutton span.closedtopicicon { background-position: -60px 0px; }
