@@ -116,12 +116,12 @@ function articles_featureditemsblock_display(& $blockinfo)
         $fields[] = 'dynamicdata';
     }
     // Initialize arrays
-    $data['feature'] = array();
+    $data['featured'] = array();
     $data['items'] = array();
 
     // Setup featured item
     if ($featuredaid > 0) {
-        $data['feature'] = xarModAPIFunc(
+        $data['featured'] = xarModAPIFunc(
             'articles','user','get',
             array(
                 'aid' => $featuredaid,
@@ -132,22 +132,22 @@ function articles_featureditemsblock_display(& $blockinfo)
             'articles', 'user', 'display',
             array(
                 'aid' => $featuredaid,
-                'itemtype' => (!empty($vars['linkpubtype']) ? $data['feature']['pubtypeid'] : NULL),
+                'itemtype' => (!empty($vars['linkpubtype']) ? $data['featured']['pubtypeid'] : NULL),
                 'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
             )
         );
         if (empty($vars['showfeaturedbod'])) {$vars['showfeaturedbod'] = false;}
         $values = array(
-            'featuredlabel'     => $data['feature']['title'],
+            'featuredlabel'     => $data['featured']['title'],
             'featuredlink'      => $featuredlink,
             'alttitle'          => $vars['alttitle'],
             'altsummary'        => $vars['altsummary'],
             'showfeaturedsum'   => $vars['showfeaturedsum'],
             'showfeaturedbod'   => $vars['showfeaturedbod'],
-            'featureddesc'      => $data['feature']['summary'],
-            'featuredbody'      => $data['feature']['body']
+            'featureddesc'      => $data['featured']['summary'],
+            'featuredbody'      => $data['featured']['body']
         );
-        $data['feature'] = array_merge($data['feature'],$values);
+        $data['featured'] = array_merge($data['featured'],$values);
     }
 
     // Setup additional items
@@ -210,10 +210,11 @@ function articles_featureditemsblock_display(& $blockinfo)
         }
     }
 
-    if (empty($data['feature']) && empty($data['items'])) {
+    if (empty($data['featured']) && empty($data['items'])) {
         // Nothing to display.
         return;
     }
+    $data['feature'][0] = $data['featured'];
     // Set the data to return.
     $blockinfo['content'] = $data;
 
