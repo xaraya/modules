@@ -74,7 +74,7 @@ function xarbb_userapi_gettopic($args)
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }
-
+  
     list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname,
     	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();

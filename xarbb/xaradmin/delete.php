@@ -52,7 +52,8 @@ function xarbb_admin_delete()
     if (!xarSecConfirmAuthKey()) return;
 
 
-    $topics =  xarModAPIFunc("xarbb","user","getalltopics",array("fid" => $fid));
+    $topics =  xarModAPIFunc('xarbb','user','getalltopics', array('fid' => $fid));
+    
     if (count($topics) >0) { //check to make sure there are topics to delete
     // need to delete the topics first then the forum.
         if (!xarModAPIFunc('xarbb',

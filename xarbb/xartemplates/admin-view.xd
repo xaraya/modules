@@ -3,6 +3,16 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>View Forums</xar:mlstring></h2>
+
+<xar:if condition="!$isforums">
+<div style="width:98%; font-weight:bold; text-align:center;">
+<p>
+<xar:mlstring>There are no forums currently registered.</xar:mlstring>
+</p>
+<a href="#$addforum#"><xar:mlstring>Please click here to add a forum.</xar:mlstring></a>
+
+</div>
+<xar:else />
 <table width="98%%" border="0" cellpadding="4">
     <tr>
         <th>
@@ -69,10 +79,18 @@
            </xar:if>
         </td>
     </tr>
-	</xar:if>
+	</xar:if> 
     </xar:loop>
 </table>
 </div>
+<div style="width:98%; font-weight:bold; margin-top:20px;">
+<p>
+<a href="#$addforum#"><xar:mlstring>Add a forum</xar:mlstring></a>
+</p>
+</div>
+
 <br />
 <!-- add the pager here -->
 #$pager#
+</xar:if>
+

@@ -62,7 +62,7 @@ function xarbb_user_newreply()
                       'gettopic',
                       array('tid' => $tid));
     }
-
+ 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
 
     // Security Check

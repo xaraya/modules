@@ -75,7 +75,7 @@ function xarbb_userapi_updatetopic($args)
     	if(isset($$vvar))
 	    	$update[] = $field ."='".xarVarPrepForStore($$vvar)."'";
     }
-
+ 
     // Update item
     $query = "UPDATE $xbbtopicstable SET ".join(",",$update)." WHERE xar_tid = $tid";
 
@@ -90,7 +90,7 @@ function xarbb_userapi_updatetopic($args)
     if (!isset($nohooks)){
         // Let any hooks know that we have created a new topic
         $args['module'] = 'xarbb';
-        $args['itemtype'] = $data['fid']; // topic
+        $args['itemtype'] = 2; // topic
         $args['itemid'] = $tid;
         xarModCallHooks('item', 'update', $tid, $args);
     }

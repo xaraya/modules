@@ -2,7 +2,7 @@
 /**
  * File: $Id$
  * 
- * Delete topic replies
+ * Delete topic replies for a given topic
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -17,7 +17,6 @@
  * @param $args['tid'] Topic id
  * @returns bool
  * @return true on success, false on failure
- * <jojodee> - TODO check as this looks as though it might delete more than required??
  */
 function xarbb_adminapi_deleteallreplies($args)
 {
@@ -30,7 +29,7 @@ function xarbb_adminapi_deleteallreplies($args)
         return;
     }
 
-    // get forum id
+    // get topic id
     $topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid));
 
     if (!$topic){

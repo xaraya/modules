@@ -14,16 +14,16 @@
 	<h2><xar:mlstring>Add a New Forum</xar:mlstring></h2>
 	<xar:if condition="!empty($warning)">
 		#$warning#
-		<br /><br />
+		<br /><br /> 
 	</xar:if>
 
-	<form method="post" action="#xarModURL('xarbb', 'admin', 'new', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" />
+	<form method="post" action="#xarModURL('xarbb', 'admin', 'new', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" />
 
 	<div style="clear: both; padding-top: 10px;">
 	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The name of the forum that you are creating.')#"><label for="fname"><xar:mlstring>Forum Name</xar:mlstring></label>:</span>
-	</span>
+	</span> 
 	<span style="float: right; width: 78%; text-align: left;">
 		<input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" />
 	</span>

@@ -76,6 +76,7 @@ function xarbb_user_viewforum()
                                   'startnum' => $startnumitem,
                                   'numitems' => $settings['topicsperpage']));
     $totaltopics=count($topics);
+
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
         $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);

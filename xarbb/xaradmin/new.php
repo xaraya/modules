@@ -83,33 +83,35 @@ function xarbb_admin_new()
                                      'fposts'   => 1,
                                      'fstatus'  => $data['fstatus']))) return;
 
+ 
             // Get New Forum ID
             $forum = xarModAPIFunc('xarbb',
                                    'user',
                                    'getforum',
                                    array('fname' => $data['fname']));
 
-            // Need to create a topic so we don't get the nasty empty error when viewing the forum.
-            $ttitle = xarML('First Post');
-            $tpost = xarML('This is your first topic');
 
-            if (!xarModAPIFunc('xarbb',
+            // Need to create a topic so we don't get the nasty empty error when viewing the forum.
+            $ttitle = xarML('Welcome to ').$data['fname'];
+            $tpost = xarML('This is the first topic for ').$data['fname'];
+
+            $tid= xarModAPIFunc('xarbb',
                                'user',
                                'createtopic',
                                array('fid'      => $forum['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
-                                     'tposter'  => $tposter))) return;
+                                     'tposter'  => $tposter));
+           if (!$tid) return;
 
-            // Let's hook to hitcount and comments here instead of the init, since we are not creating
-            // predetermined forums on install.
-
-            // Enable hitcount hooks for xarbb topics (= item type 2)
+           // Let's hook to hitcount and comments here instead of the init, since we are not creating
+           // predetermined forums on install.
+           // Enable hitcount hooks for xarbb topics
             xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
                                                                      'callerItemType'   => $forum['fid'],
                                                                      'hookModName'      => 'hitcount'));
 
-            // Enable comment hooks for xarbb topics (= item type 2)
+            // Enable comment hooks for xarbb topics
             //<jojodee> not sure why this is here after being commented out above
             xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
                                                                      'callerItemType'   => $forum['fid'],
@@ -136,6 +138,6 @@ function xarbb_admin_new()
             break;
     }
     // Return the output
-    return $data;
+ return $data;
 }
 ?>

@@ -145,7 +145,6 @@ function xarbb_init()
 
     // Enable categories hooks for xarbb forums (= item type 1)
     xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
-                                                         'callerItemType'   => 1,
                                                          'hookModName'      => 'categories'));
 
     // modvars
@@ -344,6 +343,7 @@ function xarbb_upgrade($oldversion)
                 foreach($forums as $forum) {
                     xarModSetVar('xarbb', 'settings.'.$forum['fid'], serialize($settings));
                 }
+            return xarbb_upgrade('1.0.6');
             break;
         case '1.0.6':
             xarModDelVar('xarbb', 'hottopic');
@@ -356,6 +356,10 @@ function xarbb_upgrade($oldversion)
             xarModSetVar('xarbb', 'cookiedomain', '');
             xarModSetVar('xarbb', 'forumsperpage', 50);
             break;
+        case '1.0.7':
+            //update the itemtypes for topics to the category linkages table
+            $updateitemtypes=xarbb_dotopicitemtypes();
+            if (!$updateitemtypes)  return;
         default:
             break;
     }
@@ -548,5 +552,42 @@ function xarbb_convertdates()
            $result->Close();
 
 return true;
+}
+
+function xarbb_dotopicitemtypes()
+{
+	//Let's first get all the forums
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    //$categories_linkage= $xartable['categories_linkage'];
+    $categories_linkage =  xarDBGetSiteTablePrefix() . '_categories_linkage';
+    $modid = xarModGetIDFromName('xarbb');
+    $forums = xarModAPIFunc('xarbb','user','getallforums');
+
+    //Now if there are forums, let's identify all the topics associated with each forum
+    // and delete al the replies associated with each topic
+    foreach($forums as $forum) {
+        $topics= xarModAPIFunc('xarbb','user','getalltopics',
+                                  array('fid'=>$forum['fid']));
+
+        //Now update each topic to the categories linkage table
+        foreach($topics as $topic) {
+           $update =  "INSERT INTO $categories_linkage (
+                          xar_cid,
+                          xar_iid,
+                          xar_modid,
+                          xar_itemtype )
+                       VALUES (
+                          '" . $topic['catid'] . "',
+                          '" . $topic['tid'] . "',
+                          '$modid',
+                          '2')";
+
+           $result =& $dbconn->Execute($update);
+           if (!$result) return;
+       }
+    }
+    $result->Close();
+    return true;
 }
 ?>

@@ -53,10 +53,11 @@ function xarbb_adminapi_update($args)
                 xar_fstatus = '" . xarVarPrepForStore($fstatus) . "'
             WHERE xar_fid = " . xarVarPrepForStore($fid);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
+     if (!$result) return;
     // Let any hooks know that we have updated a forum
     $args['module'] = 'xarbb';
     $args['itemtype'] = 1; // forum
+    $args['itemid'] = $fid;
     xarModCallHooks('item', 'update', $fid, $args);
     // Let the calling process know that we have finished successfully
     return true;

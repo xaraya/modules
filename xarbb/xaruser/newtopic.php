@@ -25,7 +25,7 @@ function xarbb_user_newtopic()
 	if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_DONT_SET)) return;
 	if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
 	if (!xarVarFetch('redirect', 'str', $redirect, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('preview',  'isset', $preview,   NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('preview',  'isset', $preview,  NULL, XARVAR_DONT_SET)) return;
 
     if(isset($tid))    {
         // The user API function is called.
@@ -50,6 +50,7 @@ function xarbb_user_newtopic()
     // Security Check
 
     if(isset($tid))    {
+        $data['tid']=$tid;
         if(!xarSecurityCheck('ModxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
     }
     else    {
@@ -58,29 +59,32 @@ function xarbb_user_newtopic()
     }
 
     if (isset($preview)){
-        $phase = 'form';
-        $data['preview'] = 1;
-        list($data['transformedtext'],
-             $data['transformedtitle']) = xarModCallHooks('item',
-                                                          'transform',
-                                                           $tid,
-                                                     array($tpost,
-                                                           $ttitle),
-                                                           'xarbb',
-                                                           $data['fid']);
+       $phase = 'form';
     }
-
+ 
     switch(strtolower($phase)) {
 
         case 'form':
         default:
-            if(isset($tid))    {
-                $data = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid));
+            if (isset($tid))  {
+                if (isset($preview)) {
+                    if (empty($tpost)){
+                        $data['tpost'] = '';
+                    } else {
+                        $data['tpost'] = $tpost;
+                    }
+                    if (empty($ttitle)){
+                        $data['ttitle'] = '';
+                    } else {
+                        $data['ttitle'] = $ttitle;
+                    }
+                }
                 $item = $data;
                 $item['module'] = 'xarbb';
-                $item['itemtype'] = $data['fid']; // Forum Topics
+                $item['itemtype'] =2;// Forum Topics
                 $item['itemid'] = $tid;
                 $data['hooks'] = xarModCallHooks('item','modify',$tid,$item);
+
             } else  {
                 if (empty($tpost)){
                     $data['tpost'] = '';
@@ -94,10 +98,11 @@ function xarbb_user_newtopic()
                 }
                 $item = $data;
                 $item['module'] = 'xarbb';
-                $item['itemtype'] = $data['fid']; // Forum Topics
+                $item['itemtype'] = 2;// Forum Topics
                 $item['itemid'] = '';
                 $data['hooks'] = xarModCallHooks('item','new','',$item);
             }
+
             $data['authid'] = xarSecGenAuthKey();
 
             if (empty($warning)){
@@ -131,8 +136,8 @@ function xarbb_user_newtopic()
                      $tpost .= "\n"; //Have to take this out with xarbb and html now handling paras.
 
                 if (!xarModAPIFunc('xarbb',
-                               'user',
-                               'updatetopic',
+                                   'user',
+                                   'updatetopic',
                                array('tid'      => $tid,
                                      'fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
@@ -173,6 +178,7 @@ function xarbb_user_newtopic()
                                          'fposter'  => $tposter))) return;
              }
 
+
             if($redirect == 'topic')
                 xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
             else
@@ -181,7 +187,18 @@ function xarbb_user_newtopic()
             break;
 
     }
+     //Now we have everything, transform
+            list($data['transformedtext'],
+            $data['transformedtitle']) = xarModCallHooks('item',
+                                                         'transform',
+                                                         $tid,
+                                                     array($data['tpost'],
+                                                           $data['ttitle']),
+                                                           'xarbb',
+                                                           $fid);
+    //Make sure we return the preview state
+    $data['preview']=$preview;
     // Return the output
-    return $data;
+   return $data;
 }
 ?>

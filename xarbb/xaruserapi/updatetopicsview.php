@@ -68,7 +68,7 @@ function xarbb_userapi_updatetopicsview($args)
     // is supplied rather than the small amout of topic information that is known
 
     $param['nohooks'] = true;
-
+  
     // Update the topic: call api func
     if(!xarModAPIFunc('xarbb','user','updatetopic',$param)) return;
 

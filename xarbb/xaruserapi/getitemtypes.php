@@ -22,8 +22,9 @@ function xarbb_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-    // Get publication types
-
+   //<jojodee> Took this out while debuggin the hooks probs
+   //Do we need this?
+ 
     $itemtypes[0] = array('label' => xarML('Main Forum Configuration'),
     				      'title' => xarML('Main Forum Configuration'),
                           'url' => xarModURL('xarbb','user','main',array()));
@@ -34,9 +35,9 @@ function xarbb_userapi_getitemtypes($args)
 
     foreach($forums as $forum){
         $itemtypevalue = $forum['fid'];
-        $itemtypes[$itemtypevalue] = array('label' => $forum['fname'] . ' ' . xarML('Topics'),
+        $itemtypes[$itemtypevalue] = array('label' => $forum['fname'] . ' ' . xarML('Forum'),
                                            'title' => xarML('Individual Forum Configuration'),
-                                           'url' => xarModURL('xarbb','user','viewforums',array('fid' => $forum['fid'])));
+                                           'url' => xarModURL('xarbb','user','main',array('fid' => $forum['fid'])));
     }
 
     return $itemtypes;

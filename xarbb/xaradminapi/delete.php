@@ -40,7 +40,7 @@ function xarbb_adminapi_delete($args)
 
     if (empty($data)) return;
 	
-
+ 
     // Security Check
     if(!xarSecurityCheck('DeletexarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
@@ -64,6 +64,7 @@ function xarbb_adminapi_delete($args)
     // Let any hooks know that we have deleted a forum
     $args['module'] = 'xarbb';
     $args['itemtype'] = 1; // forum
+    $args['itemid'] = $fid;  
     xarModCallHooks('item', 'delete', $fid, $args);
 
     // Let the calling process know that we have finished successfully

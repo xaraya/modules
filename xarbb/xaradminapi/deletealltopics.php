@@ -2,7 +2,7 @@
 /**
  * File: $Id$
  * 
- * Delete forum topics and replies
+ * Delete forum topics and replies for a given forum
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -41,16 +41,16 @@ function xarbb_adminapi_deletealltopics($args)
     // Security Check
     if(!xarSecurityCheck('ModxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
-    $topics =  xarModAPIFunc("xarbb","user","getalltopics",array("fid" => $fid));
+    $topics =  xarModAPIFunc('xarbb','user','getalltopics',array('fid' => $fid));
 
     if ((!$topics) || (count($topics) ==0)) {
      	return;
     }
-
+    //Delete all the replies for a given topic
     foreach($topics as $topic)	   {
-		if(!xarModAPIFunc("xarbb","admin","deleteallreplies",array(
-        			"tid" => $topic["tid"]
-				))) return;
+		if(!xarModAPIFunc('xarbb','admin','deleteallreplies',
+                    array('tid' => $topic['tid'])))
+        return;
     }
 
     // Get datbase setup
@@ -68,8 +68,9 @@ function xarbb_adminapi_deletealltopics($args)
     // Let any hooks know that we have deleted topics
 	foreach($topics as $topic)	{
 	    $args['module'] = 'xarbb';
-	    $args['itemtype'] = $fid; // topic
-	    xarModCallHooks('item', 'delete', $topic["tid"], $args);
+	    $args['itemtype'] = 2; // topic
+	    $args['itemid'] = $topic['tid'];
+	    xarModCallHooks('item', 'delete', $topic['tid'], $args);
     }
 
     // Let the calling process know that we have finished successfully

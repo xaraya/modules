@@ -17,8 +17,10 @@
 		</td>
 	</tr>
 </table>
+
 <xar:if condition="isset($preview)">
-	<table width="98%" border="0">
+<div style="width:98%; margin-bottom:20px;">
+	<table width="98%" border="1">
 		<tr>
 			<th>
 				<xar:mlstring>
@@ -61,8 +63,10 @@
 			</td>
 		</tr>
 	</table>
+</div>
 </xar:if>
-<form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" method="post" name="post" id="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
+
+<form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" name="post" id="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
 <table border="0" width="98%">
 	<tr style="border: 1px solid #000;"> 
 		<th colspan="2" height="25">
@@ -237,7 +241,7 @@
 				</xar:if>
 				<input type="hidden" name="authid" id="authid" value="#$authid#" />
 				<input type="hidden" name="fid" id="fid" value="#$fid#" />
-				<input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
+ 				<input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
 				<input type="submit" id="preview" name="preview" value="#$previewlabel#" />&nbsp;
 				<input type="submit" value="#$submitlabel#" />
 			</td>

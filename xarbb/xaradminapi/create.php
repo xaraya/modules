@@ -91,7 +91,7 @@ function xarbb_adminapi_create($args)
               xar_fpostid,
               xar_fstatus   )
             VALUES (
-              $nextId,
+              $nextId, 
               '" . xarVarPrepForStore($fname) . "',
               '" . xarVarPrepForStore($fdesc) . "',
               '" . xarVarPrepForStore($ftopics) . "',
@@ -108,7 +108,7 @@ function xarbb_adminapi_create($args)
     if (empty($cids)) {
         $cids[] = xarModGetVar('xarbb', 'mastercids.1');
     }
-
+ 
     // Let any hooks know that we have created a new forum
     $args['module'] = 'xarbb';
     $args['itemtype'] = 1; // forum

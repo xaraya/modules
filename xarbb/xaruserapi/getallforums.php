@@ -38,6 +38,7 @@ function xarbb_userapi_getallforums($args)
     $xbbforumstable = $xartable['xbbforums'];
 
     // Get links
+    //<jojodee> Make sure we only get forums itemtype=1 else duplicates bug #2335 revisited
     $query = "SELECT xar_fid,
                    xar_fname,
                    xar_fdesc,
@@ -60,6 +61,9 @@ function xarbb_userapi_getallforums($args)
             if (!empty($categoriesdef['where'])) {
                 $query .= ' WHERE ' . $categoriesdef['where'];
             }
+            //Make sure we only get forums itemtype=1 else duplicates bug #2335 revisited
+            $query .= ' AND '.$categoriesdef['table'].'.xar_itemtype=1';
+           
         }
     }
     $query .= " ORDER BY xar_fname";

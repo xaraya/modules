@@ -40,12 +40,14 @@ function xarbb_userapi_getalltopics($args)
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
+ 
     // Why do this look-up multiple times?  Return the cache instead.
-    if (xarVarIsCached('xarbb.topics', 'alltopicscache')){
+    //<jojodee> Why here? I thought this was all topics for a given forum -not ALL topics
+    //so we have to cache per forum
+    /*if (xarVarIsCached('xarbb.topics', 'alltopicscache')){
         $topics = xarVarGetCached('xarbb.topics', 'alltopicscache');
         return $topics;
-    }
+    }*/
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -56,12 +58,13 @@ function xarbb_userapi_getalltopics($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => $cids,
                                         'modid' => xarModGetIDFromName('xarbb')));
-  
+
     // CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
     // Do we want to support that in the future ?
     // make only one query to speed up
     // Get links
-    $query = "SELECT xar_tid,
+    //Fix for duplicates listings of topics with topic itemtypes - select distinct - get bug #2335
+    $query = "SELECT DISTINCT xar_tid,
                      $xbbtopicstable.xar_fid,
                      xar_ttitle,
                      xar_tpost,
@@ -82,11 +85,16 @@ function xarbb_userapi_getalltopics($args)
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} ";
-    if (isset($fid)) {
+     if (isset($fid)) {
         $query .= "AND $xbbforumstable.xar_fid = " . xarVarPrepForStore($fid);
-    } else {
-        $query .= "AND xar_tid IN (" . join(', ', $tids) . ")";
+        //#bug 2335 - older upgrades of xarbb seem to need the following to prevent duplicates
+        //Better - clean out hooks table for xarbb and reset all hooks for xarbb
+        //$query .= " AND {$categoriesdef['itemtype']} = 2";
+
+     } else {
+        $query .= " AND xar_tid IN (" . join(', ', $tids) . ")";
     }
+
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 

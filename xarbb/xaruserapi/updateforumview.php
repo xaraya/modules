@@ -97,7 +97,7 @@ function xarbb_userapi_updateforumview($args)
         $fposts = $link['fposts'] - 1;
     }
     */
-
+ 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -114,6 +114,7 @@ function xarbb_userapi_updateforumview($args)
             WHERE xar_fid       = " . xarVarPrepForStore($fid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
 
     // Let the calling process know that we have finished successfully
     return true;

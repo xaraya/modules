@@ -30,9 +30,9 @@ function xarbb_admin_view()
 
     // Security Check
     if(!xarSecurityCheck('EditxarBB',1,'Forum')) return;
-
+    $data['isforums']=true;
     $forumsperpage=xarModGetVar('xarbb','forumsperpage');
-
+    $data['addforum']=xarModURL('xarbb','admin','new');
     // The user API function is called
     $links = xarModAPIFunc('xarbb',
                            'user',
@@ -42,9 +42,11 @@ function xarbb_admin_view()
                                                             'forumsperpage')));
 
     if (empty($links)) {
-        $msg = xarML('There are no Forums registered.  Please add a forum.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $data['isforums']=false;
+        //<jojodee> Handle it ourselves Bug #2455 
+        //$msg = xarML('There are no Forums registered for viewing.  Please add a forum.');
+        // xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return $data;
     }
 
     $totlinks=count($links);

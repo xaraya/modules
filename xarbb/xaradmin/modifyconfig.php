@@ -30,7 +30,7 @@ function xarbb_admin_modifyconfig()
 
             $hooks = xarModCallHooks('module', 'modifyconfig', 'xarbb',
                                     array('module' => 'xarbb',
-                                          'itemtype' => 1)); // forum
+                                          'itemtype' => 0)); // forum
             if (empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
@@ -41,7 +41,7 @@ function xarbb_admin_modifyconfig()
 
             $data['authid'] = xarSecGenAuthKey();
 
-            break;
+            break; 
 
         case 'update':
 
@@ -63,7 +63,7 @@ function xarbb_admin_modifyconfig()
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
             xarModCallHooks('module','updateconfig','xarbb',
                            array('module' => 'xarbb',
-                                 'itemtype' => 1)); // forum
+                                 'itemtype' => 0)); // General forum hooks
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'modifyconfig'));
 
             // Return

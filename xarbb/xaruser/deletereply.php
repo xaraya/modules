@@ -28,7 +28,7 @@ function xarbb_user_deletereply()
 
     // Security Check
     if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
-
+ 
     // Check for confirmation.
     if (empty($confirmation)) {
         //Load Template
@@ -55,7 +55,7 @@ function xarbb_user_deletereply()
                              'replies'  => 1,
                              'move'     => 'negative',
                              'fposter'  => $topic['tposter']))) return;
-
+ 
     // Redirect
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic',array("tid" => $tid)));
     // Return

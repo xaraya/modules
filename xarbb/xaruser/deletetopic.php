@@ -31,7 +31,7 @@ function xarbb_user_deletetopic()
         $data['authid'] = xarSecGenAuthKey();
         $data['tid'] = $tid;
         return $data;
-    }
+    } 
 
     // If we get here it means that the user has confirmed the action
 
