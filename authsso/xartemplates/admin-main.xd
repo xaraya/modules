@@ -28,7 +28,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Authentication by AuthSSO is automatically enabled/available once the AuthSSO module has been initialized.  To disable AuthSSO authentication, you must remove the module or disable it in the modify config screen (or disable the webserver authentication, which is a prerequisite of AuthSSO functionality).</xar:mlstring>
+            <xar:mlstring>Authentication by AuthSSO is automatically available once the AuthSSO module has been initialized.  To disable AuthSSO authentication, you must remove the module or disable it in the modify config screen (or disable the webserver authentication, which is a prerequisite of AuthSSO functionality).</xar:mlstring>
             <br />
             <br />
             <xar:mlstring>
