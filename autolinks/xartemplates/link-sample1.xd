@@ -1,4 +1,4 @@
-<!--- Displays the URL in square brackets after the keyword --->
+<xar:comment> Displays the URL in square brackets after the keyword </xar:comment>
 <xar:set name="$stdattributes['href']">#$url#</xar:set>
 <xar:set name="$stdattributes['title']">#$title#</xar:set>
 <xar:if condition="!empty($target)">

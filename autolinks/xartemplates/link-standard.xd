@@ -1,4 +1,4 @@
-<!---
+<xar:comment>
     Traditional autolink anchor tag.
     The default attributes passed into this template are:
     #$url# - the url field of the link
@@ -12,7 +12,7 @@
       with appropriate field names.
     * The #$match# variable contains the full matched string. Other DD properties may be
       set up to supply different parts of the matched string, using a RE match.
---->
+</xar:comment>
 <xar:set name="$stdattributes['href']">#$url#</xar:set>
 <xar:set name="$stdattributes['title']">#xarML($title)#</xar:set>
 <xar:if condition="!empty($target)">

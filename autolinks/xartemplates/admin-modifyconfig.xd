@@ -1,10 +1,10 @@
-<!--- Dropdown for link style --->
+<xar:comment> Dropdown for link style </xar:comment>
 <xar:set name="$decorationsel">xarModGetVar('autolinks', 'decoration')</xar:set>
 
-<!--- Dropdown for samples display --->
+<xar:comment> Dropdown for samples display </xar:comment>
 <xar:set name="$samplessel">xarModGetVar('autolinks', 'showsamples')</xar:set>
 
-<!--- Button labels --->
+<xar:comment> Button labels </xar:comment>
 <xar:set name="$submit"><xar:mlstring>Submit</xar:mlstring></xar:set>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>

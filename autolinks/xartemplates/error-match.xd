@@ -1,10 +1,10 @@
-<!--- 
+<xar:comment> 
 Variables available in this template:
     match - the complete matched text
     template_base - the template base name
     template_name - the template main name
     error_text - the full error text
---->
+</xar:comment>
 <xar:set name="$error_desc"><xar:ml>
         <xar:mlstring>
             Dynamic Autolink Error in template #(1)-#(2):

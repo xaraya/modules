@@ -1,4 +1,4 @@
-<!---
+<xar:comment>
     Traditional autolink anchor tag.
     The default attributes passed into this template are:
     #$url#      - default URL if the calculated URL fails
@@ -14,7 +14,7 @@
     #$idname2#  - extra item ID name
     #$idvalue2# - extra item ID value
     #$text#     - text to display as the link (default 'click here')
---->
+</xar:comment>
 
 <xar:if condition="empty($text)">
     <xar:set name="$text"><xar:mlstring>click here</xar:mlstring></xar:set>
@@ -64,5 +64,5 @@
     <xar:set name="$attributes['class']">#$class#</xar:set>
 </xar:if>
 
-<!--- Now create the actual link, based on the attributes we have defined above. --->
+<xar:comment> Now create the actual link, based on the attributes we have defined above. </xar:comment>
 <a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $attributes)#>#xarML($text)#</a>

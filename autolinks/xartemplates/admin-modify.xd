@@ -1,4 +1,4 @@
-<!--- $Id --->
+<xar:comment> $Id </xar:comment>
 <xar:set name="$modifybuttonlabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Edit Autolink</xar:mlstring> #$prepname#</h2>
@@ -110,7 +110,7 @@
     </div>
     <br style="clear: both; height=0;"/>
 
-    <!--- Display the DD hooks --->
+    <xar:comment> Display the DD hooks </xar:comment>
     <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">
             <xar:if condition="$hookmodule eq 'dynamicdata'">#$hooks[$hookmodule]#</xar:if>
@@ -130,7 +130,7 @@
     </div>
     <br style="clear: both; height=0;"/>
 
-    <!--- Display the non-DD hooks --->
+    <xar:comment> Display the non-DD hooks </xar:comment>
     <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">
             <xar:if condition="$hookmodule ne 'dynamicdata'">#$hooks[$hookmodule]#</xar:if>

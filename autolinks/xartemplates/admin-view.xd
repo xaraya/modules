@@ -1,4 +1,4 @@
-<!--- $Id$ --->
+<xar:comment> $Id$ </xar:comment>
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
@@ -24,7 +24,7 @@
 </form>
 
 <xar:if condition="!empty($items)">
-<!--- TODO: module classes? --->
+<xar:comment> TODO: module classes? </xar:comment>
 <table style="width: auto; border: 1px solid #666666; empty-cells: inherit; border-collapse: collapse;" cellspacing="0" cellpadding="4">
     <tr>
         <th style="border: 1px solid #666666;"><xar:mlstring>Type</xar:mlstring></th>
@@ -34,7 +34,7 @@
         <th style="border: 1px solid #666666;"><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$items" value="$item">
-        <!--- TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items? --->
+        <xar:comment> TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items? </xar:comment>
         <xar:if condition="!empty($item['enabled'])">
             <xar:set name="$bgrow">'#DDFFDD'</xar:set>
         <xar:else/>

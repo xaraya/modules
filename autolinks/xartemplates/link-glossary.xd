@@ -1,13 +1,13 @@
-<!---
+<xar:comment>
     Define a DD property 'replace' to over-ride the default link content (which
     defaults to the complete matching string). This is useful for RE matches,
     such as {(word)} where 'word' is $2 in the list of matching substrings.
---->
+</xar:comment>
 <xar:if condition="empty($replace)">
     <xar:set name="replace">$match</xar:set>
 </xar:if>
 <xar:if condition="empty($term)">
     <xar:set name="term">$match</xar:set>
 </xar:if>
-<!--- Feel free to format the glossary link in some unique way. --->
+<xar:comment> Feel free to format the glossary link in some unique way. </xar:comment>
 <a href="#xarServerGetCurrentURL(array('glossaryterm'=>$term))#" title="#$title#">#$replace#</a>

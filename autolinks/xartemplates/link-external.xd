@@ -1,22 +1,22 @@
-<!--- External site link. --->
-<!--- 
+<xar:comment> External site link. </xar:comment>
+<xar:comment> 
     Over-ride the default image using a DD property named 'icon' on 
     the autolink type using this template. This will allow you to
     use different images for, say, HTTP and FTP URLs.
     A DD property 'imgalt' will over-ride the default alt text for
     the image.
---->
-<!--- Default image alt text, if not over-ridden. --->
+</xar:comment>
+<xar:comment> Default image alt text, if not over-ridden. </xar:comment>
 <xar:if condition="empty($imgalt)">
     <xar:set name="$imgalt"><xar:mlstring>External link icon</xar:mlstring></xar:set>
 </xar:if>
-<!--- Default icon, if not over-ridden. --->
+<xar:comment> Default icon, if not over-ridden. </xar:comment>
 <xar:if condition="!isset($icon)">
     <xar:set name="$icon">'icon_www.gif'</xar:set>
 </xar:if>
-<!--- Get the image URL --->
+<xar:comment> Get the image URL </xar:comment>
 <xar:set name="$imgurl">#xarTplGetImage($icon, 'autolinks')#</xar:set>
-<!--- First set used if a target is specified (either the global default, or over-ridden with DD). --->
+<xar:comment> First set used if a target is specified (either the global default, or over-ridden with DD). </xar:comment>
 <xar:if condition="!empty($target)">
     <xar:if condition="empty($imgurl)">
         <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay(xarML($title))#">#$match#</a>

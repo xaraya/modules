@@ -6,7 +6,7 @@
     <div style="margin: auto;">
         <ul>
             <li><a href="#xarModURL('autolinks','util','export')#"><xar:mlstring>Export Autolinks</xar:mlstring></a></li>
-            <!---<li><a href="#xarModURL('autolinks','util','import')#"><xar:mlstring>Import Autolinks</xar:mlstring></a></li>--->
+            <xar:comment><li><a href="#xarModURL('autolinks','util','import')#"><xar:mlstring>Import Autolinks</xar:mlstring></a></li></xar:comment>
             <li><xar:mlstring>Import Autolinks</xar:mlstring> [TODO]</li>
         </ul>
     </div>

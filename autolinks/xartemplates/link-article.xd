@@ -1,4 +1,4 @@
-<!---
+<xar:comment>
     Over-ride values (through DD):
     'aid'    - mandatory article ID. Arrenge for this to be passed in
                from an RE match of the article ID.
@@ -12,30 +12,30 @@
     'title'  - set the tool-tip title of the link
     'text'   - alternative text for link when displaying types
                'readfirst'/'readnext'/'readlast'
---->
+</xar:comment>
 <xar:if condition="empty($aid)">
     #$match#
 <xar:else/>
-    <!--- Array used to fetch the article or create a URL. --->
+    <xar:comment> Array used to fetch the article or create a URL. </xar:comment>
     <xar:set name="$aidarray['aid']">#$aid#</xar:set>
 
-    <!--- The trigger - the URL - can be used to select different portions of this template. --->
+    <xar:comment> The trigger - the URL - can be used to select different portions of this template. </xar:comment>
     <xar:if condition="$url eq 'display'">
-        <!--- Provide a link to an article, given its aid, extracting the article title to display. --->
-        <!--- Title text over-ride. --->
+        <xar:comment> Provide a link to an article, given its aid, extracting the article title to display. </xar:comment>
+        <xar:comment> Title text over-ride. </xar:comment>
         <xar:if condition="empty($title)">
             <xar:set name="$title"><xar:mlstring>Click here to read the article</xar:mlstring></xar:set>
         </xar:if>
-        <!--- Fetch the article from its API. --->
+        <xar:comment> Fetch the article from its API. </xar:comment>
         <xar:set name="$article">#xarModAPIfunc('articles','user','get',$aidarray)#</xar:set>
         <xar:if condition="!empty($article['title'])">
             <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
         <xar:else/>
-            <!--- Display error if the article could not be fetched (invalid number or no permission. --->
+            <xar:comment> Display error if the article could not be fetched (invalid number or no permission. </xar:comment>
             <span class="xar-error">[<xar:mlstring>Article not available:</xar:mlstring> ID #$aid#]</span>
         </xar:if>
     <xar:elseif condition="$url eq 'readfirst' or $url eq 'readnext' or $url eq 'readlast'"/>
-        <!--- If the ptid is passed in, then use that. --->
+        <xar:comment> If the ptid is passed in, then use that. </xar:comment>
         <xar:if condition="!empty($ptid)">
             <xar:set name="$aidarray['ptid']">#$ptid#</xar:set>
         </xar:if>
@@ -56,7 +56,7 @@
             <a href="#xarModURL('articles','user','display',$aidarray)#" >#xarVarPrepForDisplay($text)#</a>
         </xar:if>
     <xar:else/>
-        <!--- No recognised trigger - just return what was matched. --->
+        <xar:comment> No recognised trigger - just return what was matched. </xar:comment>
         #$match#
     </xar:if>
 </xar:if>

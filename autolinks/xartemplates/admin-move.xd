@@ -7,7 +7,7 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
     </div>
 
-    <!--- Details of existing link. --->
+    <xar:comment> Details of existing link. </xar:comment>
     <xar:if condition="isset($link)">
         <h2><xar:mlstring>Current details</xar:mlstring></h2>
         <p><strong><xar:mlstring>Name:</xar:mlstring></strong> #xarVarPrepForDisplay($link['name'])#</p>
@@ -17,7 +17,7 @@
         <div><input type="hidden" name="lid" id="lid" value="#$link['lid']#"/></div>
     </xar:if>
 
-    <!-- Choice of types to move link to. --->
+    <!-- Choice of types to move link to. </xar:comment>
     <xar:if condition="isset($types)">
         <h2><xar:mlstring>Move</xar:mlstring></h2>
         <p><label for="tid"><xar:mlstring>Move To Autolink Type</xar:mlstring></label>&nbsp;&nbsp;
@@ -32,7 +32,7 @@
         </select></p>
     </xar:if>
 
-    <!-- Details of selected type to move link to. --->
+    <!-- Details of selected type to move link to. </xar:comment>
     <xar:if condition="isset($type)">
         <h2><xar:mlstring>Move to</xar:mlstring></h2>
         <p><strong><xar:mlstring>Type Name:</xar:mlstring></strong> #xarVarPrepForDisplay($type['type_name'])#</p>
@@ -40,7 +40,7 @@
         <div><input type="hidden" name="tid" id="tid" value="#$tid#"/></div>
     </xar:if>
 
-    <!-- A type has been selected; show confirm/back buttons. --->
+    <!-- A type has been selected; show confirm/back buttons. </xar:comment>
     <xar:if condition="!empty($type)">
         <xar:set name="$buttonlabel"><xar:mlstring>Confirm</xar:mlstring></xar:set>
         <xar:set name="$buttonlabel2"><xar:mlstring>Back</xar:mlstring></xar:set>
