@@ -44,7 +44,7 @@
         $check_flag = false;
         $check_query = new xenQuery("select zone_id from " . TABLE_ZONES_TO_GEO_ZONES . " where geo_zone_id = '" . MODULE_PAYMENT_CC_ZONE . "' and zone_country_id = '" . $order->billing['country']['id'] . "' order by zone_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($check = $q->output()) {
           if ($check['zone_id'] < 1) {
             $check_flag = true;
