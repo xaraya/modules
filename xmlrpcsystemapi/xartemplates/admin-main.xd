@@ -22,7 +22,7 @@
 			</p>
 
 			<p>
-			  <xar:mlstring>You can find the specification for the system API at: 
+			  <xar:mlstring>You can find the specification for the system API at:</xar:mlstring>
 			  <a href="http://scripts.incutio.com/xmlrpc/introspection.html">
 				 http://scripts.incutio.com/xmlrpc/introspection.html
 			  </a> 
@@ -31,9 +31,9 @@
 			  <xar:mlstring>Commonly implemented methods are</xar:mlstring>:
 			</p>
 			<ul>
-			  <li><xar:mlstring>system.listMethods</xar:mlstring></li>
-			  <li><xar:mlstring>system.methodSignature</xar:mlstring></li>
-			  <li><xar:mlstring>system.methodHelp</xar:mlstring></li>
+			  <li>system.listMethods</li>
+			  <li>system.methodSignature</li>
+			  <li>system.methodHelp</li>
 			</ul>
 		</div>
         <br />
