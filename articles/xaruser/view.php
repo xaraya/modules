@@ -612,7 +612,8 @@ function articles_user_view()
         if ($dotransform) {
             $article['itemtype'] = $article['pubtypeid'];
         // TODO: what about transforming DD fields ?
-            $article['transform'] = array('title','summary','notes');
+        //    $article['transform'] = array('title','summary','notes');
+            $article['transform'] = array('summary','notes');
             $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
         }
 
