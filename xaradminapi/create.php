@@ -134,7 +134,7 @@ function articles_adminapi_create($args)
               xar_status,
               xar_language)
             VALUES (?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array((int)     $nextId, 
+    $bindvars = array($nextId, 
                       (string)  $title, 
                       (string)  $summary, 
                       (string)  $body, 
