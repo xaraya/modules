@@ -44,14 +44,13 @@
 		          </xar:if>
             </span>
           </div>
-          <b>Version:</b>&nbsp;&nbsp; #$loop:item['version']#<br /><br />
-          #$loop:item['desc']#<br /><br />
+          <b>Version:</b>&nbsp;&nbsp; #$loop:item['version']#
+             <p>#$loop:item['desc']#</p>
           <div align="right">
             <a href="#$loop:item['displaylink']#"><xar:mlstring>Read More</xar:mlstring></a>
             <xar:if condition="!empty($loop:item['comments'])">
               -- #$loop:item['comments']# <xar:mlstring>Comments</xar:mlstring>
             </xar:if>
-            <br />
           </div>
         </div>
       </div>

@@ -38,6 +38,9 @@
     </tr>
   </xar:loop>
 </table>
-<p>
+<p style="margin-top:20px;">
+<!-- add the pager here -->
+#$pager#
+</p>
 
 
