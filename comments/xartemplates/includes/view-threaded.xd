@@ -20,10 +20,10 @@
                                 &nbsp;
                                 <xar:if condition="$loop:item['childcount'] gt 0">
                                     <a href="">
-                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
+                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" alt="" style="border: 0; align: top;" /></xar:foreach>
                                     </a>
                                 <xar:else />
-                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
+                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" alt="" style="border: 0; align: top;" /></xar:foreach>
                                 </xar:if>
                                 &nbsp;&nbsp;
                             </td>
@@ -60,10 +60,10 @@
                                 &nbsp;
                                 <xar:if condition="$loop:item['childcount'] gt 0">
                                     <a href="">
-                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
+                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" style="border: 0; align: top;" alt="" /></xar:foreach>
                                     </a>
                                 <xar:else />
-                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
+                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" alt="" style="border: 0; align: top;" /></xar:foreach>
                                 </xar:if>
                                 &nbsp;&nbsp;
                             </td>
