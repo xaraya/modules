@@ -1,17 +1,20 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Release Module</xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
 <h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
 <xar:if condition="!empty($message)">
     #$message#
 <xar:else />
 
-<xar:mlstring>From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).</xar:mlstring>
-<div align="center">
-    <br /><br />
-    <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
+    <xar:mlstring>From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).</xar:mlstring>
+
+    <div style="text-align:center;">
+        <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="rid" id="rid" value="#$rid#" />    
+        <input type="hidden" name="rid" id="rid" value="#$rid#" />
         <input type="hidden" name="name" id="name" value="#$name#" />
         <table border="0" cellpadding="5">
             <tr>
@@ -38,23 +41,23 @@
                     #$desc#
                 </td>
             </tr>
-        </table>            
+        </table>
         <br /><br />
         <xar:if condition="$type eq 'Module'">
-            <input type="radio" name="phase" id="phase" value="module"  />
+        <input type="radio" name="phase" id="phase" value="module"  />
             <xar:mlstring>General Use</xar:mlstring>
-            <input type="radio" name="phase" id="phase" value="blocks"  />
+        <input type="radio" name="phase" id="phase" value="blocks"  />
             <xar:mlstring>Blocks Documentation</xar:mlstring>
-            <input type="radio" name="phase" id="phase" value="hooks"  />
+        <input type="radio" name="phase" id="phase" value="hooks"  />
             <xar:mlstring>Hooks Documentation</xar:mlstring>
         <xar:else />
-            <input type="radio" name="phase" id="phase" value="theme"  />
+        <input type="radio" name="phase" id="phase" value="theme"  />
             <xar:mlstring>General Use</xar:mlstring>
-            <input type="radio" name="phase" id="phase" value="blockgroups"  />
+        <input type="radio" name="phase" id="phase" value="blockgroups"  />
             <xar:mlstring>Defined Block Groups</xar:mlstring><br /><br />
         </xar:if>
         <input type="submit" value="Continue"  tabindex="6" />
-    </form>
-</div>
+        </form>
+    </div>
 </xar:if>
 </div>

@@ -49,12 +49,14 @@ function release_user_adddocs()
             if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
                 $message = '';
             } else {
-                $message = xarML('You are not allowed to add documentation to this module');               
+                $message = xarML('You are not allowed to add documentation to this module');
             }
 
             //TODO FIX ME!!!
             if (empty($data['name'])){
                 $message = xarML('There is no assigned ID for your extension.');
+                $data['name']=xarML('unassigned');
+
             }
 
             xarTplSetPageTitle(xarVarPrepForDisplay($data['name']));
