@@ -58,7 +58,7 @@ function keywords_adminapi_removehook($args)
     $keywords = $xartable['keywords'];
 
     // Delete the entries
-    $queryl = "DELETE FROM $keywords
+    $query = "DELETE FROM $keywords
                WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'";
 
     $result =& $dbconn->Execute($query);
