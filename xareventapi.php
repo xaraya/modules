@@ -13,21 +13,27 @@ function authinvision2_eventapi_onUserLogin($userId)
     $userRole = xarModAPIFunc('roles', 'user', 'get', array('uid' => $userId));
 
     if (empty($userRole)) {
+        $msg = xarML('No role defined');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);
         return;
     }
     if (!$connect || !mysql_select_db($db,$connect)) {
+        $msg = xarML('DB Error: connection or database selection failed');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);
         return;
     }
 
-    xarVarFetch('invisibleme','checkbox',$invisibleme,0,XARVAR_NOT_REQUIRED);
+    xarVarFetch('invisibleme','checkbox',$invisibleme,0,
+                 XARVAR_DONT_REUSE+XARVAR_NOT_REQUIRED);
     if (!$invisibleme) {
         $invisibleme = 0;
+        $login_anon = '0&1';
+    } else {
+        $login_anon = '1&1';
     }
 
     //---------------------------------------
@@ -46,6 +52,7 @@ function authinvision2_eventapi_onUserLogin($userId)
     $sql = "SELECT * FROM ".$prefix."_members WHERE name='".$userRole['uname']."'";
     $result = mysql_query($sql,$connect);
     if (!$result) {
+        $msg = xarML('DB error: query failed');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);
@@ -72,11 +79,14 @@ function authinvision2_eventapi_onUserLogin($userId)
         //-----------------------------------
         // Exit as the session update failed
         //-----------------------------------
+        $msg = xarML('DB Error: query failed');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);
         return;
     }
+    $sql = "UPDATE ".$prefix."_members SET login_anonymous='".$login_anon."' WHERE name='".$user_info['name']."'";
+    $result = mysql_query($sql,$connect);
 
     //-----------------
     // Set the cookies
@@ -107,6 +117,7 @@ function authinvision2_eventapi_OnUserLogout($userID)
 
     $connect = mysql_connect($server, $username, $pwd);
     if (!$connect || !mysql_select_db($db,$connect)) {
+        $msg = xarML('DB Error: connection or database selection failed.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);

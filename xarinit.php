@@ -57,19 +57,13 @@ function authinvision2_upgrade($oldVersion)
 {
     switch($oldVersion) {
     case '1.0':
-        // compatability upgrade, nothing to be done
-        break;
     case '1.1':
-        // No upgrading required
-        break;
     case '1.2':
-        // No upgrading required
-        break;
     case '1.3':
-        // No upgrading required
-        break;
     case '1.3.1':
-        // No upgrading required
+        // Add the login block if it doesn't exist
+        xarModAPIFunc('blocks', 'admin', 'register_block_type',
+            array('modName' => 'authinvision2', 'blockType' => 'login'));
         break;
     }
     return true;

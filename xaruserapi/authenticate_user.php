@@ -73,6 +73,7 @@ function authinvision2_userapi_authenticate_user($args)
         $sql = "SELECT * FROM ".$prefix."_members WHERE name='".$uname."'";
         $result = mysql_query($sql,$connect);
         if (!$result) {
+            $msg = xarML('DB Error: query failed');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             db_switch();
@@ -96,7 +97,6 @@ function authinvision2_userapi_authenticate_user($args)
                       'valcode' => 'createdbyinvision2',
                       'state' => 3,
                       'authmodule' => 'authinvision2'));
-                      error_log("RID: $rid");
             if (!$rid) {
                 error_log("user not created");
                 mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);
@@ -117,6 +117,10 @@ function authinvision2_userapi_authenticate_user($args)
                 mysql_select_db($GLOBALS['xarDB_systemArgs']['databaseName']);
                 return XARUSER_AUTH_FAILED;
             }
+        } elseif ($xarUser['state'] == ROLES_STATE_INACTIVE) {
+            $msg = xarML('Your account has been marked as inactive.  Contact the administrator with further questions.');
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            return;
         } else {
             $rid = $xarUser['uid'];
         }

@@ -14,7 +14,7 @@
 */
 $modversion['name'] = 'Authinvision2';
 $modversion['id'] = '130';
-$modversion['version'] = '1.3.1';
+$modversion['version'] = '1.3.2';
 $modversion['description'] = 'Xaraya Invision Board Module';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
