@@ -19,7 +19,7 @@ function articles_adminapi_delete($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'delete',
                     'Articles');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
@@ -31,7 +31,7 @@ function articles_adminapi_delete($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to delete #(1) items',
                     'Article');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
+        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return false;
     }

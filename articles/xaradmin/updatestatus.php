@@ -17,13 +17,13 @@ function articles_admin_updatestatus()
 
     if (!isset($aids) || count($aids) == 0) {
         $msg = xarML('No articles selected');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
                        new DefaultUserException($msg));
         return;
     }
     if (!isset($status) || !is_numeric($status) || $status < -1 || $status > 3) {
         $msg = xarML('Invalid status');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_DATA',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA',
                        new DefaultUserException($msg));
         return;
     }
@@ -54,7 +54,7 @@ function articles_admin_updatestatus()
         if (!isset($article) || !is_array($article)) {
             $msg = xarML('Unable to find #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return;
         }
@@ -70,7 +70,7 @@ function articles_admin_updatestatus()
         if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                            new SystemException($msg));
             return;
         }

@@ -19,7 +19,7 @@ function articles_adminapi_deletepubtype($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type ID', 'admin', 'deletepubtype',
                     'Articles');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
@@ -36,7 +36,7 @@ function articles_adminapi_deletepubtype($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type ID', 'admin', 'deletepubtype',
                     'Articles');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }

@@ -17,7 +17,7 @@ function articles_admin_update()
     if (empty($aid) || !is_numeric($aid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'item id', 'admin', 'update', 'Articles');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -26,7 +26,7 @@ function articles_admin_update()
     if (empty($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'publication type', 'admin', 'update', 'Articles');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -40,7 +40,7 @@ function articles_admin_update()
     if (!isset($article)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'article', 'admin', 'update', 'Articles');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

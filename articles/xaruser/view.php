@@ -423,7 +423,7 @@ function articles_user_view($args)
              return; // throw back
         } elseif (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
             // get back the reason in string format
-            $reason = xarExceptionValue();
+            $reason = xarErrorValue();
             if (!empty($reason)) {
                 $reason = ' - ' . xarML('Reason') . ' : ' . $reason->toString();
             }
@@ -439,7 +439,7 @@ function articles_user_view($args)
     if (!empty($authorid)) {
         $data['author'] = xarUserGetVar('name', $authorid);
         if (empty($data['author'])) {
-            xarExceptionHandled();
+            xarErrorHandled();
             $data['author'] = xarML('Unknown');
         }
     }

@@ -18,7 +18,7 @@ function articles_admin_create()
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type', 'admin', 'create',
                     'Articles');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -128,13 +128,13 @@ function articles_admin_create()
         // Handle the user exceptions yourself
         $status = xarML('Creating article failed');
         // Get the information about the exception (in HTML or string format)
-        // $reason = xarExceptionValueHTML();
-        $reason = xarExceptionValue();
+        // $reason = xarErrorValueHTML();
+        $reason = xarErrorValue();
         if (!empty($reason)) {
             $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
         }
         // Free the exception to tell Xaraya that you handled it
-        xarExceptionFree();
+        xarErrorFree();
         return $status;
     }
 

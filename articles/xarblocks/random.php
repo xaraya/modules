@@ -125,7 +125,7 @@ function articles_randomblock_display($blockinfo)
                 if (!empty($articles[$randomaid]['authorid']) && !empty($vars['showauthor'])) {
                     $articles[$randomaid]['authorname'] = xarUserGetVar('name', $articles[$randomaid]['authorid']);
                     if (empty($articles[$randomaid]['authorname'])) {
-                        xarExceptionHandled();
+                        xarErrorHandled();
                         $articles[$randomaid]['authorname'] = xarML('Unknown');
                     }
                 }

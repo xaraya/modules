@@ -62,19 +62,19 @@ function articles_admin_view()
         if (!xarSecurityCheck('EditArticles',0,'Article',"All:All:All:All")) {
             $msg = xarML('You have no permission to edit #(1)',
                          'Articles');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                             new SystemException($msg));
             return;
         }
     } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return;
     } elseif (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:All:All:All")) {
         $msg = xarML('You have no permission to edit #(1)',
                      $pubtypes[$ptid]['descr']);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                         new SystemException($msg));
         return;
     }

@@ -12,12 +12,12 @@ function articles_adminapi_importpubtype($args)
 
     if (empty($xml) && empty($file)) {
         $msg = xarML('Missing import file or XML content');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return;
     } elseif (!empty($file) && (!file_exists($file) || !preg_match('/\.xml$/',$file)) ) {
         $msg = xarML('Invalid import file');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return;
     }
@@ -37,7 +37,7 @@ function articles_adminapi_importpubtype($args)
         $fp = @fopen($file, 'r');
         if (!$fp) {
             $msg = xarML('Unable to open import file');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return;
         }
@@ -74,7 +74,7 @@ function articles_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($object[$key])) {
                     $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','object',xarVarPrepForDisplay($key),$count);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -83,7 +83,7 @@ function articles_adminapi_importpubtype($args)
             } elseif (preg_match('#<config>#',$line)) {
                 if (isset($object['config'])) {
                     $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','object','config',$count);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -93,7 +93,7 @@ function articles_adminapi_importpubtype($args)
             } elseif (preg_match('#<properties>#',$line)) {
                 if (empty($object['name']) || empty($object['moduleid'])) {
                     $msg = xarML('Missing keys in object definition');
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -117,7 +117,7 @@ function articles_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($config[$key])) {
                     $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','config',xarVarPrepForDisplay($key),$count);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -141,7 +141,7 @@ function articles_adminapi_importpubtype($args)
             } elseif (preg_match('#</property>#',$line)) {
                 if (empty($property['name']) || empty($property['type'])) {
                     $msg = xarML('Missing keys in property definition');
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -161,7 +161,7 @@ function articles_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($property[$key])) {
                     $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','property',xarVarPrepForDisplay($key),$count);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -296,7 +296,7 @@ function articles_adminapi_importpubtype($args)
                         $objectname2objectid[$objectname] = $objectinfo['objectid'];
                     } else {
                         $msg = xarML('Unknown #(1) "#(2)" on line #(3)','object',xarVarPrepForDisplay($objectname),$count);
-                        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                         new SystemException($msg));
                         if (!empty($file)) fclose($fp);
                         return;
@@ -334,7 +334,7 @@ function articles_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($item[$key])) {
                     $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','item',xarVarPrepForDisplay($key),$count);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -347,7 +347,7 @@ function articles_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($item[$key])) {
                     $msg = xarML('Duplicate definition for #(1) key #(2)','item',xarVarPrepForDisplay($key));
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -359,7 +359,7 @@ function articles_adminapi_importpubtype($args)
                 $value = $matches[1];
                 if (!isset($item[$closetag])) {
                     $msg = xarML('Undefined #(1) key #(2)','item',xarVarPrepForDisplay($closetag));
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;
@@ -370,7 +370,7 @@ function articles_adminapi_importpubtype($args)
                 // multi-line entries *are* relevant here
                 if (!isset($item[$closetag])) {
                     $msg = xarML('Undefined #(1) key #(2)','item',xarVarPrepForDisplay($closetag));
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                                     new SystemException($msg));
                     if (!empty($file)) fclose($fp);
                     return;

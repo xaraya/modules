@@ -37,7 +37,7 @@ function articles_admin_new($args)
     // TODO: check by category too ?
         if (!xarSecurityCheck('SubmitArticles',0)) {
             $msg = xarML('You have no permission to submit Articles');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                             new SystemException($msg));
             return;
         }
@@ -52,7 +52,7 @@ function articles_admin_new($args)
                     }
                     $msg = xarML('You have no permission to submit #(1) in category #(2)',
                                  $pubtypes[$ptid]['descr'],$catinfo['name']);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                                     new SystemException($msg));
                     return;
                 }
@@ -61,7 +61,7 @@ function articles_admin_new($args)
             if (!xarSecurityCheck('SubmitArticles',0,'Article',"$ptid:All:All:All")) {
                 $msg = xarML('You have no permission to submit #(1)',
                              $pubtypes[$ptid]['descr']);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                                 new SystemException($msg));
                 return;
             }

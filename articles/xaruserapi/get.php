@@ -36,7 +36,7 @@ function articles_userapi_get($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'user', 'get',
                     'Articles');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
