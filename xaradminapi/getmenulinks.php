@@ -23,9 +23,9 @@ function metaweblogapi_adminapi_getmenulinks()
 {
     // Security Check
     $menulinks = array();
-    $menulinks[] = array('url'   => xarModURL('metaweblogapi','admin','modifyconfig'),
-                             'title' => xarML('Modify the configuration of the MetaWeblogAPI module'),
-                             'label' => xarML('Modify Config'));
+    //$menulinks[] = array('url'   => xarModURL('metaweblogapi','admin','modifyconfig'),
+    //                         'title' => xarML('Modify the configuration of the MetaWeblogAPI module'),
+    //                         'label' => xarML('Modify Config'));
    
     return $menulinks;
 }

@@ -45,7 +45,7 @@
  *    </methodCall>
  *
  * The method should return an url to the posted object, which means that subsequent newPost or editPost 
- * methods can refer to the object.
+ * methods can refer to the object. The parameters should at least include 'name', 'type' and 'bits'.
  *
  * Idea for Xaraya is the following:
  *
@@ -58,6 +58,17 @@
  * 5. Determine the url, optionally based on mimetype (image-> preview, other->icon)
  * 6. Return that url
  */
- 
+function metaweblogapi_userapi_newmediaobject($args)
+{
+    extract($args);    
+    // Extract the parameters from the xmlrpc msg
+    $sn0=$msg->getParam(0);  $blogid   = $sn0->scalarval();
+    $sn1=$msg->getParam(1);  $username = $sn1->scalarval();
+    $sn2=$msg->getParam(2);  $password = $sn2->scalarval();
+    
+    // Get the members from the struct which represents the mediaobject
+    $sn3=$msg->getParam(3); $struct = $sn3->getval();
+    
+}
 
 ?>
