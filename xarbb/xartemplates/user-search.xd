@@ -23,44 +23,27 @@
         </xar:mlstring>
         :
     </h3>
-	<div class="xarbb-tablewrapper">
-		<table>
-			<tr>
-				<th>
-					<xar:mlstring>
-						Topic 
-					</xar:mlstring>
-				</th>
-				<th>
-					<xar:mlstring>
-						Author 
-					</xar:mlstring>
-				</th>
-			</tr>
-			<xar:loop name="$topics">
-				<tr>
-					<td class="xar-norm forumname">
-						<xar:if condition="$loop:item['xar_tstatus'] eq 5">
-							<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_tpost']))#">
-								#$loop:item['xar_ttitle']# 
-							</a>
-							<xar:else />
-							<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_tid']))#">
-								#$loop:item['xar_ttitle']# 
-							</a>
-						</xar:if>
-					</td>
-					<td class="xar-accent authorname">
-						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_tposter']))#">
-							#$loop:item['xar_author']# 
-						</a>
-					</td>
-				</tr>
-			</xar:loop>
-		<xar:if condition="empty($replies)">
-			</table>
-		</div>
-		</xar:if>
+	<ul>
+		<xar:loop name="$topics">
+			<li>
+				<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_tid']))#">
+					#$loop:item['xar_ttitle']# 
+				</a>
+				<xar:mlstring>
+				    By
+				</xar:mlstring>
+				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_tposter']))#">
+					#$loop:item['xar_author']# 
+				</a>
+				<xar:mlstring>
+				    On
+				</xar:mlstring>
+				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['xar_ttime'])# 
+			</li>
+		</xar:loop>
+	<xar:if condition="empty($replies)">
+		</ul>
+	</xar:if>
 </xar:if>
 
 
@@ -73,38 +56,26 @@
 			</xar:mlstring>
 			:
 		</h3>
-		<div class="xarbb-tablewrapper">
-			<table>
-				<tr>
-					<th>
-						<xar:mlstring>
-							Topic 
-						</xar:mlstring>
-					</th>
-					<th>
-						<xar:mlstring>
-							Author 
-						</xar:mlstring>
-					</th>
-				</tr>
+		<ul>
 	</xar:if>
-			<xar:loop name="$replies">
-				<tr>
-					<td class="xar-norm forumname">
-						<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_objectid']))#">
-							#$loop:item['xar_title']# 
-						</a>
-					</td>
-					<td class="xar-accent authorname">
-						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_author']))#">
-							#$loop:item['xar_name']# 
-						</a>
-					</td>
-				</tr>
-			</xar:loop>
-		</table>
-	</div>
-
+	<xar:loop name="$replies">
+			<li>
+				<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_objectid']))#">
+					#$loop:item['xar_title']# 
+				</a>
+				<xar:mlstring>
+				    By
+				</xar:mlstring>
+				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_author']))#">
+					#$loop:item['xar_name']# 
+				</a>
+				<xar:mlstring>
+				    On
+				</xar:mlstring>
+				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['xar_date'])# 
+			</li>
+		</xar:loop>
+	</ul>
 </xar:if>
 
 <p>

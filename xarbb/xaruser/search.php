@@ -10,19 +10,15 @@
  */
 function xarbb_user_search( $args ) 
 {
-
     if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
-
-
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
     $search     = array();
-
     // TODO:  check 'q' and 'author' for '%' value
     //        and sterilize if found
     if (!isset($q) || strlen(trim($q)) <= 0) {
@@ -37,7 +33,6 @@ function xarbb_user_search( $args )
     }
 
     $q = "%$q%";
-
     // Default parameters
     if (!isset($startnum)) {
         $startnum = 1;
@@ -98,29 +93,10 @@ function xarbb_user_search( $args )
     $search['modid'] = xarModGetIDFromName('xarbb');
 
     $data['replies'] = xarModAPIFunc('xarbb', 'user', 'searchreplies', $search);
-/*
-    if (!empty($package['comments'])) {
-
-        $header['modid'] = $package['comments'][0]['xar_modid'];
-        $header['itemtype'] = $package['comments'][0]['xar_itemtype'];
-        $header['objectid'] = $package['comments'][0]['xar_objectid'];
-        $receipt['returnurl']['decoded'] = xarModURL('comments','user','display', $postinfo);
-        $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
-
-        $receipt['directurl'] = true;
-
-        $data['package'] = $package;
-        $data['receipt'] = $receipt;
-
-
-    }
-*/
+    $data['topics'] = xarModAPIFunc('xarbb', 'user', 'searchtopics', $search);
 
     $data['hide'] = $q;
     $data['header'] = $header;
-
-    $data['topics'] = xarModAPIFunc('xarbb', 'user', 'searchtopics', $search);
     return $data;
 }
-
 ?>
