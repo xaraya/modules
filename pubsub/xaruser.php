@@ -54,7 +54,7 @@ function pubsub_user_displayicon($args)
 
     $modid = xarModGetIDFromName($modname);
     // do nothing if user not logged in
-    if (!xarUserLoggedIn()) {
+    if (!xarUserIsLoggedIn()) {
          return;
     }
 

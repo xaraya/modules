@@ -44,7 +44,7 @@ function pubsub_userapi_adduser($args)
     }
 
     // Anonymous user cannot subscribe to events
-    if (xarUserLoggedIn()) {
+    if (xarUserIsLoggedIn()) {
         // if no userid was supplied then subscribe the currently logged in user
         if (!isset($userid)) {
 	    $userid = xarSessionGetVar('uid');
