@@ -17,7 +17,7 @@ function messages_userapi_delete( $args )
     if (!isset($mid)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'mid', 'userapi', 'delete', 'messages');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

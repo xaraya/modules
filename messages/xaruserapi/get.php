@@ -8,7 +8,7 @@ function messages_userapi_get( $args )
     if (!isset($mid) || empty($mid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'message_id', 'userapi', 'get', 'messages');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

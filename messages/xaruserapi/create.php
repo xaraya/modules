@@ -6,21 +6,21 @@ function messages_userapi_create( $args )
     if (!isset($subject)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'subject', 'userapi', 'create', 'messages');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($body)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'body', 'userapi', 'create', 'messages');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($receipient)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'receipient', 'userapi', 'create', 'messages');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
