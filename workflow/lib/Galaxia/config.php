@@ -57,8 +57,8 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 // Database handler
 global $dbGalaxia;
 if (!isset($dbGalaxia)) {
-    // Note that we do NOT assign by reference here, because we do want a copy
-    $dbGalaxia = xarDBGetConn();
+    // Galaxia needs its own connection for the associative fetch mode.
+    $dbGalaxia =& xarDBNewConn();
 
     // Set the fetch mode to assoc by default (needed by lib/Galaxia)
     $oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
