@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include("modules/bloggerapi/xarincludes/common.php");
-
 /**
  * Get a posting
  * 
@@ -60,7 +58,10 @@ function bloggerapi_userapi_getpost($msg) {
         // FIXME: <mrb> it was unclear by me what needed prepping, only <,> and &??
         $data['content']=xarVarPrepForDisplay($content);
         $data['postid']=$article['aid'];
-        $output = _bloggerapi_createresponse('getpost',$data);
+        $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                   array('module'  => 'bloggerapi',
+                         'command' => 'getpost',
+                         'params'  => $data))
 	}
     return $output;
 	

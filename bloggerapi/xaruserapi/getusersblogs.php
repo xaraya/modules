@@ -13,7 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include("modules/bloggerapi/xarincludes/common.php");
 /**
  * Return categories from Xaraya
  * 
@@ -81,7 +80,11 @@ function bloggerapi_userapi_getusersblogs($msg) {
 			$i++;
 		}
         $data['categories'] = $catlist;
-        $output = _bloggerapi_createresponse('getusersblogs',$data);
+        $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                                array('module'  => 'bloggerapi',
+                                      'command' => 'getusersblogs',
+                                      'params'  => $data)
+                                );
     }
     //xarLogMessage($output);
     return $output;

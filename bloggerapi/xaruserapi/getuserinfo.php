@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include("modules/bloggerapi/xarinclude/common.php");
-
 /**
  * Retrieve info about a user
  * 
@@ -54,7 +52,11 @@ function bloggerapi_userapi_getuserinfo($msg) {
         $data['lastname'] = $userinfo['name'];
         $data['firstname'] = '';
         
-        $output = _bloggerapi_createresponse('getuserinfo',$data);
+        $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                                array('module'  => 'bloggerapi',
+                                      'command' => 'getuserinfo',
+                                      'params'  => $data)
+                                );
     }
     return $output;
     

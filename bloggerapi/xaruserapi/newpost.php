@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include("modules/bloggerapi/xarincludes/common.php");
-
 /**
 * Create a new posting
 * 
@@ -35,7 +33,7 @@ function bloggerapi_userapi_newpost($msg) {
 	$sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
 	$sn4=$msg->getParam(4);  $content   = $sn4->scalarval();
 	$sn5=$msg->getParam(5);  $publish   = $sn5->scalarval();
-	xarLogVariable('publish', $publish);
+	//xarLogVariable('publish', $publish);
 
     if (!xarUserLogin($username,$password)) {
       $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
@@ -74,7 +72,11 @@ function bloggerapi_userapi_newpost($msg) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
 	}	else {
         $data['postid'] = $postid;
-        $output = _bloggerapi_createresponse('newpost',$data);
+        $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                                array('module'  => 'bloggerapi',
+                                      'command' => 'newpost',
+                                      'params'  => $data)
+                                );
     }
     return $output;
 } 

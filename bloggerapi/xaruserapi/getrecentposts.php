@@ -14,8 +14,6 @@
 */
 
 
-include("modules/bloggerapi/xarincludes/common.php");
-
 /**
  * Get recent postings
  * 
@@ -81,9 +79,12 @@ function bloggerapi_userapi_getrecentposts($msg) {
 		}
 
         $data['articlelist'] = $article_list;
-    
-        $output = _bloggerapi_createresponse('getrecentposts',$data);
 
+        $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                                array('module'  => 'bloggerapi',
+                                      'command' => 'getrecentposts',
+                                      'params'  => $data)
+                                );
     } 
     return $output;
 }

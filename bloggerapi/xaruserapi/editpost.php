@@ -13,8 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include("modules/bloggerapi/xarincludes/common.php");
-
 /**
  * Edit a posting
  * 
