@@ -1,0 +1,42 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Poll Results</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#$title#</h2><br />
+<div style="text-align: center; margin: auto;">
+<xar:if condition="$private">
+<p><xar:mlstring>This Poll is currently private.  Please check again soon for the results.</xar:mlstring></p>
+<xar:else />
+	<table cellpadding="2" cellspacing="0" style="align: center;margin: auto;border: 0px;">
+	    <xar:loop name="$options">
+	    <tr>
+	        <td style="text-align: left;vertical-align: middle;" colspan="3">
+	            <b>#$loop:item['name']#</b> [ #$loop:item['percentage']#%&nbsp;(#$loop:item['votes']#) ]<br />
+	            <xar:if condition="$imggraph eq 1">
+	                <xar:if condition="$loop:item['barwidth'] le 1">
+	                <img src="modules/polls/xarimages/bar.png" style="width: 1px;height: 10px;" alt="vote bar" />
+	                <xar:else />
+	                <img src="modules/polls/xarimages/bar.png" style="width: #$loop:item['barwidth']#%;height: 10px;" alt="vote bar" />
+	                </xar:if>
+	            <xar:else/>
+	                <div class="xar-alt" style="width:#$loop:item['barwidth']#%; height: 1em;min-width:1px; float:left; display:inline;"></div><br />
+	            </xar:if>
+	        </td>
+	    </tr>
+	    </xar:loop>
+	</table>
+</xar:if>
+<br />
+<b><xar:mlstring>Total votes</xar:mlstring>: #$totalvotes#</b><br /><br />
+<span class="xar-sub">
+<xar:mlstring>We allow just one vote</xar:mlstring> #$votelimit#</span>
+<br /><br />
+[ 
+<xar:if condition="$canvote">
+<a class="xar-normal" href="#$voteurl#"><xar:mlstring>Vote</xar:mlstring></a> | 
+<xar:else />
+<xar:mlstring>Already voted</xar:mlstring> |
+</xar:if>
+<a class="xar-normal" href="#$listurl#"><xar:mlstring>Previous polls</xar:mlstring></a> ]
+</div>
+</div>
+<div class="xar-mod-foot">
+#$hookoutput#
+</div>

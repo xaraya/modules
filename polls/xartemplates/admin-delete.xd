@@ -1,0 +1,15 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Delete Poll</xar:mlstring></h2>
+<div style="text-align: center; margin: auto;">
+<h3>#$polltitle#</h3>
+<form method="post" action="&xar-modurl-polls-admin-delete;">
+<input type="hidden" name="authid" value="#$authid#">
+<input type="hidden" name="pid" value="#$pid#">
+<input type="hidden" name="confirm" value="#$confirm#">
+            <xar:mlstring>Delete this Poll?</xar:mlstring><br /><br />
+            <input type="submit" value="#$buttonlabel#"><br /><br />
+            <a href="&xar-modurl-polls-admin-list;"><xar:mlstring>Cancel Delete</xar:mlstring></a>
+            </form>
+</form>
+</div>
+</div>

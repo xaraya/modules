@@ -1,0 +1,49 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Create New Poll</xar:mlstring></h2><br />
+<div style="text-align: center; margin: auto;">
+<form method="post" action="&xar-modurl-polls-admin-create;">
+<input type="hidden" name="authid" value="#$authid#">
+<table cellspacing="0" cellpadding="2" style="text-align: left; margin: auto;width: 70%;border: 0px;">
+    <tr>
+        <td>
+             <label for="title"><xar:mlstring>Poll title</xar:mlstring></label>:
+        </td>
+        <td>
+            <input type="text" name="title" id="title" size="50" maxlength="100" value="">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <xar:mlstring>Poll type</xar:mlstring>:
+        </td>
+        <td>
+            <input type="radio" name="polltype" value="single" checked>&nbsp;<xar:mlstring>Single Vote</xar:mlstring><br />
+            <input type="radio" name="polltype" value="multi">&nbsp;<xar:mlstring>Multiple Vote</xar:mlstring><br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+             <label for="private"><xar:mlstring>Private</xar:mlstring></label>:
+        </td>
+        <td>
+            <input type="checkbox" name="private" id="private" value="1" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: center;">
+            <br />
+             <xar:mlstring>Please enter each available option into a single field</xar:mlstring>
+            <br />&nbsp;
+        </td>
+    </tr>
+    <xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
+	    <tr>
+	        <td><label for="option_#$i#"><xar:mlstring>Option</xar:mlstring> #$i#</label>:</td>
+	        <td><input type="text" name="option_#$i#" value="" size="50" maxlength="50"></td>
+	    </tr>
+    </xar:for>
+</table><br /><br />
+            <input type="submit" value="#$buttonlabel#">
+</form>
+</div>
+</div>

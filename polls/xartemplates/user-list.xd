@@ -1,0 +1,33 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Existing Polls</xar:mlstring></span></div>
+<div class="xar-mod-body" style="text-align: center;margin: auto;"><br/>
+<xar:if condition="empty($polls)">
+<div style="align: center;margin: auto;">
+	<p><xar:mlstring>There are no polls available</xar:mlstring></p>
+</div>
+<xar:else/>
+<table style="width: 100%;border: 0px;" cellpadding="2" cellspacing="1" class="xar-accent">
+    <tr>
+        <th><xar:mlstring>Title</xar:mlstring></th>
+        <th><xar:mlstring>Actions</xar:mlstring></th>
+    </tr>
+    <xar:loop name="$polls">
+    <tr>
+        <td class="xar-norm">#$loop:item['title']# (#$loop:item['type']#  - <xar:if condition="$loop:item['open']"><xar:mlstring>Open</xar:mlstring><xar:else /><xar:mlstring>Closed</xar:mlstring></xar:if>) #$loop:item['votes']# <xar:mlstring>Votes</xar:mlstring>
+        <xar:if condition="$loop:item['private']"> [ <span class="xar-error"><xar:mlstring>Private</xar:mlstring></span> ]</xar:if>
+        </td>
+        <td style="text-align: center;" class="xar-norm"> [ 
+        <xar:if condition="$previewresults or !$loop:item['canvote']">
+            <a href="#$loop:item['action_results']#"><xar:mlstring>Results</xar:mlstring></a>
+        </xar:if>
+        <xar:if condition="$previewresults and ($loop:item['canvote'] and $loop:item['open'])">
+            | 
+        </xar:if>
+        <xar:if condition="$loop:item['canvote'] and $loop:item['open']">
+            <a href="#$loop:item['action_vote']#"><xar:mlstring>Vote</xar:mlstring></a>
+        </xar:if> ]
+        </td>
+    </tr>
+    </xar:loop>
+</table>
+</xar:if>
+</div>

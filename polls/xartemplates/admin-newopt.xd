@@ -1,0 +1,23 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>New Option</xar:mlstring></h2>
+<div style="text-align: center; margin: auto;">
+<h3>#$polltitle#</h3>
+<form method="post" action="&xar-modurl-polls-admin-createopt;">
+<input type="hidden" name="authid" value="#$authid#">
+<input type="hidden" name="pid" value="#$pid#">
+<table cellspacing="0" cellpadding="2" style="text-align: left;margin: auto;width: 70%;border: 0px;">
+    <tr>
+        <td>
+            <label for="option"><xar:mlstring>Option Text</xar:mlstring></label>:
+        </td>
+        <td>
+            <input type="text" name="option" id="option" size="50" maxlength="100" value="">
+        </td>
+    </tr>
+</table><br /><br />
+            <input type="submit" value="#$buttonlabel#"><br /><br />
+            <a href="#$cancelurl#"><xar:mlstring>Cancel New</xar:mlstring></a>
+
+</form>
+</div>
+</div>

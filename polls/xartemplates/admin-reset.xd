@@ -1,0 +1,17 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Reset Poll</xar:mlstring></h2>
+<div style="text-align: center; margin: auto;">
+<form method="post" action="&xar-modurl-polls-admin-reset;">
+<input type="hidden" name="authid" value="#$authid#">
+<input type="hidden" name="pid" value="#$pid#">
+<input type="hidden" name="confirm" value="#$confirm#">
+<h3><xar:mlstring>Reset this poll?</xar:mlstring></h3>
+            #$polltitle#<br /><br />
+(<xar:mlstring>all votes will be deleted</xar:mlstring>)<br /><br />
+            <input type="submit" value="#$buttonlabel#"><br /><br />
+            <a href="&xar-modurl-polls-admin-list;"><xar:mlstring>Cancel Reset</xar:mlstring></a>
+
+            </form>
+</form>
+</div>
+</div>

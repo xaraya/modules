@@ -1,0 +1,50 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Polls</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <em><xar:mlstring>Polls is Xaraya Content Module.</xar:mlstring></em>
+            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>The Polls Module controls the configuration and management of simple vote questions.</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>From the menu, you have four choices.</xar:mlstring>
+            <ul>
+            <li><xar:mlstring>Overview</xar:mlstring>: <xar:mlstring>This page</xar:mlstring></li>
+            <li><xar:mlstring>New Poll</xar:mlstring>: <xar:mlstring>Add a Poll to your site</xar:mlstring></li>
+            <li><xar:mlstring>List Polls</xar:mlstring>: <xar:mlstring>View a summary list of existing Polls</xar:mlstring></li>
+            <li><xar:mlstring>Modify Config</xar:mlstring>: <xar:mlstring>Change the Polls module settings</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Poll blocks will display the current poll in block format.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The are no included hooks at this time.</xar:mlstring>
+        </div>
+    </div>
+</div>

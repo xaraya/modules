@@ -1,0 +1,30 @@
+<div class="xar-mod-head"><span class="xar-mod-title">#$listlabel#</span></div>
+<div class="xar-mod-body" style="text-align: center;margin: auto;"><br/>
+<xar:if condition="!isset($polls)">
+#$nopollslabel#
+<xar:else/>
+<table style="width: 100%;border: 0px;" cellpadding="2" cellspacing="0">
+    <tr>
+        <th>#$titlelistlabel#</th>
+        <th>#$actionslistlabel#</th>
+    </tr>
+    <xar:if condition="count($polls) == 0">
+    <tr>
+        <td colspan="2" style="text-align: center;">#$nopollslabel#</td>
+    </tr>
+    <xar:else />
+    <xar:loop name="$polls">
+    <tr>
+        <td>#$loop:item['title']# (#$loop:item['type']#  - <xar:if condition="$loop:item['open']">#$loop:item['openlabel']#<xar:else />#$loop:item['closedlabel']#</xar:if>) #$loop:item['votes']# #$loop:item['voteslabel']#</td>
+        <td style="text-align: center;"> [ 
+        <a href="#$loop:item['action_results']#">#$loop:item['action_resultslabel']#</a>
+        <xar:if condition="!$loop:item['voted'] and $loop:item['open']">
+            | <a href="#$loop:item['action_vote']#">#$loop:item['action_votelabel']#</a>
+        </xar:if> ]
+        </td>
+    </tr>
+    </xar:loop>
+    </xar:if>
+</table>
+</xar:if>
+</div>

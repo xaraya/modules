@@ -1,0 +1,41 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Poll Options</xar:mlstring></h2>
+<div style="text-align: center; margin: auto;">
+<h3>#$polltitle#</h3>
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="margin: auto;border: 0px;">
+<tr>
+    <th><xar:mlstring>Options</xar:mlstring></th>
+    <th><xar:mlstring>Order</xar:mlstring></th>
+    <th><xar:mlstring>Actions</xar:mlstring></th>
+</tr>
+<xar:loop name="$options">
+<tr>
+	<td class="xar-norm" style="text-align: left;">#$loop:item['name']# (#$loop:item['votes']# <xar:mlstring>votes</xar:mlstring>)</td>
+    <td class="xar-norm" style="text-align: center;">
+<xar:if condition="isset($loop:item['down'])">
+    <a href="#$loop:item['down']#" title="#$downlabel#" ><img src="modules/polls/xarimages/downarrow.gif" style="border: 0px;" alt="#$downlabel#" /></a>
+<xar:else />
+    <img src="modules/polls/xarimages/noarrow.gif" style="border: 0px;" alt="" />
+</xar:if>
+<xar:if condition="isset($loop:item['up'])">
+    <a href="#$loop:item['up']#" title="#$uplabel#"><img src="modules/polls/xarimages/uparrow.gif" style="border: 0px;" alt="#$uplabel#" /></a>
+<xar:else />
+    <img src="modules/polls/xarimages/noarrow.gif" style="border: 0px;" alt="" />
+</xar:if>
+</td>
+    <td class="xar-norm">
+<xar:if condition="isset($loop:item['modify'])">[ 
+    <a href="#$loop:item['modify']#"><xar:mlstring>Modify</xar:mlstring></a> | 
+</xar:if>
+<xar:if condition="isset($loop:item['delete'])">
+    <a href="#$loop:item['delete']#"><xar:mlstring>Delete</xar:mlstring></a>
+</xar:if>
+     ]
+	</td>
+</tr>
+</xar:loop>
+</table><br /><br />
+<a href="#$newurl#"><xar:mlstring>New option</xar:mlstring></a>
+</form>
+</div>
+</div>

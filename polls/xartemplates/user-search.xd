@@ -1,0 +1,17 @@
+<h2><xar:mlstring>Search Polls</xar:mlstring></h2>
+<xar:if condition="!empty($polls) and count($polls) gt 0">
+    <h3><xar:mlstring>Polls Found</xar:mlstring>:</h3>
+    <ul>
+    <xar:foreach in="$polls" key="$pid" value="$poll">
+        <li><a href="#xarModURL('polls', 'user', 'display', array('pid' => $poll['pid']))#">#$poll['title']#</a></ul>
+    </xar:foreach>
+    </ul>
+<xar:else/>
+<xar:if condition="!empty($status)">
+<p>#$status#</p>
+</xar:if>
+</xar:if>
+
+<p><xar:mlstring>Search</xar:mlstring>:</p>
+<p><xar:mlstring>Poll Title</xar:mlstring>:&nbsp;&nbsp;<input type="checkbox" name="polls_title" value="1" checked="checked" /> </p>
+<p><xar:mlstring>Poll Options</xar:mlstring>:&nbsp;&nbsp;<input type="checkbox" name="polls_options" value="1" checked="checked" /></p>

@@ -1,0 +1,38 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Vote</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#$title#</h2>
+<div style="text-align: center;margin: auto;">
+<xar:if condition="!$canvote">
+    <p><xar:mlstring>You are not allowed to vote on this Poll.</xar:mlstring></p>
+<xar:else />
+    <form method="post" action="&xar-modurl-polls-user-vote;">
+    <input type="hidden" name="authid" value="#$authid#">
+    <input type="hidden" name="pid" value="#$pid#">
+    <xar:if condition="$private">
+        <p><xar:mlstring>This Poll is currently private.  Results will not be shown.</xar:mlstring></p>
+    </xar:if>
+    <table cellpadding="2" cellspacing="0" style="align: center;margin: auto;border: 0px;">
+    <xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
+    <tr>
+        <td>
+            <xar:if condition="$type eq 'single'">
+                <input type="radio" name="option" id="polloption_#$i#" value="#$i#" />
+            <xar:elseif condition="$type eq 'multi'" />
+                <input type="checkbox" name="option_#$i#" id="polloption_#$i#" value="#$i#" />
+            </xar:if>
+        </td>
+        <td style="text-align: left;"><label for="polloption_#$i#">#$options[$i]['name']#</label></td>
+    </tr>
+    </xar:for>
+    </table>
+    <br />
+    <input type="submit" value="#$buttonlabel#"><br /><br />
+    <xar:if condition="$previewresults">
+    <a href="#$resultsurl#"><xar:mlstring>View Results</xar:mlstring></a><br />
+    </xar:if>
+    <a href="&xar-modurl-polls-user-list;"><xar:mlstring>Previous Polls</xar:mlstring></a><br />
+    </form>
+    </div>
+</xar:if>
+<div class="xar-mod-foot">
+#$hookoutput#
+</div>

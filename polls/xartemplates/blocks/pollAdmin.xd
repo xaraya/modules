@@ -1,0 +1,16 @@
+<tr align="left" valign="middle">
+	<td>
+		<label for="pid#$blockid#"><xar:mlstring>Poll to display:</xar:mlstring></label>
+	</td>
+	<td>
+        <select name="pid" id="pid#$blockid#">
+        <xar:loop name="$polls">
+        <xar:if condition="$loop:item['pid'] eq $sel_pid">
+		<option name="#$loop:item['pid']#" id="#$loop:item['pid']#" value="#$loop:item['pid']#" selected="selected">#$loop:item['name']#</option>
+        <xar:else />
+		<option name="#$loop:item['pid']#" id="#$loop:item['pid']#" value="#$loop:item['pid']#">#$loop:item['name']#</option>
+        </xar:if>
+        </xar:loop>
+        </select>
+	</td>
+</tr>

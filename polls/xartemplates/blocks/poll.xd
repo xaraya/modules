@@ -1,0 +1,60 @@
+<xar:if condition="$canvote">
+<table border="0" cellpadding="2" cellspacing="0" width="100%">
+<form method="post" action="&xar-modurl-polls-user-vote;">
+<input type="hidden" name="authid" value="#$authid#">
+<input type="hidden" name="pid" value="#$pid#">
+<tr>
+    <td colspan="2">#$title#</td>
+</tr>
+<xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
+<tr>
+	<td>
+        <xar:if condition="$type eq 'single'">
+            <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
+        <xar:elseif  condition="$type eq 'multi'" />
+            <input type="checkbox" name="option_#$i#" id="option_#$bid#_#$i#" value="#$i#" />
+        </xar:if>
+	</td>
+    <td width="90%"><label for="option_#$bid#_#$i#">#$options[$i]['name']#</label></td>
+</tr>
+</xar:for>
+</table>
+<br />
+        <div style="text-align:center; margin: auto;">
+        <input type="submit" value="#$buttonlabel#" style="text-align:center; margin: auto;">
+        </div>
+        <input type="hidden" name="blockvote" value="1" />
+</form>
+
+<xar:else />
+
+<table border="0" cellpadding="2" cellspacing="0" width="100%">
+<tr>
+    <td colspan="2">#$title#<br />&nbsp;</td>
+</tr>
+<xar:loop name="$options">
+    <tr>
+        <td align="left" valign="middle" colspan="3">
+            <b>#$loop:item['name']#</b> [ #$loop:item['percentage']#%&nbsp;(#$loop:item['votes']#) ]<br />
+            <xar:if condition="$imggraph eq 1">
+                <xar:if condition="$loop:item['barwidth'] le 1">
+                <img src="modules/polls/xarimages/bar.png" width="2" height="10" alt="" />
+                <xar:else />
+                <img src="modules/polls/xarimages/bar.png" width="#$loop:item['barwidth']#%" height="10" alt="" />
+                </xar:if>
+            <xar:else/>
+                <div class="xar-alt" style="width:#$loop:item['barwidth']#%; height: 1em;min-width:1px; float:left; display:inline;"></div><br />
+            </xar:if>
+        </td>
+    </tr>
+ </xar:loop>
+</table>
+
+
+</xar:if>
+
+<div style="text-align:center;margin: auto;"><br />
+        <xar:if condition="$previewresults or $voted">
+            <a href="#$resultsurl#"><xar:mlstring>Results</xar:mlstring></a><br />
+        </xar:if>
+        <a href="&xar-modurl-polls-user-list;"><xar:mlstring>Previous Polls</xar:mlstring></a></div>

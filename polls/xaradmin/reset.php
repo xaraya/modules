@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * reset a poll
+ */
+function polls_admin_reset()
+{
+    // Get parameters
+    list($pid,
+         $confirm) = xarVarCleanFromInput('pid',
+                                         'confirm');
+    if (!isset($pid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+
+    $poll = xarModAPIFunc('polls',
+                           'user',
+                           'get',
+                           array('pid' => $pid));
+
+    if (!xarSecurityCheck('AdminPolls',1,'All',"$poll[title]:All:$pid")) {
+        return;
+    }
+
+    // Check for confirmation
+    if ($confirm != 1) {
+        // No confirmation yet - get one
+
+        $data = array();
+
+        $data['polltitle'] = $poll['title'];
+        $data['pid'] = $pid;
+        $data['confirm'] = 1;
+        $data['authid'] = xarSecGenAuthKey();
+        $data['buttonlabel'] = 'Reset Poll';
+
+        return $data;
+    }
+
+    // Confirm authorisation code
+    if (!xarSecConfirmAuthKey()) return;
+
+    // Pass to API
+    if (xarModAPIFunc('polls',
+                     'admin',
+                     'reset', array('pid' => $pid))) {
+        // Success
+        xarSessionSetVar('statusmsg', xarML('Poll reset'));
+
+    }
+
+    xarResponseRedirect(xarModURL('polls', 'admin', 'list'));
+
+    return true;
+}
+
+
+?>
