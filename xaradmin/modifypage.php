@@ -119,14 +119,16 @@ function xarpages_admin_modifypage()
     }
 
     // Clear out any empty hooks, and truncate the remainder.
-    foreach($hooks as $key => $hook) {
-        if (trim($hook) == '') {
-            unset($hooks[$key]);
-        } else {
-            $hooks[$key] = trim($hook);
+    if (isset($hooks)) {
+        foreach($hooks as $key => $hook) {
+            if (trim($hook) == '') {
+                unset($hooks[$key]);
+            } else {
+                $hooks[$key] = trim($hook);
+            }
         }
+        $data['hooks'] =& $hooks;
     }
-    $data['hooks'] =& $hooks;
 
     // Implode the names for each page into a path for display.
     foreach ($pages['pages'] as $key => $page) {

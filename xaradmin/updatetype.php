@@ -35,11 +35,7 @@ function xarpages_admin_updatetype()
         if (!$ptid) {return;}
     }
 
-    if ($creating) {
-        xarResponseRedirect(xarModUrl('xarpages', 'admin', 'viewtypes'));
-    } else {
-        xarResponseRedirect(xarModUrl('xarpages', 'admin', 'viewtypes'));
-    }
+    xarResponseRedirect(xarModUrl('xarpages', 'admin', 'viewtypes'));
 
     return true;
 }
