@@ -26,7 +26,7 @@ function events_init()
 
         if(!xarModIsAvailable('categories')) {
         $msg=xarML('The categories module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }

@@ -23,7 +23,7 @@ function events_adminapi_delete($args)
     if (!isset($exid) || !is_numeric($exid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item ID', 'admin', 'delete', 'Events');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
