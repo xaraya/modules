@@ -32,7 +32,7 @@ function categories_adminapi_createcat($args)
     if ((!isset($name))        ||
         (!isset($description)))
     {
-        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -48,7 +48,7 @@ function categories_adminapi_createcat($args)
             (!isset($inorout))
            )
         {
-            $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+            $msg = xarML('Invalid Parameter Count');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
@@ -78,7 +78,7 @@ function categories_adminapi_createcat($args)
                 )
             );
        } else {
-            $msg = xarML('That category already exists', join(', ', $invalid), 'admin', 'createcat', 'categories');
+            $msg = xarML('That category already exists');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
        }

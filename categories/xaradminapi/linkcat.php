@@ -29,7 +29,7 @@ function categories_adminapi_linkcat($args)
         (!isset($args['modid']))
        )
     {
-        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'linkcat', 'categories');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }

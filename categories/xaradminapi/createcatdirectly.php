@@ -10,7 +10,7 @@ function categories_adminapi_createcatdirectly($args)
         (!isset($description)) ||
         (!isset($point_of_insertion)))
     {
-        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
