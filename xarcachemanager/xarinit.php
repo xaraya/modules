@@ -94,6 +94,9 @@ function xarcachemanager_init()
             xarModSetVar('comments','cache.userapi.get_author_count',60);
         }
     }
+    
+    // add the database storage table
+    xarcachemanager_create_cache_data();
 
     // Initialisation successful
     return true;
