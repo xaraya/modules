@@ -1,5 +1,6 @@
+<h2><xar:mlstring>View XLink Definitions</xar:mlstring></h2>
 <xar:if condition="empty($status)">
-    <xar:mlstring>Please provide an id (and optional base name)</xar:mlstring>
+    <xar:data-view module="xlink" fieldlist="basename,refid" layout="list" />
 <xar:elseif condition="$status eq 1" />
     <xar:mlstring>Unable to find corresponding item</xar:mlstring>
 <xar:elseif condition="$status eq 2" />

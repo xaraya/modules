@@ -76,53 +76,10 @@ function xlink_adminapi_deletehook($args)
     $xartable = xarDBGetTables();
     $xlinktable = $xartable['xlink'];
 
-    $editor = xarUserGetVar('uid');
-    $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
-    if (!empty($forwarded)) {
-        $hostname = preg_replace('/,.*/', '', $forwarded);
-    } else {
-        $hostname = xarServerGetVar('REMOTE_ADDR');
-    }
-    $date = time();
-    $status = 'deleted';
-/*
-    if (!empty($extrainfo['xlink_remark'])) {
-        $remark = $extrainfo['xlink_remark'];
-    } else {
-        $remark = xarVarCleanFromInput('xlink_remark');
-        if (empty($remark)){
-            $remark = '';
-        }
-    }
-*/
-    $remark = '';
-// probably not relevant here...
-//    $content = serialize($extrainfo);
-    $content = '';
-
-    // Get a new xlink ID
-    $nextId = $dbconn->GenId($xlinktable);
-    // Create new xlink
-    $query = "INSERT INTO $xlinktable(xar_logid,
-                                       xar_moduleid,
-                                       xar_itemtype,
-                                       xar_itemid,
-                                       xar_editor,
-                                       xar_hostname,
-                                       xar_date,
-                                       xar_status,
-                                       xar_remark,
-                                       xar_content)
-            VALUES ($nextId,
-                    '" . xarVarPrepForStore($modid) . "',
-                    '" . xarVarPrepForStore($itemtype) . "',
-                    '" . xarVarPrepForStore($objectid) . "',
-                    '" . xarVarPrepForStore($editor) . "',
-                    '" . xarVarPrepForStore($hostname) . "',
-                    '" . xarVarPrepForStore($date) . "',
-                    '" . xarVarPrepForStore($status) . "',
-                    '" . xarVarPrepForStore($remark) . "',
-                    '" . xarVarPrepForStore($content) . "')";
+    $query = "DELETE FROM $xlinktable
+              WHERE xar_moduleid = " . xarVarPrepForStore($modid) . "
+                AND xar_itemtype = " . xarVarPrepForStore($itemtype) . "
+                AND xar_itemid = " . xarVarPrepForStore($itemid);
 
     $result =& $dbconn->Execute($query);
     if (!$result) {
@@ -130,13 +87,6 @@ function xlink_adminapi_deletehook($args)
         //return false;
         return $extrainfo;
     }
-
-    $logid = $dbconn->PO_Insert_ID($xlinktable, 'xar_logid');
-
-    // Return the extra info with the id of the newly created item
-    // (not that this will be of any used when called via hooks, but
-    // who knows where else this might be used)
-    $extrainfo['xlinkid'] = $logid;
 
     // Return the extra info
     return $extrainfo;

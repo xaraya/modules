@@ -56,6 +56,23 @@ function xlink_admin_updateconfig()
         }
     }
 
+    // update the list of valid basenames
+    $objectid = xarModGetVar('xlink','objectid');
+    if (!empty($objectid)) {
+        $object =& xarModAPIFunc('dynamicdata','user','getobject',
+                                 array('objectid' => $objectid));
+        if (isset($object->properties['basename'])) {
+            $property = $object->properties['basename'];
+            $basenames = array_keys($newbasenames);
+            $validation = ';' . join(';',$basenames);
+            xarModAPIFunc('dynamicdata','admin','updateprop',
+                          array('prop_id' => $property->id,
+                                'label' => $property->label,
+                                'type' => $property->type,
+                                'validation' => $validation));
+        }
+    }
+
     xarResponseRedirect(xarModURL('xlink', 'admin', 'modifyconfig'));
 
     return true;

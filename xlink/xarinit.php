@@ -25,7 +25,11 @@ function xlink_init()
 
     xarDBLoadTableMaintenanceAPI();
     $query = xarDBCreateTable($xartable['xlink'],
-                             array('xar_basename'   => array('type'        => 'varchar',
+                             array('xar_id'         => array('type'        => 'integer',
+                                                            'null'       => false,
+                                                            'increment'  => true,
+                                                            'primary_key' => true),
+                                   'xar_basename'   => array('type'        => 'varchar',
                                                             'size'        => 40,
                                                             'null'        => false,
                                                             'default'     => ''),
@@ -127,6 +131,13 @@ function xlink_init()
     xarRegisterMask('ReadXLink', 'All', 'xlink', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AdminXLink', 'All', 'xlink', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
+    // create the dynamic object that will represent our items
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xlink/xlink.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('xlink','objectid',$objectid);
+
     // Initialisation successful
     return true;
 }
@@ -141,6 +152,10 @@ function xlink_upgrade($oldversion)
     switch ($oldversion) {
         case 1.0:
             // Code to upgrade from version 1.0 goes here
+// Warning: this deletes all previous settings & entries !
+            if (!xlink_delete()) return;
+            if (!xlink_init()) return;
+            xarModSetVar('xlink', 'SupportShortURLs', 1);
             break;
         case 2.0:
             // Code to upgrade from version 2.0 goes here
@@ -214,6 +229,14 @@ function xlink_delete()
     // Remove Masks and Instances
     xarRemoveMasks('xlink');
     xarRemoveInstances('xlink'); 
+
+    // delete the dynamic object and its properties
+    $objectid = xarModGetVar('xlink','objectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',
+                      array('objectid' => $objectid));
+        xarModDelVar('xlink','objectid');
+    }
 
     // Deletion successful
     return true;

@@ -1,0 +1,73 @@
+<object name="xlink">
+  <objectid>9</objectid>
+  <label>XLink</label>
+  <moduleid>186</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>53</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_xlink.xar_id</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="basename">
+      <id>54</id>
+      <label>Basename</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_xlink.xar_basename</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>;kbase;products</validation>
+    </property>
+    <property name="refid">
+      <id>55</id>
+      <label>Reference</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_xlink.xar_refid</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>1:254</validation>
+    </property>
+    <property name="moduleid">
+      <id>56</id>
+      <label>Module</label>
+      <type>module</type>
+      <default></default>
+      <source>xar_xlink.xar_moduleid</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="itemtype">
+      <id>57</id>
+      <label>Itemtype</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_xlink.xar_itemtype</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="itemid">
+      <id>58</id>
+      <label>Itemid</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_xlink.xar_itemid</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
+

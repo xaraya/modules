@@ -1,0 +1,7 @@
+<h2><xar:mlstring>Display XLink Definition</xar:mlstring></h2>
+<xar:if condition="!empty($itemid) and is_numeric($itemid)">
+    <xar:data-display module="xlink" itemid="$itemid" />
+<xar:else />
+    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+</xar:if>
+

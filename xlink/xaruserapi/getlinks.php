@@ -43,7 +43,8 @@ function xlink_userapi_getlinks($args)
     $xlinktable = $xartable['xlink'];
 
     // Get links for this module item
-    $query = "SELECT xar_basename,
+    $query = "SELECT xar_id,
+                     xar_basename,
                      xar_refid
               FROM $xlinktable
               WHERE xar_moduleid = " . xarVarPrepForStore($modid) . "
@@ -64,9 +65,10 @@ function xlink_userapi_getlinks($args)
     $links = array();
     while (!$result->EOF) {
         $link = array();
-        list($link['basename'],
+        list($linkid,
+             $link['basename'],
              $link['refid']) = $result->fields;
-        $links[] = $link;
+        $links[$linkid] = $link;
         $result->MoveNext();
     }
     $result->Close();

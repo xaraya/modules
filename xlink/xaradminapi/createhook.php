@@ -82,13 +82,17 @@ function xlink_adminapi_createhook($args)
 
 // TODO: generate auto-increment per base if necessary
 
+    // Get a new xlink ID
+    $nextId = $dbconn->GenId($xlinktable);
     // Create new xlink
-    $query = "INSERT INTO $xlinktable(xar_basename,
+    $query = "INSERT INTO $xlinktable (xar_id,
+                                       xar_basename,
                                        xar_refid,
                                        xar_moduleid,
                                        xar_itemtype,
                                        xar_itemid)
-            VALUES ('" . xarVarPrepForStore($base) . "',
+            VALUES ($nextId,
+                    '" . xarVarPrepForStore($base) . "',
                     '" . xarVarPrepForStore($refid) . "',
                     '" . xarVarPrepForStore($modid) . "',
                     '" . xarVarPrepForStore($itemtype) . "',
@@ -100,6 +104,8 @@ function xlink_adminapi_createhook($args)
         //return false;
         return $extrainfo;
     }
+
+    $xlinkid = $dbconn->PO_Insert_ID($xlinktable, 'xar_id');
 
     $extrainfo['xlink_base'] = $base;
     $extrainfo['xlink_id'] = $refid;
