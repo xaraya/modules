@@ -194,9 +194,9 @@
                     </xar:if>
                     <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" />
                     <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" />
-                    <input type="submit" name="receipt[action]" id="receipt-action-preview" value="#xarML('preview')#" />
+                    <input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" />
                     &nbsp;&nbsp; 
-                    <input type="submit" name="receipt[action]" id="receipt-action-submit" value="#xarML('submit')#" />
+                    <input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" />
                     &nbsp;&nbsp; 
                 </td>
             </tr>
