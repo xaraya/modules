@@ -10,7 +10,7 @@
 </table>
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
-	<tr> 
+	<tr>
 		<td align="left" valign="bottom" colspan="2">
 			<div id="top">
 				<b>
@@ -88,6 +88,8 @@
 			</h4>
 		</th>
 	</tr>
+	<!--- Display the Topic Post itself - unless it is not the first pager page --->
+	<xar:if condition="$startnum eq 1">
 	<tr> 
 		<td width="150" align="left" valign="top" style="border-right: 1px solid #000; border-left: 1px solid #000;">
 			<span>
@@ -238,11 +240,18 @@
 			</table>
 		</td>
 	</tr>
+	</xar:if>
+<xar:if condition="$startnum eq 1">
 </table>
-
-<xar:foreach in="$items" value="$item" key="$key">
 <table width="100%" cellspacing="1" cellpadding="3" border="0">
-	<tr> 
+</xar:if>
+    <xar:foreach in="$items" value="$item" key="$key">
+        <xar:if condition="(($key+1) % 2)">
+            <xar:set name="myclass">'xar-alt'</xar:set>
+        <xar:else />
+            <xar:set name="myclass">'xar-norm'</xar:set>
+        </xar:if>
+	<tr >
 		<td width="150" align="left" valign="top" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000;">
 			<span>
 				<b>
@@ -289,7 +298,7 @@
 				</xar:if>
 			</span><br />
 		</td>
-		<td width="100%" height="28" valign="top" style="border-right: 1px solid #000; border-left: 1px solid #000;">
+		<td class='#$myclass#' width="100%" height="28" valign="top" style="border-right: 1px solid #000; border-left: 1px solid #000;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="100%">
@@ -353,7 +362,7 @@
 			</table>
 		</td>
 	</tr>
-	<tr> 
+	<tr>
 		<td width="150" align="left" valign="middle" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
 			<span>
 				<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
@@ -363,7 +372,7 @@
 				</a>
 			</span>
 		</td>
-		<td width="100%" height="28" valign="bottom" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
+		<td  class='#$myclass#' width="100%" height="28" valign="bottom" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
 			<hr />
 			<table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
 				<tr> 
@@ -408,8 +417,9 @@
 			</table>
 		</td>
 	</tr>
+    </xar:foreach>
 </table>
-</xar:foreach>
+
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
 	<tr> 
@@ -444,6 +454,17 @@
 					#$fname#
 				</a>
 			</span>
+		</td>
+	</tr>
+		<td align="right" valign="bottom" colspan="2">
+		<xar:if condition="!empty($pager)">
+			<span class="xar-sub">
+				<b>
+					#$pager#
+				</b><br />
+				&nbsp; 
+			</span>
+			</xar:if>
 		</td>
 	</tr>
 </table>

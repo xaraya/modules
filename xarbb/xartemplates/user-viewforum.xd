@@ -69,7 +69,7 @@
 	</tr>
 </table>
 
-<table style="border: 0px solid #000;" cellpadding="4" cellspacing="1" width="100%">
+<table style="border: 1px solid #000;" cellpadding="4" cellspacing="1" width="100%">
 	<tr style="border: 1px solid #000;"> 
 		<th colspan="2" align="center" nowrap="nowrap">
 			<h4>
@@ -108,7 +108,7 @@
 		</th>
 	</tr>
 <xar:loop name="$items">
-	<tr >
+	<tr style="border: 1px solid #000;">
 		<td class="xar-norm" align="center" valign="middle" width="20" >
 			#$loop:item['timeimage']#
 		</td>

@@ -60,8 +60,8 @@
 		</td>
 	</tr>
 </table>
-<table width="100%" cellpadding="4" cellspacing="1">
-	<tr> 
+<table width="100%" cellpadding="4" cellspacing="1" border="0">
+	<tr style="border: 1px solid #000;">
 		<th colspan="2" nowrap="nowrap">
 			<h4>
 				<xar:mlstring>
@@ -92,7 +92,7 @@
 		</th>
 	</tr>
 	<xar:loop name="$items">
-	<tr class="xar-accent" >
+	<tr class="xar-accent" style="border-bottom: 1px solid #000;">
 		<td colspan="2">
 			<h2>
 				<xar:if condition="isset($loop:item['catname'])">
@@ -111,7 +111,7 @@
 		</td>
 	</tr>
 	<xar:foreach in="$loop:item['cbchild']" value="$cats">
-		<tr class="xar-accent" >
+		<tr class="xar-accent" style="border-bottom: 1px solid #000;">
 			<td align="center" valign="middle">
 				<img src="#xarTplGetImage('new/folder_cat.gif')#" alt="#xarML('Category')#" />
 			</td>
@@ -145,7 +145,7 @@
 		</tr>
 	</xar:foreach>
 	<xar:foreach in="$loop:item['forums']" value="$forum">
-		<tr >
+		<tr style="border-bottom: 1px solid #000;">
 			<td class="xar-norm" align="center" valign="middle">
 				#$forum['timeimage']#
 			</td>
