@@ -45,8 +45,8 @@ function dynamic_planning_userapi_getall($args)
     }
 
     // Get datbase setup - note that both pnDBGetConn() and pnDBGetTables()
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $trackstable = $pntable['dp_tracks'];
     $trackscolumn = &$pntable['dp_tracks_column'];
@@ -111,8 +111,8 @@ function dynamic_planning_userapi_get($args)
     }
 
     // Get datbase setup - note that both pnDBGetConn() and pnDBGetTables()
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $taskstable = $pntable['dp_tasks'];
     $taskscolumn = &$pntable['dp_tasks_column'];
@@ -171,8 +171,8 @@ function dynamic_planning_userapi_gettrack($args)
 {  
     extract($args);
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $trackstable = $pntable['dp_tracks'];
     $trackscolumn = &$pntable['dp_tracks_column'];
@@ -208,8 +208,8 @@ function dynamic_planning_userapi_gettask($args)
 {
     extract($args);
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $taskstable = $pntable['dp_tasks'];
     $taskscolumn = &$pntable['dp_tasks_column'];
@@ -258,8 +258,8 @@ function template_userapi_countitems()
     // currently just want the first item, which is the official database
     // handle.  For pnDBGetTables() we want to keep the entire tables array
     // together for easy reference later on
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules

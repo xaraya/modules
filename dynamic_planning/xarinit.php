@@ -34,8 +34,8 @@ function dynamic_planning_init()
 {
     // Get datbase setup 
     
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // create table
     $dp_trackstable = $xartable['dp_tracks'];
@@ -122,8 +122,8 @@ function dynamic_planning_upgrade($oldversion)
 function dynamic_planning_delete()
 {
     // Get datbase setup 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     
     // Set table names
     $dp_trackstable = $xartable['dp_tracks'];
