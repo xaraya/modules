@@ -1,67 +1,67 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Wizards</xar:mlstring> - #$module#&nbsp;<xar:mlstring>Module</xar:mlstring></span></div>
 <div class="xar-mod-body">
-	<h2 style="width:100%;height:1.5em;">
-		<span style="width:49%;float:left;text-align:left;">
-			<xar:mlstring>
-				View Wizards
-			</xar:mlstring>
-		</span>
-		<span style="width:49%;float:right;text-align:right;">
-			<xar:mlstring>
-				Total listed: 
-			</xar:mlstring>
-			<xar:set name="$modscount">count($collection)</xar:set>
-			#$modscount#
-		</span>
-	</h2>
+    <h2 style="width:100%;height:1.5em;">
+        <span style="width:49%;float:left;text-align:left;">
+            <xar:mlstring>
+                View Wizards
+            </xar:mlstring>
+        </span>
+        <span style="width:49%;float:right;text-align:right;">
+            <xar:mlstring>
+                Total listed: 
+            </xar:mlstring>
+            <xar:set name="$modscount">count($collection)</xar:set>
+            #$modscount#
+        </span>
+    </h2>
 
-		<div class="xar-norm-outline" style="margin-top:1px;">
-			<table style="width:100%; border-collapse:collapse; border-spacing:1px; padding:0;">
-				<tr>
-					<th style="text-align: left; padding-left: .5em;">
-						<xar:mlstring>Name</xar:mlstring>
-					</th>
-					<th style="text-align: center;">
-						<xar:mlstring>&nbsp;</xar:mlstring>
-					</th>
-					<th style="text-align: right; padding-right: .5em;">
-						<xar:mlstring>Status</xar:mlstring>
-					</th>	
-					<th style="text-align: left;padding-left: .5em;">
-						<xar:mlstring>Action</xar:mlstring>
-					</th>
-				</tr>
-				<xar:foreach in="$collection" value="$wizard">
-					<form method="post" action="#$actionurl#">
-					<tr>
-						<td name="#$wizard->getName()#" id="#$wizard->getName()#" class="xar-norm-outline xar-mod-title" style="vertical-align: middle; text-align: left; padding-left: .5em; margin:auto; width: 150px; height: 20px;border-width: 0px 0px 1px 0px;border-style: solid;">#$wizard->getName()#
-						<input type="hidden" name="wizard" id="#$wizard->getName()#" value="#$wizard->getName()#" />
-						</td>
-						
-						<td class="xar-norm-outline" style="text-align: left;border-width: 0px 0px 1px 0px;border-style: solid;">
-								#$wizard->getDescription()#
-						</td>
-						<td class="xar-norm-outline" style="text-align: right;width: 35px;border-width: 0px 0px 1px 0px;border-style: solid;vertical-align: middle;">
-							<div style="padding-right: .5em;">
-								#$wizard->getStatus()#
-							</div>
-						</td>
-						
-						<td class="xar-norm-outline" style="text-align: left;width: 35px;border-width: 0px 0px 1px 0px;border-style: solid;white-space: nowrap;">
-								<div style="padding-left: .5em;">
-									<input type="submit" name="#$wizard->getStatus()#" id="run" value="Run" />
-								</div>
-						</td>
-					</tr>
-				</form>
-				</xar:foreach>
-				</tr>
-			</table>
-		</div>
-		<xar:if condition="$message ne ''">
-			<div class="xar-norm-outline xar-accent" style="text-align: center;margin-top: 1px;padding:.5em;">
-				#$message#
-			</div>
+        <div class="xar-norm-outline" style="margin-top:1px;">
+            <table style="width:100%; border-collapse:collapse; border-spacing:1px; padding:0;">
+                <tr>
+                    <th style="text-align: left; padding-left: .5em;">
+                        <xar:mlstring>Name</xar:mlstring>
+                    </th>
+                    <th style="text-align: center;">
+                        <xar:mlstring>&nbsp;</xar:mlstring>
+                    </th>
+                    <th style="text-align: right; padding-right: .5em;">
+                        <xar:mlstring>Status</xar:mlstring>
+                    </th>    
+                    <th style="text-align: left;padding-left: .5em;">
+                        <xar:mlstring>Action</xar:mlstring>
+                    </th>
+                </tr>
+                <xar:foreach in="$collection" value="$wizard">
+                    <form method="post" action="#$actionurl#">
+                    <tr>
+                        <td name="#$wizard->getName()#" id="#$wizard->getName()#" class="xar-norm-outline xar-mod-title" style="vertical-align: middle; text-align: left; padding-left: .5em; margin:auto; width: 150px; height: 20px;border-width: 0px 0px 1px 0px;border-style: solid;">#$wizard->getName()#
+                        <input type="hidden" name="wizard" id="#$wizard->getName()#" value="#$wizard->getName()#" />
+                        </td>
+                        
+                        <td class="xar-norm-outline" style="text-align: left;border-width: 0px 0px 1px 0px;border-style: solid;">
+                                #$wizard->getDescription()#
+                        </td>
+                        <td class="xar-norm-outline" style="text-align: right;width: 35px;border-width: 0px 0px 1px 0px;border-style: solid;vertical-align: middle;">
+                            <div style="padding-right: .5em;">
+                                #$wizard->getStatus()#
+                            </div>
+                        </td>
+                        
+                        <td class="xar-norm-outline" style="text-align: left;width: 35px;border-width: 0px 0px 1px 0px;border-style: solid;white-space: nowrap;">
+                                <div style="padding-left: .5em;">
+                                    <input type="submit" name="#$wizard->getStatus()#" id="run" value="Run" />
+                                </div>
+                        </td>
+                    </tr>
+                </form>
+                </xar:foreach>
+                </tr>
+            </table>
+        </div>
+        <xar:if condition="$message ne ''">
+            <div class="xar-norm-outline xar-accent" style="text-align: center;margin-top: 1px;padding:.5em;">
+                #$message#
+            </div>
         </xar:if>
 </div>
