@@ -1,10 +1,34 @@
-Version 1.41 (2005-01-xx)
+Version 1.43 (2005-02-xx)
+	Fixed bug with ask option not working.
+Version 1.42 (2005-02-14)
+	Fixed bug with the element path beeing resized if width/height of editor was 100%.
+	Fixed bug with reloading/flicker of all button images in MSIE if browser cache is disabled.
+	Fixed backspace/delete bug in Firefox, some times the cursor got stuck.
+	Fixed bug issues with enter/return key in Firefox/Mozilla.
+	Fixed bug where copy/paste and drag drop of images/links failed in Firefox/Mozilla if a document_base_url is provided.
+	Fixed so when relative_urls is set to false it forces absolute URLs for images/links.
+	Fixed so the _src.js suffix versions of the themes and plugins gets loaded with the tiny_mce_src.js script is used.
+	Fixed so verify_css_classes option is disabled by default.
+	Fixed bug where tables where resized when toggling visual aid in Firefox/Mozilla.
+	Fixed bugs with advhr plugin running in a hidden div element.
+	Added new auto_focus option that enabled a specific editor area to be focused on startup.
+	Added a extra argument to the filebrowser callback inorder to get the calling window reference.
+	Added a new persian (farsi) language pack contributed by Morteza Zafari.
+	Added new more nice looking icons contributed by Morteza Zafari and Michael Keck. The old icons are available in a separate icon pack.
+	Added updated Canadian French language pack contributed by Virtuelcom.
+	Added updated French languahe pack contributed by Laurent Dran.
+	Added updated German language pack contributed by Tobias Heer.
+	Added some documentation regarding the layout manager options made by SlyD.
+Version 1.41 (2005-01-31)
 	Added new table plugin, all table code is moved into this plugin [BREAKS COMPATIBLITY].
+	Added new external_link_list_url/external_image_list_url options for better backend integration.
+	Added new file_browser_callback option for better backend integration.
 	Added new layout manager code into the advanced theme, contributed by SlyD.
 	Added new nowrap option, enables so users may change the word wraping behavior.
 	Added new Thai language pack contributed by Innozent.
 	Added obfuscated version of all plugins and themes to reduce over all startup/download time.
 	Added Simplified Chinese language pack contributed by cube316.
+	Added a updated Czech language pack thanks to Josef Klimosz.
 	Fixed issue where anchor elements where closed. This results in browser problems with the outputed HTML.
 	Fixed bug where the first return key press didn't produce a paragraph in Firefox/Mozilla.
 	Fixed bug in the searchreplace plugin where replace content sometimes fails in Firefox/Mozilla.

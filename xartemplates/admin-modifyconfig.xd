@@ -115,7 +115,7 @@
         <li><xar:mlstring>Choose the Mode of <strong>Special Labelled Only</strong> in the configuration options. 
             Then add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
             You <strong>do not</strong> need to add any other tags  to your templates.<br /><br />
-            This DD Property automatically marks the div or textarea of the field with the attribute mce_editable="true" and this acts as a marker for the WYSIWYG conversion. You can also do this manually by adding the attribute to any textarea of div.
+            This DD Property automatically marks the div or textarea of the field with the attribute mce_editable="true" and this acts as a marker for the WYSIWYG conversion. You can also do this manually by adding the attribute to any textarea or div.
             Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
           <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>
@@ -387,7 +387,10 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
+            <xar:comment>
                 <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="80" maxlength="240" />
+            </xar:comment>
+               <textarea name="tinyextended" id="tinyextended" cols="50" rows="4" >#$tinyextended#</textarea>
             <p><xar:mlstring>Make sure you have 'style' and 'class' as allowed attributes in img or a tags if you need them.
             *[*] allows all tags and attributes. Use with disallowed tags below. Your HTML module settings will
             finally filter all tags (but not attributes).</xar:mlstring></p>
@@ -402,7 +405,10 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
+             <xar:comment>
                 <input type="text" name="tinyinvalid" id="tinyinvalid" value="#$tinyinvalid#" size="80" maxlength="240" />
+             </xar:comment>
+               <textarea name="tinyinvalid" id="tinyinvalid" cols="50" rows="4" >#$tinyinvalid#</textarea>
             </span>
         </div>
 
@@ -424,9 +430,13 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
+            <xar:comment>
                 <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="60" maxlength="240" />
+            </xar:comment>
+               <textarea name="tinyplugins" id="tinyplugins" cols="50" rows="3" >#$tinyplugins#</textarea>
+
                     <p><xar:mlstring>Available plugins: save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
-                     advimage, advlink, flash, advhrm, searchreplace, print, table, xarpagebreak</xar:mlstring></p>
+                     advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak</xar:mlstring></p>
             </span>
         </div>
 
@@ -550,6 +560,7 @@
             </span>
         </div>
         </xar:comment>
+
         <div style="clear: both; padding-top: 10px;">
             <span style="float: left; width: 30%; text-align: right;">
                 <span class="help" title="#xarML('Comma separated list of block formats to be used in format drop down list.')#">
@@ -557,7 +568,11 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
+              <xar:comment>
                 <input type="text" name="tinyadvformat" id="tinyadvformat" value="#$tinyadvformat#" size="60" maxlength="240" />
+              </xar:comment>
+                <textarea name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" >#$tinyadvformat#</textarea>
+
                     <p><xar:mlstring>These will defalut to p, address, pre, h1, h2, h3, h4, h5 and h6 if this option is left blank.</xar:mlstring></p>
             </span>
         </div>

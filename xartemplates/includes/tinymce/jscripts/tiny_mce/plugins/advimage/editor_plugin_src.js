@@ -1,5 +1,5 @@
-/* Import theme specific language pack */
-tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn');
+/* Import plugin specific language pack */
+tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr');
 
 /**
  * Insert image template function.
@@ -16,4 +16,13 @@ function TinyMCE_advimage_getInsertImageTemplate() {
     template['height'] += tinyMCE.getLang('lang_insert_image_delta_height', 0);
 
     return template;
-} 
+}
+
+/**
+ * Setup content function.
+ */
+function TinyMCE_advimage_handleEvent(editor_id, body, doc) {
+	// Convert all links to absolute
+
+	alert(editor_id + "," + body.innerHTML);
+}

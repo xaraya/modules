@@ -1,6 +1,5 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <link href="../docs/style.css" rel="stylesheet" type="text/css">
 
 <!-- tinyMCE -->
@@ -22,8 +21,17 @@
 		content_css : "example_full.css",
 	    plugin_insertdate_dateFormat : "%Y-%m-%d",
 	    plugin_insertdate_timeFormat : "%H:%M:%S",
-		extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+		extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+		external_link_list_url : "example_link_list.js",
+		external_image_list_url : "example_image_list.js",
+		flash_external_list_url : "example_flash_list.js",
+		file_browser_callback : "fileBrowserCallBack"
 	});
+
+	function fileBrowserCallBack(field_name, url, type) {
+		// This is where you insert your custom filebrowser logic
+		alert("Filebrowser callback: " + field_name + "," + url + "," + type);
+	}
 </script>
 <!-- /tinyMCE -->
 

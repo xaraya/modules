@@ -52,3 +52,6 @@ tinyMCELang['lang_theme_path'] = '路径';
 tinyMCELang['lang_cut_desc'] = '剪切';
 tinyMCELang['lang_copy_desc'] = '复制';
 tinyMCELang['lang_paste_desc'] = '粘贴';
+tinyMCELang['lang_link_list'] = '链接列表';
+tinyMCELang['lang_image_list'] = '图像列表';
+tinyMCELang['lang_browse'] = '浏览';

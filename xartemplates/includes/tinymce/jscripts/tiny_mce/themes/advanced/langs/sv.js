@@ -54,3 +54,6 @@ tinyMCELang['lang_theme_path'] = 'S&ouml;kv&auml;g';
 tinyMCELang['lang_cut_desc'] = 'Klipput';
 tinyMCELang['lang_copy_desc'] = 'Kopiera';
 tinyMCELang['lang_paste_desc'] = 'Klistra in';
+tinyMCELang['lang_link_list'] = 'L&auml;nkar';
+tinyMCELang['lang_image_list'] = 'Bilder';
+tinyMCELang['lang_browse'] = 'Bl&auml;ddra';

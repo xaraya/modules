@@ -53,3 +53,6 @@ tinyMCELang['lang_theme_path'] = 'Path';
 tinyMCELang['lang_cut_desc'] = 'Cortar';
 tinyMCELang['lang_copy_desc'] = 'Copiar';
 tinyMCELang['lang_paste_desc'] = 'Colar';
+tinyMCELang['lang_link_list'] = 'Link list';
+tinyMCELang['lang_image_list'] = 'Image list';
+tinyMCELang['lang_browse'] = 'Browse';

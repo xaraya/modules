@@ -1,4 +1,4 @@
 // CAN_FR lang variables
 
-tinyMCELang['lang_insertdate_desc'] = 'Ins&egrave;rer la date';
-tinyMCELang['lang_inserttime_desc'] = 'Ins&egrave;rer l\'heure';
+tinyMCELang['lang_insertdate_desc'] = 'Insérer la date';
+tinyMCELang['lang_inserttime_desc'] = 'Insérer l\'heure';
