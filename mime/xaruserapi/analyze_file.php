@@ -21,23 +21,32 @@ function mime_userapi_analyze_file( $args )
         xarExeptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
-
+    
+    // Start off trying mime_content_type
     if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
         return mime_content_type($fileName);
     }
     
-    $fileSize = fileSize($fileName);
-        
+    // if that didn't work, try getimagesize to see if the file is an image
+    $fileInfo = getimagesize($fileName);
+    if (is_array($fileInfo)) {
+        return $fileInfo['mime'];
+    }
+    
+    // Otherwise, see if the file is empty and, if so
+    // return it as octet-stream
+    $fileSize = fileSize($fileName);    
     if (!$fileSize) { 
         return 'application/octet-stream';
     }
     
+    // Otherwise, actually test the contents of the file
     if (!($fp = @fopen($fileName, 'rb'))) {
         $msg = xarML('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_OPEN', new SystemException($msg));
         return FALSE;
     } else {
-        include ("modules/mime/xarincludes/mime.magic.php");
+        $mime_list = xarModAPIFunc('mime', 'user', 'getall_magic');
         
         foreach($mime_list as $mime_type => $mime_info) {
             
@@ -48,32 +57,36 @@ function mime_userapi_analyze_file( $args )
                 continue;
             }
             
-            foreach ($mime_info['needles'] as $needle => $needle_info) {
+            foreach ($mime_info as $magicInfo) {
                 // if the offset is beyond the range of the file
                 // continue on to the next item
-                if ($needle_info['offset'] >= $fileSize) {
+                if ($magicInfo['offset'] >= $fileSize) {
                     continue;
                 }
 
-                if ($needle_info['offset'] >= 0) {
-                    if (@fseek($fp, $needle_info['offset'], SEEK_SET)) {
+                if ($magicInfo['offset'] >= 0) {
+                    if (@fseek($fp, $magicInfo['offset'], SEEK_SET)) {
                         $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]' ,
-                                      $needle_info['offset'], $fileName);
+                                      $magicInfo['offset'], $fileName);
                         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SEEK', new SystemException($msg));
                         return FALSE;
                     }
                 }
                
-                if (!($value = @fread($fp, $needle_info['length']))) {
+                if (!($value = @fread($fp, $magicInfo['length']))) {
                     $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].' , 
-                                 $needle_info['length'], $fileName);
+                                 $magicInfo['length'], $fileName);
                     xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
                     return FALSE;
                 }
 
-                if ($needle == $value) {
+                if ($magicInfo['value'] == base64_encode($value)) {
                     fclose($fp);
-                    return $mime_type;
+                       $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype',
+                                                  array('subtypeId' => $magicInfo['subtypeId']));
+                    if (!empty($mimeType)) {
+                           return $mimeType;
+                       } 
                 }
             }
         } 
@@ -91,7 +104,7 @@ function mime_userapi_analyze_file( $args )
         
         // get rid of printable characters so we can 
         // use ctype_print to check for printable characters
-        // which, in a binary file, there should'nt be any
+        // which, in a binary file, there shouldn't be any
         $value = str_replace(array("\n","\r","\t"), '', $value);
 
         if (ctype_print($value)) {

@@ -35,20 +35,22 @@ function mime_userapi_extension_to_mime( $args ) {
         // to analyze_file()
         if (count($parts) > 1) {
             
-            include("modules/mime/xarincludes/mime.magic.php");
-            
             $extension = $parts[count($parts) - 1];
-            $type = xarModAPIFunc('mime','user','array_search_r',
-                                   array('needle'   => $extension,
-                                         'haystack' => $mime_list));
+            $extensionInfo = xarModAPIFunc('mime', 'user', 'get_extension', 
+                                            array('extensionName' => $extension));
+            if (!empty($extensionInfo)) {
+                $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', 
+                                           array('subtypeId' => $extensionInfo['subtypeId']));
+                if (!empty($mimeType)) {
+                    return $mimeType;
+                } 
+            } 
         } 
         
-        if (count($parts) <= 1 || (!$type || !is_array($type))) {
+        if (!isset($mimeType)) {        
             return xarModAPIFunc('mime','user','analyze_file',
                                   array('fileName' => $fileName));
-        } else {
-            return $type[0];
-        }
+        } 
     }
 }
 
