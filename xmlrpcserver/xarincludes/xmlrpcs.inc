@@ -78,7 +78,7 @@ class xmlrpc_server {
 		Header("Content-type: text/xml\r\nContent-length: " . 
                strlen($payload));
         // even in debugging this might be too much
-        //xarLogMessage($payload);
+        //xarLogMessage("PAYLOAD:" . $payload, XARLOG_LEVEL_WARNING);
 		print $payload;
 	}
     
@@ -156,7 +156,7 @@ class xmlrpc_server {
                 eval('$m->addParam(' . $_xh[$parser]['params'][$i]. ");");
             }
             // uncomment this to really see what the server's getting!
-            //xarLogMessage($plist);
+            //xarLogMessage($plist,XARLOG_LEVEL_WARNING);
             // now to deal with the method
             $methName=$_xh[$parser]['method'];
             if (ereg("^system\.", $methName)) {
@@ -205,8 +205,8 @@ class xmlrpc_server {
                                   $xmlrpcstr["unknown_method"]);
             }
         }
-        //xarLogMessage("Going to return");
-        //xarLogMessage(print_r($r,true));
+        //xarLogMessage("Going to return", XARLOG_LEVEL_WARNING);
+        //xarLogMessage(print_r($r,true),XARLOG_LEVEL_WARNING);
         return $r;
     }
     
@@ -228,10 +228,10 @@ function __constructxarfunc($funcname,$args) {
     if(substr($parts[1],-3,3)=='api') {
         // Api function
         $type = substr($parts[1],0,-3);
-        $xarfunc = "xarModApiFunc('$parts[0]','$type','$parts[2]',$args);";
+        $xarfunc = "xarModApiFunc('$parts[0]','$type','$parts[2]',array('msg' => $args));";
         return $xarfunc;
     } else {
-        $xarfunc = "xarModFunc('$parts[0]','$parts[1]','$parts[2]',$args);";
+        $xarfunc = "xarModFunc('$parts[0]','$parts[1]','$parts[2]',array('msg' => $args));";
         return $xarfunc;
     }   
 }
