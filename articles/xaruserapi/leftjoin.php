@@ -187,7 +187,7 @@ function articles_userapi_leftjoin($args)
         $normal = array();
 
         // 0. Check for "'equal whole string' searchType"
-        if( $searchtype == 'equal whole string' )
+        if (!empty($searchtype) && $searchtype == 'equal whole string')
         {
             $normal[] = $search;
             $search   = "";
