@@ -89,7 +89,7 @@ function commerce_admin_product_attributes()
   if ($_GET['action'] == 'delete_product_option') { // delete product option
     $options = new xenQuery("select products_options_id, products_options_name from " . TABLE_PRODUCTS_OPTIONS . " where products_options_id = '" . $_GET['option_id'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $options_values = $q->output();
 ?>
               <tr>
@@ -115,7 +115,7 @@ function commerce_admin_product_attributes()
                   </tr>
 <?php
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products_values = $q->output()) {
         $rows++;
 ?>
@@ -226,7 +226,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
     $next_id = 1;
     $options = new xenQuery($options);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($options_values = $q->output()) {
       $rows++;
 ?>
@@ -238,7 +238,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
         for ($i = 0, $n = sizeof($languages); $i < $n; $i ++) {
           $option_name = new xenQuery("select products_options_name from " . TABLE_PRODUCTS_OPTIONS . " where products_options_id = '" . $options_values['products_options_id'] . "' and language_id = '" . $languages[$i]['id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $option_name = $q->output();
           $inputs .= $languages[$i]['code'] . ':&nbsp;<input type="text" name="option_name[' . $languages[$i]['id'] . ']" size="20" value="' . $option_name['products_options_name'] . '">&nbsp;<br>';
         }
@@ -262,7 +262,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 <?php
       $max_options_id_query = new xenQuery("select max(products_options_id) + 1 as next_id from " . TABLE_PRODUCTS_OPTIONS);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $max_options_id_values = $q->output();
       $next_id = $max_options_id_values['next_id'];
     }
@@ -304,7 +304,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
   if ($_GET['action'] == 'delete_option_value') { // delete product option value
     $values = new xenQuery("select products_options_values_id, products_options_values_name from " . TABLE_PRODUCTS_OPTIONS_VALUES . " where products_options_values_id = '" . $_GET['value_id'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $values_values = $q->output();
 ?>
               <tr>
@@ -330,7 +330,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
                   </tr>
 <?php
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products_values = $q->output()) {
         $rows++;
 ?>
@@ -437,7 +437,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
     $next_id = 1;
     $values = new xenQuery($values);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($values_values = $q->output()) {
       $options_name = xtc_options_name($values_values['products_options_id']);
       $values_name = $values_values['products_options_values_name'];
@@ -451,7 +451,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
         for ($i = 0, $n = sizeof($languages); $i < $n; $i ++) {
           $value_name = new xenQuery("select products_options_values_name from " . TABLE_PRODUCTS_OPTIONS_VALUES . " where products_options_values_id = '" . $values_values['products_options_values_id'] . "' and language_id = '" . $languages[$i]['id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $value_name = $q->output();
           $inputs .= $languages[$i]['code'] . ':&nbsp;<input type="text" name="value_name[' . $languages[$i]['id'] . ']" size="15" value="' . $value_name['products_options_values_name'] . '">&nbsp;<br>';
         }
@@ -461,7 +461,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 <?php
         $options = new xenQuery("select products_options_id, products_options_name from " . TABLE_PRODUCTS_OPTIONS . " where language_id = '" . $_SESSION['languages_id'] . "' order by products_options_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($options_values = $q->output()) {
           echo "\n" . '<option name="' . $options_values['products_options_name'] . '" value="' . $options_values['products_options_id'] . '"';
           if ($values_values['products_options_id'] == $options_values['products_options_id']) {
@@ -487,7 +487,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
       }
       $max_values_id_query = new xenQuery("select max(products_options_values_id) + 1 as next_id from " . TABLE_PRODUCTS_OPTIONS_VALUES);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $max_values_id_values = $q->output();
       $next_id = $max_values_id_values['next_id'];
     }
@@ -508,7 +508,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 <?php
       $options = new xenQuery("select products_options_id, products_options_name from " . TABLE_PRODUCTS_OPTIONS . " where language_id = '" . $_SESSION['languages_id'] . "' order by products_options_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($options_values = $q->output()) {
         echo '<option name="' . $options_values['products_options_name'] . '" value="' . $options_values['products_options_id'] . '">' . $options_values['products_options_name'] . '</option>';
       }

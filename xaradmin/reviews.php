@@ -44,16 +44,16 @@ function commerce_admin_reviews()
 
     $reviews_query = new xenQuery("select r.reviews_id, r.products_id, r.customers_name, r.date_added, r.last_modified, r.reviews_read, rd.reviews_text, r.reviews_rating from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd where r.reviews_id = '" . xtc_db_input($rID) . "' and r.reviews_id = rd.reviews_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $reviews = $q->output();
     $products_query = new xenQuery("select products_image from " . TABLE_PRODUCTS . " where products_id = '" . $reviews['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $products = $q->output();
 
     $products_name_query = new xenQuery("select products_name from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $reviews['products_id'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $products_name = $q->output();
 
     $rInfo_array = xtc_array_merge($reviews, $products, $products_name);
@@ -104,16 +104,16 @@ function commerce_admin_reviews()
     } else {
       $reviews_query = new xenQuery("select r.reviews_id, r.products_id, r.customers_name, r.date_added, r.last_modified, r.reviews_read, rd.reviews_text, r.reviews_rating from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd where r.reviews_id = '" . $_GET['rID'] . "' and r.reviews_id = rd.reviews_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $reviews = $q->output();
       $products_query = new xenQuery("select products_image from " . TABLE_PRODUCTS . " where products_id = '" . $reviews['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $products = $q->output();
 
       $products_name_query = new xenQuery("select products_name from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $reviews['products_id'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $products_name = $q->output();
 
       $rInfo_array = xtc_array_merge($reviews, $products, $products_name);
@@ -185,27 +185,27 @@ function commerce_admin_reviews()
     $reviews_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $reviews_query_raw, $reviews_query_numrows);
     $reviews_query = new xenQuery($reviews_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($reviews = $q->output()) {
       if ( ((!$_GET['rID']) || ($_GET['rID'] == $reviews['reviews_id'])) && (!$rInfo) ) {
         $reviews_text_query = new xenQuery("select r.reviews_read, r.customers_name, length(rd.reviews_text) as reviews_text_size from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd where r.reviews_id = '" . $reviews['reviews_id'] . "' and r.reviews_id = rd.reviews_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $reviews_text = $q->output();
 
         $products_image_query = new xenQuery("select products_image from " . TABLE_PRODUCTS . " where products_id = '" . $reviews['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $products_image = $q->output();
 
         $products_name_query = new xenQuery("select products_name from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $reviews['products_id'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $products_name = $q->output();
 
         $reviews_average_query = new xenQuery("select (avg(reviews_rating) / 5 * 100) as average_rating from " . TABLE_REVIEWS . " where products_id = '" . $reviews['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $reviews_average = $q->output();
 
         $review_info = xtc_array_merge($reviews_text, $reviews_average, $products_name);

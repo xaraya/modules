@@ -42,7 +42,7 @@
 
       $count_query = new xenQuery("select count(" . $count_string . ") as total " . substr($this->sql_query, $pos_from, ($pos_to - $pos_from)));
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $count = $q->output();
 
       $this->number_of_rows = $count['total'];

@@ -48,7 +48,7 @@ function commerce_admin_tax_classes()
   $classes_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $classes_query_raw, $classes_query_numrows);
   $classes_query = new xenQuery($classes_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($classes = $q->output()) {
     if (((!$_GET['tID']) || (@$_GET['tID'] == $classes['tax_class_id'])) && (!$tcInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
       $tcInfo = new objectInfo($classes);

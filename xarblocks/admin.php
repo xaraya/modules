@@ -62,11 +62,11 @@ function commerce_admincommerceblock_display($blockinfo)
   $orders_contents = '';
   $orders_status_query = new xenQuery("select orders_status_name, orders_status_id from " . TABLE_ORDERS_STATUS . " where language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($orders_status = $q->output()) {
     $orders_pending_query = new xenQuery("select count(*) as count from " . TABLE_ORDERS . " where orders_status = '" . $orders_status['orders_status_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $orders_pending = $q->output();
     $orders_contents .= '<a href="' . xarModURL('commerce','user',(FILENAME_ORDERS, 'selected_box=customers&status=' . $orders_status['orders_status_id']) . '">' . $orders_status['orders_status_name'] . '</a>: ' . $orders_pending['count'] . '<br>';
   }
@@ -74,15 +74,15 @@ function commerce_admincommerceblock_display($blockinfo)
 
   $customers_query = new xenQuery("select count(*) as count from " . TABLE_CUSTOMERS);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $customers = $q->output();
   $products_query = new xenQuery("select count(*) as count from " . TABLE_PRODUCTS . " where products_status = '1'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $products = $q->output();
   $reviews_query = new xenQuery("select count(*) as count from " . TABLE_REVIEWS);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $reviews = $q->output();
   $admin_image = '<a href="' . xarModURL('commerce','user',(FILENAME_START,'').'">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES.'admin_button.gif') .'</a>';
   if ($cPath != '' && $product_info['products_id'] != '') {

@@ -157,21 +157,21 @@
         $entry_state_error = false;
         $check_query = new xenQuery("select count(*) as total from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($entry_country_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $check_value = $q->output();
         $entry_state_has_zones = ($check_value['total'] > 0);
         if ($entry_state_has_zones == true) {
           $zone_query = new xenQuery("select zone_id from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($entry_country_id) . "' and zone_name = '" . xtc_db_input($entry_state) . "'");
           if ($zone_query->getrows() == 1) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $zone_values = $q->output();
             $entry_zone_id = $zone_values['zone_id'];
           } else {
             $zone_query = new xenQuery("select zone_id from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($entry_country) . "' and zone_code = '" . xtc_db_input($entry_state) . "'");
             if ($zone_query->getrows() >= 1) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
               $zone_values = $q->output(;
               $zone_id = $zone_values['zone_id'];
             } else {
@@ -524,7 +524,7 @@
           $zones_array = array();
           $zones_query = new xenQuery("select zone_name from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($entry_country_id) . "' order by zone_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($zones_values = $q->output()) {
             $zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
           }

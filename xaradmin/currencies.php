@@ -41,7 +41,7 @@ function commerce_admin_currencies()
                 $q->addfield('decimal_places',$decimal_places);
                 $q->addfield('last_updated',mktime());
                 $q->addfield('value',$value);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','currencies'));
                 break;
             case 'save':
@@ -64,17 +64,17 @@ function commerce_admin_currencies()
                 $q->addfield('last_updated',mktime());
                 $q->addfield('value',$value);
                 $q->eq('currencies_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','currencies',array('page' => $page,'cID' => $cID)));
             case 'deleteconfirm':
                 $q = new xenQuery('DELETE', $xartables['commerce_currencies']);
                 $q->eq('currencies_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','currencies',array('page' => $page)));
                 break;
             case 'update':
 /*                $q = new xenQuery('SELECT', $xartables['commerce_currencies'],array('currencies_id','code', 'title'));
-                $q->run();
+                if(!$q->run()) return;
                 while ($currency = $q->output()) {
                   $quote_function = 'quote_' . CURRENCY_SERVER_PRIMARY . '_currency';
                   $rate = $quote_function($currency['code']);
@@ -87,7 +87,7 @@ function commerce_admin_currencies()
                     $q->addfield('value',$rate);
                     $q->addfield('last_updated',now());
                     $q->eq('currencies_id',$currency['currencies_id']);
-                    $q->run();
+                    if(!$q->run()) return;
                     $messageStack->add_session(sprintf(TEXT_INFO_CURRENCY_UPDATED, $currency['title'], $currency['code']), 'success');
                   } else {
                     $messageStack->add_session(sprintf(ERROR_CURRENCY_INVALID, $currency['title'], $currency['code']), 'error');
@@ -107,7 +107,7 @@ function commerce_admin_currencies()
     $q->setorder('title');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),

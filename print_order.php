@@ -29,7 +29,7 @@
                     WHERE orders_id='".$_GET['oID']."'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $order_check = $q->output();
   if ($_SESSION['customer_id'] == $order_check['customers_id'])
     {
@@ -68,7 +68,7 @@
                         WHERE orders_id='".$_GET['oID']."'");
         $order_data=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($order_data_values = $q->output()) {
             $attributes_query=new xenQuery("SELECT
                         products_options,
@@ -80,7 +80,7 @@
             $attributes_data='';
             $attributes_model='';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             while ($attributes_data_values = $q->output()) {
             $attributes_data .='<br>'.$attributes_data_values['products_options'].':'.$attributes_data_values['products_options_values'];
             $attributes_model .='<br>'.xtc_get_attributes_model($order_data_values['products_id'],$attributes_data_values['products_options_values']);
@@ -104,7 +104,7 @@
 
     $order_total=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($oder_total_values = $q->output()) {
 
     $order_total[]=array(

@@ -31,7 +31,7 @@
 
   $cfg_group_query = new xenQuery("select configuration_group_title from " . TABLE_CONFIGURATION_GROUP . " where configuration_group_id = '" . $_GET['gID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $cfg_group = $q->output();
 ?>
 <html <?php echo HTML_PARAMS; ?>>
@@ -80,7 +80,7 @@
   $configuration_query = new xenQuery("select configuration_key,configuration_id, configuration_value, use_function from " . TABLE_CONFIGURATION . " where configuration_group_id = '" . $_GET['gID'] . "' order by sort_order");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($configuration = $q->output()) {
     if ($_GET['gID'] == 6) {
       switch ($configuration['configuration_key']) {
@@ -138,7 +138,7 @@
     if (((!$_GET['cID']) || (@$_GET['cID'] == $configuration['configuration_id'])) && (!$cInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
       $cfg_extra_query = new xenQuery("select configuration_key, date_added, last_modified, use_function, set_function from " . TABLE_CONFIGURATION . " where configuration_id = '" . $configuration['configuration_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $cfg_extra = $q->output();
 
       $cInfo_array = xtc_array_merge($configuration, $cfg_extra);

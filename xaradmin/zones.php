@@ -30,7 +30,7 @@ function commerce_admin_zones()
                 $q->addfield('zone_country_id',$zone_country_id);
                 $q->addfield('zone_code',$zone_code);
                 $q->addfield('zone_name',$zone_name);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','zones'));
                 break;
             case 'save':
@@ -43,13 +43,13 @@ function commerce_admin_zones()
                 $q->addfield('zone_code',$zone_code);
                 $q->addfield('zone_name',$zone_name);
                 $q->eq('zone_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','zones',array('page' => $page,'cID' => $cID)));
 
             case 'deleteconfirm':
                 $q = new xenQuery('DELETE', $xartables['commerce_zones']);
                 $q->eq('zone_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','zones',array('page' => $page)));
                 break;
         }
@@ -67,7 +67,7 @@ function commerce_admin_zones()
     $q->addorder('z.zone_name');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),

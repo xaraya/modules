@@ -46,7 +46,7 @@ function commerce_admin_customers()
         $customer_updated = false;
         $check_status_query = new xenQuery("select customers_firstname, customers_lastname, customers_email_address , customers_status, member_flag from " . TABLE_CUSTOMERS . " where customers_id = '" . xtc_db_input($_GET['cID']) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $check_status = $q->output();
         if ($check_status['customers_status'] != $status) {
           new xenQuery("update " . TABLE_CUSTOMERS . " set customers_status = '" . xtc_db_input($_POST['status']) . "' where customers_id = '" . xtc_db_input($_GET['cID']) . "'");
@@ -174,21 +174,21 @@ function commerce_admin_customers()
             $entry_state_error = false;
             $check_query = new xenQuery("select count(*) as total from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($entry_country_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $check_value = $q->output();
             $entry_state_has_zones = ($check_value['total'] > 0);
             if ($entry_state_has_zones == true) {
               $zone_query = new xenQuery("select zone_id from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($entry_country_id) . "' and zone_name = '" . xtc_db_input($entry_state) . "'");
               if ($zone_query->getrows() == 1) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
                 $zone_values = $q->output();
                 $entry_zone_id = $zone_values['zone_id'];
               } else {
                 $zone_query = new xenQuery("select zone_id from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($entry_country) . "' and zone_code = '" . xtc_db_input($entry_state) . "'");
                 if ($zone_query->getrows() == 1) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
                   $zone_values = $q->output();
                   $zone_id = $zone_values['zone_id'];
                 } else {
@@ -271,7 +271,7 @@ function commerce_admin_customers()
         if ($_POST['delete_reviews'] == 'on') {
           $reviews_query = new xenQuery("select reviews_id from " . TABLE_REVIEWS . " where customers_id = '" . xtc_db_input($customers_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($reviews = $q->output()) {
             new xenQuery("delete from " . TABLE_REVIEWS_DESCRIPTION . " where reviews_id = '" . $reviews['reviews_id'] . "'");
           }
@@ -295,7 +295,7 @@ function commerce_admin_customers()
       default:
         $customers_query = new xenQuery("select c.customers_id, c.customers_gender, c.customers_firstname, c.customers_lastname, c.customers_dob, c.customers_email_address, a.entry_company, a.entry_street_address, a.entry_suburb, a.entry_postcode, a.entry_city, a.entry_state, a.entry_zone_id, a.entry_country_id, c.customers_telephone, c.customers_fax, c.customers_newsletter, c.customers_default_address_id from " . TABLE_CUSTOMERS . " c left join " . TABLE_ADDRESS_BOOK . " a on c.customers_default_address_id = a.address_book_id where a.customers_id = c.customers_id and c.customers_id = '" . $_GET['cID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $customers = $q->output();
         $cInfo = new objectInfo($customers);
     }
@@ -395,7 +395,7 @@ function commerce_admin_customers()
     $customers_query = new xenQuery("select c.customers_gender,c.customers_status, c.member_flag, c.customers_firstname, c.customers_lastname, c.customers_dob, c.customers_email_address, a.entry_company, a.entry_street_address, a.entry_suburb, a.entry_postcode, a.entry_city, a.entry_state, a.entry_zone_id, a.entry_country_id, c.customers_telephone, c.customers_fax, c.customers_newsletter, c.customers_default_address_id from " . TABLE_CUSTOMERS . " c left join " . TABLE_ADDRESS_BOOK . " a on c.customers_default_address_id = a.address_book_id where a.customers_id = c.customers_id and c.customers_id = '" . $_GET['cID'] . "'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $customers = $q->output();
     $cInfo = new objectInfo($customers);
     $newsletter_array = array(array('id' => '1', 'text' => ENTRY_NEWSLETTER_YES), array('id' => '0', 'text' => ENTRY_NEWSLETTER_NO));
@@ -631,7 +631,7 @@ function commerce_admin_customers()
             $zones_array = array();
             $zones_query = new xenQuery("select zone_name from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($cInfo->entry_country_id) . "' order by zone_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             while ($zones_values = $q->output()) {
               $zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
             }
@@ -802,22 +802,22 @@ $select_data=array(array('id' => '99', 'text' => TEXT_SELECT),array('id' => '100
     $customers_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $customers_query_raw, $customers_query_numrows);
     $customers_query = new xenQuery($customers_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($customers = $q->output()) {
       $info_query = new xenQuery("select customers_info_date_account_created as date_account_created, customers_info_date_account_last_modified as date_account_last_modified, customers_info_date_of_last_logon as date_last_logon, customers_info_number_of_logons as number_of_logons from " . TABLE_CUSTOMERS_INFO . " where customers_info_id = '" . $customers['customers_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $info = $q->output();
 
       if (((!$_GET['cID']) || (@$_GET['cID'] == $customers['customers_id'])) && (!$cInfo)) {
         $country_query = new xenQuery("select countries_name from " . TABLE_COUNTRIES . " where countries_id = '" . $customers['entry_country_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $country = $q->output();
 
         $reviews_query = new xenQuery("select count(*) as number_of_reviews from " . TABLE_REVIEWS . " where customers_id = '" . $customers['customers_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $reviews = $q->output();
 
         $customer_info = xtc_array_merge($country, $info, $reviews);
@@ -901,7 +901,7 @@ $select_data=array(array('id' => '99', 'text' => TEXT_SELECT),array('id' => '100
 
         if ($customers_history_query)->getrows() {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($customers_history = $q->output()) {
 
             $contents[] = array('text' => '<tr>' . "\n" . '<td class="smallText">' . $customers_statuses_array[$customers_history['new_value']]['text'] . '</td>' . "\n" .'<td class="smallText" align="center">' . xtc_datetime_short($customers_history['date_added']) . '</td>' . "\n" .'<td class="smallText" align="center">');
@@ -976,7 +976,7 @@ $select_data=array(array('id' => '99', 'text' => TEXT_SELECT),array('id' => '100
         $customers_log_info_array = xtc_get_user_info($customers_id);
         if ($customers_log_info_array->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($customers_log_info = $q->output()) {
             $contents[] = array('text' => '<tr>' . "\n" . '<td class="smallText">' . $customers_log_info['customers_ip_date'] . ' ' . $customers_log_info['customers_ip']);
           }

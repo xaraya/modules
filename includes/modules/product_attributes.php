@@ -25,7 +25,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
 
     $products_attributes_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_OPTIONS . " popt, " . TABLE_PRODUCTS_ATTRIBUTES . " patrib where patrib.products_id='" . (int)$_GET['products_id'] . "' and patrib.options_id = popt.products_options_id and popt.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $products_attributes = $q->output();
     if ($products_attributes['total'] > 0) {
       $products_options_name_query = new xenQuery("select distinct popt.products_options_id, popt.products_options_name from " . TABLE_PRODUCTS_OPTIONS . " popt, " . TABLE_PRODUCTS_ATTRIBUTES . " patrib where patrib.products_id='" . (int)$_GET['products_id'] . "' and patrib.options_id = popt.products_options_id and popt.language_id = '" . $_SESSION['languages_id'] . "' order by popt.products_options_name");
@@ -34,7 +34,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
     $col = 0;
     $products_options_data=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products_options_name = $q->output()) {
         $selected = 0;
         $products_options_array = array();
@@ -46,7 +46,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
         $products_options_query = new xenQuery("select pov.products_options_values_id, pov.products_options_values_name, pa.options_values_price, pa.price_prefix,pa.attributes_stock, pa.attributes_model from " . TABLE_PRODUCTS_ATTRIBUTES . " pa, " . TABLE_PRODUCTS_OPTIONS_VALUES . " pov where pa.products_id = '" . (int)$_GET['products_id'] . "' and pa.options_id = '" . $products_options_name['products_options_id'] . "' and pa.options_values_id = pov.products_options_values_id and pov.language_id = '" . $_SESSION['languages_id'] . "' order by pov.products_options_values_name");
         $col = 0;
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($products_options = $q->output()) {
           $products_options_array[] = array('id' => $products_options['products_options_values_id'], 'text' => $products_options['products_options_values_name']);
           if ($products_options['options_values_price'] != '0') {
@@ -74,7 +74,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
                                 FROM ".TABLE_PRODUCTS."
                                 WHERE products_id='".$_GET['products_id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $template_data=$q->output();
   if ($template_data['options_template']=='' or $template_data['options_template']=='default') {
           $files=array();

@@ -31,7 +31,7 @@ function commerce_admin_geo_zones()
                 $q->addfield('zone_country_id',$zone_country_id);
                 $q->addfield('zone_id',$zone_id);
                 $q->addfield('date_added',mktime());
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','geo_zones'));
                 break;
             case 'save_sub':
@@ -42,13 +42,13 @@ function commerce_admin_geo_zones()
                 $q->addfield('zone_id',$zone_id);
                 $q->addfield('last_modified',mktime());
                 $q->eq('geo_zone_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','geo_zones',array('page' => $page,'cID' => $cID)));
 
             case 'deleteconfirm_sub':
                 $q = new xenQuery('DELETE', $xartables['commerce_zones_to_geo_zones']);
                 $q->eq('association_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','geo_zones',array('page' => $page)));
                 break;
         }
@@ -62,7 +62,7 @@ function commerce_admin_geo_zones()
                 $q->addfield('geo_zone_name',$geo_zone_name);
                 $q->addfield('geo_zone_description',$geo_zone_description);
                 $q->addfield('date_added',mktime());
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','geo_zones'));
                 break;
             case 'save':
@@ -72,7 +72,7 @@ function commerce_admin_geo_zones()
                 $q->addfield('geo_zone_name',$geo_zone_name);
                 $q->addfield('geo_zone_description',$geo_zone_description);
                 $q->eq('geo_zone_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','geo_zones',array('page' => $page,'cID' => $cID)));
 
             case 'deleteconfirm':
@@ -80,7 +80,7 @@ function commerce_admin_geo_zones()
                 $q->eq('geo_zone_id',$cID);
                 $q = new xenQuery('DELETE', $xartables['commerce_zones_to_geo_zones']);
                 $q->eq('geo_zone_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','geo_zones',array('page' => $page)));
                 break;
         }
@@ -101,7 +101,7 @@ function commerce_admin_geo_zones()
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
 //    $q->setstatement();
 //    echo $q->getstatement();exit;
-    $q->run();
+    if(!$q->run()) return;
 
 
     $pager = new splitPageResults($page,

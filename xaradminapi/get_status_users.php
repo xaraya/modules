@@ -19,7 +19,7 @@ function commerce_adminapi_get_status_users($args) {
     $q = new xenQuery('SELECT',$xartables['commerce_customers']);
     $q->addfields(array('count(customers_status) as count'));
     $q->eq('customers_status',$status_id);
-    $q->run();
+    if(!$q->run()) return;
     $status_data = $q->row();
     return $status_data['count'];
 }

@@ -35,13 +35,13 @@
 
   $banner_query = new xenQuery("select banners_title from " . TABLE_BANNERS . " where banners_id = '" . $_GET['bID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $banner = $q->output();
 
   $years_array = array();
   $years_query = new xenQuery("select distinct year(banners_history_date) as banner_year from " . TABLE_BANNERS_HISTORY . " where banners_id = '" . $_GET['bID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($years = $q->output()) {
     $years_array[] = array('id' => $years['banner_year'],
                            'text' => $years['banner_year']);

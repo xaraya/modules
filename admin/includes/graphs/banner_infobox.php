@@ -20,7 +20,7 @@
   $stats = array();
   $banner_stats_query = new xenQuery("select dayofmonth(banners_history_date) as name, banners_shown as value, banners_clicked as dvalue from " . TABLE_BANNERS_HISTORY . " where banners_id = '" . $banner_id . "' and to_days(now()) - to_days(banners_history_date) < " . $days . " order by banners_history_date");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($banner_stats = $q->output()) {
     $stats[] = array($banner_stats['name'], $banner_stats['value'], $banner_stats['dvalue']);
   }

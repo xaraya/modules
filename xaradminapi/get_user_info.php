@@ -18,7 +18,7 @@ function commerce_adminapi_get_user_info($args) {
     $q = new xenQuery('SELECT',$xartables['commerce_customers_ip']);
     $q->addfields(array('customers_ip', 'customers_ip_date', 'customers_host', 'customers_advertiser', 'customers_referer_url'));
     $q->eq('customers_id',$customer_id);
-    $q->run();
+    if(!$q->run()) return;
     return $q->output();
 }
 ?>

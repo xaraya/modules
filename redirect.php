@@ -24,7 +24,7 @@
       $banner_query = new xenQuery("select banners_url from " . TABLE_BANNERS . " where banners_id = '" . $_GET['goto'] . "'");
       if ($banner_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $banner = $q->output();
         xtc_update_banner_click_count($_GET['goto']);
 
@@ -53,14 +53,14 @@
             xarRedirectResponse(xarModURL('commerce','user','default'));
           } else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $manufacturer = $q->output();
             new xenQuery("update " . TABLE_MANUFACTURERS_INFO . " set url_clicked = url_clicked+1, date_last_click = now() where manufacturers_id = '" . (int)$_GET['manufacturers_id'] . "' and languages_id = '" . $manufacturer['languages_id'] . "'");
           }
         } else {
           // url exists in selected language
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $manufacturer = $q->output();
           new xenQuery("update " . TABLE_MANUFACTURERS_INFO . " set url_clicked = url_clicked+1, date_last_click = now() where manufacturers_id = '" . (int)$_GET['manufacturers_id'] . "' and languages_id = '" . $_SESSION['languages_id'] . "'");
         }

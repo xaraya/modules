@@ -95,7 +95,7 @@
   // set the application parameters
   $configuration_query = new xenQuery('select configuration_key as cfgKey, configuration_value as cfgValue from ' . TABLE_CONFIGURATION);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($configuration = $q->output()) {
     define($configuration['cfgKey'], $configuration['cfgValue']);
   }
@@ -338,7 +338,7 @@
                                 xarRedirectResponse(xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH_RESULT, 'keywords=' . $_POST['quickie'], 'NONSSL'));
                               }
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
                               $quickie = $q->output();
                               if (xtc_has_product_attributes($quickie['products_id'])) {
                                 xarRedirectResponse(xarModURL('commerce','user','product_info', 'products_id=' . $quickie['products_id'], 'NONSSL'));
@@ -374,7 +374,7 @@
           for ($i = 0, $n = sizeof($notify); $i < $n; $i++) {
             $check_query = new xenQuery("select count(*) as count from " . TABLE_PRODUCTS_NOTIFICATIONS . " where products_id = '" . $notify[$i] . "' and customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $check = $q->output();
             if ($check['count'] < 1) {
               new xenQuery("insert into " . TABLE_PRODUCTS_NOTIFICATIONS . " (products_id, customers_id, date_added) values ('" . $notify[$i] . "', '" . $_SESSION['customer_id'] . "', now())");
@@ -390,7 +390,7 @@
         if (isset($_SESSION['customer_id']) && isset($_GET['products_id'])) {
           $check_query = new xenQuery("select count(*) as count from " . TABLE_PRODUCTS_NOTIFICATIONS . " where products_id = '" . $_GET['products_id'] . "' and customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $check = $q->output();
           if ($check['count'] > 0) {
             new xenQuery("delete from " . TABLE_PRODUCTS_NOTIFICATIONS . " where products_id = '" . $_GET['products_id'] . "' and customers_id = '" . $_SESSION['customer_id'] . "'");

@@ -18,7 +18,7 @@ function commerce_admin_stats_products_viewed()
   $products_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $products_query_raw, $products_query_numrows);
   $products_query = new xenQuery($products_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($products = $q->output()) {
     $rows++;
 

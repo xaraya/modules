@@ -35,7 +35,7 @@ function commerce_admin_new_attributes()
       if ($_POST['copy_product_id'] != 0) {
           $attrib_query = new xenQuery("SELECT products_id, options_id, options_values_id, options_values_price, price_prefix, attributes_model, attributes_stock, options_values_weight, weight_prefix FROM products_attributes WHERE products_id = " . $_POST['copy_product_id']);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($attrib_res = $q->output()) {
               new xenQuery("INSERT into products_attributes (products_id, options_id, options_values_id, options_values_price, price_prefix, attributes_model, attributes_stock, options_values_weight, weight_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $attrib_res['options_id'] . "', '" . $attrib_res['options_values_id'] . "', '" . $attrib_res['options_values_price'] . "', '" . $attrib_res['price_prefix'] . "', '" . $attrib_res['attributes_model'] . "', '" . $attrib_res['attributes_stock'] . "', '" . $attrib_res['options_values_weight'] . "', '" . $attrib_res['weight_prefix'] . "')");
           }

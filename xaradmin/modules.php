@@ -109,7 +109,7 @@ function commerce_admin_modules($args)
                 $q = new xenQuery('SELECT',$xartable['commerce_configuration']);
                 $q->addfields('configuration_key','configuration_value', 'use_function', 'set_function');
                 $q->eq('configuration_key',$module_keys[$j]);
-                $q->run();
+                if(!$q->run()) return;
                 $key_value = $q->row();
                 if ($key_value['configuration_key'] !='')
                     $keys_extra[$module_keys[$j]]['title'] = constant(strtoupper($key_value['configuration_key'] .'_TITLE'));
@@ -143,7 +143,7 @@ function commerce_admin_modules($args)
     ksort($installed_modules);
     $q = new xenQuery('SELECT',$xartables['commerce_configuration'],array('configuration_value'));
     $q->eq('configuration_key',$module_keys[$j]);
-    $q->run();
+    if(!$q->run()) return;
     $check = $q->output();
     if (!empty($check)) {
         if ($check['configuration_value'] != implode(';', $installed_modules)) {
@@ -151,7 +151,7 @@ function commerce_admin_modules($args)
             $q->addfield('configuration_value',implode(';', $installed_modules));
             $q->addfield('last_modified',now());
             $q->eq('configuration_key',$key);
-            $q->run();
+            if(!$q->run()) return;
         }
     } else {
             $q = new xenQuery('INSERT',$xartables['commerce_configuration']);
@@ -160,7 +160,7 @@ function commerce_admin_modules($args)
             $q->addfield('configuration_group_id',6);
             $q->addfield('sort_order',0);
             $q->addfield('date_added',now());
-            $q->run();
+            if(!$q->run()) return;
     }
 /*
 ?>

@@ -36,7 +36,7 @@ function commerce_admin_tax_rates()
                 $q->addfield('tax_description',$tax_description);
                 $q->addfield('tax_priority',$tax_priority);
                 $q->addfield('date_added',mktime());
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_rates'));
                 break;
             case 'save':
@@ -54,13 +54,13 @@ function commerce_admin_tax_rates()
                 $q->addfield('tax_priority',$tax_priority);
                 $q->addfield('last_modified',mktime());
                 $q->eq('tax_rates_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_rates',array('page' => $page,'cID' => $cID)));
 
             case 'deleteconfirm':
                 $q = new xenQuery('DELETE', $xartables['commerce_tax_rates']);
                 $q->eq('tax_rates_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_rates',array('page' => $page)));
                 break;
         }
@@ -80,7 +80,7 @@ function commerce_admin_tax_rates()
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
 //    $q->setstatement();
 //    echo $q->getstatement();exit;
-    $q->run();
+    if(!$q->run()) return;
 
 
     $pager = new splitPageResults($page,

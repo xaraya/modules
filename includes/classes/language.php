@@ -69,7 +69,7 @@
       $this->catalog_languages = array();
       $languages_query = new xenQuery("select languages_id, name, code, image, directory,language_charset from " . TABLE_LANGUAGES . " order by sort_order");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($languages = $q->output()) {
         $this->catalog_languages[$languages['code']] = array('id' => $languages['languages_id'],
                                                              'name' => $languages['name'],

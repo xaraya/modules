@@ -27,7 +27,7 @@
 if (strstr($PHP_SELF, FILENAME_PRODUCT_INFO)) {
 $product_meta_query = new xenQuery("select pd.products_name,p.products_model,pd.products_meta_title,pd.products_meta_description , pd.products_meta_keywords,pd.products_meta_title from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_status = '1' and p.products_id = '" . (int)$_GET['products_id'] . "' and pd.products_id = p.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 $product_meta = $q->output();
 ?>
 <META NAME="description" CONTENT="<?php echo $product_meta['products_meta_description']; ?>">
@@ -48,7 +48,7 @@ $categories_meta_query=new xenQuery("SELECT categories_meta_keywords,
                                             WHERE categories_id='".$_GET['cPath']."' and
                                             language_id='".$_SESSION['languages_id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 $categories_meta = $q->output();
 if ($categories_meta['categories_meta_keywords']=='') {
 $categories_meta['categories_meta_keywords']=META_KEYWORDS;

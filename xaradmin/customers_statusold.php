@@ -58,7 +58,7 @@ function commerce_admin_customer_status()
           if (!xarModAPIFunc('commerce','user','not_null',array('arg' => $customers_status_id))) {
             $next_id_query = new xenQuery("select max(customers_status_id) as customers_status_id from " . TABLE_CUSTOMERS_STATUS . "");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $next_id = $q->output();
             $customers_status_id = $next_id['customers_status_id'] + 1;
             // We want to create a personal offer table corresponding to each customers_status
@@ -90,7 +90,7 @@ function commerce_admin_customer_status()
 
       $customers_status_query = new xenQuery("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'DEFAULT_CUSTOMERS_STATUS_ID'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $customers_status = $q->output();
       if ($customers_status['configuration_value'] == $cID) {
         new xenQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '' where configuration_key = 'DEFAULT_CUSTOMERS_STATUS_ID'");
@@ -108,7 +108,7 @@ function commerce_admin_customer_status()
 
       $status_query = new xenQuery("select count(*) as count from " . TABLE_CUSTOMERS . " where customers_status = '" . xtc_db_input($cID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $status = $q->output();
 
       $remove_status = true;
@@ -121,7 +121,7 @@ function commerce_admin_customer_status()
       } else {
         $history_query = new xenQuery("select count(*) as count from " . TABLE_CUSTOMERS_STATUS_HISTORY . " where '" . xtc_db_input($cID) . "' in (new_value, old_value)");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $history = $q->output();
         if ($history['count'] > 0) {
           $remove_status = false;
@@ -144,7 +144,7 @@ function commerce_admin_customer_status()
   $customers_status_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $customers_status_query_raw, $customers_status_query_numrows);
   $customers_status_query = new xenQuery($customers_status_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($customers_status = $q->output()) {
     if (((!$_GET['cID']) || ($_GET['cID'] == $customers_status['customers_status_id'])) && (!$cInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
       $cInfo = new objectInfo($customers_status);

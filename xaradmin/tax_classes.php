@@ -30,7 +30,7 @@ function commerce_admin_tax_classes()
                 $q->addfield('tax_class_description',$tax_class_description);
                 $q->addfield('date_added',mktime());
                 $q->addfield('last_modified',mktime());
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_classes'));
                 break;
             case 'save':
@@ -42,13 +42,13 @@ function commerce_admin_tax_classes()
                 $q->addfield('tax_class_description',$tax_class_description);
                 $q->addfield('last_modified',mktime());
                 $q->eq('tax_class_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_classes',array('page' => $page,'cID' => $cID)));
 
             case 'deleteconfirm':
                 $q = new xenQuery('DELETE', $xartables['commerce_tax_class']);
                 $q->eq('tax_class_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_classes',array('page' => $page)));
                 break;
         }
@@ -63,7 +63,7 @@ function commerce_admin_tax_classes()
     $q->setorder('tax_class_title');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),

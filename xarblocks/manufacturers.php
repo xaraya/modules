@@ -56,64 +56,47 @@ function commerce_manufacturersblock_display($blockinfo)
     // Security Check
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
-//$box_content='';
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    $xartables = xarDBGetTables();
+    $configuration = xarModAPIFunc('commerce','admin','load_configuration');
+    if(!xarVarFetch('manufacturers_id',    'int',  $manufacturers_id, 0, XARVAR_NOT_REQUIRED)) {return;}
 
-  $manufacturers = array('manufacturers_id', 'manufacturers_name');
-  $q = new xenQuery("SELECT",$xartables['commerce_manufacturers'],$manufacturers);
-//FIXME  if ($q->getrows() <= MAX_DISPLAY_MANUFACTURERS_IN_A_LIST) {
-  if ($q->getrows() <= 5) {
+    $q = new xenQuery("SELECT",$xartables['commerce_manufacturers'],array('manufacturers_id', 'manufacturers_name'));
     $q->setorder('manufacturers_name');
-    // Display a list
-    $manufacturers_list = '';
-      $q->run();
-    while ($manufacturers = $q->output()) {
-      $manufacturers_name = ((strlen($manufacturers['manufacturers_name']) > MAX_DISPLAY_MANUFACTURER_NAME_LEN) ? substr($manufacturers['manufacturers_name'], 0, MAX_DISPLAY_MANUFACTURER_NAME_LEN) . '..' : $manufacturers['manufacturers_name']);
-      if (isset($_GET['manufacturers_id']) && ($_GET['manufacturers_id'] == $manufacturers['manufacturers_id'])) $manufacturers_name = '<b>' . $manufacturers_name .'</b>';
-      $manufacturers_list .= '<a href="' . xarModURL('commerce','user','default',array('manufacturers_id'  => $manufacturers['manufacturers_id'])) . '">' . $manufacturers_name . '</a><br>';
+    if(!$q->run()) return;
+    if ($q->getrows() == 0) return;
+    $dropdown = '';
+    $list = '';
+    if ($q->getrows() <= $configuration['max_display_manufacturers_in_a_list']) {
+        // Display a list
+        foreach ($q->output() as $manufacturers) {
+            $manufacturers_name = ((strlen($manufacturers['manufacturers_name']) > $configuration['max_display_manufacturer_name_len']) ? substr($manufacturers['manufacturers_name'], 0, $configuration['max_display_manufacturer_name_len']) . '..' : $manufacturers['manufacturers_name']);
+            if ($manufacturers_id && $manufacturers_id == $manufacturers['manufacturers_id']) $manufacturers_name = '<b>' . $manufacturers_name .'</b>';
+            $list .= '<a href="' . xarModURL('commerce','user','default',array('manufacturers_id'  => $manufacturers['manufacturers_id'])) . '">' . $manufacturers_name . '</a><br>';
+        }
+
+    }
+    else {
+        // Display a drop-down
+        $manufacturers_array = array();
+        if ($configuration['max_manufacturers_list'] < 2) {
+            $manufacturers_array[] = array('id' => '', 'text' => xarML('Please make a choice'));
+        }
+        foreach ($q->output() as $manufacturers) {
+            $manufacturers_name = ((strlen($manufacturers['manufacturers_name']) > $configuration['max_display_manufacturer_name_len']) ? substr($manufacturers['manufacturers_name'], 0, $configuration['max_display_manufacturer_name_len']) . '..' : $manufacturers['manufacturers_name']);
+            $manufacturers_array[] = array('id' => $manufacturers['manufacturers_id'],                                     'text' => $manufacturers_name);
+        }
+        $dropdown = xarModAPIFunc('commerce','user','draw_pull_down_menu',array(
+                'name' =>'manufacturers_id',
+                'values' => $manufacturers_array,
+                'default' => xarSessionGetVar('currency'),
+                'parameters' => 'onChange="this.form.submit();" size="' . $configuration['max_manufacturers_list'] . '" style="width: 100%"'
+            )
+        );
     }
 
-  } else {
-    // Display a drop-down
-    $manufacturers_array = array();
-    if (MAX_MANUFACTURERS_LIST < 2) {
-      $manufacturers_array[] = array('id' => '', 'text' => PULL_DOWN_DEFAULT);
-    }
-
-      $q = new xenQuery();
-      $q->run();
-    while ($manufacturers = $q->output()) {
-      $manufacturers_name = ((strlen($manufacturers['manufacturers_name']) > MAX_DISPLAY_MANUFACTURER_NAME_LEN) ? substr($manufacturers['manufacturers_name'], 0, MAX_DISPLAY_MANUFACTURER_NAME_LEN) . '..' : $manufacturers['manufacturers_name']);
-      $manufacturers_array[] = array('id' => $manufacturers['manufacturers_id'],
-                                     'text' => $manufacturers_name);
-    }
-
-  }
-
-
-
-
-if ($manufacturers['manufacturers_name']=='') return;
-
-$box_content=xtc_draw_form('manufacturers', xarModURL('commerce','user','default', '', 'NONSSL', false), 'get').commerce_userapi_draw_pull_down_menu('manufacturers_id', $manufacturers_array, $_GET['manufacturers_id'], 'onChange="this.form.submit();" size="' . MAX_MANUFACTURERS_LIST . '" style="width: 100%"') .
-xtc_hide_session_id().'</form>';
-
-
-    $box_smarty->assign('BOX_TITLE', BOX_HEADING_MANUFACTURERS);
-    $box_smarty->assign('BOX_CONTENT', $box_content);
-
-    $box_smarty->assign('language', $_SESSION['language']);
-/*          // set cache ID
-  if (USE_CACHE=='false') {
-  $box_smarty->caching = 0;
-  $box_manufacturers= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_manufacturers.html');
-  } else {
-  $box_smarty->caching = 1;
-  $box_smarty->cache_lifetime=CACHE_LIFETIME;
-  $box_smarty->cache_modified_check=CACHE_CHECK;
-  $cache_id = $_SESSION['language'].$_GET['manufacturers_id'];
-  $box_manufacturers= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_manufacturers.html',$cache_id);
-  }
-*/
+    $data['dropdown'] = $dropdown;
+    $data['list'] = $list;
     $blockinfo['content'] = $data;
     return $blockinfo;
 }

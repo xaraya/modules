@@ -30,7 +30,7 @@
                                WHERE
                                    language_id = '" . $_SESSION['languages_id'] . "' AND customers_status_id != '0'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($group_values = $q->output()) {
     // load data into array
     $i++;
@@ -106,7 +106,7 @@ echo TEXT_NETTO . '<b>'.$currencies->format(xtc_round(get_group_price($group_dat
                                      ORDER BY quantity ASC");
       echo '<table width="247" border="0" cellpadding="0" cellspacing="0">';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($staffel_values = $q->output()) {
       // load data into array
 ?>
@@ -118,7 +118,7 @@ echo TEXT_NETTO . '<b>'.$currencies->format(xtc_round(get_group_price($group_dat
 if (PRICE_IS_BRUTTO=='true'){
 $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $pInfo->products_tax_class_id . "' ");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 $tax = $q->output();
 
 $products_price = xtc_round($staffel_values['personal_offer']*((100+$tax['tax_rate'])/100),PRICE_PRECISION);

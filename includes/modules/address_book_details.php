@@ -68,7 +68,7 @@ $module_smarty->assign('INPUT_STREET',xtc_draw_input_field('street_address', $en
         $zones_array = array();
         $zones_query = new xenQuery("select zone_name from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($country) . "' order by zone_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($zones_values = $q->output()) {
           $zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
         }

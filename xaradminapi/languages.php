@@ -26,7 +26,7 @@ function commerce_adminapi_get_languages_directory($args) {
                           array('languages_id','directory')
                          );
         $q->eq('code',$code);
-      $q->run();
+      if(!$q->run()) return;
         if ($q->getrows() > 0) {
           $lang = $q->row();
           $_SESSION['languages_id'] = $lang['languages_id'];

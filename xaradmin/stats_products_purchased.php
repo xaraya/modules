@@ -19,7 +19,7 @@ function commerce_admin_stats_products_purchased()
 
   $products_query = new xenQuery($products_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($products = $q->output()) {
     $rows++;
 

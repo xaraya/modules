@@ -126,7 +126,7 @@ function commerce_admin_create_account()
     $q = new xenQuery('SELECT',$xartables['commerce_customers']);
     $q->addfield('customers_email_address');
     $q->eq('customers_email_address',$customers_email_address);
-    $q->run();
+    if(!$q->run()) return;
     if ($q->getrows()) {
         $data['error'] = true;
         $data['entry_email_address_exists'] = true;
@@ -170,7 +170,7 @@ function commerce_admin_create_account()
             $data['entry_state_error'] = false;
             $q = new xenQuery('SELECT',$xartables['commerce_zones'],array('zone_id AS id','zone_name AS text'));
             $q->eq('zone_country_id',$entry_country_id);
-            $q->run();
+            if(!$q->run()) return;
             if ($q->getrows() > 0) {
                 $data['zones'] = $q->output();
             } else {
@@ -207,7 +207,7 @@ function commerce_admin_create_account()
 
                     if ($configuration['account_gender'] == 'true') $q->addfield('customers_gender',$customers_gender);
                     if ($configuration['account_dob'] == 'true') $q->addfield('customers_dob',xarModAPIFunc('commerce','admin','date_raw',array('date'=>$customers_dob)));
-                    $q->run();
+                    if(!$q->run()) return;
 
                     $dbconn = $q->getconnection();
                     $cc_id = $dbconn->PO_Insert_ID($xartables['commerce_customers'],'customers_id');
@@ -235,26 +235,26 @@ function commerce_admin_create_account()
                     }
 
                     $q->addfield('customers_id',$cc_id);
-                    $q->run();
+                    if(!$q->run()) return;
 
                     $address_id = $dbconn->PO_Insert_ID($xartables['commerce_customers'],'customers_id');
                     $q = new xenQuery('UPDATE',$xartables['commerce_customers']);
                     $q->addfield('customers_default_address_id',$address_id);
                     $q->eq('customers_id',$cc_id);
-                    $q->run();
+                    if(!$q->run()) return;
 
                     $q = new xenQuery('INSERT',$xartables['commerce_customers_info']);
                     $q->addfield('customers_info_id',$cc_id);
                     $q->addfield('customers_info_number_of_logons',0);
                     $q->addfield('customers_info_date_account_created',mktime());
-                    $q->run();
+                    if(!$q->run()) return;
 
                     // Create insert into admin access table if admin is created.
                     if ($customers_status=='0') {
                         $q = new xenQuery("INSERT",$xartables['commerce_admin_access']);
                         $q->addfield('customers_id',$cc_id);
                         $q->addfield('start',1);
-                        $q->run();
+                        if(!$q->run()) return;
                     }
                     // Create eMail
                     if ( ($customers_send_mail != 'yes')) {

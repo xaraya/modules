@@ -24,14 +24,14 @@
      $info_smarty->assign('options',$products_options_data);
     $reviews_query = new xenQuery("select count(*) as count from " . TABLE_REVIEWS . " where products_id = '" . $_GET['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $reviews = $q->output();
     if ($reviews['count'] > 0) {
 
   $product_info_query = new xenQuery("select pd.products_name from " . TABLE_PRODUCTS_DESCRIPTION . " pd left join " . TABLE_PRODUCTS . " p on pd.products_id = p.products_id where pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_status = '1' and pd.products_id = '" . (int)$_GET['products_id'] . "'");
   if (!$product_info_query->getrows()) xarRedirectResponse(xarModURL('commerce','user','reviews'));
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $product_info = $q->output();
 
 
@@ -53,7 +53,7 @@
     $row = 0;
     $data_reviews=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($reviews = $q->output()) {
       $row++;
      $data_reviews[]=array(

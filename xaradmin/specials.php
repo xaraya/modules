@@ -28,7 +28,7 @@ define ('PRICE_PRECISION','2');
       if (substr($_POST['specials_price'], -1) == '%') {
         $new_special_insert_query = new xenQuery("select products_id, products_price from " . TABLE_PRODUCTS . " where products_id = '" . $_POST['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $new_special_insert = $q->output();
         $_POST['products_price'] = $new_special_insert['products_price'];
         $_POST['specials_price'] = ($_POST['products_price'] - (($_POST['specials_price'] / 100) * $_POST['products_price']));
@@ -44,7 +44,7 @@ define ('PRICE_PRECISION','2');
                 $sql="select tr.tax_rate from " . TABLE_TAX_RATES . " tr, " . TABLE_PRODUCTS . " p  where tr.tax_class_id = p. products_tax_class_id  and p.products_id = '". $_POST['products_id'] . "' ";
         $tax_query = new xenQuery($sql);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $tax = $q->output(;
         $_POST['specials_price'] = ($_POST['specials_price']/($tax[tax_rate]+100)*100);
      }
@@ -66,7 +66,7 @@ define ('PRICE_PRECISION','2');
                 $sql="select tr.tax_rate from " . TABLE_TAX_RATES . " tr, " . TABLE_PRODUCTS . " p  where tr.tax_class_id = p. products_tax_class_id  and p.products_id = '". $_POST['products_up_id'] . "' ";
         $tax_query = new xenQuery($sql);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $tax = $q->output();
         $_POST['specials_price'] = ($_POST['specials_price']/($tax[tax_rate]+100)*100);
      }
@@ -123,7 +123,7 @@ define ('PRICE_PRECISION','2');
 
       $product_query = new xenQuery("select p.products_tax_class_id, p.products_id, pd.products_name, p.products_price, s.specials_new_products_price, s.expires_date from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_SPECIALS . " s where p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_id = s.products_id and s.specials_id = '" . $_GET['sID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $product = $q->output();
 
       $sInfo = new objectInfo($product);
@@ -135,7 +135,7 @@ define ('PRICE_PRECISION','2');
       $specials_array = array();
       $specials_query = new xenQuery("select p.products_id from " . TABLE_PRODUCTS . " p, " . TABLE_SPECIALS . " s where s.products_id = p.products_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($specials = $q->output()) {
         $specials_array[] = $specials['products_id'];
       }
@@ -161,7 +161,7 @@ define ('PRICE_PRECISION','2');
             $new_price_netto=xtc_round($new_price,PRICE_PRECISION);
             $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $sInfo->products_tax_class_id . "' ");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $tax = $q->output();
             $price= ($price*($tax[tax_rate]+100)/100);
             $new_price= ($new_price*($tax[tax_rate]+100)/100);
@@ -211,7 +211,7 @@ define ('PRICE_PRECISION','2');
     $specials_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $specials_query_raw, $specials_query_numrows);
     $specials_query = new xenQuery($specials_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($specials = $q->output()) {
       if ( ((!$_GET['sID']) || ($_GET['sID'] == $specials['specials_id'])) && (!$sInfo) ) {
 

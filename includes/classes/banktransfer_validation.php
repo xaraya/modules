@@ -61,7 +61,7 @@ var $PRZ; //Enthält die Prüfziffer
     $blz_query = new xenQuery("SELECT * from banktransfer_blz WHERE blz = '" . $blz . "'");
     if ($blz_query->getrows())
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $data = $q->output();
     else
       $data = -1;

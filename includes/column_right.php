@@ -27,7 +27,7 @@ include(DIR_WS_BOXES . 'languages.php');
     if (isset($_SESSION['customer_id'])) {
       $check_query = new xenQuery("select count(*) as count from " . TABLE_CUSTOMERS_INFO . " where customers_info_id = '" . $_SESSION['customer_id'] . "' and global_product_notifications = '1'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check = $q->output();
       if ($check['count'] > 0) {
         include(DIR_WS_BOXES . 'best_sellers.php');

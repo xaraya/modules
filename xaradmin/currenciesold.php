@@ -51,7 +51,7 @@ function commerce_admin_currencies()
             $q = new xenQuery('UPDATE', $xartables['commerce_configuration]);
             $q->addfield('configuration_value',xtc_db_input($code));
             $q->eq('configuration_key','DEFAULT_CURRENCY');
-            $q->run();
+            if(!$q->run()) return;
         }
         xarRedirectResponse(xarModURL('commerce','admin','currencies',array('page' => $_GET['page'] ,'cID' => $currency_id)));
         break;
@@ -60,25 +60,25 @@ function commerce_admin_currencies()
         $currencies_id = xtc_db_prepare_input($_GET['cID']);
         $q = new xenQuery('SELECT', $xartables['commerce_configuration],array('currencies_id'));
         $q->eq('code','DEFAULT_CURRENCY');
-        $q->run();
+        if(!$q->run()) return;
         $currency = $q->output();
         if ($currency['currencies_id'] == $currencies_id) {
             $q = new xenQuery('UPDATE', $xartables['commerce_configuration]);
             $q->addfield('configuration_value','');
             $q->eq('configuration_key','DEFAULT_CURRENCY');
-            $q->run();
+            if(!$q->run()) return;
         }
 
         $q = new xenQuery('DELETE', $xartables['commerce_configuration]);
         $q->eq('currencies_id',xtc_db_input($currencies_id));
-        $q->run();
+        if(!$q->run()) return;
 
         xarRedirectResponse(xarModURL('commerce','admin','currencies',array('page' => $_GET['page'])));
         break;
 
       case 'update':
         $q = new xenQuery('SELECT', $xartables['commerce_configuration],array('currencies_id','code', 'title'));
-        $q->run();
+        if(!$q->run()) return;
 
         while ($currency = $q->output()) {
           $quote_function = 'quote_' . CURRENCY_SERVER_PRIMARY . '_currency';
@@ -92,7 +92,7 @@ function commerce_admin_currencies()
             $q->addfield('value',$rate);
             $q->addfield('last_updated',now());
             $q->eq('currencies_id',$currency['currencies_id']);
-            $q->run();
+            if(!$q->run()) return;
             $messageStack->add_session(sprintf(TEXT_INFO_CURRENCY_UPDATED, $currency['title'], $currency['code']), 'success');
           } else {
             $messageStack->add_session(sprintf(ERROR_CURRENCY_INVALID, $currency['title'], $currency['code']), 'error');
@@ -106,7 +106,7 @@ function commerce_admin_currencies()
 
         $q = new xenQuery('SELECT', $xartables['commerce_configuration],array('code'));
         $q->eq('currencies_id',xtc_db_input($currencies_id));
-        $q->run();
+        if(!$q->run()) return;
         $currency = $q->output();
 
         $remove_currency = true;
@@ -122,7 +122,7 @@ function commerce_admin_currencies()
   $currency_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $currency_query_raw, $currency_query_numrows);
   $currency_query = new xenQuery($currency_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($currency = $q->output()) {
     if (((!$_GET['cID']) || (@$_GET['cID'] == $currency['currencies_id'])) && (!$cInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
       $cInfo = new objectInfo($currency);

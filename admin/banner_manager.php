@@ -117,7 +117,7 @@
         if ($delete_image == 'on') {
           $banner_query = new xenQuery("select banners_image from " . TABLE_BANNERS . " where banners_id = '" . xtc_db_input($banners_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $banner = $q->output();
           if (is_file(DIR_FS_CATALOG_IMAGES . $banner['banners_image'])) {
             if (is_writeable(DIR_FS_CATALOG_IMAGES . $banner['banners_image'])) {
@@ -224,7 +224,7 @@ function popupImageWindow(url) {
 
       $banner_query = new xenQuery("select banners_title, banners_url, banners_image, banners_group, banners_html_text, status, date_format(date_scheduled, '%d/%m/%Y') as date_scheduled, date_format(expires_date, '%d/%m/%Y') as expires_date, expires_impressions, date_status_change from " . TABLE_BANNERS . " where banners_id = '" . xtc_db_input($bID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $banner = $q->output();
 
       $bInfo = new objectInfo($banner);
@@ -237,7 +237,7 @@ function popupImageWindow(url) {
     $groups_array = array();
     $groups_query = new xenQuery("select distinct banners_group from " . TABLE_BANNERS . " order by banners_group");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($groups = $q->output()) {
       $groups_array[] = array('id' => $groups['banners_group'], 'text' => $groups['banners_group']);
     }
@@ -334,11 +334,11 @@ function popupImageWindow(url) {
     $banners_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $banners_query_raw, $banners_query_numrows);
     $banners_query = new xenQuery($banners_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($banners = $q->output()) {
       $info_query = new xenQuery("select sum(banners_shown) as banners_shown, sum(banners_clicked) as banners_clicked from " . TABLE_BANNERS_HISTORY . " where banners_id = '" . $banners['banners_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $info = $q->output();
 
       if (((!$_GET['bID']) || ($_GET['bID'] == $banners['banners_id'])) && (!$bInfo) && (substr($_GET['action'], 0, 3) != 'new')) {

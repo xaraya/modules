@@ -56,43 +56,34 @@ function commerce_informationblock_display($blockinfo)
     // Security Check
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    $xartables = xarDBGetTables();
+
+    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
+    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
+    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+
+    $content_string='';
+    $q = new xenQuery('SELECT',$xartables['commerce_content_manager']);
+    $q->addfields(array('content_id',
+                        'categories_id',
+                        'parent_id',
+                        'content_title',
+                        'content_group'));
+    $q->eq('languages_id', $currentlang['id']);
+    $q->eq('file_flag', 0);
+    $q->eq('content_status', 1);
+    $q->ne('content_group', 4);
+    if(!$q->run()) return;
+
+    foreach ($q->output() as $row) {
+        $content_string .= '<a href="' . xarModURL('commerce','user','shop_content',array('coID' => $row['content_group'])) . '">' . $row['content_title'] . '</a><br>';
+    }
 
 
-$content_string='';
-$content_query=new xenQuery("SELECT
-                    content_id,
-                    categories_id,
-                    parent_id,
-                    content_title,
-                    content_group
-                    FROM ".TABLE_CONTENT_MANAGER."
-                    WHERE languages_id='".$_SESSION['languages_id']."'
-                    and file_flag=0 and content_status=1 and content_group!=4");
-      $q = new xenQuery();
-      $q->run();
- while ($content_data=$q->output()) {
+    $data['contacturl'] = xarModURL('commerce','user','filename');
+    $data['content_string'] = $content_string;
 
- $content_string .= '<a href="' . xarModURL('commerce','user','shop_content',array('coID' => $content_data['content_group'])) . '">' . $content_data['content_title'] . '</a><br>';
-}
-
-
-    $box_smarty->assign('BOX_TITLE', BOX_HEADING_INFORMATION);
-    $box_smarty->assign('BOX_CONTENT', '<a href="' . xarModURL('commerce','user',(FILENAME_CONTACT_US) . '">' . BOX_INFORMATION_CONTACT . '</a><br>'.
-                                         $content_string);
-
-    $box_smarty->assign('language', $_SESSION['language']);
-/*          // set cache ID
-  if (USE_CACHE=='false') {
-  $box_smarty->caching = 0;
-  $box_information= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_information.html');
-  } else {
-  $box_smarty->caching = 1;
-  $box_smarty->cache_lifetime=CACHE_LIFETIME;
-  $box_smarty->cache_modified_check=CACHE_CHECK;
-  $cache_id = $_SESSION['language'];
-  $box_information= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_information.html',$cache_id);
-  }
-*/
     $blockinfo['content'] = $data;
     return $blockinfo;
 }

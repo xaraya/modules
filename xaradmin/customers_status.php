@@ -84,13 +84,13 @@ function commerce_admin_customers_status()
                         $q->addtable($xartables['commerce_customers_status']);
                         $q->addfield('language_id',$language_id);
                         $q->addfield('customers_status_id',$cID);
-                        $q->run();
+                        if(!$q->run()) return;
                     }
                     else {
                         $q->settype('UPDATE');
                         $q->eq('language_id',$language_id);
                         $q->eq('customers_status_id',$cID);
-                        $q->run();
+                        if(!$q->run()) return;
                     }
                 }
 //      if ($customers_status_image = new upload('customers_status_image', DIR_WS_ICONS)) {
@@ -101,7 +101,7 @@ function commerce_admin_customers_status()
                     $q = new xenQuery('UPDATE', $xartables['commerce_configuration']);
                     $q->addfield('configuration_value', $customers_status_id);
                     $q->eq('configuration_key','DEFAULT_CUSTOMERS_STATUS_ID');
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
                 xarResponseRedirect(xarModURL('commerce','admin','customers_status',array('page' => $page,'cID' => $cID)));
@@ -109,28 +109,28 @@ function commerce_admin_customers_status()
             case 'deleteconfirm':
                 $q = new xenQuery('SELECT', $xartables['commerce_configuration'],array('configuration_value'));
                 $q->eq('configuration_key',DEFAULT_CUSTOMERS_STATUS_ID);
-                $q->run();
+                if(!$q->run()) return;
                 $customers_status = $q->row();
                 if ($customers_status['configuration_value'] == $cID) {
                     $q = new xenQuery('UPDATE', $xartables['commerce_configuration']);
                     $q->addfield('configuration_value', '');
                     $q->eq('configuration_key',DEFAULT_CUSTOMERS_STATUS_ID);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
                 $q = new xenQuery('DELETE', $xartables['commerce_customers_status']);
                 $q->eq('customers_status_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
 
                 // We want to drop the existing corresponding personal_offers table
                 $q = new xenQuery("drop table IF EXISTS personal_offers_by_customers_status_" . $cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','customers_status',array('page' => $page)));
                 break;
             case 'delete':
                 $q = new xenQuery('SELECT', $xartables['commerce_customers'],array('count(*) as count'));
                 $q->eq('customers_status',$cID);
-                $q->run();
+                if(!$q->run()) return;
 
                 $status = $q->row();
                 $remove_status = true;
@@ -143,7 +143,7 @@ function commerce_admin_customers_status()
 //                    $messageStack->add(ERROR_STATUS_USED_IN_CUSTOMERS, 'error');
                 } else {
 //                    $q = new xenQuery("select count(*) as count from " . $xartables['commerce_customers_status_history'] . " where '" . $cID . "' in (new_value, old_value)");
-//                    $q->run();
+//                    if(!$q->run()) return;
 //                    $history = $q->row();
 //                    if ($history['count'] > 0) {
                       $remove_status = false;
@@ -163,7 +163,7 @@ function commerce_admin_customers_status()
     $q->setorder('customers_status_id');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),

@@ -47,7 +47,7 @@ $module_data=array();
   if ($reviews_split->number_of_rows > 0) {
     $reviews_query = new xenQuery($reviews_split->sql_query);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($reviews = $q->output()) {
     $module_data[]=array(
                          'PRODUCTS_IMAGE' => xarTplGetImage('product_images/thumbnail_images/' . $reviews['products_image']), $reviews['products_name'],

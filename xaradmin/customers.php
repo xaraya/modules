@@ -49,7 +49,7 @@ function commerce_admin_customers()
                     $q->addfield('memo_title',$memo_title);
                     $q->addfield('memo_text',$memo_text);
                     $q->addfield('poster_id',$_SESSION['customer_id']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 $error = false; // reset error flag
 
@@ -127,7 +127,7 @@ function commerce_admin_customers()
                         $q = new xenQuery('SELECT',$xartables['commerce_zones']);
                         $q->addfield('count(*) as total');
                         $q->eq('zone_country_id',$entry_country_id);
-                        $q->run();
+                        if(!$q->run()) return;
                         $check_value = $q->row();
                         $entry_state_has_zones = ($check_value['total'] > 0);
                         if ($entry_state_has_zones == true) {
@@ -135,7 +135,7 @@ function commerce_admin_customers()
                         $q->addfield('zone_id');
                         $q->eq('zone_country_id',$entry_country_id);
                         $q->eq('zone_name',$entry_state);
-                        $q->run();
+                        if(!$q->run()) return;
                         if ($zone_query->getrows() == 1) {
                                 $zone_values = $q->row();
                                 $entry_zone_id = $zone_values['zone_id'];
@@ -144,7 +144,7 @@ function commerce_admin_customers()
                                 $q->addfield('zone_id');
                                 $q->eq('zone_country_id',$entry_country_id);
                                 $q->eq('zone_code',$entry_state);
-                                $q->run();
+                                if(!$q->run()) return;
                                 if ($zone_query->getrows() == 1) {
                                     $zone_values = $q->row();
                                     $zone_id = $zone_values['zone_id'];
@@ -173,7 +173,7 @@ function commerce_admin_customers()
                 $q->addfield('customers_email_address');
                 $q->eq('customers_email_address',$customers_email_address);
                 $q->eq('customers_id',$customers_id);
-                $q->run();
+                if(!$q->run()) return;
                 if ($check_email->getrows()) {
                     $error = true;
                     $entry_email_address_exists = true;
@@ -194,12 +194,12 @@ function commerce_admin_customers()
                     if (ACCOUNT_DOB == 'true') $q->addfield('customers_dob',xtc_date_raw($customers_dob));
 
                     $q->eq('customers_id',$customers_id);
-                    $q->run();
+                    if(!$q->run()) return;
 
                     $q = new xenQuery('UPDATE',$xartables['commerce_customers_info']);
                     $q->addfield('customers_info_date_account_last_modified',mktime());
                     $q->eq('customers_info_id',$customers_id);
-                    $q->run();
+                    if(!$q->run()) return;
 
                     if ($entry_zone_id > 0) $entry_state = '';
 
@@ -226,7 +226,7 @@ function commerce_admin_customers()
 
                     $q->eq('customers_id',$customers_id);
                     $q->eq('address_book_id',$default_address_id);
-                    $q->run();
+                    if(!$q->run()) return;
 
                     xarResponseRedirect(xarModURL('commerce','admin','customers',array('page' => $page,'cID' => $cID)));
                 } elseif ($error == true) {
@@ -249,7 +249,7 @@ function commerce_admin_customers()
                 $q->addfield('tax_description',$tax_description);
                 $q->addfield('tax_priority',$tax_priority);
                 $q->addfield('date_added',mktime());
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_rates'));
                 break;
             case 'save':
@@ -267,7 +267,7 @@ function commerce_admin_customers()
                 $q->addfield('tax_priority',$tax_priority);
                 $q->addfield('last_modified',mktime());
                 $q->eq('tax_rates_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','tax_rates',array('page' => $page,'cID' => $cID)));
 
             case 'deleteconfirm':
@@ -275,47 +275,47 @@ function commerce_admin_customers()
                 if($delete_reviews == 'on') {
                     $q = new xenQuery('SELECT',$xartables['commerce_reviews'],array('reviews_id'));
                     $q->eq('customers_id',$customers_id);
-                    $q->run();
+                    if(!$q->run()) return;
                     while ($reviews = $q->output()) {
                         $q = new xenQuery('DELETE',$xartables['commerce_reviews_description']);
                         $q->eq('reviews_id',$reviews['reviews_id']);
-                        $q->run();
+                        if(!$q->run()) return;
                     }
                     $q = new xenQuery('DELETE',$xartables['commerce_reviews']);
                     $q->eq('customers_id',$customers_id);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 else {
                     $q = new xenQuery('UPDATE',$xartables['commerce_reviews']);
                     $q->addfield('customers_id','');
                     $q->eq('customers_id',$cID);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
                 $q = new xenQuery('DELETE',$xartables['commerce_address_book']);
                 $q->eq('customers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE',$xartables['commerce_customers']);
                 $q->eq('customers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE',$xartables['commerce_customers_info']);
                 $q->eq('customers_info_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE',$xartables['commerce_customers_basket']);
                 $q->eq('customers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE',$xartables['commerce_customers_basket_attributes']);
                 $q->eq('customers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE',$xartables['commerce_whos_online']);
                 $q->eq('customer_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE',$xartables['commerce_customers_status_history']);
                 $q->eq('customers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE',$xartables['commerce_customers_ip']);
                 $q->eq('customers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
 
                 xarResponseRedirect(xarModURL('commerce','admin','customers',array('page' => $page)));
                 break;
@@ -361,7 +361,7 @@ function commerce_admin_customers()
 
 //    $q->setstatement();
 //    echo $q->getstatement();exit;
-    $q->run();
+    if(!$q->run()) return;
 
 
     $pager = new splitPageResults($page,
@@ -377,7 +377,7 @@ function commerce_admin_customers()
     for ($i=0;$i<$limit;$i++) {
         $q = new xenQuery('SELECT',$xartables['commerce_reviews'],array('count(*) as number_of_reviews'));
         $q->eq('customers_id',$items[$i]['customers_id']);
-        $q->run();
+        if(!$q->run()) return;
         $row = $q->row();
         $items[$i]['number_of_reviews'] = $row['number_of_reviews'];
 

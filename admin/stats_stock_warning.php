@@ -53,7 +53,7 @@
 <?php
   $products_query = new xenQuery("SELECT p.products_id, p.products_quantity, pd.products_name FROM " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd WHERE pd.language_id = '" . $_SESSION['languages_id'] . "' AND pd.products_id = p.products_id ORDER BY products_quantity");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($products_values = $q->output()) {
     echo '<tr><td width="50%" class="dataTableContent"><a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'pID=' . $products_values['products_id'] . '&action=new_product') . '"><b>' . $products_values['products_name'] . '</b></a></td><td width="50%" class="dataTableContent">';
     if ($products_values['products_quantity'] <='0') {
@@ -72,7 +72,7 @@
                                                    pa.products_id = '".$products_values['products_id'] . "' AND pov.products_options_values_id = pa.options_values_id AND pov.language_id = '" . $_SESSION['languages_id'] . "' ORDER BY pa.attributes_stock");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($products_attributes_values = $q->output()) {
       echo '<tr><td width="50%" class="dataTableContent">&nbsp;&nbsp;&nbsp;&nbsp;-' . $products_attributes_values['products_options_values_name'] . '</td><td width="50%" class="dataTableContent">';
       if ($products_attributes_values['attributes_stock'] <= '0') {

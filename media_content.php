@@ -23,7 +23,7 @@ require('includes/application_top.php');
                     FROM ".TABLE_PRODUCTS_CONTENT."
                     WHERE content_id='".$_GET['coID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $content_data=$q->output();
 
         // update file counter

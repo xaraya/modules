@@ -64,7 +64,7 @@ function commerce_admin_categories()
                     for ($i = 0, $n = sizeof($categories); $i < $n; $i++) {
                         $product_ids_query = new xenQuery("select products_id from " . TABLE_PRODUCTS_TO_CATEGORIES . " where categories_id = '" . $categories[$i]['id'] . "'");
                         $q = new xenQuery();
-                        $q->run();
+                        if(!$q->run()) return;
                         while ($product_ids = $q->output()) {
                             $products[$product_ids['products_id']]['categories'][] = $categories[$i]['id'];
                         }
@@ -80,7 +80,7 @@ function commerce_admin_categories()
 
                         $check_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id = '" . $key . "' and categories_id not in (" . $category_ids . ")");
                         $q = new xenQuery();
-                        $q->run();
+                        if(!$q->run()) return;
                         $check = $q->output();
                         if ($check['total'] < '1') {
                             $products_delete[$key] = $key;
@@ -114,7 +114,7 @@ function commerce_admin_categories()
 
                     $product_categories_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id = '" . xtc_db_input($product_id) . "'");
                     $q = new xenQuery();
-                    $q->run();
+                    if(!$q->run()) return;
                     $product_categories = $q->output();
 
                     if ($product_categories['total'] == '0') {
@@ -138,7 +138,7 @@ function commerce_admin_categories()
 
                 $duplicate_check_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id = '" . xtc_db_input($products_id) . "' and categories_id = '" . xtc_db_input($new_parent_id) . "'");
                 $q = new xenQuery();
-                $q->run();
+                if(!$q->run()) return;
                 $duplicate_check = $q->output();
                 if ($duplicate_check['total'] < 1) new xenQuery("update " . TABLE_PRODUCTS_TO_CATEGORIES . " set categories_id = '" . xtc_db_input($new_parent_id) . "' where products_id = '" . xtc_db_input($products_id) . "' and categories_id = '" . $current_category_id . "'");
 
@@ -153,7 +153,7 @@ function commerce_admin_categories()
                 if (PRICE_IS_BRUTTO=='true' && $products_price){
                     $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '".$products_tax_class_id."' ");
                     $q = new xenQuery();
-                    $q->run();
+                    if(!$q->run()) return;
                     $tax = $q->output();
                     $products_price = ($products_price/($tax['tax_rate']+100)*100);
                 }
@@ -229,7 +229,7 @@ function commerce_admin_categories()
                     $i = 0;
                     $group_query = new xenQuery("SELECT customers_status_id  FROM " . TABLE_CUSTOMERS_STATUS . " WHERE language_id = '" . $_SESSION['languages_id'] . "' AND customers_status_id != '0'");
                     $q = new xenQuery();
-                    $q->run();
+                    if(!$q->run()) return;
                     while ($group_values = $q->output()) {
                     // load data into array
                     $i++;
@@ -244,7 +244,7 @@ function commerce_admin_categories()
                     if (PRICE_IS_BRUTTO=='true'){
                     $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $products_tax_class_id . "' ");
                     $q = new xenQuery();
-                    $q->run();
+                    if(!$q->run()) return;
                     $tax = $q->output();
                     $personal_price= ($personal_price/($tax['tax_rate']+100)*100);
                     }
@@ -259,7 +259,7 @@ function commerce_admin_categories()
                 $i = 0;
                 $group_query = new xenQuery("SELECT customers_status_id FROM " . TABLE_CUSTOMERS_STATUS . " WHERE language_id = '" . $_SESSION['languages_id'] . "' AND customers_status_id != '0'");
                 $q = new xenQuery();
-                $q->run();
+                if(!$q->run()) return;
                 while ($group_values = $q->output()) {
                     // load data into array
                     $i++;
@@ -272,7 +272,7 @@ function commerce_admin_categories()
                         if ($configuration['price_is_brutto'] == true){
                             $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $_POST['products_tax_class_id'] . "' ");
                             $q = new xenQuery();
-                            $q->run();
+                            if(!$q->run()) return;
                             $tax = $q->output();
                             $staffelpreis= ($staffelpreis/($tax['tax_rate']+100)*100);
                         }
@@ -315,7 +315,7 @@ function commerce_admin_categories()
                         if ($categories_id != $current_category_id) {
                             $check_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id = '" . xtc_db_input($products_id) . "' and categories_id = '" . xtc_db_input($categories_id) . "'");
                             $q = new xenQuery();
-                            $q->run();
+                            if(!$q->run()) return;
                             $check = $q->output();
                             if ($check['total'] < '1') {
                                 new xenQuery("insert into " . TABLE_PRODUCTS_TO_CATEGORIES . " (products_id, categories_id) values ('" . xtc_db_input($products_id) . "', '" . xtc_db_input($categories_id) . "')");
@@ -328,14 +328,14 @@ function commerce_admin_categories()
                     elseif ($copy_as == 'duplicate') {
                         $product_query = new xenQuery("select products_quantity, products_model, products_image, products_price, products_discount_allowed, products_date_available, products_weight, products_tax_class_id, manufacturers_id from " . TABLE_PRODUCTS . " where products_id = '" . xtc_db_input($products_id) . "'");
                         $q = new xenQuery();
-                        $q->run();
+                        if(!$q->run()) return;
                         $product = $q->output();
                         new xenQuery("insert into " . TABLE_PRODUCTS . " (products_quantity, products_model,products_image, products_price, products_discount_allowed, products_date_added, products_date_available, products_weight, products_status, products_tax_class_id, manufacturers_id) values ('" . $product['products_quantity'] . "', '" . $product['products_model'] . "', '" . $product['products_image'] . "', '" . $product['products_price'] . "', '" . $product['products_discount_allowed'] . "',  now(), '" . $product['products_date_available'] . "', '" . $product['products_weight'] . "', '0', '" . $product['products_tax_class_id'] . "', '" . $product['manufacturers_id'] . "')");
                         $dup_products_id = xtc_db_insert_id();
 
                         $description_query = new xenQuery("select language_id, products_name, products_description,products_short_description, products_meta_title, products_meta_description, products_meta_keywords, products_url from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . xtc_db_input($products_id) . "'");
                         $q = new xenQuery();
-                        $q->run();
+                        if(!$q->run()) return;
                         while ($description = $q->output()) {
                             new xenQuery("insert into " . TABLE_PRODUCTS_DESCRIPTION . " (products_id, language_id, products_name, products_description, products_short_description, products_meta_title, products_meta_description, products_meta_keywords, products_url, products_viewed) values ('" . $dup_products_id . "', '" . $description['language_id'] . "', '" . addslashes($description['products_name']) . "', '" . addslashes($description['products_description']) . "','" . addslashes($description['products_short_description']) . "', '" . $description['products_url'] . "', '0')");
                         }
@@ -374,7 +374,7 @@ function commerce_admin_categories()
         $q->eq('c.parent_id',$current_category_id);
     }
 
-    $q->run();
+    if(!$q->run()) return;
     $pager = new splitPageResults($page,
                                   $q->getrows(),
                                   xarModURL('commerce','admin','customers'),
@@ -420,7 +420,7 @@ function commerce_admin_categories()
     else {
         $q->eq('p2c.categories_id',$current_category_id);
     }
-    $q->run();
+    if(!$q->run()) return;
 
     $items1 =$q->output();
     $limit = count($items1);
@@ -434,7 +434,7 @@ function commerce_admin_categories()
             // find out the rating average from customer reviews
             $q = new xenQuery('SELECT',$xartables['commerce_reviews'],array('avg(reviews_rating) / 5 * 100) as average_rating'));
             $q->eq('products_id',$items1[$i]['products_id']);
-            $q->run();
+            if(!$q->run()) return;
             $row = $q->row();
             $items[$i]['average_rating'] = $row['average_rating'];
             $pInfo = new objectInfo($items[$i]);

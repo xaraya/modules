@@ -20,7 +20,7 @@ function commerce_adminapi_load_configuration() {
     xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
     $q = new xenQuery('SELECT',$xartables['commerce_configuration'], array('configuration_key AS cfgKey','configuration_value AS cfgValue'));
-    $q->run();
+    if(!$q->run()) return;
     $configuration_array = array();
     foreach ($q->output() as $configuration) {
         $varname = strtolower($configuration['cfgKey']);

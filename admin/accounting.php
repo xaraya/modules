@@ -31,7 +31,7 @@
       } else {
         $allow_edit_query = new xenQuery("select customers_status, customers_firstname, customers_lastname from " . TABLE_CUSTOMERS . " where customers_id = '" . $_GET['cID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $allow_edit = $q->output();
         if ($allow_edit['customers_status'] != 0 || $allow_edit == '') {
           xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CUSTOMERS, 'cID=' . $_GET['cID'], 'NONSSL'));
@@ -80,13 +80,13 @@
     $customers_id = xtc_db_prepare_input($_GET['cID']);
     $admin_access_query = new xenQuery("select * from " . TABLE_ADMIN_ACCESS . " where customers_id = '" . $_GET['cID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $admin_access = $q->output();
     if ($admin_access == '') {
       new xenQuery("INSERT INTO " . TABLE_ADMIN_ACCESS . " (customers_id) VALUES ('" . $_GET['cID'] . "')");
       $admin_access_query = new xenQuery("select * from " . TABLE_ADMIN_ACCESS . " where customers_id = '" . $_GET['cID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $admin_access = $q->output();
     }
 ?>

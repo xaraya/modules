@@ -25,7 +25,7 @@
     if ( ($_GET['cID']) && (!$_POST) ) {
       $category_query = new xenQuery("select c.categories_id, cd.language_id, cd.categories_name, cd.categories_heading_title, cd.categories_description, cd.categories_meta_title, cd.categories_meta_description, cd.categories_meta_keywords, c.categories_image, c.sort_order, c.date_added, c.last_modified from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_id = cd.categories_id and c.categories_id = '" . $_GET['cID'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $category = $q->output();
 
       $cInfo = new objectInfo($category);

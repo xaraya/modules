@@ -33,7 +33,7 @@
           if (!xarModAPIFunc('commerce','user','not_null',array('arg' => $orders_status_id))) {
             $next_id_query = new xenQuery("select max(orders_status_id) as orders_status_id from " . TABLE_ORDERS_STATUS . "");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $next_id = $q->output();
             $orders_status_id = $next_id['orders_status_id'] + 1;
           }
@@ -59,7 +59,7 @@
 
       $orders_status_query = new xenQuery("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'DEFAULT_ORDERS_STATUS_ID'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $orders_status = $q->output();
       if ($orders_status['configuration_value'] == $oID) {
         new xenQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '' where configuration_key = 'DEFAULT_ORDERS_STATUS_ID'");
@@ -75,7 +75,7 @@
 
       $status_query = new xenQuery("select count(*) as count from " . TABLE_ORDERS . " where orders_status = '" . xtc_db_input($oID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $status = $q->output();
 
       $remove_status = true;
@@ -88,7 +88,7 @@
       } else {
         $history_query = new xenQuery("select count(*) as count from " . TABLE_ORDERS_STATUS_HISTORY . " where orders_status_id = '" . xtc_db_input($oID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $history = $q->output();
         if ($history['count'] > 0) {
           $remove_status = false;

@@ -23,7 +23,7 @@
     $stock_flag = '';
     $stock_query = new xenQuery("SELECT products_quantity FROM " . TABLE_PRODUCTS . " where products_id = '" . $products_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $stock_values = $q->output();
     if ($stock_values['products_quantity'] <= '0') {
       $stock_flag = 'true';
@@ -32,7 +32,7 @@
 
     $attribute_stock_query = new xenQuery("SELECT attributes_stock FROM " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id = '" . $products_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($attribute_stock_values = $q->output()) {
       if ($attribute_stock_values['attributes_stock'] <= '0') {
         $stock_flag = 'true';
@@ -71,7 +71,7 @@
   if ($pagename!='index') {
     $access_permission_query = new xenQuery("select " . $pagename . " from " . TABLE_ADMIN_ACCESS . " where customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $access_permission = $q->output();
 
     if (($_SESSION['customers_status']['customers_status_id'] == '0') && ($access_permission[$pagename] == '1')) {
@@ -103,7 +103,7 @@
   function xtc_customers_name($customers_id) {
     $customers = new xenQuery("select customers_firstname, customers_lastname from " . TABLE_CUSTOMERS . " where customers_id = '" . $customers_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $customers_values = $q->output();
 
     return $customers_values['customers_firstname'] . ' ' . $customers_values['customers_lastname'];
@@ -121,11 +121,11 @@
         $cPath_new = '';
         $last_category_query = new xenQuery("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" . $cPath_array[(sizeof($cPath_array)-1)] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $last_category = $q->output();
         $current_category_query = new xenQuery("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" . $current_category_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $current_category = $q->output();
         if ($last_category['parent_id'] == $current_category['parent_id']) {
           for ($i = 0, $n = sizeof($cPath_array) - 1; $i < $n; $i++) {
@@ -242,14 +242,14 @@
     if ($include_itself) {
       $category_query = new xenQuery("select cd.categories_name from " . TABLE_CATEGORIES_DESCRIPTION . " cd where cd.language_id = '" . $_SESSION['languages_id'] . "' and cd.categories_id = '" . $parent_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $category = $q->output();
       $category_tree_array[] = array('id' => $parent_id, 'text' => $category['categories_name']);
     }
 
     $categories_query = new xenQuery("select c.categories_id, cd.categories_name, c.parent_id from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_id = cd.categories_id and cd.language_id = '" . $_SESSION['languages_id'] . "' and c.parent_id = '" . $parent_id . "' order by c.sort_order, cd.categories_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($categories = $q->output()) {
       if ($exclude != $categories['categories_id']) $category_tree_array[] = array('id' => $categories['categories_id'], 'text' => $spacing . $categories['categories_name']);
       $category_tree_array = xtc_get_category_tree($categories['categories_id'], $spacing . '&nbsp;&nbsp;&nbsp;', $exclude, $category_tree_array);
@@ -271,7 +271,7 @@
     $select_string .= '>';
     $products_query = new xenQuery("select p.products_id, pd.products_name, p.products_price from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "' order by products_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($products = $q->output()) {
       if (!xtc_in_array($products['products_id'], $exclude)) {
         $select_string .= '<option value="' . $products['products_id'] . '">' . $products['products_name'] . ' (' . $currencies->format($products['products_price']) . ')</option>';
@@ -286,7 +286,7 @@
 
     $options = new xenQuery("select products_options_name from " . TABLE_PRODUCTS_OPTIONS . " where products_options_id = '" . $options_id . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $options_values = $q->output();
 
     return $options_values['products_options_name'];
@@ -297,7 +297,7 @@
     $values = new xenQuery("select products_options_values_name from " . TABLE_PRODUCTS_OPTIONS_VALUES . " where products_options_values_id = '" . $values_id . "' and language_id = '" . $_SESSION['languages_id'] . "'");
     $values_values = $q->output();
     $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 
 
     return $values_values['products_options_values_name'];
@@ -380,7 +380,7 @@
     $select_string = '<select ' . $parameters . '>';
     $classes_query = new xenQuery("select tax_class_id, tax_class_title from " . TABLE_TAX_CLASS . " order by tax_class_title");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($classes = $q->output()) {
       $select_string .= '<option value="' . $classes['tax_class_id'] . '"';
       if ($selected == $classes['tax_class_id']) $select_string .= ' SELECTED';
@@ -395,7 +395,7 @@
     $select_string = '<select ' . $parameters . '>';
     $zones_query = new xenQuery("select geo_zone_id, geo_zone_name from " . TABLE_GEO_ZONES . " order by geo_zone_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($zones = $q->output()) {
       $select_string .= '<option value="' . $zones['geo_zone_id'] . '"';
       if ($selected == $zones['geo_zone_id']) $select_string .= ' SELECTED';
@@ -413,7 +413,7 @@
       $geo_zone_name = $geo_zone_id;
     } else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $zones = $q->output();
       $geo_zone_name = $zones['geo_zone_name'];
     }
@@ -424,7 +424,7 @@
   function xtc_address_format($address_format_id, $address, $html, $boln, $eoln) {
     $address_format_query = new xenQuery("select address_format as format from " . TABLE_ADDRESS_FORMAT . " where address_format_id = '" . $address_format_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $address_format = $q->output();
 
     $company = addslashes($address['company']);
@@ -501,7 +501,7 @@
     }
     else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $state_prov_values = $q->output();
       $state_prov_code = $state_prov_values['zone_code'];
     }
@@ -529,7 +529,7 @@
 /*  function xtc_get_languages() {
     $languages_query = new xenQuery("select languages_id, name, code, image, directory from " . TABLE_LANGUAGES . " order by sort_order");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($languages = $q->output()) {
       $languages_array[] = array('id' => $languages['languages_id'],
                                  'name' => $languages['name'],
@@ -545,7 +545,7 @@
   function xtc_get_categories_name($category_id, $language_id) {
     $category_query = new xenQuery("select categories_name from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id = '" . $category_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $category = $q->output();
 
     return $category['categories_name'];
@@ -554,7 +554,7 @@
   function xtc_get_categories_heading_title($category_id, $language_id) {
     $category_query = new xenQuery("select categories_heading_title from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id = '" . $category_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $category = $q->output();
     return $category['categories_heading_title'];
   }
@@ -562,7 +562,7 @@
   function xtc_get_categories_description($category_id, $language_id) {
     $category_query = new xenQuery("select categories_description from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id = '" . $category_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $category = $q->output();
 
     return $category['categories_description'];
@@ -571,7 +571,7 @@
   function xtc_get_categories_meta_title($category_id, $language_id) {
     $category_query = new xenQuery("select categories_meta_title from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id = '" . $category_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $category = $q->output();
 
     return $category['categories_meta_title'];
@@ -580,7 +580,7 @@
   function xtc_get_categories_meta_description($category_id, $language_id) {
     $category_query = new xenQuery("select categories_meta_description from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id = '" . $category_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $category = $q->output();
 
     return $category['categories_meta_description'];
@@ -589,7 +589,7 @@
   function xtc_get_categories_meta_keywords($category_id, $language_id) {
     $category_query = new xenQuery("select categories_meta_keywords from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id = '" . $category_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $category = $q->output();
 
     return $category['categories_meta_keywords'];
@@ -600,7 +600,7 @@
     if (!$language_id) $language_id = $_SESSION['languages_id'];
     $orders_status_query = new xenQuery("select orders_status_name from " . TABLE_ORDERS_STATUS . " where orders_status_id = '" . $orders_status_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $orders_status = $q->output();
 
     return $orders_status['orders_status_name'];
@@ -611,7 +611,7 @@
     $orders_status_array = array();
     $orders_status_query = new xenQuery("select orders_status_id, orders_status_name from " . TABLE_ORDERS_STATUS . " where language_id = '" . $_SESSION['languages_id'] . "' order by orders_status_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($orders_status = $q->output()) {
       $orders_status_array[] = array('id' => $orders_status['orders_status_id'],
                                      'text' => $orders_status['orders_status_name']
@@ -626,7 +626,7 @@
     if ($language_id == 0) $language_id = $_SESSION['languages_id'];
     $product_query = new xenQuery("select products_name from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_name'];
@@ -635,7 +635,7 @@
   function xtc_get_products_description($product_id, $language_id) {
     $product_query = new xenQuery("select products_description from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_description'];
@@ -644,7 +644,7 @@
     function xtc_get_products_short_description($product_id, $language_id) {
     $product_query = new xenQuery("select products_short_description from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_short_description'];
@@ -653,7 +653,7 @@
   function xtc_get_products_meta_title($product_id, $language_id) {
     $product_query = new xenQuery("select products_meta_title from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_meta_title'];
@@ -662,7 +662,7 @@
   function xtc_get_products_meta_description($product_id, $language_id) {
     $product_query = new xenQuery("select products_meta_description from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_meta_description'];
@@ -671,7 +671,7 @@
   function xtc_get_products_meta_keywords($product_id, $language_id) {
     $product_query = new xenQuery("select products_meta_keywords from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_meta_keywords'];
@@ -680,7 +680,7 @@
   function xtc_get_products_url($product_id, $language_id) {
     $product_query = new xenQuery("select products_url from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_url'];
@@ -692,7 +692,7 @@
   function xtc_get_manufacturer_url($manufacturer_id, $language_id) {
     $manufacturer_query = new xenQuery("select manufacturers_url from " . TABLE_MANUFACTURERS_INFO . " where manufacturers_id = '" . $manufacturer_id . "' and languages_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $manufacturer = $q->output();
 
     return $manufacturer['manufacturers_url'];
@@ -722,7 +722,7 @@
     }
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $products = $q->output();
 
     $products_count += $products['total'];
@@ -730,7 +730,7 @@
     $childs_query = new xenQuery("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . $categories_id . "'");
     if ($childs_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($childs = $q->output()) {
         $products_count += xtc_products_in_category_count($childs['categories_id'], $include_deactivated);
       }
@@ -747,7 +747,7 @@
 
     $categories_query = new xenQuery("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . $categories_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($categories = $q->output()) {
       $categories_count++;
       $categories_count += xtc_childs_in_category_count($categories['categories_id']);
@@ -767,7 +767,7 @@
     }
     $countries_query = new xenQuery("select countries_id, countries_name from " . TABLE_COUNTRIES . " order by countries_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($countries = $q->output()) {
       $countries_array[] = array('id' => $countries['countries_id'],
                                  'text' => $countries['countries_name']);
@@ -782,7 +782,7 @@
     $zones_array = array();
     $zones_query = new xenQuery("select zone_id, zone_name from " . TABLE_ZONES . " where zone_country_id = '" . $country_id . "' order by zone_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($zones = $q->output()) {
       $zones_array[] = array('id' => $zones['zone_id'],
                              'text' => $zones['zone_name']);
@@ -822,7 +822,7 @@
     $address_format_query = new xenQuery("select address_format_id from " . TABLE_ADDRESS_FORMAT . " order by address_format_id");
     $address_format_array = array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($address_format_values = $q->output()) {
       $address_format_array[] = array('id' => $address_format_values['address_format_id'],
                                       'text' => $address_format_values['address_format_id']);
@@ -846,7 +846,7 @@
     $tax_class_array = array(array('id' => '0', 'text' => TEXT_NONE));
     $tax_class_query = new xenQuery("select tax_class_id, tax_class_title from " . TABLE_TAX_CLASS . " order by tax_class_title");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($tax_class = $q->output()) {
       $tax_class_array[] = array('id' => $tax_class['tax_class_id'],
                                  'text' => $tax_class['tax_class_title']);
@@ -952,7 +952,7 @@
 
     $db_query = new xenQuery("select now() as datetime");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $db = $q->output();
 
     list($system, $host, $kernel) = preg_split('/[\s,]+/', @exec('uname -a'), 5);
@@ -1012,14 +1012,14 @@
     if ($from == 'product') {
       $categories_query = new xenQuery("select categories_id from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id = '" . $id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($categories = $q->output()) {
         if ($categories['categories_id'] == '0') {
           $categories_array[$index][] = array('id' => '0', 'text' => TEXT_TOP);
         } else {
           $category_query = new xenQuery("select cd.categories_name, c.parent_id from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_id = '" . $categories['categories_id'] . "' and c.categories_id = cd.categories_id and cd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $category = $q->output();
           $categories_array[$index][] = array('id' => $categories['categories_id'], 'text' => $category['categories_name']);
           if ( (xarModAPIFunc('commerce','user','not_null',array('arg' => $category['parent_id']))) && ($category['parent_id'] != '0') ) $categories_array = xtc_generate_category_path($category['parent_id'], 'category', $categories_array, $index);
@@ -1030,7 +1030,7 @@
     } elseif ($from == 'category') {
       $category_query = new xenQuery("select cd.categories_name, c.parent_id from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_id = '" . $id . "' and c.categories_id = cd.categories_id and cd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $category = $q->output();
       $categories_array[$index][] = array('id' => $id, 'text' => $category['categories_name']);
       if ( (xarModAPIFunc('commerce','user','not_null',array('arg' => $category['parent_id']))) && ($category['parent_id'] != '0') ) $categories_array = xtc_generate_category_path($category['parent_id'], 'category', $categories_array, $index);
@@ -1058,12 +1058,12 @@
   function xtc_remove_category($category_id) {
     $category_image_query = new xenQuery("select categories_image from " . TABLE_CATEGORIES . " where categories_id = '" . xtc_db_input($category_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $category_image = $q->output();
 
     $duplicate_image_query = new xenQuery("select count(*) as total from " . TABLE_CATEGORIES . " where categories_image = '" . xtc_db_input($category_image['categories_image']) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $duplicate_image = $q->output();
 
     if ($duplicate_image['total'] < 2) {
@@ -1085,12 +1085,12 @@
   function xtc_remove_product($product_id) {
     $product_image_query = new xenQuery("select products_image from " . TABLE_PRODUCTS . " where products_id = '" . xtc_db_input($product_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product_image = $q->output();
 
     $duplicate_image_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS . " where products_image = '" . xtc_db_input($product_image['products_image']) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $duplicate_image = $q->output();
 
     if ($duplicate_image['total'] < 2) {
@@ -1116,7 +1116,7 @@
 
     $product_reviews_query = new xenQuery("select reviews_id from " . TABLE_REVIEWS . " where products_id = '" . xtc_db_input($product_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($product_reviews = $q->output()) {
       new xenQuery("delete from " . TABLE_REVIEWS_DESCRIPTION . " where reviews_id = '" . $product_reviews['reviews_id'] . "'");
     }
@@ -1132,7 +1132,7 @@
     if ($restock == 'on') {
       $order_query = new xenQuery("select products_id, products_quantity from " . TABLE_ORDERS_PRODUCTS . " where orders_id = '" . xtc_db_input($order_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($order = $q->output()) {
         new xenQuery("update " . TABLE_PRODUCTS . " set products_quantity = products_quantity + " . $order['products_quantity'] . ", products_ordered = products_ordered - " . $order['products_quantity'] . " where products_id = '" . $order['products_id'] . "'");
       }
@@ -1327,7 +1327,7 @@
     } else {
       $classes_query = new xenQuery("select tax_class_title from " . TABLE_TAX_CLASS . " where tax_class_id = '" . $tax_class_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $classes = $q->output();
 
       return $classes['tax_class_title'];
@@ -1401,7 +1401,7 @@
     if (xtc_db_num_rows($tax_query)) {
       $tax_multiplier = 0;
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($tax = $q->output()) {
         $tax_multiplier += $tax['tax_rate'];
       }
@@ -1425,7 +1425,7 @@
     } else {
       $classes_query = new xenQuery("select geo_zone_name from " . TABLE_GEO_ZONES . " where geo_zone_id = '" . $zone_class_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $classes = $q->output();
 
       return $classes['geo_zone_name'];
@@ -1454,7 +1454,7 @@ $name = (($key) ? 'configuration[' . $key . ']' : 'configuration_value');
     $zone_class_array = array(array('id' => '0', 'text' => TEXT_NONE));
     $zone_class_query = new xenQuery("select geo_zone_id, geo_zone_name from " . TABLE_GEO_ZONES . " order by geo_zone_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($zone_class = $q->output()) {
       $zone_class_array[] = array('id' => $zone_class['geo_zone_id'],
                                   'text' => $zone_class['geo_zone_name']);
@@ -1470,7 +1470,7 @@ $name = (($key) ? 'configuration[' . $key . ']' : 'configuration_value');
     $statuses_array = array(array('id' => '0', 'text' => TEXT_DEFAULT));
     $statuses_query = new xenQuery("select orders_status_id, orders_status_name from " . TABLE_ORDERS_STATUS . " where language_id = '" . $_SESSION['languages_id'] . "' order by orders_status_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($statuses = $q->output()) {
       $statuses_array[] = array('id' => $statuses['orders_status_id'],
                                 'text' => $statuses['orders_status_name']);
@@ -1487,7 +1487,7 @@ $name = (($key) ? 'configuration[' . $key . ']' : 'configuration_value');
 
     $status_query = new xenQuery("select orders_status_name from " . TABLE_ORDERS_STATUS . " where orders_status_id = '" . $order_status_id . "' and language_id = '" . $language_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $status = $q->output();
 
     return $status['orders_status_name'];
@@ -1531,7 +1531,7 @@ $name = (($key) ? 'configuration[' . $key . ']' : 'configuration_value');
      $customers_statuses_query = new xenQuery("select customers_status_id, customers_status_name, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount from " . TABLE_CUSTOMERS_STATUS . " where language_id = '" . $_SESSION['languages_id'] . "' order by customers_status_id");
      $i=1;        // this is changed from 0 to 1 in cs v1.2
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
      while ($customers_statuses = $q->output()) {
        $i=$customers_statuses['customers_status_id'];
        $customers_statuses_array[$i] = array('id' => $customers_statuses['customers_status_id'],
@@ -1553,7 +1553,7 @@ $name = (($key) ? 'configuration[' . $key . ']' : 'configuration_value');
     $customer_status_array = array();
     $customer_status_query = new xenQuery("select customers_status, member_flag, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices  FROM " . TABLE_CUSTOMERS . " left join " . TABLE_CUSTOMERS_STATUS . " on customers_status = customers_status_id where customers_id='" . $customers_id . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $customer_status_array = $q->output();
   return $customer_status_array;
   }
@@ -1613,14 +1613,14 @@ $language_id = 1;
     // well, first try to get group price from database
     $group_price_query = new xenQuery("SELECT personal_offer FROM personal_offers_by_customers_status_" . $group_id . " WHERE products_id = '" . $product_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $group_price_data = $q->output();
     // if we found a price, everything is ok if not, we will create new entry
     if ($group_price_data['personal_offer'] == '') {
       new xenQuery("INSERT INTO personal_offers_by_customers_status_" . $group_id . " (price_id, products_id, quantity, personal_offer) VALUES ('', '" . $product_id . "', '1', '0.00')");
       $group_price_query = new xenQuery("SELECT personal_offer FROM personal_offers_by_customers_status_" . $group_id . " WHERE products_id = '" . $product_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $group_price_data = $q->output();
     }
     return $group_price_data['personal_offer'];
@@ -1638,7 +1638,7 @@ $language_id = 1;
                                       WHERE
                                           code = '" . $currency . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $currencies_value = $q->output();
     $currencies_data = array();
     $currencies_data = array(
@@ -1689,7 +1689,7 @@ $language_id = 1;
   function xtc_get_status_users($status_id) {
     $status_query = new xenQuery("SELECT count(customers_status) as count FROM " . TABLE_CUSTOMERS . " WHERE customers_status = '" . $status_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $status_data = $q->output();
     return $status_data['count'];
   }

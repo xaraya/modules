@@ -23,7 +23,7 @@ if ($_GET['pID']=='media') {
                     FROM ".TABLE_PRODUCTS_CONTENT."
                     WHERE content_id='".$_GET['coID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $content_data=$q->output();
 
 } else {
@@ -35,7 +35,7 @@ if ($_GET['pID']=='media') {
                     FROM ".TABLE_CONTENT_MANAGER."
                     WHERE content_id='".$_GET['coID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $content_data=$q->output();
  }
 ?>

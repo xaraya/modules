@@ -214,7 +214,7 @@ for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
                                         WHERE languages_id='".$languages[$i]['id']."'
                                         AND parent_id='0'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($content_data=$q->output()) {
 
          $content[]=array(
@@ -251,7 +251,7 @@ for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
 for ($ii = 0, $nn = sizeof($content); $ii < $nn; $ii++) {
  $file_flag_sql = new xenQuery("SELECT file_flag_name FROM " . TABLE_CM_FILE_FLAGS . " WHERE file_flag=" . $content[$ii]['FILE_FLAG']);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  $file_flag_result = $q->output();
  echo '              <tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\'" onmouseout="this.className=\'dataTableRow\'">' . "\n";
  if ($content[$ii]['CONTENT_FILE']=='') $content[$ii]['CONTENT_FILE']='database';
@@ -304,7 +304,7 @@ for ($ii = 0, $nn = sizeof($content); $ii < $nn; $ii++) {
                                         WHERE languages_id='".$i."'
                                         AND parent_id='".$content[$ii]['CONTENT_ID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($content_1_data=$q->output()) {
 
          $content_1[]=array(
@@ -323,7 +323,7 @@ for ($a = 0, $x = sizeof($content_1); $a < $x; $a++) {
 if ($content_1[$a]!='') {
  $file_flag_sql = new xenQuery("SELECT file_flag_name FROM " . TABLE_CM_FILE_FLAGS . " WHERE file_flag=" . $content_1[$a]['FILE_FLAG']);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  $file_flag_result = $q->output();
  echo '<tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\'" onmouseout="this.className=\'dataTableRow\'">' . "\n";
 
@@ -387,7 +387,7 @@ switch ($_GET['action']) {
                                         WHERE content_id='".$_GET['coID']."'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $content=$q->output();
 }
         $languages_array = array();
@@ -412,7 +412,7 @@ switch ($_GET['action']) {
                                         WHERE ".$query_string." parent_id='0'
                                         AND content_id!='".$_GET['coID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($categories_data=$q->output()) {
 
   $categories_array[]=array(
@@ -452,7 +452,7 @@ if ($content['content_delete']!=0 or $_GET['action']=='new') {
 }
 $file_flag_sql = new xenQuery("SELECT file_flag as id, file_flag_name as text FROM " . TABLE_CM_FILE_FLAGS);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 while($file_flag = $q->output()) {
     $file_flag_array[] = array('id' => $file_flag['id'], 'text' => $file_flag['text']);
 }
@@ -592,7 +592,7 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
                                         WHERE content_id='".$_GET['coID']."'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $content=$q->output();
 }
 
@@ -605,7 +605,7 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
  $products_array='';
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($products_data=$q->output()) {
 
  $products_array[]=array(
@@ -638,7 +638,7 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
  $content_files='';
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($content_files_data=$q->output()) {
 
  $content_files[]=array(
@@ -754,7 +754,7 @@ if (!$_GET['action']) {
 
  $products_ids='';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($products_id_data=$q->output()) {
 
         $products_ids[]=array(
@@ -799,7 +799,7 @@ if ($_GET['pID']) {
                                         WHERE products_id='".$_GET['pID']."' order by content_name");
         $content_array='';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($content_data=$q->output()) {
 
                 $content_array[]=array(

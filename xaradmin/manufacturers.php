@@ -23,50 +23,49 @@ function commerce_admin_manufacturers()
     if (isset($action)) {
         switch ($action) {
             case 'insert':
+                // Write to the manufacturers table
                 if(!xarVarFetch('manufacturers_name','str',$manufacturers_name)) {return;}
-                $q = new xenQuery('INSERT', $xartables['commerce_manufacturers']);
+                $q = new xenQuery('INSERT');
+                $q->settable($xartables['commerce_manufacturers']);
                 $q->addfield('manufacturers_name',$manufacturers_name);
                 $q->addfield('date_added',mktime());
-              $languages = xarModAPIFunc('commerce','user','get_languages');
-              for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
-                if(!xarVarFetch('manufacturers_url','str',$manufacturers_url_array[$language_id])) {return;}
-                $language_id = $languages[$i]['id'];
-                $q->addfield('manufacturers_url',$manufacturers_url_array[$language_id]);
-                $q->run();
+                if(!$q->run()) return;
+                $lastID = $q->lastid($xartables['commerce_manufacturers'], 'manufacturers_id');
 
-                $q = new xenQuery('INSERT', $xartables['commerce_manufacturers_info']);
-                $q->addfield('languages_id',$language_id);
-                $q->run();
-              }
+                $q->settable($xartables['commerce_manufacturers_info']);
+                $q->clearfields();
+                // Write to the manufacturers info table
+                if(!xarVarFetch('manufacturers_url','array',$manufacturers_url_array)) {return;}
+                $languages = xarModAPIFunc('commerce','user','get_languages');
+                for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
+                    $language_id = $languages[$i]['id'];
+                    $q->addfield('manufacturers_id',$lastID);
+                    $q->addfield('manufacturers_url',$manufacturers_url_array[$language_id]);
+                    $q->addfield('languages_id',$language_id);
+                    if(!$q->run()) return;
+                }
                 xarResponseRedirect(xarModURL('commerce','admin','manufacturers'));
                 break;
             case 'save':
+                // Write to the manufacturers table
+                if(!xarVarFetch('manufacturers_name','str',$manufacturers_name)) {return;}
                 $q = new xenQuery('UPDATE', $xartables['commerce_manufacturers']);
                 $q->addfield('manufacturers_name',$manufacturers_name);
                 $q->addfield('last_modified',mktime());
                 $q->eq('manufacturers_id',$cID);
-              $languages = xarModAPIFunc('commerce','user','get_languages');
-              for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
-                if(!xarVarFetch('manufacturers_url','str',$manufacturers_url_array[$language_id])) {return;}
-                $language_id = $languages[$i]['id'];
-                $q->addfield('manufacturers_url',$manufacturers_url_array[$language_id]);
-                $q->eq('languages_id',$language_id);
-                $q->run();
+                if(!$q->run()) return;
 
-                $q = new xenQuery('INSERT', $xartables['commerce_manufacturers_info']);
-                $q->eq('manufacturers_id',$manufacturers_id);
-                $q->eq('languages_id',$language_id);
-                $q->run();
-              }
-                /*      if ($manufacturers_image = new upload('manufacturers_image', DIR_FS_CATALOG_IMAGES)) {
-                //        new xenQuery("update " . TABLE_MANUFACTURERS . " set manufacturers_image = '" . $manufacturers_image->filename . "' where manufacturers_id = '" . xtc_db_input($manufacturers_id) . "'");
-                //      }
-
-
-                //      if (USE_CACHE == 'true') {
-                //        xtc_reset_cache_block('manufacturers');
-                //      }
-                */
+                $q->settable($xartables['commerce_manufacturers_info']);
+                $q->clearfields();
+                // Write to the manufacturers info table
+                if(!xarVarFetch('manufacturers_url','array',$manufacturers_url_array)) {return;}
+                $languages = xarModAPIFunc('commerce','user','get_languages');
+                for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
+                    $language_id = $languages[$i]['id'];
+                    $q->addfield('manufacturers_url',$manufacturers_url_array[$language_id]);
+                    $q->eq('languages_id',$language_id);
+                    if(!$q->run()) return;
+                }
                 xarResponseRedirect(xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cID)));
                 break;
             case 'deleteconfirm':
@@ -74,22 +73,22 @@ function commerce_admin_manufacturers()
                 if ($delete_image == 'on') {
                     $q = new xenQuery('SELECT', $xartables['commerce_manufacturers'],array('manufacturers_image'));
                     $q->eq('manufacturers_id',$cID);
-                    $q->run();
+                    if(!$q->run()) return;
                     $manufacturer = $q->row();
                     $image_location = 'modules/commerce/xarimages/' . $manufacturer['manufacturers_image'];
                     if (file_exists($image_location)) @unlink($image_location);
                 }
                 $q = new xenQuery('DELETE', $xartables['commerce_manufacturers']);
                 $q->eq('manufacturers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE', $xartables['commerce_manufacturers_info']);
                 $q->eq('manufacturers_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 if(!xarVarFetch('delete_products','str',$delete_products)) {return;}
                 if ($delete_products == 'on') {
                     $q = new xenQuery('SELECT', $xartables['commerce_products']);
                     $q->eq('manufacturers_id',$cID);
-                    $q->run();
+                    if(!$q->run()) return;
                     foreach ($q->output() as $product) {
                       xarModAPIFunc('commerce','admin','remove_product',array('id' =>$products['products_id']));
                     }
@@ -98,12 +97,8 @@ function commerce_admin_manufacturers()
                     $q = new xenQuery('UPDATE', $xartables['commerce_products']);
                     $q->addfield('manufacturers_id','');
                     $q->eq('manufacturers_id',$cID);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
-//      if (USE_CACHE == 'true') {
-//        xtc_reset_cache_block('manufacturers');
-//      }
-
                 xarResponseRedirect(xarModURL('commerce','admin','manufacturers',array('page' => $page)));
                 break;
         }
@@ -111,13 +106,18 @@ function commerce_admin_manufacturers()
 
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
+    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
 
-    $q = new xenQuery('SELECT',$xartables['commerce_manufacturers']);
-    $q->addfields(array('manufacturers_id', 'manufacturers_name', 'manufacturers_image', 'date_added', 'last_modified'));
+    $q = new xenQuery('SELECT');
+    $q->addtable($xartables['commerce_manufacturers'], 'm');
+    $q->addtable($xartables['commerce_manufacturers_info'], 'mi');
+    $q->addfields(array('m.manufacturers_id', 'm.manufacturers_name', 'm.manufacturers_image', 'm.date_added', 'm.last_modified'));
+    $q->join('mi.manufacturers_id','m.manufacturers_id');
+    $q->eq('mi.languages_id',$currentlang['id']);
     $q->setorder('manufacturers_name');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),
@@ -131,14 +131,12 @@ function commerce_admin_manufacturers()
     $limit = count($items);
     for ($i=0;$i<$limit;$i++) {
         if ((!isset($cID) || $cID == $items[$i]['manufacturers_id']) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
-
-            $manufacturer_products_query = new xenQuery("select count(*) as products_count from " . TABLE_PRODUCTS . " where manufacturers_id = '" . $manufacturers['manufacturers_id'] . "'");
             $q = new xenQuery('SELECT',$xartables['commerce_products']);
-            $q->eq('manufacturers_id',$cID);
             $q->addfields('count(*) as products_count');
-            $q->run();
+            $q->eq('manufacturers_id',$items[$i]['manufacturers_id']);
+            if(!$q->run()) return;
             $manufacturer_products = $q->row();
-            $items = array_merge($items,$manufacturer_products);
+            $items[$i] = array_merge($items[$i],$manufacturer_products);
             $cInfo = new objectInfo($items[$i]);
             $items[$i]['url'] = xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo->manufacturers_id, 'action' => 'edit'));
         }
@@ -154,7 +152,6 @@ function commerce_admin_manufacturers()
 
     $languages = xarModAPIFunc('commerce','user','get_languages');
     $data['languages'] = $languages;
-//echo var_dump($languages);exit;
     return $data;
 }
 ?>

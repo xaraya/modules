@@ -30,7 +30,7 @@ function commerce_admin_languages($args)
       // create additional categories_description records
       $categories_query = new xenQuery("select c.categories_id, cd.categories_name from " . TABLE_CATEGORIES . " c left join " . TABLE_CATEGORIES_DESCRIPTION . " cd on c.categories_id = cd.categories_id where cd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($categories = $q->output()) {
         new xenQuery("insert into " . TABLE_CATEGORIES_DESCRIPTION . " (categories_id, language_id, categories_name) values ('" . $categories['categories_id'] . "', '" . $insert_id . "', '" . xtc_db_input($categories['categories_name']) . "')");
       }
@@ -38,7 +38,7 @@ function commerce_admin_languages($args)
       // create additional products_description records
       $products_query = new xenQuery("select p.products_id, pd.products_name, pd.products_description, pd.products_url from " . TABLE_PRODUCTS . " p left join " . TABLE_PRODUCTS_DESCRIPTION . " pd on p.products_id = pd.products_id where pd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products = $q->output()) {
         new xenQuery("insert into " . TABLE_PRODUCTS_DESCRIPTION . " (products_id, language_id, products_name, products_description, products_url) values ('" . $products['products_id'] . "', '" . $insert_id . "', '" . xtc_db_input($products['products_name']) . "', '" . xtc_db_input($products['products_description']) . "', '" . xtc_db_input($products['products_url']) . "')");
       }
@@ -46,7 +46,7 @@ function commerce_admin_languages($args)
       // create additional products_options records
       $products_options_query = new xenQuery("select products_options_id, products_options_name from " . TABLE_PRODUCTS_OPTIONS . " where language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products_options = $q->output()) {
         new xenQuery("insert into " . TABLE_PRODUCTS_OPTIONS . " (products_options_id, language_id, products_options_name) values ('" . $products_options['products_options_id'] . "', '" . $insert_id . "', '" . xtc_db_input($products_options['products_options_name']) . "')");
       }
@@ -54,7 +54,7 @@ function commerce_admin_languages($args)
       // create additional products_options_values records
       $products_options_values_query = new xenQuery("select products_options_values_id, products_options_values_name from " . TABLE_PRODUCTS_OPTIONS_VALUES . " where language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products_options_values = $q->output()) {
         new xenQuery("insert into " . TABLE_PRODUCTS_OPTIONS_VALUES . " (products_options_values_id, language_id, products_options_values_name) values ('" . $products_options_values['products_options_values_id'] . "', '" . $insert_id . "', '" . xtc_db_input($products_options_values['products_options_values_name']) . "')");
       }
@@ -62,7 +62,7 @@ function commerce_admin_languages($args)
       // create additional manufacturers_info records
       $manufacturers_query = new xenQuery("select m.manufacturers_id, mi.manufacturers_url from " . TABLE_MANUFACTURERS . " m left join " . TABLE_MANUFACTURERS_INFO . " mi on m.manufacturers_id = mi.manufacturers_id where mi.languages_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($manufacturers = $q->output()) {
         new xenQuery("insert into " . TABLE_MANUFACTURERS_INFO . " (manufacturers_id, languages_id, manufacturers_url) values ('" . $manufacturers['manufacturers_id'] . "', '" . $insert_id . "', '" . xtc_db_input($manufacturers['manufacturers_url']) . "')");
       }
@@ -70,7 +70,7 @@ function commerce_admin_languages($args)
       // create additional orders_status records
       $orders_status_query = new xenQuery("select orders_status_id, orders_status_name from " . TABLE_ORDERS_STATUS . " where language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($orders_status = $q->output()) {
         new xenQuery("insert into " . TABLE_ORDERS_STATUS . " (orders_status_id, language_id, orders_status_name) values ('" . $orders_status['orders_status_id'] . "', '" . $insert_id . "', '" . xtc_db_input($orders_status['orders_status_name']) . "')");
       }
@@ -79,7 +79,7 @@ function commerce_admin_languages($args)
             $customers_status_query=new xenQuery("SELECT DISTINCT customers_status_id
                             FROM ".TABLE_CUSTOMERS_STATUS);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($data=$q->output()) {
 
       $customers_status_data_query=new xenQuery("SELECT *
@@ -87,7 +87,7 @@ function commerce_admin_languages($args)
                             WHERE customers_status_id='".$data['customers_status_id']."'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $group_data=$q->output();
         $q->addfield('customers_status_id',$data['customers_status_id']);
         $q->addfield('language_id',$insert_id);
@@ -139,7 +139,7 @@ function commerce_admin_languages($args)
 
       $lng_query = new xenQuery("select languages_id from " . TABLE_LANGUAGES . " where code = '" . DEFAULT_CURRENCY . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $lng = $q->output();
       if ($lng['languages_id'] == $lID) {
         new xenQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '' where configuration_key = 'DEFAULT_CURRENCY'");
@@ -164,7 +164,7 @@ function commerce_admin_languages($args)
 
       $lng_query = new xenQuery("select code from " . TABLE_LANGUAGES . " where languages_id = '" . xtc_db_input($lID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $lng = $q->output();
 
       $remove_language = true;
@@ -180,7 +180,7 @@ function commerce_admin_languages($args)
   $languages_query = new xenQuery($languages_query_raw);
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($languages = $q->output()) {
     if (((!$_GET['lID']) || (@$_GET['lID'] == $languages['languages_id'])) && (!$lInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
       $lInfo = new objectInfo($languages);

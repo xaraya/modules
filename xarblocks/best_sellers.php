@@ -72,7 +72,7 @@ function commerce_best_sellersblock_display($blockinfo)
     $rows = 0;
     $box_content=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($best_sellers = $q->output()) {
         $rows++;
         if ( ($rows < 10) && (substr($rows, 0, 1) != '0') ) $rows = '0' . $rows;

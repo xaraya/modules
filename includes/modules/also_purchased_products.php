@@ -28,7 +28,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
       $row = 0;
       $module_content = array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($orders = $q->output()) {
         $orders['products_name'] = xarModAPIFunc('commerce','user','get_products_name',array('id' =>$orders['products_id']));
         $orders['products_short_description'] = xtc_get_short_description($orders['products_id']);

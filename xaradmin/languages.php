@@ -37,7 +37,7 @@ function commerce_admin_languages()
                 $q->addfield('directory',$directory);
                 $q->addfield('sort_order',$sort_order);
                 $q->addfield('charset',$charset);
-                $q->run();
+                if(!$q->run()) return;
 
       // create additional categories_description records
                 $q = new xenQuery('SELECT',$xartables['commerce_categories'],'c');
@@ -45,13 +45,13 @@ function commerce_admin_languages()
                 $q->addfields('c.categories_id', 'cd.categories_name');
                 $q->join('c.categories_id','cd.categories_id');
                 $q->eq('cd.language_id',$_SESSION['languages_id']);
-                $q->run();
+                if(!$q->run()) return;
                 foreach ($q->output() as $category) {
                     $q = new xenQuery('INSERT', $xartables['commerce_categories_description']);
                     $q->addfield('categories_id',$category['categories_id']);
                     $q->addfield('language_id',$insert_id);
                     $q->addfield('categories_name',$category['categories_name']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
       // create additional products_description records
@@ -60,7 +60,7 @@ function commerce_admin_languages()
                 $q->addfields('p.products_id', 'pd.products_name', 'pd.products_description', 'pd.products_url');
                 $q->join('p.products_id','pd.products_id');
                 $q->eq('pd.language_id',$_SESSION['languages_id']);
-                $q->run();
+                if(!$q->run()) return;
                 foreach ($q->output() as $products) {
                     $q = new xenQuery('INSERT', $xartables['commerce_products_description']);
                     $q->addfield('products_id',$products['products_id']);
@@ -68,33 +68,33 @@ function commerce_admin_languages()
                     $q->addfield('products_name',$products['products_name']);
                     $q->addfield('products_description',$products['products_description']);
                     $q->addfield('products_url',$products['products_url']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
       // create additional products_options records
                 $q = new xenQuery('SELECT',$xartables['commerce_products_options']);
                 $q->addfields('products_options_id', 'products_options_name');
                 $q->eq('language_id',$_SESSION['languages_id']);
-                $q->run();
+                if(!$q->run()) return;
                 foreach ($q->output() as $products_options) {
                     $q = new xenQuery('INSERT', $xartables['commerce_products_options']);
                     $q->addfield('products_options_id',$products_options['products_options_id']);
                     $q->addfield('language_id',$insert_id);
                     $q->addfield('products_options_name',$products_options['products_options_name']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
       // create additional products_options_values records
                 $q = new xenQuery('SELECT',$xartables['commerce_products_options_values']);
                 $q->addfields('products_options_values_id', 'products_options_values_name');
                 $q->eq('language_id',$_SESSION['languages_id']);
-                $q->run();
+                if(!$q->run()) return;
                 foreach ($q->output() as $products_options_values) {
                     $q = new xenQuery('INSERT', $xartables['commerce_products_description']);
                     $q->addfield('products_options_values_id',$products_options['products_options_values_id']);
                     $q->addfield('language_id',$insert_id);
                     $q->addfield('products_options_values_name',$products_options['products_options_values_name']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
       // create additional manufacturers_info records
@@ -103,32 +103,32 @@ function commerce_admin_languages()
                 $q->addfields('m.manufacturers_id', 'mi.manufacturers_url');
                 $q->join('m.manufacturers_id','mi.manufacturers_id');
                 $q->eq('mi.language_id',$_SESSION['languages_id']);
-                $q->run();
+                if(!$q->run()) return;
                 foreach ($q->output() as $manufacturers) {
                     $q = new xenQuery('INSERT', $xartables['commerce_manufacturers_info']);
                     $q->addfield('manufacturers_id',$manufacturers['manufacturers_id']);
                     $q->addfield('language_id',$insert_id);
                     $q->addfield('manufacturers_url',$manufacturers['manufacturers_url']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
       // create additional orders_status records
                 $q = new xenQuery('SELECT',$xartables['commerce_orders_status']);
                 $q->addfields('orders_status_id', 'orders_status_name');
                 $q->eq('language_id',$_SESSION['languages_id']);
-                $q->run();
+                if(!$q->run()) return;
                 foreach ($q->output() as $orders_status) {
                     $q = new xenQuery('INSERT', $xartables['orders_status']);
                     $q->addfield('orders_status_id',$orders_status['orders_status_id']);
                     $q->addfield('language_id',$insert_id);
                     $q->addfield('orders_status_name',$orders_status['orders_status_name']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
       // create additional customers status
                 $q = new xenQuery('SELECT',$xartables['commerce_customers_status']);
                 $q->addfields('DISTINCT customers_status_id');
-                $q->run();
+                if(!$q->run()) return;
                 foreach ($q->output() as $data) {
                     $q1 = new xenQuery('SELECT',$xartables['commerce_customers_status']);
                     $q1->eq('customers_status_id',$data['customers_status_id']);
@@ -160,7 +160,7 @@ function commerce_admin_languages()
                     $q = new xenQuery('UPDATE', $xartables['commerce_configuration']);
                     $q->addfield('configuration_value', $code);
                     $q->eq('configuration_key',DEFAULT_LANGUAGE);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
                 xarResponseRedirect(xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $insert_id)));
@@ -180,14 +180,14 @@ function commerce_admin_languages()
                 $q->addfield('sort_order',$sort_order);
                 $q->addfield('charset',$charset);
                 $q->eq('languages_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
 
                 if(!xarVarFetch('default','str',$default)) {return;}
                 if ($default == 'on') {
                     $q = new xenQuery('UPDATE', $xartables['commerce_configuration']);
                     $q->addfield('configuration_value', $code);
                     $q->eq('configuration_key',DEFAULT_LANGUAGE);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
                 xarResponseRedirect(xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $cID)));
@@ -195,45 +195,45 @@ function commerce_admin_languages()
                 $q = new xenQuery('SELECT', $xartables['commerce_languages']);
                 $q->addfield('languages_id');
                 $q->eq('code',DEFAULT_CURRENCY);
-                $q->run();
+                if(!$q->run()) return;
                 $lng = $q->row();
                 if ($lng['languages_id'] == $cID) {
                     $q = new xenQuery('UPDATE', $xartables['commerce_configuration']);
                     $q->addfield('configuration_value','');
                     $q->eq('configuration_key',DEFAULT_CURRENCY);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
 
                 $q = new xenQuery('DELETE', $xartables['commerce_categories_description']);
                 $q->eq('languages_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_products_description']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_products_options']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_products_options_values']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_manufacturers_info']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_orders_status']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_languages']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_content_manager']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_products_content']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_products_description']);
-                $q->run();
+                if(!$q->run()) return;
                 $q->settable($xartables['commerce_customers_status']);
-                $q->run();
+                if(!$q->run()) return;
 
                 xarResponseRedirect(xarModURL('commerce','admin','languages',array('page' => $page)));
                 break;
             case 'delete':
                 $q = new xenQuery('SELECT', $xartables['commerce_languages'],array('code'));
                 $q->eq('languages_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 $lng = $q->row();
                 if ($lng['code'] == $localeinfo['lang']) {
                     $remove_language = false;
@@ -252,7 +252,7 @@ function commerce_admin_languages()
     $q->setorder('sort_order');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),

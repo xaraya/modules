@@ -20,7 +20,7 @@
     $rows = 0;
     $listing_query = new xenQuery($listing_split->sql_query);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($listing = $q->output()) {
       $rows++;
       if ($_SESSION['customers_status']['customers_status_show_price'] != '0') {

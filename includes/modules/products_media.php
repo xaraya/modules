@@ -28,7 +28,7 @@ $check_query=new xenQuery("SELECT DISTINCT
 $check_data=array();
 $i='0';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 while ($content_data=$q->output()) {
  $check_data[$i]=$content_data['products_id'];
  $i++;
@@ -54,7 +54,7 @@ $content_query=new xenQuery("SELECT
 
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($content_data=$q->output()) {
     $filename='';
     if ($content_data['content_link']!='')  {

@@ -66,13 +66,13 @@
 
       $products_query = new xenQuery("select products_id, customers_basket_quantity from " . TABLE_CUSTOMERS_BASKET . " where customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products = $q->output()) {
         $this->contents[$products['products_id']] = array('qty' => $products['customers_basket_quantity']);
         // attributes
         $attributes_query = new xenQuery("select products_options_id, products_options_value_id from " . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . " where customers_id = '" . $_SESSION['customer_id'] . "' and products_id = '" . $products['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($attributes = $q->output()) {
           $this->contents[$products['products_id']]['attributes'][$attributes['products_options_id']] = $attributes['products_options_value_id'];
         }
@@ -233,7 +233,7 @@
         // products price
         $product_query = new xenQuery("select products_id, products_price, products_discount_allowed, products_tax_class_id, products_weight from " . TABLE_PRODUCTS . " where products_id='" . xtc_get_prid($products_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         if ($product = $q->output()) {
           $products_price=xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$product['products_id'],'price_special' =>$price_special=0,'quantity' =>$quantity=$qty));
           $this->total += $products_price;
@@ -246,7 +246,7 @@
           while (list($option, $value) = each($this->contents[$products_id]['attributes'])) {
             $attribute_price_query = new xenQuery("select pd.products_tax_class_id, p.options_values_price, p.price_prefix, p.options_values_weight, p.weight_prefix from " . TABLE_PRODUCTS_ATTRIBUTES . " p, " . TABLE_PRODUCTS . " pd where p.products_id = '" . $product['products_id'] . "' and p.options_id = '" . $option . "' and pd.products_id = p.products_id and p.options_values_id = '" . $value . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $attribute_price = $q->output();
 
             $attribute_weight=$attribute_price['options_values_weight'];
@@ -276,7 +276,7 @@
         while (list($option, $value) = each($this->contents[$products_id]['attributes'])) {
           $attribute_price_query = new xenQuery("select pd.products_tax_class_id, p.options_values_price, p.price_prefix from " . TABLE_PRODUCTS_ATTRIBUTES . " p, " . TABLE_PRODUCTS . " pd where p.products_id = '" . $products_id . "' and p.options_id = '" . $option . "' and pd.products_id = p.products_id and p.options_values_id = '" . $value . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $attribute_price = $q->output();
           if ($attribute_price['price_prefix'] == '+') {
             $attributes_price += xtc_get_products_attribute_price($attribute_price['options_values_price'], $tax_class=$attribute_price['products_tax_class_id'], $price_special=0, $quantity=1, $prefix=$attribute_price['price_prefix']);
@@ -297,7 +297,7 @@
       while (list($products_id, ) = each($this->contents)) {
         $products_query = new xenQuery("select p.products_id, pd.products_name,p.products_image, p.products_model, p.products_price, p.products_discount_allowed, p.products_weight, p.products_tax_class_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id='" . xtc_get_prid($products_id) . "' and pd.products_id = p.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         if ($products = $q->output()) {
           $prid = $products['products_id'];
           $products_price = xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$products['products_id'],'price_special' =>$price_special=0,'quantity' =>$quantity=1));
@@ -347,7 +347,7 @@
             while (list(, $value) = each($this->contents[$products_id]['attributes'])) {
               $virtual_check_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_ATTRIBUTES . " pa, " . TABLE_PRODUCTS_ATTRIBUTES_DOWNLOAD . " pad where pa.products_id = '" . $products_id . "' and pa.options_values_id = '" . $value . "' and pa.products_attributes_id = pad.products_attributes_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
               $virtual_check = $q->output();
 
               if ($virtual_check['total'] > 0) {

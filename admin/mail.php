@@ -39,7 +39,7 @@
           $mail_query = new xenQuery("select customers_firstname, customers_lastname, customers_email_address from " . TABLE_CUSTOMERS . " where customers_status = " . $_POST['customers_email_address']);
           $sent_to_query = new xenQuery("select customers_status_name from " . TABLE_CUSTOMERS_STATUS . " WHERE customers_status_id = '" . $_POST['customers_email_address'] . "' AND language_id='" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $sent_to = $q->output();
           $mail_sent_to = $sent_to['customers_status_name'];
         } else {
@@ -60,7 +60,7 @@
     $mimemessage->add_text($message);
     $mimemessage->build_message();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($mail = $q->output()) {
       $mimemessage->send($mail['customers_firstname'] . ' ' . $mail['customers_lastname'], $mail['customers_email_address'], '', $from, $subject);
     }
@@ -123,7 +123,7 @@
           echo "hier bin ich";
           $sent_to_query = new xenQuery("select customers_status_name from " . TABLE_CUSTOMERS_STATUS . " WHERE customers_status_id = '" . $_POST['customers_email_address'] . "' AND language_id='" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $sent_to = $q->output();
           $mail_sent_to = $sent_to['customers_status_name'];
         } else {
@@ -201,7 +201,7 @@
 //    $customers_statuses_array = xtc_get_customers_statuses();
     $customers_statuses_array = new xenQuery("select customers_status_id , customers_status_name from " . TABLE_CUSTOMERS_STATUS . " WHERE language_id='" . $_SESSION['languages_id'] . "' order by customers_status_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($customers_statuses_value = $q->output()) {
       $customers[] = array('id' => $customers_statuses_value['customers_status_id'],
                            'text' => $customers_statuses_value['customers_status_name']);
@@ -209,7 +209,7 @@
     // End customers Status 1.x
     $mail_query = new xenQuery("select customers_email_address, customers_firstname, customers_lastname from " . TABLE_CUSTOMERS . " order by customers_lastname");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while($customers_values = $q->output()) {
       $customers[] = array('id' => $customers_values['customers_email_address'],
                            'text' => $customers_values['customers_lastname'] . ', ' . $customers_values['customers_firstname'] . ' (' . $customers_values['customers_email_address'] . ')');

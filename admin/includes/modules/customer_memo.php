@@ -27,11 +27,11 @@
                               ORDER BY
                                   memo_date DESC");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($memo_values = $q->output()) {
     $poster_query = new xenQuery("SELECT customers_firstname, customers_lastname FROM " . TABLE_CUSTOMERS . " WHERE customers_id = '" . $memo_values['poster_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $poster_values = $q->output();
 ?><table width="100%">
       <tr>

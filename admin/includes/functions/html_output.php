@@ -122,7 +122,7 @@
     $num_country = 1;
     $output_string = '';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($countries = $q->output()) {
       if ($num_country == 1) {
         $output_string .= '  if (' . $country . ' == "' . $countries['zone_country_id'] . '") {' . "\n";
@@ -134,7 +134,7 @@
 
       $num_state = 1;
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($states = $q->output()) {
         if ($num_state == '1') $output_string .= '    ' . $form . '.' . $field . '.options[0] = new Option("' . PLEASE_SELECT . '", "");' . "\n";
         $output_string .= '    ' . $form . '.' . $field . '.options[' . $num_state . '] = new Option("' . $states['zone_name'] . '", "' . $states['zone_id'] . '");' . "\n";

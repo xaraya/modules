@@ -13,7 +13,7 @@
   if (isset($_SESSION['customer_id'])) {
     $customers_status_query_1 = new xenQuery("SELECT customers_status FROM " . TABLE_CUSTOMERS . " WHERE customers_id = '" . $_SESSION['customer_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $customers_status_value_1 = $q->output();
 
     $customers_status_query = new xenQuery("SELECT
@@ -36,7 +36,7 @@
                                                 customers_status_id = '" . $customers_status_value_1['customers_status'] . "' AND language_id = '" . $_SESSION['languages_id'] . "'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $customers_status_value = $q->output();
 
     $_SESSION['customers_status'] = array();
@@ -76,7 +76,7 @@
                                             WHERE
                                                 customers_status_id = '" . DEFAULT_CUSTOMERS_STATUS_ID_GUEST . "' AND language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $customers_status_value = $q->output();
 
     $_SESSION['customers_status'] = array();

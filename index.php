@@ -33,14 +33,14 @@
   if (isset($cPath) && xarModAPIFunc('commerce','user','not_null',array('arg' => $cPath))) {
     $categories_products_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS_TO_CATEGORIES . " where categories_id = '" . $current_category_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $cateqories_products = $q->output();
     if ($cateqories_products['total'] > 0) {
       $category_depth = 'products'; // display products
     } else {
       $category_parent_query = new xenQuery("select count(*) as total from " . TABLE_CATEGORIES . " where parent_id = '" . $current_category_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $category_parent = $q->output();
       if ($category_parent['total'] > 0) {
         $category_depth = 'nested'; // navigate through the categories

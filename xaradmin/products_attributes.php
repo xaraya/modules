@@ -44,7 +44,7 @@ function commerce_admin_products_attributes()
                     $q->addfield('products_options_id',$products_options_id);
                     $q->addfield('products_options_name',$option_name[$i+1]);
                     $q->addfield('language_id',$languages[$i]['id']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
@@ -55,12 +55,12 @@ function commerce_admin_products_attributes()
                     $q->addfield('products_options_values_id',$value_id);
                     $q->addfield('products_options_values_name',$value_name[$languages[$i]['id']]);
                     $q->addfield('language_id',$languages[$i]['id']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 $q = new xenQuery('INSERT',$xartables['commerce_products_options_values_to_products_options']);
                 $q->addfield('products_options_values_id',$value_id);
                 $q->addfield('products_options_id',$option_id);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
             case 'add_product_attributes':
@@ -71,7 +71,7 @@ function commerce_admin_products_attributes()
                 $q->addfield('value_price',$value_price);
                 $q->addfield('price_prefix',$price_prefix);
         $products_attributes_id = xtc_db_insert_id();
-                $q->run();
+                if(!$q->run()) return;
                 if(!xarVarFetch('products_attributes_filename','str',$products_attributes_filename)) {return;}
                 if (($configuration['download_enabled'] == 'true') && $products_attributes_filename != '') {
                     $q = new xenQuery('INSERT',$xartables['commerce_products_attributes_download']);
@@ -79,7 +79,7 @@ function commerce_admin_products_attributes()
                     $q->addfield('products_attributes_filename',$products_attributes_filename);
                     $q->addfield('products_attributes_maxdays',$products_attributes_maxdays);
                     $q->addfield('products_attributes_maxcount',$products_attributes_maxcount);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
@@ -90,7 +90,7 @@ function commerce_admin_products_attributes()
                 $q->addfields(array('o.language_id','l.code', 'o.products_options_name'));
                 $q->eq('products_options_id',$option_id);
                 $q->join('l.languages_id','o.language_id');
-                $q->run();
+                if(!$q->run()) return;
                 $data['options_name'] = $q->output();
                 break;
             case 'update_option_value':
@@ -100,7 +100,7 @@ function commerce_admin_products_attributes()
                 $q->addfields(array('ov.language_id','l.code', 'ov.products_options_values_name'));
                 $q->eq('ov.products_options_values_id',$value_id);
                 $q->join('l.languages_id','ov.language_id');
-                $q->run();
+                if(!$q->run()) return;
                 $data['options_value_name'] = $q->output();
                 break;
             case 'update_option_name':
@@ -110,7 +110,7 @@ function commerce_admin_products_attributes()
                     $q->addfield('products_options_name',$option_name[$languages[$i]['id']]);
                     $q->eq('products_options_id',$option_id);
                     $q->eq('language_id',$languages[$i]['id']);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
@@ -121,12 +121,12 @@ function commerce_admin_products_attributes()
                     $q->addfield('products_options_values_name',$value_name[$languages[$i]['id']]);
                     $q->eq('language_id',$languages[$i]['id']);
                     $q->eq('products_options_values_id',$value_id);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 $q = new xenQuery('UPDATE',$xartables['commerce_products_options_values_to_products_options']);
                 $q->addfield('products_options_id',$option_id);
                 $q->eq('products_options_values_id',$value_id);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
             case 'update_product_attribute':
@@ -144,33 +144,33 @@ function commerce_admin_products_attributes()
                     $q->addfield('products_attributes_maxdays',$products_attributes_maxdays);
                     $q->addfield('products_attributes_maxcount',$products_attributes_maxcount);
                     $q->eq('products_attributes_id',$attribute_id);
-                    $q->run();
+                    if(!$q->run()) return;
                 }
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
             case 'delete_option':
                 $q = new xenQuery('DELETE', $xartables['commerce_products_options']);
                 $q->eq('products_options_id',$option_id);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
             case 'delete_value':
                 $q = new xenQuery('DELETE', $xartables['commerce_products_options_values']);
                 $q->eq('products_options_values_id',$value_id);
-                $q->run();
+                if(!$q->run()) return;
                 $q = new xenQuery('DELETE', $xartables['commerce_products_options_values_to_products_options']);
                 $q->eq('products_options_values_id',$value_id);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
             case 'delete_attribute':
                 $q = new xenQuery('DELETE', $xartables['commerce_products_attributes']);
                 $q->eq('products_attributes_id',$attribute_id);
-                $q->run();
+                if(!$q->run()) return;
 // Added for DOWNLOAD_ENABLED. Always try to remove attributes, even if downloads are no longer enabled
                 $q = new xenQuery('DELETE', $xartables['commerce_products_attributes_download']);
                 $q->eq('products_attributes_id',$attribute_id);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','products_attributes', array('option_page' => $option_page, 'value_page' => $value_page, 'attribute_page' => $attribute_page)));
                 break;
             case 'delete_product_option':
@@ -180,7 +180,7 @@ function commerce_admin_products_attributes()
                 $q->eq('language_id', $currentlang['id']);
                 $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
                 $q->setstartat(($option_page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-                $q->run();
+                if(!$q->run()) return;
                 $data['options_values'] = $q->row();
                 break;
             case 'delete_option_value':
@@ -188,7 +188,7 @@ function commerce_admin_products_attributes()
                 $q->addfields(array('products_options_values_id', 'products_options_values_name'));
                 $q->eq('products_options_values_id', $value_id);
                 $q->eq('language_id', $currentlang['id']);
-                $q->run();
+                if(!$q->run()) return;
                 $data['delete_value'] = $q->row();
                 break;
         }
@@ -210,7 +210,7 @@ function commerce_admin_products_attributes()
     $q->eq('pd.language_id',$currentlang);
 //    $q->eq('pa.options_id',$option_id);
     $q->setorder('pd.products_name');
-//    $q->run();
+//    if(!$q->run()) return;
     $data['products'] = $q->output();
 
     $q = new xenQuery('SELECT');
@@ -226,7 +226,7 @@ function commerce_admin_products_attributes()
     $q->eq('po.language_id',$currentlang['id']);
 //    $q->eq('pa.options_values_id',$value_id);
     $q->setorder('pd.products_name');
-//    $q->run();
+//    if(!$q->run()) return;
     $data['products_values'] = $q->output();
 
     if(!xarVarFetch('option_order_by', 'str',  $option_order_by, 'products_options_id', XARVAR_DONT_SET)) {return;}
@@ -235,7 +235,7 @@ function commerce_admin_products_attributes()
     $q->setorder($option_order_by);
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($option_page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
     $data['option_values'] = $q->output;
 
     $selection['startnum'] = '%%';
@@ -246,13 +246,13 @@ function commerce_admin_products_attributes()
 
     $q = new xenQuery('SELECT',$xartables['commerce_products_options']);
     $q->addfield('max(products_options_id) AS next_id');
-    $q->run();
+    if(!$q->run()) return;
     $max_options_id_values = $q->row();
     $data['next_id'] = isset($max_options_id_values['next_id']) ? $max_options_id_values['next_id'] + 1: 1;
 
     $q = new xenQuery('SELECT',$xartables['commerce_products_options_values']);
     $q->addfield('max(products_options_values_id) AS next_id');
-    $q->run();
+    if(!$q->run()) return;
     $max_options_id_values = $q->row();
     $data['next_value_id'] = isset($max_options_id_values['next_id']) ? $max_options_id_values['next_id'] + 1: 1;
 
@@ -265,7 +265,7 @@ function commerce_admin_products_attributes()
     $q->setstartat(($option_page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
 //            $q->setstatement();
 //            echo $q->getstatement();exit;
-    $q->run();
+    if(!$q->run()) return;
     $data['values_values'] = $q->output;
 //    echo var_dump($data['values_values']);exit;
 
@@ -273,13 +273,13 @@ function commerce_admin_products_attributes()
     $q->addfields(array('products_options_id','products_options_name'));
     $q->eq('language_id',$currentlang['id']);
     $q->setorder('products_options_name');
-    $q->run();
+    if(!$q->run()) return;
     $data['option_list'] = $q->output();
 
     $q = new xenQuery('SELECT',$xartables['commerce_products_options'],'products_options_name');
     $q->eq('products_options_name',$option_id);
     $q->eq('language_id',$currentlang['id']);
-    $q->run();
+    if(!$q->run()) return;
     $option = $q->row();
     if($option == array()) $data['option_name'] = '';
     else $data['option_name'] = $option['products_options_name'];
@@ -296,7 +296,7 @@ function commerce_admin_products_attributes()
     $q->eq('pd.language_id',$currentlang['id']);
     $q->eq('po.language_id',$currentlang['id']);
     $q->setorder('pd.products_name');
-    $q->run();
+    if(!$q->run()) return;
 
     $data['action'] = $action;
     $data['option_page'] = $option_page;

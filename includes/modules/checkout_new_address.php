@@ -56,7 +56,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
         $zones_array = array();
         $zones_query = new xenQuery("select zone_name from " . TABLE_ZONES . " where zone_country_id = '" . xtc_db_input($country) . "' order by zone_name");
         while ($zones_values = $q->output()      $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 ) {
           $zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
         }

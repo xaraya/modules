@@ -29,7 +29,7 @@
       $products_array = array();
       $products_query = new xenQuery("select pd.products_id, pd.products_name from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where pd.language_id = '" . $_SESSION['languages_id'] . "' and pd.products_id = p.products_id and p.products_status = '1' order by pd.products_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($products = $q->output()) {
         $products_array[] = array('id' => $products['products_id'],
                                   'text' => $products['products_name']);
@@ -97,14 +97,14 @@ function selectAll(FormName, SelectBox) {
       if ($_GET['global'] == 'true') {
         $products_query = new xenQuery("select distinct customers_id from " . TABLE_PRODUCTS_NOTIFICATIONS);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($products = $q->output()) {
           $audience[$products['customers_id']] = '1';
         }
 
         $customers_query = new xenQuery("select customers_info_id from " . TABLE_CUSTOMERS_INFO . " where global_product_notifications = '1'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($customers = $q->output()) {
           $audience[$customers['customers_info_id']] = '1';
         }
@@ -115,14 +115,14 @@ function selectAll(FormName, SelectBox) {
 
         $products_query = new xenQuery("select distinct customers_id from " . TABLE_PRODUCTS_NOTIFICATIONS . " where products_id in (" . $ids . ")");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($products = $q->output()) {
           $audience[$products['customers_id']] = '1';
         }
 
         $customers_query = new xenQuery("select customers_info_id from " . TABLE_CUSTOMERS_INFO . " where global_product_notifications = '1'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($customers = $q->output()) {
           $audience[$customers['customers_info_id']] = '1';
         }
@@ -174,7 +174,7 @@ function selectAll(FormName, SelectBox) {
       if ($_POST['global'] == 'true') {
         $products_query = new xenQuery("select distinct pn.customers_id, c.customers_firstname, c.customers_lastname, c.customers_email_address from " . TABLE_CUSTOMERS . " c, " . TABLE_PRODUCTS_NOTIFICATIONS . " pn where c.customers_id = pn.customers_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($products = $q->output()) {
           $audience[$products['customers_id']] = array('firstname' => $products['customers_firstname'],
                                                        'lastname' => $products['customers_lastname'],
@@ -183,7 +183,7 @@ function selectAll(FormName, SelectBox) {
 
         $customers_query = new xenQuery("select c.customers_id, c.customers_firstname, c.customers_lastname, c.customers_email_address from " . TABLE_CUSTOMERS . " c, " . TABLE_CUSTOMERS_INFO . " ci where c.customers_id = ci.customers_info_id and ci.global_product_notifications = '1'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($customers = $q->output() {
           $audience[$customers['customers_id']] = array('firstname' => $customers['customers_firstname'],
                                                         'lastname' => $customers['customers_lastname'],
@@ -196,7 +196,7 @@ function selectAll(FormName, SelectBox) {
 
         $products_query = new xenQuery("select distinct pn.customers_id, c.customers_firstname, c.customers_lastname, c.customers_email_address from " . TABLE_CUSTOMERS . " c, " . TABLE_PRODUCTS_NOTIFICATIONS . " pn where c.customers_id = pn.customers_id and pn.products_id in (" . $ids . ")");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($products = $q->output()) {
           $audience[$products['customers_id']] = array('firstname' => $products['customers_firstname'],
                                                        'lastname' => $products['customers_lastname'],
@@ -205,7 +205,7 @@ function selectAll(FormName, SelectBox) {
 
         $customers_query = new xenQuery("select c.customers_id, c.customers_firstname, c.customers_lastname, c.customers_email_address from " . TABLE_CUSTOMERS . " c, " . TABLE_CUSTOMERS_INFO . " ci where c.customers_id = ci.customers_info_id and ci.global_product_notifications = '1'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($customers = $q->output()) {
           $audience[$customers['customers_id']] = array('firstname' => $customers['customers_firstname'],
                                                         'lastname' => $customers['customers_lastname'],

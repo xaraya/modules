@@ -104,7 +104,7 @@ function commerce_admin_module_newsletter()
                                   customers_status='".$groups[$i]."'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
    while ($customers_data=$q->output()){
                                $q->addfield('customers_id',$customers_data['customers_id']);
                                $q->addfield('customers_status',$groups[$i]);
@@ -152,7 +152,7 @@ $limit_up = $limits['1'];
                                 FROM module_newsletter_temp_".$_GET['ID']."
                                 ");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
      $limit_data=$q->output();
 
 
@@ -169,7 +169,7 @@ $limit_up = $limits['1'];
 
      $email_data=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($email_query_data=$q->output()) {
 
  $email_data[]=array('id' => $email_query_data['id'],
@@ -194,7 +194,7 @@ $limit_up = $limits['1'];
                                   FROM ".TABLE_MODULE_NEWSLETTER."
                                   WHERE  newsletter_id='".$_GET['ID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  $newsletters_data=$q->output();
  xtc_php_mail(EMAIL_SUPPORT_ADDRESS,EMAIL_SUPPORT_NAME,$newsletters_data['cc'],'' , '', EMAIL_SUPPORT_REPLY_ADDRESS, EMAIL_SUPPORT_REPLY_ADDRESS_NAME, '', '', $newsletters_data['title'],$newsletters_data['body'] , $newsletters_data['body']);
  for ($i=1;$i<=$max_runtime;$i++)
@@ -211,7 +211,7 @@ $limit_up = $limits['1'];
                                 FROM module_newsletter_temp_".$_GET['ID']."
                                 WHERE comment='send'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
      $limit1_data=$q->output();
 
      if ($limit1_data['count']-$limit_data['count']<=0)
@@ -267,7 +267,7 @@ switch ($_GET['action']) {
                                      language_id='".$_SESSION['languages_id']."'");
  $customer_group=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($customer_group_data=$q->output() {
 
       // get single users
@@ -276,7 +276,7 @@ switch ($_GET['action']) {
                                 WHERE customers_newsletter='1' and
                                 customers_status='".$customer_group_data['customers_status_id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
      $group_data=$q->output();
 
 
@@ -330,7 +330,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
                                   WHERE status='0'");
  $news_data=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($newsletters_data=$q->output()) {
 
  $news_data[]=array(    'id' => $newsletters_data['newsletter_id'],
@@ -369,7 +369,7 @@ $total_query=new xenQuery("SELECT
                            count(*) as count
                            FROM module_newsletter_temp_".$_GET['ID']."");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 $total_data=$q->output();
 ?>
 <tr>
@@ -399,7 +399,7 @@ $total_data=$q->output();
                                   FROM ".TABLE_MODULE_NEWSLETTER."
                                   WHERE newsletter_id='".$_GET['ID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
    $newsletters_data=$q->output();
 
 echo TEXT_TITLE.$newsletters_data['title'].'<br>';
@@ -435,7 +435,7 @@ echo '<table style="border-color: #cccccc; border: 1px solid;" width="100%"><tr>
                                   WHERE status='1'");
  $news_data=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($newsletters_data=$q->output()) {
 
  $news_data[]=array(    'id' => $newsletters_data['newsletter_id'],
@@ -491,7 +491,7 @@ if ($news_data[$i]['id']!='') {
                                   FROM ".TABLE_MODULE_NEWSLETTER."
                                   WHERE newsletter_id='".$_GET['ID']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
    $newsletters_data=$q->output();
 
   case 'safe':
@@ -521,7 +521,7 @@ for ($i=0,$n=sizeof($customers_status);$i<$n; $i++) {
                                 WHERE customers_newsletter='1' and
                                 customers_status='".$customers_status[$i]['id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
      $group_data=$q->output();
 
      $group_query=new xenQuery("SELECT count(*) as count
@@ -529,7 +529,7 @@ for ($i=0,$n=sizeof($customers_status);$i<$n; $i++) {
                                 WHERE
                                 customers_status='".$customers_status[$i]['id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
      $group_data_all=$q->output();
 
 echo xtc_draw_checkbox_field('status['.$i.']', 'yes',true).' '.$customers_status[$i]['text'].'  <i>(<b>'.$group_data['count'].'</b>'.TEXT_USERS.$group_data_all['count'].TEXT_CUSTOMERS.'<br>';

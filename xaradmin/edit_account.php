@@ -34,7 +34,7 @@ function commerce_admin_edit_account()
         $q->join('c.customers_default_address_id','a.address_book_id');
 
         $q->eq('c.customers_id',$cID);
-        $q->run();
+        if(!$q->run()) return;
         $customer = $q->row();
 
         $customers_firstname = $customer['customers_firstname'];
@@ -149,7 +149,7 @@ function commerce_admin_edit_account()
     $q->addfield('customers_email_address');
     $q->eq('customers_email_address',$customers_email_address);
     $q->ne('customers_id',$cID);
-    $q->run();
+    if(!$q->run()) return;
     if ($q->getrows()) {
         $data['error'] = true;
         $data['entry_email_address_exists'] = true;
@@ -193,7 +193,7 @@ function commerce_admin_edit_account()
             $data['entry_state_error'] = false;
             $q = new xenQuery('SELECT',$xartables['commerce_zones'],array('zone_id AS id','zone_name AS text'));
             $q->eq('zone_country_id',$entry_country_id);
-            $q->run();
+            if(!$q->run()) return;
             if ($q->getrows() > 0) {
                 $data['zones'] = $q->output();
             } else {
@@ -217,7 +217,7 @@ function commerce_admin_edit_account()
     $q->addfields(array('memo_id','memo_text','memo_title','memo_date'));
     $q->setorder('memo_date','DESC');
     $q->eq('customers_id',$cID);
-    $q->run();
+    if(!$q->run()) return;
     $data['memos'] = $q->output();
 
     if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
@@ -238,12 +238,12 @@ function commerce_admin_edit_account()
                     if ($configuration['account_dob'] == 'true') $q->addfield('customers_dob',xarModAPIFunc('commerce','admin','date_raw',array('date'=>$customers_dob)));
 
                     $q->eq('customers_id',$cID);
-                    $q->run();
+                    if(!$q->run()) return;
 
                     $q = new xenQuery('UPDATE',$xartables['commerce_customers_info']);
                     $q->addfield('customers_info_date_account_last_modified',mktime());
                     $q->eq('customers_info_id',$cID);
-                    $q->run();
+                    if(!$q->run()) return;
 
                     $q = new xenQuery('UPDATE',$xartables['commerce_address_book']);
                     $q->addfield('entry_firstname',$customers_firstname);
@@ -268,7 +268,7 @@ function commerce_admin_edit_account()
 
                     $q->eq('customers_id',$cID);
                     $q->eq('address_book_id',$default_address_id);
-                    $q->run();
+                    if(!$q->run()) return;
                     xarResponseRedirect(xarModURL('commerce','admin','customers',array('cID' => $cID)));
                 }
         }

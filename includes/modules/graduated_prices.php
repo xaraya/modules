@@ -32,7 +32,7 @@ $module_content=array();
   $staffel=array();
   $i='';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($staffel_values = $q->output()) {
   $staffel[]=array('stk'=>$staffel_values['quantity'],
                     'price'=>$staffel_values['personal_offer']);

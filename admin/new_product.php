@@ -26,7 +26,7 @@
    if ( ($_GET['pID']) && (!$_POST) ) {
       $product_query = new xenQuery("select p.product_template,p.options_template,pd.products_name, pd.products_description,pd.products_short_description, pd.products_meta_title, pd.products_meta_description, pd.products_meta_keywords, pd.products_url, p.products_id, p.products_quantity, p.products_model, p.products_image, p.products_price, p.products_discount_allowed, p.products_weight, p.products_date_added, p.products_last_modified, date_format(p.products_date_available, '%Y-%m-%d') as products_date_available, p.products_status, p.products_tax_class_id, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . $_GET['pID'] . "' and p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $product = $q->output();
       $pInfo = new objectInfo($product);
     } elseif ($_POST) {
@@ -45,7 +45,7 @@
     $manufacturers_array = array(array('id' => '', 'text' => TEXT_NONE));
     $manufacturers_query = new xenQuery("select manufacturers_id, manufacturers_name from " . TABLE_MANUFACTURERS . " order by manufacturers_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($manufacturers = $q->output()) {
       $manufacturers_array[] = array('id' => $manufacturers['manufacturers_id'],
                                      'text' => $manufacturers['manufacturers_name']);
@@ -54,7 +54,7 @@
     $tax_class_array = array(array('id' => '0', 'text' => TEXT_NONE));
     $tax_class_query = new xenQuery("select tax_class_id, tax_class_title from " . TABLE_TAX_CLASS . " order by tax_class_title");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($tax_class = $q->output()) {
       $tax_class_array[] = array('id' => $tax_class['tax_class_id'],
                                  'text' => $tax_class['tax_class_title']);

@@ -44,12 +44,12 @@
 
       $order_query = new xenQuery("select customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_country, customers_telephone, customers_email_address, customers_address_format_id, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_country, delivery_address_format_id, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_country, billing_address_format_id, payment_method, cc_type, cc_owner, cc_number, cc_expires, currency, currency_value, date_purchased, orders_status, last_modified from " . TABLE_ORDERS . " where orders_id = '" . xtc_db_input($order_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $order = $q->output();
 
       $totals_query = new xenQuery("select title, text,value from " . TABLE_ORDERS_TOTAL . " where orders_id = '" . xtc_db_input($order_id) . "' order by sort_order");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($totals = $q->output()) {
         $this->totals[] = array('title' => $totals['title'],
                                 'text' => xtc_format_price($totals['value'],$price_special=1,$calculate_currencies=false));
@@ -57,17 +57,17 @@
 
       $order_total_query = new xenQuery("select text from " . TABLE_ORDERS_TOTAL . " where orders_id = '" . $order_id . "' and class = 'ot_total'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $order_total = $q->output();
 
       $shipping_method_query = new xenQuery("select title from " . TABLE_ORDERS_TOTAL . " where orders_id = '" . $order_id . "' and class = 'ot_shipping'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $shipping_method = $q->output();
 
       $order_status_query = new xenQuery("select orders_status_name from " . TABLE_ORDERS_STATUS . " where orders_status_id = '" . $order['orders_status'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $order_status = $q->output();
 
       $this->info = array('currency' => $order['currency'],
@@ -125,7 +125,7 @@
       $index = 0;
       $orders_products_query = new xenQuery("select orders_products_id, products_id, products_name, products_model, products_price, products_tax, products_quantity, final_price from " . TABLE_ORDERS_PRODUCTS . " where orders_id = '" . xtc_db_input($order_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($orders_products = $q->output()) {
         $this->products[$index] = array('qty' => $orders_products['products_quantity'],
                                         'id' => $orders_products['products_id'],
@@ -140,7 +140,7 @@
         $attributes_query = new xenQuery("select products_options, products_options_values, options_values_price, price_prefix from " . TABLE_ORDERS_PRODUCTS_ATTRIBUTES . " where orders_id = '" . xtc_db_input($order_id) . "' and orders_products_id = '" . $orders_products['orders_products_id'] . "'");
         if ($attributes_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($attributes = $q->output()) {
             $this->products[$index]['attributes'][$subindex] = array('option' => $attributes['products_options'],
                                                                      'value' => $attributes['products_options_values'],
@@ -164,22 +164,22 @@
 
       $customer_address_query = new xenQuery("select c.customers_firstname, c.customers_gender,c.customers_lastname, c.customers_telephone, c.customers_email_address, ab.entry_company, ab.entry_street_address, ab.entry_suburb, ab.entry_postcode, ab.entry_city, ab.entry_zone_id, z.zone_name, co.countries_id, co.countries_name, co.countries_iso_code_2, co.countries_iso_code_3, co.address_format_id, ab.entry_state from " . TABLE_CUSTOMERS . " c, " . TABLE_ADDRESS_BOOK . " ab left join " . TABLE_ZONES . " z on (ab.entry_zone_id = z.zone_id) left join " . TABLE_COUNTRIES . " co on (ab.entry_country_id = co.countries_id) where c.customers_id = '" . $_SESSION['customer_id'] . "' and ab.customers_id = '" . $_SESSION['customer_id'] . "' and c.customers_default_address_id = ab.address_book_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $customer_address = $q->output();
 
       $shipping_address_query = new xenQuery("select ab.entry_firstname, ab.entry_lastname, ab.entry_company, ab.entry_street_address, ab.entry_suburb, ab.entry_postcode, ab.entry_city, ab.entry_zone_id, z.zone_name, ab.entry_country_id, c.countries_id, c.countries_name, c.countries_iso_code_2, c.countries_iso_code_3, c.address_format_id, ab.entry_state from " . TABLE_ADDRESS_BOOK . " ab left join " . TABLE_ZONES . " z on (ab.entry_zone_id = z.zone_id) left join " . TABLE_COUNTRIES . " c on (ab.entry_country_id = c.countries_id) where ab.customers_id = '" . $_SESSION['customer_id'] . "' and ab.address_book_id = '" . $_SESSION['sendto'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $shipping_address = $q->output();
 
       $billing_address_query = new xenQuery("select ab.entry_firstname, ab.entry_lastname, ab.entry_company, ab.entry_street_address, ab.entry_suburb, ab.entry_postcode, ab.entry_city, ab.entry_zone_id, z.zone_name, ab.entry_country_id, c.countries_id, c.countries_name, c.countries_iso_code_2, c.countries_iso_code_3, c.address_format_id, ab.entry_state from " . TABLE_ADDRESS_BOOK . " ab left join " . TABLE_ZONES . " z on (ab.entry_zone_id = z.zone_id) left join " . TABLE_COUNTRIES . " c on (ab.entry_country_id = c.countries_id) where ab.customers_id = '" . $_SESSION['customer_id'] . "' and ab.address_book_id = '" . $_SESSION['billto'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $billing_address = $q->output();
 
       $tax_address_query = new xenQuery("select ab.entry_country_id, ab.entry_zone_id from " . TABLE_ADDRESS_BOOK . " ab left join " . TABLE_ZONES . " z on (ab.entry_zone_id = z.zone_id) where ab.customers_id = '" . $_SESSION['customer_id'] . "' and ab.address_book_id = '" . ($this->content_type == 'virtual' ? $_SESSION['billto'] : $_SESSION['sendto']) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $tax_address = $q->output();
 
       $this->info = array('order_status' => DEFAULT_ORDERS_STATUS_ID,
@@ -269,7 +269,7 @@
           while (list($option, $value) = each($products[$i]['attributes'])) {
             $attributes_query = new xenQuery("select popt.products_options_name, poval.products_options_values_name, pa.options_values_price, pa.price_prefix from " . TABLE_PRODUCTS_OPTIONS . " popt, " . TABLE_PRODUCTS_OPTIONS_VALUES . " poval, " . TABLE_PRODUCTS_ATTRIBUTES . " pa where pa.products_id = '" . $products[$i]['id'] . "' and pa.options_id = '" . $option . "' and pa.options_id = popt.products_options_id and pa.options_values_id = '" . $value . "' and pa.options_values_id = poval.products_options_values_id and popt.language_id = '" . $_SESSION['languages_id'] . "' and poval.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $attributes = $q->output();
 
             $this->products[$index]['attributes'][$subindex] = array('option' => $attributes['products_options_name'],

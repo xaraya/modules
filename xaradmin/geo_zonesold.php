@@ -150,7 +150,7 @@ function update_zone(theForm) {
     $zones_split = new splitPageResults($_GET['spage'], MAX_DISPLAY_SEARCH_RESULTS, $zones_query_raw, $zones_query_numrows);
     $zones_query = new xenQuery($zones_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($zones = $q->output()) {
       $rows++;
       if (((!$_GET['sID']) || (@$_GET['sID'] == $zones['association_id'])) && (!$sInfo) && (substr($_GET['saction'], 0, 3) != 'new')) {
@@ -194,13 +194,13 @@ function update_zone(theForm) {
     $zones_split = new splitPageResults($_GET['zpage'], MAX_DISPLAY_SEARCH_RESULTS, $zones_query_raw, $zones_query_numrows);
     $zones_query = new xenQuery($zones_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($zones = $q->output()) {
       if (((!$_GET['zID']) || (@$_GET['zID'] == $zones['geo_zone_id'])) && (!$zInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
         $num_zones_query = new xenQuery("select count(*) as num_zones from " . TABLE_ZONES_TO_GEO_ZONES . " where geo_zone_id = '" . $zones['geo_zone_id'] . "' group by geo_zone_id");
         if ($num_zones_query->getrows() > 0) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           $num_zones = $q->output();
           $zones['num_zones'] = $num_zones['num_zones'];
         } else {

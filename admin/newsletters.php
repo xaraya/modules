@@ -87,7 +87,7 @@
 
         $check_query = new xenQuery("select locked from " . TABLE_NEWSLETTERS . " where newsletters_id = '" . xtc_db_input($newsletter_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $check = $q->output();
 
         if ($check['locked'] < 1) {
@@ -143,7 +143,7 @@
 
       $newsletter_query = new xenQuery("select title, content, module from " . TABLE_NEWSLETTERS . " where newsletters_id = '" . xtc_db_input($nID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $newsletter = $q->output();
 
       $nInfo = new objectInfo($newsletter);
@@ -214,7 +214,7 @@
 
     $newsletter_query = new xenQuery("select title, content, module from " . TABLE_NEWSLETTERS . " where newsletters_id = '" . xtc_db_input($nID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $newsletter = $q->output();
 
     $nInfo = new objectInfo($newsletter);
@@ -237,7 +237,7 @@
 
     $newsletter_query = new xenQuery("select title, content, module from " . TABLE_NEWSLETTERS . " where newsletters_id = '" . xtc_db_input($nID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $newsletter = $q->output();
 
     $nInfo = new objectInfo($newsletter);
@@ -256,7 +256,7 @@
 
     $newsletter_query = new xenQuery("select title, content, module from " . TABLE_NEWSLETTERS . " where newsletters_id = '" . xtc_db_input($nID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $newsletter = $q->output();
 
     $nInfo = new objectInfo($newsletter);
@@ -278,7 +278,7 @@
 
     $newsletter_query = new xenQuery("select newsletters_id, title, content, module from " . TABLE_NEWSLETTERS . " where newsletters_id = '" . xtc_db_input($nID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $newsletter = $q->output();
 
     $nInfo = new objectInfo($newsletter);
@@ -333,7 +333,7 @@
     $newsletters_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $newsletters_query_raw, $newsletters_query_numrows);
     $newsletters_query = new xenQuery($newsletters_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($newsletters = $q->output()) {
       if (((!$_GET['nID']) || (@$_GET['nID'] == $newsletters['newsletters_id'])) && (!$nInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
         $nInfo = new objectInfo($newsletters);
@@ -405,7 +405,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
         $contents[] = array('text' => '<table border="1" cellspacing="0" cellpadding="5"><tr><td class="smallText" align="center">' . TABLE_HEADING_NEWS_HIST_CS_VALUE .' </td><td class="smallText" align="center">' . TABLE_HEADING_NEWS_HIST_DATE_ADDED . '</td></tr>');
         if ($newsletters_history_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($newsletters_history = $q->output()) {
             $contents[] = array('text' => '<tr>' . "\n" . '<td class="smallText">' . $customers_statuses_array[$newsletters_history['news_hist_cs']]['text'] . '</td>' . "\n" .'<td class="smallText" align="center">' . xtc_datetime_short($newsletters_history['news_hist_cs_date_sent']) . '</td>' . "\n" .'<td class="smallText" align="center">');
             $contents[] = array('text' => '</tr>' . "\n");

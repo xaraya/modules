@@ -32,7 +32,7 @@ function commerce_admin_countries()
                 $q->addfield('countries_iso_code_2',$countries_iso_code_2);
                 $q->addfield('countries_iso_code_3',$countries_iso_code_3);
                 $q->addfield('address_format_id',$address_format_id);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','countries'));
                 break;
             case 'save':
@@ -46,13 +46,13 @@ function commerce_admin_countries()
                 $q->addfield('countries_iso_code_3',$countries_iso_code_3);
                 $q->addfield('address_format_id',$address_format_id);
                 $q->eq('countries_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','countries',array('page' => $page,'cID' => $cID)));
 
             case 'deleteconfirm':
                 $q = new xenQuery('DELETE', $xartables['commerce_countries']);
                 $q->eq('countries_id',$cID);
-                $q->run();
+                if(!$q->run()) return;
                 xarResponseRedirect(xarModURL('commerce','admin','countries',array('page' => $page)));
                 break;
         }
@@ -67,7 +67,7 @@ function commerce_admin_countries()
     $q->setorder('countries_name');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
     $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
-    $q->run();
+    if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),

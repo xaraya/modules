@@ -93,7 +93,7 @@ function commerce_admin_categories_screen()
                         $q = new xenQuery('SELECT','commerce_categories');
                         $q->addfield('categories_image',$categories_image->filename);
                         $q->eq('categories_id',$categories_id);
-                        $q->run();
+                        if(!$q->run()) return;
                     }
 
                 }

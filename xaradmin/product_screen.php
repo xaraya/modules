@@ -61,7 +61,7 @@ function commerce_admin_product_screen()
         $q->join('p.products_id','pd.products_id');
         $q->eq('pd.products_id',$pID);
         $q->eq('cd.language_id',$currentlang['id']);
-        $q->run();
+        if(!$q->run()) return;
 
         $pInfo = new objectInfo($q->row());
     }
@@ -159,7 +159,7 @@ function commerce_admin_product_screen()
                                    'customers_status_name AS status_name'));
     $q->eq('language_id',$currentlang['id']);
     $q->ne('customers_status_id',0);
-    $q->run();
+    if(!$q->run()) return;
     $data['group_data'] = $q->output();
 
 // calculate brutto price for display
@@ -186,7 +186,7 @@ $data['products_price'] = $products_price;
     $q = new xenQuery('SELECT',$xartables['commerce_tax_class']);
     $q->addfields(array('tax_class_id AS id', 'tax_class_title AS text'));
     $q->setorder('tax_class_title');
-    $q->run();
+    if(!$q->run()) return;
     $data['tax_class_array'] = array_merge($tax_class_array,$q->output());
 //    echo var_dump($tax_class_array);exit;
 
@@ -273,7 +273,7 @@ if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
                         $q = new xenQuery('SELECT','commerce_categories');
                         $q->addfield('categories_image',$categories_image->filename);
                         $q->eq('categories_id',$categories_id);
-                        $q->run();
+                        if(!$q->run()) return;
                     }
 
                 }

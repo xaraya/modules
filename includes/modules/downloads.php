@@ -21,7 +21,7 @@
     // Get last order id for checkout_success
     $orders_query = new xenQuery("select orders_id from " . TABLE_ORDERS . " where customers_id = '" . $_SESSION['customer_id'] . "' order by orders_id desc limit 1");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $orders = $q->output();
     $last_order = $orders['orders_id'];
   } else {
@@ -46,7 +46,7 @@
 <!-- list of products -->
 <?php
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($downloads = $q->output()) {
 // MySQL 3.22 does not have INTERVAL
       list($dt_year, $dt_month, $dt_day) = explode('-', $downloads['date_purchased_day']);

@@ -46,7 +46,7 @@ function commerce_admin_whos_online()
 <?php
   $whos_online_query = new xenQuery("select customer_id, full_name, ip_address, time_entry, time_last_click, last_page_url, session_id from " . TABLE_WHOS_ONLINE);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($whos_online = $q->output()) {
     $time_online = (time() - $whos_online['time_entry']);
     if ( ((!$_GET['info']) || (@$_GET['info'] == $whos_online['session_id'])) && (!$info) ) {
@@ -82,7 +82,7 @@ function commerce_admin_whos_online()
     if (STORE_SESSIONS == 'mysql') {
       $session_data = new xenQuery("select value from " . TABLE_SESSIONS . " WHERE sesskey = '" . $info . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $session_data = $q->output();
       $session_data = trim($session_data['value']);
     } else {

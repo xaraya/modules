@@ -22,12 +22,12 @@ function commerce_admin_remove_product($args) {
 
     $q = new xenQuery('SELECT', $xartables['commerce_products'],array('products_image'));
     $q->eq('product_id',$product_id);
-    $q->run();
+    if(!$q->run()) return;
     $product_image = $q->row();
 
     $q = new xenQuery('SELECT', $xartables['commerce_products'],array('count(*) as total'));
     $q->eq('products_image',$product_image['products_image']);
-    $q->run();
+    if(!$q->run()) return;
     $duplicate_image = $q->row();
 
     if ($duplicate_image['total'] < 2) {
@@ -45,25 +45,25 @@ function commerce_admin_remove_product($args) {
 
     $q = new xenQuery('DELETE', $xartables['commerce_specials']);
     $q->eq('products_id',$product_id);
-    $q->run();
+    if(!$q->run()) return;
     $q->settable($xartables['commerce_products']);
-    $q->run();
+    if(!$q->run()) return;
     $q->settable($xartables['commerce_products']);
-    $q->run();
+    if(!$q->run()) return;
     $q->settable($xartables['commerce_products_to_categories']);
-    $q->run();
+    if(!$q->run()) return;
     $q->settable($xartables['commerce_products_description']);
-    $q->run();
+    if(!$q->run()) return;
     $q->settable($xartables['commerce_products_attibutes']);
-    $q->run();
+    if(!$q->run()) return;
     $q->settable($xartables['commerce_customers_basket']);
-    $q->run();
+    if(!$q->run()) return;
     $q->settable($xartables['commerce_customers_basket_attributes']);
-    $q->run();
+    if(!$q->run()) return;
 
     $q = new xenQuery('SELECT', $xartables['commerce_reviews'],array('reviews_id'));
     $q->eq('products_id',$product_id);
-    $q->run();
+    if(!$q->run()) return;
 
     $q1 = new xenQuery('DELETE', $xartables['commerce_reviews_description']);
     foreach ($q->output() as $product_review) {
@@ -73,7 +73,7 @@ function commerce_admin_remove_product($args) {
 
     $q = new xenQuery('DELETE', $xartables['commerce_reviews']);
     $q->eq('products_id',$product_id);
-    $q->run();
+    if(!$q->run()) return;
 
 //    if (USE_CACHE == 'true') {
 //      xtc_reset_cache_block('categories');

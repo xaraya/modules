@@ -33,7 +33,7 @@
   } else {
     new xenQuery("update " . TABLE_PRODUCTS_DESCRIPTION . " set products_viewed = products_viewed+1 where products_id = '" . (int)$_GET['products_id'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product_info = $q->output();
 
     $products_price=xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$product_info['products_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));

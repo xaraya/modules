@@ -23,7 +23,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
 
     $row = 0;
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($expected = $q->output()) {
       $row++;
       $module_content[]=array('PRODUCTS_LINK'=>xarModURL('commerce','user','product_info', 'products_id=' . $expected['products_id']),

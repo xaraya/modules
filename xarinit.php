@@ -2423,6 +2423,42 @@ function commerce_init()
     $query = "INSERT INTO " . $prefix . "_commerce_zones (zone_country_id, zone_code, zone_name) VALUES (195,'Zaragoza','Zaragoza')";
     if (!$q->run($query)) return;
 
+    // Default values for discounts and other stuff
+    $status_discount = '0.00';
+    $status_ot_discount_flag = '1';
+    $status_ot_discount = '0.00';
+    $graduated_price = '1';
+    $show_price = '1';
+    $show_tax = '1';
+
+    $status_discount2 = '0.00';
+    $status_ot_discount_flag2 = '1';
+    $status_ot_discount2 = '0.00';
+    $graduated_price2 = '1';
+    $show_price2 = '1';
+    $show_tax2 = '1';
+
+    // status Admin
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES ('0', '1', 'Admin', 1, 'admin_status.gif', '0.00', '1', '0.00', '1', '1', '1')";
+    if (!$q->run($query)) return;
+
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES ('0', '2', 'Admin', 1, 'admin_status.gif', '0.00', '1', '0.00', '1', '1', '1')";
+    if (!$q->run($query)) return;
+
+    // status Guest
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (1, 1, 'Guest', 1, 'guest_status.gif', '".$status_discount."', '".$status_ot_discount_flag."', '".$status_ot_discount."', '".$graduated_price."', '".$show_price."', '".$show_tax."')";
+    if (!$q->run($query)) return;
+
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (1, 2, 'Gast', 1, 'guest_status.gif', '".$status_discount."', '".$status_ot_discount_flag."', '".$status_ot_discount."', '".$graduated_price."', '".$show_price."', '".$show_tax."')";
+    if (!$q->run($query)) return;
+
+// status New customer
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (2, 1, 'New customer', 1, 'customer_status.gif', '".$status_discount2."', '".$status_ot_discount_flag2."', '".$status_ot_discount2."', '".$graduated_price2."', '".$show_price2."', '".$show_tax2."')";
+    if (!$q->run($query)) return;
+
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (2, 2, 'Neuer Kunde', 1, 'customer_status.gif', '".$status_discount2."', '".$status_ot_discount_flag2."', '".$status_ot_discount2."', '".$graduated_price2."', '".$show_price2."', '".$show_tax2."')";
+    if (!$q->run($query)) return;
+
     // Register masks
     xarRegisterMask('ViewCommerceBlocks','All','commerce','Block','All:All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadCommerceBlock','All','commerce','Block','All:All:All','ACCESS_READ');
@@ -2458,6 +2494,13 @@ function commerce_init()
         return;
     }
 */
+// Register some block types
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'commerce',
+                'blockType' => 'categories'))) return;
+
     if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
@@ -2562,6 +2605,59 @@ function commerce_init()
 
     xarModSetVar('commerce', 'itemsperpage', 20);
 
+// Create some block instances
+
+// Put a categories block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'categories'));
+    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commercecategories',
+                                                                  'state' => 0,
+                                                                  'groups' => array($leftgroup)));
+// Put a information block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'information'));
+    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commerceinformation',
+                                                                  'state' => 0,
+                                                                  'groups' => array($leftgroup)));
+// Put a search block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'search'));
+    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commercesearch',
+                                                                  'state' => 0,
+                                                                  'groups' => array($leftgroup)));
+// Put a language block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'roles', 'type'=>'language'));
+    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commercelanguage',
+                                                                  'title' => xarML('Language'),
+                                                                  'state' => 0,
+                                                                  'groups' => array($rightgroup)));
+// Put a manufacturers block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'manufacturers'));
+    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commercemanufacturers',
+                                                                  'state' => 0,
+                                                                  'groups' => array($rightgroup)));
+// Put a currency block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'currencies'));
+    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commercecurrencies',
+                                                                  'state' => 0,
+                                                                  'groups' => array($rightgroup)));
+// Put a shopping cart block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'shopping_cart'));
+    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commercecart',
+                                                                  'state' => 0,
+                                                                  'groups' => array($rightgroup)));
+
 // Initialisation successful
     return true;
 }
@@ -2601,6 +2697,16 @@ function commerce_delete()
 
     xarModDelAllVars('commerce');
     xarRemoveMasks('commerce');
+
+    // Remove the language block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
+    if ($blockinfo) {
+        if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
+    }
+
+    // The modules module will take care of all the other blocks
+
+
 // Delete successful
 
 return true;

@@ -29,7 +29,7 @@
       $this->currencies = array();
       $currencies_query = new xenQuery("select code, title, symbol_left, symbol_right, decimal_point, thousands_point, decimal_places, value from " . TABLE_CURRENCIES);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($currencies = $q->output()) {
         $this->currencies[$currencies['code']] = array('title' => $currencies['title'],
                                                        'symbol_left' => $currencies['symbol_left'],

@@ -81,7 +81,7 @@ $payment_query=new xenQuery("SELECT *
             FROM ".TABLE_CONFIGURATION."
             WHERE configuration_key = 'MODULE_PAYMENT_INSTALLED'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 while ($payment_data=$q->output()) {
  $installed_payment=$payment_data['configuration_value'];
 
@@ -94,7 +94,7 @@ $shipping_query=new xenQuery("SELECT *
             FROM ".TABLE_CONFIGURATION."
             WHERE configuration_key = 'MODULE_SHIPPING_INSTALLED'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 while ($shipping_data=$q->output()) {
  $installed_shipping=$shipping_data['configuration_value'];
 

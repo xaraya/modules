@@ -20,7 +20,7 @@
   $stats = array(array('0', '0', '0'));
   $banner_stats_query = new xenQuery("select year(banners_history_date) as year, sum(banners_shown) as value, sum(banners_clicked) as dvalue from " . TABLE_BANNERS_HISTORY . " where banners_id = '" . $banner_id . "' group by year");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($banner_stats = $q->output()) {
     $stats[] = array($banner_stats['year'], (($banner_stats['value']) ? $banner_stats['value'] : '0'), (($banner_stats['dvalue']) ? $banner_stats['dvalue'] : '0'));
   }

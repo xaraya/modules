@@ -32,7 +32,7 @@
       $qid = new xenQuery("select value from " . TABLE_SESSIONS . " where sesskey = '" . $key . "' and expiry > '" . time() . "'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $value = $q->output();
       if ($value['value']) {
         return $value['value'];
@@ -49,7 +49,7 @@
 
       $qid = new xenQuery("select count(*) as total from " . TABLE_SESSIONS . " where sesskey = '" . $key . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $total = $q->output();
 
       if ($total['total'] > 0) {

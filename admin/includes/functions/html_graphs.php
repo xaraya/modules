@@ -372,7 +372,7 @@
   function xtc_banner_graph_infoBox($banner_id, $days) {
     $banner_stats_query = new xenQuery("select dayofmonth(banners_history_date) as name, banners_shown as value, banners_clicked as dvalue from " . TABLE_BANNERS_HISTORY . " where banners_id = '" . $banner_id . "' and to_days(now()) - to_days(banners_history_date) < " . $days . " order by banners_history_date");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($banner_stats = $q->output()) {
       $names[] = $banner_stats['name'];
       $values[] = $banner_stats['value'];
@@ -419,7 +419,7 @@
 
     $banner_stats_query = new xenQuery("select year(banners_history_date) as year, sum(banners_shown) as value, sum(banners_clicked) as dvalue from " . TABLE_BANNERS_HISTORY . " where banners_id = '" . $banner_id . "' group by year(banners_history_date)");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($banner_stats = $q->output()) {
       $names[] = $banner_stats['year'];
       $values[] = (($banner_stats['value']) ? $banner_stats['value'] : '0');

@@ -66,7 +66,7 @@
       $categories_query = new xenQuery("select c.categories_id, cd.categories_name, c.categories_image, c.parent_id, c.sort_order, c.date_added, c.last_modified, c.categories_status from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.parent_id = '" . $current_category_id . "' and c.categories_id = cd.categories_id and cd.language_id = '" . $_SESSION['languages_id'] . "' order by c.sort_order, cd.categories_name");
     }
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($categories = $q->output()) {
       $categories_count++;
       $rows++;
@@ -116,7 +116,7 @@
       $products_query = new xenQuery("select p.products_tax_class_id, p.products_id, pd.products_name, p.products_quantity, p.products_image, p.products_price, p.products_discount_allowed, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c where p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_id = p2c.products_id and p2c.categories_id = '" . $current_category_id . "' order by pd.products_name");
     }
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($products = $q->output()) {
       $products_count++;
       $rows++;
@@ -128,7 +128,7 @@
         // find out the rating average from customer reviews
         $reviews_query = new xenQuery("select (avg(reviews_rating) / 5 * 100) as average_rating from " . TABLE_REVIEWS . " where products_id = '" . $products['products_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $reviews = $q->output();
         $pInfo_array = xtc_array_merge($products, $reviews);
         $pInfo = new objectInfo($pInfo_array);
@@ -350,7 +350,7 @@
                 $price_netto=xtc_round($price,PRICE_PRECISION);
                 $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $pInfo->products_tax_class_id . "' ");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
                 $tax = $q->output();
                 $price= ($price*($tax[tax_rate]+100)/100);
 

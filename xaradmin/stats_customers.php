@@ -25,7 +25,7 @@ function commerce_admin_stats_customers()
 
   $customers_query = new xenQuery($customers_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($customers = $q->output()) {
     $rows++;
 

@@ -104,7 +104,7 @@ function selectAll(FormName, SelectBox) {
 
       $mail_query = new xenQuery("select count(*) as count from " . TABLE_CUSTOMERS . " where customers_newsletter = '1'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $mail = $q->output();
 
       $confirm_string = '<table border="0" cellspacing="0" cellpadding="2">' . "\n" .
@@ -141,7 +141,7 @@ function selectAll(FormName, SelectBox) {
       $mimemessage->add_text($this->content);
       $mimemessage->build_message();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($mail = $q->output()) {
         $mimemessage->send($mail['customers_firstname'] . ' ' . $mail['customers_lastname'], $mail['customers_email_address'], '', EMAIL_FROM, $this->title);
       }

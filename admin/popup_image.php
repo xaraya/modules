@@ -25,7 +25,7 @@
 
         $banner_query = new xenQuery("select banners_title, banners_image, banners_html_text from " . TABLE_BANNERS . " where banners_id = '" . xtc_db_input($banners_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $banner = $q->output();
 
         $page_title = $banner['banners_title'];

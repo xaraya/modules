@@ -25,7 +25,7 @@
       $_SESSION['counter_count'] = 1;
     } else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $counter = $q->output();
       $counter_startdate = $counter['startdate'];
       $counter_now = ($counter['counter'] + 1);
@@ -35,7 +35,7 @@
     $counter_startdate_formatted = strftime(DATE_FORMAT_LONG, mktime(0, 0, 0, substr($counter_startdate, 4, 2), substr($counter_startdate, -2), substr($counter_startdate, 0, 4)));
   } else {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $counter = $q->output();
     $counter_startdate = $counter['startdate'];
     $counter_now = $counter['counter'];

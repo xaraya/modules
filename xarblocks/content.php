@@ -69,7 +69,7 @@ $content_query=new xenQuery("SELECT
                     WHERE languages_id='".$_SESSION['languages_id']."'
                     and file_flag=1 and content_status=1");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  while ($content_data=$q->output()) {
 
  $content_string .= '<a href="' . xarModURL('commerce','user',(FILENAME_CONTENT,'coID='.$content_data['content_group']) . '">' . $content_data['content_title'] . '</a><br>';

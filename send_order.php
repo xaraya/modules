@@ -59,7 +59,7 @@
                         WHERE orders_id='".$insert_id."'");
         $order_data=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($order_data_values = $q->output()) {
             $attributes_query=new xenQuery("SELECT
                         products_options,
@@ -71,7 +71,7 @@
             $attributes_data='';
             $attributes_model='';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             while ($attributes_data_values = $q->output()) {
             $attributes_data .=$attributes_data_values['products_options'].':'.$attributes_data_values['products_options_values'].'<br>';
             $attributes_model .=xtc_get_attributes_model($order_data_values['products_id'],$attributes_data_values['products_options_values']).'<br>';
@@ -95,7 +95,7 @@
 
     $order_total=array();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($oder_total_values = $q->output()) {
 
     $order_total[]=array(

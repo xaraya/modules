@@ -56,42 +56,57 @@ function commerce_categoriesblock_display($blockinfo)
     // Security Check
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
-// reset var
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    $xartables = xarDBGetTables();
 
-$box_content='';
+    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
+    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
+    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+
+    $box_content='';
 
   // include needed functions
-  require_once(DIR_FS_INC . 'xtc_show_category.inc.php');
-  require_once(DIR_FS_INC . 'xtc_has_category_subcategories.inc.php');
-  require_once(DIR_FS_INC . 'xtc_count_products_in_category.inc.php');
+//  require_once(DIR_FS_INC . 'xtc_show_category.inc.php');
+//  require_once(DIR_FS_INC . 'xtc_has_category_subcategories.inc.php');
+//  require_once(DIR_FS_INC . 'xtc_count_products_in_category.inc.php');
 
 
-  $categories_string = '';
+    $categories_string = '';
 
-  $categories_query = new xenQuery("select c.categories_id, cd.categories_name, c.parent_id from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_status = '1' and c.parent_id = '0' and c.categories_id = cd.categories_id and cd.language_id='" . $_SESSION['languages_id'] ."' order by sort_order, cd.categories_name");
-      $q = new xenQuery();
-      $q->run();
-  while ($categories = $q->output())  {
-    $foo[$categories['categories_id']] = array(
-                                        'name' => $categories['categories_name'],
-                                        'parent' => $categories['parent_id'],
-                                        'level' => 0,
-                                        'path' => $categories['categories_id'],
-                                        'next_id' => false);
+    $q = new xenQuery('SELECT');
+    $q->addtable($xartables['commerce_categories'],'c');
+    $q->addtable($xartables['commerce_categories_description'],'cd');
+    $q->addfields(array('c.categories_id', 'cd.categories_name', 'c.parent_id'));
+    $q->eq('c.categories_status', 1);
+    $q->eq('c.parent_id', 0);
+    $q->eq('cd.language_id', $currentlang['id']);
+    $q->join('c.categories_id', 'cd.categories_id');
+    $q->setorder('sort_order');
+    $q->addorder('cd.categories_name');
+    if(!$q->run()) return;
 
-    if (isset($prev_id)) {
-      $foo[$prev_id]['next_id'] = $categories['categories_id'];
+    foreach ($q->output() as $categories)  {
+        $foo[$categories['categories_id']] = array(
+                                            'name' => $categories['categories_name'],
+                                            'parent' => $categories['parent_id'],
+                                            'level' => 0,
+                                            'path' => $categories['categories_id'],
+                                            'next_id' => false);
+
+        if (isset($prev_id)) {
+            $foo[$prev_id]['next_id'] = $categories['categories_id'];
+        }
+
+        $prev_id = $categories['categories_id'];
+
+        if (!isset($first_element)) {
+            $first_element = $categories['categories_id'];
+        }
     }
-
-    $prev_id = $categories['categories_id'];
-
-    if (!isset($first_element)) {
-      $first_element = $categories['categories_id'];
-    }
-  }
+    if (!isset($first_element)) $first_element = 0;
 
   //------------------------
-  if ($cPath) {
+  if (isset($cPath)) {
     $new_path = '';
     $id = split('_', $cPath);
     reset($id);
@@ -103,7 +118,7 @@ $box_content='';
       if ($category_check > 0) {
         $new_path .= $value;
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($row = $q->output()) {
           $foo[$row['categories_id']] = array(
                                               'name' => $row['categories_name'],
@@ -132,13 +147,11 @@ $box_content='';
       }
     }
   }
-  xtc_show_category($first_element);
+  xarModAPIFunc('commerce','user','show_category', array('base' => $first_element));
 
-
-    $box_smarty->assign('BOX_TITLE', BOX_HEADING_CATEGORIES);
+/*     $box_smarty->assign('BOX_TITLE', BOX_HEADING_CATEGORIES);
     $box_smarty->assign('BOX_CONTENT', $categories_string);
-    $box_smarty->assign('language', $_SESSION['language']);
-/*          // set cache ID
+         // set cache ID
   if (USE_CACHE=='false') {
   $box_smarty->caching = 0;
   $box_categories= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_categories.html');
