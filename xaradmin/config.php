@@ -65,7 +65,7 @@ function netquery_admin_config()
             xarModSetVar('netquery', 'pingexec_remote', $pingexec_remote);
             xarModSetVar('netquery', 'pingexec_remote_t', $pingexec_remote_t);
             xarModSetVar('netquery', 'trace_enabled', $trace_enabled);
-            xarModSetVar('netquery', 'traceexec_local', $pingexec_local);
+            xarModSetVar('netquery', 'traceexec_local', $traceexec_local);
             xarModSetVar('netquery', 'trace_remote_enabled', $trace_remote_enabled);
             xarModSetVar('netquery', 'traceexec_remote', $traceexec_remote);
             xarModSetVar('netquery', 'traceexec_remote_t', $traceexec_remote_t);
