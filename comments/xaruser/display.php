@@ -147,7 +147,7 @@ function comments_user_display($args) {
             if ($package['settings']['render'] != _COM_VIEW_THREADED) {
                 $comment['transform'] = array('xar_title', 'xar_text');
             } else {
-                $comment['transform'] = array('xar_title');
+                $comment['transform'] = array('xar_text');
             }
             // call the item transform hooks
             // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
