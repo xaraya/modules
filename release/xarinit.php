@@ -205,6 +205,7 @@ function release_upgrade($oldversion)
             if (!$result) return;
 
         break;
+        case '0.05':
 
     }
 
