@@ -140,10 +140,9 @@
     </tr>
    <tr><td valign='middle' colspan='2' align='center'>#$securitymessage#</td></tr>
     <tr>
-        <td valign='middle' align='left'><xar:mlstring>Click to Delete:</xar:mlstring></td>
-        <td valign='middle' align='left'><a href="#$deleteurl#">#$bkname#</a></td>
+        <td valign='middle' colspan="2" align='center'><a href="#$deleteurl#"><xar:mlstring>DELETE backup</xar:mlstring></a></td>
     </tr>
-  
+
     </table>
     </div>
 
