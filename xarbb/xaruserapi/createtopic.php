@@ -130,8 +130,8 @@ function xarbb_userapi_createtopic($args)
     // Let any hooks know that we have created a new topic
     $args['module'] = 'xarbb';
     $args['itemtype'] = $fid; //Update itemtype hooks for this forum
-    $args['itemid'] = $fid;
-    xarModCallHooks('item', 'create', $fid, $args); 
+    $args['itemid'] = $tid;
+    xarModCallHooks('item', 'create', $tid, $args); 
 
     // Return the id of the newly created link to the calling process
     return $tid;
