@@ -5,7 +5,7 @@
 function ephemerids_admin_view()
 {
     // Get parameters from whatever input we need
-    $startnum = xarVarCleanFromInput('startnum');
+   if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
     $data['items'] = array();
 
     // Security Check
