@@ -1,6 +1,6 @@
-	<xar:loop name="$links">
-		<p>
-			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
-		</p>
-	</xar:loop>
+    <xar:loop name="$links">
+        <p>
+            <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+        </p>
+    </xar:loop>

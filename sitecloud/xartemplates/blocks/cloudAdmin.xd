@@ -1,8 +1,8 @@
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Select the limit of sites to display in block')#"><label for="limit#$blockid#"><xar:mlstring>Number of sites to display:</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="limit" id="limit" size="3" maxlength="3" value="#$limit#" />
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Select the limit of sites to display in block')#"><label for="limit#$blockid#"><xar:mlstring>Number of sites to display:</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="limit" id="limit" size="3" maxlength="3" value="#$limit#" />
+        </span>
+        </div>

@@ -3,66 +3,66 @@
 <div style="margin: auto;">
 
 <xar:if condition="xarModIsHooked('categories','sitecloud')">
-	<xar:template file="cattag" type="module"/>
+    <xar:template file="cattag" type="module"/>
 </xar:if>
 
 <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
 <div class="xar-norm" style="padding: 3px;">
 
 <h3><xar:mlstring>Updated in the last hour</xar:mlstring></h3>
-	<xar:loop name="$links">
-	<xar:if condition="$loop:item['when'] lt 3600">
-		<p>
-			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
-		</p>
-	</xar:if>
-	</xar:loop>
+    <xar:loop name="$links">
+    <xar:if condition="$loop:item['when'] lt 3600">
+        <p>
+            <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+        </p>
+    </xar:if>
+    </xar:loop>
 <h3><xar:mlstring>Updated in the last two hours</xar:mlstring></h3>
-	<xar:loop name="$links">
-	<xar:if condition="($loop:item['when'] lt 7200) AND ($loop:item['when'] gt 3600)">
-		<p>
-			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
-		</p>
-	</xar:if>
-	</xar:loop>
+    <xar:loop name="$links">
+    <xar:if condition="($loop:item['when'] lt 7200) AND ($loop:item['when'] gt 3600)">
+        <p>
+            <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+        </p>
+    </xar:if>
+    </xar:loop>
 <h3><xar:mlstring>Updated in the last four hours</xar:mlstring></h3>
-	<xar:loop name="$links">
-	<xar:if condition="($loop:item['when'] lt 14400) AND ($loop:item['when'] gt 7200)">
-		<p>
-			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
-		</p>
-	</xar:if>
-	</xar:loop>
+    <xar:loop name="$links">
+    <xar:if condition="($loop:item['when'] lt 14400) AND ($loop:item['when'] gt 7200)">
+        <p>
+            <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+        </p>
+    </xar:if>
+    </xar:loop>
 <h3><xar:mlstring>Updated in the last day</xar:mlstring></h3>
-	<xar:loop name="$links">
-	<xar:if condition="($loop:item['when'] lt 86400) AND ($loop:item['when'] gt 14400)">
-		<p>
-			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
-		</p>
-	</xar:if>
-	</xar:loop>
+    <xar:loop name="$links">
+    <xar:if condition="($loop:item['when'] lt 86400) AND ($loop:item['when'] gt 14400)">
+        <p>
+            <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+        </p>
+    </xar:if>
+    </xar:loop>
 <h3><xar:mlstring>Updated in the last week</xar:mlstring></h3>
-	<xar:loop name="$links">
-	<xar:if condition="($loop:item['when'] lt 604800) AND ($loop:item['when'] gt 86400)">
-		<p>
-			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
-		</p>
-	</xar:if>
-	</xar:loop>
+    <xar:loop name="$links">
+    <xar:if condition="($loop:item['when'] lt 604800) AND ($loop:item['when'] gt 86400)">
+        <p>
+            <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+        </p>
+    </xar:if>
+    </xar:loop>
 <h3><xar:mlstring>Updates over a week old</xar:mlstring></h3>
-	<xar:loop name="$links">
-	<xar:if condition="$loop:item['when'] gt 604800">
-		<p>
-			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
-		</p>
-	</xar:if>
-	</xar:loop>
+    <xar:loop name="$links">
+    <xar:if condition="$loop:item['when'] gt 604800">
+        <p>
+            <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+        </p>
+    </xar:if>
+    </xar:loop>
 </div>
 </div>
 <p>#$pager#</p>
