@@ -2,8 +2,9 @@
 function messages_user_display( ) {
 
     // Security check
-    if (!xarSecurityCheck( 'ViewMessages'))
-        return;
+    if (!xarSecurityCheck('ViewMessages', 0)) {
+        return $data['error'] = xarML('You are not permitted to view messages.');
+    }
 
     $read_messages = unserialize(xarModGetUserVar('messages','read_messages'));
     $messages = xarModAPIFunc('messages', 'user', 'getall', array());

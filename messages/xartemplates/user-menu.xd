@@ -1,14 +1,27 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Messages</xar:mlstring>
-    </span>
-</div>
+<xar:if condition="!isset($error)">
 
-<div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>Messages Menu</xar:mlstring>
-    </h2>
-    <div align="center">
-
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Messages</xar:mlstring>
+        </span>
     </div>
-</div>
+
+    <div class="xar-mod-body">
+        <h2>
+            <xar:mlstring>Messages Menu</xar:mlstring>
+        </h2>
+        <div align="center">
+
+        </div>
+    </div>
+<xar:else />
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Messages</xar:mlstring>
+        </span>
+    </div>
+    <br />
+    <div class="xar-norm">
+        #$error#
+    </div>
+</xar:if>

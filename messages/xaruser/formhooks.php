@@ -1,3 +1,4 @@
+<?php
 function messages_user_formhooks()
 {
 
@@ -19,4 +20,4 @@ function messages_user_formhooks()
 
     return $hooks;
 }
-
+?>

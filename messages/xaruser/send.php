@@ -2,8 +2,9 @@
 function messages_user_send() {
 
     // Security check
-    if (!xarSecurityCheck( 'AddMessages'))
-        return;
+    if (!xarSecurityCheck( 'AddMessages', 0)) {
+        return $data['error'] = xarML('You are not permitted to send messages.');
+    }
 
     if (!xarVarFetch('action', 'enum:submit:preview:reply:post', $action)) return;
 
@@ -96,3 +97,4 @@ function messages_user_send() {
     return $data;
 }
 
+?>

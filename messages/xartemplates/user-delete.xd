@@ -1,0 +1,16 @@
+<xar:if condition="!isset($error)">
+    <xar:template file="view-message" type="module" />
+    <br />
+    <br />
+    <xar:template file="delete-message" type="module" />
+<xar:else />
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Messages</xar:mlstring>
+        </span>
+    </div>
+    <br />
+    <div class="xar-norm">
+        #$error#
+    </div>
+</xar:if>

@@ -9,8 +9,7 @@ function messages_userapi_getmenulinks ( $args ) {
     // not that he/she doesn't.
 
 
-    if (xarSecurityCheck('ViewMessages')) {
-
+    if (xarSecurityCheck('ViewMessages', 0) === true) {
         // The main menu will look for this array and return it for a tree
         // view of the module. We are just looking for three items in the
         // array, the url, which we need to use the xarModURL function, the
@@ -28,9 +27,7 @@ function messages_userapi_getmenulinks ( $args ) {
             'title'    => 'Send a message to someone',
             'label'    => 'Send Message' );
 
-    }
-
-    if (empty($menulinks)){
+    } else {
         $menulinks = '';
     }
 

@@ -1,9 +1,8 @@
 <?php
 function messages_user_main() {
 
-    if(xarSecurityCheck( 'ViewMessages', 0)) {
-        $data['error'] = "You need to login before you can add or view your Messages";
-        return $data;
+    if (!xarSecurityCheck('ViewMessages', 0)) {
+        return $data['error'] = xarML('You are not permitted to view messages.');
     }
 
     xarTplSetPageTitle( 'Messages :: Splash Page' );

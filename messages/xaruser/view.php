@@ -2,8 +2,9 @@
 function messages_user_view( $args ) {
 
     // Security check
-    if (!xarSecurityCheck( 'ViewMessages'))
-        return;
+    if (!xarSecurityCheck('ViewMessages', 0)) {
+        return $data['error'] = xarML('You are not permitted to view messages.');
+    }
 
     if (!xarVarFetch('mid', 'int:1:', $mid)) return;
 
@@ -45,3 +46,4 @@ function messages_user_view( $args ) {
     return $data;
 }
 
+?>
