@@ -38,6 +38,11 @@ function xarbb_user_viewtopic()
 
     $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));
     $allowhtml              = $settings['allowhtml'];
+    if (isset($settings['allowbbcode'])) {
+        $allowbbcode  = $settings['allowbbcode'];
+    } else {
+        $allowbbcode = false;
+    }
     $postperpage            = $settings['postsperpage'];
 
     // Security Check
@@ -181,26 +186,28 @@ function xarbb_user_viewtopic()
     $item['module'] = 'xarbb';
     $item['itemtype'] = $data['fid']; // Forum Topics
     $item['itemid'] = $tid;
-
+ 
 
     // for display hooks, we need to pass a returnurl
     $item['returnurl'] = xarModURL('xarbb','user','viewtopic',
                                    array('tid' => $tid,
                                          'startnum'=>$startnum));
- 
+
     $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
 
-    // Let's handle the changelog a little differently 
+    // Let's handle the changelog a little differently
     // and add a link in the topic itself.
     if (isset($data['hooks']['changelog'])){
         $data['changelog']  = true;
         $data['hooks']['changelog'] = '';
     }
+    //pass the bbcodeswitch
+    $data['allowbbcode'] = $allowbbcode;
 
     // Let's suppress the hitcount hook from showing.
     $data['hooks']['hitcount'] = '';
     $data['authid'] = xarSecGenAuthKey();
-    
+
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnum,
