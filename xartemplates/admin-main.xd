@@ -72,6 +72,7 @@
     <p><xar:mlstring>
       After this the /content/ is the root of the virtual filesystem Xaraya will create and:</xar:mlstring>
       <pre>http://xaraya.com/content/</pre> <xar:mlstring>will be the location to point your WebDAV to.</xar:mlstring>
+    </p>
     <h4><xar:mlstring>Limitations</xar:mlstring></h4>
     <p>
       <ul>
