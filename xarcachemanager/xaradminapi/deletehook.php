@@ -16,15 +16,10 @@ function xarcachemanager_adminapi_deletehook($args)
 
     $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
 
-    if (!file_exists($outputCacheDir . 'cache.touch')) {
-        // caching is not enabled and xarCache will not be available
-        return;
-    }
-
     if (!function_exists('xarOutputFlushCached')) {
         // caching is on, but the function isn't available
         // load xarCache to make it so
-        include 'includes/xarCache.php';
+        include_once 'includes/xarCache.php';
         if (xarCache_init(array('cacheDir' => $outputCacheDir)) == false) {
             // somethings wrong, caching should be off now
             return;
@@ -72,19 +67,35 @@ function xarcachemanager_adminapi_deletehook($args)
 
     switch($modname) {
         case 'blocks':
+            // first, remove the corresponding block settings from the db
+            $systemPrefix = xarDBGetSystemTablePrefix();
+            $blocksettings = $systemPrefix . '_cache_blocks';
+            $dbconn =& xarDBGetConn();
+            $query = "SELECT xar_nocache
+                        FROM $blocksettings WHERE xar_bid = $objectid ";
+            $result =& $dbconn->Execute($query);
+            if (count($result) > 0) {
+                $query = "DELETE FROM
+                         $blocksettings WHERE xar_bid = $objectid ";
+                $result =& $dbconn->Execute($query);
+            }
+                
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
-            $cacheKey = "-user-";
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached('', $outputCacheDir . 'paage');
             // and flush the block
             $cacheKey = "-blockid" . $objectid;
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached($cacheKey, $outputCacheDir . 'block');
+            break;
+        case 'articles': 
+            xarOutputFlushCached('articles-');
+            // a status update might mean a new menulink and new base homepage
+            xarOutputFlushCached('base');
             break;
         case 'privileges': // fall-through all modules that should flush the entire cache
         case 'roles':
             // if security changes, flush everything, just in case.
-            $cacheKey = "";
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached('');
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
@@ -100,27 +111,20 @@ function xarcachemanager_adminapi_deletehook($args)
             }
                 // no break because we want it to keep going and flush it's own cacheKey too
                 // incase it's got a user view, like categories.
-            case 'articles': // fall-through
-                             //nothing special yet
-            default:
-                // identify pages that include the updated item and delete the cached files
-                // nothing fancy yet, just flush it out
-                $cacheKey = "$modname-";
-                xarOutputFlushCached($cacheKey);
-                // a deleted item might mean a menulink goes away
-                xarOutputFlushCached('base-block');
-                break;
+        // fall-through
+                         //nothing special yet
+        default:
+            // identify pages that include the updated item and delete the cached files
+            // nothing fancy yet, just flush it out
+            $cacheKey = "$modname-";
+            xarOutputFlushCached($cacheKey);
+            // a deleted item might mean a menulink goes away
+            xarOutputFlushCached('base');
+            break;
     }
 
     if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-        xarOutputFlushCached('static');
-        $configKeys = array('Page.SessionLess');
-        $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                         array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
-        
-        foreach ($sessionlessurls['Page.SessionLess'] as $url) {
-            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
-        }
+        xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
 
     // Return the extra info

@@ -17,15 +17,10 @@ function xarcachemanager_adminapi_updatehook($args)
 
     $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
 
-    if (!file_exists($outputCacheDir . 'cache.touch')) {
-        // caching is not enabled and xarCache will not be available
-        return;
-    }
-
     if (!function_exists('xarOutputFlushCached')) {
         // caching is on, but the function isn't available
         // load xarCache to make it so
-        include 'includes/xarCache.php';
+        include_once 'includes/xarCache.php';
         if (xarCache_init(array('cacheDir' => $outputCacheDir)) == false) {
             // somethings wrong, caching should be off now
             return;
@@ -73,60 +68,66 @@ function xarcachemanager_adminapi_updatehook($args)
 
     switch($modname) {
         case 'blocks':
-            // first, save the new settings
-            xarVarFetch('nocache', 'isset', $nocache, 0, XARVAR_NOT_REQUIRED);
-            xarVarFetch('pageshared', 'isset', $pageshared, 0, XARVAR_NOT_REQUIRED);
-            xarVarFetch('usershared', 'isset', $usershared, 0, XARVAR_NOT_REQUIRED);
-            xarVarFetch('cacheexpire', 'str:1:9', $cacheexpire, NULL, XARVAR_NOT_REQUIRED);
-
-            if (empty($nocache)) {
-                $nocache = 0;
-            }
-            if (empty($pageshared)) {
-                $pageshared = 0;
-            }
-            if (!isset($cacheexpire)) {
-                $cacheexpire = NULL;
-            }
-            if (!empty($cacheexpire)) {
-                $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
-                                              array('starttime' => $cacheexpire,
-                                                    'direction' => 'to'));
-            }
-
-            $systemPrefix = xarDBGetSystemTablePrefix();
-            $blocksettings = $systemPrefix . '_cache_blocks';
-            $dbconn =& xarDBGetConn();
-            $query = "SELECT xar_nocache
-                        FROM $blocksettings WHERE xar_bid = $objectid ";
-            $result =& $dbconn->Execute($query);
-            if (count($result) > 0) {
-                $query = "DELETE FROM
-                         $blocksettings WHERE xar_bid = $objectid ";
+            // first, if authorized, save the new settings
+            if (file_exists($outputCacheDir . 'cache.blocklevel') && 
+                xarSecurityCheck('AdminXarCache', 0)) {
+                xarVarFetch('nocache', 'isset', $nocache, 0, XARVAR_NOT_REQUIRED);
+                xarVarFetch('pageshared', 'isset', $pageshared, 0, XARVAR_NOT_REQUIRED);
+                xarVarFetch('usershared', 'isset', $usershared, 0, XARVAR_NOT_REQUIRED);
+                xarVarFetch('cacheexpire', 'str:1:9', $cacheexpire, NULL, XARVAR_NOT_REQUIRED);
+    
+                if (empty($nocache)) {
+                    $nocache = 0;
+                }
+                if (empty($pageshared)) {
+                    $pageshared = 0;
+                }
+                if (!isset($cacheexpire)) {
+                    $cacheexpire = NULL;
+                }
+                if (!empty($cacheexpire)) {
+                    $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                                  array('starttime' => $cacheexpire,
+                                                        'direction' => 'to'));
+                }
+    
+                $systemPrefix = xarDBGetSystemTablePrefix();
+                $blocksettings = $systemPrefix . '_cache_blocks';
+                $dbconn =& xarDBGetConn();
+                $query = "SELECT xar_nocache
+                            FROM $blocksettings WHERE xar_bid = $objectid ";
                 $result =& $dbconn->Execute($query);
+                if (count($result) > 0) {
+                    $query = "DELETE FROM
+                             $blocksettings WHERE xar_bid = $objectid ";
+                    $result =& $dbconn->Execute($query);
+                }
+                $query = "INSERT INTO $blocksettings (xar_bid,
+                                                      xar_nocache,
+                                                      xar_page,
+                                                      xar_user,
+                                                      xar_expire)
+                            VALUES (?,?,?,?,?)";
+                $bindvars = array($objectid, $nocache, $pageshared, $usershared, $cacheexpire);
+                $result =& $dbconn->Execute($query,$bindvars);
             }
-            $query = "INSERT INTO $blocksettings (xar_bid,
-                                                  xar_nocache,
-                                                  xar_page,
-                                                  xar_user,
-                                                  xar_expire)
-                        VALUES (?,?,?,?,?)";
-            $bindvars = array($objectid, $nocache, $pageshared, $usershared, $cacheexpire);
-            $result =& $dbconn->Execute($query,$bindvars);
             
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
-            $cacheKey = "-user-";
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached('', $outputCacheDir . 'page');
             // and flush the block
             $cacheKey = "-blockid" . $objectid;
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached($cacheKey, $outputCacheDir . 'block');
+            break;
+        case 'articles':
+            xarOutputFlushCached('articles');
+            // a status update might mean a new menulink and new base homepage
+            xarOutputFlushCached('base');
             break;
         case 'privileges': // fall-through all modules that should flush the entire cache
         case 'roles':
             // if security changes, flush everything, just in case.
-            $cacheKey = "";
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached('');
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
@@ -142,9 +143,6 @@ function xarcachemanager_adminapi_updatehook($args)
             }
             // no break because we want it to keep going and flush it's own cacheKey too
             // incase it's got a user view, like categories.
-        case 'articles': // fall-through
-            // a status update might mean a new menulink
-            xarOutputFlushCached('base-block');
         default:
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out
@@ -154,17 +152,7 @@ function xarcachemanager_adminapi_updatehook($args)
     }
     
     if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-        xarOutputFlushCached('static');
-        $configKeys = array('Page.SessionLess');
-        $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                         array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
-        
-        foreach ($sessionlessurls['Page.SessionLess'] as $url) {
-            // Make sure the url isn't empty before calling getfile()
-            if (strlen(trim($url))) {
-                xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
-            }
-        }
+        xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
 
     // Return the extra info

@@ -16,15 +16,10 @@ function xarcachemanager_adminapi_createhook($args)
 
     $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
 
-    if (!file_exists($outputCacheDir . 'cache.touch')) {
-        // caching is not enabled and xarCache will not be available
-        return;
-    }
-
     if (!function_exists('xarOutputFlushCached')) {
         // caching is on, but the function isn't available
         // load xarCache to make it so
-        include 'includes/xarCache.php';
+        include_once 'includes/xarCache.php';
         if (xarCache_init(array('cacheDir' => $outputCacheDir)) == false) {
             // somethings wrong, caching should be off now
             return;
@@ -74,21 +69,20 @@ function xarcachemanager_adminapi_createhook($args)
         case 'blocks':
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
-            $cacheKey = "-user-";
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached('', $outputCacheDir . 'page');
             break;
         case 'privileges': // fall-through all modules that should flush the entire cache
         case 'roles':
             // if security changes, flush everything, just in case.
-            $cacheKey = "";
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached('');
             break;
         case 'articles':
-            if (!isset($extrainfo['status']) || $extrainfo['status'] == 0) {
+            if (isset($extrainfo['status']) && $extrainfo['status'] == 0) {
                 break;
             }
-            $cacheKey = "articles-";
-            xarOutputFlushCached($cacheKey);
+            xarOutputFlushCached('articles-');
+            // a status update might mean a new menulink and new base homepage
+            xarOutputFlushCached('base');
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
@@ -115,14 +109,7 @@ function xarcachemanager_adminapi_createhook($args)
     }
 
     if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-        xarOutputFlushCached('static');
-        $configKeys = array('Page.SessionLess');
-        $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                         array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
-        
-        foreach ($sessionlessurls['Page.SessionLess'] as $url) {
-            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
-        }
+        xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
     
     return $extrainfo;

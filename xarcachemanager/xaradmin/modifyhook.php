@@ -12,6 +12,8 @@
 function xarcachemanager_admin_modifyhook($args)
 {
     extract($args);
+    
+    if (!xarSecurityCheck('AdminXarCache', 0)) { return; }
 
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

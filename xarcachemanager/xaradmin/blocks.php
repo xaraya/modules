@@ -7,10 +7,12 @@ function xarcachemanager_admin_blocks($args)
 { 
     extract($args);
 
-    if (!xarSecurityCheck('AdminXarCache')) return;
+    if (!xarSecurityCheck('AdminXarCache')) { return; }
+
+    $cacheOutputDir = xarCoreGetVarDirPath() . '/cache/output';
 
     $data = array();
-    if (!file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.blocklevel')) {
+    if (!file_exists($cacheOutputDir . '/cache.blocklevel')) {
         $data['blocks'] = array();
         return $data;
     }
@@ -77,13 +79,22 @@ function xarcachemanager_admin_blocks($args)
             if (!$result) return;
         }
 
+        // make sure we can flush blocks, even if caching is currently disabled
+        if (!function_exists('xarOutputFlushCached')) {
+            include_once 'includes/xarCache.php';
+            if (!xarCache_init(array('cacheDir' => $cacheOutputDir))) {
+                // somethings wrong, caching should be disabled now
+                return;
+            }
+        }
         // blocks could be anywhere, we're not smart enough not know exactly where yet
         // so just flush all pages
-        $cacheKey = "-user-";
-        xarOutputFlushCached($cacheKey);
+        xarOutputFlushCached('', $cacheOutputDir . '/page');
         // and flush the blocks
-        $cacheKey = "-blockid";
-        xarOutputFlushCached($cacheKey);
+        xarOutputFlushCached('', $cacheOutputDir . '/block');
+        if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
+            xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
+        }
     }
 
     // Get all block caching configurations
