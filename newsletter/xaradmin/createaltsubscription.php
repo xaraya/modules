@@ -150,7 +150,7 @@ function newsletter_admin__checkemail($email)
 
         // Validate the domain
         //list($username,$domaintld) = split("@",$email);
-	    //if (getmxrr($domaintld,$mxrecords)) {
+        //if (getmxrr($domaintld,$mxrecords)) {
         return true;
         //}
     }
