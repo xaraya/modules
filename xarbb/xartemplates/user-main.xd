@@ -1,6 +1,6 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <xar:if condition="isset($catid)">
-	<table border="0" width="95%">
+	<table border="0" cellpadding="3" cellspacing="0" width="100%">
 		<tr>
 			<td colspan="2">
 				<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
@@ -9,7 +9,7 @@
 	</table>
 </xar:if>
 
-<table width="95%">
+<table width="100%" cellspacing="0" cellpadding="2">
 	<tr> 
 		<td align="left" valign="bottom">
 			<p>
@@ -60,7 +60,7 @@
 		</td>
 	</tr>
 </table>
-<table width="95%">
+<table width="100%" cellpadding="4" cellspacing="1" border="0">
 	<tr style="border: 1px solid #000;">
 		<th colspan="2" nowrap="nowrap">
 			<h4>
@@ -186,7 +186,7 @@
   <!-- END catrow -->
 </table>
 
-<table width="95%">
+<table width="100%" cellspacing="0" border="0" align="center" cellpadding="2">
 	<tr> 
 		<td align="left">
 			<span class="xar-sub">
@@ -208,7 +208,7 @@
 </table>
 <xar:if condition="!xarUserIsLoggedIn()">
 	<form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
-		<table width="95%">
+		<table width="100%" cellpadding="3" cellspacing="1">
 			<tr> 
 				<th height="28" align="left">
 					<span class="xar-title">
@@ -254,7 +254,7 @@
 
 <br clear="all" />
 
-<table align="center">
+<table cellspacing="3" border="0" align="center" cellpadding="0">
 	<tr> 
 		<td width="20" align="center">
 			<img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post in forum')#" />
