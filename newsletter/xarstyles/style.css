@@ -1,0 +1,39 @@
+/* Newsletter Styles */
+.contentBorder{
+    border-left: solid 1px #000000; 
+    border-right: solid 1px #000000; 
+    border-bottom: solid 1px #000000; 
+    padding: 5px;
+}
+
+.selectedMenuItem {
+    border-left: solid 1px #000000; 
+    border-right: solid 1px #000000; 
+    border-top: solid 1px #000000; 
+    padding: 3px;
+}
+
+.menuItem{
+    border-left: solid 1px #000000; 
+    border-top: solid 1px #000000;
+    border-bottom: solid 1px #000000;
+    border-right: solid 1px #000000; 
+    padding: 3px;
+}
+
+/* a 'standard' table */
+table.std {
+    border: solid #08245b 2px;
+    background: #d6ebff;
+}
+table.std TH {
+    background-color: #08245b;
+    color: white;
+    list-style-type: disc;
+    list-style-position: inside;
+    border: outset #D1D1CD 1px;
+}
+
+table.std td.hilite {
+    background-color: #ffffff;
+}

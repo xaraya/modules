@@ -1,0 +1,20 @@
+<table border="0" cellpadding="2" cellspacing="0" width="100%">
+<xar:if condition="$loggedin eq 0">
+    <tr>
+        <td>
+            <a href="#$infolink['url']#">#$infolink['label']#</a>
+        </td>
+    </tr>
+<xar:else />
+    <tr>
+        <td>
+            <a href="#$subscribelink['url']#">#$subscribelink['label']#</a>
+        </td>
+    </tr>
+</xar:if>
+<tr>
+    <td>
+        <a href="#$viewlink['url']#">#$viewlink['label']#</a>
+    </td>
+</tr>
+</table>

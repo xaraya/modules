@@ -1,0 +1,114 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <xar:if condition="!empty($users)">
+            <form action="#xarModURL('newsletter', 'admin', 'viewusers')#" method="post" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="sortby" id="sortby" value="#$sortby#" />
+            <input type="hidden" name="startnum" id="startnum" value="1" />
+                <table width="100%" border="1" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <xar:if condition="$nameurl != ''">
+                            <th><a href="#$nameurl#"><xar:mlstring>Newsletter User Name</xar:mlstring></a></th>
+                        <xar:else />
+                            <th><xar:mlstring>Newsletter User Name</xar:mlstring></th>
+                        </xar:if>
+                        <xar:if condition="$groupurl != ''">
+                            <th><a href="#$groupurl#"><xar:mlstring>Newsletter Group Name</xar:mlstring></a></th>
+                        <xar:else />
+                            <th><xar:mlstring>Newsletter Group Name</xar:mlstring></th>
+                        </xar:if>
+                        <th><xar:mlstring>Options</xar:mlstring></th>
+                    </tr>
+                    <xar:loop name="$users">
+                        <tr>
+                            <td>#$loop:item['name']#</td>
+                            <td>#$loop:item['group']#</td>
+                            <xar:if condition="!empty($loop:item['options'])">
+                                <td>#$loop:item['options']#</td>
+                            </xar:if>
+                            <td>
+                                <xar:if condition="empty($loop:item['editurl'])">
+                                    #$loop:item['edittitle']#
+                                <xar:else />
+                                    <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                                </xar:if>
+                                |
+                                <xar:if condition="empty($loop:item['deleteurl'])">
+                                    #$loop:item['deletetitle']#
+                                <xar:else />
+                                    <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                                </xar:if>
+                            </td>
+                        </tr>
+                    </xar:loop>
+                </table>
+            </form>
+        <hr>
+        </xar:if>
+        <b><xar:mlstring>Add a Newsletter User</xar:mlstring></b>
+        <br />
+        <div style="text-align: left;margin: auto;">        
+            <xar:if condition="$creategroups==0">
+                <span class="xar-title"><b><xar:mlstring>There are no Newsletter groups.  Please click on </xar:mlstring>&nbsp;
+                <a href="&xar-modurl-newsletter-admin-modifyconfig;">Modify Config</a>&nbsp;
+                <xar:mlstring>and create the default groups.</xar:mlstring></span>
+                <br /><br />
+            <xar:else />
+                <xar:mlstring>You are about to add a user to one of the Newsletter groups.  You must select a group that already has the appropriate Newsletter privileges.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring>The default groups and privileges are:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring><b>Newsletter Publisher</b> (AdminNewsletter privilege) - Can create, edit and delete stories, issues, publications and subscriptions.  Can set configuration for the information block.  Can publish issues.</xar:mlstring></li>
+                    <li><xar:mlstring><b>NewsletterEditor</b> (DeleteNewsletter privilege) - Can create, edit and delete stories or issues.  Cannot publish issues.</xar:mlstring></li>
+                    <li><xar:mlstring><b>NewsletterWriter</b> (AddNewsletter privilege) - Can add, edit or delete stories.  Cannot publish issues.</xar:mlstring></li>
+                </ul>
+                <form action="#xarModURL('newsletter', 'admin', 'createowner')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />     
+                <table border="0" cellpadding="5">
+                <tr>
+                    <td>
+                        <xar:mlstring>Select User:</xar:mlstring>
+                    </td>
+                    <td>
+                    <select name="ownerId">
+                        <xar:loop name="$roles">
+                            <option name="uid" value="#$loop:item['uid']#">#$loop:item['name']#</option>
+                        </xar:loop>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xar:mlstring>Select Group:</xar:mlstring>
+                    </td>
+                    <td>
+                        <select name="userGroup" id="userGroup">
+                            <xar:loop name="$groups">
+                                <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected>#$loop:item['name']#</option>
+                                <xar:else />
+                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                                </xar:if>
+                            </xar:loop>
+                            </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <br /><br />
+                        <input type="submit" value="#$addlabel#"  tabindex="1" />
+                    </td>
+                </tr>
+                </table>            
+                </form>
+            </xar:if>
+            <br />
+        </div>
+    </div>
+</div>

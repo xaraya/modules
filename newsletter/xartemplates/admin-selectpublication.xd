@@ -1,0 +1,39 @@
+<div class="xar-mod-body xar-norm-outline" style="padding: 1px;">
+    <div style="margin: auto;">
+        <h2><xar:mlstring>Publish Issue</xar:mlstring></h2><br />
+        <form action="#xarModURL('newsletter', 'admin', 'retrievepublication')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />   
+        <table border="0" cellpadding="5">
+            <xar:if condition="!empty($publications)">
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Choose Publication:</xar:mlstring></b>
+                    </td>
+                    <td>                       
+                        <select name="publicationId" tabindex="1">
+                            <option value=0>New Publication</option>
+                            <xar:loop name="$publications">
+                                <option name="pid" value="#$loop:item['id']#">#$loop:item['title']#</option>
+                            </xar:loop>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <br /><br />
+                        <input type="submit" value="#$submitbutton#"  tabindex="3" />
+                    </td>
+                </tr>
+           <xar:else />
+                <tr>
+                    <td colspan="2" align="left">
+                        <xar:mlstring>You must add a publication before creating a new issue.</xar:mlstring>
+                        <br /><br />
+                        <b><a href="#xarModURL('newsletter', 'admin', 'newpublication')#"><xar:mlstring>Create a New Publication</xar:mlstring></a></b>
+                    </td>
+                </tr>
+            </xar:if>            
+        </table>            
+        </form>
+    </div>
+</div>

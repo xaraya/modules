@@ -1,0 +1,42 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">
+            <table width="100%" border="1" cellspacing="0" cellpadding="4">
+                <tr>
+                    <th><xar:mlstring>Title</xar:mlstring></th>
+                    <th><xar:mlstring>Options</xar:mlstring></th>
+                </tr>
+                <xar:if condition="!empty($disclaimers)">
+                    <xar:loop name="$disclaimers">
+                <tr>
+                    <td>#$loop:item['title']#</td>
+                    <xar:if condition="!empty($loop:item['options'])">
+                        <td>#$loop:item['options']#</td>
+                    </xar:if>
+                    <td>
+                       <xar:if condition="empty($loop:item['editurl'])">
+                           #$loop:item['edittitle']#
+                       <xar:else />
+                           <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                       </xar:if>
+                       |
+                       <xar:if condition="empty($loop:item['deleteurl'])">
+                           #$loop:item['deletetitle']#
+                       <xar:else />
+                           <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                       </xar:if>
+                    </td>
+                </tr>
+                    </xar:loop>
+                </xar:if>
+            </table>
+        </div>
+    </div>
+</div>

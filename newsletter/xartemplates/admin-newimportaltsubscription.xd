@@ -1,0 +1,92 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<xar:if condition="!empty($publications)">
+    <div class="xar-mod-body">
+        <div class="contentBorder">
+            <div style="text-align: left;margin: auto;">
+                <form action="#xarModURL('newsletter', 'admin', 'importaltsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />     
+                <table border="0" width="100%">
+                    <tr>
+                        <td align="left" colspan="2">
+                            <xar:mlstring>You can import a list of contacts into your subscription using a CSV (comma separated values) export.</xar:mlstring>
+                            <br /><br />
+                            <xar:mlstring>The fields should be in the format:</xar:mlstring>
+                            <br />
+                            <xar:mlstring>&nbsp;&nbsp;lastname,firstname,email</xar:mlstring>
+                            <br /><br />
+                            <xar:mlstring>For example, the following CSV will be parsed correctly: </xar:mlstring>
+                            <br />
+                            <xar:mlstring>&nbsp;&nbsp;baggins,frodo,fbaggins@bagend.com</xar:mlstring>
+                            <br />
+                            <xar:mlstring>&nbsp;&nbsp;"gamgee,samwise",sgamgee@bagend.com</xar:mlstring>
+                            <br />
+                            <xar:mlstring>&nbsp;&nbsp;"took,peregrin",ptook@bagend.com SMTP ptook@bagend.com</xar:mlstring>
+                            <br /><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" colspan="2">
+                            <xar:mlstring>Insert CSV fields:</xar:mlstring>
+                            <br />
+                            <textarea name="import" rows="15" cols="50" tabindex="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <xar:mlstring>Delimitor:</xar:mlstring>
+                        </td>
+                        <td align="left">
+                            <input type="text" name="delim" id="delim" value="," size="2" maxlength="2" tabindex="11" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <xar:mlstring>Mail Options</xar:mlstring>
+                        </td>
+                        <td align="left">
+                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" tabindex="9" />
+                            &nbsp;&nbsp;HTML Mail
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" colspan="2">
+                            <br />
+                            <xar:mlstring>Choose which publication(s) to add new subscription:</xar:mlstring>
+                        </td>
+                    </tr>
+                    <xar:loop name="$publications">
+                        <tr>
+                            <td align="left">
+                                <b>#$loop:item['title']#</b>
+                            </td>
+                            <td align="left" valign="center">
+                                <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#"/>
+                            </td>
+                        </tr>
+                    </xar:loop>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <br /><br />
+                            <input type="submit" value="#$importbutton#"  />
+                        </td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+<xar:else />
+    <div class="xar-mod-body">
+        <div class="contentBorder">
+            <div style="text-align: left;margin: auto;">
+                <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
+            </div>
+        </div>
+    </div>
+</xar:if>

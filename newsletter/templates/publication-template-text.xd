@@ -1,0 +1,43 @@
+<xar:if condition="!empty($publication['introduction'])">#$publication['introduction']#</xar:if>
+
+
+<xar:if condition="!empty($issue['editorNote'])">Editor's Note: #$issue['editorNote']#</xar:if>
+
+
+<xar:if condition="!empty($issue['headlines']) and count($issue['headlines']) gt 0"><xar:loop name="$issue['headlines']">
+**#$loop:item['category']# Headlines
+<xar:loop name="$loop:item['stories']">  #$loop:item['title']#
+
+
+</xar:loop></xar:loop></xar:if>
+------------------------------------------------------------
+<xar:loop name="$issue['headlines']">
+
+#$loop:item['category']#
+
+<xar:loop name="$loop:item['stories']">
+
+#$loop:item['title']#
+
+(#$loop:item['source']#<xar:if condition="$loop:item['storyDate']['timestamp'] != 0">, #$loop:item['storyDate']['mon']#/#$loop:item['storyDate']['day']#/#$loop:item['storyDate']['year']# <xar:if condition="!empty($loop:item['altDate'])"> &nbsp;#$loop:item['altDate']# </xar:if> <xar:else /> #$loop:item['altDate']# </xar:if>)
+
+#$loop:item['content']#
+
+
+<xar:if condition="!empty($loop:item['commentarySource']) && !empty($loop:item['commentarySource'])">#$loop:item['commentarySource']#:
+#$loop:item['commentary']# </xar:if>
+
+
+<xar:if condition="$loop:item['linkExpired'] eq true">Full text (expired): #$loop:item['fullTextLink']#<br /><xar:else />Full text: <a href="#$loop:item['fullTextLink']#">#$loop:item['fullTextLink']#</a><br /></xar:if>
+<xar:if condition="$loop:item['registerLink'] eq 1">#$publication['linkRegistration']#</xar:if>
+
+
+------------------------------------------------------------
+</xar:loop></xar:loop>
+
+
+#$issue['ownerName']#
+
+<xar:if condition="!empty($issue['ownerSignature'])">#$issue['ownerSignature']# </xar:if>
+
+<xar:if condition="!empty($publication['disclaimer'])">Disclaimer:  #$publication['disclaimer']#</xar:if>

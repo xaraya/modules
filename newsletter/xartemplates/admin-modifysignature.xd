@@ -1,0 +1,47 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">
+            <br />
+            <form action="&xar-modurl-newsletter-admin-updatesignature;" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+            <input type="hidden" name="id" id="id" value="#$item['id']#" />
+            <table border="0" cellpadding="5">
+                <tr>
+                    <td colspan="2">
+                    #$hooks#
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Name:</xar:mlstring></b>
+                    </td>
+                    <td>
+                        #$item['name']#
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Signature:</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <textarea name="signature" rows="8" cols="50" tabindex="1">#xarVarPrepForDisplay($item['signature'])#</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <br /><br />
+                        <input type="submit" value="#$updatebutton#"  tabindex="2" />
+                    </td>
+                </tr>
+            </table>    
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete Story</xar:mlstring></h2><br />
+    <div style="text-align: center;margin: auto;">    
+        <form action="#xarModURL('newsletter', 'admin', 'deletestory')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="id" id="id" value="#$id#" />
+        <input type="hidden" name="confirm" id="confirm" value="1"/>
+        <table width="100%" border="0" cellpadding="5">
+            <tr>
+                <td>
+                    <span class="xar-title"><xar:mlstring>You are about to delete a story.</xar:mlstring></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="xar-title"><xar:mlstring>Confirm removal of story:</xar:mlstring></span>&nbsp;&nbsp;
+            #$namevalue#
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="#$confirmbutton#"  tabindex="1" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="&xar-modurl-newsletter-admin-viewstory;"><xar:mlstring>Cancel removal of story</xar:mlstring></a>
+                </td>
+            </tr>
+        </table>
+        </form>        
+    </div>
+</div>

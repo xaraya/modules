@@ -1,0 +1,486 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+        <xar:if condition="file_exists('modules/adminpanels/xarimages/admin.gif')" >
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <xar:else />
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The Newsletter module allows an individual or organization to compile and distribute news and research updates to interested parties via email.  This module gives writers, editors and publishers a comprehensive process to easily assemble the stories for an newsletter and subsequently publish the information to a subscription base.</xar:mlstring>
+            <br /><br />
+            <xar:mlstring>This module was originally created for the</xar:mlstring>
+            &nbsp;<a href="http://www.schwabfoundation.org">Charles and Helen Schwab Foundation</a>&nbsp;
+            <xar:mlstring>to distribute weekly updates on the program and research areas relevant to the foundation's learning differences and human services programs and initiatives.</xar:mlstring>
+        </div>
+        <xar:if condition="$logged eq 1">
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                <xar:mlstring>How To Use It?</xar:mlstring>
+            </div>
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring><b>Note:</b>&nbsp;&nbsp;If you have not yet configured the module, please do so.</xar:mlstring>
+                <br />
+                <a href="#xarModURL('newsletter', 'admin', 'configdesc')#">Click here to configure the Newsletter module.</a>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring><b>Default Groups</b></xar:mlstring>
+                <br /><br />
+                <xar:mlstring>As a user of the Newsletter module, you will be added to either the publisher, editor or writer group.  Once the module administrator has added you to one of these groups, you will be able to create content for a publication.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring>The default roles and responsibilities:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring><b>Publisher</b></xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Can create, edit and delete stories, issues, publications and subscriptions.  Can modify the default configuration.  Can publish issues.</xar:mlstring>
+                    <li><xar:mlstring><b>Editor</b></xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Can create, edit and delete stories and issues.</xar:mlstring>
+                    <li><xar:mlstring><b>Writer</b></xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Can add or edit stories and issues.</xar:mlstring>
+                </ul>
+                <br />
+                <xar:mlstring><b>Publication Items</b></xar:mlstring>
+                <br /><br />
+                <xar:mlstring>A publication is the top-level wrapper for each issue and sets default information for each issue and story within the issue.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring>A publication will contain the following items:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring><b>Disclaimer</b></xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Each publication should have a disclaimer or confidentiality clause.  Once a disclaimer is created, it can be used by multiple publications.</xar:mlstring>
+                    <br />
+                    <li><xar:mlstring><b>Issue</b></xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>An issue contains the news and research updates that have been compiled as stories.  Once the issue is ready to be published, the issue will be sent to the subscription base.  After an issue has been published, it can be view by non-registered users from the Newsletter information block.</xar:mlstring>
+                    <br />
+                    <li><xar:mlstring><b>Story</b></xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Each issue will have multiple stories relating to the news and research updates that will be presented to the subscription base.</xar:mlstring> 
+                </ul>
+                <br />
+                <xar:mlstring>The following is an example of a publication:</xar:mlstring>
+                <br /><br />
+                <table width="100%" cellpadding="0" border="0">
+                <tr>
+                    <td colspan="3"><xar:mlstring>Homelessness Update</xar:mlstring></td>
+                    <td><xar:mlstring>publication</xar:mlstring></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="2"><b><xar:mlstring>June 2003</xar:mlstring></b></td>
+                    <td><b><xar:mlstring>issue</xar:mlstring></b></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><xar:mlstring>Mayor to Approve Housing Law</xar:mlstring></td>
+                    <td><xar:mlstring>story</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><xar:mlstring>County Asked to Increase Homeless Aid</xar:mlstring></td>
+                    <td><xar:mlstring>story</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>&nbsp</td>
+                    <td colspan="2"><b><xar:mlstring>July 2003</xar:mlstring></b></td>
+                    <td><b><xar:mlstring>issue</xar:mlstring></b></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><xar:mlstring>Council Approves Cash for Housing</xar:mlstring></td>
+                    <td><xar:mlstring>story</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><xar:mlstring>Shaky Housing Plans</xar:mlstring></td>
+                    <td><xar:mlstring>story</xar:mlstring></td>
+                </tr>
+                </table>
+                <br /><br />
+                <b><xar:mlstring>Steps to publish your first issue:</xar:mlstring></b>
+                <ol>
+                    <li><xar:mlstring>Modify the configuration (publisher)</xar:mlstring></li>
+                    <br /><br />
+                    <xar:mlstring>The admin or publisher should first update the module's configuration within the Newsletter <i>modify configuration</i> before publishing an issue.  If the Newsletter information block has been added, then the <i>Publisher or Company Name</i> and <i>Information</i> fields will be displayed within the information block.  <i>Information</i> should contain a general description about the publications that are available to the subscription base.</xar:mlstring>
+                    <br /><br />
+                    <li><xar:mlstring>Edit your signature (publisher, editor, writer)</xar:mlstring></li>
+                    <br /><br />
+                    <xar:mlstring>Add a signature block if you wish to include a signature in each issue.  Do not include a user name in your signature block as this will be automatically included in the template.  By default, the signature block will be displayed after your user name.</xar:mlstring>
+                    <br /><br />
+                    <li><xar:mlstring>Modify the publication templates (publisher)</xar:mlstring></li>
+                    <br /><br />
+                    <xar:mlstring>Each publication can have it's own HTML and text email template.  To create a new template, you will need to copy one of the existing templates and modify the template for the desired appearance.  A README file is included in the templates directory with the necessary information on creating a new template.</xar:mlstring> 
+                    <br /><br />
+                    <xar:mlstring>The default templates are located the directory <i>"modules/newsletter/templates"</i></xar:mlstring>
+                    <br /><br />
+                    <xar:mlstring>The default templates are:</xar:mlstring>
+                    <ul>
+                        <li><xar:mlstring>publication-template-html.xd - default HTML template</xar:mlstring></li>
+                        <li><xar:mlstring>publication-template-text.xd - default text template</xar:mlstring></li>
+                    </ul>
+                    <br /><br />
+                    <xar:mlstring>Once a new template has been created, assign this template when you create the publication.  When previewing an issue, the HTML publication template will be used to display the issue.</xar:mlstring>
+                    <br /><br />
+                    <li><xar:mlstring>Select "Publish Issue" from the Newsletter user menu.</xar:mlstring>
+                    <br /><br />
+                    <xar:mlstring>Either create a new publication or choose a publication that already exists. (publisher)</xar:mlstring></li>
+                    <br /><br />
+                    <li><xar:mlstring>Create an issue (publisher, editor)</xar:mlstring></li>
+                    <br /><br />
+                    <li><xar:mlstring>Create stories (publisher, editor, writer)</xar:mlstring></li>
+                    <br /><br />
+                    <xar:mlstring>You can continue adding stories to the issue until you have finished and are ready to publish the issue.</xar:mlstring>
+                    <br /><br />
+
+                    <li><xar:mlstring>Preview the issue (publisher, editor, writer)</xar:mlstring></li>
+                    <br /><br />
+                    <xar:mlstring>Select an issue to preview.  The publication's HTML template will be used to display the issue.</xar:mlstring>
+                    <br /><br />
+                    <li><xar:mlstring>Publish the issue (publisher)</xar:mlstring></li>
+                    <br /><br />
+                    <xar:mlstring>Select an issue to publish.  The issue will be sent to the subscription base.  After an issue has been published, it is viewable to non-registered users from within the Newsletter information block as an archive of past issues.</xar:mlstring>
+                </ol>
+                <br />
+                <xar:mlstring>To publish another issue, repeat steps 4-8. </xar:mlstring>
+                <br /><br />
+                <xar:mlstring><b>Subscriptions</b></xar:mlstring>
+                <br /><br />
+                <xar:mlstring>Normally, a user cannot subscribe to a publication unless they are a registered user on your site.  If the Newsletter information block has been added, then a registered user will be able to subscribe to a publication and modify their subscriptions.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring>If you wish to add a subscription that is not a registered user, then you can add a subscription from the <i>add subscription</i> menu.  You will need to provide a user name and email address.  This provides an alternative way of adding subscriptions to a publication for users that are not registered.</xar:mlstring>
+            </div>
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                <xar:mlstring>Newsletter Main Menu</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring>From the main menu, you have the following choices based on your privileges:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring>Publish Issue - Create a new issue for publication</xar:mlstring></li>
+                    <li><xar:mlstring>Edit Issues - Edit your issues and stories.</xar:mlstring></li>
+                    <li><xar:mlstring>Edit Publications - Edit your publications.</xar:mlstring></li>
+                    <li><xar:mlstring>Edit Subscriptions - Search/edit subscriptions of a publication.</xar:mlstring></li>
+                    <li><xar:mlstring>Edit Signature - Edit your signature.</xar:mlstring></li>
+                    <li><xar:mlstring>Modify Config - Modify the configuration.</xar:mlstring></li>
+                </ul>
+            </div>
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                <xar:mlstring>Content Fields</xar:mlstring>
+            </div>
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <br />
+                <xar:mlstring><b>Publication</b></xar:mlstring>
+                <br /><br />
+                <table width="100%" cellpadding="2" cellspacing="2" border="0">
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring><b>Field</b></xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring><b>Description</b></xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Owner</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The owner of the publication usually assigned to the publication group.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Category</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The category for the publication.  This will be a category created by the module administrator.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Alternative Categories</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>Alternative categories allow a module developer to find publications based on other categories.  For example, a module developer could create a subscription block based on an article category, assign the publication's alternative category to that article category and show publication information when that article is displayed.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Title</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The title of the publication.  This will be included in the email header.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Introduction</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The introduction to the publication.  The introduction can include a general greeting message, overview of the publication, etc.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>HTML Template</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The name of the HTML template to use for the publication.  The HTML template located in the <i>modules/newsletter/templates</i> directory.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Text template</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The name of the text template to use for the publication.  The text template located in the <i>modules/newsletter/templates</i> directory.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Logo</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The logo of the publication.  This is only included in HTML mail.  The logo must be an http link to the image.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Link Expiration</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The default number of days before a link expires in a story.  This value can be overridden within each story.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Link Registration Text</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>If a link to a piece of content requires registration before you can view the content, this text will be displayed after the link.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Private</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>If the publication is private, then registered users will not be allowed to subscribe to the publication.  The editor of the publication will need to add subscribers through the "Edit Subscriptions" menu.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Disclaimer</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The disclaimer or confidentiality clause of a publication.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Description</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The description of the publication is displayed when a registered user chooses to subscribe to a publication or modify their subscription through the Newsletter information block.</xar:mlstring>
+                        </td>
+                    </tr>
+                </table>
+                <br /><br />
+                <xar:mlstring><b>Issue</b></xar:mlstring>
+                <br /><br />
+                <table width="100%" cellpadding="2" cellspacing="2" border="0">
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring><b>Field</b></xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring><b>Description</b></xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Publication</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The publication of the issue.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Owner</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The owner of the issue.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Title</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The title of the issue.  This will be appended to the publication name in the email header.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Editor Note</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The editor's note.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Show in Archives</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>Allow an issue to be shown in the archive of past issues.  The archive is displayed to registered users in the information block.</xar:mlstring>
+                        </td>
+                    </tr>
+                </table>
+                <br /><br />
+                <xar:mlstring><b>Story</b></xar:mlstring>
+                <br /><br />
+                <table width="100%" cellpadding="2" cellspacing="2" border="0">
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring><b>Field</b></xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring><b>Description</b></xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Publication</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The publication of the story.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Owner</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The owner of the story.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Story Category</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The category of the story.  The story order within an issue is based on the category order.  Within each category, the story is ordered by date (newest to oldest).</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Title</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The title of the story.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Source</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The source of the story (e.g. The New York Times).</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Story Date</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The date of the story.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Alternative Date</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>If the content piece does not have a date, then the alternative date field can be used in place of the date field.  If the story date is also included, then the alternative date is appended to the date field.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Content</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The content of the story.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Full Text Link </xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The full URL to the content piece.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Registration Required</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>This field is provided if a link requires registration before viewing.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Link Expiration</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The default number of days before the link expires for the content piece.  Some news links expire after a certain number of days.  This will override the publication setting for link expiration.  To specify that a link never expires, set this value to 0.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Commentary</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>Commentary about the content.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Commentary Source</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The source of the commentary (e.g. person, news agency, etc.).</xar:mlstring>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            </div>
+        </xar:if>
+        <br />
+    </div>
+</div>

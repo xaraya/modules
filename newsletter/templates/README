@@ -1,0 +1,95 @@
+=====================================================================
+=====================================================================
+
+Publication Templates
+
+Each publication can have it's own HTML and text email template. To create a new template, you will need to copy one of the existing templates and modify the template for the desired appearance.
+
+The default templates are located the directory "modules/newsletter/templates"
+
+The default templates are:
+    publication-template-html.xd    - default HTML template
+    publication-template-text.xd    - default text template 
+
+Once a new template has been created, edit the publication to use the new template. When viewing an issue, the HTML publication template will be used to display the issue.
+
+=====================================================================
+=====================================================================
+
+Publication variables:
+
+#$publication['title']#
+    The title of the publication.
+
+#$publication['introduction']#
+    The introduction to the publication. The introduction can include a general greeting message, overview of the publication, etc.    
+
+#$publication['logo']#
+    The logo of the publication. This is only included in HTML mail. The logo must be an http link to the image. 
+
+#$publication['disclaimer']#
+    The disclaimer or confidentiality clause of a publication.
+
+=====================================================================
+
+Issue variables:
+
+#$issue['editorNote']#
+    The editor note.
+
+#$issue['ownerName']#
+    The owner of the issue.
+
+#$issue['ownerSignature']#
+    The signature block of the owner.
+
+<xar:loopname="$issue['headlines']"> 
+    A loop containing the following items:
+
+        #$loop:item['category']#
+            Loop over all the story categories within an issue.  The story order within an issue is based on the category order. Within each category, the story is ordered by date (newest to oldest).
+
+        <xar:loopname="$loop:item['stories']">
+            A loop containing all the of variables for a story:
+
+                #$loop:item['title']# 
+                    The title of the story.
+
+                #$loop:item['source']#
+                    The source of the story (e.g. The New York Times). 
+                    
+                #$storyDate['timestamp']#
+                    The UNIX timestamp of the story (e.g. 1057647600) 
+
+                #$storyDate['mon']#
+                    The month of the story (displayed as MM).
+
+                #$storyDate['day']#
+                    The day of the story (displayed as DD).
+
+                #$storyDate['year']#
+                    The year of the story (displayed as YYYY).
+
+                #$loop:item['altDate']#
+                    If the content piece does not have a date, then the alternative date field can be used in place of the date field. If the story date is also included, then the alternative date is appended to the date field.
+
+                #$loop:item['content']#
+                    The content of the story.
+
+                #$loop:item['fullTextLink']#
+                    The full URL to the content piece.
+
+                #$loop:item['registerLinkText']#
+                    If a story's URL requires registration before viewing, the publication register link text will be displayed.
+
+                #$loop:item['commentary']#
+                    Commentary about the content.
+
+                #$loop:item['commentarySource']#:
+                    The source of the commentary.
+
+        </xar:loop>
+</xar:loop>
+
+=====================================================================
+=====================================================================

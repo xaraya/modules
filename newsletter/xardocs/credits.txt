@@ -1,0 +1,19 @@
+// ----------------------------------------------------------------------
+//
+// Newsletter 
+//
+// This module allows an individual or organization to compile and
+// distribute news and research updates to interested parties via 
+// email. This module gives writers, editors and publishers a 
+// comprehensive process to easily assemble the stories for an 
+// program area and subsequently publish the information to a subscription base.
+//
+// The module was originally created for the Charles and Helen 
+// Schwab Foundation to distribute weekly updates on the program 
+// areas relevant to the foundation's learning differences and 
+// human services programs and initiatives.
+//
+// Author:  Richard Cave rcave@schwabfoundation.org
+//                       rcave@xaraya.com
+// 
+// ----------------------------------------------------------------------

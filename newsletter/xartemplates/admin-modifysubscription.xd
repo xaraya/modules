@@ -1,0 +1,65 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">Newsletter</span>
+</div>
+<div align="xar-mod-body">
+    <h2><xar:mlstring>Modify Subscription</xar:mlstring></h2><br />
+    <div style="text-align: left;margin: auto;">
+        <form action="&xar-modurl-newsletter-admin-updatesubscription;" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+        <input type="hidden" name="uid" id="$uid" value="#$uid#" /> 
+        <table border="0" width="100%">
+            <tr>
+                <td align="left">
+                    <xar:mlstring>Subscription Name:</xar:mlstring>
+                </td>
+                <td>
+                    #xarVarPrepForDisplay($name)#
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <xar:mlstring>Mail Options</xar:mlstring>
+                </td>
+                <td>
+                    <xar:if condition="$htmlmail eq 1">
+                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked />
+                    <xar:else />
+                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" />
+                    </xar:if>
+                &nbsp;&nbsp;HTML Mail
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" colspan="2">
+                    <xar:mlstring>Choose which publication(s) to modify subscription:</xar:mlstring>
+                </td>
+            </tr>
+            <xar:loop name="$publications">
+                <tr>
+                    <td>
+                        <b>#$loop:item['title']#</b>
+                    </td>
+                    <td align="left" valign="center">
+                        <xar:if condition="$loop:item['checked'] eq true">
+                            <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" checked />
+                        <xar:else />
+                            <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" />
+                        </xar:if>
+                    </td>
+                </tr>
+            </xar:loop>
+        <tr>
+            <td colspan="3" align="center">
+                <br /><br />
+                <input type="submit" value="#$updatebutton#"  />
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>

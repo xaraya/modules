@@ -1,0 +1,36 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New Disclaimer</xar:mlstring></h2><br />
+    <div style="text-align: left;margin: auto;">
+        <form action="#xarModURL('newsletter', 'admin', 'createdisclaimer')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />     
+        <table border="0" cellpadding="5">
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Title:</xar:mlstring></b>
+                </td>
+                <td>
+                    <input type="text" name="title" id="title" value="" size="50" maxlength="255" tabindex="1" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Disclaimer:</xar:mlstring></b>
+                </td>
+                <td>
+                    <textarea name="disclaimer" rows="8" cols="50" tabindex="2"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <br /><br />
+                    <input type="submit" value="#$addlabel#"  tabindex="3" />
+                </td>
+            </tr>
+        </table>            
+        </form>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">
+            <form action="#xarModURL('newsletter', 'admin', 'updatenewsletter')#" method="post" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <table border="0" cellpadding="2">
+                <tr align="left" valign="top">
+                    <td colspan="2">#xarML('Modify the following for display in the information block.')#</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Publisher or Company Name</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <input type="text" name="publishername" id="publishername" value="#xarVarPrepForDisplay($publishername)#" size="50" maxlength="255" tabindex="1" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Information about Newsletter</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <textarea name="information" rows="10" cols="50" tabindex="2">#xarVarPrepForDisplay($information)#</textarea>
+                    <td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <br /><hr/><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Default HTML Publication Template:</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <input type="text" name="templateHTML" id="templateHTML" value="#xarVarPrepForDisplay($templateHTML)#" size="50" maxlength="255" tabindex="3" />
+                    <td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Default Text Publication Template:</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <input type="text" name="templateText" id="templateText" value="#xarVarPrepForDisplay($templateText)#" size="50" maxlength="255" tabindex="4" />
+                    <td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Show categories alphabetically?</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <xar:if condition="$categorysort eq 1">
+                            <input type="checkbox" name="categorysort" value="1" checked tabindex="5" />
+                        <xar:else />
+                            <input type="checkbox" name="categorysort" value="1" tabindex="5" />
+                        </xar:if>
+                        <br/><font size="1"><xar:mlstring>(turn off to display by order of category id)</xar:mlstring></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Preview Issue in New Browser Window?</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <xar:if condition="$previewbrowser eq 1">
+                            <input type="checkbox" name="previewbrowser" value="1" checked tabindex="6" />
+                        <xar:else />
+                            <input type="checkbox" name="previewbrowser" value="1" tabindex="6" />
+                        </xar:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Default number of stories/issues per page</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="7" tabindex="7" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <br /><hr/><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <br /><br />
+                        <input type="submit" value="#$modifybutton#"  tabindex="8" />
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+</div>

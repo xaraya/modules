@@ -1,0 +1,179 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body"><h2><xar:mlstring>New Story</xar:mlstring></h2><br />
+    <div style="text-align: left;margin: auto;">
+        <form action="#xarModURL('newsletter', 'admin', 'createstory')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />     
+        <input type="hidden" name="publicationId" id="publicationId" value="#$publicationId#" />       
+        <input type="hidden" name="issueId" id="issueId" value="#$issueId#" />       
+        <table border="0" cellpadding="5">
+            <tr>
+                <td>
+                    <xar:mlstring>Publication:</xar:mlstring>
+                </td>
+                <xar:if condition="$publicationId eq 0">
+                    <td>
+                        <select name="publicationId" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
+                        <option value=0>Choose Publication</option>
+                            <xar:loop name="$publications">
+                                <xar:if condition="$publicationId eq $loop:item['id']">
+                                    <option name="pid" value="#$loop:item['id']#" selected>#$loop:item['title']#</option>
+                                <xar:else />
+                                    <option name="pid" value="#$loop:item['id']#">#$loop:item['title']#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </td>
+                <xar:else />
+                    <td>
+                        #$publication_title#
+                    </td>
+                </xar:if>
+            </tr>
+            <tr>
+                <td>
+                    <xar:mlstring>Story Owner:</xar:mlstring>
+                </td>
+                <td>
+                <select name="ownerId" tabindex="2">
+                    <xar:loop name="$owners">
+                        <xar:if condition="$ownerId eq $loop:item['id']">
+                            <option name="uid" value="#$loop:item['id']#" selected>#$loop:item['name']#</option>
+                        <xar:else />
+                            <option name="uid" value="#$loop:item['id']#">#$loop:item['name']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+                </td>
+            </tr>
+            <xar:if condition="$number_of_categories != 0">
+                <tr>
+                    <td>
+                        <xar:mlstring>Choose Category</xar:mlstring>
+                    </td>
+                    <td>
+                        <select name="categoryId" tabindex="3">
+                            <xar:loop name="$categories">
+                                <option name="cid" value="#$loop:item['cid']#">#$loop:item['name']#</option>
+                            </xar:loop>
+                        </select>
+                    </td>
+                </tr>
+            <xar:else />
+                <input type="hidden" name="categoryId" id="categoryId" value="#$number_of_categories#" />       
+            </xar:if>
+            <tr>
+                <td>
+                    <xar:mlstring>Title:</xar:mlstring>
+                </td>
+                <td>
+                    <input type="text" name="title" id="title" value="" size="50" maxlength="255" tabindex="4" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <xar:mlstring>Source:</xar:mlstring>
+                </td>
+                <td>
+                    <input type="text" name="source" id="source" value="" size="50" maxlength="255" tabindex="5" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <xar:mlstring>Story Date:</xar:mlstring>
+                </td>
+                <td>
+                    <input type="text" name="storyDateMon" id="storyDateMon" value="#$storyDate['mon']#" size="2" maxlength="2" tabindex="6" />
+                    &nbsp;-&nbsp;
+                    <input type="text" name="storyDateDay" id="storyDateDay" value="#$storyDate['day']#" size="2" maxlength="2" tabindex="7" />
+                    &nbsp;-&nbsp;
+                    <input type="text" name="storyDateYear" id="storyDateYear" value="#$storyDate['year']#" size="4" maxlength="4" tabindex="8" />
+                    &nbsp;&nbsp;
+                    (mm-dd-yyyy)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <xar:mlstring>Alternative Date:</xar:mlstring>
+                </td>
+                <td>
+                    <input type="text" name="altDate" id="altDate" value="" size="50" maxlength="255" tabindex="9" />
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <xar:mlstring>Content:</xar:mlstring>
+                </td>
+                <td>
+                    <textarea name="content" rows="15" cols="50" tabindex="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <xar:mlstring>Full Text Link:</xar:mlstring>
+                </td>
+                <td>
+                    <input type="text" name="fullTextLink" id="fullTextLink" value="" size="50" maxlength="255" tabindex="12" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <xar:mlstring>Registration Required to View Link:</xar:mlstring>
+                </td>
+                <td>
+                    <input type="checkbox" name="registerLink" value="1" tabindex="13" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <xar:mlstring>Number of Days before Link Expires:</xar:mlstring>
+                    <br/><font size="1"><xar:mlstring>(overrides publication default)</xar:mlstring></font>
+                </td>
+                <td>
+                    <xar:if condition="isset($linkExpires)">
+                        <input type="text" name="linkExpiration" id="linkExpiration" value="#$linkExpires#" size="4" maxlength="4" tabindex="14" />
+                    <xar:else />
+                    <input type="text" name="linkExpiration" id="linkExpiration" size="4" maxlength="4" tabindex="14" />
+                    </xar:if>
+                    &nbsp;<xar:mlstring>(0 = link never expires)</xar:mlstring>
+                <td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <xar:mlstring>Commentary:</xar:mlstring>
+                </td>
+                <td>
+                    <textarea name="commentary" rows="8" cols="50" tabindex="15"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <xar:mlstring>Commentary Source:</xar:mlstring>
+                </td>
+                <td>
+                    <xar:if condition="!empty($commentarySource)">
+                        <select name="commentarySource" tabindex="16">
+                            <option value=''>Choose Source</option>
+                            <xar:loop name="$commentarySource">
+                                <option name="source" value="#$loop:item['source']#">#$loop:item['source']#</option>
+                            </xar:loop>
+                        </select>
+                        <br /><br />
+                    </xar:if>
+                    <xar:mlstring>Add a new commentary source:</xar:mlstring></b>
+                    <br /><br />
+                    <input type="text" name="newCommentarySource" id="newCommentarySource" value="" size="50" maxlength="255" tabindex="17" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <br /><br />
+                    <input type="submit" name="submit" value="#$nextlabel#" tabindex="18" />
+                    <input type="submit" name="submit" value="#$addlabel#" tabindex="19" />
+                </td>
+            </tr>
+        </form>
+        </table>       
+    </div>
+</div>     

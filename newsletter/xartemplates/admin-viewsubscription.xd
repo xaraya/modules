@@ -1,0 +1,63 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">
+            <table border="0" width="100%">
+                <xar:if condition="!empty($subscriptions)">
+                    <tr>
+                        <th><xar:mlstring>Publication</xar:mlstring></th>
+                        <th><xar:mlstring>Name</xar:mlstring></th>
+                        <th><xar:mlstring>User Name</xar:mlstring></th>
+                        <th><xar:mlstring>Email Address</xar:mlstring></th>
+                        <th><xar:mlstring>Options</xar:mlstring></th>
+                    </tr>
+                    <xar:loop name="$subscriptions">
+                        <tr>
+                            <td>
+                                #$loop:item['title']#
+                            </td>
+                            <td>
+                                <xar:if condition="isset($loop:item['name'])">
+                                    #$loop:item['name']#
+                                </xar:if>
+                            </td>
+                            <td>
+                                <xar:if condition="isset($loop:item['uname'])">
+                                    #$loop:item['uname']#
+                                </xar:if>
+                            </td>
+                            <td>
+                                #$loop:item['email']#
+                            </td>
+                            <td>
+                                <xar:if condition="empty($loop:item['editurl'])">
+                                    #$loop:item['edittitle']#
+                                <xar:else />
+                                    <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                                </xar:if>
+                                |
+                                <xar:if condition="empty($loop:item['deleteurl'])">
+                                    #$loop:item['deletetitle']#
+                                <xar:else />
+                                    <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                                </xar:if>
+                            </td>
+                        </tr>
+                    </xar:loop>
+                <xar:else />
+                    <tr>
+                        <td>
+                            No subscriptions found!
+                        </td>
+                    </tr>
+                </xar:if>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New Issue</xar:mlstring></h2><br />
+    <div style="text-align: left;margin: auto;">
+        <script language="JavaScript">
+        function radio_input(redirect)
+        {
+        // Re-direct the browser to the modurl value
+        window.location.href = redirect;
+        }
+        </script>
+        <form action="#xarModURL('newsletter', 'admin', 'createissue')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />     
+        <input type="hidden" name="display" id="display" value="#$display#" />
+        <input type="hidden" name="publicationId" id="publicationId" value="#$publicationId#" />
+        <table border="0" cellpadding="5">
+            <tr>
+                <td>
+                    <b><xar:mlstring>Publication:</xar:mlstring></b>
+                </td>
+                <xar:if condition="$publicationId eq 0">
+                    <td>
+                        <select name="publication" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
+                        <option value=0>Choose Publication</option>
+                            <xar:loop name="$publications">
+                                <xar:if condition="$publicationId eq $loop:item['id']">
+                                    <option name="id" value="#$loop:item['id']#" selected>#$loop:item['title']#</option>
+                                <xar:else />
+                                    <option name="id" value="#$loop:item['id']#">#$loop:item['title']#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </td>
+                <xar:else />
+                    <td>
+                        #$publication_title#
+                    </td>
+                </xar:if>
+            </tr>        
+            <tr>
+                <td>
+                    <b><xar:mlstring>Choose Owner:</xar:mlstring></b> 
+                </td>
+                <td>
+                    <select name="ownerId" tabindex="2">
+                        <xar:loop name="$owners">
+                            <xar:if condition="$loggeduser['uid'] eq $loop:item['id']">
+                                <option name="id" value="#$loop:item['id']#" selected>#$loop:item['name']#</option>
+                            <xar:else />
+                                <option name="id" value="#$loop:item['id']#">#$loop:item['name']#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Title:</xar:mlstring></b> 
+                </td>
+                <td>
+                    <xar:if condition="empty($issue_title)">
+                        <input type="text" name="title" id="title" size="50" maxlength="255" tabindex="2" />
+                    <xar:else />
+                        <input type="text" name="title" id="title" size="50" maxlength="255" tabindex="2" value="#$issue_title#" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Editor Note:</xar:mlstring></b> 
+                </td>
+                <td>
+                    <textarea name="editorNote" rows="5" cols="50" tabindex="4"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Show in Archives:</xar:mlstring></b> 
+                </td>
+                <td>
+                    <xar:if condition="$externalvalue eq 1">
+                        <input type="checkbox" name="external" value="1" checked tabindex="6" />
+                    <xar:else />
+                        <input type="checkbox" name="external" value="1" tabindex="9" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;" colspan="2">
+                    <br /><br />
+                    <input type="submit" value="#$addlabel#"  tabindex="10" />
+                </td>
+            </tr>
+        </table>            
+        </form>
+    </div>
+</div>

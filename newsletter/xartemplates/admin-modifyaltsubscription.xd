@@ -1,0 +1,70 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menu['menutitle']#</span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Subscription</xar:mlstring></h2><br />
+    <div style="text-align: left;margin: auto;">
+        <form action="#xarModURL('newsletter', 'admin', 'updatealtsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+        <input type="hidden" name="id" id="id" value="#$subscription['id']#" />
+        <table border="0" width="100%">
+            <tr>
+                <td align="left">
+                    <xar:mlstring>Subscription Name:</xar:mlstring>
+                </td>
+                <td>
+                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($subscription['name'])#" size="50" maxlength="100" tabindex="1" />
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <xar:mlstring>Subscription Email:</xar:mlstring>
+                    <br /><br />
+                </td>
+                <td>
+                    <input type="text" name="email" id="email" value="#xarVarPrepForDisplay($subscription['email'])#" size="50" maxlength="255" tabindex="2" />
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <xar:mlstring>Mail Options</xar:mlstring>
+                </td>
+                <td>
+                    <xar:if condition="$subscription['htmlmail'] eq 1">
+                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked />
+                    <xar:else />
+                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" />
+                    </xar:if>
+                &nbsp;&nbsp;HTML Mail
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" colspan="2">
+                    <xar:mlstring>Choose which publication(s) to modify subscription:</xar:mlstring>
+                </td>
+            </tr>
+            <xar:loop name="$subscription['publications']">
+                <tr>
+                    <td>
+                        <b>#$loop:item['title']#</b>
+                    </td>
+                    <td align="left" valign="center">
+                        <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" #$loop:item['checked']# />
+                    </td>
+                </tr>
+            </xar:loop>
+            <tr>
+                <td colspan="2" align="center">
+                    <br /><br />
+                    <input type="submit" value="#$updatebutton#"  tabindex="3" />
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>

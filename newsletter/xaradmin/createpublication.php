@@ -1,0 +1,132 @@
+<?php
+/*
+ * File: $Id: $
+ *
+ * Newsletter 
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003-2004 by the Xaraya Development Team
+ * @link http://xavier.schwabfoundation.org
+ *
+ * @subpackage newsletter module
+ * @author Richard Cave <rcave@xaraya.com>
+*/
+
+
+/**
+ * Create a new Newsletter publication
+ *
+ * @public
+ * @author Richard Cave
+ * @param 'ownerId' the id of the publication owner (uid in roles)
+ * @param 'categoryId' the category id of the publiction
+ * @param 'altcids' array of alternate category ids for the publication
+ * @param 'title' the title of the publication
+ * @param 'templateHTML' the HTML template for the publication
+ * @param 'templateText' the text template for the publication
+ * @param 'logo' the logo of the publication
+ * @param 'linkExpiration' default number of days before a story link expires
+ * @param 'linkRegistration' default text for link registration
+ * @param 'description' description of the publication (used on subscription page)
+ * @param 'disclaimerId' disclaimer id for the publication
+ * @param 'introduction' introduction of the publication
+ * @param 'private' publication is open for subscription or private
+ * @returns bool
+ * @return true on success, false on failure
+ */
+function newsletter_admin_createpublication()
+{
+    // Confirm authorization key 
+    if (!xarSecConfirmAuthKey()) {
+        $msg = xarML('Invalid authorization key for creating new #(1) item', 'Newsletter');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        return;
+    }
+
+    // Get parameters from the input
+    if (!xarVarFetch('ownerId', 'id', $ownerId)) {
+        xarExceptionFree();
+        $msg = xarML('You must select an owner name.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
+    if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
+
+    if (!xarVarFetch('title', 'str:1:', $title)) {
+        xarExceptionFree();
+        $msg = xarML('You must enter a publication title');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
+    $defaultValue = xarModGetVar('newsletter', 'templateHTML');
+    if (!xarVarFetch('templateHTML', 'str:1:', $templateHTML, $defaultValue)) return;
+
+    $defaultValue = xarModGetVar('newsletter', 'templateText');
+    if (!xarVarFetch('templateText', 'str:1:', $templateText, $defaultValue)) return;
+
+    $defaultValue = xarModGetVar('newsletter', 'linkexpiration');
+    if (!xarVarFetch('linkExpiration', 'int:0:', $linkExpiration, $defaultValue)) return;
+
+    $defaultValue = xarModGetVar('newsletter', 'linkregistration');
+    if (!xarVarFetch('linkRegistration', 'str:1:', $linkRegistration, $defaultValue)) return;
+
+    if (!xarVarFetch('logo', 'str:1:', $logo, '')) return;
+    if (!xarVarFetch('description', 'str:1:', $description, '')) return;
+    if (!xarVarFetch('disclaimerId', 'id', $disclaimerId, 0)) return;
+    if (!xarVarFetch('newdisclaimer', 'str:1:', $newdisclaimer, '')) return;
+    if (!xarVarFetch('introduction', 'str:1:', $introduction, '')) return;
+    if (!xarVarFetch('altcids', 'array:1:', $altcids, array())) return;
+    if (!xarVarFetch('private', 'int:0:1:', $private, 0)) return;
+
+    // Add new disclaimer if field isn't empty
+    if (!empty($newdisclaimer)) {
+        // Add disclaimer
+        $disclaimerId = xarModAPIFunc('newsletter',
+                                      'admin',
+                                      'createdisclaimer',
+                                      array('title' => $title,
+                                            'disclaimer' => $newdisclaimer));
+
+        // Check return value
+        if (!isset($disclaimerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            return; // throw back
+    }
+
+    // Call create owner function API
+    $pubId = xarModAPIFunc('newsletter',
+                           'admin',
+                           'createpublication',
+                           array('ownerId' => $ownerId,
+                                 'categoryId' => $categoryId,
+                                 'altcids' => $altcids,
+                                 'title' => $title,
+                                 'introduction' => $introduction,
+                                 'templateHTML' => $templateHTML,
+                                 'templateText' => $templateText,
+                                 'logo' => $logo,
+                                 'linkExpiration' => $linkExpiration,
+                                 'linkRegistration' => $linkRegistration,
+                                 'disclaimerId' => $disclaimerId,  
+                                 'description' => $description,
+                                 'private' => $private));
+
+    // Check return value
+    if (!isset($pubId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        return; // throw back
+
+    // Set publication id
+    $data['publicationId'] = $pubId;
+
+    // Success
+    xarSessionSetVar('statusmsg', xarML('Issue Created'));
+
+    // Redirect to new issue
+    xarResponseRedirect(xarModURL('newsletter', 'admin', 'newissue', $data));
+
+    // Return
+    return true;
+}
+
+?>

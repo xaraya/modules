@@ -1,0 +1,77 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">
+            <table width="100%" border="1" cellspacing="0" cellpadding="4">
+                <tr>
+                    <xar:if condition="$publicationtitleurl != ''">
+                        <th><a href="#$publicationtitleurl#"><xar:mlstring>Publication Title</xar:mlstring></a></th>
+                    <xar:else />
+                        <th><xar:mlstring>Publication Title</xar:mlstring></th>
+                    </xar:if>
+                    <xar:if condition="$showcategory eq true">
+                        <xar:if condition="$categoryurl != ''">
+                            <th><a href="#$categoryurl#"><xar:mlstring>Category</xar:mlstring></a></th>
+                        <xar:else />
+                            <th><xar:mlstring>Category</xar:mlstring></th>
+                        </xar:if>
+                    </xar:if>
+                    <xar:if condition="$publicationownerurl != ''">
+                        <th><a href="#$publicationownerurl#"><xar:mlstring>Owner</xar:mlstring></a></th>
+                    <xar:else />
+                        <th><xar:mlstring>Owner</xar:mlstring></th>
+                    </xar:if>
+                    <th><xar:mlstring>Options</xar:mlstring></th>
+                </tr>
+                <xar:if condition="!empty($publications)">
+                    <xar:loop name="$publications">
+                <tr>
+                    <td>#$loop:item['title']#</td>
+                    <xar:if condition="!empty($loop:item['categoryname'])">
+                        <td>#$loop:item['categoryname']#</td>
+                    </xar:if>
+                    <td>#$loop:item['ownerName']#</td>
+                    <xar:if condition="!empty($loop:item['options'])">
+                        <td>#$loop:item['options']#</td>
+                    </xar:if>
+                    <td>
+                       <xar:if condition="empty($loop:item['editurl'])">
+                           #$loop:item['edittitle']#
+                       <xar:else />
+                           <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                       </xar:if>
+                       |
+                       <xar:if condition="empty($loop:item['deleteurl'])">
+                           #$loop:item['deletetitle']#
+                       <xar:else />
+                           <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                       </xar:if>
+                       <br />
+                       <xar:if condition="empty($loop:item['newissuesurl'])">
+                           #$loop:item['newissuestitle']#
+                       <xar:else />
+                           <a href="#$loop:item['newissuesurl']#">#$loop:item['newissuestitle']#</a>
+                       </xar:if>
+                       |
+                       <xar:if condition="empty($loop:item['editissuesurl'])">
+                           #$loop:item['editissuestitle']#
+                       <xar:else />
+                           <a href="#$loop:item['editissuesurl']#">#$loop:item['editissuestitle']#</a>
+                       </xar:if>
+                    </td>
+                </tr>
+                    </xar:loop>
+                </xar:if>
+            </table>
+            <br />
+            <!-- add the pager here -->
+            #$pager#
+        </div>
+    </div>
+</div>

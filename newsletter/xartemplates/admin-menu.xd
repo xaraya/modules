@@ -1,0 +1,21 @@
+<table border=0 cellspacing=0 cellpadding=0 width="100%">
+    <tr>
+    <xar:loop name="$menulinks">
+    <xar:if condition="$page eq $loop:item['page'] AND empty($loop:item['type'])">
+        <!-- Selected Object -->
+        <td class="xar-norm" align="center">
+            <div class="selectedMenuItem">
+                <a href="#$loop:item['url']#">#$loop:item['label']#</a>
+            </div>
+         </td>
+    <xar:else />
+        <!-- Not Selected -->
+        <td class="xar-accent" align="center">
+            <div class="menuItem">
+            <a href="#$loop:item['url']#">#$loop:item['label']#</a>
+            </div>
+        </td>
+    </xar:if>
+    </xar:loop>
+    </tr>
+</table>

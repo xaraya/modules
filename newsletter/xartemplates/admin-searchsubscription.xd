@@ -1,0 +1,84 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<xar:if condition="!empty($publications)">
+    <div class="xar-mod-body">
+        <div class="contentBorder">
+            <div style="text-align: left;margin: auto;">
+                <form action="#xarModURL('newsletter', 'admin', 'viewsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />     
+                <input type="hidden" name="search" id="search" value="publication" />       
+                <table width="100%" border="0" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td colspan="2">
+                            <xar:mlstring>Show all subscriptions for a publication:</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%">
+                        <select name="publicationId" tabindex="1">
+                            <xar:loop name="$publications">
+                                <option name="id" value="#$loop:item['id']#">#$loop:item['title']#</option>
+                            </xar:loop>
+                           </select>
+                        </td>
+                        <td width="50%">
+                            <input type="submit" value="#$showbutton#"  tabindex="2" />
+                        </td>
+                    </tr>
+                </table>            
+                </form>        
+                <br /><br />        
+                <form action="#xarModURL('newsletter', 'admin', 'viewsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <input type="hidden" name="search" id="search" value="name" />      
+                <table width="100%" border="0" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td colspan="2">
+                            <xar:mlstring>Search by name or username:</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%">
+                            <input type="text" name="searchname" id="searchname" value="" size="30" maxlength="100" tabindex="3" />
+                        </td>
+                        <td width="50%">
+                            <input type="submit" value="#$searchbutton#"  tabindex="4" />
+                        </td>
+                    </tr>
+                </table>            
+                </form>        
+                <br /><br />        
+                <form action="#xarModURL('newsletter', 'admin', 'viewsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <input type="hidden" name="search" id="search" value="email" />     
+                <table width="100%" border="0" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td colspan="2">
+                            <xar:mlstring>Search by email address:</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%">
+                            <input type="text" name="searchname" id="searchname" value="" size="30" maxlength="100" tabindex="5" />
+                        </td>
+                        <td width="50%">
+                            <input type="submit" value="#$searchbutton#"  tabindex="6" />
+                        </td>
+                    </tr>
+                </table>            
+                </form>
+            </div>
+        </div>
+    </div>
+<xar:else />
+    <div class="xar-mod-body">
+        <div class="contentBorder">
+            <div style="text-align: left;margin: auto;">
+                <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
+            </div>
+        </div>
+    </div>
+</xar:if>

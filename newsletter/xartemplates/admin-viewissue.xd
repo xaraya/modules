@@ -1,0 +1,155 @@
+<xar:base-include-javascript filename="launchRemote.js" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <xar:if condition="$publicationId != 0">
+            <b><xar:mlstring>Publication Title:</xar:mlstring>&nbsp;#$publication_title#</b>
+        </xar:if>
+        <div style="text-align: left;margin: auto;">
+            <form action="#xarModURL('newsletter', 'admin', 'viewissue')#" method="post" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
+            <input type="hidden" name="publicationId" id="publicationId" value="#$publicationId#" />
+            <table width="100%" border="0" cellspacing="0" cellpadding="4">
+                <tr>
+                    <td colspan="3">
+                        <xar:mlstring>Sort By:</xar:mlstring>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <select name="owner" onChange="this.form.submit();" tabindex="1">
+                            <xar:if condition="$owner eq 0">
+                                <option value="0" selected>All Issues</option>
+                            <xar:else />
+                                <option value="0">All Issues</option>
+                            </xar:if>
+                            <xar:if condition="$owner eq 1">                  
+                                <option value="1" selected>My Issues</option>
+                            <xar:else />
+                                <option value="1">My Issues</option>
+                            </xar:if> 
+                        </select>
+                    </td>
+                    <td valign="top">
+                        <select name="sortby" onChange="this.form.submit();" tabindex="2">
+                            <xar:if condition="$sortby eq 'date'">
+                                <option value="date" selected>Date</option>
+                            <xar:else />
+                                <option value="date">Date</option>
+                            </xar:if>
+                            <xar:if condition="$sortby eq 'title'">                  
+                                <option value="title" selected>Title</option>
+                            <xar:else />
+                                <option value="title">Title</option>
+                            </xar:if>
+                            <xar:if condition="$sortby eq 'publication'">                  
+                                <option value="publication" selected>Publication</option>
+                            <xar:else />
+                                <option value="publication">Publication</option>
+                            </xar:if>
+                        </select>
+                    </td>
+                    <td valign="top">
+                        <xar:if condition="$display eq 'published'">
+                            <input type="radio" value="published" name="display" OnClick="this.form.submit();" checked><xar:mlstring>Published Issues</xar:mlstring>
+                        <xar:else />
+                            <input type="radio" value="published" name="display" OnClick="this.form.submit();"><xar:mlstring>Published Issues</xar:mlstring>
+                        </xar:if>
+                        <br />       
+                        <xar:if condition="$display eq 'unpublished'">                 
+                            <input type="radio" value="unpublished" name="display" OnClick="this.form.submit();" checked><xar:mlstring>Unpublished Issues</xar:mlstring>
+                        <xar:else />
+                            <input type="radio" value="unpublished" name="display" OnClick="this.form.submit();"><xar:mlstring>Unpublished Issues</xar:mlstring>
+                        </xar:if>
+                        <br />
+                        <xar:if condition="$display eq 'all'">
+                            <input type="radio" value="all" name="display" OnClick="this.form.submit();" checked><xar:mlstring>Published and Unpublished</xar:mlstring>
+                        <xar:else />
+                            <input type="radio" value="all" name="display" OnClick="this.form.submit();"><xar:mlstring>Published and Unpublished</xar:mlstring>
+                        </xar:if>
+                    </td>
+                </tr>
+            </table>
+            </form>
+            <table width="100%" border="1" cellspacing="0" cellpadding="4">
+                <tr>
+                    <xar:if condition="$issuetitleurl != ''">
+                        <th><a href="#$issuetitleurl#"><xar:mlstring>Issue Title</xar:mlstring></a></th>
+                    <xar:else />
+                        <th><xar:mlstring>Issue Title</xar:mlstring></th>
+                    </xar:if>
+                    <xar:if condition="$publicationurl != ''">
+                        <th><a href="#$publicationurl#"><xar:mlstring>Publication</xar:mlstring></a></th>
+                    <xar:else />
+                        <th><xar:mlstring>Publication</xar:mlstring></th>
+                    </xar:if>
+                    <xar:if condition="$issueownerurl != ''">
+                        <th><a href="#$issueownerurl#"><xar:mlstring>Owner</xar:mlstring></a></th>
+                    <xar:else />
+                        <th><xar:mlstring>Owner</xar:mlstring></th>
+                    </xar:if>
+                    <th><xar:mlstring>Options</xar:mlstring></th>
+                </tr>
+                <xar:if condition="!empty($issues)">
+                    <xar:loop name="$issues">
+                        <tr>
+                            <td>#$loop:item['title']#</td>
+                            <td>#$loop:item['publicationTitle']#</td>
+                            <td>#$loop:item['ownerName']#</td>
+                            <td>
+                               <xar:if condition="empty($loop:item['editurl'])">
+                                   #$loop:item['edittitle']#
+                               <xar:else />
+                                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                               </xar:if>
+                                |
+                               <xar:if condition="empty($loop:item['deleteurl'])">
+                                   #$loop:item['deletetitle']#
+                               <xar:else />
+                                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                               </xar:if>
+                               <br />
+                               <xar:if condition="empty($loop:item['previewurl'])">
+                                   #$loop:item['previewtitle']#
+                               <xar:else />
+                                   <xar:if condition="$previewbrowser eq 1">
+                                       <a href="javascript:launchRemote('#$loop:item['previewurl']#')";>#$loop:item['previewtitle']#</a>
+                                   <xar:else />
+                                       <a href="#$loop:item['previewurl']#">#$loop:item['previewtitle']#</a>
+                                   </xar:if>
+                               </xar:if>
+                                |
+                               <xar:if condition="empty($loop:item['publishurl'])">
+                                   #$loop:item['publishtitle']#
+                               <xar:else />
+                                   <a href="#$loop:item['publishurl']#">#$loop:item['publishtitle']#</a>
+                               </xar:if>
+                               <br />
+                               <xar:if condition="empty($loop:item['newstoryurl'])">
+                                   #$loop:item['newstorytitle']#
+                               <xar:else />
+                                   <a href="#$loop:item['newstoryurl']#">#$loop:item['newstorytitle']#</a>
+                               </xar:if>
+                                |
+                               <xar:if condition="empty($loop:item['editstoriesurl'])">
+                                   #$loop:item['editstoriestitle']#
+                               <xar:else />
+                                   <a href="#$loop:item['editstoriesurl']#">#$loop:item['editstoriestitle']#</a>
+                               </xar:if>
+                            </td>
+                        </tr>
+                    </xar:loop>
+                </xar:if>
+            </table>
+            <br />
+            <!-- add the pager here -->
+            #$pager#
+        </div>
+    </div>
+</div>

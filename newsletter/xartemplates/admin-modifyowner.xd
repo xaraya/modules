@@ -1,0 +1,50 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menu['menutitle']#</span>
+</div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Newsletter User</xar:mlstring></h2><br />
+    <div style="text-align: left;margin: auto;">    
+        <form action="#xarModURL('newsletter', 'admin', 'updateowner')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+        <input type="hidden" name="id" id="id" value="#$owner['id']#" />
+        <table border="0" cellpadding="5">
+            <tr>
+                <td>
+                    <b><xar:mlstring>User Name:</xar:mlstring></b>
+                </td>
+                <td>
+                    #$owner['name']#
+                </td>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Select Group:</xar:mlstring></b>
+                </td>
+                <td>
+                    <select name="groupName" id="groupName">
+                        <xar:loop name="$owner['groups']">
+                            <xar:if condition="$loop:item['name'] eq $owner['defaultgroup']">
+                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected>#$loop:item['name']#</option>
+                            <xar:else />
+                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Signature:</xar:mlstring></b>
+                </td>
+                <td>
+                    <textarea name="signature" rows="8" cols="50" tabindex="1">#$owner['signature']#</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <br /><br />
+                    <input type="submit" value="#$updatebutton#"  tabindex="2" />
+                </td>
+            </tr>
+        </table>    
+        </form>
+    </div>
+</div>

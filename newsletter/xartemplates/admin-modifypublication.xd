@@ -1,0 +1,172 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menu['menutitle']#</span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Publication</xar:mlstring></h2><br />
+    <div style="text-align: left;margin: auto;">
+        <form action="#xarModURL('newsletter', 'admin', 'updatepublication')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+        <input type="hidden" name="id" id="id" value="#$publication['id']#" />
+        <table border="0" cellpadding="5">
+            <tr>
+                <td>
+                    <b><xar:mlstring>Owner Name:</xar:mlstring></b>
+                </td>
+                <td>
+                <select name="ownerId" tabindex="1">
+                    <xar:loop name="$publication['owners']">
+                        <xar:if condition="$loop:item['id'] eq $publication['ownerId']">
+                            <option name="id" value="#$loop:item['id']#" selected>#$loop:item['name']#</option>
+                        <xar:else />
+                            <option name="id" value="#$loop:item['id']#">#$loop:item['name']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+                </td>
+            </tr>
+            <xar:if condition="$publication['number_of_categories'] != 0">
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Publication Category:</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <select name="categoryId" tabindex="2">
+                            <xar:loop name="$publication['categories']">
+                                <xar:if condition="$loop:item['cid'] eq $publication['cid']">
+                                    <option name="cid" value="#$loop:item['cid']#" selected>#$loop:item['name']#</option>
+                                <xar:else />
+                                    <option name="cid" value="#$loop:item['cid']#">#$loop:item['name']#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <b><xar:mlstring>Alternative Categories:</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <select name="altcids[]" tabindex="3" multiple size="5">
+                            <xar:loop name="$altcategories">
+                                <xar:if condition="$loop:item['selected'] eq 0">
+                                    <option name="id" value="#$loop:item['cid']#" >#$loop:item['name']#</option>
+                                <xar:else />
+                                    <option name="id" value="#$loop:item['cid']#" selected>#$loop:item['name']#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </td>
+                </tr>
+            <xar:else />
+                <input type="hidden" name="categoryId" id="categoryId" value="#$publication['number_of_categories']#" />        
+            </xar:if>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Title:</xar:mlstring></b>
+                </td>
+                <td>
+                    <input type="text" name="title" id="title" value="#xarVarPrepForDisplay($publication['title'])#" size="50" maxlength="255" tabindex="4" />
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <b><xar:mlstring>Introduction:</xar:mlstring></b>
+                </td>
+               <td>
+                    <textarea name="introduction" rows="10" cols="50" tabindex="5">#xarVarPrepForDisplay($publication['introduction'])#</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>HTML Template:</xar:mlstring></b>
+                </td>
+                <td>
+                    <input type="text" name="templateHTML" id="templateHTML" size="50" maxlength="50" tabindex="6" value="#xarVarPrepForDisplay($publication['templateHTML'])#"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Text Template:</xar:mlstring></b>
+                </td>
+                <td>
+                    <input type="text" name="templateText" id="templateText" size="50" maxlength="50" tabindex="7" value="#xarVarPrepForDisplay($publication['templateText'])#"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Logo:</xar:mlstring></b>
+                    <br/><font size="1">http://my.site.com/logo.gif</font>
+                </td>
+                <td>
+                    <input type="text" name="logo" id="logo" value="#$publication['logo']#" size="50" maxlength="255" tabindex="8" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Default Number of Days before Link Expires:</xar:mlstring></b>
+                </td>
+                <td>
+                    <input type="text" name="linkExpiration" id="linkExpiration" value="#$publication['linkExpiration']#" size="4" maxlength="4" tabindex="9" />
+                    &nbsp;<xar:mlstring>(0 = link never expires)</xar:mlstring>
+                <td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Text for Link Registration:</xar:mlstring></b>
+                </td>
+                <td>
+                    <textarea name="linkRegistration" rows="3" cols="50" tabindex="10">#xarVarPrepForDisplay($publication['linkRegistration'])#</textarea>
+                <td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Private Publication:</xar:mlstring></b> 
+                </td>
+                <td>
+                    <xar:if condition="$publication['private'] eq 1">
+                        <input type="checkbox" name="private" value="1" checked tabindex="11" />
+                    <xar:else />
+                        <input type="checkbox" name="private" value="1" tabindex="11" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <b><xar:mlstring>Disclaimer:</xar:mlstring></b>
+                </td>
+                <td>
+                    <select name="disclaimerId" tabindex="12">
+                    <option value=0>Choose Disclaimer</option>
+                    <xar:loop name="$publication['disclaimers']">
+                        <xar:if condition="$loop:item['id'] eq $publication['disclaimerId']">
+                            <option name="id" value="#$loop:item['id']#" selected>#$loop:item['title']#</option>
+                        <xar:else />
+                            <option name="id" value="#$loop:item['id']#">#$loop:item['title']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+                <br /><br />
+                    <xar:mlstring>Or edit the current disclaimer:</xar:mlstring></b>
+                    <br /><br />
+                    <textarea name="editdisclaimer" rows="3" cols="50" tabindex="13">#xarVarPrepForDisplay($disclaimer['disclaimer'])#</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <b><xar:mlstring>Description:</xar:mlstring></b>
+                    <br/><font size="1">(Shown on subscription page)</font>
+                </td>
+                <td>
+                    <textarea name="description" rows="10" cols="50" tabindex="14">#xarVarPrepForDisplay($publication['description'])#</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <br /><br />
+                    <input type="submit" value="#$updatebutton#"  tabindex="15" />
+                </td>
+            </tr>
+        </table>            
+        </form>
+    </div>
+</div>

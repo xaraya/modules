@@ -1,0 +1,218 @@
+=====================================================================
+=====================================================================
+
+What is it? 
+
+The Newsletter module allows an individual or organization to compile and distribute news and research updates to interested parties via email. This module gives writers, editors and publishers a comprehensive process to easily assemble the stories for an program area and subsequently publish the information to a subscription base. 
+
+This module was originally created for the Charles and Helen Schwab Foundation  to distribute weekly updates on the program and research areas relevant to the foundation's learning differences and human services programs and initiatives. 
+
+=====================================================================
+=====================================================================
+
+Admin Help
+
+=====================================================================
+=====================================================================
+
+Note: This overview is focused on the administrative tasks that must be performed before a publication can be created. For an overview of Newsletter, please refer to the overview in the main menu. 
+
+As the module administrator, you will need to complete the following steps before you can start using the Newsletter module: 
+
+1. Configure Roles and Privileges 
+
+As the module administrator, you must configure the necessary roles and privileges for the Newsletter publishers, editors and writers. You can create the groups and privileges manually or can you use the adminstration modify configuration menu to easily create the default groups and privileges. After these groups and privileges have been created, you can then add a user to the publisher, editor or writer group. 
+
+To add the groups and privileges, select Modify Configuration from the Newsletter administration menu. By default, the groups are assigned to the Everybody role. You can select the default groups and privileges to be created or you can set which role to assign these groups and change the default privilege for each group. 
+
+The default groups and privileges are: 
+
+Newsletter Publisher (AdminNewsletter privilege) 
+    Can create, edit and delete stories, issues, publications and subscriptions.
+    Can preview and publish issues. 
+    Can set configuration for the information block. 
+NewsletterEditor (DeleteNewsletter privilege) 
+    Can create, edit and delete stories or issues. 
+    Can preview an issue.
+    Cannot publish issues. 
+NewsletterWriter (AddNewsletter privilege) 
+    Can add or edit stories or issues. 
+    Can preview an issue.
+    Cannot publish issues. 
+
+Once the groups and privileges are created, you do not need to modify the admin configuration unless you want to change the privilege of a group. 
+
+2. Add an Newsletter user 
+
+After the Newsletter groups and privileges have been successfully created, you can add users to these groups. Select "Add Newsletter User" from the Newsletter administration menu to add a user. Once a user has been added to the appropriate group, that user will have writer, editor or publisher privileges and will be able to start creating content for a publication. 
+
+Note: You will not be able to create a publication until at least one user is added to the Newsletter Publisher group. 
+
+3. Add publication and story categories 
+
+When the module is first activated, a category named "Newsletter" is created. You must created sub-categories of this master category before a publication can be created. Each sub-category of "Newsletter" will be a publication category. Under each publication category, you will want to create another set of categories corresponding to the story categories for each publication. 
+
+For example: 
+
+Newsletter              master category 
+|_ Learning Differences             publication category 
+| |_ LD Experts in the News             story category 
+| |_ Education / Schools                story category 
+| |_ Successful People                  story category 
+| |_ Controversial Treatment            story category 
+|_ Internet Technology              publication category 
+  |_ Design and Architecture            story category 
+  |_ Emerging Technologies              story category 
+  |_ Networks and Infrastructure        story category 
+  |_ Standards and Practices            story category 
+
+
+Note: The stories within a publication will ordered in the same order as the story categories, so place the story categories accordingly. 
+
+=====================================================================
+
+Included Blocks 
+
+The following blocks are included: 
+information - This block provides the following:
+    - General information about the publications that a user can subscribe to. This information is created in the Newsletter user modify configuration screen in the text fields "Publisher or Company Name" and "Information about Newsletter"
+    - Allows non-registered users to view past issues.
+    - Allows logged in users to modify their subscription(s) to the publications.
+
+addlinks - This block displays the same menu as the Add Links main menu. Depending on the privileges of a user, the user will be able to add a story, issue, publication, disclaimer or subscription. This block can be easily modified to display only those items that are frequently added. 
+
+viewlinks - This block displays the same menu as the View Links main menu. Depending on the privileges of a user, the user will be able to view, edit and delete a story, issue, publication, disclaimer or subscription. This block can be easily modified to display only those items that are frequently viewed. 
+
+=====================================================================
+
+Included Hooks 
+
+Newsletter provides all the necessary hooks to be present within other modules. But these hooks have not been thoroughly tested. 
+
+
+=====================================================================
+=====================================================================
+
+User Help
+
+=====================================================================
+=====================================================================
+
+Default Groups 
+
+As a user of the Newsletter module, you will be added to either the publisher, editor or writer group. Once the module administrator has added you to one of these groups, you will be able to create content for a publication. 
+
+The default roles and responsibilities: 
+Publisher 
+    Can create, edit and delete stories, issues, publications and subscriptions.
+    Can modify the default configuration. 
+    Can publish issues. 
+Editor 
+    Can create, edit and delete stories and issues. 
+Writer 
+    Can add, edit or delete stories. 
+
+=====================================================================
+
+Publication Items 
+
+A publication is the top-level wrapper for each issue and sets default information for each issue and story within the issue. 
+
+A publication will contain the following items: 
+Disclaimer 
+    Each publication should have a disclaimer or confidentiality clause. Once a disclaimer is created, it can be used by multiple publications. 
+
+Issue 
+    An issue contains the news and research updates that have been compiled as stories. Once the issue is ready to be published, the issue will be sent to the subscription base. After an issue has been published, it can be view by non-registered users from the Newsletter information block. 
+
+Story 
+    Each issue will have multiple stories relating to the news and research updates that will be presented to the subscription base. 
+
+The following is an example of a publication: 
+
+Homelessness Update publication 
+  June 2003 issue 
+    Mayor to Approve Housing Law story 
+    County Asked to Increase Homeless Aid story 
+  July 2003 issue 
+    Council Approves Cash for Housing story 
+    Shaky Housing Plans story 
+
+=====================================================================
+
+Steps to publish your first issue: 
+
+1. Modify the configuration (publisher) 
+
+The publisher should first update the module's configuration within the Newsletter modify configuration before publishing an issue. If the Newsletter information block has been added, then the Publisher or Company Name and Information fields will be displayed within the information block. Information should contain a general description about the publications that are available to the subscription base. 
+
+2. Edit your signature (publisher, editor, writer) 
+
+Add a signature block if you wish to include a signature in each issue. Do not include a user name in your signature block as this will be automatically included in the template. By default, the signature block will be displayed after your user name. 
+
+3. Create a disclaimer (publisher) 
+
+Once a disclaimer is created, it can be used by multiple publications. 
+
+4. Create a publication (publisher) 
+
+5. Modify the publication templates (publisher) 
+
+Each publication can have it's own HTML and text email template. To create a new template, you will need to copy one of the existing templates and modify the template for the desired appearance.  A README file is included in the templates directory with the necessary information on creating a new template.
+
+The default templates are located the directory "modules/newsletter/templates"
+
+The default templates are:
+    publication-template-html.xd    - default HTML template
+    publication-template-text.xd    - default text template
+
+Once a new template has been created, edit the publication to use the new template. When viewing an issue, the HTML publication template will be used to display the issue. 
+
+6. Create stories (publisher, editor, writer) 
+
+7. Create an issue (publisher, editor) 
+
+Select the stories that will be included in the issue. 
+
+8. Preview the issue (publisher, editor, writer) 
+
+Select an issue to preview. The publication's HTML template will be used to display the issue. 
+
+9. Publish the issue (publisher) 
+
+Select an issue to publish. The issue will be sent to the subscription base. After an issue has been published, it is viewable to non-registered users from within the Newsletter information block. 
+
+To publish another issue, repeat steps 6-9. 
+
+=====================================================================
+
+Subscriptions 
+
+Normally, a user cannot subscribe to a publication unless they are a registered user on your site. If the Newsletter information block has been added, then a registered user will be able to subscribe to a publication and modify their subscriptions. 
+
+If you wish to add a subscription that is not a registered user, then you can add a subscription from the add subscription menu. You will need to provide a user name and email address. This provides an alternative way of adding subscriptions to a publication for users that are not registered. 
+
+=====================================================================
+
+Newsletter Main Menu 
+
+From the main menu, you have the following choices based on your privileges: 
+Add Menu 
+    Add Story           - Add a story
+    Add Issue           - Add an issue
+    Add Disclaimer      - Add a disclaimer
+    Add Publication     - Add a publication
+    Add Subscription    - Add a subscription 
+View Menu 
+    View Story          - View, edit, or delete a story
+    View Issue          - View, edit, or delete an issue 
+    View Disclaimer     - View, edit, or delete a disclaimer
+    View Publication    - View, edit, or delete a publication
+    View Subscription   - View, edit, or delete a subscription
+Edit Signature          - Edit your signature. 
+Preview Issue           - Preview an issue. 
+Publish Issue           - Publish an issue. 
+Modify Config           - Modify the configuration. 
+
+=====================================================================
+=====================================================================

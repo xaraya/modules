@@ -1,0 +1,78 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">
+            <table border="0" width="100%">
+                <xar:if condition="!empty($imports_invalid)">
+                    <tr>
+                        <td colspan="2">
+                            <b><xar:mlstring>The following did not import:</xar:mlstring></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><xar:mlstring>Name</xar:mlstring></th>
+                        <th><xar:mlstring>Email Address</xar:mlstring></th>
+                    </tr>
+                    <xar:loop name="$imports_invalid">
+                        <tr>
+                            <td>
+                                #$loop:item['name']#
+                            </td> 
+                            <td>
+                                #$loop:item['email']#
+                            </td> 
+                        </tr>
+                    </xar:loop>
+                </xar:if>
+            </table>
+            <br />
+            <table border="0" width="100%">
+                <xar:if condition="!empty($imports_valid)">
+                    <tr>
+                        <td colspan="4">
+                            <b><xar:mlstring>The following imported successfully:</xar:mlstring></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><xar:mlstring>Name</xar:mlstring></th>
+                        <th><xar:mlstring>Email Address</xar:mlstring></th>
+                        <th><xar:mlstring>Publication</xar:mlstring></th>
+                        <th><xar:mlstring>Options</xar:mlstring></th>
+                    </tr>
+                    <xar:loop name="$imports_valid">
+                        <tr>
+                            <td>
+                                #$loop:item['name']#
+                            </td>
+                            <td>
+                                #$loop:item['email']#
+                            </td>
+                            <td>
+                                #$loop:item['publication']#
+                            </td>
+                            <td>
+                                <xar:if condition="empty($loop:item['editurl'])">
+                                    #$loop:item['edittitle']#
+                                <xar:else />
+                                    <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                                </xar:if>
+                                |
+                                <xar:if condition="empty($loop:item['deleteurl'])">
+                                    #$loop:item['deletetitle']#
+                                <xar:else />
+                                    <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                                </xar:if>
+                            </td>
+                        </tr>
+                    </xar:loop>
+                </xar:if>
+            </table>
+        </div>
+    </div>
+</div>

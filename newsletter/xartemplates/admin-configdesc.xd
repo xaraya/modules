@@ -1,0 +1,176 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+#$menu#
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="padding: 1px;" class="xar-norm-outline">
+            <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/adminpanels/xarimages/admin.gif')" >
+                <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+            </div>
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                <xar:mlstring>What is it?</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring>The Newsletter module allows an individual or organization to compile and distribute news and research updates to interested parties via email.  This module gives writers, editors, and publishers a comprehensive process to easily assemble the stories for a newsletter and subsequently publish the information to a subscription base.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring>This module was originally created for the</xar:mlstring>
+                &nbsp;<a href="http://www.schwabfoundation.org">Charles and Helen Schwab Foundation</a>&nbsp;
+                <xar:mlstring>to distribute weekly updates on the program and research areas relevant to the foundation's learning differences and human services programs and initiatives.</xar:mlstring>
+            </div>
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                <xar:mlstring>How To Use It?</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring><b>Note:</b>  This overview is focused on the administrative tasks that must be performed before a publication can be created.  For an overview of Newsletter, please refer to the overview in the main menu.</xar:mlstring>
+                <br /><br />
+                <a href="#xarModURL('newsletter', 'admin', 'main')#">Click here for an overview of the Newsletter module.</a>
+                <br /><br />
+                <xar:mlstring>As the module administrator, you will need to complete the following steps before you can start using the Newsletter module:</xar:mlstring>
+                <br /><br />
+                <b><xar:mlstring>1.  Configure Roles and Privileges</xar:mlstring></b>
+                <br /><br />
+                 <xar:mlstring>As the module administrator, you must configure the necessary roles and privileges for the Newsletter publishers, editors and writers.  You can create the groups and privileges manually or can you use the adminstration modify configuration menu to easily create the default groups and privileges.  After these groups and privileges have been created, you can then add a user to the publisher, editor or writer group.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring>To add the groups and privileges, select Modify Configuration from the Newsletter administration menu.  By default, the groups are assigned to the Everybody role.  You can select the default groups and privileges to be created or you can set which role to assign these groups and change the default privilege for each group.</xar:mlstring>
+                <br /><br />
+                 <xar:mlstring>The default groups and privileges are:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring><b>NewsletterPublisher</b> (AdminNewsletter privilege)</xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Can create, edit and delete stories, issues, publications and subscriptions.  Can set configuration for the information block.  Can publish issues.</xar:mlstring>
+                    <li><xar:mlstring><b>NewsletterEditor</b> (DeleteNewsletter privilege)</xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Can create, edit and delete stories or issues.  Cannot publish issues.</xar:mlstring>
+                    <li><xar:mlstring><b>NewsletterWriter</b> (AddNewsletter privilege)</xar:mlstring></li>
+                    <br />
+                    <xar:mlstring>Can add, edit or delete stories.  Cannot publish issues.</xar:mlstring>
+                </ul>
+                <xar:mlstring>Once the groups and privileges are created, you do not need to modify the admin configuration unless you want to change the privilege of a group.</xar:mlstring>
+                <br /><br />
+                <a href="#xarModURL('newsletter', 'admin', 'modifyprivileges')#">Click here to configure Newsletter roles and privileges.</a>
+                <br /><br />
+                <b><xar:mlstring>2.  Add a Newsletter user</xar:mlstring></b>
+                <br /><br />
+                <xar:mlstring>After the Newsletter groups and privileges have been successfully created, you can add users to these groups.  Select "Add Newsletter User" from the Newsletter administration menu to add a user.   Once a user has been added to the appropriate group, that user will have writer, editor or publisher privileges and will be able to start creating content for a publication.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring><b>Note:</b>  You will not be able to create a publication until at least one user is added to the Newsletter Publisher group.</xar:mlstring>
+                <br /><br />
+                <a href="#xarModURL('newsletter', 'admin', 'newowner')#">Click here to add a Newsletter user.</a>
+                <br /><br />
+                <b><xar:mlstring>3.  Add publication and story categories</xar:mlstring></b>
+                <br /><br />
+                <xar:mlstring>When the module is first activated, a category named "Newsletter" is created.  You must create sub-categories of this master category before a publication can be created.   Each sub-category of "Newsletter" will be a publication category.  Under each publication category, you will want to create another set of categories corresponding to the story categories for each publication.</xar:mlstring>
+                <br /><br />
+                <xar:mlstring>For example:</xar:mlstring>
+                <br /><br />
+                <table width="100%" cellpadding="0" border="0">
+                <tr>
+                    <td colspan="3">
+                    <xar:mlstring>Newsletter</xar:mlstring>
+                    <td><xar:mlstring>master category</xar:mlstring></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">|_</td>
+                    <td><xar:mlstring>Learning Differences</xar:mlstring></td>
+                    <td><xar:mlstring>publication category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>|</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>LD Experts in the News</xar:mlstring></td>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>|</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>Education / Schools</xar:mlstring>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>|</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>Successful People</xar:mlstring>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>|</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>Controversial Treatment</xar:mlstring>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td colspan="2">|_</td>
+                    <td><xar:mlstring>Internet Technology</xar:mlstring></td>
+                    <td><xar:mlstring>publication category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>Design and Architecture</xar:mlstring></td>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>Emerging Technologies</xar:mlstring></td>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>Networks and Infrastructure</xar:mlstring></td>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>|_</td>
+                    <td><xar:mlstring>Standards and Practices</xar:mlstring></td>
+                    <td><xar:mlstring>story category</xar:mlstring></td>
+                </tr>
+                </table>
+                <br /><br />
+                <xar:mlstring><b>Note:</b>  The stories within a publication will ordered in the same order as the story categories, so place the story categories accordingly.</xar:mlstring>
+                <br /><br />
+                <a href="#xarModURL('categories', 'admin', 'modifycat')#">Click here to add categories.</a>
+            </div>
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                <xar:mlstring>Included Blocks</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring>The following blocks are included:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring><b>information</b> - This block provides the following:</xar:mlstring><br/>
+                        <xar:mlstring>- General information about the publications that a user can subscribe to.  This information is created in the Newsletter user modify configuration screen in the text fields "Publisher or Company Name" and "Information about Newsletter"</xar:mlstring><br/>
+                        <xar:mlstring>- Allows non-registered users to view past issues.</xar:mlstring><br/>
+                        <xar:mlstring>- Allows logged in users to modify their subscription(s) to the publications.</xar:mlstring><br/>
+                    </li>
+                </ul>
+            </div>
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring>Newsletter provides all the necessary hooks to be present within other modules.  But these hooks have not been thoroughly tested.</xar:mlstring>
+            </div>
+            <br />
+            <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            </div>
+        </div>
+    </div>
+</div>

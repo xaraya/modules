@@ -1,0 +1,100 @@
+<html>
+    <head> 
+        <title>#$publication['title']# :: #$issue['title']#</title>
+    </head>
+    <body>
+        <table border="0" width="100%" cellpadding="5">
+            <xar:if condition="!empty($publication['logo'])">
+                <tr>
+                    <td colspan=2>
+                    <img src="#$publication['logo']#" alt="#$publication['title']#" align:left; vertical-align:top; border:0px" />
+                    </td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($publication['introduction'])">
+                <tr>
+                    <td colspan=2>
+                        #$publication['introduction']#
+                    </td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($issue['editorNote'])">
+                <tr>
+                    <td colspan=2>
+                        <b>Editor's Note:</b>&nbsp;&nbsp;#$issue['editorNote']#
+                    </td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($issue['headlines']) and count($issue['headlines']) gt 0">
+                <tr>
+                    <td colspan=2>
+                    <xar:loop name="$issue['headlines']">
+                        <br /><b>#$loop:item['category']#&nbsp;Headlines</b>
+                        <xar:loop name="$loop:item['stories']">
+                            <br />#$loop:item['title']#
+                        </xar:loop>
+                        <br />
+                    </xar:loop>
+                    </td>
+                </tr>
+            </xar:if>
+            <tr>
+                <td colspan=2>
+                <p>
+                ------------------------------------------------------------
+                <xar:loop name="$issue['headlines']">
+                    <br />
+                    <b>#$loop:item['category']#</b>
+                    <br />
+                    <xar:loop name="$loop:item['stories']">
+                        <br />
+                        #$loop:item['title']#
+                        <br />(
+                        #$loop:item['source']#,&nbsp;
+                        <xar:if condition="$loop:item['storyDate']['timestamp'] != 0">
+                        #$loop:item['storyDate']['mon']#/#$loop:item['storyDate']['day']#/#$loop:item['storyDate']['year']#
+                            <xar:if condition="!empty($loop:item['altDate'])">
+                                #$loop:item['altDate']#
+                            </xar:if>
+                        <xar:else />
+                            #$loop:item['altDate']#
+                        </xar:if>
+                        )</p>
+                        <p>#$loop:item['content']#</p>
+                        <xar:if condition="!empty($loop:item['commentarySource']) && !empty($loop:item['commentary'])">
+                            #$loop:item['commentarySource']#:
+                            <br /><i>#$loop:item['commentary']#</i><br />
+                        </xar:if>
+                        <br />
+                        <xar:if condition="$loop:item['linkExpired'] eq true">
+                            Full text (expired): #$loop:item['fullTextLink']#<br />
+                        <xar:else />
+                            Full text: <a href="#$loop:item['fullTextLink']#">#$loop:item['fullTextLink']#</a><br />
+                        </xar:if>
+                        <xar:if condition="$loop:item['registerLink'] eq 1">
+                            #$publication['linkRegistration']#
+                        </xar:if>
+                        <br />
+                    ------------------------------------------------------------
+                    </xar:loop>
+                </xar:loop>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    #$issue['ownerName']#
+                    <xar:if condition="!empty($issue['ownerSignature'])">
+                        <br />#$issue['ownerSignature']#
+                    </xar:if>
+                </td>
+            </tr>
+            <xar:if condition="!empty($publication['disclaimer'])">
+                <tr>
+                    <td colspan=2>
+                        <b>Disclaimer:  </b>#$publication['disclaimer']#
+                    </td>
+                </tr>
+            </xar:if>
+        </table>            
+    </body>
+</html>
