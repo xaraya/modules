@@ -5,7 +5,7 @@
 <p><a href="http://www.syndic8.com"><xar:mlstring>List of available feeds</xar:mlstring><a></p>
 
 
-<form method="post" action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" >
 	<div style="clear: both; padding-top: 10px;">
 	<input type="hidden" name="authid" value="#$authid#" />
 	<span style="float: left; width: 20%; text-align: right;">
