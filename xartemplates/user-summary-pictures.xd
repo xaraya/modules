@@ -1,40 +1,52 @@
-<table border="0" cellpadding="5" cellspacing="0" width="100%">
-    <tr>
-        <td align="center" valign="top" class="xar-normal">
-    <xar:if condition="!empty($categories) and count($categories) gt 0">
-        [ <xar:foreach in="$categories" value="$cat">
-            #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
-        </xar:foreach> ]<br />
-    </xar:if>
-
-    <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
-      <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
-      <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
-        <a href="#$link#">
-          <xar:if condition="xarModIsAvailable('images')">
-            <xar:set name="file">$fileInfo</xar:set>
-            <xar:template file="picture-thumbnail" type="module" />
-          <xar:else />
-            <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#"  
-                                                 width="150px" 
-                                                 alt="#$title#" />
-          </xar:if>
-          </a><br />
-      </xar:foreach>
+<xar:if condition="xarTplAddStyleLink('articles', 'gallery')"></xar:if>
+<xar:if condition="!empty($categories) and count($categories) gt 0">
+    <p>
+        [ 
+        <xar:foreach in="$categories" value="$cat">
+            #$cat['cjoin']# 
+            <a href="#$cat['clink']#">
+                #$cat['cname']#
+            </a>
+        </xar:foreach> 
+        ]
+    </p>
+</xar:if>
+<div id="main-content"> 
+    <ul>
+        <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
+            <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
+            <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
+                <li>
+                    <a href="#$link#">
+                        <xar:if condition="xarModIsAvailable('images')">
+                            <xar:set name="file">$fileInfo</xar:set>
+                            <xar:template file="picture-thumbnail" type="module" />
+                        <xar:else />
+                            <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" width="150px" alt="#$title#" />
+                        </xar:if>
+                        <span>
+                            #$notes#
+                        </span>
+                    </a>
+                </li> 
+            </xar:foreach>
+        <xar:else />
+            <li>
+                <a href="#$link#">
+                    <img src="#$summary#" alt="#$title#" />
+                    <span>
+                        #$notes#
+                    </span>
+                </a>
+            </li>
+        </xar:if>
+    </ul> 
+</div>
+      
+<xar:if condition="!empty($counter)">
+    <xar:if condition="$counter eq 1">
+        (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
     <xar:else />
-        <a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br />
+        (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
     </xar:if>
-
-            <xar:if condition="!empty($title)">
-                <a class="xar-title" href="#$link#">#$title#</a><br />
-            </xar:if>
-            <xar:if condition="!empty($counter)">
-                <xar:if condition="$counter eq 1">
-                    (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
-                <xar:else />
-                    (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
-                </xar:if>
-            </xar:if>
-        </td>
-    </tr>
-</table>
+</xar:if>
