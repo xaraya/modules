@@ -1,5 +1,5 @@
-repository: xaraya-modules
-description: Xaraya modules repository
+repository: xaraya dyn_example module
+description: Xaraya dyn_example module repository
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
