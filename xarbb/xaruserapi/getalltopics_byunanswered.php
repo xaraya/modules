@@ -49,7 +49,8 @@ function xarbb_userapi_getalltopics_byunanswered($args)
     // Do we want to support that in the future ?
     // make only one query to speed up
     // Get links
-    $query = "SELECT xar_tid,
+    //bug # 2531 -  prevent duplicates now
+    $query = "SELECT DISTINCT xar_tid,
                      $xbbtopicstable.xar_fid,
                      xar_ttitle,
                      xar_tpost,
@@ -73,6 +74,9 @@ function xarbb_userapi_getalltopics_byunanswered($args)
             WHERE {$categoriesdef['where']} ";
     // Get by UID
     $query .= "AND $xbbtopicstable.xar_treplies = 0";
+        //bug # 2531 -  prevent duplicates now
+
+
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 
