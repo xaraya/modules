@@ -12,6 +12,7 @@
 define('CHOOSE', -1);
 define('INFO', 0);
 define('GEN', 1);
+define('TRAN',2);
 define('REL', 2);
 define('DOWNLOAD', 3);
 
@@ -39,7 +40,7 @@ define('RELEASE', 4);
 
     if (!xarVarFetch('locale', 'str:1:', $locale)) return;
     translations_working_locale($locale);
-    xarResponseRedirect(xarModURL('translations', 'admin'));
+    xarResponseRedirect(xarModURL('translations', 'admin','start'));
 }
 
 /* FUNC */function translations_admin_update_release_locale()
@@ -140,6 +141,8 @@ define('RELEASE', 4);
     $druidbar = translations_create_generate_skels_druidbar(INFO);
     $opbar = translations_create_opbar(GEN_SKELS);
     $tplData = array_merge($druidbar, $opbar);
+    $tran_type = xarSessionGetVar('translations_dnType');
+    $tplData['dnType'] = translations__dnType2Name($tran_type);
 
     return $tplData;
 }
@@ -178,6 +181,8 @@ define('RELEASE', 4);
 
     $druidbar = translations_create_generate_skels_druidbar(GEN);
     $opbar = translations_create_opbar(GEN_SKELS);
+    $tran_type = xarSessionGetVar('translations_dnType');
+    $tplData['dnType'] = translations__dnType2Name($tran_type);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
     return $tplData;
@@ -286,8 +291,8 @@ define('RELEASE', 4);
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar('', '');
-
-    $tplData = array_merge($opbar, $trabar);
+    $druidbar = translations_create_translate_druidbar(TRAN);
+    $tplData = array_merge($opbar, $trabar, $druidbar);
 
     return $tplData;
 }
@@ -388,8 +393,10 @@ define('RELEASE', 4);
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar($subtype, $subname);
+    $druidbar = translations_create_translate_druidbar(TRANSLATE);
 
-    $tplData = array_merge($tplData, $opbar, $trabar);
+    $tplData = array_merge($tplData, $opbar, $trabar, $druidbar);
+    $tplData['dnType'] = translations__dnType2Name($dnType);
 
     xarTplAddStyleLink('translations', 'translate_subtype');
     return $tplData;
@@ -479,8 +486,9 @@ function translations_admin_translate_update()
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar('template', '');
-
+   
     $tplData = array_merge($tplData, $opbar, $trabar);
+    $tplData['dnType'] = translations__dnType2Name($dnType);
 
     return $tplData;
 }
@@ -613,7 +621,7 @@ function translations_grab_source_code($references, $maxReferences = NULL)
 }
 
 function translations_create_generate_skels_druidbar($currentStep) {
-    $stepLabels[INFO] = xarML('Informations');
+    $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepURLs[INFO] = xarModURL('translations', 'admin', 'generate_skels_info');
     $stepURLs[GEN] = NULL;
@@ -621,14 +629,24 @@ function translations_create_generate_skels_druidbar($currentStep) {
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
 }
 
+function translations_create_translate_druidbar($currentStep) {
+    $stepLabels[INFO] = xarML('Overview');
+    $stepLabels[GEN] = xarML('Generation');
+    $stepLabels[TRAN] = xarML('Translate');
+    $stepURLs[INFO] = xarModURL('translations', 'admin', 'generate_skels_info');
+    $stepURLs[GEN] = xarModURL('translations','admin','generate_skels');
+
+    return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
+}
+
 function translations_create_generate_trans_druidbar($currentStep) {
-    $stepLabels[INFO] = xarML('Informations');
+    $stepLabels[INFO] = xarML('Overview');
     $stepLabels[GEN] = xarML('Generation');
     $stepLabels[REL] = xarML('Release');
-    $stepLabels[DOWNLOAD] = xarML('Download');
+    //$stepLabels[DOWNLOAD] = xarML('Download');
     $stepURLs[INFO] = xarModURL('translations', 'admin', 'generate_trans_info');
     $stepURLs[GEN] = xarModURL('translations', 'admin', 'generate_trans');
-    $stepURLs[REL] = xarModURL('translations', 'admin', 'generate_release');
+    //$stepURLs[REL] = xarModURL('translations', 'admin', 'generate_release');
     $stepURLs[DOWNLOAD] = NULL;
 
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep);
@@ -663,7 +681,7 @@ function translations_create_opbar($currentOp)
     $opLabels[OVERVIEW] = xarML('Overview');
     $opLabels[GEN_SKELS] = xarML('Generate skels');
     $opLabels[TRANSLATE] = xarML('Translate');
-    $opLabels[GEN_TRANS] = xarML('Generate translations');
+    //$opLabels[GEN_TRANS] = xarML('Generate translations');
     //$opLabels[RELEASE] = xarML('Release translations package');
 
     switch ($dnType) {
@@ -679,7 +697,7 @@ function translations_create_opbar($currentOp)
     }
     $opURLs[GEN_SKELS] = xarModURL('translations', 'admin', 'generate_skels_info');
     $opURLs[TRANSLATE] = xarModURL('translations', 'admin', 'translate');
-    $opURLs[GEN_TRANS] = xarModURL('translations', 'admin', 'generate_trans_info');
+    //$opURLs[GEN_TRANS] = xarModURL('translations', 'admin', 'generate_trans_info');
     //$opURLs[RELEASE] = xarModURL('translations', 'admin', 'release_info');
 
     $enabledOps = array(true, true, false, false/*, false*/); // Enables See module details & Generate translations skels
@@ -733,19 +751,19 @@ function translations_create_trabar($subtype, $subname)
             $enabledTras[$j] = true;
             $j++;
         }
-        $traLabels[$j] = 'common';
+        $traLabels[$j] = xarML('Common');
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'file', 'subname'=>'common'));
         $enabledTras[$j++] = true;
-        $traLabels[$j] = 'templates';
+        $traLabels[$j] = xarML('Templates');
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_templates');
         $enabledTras[$j++] = true;
-        $traLabels[$j] = 'incltempl';
+        $traLabels[$j] = xarML('Included templates');
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_incltempl');
         $enabledTras[$j++] = true;
-        $traLabels[$j] = 'blktempl';
+        $traLabels[$j] = 'Block templates';
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_blktempl');
         $enabledTras[$j++] = true;
-        $traLabels[$j] = 'blocks';
+        $traLabels[$j] = xarML('Blocks');
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_blocks');
         $enabledTras[$j++] = true;
 
@@ -807,4 +825,22 @@ function translations_release_locale($locale = NULL)
         xarSessionSetVar('translations_release_locale', $locale);
     }
 }
+
+function translations__dntype2name ($tran_type)
+{
+    switch($tran_type) {
+    case XARMLS_DNTYPE_CORE:
+        return xarML('core');
+        break;
+    case XARMLS_DNTYPE_MODULE:
+        return xarML('module');
+        break;
+    case XARML_DNTYPE_THEME:
+        return xarML('theme');
+        break;
+    default:
+        return xarML('unknown');
+    }
+}
+
 ?>

@@ -1,7 +1,16 @@
 <xar:template file="admin-menu" type="module"/>
 
-<p>
+<h4><xar:mlstring>Choose a translation to work on</xar:mlstring></h4>
 <form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations', 'admin', 'update_working_locale')#" method="post">
+  <p>
+    While working inside the translations module, you always work on the translation of 1 particular
+    locale. You choose that locale below. It will activate the proper storage location for the translated
+    items while you are working on a translation.<br />
+    So, i you want to work on the dutch translation for the dutch locale, encoded in
+    single byte format, choose nl_NL.iso8859-1 below. If you want to work on another translation, just
+    return to this screen and select another locale.
+  </p>
+  <p>
     <xar:mlstring>Choose the working locale</xar:mlstring>:
     <select name="locale" id="locale" onchange="document.workingLocaleForm.submit();">
         <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
@@ -12,22 +21,27 @@
             </xar:if>
         </xar:for>
     </select>
+    <xar:set name="$select_locale"><xar:mlstring>Select this locale</xar:mlstring></xar:set>
+    <input type="submit" value="#$select_locale#"/>
 </form>
+
+<h4><xar:mlstring>Translation jobs</xar:mlstring></h4>
+<p>
+  <ul>
+    <li>
+      <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'core'))#">
+        <xar:mlstring>Translate the core</xar:mlstring>
+      </a>
+    </li>
+    <li>
+      <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'module'))#">
+        <xar:mlstring>Translate a module</xar:mlstring>
+      </a>
+    </li>
+    <li>
+      <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'theme'))#">
+        <xar:mlstring>Translate a theme</xar:mlstring>
+      </a>
+    </li>
+  </ul>
 </p>
-<ul>
-  <li>
-  <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'core'))#">
-    <xar:mlstring>Translate the core</xar:mlstring>
-    </a>
-  </li>
-  <li>
-    <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'module'))#">
-    <xar:mlstring>Translate a module</xar:mlstring>
-    </a>
-  </li>
-  <li>
-  <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'theme'))#">
-    <xar:mlstring>Translate a theme</xar:mlstring>
-    </a>
-  </li>
-</ul>

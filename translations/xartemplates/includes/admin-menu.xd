@@ -4,3 +4,12 @@
     <xar:mlstring>Translations administration</xar:mlstring>
   </span>
 </div>
+
+<div>
+  <span>
+    <xar:mlstring>Currently working on</xar:mlstring>:
+  </span>
+  <span class="xar-title">
+    #xarSessionGetVar('translations_working_locale')#
+  </span>
+</div>

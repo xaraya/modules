@@ -332,7 +332,7 @@
                 if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
                 //$partnames[] = $matches[1];
 
-                //$parser = new PHPParser();
+                $parser = new PHPParser();
                 $parser->parse("modules/$moddir/xar$subname/$filename");
 
                 $transEntriesCollection[$subname] = $parser->getTransEntries();

@@ -1,8 +1,15 @@
 <xar:template type="module" file="admin-menu"/>
 
-<xar:template type="module" file="toplink" />
-<br />
+<!-- Show progress -->
 <xar:template type="module" file="druidbar" />
+<h4>
+  <xar:ml>
+    <xar:mlstring>Generating a skeleton for #(1) #(2)</xar:mlstring>
+    <xar:mlvar>#$dnType#</xar:mlvar>
+    <xar:mlvar>#xarSessionGetVar('translations_dnName')#</xar:mlvar>
+  </xar:ml>
+</h4>
+
 <p>
 <xar:mlstring>Now we're going to generate skels, this operation could take several minutes. Just take a break!</xar:mlstring>
 </p>

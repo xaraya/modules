@@ -1,5 +1,13 @@
-<xar:template type="module" file="toplink" />
-<br />
+<xar:template type="module" file="admin-menu"/>
+
+<h4>
+<xar:ml>
+  <xar:mlstring>Translating: #(1) #(2)</xar:mlstring>
+  <xar:mlvar>#$dnType#</xar:mlvar>
+  <xar:mlvar>#xarSessionGetVar('translations_dnName')#</xar:mlvar>
+</xar:ml>
+</h4>
+
 <xar:template type="module" file="trabar" />
 <xar:if condition="count($subnames) gt 0">
   <p>

@@ -1,5 +1,5 @@
-<xar:template type="module" file="toplink" />
-<br />
+<xar:template type="module" file="admin-menu"/>
+
 <xar:template type="module" file="trabar" />
 <xar:if condition="count($subnames) gt 0">
   <p>

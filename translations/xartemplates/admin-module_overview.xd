@@ -1,5 +1,5 @@
-<xar:template type="module" file="toplink" />
-<br />
+<xar:template type="module" file="admin-menu"/>
+
 <xar:template type="module" file="druidbar" />
 <xar:mlstring>Module name</xar:mlstring>: #$displayname#<br />
 <xar:mlstring>Module original name</xar:mlstring>: #$name#<br />

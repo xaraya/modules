@@ -1,11 +1,13 @@
-<xar:template type="module" file="toplink" />
-<br />
-<xar:template type="module" file="druidbar" />
+<xar:template type="module" file="admin-menu"/>
+
+<h4><xar:mlstring>Getting the translated package</xar:mlstring></h4>
 <p>
-<xar:ml>
-  <xar:mlstring>Translations package successfully generated. The package is located inside your var/cache directory. You can also download it from <a href="#(1)">here</a>.</xar:mlstring>
-  <xar:mlvar>#$url#</xar:mlvar>
-</xar:ml>
+  A translation package archive has been created, with the translations for #xarSessionGetVar('translations_working_locale')#
 </p>
-<br />
-<xar:template type="module" file="opbar" />
+<p>
+  <xar:ml>
+    <xar:mlstring>A <a href="#(1)">translation package archive</a> (tar.gz) format. Translations package successfully generated.</xar:mlstring>
+    <xar:mlvar>#$url#</xar:mlvar>
+  </xar:ml>
+  <xar:mlstring>The package is located inside your var/cache directory.</xar:mlstring> 
+</p>

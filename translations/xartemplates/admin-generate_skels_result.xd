@@ -1,8 +1,14 @@
 <xar:template type="module" file="admin-menu"/>
 
-<xar:template type="module" file="toplink" />
-<br />
 <xar:template type="module" file="druidbar" />
+
+<h4>
+  <xar:ml>
+    <xar:mlstring>Skeletons generated for #(1) #(2)</xar:mlstring>
+    <xar:mlvar>#$dnType#</xar:mlvar>
+    <xar:mlvar>#xarSessionGetVar('translations_dnName')#</xar:mlvar>
+  </xar:ml>
+</h4>
 <p>
 <xar:mlstring>Skels successfully generated. The results are shown below.</xar:mlstring>
 </p>

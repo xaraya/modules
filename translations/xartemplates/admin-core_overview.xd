@@ -1,7 +1,6 @@
 <xar:template file="admin-menu" type="module"/>
 
-<xar:template type="module" file="toplink" />
-<br />
+<h4><xar:mlstring>Translating the core</xar:mlstring></h4>
 <xar:mlstring>Xaraya version number</xar:mlstring>: #$verNum#<br />
 <xar:mlstring>Xaraya version id</xar:mlstring>: #$verId#<br />
 <xar:mlstring>Xaraya version sub</xar:mlstring>: #$verSub#<br />

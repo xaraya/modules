@@ -1,10 +1,14 @@
 <xar:template type="module" file="admin-menu"/>
 
-<xar:template type="module" file="toplink" />
-<br />
-<xar:template type="module" file="trabar" />
+<xar:template type="module" file="druidbar"/>
+
+<h4><xar:mlstring>What to translate?</xar:mlstring></h4>
 <p>
-<xar:mlstring>Choose from the upper bar which part you want translate.</xar:mlstring>
+  <xar:mlstring>Choose from below which part you  want to translate.</xar:mlstring>
 </p>
-<br />
+
+<!-- Generated list of things for which there are skeletons -->
+<xar:template type="module" file="trabar" />
+
+<!-- Operations overview -->
 <xar:template type="module" file="opbar" />
