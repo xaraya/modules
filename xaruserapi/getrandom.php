@@ -80,7 +80,7 @@ function articles_userapi_getrandom($args)
             }
         }
     }
-    die('<pre>'.print_r($aidlist,true).'</pre>');
+    
     return $articles;
 }
 
