@@ -28,26 +28,26 @@ function censor_init()
 
     $censortable = $xartable['censor'];
 
-    $fields = array('xar_cid' => array('type' => 'integer', 
-                                       'null' => false, 
-                                       'increment' => true, 
+    $fields = array('xar_cid' => array('type' => 'integer',
+                                       'null' => false,
+                                       'increment' => true,
                                        'primary_key' => true),
-        'xar_keyword' => array('type' => 'varchar', 
-                               'size' => 100, 
-                               'null' => false, 
+        'xar_keyword' => array('type' => 'varchar',
+                               'size' => 100,
+                               'null' => false,
                                'default' => ''),
-        'xar_case_sensitive' => array('type' => 'char', 
-                               'size' => 1, 
-                               'null' => false, 
+        'xar_case_sensitive' => array('type' => 'char',
+                               'size' => 1,
+                               'null' => false,
                                'default' => '0'),
-        'xar_match_case' => array('type' => 'char', 
-                               'size' => 1, 
-                               'null' => false, 
+        'xar_match_case' => array('type' => 'char',
+                               'size' => 1,
+                               'null' => false,
                                'default' => '0'),
-        'xar_locale' => array('type' => 'varchar', 
-                               'size' => 100, 
-                               'null' => false, 
-                               'default' => 'ALL')
+        'xar_locale' => array('type' => 'varchar',
+                               'size' => 100,
+                               'null' => false,
+                               'default' => '')
         );
 
     $query = xarDBCreateTable($censortable, $fields);
@@ -83,14 +83,14 @@ function censor_init()
 function censor_upgrade($oldversion)
 {
     switch ($oldversion) {
-         
-        case '1.0.0':     
-    
+
+        case '1.0.0':
+
         xarDBLoadTableMaintenanceAPI();
         $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $censortable = $xartable['censor'];
-        
+
             $query = xarDBAlterTable($censortable,
                                   array('command' => 'add',
                                         'field'   => 'xar_case_sensitive',
@@ -100,7 +100,7 @@ function censor_upgrade($oldversion)
                                         'default' => '0'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-    
+
         $query = xarDBAlterTable($censortable,
                                   array('command' => 'add',
                                         'field'   => 'xar_match_case',
@@ -110,7 +110,7 @@ function censor_upgrade($oldversion)
                                         'default' => '0'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-        
+
             $query = xarDBAlterTable($censortable,
                                   array('command' => 'add',
                                         'field'   => 'xar_locale',
@@ -121,25 +121,28 @@ function censor_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
         //inserire update default
-        
+
         $query = "UPDATE $censortable SET xar_case_sensitive = 0";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
             $query = "UPDATE $censortable SET xar_match_case = 0";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
-            $query = "UPDATE $censortable SET xar_locale = 'ALL'";
-            $result =& $dbconn->Execute($query);
+
+            $locale[] = xarConfigGetVar('Site.MLS.DefaultLocale');
+            $loc = serialize($locale);
+            $query = "UPDATE $censortable SET xar_locale = ?";
+            $bindvars = array($loc);
+            $result =& $dbconn->Execute($query,$bindvars);
             if (!$result) return;
-        
+
         return censor_upgrade('1.1.0');
             break;
-        
+
         case '1.1.0':
             break;
-        
+
         default:
             break;
     }
