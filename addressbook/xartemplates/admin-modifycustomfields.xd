@@ -5,29 +5,29 @@
       <h2><xar:mlstring>Configure Custom Fields</xar:mlstring></h2>
 <!-- START WARN DISPLAY -->
       <div style="text-align:center;">
-	    <xar:template compile="false" file="mod-warn-msg" type="module" />
-	  </div>
+        <xar:template compile="false" file="mod-warn-msg" type="module" />
+      </div>
 <!-- END WARN DISPLAY -->
       <div class="xar-norm-outline" style="padding:.25em;">
       <div style="margin:0em 1em; text-align:center;">
         <div style="width:60%;">
-	    <form name="modcustfield" id="modcustfield" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifycustomfields')#"><!-- enctype="application/x-www-form-urlencoded"> -->
-		<div id="tableContainer">
-		<div id="tableContainer">
-		  <table style="width:60%; border:0em; padding:.5em;">
+        <form name="modcustfield" id="modcustfield" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifycustomfields')#"><!-- enctype="application/x-www-form-urlencoded"> -->
+        <div id="tableContainer">
+        <div id="tableContainer">
+          <table style="width:60%; border:0em; padding:.5em;">
           <tr>
             <td style="text-align:center; padding:.25em;">
               <strong><xar:mlstring>Custom Label</xar:mlstring></strong>
-			</td>
+            </td>
             <td style="text-align:center; padding:.25em;">
-			  <strong><xar:mlstring>Data Type</xar:mlstring></strong>
-			</td>
+              <strong><xar:mlstring>Data Type</xar:mlstring></strong>
+            </td>
             <td style="text-align:center; padding:.25em;">
-			  <strong><xar:mlstring>Delete</xar:mlstring></strong>
-			</td>
+              <strong><xar:mlstring>Delete</xar:mlstring></strong>
+            </td>
             <td style="text-align:center; padding:.25em;">
-			  <strong><xar:mlstring>Order</xar:mlstring></strong>
-			</td>
+              <strong><xar:mlstring>Order</xar:mlstring></strong>
+            </td>
           </tr>
 <!-- Logic for displaying existing custom fields -->
 <xar:if condition="isset($custfields)">
@@ -65,8 +65,8 @@
               <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4"></a><a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4"></a>
               </xar:if>
             </xar:if>
-			</td>
-		  </tr>
+            </td>
+          </tr>
   </xar:foreach>
 </xar:if>
 <!-- END Logic for displaying existing custom fields -->
@@ -81,24 +81,24 @@
                 <option value="#$datatype['id']#">#$datatype['name']#</option>
               </xar:foreach>
             </select>
-			</td>
+            </td>
             <td style="text-align:center; padding:.25em;">
-			  &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
-			</td>
+              &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
+            </td>
             <td style="text-align:center; padding:.25em;">&nbsp;
-			  
-			</td>
+              
+            </td>
           </tr>
 <!-- END Logic for displaying new custom field -->
         </table>
         </div>
-		<div style="margin:1em;">
-			<input type="submit" name="btnSubmit" value="#$btnCommitText#">
-			<input name="authid" type="hidden" id="authid" value="#$authid#">
-			<input name="incID" type="hidden" id="incID" value="">
-			<input name="decID" type="hidden" id="decID" value="">
-			<input name="formSubmit" type="hidden" id="formSubmit" value="1">
-		</div>
+        <div style="margin:1em;">
+            <input type="submit" name="btnSubmit" value="#$btnCommitText#">
+            <input name="authid" type="hidden" id="authid" value="#$authid#">
+            <input name="incID" type="hidden" id="incID" value="">
+            <input name="decID" type="hidden" id="decID" value="">
+            <input name="formSubmit" type="hidden" id="formSubmit" value="1">
+        </div>
         </form>
       </div>
       </div>

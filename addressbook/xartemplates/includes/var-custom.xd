@@ -1,12 +1,12 @@
 <xar:if condition="$addrow gt 0">
-	<xar:for start="$i=0" test="$i lt count($custUserData)" iter="$i++">
-		<xar:if condition="isset($custUserData[$i]['userData'])">
-  	<input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="hidden" value="#$custUserData[$i]['userData']#">
-		<xar:else />
-  	<input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="hidden" value="">
-		</xar:if>
-  	<input name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" type="hidden" value="#$custUserData[$i]['colName']#">
-  	<input name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" type="hidden" value="#$custUserData[$i]['type']#">
-  	<input name="custUserData[#$i#][label]" id="custUserData[#$i#][label]" type="hidden" value="#$custUserData[$i]['label']#">
-	</xar:for>
+    <xar:for start="$i=0" test="$i lt count($custUserData)" iter="$i++">
+        <xar:if condition="isset($custUserData[$i]['userData'])">
+      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="hidden" value="#$custUserData[$i]['userData']#">
+        <xar:else />
+      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="hidden" value="">
+        </xar:if>
+      <input name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" type="hidden" value="#$custUserData[$i]['colName']#">
+      <input name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" type="hidden" value="#$custUserData[$i]['type']#">
+      <input name="custUserData[#$i#][label]" id="custUserData[#$i#][label]" type="hidden" value="#$custUserData[$i]['label']#">
+    </xar:for>
 </xar:if>

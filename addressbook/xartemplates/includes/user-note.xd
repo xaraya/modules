@@ -1,19 +1,19 @@
 <table class="xar-alt-outline" cellpadding="1" cellspacing="0">
-	<tr>
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=1;"><xar:mlstring>Address</xar:mlstring></a></th>
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
+    <tr>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=1;"><xar:mlstring>Address</xar:mlstring></a></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
 <xar:if condition="$addrow gt 0">
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=3;">#$custom_tab#</a></th>
-</xar:if>		
-		<th><xar:mlstring>Note</xar:mlstring></th>
-	</tr>
-	<tr>
-		<td colspan="#$numcols#">
-		<table width="100%" border="0" cellspacing="0" cellpadding="5">
-		  <tr>
-		    <td align="center"><textarea name="note" cols="70" rows="8" id="note">#$note#</textarea></td>
-		    </tr>
-	  </table></td>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=3;">#$custom_tab#</a></th>
+</xar:if>        
+        <th><xar:mlstring>Note</xar:mlstring></th>
+    </tr>
+    <tr>
+        <td colspan="#$numcols#">
+        <table width="100%" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td align="center"><textarea name="note" cols="70" rows="8" id="note">#$note#</textarea></td>
+            </tr>
+      </table></td>
 </tr>
 </table>

@@ -5,110 +5,110 @@
   <h2><xar:mlstring>Administrator Documentation</xar:mlstring></h2>
   <div class="xar-norm-outline" style="padding:.25em;">
     <div style="float:right;display:block;background-color:#ffffff;padding:.5em;">
-	    <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
+        <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
           <img src="modules/#$modInfo['directory']#/xarimages/admin.gif" alt="official icon" width="96" height="96" />
     </div>
-		<div style="margin:0em 1em;">
-		  <h4><xar:mlstring>Access Level</xar:mlstring></h4>
-	  </div>
-		<div style="margin:0em 1em;">
+        <div style="margin:0em 1em;">
+          <h4><xar:mlstring>Access Level</xar:mlstring></h4>
+      </div>
+        <div style="margin:0em 1em;">
     <xar:mlstring>1.1 Grant rights for an unregistered user</xar:mlstring>
-	  <blockquote><xar:mlstring>Unregistered users have their own set of rights. By default,  
-		unregistered users may view existing entries only. You may grant unregistered users the 
-		rights to edit and delete records created by other unregistered users only. Administrators 
-		may view / edit / delete any record created by an unregistered user.</xar:mlstring></blockquote>
-	  <xar:mlstring>1.2 Grant right for registered users</xar:mlstring>
-  	  <blockquote><xar:mlstring>Registered users have their own set of rights. By default, registered users can create records, view records, and delete records. You can restrict access by deselecting grants. Registered users can edit records created by that user account only. All other records are view only. Records marked as private can be viewed only by the user that created the record and no one else save Administrators. Administrators may view / edit / delete any record created by a registered user.</xar:mlstring></blockquote>
+      <blockquote><xar:mlstring>Unregistered users have their own set of rights. By default,  
+        unregistered users may view existing entries only. You may grant unregistered users the 
+        rights to edit and delete records created by other unregistered users only. Administrators 
+        may view / edit / delete any record created by an unregistered user.</xar:mlstring></blockquote>
+      <xar:mlstring>1.2 Grant right for registered users</xar:mlstring>
+        <blockquote><xar:mlstring>Registered users have their own set of rights. By default, registered users can create records, view records, and delete records. You can restrict access by deselecting grants. Registered users can edit records created by that user account only. All other records are view only. Records marked as private can be viewed only by the user that created the record and no one else save Administrators. Administrators may view / edit / delete any record created by a registered user.</xar:mlstring></blockquote>
     </div>
-		<div style="margin:0em 1em;">
-	    <h4><xar:mlstring>Other Settings</xar:mlstring></h4>
-	  </div>
-		<div style="margin:0em 1em;">
-		  <xar:mlstring>2.1 Title of this Address Book</xar:mlstring>
-		  <blockquote><xar:mlstring>Enter the title which will appear to all users.</xar:mlstring></blockquote>
-		  <xar:mlstring>2.3 Default and Alternate sort order / List View</xar:mlstring>
-		  <blockquote><xar:mlstring>Select two columns of your choice. This setting 
-		  affects not only the sort order but also the display of columns in 
-		  the list view. Users are allowed to select between the Default and Alternate sort orders.</xar:mlstring></blockquote>
-		  <xar:mlstring>2.4 Name display in list view and sort order for name 
-		  information</xar:mlstring>
-		  <blockquote><xar:mlstring>This setting is for the sort order and display of names in 
-		  the list view. You can change the default &laquo;Last Name, First 
-		  Name&raquo; to &laquo;First Name Last Name&raquo;, which is default in 
-		  some countries.</xar:mlstring></blockquote>
-		  <xar:mlstring>2.5 Special character (Umlauts) replacement for sort columns</xar:mlstring>
-		  <blockquote><xar:mlstring>MySQL 3.x uses the Latin-1 character set as 
-		  default. Most users have no permission to change these settings. 
-		  Therefore names and companies are now stored in special sort columns 
-		  for correct sorting when special characters (Umlauts) are used. There 
-		  is an admin setting where you can set up the character replacement to 
-		  correct the sort for each language.</xar:mlstring></blockquote>
-		  <xar:mlstring>2.6 Personal address book mode</xar:mlstring>
-		  <blockquote><xar:mlstring>The Address Book may be used as a Global AddressBook (unchecked by default) 
-		  or a Personal AddressBook (checked). As a Global AddressBook all users with access may view records 
-		  that are NOT marked Private. As a Personal AddressBook users may only view entries they have created 
-		  and unregistered users may not view or create any entries.</xar:mlstring></blockquote>
-		  <xar:mlstring>2.7 Do you want to use a prefix field?</xar:mlstring>
-		  <blockquote><xar:mlstring>
-		  Prefix/Title (Mr. Mrs. etc.). Values can be set in </xar:mlstring> <a href="#xarModURL(__ADDRESSBOOK__,'admin','modifyprefixes')#">Name Prefixes</a> 
-		  <xar:mlstring>Administration Panel and are optionally selected via a drop-down list when creating / editing an entry. This field is hidden by default. </xar:mlstring></blockquote>
-		  <xar:mlstring>2.8 Do you want to use images/logos?</xar:mlstring>
-		  <blockquote><xar:mlstring>Administrators will see a selection box of all 
-		  files in the xarimages directory of AddressBook and can assign it to a 
-		  record. The picture is shown in the upper right of the detail page. 
-  		Currently, all pictures must be manually uploaded into the xarimages directory of 
-	  	AddressBook. This field is hidden by default.</xar:mlstring></blockquote>
-		  <xar:mlstring>2.9 Disable the menu</xar:mlstring>		
-		  <blockquote><xar:mlstring>If you want to use the AddressBook as a 
-		  simple contact list, you might want to disable the menu completely. 
-		  You can also disable it for guests only. Note, Administrators always see the full menu, regardless of this setting.
-		  </xar:mlstring></blockquote>
-		  <xar:mlstring>2.10 Disable the second line of the main menu</xar:mlstring>
-		  <blockquote><xar:mlstring>This hides the second menu line for all users who
-		      DO NOT have edit access. Users still have access to the categories,
-		      sort order and the search field, but not access to Private records,
-		      A-Z / Complete list view switch, and the Add New Record link.</xar:mlstring></blockquote>
-  		  <xar:mlstring>2.11 Show zip before city</xar:mlstring>
-  		<blockquote><xar:mlstring>In Europe the postal code (zip in USA) is shown before the city. 
-  		This option is off by default.</xar:mlstring></blockquote>
-  		<xar:mlstring>2.12 Records viewed per page</xar:mlstring>
-  		<blockquote><xar:mlstring>Pick your number between 1 and ??</xar:mlstring></blockquote>
-	  </div>
-		<div style="margin:0em 1em;">
-		  <h4><xar:mlstring>Custom Labels</xar:mlstring></h4>
-	  </div>
-		<div style="margin:0em 1em;">
-		  <xar:mlstring>3.1 Custom tab</xar:mlstring>
-		  <blockquote><xar:mlstring>Name of the Custom Fields tab and the 
-		  headline for custom fields in the detail page. Leave it blank, if you 
-		  do not use custom fields.</xar:mlstring></blockquote>
-		  <xar:mlstring>3.2 Width of TEXTAREA fields</xar:mlstring>
-		  <blockquote><xar:mlstring>TEXTAREA field width can change depending on 
-		  the CSS of your theme. Sometimes this results in a very bad layout of 
-		  your form. You can set the html COLS of a TEXTAREA field. Valid size ranges from 4 to 100.</xar:mlstring></blockquote>
-		  <xar:mlstring>3.3 Format for date entries</xar:mlstring>
-		  <blockquote><xar:mlstring>Select the format for date entry and 
-		  display. Only two options at this time, MM.DD.YYYY and DD.MM.YYYY.</xar:mlstring></blockquote>
-		  <xar:mlstring>3.4 Format for numeric values</xar:mlstring>
-		  <blockquote><xar:mlstring>Select the format for numeric entry and 
-		  display. Only two options at this time, 9,999.00 and 9.999,00</xar:mlstring></blockquote>
-	  </div>
-		<div style="margin:0em 1em;">
-		  <h4><xar:mlstring>Quality Control Reporting</xar:mlstring></h4>
-	  </div>
-		<div style="margin:0em 1em;">
-		  <xar:mlstring>4.1 Send error reports to Site Admin</xar:mlstring>
-		  <blockquote><xar:mlstring>This option enables error messages to be emailed directly to
-		  the site administrator email account. Uncheck to disable this feature.</xar:mlstring></blockquote>
-		  <xar:mlstring>4.2 Alternate Site Admin email address</xar:mlstring>
-		  <blockquote><xar:mlstring>Choose an alternate email address if the official Site Admin
-		  does not wish to receive AddressBook error notifications.</xar:mlstring></blockquote>
-		  <xar:mlstring>4.3 Send error reports to AddressBook Quality Control</xar:mlstring>
-		  <blockquote><xar:mlstring>This option sends an email directly to the AddressBook development
-		  team with the error message, date and time of occurrence, and the fully qualified host name of the
-		  server running the AddressBook module. NO OTHER INFORMATION IS SENT. This information is used solely for 
-		  the purpose of fixing issues encountered in the AddressBook module. Uncheck to disable this feature.</xar:mlstring></blockquote>
-	  </div>
+        <div style="margin:0em 1em;">
+        <h4><xar:mlstring>Other Settings</xar:mlstring></h4>
+      </div>
+        <div style="margin:0em 1em;">
+          <xar:mlstring>2.1 Title of this Address Book</xar:mlstring>
+          <blockquote><xar:mlstring>Enter the title which will appear to all users.</xar:mlstring></blockquote>
+          <xar:mlstring>2.3 Default and Alternate sort order / List View</xar:mlstring>
+          <blockquote><xar:mlstring>Select two columns of your choice. This setting 
+          affects not only the sort order but also the display of columns in 
+          the list view. Users are allowed to select between the Default and Alternate sort orders.</xar:mlstring></blockquote>
+          <xar:mlstring>2.4 Name display in list view and sort order for name 
+          information</xar:mlstring>
+          <blockquote><xar:mlstring>This setting is for the sort order and display of names in 
+          the list view. You can change the default &laquo;Last Name, First 
+          Name&raquo; to &laquo;First Name Last Name&raquo;, which is default in 
+          some countries.</xar:mlstring></blockquote>
+          <xar:mlstring>2.5 Special character (Umlauts) replacement for sort columns</xar:mlstring>
+          <blockquote><xar:mlstring>MySQL 3.x uses the Latin-1 character set as 
+          default. Most users have no permission to change these settings. 
+          Therefore names and companies are now stored in special sort columns 
+          for correct sorting when special characters (Umlauts) are used. There 
+          is an admin setting where you can set up the character replacement to 
+          correct the sort for each language.</xar:mlstring></blockquote>
+          <xar:mlstring>2.6 Personal address book mode</xar:mlstring>
+          <blockquote><xar:mlstring>The Address Book may be used as a Global AddressBook (unchecked by default) 
+          or a Personal AddressBook (checked). As a Global AddressBook all users with access may view records 
+          that are NOT marked Private. As a Personal AddressBook users may only view entries they have created 
+          and unregistered users may not view or create any entries.</xar:mlstring></blockquote>
+          <xar:mlstring>2.7 Do you want to use a prefix field?</xar:mlstring>
+          <blockquote><xar:mlstring>
+          Prefix/Title (Mr. Mrs. etc.). Values can be set in </xar:mlstring> <a href="#xarModURL(__ADDRESSBOOK__,'admin','modifyprefixes')#">Name Prefixes</a> 
+          <xar:mlstring>Administration Panel and are optionally selected via a drop-down list when creating / editing an entry. This field is hidden by default. </xar:mlstring></blockquote>
+          <xar:mlstring>2.8 Do you want to use images/logos?</xar:mlstring>
+          <blockquote><xar:mlstring>Administrators will see a selection box of all 
+          files in the xarimages directory of AddressBook and can assign it to a 
+          record. The picture is shown in the upper right of the detail page. 
+          Currently, all pictures must be manually uploaded into the xarimages directory of 
+          AddressBook. This field is hidden by default.</xar:mlstring></blockquote>
+          <xar:mlstring>2.9 Disable the menu</xar:mlstring>        
+          <blockquote><xar:mlstring>If you want to use the AddressBook as a 
+          simple contact list, you might want to disable the menu completely. 
+          You can also disable it for guests only. Note, Administrators always see the full menu, regardless of this setting.
+          </xar:mlstring></blockquote>
+          <xar:mlstring>2.10 Disable the second line of the main menu</xar:mlstring>
+          <blockquote><xar:mlstring>This hides the second menu line for all users who
+              DO NOT have edit access. Users still have access to the categories,
+              sort order and the search field, but not access to Private records,
+              A-Z / Complete list view switch, and the Add New Record link.</xar:mlstring></blockquote>
+            <xar:mlstring>2.11 Show zip before city</xar:mlstring>
+          <blockquote><xar:mlstring>In Europe the postal code (zip in USA) is shown before the city. 
+          This option is off by default.</xar:mlstring></blockquote>
+          <xar:mlstring>2.12 Records viewed per page</xar:mlstring>
+          <blockquote><xar:mlstring>Pick your number between 1 and ??</xar:mlstring></blockquote>
+      </div>
+        <div style="margin:0em 1em;">
+          <h4><xar:mlstring>Custom Labels</xar:mlstring></h4>
+      </div>
+        <div style="margin:0em 1em;">
+          <xar:mlstring>3.1 Custom tab</xar:mlstring>
+          <blockquote><xar:mlstring>Name of the Custom Fields tab and the 
+          headline for custom fields in the detail page. Leave it blank, if you 
+          do not use custom fields.</xar:mlstring></blockquote>
+          <xar:mlstring>3.2 Width of TEXTAREA fields</xar:mlstring>
+          <blockquote><xar:mlstring>TEXTAREA field width can change depending on 
+          the CSS of your theme. Sometimes this results in a very bad layout of 
+          your form. You can set the html COLS of a TEXTAREA field. Valid size ranges from 4 to 100.</xar:mlstring></blockquote>
+          <xar:mlstring>3.3 Format for date entries</xar:mlstring>
+          <blockquote><xar:mlstring>Select the format for date entry and 
+          display. Only two options at this time, MM.DD.YYYY and DD.MM.YYYY.</xar:mlstring></blockquote>
+          <xar:mlstring>3.4 Format for numeric values</xar:mlstring>
+          <blockquote><xar:mlstring>Select the format for numeric entry and 
+          display. Only two options at this time, 9,999.00 and 9.999,00</xar:mlstring></blockquote>
+      </div>
+        <div style="margin:0em 1em;">
+          <h4><xar:mlstring>Quality Control Reporting</xar:mlstring></h4>
+      </div>
+        <div style="margin:0em 1em;">
+          <xar:mlstring>4.1 Send error reports to Site Admin</xar:mlstring>
+          <blockquote><xar:mlstring>This option enables error messages to be emailed directly to
+          the site administrator email account. Uncheck to disable this feature.</xar:mlstring></blockquote>
+          <xar:mlstring>4.2 Alternate Site Admin email address</xar:mlstring>
+          <blockquote><xar:mlstring>Choose an alternate email address if the official Site Admin
+          does not wish to receive AddressBook error notifications.</xar:mlstring></blockquote>
+          <xar:mlstring>4.3 Send error reports to AddressBook Quality Control</xar:mlstring>
+          <blockquote><xar:mlstring>This option sends an email directly to the AddressBook development
+          team with the error message, date and time of occurrence, and the fully qualified host name of the
+          server running the AddressBook module. NO OTHER INFORMATION IS SENT. This information is used solely for 
+          the purpose of fixing issues encountered in the AddressBook module. Uncheck to disable this feature.</xar:mlstring></blockquote>
+      </div>
   </div>
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />

@@ -7,8 +7,8 @@
   <xar:template compile="false" file="mod-warn-msg" type="module" />
   </div>
 <!-- END WARN DISPLAY -->
-	<xar:if condition="!isset($insertStatus)">
-	<div class="xar-alt-outline" style="padding:.25; text-align:center;">
+    <xar:if condition="!isset($insertStatus)">
+    <div class="xar-alt-outline" style="padding:.25; text-align:center;">
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
 <!-- START MENUVALUES -->
 <input name="id" type="hidden" value="#$id#" id="id">
@@ -30,14 +30,14 @@
 <table>
 <tr>
   <td>
-	<div class="xar-alt-outline" style="padding:.5em; text-align:center">
-	    <xar:if condition="$formcall eq 'edit'">
-	        <span class="xar-title">#$fname# #$lname#</span>
-	    <xar:else />
-	        <span class="xar-title"><xar:mlstring>Insert new record</xar:mlstring></span>
-	    </xar:if>
-	</div>
-	</td>
+    <div class="xar-alt-outline" style="padding:.5em; text-align:center">
+        <xar:if condition="$formcall eq 'edit'">
+            <span class="xar-title">#$fname# #$lname#</span>
+        <xar:else />
+            <span class="xar-title"><xar:mlstring>Insert new record</xar:mlstring></span>
+        </xar:if>
+    </div>
+    </td>
 </tr>
 <tr>
 <td>
@@ -88,11 +88,11 @@
                 <select name="cat_id" id="cat_id">
                     <option value="0"><xar:mlstring>Unfiled</xar:mlstring></option>
                 <xar:foreach in="$cats" value="$cat">
-	              <xar:if condition="$cat['id'] ne $cat_id">
+                  <xar:if condition="$cat['id'] ne $cat_id">
                     <option value="#$cat['id']#">#$cat['name']#</option>
-	              <xar:else />
+                  <xar:else />
                     <option selected value="#$cat['id']#">#$cat['name']#</option>
-	              </xar:if>
+                  </xar:if>
                 </xar:foreach>
         </select>
         </td>
@@ -137,9 +137,9 @@
 </div>
   <xar:else />
   <div class="xar-alt-outline" style="padding: 4em; text-align:center;">
-	  <h3>#xarModGetVar(__ADDRESSBOOK__,'abtitle')# <xar:mlstring>Entry Saved!</xar:mlstring></h3>
-		<br />
-	  <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
+      <h3>#xarModGetVar(__ADDRESSBOOK__,'abtitle')# <xar:mlstring>Entry Saved!</xar:mlstring></h3>
+        <br />
+      <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
   </div>
   </xar:if>
 </div>

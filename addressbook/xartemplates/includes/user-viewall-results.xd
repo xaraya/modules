@@ -3,25 +3,25 @@
   <tr>
     <xar:foreach in="$headers" value="$header">
     <th>
-	  <label class="xar-mod-title">#$header['header']#</label>
-	</th>
+      <label class="xar-mod-title">#$header['header']#</label>
+    </th>
     </xar:foreach>
     <th>
-	  <label class="xar-mod-title"><xar:mlstring>CONTACT</xar:mlstring></label>
-	</th>
+      <label class="xar-mod-title"><xar:mlstring>CONTACT</xar:mlstring></label>
+    </th>
     <th>
-	  <label class="xar-mod-title"><xar:mlstring>ACTION</xar:mlstring></label>
-	</th>
+      <label class="xar-mod-title"><xar:mlstring>ACTION</xar:mlstring></label>
+    </th>
   </tr>
 <!-- END Header row -->
 <!-- Results -->
   <xar:set name="$i">1</xar:set>
   <xar:foreach in="$displayRows" value="$row">
-	<xar:if condition="($i % 2) eq 1">
-	  <xar:set name="$rowClass">"xar-norm"</xar:set>
-	<xar:else />
-	  <xar:set name="$rowClass">"xar-accent"</xar:set>
-	</xar:if>
+    <xar:if condition="($i % 2) eq 1">
+      <xar:set name="$rowClass">"xar-norm"</xar:set>
+    <xar:else />
+      <xar:set name="$rowClass">"xar-accent"</xar:set>
+    </xar:if>
   <tr>
     <xar:foreach in="$row['displayRow']" value="$rowData">
     <td class="#$rowClass#">#$rowData#</td>
@@ -34,6 +34,6 @@
     </xar:if>
     </td>
   </tr>
-	<xar:set name="$i">$i+=1</xar:set>
+    <xar:set name="$i">$i+=1</xar:set>
 </xar:foreach>
 </table>

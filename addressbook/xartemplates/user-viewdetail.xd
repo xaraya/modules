@@ -2,99 +2,99 @@
 <!-- START: outline or work area -->
 <div class="xar-alt-outline" style="padding:1em">
     
-	<div id="changeHistory" style="text-align:left; padding:.5em 0em .5em .25em; margin-bottom:.25em;">
+    <div id="changeHistory" style="text-align:left; padding:.5em 0em .5em .25em; margin-bottom:.25em;">
       <span class="xar-title">#$info#</span>
     </div>
 
 <!-- CONTACT info -->
-	
+    
     <div id="contactInfo" class="xar-alt-outline" style="margin:.5em 0em;">
-	<div style="padding:.5em;">
-	<table border="0" cellpadding="0" cellspacing="0" >
-	  <tr align="center" valign="middle">
-	    <td align="left" valign="top">
-		<div style="padding:0em 1em 0em 0em;">
+    <div style="padding:.5em;">
+    <table border="0" cellpadding="0" cellspacing="0" >
+      <tr align="center" valign="middle">
+        <td align="left" valign="top">
+        <div style="padding:0em 1em 0em 0em;">
 <xar:if condition="!empty($lname)">
   <xar:if condition="!empty($fname)">
-		  <strong>#$fname#&nbsp;#$lname#</strong><br /><br />
+          <strong>#$fname#&nbsp;#$lname#</strong><br /><br />
     <xar:if condition="!empty($company)">
-	      #$company#<br />
-	</xar:if>
-	<xar:if condition="!empty($title)">
-	      #$title#<br />
-	</xar:if>
+          #$company#<br />
+    </xar:if>
+    <xar:if condition="!empty($title)">
+          #$title#<br />
+    </xar:if>
   </xar:if>
 <xar:else />
-	      <strong>#$company#</strong><br /><br />
+          <strong>#$company#</strong><br /><br />
   <xar:if condition="!empty($title)">
-	      #$title#<br />
+          #$title#<br />
   </xar:if>
 </xar:if>
           <br />
 <xar:if condition="!empty($address_1)">
-	      #$address_1#<br />
+          #$address_1#<br />
 </xar:if>
 <xar:if condition="!empty($address_1)">
           #$address_2#<br />
 </xar:if>
 <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'zipbeforecity')">
   <xar:if condition="!empty($zip)">
-	      #$zip#&nbsp;
+          #$zip#&nbsp;
   </xar:if>
   <xar:if condition="!empty($city)">
-	      #$city#<br />
+          #$city#<br />
   </xar:if>
   <xar:if condition="!empty($state)">
-		  #$state#<br />
+          #$state#<br />
   </xar:if>
   <xar:if condition="!empty($country)">
-		  #$country#<br />
+          #$country#<br />
   </xar:if>
 <xar:else />
   <xar:if condition="!empty($city)">
-		#$city#<br />
+        #$city#<br />
   </xar:if>
   <xar:if condition="!empty($state)">
-		#$state#
+        #$state#
   </xar:if>
   <xar:if condition="!empty($zip)">
-		&nbsp;#$zip#<br />
+        &nbsp;#$zip#<br />
   </xar:if>
   <xar:if condition="!empty($country)">
-		#$country#<br />
+        #$country#<br />
   </xar:if>
 </xar:if>
         </div>
-		</td>
-		<td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
-		<td align="left" valign="top">
-		<div style="padding:0em 1em 0em 1em;">
-	      <strong><xar:mlstring>Contact</xar:mlstring>:</strong><br />
-		  <br />
+        </td>
+        <td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
+        <td align="left" valign="top">
+        <div style="padding:0em 1em 0em 1em;">
+          <strong><xar:mlstring>Contact</xar:mlstring>:</strong><br />
+          <br />
 <xar:if condition="!empty($contacts)">
-			<table border="0" cellpadding="0" cellspacing="0">
-				<xar:foreach in="$contacts" value="$contact">
-					<tr align="center" valign="middle">
-						<td colspan="1" rowspan="1" align="left" valign="top">#$contact['label']#: </td>
-						<td width="10"></td>
-						<td colspan="1" rowspan="1" align="left" valign="middle">#$contact['contact']#</td>
-					</tr>
-				</xar:foreach>
-			</table>
+            <table border="0" cellpadding="0" cellspacing="0">
+                <xar:foreach in="$contacts" value="$contact">
+                    <tr align="center" valign="middle">
+                        <td colspan="1" rowspan="1" align="left" valign="top">#$contact['label']#: </td>
+                        <td width="10"></td>
+                        <td colspan="1" rowspan="1" align="left" valign="middle">#$contact['contact']#</td>
+                    </tr>
+                </xar:foreach>
+            </table>
 </xar:if>
         </div>
-		</td>
+        </td>
 <xar:if condition="$img">
-		<td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
-		<td align="center" valign="middle">
-		<div style="padding:0em 1em 0em 1em;">
-		  <img src="modules/#$abModInfo['directory']#/xarimages/#$img#" border="0" alt="">
-		</div>
-		</td>
+        <td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
+        <td align="center" valign="middle">
+        <div style="padding:0em 1em 0em 1em;">
+          <img src="modules/#$abModInfo['directory']#/xarimages/#$img#" border="0" alt="">
+        </div>
+        </td>
 </xar:if>
       </tr>
-	</table>
-	</div>
+    </table>
+    </div>
     </div>
 
 <!-- CUSTOM info -->
@@ -104,27 +104,27 @@
       <span class="xar-title">#$custom_tab#</span>
     </div>
     <div style="padding:.25em;">
-		<table cellpadding="0" cellspacing="0">
-		<xar:foreach in="$custUserData" value="$cud">
-			<xar:if condition="strstr($cud['type'],_AB_CUST_TEST_LB) or strstr($cud['type'],_AB_CUST_TEST_HR)">
-				<tr>
-						<td colspan="3" style="text-align:left;">#$cud['userData']#</td>
-				</tr>
-			<xar:else />
-				<tr>
-						<td style="text-align:left;" >#$cud['label']#:</td>
-						<td width="10"></td>
-						<td style="text-align:left;" >
-						<xar:if condition="isset($cud['userData'])">
-							#$cud['userData']#
-						<xar:else />
-							&nbsp;
-						</xar:if>
-						</td>
-				</tr>
-			</xar:if>
-		</xar:foreach>
-		</table>
+        <table cellpadding="0" cellspacing="0">
+        <xar:foreach in="$custUserData" value="$cud">
+            <xar:if condition="strstr($cud['type'],_AB_CUST_TEST_LB) or strstr($cud['type'],_AB_CUST_TEST_HR)">
+                <tr>
+                        <td colspan="3" style="text-align:left;">#$cud['userData']#</td>
+                </tr>
+            <xar:else />
+                <tr>
+                        <td style="text-align:left;" >#$cud['label']#:</td>
+                        <td width="10"></td>
+                        <td style="text-align:left;" >
+                        <xar:if condition="isset($cud['userData'])">
+                            #$cud['userData']#
+                        <xar:else />
+                            &nbsp;
+                        </xar:if>
+                        </td>
+                </tr>
+            </xar:if>
+        </xar:foreach>
+        </table>
     </div>
   </div>
 </xar:if>
@@ -132,14 +132,14 @@
 <xar:comment> display NOTE </xar:comment>
 <xar:if condition="!empty($note)">
   <div id="noteInfo" class="xar-alt-outline" style="margin:.5em 0em;;">
-	<div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
-	  <span class="xar-title"><xar:mlstring>Note</xar:mlstring></span>
-	</div>
-	  
-	<div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
+    <div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
+      <span class="xar-title"><xar:mlstring>Note</xar:mlstring></span>
+    </div>
+      
+    <div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
       #$note#
- 	</div>
-  </div>		
+     </div>
+  </div>        
 </xar:if>
 
 <!-- BUTTONS -->
@@ -151,6 +151,6 @@
       <input type="button" value="#$goBack#" onclick="javascript:history.go(-1);" />
     </form>
     </div>
-	
+    
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />

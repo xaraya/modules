@@ -1,42 +1,42 @@
 <table class="xar-alt-outline" cellpadding="1" cellspacing="0">
-	<tr>
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
-		<th><xar:mlstring>Address</xar:mlstring></th>
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
+    <tr>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
+        <th><xar:mlstring>Address</xar:mlstring></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
 <xar:if condition="$addrow gt 0">
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=3;">#$custom_tab#</a></th>
-</xar:if>		
-		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=4;"><xar:mlstring>Note</xar:mlstring></a></th>
-	</tr>
-	<tr>
-		<td colspan="#$numcols#">
-		<table width="100%" border="0" cellspacing="0" cellpadding="5">
-		  <tr>
-		    <td align="right"><xar:mlstring>Address</xar:mlstring>:</td>
-		    <td>
-		      <input name="address_1" type="text" id="address_1" value="#$address_1#" size="60" maxlength="100">
-		    </td>
-		    </tr>
-		  <tr>
-		    <td align="right">&nbsp;</td>
-		    <td><input name="address_2" type="text" id="address_2" value="#$address_2#" size="60" maxlength="100"></td>
-		    </tr>
-		  <tr>
-		    <td align="right"><xar:mlstring>City</xar:mlstring>:</td>
-		    <td><input name="city" type="text" id="city" value="#$city#" size="60" maxlength="100"></td>
-		    </tr>
-		  <tr>
-		    <td align="right"><xar:mlstring>State</xar:mlstring>:</td>
-		    <td><input name="state" type="text" id="state" value="#$state#" size="60" maxlength="100"></td>
-		    </tr>
-		  <tr>
-		    <td align="right"><xar:mlstring>Zip</xar:mlstring>:</td>
-		    <td><input name="zip" type="text" id="zip" value="#$zip#" size="60" maxlength="100"></td>
-		    </tr>
-		  <tr>
-		    <td align="right"><xar:mlstring>Country</xar:mlstring>:</td>
-		    <td><input name="country" type="text" id="country" value="#$country#" size="60" maxlength="100"></td>
-		    </tr>
-	  </table></td>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=3;">#$custom_tab#</a></th>
+</xar:if>        
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=4;"><xar:mlstring>Note</xar:mlstring></a></th>
+    </tr>
+    <tr>
+        <td colspan="#$numcols#">
+        <table width="100%" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td align="right"><xar:mlstring>Address</xar:mlstring>:</td>
+            <td>
+              <input name="address_1" type="text" id="address_1" value="#$address_1#" size="60" maxlength="100">
+            </td>
+            </tr>
+          <tr>
+            <td align="right">&nbsp;</td>
+            <td><input name="address_2" type="text" id="address_2" value="#$address_2#" size="60" maxlength="100"></td>
+            </tr>
+          <tr>
+            <td align="right"><xar:mlstring>City</xar:mlstring>:</td>
+            <td><input name="city" type="text" id="city" value="#$city#" size="60" maxlength="100"></td>
+            </tr>
+          <tr>
+            <td align="right"><xar:mlstring>State</xar:mlstring>:</td>
+            <td><input name="state" type="text" id="state" value="#$state#" size="60" maxlength="100"></td>
+            </tr>
+          <tr>
+            <td align="right"><xar:mlstring>Zip</xar:mlstring>:</td>
+            <td><input name="zip" type="text" id="zip" value="#$zip#" size="60" maxlength="100"></td>
+            </tr>
+          <tr>
+            <td align="right"><xar:mlstring>Country</xar:mlstring>:</td>
+            <td><input name="country" type="text" id="country" value="#$country#" size="60" maxlength="100"></td>
+            </tr>
+      </table></td>
 </tr>
 </table>

@@ -73,7 +73,7 @@
                   <option selected value="#$imgFile['id']#">#$imgFile['name']#</option>
                         </xar:if>
                     </xar:foreach>
-		        </select>
+                </select>
               </td>
             </tr>
             <xar:else />

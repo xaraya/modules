@@ -1,7 +1,7 @@
 <xar:if condition="!xarModGetVar(__ADDRESSBOOK__, 'hidecopyright')">
 <xar:set id="modInfo" name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));</xar:set>
 <div style="text-align:center; padding:.5em;">
-	<span class="xar-sub"><xar:mlstring>Powered by</xar:mlstring> <a href="http://xaraya.blacktower.com">AddressBook v#$modInfo['version']#</a> &copy; 2003
-	<xar:mlstring>based on</xar:mlstring> <a href="http://www.smiatek.com">pnAddressBook v2.0</a> &copy;  smiatek.com</span>
+    <span class="xar-sub"><xar:mlstring>Powered by</xar:mlstring> <a href="http://xaraya.blacktower.com">AddressBook v#$modInfo['version']#</a> &copy; 2003
+    <xar:mlstring>based on</xar:mlstring> <a href="http://www.smiatek.com">pnAddressBook v2.0</a> &copy;  smiatek.com</span>
 </div>
 </xar:if>

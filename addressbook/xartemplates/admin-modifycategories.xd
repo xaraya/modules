@@ -12,15 +12,15 @@
   <div style="margin:0em 1em; text-align:center;">
     <div style="width:60%;">
       <form name="form1" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifycategories')#">
-		<div id="tableContainer">
-		  <table style="width:60%; border:0em; padding:.5em;">
+        <div id="tableContainer">
+          <table style="width:60%; border:0em; padding:.5em;">
           <tr>
             <td style="text-align:center; padding:.25em;">
-			  <strong><xar:mlstring>Category</xar:mlstring></strong>
-			</td>
+              <strong><xar:mlstring>Category</xar:mlstring></strong>
+            </td>
             <td style="text-align:center; padding:.25em;">
-			  <strong><xar:mlstring>Delete</xar:mlstring></strong>
-			</td>
+              <strong><xar:mlstring>Delete</xar:mlstring></strong>
+            </td>
           </tr>
 <!-- Logic for displaying existing categories -->
                     <xar:if condition="isset($categories)">
@@ -42,18 +42,18 @@
               <input name="newname" id="newname" type="text" size="20" maxlength="30" >
             </td>
             <td style="text-align:center;">
-			  &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
-			</td>
+              &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
+            </td>
           </tr>
         </table>
-		</div>
-		<div style="margin:1em;">
-  		  <input type="submit" name="submit" value="#$btnCommitText#">
+        </div>
+        <div style="margin:1em;">
+            <input type="submit" name="submit" value="#$btnCommitText#">
           <input name="authid" type="hidden" id="authid" value="#$authid#">
           <input name="formSubmit" type="hidden" id="formSubmit" value="1">
-		</div>
+        </div>
         </form>
-	  </div>
+      </div>
 <!-- END test div-->
     </div>
   </div>

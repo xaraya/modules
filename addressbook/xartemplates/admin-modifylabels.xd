@@ -9,18 +9,18 @@
   </div>
 <!-- END WARN DISPLAY -->
   <div class="xar-norm-outline" style="padding:.25em;">
-  	<div style="margin:0em 1em; text-align:center;">
+      <div style="margin:0em 1em; text-align:center;">
     <div id="formContainer" style="width:60%;">
       <form name="form1" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifylabels')#">
-	  <div>
+      <div>
       <table style="width:60%; border:0em; padding:.5em;">
         <tr>
           <td style="text-align:center; padding:.25em;">
-		    <strong><xar:mlstring>Label</xar:mlstring></strong>
-		  </td>
+            <strong><xar:mlstring>Label</xar:mlstring></strong>
+          </td>
           <td style="text-align:center; padding:.25em;">
-		  <strong><xar:mlstring>Delete</xar:mlstring></strong>
-		  </td>
+          <strong><xar:mlstring>Delete</xar:mlstring></strong>
+          </td>
         </tr>
 <!-- Logic for displaying existing labels -->
 <xar:if condition="isset($labels)">
@@ -30,10 +30,10 @@
             <input name="name[]" type="text" value="#$label['name']#" size="20" maxlength="30" />
           </td>
           <td style="text-align:center; padding:.25em;">
-			<input type="checkbox" name="del[]" id="del[]" value="#$label['id']#"/>
-			<input type="hidden" name="id[]" id="id[]" value="#$label['id']#" />
-	      </td>
-		</tr>
+            <input type="checkbox" name="del[]" id="del[]" value="#$label['id']#"/>
+            <input type="hidden" name="id[]" id="id[]" value="#$label['id']#" />
+          </td>
+        </tr>
   </xar:foreach>
 </xar:if>
 <!-- Logic for displaying existing labels -->
@@ -42,19 +42,19 @@
             <input name="newname" id="newname" type="text" size="20" maxlength="30" >
           </td>
           <td style="text-align:center; padding:.25em;">
-			  &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
-		  </td>
+              &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
+          </td>
           </tr>
         </table>
-	  </div>
+      </div>
       <div style="margin:1em;">
-		<input type="submit" name="submit" value="#$btnCommitText#">
+        <input type="submit" name="submit" value="#$btnCommitText#">
         <input name="authid" type="hidden" id="authid" value="#$authid#">
         <input name="formSubmit" type="hidden" id="formSubmit" value="1">
-	  </div>
+      </div>
       </form>
-	</div>
-  	</div>
+    </div>
+      </div>
   </div>
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />
