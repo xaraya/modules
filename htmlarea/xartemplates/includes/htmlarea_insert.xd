@@ -5,14 +5,16 @@
 <xar:if condition="!isset($editorheight)">
 	<xar:set name="$editorheight">"400px"</xar:set>
 </xar:if><script type="text/javascript">
-  _editor_url = "modules/htmlarea/HTMLArea/";
+  _editor_url = "modules/htmlarea/xartemplates/includes/HTMLArea/";
   _editor_lang = "#$localeinfo['lang']#";
+</script>
+<script language="javascript" type="text/javascript" src="modules/htmlarea/xartemplates/includes/HTMLArea/htmlarea.js"></script>
+<script language="javascript" type="text/javascript" src="modules/htmlarea/xartemplates/includes/HTMLArea/dialog.js"></script>
+<script language="javascript" type="text/javascript" src="modules/htmlarea/xartemplates/includes/HTMLArea/htmlarea-lang-#$localeinfo['lang']#.js">
 </script>
 <script type="text/javascript" defer="1">
 	 var config = new HTMLArea.Config(); 
 	 config.width = '#$editorwidth#';
 	 config.height = '#$editorheight#';
 	 HTMLArea.replaceAll(config);
-</script>
-<script language="javascript" type="text/javascript" src="modules/htmlarea/xartemplates/includes/HTMLArea/htmlarea.js">
 </script>
