@@ -23,7 +23,7 @@ function hitcount_adminapi_delete($args)
         if (!is_numeric($objectid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'object ID', 'admin', 'delete', 'Hitcount');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                             new SystemException($msg));
             return false;
         }
@@ -38,7 +38,7 @@ function hitcount_adminapi_delete($args)
         if (empty($modid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'module name', 'admin', 'delete', 'Hitcount');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return false;
         }
@@ -94,7 +94,7 @@ function hitcount_adminapi_delete($args)
             if (!is_numeric($modid)) {
                 $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                              'module id', 'admin', 'delete', 'Hitcount');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                                 new SystemException($msg));
                 return false;
             }
