@@ -33,6 +33,13 @@ function hookbridge_init()
     xarModSetVar('hookbridge', 'hookfunctions_create', serialize($emptyArray) );
     xarModSetVar('hookbridge', 'hookenabled_update', 0 );
     xarModSetVar('hookbridge', 'hookfunctions_update', serialize($emptyArray) );
+
+    xarModSetVar('hookbridge', 'hookenabled_new', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_new', serialize($emptyArray) );
+    xarModSetVar('hookbridge', 'hookenabled_modify', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_modify', serialize($emptyArray) );
+    xarModSetVar('hookbridge', 'hookenabled_display', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_display', serialize($emptyArray) );
     
 
     if (!xarModRegisterHook('module','modifyconfig','GUI','hookbridge','hook','module_modifyconfig' )) { return false; }
