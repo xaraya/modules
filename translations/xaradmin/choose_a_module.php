@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Choose a module page generation
  *
  * @package modules
@@ -28,8 +25,9 @@ function translations_admin_choose_a_module()
     $modlist = array_merge($modlist1,$modlist2);
     ksort($modlist);
     
-    $tplData = translations_create_choose_a_module_druidbar(CHOOSE);
+    $tplData = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_MODULE, '', 0);
     $tplData['modlist'] = $modlist;
+    $tplData['dnType'] = XARMLS_DNTYPE_MODULE;
     return $tplData;
 }
 

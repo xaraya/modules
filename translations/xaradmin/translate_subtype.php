@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Translate on screen for subtypes of a module
  *
  * @package modules
@@ -18,6 +15,10 @@ function translations_admin_translate_subtype()
 {
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
+
+    if (!xarVarFetch('dnType','int',$dnType)) return;
+    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
+    if (!xarVarFetch('extid','int',$extid)) return;
 
     // FIXME voll context validation
     //$contexts = Load all contexts types;
@@ -41,22 +42,30 @@ function translations_admin_translate_subtype()
     }
 
     $args = array();
+    $args['dntype'] = $dnType;
+    $args['dnname'] = $dnName;
     $args['subtype'] = $subtype;
     $args['subname'] = $subname;
     $entries = xarModAPIFunc('translations','admin','getcontextentries',$args);
-
-    $dnType = xarSessionGetVar('translations_dnType');
-    $dnName = xarSessionGetVar('translations_dnName');
 
     $tplData = $entries;
     $action = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
     $tplData['action'] = $action;
 
-    $opbar = translations_create_opbar(TRANSLATE);
-    $trabar = translations_create_trabar($subtype,$subname);
-    $druidbar = translations_create_translate_druidbar(TRAN, $dnType);
+    $opbar = translations_create_opbar(TRANSLATE, $dnType, $dnName, $extid);
+    $trabar = translations_create_trabar($dnType, $dnName, $extid, $subtype,$subname);
+    $druidbar = translations_create_druidbar(TRAN, $dnType, $dnName, $extid);
     $tplData = array_merge($tplData, $opbar, $trabar, $druidbar);
-    $tplData['dnType'] = translations__dnType2Name($dnType);
+    $tplData['dnType'] = $dnType;
+
+    if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
+    elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
+    elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
+    else $dnTypeText = '';
+    $tplData['dnTypeText'] = $dnTypeText;
+
+    $tplData['dnName'] = $dnName;
+    $tplData['extid'] = $extid;
 
     return $tplData;
 }

@@ -1,13 +1,15 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Marco Canini
-// Purpose of file:  Initialisation functions for translations
-// ----------------------------------------------------------------------
+/**
+ * Initialisation functions for translations
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage translations
+ * @author Marco Canini
+ * @author Marcel van der Boom <marcel@xaraya.com>
+*/
 
 /**
  * initialise the translations module
@@ -23,6 +25,7 @@ function translations_init()
     xarModSetVar('translations', 'maxreferences', 5);
     xarModSetVar('translations', 'maxcodelines', 5);
 
+    xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AdminTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_ADMIN');
 
     return true;
@@ -38,8 +41,9 @@ function translations_upgrade($oldversion)
             xarModSetVar('translations', 'showcontext', 0);
             xarModSetVar('translations', 'maxreferences', 5);
             xarModSetVar('translations', 'maxcodelines', 5);
-        break;
         case '0.1.1':
+            xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
+        case '0.1.2':
     }
     return true;
 }

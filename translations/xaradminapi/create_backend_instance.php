@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Create backend instance
  *
  * @package modules

@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Release core translations
  *
  * @package modules

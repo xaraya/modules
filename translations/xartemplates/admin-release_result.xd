@@ -1,5 +1,8 @@
 <xar:template type="module" file="admin-menu"/>
 
+<!-- Show progress -->
+<xar:template type="module" file="druidbar" />
+
 <h4><xar:mlstring>Getting the translated package</xar:mlstring></h4>
 <p>
   <xar:ml>
@@ -12,5 +15,9 @@
     <xar:mlstring>A <a href="#(1)">translation package archive</a> (tar.gz) format. Translations package successfully generated.</xar:mlstring>
     <xar:mlvar>#$url#</xar:mlvar>
   </xar:ml>
+</p>
+<p>
   <xar:mlstring>The package is located inside your var/cache directory.</xar:mlstring> 
 </p>
+<br />
+<xar:template type="module" file="opbar" />

@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Release module translations
  *
  * @package modules
@@ -33,8 +30,9 @@ function translations_adminapi_release_module_trans($args)
     $modname = $modinfo['name'];
     $modversion = $modinfo['version'];
 
-    if (!$bt = translations_adminapi_release_backend_type()) return;;
-// Security Check
+    if (!$bt = xarModAPIFunc('translations','admin','release_backend_type')) return;;
+
+    // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     if ($bt != 'php') {
@@ -51,12 +49,13 @@ function translations_adminapi_release_module_trans($args)
         return;
     }
 
-    // return translations_make_package($modname, $modversion, $dirpath, $locale);
     $newargs['basefilename'] = $modname;
     $newargs['version'] = $modversion;
     $newargs['dirpath'] = $dirpath;
     $newargs['locale'] = $locale;
-    $backend = xarModAPIFunc('translations','admin','make_package',$newargs);
+    $releaseBackend = xarModAPIFunc('translations','admin','make_package',$newargs);
+
+    return $releaseBackend;
 }
 
 ?>

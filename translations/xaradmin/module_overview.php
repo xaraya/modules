@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Module overview
  *
  * @package modules
@@ -19,16 +16,15 @@ function translations_admin_module_overview()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $sessmodid = xarSessionGetVar('translations_modid');
-    if (!xarVarFetch('modid', 'id', $modid, $sessmodid)) return;
-    xarSessionSetVar('translations_modid', $modid);
+    if (!xarVarFetch('extid', 'id', $modid)) return;
 
     if (!($tplData = xarModGetInfo($modid))) return;
+    $tplData['dnType'] = XARMLS_DNTYPE_MODULE;
+    $tplData['dnName'] = $tplData['name'];
+    $tplData['modid'] = $modid;
 
-    xarSessionSetVar('translations_dnName', $tplData['name']);
-
-    $druidbar = translations_create_module_overview_druidbar(INFO);
-    $opbar = translations_create_opbar(OVERVIEW);
+    $druidbar = translations_create_druidbar(INFO, XARMLS_DNTYPE_MODULE, $tplData['name'], $modid);
+    $opbar = translations_create_opbar(OVERVIEW, XARMLS_DNTYPE_MODULE, $tplData['name'], $modid);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
     return $tplData;

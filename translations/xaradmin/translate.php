@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Translations page generation
  *
  * @package modules
@@ -19,11 +16,18 @@ function translations_admin_translate()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $tran_type = xarSessionGetVar('translations_dnType');
-    $opbar = translations_create_opbar(TRANSLATE);
-    $trabar = translations_create_trabar('', '');
-    $druidbar = translations_create_translate_druidbar(TRAN, $tran_type);
+    if (!xarVarFetch('dnType','int',$dnType)) return;
+    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
+    if (!xarVarFetch('extid','int',$extid)) return;
+
+    $opbar = translations_create_opbar(TRANSLATE, $dnType, $dnName, $extid);
+    $trabar = translations_create_trabar($dnType, $dnName, $extid, '', '');
+    $druidbar = translations_create_druidbar(TRAN, $dnType, $dnName, $extid);
     $tplData = array_merge($opbar, $trabar, $druidbar);
+
+    $tplData['dnType'] = $dnType;
+    $tplData['dnName'] = $dnName;
+    $tplData['extid'] = $extid;
 
     return $tplData;
 }

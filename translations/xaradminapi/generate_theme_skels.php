@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Generate skeletons for a theme
  *
  * @package modules

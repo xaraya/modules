@@ -4,6 +4,9 @@
   </p>
 
     <form method="post" action="&xar-modurl-translations-admin-translate_subtype;">
+    <input type="hidden" name="dnType" value="#$dnType#">
+    <input type="hidden" name="dnName" value="#$dnName#">
+    <input type="hidden" name="extid" value="#$extid#">
     <select name="defaultcontext" id="defaultcontext" size="1">
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
         <xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">

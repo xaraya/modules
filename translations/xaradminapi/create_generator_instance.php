@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Create generator instance
  *
  * @package modules

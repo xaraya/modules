@@ -6,8 +6,8 @@
 </p>
 <ul>
 <xar:loop name="$modlist">
-  <li><a href="#xarModURL('translations', 'admin', 'module_overview', array('modid' => $loop:item['regid']))#">
-    #$loop:item['displayname']#
+  <li><a href="#xarModURL('translations', 'admin', 'module_overview', array('extid' => $loop:item['regid']))#">
+    #$loop:item['name']#&nbsp;-&nbsp;#$loop:item['displayname']#
   </a></li>
 </xar:loop>
 </ul>

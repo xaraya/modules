@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Get context entries
  *
  * @package modules
@@ -20,8 +17,8 @@ function translations_adminapi_getcontextentries($args)
 {
     extract($args);
 
-    $dnType = xarSessionGetVar('translations_dnType');
-    $dnName = xarSessionGetVar('translations_dnName');
+    $dnType = $dntype;
+    $dnName = $dnname;
     $ctxType = $subtype;
     $ctxName = $subname;
 

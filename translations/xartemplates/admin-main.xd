@@ -9,8 +9,8 @@
   <xar:mlstring>The Xaraya MLS is a tool to automate the translation process for Xaraya.
   The process roughly consists of two parts:</xar:mlstring>
   <ol>
-    <li><a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Translating</xar:mlstring></a>
-    <li><a href="&xar-modurl-translations-admin-generate_trans_info;"><xar:mlstring>Generating &amp; Packaging</xar:mlstring></a>
+    <li><xar:mlstring>Translating</xar:mlstring>
+    <li><xar:mlstring>Generating &amp; Packaging</xar:mlstring>
   </ol>
 </p>
 
@@ -32,4 +32,8 @@
     <li><xar:mlstring>Generating the translation, giving an overview of the translated items</xar:mlstring></li>
     <li><xar:mlstring>Packaging the generated translation in a downloadable archive</xar:mlstring></li>
   </ol>
+</p>
+
+<p>
+<a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Start translating</xar:mlstring></a>
 </p>

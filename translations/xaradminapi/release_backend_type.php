@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Get release backend type
  *
  * @package modules

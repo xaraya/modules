@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Get directories list from theme directory
  *
  * @package modules

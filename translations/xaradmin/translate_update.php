@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Update translations of a certain subtype
  *
  * @package modules
@@ -37,8 +34,10 @@ function translations_admin_translate_update()
     if (!xarVarFetch('numEntries', 'int:0:', $numEntries)) return;
     if (!xarVarFetch('numKeyEntries', 'int:0:', $numKeyEntries)) return;
 
-    $dnType = xarSessionGetVar('translations_dnType');
-    $dnName = xarSessionGetVar('translations_dnName');
+    if (!xarVarFetch('dnType','int',$dnType)) return;
+    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
+    if (!xarVarFetch('extid','int',$extid)) return;
+
     $ctxType = $subtype;
     $ctxName = $subname;
 
@@ -82,6 +81,11 @@ function translations_admin_translate_update()
     $gen->close();
 
 // voll    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
-    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('defaultcontext'=>$subtype.':'.$subname)));
+    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', 
+       array(
+           'dnType' => $dnType,  
+           'dnName' => $dnName,  
+           'extid' => $extid,  
+           'defaultcontext'=>$subtype.':'.$subname)));
 }
 ?>

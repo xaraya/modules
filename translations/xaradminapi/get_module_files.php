@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Get filenames list from specified directory in module
  *
  * @package modules

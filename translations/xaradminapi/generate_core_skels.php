@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Generate XML skeletons admin api function
  *
  * @package modules

@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Update the session info with how we are going to translate
  *
  * @package modules
@@ -25,15 +22,12 @@ function translations_admin_update_info()
     switch ($type) {
         case 'core':
         $url = xarModURL('translations', 'admin', 'core_overview');
-        xarSessionSetVar('translations_dnType', XARMLS_DNTYPE_CORE);
         break;
         case 'module':
         $url = xarModURL('translations', 'admin', 'choose_a_module');
-        xarSessionSetVar('translations_dnType', XARMLS_DNTYPE_MODULE);
         break;
         case 'theme':
         $url = xarModURL('translations', 'admin', 'choose_a_theme');
-        xarSessionSetVar('translations_dnType', XARMLS_DNTYPE_THEME);
         break;
     }
     xarResponseRedirect($url);

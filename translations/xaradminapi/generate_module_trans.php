@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Generate module translations
  *
  * @package modules

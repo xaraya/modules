@@ -6,9 +6,12 @@
   When you are finished with translating all the relevant parts of xaraya (core, modules etc.)
   you can package the translation.
 </xar:mlstring>
-<!-- <xar:template type="module" file="druidbar" /> -->
+<xar:template type="module" file="druidbar" />
 <p>
 <form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarModURL('translations', 'admin', 'update_release_locale')#" method="post">
+    <input type="hidden" name="dnType" value="#$dnType#">
+    <input type="hidden" name="dnName" value="#$dnName#">
+    <input type="hidden" name="extid" value="#$extid#">
     <xar:mlstring>Choose the locale you want to generate translations for</xar:mlstring>:
     <select name="locale" id="locale" onchange="document.releaseLocaleForm.submit();">
         <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
@@ -29,5 +32,11 @@
   <xar:mlvar>#$archiver_path#</xar:mlvar>
 </xar:ml>
 </p>
-<a href="#xarModURL('translations', 'admin', 'generate_trans')#">#xarML('GO')#</a><br />
-
+<form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_trans_result')#">
+    <input type="hidden" name="dnType" value="#$dnType#">
+    <input type="hidden" name="dnName" value="#$dnName#">
+    <input type="hidden" name="extid" value="#$extid#">
+    <input type="submit" value="#xarML('GO')#">
+</form>
+<br />
+<xar:template type="module" file="opbar" />

@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Archiver path
  *
  * @package modules

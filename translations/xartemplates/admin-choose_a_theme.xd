@@ -6,7 +6,7 @@
 </p>
 <ul>
 <xar:loop name="$themelist">
-  <li><a href="#xarModURL('translations', 'admin', 'theme_overview', array('themeid' => $loop:item['regid']))#">
+  <li><a href="#xarModURL('translations', 'admin', 'theme_overview', array('extid' => $loop:item['regid']))#">
     #$loop:item['displayname']#
   </a></li>
 </xar:loop>

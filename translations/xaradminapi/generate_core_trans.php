@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Generate core translation
  *
  * @package modules

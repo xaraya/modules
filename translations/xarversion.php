@@ -1,8 +1,7 @@
 <?php
-// $Id$
 $modversion['name'] = 'Translations';
 $modversion['id'] = '77';
-$modversion['version'] = '0.1.1';
+$modversion['version'] = '0.1.2';
 $modversion['displayname']    = xarML('Translations');
 $modversion['description'] = 'Translations handling';
 $modversion['credits'] = 'docs/credits.txt';
@@ -13,7 +12,7 @@ $modversion['official'] = 1;
 $modversion['author'] = 'Marco Canini';
 $modversion['contact'] = 'marco@xaraya.com';
 $modversion['admin'] = 1;
-$modversion['user'] = 0;
+$modversion['user'] = 1;
 $modversion['securityschema'] = array('translations::' => 'Locale string:Backend name:Module name');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';

@@ -1,6 +1,6 @@
 <?php
 /**
- * Entry point for translations admin
+ * Translations bulk operations
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -13,15 +13,12 @@
 
 
 /**
- * Entry point for translations admin screen
- *
- * A somewhat longer description of the function which may be 
- * multiple lines, can contain examples.
+ * Entry point for translations bulk operations
  *
  * @access  public
  * @return  array template data
 */
-function translations_admin_main()
+function translations_admin_bulk()
 {
     return array();
 }

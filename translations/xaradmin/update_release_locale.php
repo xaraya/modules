@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Update release locale
  *
  * @package modules

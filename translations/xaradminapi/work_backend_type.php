@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Get work backend type
  *
  * @package modules

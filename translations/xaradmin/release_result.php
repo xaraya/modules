@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Release result page generation
  *
  * @package modules
@@ -19,17 +16,32 @@ function translations_admin_release_result()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $filename = xarSessionGetVar('translations_filename');
+    if (!xarVarFetch('dnType','int',$dnType)) return;
+    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
+    if (!xarVarFetch('extid','int',$extid)) return;
+
+    $locale = translations_release_locale();
+    $args = array('locale'=>$locale);
+    switch ($dnType) {
+        case XARMLS_DNTYPE_CORE:
+        $res = xarModAPIFunc('translations','admin','release_core_trans',$args);
+        break;
+        case XARMLS_DNTYPE_MODULE:
+        $args['modid'] = $extid;
+        $res = xarModAPIFunc('translations','admin','release_module_trans',$args);
+        break;
+    }
+    if (!isset($res)) return;
+
+    $filename = $res;
     if ($filename == NULL) {
         xarResponseRedirect(xarModURL('translations', 'admin', 'release_info'));
     }
-    xarSessionDelVar('translations_filename');
 
     $tplData['url'] = xarServerGetBaseURL().xarCoreGetVarDirPath().'/cache/'.$filename;
 
-    $tran_type = xarSessionGetVar('translations_dnType');
-    $druidbar = translations_create_generate_trans_druidbar(REL, $tran_type);
-    $opbar = translations_create_opbar(GEN_TRANS);
+    $druidbar = translations_create_druidbar(REL, $dnType, $dnName, $extid);
+    $opbar = translations_create_opbar(RELEASE, $dnType, $dnName, $extid);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
     return $tplData;

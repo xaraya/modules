@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Theme overview
  *
  * @package modules
@@ -19,16 +16,15 @@ function translations_admin_theme_overview()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $sessthemeid = xarSessionGetVar('translations_themeid');
-    if (!xarVarFetch('themeid', 'id', $themeid, $sessthemeid)) return;
-    xarSessionSetVar('translations_themeid', $themeid);
+    if (!xarVarFetch('extid', 'id', $themeid)) return;
 
     if (!($tplData = xarThemeGetInfo($themeid))) return;
+    $tplData['dnType'] = XARMLS_DNTYPE_THEME;
+    $tplData['dnName'] = $tplData['directory'];
+    $tplData['themeid'] = $themeid;
 
-    xarSessionSetVar('translations_dnName', $tplData['directory']);
-
-    $druidbar = translations_create_theme_overview_druidbar(INFO);
-    $opbar = translations_create_opbar(OVERVIEW);
+    $druidbar = translations_create_druidbar(INFO, XARMLS_DNTYPE_THEME, $tplData['directory'], $themeid);
+    $opbar = translations_create_opbar(OVERVIEW, XARMLS_DNTYPE_THEME, $tplData['directory'], $themeid);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
     return $tplData;

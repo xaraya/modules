@@ -1,8 +1,5 @@
 <?php
-
 /**
- * Generate theme translations
- *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com

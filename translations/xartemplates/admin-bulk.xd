@@ -1,0 +1,14 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Translations Bulk Operations</xar:mlstring>
+  </span>
+</div>
+
+<h4><xar:mlstring>Possible operations</xar:mlstring></h4>
+<p>
+  <ol>
+    <li><xar:mlstring>Generating / updating skeletons for core and all extensions</xar:mlstring></li>
+    <li><xar:mlstring>Generating the translation for core and all extensions</xar:mlstring></li>
+    <li><xar:mlstring>Packaging the generated translations in a downloadable archives</xar:mlstring></li>
+  </ol>
+</p>

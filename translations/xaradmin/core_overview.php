@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Core overview page generation
  *
  * @package modules
@@ -19,12 +16,12 @@ function translations_admin_core_overview()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    xarSessionSetVar('translations_dnName', 'xaraya');
-
-    $tplData = translations_create_opbar(OVERVIEW);
+    $tplData = translations_create_opbar(OVERVIEW, XARMLS_DNTYPE_CORE, 'xaraya', 0);
     $tplData['verNum'] = XARCORE_VERSION_NUM;
     $tplData['verId'] = XARCORE_VERSION_ID;
     $tplData['verSub'] = XARCORE_VERSION_SUB;
+    $tplData['dnType'] = XARMLS_DNTYPE_CORE;
+    $tplData['dnName'] = 'xaraya';
     return $tplData;
 }
 

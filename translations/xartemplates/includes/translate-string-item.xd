@@ -19,9 +19,7 @@
  </tr>
  <tr>
   <td>
-      <xar:set name="showreferences">
-        <xar:var scope="module" module="translations" name="showcontext"/>
-      </xar:set>
+      <xar:set name="showreferences">xarModGetVar('translations', 'showcontext')</xar:set>
       <xar:if condition="$showreferences">
         <table>
           <xar:loop name="$references">

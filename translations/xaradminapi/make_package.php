@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Make package
  *
  * @package modules

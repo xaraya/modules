@@ -5,8 +5,8 @@
 <h4>
   <xar:ml>
     <xar:mlstring>Skeletons generated for #(1) #(2)</xar:mlstring>
-    <xar:mlvar>#$dnType#</xar:mlvar>
-    <xar:mlvar>#xarSessionGetVar('translations_dnName')#</xar:mlvar>
+    <xar:mlvar>#$dnTypeText#</xar:mlvar>
+    <xar:mlvar>#$dnName#</xar:mlvar>
   </xar:ml>
 </h4>
 <p>

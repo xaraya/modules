@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Update configuration for translations module
  *
  * @package modules

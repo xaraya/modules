@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Generate skels information
  *
  * @package modules
@@ -19,11 +16,23 @@ function translations_admin_generate_skels_info()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $tran_type = xarSessionGetVar('translations_dnType');
-    $druidbar = translations_create_generate_skels_druidbar(GEN,$tran_type);
-    $opbar = translations_create_opbar(GEN_SKELS);
+    if (!xarVarFetch('dnType','int',$dnType)) return;
+    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
+    if (!xarVarFetch('extid','int',$extid)) return;
+
+    $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);
+    $opbar = translations_create_opbar(GEN_SKELS, $dnType, $dnName, $extid);
     $tplData = array_merge($druidbar, $opbar);
-    $tplData['dnType'] = translations__dnType2Name($tran_type);
+    $tplData['dnType'] = $dnType;
+
+    if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
+    elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
+    elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
+    else $dnTypeText = '';
+    $tplData['dnTypeText'] = $dnTypeText;
+
+    $tplData['dnName'] = $dnName;
+    $tplData['extid'] = $extid;
 
     return $tplData;
 }

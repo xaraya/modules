@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Start translation process
  *
  * @package modules
@@ -29,6 +26,7 @@ function translations_admin_start()
     //    $tplData['locales'] = xarLocaleGetList(array('charset'=>'utf-8'));
     $tplData['locales'] = $GLOBALS['xarMLS_allowedLocales'];
     $tplData['working_locale'] = translations_working_locale();
+    $tplData['dnType'] = XARMLS_DNTYPE_CORE;
 
     return $tplData;
 }

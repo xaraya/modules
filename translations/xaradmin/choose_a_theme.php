@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Choose a theme page generation
  *
  * @package modules
@@ -21,8 +18,9 @@ function translations_admin_choose_a_theme()
 
     if (!($themelist = xarModAPIFunc('themes','admin','GetThemeList',array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
 
-    $tplData = translations_create_choose_a_theme_druidbar(CHOOSE);
+    $tplData = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_THEME, '', 0);
     $tplData['themelist'] = $themelist;
+    $tplData['dnType'] = XARMLS_DNTYPE_THEME;
     return $tplData;
 }
 

@@ -3,10 +3,9 @@
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>Translation progress report for locale </xar:mlstring>
-    <xar:var scope="session" name="translations_working_locale"/>
+    #xarSessionGetVar('translations_working_locale')#
   </span>
 </div>
-
 <xar:set name="total_entries">$coreentries['numEntries']+$mod_totalentries+$theme_totalentries</xar:set>
 <xar:set name="total_untranslated">$coreentries['numEmptyEntries']+$mod_untranslated+$theme_untranslated</xar:set>
 <xar:set name="total_keyentries">$coreentries['numKeyEntries']+$mod_keytotalentries+$theme_keytotalentries</xar:set>

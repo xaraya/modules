@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Status report for the current translation
  *
  * @package modules
@@ -30,32 +28,28 @@ function &count_entries(&$entries)
 function translations_admin_show_status()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurityCheck('ReadTranslations')) return;
    
     $data = array();
 
     // core
-    xarSessionSetVar('translations_dnName','core');
-    xarSessionSetVar('translations_dnType',XARMLS_DNTYPE_CORE);
-    $tmp =& translations_create_trabar('core','core');
+    $tmp =& translations_create_trabar(XARMLS_DNTYPE_CORE, 'xaraya', 0, 'core','core');
     $coreentries =& count_entries(&$tmp['entrydata']);
     unset($tmp);
 
     // modules
     if (!($mods = xarModAPIFunc('modules','admin','GetList', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
     $modentries = array();
-    xarSessionSetVar('translations_dnType',XARMLS_DNTYPE_MODULE);
     $mod_totalentries = 0; $mod_untranslated = 0; $mod_keytotalentries = 0; $mod_keyuntranslated =0;
     foreach($mods as $mod) {
         $modname = $mod['name'];
-        xarSessionSetVar('translations_dnName',$modname);
-        xarSessionSetVar('translations_modid',$mod['regid']);
+        $modid = $mod['regid'];
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
         $testbackend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
         if (isset($testbackend) && $testbackend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
-            $tmp =&  translations_create_trabar('modules',$modname);
+            $tmp =&  translations_create_trabar(XARMLS_DNTYPE_MODULE, $modname, $modid, 'modules',$modname);
             $modentries[$modname] =& count_entries(&$tmp['entrydata']);
             unset($tmp);
             $mod_totalentries += $modentries[$modname]['numEntries'];
@@ -75,18 +69,16 @@ function translations_admin_show_status()
     if (!($themes = xarModAPIFunc('themes','admin','GetThemeList', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
 
     $themeentries = array();
-    xarSessionSetVar('translations_dnType',XARMLS_DNTYPE_THEME);
     $theme_totalentries = 0; $theme_untranslated =0; $theme_keytotalentries = 0; $theme_keyuntranslated = 0;
     foreach($themes as $theme) {
         $themename = $theme['osdirectory'];
-        xarSessionSetVar('translations_dnName',$themename);
-        xarSessionSetVar('translations_themeid',$theme['regid']);
+        $themeid = $theme['regid'];
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
         $testbackend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
         if (isset($testbackend) && $testbackend->bindDomain(XARMLS_DNTYPE_THEME, $themename)) {
-            $tmp =&  translations_create_trabar('themes',$themename);
+            $tmp =&  translations_create_trabar(XARMLS_DNTYPE_THEME, $themename, $themeid, 'themes', $themename);
             $themeentries[$themename] =& count_entries(&$tmp['entrydata']);
             unset($tmp);
             $theme_totalentries += $themeentries[$themename]['numEntries'];
@@ -113,6 +105,7 @@ function translations_admin_show_status()
     $data['theme_keytotalentries'] = $theme_keytotalentries;
     $data['theme_keyuntranslated'] = $theme_keyuntranslated;
     $data['themeentries'] = $themeentries;
+
     return $data;
 }
 
