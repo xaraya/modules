@@ -7,6 +7,7 @@ function &weather_userapi_getmenulinks()
     
     $menulinks = '';
     
+    /*
     $menulinks[] = Array(
         'url'=>xarModURL('weather','user','cc',array('xwloc'=>$loc,'xwunits'=>$units)),
         'title'=>xarML('Current Conditions'),
@@ -24,7 +25,7 @@ function &weather_userapi_getmenulinks()
         'title'=>xarML('Extended Forecast'),
         'label'=>xarML('Extended Forecast')
         );
-    
+    */
     $menulinks[] = Array(
         'url'=>xarModURL('weather','user','search',array('xwloc'=>$loc,'xwunits'=>$units)),
         'title'=>xarML('Search Locations'),

@@ -14,25 +14,14 @@ function weather_userapi_encode_shorturl(&$params)
     // specify some short URLs relevant to your module
     switch($params['func']) {
         case 'main':
+        case 'cc':
             $path = "/$module/";
             break;
         
-        case 'cc':
-            $path = "/$module/current/";
+        case 'details':
+            $path = "/$module/details/";
             break;
-            
-        case 'ccdetails':
-            $path = "/$module/current/details/";
-            break;
-            
-        case 'extforecast':
-            $path = "/$module/extended/";
-            break;
-            
-        case 'extforecastdetails':
-            $path = "/$module/extended/details/";
-            break;
-            
+        
         case 'search':
             $path = "/$module/search/";
             break;
@@ -47,6 +36,10 @@ function weather_userapi_encode_shorturl(&$params)
     if(!empty($path) && isset($params['xwunits'])) {
         $join = empty($extra) ? '?' : '&amp;';
         $extra .= $join . 'xwunits=' . $params['xwunits'];
+    }
+    if(!empty($path) && isset($params['xwday'])) {
+        $join = empty($extra) ? '?' : '&amp;';
+        $extra .= $join . 'xwday=' . $params['xwday'];
     }
     return $path.$extra;
 }

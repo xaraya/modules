@@ -8,24 +8,19 @@ function weather_user_main()
 function weather_user_cc()
 {
     $w =& xarModAPIFunc('weather','user','factory');
-    return array('wData'=>$w->ccData());
+    return array(
+        'wData'=>$w->ccData(),
+        'eData'=>$w->forecastData()
+        );
 }
-
-function weather_user_ccDetails()
+function weather_user_details()
 {
+    xarVarFetch('xwday','int:0:9',$xwday,0);
     $w =& xarModAPIFunc('weather','user','factory');
-    return array('wData'=>$w->ccData());
-}
-
-function weather_user_extForecast()
-{
-    $w =& xarModAPIFunc('weather','user','factory');
-    return array('wData'=>$w->forecastData());
-}
-
-function weather_user_extForecastDetails()
-{
-    $w =& xarModAPIFunc('weather','user','factory');
-    return array('wData'=>$w->forecastData());
+    return array(
+        'day'=>$xwday,
+        'wData'=>$w->ccData(),
+        'eData'=>$w->forecastData()
+        );
 }
 ?>

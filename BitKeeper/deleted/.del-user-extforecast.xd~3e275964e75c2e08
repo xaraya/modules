@@ -3,11 +3,6 @@
 <xar:template file="weatherdotcomsearch" />
 
 <div id="weather">
-<h1><xar:ml>
-    <xar:mlstring>Extended Forecast for #(1)</xar:mlstring> 
-    <xar:mlvar>#$wData[0]['loc']#</xar:mlvar>
-    </xar:ml>
-</h1>
 <table border="1" cellpadding="2" cellspacing="0">
     <tr>
         <th><xar:mlstring>Today</xar:mlstring></th>
