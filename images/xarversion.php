@@ -15,5 +15,7 @@
     $modversion['admin'] = 1;
     $modversion['securityschema'] = array();
     $modversion['dependency'] = array(666);
+    $modversion['class'] = 'Utility';
+    $modversion['category'] = 'General';
 
 ?>
