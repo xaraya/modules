@@ -140,7 +140,7 @@ function articles_userapi_decode_shorturl($params)
                         // Decode using title
                         if( $decodeUsingTitle )
                         {
-                            return decodeUsingTitle( $params, $id );
+                            return articles_decodeUsingTitle( $params, $id );
                         }
 
                         return array('view', $args);
@@ -154,7 +154,7 @@ function articles_userapi_decode_shorturl($params)
         // Decode using title
         if( $decodeUsingTitle )
         {
-            return decodeUsingTitle( $params );
+            return articles_decodeUsingTitle( $params );
         }
     }
 
@@ -162,7 +162,7 @@ function articles_userapi_decode_shorturl($params)
     // (e.g. for multiple category selections)
 }
 
-function decodeUsingTitle( $params, $ptid = '' )
+function articles_decodeUsingTitle( $params, $ptid = '' )
 {
     $dupeResolutionMethod = 'ALL';
 

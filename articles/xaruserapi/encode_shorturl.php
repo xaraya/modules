@@ -68,27 +68,19 @@ function articles_userapi_encode_shorturl($args)
     } elseif ($func == 'view') {
 // TODO: review logic of possible combinations
         if (isset($authorid) && $authorid > 0) {
-            $path = '/' . $module . '/' . xarML('by_author') . '/'
-                    . $authorid;
-        }
-        if (isset($ptid) && isset($pubtypes[$ptid])) {
-            $alias = xarModGetAlias($pubtypes[$ptid]['name']);
-            if ($module == $alias) {
-                // OK, we can use a 'fake' module name here
-                $path = '/' . $pubtypes[$ptid]['name'] . '/';
-            } else {
-                $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . '/';
-            }
-        } else {
-            $alias = xarModGetAlias('frontpage');
-            if ($module == $alias) {
-                // OK, we can use a 'fake' module name here
-                $path = '/frontpage/';
+            if (isset($ptid) && isset($pubtypes[$ptid])) {
+                $alias = xarModGetAlias($pubtypes[$ptid]['name']);
+                if ($module == $alias) {
+                    // OK, we can use a 'fake' module name here
+                    $path = '/' . $pubtypes[$ptid]['name'] . '/';
+                } else {
+                    $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . '/';
+                }
             } else {
                 $path = '/' . $module . '/';
             }
-        }
-        if (!empty($catid)) {
+            $path .= xarML('by_author') . '/' . $authorid;
+        } elseif (!empty($catid)) {
             if (isset($ptid) && isset($pubtypes[$ptid])) {
                 if (isset($bycat)) {
                     $path = '/' . $module . '/c' . $catid
@@ -129,8 +121,22 @@ function articles_userapi_encode_shorturl($args)
                 }
             }
 */
-        } elseif (empty($path)) {
-            $path = '/' . $module . '/';
+        } elseif (isset($ptid) && isset($pubtypes[$ptid])) {
+            $alias = xarModGetAlias($pubtypes[$ptid]['name']);
+            if ($module == $alias) {
+                // OK, we can use a 'fake' module name here
+                $path = '/' . $pubtypes[$ptid]['name'] . '/';
+            } else {
+                $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . '/';
+            }
+        } else {
+            $alias = xarModGetAlias('frontpage');
+            if ($module == $alias) {
+                // OK, we can use a 'fake' module name here
+                $path = '/frontpage/';
+            } else {
+                $path = '/' . $module . '/';
+            }
         }
     } elseif ($func == 'display' && isset($aid)) {
         if (isset($ptid) && isset($pubtypes[$ptid])) 
@@ -147,7 +153,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= encodeUsingTitle($aid);
+                $path .= articles_encodeUsingTitle($aid);
             } else {
                 $path .= $aid;
             }
@@ -269,6 +275,11 @@ function articles_userapi_encode_shorturl($args)
             $path .= $join . 'sort=' . $sort;
             $join = '&';
         }
+        // letter
+        if (isset($letter)) {
+            $path .= $join . 'letter=' . $letter;
+            $join = '&';
+        }
         // pager
         if (isset($startnum) && $startnum != 1) {
             $path .= $join . 'startnum=' . $startnum;
@@ -294,7 +305,7 @@ function articles_userapi_encode_shorturl($args)
     return $path;
 }
 
-function encodeUsingTitle( $aid )
+function articles_encodeUsingTitle( $aid )
 {
     $searchArgs['aid'] = $aid;
     $article = xarModAPIFunc('articles','user','get', $searchArgs);
