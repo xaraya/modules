@@ -204,30 +204,20 @@ function translations_adminapi_generate_module_skels($args)
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
 
     foreach ($subnames as $subname) {
-
-//        $matchstring = '/^' . template . '::(.*)/';
-//        if (preg_match($matchstring, $subname, $matches)) {
-//            if (!$gen->create(XARMLS_CTXTYPE_TEMPLATE, $matches[1])) return;
-
-        if (preg_match('/^templates::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_TEMPLATE, $matches[1])) return;
-        } elseif (preg_match('/^templateincludes::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_INCLTEMPL, $matches[1])) return;
-        } elseif (preg_match('/^templateblocks::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_BLKTEMPL, $matches[1])) return;
-        } elseif (preg_match('/^blocks::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_BLOCK, $matches[1])) return;
-        } elseif (preg_match('/^admin::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_ADMIN, $matches[1])) return;
-        } elseif (preg_match('/^adminapi::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_ADMINAPI, $matches[1])) return;
-        } elseif (preg_match('/^user::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_USER, $matches[1])) return;
-        } elseif (preg_match('/^userapi::(.*)/', $subname, $matches)) {
-            if (!$gen->create(XARMLS_CTXTYPE_USERAPI, $matches[1])) return;
-        } else {
+        $contexts = $GLOBALS['MLS']->getContexts();
+        $foundmatch = false;
+        foreach ($contexts as $context) {
+            $matchstring = '/^' . $context->getName() . '::(.*)/';
+            if (preg_match($matchstring, $subname, $matches)) {
+                if (!$gen->create($context->getType(), $matches[1])) return;
+                $foundmatch = true;
+                break;
+            }
+        }
+        if (!$foundmatch) {
             if (!$gen->create(XARMLS_CTXTYPE_FILE, $subname)) return;
         }
+
         $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
 
         // Avoid creating entries for the same locale

@@ -68,6 +68,7 @@ function translations_adminapi_generate_core_skels($args)
     // Avoid creating entries for the same locale (en_US.utf-8)
     // NOTE from voll: I comment this IF because we don't have translation anyway
     //    if ($locale != 'en_US.utf-8') {
+
     foreach ($transEntries as $string => $references) {
         $statistics['core']['entries']++;
         // Get previous translation, it's void if not yet translated

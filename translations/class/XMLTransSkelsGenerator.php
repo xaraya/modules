@@ -12,6 +12,7 @@
 class XMLTranslationsSkelsGenerator {
 
     var $locale;
+    var $fp;
 
     function XMLTranslationsSkelsGenerator($locale)
     {
