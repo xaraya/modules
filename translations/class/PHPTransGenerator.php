@@ -75,7 +75,7 @@ class PHPTranslationsGenerator {
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
         $context = $GLOBALS['MLS']->getContextByType($ctxType);
-        if ($context->getDir() != "") $fileName .= $context->getDir() . "/";
+        if ($context->getDir() != "") $this->fileName .= $context->getDir() . "/";
         $this->fileName .= $ctxName . ".php";
 
         $this->fp = fopen($this->fileName.'.swp', 'w');
