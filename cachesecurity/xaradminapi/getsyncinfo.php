@@ -7,32 +7,10 @@ function cachesecurity_adminapi_getsyncinfo()
 {
     $files = array();
 
-/*
-    $files['masks'] = xarModAPIFunc(
-        'cachesecurity','admin','filename', array('part'=>'masks')
-     );
-    $files['privileges'] = xarModAPIFunc(
-        'cachesecurity','admin','filename', array('part'=>'privileges')
-     );
-*/
+    $synchronized['rolesgraph'] = xarConfigGetVar('CacheSecurity.rolesgraph');
+    $synchronized['privsgraph'] = xarConfigGetVar('CacheSecurity.privsgraph');
 
-    $files['rolesgraph'] = xarModAPIFunc(
-        'cachesecurity','admin','filename', array('part'=>'rolesgraph')
-     );
-    $files['privsgraph'] = xarModAPIFunc(
-        'cachesecurity','admin','filename', array('part'=>'privsgraph')
-     );
-    
-    $exists = array();
-    foreach ($files as $part => $filename) {
-        if (!file_exists($filename)) {
-            $exists[$part] = false;
-        } else {
-            $exists[$part] = true;
-        }
-    }
-
-    return $exists;
+    return $synchronized;
 }
 
 ?>

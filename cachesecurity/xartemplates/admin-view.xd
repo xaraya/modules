@@ -26,7 +26,7 @@
 		            		</div>
             			</xar:if>
             	    </td>
-              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'all'))#">
+              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'all', 'authid' => $authid))#">
               			<xar:mlstring>Synchronize All</xar:mlstring>
               		</a></td>
             		<td><xar:mlstring>Synchronizes all of the security caches at once.</xar:mlstring></td>
@@ -44,7 +44,7 @@
 		            		</div>
             			</xar:if>
             		</td>
-              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'masks'))#">
+              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'masks', 'authid' => $authid))#">
               			<xar:mlstring>Synchronize Masks</xar:mlstring>
               		</a></td>
             		<td><xar:mlstring>Synchronizes just the security masks cache.</xar:mlstring></td>
@@ -61,7 +61,7 @@
 		            		</div>
             			</xar:if>
             		</td>
-              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'privileges'))#">
+              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'privileges', 'authid' => $authid))#">
               			<xar:mlstring>Synchornize Privileges</xar:mlstring>
               		</a></td>
             		<td><xar:mlstring>Synchronizes just the security privileges cache.</xar:mlstring></td>
@@ -79,7 +79,7 @@
 		            		</div>
             			</xar:if>
             		</td>
-              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'privsgraph'))#">
+              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'privsgraph', 'authid' => $authid))#">
               			<xar:mlstring>Synchronize Privileges Structure</xar:mlstring>
               		</a></td>
             		<td><xar:mlstring>Synchronizes just the security privileges structure cache.</xar:mlstring></td>
@@ -96,7 +96,7 @@
 		            		</div>
             			</xar:if>
             		</td>
-              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'rolesgraph'))#">
+              		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'rolesgraph', 'authid' => $authid))#">
               			<xar:mlstring>Synchronize Roles Structure</xar:mlstring>
               		</a></td>
             		<td><xar:mlstring>Synchronizes just the roles structure cache.</xar:mlstring></td>
@@ -108,7 +108,7 @@
 		            			<xar:mlstring>Ok</xar:mlstring>
 		            		</div>
     	        		</td>
-        	      		<td><a href="#xarModURL('cachesecurity', 'admin', 'turnoff')#">
+        	      		<td><a href="#xarModURL('cachesecurity', 'admin', 'turnoff', array('authid' => $authid))#">
             	  			<xar:mlstring>Turn Off</xar:mlstring>
 	              		</a></td>
     	        		<td><xar:mlstring>Turns off the security caching system.</xar:mlstring></td>
@@ -120,7 +120,7 @@
 		            			<xar:mlstring>Not Ok</xar:mlstring>
 		            		</div>
     	        		</td>
-        	      		<td><a href="#xarModURL('cachesecurity', 'admin', 'turnon')#">
+        	      		<td><a href="#xarModURL('cachesecurity', 'admin', 'turnon', array('authid'=>$authid))#">
             	  			<xar:mlstring>Turn On</xar:mlstring>
 	              		</a></td>
     	        		<td><xar:mlstring>Turns on the security caching system.</xar:mlstring></td>

@@ -7,7 +7,7 @@
 
 function cachesecurity_admin_turnoff()
 {
-    $filename = xarModAPIFunc('cachesecurity','admin','filename', array('part'=>'on'));
+    if (!xarSecConfirmAuthKey()) return;
 
     if (!xarModAPIFunc('cachesecurity','admin','turnoff')) return;
   

@@ -5,8 +5,7 @@
  */
 function cachesecurity_adminapi_unsetsynchronized($args)
 {
-    $filename = xarModAPIFunc('cachesecurity','admin','filename', array('part'=>$args['part']));
-    if (file_exists($filename) && !unlink($filename)) return false;
+    xarConfigSetVar('CacheSecurity.'.$args['part'], false);
 
     return true;
 }

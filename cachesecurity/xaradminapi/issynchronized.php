@@ -9,7 +9,7 @@ function cachesecurity_adminapi_issynchronized()
 
     $synchronized = true;
     foreach ($parts as $boolean) {
-        if ($boolean == false) {
+        if (!$boolean) {
             $synchronized = false;
             break;
         }

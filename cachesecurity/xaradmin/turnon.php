@@ -7,6 +7,8 @@
 
 function cachesecurity_admin_turnon()
 {
+    if (!xarSecConfirmAuthKey()) return;
+
     if (!xarModAPIFunc('cachesecurity','admin','issynchronized')) {
         xarResponseRedirect(xarModURL('cachesecurity', 'admin', 'view', array(
             'error' => xarML('Not all parts of the security cache system are synchronized.'))));

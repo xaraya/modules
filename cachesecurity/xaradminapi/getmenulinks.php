@@ -27,11 +27,11 @@ function cachesecurity_adminapi_getmenulinks()
                                   // we must encapsulate the calls in the xarML in the API.
                                   'title' => xarML('Turn the security cache system on.'),
                                   'label' => xarML('Turn on'),
-                                  'func' => 'switchonoff');
+                                  'func' => 'turnon');
         } else {
             $menulinks[] = Array('url'   => xarModURL('cachesecurity',
                                                        'admin',
-                                                       'switchonoff', 
+                                                       'turnoff', 
                                                        array('authid' => xarSecGenAuthKey())),
                                   // In order to display the tool tips and label in any language,
                                   // we must encapsulate the calls in the xarML in the API.

@@ -7,7 +7,6 @@
 
 function cachesecurity_adminapi_turnon()
 {
-    $filename = xarModAPIFunc('cachesecurity','admin','filename', array('part'=>'on'));
     $issynchronized = xarModAPIFunc('cachesecurity','admin','issynchronized');
 
     if (!$issynchronized) {
@@ -16,14 +15,7 @@ function cachesecurity_adminapi_turnon()
         return;
     }
 
-    //Make sure the file cache is empty.
-    $masksDir = xarCoreGetVarDirPath() . "/security/masks";
-    if (!xarModAPIFunc('cachesecurity','admin','recursivedelete', array(
-        'directory'=>$masksDir))) return false;
-
-    if (!mkdir($masksDir)) return false;
-
-    if (!touch($filename)) return false;
+    if (!xarConfigSetVar('CacheSecurity.on', true)) return false;
   
      return true;
 }
