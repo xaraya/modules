@@ -52,7 +52,6 @@ function xarcachemanager_admin_updateconfig()
         xarModSetVar('xarcachemanager','CacheBlockOutput', 1);
         // flush adminpanels blocks to show new options if necessary
         if (!function_exists('xarPageFlushCached')) {
-            error_log($outputCacheDir . '/cache.touch');
             include_once('includes/xarCache.php');
             xarCache_init(array('cacheDir' => $outputCacheDir));
         }
