@@ -1,2 +1,2 @@
 <!-- The user-main function doesn't have content, it redirects to user-view -->
-<xar:template file="user-view" type="module"/>
+<xar:template file="user-view" />

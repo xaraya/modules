@@ -48,6 +48,9 @@ function bkview_user_csetview($args)
         $csets[$counter]['author']=$author;
         $csets[$counter]['rev']=$rev;
         $csets[$counter]['utc']=$utc;
+        $csets[$counter]['repoid'] = $repoid;
+        $csets[$counter]['range'] = bkAgeToRangeCode($age);
+        $csets[$counter]['taggedonly'] = $taggedonly;
         $comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
         $comments=nl2br(xarVarPrepForDisplay($comments));
         $csets[$counter]['comments']=$comments;

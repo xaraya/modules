@@ -563,15 +563,33 @@ function bkAgeToRangeCode($age)
     // useable by bk prs (bit lame that prs doesn't do that itself)
     // First part: multiplier
     // Second part: unit:
-    //    h - hours
-    //    w - weeks
-    //    d - days
-    //    m - months
-    //    y - years
-
-    $ageCode='-1h';
+    //    Y/y - years
+    //    M   - months
+    //    W/w - weeks
+    //    D/d - days
+    //    h   - hours
+    //    m   - minutues
+    //    s   - seconds
+    
     $parts = explode(' ',$age);
-    $ageCode = "-". $parts[0] .$parts[1][0];
+    switch (strtolower($parts[1][0])) {
+        case 'y':
+        case 'w':
+        case 'd':
+        case 'h':
+        case 's':
+            $ageCode = "-". $parts[0] . $parts[1][0];
+            break;
+        case 'm':
+            if(strtolower($parts[1][1]) =='o') {
+                $ageCode = "-". $parts[0] . 'M';
+            } else {
+                $ageCode = "-". $parts[0] . 'm';
+            }
+            break;
+        default:
+            $ageCode = '-1h';
+    }
     return $ageCode;
 }
 

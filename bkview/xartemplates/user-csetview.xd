@@ -3,38 +3,7 @@
 <div style="float:left; margin-top: 1em; width: 100%;">
     <xar:if condition="count($csets) gt 0">
       <xar:loop name="$csets">
-        <div class="xar-norm-outline " style="margin-bottom: 5pt; padding-left: 2pt;">
-          <xar:set name="csetclass">'xar-norm'</xar:set>
-          <xar:set name="csettag">''</xar:set>
-          <xar:if condition="!empty($loop:item['tag'])">
-            <xar:set name="csetclass">'xar-accent'</xar:set>
-            <xar:set name="csettag">#$loop:item['tag']#</xar:set>
-          </xar:if>
-          <div class="#$csetclass#">
-            <span><xar:mlstring>ChangeSet</xar:mlstring></span>
-            <span>
-              <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
-                #$loop:item['rev']#</a>
-                #$loop:item['tag']#
-            </span>
-            <span><xar:mlstring>by</xar:mlstring></span>
-            <span>
-              <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$loop:item['author']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">
-                #$loop:item['author']#
-              </a>
-            </span>
-            
-            <span>
-              <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">
-                #$loop:item['age']#
-              </a>
-            </span>
-            <span><xar:mlstring>ago</xar:mlstring></span>
-          </div>
-          <div class="comments">
-            #$loop:item['comments']#
-          </div>
-        </div>
+        <xar:template file="user-cset" subdata="$loop:item" />
       </xar:loop>
     <xar:else/>
         <div>

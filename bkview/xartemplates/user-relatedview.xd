@@ -1,24 +1,8 @@
 <xar:template file="user-menu" />
 
-<div style="float: left; margin-top:1em;">
+<div style="float: left; margin-top:1em; width: 100%">
     <xar:loop name="$csets">
-      <div class="xar-norm-outline" style="margin-bottom: 5pt; padding-left: 2pt;">
-        <div class="xar-norm">
-          <span><xar:mlstring>Changeset</xar:mlstring></span>
-          <span>
-            <a onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">
-              #$loop:item['rev']#
-            </a>
-          </span>
-          <span><xar:mlstring>by</xar:mlstring></span>
-          <span>#$loop:item['author']#</span>
-          <span>#$loop:item['age']#</span>
-          <span><xar:mlstring>ago</xar:mlstring></span>
-        </div>
-        <div class="comments">
-          #$loop:item['comments']#
-        </div>
-      </div>
+      <xar:template file="user-cset" subdata="$loop:item"/>
     </xar:loop>
   </div>
 </div>
