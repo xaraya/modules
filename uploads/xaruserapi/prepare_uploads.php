@@ -124,7 +124,11 @@ function uploads_userapi_prepare_uploads( $args ) {
         // just use the name of the uploaded file
         $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
     }
-    
+
+    if (isset($fileInfo['fileDest'])) {
+        $fileInfo['fileLocation'] = $fileInfo['fileDest'];
+    }
+
     return array("$fileInfo[fileName]" => $fileInfo);
 }
  

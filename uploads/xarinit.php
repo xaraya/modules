@@ -51,10 +51,10 @@ function uploads_init()
     $filter['fileStatus']   = '';
     
     $mimetypes =& $data['filters']['mimetypes'];
-    $mimetypes = array_merge($mimetypes, xarModAPIFunc('mime','user','getall_types'));
-    unset($mimetypes);
+    $mimetypes += xarModAPIFunc('mime','user','getall_types');
 
     xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
+    unset($mimetypes);
     
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -413,7 +413,7 @@ function uploads_upgrade($oldversion)
             $filter['fileStatus']   = '';
 
             $mimetypes =& $data['filters']['mimetypes'];
-            $mimetypes = array_merge($mimetypes, xarModAPIFunc('mime','user','getall_types'));
+            $mimetypes += xarModAPIFunc('mime','user','getall_types');
             unset($mimetypes);
 
             xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
