@@ -50,8 +50,9 @@
 
 	<form action="#xarModURL('search', 'user', 'main')#" method="post">
 	<p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" />
-	&nbsp;&nbsp;&nbsp; <input type="submit" value="Search" />
-	&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset Form" /></p>
+        <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
+	&nbsp;&nbsp;&nbsp; <input type="submit" value="#$search#" />
+	&nbsp;&nbsp;&nbsp;<a href="&xar-modurl-search-user-main;"><xar:mlstring>Reset Form</xar:mlstring></a></p>
 	<p><label for="author"><xar:mlstring>By author</xar:mlstring>:</label> <input type="text" name="author" id="author" size="20" /></p>
 
 	<xar:if condition="!empty($query)">
