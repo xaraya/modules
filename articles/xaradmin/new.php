@@ -163,8 +163,10 @@ function articles_admin_new($args)
         }
     }
 
-    $formhooks = articles_user_formhooks();
-    $data['formhooks'] = $formhooks;
+    if (!empty($ptid)) {
+        $formhooks = articles_user_formhooks($ptid);
+        $data['formhooks'] = $formhooks;
+    }
 
     $data['previewlabel'] = xarVarPrepForDisplay(xarML('Preview'));
     $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Article'));

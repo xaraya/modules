@@ -127,7 +127,7 @@ function articles_admin_modify($args)
         }
     }
 
-    $formhooks = articles_user_formhooks();
+    $formhooks = articles_user_formhooks($ptid);
     $data['formhooks'] = $formhooks;
 
     $data['previewlabel'] = xarML('Preview');

@@ -17,13 +17,13 @@
  *
  * I'll handle it as an API call once I have my seperate integration module built;) JC.
  */
-function articles_user_formhooks()
+function articles_user_formhooks($ptid = '')
 {
 
     $hooks = array();
     // call the right hooks, i.e. not the ones for the comments module :)
-    $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'articles');
-    $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'articles');
+    $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'articles', $ptid);
+    $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'articles', $ptid);
 
     if (empty($hooks['formaction'])){
         $hooks['formaction'] = '';

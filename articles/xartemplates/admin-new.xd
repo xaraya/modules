@@ -23,9 +23,9 @@
     // compatibility with future versions of Xaraya
 -->
 <xar:if condition="!empty($withupload)">
-    <form method="post" action="&xar-modurl-articles-admin-create;" enctype="multipart/form-data" #$formhooks['formaction']#>
+    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="multipart/form-data" #$formhooks['formaction']#>
 <xar:else />
-    <form method="post" action="&xar-modurl-articles-admin-create;" #$formhooks['formaction']#>
+    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" #$formhooks['formaction']#>
 </xar:if>
 <!--
     // Add an authorisation ID - this adds a hidden field in the form that
