@@ -231,17 +231,20 @@ function categories_userapi_navigation($args)
                 foreach ($neighbours as $neighbour) {
 //                    if ($neighbour['link'] == 'parent') {
 //                        $data['uplabel'] = $neighbour['name'];
+//                        $data['upcid'] = $neighbour['cid'];
 //                        $data['uplink'] = xarModURL($modname,$type,$func,
 //                                                   array('itemtype' => $itemtype,
 //                                                         'catid' => $neighbour['cid']));
 //                    } elseif ($neighbour['link'] == 'previous') {
                     if ($neighbour['link'] == 'previous') {
                         $data['prevlabel'] = $neighbour['name'];
+                        $data['prevcid'] = $neighbour['cid'];
                         $data['prevlink'] = xarModURL($modname,$type,$func,
                                                      array('itemtype' => $itemtype,
                                                            'catid' => $neighbour['cid']));
                     } elseif ($neighbour['link'] == 'next') {
                         $data['nextlabel'] = $neighbour['name'];
+                        $data['nextcid'] = $neighbour['cid'];
                         $data['nextlink'] = xarModURL($modname,$type,$func,
                                                      array('itemtype' => $itemtype,
                                                            'catid' => $neighbour['cid']));
@@ -278,6 +281,7 @@ function categories_userapi_navigation($args)
                                            'itemtype' => $itemtype));
                     $label = xarVarPrepForDisplay($cat['name']);
                     $data['catitems'][] = array('catlabel' => $label,
+                                                'catid' => $cat['cid'],
                                                 'catlink' => $link,
                                                 'catjoin' => $join);
                     $join = ' | ';
@@ -308,6 +312,7 @@ function categories_userapi_navigation($args)
                                      array('itemtype' => $itemtype));
                     $join = '';
                     $catitems[] = array('catlabel' => $label,
+                                        'catid' => $cid,
                                         'catlink' => $link,
                                         'catjoin' => $join);
                     $join = ' &gt; ';
@@ -337,6 +342,7 @@ function categories_userapi_navigation($args)
                             }
                         }
                         $catitems[] = array('catlabel' => $label,
+                                            'catid' => $cat['cid'],
                                             'catlink' => $link,
                                             'catjoin' => $join);
                     }
@@ -354,6 +360,7 @@ function categories_userapi_navigation($args)
                                                 'itemtype' => $itemtype));
                         $join = '';
                         $catitems[] = array('catlabel' => $label,
+                                            'catid' => join('-',$cids),
                                             'catlink' => $link,
                                             'catjoin' => $join);
                     }
@@ -368,6 +375,7 @@ function categories_userapi_navigation($args)
                             $join = '';
                         }
                         $catitems[] = array('catlabel' => $label,
+                                            'catid' => join('+',$cids),
                                             'catlink' => $link,
                                             'catjoin' => $join);
                     }
@@ -399,6 +407,8 @@ function categories_userapi_navigation($args)
                                                            'itemtype' => $itemtype));
                     // calling item display hooks *for the categories module* here !
                     $data['cathooks'] = xarModCallHooks('item','display',$cid,$curcat,'categories');
+                    // saving the current cat id for use e.g. with DD tags (<xar:data-display module="categories" itemid="$catid" />)
+                    $data['catid'] = $curcat['cid'];
                 }
 
                 // set the page title to the current module + category if no item is displayed
@@ -454,6 +464,7 @@ function categories_userapi_navigation($args)
                         }
     */
                         $data['catlines'][] = array('catlabel' => $label,
+                                                    'catid' => $info['id'],
                                                     'catlink' => $link,
                                                   //  'catdescr' => $descr,
                                                     'catdescr' => '',
@@ -490,6 +501,7 @@ function categories_userapi_navigation($args)
                             $image = xarTplGetImage($cat['image'],'categories');
                             $numicons++;
                             $data['caticons'][] = array('catlabel' => $label,
+                                                        'catid' => $cat['cid'],
                                                         'catlink' => $link,
                                                         'catimage' => $image,
                                                         'catcount' => $count,
@@ -503,6 +515,7 @@ function categories_userapi_navigation($args)
                             $beforetags = '<li>';
                             $aftertags = '</li>';
                             $data['catlines'][] = array('catlabel' => $label,
+                                                        'catid' => $cat['cid'],
                                                         'catlink' => $link,
                                                         'catdescr' => $descr,
                                                         'catcount' => $count,
@@ -555,10 +568,12 @@ function categories_userapi_navigation($args)
                         }
                         if ($cat['cid'] == $cid) {
                             $catparents[] = array('catlabel' => $label,
+                                                  'catid' => $cat['cid'],
                                                   'catlink' => $link,
                                                   'catcount' => $count);
                         } else {
                             $catitems[] = array('catlabel' => $label,
+                                                'catid' => $cat['cid'],
                                                 'catlink' => $link,
                                                 'catcount' => $count);
                         }
@@ -604,6 +619,7 @@ function categories_userapi_navigation($args)
                             $count = 0;
                         }
                         $catparents[] = array('catlabel' => $label,
+                                              'catid' => $cat['cid'],
                                               'catlink' => $link,
                                               'catcount' => $count);
                     }
@@ -628,6 +644,7 @@ function categories_userapi_navigation($args)
                         } else {
                             $count = 0;
                         }
+                        $savecid = $cat['cid'];
                         $catchildren = array();
                         if ($cat['cid'] == $cid) {
                             if (empty($itemid) && empty($andcids)) {
@@ -648,12 +665,14 @@ function categories_userapi_navigation($args)
                                         $ccount = 0;
                                     }
                                     $catchildren[] = array('clabel' => $clabel,
+                                                           'cid' => $cat['cid'],
                                                            'clink' => $clink,
                                                            'ccount' => $ccount);
                                 }
                             }
                         }
                         $catitems[] = array('catlabel' => $label,
+                                            'catid' => $savecid,
                                             'catlink' => $link,
                                             'catcount' => $count,
                                             'catchildren' => $catchildren);
