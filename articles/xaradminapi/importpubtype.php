@@ -264,6 +264,14 @@ function articles_adminapi_importpubtype($args)
                             return;
                         }
                     }
+
+                    // 7. check if we need to enable DD hooks for this pubtype
+                    if (!xarModIsHooked('dynamicdata','articles')) {
+                        xarModAPIFunc('modules','admin','enablehooks',
+                                      array('callerModName' => 'articles',
+                                            'callerItemType' => $ptid,
+                                            'hookModName' => 'dynamicdata'));
+                    }
                 }
 
                 $properties = array();
