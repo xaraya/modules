@@ -51,6 +51,14 @@ function comments_userapi_get_multiple($args) {
                                  array('cid' => $cid));
     }
 
+    // Optional argument for Pager - 
+    // for those modules that use comments and require this
+     if (!isset($startnum)) {
+        $startnum = 1;
+    } 
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
     if (!isset($status) || empty($status)) {
         $status = _COM_STATUS_ON;
     }
@@ -101,7 +109,13 @@ function comments_userapi_get_multiple($args) {
 
     $sql .= " ORDER BY $ctable[left]";
 
-    $result =& $dbconn->Execute($sql);
+    //Add select limit for modules that call this function and need Pager
+    if (isset($numitems) && is_numeric($numitems)) {
+        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+    } else {
+       $result =& $dbconn->Execute($query);
+    }
+    //$result =& $dbconn->Execute($sql);
     if (!$result) return;
 
     // if we have nothing to return
