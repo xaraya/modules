@@ -449,7 +449,8 @@
  			oDesc.css.visibility = "visible"
  		    }
  		}
- 		function popout(){ // Hides message
+ 		function popout()
+		{ // Hides message
  		    if(oDesc) oDesc.css.visibility = "hidden"
  		}
  		//-->

@@ -61,7 +61,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class nusoap_base {
+ class nusoap_base 
+ {
  
  	var $title = 'NuSOAP';
  	var $version = '0.6.3';

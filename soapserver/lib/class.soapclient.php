@@ -57,7 +57,8 @@
  	* @param	int $portName optional portName in WSDL document
  	* @access   public
  	*/
- 	function soapclient($endpoint,$wsdl = false){
+ 	function soapclient($endpoint,$wsdl = false)
+	{
  		$this->endpoint = $endpoint;
  
  		// make values
@@ -96,7 +97,8 @@
  	* @return	mixed
  	* @access   public
  	*/
- 	function call($operation,$params=array(),$namespace='',$soapAction='',$headers=false,$rpcParams=null){
+ 	function call($operation,$params=array(),$namespace='',$soapAction='',$headers=false,$rpcParams=null)
+	{
  		$this->operation = $operation;
  		$this->fault = false;
  		$this->error_str = '';
@@ -216,7 +218,8 @@
  	* @return	array array of data pertaining to the operation
  	* @access   public
  	*/
- 	function getOperationData($operation){
+ 	function getOperationData($operation)
+	{
  		if(isset($this->operations[$operation])){
  			return $this->operations[$operation];
  		}
@@ -236,7 +239,8 @@
  	* @return	mixed native PHP types.
  	* @access   private
  	*/
- 	function send($msg, $soapaction = '', $timeout=0) {
+ 	function send($msg, $soapaction = '', $timeout=0) 
+	{
  		// detect transport
  		switch(true){
  			// http(s)
@@ -307,7 +311,8 @@
  	* @return	mixed value of the message, decoded into a PHP type
  	* @access   private
  	*/
-     function parseResponse($data) {
+     function parseResponse($data) 
+	 {
  		$this->debug('Entering parseResponse(), about to create soap_parser instance');
  		$parser = new soap_parser($data,$this->xml_encoding,$this->operation);
  		// if parse errors
@@ -338,7 +343,8 @@
  	* @param	$headers string XML
  	* @access   public
  	*/
- 	function setHeaders($headers){
+ 	function setHeaders($headers)
+	{
  		$this->requestHeaders = $headers;
  	}
  
@@ -348,7 +354,8 @@
  	* @return	mixed object SOAPx4 soapval object or empty if no headers
  	* @access   public
  	*/
- 	function getHeaders(){
+ 	function getHeaders()
+	{
  	    if($this->responseHeaders != '') {
  			return $this->responseHeaders;
  	    }
@@ -361,7 +368,8 @@
  	* @param    string $proxyport
  	* @access   public
  	*/
- 	function setHTTPProxy($proxyhost, $proxyport) {
+ 	function setHTTPProxy($proxyhost, $proxyport) 
+	{
  		$this->proxyhost = $proxyhost;
  		$this->proxyport = $proxyport;
  	}
@@ -373,7 +381,8 @@
  	* @param    string $password
  	* @access   public
  	*/
- 	function setCredentials($username, $password) {
+ 	function setCredentials($username, $password) 
+	{
  		$this->username = $username;
  		$this->password = $password;
  	}
@@ -393,7 +402,8 @@
  	*
  	* @access   public
  	*/
- 	function useHTTPPersistentConnection(){
+ 	function useHTTPPersistentConnection()
+	{
  		$this->persistentConnection = true;
  	}
  	
@@ -404,7 +414,8 @@
  	*
  	* @access public
  	*/
- 	function getDefaultRpcParams() {
+ 	function getDefaultRpcParams() 
+	{
  		return $this->defaultRpcParams;
  	}
  
@@ -416,7 +427,8 @@
  	* @param    boolean $rpcParams
  	* @access public
  	*/
- 	function setDefaultRpcParams($rpcParams) {
+ 	function setDefaultRpcParams($rpcParams) 
+	{
  		$this->defaultRpcParams = $rpcParams;
  	}
  	
@@ -426,7 +438,8 @@
  	* @return   object soap_proxy object
  	* @access   public
  	*/
- 	function getProxy(){
+ 	function getProxy()
+	{
  		$evalStr = '';
  		foreach($this->operations as $operation => $opData){
  			if($operation != ''){
