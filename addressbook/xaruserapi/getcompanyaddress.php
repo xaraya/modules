@@ -18,9 +18,9 @@
  * getCompanyAddress
  *
  * @param int $id - AddressBook entry with Company address
- * @return array - company name + address 
+ * @return array - company name + address
  */
-function AddressBook_userapi_getCompanyAddress($args) {
+function addressbook_userapi_getCompanyAddress($args) {
     extract($args);
     list($dbconn) = xarDBGetConn();
     $xarTables = xarDBGetTables();

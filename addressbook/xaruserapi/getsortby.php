@@ -19,7 +19,7 @@
  * @param string $sort - type of sort
  * @return string - contcatenated sort ordering
  */
-function AddressBook_userapi_getSortBy($args){
+function addressbook_userapi_getSortBy($args){
     extract($args);
     if (!isset($sort)) {
         return false;
@@ -56,7 +56,7 @@ function AddressBook_userapi_getSortBy($args){
         }
         $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',array('flag'=>_AB_CUST_UDCOLANDLABELS)); //gehDEBUG
+            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_UDCOLANDLABELS)); //gehDEBUG
             foreach($custUserData as $userData) {
                 if ($sortCols[$i] == $userData['colName']) {
                     $returnArray[$i] = $userData['label'];

@@ -21,7 +21,7 @@
  * @return bool
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function AddressBook_adminapi_updatecategories($args) {
+function addressbook_adminapi_updatecategories($args) {
 
     // var defines
     $dels = '';
@@ -79,7 +79,7 @@ function AddressBook_adminapi_updatecategories($args) {
                           WHERE nr = $id");
     }
 
-    if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateItems',array('tablename'=>'categories','updates'=>$updates))) {
+    if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'categories','updates'=>$updates))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
                     new abUserException('UPDATE - '._AB_SUCCESS));
@@ -87,7 +87,7 @@ function AddressBook_adminapi_updatecategories($args) {
 
     if(!empty($dels)) {
         $delete = "DELETE FROM $cat_table WHERE nr IN ($dels)";
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteItems',array('tablename'=>'categories','delete'=>$delete))) {
+        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteitems',array('tablename'=>'categories','delete'=>$delete))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_INFO,
                         new abUserException('DELETE - '._AB_SUCCESS));
@@ -95,7 +95,7 @@ function AddressBook_adminapi_updatecategories($args) {
     }
 
     if( (isset($newname)) && ($newname != '') ) {
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addItems',array('tablename'=>'categories','name'=>$newname))) {
+        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','additems',array('tablename'=>'categories','name'=>$newname))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_INFO,
                         new abUserException('INSERT - '._AB_SUCCESS));

@@ -20,7 +20,7 @@ include_once ('modules/addressbook/xarglobal.php');
 //=========================================================================
 //  the main administration function
 //=========================================================================
-function AddressBook_admin_main() {
+function addressbook_admin_main() {
 
     /**
      * Check if we want to display our overview panel.
@@ -28,7 +28,7 @@ function AddressBook_admin_main() {
     if (xarModGetVar('adminpanels', 'overview') == 0){
         return array();
     } else {
-    	xarResponseRedirect(xarModURL(__ADDRESSBOOK__,'admin','modifyconfig'));
+        xarResponseRedirect(xarModURL(__ADDRESSBOOK__,'admin','modifyconfig'));
     }
 
 } // END main
@@ -36,9 +36,9 @@ function AddressBook_admin_main() {
 /**
  * Placeholder function to display a static page
  */
-function AddressBook_admin_displayDocs () {
+function addressbook_admin_displayDocs () {
 
-	return array();
+    return array();
 
 } // END displayDocs
 

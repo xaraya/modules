@@ -17,7 +17,7 @@
 /**
  * Display details
  */
-function AddressBook_user_viewdetail() {
+function addressbook_user_viewdetail() {
 
     $output = array();
     $output['abModInfo'] = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
@@ -33,23 +33,23 @@ function AddressBook_user_viewdetail() {
     $output['zipbeforecity'] = xarModGetVar(__ADDRESSBOOK__,'zipbeforecity');
 
     // Get detailed values from database
-    $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$output['id']));
+    $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getdetailvalues',array('id'=>$output['id']));
     if ($details && is_array($details)) {
-    	foreach ($details as $key=>$value) {
-        	$output[$key] = $value;
-    	}
+        foreach ($details as $key=>$value) {
+            $output[$key] = $value;
+        }
     } else { // did not get details for some reason
-    	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-    }    	
+        return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    }
 
     // Get the labels
-    $labels = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'labels'));
+    $labels = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'labels'));
 
     // General information
     // headline
     $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '._AB_UNFILED);
     if ($output['cat_id'] > 0) {
-	    $cats = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'categories'));
+        $cats = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'categories'));
         foreach ($cats as $cat) {
             if ($output['cat_id'] == $cat['id']) {
                 $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '.$cat['name']);
@@ -72,10 +72,10 @@ function AddressBook_user_viewdetail() {
         $the_contact = 'contact_'.$i;
         $the_label = 'c_label_'.$i;
         if (!empty($output[$the_contact])) {
-        	//FIXME:<garrett> if there is a record with a set of contact labels
-        	// and ALL those labels were deleted & new ones added, this will fail to
-        	// to build the contact array because none of the old labels['id'] will
-        	// be found in the new label list.
+            //FIXME:<garrett> if there is a record with a set of contact labels
+            // and ALL those labels were deleted & new ones added, this will fail to
+            // to build the contact array because none of the old labels['id'] will
+            // be found in the new label list.
             foreach ($labels as $lab) {
                 if ($output[$the_label] == $lab['id']) {
                     $contact['label'] = xarVarPrepHTMLDisplay($lab['name']);
@@ -109,8 +109,8 @@ function AddressBook_user_viewdetail() {
     if ((!empty($custom_tab)) || ($custom_tab != '')) {
 
         $output['custom_tab'] = $custom_tab;
-        $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',
-        								array('id'=>$output['id']
+        $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',
+                                        array('id'=>$output['id']
                                              ,'flag'=>_AB_CUST_ALLINFO));
 
 
@@ -131,7 +131,7 @@ function AddressBook_user_viewdetail() {
      * Navigation buttons
      */
     // Copy to clipboard if IE
-    if (xarModAPIFunc(__ADDRESSBOOK__,'util','checkForIE')) {
+    if (xarModAPIFunc(__ADDRESSBOOK__,'util','checkforie')) {
         $clip='';
         if (!empty($output['company'])) {$clip.=$output['company'].'\n'; }
         if (!empty($output['lname'])) {
@@ -158,7 +158,7 @@ function AddressBook_user_viewdetail() {
 
     $output['goBack'] = xarVarPrepHTMLDisplay(_AB_GOBACK);
 
-	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
 } // END viewdetail
 

@@ -22,7 +22,7 @@
  * @param args['tablename'] string
  * @param args['name'] string
  * @return bool
- */function AddressBook_adminapi_addItems($args)
+ */function addressbook_adminapi_addItems($args)
 {
     $returnCode = TRUE;
 
@@ -45,7 +45,7 @@
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
+                     join(', ', $invalid), 'admin', 'updateitems', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

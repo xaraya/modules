@@ -19,12 +19,12 @@
  *
  * @return mixed
  */
-function AddressBook_userapi_getAddressList($args) {
+function addressbook_userapi_getAddressList($args) {
 
     extract($args);
 
     // Get the menu values
-    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
+    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getmenuvalues');
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
@@ -126,7 +126,7 @@ function AddressBook_userapi_getAddressList($args) {
                   OR contact_4 LIKE '%".$output['formSearch']."%'
                   OR contact_5 LIKE '%".$output['formSearch']."%')";
 
-        $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
+        $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
         foreach($custFields as $custField) {
             if ((!strstr($custField['type'],_AB_CUST_TEST_LB)) && (!strstr($custField['type'],_AB_CUST_TEST_HR))) {
                 if (strstr($custField['type'],_AB_CUST_TEST_STRING)) {
@@ -210,11 +210,11 @@ function AddressBook_userapi_getAddressList($args) {
     }
 
     if ($output['sortview'] != 1) {
-        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getListHeader',array('sort'=>1));
+        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getlistheader',array('sort'=>1));
 //geh        $output->Text('<b>'.xarVarPrepHTMLDisplay($headers[0]).'</b>');
     }
     else {
-        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getListHeader',array('sort'=>2));
+        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getlistheader',array('sort'=>2));
 //geh        $output->Text('<b>'.xarVarPrepHTMLDisplay($headers[0]).'</b>');
     }
 
@@ -298,7 +298,7 @@ function AddressBook_userapi_getAddressList($args) {
                                          );
 
         /* not sure what this does gehDEBUG
-//        $cus_fields = xarModAPIFunc(__ADDRESSBOOK__,'user','customFieldInformation',array('id'=>$id));
+//        $cus_fields = xarModAPIFunc(__ADDRESSBOOK__,'user','customfieldinformation',array('id'=>$id));
         $i=1;
         foreach($cus_fields as $cus) {
             if ($cus['type']=='date default NULL') {

@@ -19,11 +19,11 @@
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function AddressBook_init()
+function addressbook_init()
 {
 
     //FIXME: until we figure out module globals
-    // if this does get changed, $abModVars will no longer be scoped here.. 
+    // if this does get changed, $abModVars will no longer be scoped here..
     include_once ('modules/addressbook/xarglobal.php');
 
     list($dbconn) = xarDBGetConn();
@@ -31,7 +31,7 @@ function AddressBook_init()
 
     xarDBLoadTableMaintenanceAPI();
 
-	/**
+    /**
      * create main address table
      */
     $abAddressTable = $xarTables['addressbook_address'];
@@ -91,8 +91,8 @@ function AddressBook_init()
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-	
-	/**
+
+    /**
      * insert default values for Label table
      */
     $insertRows = array(
@@ -114,7 +114,7 @@ function AddressBook_init()
         $result =& $dbconn->Execute($query);
         if (!$result) return;
     }
-    
+
     /**
      * create category table
      */
@@ -129,7 +129,7 @@ function AddressBook_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-	/**
+    /**
      * insert default values
      */
     $insertRows = array(
@@ -148,7 +148,7 @@ function AddressBook_init()
         if (!$result) return;
     }
 
-	/**
+    /**
      * create custom field table
      */
     $abCustomfieldsTable = $xarTables['addressbook_customfields'];
@@ -164,8 +164,8 @@ function AddressBook_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-	/**
-     * insert default values for Custom table. These primary keys are 
+    /**
+     * insert default values for Custom table. These primary keys are
      * intentionally numbered from 1 to 4 as they cannot be removed from
      * the application.
      */
@@ -175,11 +175,11 @@ function AddressBook_init()
                        ,xarVarPrepForStore(_AB_CUSTOM_4)
                        );
 
-	$nextId = 1;
+    $nextId = 1;
     foreach ($insertRows as $row) {
         $query = sprintf ("INSERT INTO %s (nr,label,type,position) VALUES (%d,'%s','varchar(60) default NULL',%d)"
                          ,$abCustomfieldsTable
-                         ,$nextId 
+                         ,$nextId
                          ,$row
                          ,$nextId);
         $result =& $dbconn->Execute($query);
@@ -187,7 +187,7 @@ function AddressBook_init()
         $nextId++;
     }
 
-	/**
+    /**
      * create prefix table
      */
     $abPrefixesTable = $xarTables['addressbook_prefixes'];
@@ -201,7 +201,7 @@ function AddressBook_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-	/**
+    /**
      * insert default values
      */
     $insertRows = array(
@@ -219,7 +219,7 @@ function AddressBook_init()
         if (!$result) return;
     }
 
-	// $abModVars set in xarglobal.php and is used to ease maintenance
+    // $abModVars set in xarglobal.php and is used to ease maintenance
     foreach ($abModVars as $modvar=>$value) {
         xarModSetVar(__ADDRESSBOOK__, $modvar, $value);
     }
@@ -260,55 +260,55 @@ function AddressBook_init()
  * upgrade the module from an old version
  * This function can be called multiple times
  */
-function AddressBook_upgrade($oldversion) {
+function addressbook_upgrade($oldversion) {
 
     //FIXME: until we figure out module globals
     include_once ('modules/addressbook/xarglobal.php');
 
-	switch($oldversion) {
+    switch($oldversion) {
         case '1.0':
-			// New Admin Message mod vars in 1.1 & later 
+            // New Admin Message mod vars in 1.1 & later
             xarModSetVar (__ADDRESSBOOK__,'rptErrAdminFlag', 1);
             xarModSetVar (__ADDRESSBOOK__,'rptErrAdminEmail', xarModGetVar('mail','adminmail'));
             xarModSetVar (__ADDRESSBOOK__,'rptErrDevFlag', 1);
-            
+
         case '1.1':
-			// Alter the table to for cross DB compatibility and rename a column
-		    list($dbconn) = xarDBGetConn();
-		    $xarTables = xarDBGetTables();
+            // Alter the table to for cross DB compatibility and rename a column
+            list($dbconn) = xarDBGetConn();
+            $xarTables = xarDBGetTables();
 
-		    $abAddressTable = $xarTables['addressbook_address'];
+            $abAddressTable = $xarTables['addressbook_address'];
 
-			// FIXME: <garrett> non-portable SQL
-			$sql = "ALTER TABLE $abAddressTable
-			             CHANGE date last_updt MEDIUMINT NOT NULL";
-			             
-			$result =& $dbconn->Execute($sql);
+            // FIXME: <garrett> non-portable SQL
+            $sql = "ALTER TABLE $abAddressTable
+                         CHANGE date last_updt MEDIUMINT NOT NULL";
+
+            $result =& $dbconn->Execute($sql);
             if (!$result) return;
-			
-		case '1.2':
-			// Fix the 
-		    list($dbconn) = xarDBGetConn();
-		    $xarTables = xarDBGetTables();
 
-		    $abAddressTable = $xarTables['addressbook_address'];
+        case '1.2':
+            // Fix the
+            list($dbconn) = xarDBGetConn();
+            $xarTables = xarDBGetTables();
 
-			// FIXME: <garrett> non-portable SQL
-			$sql = "ALTER TABLE $abAddressTable
-			             CHANGE user_id user_id INTEGER DEFAULT NULL
-			            ,CHANGE last_updt last_updt INTEGER NOT NULL";
-			             
-			$result =& $dbconn->Execute($sql);
+            $abAddressTable = $xarTables['addressbook_address'];
+
+            // FIXME: <garrett> non-portable SQL
+            $sql = "ALTER TABLE $abAddressTable
+                         CHANGE user_id user_id INTEGER DEFAULT NULL
+                        ,CHANGE last_updt last_updt INTEGER NOT NULL";
+
+            $result =& $dbconn->Execute($sql);
             if (!$result) return;
-			
-		case '1.2.1':
-		case '1.3.0':
-		case '1.4.0':
-                    
-			break;
-	}
 
-	return true;
+        case '1.2.1':
+        case '1.3.0':
+        case '1.4.0':
+
+            break;
+    }
+
+    return true;
 }
 
 /**
@@ -316,7 +316,7 @@ function AddressBook_upgrade($oldversion) {
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function AddressBook_delete() {
+function addressbook_delete() {
 
     //FIXME: until we figure out module globals
     include_once ('modules/addressbook/xarglobal.php');

@@ -16,15 +16,14 @@
 
 //FIXME: until we figure out module globals
 include_once ('modules/addressbook/xarglobal.php');
-
 //=========================================================================
 //  the main function
 //=========================================================================
-function AddressBook_user_main() {
+function addressbook_user_main() {
 
-    $output = xarModFunc(__ADDRESSBOOK__,'user','viewall');
+$output = xarModFunc(__ADDRESSBOOK__,'user','viewall');
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 } // END main
 
 ?>

@@ -20,7 +20,7 @@
  * @param args['delete'] string
  * @return bool
  */
-function AddressBook_adminapi_deleteItems($args)
+function addressbook_adminapi_deleteItems($args)
 {
     $returnCode = TRUE;
 

@@ -28,12 +28,12 @@ function AddressBook_user_viewall() {
     /**
      * not sure how this differs from xarSecurityCheck above...
      */
-    $output['userCanViewEntries'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'view'));
+    $output['userCanViewEntries'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkaccesslevel',array('option'=>'view'));
 
     /**
      * Get menu values from the input
      */
-    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
+    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getmenuvalues');
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
@@ -41,13 +41,13 @@ function AddressBook_user_viewall() {
     /**
      * Print the main menu
      */
-    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenu',array('output'=>$output));
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getmenu',array('output'=>$output));
 
-	// Start Page
+    // Start Page
 
-    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getAddressList',array('output'=>$output));
-	
-	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getaddresslist',array('output'=>$output));
+
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
 } // END viewall
 

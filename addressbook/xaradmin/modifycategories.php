@@ -20,51 +20,51 @@
  *
  * @param GET / POST passed from modifycategories form
  * @return xarTemplate data
- */ 
-function AddressBook_admin_modifycategories() {
+ */
+function addressbook_admin_modifycategories() {
 
-	$output = array();
-	
+    $output = array();
+
     /**
      * Security check first
      */
     if (xarSecurityCheck('AdminAddressBook',0)) {
-		/*
-		 * Check if we've come in via a submit, commit everything and cary on
-		 */
-		xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
-		if ($formSubmit) {
-			/**
-			 * Data integrity / Security check 
-			 */
-		    if (!xarSecConfirmAuthKey()) 
-		    	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-		
-			if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) return;
-			if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE)) return;
-			if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE)) return;
-		    if (!xarVarFetch ('newname','str::30',$formData['newname'], FALSE)) return;
-			
-			if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updatecategories',$formData)) {
-				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-			}
-		} 
+        /*
+         * Check if we've come in via a submit, commit everything and cary on
+         */
+        xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
+        if ($formSubmit) {
+            /**
+             * Data integrity / Security check
+             */
+            if (!xarSecConfirmAuthKey())
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
-	    // get the list of categories
-	    $output['categories'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'categories'));
-	
-	    // Generate a one-time authorisation code for this operation
-	    $output['authid'] = xarSecGenAuthKey();
-	
-	    // Submit button
-	    $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
+            if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) return;
+            if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE)) return;
+            if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE)) return;
+            if (!xarVarFetch ('newname','str::30',$formData['newname'], FALSE)) return;
+
+            if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updatecategories',$formData)) {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+        }
+
+        // get the list of categories
+        $output['categories'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'categories'));
+
+        // Generate a one-time authorisation code for this operation
+        $output['authid'] = xarSecGenAuthKey();
+
+        // Submit button
+        $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
 
     } else {
-		return xarTplModule(__ADDRESSBOOK__,'user','noauth'); 
+        return xarTplModule(__ADDRESSBOOK__,'user','noauth');
     }
-    
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
 } // END modifycategories
 

@@ -20,10 +20,10 @@
  * @param string $inum - numeric to format
  * @return string $num - formated number
  */
-function AddressBook_utilapi_input2numeric($args){
+function addressbook_utilapi_input2numeric($args){
 
-	$num = 0;
-	    
+    $num = 0;
+
     extract($args);
     if( (!isset($inum)) || (empty($inum)) || ($inum=='')) {
         return 'NULL';

@@ -21,54 +21,54 @@
  * @param GET / POST passed from modifyprefix form
  * @return xarTemplate data
  */
-function AddressBook_admin_modifyprefixes($args) {
+function addressbook_admin_modifyprefixes($args) {
     $output = array (); // template contents go here
     /**
      * Security check first
      */
     if (xarSecurityCheck('AdminAddressBook',0)) {
-		/*
-		 * Check if we've come in via a submit, commit everything and cary on
-		 */
-		xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
-		if ($formSubmit) {
-	
-		    if (!xarSecConfirmAuthKey()) 
-		    	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+        /*
+         * Check if we've come in via a submit, commit everything and cary on
+         */
+        xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
+        if ($formSubmit) {
+
+            if (!xarSecConfirmAuthKey())
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
 
-			if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) {
-				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-			}
-			if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE))  {
-				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-			}
-			if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE))  {
-				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-			}
-		    if (!xarVarFetch ('newname','str::30',$formData['newname'],FALSE))  {
-				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-			}
-			
-			if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updateprefixes',$formData)) {
-				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-			}
-		} 
+            if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+            if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE))  {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+            if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE))  {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+            if (!xarVarFetch ('newname','str::30',$formData['newname'],FALSE))  {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
 
-	    // get the list of prefixes
-	    $output['prefixes'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'prefixes'));
-	
-	    // Generate a one-time authorisation code for this operation
-	    $output['authid'] = xarSecGenAuthKey();
-	
-	    // Submit button
-	    $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
+            if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updateprefixes',$formData)) {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+        }
+
+        // get the list of prefixes
+        $output['prefixes'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'prefixes'));
+
+        // Generate a one-time authorisation code for this operation
+        $output['authid'] = xarSecGenAuthKey();
+
+        // Submit button
+        $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
 
     } else {
-		return xarTplModule(__ADDRESSBOOK__,'user','noauth'); 
+        return xarTplModule(__ADDRESSBOOK__,'user','noauth');
     }
 
-	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
 } // END modifyprefixes
 

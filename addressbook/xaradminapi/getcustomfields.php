@@ -14,13 +14,13 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function AddressBook_adminapi_getCustomfields() {
+function addressbook_adminapi_getCustomfields() {
     list($dbconn) = xarDBGetConn();
     $xarTables = xarDBGetTables();
     $cus_table = $xarTables['addressbook_customfields'];
     $sql = "SELECT nr, label, type, position
             FROM $cus_table WHERE nr > 0
-			ORDER BY position";
+            ORDER BY position";
 
     $result =& $dbconn->Execute($sql);
     if (!$result) return array();
@@ -30,8 +30,8 @@ function AddressBook_adminapi_getCustomfields() {
         list($cusid,$cuslabel,$custype,$cuspos) = $result->fields;
         $customfields[$i]['nr']     = $cusid;
         $customfields[$i]['custLabel']   = $cuslabel;
-		$customfields[$i]['custType']   = $custype;
-		$customfields[$i++]['position']   = $cuspos;
+        $customfields[$i]['custType']   = $custype;
+        $customfields[$i++]['position']   = $cuspos;
      }
     $result->Close();
     return $customfields;

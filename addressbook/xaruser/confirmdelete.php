@@ -17,17 +17,17 @@
 //=========================================================================
 //  Confirm deletion
 //=========================================================================
-function AddressBook_user_confirmdelete() {
+function addressbook_user_confirmdelete() {
 
     $output = array();
 
-	// preserve menu settings
-    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
+    // preserve menu settings
+    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getmenuvalues');
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
 
-	$output['menuValues']=array('catview'   =>$output['catview'],
+    $output['menuValues']=array('catview'   =>$output['catview'],
                     'menuprivate'=>$output['menuprivate'],
                     'all'       =>$output['all'],
                     'sortview'  =>$output['sortview'],
@@ -35,11 +35,11 @@ function AddressBook_user_confirmdelete() {
                     'char'      =>$output['char'],
                     'total'     =>$output['total']);
 
-	// Get the values
-	$output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array ('output'=>$output));
+    // Get the values
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array ('output'=>$output));
 
-	// Get detailed values from database
-	$details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$output['id']));
+    // Get detailed values from database
+    $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getdetailvalues',array('id'=>$output['id']));
     foreach ($details as $key=>$value) {
         $output[$key] = $value;
     }
@@ -50,8 +50,8 @@ function AddressBook_user_confirmdelete() {
     $output['buttonDelete'] = xarML(_AB_DELETE);
     $output['buttonCancel'] = xarML(_AB_CANCEL);
 
-	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-	
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+
 } // END confirmDelete
 
 ?>

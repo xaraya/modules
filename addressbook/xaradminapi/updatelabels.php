@@ -21,7 +21,7 @@
  * @return bool
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function AddressBook_adminapi_updatelabels($args) {
+function addressbook_adminapi_updatelabels($args) {
 
     // var defines
     $dels = '';
@@ -78,7 +78,7 @@ function AddressBook_adminapi_updatelabels($args) {
                           WHERE nr = $id");
     }
 
-    if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateItems',array('tablename'=>'labels','updates'=>$updates))) {
+    if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'labels','updates'=>$updates))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
                     new abUserException('UPDATE - '._AB_SUCCESS));
@@ -86,7 +86,7 @@ function AddressBook_adminapi_updatelabels($args) {
 
     if(!empty($dels)) {
         $delete = "DELETE FROM $labelTable WHERE nr IN ($dels)";
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteItems',array('tablename'=>'labels','delete'=>$delete))) {
+        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteitems',array('tablename'=>'labels','delete'=>$delete))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
                     new abUserException('DELETE - '._AB_SUCCESS));
@@ -94,7 +94,7 @@ function AddressBook_adminapi_updatelabels($args) {
     }
 
     if( (isset($newname)) && ($newname != '') ) {
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addItems',array('tablename'=>'labels','name'=>$newname))) {
+        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','additems',array('tablename'=>'labels','name'=>$newname))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
                     new abUserException('INSERT - '._AB_SUCCESS));

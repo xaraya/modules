@@ -20,7 +20,7 @@
  * @param int $sort
  * @return array
  */
-function AddressBook_userapi_getListHeader($args){
+function addressbook_userapi_getListHeader($args){
     extract($args);
     if (!isset($sort)) {
         return false;
@@ -57,7 +57,7 @@ function AddressBook_userapi_getListHeader($args){
         }
         $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',array('flag'=>_AB_CUST_UDCOLANDLABELS)); //gehDEBUG
+            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_UDCOLANDLABELS)); //gehDEBUG
             foreach($custUserData as $userData) {
                 if ($sortCols[$i] == $userData['colName']) {
                     $returnArray[$i] = array('header'=> strtoupper($userData['label']));

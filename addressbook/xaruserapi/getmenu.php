@@ -17,7 +17,7 @@
 /**
  * Displays user menu
  */
-function AddressBook_userapi_getMenu($args) {
+function addressbook_userapi_getMenu($args) {
     extract ($args);
 
     $output['authid'] = xarSecGenAuthKey();
@@ -51,10 +51,10 @@ function AddressBook_userapi_getMenu($args) {
     }
     else {
         // Start Category
-        $output['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'categories'));
+        $output['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'categories'));
 
-        $sortby_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','getSortBy',array('sort'=>1));
-        $sortby_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','getSortBy',array('sort'=>2));
+        $sortby_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','getsortby',array('sort'=>1));
+        $sortby_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','getsortby',array('sort'=>2));
         $output['sortby'][] = array('id'=>0,'name'=>xarVarPrepHTMLDisplay($sortby_1));
         $output['sortby'][] = array('id'=>1,'name'=>xarVarPrepHTMLDisplay($sortby_2));
 
@@ -147,7 +147,7 @@ function AddressBook_userapi_getMenu($args) {
             $output['newAddrLinkTEXT'] = xarVarPrepHTMLDisplay (xarML(_AB_MENU_ADD));
 
             // Set our flag / template uses to determine if it should display the link
-            $output['addNewAddress'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'create'));
+            $output['addNewAddress'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkaccesslevel',array('option'=>'create'));
 
             // End New Record
 

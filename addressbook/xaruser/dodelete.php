@@ -19,12 +19,12 @@
 //=========================================================================
 //  Delete a record
 //=========================================================================
-function AddressBook_user_dodelete() {
+function addressbook_user_dodelete() {
 
     if (!xarVarFetch ('id','int::',$id, FALSE)) return FALSE;
 
     // save menu settings
-    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
+    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getmenuvalues');
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
@@ -37,24 +37,24 @@ function AddressBook_user_dodelete() {
                     ,'char'      =>$output['char']
                     );
 
-	// Security check
-	// Confirm authorisation code
-	//if (!pnSecAuthAction(0, 'AddressBook::', '::', ACCESS_READ)) {
-	if (!xarSecConfirmAuthKey()) {
-	    $output = array();
+    // Security check
+    // Confirm authorisation code
+    //if (!pnSecAuthAction(0, 'AddressBook::', '::', ACCESS_READ)) {
+    if (!xarSecConfirmAuthKey()) {
+        $output = array();
         $output['infoMsg'] = xarML(_ADDRESSBOOK_NOAUTH);
         $output['backToListTEXT'] = xarML(_AB_GOBACK);
-		return $output;
+        return $output;
     }
 
-	if(!xarModAPIFunc(__ADDRESSBOOK__,'user','deleterecord',array('id'=>$id))) {
+    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','deleterecord',array('id'=>$id))) {
         $output = array();
         $output['infoMsg'] = xarML(_AB_DELETENOSUCCESS);
         $output['backToListTEXT'] = xarML(_AB_GOBACK);
-		return $output;
+        return $output;
     }
 
-	// This function generated no output
+    // This function generated no output
     xarResponseRedirect(xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$output['menuValues']));
 
     if (xarExceptionMajor() != XAR_NO_EXCEPTION) {
@@ -63,13 +63,13 @@ function AddressBook_user_dodelete() {
             return; // throw back
         } else {
                         // We are going to handle this exception REGARDLESS of the type
-            $output['abExceptions'] = xarModAPIFunc(__ADDRESSBOOK__,'user','handleException');
+            $output['abExceptions'] = xarModAPIFunc(__ADDRESSBOOK__,'user','handleexception');
         }
     }
 
     // Return
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-    
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+
 } // END doDelete
 
 ?>

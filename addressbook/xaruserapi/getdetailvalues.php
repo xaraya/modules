@@ -21,7 +21,7 @@
  * @return array $detailValues
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function AddressBook_userapi_getDetailValues($args) {
+function addressbook_userapi_getDetailValues($args) {
 
     $detailValues = FALSE;
 
@@ -91,7 +91,7 @@ function AddressBook_userapi_getDetailValues($args) {
         /**
          * get the custom field information
          */
-        $detailValues['custUserData'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',array('id'=>$id));
+        $detailValues['custUserData'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('id'=>$id));
 
         $result->Close();
     }

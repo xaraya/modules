@@ -20,7 +20,7 @@
  * @param none
  * @return bool (true - client uses Internet Explorer / false - no IE
  */
-function AddressBook_utilapi_checkForIE() {
+function addressbook_utilapi_checkforie() {
 
     xarModAPIFunc('sniffer','user','sniff');
 

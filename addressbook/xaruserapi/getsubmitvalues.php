@@ -15,12 +15,12 @@
  */
 
 /**
- * Retrieves all form input from the GET / POST and formats 
+ * Retrieves all form input from the GET / POST and formats
  *
  * @param mixed
  * @return mixed
  */
-function AddressBook_userapi_getsubmitvalues($args) {
+function addressbook_userapi_getsubmitvalues($args) {
 
     extract($args);
 

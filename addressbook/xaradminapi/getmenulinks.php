@@ -19,7 +19,7 @@
  *
  * @return array of menu links
  */
-function AddressBook_adminapi_getmenulinks()
+function addressbook_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AdminAddressBook',0)) {
         $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,

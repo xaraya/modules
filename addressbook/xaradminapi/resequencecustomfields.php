@@ -19,15 +19,15 @@
  *
  * @param none
  * @return bool
- */ 
-function AddressBook_adminapi_resequenceCustomfields() {
+ */
+function addressbook_adminapi_resequenceCustomfields() {
 
-	/**
-	 * Security check 
-	 */
+    /**
+     * Security check
+     */
     if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
-	list($dbconn) = xarDBGetConn();
+    list($dbconn) = xarDBGetConn();
     $xarTables = xarDBGetTables();
     $cus_table = $xarTables['addressbook_customfields'];
 
@@ -52,9 +52,9 @@ function AddressBook_adminapi_resequenceCustomfields() {
         $seq++;
     }
     $result->Close();
-    
+
     return TRUE;
-    
+
 } // END resequenceCustomFields
 
 ?>

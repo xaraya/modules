@@ -22,7 +22,7 @@
  * @param args['updates'] array of strings
  * @return true
  */
- function AddressBook_adminapi_updateItems($args) {
+ function addressbook_adminapi_updateItems($args) {
 
     $returnCode = TRUE;
 

@@ -20,7 +20,7 @@
  * @param string $inum
  * @return string - number formatted for display
  */
-function AddressBook_userapi_num4display($args){
+function addressbook_userapi_num4display($args){
     extract($args);
     if( (!isset($inum)) || (empty($inum)) || ($inum=='')) {
         return '';

@@ -20,7 +20,7 @@
  * @param int $id - address table key
  * @return bool
  */
-function AddressBook_userapi_deleterecord($args) {
+function addressbook_userapi_deleterecord($args) {
     extract($args);
 
     list($dbconn) = xarDBGetConn();

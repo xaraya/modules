@@ -23,7 +23,7 @@
  * @param args['tablename'] string
  * @return arrItems array
  */
-function AddressBook_utilapi_getItems($args)
+function addressbook_utilapi_getitems($args)
 {
     $arrItems = array();
 
@@ -38,7 +38,7 @@ function AddressBook_utilapi_getItems($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'getItems', __ADDRESSBOOK__);
+            join(', ', $invalid), 'admin', 'getitems', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
     } else {

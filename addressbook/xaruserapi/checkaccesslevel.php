@@ -20,7 +20,7 @@
  * @param string $option - target access level
  * @return bool
  */
-function AddressBook_userapi_checkAccessLevel($args) {
+function addressbook_userapi_checkAccessLevel($args) {
     $access=false;
     $usermode = (xarModGetVar(__ADDRESSBOOK__, 'usermode'));
     $guestmode = (xarModGetVar(__ADDRESSBOOK__, 'guestmode'));

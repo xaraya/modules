@@ -18,7 +18,7 @@
  * This function is called internally by the core whenever the module is
  * loaded.  It adds in the information
  */
-function AddressBook_xartables()
+function addressbook_xartables()
 {
     // Initialise table array
     $xarTables = array();

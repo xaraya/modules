@@ -25,7 +25,7 @@
  *
  * @return array custom field info
  */
-function AddressBook_userapi_getCustFieldInfo($args) {
+function addressbook_userapi_getCustFieldInfo($args) {
     extract ($args);
 
     $custFieldInfo = array();
@@ -50,7 +50,7 @@ function AddressBook_userapi_getCustFieldInfo($args) {
             }
         }
 
-        $custFieldTypeInfo = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldTypeInfo');
+        $custFieldTypeInfo = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldtypeinfo');
 
         switch ($flag) {
             case _AB_CUST_UDCOLANDLABELS:
@@ -123,7 +123,7 @@ function AddressBook_userapi_getCustFieldInfo($args) {
                 $custFieldInfo = $custFieldTypeInfo;
 
                 $custFieldUserInfo = xarModAPIFunc(__ADDRESSBOOK__,'user'
-                                                  ,'getCustFieldUserInfo'
+                                                  ,'getcustfielduserinfo'
                                                   ,array('custFieldTypeInfo'=>$custFieldTypeInfo,'id'=>$id));
 
                 /**

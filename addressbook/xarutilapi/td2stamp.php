@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * File: $Id: td2stamp.php,v 1.1 2003/07/08 22:42:30 garrett Exp $
  *
@@ -20,7 +20,7 @@
  * @param string $idate - the date to format
  * @return string formated date
  */
-function AddressBook_utilapi_td2stamp($args){
+function addressbook_utilapi_td2stamp($args){
     extract($args);
     if( (!isset($idate)) || (empty($idate)) || ($idate=='')) {
         return 'NULL';

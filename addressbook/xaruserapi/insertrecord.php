@@ -19,28 +19,28 @@
  *
  * @param mixed
  */
-function AddressBook_userapi_insertrecord($args) {
+function addressbook_userapi_insertrecord($args) {
     extract($args);
 
-    $lname = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$lname);
-    $fname = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$fname);
-    $title = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$title);
-    $company = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$company);
-    $zip = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$zip);
-    $city = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$city);
-    $address_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$address_1);
-    $address_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$address_2);
-    $state = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$state);
-    $country = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$country);
-    $contact_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$contact_1);
-    $contact_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$contact_2);
-    $contact_3 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$contact_3);
-    $contact_4 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$contact_4);
-    $contact_5 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$contact_5);
-    $note = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$note);
+    $lname = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$lname);
+    $fname = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$fname);
+    $title = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$title);
+    $company = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$company);
+    $zip = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$zip);
+    $city = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$city);
+    $address_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_1);
+    $address_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_2);
+    $state = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$state);
+    $country = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$country);
+    $contact_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_1);
+    $contact_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_2);
+    $contact_3 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_3);
+    $contact_4 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_4);
+    $contact_5 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_5);
+    $note = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$note);
     if (!isset($private)) { $private=0; }
     if (!xarUserIsLoggedIn()) { $user_id=0; }
-    $last_updt = xarModAPIFunc(__ADDRESSBOOK__,'util','getUserTime');
+    $last_updt = xarModAPIFunc(__ADDRESSBOOK__,'util','getusertime');
 
     /**
      * custom field values
@@ -49,7 +49,7 @@ function AddressBook_userapi_insertrecord($args) {
         foreach($custUserData as $rowIdx=>$userData) {
             if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
                 $custUserData[$rowIdx]['userData'] =
-                		xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$userData['userData']);
+                        xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$userData['userData']);
             }
         }
     }
@@ -77,7 +77,7 @@ function AddressBook_userapi_insertrecord($args) {
     list($dbconn) = xarDBGetConn();
     $xarTables = xarDBGetTables();
     $address_table = $xarTables['addressbook_address'];
-    
+
     $nextID = $dbconn->GenID($address_table);
 
     $sql = "INSERT INTO $address_table (
@@ -110,9 +110,9 @@ function AddressBook_userapi_insertrecord($args) {
             c_main,";
 
 // mising comma before 'array' was not flagged by compiler. is that normal PHP behaviour?
-//            $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo'array('flag'=>_AB_CUST_UDCOLNAMESONLY));
+//            $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo'array('flag'=>_AB_CUST_UDCOLNAMESONLY));
             if (isset($custUserData)) {
-                $custColNames = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',
+                $custColNames = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',
                                            array('flag'=>_AB_CUST_UDCOLNAMESONLY,'custUserData'=>$custUserData));
                 foreach($custColNames as $colName) {
                     $sql .= $colName.",";

@@ -20,7 +20,7 @@
  * @param args['delete'] string
  * @return bool
  */
-function AddressBook_adminapi_deleteCustomfields($args)
+function addressbook_adminapi_deleteCustomfields($args)
 {
     $returnCode = TRUE;
 

@@ -21,34 +21,34 @@
  * @param GET / POST passed from modifylabels form
  * @return xarTemplate data
  */
-function AddressBook_admin_modifylabels() {
+function addressbook_admin_modifylabels() {
 
     $output = array (); // template contents go here
     /**
      * Security check first
      */
     if (xarSecurityCheck('AdminAddressBook',0)) {
-		/*
-		 * Check if we've come in via a submit, commit everything and cary on
-		 */
-		xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
-		if ($formSubmit) {
-	
-		    if (!xarSecConfirmAuthKey()) 
-		    	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+        /*
+         * Check if we've come in via a submit, commit everything and cary on
+         */
+        xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
+        if ($formSubmit) {
 
-			if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) return FALSE;
-			if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE)) return FALSE;
-			if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE)) return FALSE;
-		    if (!xarVarFetch ('newname','str::30',$formData['newname'],FALSE)) return FALSE;
-			
-			if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updatelabels',$formData)) {
-				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
-			}
-		} 
+            if (!xarSecConfirmAuthKey())
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+
+            if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) return FALSE;
+            if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE)) return FALSE;
+            if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE)) return FALSE;
+            if (!xarVarFetch ('newname','str::30',$formData['newname'],FALSE)) return FALSE;
+
+            if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updatelabels',$formData)) {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+        }
 
         // get the list of labels
-        $output['labels'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'labels'));
+        $output['labels'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'labels'));
 
         // Generate a one-time authorisation code for this operation
         $output['authid'] = xarSecGenAuthKey();
@@ -57,10 +57,10 @@ function AddressBook_admin_modifylabels() {
         $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
 
     } else {
-		return xarTplModule(__ADDRESSBOOK__,'user','noauth'); 
+        return xarTplModule(__ADDRESSBOOK__,'user','noauth');
     }
 
-	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
 } // END modifylabels
 

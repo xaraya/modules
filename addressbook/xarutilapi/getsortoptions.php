@@ -20,9 +20,9 @@
  * @param none
  * @return array
  */
-function AddressBook_utilapi_getSortOptions() {
+function addressbook_utilapi_getsortoptions() {
 
-	$sortOptions = array();
+    $sortOptions = array();
 
     $sortOptions[] = array('id'=>'sortname',   'name'=>xarML(_AB_NAME));
     $sortOptions[] = array('id'=>'title',      'name'=>xarML(_AB_TITLE));
@@ -31,8 +31,8 @@ function AddressBook_utilapi_getSortOptions() {
     $sortOptions[] = array('id'=>'city',       'name'=>xarML(_AB_CITY));
     $sortOptions[] = array('id'=>'state',      'name'=>xarML(_AB_STATE));
     $sortOptions[] = array('id'=>'country',    'name'=>xarML(_AB_COUNTRY));
-	
-	return $sortOptions;
+
+    return $sortOptions;
 
 } // END getSortOptions
 

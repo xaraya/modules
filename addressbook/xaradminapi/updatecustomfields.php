@@ -22,7 +22,7 @@
  * @raise _AB_GLOBALPROTECTERROR, _AB_GRANTERROR, _AB_SORTERROR_1,
  *        _AB_SORTERROR_2, _AB_SPECIAL_CHARS_ERROR
  */
-function AddressBook_adminapi_updatecustomfields($args) {
+function addressbook_adminapi_updatecustomfields($args) {
 
     /**
      * Security check
@@ -57,11 +57,11 @@ function AddressBook_adminapi_updatecustomfields($args) {
      * not both
      */
     if (isset($incID) && $incID > 0) {
-        if (!xarModAPIFunc(__ADDRESSBOOK__, 'admin', 'incCustomFields', array('id' => $incID))) {
+        if (!xarModAPIFunc(__ADDRESSBOOK__, 'admin', 'inccustomfields', array('id' => $incID))) {
             return FALSE;
         }
     } elseif (isset($decID) && $decID > 0) {
-        if (!xarModAPIFunc(__ADDRESSBOOK__, 'admin', 'decCustomFields', array('id' => $decID))) {
+        if (!xarModAPIFunc(__ADDRESSBOOK__, 'admin', 'deccustomfields', array('id' => $decID))) {
             return FALSE;
         }
     } else {
@@ -103,7 +103,7 @@ function AddressBook_adminapi_updatecustomfields($args) {
             }
         }
 
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateItems',array('tablename'=>'customfields','updates'=>$updates))) {
+        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'customfields','updates'=>$updates))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_INFO,
                         new abUserException('UPDATE - '._AB_SUCCESS));
@@ -112,11 +112,11 @@ function AddressBook_adminapi_updatecustomfields($args) {
         }
 
         if (count($modDel)) {
-            if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteCustomFields',array('modDel'=>$modDel,'modDelType'=>$modDelType))) {
+            if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deletecustomfields',array('modDel'=>$modDel,'modDelType'=>$modDelType))) {
                 xarErrorSet(XAR_USER_EXCEPTION,
                             _AB_ERR_INFO,
                             new abUserException('DELETE - '._AB_SUCCESS));
-                if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequenceCustomfields')) {
+                if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequencecustomfields')) {
                     return FALSE;
                 }
             } else {
@@ -142,11 +142,11 @@ function AddressBook_adminapi_updatecustomfields($args) {
                 array_push($inserts,"ALTER TABLE $adr_table ADD custom_".$nextID." ".xarVarPrepForStore($newtype));
             }
 
-            if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addCustomfields',array('inserts'=>$inserts))) {
+            if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addcustomfields',array('inserts'=>$inserts))) {
                 xarErrorSet(XAR_USER_EXCEPTION,
                             _AB_ERR_INFO,
                             new abUserException('INSERT - '._AB_SUCCESS));
-                if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequenceCustomfields')) {
+                if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequencecustomfields')) {
                     return FALSE;
                 }
             } else {

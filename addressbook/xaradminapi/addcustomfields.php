@@ -20,7 +20,7 @@
  * @param args['inserts'] array of strings
  * @return bool
  */
-function AddressBook_adminapi_addCustomfields($args)
+function addressbook_adminapi_addCustomfields($args)
 {
     $returnCode = TRUE;
 
@@ -40,7 +40,7 @@ function AddressBook_adminapi_addCustomfields($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
+                     join(', ', $invalid), 'admin', 'updateitems', __ADDRESSBOOK__);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

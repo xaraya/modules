@@ -17,7 +17,7 @@
 /**
  * checksubmitvalues
  */
-function AddressBook_userapi_checksubmitvalues($args) {
+function addressbook_userapi_checksubmitvalues($args) {
 
     $checkResult = TRUE;
 
