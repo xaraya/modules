@@ -13,7 +13,7 @@
 <div class="xar-mod-body">
 <xar:if condition="isset($menu)">#$menu#</xar:if>
 <div class="contentBorder"> 
-<xar:if condition="xarUserIsLoggedIn()">
+<xar:if condition="$UserLoggedIn"> 
 
 <xar:if condition="!empty($selection) && !empty($sortorder) && !empty($status)">
 Filter by Status:

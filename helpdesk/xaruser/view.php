@@ -10,11 +10,9 @@
 */
 function helpdesk_user_view($args)
 {
-    // Need to think if annon should be able to view some tickets
-    if (!xarUserIsLoggedIn()) {
-        return xarTplModule('helpdesk', 'user', 'view', $data);
-    }
-    
+    // Get arguments
+    extract($args);
+ 
     xarVarFetch('selection',    'str:1:',  $selection,  'ALL',  XARVAR_NOT_REQUIRED);
     xarVarFetch('sortorder',    'str:1:',  $sortorder,  'TICKET_ID', XARVAR_NOT_REQUIRED);
     xarVarFetch('order',        'str:1:',  $order,      'ASC',  XARVAR_NOT_REQUIRED);
@@ -34,6 +32,12 @@ function helpdesk_user_view($args)
     $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
     
+    // Need to think if annon should be able to view some tickets
+    $data['UserLoggedIn'] = xarUserIsLoggedIn();
+    if (!$data['UserLoggedIn']) {
+        return xarTplModule('helpdesk', 'user', 'view', $data);
+    }
+
     $data['username'] = xarUserGetVar('uname');
     $data['userid']   = xarUserGetVar('uid');    
         
