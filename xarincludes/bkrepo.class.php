@@ -340,21 +340,26 @@ class bkRepo
                 
         $edges = array(); $nodes = array(); 
         $inEdges = array(); $lateMergeNodes = array();
-        $cmd = "bk prs -hr$start..$end -nd':REV:|:KIDS:' $file";
+        $cmd = "bk prs -hr$startRev..$endRev -nd':REV:|:KIDS:|:DS:' $file";
         $rawdata = $this->_run($cmd);
         foreach($rawdata as $primeLine) {
-            list($rev, $kids) = explode('|',$primeLine);
+            list($rev, $kids,$serial) = explode('|',$primeLine);
             if(!empty($kids)) $kids = explode(' ',$kids); else $kids = array();
-            $nodes[] = $rev;
+            $nodes[$serial] = $rev;
             foreach($kids as $next) {
-                $edges[] = array($rev => $next);
-                $inEdges[$next][] = $rev;
+                if($rev != $next && $next != $startRev && $rev != $endRev) 
+                {
+                    $edges[] = array($rev => $next);
+                    $inEdges[$next][] = $rev;
+                } else {
+                    // Usally means a tag is on the cset
+                }
             }
         }
         $lateMergeNodes = array_diff($nodes, array_keys($inEdges));
-        $startKey = array_search($startRev, $lateMergeNodes);
-        if($startKey) unset($lateMergeNodes[$startKey]);
-        $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes);
+        if($startKey = array_search($startRev, $lateMergeNodes)) unset($lateMergeNodes[$startKey]);
+        ksort($nodes);
+        $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
         return $graph;
     
     }

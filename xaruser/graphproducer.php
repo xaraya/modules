@@ -28,31 +28,23 @@ function bkview_user_graphproducer($args)
         include_once "modules/bkview/xarincludes/GraphViz.php";
         
         $graph = new Image_GraphViz();
-        // Set some default attributes
-        $attributes = array (
-                             'fontsize' => 8.0,
-                             'labelfontsize' => 8.0
-                             );
-        $graph->setAttributes($attributes);
+        
+
         foreach($graphdata['nodes'] as $node)
         {
-            // Don't include the connector nodes to the past for now
-            // TODO: see if this is a usefull option to switch on and off (include dashed line to it?)
+            $attributes = array('href' => xarModUrl('bkview','user','deltaview', array('repoid' => $repoid, 'rev' => $node)),
+                                'tooltip' => xarML('Show details for revision #(1)',$node),'label' => $node);
+            if($node == $graphdata['startRev'] || $node == $graphdata['endRev']) $attributes['color'] ='red';
             if(!in_array($node, $graphdata['pastconnectors']))
             {
                 // Normal node
-                $graph->addNode($node, array(
-                                             //http://xartest.hsdev.com/index.php?module=bkview&func=deltaview&repoid=3&rev=1.2050
-                                             'URL' => xarModUrl('bkview','user','deltaview', array('repoid' => $repoid, 'rev' => $node)), 
-                                             'label'=> $node, 'labelfontsize' => 6.0, 'labelfontname' => 'Helvetica',
-                                             'shape' => 'box'));
+                $attributes['shape'] = 'box';
+                $graph->addNode($node, $attributes);
             } elseif($spc) {
                 // Past connector node
-                $graph->addNode($node, array(
-                                             //http://xartest.hsdev.com/index.php?module=bkview&func=deltaview&repoid=3&rev=1.2050
-                                             'URL' => xarModUrl('bkview','user','deltaview', array('repoid' => $repoid, 'rev' => $node)), 
-                                             'label'=> $node, 'labelfontsize' => 6.0, 'labelfontname' => 'Helvetica',
-                                             'shape' => 'ellipse'));
+                $attributes['shape'] = 'ellipse';
+                $attributes['style'] = 'dashed';
+                $graph->addNode($node, $attributes);
             }
         }
         foreach($graphdata['edges'] as $edge) 

@@ -208,7 +208,7 @@ class Image_GraphViz {
     
             `$command`;
             // this removes the parsed graph file
-            //unlink($file);
+            unlink($file);
     
             $fp = fopen($outputfile, 'rb');
     
@@ -216,7 +216,7 @@ class Image_GraphViz {
                 $data = fread($fp, filesize($outputfile));
                 fclose($fp);
                 // this removes the generated image
-                //unlink($outputfile);
+                unlink($outputfile);
             }
     
             return $data;
