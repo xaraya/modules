@@ -100,12 +100,16 @@ passed 1.12
 
 # test 2.11 No tabs
 failed=0
+tab=`echo -en '\t'`
 test="No use of tab characters in files"
 for i in `bk sfiles -Ug`; do
-    tab=`echo -en "\t"`
-    result=`grep -n '${tab}' $i`
+    # skip binary files
+    ascii=`bk isascii $i`
     if [ $? -ne 1 ] ; then
-        failed 2.11 "in $i" $result
+        result=`grep -ce "$tab" $i`
+        if [ $? -ne 1 ] ; then
+            failed 2.11 "in $i" " n/a ($result tabs in file)"
+        fi
     fi
 done
 passed 2.11
@@ -113,13 +117,16 @@ passed 2.11
 
 # test 2.13 : use unix line endings
 failed=0
-test="No use of windows line ending"
+wincr=`echo -en '\r\n'`
+test="No use of windows/mac line endings"
 for i in `bk sfiles -Ug`; do
-    wincr=`echo -en "\n\r"`
-    result=`grep -n '${wincr}' $i`
-    if [ $? -ne 1 ] ; then
-        failed 2.13 "on $i" $result
-    fi
+    ascii=`bk isascii $i`
+    if [ $? -ne 1 ] ; then  
+        result=`grep -ce "$wincr" $i`
+        if [ $? -ne 1 ] ; then
+            failed 2.13 "on $i" " n/a (file has $result win/mac CRs)"
+        fi
+    fi    
 done
 passed 2.13
 
