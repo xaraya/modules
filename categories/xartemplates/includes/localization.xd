@@ -4,16 +4,16 @@
 </xar:if>
 
 <xar:if condition="count($categories) eq 0">
-    <input type="hidden" name="moving[#$cid#]" id="moving[#$cid#]" value="false" />
-    <input type="hidden" name="refcid[#$cid#]" id="refcid[#$cid#]" value="#$refcid#" />
-    <input type="hidden" name="position[#$cid#]" id="position[#$cid#]" value="#$position#" />
-    <input type="hidden" name="catexists[#$cid#]" id="catexists[#$cid#]" value="false" />
+    <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="false" />
+    <input type="hidden" name="refcid[#$cid#]" id="refcid_#$cid#" value="#$refcid#" />
+    <input type="hidden" name="position[#$cid#]" id="position_#$cid#" value="#$position#" />
+    <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="false" />
 <xar:else />
-    <input type="hidden" name="moving[#$cid#]" id="moving[#$cid#]" value="true" />
-    <input type="hidden" name="catexists[#$cid#]" id="catexists[#$cid#]" value="true" />
+    <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="true" />
+    <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="true" />
     <tr align="left" valign="middle">
-        <td><label for="refcid[#$cid#]"><xar:mlstring>In relation to this category</xar:mlstring></label></td>
-        <td><select name="refcid[#$cid#]" id="refcid[#$cid#]">
+        <td><label for="refcid_#$cid#"><xar:mlstring>In relation to this category</xar:mlstring></label></td>
+        <td><select name="refcid[#$cid#]" id="refcid_#$cid#">
             <xar:for start="$i = 0" test="$i lt count($categories)" iter="$i++">
                 <xar:if condition="$categories[$i]['left'] eq $category['left']-1">
                     <option value="#$categories[$i]['cid']#" selected="selected">
@@ -33,8 +33,8 @@
           There is no position which we can have a selected category that will
           work in all cases  --->
     <tr>
-        <td><label for="position[#$cid#]"><xar:mlstring>Position</xar:mlstring></label></td>
-        <td><select name="position[#$cid#]" id="position[#$cid#]">
+        <td><label for="position_#$cid#"><xar:mlstring>Position</xar:mlstring></label></td>
+        <td><select name="position[#$cid#]" id="position_#$cid#">
             <xar:if condition="$position eq 1">
                 <option value="1" selected="selected">
                     <xar:mlstring>Right before, in the same level</xar:mlstring>
