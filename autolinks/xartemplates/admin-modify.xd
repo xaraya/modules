@@ -1,0 +1,77 @@
+<!--- $Id --->
+<xar:set name="$modifybuttonlabel"><xar:mlstring>Modify Autolink</xar:mlstring></xar:set>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Edit</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post" action="#$updateurl#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="lid" id="lid" value="#$lid#" />
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr align="left" valign="middle">
+                        <td>
+                            <label for="keyword"><xar:mlstring>Matching Key</xar:mlstring></label>
+                        </td>
+                        <td>
+                            <input type="text" name="keyword" id="keyword" value="#$prepkeyword#" size="32" maxlength="100" tabindex="1" />
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <label for="match_re"><xar:mlstring>Match As Regular Expression</xar:mlstring></label>
+                        </td>
+                        <td>
+							<xar:if condition="$match_re">
+								<input type="checkbox" name="match_re" id="match_re" value="1" checked="checked" />
+							<xar:else />
+								<input type="checkbox" name="match_re" id="match_re" value="1" />
+							</xar:if>
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <label for="title"><xar:mlstring>Title</xar:mlstring></label>
+                        </td>
+                        <td>
+                            <input type="text" name="title" id="title" value="#$preptitle#" size="32" maxlength="100" tabindex="2" />
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <label for="url"><xar:mlstring>URL</xar:mlstring></label>
+                        </td>
+                        <td>
+                            <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" tabindex="3" />
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <label for="comment"><xar:mlstring>Comment</xar:mlstring></label>
+                        </td>
+                        <td>
+                            <input type="text" name="comment" id="comment" value="#$prepcomment#" size="40" maxlength="200" tabindex="4" />
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <label for="enabled"><xar:mlstring>Enabled</xar:mlstring></label>
+                        </td>
+                        <td>
+							<xar:if condition="$enabled">
+								<input type="checkbox" name="enabled" id="enabled" value="1" checked="checked" />
+							<xar:else />
+								<input type="checkbox" name="enabled" id="enabled" value="1" />
+							</xar:if>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="#$modifybuttonlabel#" align="middle" tabindex="5" />
+</form>
+<a href="#$cancelurl#"><xar:mlstring>Cancel</xar:mlstring></a>
+</div>
+</div>

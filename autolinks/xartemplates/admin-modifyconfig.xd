@@ -1,0 +1,56 @@
+<xar:set name="$decorationsel">xarModGetVar('autolinks', 'decoration')</xar:set>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Configure Autolinks</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post" action="#xarModURL('autolinks', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+	<h3><xar:mlstring>Matching Rule Options</xar:mlstring></h3>
+
+	<p><label for="punctuation"><xar:mlstring>Punctuation characters</xar:mlstring></label>&nbsp;&nbsp;
+	<input type="text" name="punctuation" id="punctuation" size="20" maxlength="30" value="#xarModGetVar('autolinks', 'punctuation', 1)#" />
+	</p>
+
+	<p>	<label for="nbspiswhite"><xar:mlstring>Match non-breaking space entity as white space</xar:mlstring></label>
+		<xar:if condition="xarModGetVar('autolinks', 'nbspiswhite')">
+			<input type="checkbox" name="nbspiswhite" id="nbspiswhite" value="1" checked="checked" />
+		<xar:else />
+			<input type="checkbox" name="nbspiswhite" id="nbspiswhite" value="1" />
+		</xar:if>
+	</p>
+
+    <h3><xar:mlstring>Action Options</xar:mlstring></h3>
+
+	<p><label for="maxlinkcount"><xar:mlstring>Limit on number of times each link is used in a piece of text</xar:mlstring></label>&nbsp;&nbsp;
+		<input type="text" name="maxlinkcount" id="maxlinkcount" size="3" maxlength="3" value="#xarModGetVar('autolinks', 'maxlinkcount', 1)#"/>
+	</p>
+
+	<label for="decoration"><xar:mlstring>Autolink decoration (style will over-ride class)</xar:mlstring></label>&nbsp;&nbsp;
+	<select name="decoration" id="decoration" size="1">
+		<xar:foreach in="$decoration" value="$v" key="$k">
+		<xar:if condition="$k eq $decorationsel">
+			<option value="#$k#" selected="selected">#$v#</option>
+		<xar:else />
+			<option value="#$k#">#$v#</option>
+		</xar:if>
+		</xar:foreach>
+	</select>
+	
+	<p>	<label for="newwindow"><xar:mlstring>Open links in new window</xar:mlstring></label>
+		<xar:if condition="xarModGetVar('autolinks', 'newwindow')">
+			<input type="checkbox" name="newwindow" id="newwindow" value="1" checked="checked" />
+		<xar:else />
+			<input type="checkbox" name="newwindow" id="newwindow" value="1" />
+		</xar:if>
+	</p>
+
+	<h3><xar:mlstring>Admin Options</xar:mlstring></h3>
+
+	<p><label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label>&nbsp;&nbsp;
+	<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('autolinks', 'itemsperpage', 1)#" />
+	</p>
+
+    <input type="submit" value="#$submit#" align="middle" />
+</form>
+</div>
+</div>

@@ -1,0 +1,2 @@
+<!--- Traditional autolink anchor tag --->
+<a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $attributes)#>#$match#</a>
