@@ -11,7 +11,7 @@ function mailbag_adminapi_getmenulinks()
     $menulinks = array();
 
 // Security Check
-	if (xarSecurityCheck('adminmailbag',0)) {
+    if (xarSecurityCheck('adminmailbag',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('mailbag',
                                                   'admin',
@@ -21,7 +21,7 @@ function mailbag_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('adminmailbag',0)) {
+    if (xarSecurityCheck('adminmailbag',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('mailbag',
                                                   'admin',
@@ -31,7 +31,7 @@ function mailbag_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('adminmailbag',0)) {
+    if (xarSecurityCheck('adminmailbag',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('mailbag',
                                                   'admin',
@@ -41,7 +41,7 @@ function mailbag_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('adminmailbag',0)) {
+    if (xarSecurityCheck('adminmailbag',0)) {
         $menulinks[] = Array('url'   => xarModURL('mailbag',
                                                   'admin',
                                                   'modifyconfig'),

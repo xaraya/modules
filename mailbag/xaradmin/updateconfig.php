@@ -54,7 +54,7 @@ function mailbag_admin_updateconfig()
     xarModCallHooks('module','updateconfig','mailbag',
                     array('module'   => 'mailbag',
                           'itemtype' => $itemtype)
-		    ); 
+            ); 
     
     xarResponseRedirect(xarModURL('mailbag', 'admin', 'modifyconfig'));
 
