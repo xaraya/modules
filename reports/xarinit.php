@@ -49,7 +49,7 @@ function reports_init()
     // Report connections
     $tabname = 'report_connections';
     $tab = $xartable[$tabname];
-	$cols = &$xartable[$tabname.'_column'];
+    $cols = &$xartable[$tabname.'_column'];
     
     $defhost = xarDBGetHost();
     $defdb   = xarDBGetName();
@@ -76,9 +76,9 @@ function reports_init()
     $res =& $dbconn->Execute($query);
     if(!$res) return;
 
-	// Create a default connection to this database itself
-	$conn_id = $dbconn->GenId($tab);
-	$conn_name = 'default'; 
+    // Create a default connection to this database itself
+    $conn_id = $dbconn->GenId($tab);
+    $conn_name = 'default'; 
     $conn_type =strtolower($deftype);
     $conn_desc = 'Xaraya connection itself';
         
@@ -115,7 +115,7 @@ function reports_upgrade($oldversion)
         // Current version
         break;
     }
-	return true;
+    return true;
 }
 
 function reports_delete() 
@@ -133,18 +133,18 @@ function reports_delete()
     if(!$res) return;
 
     
-	// Delete module variables
-	// Template: xarModDelVar('reports', 'varname');
-	xarModDelVar('reports','images_location');
-	xarModDelVar('reports','reports_location');
-	xarModDelVar('reports','pdf_backend');
+    // Delete module variables
+    // Template: xarModDelVar('reports', 'varname');
+    xarModDelVar('reports','images_location');
+    xarModDelVar('reports','reports_location');
+    xarModDelVar('reports','pdf_backend');
 
     // Delete the custom tags
     xarTplUnregisterTag('reports-dataset');
     xarTplUnregisterTag('reports-dataitem');
-	
-	// Deletion successful
-	return true;
+    
+    // Deletion successful
+    return true;
 }
 
 ?>

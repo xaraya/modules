@@ -5,19 +5,19 @@
  */
 function reports_userapi_report_get($args) 
 {
-	list($rep_id) = xarVarCleanFromInput('rep_id');
-	extract($args);
+    list($rep_id) = xarVarCleanFromInput('rep_id');
+    extract($args);
     
-	$dbconn =& xarDBGetConn();
-	$xartables =& xarDBGetTables();
-	$tab = $xartables['reports'];
-	$cols = &$xartables['reports_column'];
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
+    $tab = $xartables['reports'];
+    $cols = &$xartables['reports_column'];
     
-	$sql = "SELECT $cols[id],$cols[name],$cols[description],$cols[conn_id],$cols[xmlfile] "
-		."FROM $tab WHERE $cols[id]=?";
-	$res= $dbconn->Execute($sql,array($rep_id));
-	if ($res) {
-		$row = $res->fields;
+    $sql = "SELECT $cols[id],$cols[name],$cols[description],$cols[conn_id],$cols[xmlfile] "
+        ."FROM $tab WHERE $cols[id]=?";
+    $res= $dbconn->Execute($sql,array($rep_id));
+    if ($res) {
+        $row = $res->fields;
         return  array (
                        'id'=>$row[0],
                        'name'=>$row[1],
@@ -25,10 +25,10 @@ function reports_userapi_report_get($args)
                        'conn_id'=>$row[3],
                        'xmlfile'=>$row[4]);
         
-		
-	} else {
-		return false;
-	}
+        
+    } else {
+        return false;
+    }
 }
 
 ?>

@@ -89,8 +89,8 @@ class Yapser
     $this->DelPDF();
     $this->DelPS();
     header("Content-type: application/pdf");
-		header("Content-Length: ".filesize($this->PDFFileName));
-		header("Content-Disposition: inline; filename=Yaps.pdf");    
+        header("Content-Length: ".filesize($this->PDFFileName));
+        header("Content-Disposition: inline; filename=Yaps.pdf");    
     echo $data;   
   }
   function CloseWebPS() 
@@ -100,8 +100,8 @@ class Yapser
     fclose($fp);
     $this->DelPS();
     header("Content-type: application/postscript");
-		header("Content-Length: ".filesize($this->PSFileName));
-		header("Content-Disposition: inline; filename=Yaps.ps");    
+        header("Content-Length: ".filesize($this->PSFileName));
+        header("Content-Disposition: inline; filename=Yaps.ps");    
     echo $data;   
   }
   function PStoPDF($pdffile="") 

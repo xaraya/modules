@@ -28,106 +28,106 @@ var $ezPageCount=0;
 
 function Cezpdf($paper='a4',$orientation='portrait')
 {
-	// Assuming that people don't want to specify the paper size using the absolute coordinates
-	// allow a couple of options:
-	// orientation can be 'portrait' or 'landscape'
-	// or, to actually set the coordinates, then pass an array in as the first parameter.
-	// the defaults are as shown.
-	// 
-	// -------------------------
-	// 2002-07-24 - Nicola Asuni (info@tecnick.com):
-	// Added new page formats (45 standard ISO paper formats and 4 american common formats)
-	// paper cordinates are calculated in this way: (inches * 72) where 1 inch = 2.54 cm
-	// 
-	// Now you may also pass a 2 values array containing the page width and height in centimeters
-	// -------------------------
+    // Assuming that people don't want to specify the paper size using the absolute coordinates
+    // allow a couple of options:
+    // orientation can be 'portrait' or 'landscape'
+    // or, to actually set the coordinates, then pass an array in as the first parameter.
+    // the defaults are as shown.
+    // 
+    // -------------------------
+    // 2002-07-24 - Nicola Asuni (info@tecnick.com):
+    // Added new page formats (45 standard ISO paper formats and 4 american common formats)
+    // paper cordinates are calculated in this way: (inches * 72) where 1 inch = 2.54 cm
+    // 
+    // Now you may also pass a 2 values array containing the page width and height in centimeters
+    // -------------------------
 
-	if (!is_array($paper)){
-		switch (strtoupper($paper)){
-			case '4A0': {$size = array(0,0,4767.87,6740.79); break;}
-			case '2A0': {$size = array(0,0,3370.39,4767.87); break;}
-			case 'A0': {$size = array(0,0,2383.94,3370.39); break;}
-			case 'A1': {$size = array(0,0,1683.78,2383.94); break;}
-			case 'A2': {$size = array(0,0,1190.55,1683.78); break;}
-			case 'A3': {$size = array(0,0,841.89,1190.55); break;}
-			case 'A4': default: {$size = array(0,0,595.28,841.89); break;}
-			case 'A5': {$size = array(0,0,419.53,595.28); break;}
-			case 'A6': {$size = array(0,0,297.64,419.53); break;}
-			case 'A7': {$size = array(0,0,209.76,297.64); break;}
-			case 'A8': {$size = array(0,0,147.40,209.76); break;}
-			case 'A9': {$size = array(0,0,104.88,147.40); break;}
-			case 'A10': {$size = array(0,0,73.70,104.88); break;}
-			case 'B0': {$size = array(0,0,2834.65,4008.19); break;}
-			case 'B1': {$size = array(0,0,2004.09,2834.65); break;}
-			case 'B2': {$size = array(0,0,1417.32,2004.09); break;}
-			case 'B3': {$size = array(0,0,1000.63,1417.32); break;}
-			case 'B4': {$size = array(0,0,708.66,1000.63); break;}
-			case 'B5': {$size = array(0,0,498.90,708.66); break;}
-			case 'B6': {$size = array(0,0,354.33,498.90); break;}
-			case 'B7': {$size = array(0,0,249.45,354.33); break;}
-			case 'B8': {$size = array(0,0,175.75,249.45); break;}
-			case 'B9': {$size = array(0,0,124.72,175.75); break;}
-			case 'B10': {$size = array(0,0,87.87,124.72); break;}
-			case 'C0': {$size = array(0,0,2599.37,3676.54); break;}
-			case 'C1': {$size = array(0,0,1836.85,2599.37); break;}
-			case 'C2': {$size = array(0,0,1298.27,1836.85); break;}
-			case 'C3': {$size = array(0,0,918.43,1298.27); break;}
-			case 'C4': {$size = array(0,0,649.13,918.43); break;}
-			case 'C5': {$size = array(0,0,459.21,649.13); break;}
-			case 'C6': {$size = array(0,0,323.15,459.21); break;}
-			case 'C7': {$size = array(0,0,229.61,323.15); break;}
-			case 'C8': {$size = array(0,0,161.57,229.61); break;}
-			case 'C9': {$size = array(0,0,113.39,161.57); break;}
-			case 'C10': {$size = array(0,0,79.37,113.39); break;}
-			case 'RA0': {$size = array(0,0,2437.80,3458.27); break;}
-			case 'RA1': {$size = array(0,0,1729.13,2437.80); break;}
-			case 'RA2': {$size = array(0,0,1218.90,1729.13); break;}
-			case 'RA3': {$size = array(0,0,864.57,1218.90); break;}
-			case 'RA4': {$size = array(0,0,609.45,864.57); break;}
-			case 'SRA0': {$size = array(0,0,2551.18,3628.35); break;}
-			case 'SRA1': {$size = array(0,0,1814.17,2551.18); break;}
-			case 'SRA2': {$size = array(0,0,1275.59,1814.17); break;}
-			case 'SRA3': {$size = array(0,0,907.09,1275.59); break;}
-			case 'SRA4': {$size = array(0,0,637.80,907.09); break;}
-			case 'LETTER': {$size = array(0,0,612.00,792.00); break;}
-			case 'LEGAL': {$size = array(0,0,612.00,1008.00); break;}
-			case 'EXECUTIVE': {$size = array(0,0,521.86,756.00); break;}
-			case 'FOLIO': {$size = array(0,0,612.00,936.00); break;}
-		}
-		switch (strtolower($orientation)){
-			case 'landscape':
-				$a=$size[3];
-				$size[3]=$size[2];
-				$size[2]=$a;
-				break;
-		}
-	} else {
-		if (count($paper)>2) {
-			// then an array was sent it to set the size
-			$size = $paper;
-		}
-		else { //size in centimeters has been passed
-			$size[0] = 0;
-			$size[1] = 0;
-			$size[2] = ( $paper[0] / 2.54 ) * 72;
-			$size[3] = ( $paper[1] / 2.54 ) * 72;
-		}
-	}
-	$this->Cpdf($size);
-	$this->ez['pageWidth']=$size[2];
-	$this->ez['pageHeight']=$size[3];
-	
-	// also set the margins to some reasonable defaults
-	$this->ez['topMargin']=30;
-	$this->ez['bottomMargin']=30;
-	$this->ez['leftMargin']=30;
-	$this->ez['rightMargin']=30;
-	
-	// set the current writing position to the top of the first page
-	$this->y = $this->ez['pageHeight']-$this->ez['topMargin'];
-	// and get the ID of the page that was created during the instancing process.
-	$this->ezPages[1]=$this->getFirstPageId();
-	$this->ezPageCount=1;
+    if (!is_array($paper)){
+        switch (strtoupper($paper)){
+            case '4A0': {$size = array(0,0,4767.87,6740.79); break;}
+            case '2A0': {$size = array(0,0,3370.39,4767.87); break;}
+            case 'A0': {$size = array(0,0,2383.94,3370.39); break;}
+            case 'A1': {$size = array(0,0,1683.78,2383.94); break;}
+            case 'A2': {$size = array(0,0,1190.55,1683.78); break;}
+            case 'A3': {$size = array(0,0,841.89,1190.55); break;}
+            case 'A4': default: {$size = array(0,0,595.28,841.89); break;}
+            case 'A5': {$size = array(0,0,419.53,595.28); break;}
+            case 'A6': {$size = array(0,0,297.64,419.53); break;}
+            case 'A7': {$size = array(0,0,209.76,297.64); break;}
+            case 'A8': {$size = array(0,0,147.40,209.76); break;}
+            case 'A9': {$size = array(0,0,104.88,147.40); break;}
+            case 'A10': {$size = array(0,0,73.70,104.88); break;}
+            case 'B0': {$size = array(0,0,2834.65,4008.19); break;}
+            case 'B1': {$size = array(0,0,2004.09,2834.65); break;}
+            case 'B2': {$size = array(0,0,1417.32,2004.09); break;}
+            case 'B3': {$size = array(0,0,1000.63,1417.32); break;}
+            case 'B4': {$size = array(0,0,708.66,1000.63); break;}
+            case 'B5': {$size = array(0,0,498.90,708.66); break;}
+            case 'B6': {$size = array(0,0,354.33,498.90); break;}
+            case 'B7': {$size = array(0,0,249.45,354.33); break;}
+            case 'B8': {$size = array(0,0,175.75,249.45); break;}
+            case 'B9': {$size = array(0,0,124.72,175.75); break;}
+            case 'B10': {$size = array(0,0,87.87,124.72); break;}
+            case 'C0': {$size = array(0,0,2599.37,3676.54); break;}
+            case 'C1': {$size = array(0,0,1836.85,2599.37); break;}
+            case 'C2': {$size = array(0,0,1298.27,1836.85); break;}
+            case 'C3': {$size = array(0,0,918.43,1298.27); break;}
+            case 'C4': {$size = array(0,0,649.13,918.43); break;}
+            case 'C5': {$size = array(0,0,459.21,649.13); break;}
+            case 'C6': {$size = array(0,0,323.15,459.21); break;}
+            case 'C7': {$size = array(0,0,229.61,323.15); break;}
+            case 'C8': {$size = array(0,0,161.57,229.61); break;}
+            case 'C9': {$size = array(0,0,113.39,161.57); break;}
+            case 'C10': {$size = array(0,0,79.37,113.39); break;}
+            case 'RA0': {$size = array(0,0,2437.80,3458.27); break;}
+            case 'RA1': {$size = array(0,0,1729.13,2437.80); break;}
+            case 'RA2': {$size = array(0,0,1218.90,1729.13); break;}
+            case 'RA3': {$size = array(0,0,864.57,1218.90); break;}
+            case 'RA4': {$size = array(0,0,609.45,864.57); break;}
+            case 'SRA0': {$size = array(0,0,2551.18,3628.35); break;}
+            case 'SRA1': {$size = array(0,0,1814.17,2551.18); break;}
+            case 'SRA2': {$size = array(0,0,1275.59,1814.17); break;}
+            case 'SRA3': {$size = array(0,0,907.09,1275.59); break;}
+            case 'SRA4': {$size = array(0,0,637.80,907.09); break;}
+            case 'LETTER': {$size = array(0,0,612.00,792.00); break;}
+            case 'LEGAL': {$size = array(0,0,612.00,1008.00); break;}
+            case 'EXECUTIVE': {$size = array(0,0,521.86,756.00); break;}
+            case 'FOLIO': {$size = array(0,0,612.00,936.00); break;}
+        }
+        switch (strtolower($orientation)){
+            case 'landscape':
+                $a=$size[3];
+                $size[3]=$size[2];
+                $size[2]=$a;
+                break;
+        }
+    } else {
+        if (count($paper)>2) {
+            // then an array was sent it to set the size
+            $size = $paper;
+        }
+        else { //size in centimeters has been passed
+            $size[0] = 0;
+            $size[1] = 0;
+            $size[2] = ( $paper[0] / 2.54 ) * 72;
+            $size[3] = ( $paper[1] / 2.54 ) * 72;
+        }
+    }
+    $this->Cpdf($size);
+    $this->ez['pageWidth']=$size[2];
+    $this->ez['pageHeight']=$size[3];
+    
+    // also set the margins to some reasonable defaults
+    $this->ez['topMargin']=30;
+    $this->ez['bottomMargin']=30;
+    $this->ez['leftMargin']=30;
+    $this->ez['rightMargin']=30;
+    
+    // set the current writing position to the top of the first page
+    $this->y = $this->ez['pageHeight']-$this->ez['topMargin'];
+    // and get the ID of the page that was created during the instancing process.
+    $this->ezPages[1]=$this->getFirstPageId();
+    $this->ezPageCount=1;
 }
 
 // ------------------------------------------------------------------------------
@@ -135,11 +135,11 @@ function Cezpdf($paper='a4',$orientation='portrait')
 // Set Margins in centimeters
 function ezSetCmMargins($top,$bottom,$left,$right)
 {
-	$top = ( $top / 2.54 ) * 72;
-	$bottom = ( $bottom / 2.54 ) * 72;
-	$left = ( $left / 2.54 ) * 72;
-	$right = ( $right / 2.54 ) * 72;
-	$this->ezSetMargins($top,$bottom,$left,$right);
+    $top = ( $top / 2.54 ) * 72;
+    $bottom = ( $bottom / 2.54 ) * 72;
+    $left = ( $left / 2.54 ) * 72;
+    $right = ( $right / 2.54 ) * 72;
+    $this->ezSetMargins($top,$bottom,$left,$right);
 }
 // ------------------------------------------------------------------------------
 
@@ -1278,11 +1278,11 @@ function ezText($text,$size=0,$options=array(),$test=0)
   // modifications to give leading and spacing based on those given by Craig Heydenburg 1/1/02
   if (is_array($options) && isset($options['leading'])) { ## use leading instead of spacing
     $height = $options['leading'];
-	} else if (is_array($options) && isset($options['spacing'])) {
+    } else if (is_array($options) && isset($options['spacing'])) {
     $height = $this->getFontHeight($size) * $options['spacing'];
-	} else {
-		$height = $this->getFontHeight($size);
-	}
+    } else {
+        $height = $this->getFontHeight($size);
+    }
 
   
   $lines = explode("\n",$text);
@@ -1325,121 +1325,121 @@ function ezText($text,$size=0,$options=array(),$test=0)
 
 function ezImage($image,$pad = 5,$width = 0,$resize = 'full',$just = 'center',$border = '')
 {
-	//beta ezimage function
-	if (stristr($image,'://'))//copy to temp file
-	{
-		$fp = @fopen($image,"rb");
-		while(!feof($fp))
-   		{
-      			$cont.= fread($fp,1024);
-   		}
-   		fclose($fp);
-		$image = tempnam ("/tmp", "php-pdf");
-		$fp2 = @fopen($image,"w");
-   		fwrite($fp2,$cont);
-  		fclose($fp2);
-		$temp = true;
-	}
+    //beta ezimage function
+    if (stristr($image,'://'))//copy to temp file
+    {
+        $fp = @fopen($image,"rb");
+        while(!feof($fp))
+           {
+                  $cont.= fread($fp,1024);
+           }
+           fclose($fp);
+        $image = tempnam ("/tmp", "php-pdf");
+        $fp2 = @fopen($image,"w");
+           fwrite($fp2,$cont);
+          fclose($fp2);
+        $temp = true;
+    }
 
-	if (!(file_exists($image))) return false; //return immediately if image file does not exist
-	$imageInfo = getimagesize($image);
-	switch ($imageInfo[2]){
-		case 2:
-			$type = "jpeg";
-			break;
-		case 3:
-			$type = "png";
-			break;
-		default:
-			return false; //return if file is not jpg or png
-	}
-	if ($width == 0) $width = $imageInfo[0]; //set width
-	$ratio = $imageInfo[0]/$imageInfo[1];
+    if (!(file_exists($image))) return false; //return immediately if image file does not exist
+    $imageInfo = getimagesize($image);
+    switch ($imageInfo[2]){
+        case 2:
+            $type = "jpeg";
+            break;
+        case 3:
+            $type = "png";
+            break;
+        default:
+            return false; //return if file is not jpg or png
+    }
+    if ($width == 0) $width = $imageInfo[0]; //set width
+    $ratio = $imageInfo[0]/$imageInfo[1];
 
-	//get maximum width of image
-	if (isset($this->ez['columns']) && $this->ez['columns']['on'] == 1)
-	{
-		$bigwidth = $this->ez['columns']['width'] - ($pad * 2);
-	}
-	else
-	{
-		$bigwidth = $this->ez['pageWidth'] - ($pad * 2);
-	}
-	//fix width if larger than maximum or if $resize=full
-	if ($resize == 'full' || $resize == 'width' || $width > $bigwidth)
-	{
-		$width = $bigwidth;
+    //get maximum width of image
+    if (isset($this->ez['columns']) && $this->ez['columns']['on'] == 1)
+    {
+        $bigwidth = $this->ez['columns']['width'] - ($pad * 2);
+    }
+    else
+    {
+        $bigwidth = $this->ez['pageWidth'] - ($pad * 2);
+    }
+    //fix width if larger than maximum or if $resize=full
+    if ($resize == 'full' || $resize == 'width' || $width > $bigwidth)
+    {
+        $width = $bigwidth;
 
-	}
+    }
 
-	$height = ($width/$ratio); //set height
+    $height = ($width/$ratio); //set height
 
-	//fix size if runs off page
-	if ($height > ($this->y - $this->ez['bottomMargin'] - ($pad * 2)))
-	{
-		if ($resize != 'full')
-		{
-			$this->ezNewPage();
-		}
-		else
-		{
-			$height = ($this->y - $this->ez['bottomMargin'] - ($pad * 2)); //shrink height
-			$width = ($height*$ratio); //fix width
-		}
-	}
+    //fix size if runs off page
+    if ($height > ($this->y - $this->ez['bottomMargin'] - ($pad * 2)))
+    {
+        if ($resize != 'full')
+        {
+            $this->ezNewPage();
+        }
+        else
+        {
+            $height = ($this->y - $this->ez['bottomMargin'] - ($pad * 2)); //shrink height
+            $width = ($height*$ratio); //fix width
+        }
+    }
 
-	//fix x-offset if image smaller than bigwidth
-	if ($width < $bigwidth)
-	{
-		//center if justification=center
-		if ($just == 'center')
-		{
-			$offset = ($bigwidth - $width) / 2;
-		}
-		//move to right if justification=right
-		if ($just == 'right')
-		{
-			$offset = ($bigwidth - $width);
-		}
-		//leave at left if justification=left
-		if ($just == 'left')
-		{
-			$offset = 0;
-		}
-	}
+    //fix x-offset if image smaller than bigwidth
+    if ($width < $bigwidth)
+    {
+        //center if justification=center
+        if ($just == 'center')
+        {
+            $offset = ($bigwidth - $width) / 2;
+        }
+        //move to right if justification=right
+        if ($just == 'right')
+        {
+            $offset = ($bigwidth - $width);
+        }
+        //leave at left if justification=left
+        if ($just == 'left')
+        {
+            $offset = 0;
+        }
+    }
 
 
-	//call appropriate function
-	if ($type == "jpeg"){
-		$this->addJpegFromFile($image,$this->ez['leftMargin'] + $pad + $offset, $this->y + $this->getFontHeight($this->ez['fontSize']) - $pad - $height,$width);
-	}
+    //call appropriate function
+    if ($type == "jpeg"){
+        $this->addJpegFromFile($image,$this->ez['leftMargin'] + $pad + $offset, $this->y + $this->getFontHeight($this->ez['fontSize']) - $pad - $height,$width);
+    }
 
-	if ($type == "png"){
-		$this->addPngFromFile($image,$this->ez['leftMargin'] + $pad + $offset, $this->y + $this->getFontHeight($this->ez['fontSize']) - $pad - $height,$width);
-	}
-	//draw border
-	if ($border != '')
-	{
-	if (!(isset($border['color'])))
-	{
-		$border['color']['red'] = .5;
-		$border['color']['blue'] = .5;
-		$border['color']['green'] = .5;
-	}
-	if (!(isset($border['width']))) $border['width'] = 1;
-	if (!(isset($border['cap']))) $border['cap'] = 'round';
-	if (!(isset($border['join']))) $border['join'] = 'round';
-	
+    if ($type == "png"){
+        $this->addPngFromFile($image,$this->ez['leftMargin'] + $pad + $offset, $this->y + $this->getFontHeight($this->ez['fontSize']) - $pad - $height,$width);
+    }
+    //draw border
+    if ($border != '')
+    {
+    if (!(isset($border['color'])))
+    {
+        $border['color']['red'] = .5;
+        $border['color']['blue'] = .5;
+        $border['color']['green'] = .5;
+    }
+    if (!(isset($border['width']))) $border['width'] = 1;
+    if (!(isset($border['cap']))) $border['cap'] = 'round';
+    if (!(isset($border['join']))) $border['join'] = 'round';
+    
 
-	$this->setStrokeColor($border['color']['red'],$border['color']['green'],$border['color']['blue']);
-	$this->setLineStyle($border['width'],$border['cap'],$border['join']);
-	$this->rectangle($this->ez['leftMargin'] + $pad + $offset, $this->y + $this->getFontHeight($this->ez['fontSize']) - $pad - $height,$width,$height);
+    $this->setStrokeColor($border['color']['red'],$border['color']['green'],$border['color']['blue']);
+    $this->setLineStyle($border['width'],$border['cap'],$border['join']);
+    $this->rectangle($this->ez['leftMargin'] + $pad + $offset, $this->y + $this->getFontHeight($this->ez['fontSize']) - $pad - $height,$width,$height);
 
-	}
-	// move y below image
-	$this->y = $this->y - $pad - $height;
-	//remove tempfile for remote images
-	if ($temp == true) unlink($image);
+    }
+    // move y below image
+    $this->y = $this->y - $pad - $height;
+    //remove tempfile for remote images
+    if ($temp == true) unlink($image);
 
 }
 // ------------------------------------------------------------------------------

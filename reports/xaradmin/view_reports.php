@@ -4,8 +4,8 @@
  */
 function reports_admin_view_reports() 
 {
-	// Get a list of reports
-	$reports = xarModAPIFunc('reports','user','report_getall',array());
+    // Get a list of reports
+    $reports = xarModAPIFunc('reports','user','report_getall',array());
     
     // Include connection info for each report
     foreach ($reports as $key => $report) {

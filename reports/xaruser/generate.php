@@ -6,23 +6,23 @@
 function reports_user_generate($args) 
 {
     $rep_id = xarVarCleanFromInput('rep_id');
-	$xmlfile = xarVarCleanFromInput('xmlfile');
-	$conn_id = xarVarCleanFromInput('conn_id');
-	extract($args);
+    $xmlfile = xarVarCleanFromInput('xmlfile');
+    $conn_id = xarVarCleanFromInput('conn_id');
+    extract($args);
     
-	// Tests:
-	// - does xmlfile exist
-	// - 
-	$dbconn =& xarDBGetConn();
-	$xartables =& xarDBGetTables();
-	$ctab = $xartables['report_connections'];
-	$ccols = &$xartables['report_connections_column'];
+    // Tests:
+    // - does xmlfile exist
+    // - 
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
+    $ctab = $xartables['report_connections'];
+    $ccols = &$xartables['report_connections_column'];
     
-	$vars=array();
-	// Get the settings for the connection for this report
-	$reploc = xarModGetVar('reports','reports_location');
+    $vars=array();
+    // Get the settings for the connection for this report
+    $reploc = xarModGetVar('reports','reports_location');
     $imgloc = xarModGetVar('reports','images_location');
-	$pdf_backend = xarModGetVar('reports','pdf_backend');
+    $pdf_backend = xarModGetVar('reports','pdf_backend');
     $format = xarModGetVar('reports','default_output');
 
     // Set up the connection for the report
@@ -71,7 +71,7 @@ function reports_user_generate($args)
                                                                   'reportfile' => $xmlfile,
                                                                   'action'     => 'search'));
     }
-//	return true;
+//    return true;
 }
 
 ?>

@@ -5,10 +5,10 @@
 function reports_admin_modify_report($args) 
 {
     xarVarFetch('rep_id','int::',$rep_id);
-	extract($args);
+    extract($args);
     
-	$rep = xarModAPIFunc('reports','user','report_get',array('rep_id'=>$rep_id));
-	$connections= xarModAPIFunc('reports','user','connection_getall',array());
+    $rep = xarModAPIFunc('reports','user','report_get',array('rep_id'=>$rep_id));
+    $connections= xarModAPIFunc('reports','user','connection_getall',array());
     $data=array ('authid' => xarSecGenAuthKey(),
                  'updatelabel' => xarML('Update Report'),
                  'rep_id' => $rep_id,
@@ -18,7 +18,7 @@ function reports_admin_modify_report($args)
                  'rep_conn_id' => $rep['conn_id'],
                  'connections' => $connections
                  );
-	return $data;
+    return $data;
 }
 
 ?>

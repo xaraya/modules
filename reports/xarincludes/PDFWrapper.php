@@ -9,8 +9,8 @@ if (!defined('PDF_WRAPPER')) define('PDF_WRAPPER',dirname(__FILE__));
 function PDFLoadCode($type) 
 {
   if (!$type) return false;
-	include_once(PDF_WRAPPER."/wrappers/PDFWrapper-$type.php");		
-	return true;		    
+    include_once(PDF_WRAPPER."/wrappers/PDFWrapper-$type.php");        
+    return true;            
 }  
                 
 function &newPDFWrapper($type) 

@@ -4,11 +4,11 @@
  */
 function reports_admin_update_report($args) 
 {
-	list($rep_id, $rep_name, $rep_desc,$rep_conn,$rep_xmlfile) = 
-		xarVarCleanFromInput('rep_id','rep_name','rep_desc','rep_conn_id','rep_xmlfile');
-	extract($args);
+    list($rep_id, $rep_name, $rep_desc,$rep_conn,$rep_xmlfile) = 
+        xarVarCleanFromInput('rep_id','rep_name','rep_desc','rep_conn_id','rep_xmlfile');
+    extract($args);
     
-	// Only desc, user and password may be empty, rest must have values
+    // Only desc, user and password may be empty, rest must have values
     
     if (!xarSecConfirmAuthKey()) {
         return false;
@@ -29,8 +29,8 @@ function reports_admin_update_report($args)
         }
     }
     
-	// Redisplay the connection screen (thus showing the newly added connection
-	xarResponseRedirect(xarModUrl('reports','admin','view_reports',array()));
+    // Redisplay the connection screen (thus showing the newly added connection
+    xarResponseRedirect(xarModUrl('reports','admin','view_reports',array()));
     return true;
 }
 

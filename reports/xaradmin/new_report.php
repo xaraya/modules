@@ -6,7 +6,7 @@ function reports_admin_new_report()
 {
     // Get all connections
     $connections = xarModAPIFunc('reports','user','connection_getall',array());
-	
+    
     $data = array ('rep_id' => 0,
                    'authid' => xarSecGenAuthKey(),
                    'name' => '(untitled report)',

@@ -4,11 +4,11 @@
  */
 function reports_admin_create_report($args) 
 {
-	list($rep_id, $rep_name, $rep_desc,$rep_xmlfile, $rep_conn_id) = 
-		xarVarCleanFromInput('rep_id','rep_name','rep_desc','rep_xmlfile', 'rep_conn_id');
-	extract($args);
+    list($rep_id, $rep_name, $rep_desc,$rep_xmlfile, $rep_conn_id) = 
+        xarVarCleanFromInput('rep_id','rep_name','rep_desc','rep_xmlfile', 'rep_conn_id');
+    extract($args);
     
-	// Only desc, user and password may be empty, rest must have values
+    // Only desc, user and password may be empty, rest must have values
     if (!xarSecConfirmAuthKey()) {
         // TODO: exception?
         return false;
@@ -28,10 +28,10 @@ function reports_admin_create_report($args)
             xarSessionSetVar('errormsg', xarML("Create report failed"));
         }
     }
-	
-	// Go back to reports menu and display status and or errors
-	xarResponseRedirect(xarModUrl('reports','admin','view_reports',array()));
-	return true;
+    
+    // Go back to reports menu and display status and or errors
+    xarResponseRedirect(xarModUrl('reports','admin','view_reports',array()));
+    return true;
 }
 
 ?>

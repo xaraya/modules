@@ -5,8 +5,8 @@
  */
 function reports_admin_view_connections() 
 {
-	// Get a list of connections
-	$connections = xarModAPIFunc('reports','user','connection_getall',array());
+    // Get a list of connections
+    $connections = xarModAPIFunc('reports','user','connection_getall',array());
 
     // FIXME: it shouldn't be necessary to prep here
     foreach ($connections as $key => $connection) {

@@ -15,7 +15,7 @@ function reports_admin_new_connection()
                 'database' => 'dbname',
                 'user' => 'username',
                 'password' => '');
-	return $data;
+    return $data;
 }
 
 ?>

@@ -4,18 +4,18 @@
  */
 function reports_admin_update_config($args) 
 {
-	// Get parameters
+    // Get parameters
     xarVarFetch('config_replocation','str::',$config_replocation);
     xarVarFetch('config_imglocation','str::',$config_imglocation);
     xarVarFetch('config_pdfbackend','str::',$config_pdfbackend);
     xarVarFetch('config_defaultoutput','str::',$config_defaultoutput);
 
-	extract($args);
-	
-	if (!xarSecConfirmAuthKey()) {
-		//TODO: exception
+    extract($args);
+    
+    if (!xarSecConfirmAuthKey()) {
+        //TODO: exception
         return false;
-	} else {
+    } else {
         // Do the actual work
         if (!xarModAPIFunc('reports',
                            'admin',
@@ -30,9 +30,9 @@ function reports_admin_update_config($args)
             return false;
         }
     }
-		
-	xarResponseRedirect(xarModURL('reports', 'admin', 'modify_config'));
-	return true;
-	
+        
+    xarResponseRedirect(xarModURL('reports', 'admin', 'modify_config'));
+    return true;
+    
 }
 ?>

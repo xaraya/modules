@@ -5,21 +5,21 @@
  */
 function reports_adminapi_delete_report($args) 
 {
-	//Get arguments
-	extract($args);
+    //Get arguments
+    extract($args);
 
-	$dbconn =& xarDBGetConn();
-	$xartables =& xarDBGetTables();
-	$tab = $xartables['reports'];
-	$cols = &$xartables['reports_column'];
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
+    $tab = $xartables['reports'];
+    $cols = &$xartables['reports_column'];
 
-	$sql = "DELETE FROM $tab WHERE $cols[id] = ?";
-	if($dbconn->Execute($sql,array($rep_id))) {
-		return true;
-	} else {
-		return false;
-	}
-	return true;
+    $sql = "DELETE FROM $tab WHERE $cols[id] = ?";
+    if($dbconn->Execute($sql,array($rep_id))) {
+        return true;
+    } else {
+        return false;
+    }
+    return true;
 }
 
 ?>
