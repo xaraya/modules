@@ -410,6 +410,7 @@ function cachesecurity_delete()
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
+    $sitePrefix = xarDBGetSiteTablePrefix();
 
 /*
     $query = xarDBDropTable($tables['security_cache_privileges']);
@@ -428,11 +429,13 @@ function cachesecurity_delete()
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
 
-    $query = xarDBDropIndex($tables['security_masks'],  'i_'.$sitePrefix.'_seccache_masks');
+    $query = xarDBDropIndex($tables['security_masks'],
+                            array('name' => 'i_'.$sitePrefix.'_seccache_masks'));
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
 
-    $query = xarDBDropIndex($tables['privileges'],  'i_'.$sitePrefix.'_seccache_privileges');
+    $query = xarDBDropIndex($tables['privileges'],
+                            array('name' => 'i_'.$sitePrefix.'_seccache_privileges'));
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
 
