@@ -47,23 +47,30 @@ function xarbb_user_main()
 
         $forums[$i]['name'] = $getname['name'];
 
-        // Images
-        if (isset($_COOKIE["xarbb_all"])){
-            $alltimecompare = unserialize($_COOKIE["xarbb_all"]);
+        // Check to see if forum is locked
+        if ($forum['fstatus'] == 1){
+            $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('Forum Locked').'" />';
         } else {
-            $alltimecompare = '';
-        }
-        $fid = $forum['fid'];
-        if (isset($_COOKIE["xarbb_f_$fid"])){
-            $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
-        } else {
-            $forumtimecompare = '';
-        }
+            // Here we can check the updated images or standard ones.
 
-        if (($alltimecompare > $forum['fpostid']) || ($forumtimecompare > $forum['fpostid'])){
-            $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
-        } else {
-            $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+            // Images
+            if (isset($_COOKIE["xarbb_all"])){
+                $alltimecompare = unserialize($_COOKIE["xarbb_all"]);
+            } else {
+                $alltimecompare = '';
+            }
+            $fid = $forum['fid'];
+            if (isset($_COOKIE["xarbb_f_$fid"])){
+                $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
+            } else {
+                $forumtimecompare = '';
+            }
+
+            if (($alltimecompare > $forum['fpostid']) || ($forumtimecompare > $forum['fpostid'])){
+                $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+            } else {
+                $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+            }
         }
     }
 

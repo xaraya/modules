@@ -71,6 +71,7 @@ function xarbb_userapi_getalltopics_byuid($args)
                      xar_fposts,
                      xar_fposter,
                      xar_fpostid,
+                     xar_fstatus,
                      {$categoriesdef['cid']}
             FROM $xbbtopicstable LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = $xbbforumstable.xar_fid
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
@@ -91,7 +92,7 @@ function xarbb_userapi_getalltopics_byuid($args)
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
-    	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid,$catid) = $result->fields;
+    	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
 
 	    if (xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid"))	{
             $topics[] = array('tid'     => $tid,
@@ -103,13 +104,14 @@ function xarbb_userapi_getalltopics_byuid($args)
                    'tftime'  => $tftime,
                    'treplies'=> $treplies,
                    'tstatus' => $tstatus,
-                   'treplier' => $treplier,
+                   'treplier'=> $treplier,
                    'fname'   => $fname,
                    'fdesc'   => $fdesc,
                    'ftopics' => $ftopics,
                    'fposts'  => $fposts,
                    'fposter' => $fposter,
                    'fpostid' => $fpostid,
+                   'fstatus' => $fstatus,
                    'catid'   => $catid);
         }
     }

@@ -26,6 +26,12 @@ function xarbb_user_viewforum()
 
     if (empty($data)) return;
 
+    if ($data['fstatus'] == 1) {
+        $msg = xarML('Forum -- #(1) -- has been locked by administrator', $data['fname']);
+        xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
+        return;
+    }
+
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 

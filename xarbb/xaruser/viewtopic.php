@@ -25,6 +25,12 @@ function xarbb_user_viewtopic()
 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
+    if ($topic['fstatus'] == 1) {
+        $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
+        xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
+        return;
+    }
+
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
 

@@ -57,44 +57,51 @@ function xarbb_user_searchtopics()
         $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
         $fid = $topic['fid'];
         $tid = $topic['tid'];
-        if (isset($_COOKIE["xarbb_all"])){
-            $allforumtimecompare = unserialize($_COOKIE["xarbb_all"]);
+
+        // Check to see if forum is locked
+        if ($topic['fstatus'] == 1){
+            $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('Forum Locked').'" />';
         } else {
-            $allforumtimecompare = '';
-        }
-        if (isset($_COOKIE["xarbb_f_$fid"])){
-            $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
-        } else {
-            $forumtimecompare = '';
-        }
-        if ($forumtimecompare > $allforumtimecompare){
-            $alltimecompare = $forumtimecompare;
-        } else {
-            $alltimecompare = $allforumtimecompare;
-        }
-        $tid = $topic['tid'];
-        if (isset($_COOKIE["xarbb_t_$tid"])){
-            $topictimecompare = unserialize($_COOKIE["xarbb_t_$tid"]);
-        } else {
-            $topictimecompare = '';
-        }
-        // We also have to get the status fields in.
-        // First lets look at the non-new items
-        if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
-            // More comments than our hottopic setting, therefore should be hot, but not new.
-            if ($topics[$i]['comments'] > $hotTopic){
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-            // Else should be a regular old boring topic
+
+            if (isset($_COOKIE["xarbb_all"])){
+                $allforumtimecompare = unserialize($_COOKIE["xarbb_all"]);
             } else {
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+                $allforumtimecompare = '';
             }
-        } else {
-            // OOF, look at this topic, hot and new.
-            if ($topics[$i]['comments'] > $hotTopic){
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-            // Else should be a regular old boring topic that has a new post
+            if (isset($_COOKIE["xarbb_f_$fid"])){
+                $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
             } else {
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+                $forumtimecompare = '';
+            }
+            if ($forumtimecompare > $allforumtimecompare){
+                $alltimecompare = $forumtimecompare;
+            } else {
+                $alltimecompare = $allforumtimecompare;
+            }
+            $tid = $topic['tid'];
+            if (isset($_COOKIE["xarbb_t_$tid"])){
+                $topictimecompare = unserialize($_COOKIE["xarbb_t_$tid"]);
+            } else {
+                $topictimecompare = '';
+            }
+            // We also have to get the status fields in.
+            // First lets look at the non-new items
+            if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
+                // More comments than our hottopic setting, therefore should be hot, but not new.
+                if ($topics[$i]['comments'] > $hotTopic){
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+                // Else should be a regular old boring topic
+                } else {
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+                }
+            } else {
+                // OOF, look at this topic, hot and new.
+                if ($topics[$i]['comments'] > $hotTopic){
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+                // Else should be a regular old boring topic that has a new post
+                } else {
+                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+                }
             }
         }
         if ($topics[$i]['comments'] == 0) {

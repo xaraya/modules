@@ -176,22 +176,7 @@
 						</xar:sec>
 						<xar:sec mask="AdminxarBB" catch="false">
 							<xar:if condition="xarModIsAvailable('overlib')"> 
-								<xar:overlib-init />
-								<xar:overlib-popup-open name="$olopen" 
-									caption="IP Address of $postername" 
-									text="Not Implemented"
-									width="100"
-									fgcolor="#ffffff"
-									bgcolor="#000000"
-									textcolor="#ff0000"
-									capcolor="#ffffff"
-									/>
-								<xar:overlib-popup-close name="$olclose"/>
-								<a href="javascript:void(0);" 
-								   onmouseover="#$olopen#" 
-								   onmouseout="#$olclose#">
-									#$ipimg#
-								</a>
+								<xar:template file="overlib-ipt" type="module" />
 							</xar:if>
 						</xar:sec>
 					</td>
@@ -371,23 +356,7 @@
 						</xar:sec>
 						<xar:sec mask="AdminxarBB" catch="false">
 							<xar:if condition="xarModIsAvailable('overlib')"> 
-								<xar:overlib-init />
-								<xar:overlib-popup-open name="$olopen" 
-									caption="IP Address of $item[xar_author]" 
-									text="$item[xar_hostname]"
-									width="150"
-									offsetx="100"
-									fgcolor="#ffffff"
-									bgcolor="#000000"
-									textcolor="#ff0000"
-									capcolor="#ffffff"
-									/>
-								<xar:overlib-popup-close name="$olclose"/>
-								<a href="javascript:void(0);" 
-								   onmouseover="#$olopen#" 
-								   onmouseout="#$olclose#">
-									#$ipimg#
-								</a>
+								<xar:template file="overlib-ipc" type="module" />
 							</xar:if>
 						</xar:sec>
 					</td>

@@ -104,9 +104,13 @@
 		</td>
 		<td class="xar-norm" width="100%" height="50">
 			<span class="xar-title">
-				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $loop:item['fid']))#" title="#$loop:item['fname']#">
-					#$loop:item['fname']#
-				</a><br />
+				<xar:if condition="$loop:item['fstatus'] ne 1">
+					<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $loop:item['fid']))#" title="#$loop:item['fname']#">
+						#$loop:item['fname']#
+					</a><br />
+				<xar:else />
+					#$loop:item['fname']#<br />
+				</xar:if>
 			</span> 
 			<span class="xar-norm">
 				#$loop:item['fdesc']#<br />

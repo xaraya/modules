@@ -60,6 +60,7 @@ function xarbb_userapi_gettopic($args)
                      xar_fposts,
                      xar_fposter,
                      xar_fpostid,
+                     xar_fstatus,
                      {$categoriesdef['cid']}
             FROM $xbbtopicstable LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = $xbbforumstable.xar_fid
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
@@ -88,7 +89,7 @@ function xarbb_userapi_gettopic($args)
     }
 
     list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
-    	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid,$catid) = $result->fields;
+    	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
@@ -109,6 +110,7 @@ function xarbb_userapi_gettopic($args)
                    'fposts'  => $fposts,
                    'fposter' => $fposter,
                    'fpostid' => $fpostid,
+                   'fstatus' => $fstatus,
                    'catid'   => $catid);
 
     return $topic;
