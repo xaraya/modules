@@ -50,7 +50,7 @@ function polls_userapi_gethooked($args)
                AND ".$prefix."_itemtype = ?
                AND ".$prefix."_itemid = ?";
     $bindvars = array((int)$modid, $itemtype, $objectid);
-    $result =& $dbconn->SelectLimit($sql, 1, $bindvars);
+    $result =& $dbconn->SelectLimit($sql, 1, -1, $bindvars);
 
     // Error check
     if (!$result) {
