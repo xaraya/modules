@@ -4,21 +4,21 @@
 <form method="post" action="#xarModURL('xslt', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-	<table border="0" cellpadding="8" cellspacing="0">
-	<xar:foreach in="$settings" key="$modname" value="$config">
-		<tr>
-			<td colspan="2"><b>#$config['label']#</b></td>
-		</tr>
-		<tr>
-			<td><xar:mlstring>XSL File</xar:mlstring></td>
-			<td>
-				<input type="text" name="xsl[#$modname#]" id="xsl[#$modname#]" value="#$config['xsl']#" size="40" />
-			</td>
-		</tr>
-	</xar:foreach>
-	</table>
-	<br /><br />
-	<input type="submit" value="Update XSLT Configuration" />
+    <table border="0" cellpadding="8" cellspacing="0">
+    <xar:foreach in="$settings" key="$modname" value="$config">
+        <tr>
+            <td colspan="2"><b>#$config['label']#</b></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>XSL File</xar:mlstring></td>
+            <td>
+                <input type="text" name="xsl[#$modname#]" id="xsl[#$modname#]" value="#$config['xsl']#" size="40" />
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
+    <br /><br />
+    <input type="submit" value="Update XSLT Configuration" />
 </form>
 </div>
 </div>
