@@ -10,7 +10,7 @@
 <table width="100%" border="0" cellpadding="2" cellspacing="1">
     <tr>
         <td style="text-align: left;">
-            <label for="basedir"><xar:mlstring>Base Directory</xar:mlstring>
+            <label for="basedir"><xar:mlstring>Base Directory</xar:mlstring></label>
         </td>
         <td style="text-align: left;">
             <input type="text" name="basedir" id="basedir" value="#$basedir#" size="50" maxlength="250" />
@@ -20,7 +20,7 @@
     </tr>
     <tr>
         <td style="text-align: left;">
-            <label for="baseurl"><xar:mlstring>Base URL</xar:mlstring>
+            <label for="baseurl"><xar:mlstring>Base URL</xar:mlstring></label>
         </td>
         <td style="text-align: left;">
             <input type="text" name="baseurl" id="baseurl" value="#$baseurl#" size="50" maxlength="250" />
@@ -28,7 +28,7 @@
     </tr>
     <tr>
         <td style="text-align: left;">
-            <label for="thumbnail"><xar:mlstring>Thumbnail Prefix</xar:mlstring>
+            <label for="thumbnail"><xar:mlstring>Thumbnail Prefix</xar:mlstring></label>
         </td>
         <td style="text-align: left;">
             <input type="text" name="thumbnail" id="thumbnail" value="#$thumbnail#" size="10" maxlength="50" />
@@ -36,10 +36,10 @@
     </tr>
     <tr>
         <td style="text-align: left;">
-            <label for="filelist[]"><xar:mlstring>Available Pictures</xar:mlstring>
+            <label for="picture_filelist"><xar:mlstring>Available Pictures</xar:mlstring></label>
         </td>
         <td style="text-align: left;">
-            <select name="filelist[]" id="filelist[]" multiple>
+            <select name="filelist[]" id="picture_filelist" multiple="multiple">
                 <option value=""></option>
             <xar:foreach in="$filelist" value="$file">
                 <xar:if condition="!empty($thumblist[$file])">

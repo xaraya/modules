@@ -10,7 +10,7 @@
             <p><xar:mlstring>What is it?</xar:mlstring></p>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><em><xar:mlstring>Articles is a Xaraya Content Module responsible for the handling of generic and complex content structures.</xar:mlstring></em>
+            <p><em><xar:mlstring>Articles is a Xaraya Content Module responsible for the handling of generic and complex content structures.</xar:mlstring></em></p>
 
         </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -40,7 +40,7 @@
                 even create or delete publication types according to your needs.</xar:mlstring></p>
 
                 <p><xar:mlstring>Each publication type also has its own templates, so that you can
-                customize the look & feel of how each article will appear to your
+                customize the look &amp; feel of how each article will appear to your
                 visitors.</xar:mlstring></p>
 
                 <p><xar:mlstring>A default set of publication types and templates (corresponding

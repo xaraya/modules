@@ -32,12 +32,12 @@
         <xar:if condition="empty($item['link'])">
             #xarVarPrepForDisplay($item['label'])#
         <xar:else />
-            <a href="#$item['link']#">#xarVarPrepForDisplay($item['label'])#
+            <xar:if condition="!empty($item['count'])">
+                <a href="#$item['link']#">#xarVarPrepForDisplay($item['label'])# (#$item['count']#)</a>
+            <xar:else />
+                <a href="#$item['link']#">#xarVarPrepForDisplay($item['label'])#</a>
+            </xar:if>
         </xar:if>
-        <xar:if condition="!empty($item['count'])">
-            (#$item['count']#)
-        </xar:if>
-        </a>
         <xar:if condition="!empty($item['desc'])">
             #xarVarPrepHTMLDisplay($item['desc'])#
         </xar:if>

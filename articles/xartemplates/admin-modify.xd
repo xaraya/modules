@@ -32,10 +32,12 @@
 </xar:comment>
 
 <xar:if condition="!empty($withupload)">
-    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="multipart/form-data" #$formhooks['formaction']#>
-<xar:else />
-    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" #$formhooks['formaction']#>
+    <xar:set name="enctype">'multipart/form-data'</xar:set>
+<xar:else/>
+    <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
 </xar:if>
+    
+<form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" #$formhooks['formaction']#>
     <div style="float:left;width:100%"> <xar:comment> containing float - quick fix for JC's css layouts [andyv] </xar:comment>
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
