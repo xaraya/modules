@@ -6,9 +6,12 @@ div.xarbb-tablewrapper,
 div.xarbb-noteswrapper,
 div.xarbb-topiccontrols,
 div.xarbb-messagecontrols {
-    width: 100%;
+	float: left;
+	width: 100%;
     margin: .5em 0;
 }
+
+* html div.xarbb-noteswrapper { float:none; }
 
 div#xarbb-topics ul.xar-sub {
     float: left;
