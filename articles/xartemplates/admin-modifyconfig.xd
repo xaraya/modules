@@ -658,7 +658,9 @@
                         <tr>
                             <td colspan="2">
                                 <xar:foreach in="$hooks" key="$hookmodule">
-                                    #$hooks[$hookmodule]# 
+                                    <xar:if condition="!empty($ptid) or $hookmodule ne 'dynamicdata'">
+                                        #$hooks[$hookmodule]# 
+                                    </xar:if>
                                 </xar:foreach>
                             </td>
                         </tr>
