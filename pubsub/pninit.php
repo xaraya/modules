@@ -61,6 +61,20 @@ function pubsub_init()
         // Report failed initialisation attempt
         return false;
     }
+    
+    $pubsubtemplatetable = $pntable['pubsub_template'];
+    $sql = "CREATE TABLE $pubsubtemplatetable (
+            pn_templateid int(10) NOT NULL default '',
+            pn_eventid int(10) NOT NULL default '',
+            pn_template text NOT NULL default '',
+	    PRIMARY KEY(pn_templateid))";
+    $dbconn->Execute($sql);
+
+    // Check database result
+    if ($dbconn->ErrorNo() != 0) {
+        // Report failed initialisation attempt
+        return false;
+    }
 
     // Set up module hooks
     if (!pnModRegisterHook('item',
@@ -187,6 +201,15 @@ function pubsub_delete()
     }
 
     $sql = "DROP TABLE $pntable[pubsub_process]";
+    $dbconn->Execute($sql);
+
+    // Check database result
+    if ($dbconn->ErrorNo() != 0) {
+        // Report failed deletion attempt
+        return false;
+    }
+
+    $sql = "DROP TABLE $pntable[pubsub_template]";
     $dbconn->Execute($sql);
 
     // Check database result

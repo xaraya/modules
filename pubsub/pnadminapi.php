@@ -279,12 +279,45 @@ function pubsub_adminapi_runjob($args)
 	    pnSessionSetVar('errormsg', _PUBSUBINVALIDEMAIL);
 	    return false;
 	} else {
-	    // addesss valid so send the mail
-            mail($info,    // to
-	         $subject, // subject
-	         $message, // message
-	         "From: pnConfigGetVar('adminmail')\r\nReply-to: pnConfigGetVar('adminmail')\r\n");
-            // delete job from queue now its run
+       	    // Database information
+    	    $pubsubtemplatetable = $pntable['pubsub_template'];
+    	    // Get info on job to run
+    	    $sql = "SELECT pn_template
+            	    FROM $pubsubtemplatetable
+            	    WHERE pn_eventid = '" . pnVarPrepForStore($eventid) . "'";
+    	    $result   = $dbconn->Execute($sql);
+    	    $template = $result->fields[0];
+	    // *** TODO  ***
+	    // need to define some variables for user firstname and surname,etc.
+	    // might not be able to use the normal BL user vars as they would 
+	    // probabaly expand to currently logged in user, not the user for 
+	    // this event.
+	    // do something with the template to parse it and generate the HTML
+	    $html = SOME_BL_FUNCTION($template); 
+	    $plaintext = strip_tags($html);
+	    $boundary = "b" . md5(uniqid(time()));
+	    $message = "From: pnConfigGetVar('adminmail')\r\nReply-to: pnConfigGetVar('adminmail')\r\n";
+	    $message .= "Content-type: multipart/mixed; ";
+	    $message .= "boundary = $boundary\r\n\r\n";
+	    $message .= "This is a MIME encoded message.\r\n\r\n";
+	    // first the plaintext message
+	    $message .= "--$boundary\r\n";
+	    $message .= "Content-type: text/plain\r\n";
+	    $message .= "Content-Transfer-Encoding: base64";
+	    $message .= "\r\n\r\n" . chunk_split(base64_encode($plaintext)) . "\r\n";
+	    // now the HTML version
+	    $message .= "--$boundary\r\n";
+	    $message .= "Content-type: text/html\r\n";
+	    $message .= "Content-Transfer-Encoding: base64";
+	    $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
+	    
+	    // send the mail
+            mail($info,     // to
+	         $subject,  // subject
+		 '',        // empty mesage body as sending multipart messages
+	         $message); // message
+
+            // delete job from queue now it has run
 	    pubsub_adminapi_deljob($handlingid);
         }
     } else {
@@ -386,5 +419,140 @@ function pubsub_adminapi_updatejob($args)
     return true;
 }
 
+/**
+ * create a new pubsub template
+ * @param $args['eventid'] name of the event this template applies to
+ * @param $args['template'] the template text
+ * @returns int
+ * @return template ID on success, false on failure
+ */
+function pubsub_adminapi_addtemplate($args)
+{
+// This function will create a new 
+
+    // Get arguments from argument array
+    extract($args);
+
+    // Security check
+    if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
+        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
+        return false;
+    }
+
+    // Get datbase setup
+    list($dbconn) = pnDBGetConn();
+    $pntable = pnDBGetTables();
+    $pubsubtemplatetable = $pntable['pubsub_template'];
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($pubsubtemplatetable);
+
+    // Add item
+    $sql = "INSERT INTO $pubsubtemplatetable (
+              pn_templateid,
+              pn_eventid,
+              pn_template)
+            VALUES (
+              $nextId,
+              '" . pnVarPrepForStore($eventid) . "',
+              '" . pnvarPrepForStore($template) . "')";
+    $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        pnSessionSetVar('errormsg', _CREATEFAILED);
+        return false;
+    }
+
+    // return eventID
+    return $nextId;
+}
+
+/**
+ * delete a pubsub template
+ * @param $args['templateid'] ID of the item
+ * @returns bool
+ * @return true on success, false on failure
+ */
+function pubsub_adminapi_deletetemplate($args)
+{
+    // Get arguments from argument array
+    extract($args);
+
+    // Argument check
+    if (!isset($templateid)) {
+        pnSessionSetVar('errormsg', _MODARGSERROR);
+        return false;
+    }
+
+    // Security check
+    if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
+        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
+        return false;
+    }
+
+    // Get datbase setup
+    list($dbconn) = pnDBGetConn();
+    $pntable = pnDBGetTables();
+    $pubsubtemplatetable = $pntable['pubsub_template'];
+
+    // Delete item
+    $sql = "DELETE FROM $pubsubtemplatetable
+            WHERE pn_templateid = '" . pnVarPrepForStore($templateid) . "'";
+    $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        pnSessionSetVar('errormsg', _DELETEFAILED);
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * update an existing pubsub template
+ * @param $args['templateid'] the ID of the item
+ * @param $args['eventid'] the new eventid of the item
+ * @param $args['template'] the new template text of the item
+ * @returns bool
+ * @return true on success, false on failure
+ */
+function pubsub_adminapi_updatetemplate($args)
+{
+    // Get arguments from argument array
+    extract($args);
+
+    // Argument check
+    if ((!isset($templateid)) ||
+        (!isset($eventid)) ||
+        (!isset($template))) (
+        pnSessionSetVar('errormsg', _MODARGSERROR);
+        return false;
+    }
+
+    // Security check
+    if (!pnSecAuthAction(0, 'Pubsub', "$name::$templateid", ACCESS_EDIT)) {
+        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
+        return false;
+    }
+
+    // Get database setup
+    list($dbconn) = pnDBGetConn();
+    $pntable = pnDBGetTables();
+    $pubsubtemplatetable = $pntable['pubsub_template'];
+
+    // Update the item
+    $sql = "UPDATE $pubsubtemplatetable
+            SET pn_template = '" . pnVarPrepForStore($template) . "',
+                pn_eventid = '" . pnVarPrepForStore($eventid) . "'
+            WHERE pn_templateid = '" . pnVarPrepForStore($templateid) . "'";
+    $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        pnSessionSetVar('errormsg', _UPDATEFAILED);
+        return false;
+    }
+
+    return true;
+}
 
 ?>

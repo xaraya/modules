@@ -29,6 +29,12 @@ function pubsub_pntables()
     // Table name
     $pntable['pubsub_process'] = $pubsub_process;
 
+    // Name for pubsub template database entities
+    $pubsub_template = pnConfigGetVar('prefix') . '_pubsub_template';
+
+    // Table name
+    $pntable['pubsub_template'] = $pubsub_template;
+
     // Return table information
     return $pntable;
 }
