@@ -3,7 +3,7 @@
 #
 #          -  Plouf's Java IRC Client  -
 #
-#      Copyright (C) 2002 Philippe Detournay
+#      Copyright (C) 2004 Philippe Detournay
 #
 #   This file is licensed under the GPL license
 #
@@ -68,16 +68,20 @@
 0406 [ABOUT_GPL] Ce programme est sous license GPL
       
 0501 [SERVER_UNABLE_TO_CONNECT] Impossible de se connecter : %1
-0502 [SERVER_UNABLE_TO_CONNECT_STILL] Impssible de se connecter à %1, déjà en train d'essayer de se connecter à %2
+0502 [SERVER_UNABLE_TO_CONNECT_STILL] Impossible de se connecter à %1, déjà en train d'essayer de se connecter à %2
 0503 [SERVER_DISCONNECTING] Déconnexion de %1
 0504 [SERVER_CONNECTING] Connexion...
 0505 [SERVER_NOT_CONNECTED] Non connecté
 0506 [SERVER_LOGIN] Enregistrement...
 0507 [SERVER_DISCONNECTED] Déconnecté de %1
 0508 [SERVER_ERROR] Erreur : %1
+0509 [SERVER_AUTOREJOIN_ATTEMPT] Tentative de retour sur le canal %1...
+050a [SERVER_AUTOREJOIN_FAILED] Impossible de rejoindre le canal %1
       
 071a [GUI_CHANGE_NICK] Modifier le nick
 071b [GUI_COPY_WINDOW] Copier le texte
+071c [GUI_DCC_CHAT_WARNING_TITLE] Attention
+071d [GUI_DCC_CHAT_WARNING_TEXT] Voulez-vous accepter une connection DCC-chat en provenance de %1?
 
 0801 [ASL_MALE] Garçon, %1 ans, %2
 0802 [ASL_FEMALE] Fille, %1 ans, %2

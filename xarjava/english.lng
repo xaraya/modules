@@ -3,7 +3,7 @@
 #
 #          -  Plouf's Java IRC Client  -
 #
-#      Copyright (C) 2002 Philippe Detournay
+#      Copyright (C) 2004 Philippe Detournay
 #
 #   This file is licensed under the GPL license
 #
@@ -75,10 +75,13 @@
 0506 [SERVER_LOGIN] Logging in...
 0507 [SERVER_DISCONNECTED] Disconnected from %1
 0508 [SERVER_ERROR] Error : %1
-     
+0509 [SERVER_AUTOREJOIN_ATTEMPT] Attempting to rejoin channel %1...
+050a [SERVER_AUTOREJOIN_FAILED] Unable to rejoin channel %1
       
 071a [GUI_CHANGE_NICK] Change nick to
 071b [GUI_COPY_WINDOW] Copy text
+071c [GUI_DCC_CHAT_WARNING_TITLE] Warning
+071d [GUI_DCC_CHAT_WARNING_TEXT] Do you want to accept DCC chat from %1?
 
 0801 [ASL_MALE] Boy, %1 years old, %2
 0802 [ASL_FEMALE] Girl, %1 years old, %2

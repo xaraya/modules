@@ -55,36 +55,41 @@ Files
 
 Build
 -----
-    The unsigned IRC Engine can be built using the following javac compiler
-    commands :
-        javac -nowarn -g:none -O -target 1.1 IRCApplet.java
-        javac -nowarn -g:none -O -target 1.1 irc\style\*.java
-        javac -nowarn -g:none -O -target 1.1 irc\tree\*.java
-        javac -nowarn -g:none -O -target 1.1 irc\dcc\prv\*.java
-        javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
-        javac -nowarn -g:none -O -target 1.1 irc\gui\common\*.java
-        javac -nowarn -g:none -O -target 1.1 irc\ident\prv\*.java
-        javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
+	The unsigned IRC Engine can be built using the following javac compiler
+	commands :
+		javac -nowarn -g:none -O -target 1.1 IRCApplet.java
+		javac -nowarn -g:none -O -target 1.1 irc\style\*.java
+		javac -nowarn -g:none -O -target 1.1 irc\tree\*.java
+		javac -nowarn -g:none -O -target 1.1 irc\dcc\prv\*.java
+		javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
+		javac -nowarn -g:none -O -target 1.1 irc\gui\common\*.java
+		javac -nowarn -g:none -O -target 1.1 irc\ident\prv\*.java
+		javac -nowarn -g:none -O -target 1.1 irc\gui\prv\*.java
 
 Installation
 ------------
-    Just upload the files you need, in regard to the mode (signed or unsigned)
-    you want. Upload any extra files, such as language files or images and
-    sound.
+	Just upload the files you need, in regard to the mode (signed or unsigned)
+	you want. Upload any extra files, such as language files or images and
+	sound.
 
 Applet html fragment
 --------------------
-    Using signed mode and the Pixx GUI, the following minimal applet fragment
-    should work just fine :
+	Using signed mode and the Pixx GUI, the following minimal applet fragment
+	should work just fine :
 
-    <applet code=IRCApplet.class archive="irc.jar,pixx.jar" width=640 height=400>
-    <param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab">
-    <param name="nick" value="Anonymous">
-    <param name="name" value="PJIRC User">
-    <param name="host" value="irc.diboo.net">
-    <param name="gui" value="pixx">
-    </applet>
-    
+	<applet code=IRCApplet.class archive="irc.jar,pixx.jar" width=640
+	    height=400>
+	<param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab">
+	<param name="nick" value="Anonymous">
+	<param name="fullname" value="PJIRC User">
+	<param name="host" value="irc.diboo.net">
+	<param name="gui" value="pixx">
+	</applet>
+
+Test your applet
+----------------
+	A test tool is available at http://www.pjirc.com/check.
+	This tool will detect common errors and mistakes.
 
 What is a server?
 -----------------
@@ -162,9 +167,9 @@ Mandatory parameters
       <param name="nick" value="Guest??">   will tell the applet to use nicks
                                             such as Guest47
 
-  name : "real" user name, sent to IRC server.
+  fullname : "real" user name, sent to IRC server.
     Example :
-      <param name="name" value="UserName">
+      <param name="fullname" value="UserName">
 
   host : IRC server host.
     Example :
@@ -234,8 +239,8 @@ Optional parameters
     Example :
       <param name="aslfemale" value="f">
 
-  aslunknown : set the string corresponding to the unknown gender in the full name
-  ----------   for asl parsing. Default value is "x".
+  aslunknown : set the string corresponding to the unknown gender in the full
+  ----------   name for asl parsing. Default value is "x".
 
     Example :
       <param name="aslunknown" value="x">
@@ -394,11 +399,10 @@ Optional parameters
     Example :
       <param name="userinforeply" value="A lucky Plouf's IRC user">
 
-  fileparameter : URL to the file containing all PJIRC parameters. If this
-  -------------   parameter is used, then no other parameter will be taken
-                  into account and the specified configuration file will be
-                  used instead. The configuration file format is the same
-                  as the pjirc.cfg file.
+  fileparameter : URL to the file containing all PJIRC parameters.
+  -------------   The configuration file format is the same as the
+                  pjirc.cfg file. If other parameters are specified
+                  using the html tags, they will be mixed.
 
     Example :
       <param name="fileparameter" value="pjirc.cfg">
@@ -423,7 +427,25 @@ Optional parameters
     Example :
       <param name="allowdccfile" value="false">
 
+  disablequeries : disable all queries. By default, this is not enabled.
+  --------------
 
+    Example
+      <param name="disablequeries" value="true">
+
+  autorejoin : enables the automatic channel rejoin when kicked out. By default,
+  ----------   autorejoin is disabled.
+
+    Example
+      <param name="autorejoin" value="true">
+
+  initX : set the Xth initial command to be executed when the applet starts
+  -----   up. This is usefull when several servers needs to be automatically
+          joined.
+          
+    Example
+      <param name="init1" value="/newserver Undernet eu.undernet.org">
+    
 Style parameters
 ----------------
 
@@ -444,7 +466,8 @@ the engine package. All 'Style' parameters are prefixed by 'style:'.
 
     Example :
       <param name="style:sourcecolorrule1" value="none+Channel all 0=00ff00">
-      <param name="style:sourcecolorrule2" value="none+Query none+some_nick 0=000000 1=ffffff">
+      <param name="style:sourcecolorrule2" value="none+Query none+some_nick
+          0=000000 1=ffffff">
 
   sourcefontruleN : set the Nth source font rule. Rule syntax is 
   ----------------   "type name fontname fontsize".
@@ -478,8 +501,10 @@ the engine package. All 'Style' parameters are prefixed by 'style:'.
                      771 : Bottom right
 
     Example :
-      <param name="style:backgroundimage1" value="none+channel none+#happy 1 img/content.gif">
-      <param name="style:backgroundimage2" value="none+Query all 2 img/soleil.gif">
+      <param name="style:backgroundimage1" value="none+channel none+#happy 1
+          img/content.gif">
+      <param name="style:backgroundimage2" value="none+Query all 2
+          img/soleil.gif">
 
   bitmapsmileys : enable or disable bitmap smileys. Once enabled, bitmaps are
   -------------   defined via the smiley parameter. By default, bitmap smileys
@@ -527,6 +552,11 @@ the engine package. All 'Style' parameters are prefixed by 'style:'.
     Example 
       <param name="style:maximumlinecount" value="256">
 
+  highlightlinks : highlight links when mouse moves over them. By default,
+  --------------   this is not enabled.
+
+    Example
+      <param name="style:highlightlinks" value="true">
 
 GUI parameters
 --------------
@@ -540,36 +570,47 @@ JavaScript support
   PJIRC is designed to support events from the "outside". The applet supports
   the following methods :
   
-  void sendString(String str) : send the given string to the server, through
-                                the current source interpretor. For instance,
-                                you can bring the channel list window by
-                                calling sendString("/list")
+  void sendString(String str) :
+      send the given string to the server, through the current source
+      interpretor. For instance, you can bring the channel list window by
+      calling sendString("/list")
                                 
-  void setFieldText(String txt) : set the textfield content.
+  void setFieldText(String txt) :
+      set the textfield content.
   
-  String getFieldText() : get the textfield content. setFieldText and
-                          getFieldText can be combined to append text for the
-                          user. For instance, adding a smiley can be done using
-                          setFieldText(getFieldText()+':)')
+  String getFieldText() :
+      get the textfield content. setFieldText and getFieldText can be combined
+      to append text for the user. For instance, adding a smiley can be done
+      using setFieldText(getFieldText()+':)')
                           
-  void validateText() : validate the current textfield content, as if the user
-                        pressed the return key.
+  void validateText() :
+      validate the current textfield content, as if the user pressed the return
+      key.
 
-  void requestSourceFocus() : request the active source to gain focus.
+  void requestSourceFocus() :
+      request the active source to gain focus.
 
-  void sendPluginEvent(String pluginName,Object event) : send the given event
-                                                         value to the given
-                                                         plugin.
+  void sendPluginEvent(String pluginName,Object event) :
+      send the given event value to the given plugin.
 
-  Object getPluginValue(String pluginName,Object valueName) : Get the plugin
-                                                              value from the
-                                                              given plugin
-                                                              name.
+  Object getPluginValue(String pluginName,Object valueName) :
+      Get the plugin value from the given plugin name.
 
+  void requestSourceFocus(String serverName,String type,String name) :
+      request the given source to gain focus. If serverName is empty, the first
+      source matching the type and name will receive focus regardless of its
+      server.
+  
+  void sendString(String serverName,String type,String name,String cmd) :
+      send the given string to the server, through the given source
+      interpretor. If serverName is empty, the first source matching the type
+      and name will receive the string, regardless of its server.
+  
 Minimal html fragment
 ---------------------
 
-<applet code=IRCApplet.class archive="irc.jar,securedirc.jar" width=640 height=400>
+<applet code=IRCApplet.class archive="irc.jar,securedirc.jar" width=640
+    height=400>
 <param name="CABINETS" value="irc.cab,securedirc.cab">
 
 <param name="nick" value="Anonymous???">
@@ -617,12 +658,16 @@ query %nick : query the given nickname
 quit [%message] : same as disconnect, but with the given message
 raw %command : send a raw command to the server
 server %host [%port [%password]] : connect to the given server
-sound %soundfile : play the given sound on the client and all other clients on the source
+sound %soundfile : play the given sound on the client and all other clients on
+    the source
 sleep %millis : freeze the interpretor for the given amount of milliseconds
 topic %channel %topic : change the given channel's topic
 unignore %nick : unignore the specified nick
 unload %plugin : unload the specified plugin
 url %url [%target] : open the given url on a new browser window
+onserver %server command : execute the following command only if the source
+    server matches the specified one. This is usefull when used with the
+    commandX parameters.
 
 Contacts
 --------
@@ -630,4 +675,5 @@ Contacts
 PJIRC is developped by Plouf - plouf@pjirc.com
 Have a look at http://www.pjirc.com/ for news about PJIRC.
 PJIRC has an official italian website on http://www.pjirc.it
-PJIRC has a CVS repository at SourceForge - http://sourceforge.net/projects/pjirc
+PJIRC has a CVS repository at SourceForge :
+    http://sourceforge.net/projects/pjirc

@@ -262,6 +262,34 @@ Parameters
     Example :
       <param name="pixx:nickpostfix" value="\b>\s">
 
+  displayentertexthere : Enables the "Enter text here..." text that
+  --------------------   will be displayed upon new source creation
+                         in the text input field. Default value is false.
+
+    Example :
+      <param name="pixx:displayentertexthere" value="true">
+
+  ignoreallmouseevents : Disables any mouse-related events. By default,
+  --------------------   this is false.
+
+    Example :
+      <param name="pixx:ignoreallmouseevents" value="true">
+
+  hideundockedsources : Removes the undocked sources from the taskbar.
+  -------------------   By default, this is not enabled.
+
+    Example :
+      <param name="pixx:hideundockedsources" value="true">
+
+  displaychannelXXX : Enable or disable channel topic details.
+  -----------------   By default, all details are enabled.
+                      XXX can be: name the channel name
+                                  mode the channel mode
+                                  count the user count
+                                  topic the channel topic
+
+    Example :
+      <param name="pixx:displaychannelmode" value="false">
 
 Runtime commands
 ----------------
@@ -273,6 +301,11 @@ undock : undock the active source
 color %c : set the current color to %c. For instance /color 4,2
 bold %b : set the bold status, with %b being either 1 or 0.
 underline %u : set the underline status, with %u being either 1 or 0.
+focus %type %source : set the focus to the given source
+highlight %word : add the given word into the highlight word list. Only
+    has effect if highlight is set to true.
+unhighlight %word : remove the given word from the highlight word list. Only
+    has effect if highlight is set to true.
 
 Contacts
 --------

@@ -3,7 +3,7 @@
 #
 #          -  Plouf's Java IRC Client  -
 #
-#      Copyright (C) 2002 Philippe Detournay
+#      Copyright (C) 2004 Philippe Detournay
 #
 #   This file is licensed under the GPL license
 #
@@ -70,5 +70,6 @@
 871c [GUI_FONT] Font
 871d [GUI_FONT_WINDOW] Select font
 871e [GUI_FONT_WINDOW_OK] Ok
+871f [GUI_ENTER_TEXT_HERE] Enter text here...
 
 ffff [ERROR_NOT_DEFINED] Undefined string

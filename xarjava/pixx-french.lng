@@ -3,7 +3,7 @@
 #
 #          -  Plouf's Java IRC Client  -
 #
-#      Copyright (C) 2002 Philippe Detournay
+#      Copyright (C) 2004 Philippe Detournay
 #
 #   This file is licensed under the GPL license
 #
@@ -55,7 +55,7 @@
 870c [GUI_TIME] Heure
 870d [GUI_FINGER] Infos
 870e [GUI_RETREIVING_FILE] Reçoit le fichier (%1 octets)
-870f [GUI_SENDING_FILE] Envoit le fichier (%1 octets)
+870f [GUI_SENDING_FILE] Envoie le fichier (%1 octets)
 8710 [GUI_TERMINATED] %1 terminé
 8711 [GUI_FAILED] %1 échec
 8712 [GUI_CLOSE] Fermer
@@ -70,5 +70,6 @@
 871c [GUI_FONT] Police
 871d [GUI_FONT_WINDOW] Choisir une nouvelle police
 871e [GUI_FONT_WINDOW_OK] Ok
+871f [GUI_ENTER_TEXT_HERE] Entrez le texte ici...
 
 ffff [ERROR_NOT_DEFINED] Undefined string

@@ -234,3 +234,34 @@ Version history
     background image can now be placed in any source corner
     new "you're now talking in #channel as nickname" message
     mIRC background color bug fixed
+
+  2.1.0 : 27/11/2004
+  -----
+    Fix : RFC compliance issue: if several spaces are used between IRC protocol parameters, PJIRC
+    incorectly decodes an empty string instead of the actual parameter
+    Fix : On Java plug-in 1.5, reloading the page containing the applet might freeze the software
+    added "enter text here" option
+    Fix : non-authorized commands can be used anyway if they are prefixed by a space.
+    parameters from the html tags and from the fileparameter option are now mixed
+    on-mouse events are now disablable
+    "on mouse over" link highlighting feature added
+    dcc chat acceptance popup is now displayed
+    queries are now disablable
+    undocked sources can now be removed from the taskbar
+    simple channel name and topic can be used instead of channel options and so on
+
+
+  2.1.1 : 29/11/2004
+  -----
+    Fix : applet not working on Microsoft Java Virtual Machine
+
+  2.2.0 : 13/06/2005
+  -----
+    Fix : DCC file transfert might fail due to "file size equals -1" issue
+    Fix : Idle information reports wrong information when idle time is greater than one hour
+    new "onserver" and "init" commands
+    added auto-rejoin channel when kicked support
+    joining an already-joined channel prompts it instead of just ignoring the command
+    the highliht list is now dynamically configurable by the user
+    several javascript support enhancements
+    several PDK enhancements
