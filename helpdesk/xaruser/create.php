@@ -65,6 +65,11 @@ function helpdesk_user_create($args)
                                   );
     }
     
+    // If closed by field is empty, then set closed by to 0
+    if (empty($closedby)) {
+        $closedby = 0;
+    }
+
     $return_val = xarModAPIFunc('helpdesk','user','create',
                                 array('userid'      => $userid,
                                       'name'        => $name,
@@ -82,6 +87,16 @@ function helpdesk_user_create($args)
                                       'issue'       => $issue,
                                       'notes'       => $notes
                                       ));
+
+    // The return value of the function is checked here, and if the function
+    // suceeded then an appropriate message is posted.  Note that if the
+    // function did not succeed then the API function should have already
+    // posted a failure message so no action is required
+    if ($return_val === false) {
+        return false;
+    }else{
+        $data['return_val'] = $return_val;
+    }
 
     // Adds the Issue                                      
     $pid = 0; // parent id
@@ -113,15 +128,6 @@ function helpdesk_user_create($args)
                                );
     }                                                              
    
-    // The return value of the function is checked here, and if the function
-    // suceeded then an appropriate message is posted.  Note that if the
-    // function did not succeed then the API function should have already
-    // posted a failure message so no action is required
-    if ($return_val === false) {
-        return false;
-    }else{
-        $data['return_val'] = $return_val;
-    }
     
     // Lets create hooks
     $item = array();

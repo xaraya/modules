@@ -58,6 +58,10 @@ Another Filter: <br />
 <option value="MYALL">My Tickets</option>
 
 <xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+<option value="MYOPEN">My Open Tickets</option>
+</xar:if>
+
+<xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
 <option value="ALL">All Tickets</option>
 </xar:if>
 

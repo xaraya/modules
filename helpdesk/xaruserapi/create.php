@@ -20,8 +20,12 @@ function helpdesk_userapi_create($args)
     if (empty($email)){ $email = xarUserGetVar('email', $whosubmit); }
     if (empty($phone)){ $phone = ''; }
 
-    //$id = $dbconn->GenID($db_column['ticket_id']);
-    $sql = "INSERT INTO $db_table  (xar_domain,
+    // Get next ID inserted into table
+    $nextid = $dbconn->GenID($db_column['ticket_id']);
+
+    // Insert ticket
+    $sql = "INSERT INTO $db_table  (xar_id,
+                                    xar_domain,
                                     $db_column[ticket_statusid],
                                     $db_column[ticket_priorityid],
                                     $db_column[ticket_sourceid],
@@ -35,7 +39,8 @@ function helpdesk_userapi_create($args)
                                     xar_phone,
                                     xar_email
                                    ) 
-                           VALUES  ('".xarVarPrepForStore($domain)."',
+                           VALUES  ($nextid,
+                                    '".xarVarPrepForStore($domain)."',
                                     '".xarVarPrepForStore($status)."',
                                     '".xarVarPrepForStore($priority)."',
                                     '".xarVarPrepForStore($source)."',
@@ -51,13 +56,14 @@ function helpdesk_userapi_create($args)
                                 )";
 
     $result = $dbconn->Execute($sql);
-    $id = $dbconn->Insert_ID();
-    
-    // Check for an error with the database code, and if so set an
-    // appropriate error message and return
-    if ($dbconn->ErrorNo() != 0) { return; }
-    
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get the ID of the item that was inserted
+    $nextid = $dbconn->PO_Insert_ID($db_table, $db_column['ticket_id']);
+
     // To see their results, we redirect them to the Manage category page:
-    return $id;
+    return $nextid;
 }
 ?>

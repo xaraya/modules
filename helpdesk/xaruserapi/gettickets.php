@@ -10,7 +10,18 @@
 */
 function helpdesk_userapi_gettickets($args)
 {
+    // Get arguments
     extract($args);
+
+    // Optional arguments.
+    if(!isset($startnum)) {
+        $startnum = 1;
+    }
+
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
+
     // Database information
     $dbconn         =& xarDBGetConn();
     $xartable       =& xarDBGetTables();
@@ -179,6 +190,8 @@ function helpdesk_userapi_gettickets($args)
     
     // Note to self this is getting more complex than I'd like
     // Lets see if there is a cleaner way
+    // RHC - I will setup pagination in a later date...
+/*
     if(empty($startnum))
     {
         $startnum = '0';
@@ -192,31 +205,41 @@ function helpdesk_userapi_gettickets($args)
     {
         $pagerows='10';
     }
-    
-    $sql .= " LIMIT $startnum, $pagerows";
-    
-    $results = $dbconn->Execute($sql);
+*/
+
+    $results = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+
+    // Check for an error
     if (!$results) { return false; }
 
+    // Put items into result arra
     $fieldresults = array();
-    while(list($ticket_id,  $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
-        $assignedto, $openedby,   $closedby) = $results->fields) {
-    $fieldresults[] = array(
-        'ticket_id'     => $ticket_id, 
-        'ticketdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $ticketdate)),
-        'subject'       => $subject,
-        'status'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'status', 'itemid'   => $statusid, 'field'=> '')),
-        'priority'      => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'priority', 'itemid' => $priorityid)),
-        'lastupdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $lastupdate)),
-        'assignedto'    => $assignedto,
-        'openedby'      => $openedby,
-        'closedby'      => $closedby
-        );
-    $results->MoveNext();
+    for (; !$results->EOF; $results->MoveNext()) {
+        list($ticket_id,  
+             $ticketdate, 
+             $subject, 
+             $statusid, 
+             $priorityid, 
+             $lastupdate,
+             $assignedto, 
+             $openedby,
+             $closedby) = $results->fields;
+
+        $fieldresults[] = array(
+            'ticket_id'     => $ticket_id, 
+            'ticketdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $ticketdate)),
+            'subject'       => $subject,
+            'status'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'status', 'itemid'   => $statusid, 'field'=> '')),
+            'priority'      => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'priority', 'itemid' => $priorityid)),
+            'lastupdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $lastupdate)),
+            'assignedto'    => $assignedto,
+            'openedby'      => $openedby,
+            'closedby'      => $closedby);
     }
     
     $results->close();
 
     return $fieldresults;
 }
+
 ?>

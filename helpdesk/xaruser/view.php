@@ -78,6 +78,7 @@ function helpdesk_user_view($args)
                                     xarModGetVar('helpdesk', 'Default rows per page'));    
 
     $data['selections'] = array('MYALL'         => 'My Tickets',
+                                'MYOPEN'        => 'My Open Tickets',
                                 'ALL'           => 'All Tickets',
                                 'MYASSIGNEDALL' => 'My Assigned Tickets',
                                 'UNASSIGNED'    => 'Unassigned Tickets');
