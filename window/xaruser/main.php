@@ -83,7 +83,7 @@ function window_user_main($args)
         {
             $msg = xarML('No URLs in the database that match your page.',
                 'window');
-            xarExceptionSet(XAR_USER_EXCEPTION,
+            xarErrorSet(XAR_USER_EXCEPTION,
                 'NOT_ALLOWED',
                 new DefaultUserException($msg));
             return;
@@ -99,7 +99,7 @@ function window_user_main($args)
     {
         $msg = xarML('No page to display was specified.',
             'window');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
             'NOT_ALLOWED',
             new DefaultUserException($msg));
         return;
@@ -110,7 +110,7 @@ function window_user_main($args)
     {
         $msg = xarML('You cannot access this page via a link.',
             'window');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
             'NOT_ALLOWED',
             new DefaultUserException($msg));
         return;
@@ -122,7 +122,7 @@ function window_user_main($args)
         ($url_parts['host'] != $_SERVER["HTTP_HOST"]))
     {
         $msg = xarML('Only pages off your local server can be displayed.', 'window');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'NOT_ALLOWED', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'NOT_ALLOWED', new DefaultUserException($msg));
         return;
     }
 
@@ -131,7 +131,7 @@ function window_user_main($args)
     {
         $msg = xarML('Only registered users can view this page.',
             'window');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
             'NOT_ALLOWED',
             new DefaultUserException($msg));
         return;
