@@ -20,7 +20,7 @@ function bkview_user_graphproducer($args)
         
         $repo =& $item['repo'];
         //xarLogMessage("BK: passing start=$start,end=$end,file=$file");
-        $graphdata =& $repo->bkGetLines($start, $end, $file);
+        $graphdata =& $repo->bkGetGraphData($start, $end, $file);
         if($format =='debug') {
             echo "<pre>".var_export($graphdata,true)."</pre>"; 
             die();
@@ -32,19 +32,20 @@ function bkview_user_graphproducer($args)
 
         foreach($graphdata['nodes'] as $node)
         {
-            $attributes = array('href' => xarModUrl('bkview','user','deltaview', array('repoid' => $repoid, 'rev' => $node)),
-                                'tooltip' => xarML('Show details for revision #(1)',$node),'label' => $node);
-            if($node == $graphdata['startRev'] || $node == $graphdata['endRev']) $attributes['color'] ='red';
-            if(!in_array($node, $graphdata['pastconnectors']))
+            $attributes = array('href' => xarModUrl('bkview','user','deltaview', array('repoid' => $repoid, 'rev' => $node['rev'])),
+                                'tooltip' => xarML('Show details for revision #(1) by #(2)',$node['rev'],$node['author']),
+                                'label' => $node['author'].'\n'.$node['rev']);
+            if($node['rev'] == $graphdata['startRev'] || $node['rev'] == $graphdata['endRev']) $attributes['color'] ='red';
+            if(!in_array($node['rev'], $graphdata['pastconnectors']))
             {
                 // Normal node
                 $attributes['shape'] = 'box';
-                $graph->addNode($node, $attributes);
+                $graph->addNode($node['rev'], $attributes);
             } elseif($spc) {
                 // Past connector node
                 $attributes['shape'] = 'ellipse';
                 $attributes['style'] = 'dashed';
-                $graph->addNode($node, $attributes);
+                $graph->addNode($node['rev'], $attributes);
             }
         }
         foreach($graphdata['edges'] as $edge) 

@@ -314,7 +314,7 @@ class bkRepo
         return $results;
     }
     
-    function bkGetLines($start = '-3d', $end = '+', $file ='ChangeSet')
+    function bkGetGraphData($start = '-3d', $end = '+', $file ='ChangeSet')
     {
         if(!trim($end)) $end="+";
         // First, translate the ranges to revisions
@@ -345,25 +345,27 @@ class bkRepo
             $startRev = $endRev;
             $endRev = $tmp;
         }
-        $edges = array(); $nodes = array(); 
+        $edges = array(); $nodes = array(); $nodeIndex = array();
         $inEdges = array(); $lateMergeNodes = array();
-        $cmd = "bk prs -hr$startRev..$endRev -nd':REV:|:KIDS:|:DS:' $file";
+        $cmd = "bk prs -hr$startRev..$endRev -nd':REV:|:KIDS:|:DS:|:P:' $file";
         $rawdata = $this->_run($cmd);
         foreach($rawdata as $primeLine) {
-            list($rev, $kids,$serial) = explode('|',$primeLine);
+            list($rev, $kids,$serial, $author) = explode('|',$primeLine);
             if(!empty($kids)) $kids = explode(' ',$kids); else $kids = array();
-            $nodes[$serial] = $rev;
+            $nodeIndex[$serial] = $rev;
+            $nodes[$serial] = array('rev' => $rev,'author' => $author);
             foreach($kids as $next) {
                 if($rev != $next && $next != $startRev && $rev != $endRev) 
                 {
                     $edges[] = array($rev => $next);
                     $inEdges[$next][] = $rev;
                 } else {
-                    // Usally means a tag is on the cset
+                    // Usally means a tag is on the cset if $rev == $next
                 }
             }
         }
-        $lateMergeNodes = array_diff($nodes, array_keys($inEdges));
+        // Compare the values of the total nodes and the ones which have arrows coming into them
+        $lateMergeNodes = array_diff($nodeIndex, array_keys($inEdges));
         if($startKey = array_search($startRev, $lateMergeNodes)) unset($lateMergeNodes[$startKey]);
         ksort($nodes);
         

@@ -23,13 +23,13 @@ class System
 {
     function mktemp($prefix = 'tmp_')
     {
-        $tmpdir = realpath(xarCoreGetVarDirPath() . '/cache/bkview/');
+        $tmpdir = xarCoreGetVarDirPath() . '/cache/bkview/';
         if(!file_exists($tmpdir))
         {
             // Try to make it
             if(!mkdir($tmpdir)) 
             {
-                die("Cant make tmpdir");
+                xarLogMessage("BK: can not make $tmpdir");
             }
         }
         $tmp = tempnam($tmpdir, $prefix);
