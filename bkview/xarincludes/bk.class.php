@@ -150,7 +150,7 @@ class bkRepo {
         } else {
             $params.='-e ';
         }
-        if ($range!='') $params.='-r'.$range.' ';
+        if ($range!='') $params.='-c'.$range.' ';
         
         $params.="-d$dspec";
         $cmd="bk changes $params";
