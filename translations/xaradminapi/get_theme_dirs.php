@@ -14,33 +14,30 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-//  This function returns an array containing all the php files
-//  in a given directory that start with "xar"
+//  This function returns an array containing all the xt files
+//  in a given directory
 
 $staticNames = array();
 
-function searchDir($path, $prefix) 
+function searchFiles($path, $prefix, $force=0) 
 {
-  global $staticNames;
+    global $staticNames;
 
-  $fileModules = array();
-  $dh = opendir($path);
-  $path2 = ereg_replace($prefix,"",$path);
+    $path2 = ereg_replace($prefix,"",$path);
   
-  $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-  $subnames = xarModAPIFunc('translations','admin','get_theme_files',
-                             array('themedir'=>"$path",'pattern'=>$pattern));
-  if (count($subnames) > 0) $staticNames[] = $path2;
-  
-  while ($entry = readdir($dh)) {
-    if (is_dir("$path/$entry")) {
-      if (($entry != '.') && ($entry != '..') && ($entry != 'SCCS')) {
-        //Recurse
-        searchDir("$path/$entry", $prefix);
-      }
+    if ($force) {
+        $staticNames[] = $path2;
+        return false;
     }
-  }
-  closedir($dh);
+
+    $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+    $subnames = xarModAPIFunc('translations','admin','get_theme_files',
+                              array('themedir'=>"$path",'pattern'=>$pattern));
+    if (count($subnames) > 0) {
+        $staticNames[] = $path2;
+        return true;
+    }
+    return false;
 }
 
 function translations_adminapi_get_theme_dirs($args)
@@ -57,8 +54,29 @@ function translations_adminapi_get_theme_dirs($args)
     if (file_exists("themes/$themedir")) {
         $dd = opendir("themes/$themedir");
         while ($filename = readdir($dd)) {
-            if ($filename == 'blocks' || $filename == 'modules' || $filename == 'pages' || $filename == 'includes') 
-                searchDir("themes/$themedir/$filename", $prefix);
+            if ($filename == 'blocks' || $filename == 'pages' || $filename == 'includes') {
+                searchFiles("themes/$themedir/$filename", $prefix);
+            } elseif ($filename == 'modules') {
+            	  searchFiles("themes/$themedir/modules", $prefix, 1);
+                $dd2 = opendir("themes/$themedir/modules");
+                while ($moddir = readdir($dd2)) {
+                	  if (($moddir == '.') || ($moddir == '..') || ($moddir == 'SCCS')) continue;
+                    if (is_dir("themes/$themedir/modules/$moddir")) {
+                    	  $force = 0;
+                    	  $filesBlock = false;
+                    	  $filesIncl = false;
+                        if (is_dir("themes/$themedir/modules/$moddir/blocks")) {
+                            $filesBlock = searchFiles("themes/$themedir/modules/$moddir/blocks", $prefix);
+                        }
+                        if (is_dir("themes/$themedir/modules/$moddir/includes")) {
+                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/includes", $prefix);
+                        }
+                        if ($filesBlock || $filesIncl) $force = 1;
+                        searchFiles("themes/$themedir/modules/$moddir", $prefix, $force);
+                    }
+                }
+                closedir($dd2);
+            }
         }
         closedir($dd);
     }
