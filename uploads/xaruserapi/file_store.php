@@ -37,7 +37,8 @@ function uploads_userapi_file_store( $args ) {
     
     $instance = implode(':', $instance);
     
-    if (xarSecurityCheck('AddUploads', 1, 'File', $instance)) {
+    if ((isset($fileInfo['fileStatus']) && $fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED) || 
+         xarSecurityCheck('AddUploads', 1, 'File', $instance)) {
 
         if (!isset($storeType)) {
                 $storeType = _UPLOADS_STORE_FSDB;

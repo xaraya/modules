@@ -188,7 +188,7 @@
                     </xar:if>
                 </span>
                 <span>
-                    <xar:mlstring>Files located in the Uploads directory</xar:mlstring>
+                    <xar:mlstring>User uploaded files</xar:mlstring>
                 </span>
             </div>
             <div>

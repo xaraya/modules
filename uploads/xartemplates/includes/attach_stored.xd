@@ -1,5 +1,5 @@
+<div id="attach_stored" style="display: none;">
 <xar:if condition="isset($storedList) AND count($storedList)">
-    <div id="attach_stored" style="display: none;">
         <xar:mlstring>Attach previously stored file:</xar:mlstring><br />
         <select name="attach_stored[]" multiple="multiple">
             <xar:loop name="$storedList">
@@ -10,5 +10,7 @@
                 </xar:if>
             </xar:loop>
         </select>
-    </div>
+<xar:else />
+    <input type="hidden" name="attach_stored[]" value="" />
 </xar:if>
+</div>

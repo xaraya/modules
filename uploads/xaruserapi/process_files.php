@@ -43,6 +43,16 @@ function uploads_userapi_process_files( $args ) {
                 xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
             }
+            
+            $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', 
+                                       array('fileName' => $upload['name'],
+                                             'fileSize' => $upload['size']));
+            if (count($fileTest)) {
+                $file = end($fileTest);
+                $fileList[0] = $file;
+                break;
+            }
+            
             // if there is an override['upload']['path'], use that
             if (isset($override['upload']['path']) && file_exists($override['upload']['path'])) {
                 $upload_directory = $override['upload']['path'];
@@ -62,8 +72,11 @@ function uploads_userapi_process_files( $args ) {
                                              'fileInfo'  => $upload));
             break;
         case _UPLOADS_GET_LOCAL:
+            
             $storeType = _UPLOADS_STORE_DB_ENTRY;
+            
             $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
+            
             if (isset($getAll) && !empty($getAll)) {
                 $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => TRUE));
             } else {
@@ -75,7 +88,13 @@ function uploads_userapi_process_files( $args ) {
                         unset($fileList[$location]);
                     }
                 }
+                
                 $fileList += $list;
+                
+                // files in the trusted directory are automatically approved
+                foreach ($fileList as $key => $fileInfo) {
+                    $fileList[$key]['fileStatus'] = _UPLOADS_STATUS_APPROVED;
+                }
                 unset($list);
             }
             break;
