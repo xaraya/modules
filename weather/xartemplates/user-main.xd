@@ -1,0 +1,22 @@
+<div id="xoapweather">
+<h1>Current Conditions for #$ccData.observStation#</h1>
+<table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td valign"top"><img src="modules/xoapweather/wxicons/64/#$ccData.icon#.png" /></td>
+        <td valign"top">
+            <strong>#$ccData.conditons#</strong><br />
+            #$ccData.temp#&deg;#$ccData.unitsTemp#<br />
+            W: #$ccData.feelsLike#&deg;#$ccData.unitsTemp#<br />
+            H: #$ccData.humidity#%<br />
+            
+                
+        </td>
+    </tr>
+</table> 
+</div>
+
+<!--
+<pre>
+<xar:set name="$null">null; print_r($ccData);</xar:set>
+</pre>
+-->

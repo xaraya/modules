@@ -1,0 +1,91 @@
+<!-- the weather.com links are required -->
+<xar:template file="weatherdotcomlogo" />
+<xar:template file="weatherdotcomsearch" />
+
+<div id="weather">
+<h1><xar:ml>
+    <xar:mlstring>Extended Forecast for #(1)</xar:mlstring> 
+    <xar:mlvar>#$wData[0]['loc']#</xar:mlvar>
+    </xar:ml>
+</h1>
+<table border="1" cellpadding="2" cellspacing="0">
+    <tr>
+        <th><xar:mlstring>Today</xar:mlstring></th>
+        <th><xar:mlstring>Tonight</xar:mlstring></th>
+    </tr>
+    <tr>
+        <td valign"top" align="center">
+            <img src="modules/weather/xarimages/icons/default/64/#$wData[0]['part']['d']['icon']#.png" /><br />
+            <strong>#$wData[0]['part']['d']['cond']#</strong><br />
+        </td>
+        <td valign"top" align="center">
+            <img src="modules/weather/xarimages/icons/default/64/#$wData[0]['part']['n']['icon']#.png" /><br />
+            <strong>#$wData[0]['part']['n']['cond']#</strong><br />
+        </td>
+    </tr>
+    <tr>
+        <th><xar:mlstring>Daytime High</xar:mlstring>  (&deg;#$wData[0]['unitsTemp']#)</th>
+        <th><xar:mlstring>Overnight Low</xar:mlstring>  (&deg;#$wData[0]['unitsTemp']#)</th>
+    </tr>
+    <tr>
+        <td valign"top" align="center">
+            <strong style="color:red;">#$wData[0]['hi']#&deg;</strong>
+        </td>
+        <td valign"top" align="center">
+            <strong style="color:blue;">#$wData[0]['lo']#&deg;</strong>
+        </td>
+    </tr>
+</table> 
+</div>
+<xar:set name="$maxdays">#xarModGetUserVar('weather','extdays')#</xar:set>
+<xar:set name="$switch">true</xar:set>
+<div id="extendedforecast">
+    <h1><xar:ml>
+        <xar:mlstring>#(1)-Day Forecast</xar:mlstring>
+        <xar:mlvar>#$maxdays#</xar:mlvar>    
+        </xar:ml>
+    </h1>
+    <table width="100%" border="0" cellpadding="2" cellsapcing="0">
+        <tr>
+            <th colspan="3">&nbsp;</th>
+            <th>
+                <xar:mlstring>Daytime High</xar:mlstring> / <br />
+                <xar:mlstring>Overnight Low</xar:mlstring><br />
+                (&deg;#$wData[0]['unitsTemp']#)
+            </th>
+            <th><xar:mlstring>Precip. %</xar:mlstring></th>
+        </tr>
+        <!-- today's details -->
+        <tr>
+            <td valign="middle" align="left"><strong>#$wData[0]['wkday']#</strong><br />#$wData[0]['date']#</td>
+            <td valign="middle" align="center"><img src="modules/weather/xarimages/icons/default/32/#$wData[0]['part']['d']['icon']#.png" /></td>
+            <td valign="middle" align="center">#$wData[0]['part']['d']['cond']#</td>
+            <td valign="middle" align="center"><strong>#$wData[0]['hi']#&deg;/#$wData[0]['lo']#&deg;</strong></td>
+            <td valign="middle" align="center">#$wData[0]['part']['d']['ppcp']#%</td>
+        </tr>
+        <!-- extended forecast details -->
+        <xar:for start="$i=1" test="$i <= $maxdays-1" iter="$i++">
+        <xar:if condition="(bool)$switch">
+            <xar:set name="$bgcolor">'bgcolor="#aaccff"'</xar:set>
+            <xar:set name="$switch">false</xar:set>
+        <xar:else />
+            <xar:set name="$bgcolor">''</xar:set>
+            <xar:set name="$switch">true</xar:set>
+        </xar:if>
+        <tr #$bgcolor#>
+            <td valign="middle" align="left"><strong>#$wData[$i]['wkday']#</strong><br />#$wData[$i]['date']#</td>
+            <td valign="middle" align="center"><img src="modules/weather/xarimages/icons/default/32/#$wData[$i]['part']['d']['icon']#.png" /></td>
+            <td valign="middle" align="center">#$wData[$i]['part']['d']['cond']#</td>
+            <td valign="middle" align="center"><strong>#$wData[$i]['hi']#&deg;/#$wData[$i]['lo']#&deg;</strong></td>
+            <td valign="middle" align="center">#$wData[$i]['part']['d']['ppcp']#%</td>
+        </tr>
+        </xar:for>
+    </table>
+</div>
+
+<p>
+<!-- the weather.com links are required -->
+<!-- NOTE we need to pass only the first element of the extended data array -->
+<xar:set name="$footerdata">array('wData'=>$wData[0])</xar:set>
+<xar:template file="weatherdotcomfull" subdata="$footerdata" />
+</p>
