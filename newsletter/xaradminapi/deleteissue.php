@@ -61,22 +61,25 @@ function newsletter_adminapi_deleteissue($args)
     if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
-    // Loop through topics and delete associated stories
-    foreach ($topics as $topic) {
+    // Make sure we have stories to delete
+    if (!empty($topics)) {
+        // Loop through topics and delete associated stories
+        foreach ($topics as $topic) {
+            if (!xarModAPIFunc('newsletter',
+                               'admin',
+                               'deletestory',
+                               array('id' => $topic['storyId']))) {
+                return; // throw back
+            }
+        }
+
+        // Delete any topics associated with the publication
         if (!xarModAPIFunc('newsletter',
                            'admin',
-                           'deletestory',
-                           array('id' => $topic['storyId']))) {
+                           'deletetopic',
+                           array('id' => $id))) {
             return; // throw back
         }
-    }
-
-    // Delete any topics associated with the publication
-    if (!xarModAPIFunc('newsletter',
-                       'admin',
-                       'deletetopic',
-                       array('id' => $id))) {
-        return; // throw back
     }
 
     // Get database setup

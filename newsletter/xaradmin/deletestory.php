@@ -77,7 +77,7 @@ function newsletter_admin_deletestory($args)
     // Find out which issue this is in
     $topic = xarModAPIFunc('newsletter',
                            'user',
-                           'gettopicsbystory',
+                           'gettopicbystory',
                            array('storyId' => $id));
     
     // Check for exceptions
