@@ -90,7 +90,10 @@ function images_delete()
     xarModDelVar('images', 'type.graphics-library');
     xarModDelVar('images', 'path.derivative-store');
 
-    xarTplUnregisterTag('image');
+    xarTplUnregisterTag('image-resize');
+    xarUnregisterMask('AdminImages');
+    xarModUnregisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook');
+    
     // Deletion successful
     return true;
 }
