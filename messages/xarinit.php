@@ -92,15 +92,17 @@ function messages_init()
     * Format is
     * register(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
-    xarRegisterPrivilege('AddMessages','All','messages','All','All','ACCESS_ADD',xarML('Add access to messages'));
+    xarRegisterPrivilege('DeleteMessages','All','messages','All','All','ACCESS_DELETE',xarML('Delete access to messages'));
+    xarMakePrivilegeRoot('DeleteMessages');
     xarRegisterPrivilege('DenyReadMessages','All','messages','All','All','ACCESS_NONE',xarML('Deny access to messages'));
+    xarMakePrivilegeRoot('DenyReadMessages');
     /*********************************************************************
     * Assign the default privileges to groups/users
     * Format is
     * assign(Privilege,Role)
     *********************************************************************/
 
-    xarAssignPrivilege('AddMessages','Users');
+    xarAssignPrivilege('DeleteMessages','Users');
     xarAssignPrivilege('DenyReadMessages','Everybody');
 
     // Initialisation successful

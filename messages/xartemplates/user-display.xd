@@ -73,6 +73,11 @@
                 <xar:mlstring>Action</xar:mlstring>
             </th>
         </tr>
+        <xar:if condition="xarSecurityCheck('DeleteMessages', 0)">
+            <xar:set name="allowdelete">1</xar:set>
+        <xar:else/>
+            <xar:set name="allowdelete">0</xar:set>
+        </xar:if>
         <xar:loop name="$messages">
             <xar:if condition="(($loop:index + 1) % 2)">
                 <tr valign="center">
@@ -94,7 +99,11 @@
                     <td class="xar-norm" nowrap="nowrap" align="right">
                         &nbsp;|&nbsp;<a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
                         <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                        <a href="#$loop:item['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                        <xar:if condition="!empty($allowdelete)">
+                            <a href="#$loop:item['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                        <xar:else/>
+                            <xar:mlstring>Delete</xar:mlstring>
+                        </xar:if>
                     </td>
                 </tr>
             <xar:else />
@@ -117,7 +126,11 @@
                     <td class="xar-accent" nowrap="nowrap" align="right">
                         &nbsp;|&nbsp;<a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
                         <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                        <a href="#$loop:item['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                        <xar:if condition="!empty($allowdelete)">
+                            <a href="#$loop:item['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                        <xar:else/>
+                            <xar:mlstring>Delete</xar:mlstring>
+                        </xar:if>
                     </td>
                 </tr>
             </xar:if>

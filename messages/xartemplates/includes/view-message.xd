@@ -23,7 +23,11 @@
                 <br />
                 <br />
                 <a href="#$message['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                <a href="#$message['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                <xar:if condition="xarSecurityCheck('DeleteMessages', 0)">
+                    <a href="#$message['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                <xar:else/>
+                    <xar:mlstring>Delete</xar:mlstring>
+                </xar:if>
             </div>
         </xar:if>
     </div>
