@@ -11,7 +11,7 @@
     <xar:foreach in="$folders" value="$folder">
         <tr valign="top" class="upper">
             <td>
-                <xar:if condition="isset($folder['mainImage'])  &&  $folder['mainImage'] != NULL">
+                <xar:if condition="isset($folder['mainImage'])  and  $folder['mainImage'] != NULL">
                     <a href="#$folder['folderURL']#"><img
                         src="#xarModUrl('photoshare', 'user', 'viewimage', array('iid' => $folder['mainImage'], 'thumbnail' => 1))#"
                         title="#xarMl('View folder')#" border="0" /></a>

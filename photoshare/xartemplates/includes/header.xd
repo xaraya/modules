@@ -1,7 +1,7 @@
 <xar:if condition="!isset($authid)">
-    <xar:set name="$authid">xarSecGenAuthKey()</xar:set>
+    <xar:set name="authid">xarSecGenAuthKey()</xar:set>
 </xar:if>
-<xar:if condition="isset($addEditIcons) && $addEditIcons">
+<xar:if condition="isset($addEditIcons) and $addEditIcons">
 <script language="javascript" src="#xarServerGetBaseURL()#modules/photoshare/xarjavascript/editimages.js"></script>
 <script language="javascript" src="#xarServerGetBaseURL()#modules/photoshare/xarjavascript/psmenu.js"></script>
 <script language="javascript">
@@ -13,7 +13,7 @@ var translations = {
 </script>
 </xar:if>
 <xar:comment>TODO: prevent to have own styles as much as possible</xar:comment>
-<xar:set name="$dummy">xarTplAddStyleLink('photoshare', 'style')</xar:set>
+<xar:set name="dummy">xarTplAddStyleLink('photoshare', 'style')</xar:set>
 
 <table class="photoshare-header">
     <tr class="photoshare-header-title">
@@ -44,7 +44,7 @@ var translations = {
               </tr></table>
         </td>
     </tr>
-<xar:if condition="isset($addEditIcons) && $addEditIcons">
+<xar:if condition="isset($addEditIcons) and $addEditIcons">
     <tr class="photoshare-header-icons">
         <td>
 
