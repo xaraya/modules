@@ -66,7 +66,7 @@
 	<binding name="wsXarSoapBinding" type="xar:wsXarSoapPort">
 		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
 		<operation name="wsModAPIFunc">
-			<soap:operation soapAction="http://127.0.0.1/xaraya/ws.php"/>
+			<soap:operation soapAction="http://epicsaga.com/ws.php"/>
 			<input>
 				<soap:body use="encoded"/>
 			</input>
@@ -75,7 +75,7 @@
 			</output>
 		</operation>
 		<operation name="wsModAPISimpleFunc">
-			<soap:operation soapAction="http://127.0.0.1/xaraya/ws.php"/>
+			<soap:operation soapAction="http://epicsaga.com/ws.php"/>
 			<input>
 				<soap:body use="encoded"/>
 			</input>
@@ -86,7 +86,7 @@
 	</binding>
 	<service name="XarayaSoap">
 		<port name="wsXarSoapPort" binding="xar:wsXarSoapBinding">
-			<soap:address location="http://127.0.0.1/xaraya/ws.php?type=soap"/>
+			<soap:address location="http://epicsaga.com/ws.php?type=soap"/>
 		</port>
 	</service>
 </wsdl:definitions>
