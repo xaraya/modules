@@ -36,7 +36,7 @@ function mybookmarks_userapi_getall($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($id, $name, $url) = $result->fields;
-        if (xarSecurityCheck('OverviewBBCode', 0)) {
+        if (xarSecurityCheck('Viewmybookmarks', 0)) {
             $links[] = array('id'      => $id,
                              'name'    => $name,
                              'url'     => $url);

@@ -17,6 +17,8 @@ function mybookmarks_user_view($args)
 {
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarSecurityCheck('Viewmybookmarks')) return;
+    if (!xarUserIsLoggedIn()) return;
     $bookmarks = xarModAPIFunc('mybookmarks',
                                'user',
                                'getall',

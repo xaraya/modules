@@ -24,7 +24,8 @@ function mybookmarks_user_delete($args)
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
     if (!xarVarFetch('id', 'int', $id)) return; 
     // Security Check
-    if (!xarSecurityCheck('DeleteReferer')) return; 
+    if (!xarSecurityCheck('Viewmybookmarks')) return; 
+    if (!xarUserIsLoggedIn()) return;
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return; 
     // The API function is called.
