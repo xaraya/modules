@@ -74,10 +74,7 @@ function xarbb_user_main()
             $forums = xarModAPIFunc('xarbb',
                                     'user',
                                     'getallforums',
-                                     array('catid' => $item['cid'],
-                                           'startnum' => $startnum,
-                                            'numitems' => xarModGetVar('xarbb',
-                                                                    'forumsperpage')));
+                                     array('catid' => $item['cid']));
             // Security check: remove forums the user should not see
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
@@ -110,10 +107,7 @@ function xarbb_user_main()
             $forums = xarModAPIFunc('xarbb',
                                     'user',
                                     'getallforums',
-                                     array('catid' => $item['cid'],
-                                           'startnum' => $startnum,
-                                            'numitems' => xarModGetVar('xarbb',
-                                                                    'forumsperpage')));
+                                     array('catid' => $item['cid']));
 
             // Security check: remove forums the user should not see
             $forumcount = count($forums);
@@ -130,11 +124,6 @@ function xarbb_user_main()
     // $pre = var_export($items, true); echo "<pre>$pre</pre>"; return;
     // Add the array of items to the template variables
     $data['items'] = $items;
-    // Add a pager
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('xarbb', 'user', 'countforums'),
-        xarModURL('xarbb', 'user', 'main', array('startnum' => '%%')),
-        xarModGetVar('xarbb', 'forumsperpage'));
 
     // Don't really need to do this for visitors, just users.
     if (xarUserIsLoggedIn()){
