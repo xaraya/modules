@@ -134,12 +134,16 @@ function navigator_admin_dynimages()
         $fileList   = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                      array('fileLocation' => $paImageDir,
                                            'descend' => FALSE,
-                                           'search'  => '.*'.$data['Id'].'.*'));
+                                           'onlyNew' => TRUE,
+                                           'search'  => '.*'.$data['Id'].'.*',
+                                           'exclude' => '.*(SCCS|.attribute).*'));
 
         $fileListAll = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                       array('fileLocation' => $image_dir,
                                             'descend' => TRUE,
-                                            'search' => '.*'.$data['Id'].'.*'));
+                                            'onlyNew' => TRUE,
+                                            'search'  => '.*'.$data['Id'].'.*',
+                                            'exclude' => '.*(SCCS|.attribute).*'));
 
         if (empty($fileList) || !count($fileList)) {
             $msg  = xarML('No images to select.');
