@@ -1,8 +1,8 @@
 <div class="xar-norm">
     <xar:loop name="$package['comments']">
         <div class="xar-accent" style="padding: 1px; margin-left: #$loop:item['depth']*30#px;margin-bottom: 4px;">
-             <div class="xar-accent" style="padding: 4px;" align="left">
-                <h4 style="display: inline;"><a name="#$loop:item['xar_cid']#" id="#$loop:item['xar_cid']#">#$loop:item['xar_title']#</a></h4>
+             <div class="xar-accent" style="padding: 4px; text-align: left;">
+                <h4 style="display: inline;"><a name="#$loop:item['xar_cid']#">#$loop:item['xar_title']#</a></h4>
                 <br />
                 <span class="xar-sub">
                     <xar:mlstring>
