@@ -402,16 +402,18 @@ function articles_userapi_getall($args)
                                                            'itemids'  => $itemids,
                                                            // ignore the display-only properties
                                                            'status'   => 1));
-            if (empty($properties) || count($properties) == 0 || empty($items) || count($items) == 0) continue;
+            if (empty($properties) || count($properties) == 0) continue;
             foreach ($articles as $key => $article) {
-                if (isset($items[$article['aid']])) {
-                // TODO: compare with array_merge
-                    foreach ($items[$article['aid']] as $name => $value) {
-                        $articles[$key][$name] = $value;
-                    // TODO: clean up this temporary fix
-                        if (isset($properties[$name]) && !empty($value)) {
-                            $articles[$key][$name.'_output'] = $properties[$name]->showOutput(array('value' => $value));
-                        }
+                foreach (array_keys($properties) as $name) {
+                    if (isset($items[$article['aid']]) && isset($items[$article['aid']][$name])) {
+                        $value = $items[$article['aid']][$name];
+                    } else {
+                        $value = $properties[$name]->default;
+                    }
+                    $articles[$key][$name] = $value;
+                // TODO: clean up this temporary fix
+                    if (!empty($value)) {
+                        $articles[$key][$name.'_output'] = $properties[$name]->showOutput(array('value' => $value));
                     }
                 }
             }
