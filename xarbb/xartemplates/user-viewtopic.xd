@@ -124,8 +124,6 @@
                                     Subject 
                                 </xar:mlstring>
                                 : 
-                                <a name="#top">
-                                </a>
                                 #$ttitle# 
                             </strong>
                         </div>
@@ -335,8 +333,6 @@
                                     Subject 
                                 </xar:mlstring>
                                 : 
-                                <a name="#top">
-                                </a>
                                 #$item['xar_title']# 
                             </strong>
                         </div>
