@@ -44,6 +44,38 @@ function workflow_admin_updateconfig()
     $serialjobs = serialize($savejobs);
     xarModSetVar('workflow','jobs',$serialjobs);
 
+    if (xarModIsAvailable('scheduler')) {
+        if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
+        // see if we have a scheduler job running to execute workflow activities
+        $job = xarModAPIFunc('scheduler','user','get',
+                             array('module' => 'workflow',
+                                   'type' => 'scheduler',
+                                   'func' => 'activities'));
+        if (empty($job) || empty($job['interval'])) {
+            if (!empty($interval)) {
+                // create a scheduler job
+                xarModAPIFunc('scheduler','admin','create',
+                              array('module' => 'workflow',
+                                    'type' => 'scheduler',
+                                    'func' => 'activities',
+                                    'interval' => $interval));
+            }
+        } elseif (empty($interval)) {
+            // delete the scheduler job
+            xarModAPIFunc('scheduler','admin','delete',
+                          array('module' => 'workflow',
+                                'type' => 'scheduler',
+                                'func' => 'activities'));
+        } elseif ($interval != $job['interval']) {
+            // update the scheduler job
+            xarModAPIFunc('scheduler','admin','update',
+                          array('module' => 'workflow',
+                                'type' => 'scheduler',
+                                'func' => 'activities',
+                                'interval' => $interval));
+        }
+    }
+
     xarResponseRedirect(xarModURL('workflow', 'admin', 'modifyconfig'));
 
     return true;

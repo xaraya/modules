@@ -12,13 +12,14 @@ function workflow_schedulerapi_activities($args)
 // workflow activities to run when. Other modules will typically have 1 job that corresponds
 // to 1 API function, so they won't need this...
 
-    $log = xarML('Starting scheduled workflow activities') . "<br/>\n";
+    $log = xarML('Starting scheduled workflow activities') . "\n";
     $serialjobs = xarModGetVar('workflow','jobs');
     if (!empty($serialjobs)) {
         $jobs = unserialize($serialjobs);
     } else {
         $jobs = array();
     }
+    $hasrun = array();
     $now = time() + 60; // add some margin here
     foreach ($jobs as $id => $job) {
         $lastrun = $job['lastrun'];
@@ -70,12 +71,41 @@ function workflow_schedulerapi_activities($args)
             $log .= xarML('succeeded');
         }
         $jobs[$id]['lastrun'] = $now - 60; // remove the margin here
-        $log .= "<br/>\n";
+        $hasrun[] = $id;
+        $log .= "\n";
     }
-    $serialjobs = serialize($jobs);
-    xarModSetVar('workflow','jobs',$serialjobs);
-
     $log .= xarML('Finished scheduled workflow activities');
+
+    // we didn't run anything, so return now
+    if (count($hasrun) == 0) {
+        return $log;
+    }
+
+// Trick : make sure we're dealing with up-to-date information here,
+//         because running all those jobs may have taken a while...
+    xarVarDelCached('Mod.Variables.workflow', 'jobs');
+
+    // get the current list of jobs
+    $serialjobs = xarModGetVar('workflow','jobs');
+    if (!empty($serialjobs)) {
+        $newjobs = unserialize($serialjobs);
+    } else {
+        $newjobs = array();
+    }
+    // set the job information
+    foreach ($hasrun as $id) {
+        if (!isset($newjobs[$id])) continue;
+        // make sure we're dealing with the same job here :)
+        if ($newjobs[$id]['activity'] == $jobs[$id]['activity'] &&
+            $newjobs[$id]['lastrun'] < $jobs[$id]['lastrun']) {
+
+            $newjobs[$id]['result'] = $jobs[$id]['result'];
+            $newjobs[$id]['lastrun'] = $jobs[$id]['lastrun'];
+        }
+    }
+    // update the new jobs
+    $serialjobs = serialize($newjobs);
+    xarModSetVar('workflow','jobs',$serialjobs);
 
     return $log;
 }
