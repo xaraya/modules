@@ -1,0 +1,89 @@
+<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+	<tr> 
+		<td align="left" valign="middle" width="100%">
+			<span class="xar-sub">
+				&nbsp;&nbsp;&nbsp;
+				<a href="#xarModUrl('xarbb', 'user', 'main')#">
+					#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)#
+				</a> 
+				-> 
+				<xar:mlstring>
+					Check IP
+				</xar:mlstring>
+			</span>
+		</td>
+	</tr>
+</table>
+
+<table width="100%" cellpadding="3" cellspacing="1" border="0">
+	<tr> 
+		<th height="25">
+			<xar:mlstring>
+				IP Information
+			</xar:mlstring>
+		</th>
+	</tr>
+	<tr> 
+		<td height="28" class="xar-accent">
+			<span class="xar-title">
+				<xar:mlstring>
+					IP address for this post
+				</xar:mlstring>
+			</span>
+		</td>
+	</tr>
+	<tr> 
+		<td class="xar-norm"> 
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr> 
+					<td>&nbsp;
+						<span>
+							#$ip#
+						</span>
+					</td>
+					<td align="right">
+						<span>
+							[ <a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput=#$ip#">
+								<xar:mlstring>
+									Look up IP
+								</xar:mlstring>
+							  </a>
+							 ]&nbsp;
+						</span>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr> 
+		<td height="28" class="xar-accent">
+			<span class="xar-title">
+				<xar:mlstring>
+					Users posting from this IP address
+				</xar:mlstring>
+			</span>
+		</td>
+	</tr>
+<xar:loop name="$items">
+	<tr> 
+		<td> 
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr> 
+					<td>&nbsp;
+						<span>
+							<a href="#xarModUrl('xarbb', 'user', 'searchtopics', array('by' => $loop:item['uid']))#">
+								#$loop:item['name']#
+							</a>
+						</span>
+					</td>
+					<td align="right">
+						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['uid']))#">
+							<img src="#xarTplGetImage('new/icon_profile.gif')#" alt="'.xarML('Profile').'" />
+						</a> 
+			&nbsp;</td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+</xar:loop>
+</table>

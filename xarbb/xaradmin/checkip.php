@@ -31,7 +31,7 @@ function xarbb_admin_checkip()
                             array('ip' => $ip,
                                   'startnum' => $startnumitem,
                                   'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
-
+    $topics = array_unique($topics);
     $replies = xarModAPIFunc('xarbb',
                              'user',
                              'getallreplies_byip',
@@ -39,160 +39,42 @@ function xarbb_admin_checkip()
                                   'hostname' => $ip,
                                   'startnum' => $startnumitem,
                                   'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
+    $replies = array_unique($replies);
+    $results = array_merge($topics, $replies);
 
-    $allresults = array_merge($topics, $replies);
-    var_dump($allresults); return;
+    $totalresults=count($results);
+    for ($i = 0; $i < $totalresults; $i++) {
+        $result = $results[$i];
+        if (isset($result['tposter'])){
+            $results[$i]['uid'] = xarVarPrepForDisplay($result['tposter']);
+        } elseif (isset($result['xar_uid'])){
+            $results[$i]['uid'] = xarVarPrepForDisplay($result['xar_uid']);
+        }
+        //} elseif (isset($result['thostname'])){
+        //    $results[$i]['ip'] = xarVarPrepForDisplay($result['thostname']);
+        //} elseif (isset($result['xar_hostname'])){
+        //   $results[$i]['ip'] = xarVarPrepForDisplay($result['xar_hostname']);
+        //}
 
-
-
-    $totaltopics=count($topics);
-    for ($i = 0; $i < $totaltopics; $i++) {
-        $topic = $topics[$i];
-        $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
-        $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
-        $fid = $topic['fid'];
-        $tid = $topic['tid'];
-
-        // Check to see if forum is locked
-        if ($topic['fstatus'] == 1){
-            $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('Forum Locked').'" />';
+        if (isset($result['tposter'])){
+            $getname = xarModAPIFunc('roles',
+                                     'user',
+                                     'get',
+                                     array('uid' => $result['tposter']));
         } else {
-
-            if (isset($_COOKIE["xarbb_all"])){
-                $allforumtimecompare = unserialize($_COOKIE["xarbb_all"]);
-            } else {
-                $allforumtimecompare = '';
-            }
-            if (isset($_COOKIE["xarbb_f_$fid"])){
-                $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
-            } else {
-                $forumtimecompare = '';
-            }
-            if ($forumtimecompare > $allforumtimecompare){
-                $alltimecompare = $forumtimecompare;
-            } else {
-                $alltimecompare = $allforumtimecompare;
-            }
-            $tid = $topic['tid'];
-            if (isset($_COOKIE["xarbb_t_$tid"])){
-                $topictimecompare = unserialize($_COOKIE["xarbb_t_$tid"]);
-            } else {
-                $topictimecompare = '';
-            }
-        }
-        switch(strtolower($topic['tstatus'])) {
-            // Just a regular old topic
-            case '0':
-            default:
-
-                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
-                    // More comments than our hottopic setting, therefore should be hot, but not new.
-                    if ($topics[$i]['comments'] > $hotTopic){
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-                    // Else should be a regular old boring topic
-                    } else {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
-                    }
-                } else {
-                    // OOF, look at this topic, hot and new.
-                    if ($topics[$i]['comments'] > $hotTopic){
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-                    // Else should be a regular old boring topic that has a new post
-                    } else {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
-                    }
-                }
-                break;
-            // Announcement topic
-            case '1':
-
-                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce.gif') . '" alt="'.xarML('Announcement').'" />';
-                } else {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce_new.gif') . '" alt="'.xarML('New Announcement').'" />';
-                }
-
-                break;
-            // Sticky topic
-            case '2':
-                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky.gif') . '" alt="'.xarML('Sticky').'" />';
-                } else {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky_new.gif') . '" alt="'.xarML('New Sticky Topic').'" />';
-                }
-                break;
-            // Locked
-            case '3':
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New post').'" />';
-                break;
+            $getname = xarModAPIFunc('roles',
+                                     'user',
+                                     'get',
+                                     array('uid' => $result['xar_uid']));
         }
 
-        if ($topics[$i]['comments'] == 0) {
-            $topics[$i]['authorid'] = $topic['tposter'];
-        } else {
-            // TODO FIX THIS FROM COMMENTS
-            $topics[$i]['authorid'] = $topic['treplier'];
-        }
-
-        $getreplyname = xarModAPIFunc('roles',
-                                      'user',
-                                      'get',
-                                      array('uid' => $topics[$i]['authorid']));
-
-        $topics[$i]['replyname'] = $getreplyname['name'];
-
-        $topics[$i]['hitcount'] = xarModAPIFunc('hitcount',
-                                                'user',
-                                                'get',
-                                                array('modname' => 'xarbb',
-                                                      'itemtype' => 2,
-                                                      'objectid' => $topic['tid']));
-
-        if (!$topics[$i]['hitcount']) {
-            $topics[$i]['hitcount'] = '0';
-        } elseif ($topics[$i]['hitcount'] == 1) {
-            $topics[$i]['hitcount'] .= ' ';
-        } else {
-            $topics[$i]['hitcount'] .= ' ';
-        }
-
-        $getname = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
-                                 array('uid' => $topic['tposter']));
-
-        $topics[$i]['name'] = $getname['name'];
+        $results[$i]['name'] = $getname['name'];
 
     }
-
-    $data['items'] = $topics;
-    $data['totalitems'] = $totaltopics;
-    if ($totaltopics == xarModGetVar('xarbb', 'topicsperpage')){
-        if (!empty($uid)){
-
-            $data['pager'] = xarTplGetPager($startnumitem,
-                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
-                                            xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
-                                                                                             'by' => $uid)),
-                                            xarModGetVar('xarbb', 'topicsperpage'));
-        } elseif (!empty($replies)){
-
-            $data['pager'] = xarTplGetPager($startnumitem,
-                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
-                                            xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
-                                                                                             'replies' => $replies)),
-                                            xarModGetVar('xarbb', 'topicsperpage'));
-        } elseif (!empty($from)){
-
-            $data['pager'] = xarTplGetPager($startnumitem,
-                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
-                                            xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
-                                                                                             'from' => $from)),
-                                            xarModGetVar('xarbb', 'topicsperpage'));
-        }
-    }
+    $data['items'] = $results;
+    $data['ip']     = $ip;
+    //var_dump($results); return;
     
     return $data; 
-    //var_dump($topics); return;
 }
 ?>
