@@ -3,7 +3,7 @@
 function contact_admin_create_contact($args)
 {
 
-    // Get parameters from whatever input we need.  
+    // Get parameters from whatever input we need.
      if (!xarVarFetch('id', 'isset', $id, '', XARVAR_NOT_REQUIRED)) return;
      if (!xarVarFetch('department', 'str:1:', $department, '', XARVAR_NOT_REQUIRED)) return;
      if (!xarVarFetch('title', 'str:1:', $title, '', XARVAR_NOT_REQUIRED)) return;
@@ -63,11 +63,6 @@ function contact_admin_create_contact($args)
      if (!xarVarFetch('newcity', 'isset', $newcity, '', XARVAR_NOT_REQUIRED)) return;
      if (!xarVarFetch('lastimage', 'isset', $lastimage, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *after* we have obtained any form-based input through
-    // xarVarCleanFromInput().
 
     // Confirm authorisation code.  This checks that the form had a valid
     // authorisation code attached to it.  If it did not then the function will
@@ -192,44 +187,26 @@ function contact_admin_create_contact($args)
     xarSessionSetVar('statusmsg', xarML('CONTACTCREATED'));
 
     $contacttype = ("P");
-    list($showname,
-         $showaddress,
-         $showaddress2,
-         $showcity,
-         $showstate,
-         $showpostalcode,
-         $showcountry,
-         $showemail,
-         $showphone,
-         $showfax,
-         $showmobile,
-         $showpager,
-         $showICQ,
-         $showAIM,
-         $showYIM,
-         $showMSNM,
-         $showtitle,
-         $showdepartment,
-         $showimage) = xarVarCleanFromInput('showname',
-                                         'showaddress',
-                                         'showaddress2',
-                                         'showcity',
-                                         'showstate',
-                                         'showpostalcode',
-                                         'showcountry',
-                                         'showemail',
-                                         'showphone',
-                                         'showfax',
-                                         'showmobile',
-                                         'showpager',
-                                         'showICQ',
-                                         'showAIM',
-                                         'showYIM',
-                                         'showMSNM',
-                                         'showtitle',
-                                         'showdepartment',
-                                         'showimage');
-
+   // Get parameters from whatever input we need.
+     if (!xarVarFetch('showname', 'isset', $showname, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showaddress', 'isset', $showaddress, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showaddress2', 'isset', $showaddress2, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showcity', 'isset', $showcity, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showstate', 'isset', $showstate, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showpostalcode', 'isset', $showpostalcode, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showcountry', 'isset', $showcountry, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showemail', 'isset', $showemail, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showphone', 'isset', $showphone, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showfax', 'isset', $showfax, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showmobile', 'isset', $showmobile, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showpager', 'isset', $showpager, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showICQ', 'isset', $showICQ, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showAIM', 'isset', $showAIM, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showYIM', 'isset', $showYIM, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showMSNM', 'isset', $showMSNM, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showtitle', 'isset', $showtitle, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showdepartment', 'isset', $showdepartment, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('showimage', 'isset', $showimage, '', XARVAR_NOT_REQUIRED)) return;
 
 
     // The API function is called.  Note that the name of the API function and
