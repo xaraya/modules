@@ -144,10 +144,10 @@ function xarbb_userapi_encode_shorturl($args)
     } 
     // add some other module arguments as standard URL parameters
     if (!empty($path)) {
-        if (isset($startnum)) {
+        if (isset($startnum) && $startnum != 1) {
             $path .= $join . 'startnum=' . $startnum;
             $join = '&amp;';
-        } 
+        }
         if (isset($read)) {
             $path .= $join . 'read=' . $read;
             $join = '&amp;';

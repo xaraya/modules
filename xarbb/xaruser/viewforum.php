@@ -15,7 +15,7 @@
 function xarbb_user_viewforum()
 {
     // Get parameters from whatever input we need
-    if(!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('fid', 'id', $fid)) return;
     if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
@@ -73,7 +73,7 @@ function xarbb_user_viewforum()
                             'user',
                             'getalltopics',
                             array('fid' => $fid,
-                                  'startnum' => $startnumitem,
+                                  'startnum' => $startnum,
                                   'numitems' => $settings['topicsperpage']));
     $totaltopics=count($topics);
  
@@ -181,9 +181,9 @@ function xarbb_user_viewforum()
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
-    $data['pager'] = xarTplGetPager($startnumitem,
+    $data['pager'] = xarTplGetPager($startnum,
                                     xarModAPIFunc('xarbb', 'user', 'counttopics', array('fid' => $fid)),
-                                    xarModURL('xarbb', 'user', 'viewforum', array('startnumitem' => '%%',
+                                    xarModURL('xarbb', 'user', 'viewforum', array('startnum' => '%%',
                                                                                   'fid'          => $fid)),
                                     $settings['topicsperpage']);
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
