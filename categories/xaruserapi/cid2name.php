@@ -5,7 +5,7 @@
 function categories_userapi_cid2name ($args)
 {
     extract($args);
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
 

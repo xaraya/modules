@@ -57,7 +57,7 @@ function categories_adminapi_deletecat($args)
     if(!xarSecurityCheck('DeleteCategories',1,'category',"All:$cid")) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     // Deleting a category

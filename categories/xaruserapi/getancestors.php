@@ -92,7 +92,7 @@ function categories_userapi_getancestors($args) {
         //$SQLquery .= ' ORDER BY P1.xar_left';
 
         // Get database connection info and execute the query.
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
         $result = $dbconn->Execute($SQLquery);
         if (!$result) {return;}
 

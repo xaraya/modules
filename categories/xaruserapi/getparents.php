@@ -21,7 +21,7 @@ function categories_userapi_getparents($args) {
         return $info;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $categoriestable = $xartable['categories'];

@@ -14,7 +14,7 @@ function categories_userapi_countitems_deprecated($args)
     if(!xarSecurityCheck('ViewCategoryLink')) return;
     
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
     

@@ -76,7 +76,7 @@ function categories_user_main()
 //              )";
 
     // Symbolic links
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
 
     $query = "SELECT xar_cid, xar_name FROM $xartable[categories_symlinks] WHERE xar_parent = '$catid'";
     $result = $dbconn->Execute($query);

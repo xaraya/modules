@@ -28,7 +28,7 @@ function categories_userapi_getneighbours($args) {
 //        return array();
 //    }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $categoriestable = $xartable['categories'];

@@ -56,7 +56,7 @@ function categories_adminapi_linkcat($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
 

@@ -28,7 +28,7 @@ xarDBLoadTableMaintenanceAPI();
 function categories_init()
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     /* CREATE TABLE xar_categories (
@@ -289,7 +289,7 @@ function categories_upgrade($oldversion)
 
         // TODO: remove this for release
             // Get database information
-            list($dbconn) = xarDBGetConn();
+            $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
 
             $query = "ALTER TABLE $xartable[categories]
@@ -355,7 +355,7 @@ function categories_upgrade($oldversion)
             }
 
             // Get database information
-            list($dbconn) = xarDBGetConn();
+            $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $linkagetable = $xartable['categories_linkage'];
 
@@ -430,7 +430,7 @@ function categories_upgrade($oldversion)
 function categories_delete()
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     // Delete categories table

@@ -20,7 +20,7 @@ function categories_userapi_countcats($args)
     if(!xarSecurityCheck('ViewCategories')) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
 

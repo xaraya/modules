@@ -15,7 +15,7 @@ function categories_userapi_getcatinfo($args) {
        return false;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $categoriestable = $xartable['categories'];

@@ -61,7 +61,7 @@ function categories_adminapi_updatecat($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
 

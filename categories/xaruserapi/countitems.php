@@ -23,7 +23,7 @@ function categories_userapi_countitems($args)
     if(!xarSecurityCheck('ViewCategoryLink')) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
 
     // Get the field names and LEFT JOIN ... ON ... parts from categories
     // By passing on the $args, we can let leftjoin() create the WHERE for

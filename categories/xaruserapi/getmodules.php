@@ -19,7 +19,7 @@ function categories_userapi_getmodules($args)
     }
 
     // Database information
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories_linkage'];
 

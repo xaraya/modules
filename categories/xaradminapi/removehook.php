@@ -36,7 +36,7 @@ function categories_adminapi_removehook($args)
     if(!xarSecurityCheck('DeleteCategoryLink',1,'Link',"$modid:All:All:All")) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
 
