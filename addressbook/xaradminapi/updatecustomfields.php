@@ -101,8 +101,7 @@ function addressbook_adminapi_updatecustomfields($args)
                                         ,'bindvars'=>array($modName[$k],$modType[$k],$id )));
 
             if (($modType[$k] != 'smallint default NULL') && ($modType[$k] != 'tinyint default NULL')) {
-                //TODO: Not sure how to lost xarVarPrep... in this instance. $modType contains the composite ALTER parameters e.g. 'varchar(60) default NULL'
-                array_push($updates,array('sql'=>"ALTER TABLE $adr_table CHANGE custom_".$id." custom_".$id." ".xarVarPrepForStore($modType[$k]),'bindvars'=>array()));
+                array_push($updates,array('sql'=>"ALTER TABLE $adr_table CHANGE custom_".$id." custom_".$id." ".$modType[$k],'bindvars'=>array()));
             }
         }
 
