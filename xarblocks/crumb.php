@@ -95,7 +95,10 @@ function xarpages_crumbblock_display($blockinfo)
     // blocks on the same page showing the same tree.
     if (xarVarIsCached('Blocks.xarpages', 'pagedata')) {
         // Pages are cached?
-        $pagedata = xarVarGetCached('Blocks.xarpages', 'pagedata');
+        // The 'serialize' hack ensures we have a proper copy of the
+        // paga data, which is a self-referencing array. If we don't
+        // do this, then any changes we make will affect the stored version.
+        $pagedata = unserialize(serialize(xarVarGetCached('Blocks.xarpages', 'pagedata')));
 
         // If the cached tree does not contain the current page,
         // then we cannot use it.

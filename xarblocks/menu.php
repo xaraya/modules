@@ -24,6 +24,7 @@ function xarpages_menublock_init()
         'current_source' => 'AUTO', // Other values: 'DEFAULT'
         'default_pid' => 0, // 0 == 'None'
         'root_pids' => array(),
+        'prune_pids' => array(),
         'max_level' => 0
     );
 }
@@ -73,6 +74,8 @@ function xarpages_menublock_display($blockinfo)
     // 4. Allow the page tree to be pruned at arbitrary specified
     //    pages. That would allow sections of the tree to be pruned
     //    from one menu and added to another (i.e. split menus).
+    //    This will also move the current page, if it happens to be in the
+    //    pruned section, down to the pruning page. [done]
 
     // Get variables from content block.
     if (!is_array($blockinfo['content'])) {
@@ -86,6 +89,12 @@ function xarpages_menublock_display($blockinfo)
         $root_pids = $vars['root_pids'];
     } else {
         $root_pids = array();
+    }
+
+    if (!empty($vars['prune_pids']) && is_array($vars['prune_pids'])) {
+        $prune_pids = $vars['prune_pids'];
+    } else {
+        $prune_pids = array();
     }
 
     // To start with, we need to know the current page.
@@ -115,8 +124,11 @@ function xarpages_menublock_display($blockinfo)
     // blocks on the same page showing the same tree.
     if (xarVarIsCached('Blocks.xarpages', 'pagedata')) {
         // Pages are cached?
-        $pagedata = xarVarGetCached('Blocks.xarpages', 'pagedata');
-
+        // The 'serialize' hack ensures we have a proper copy of the
+        // paga data, which is a self-referencing array. If we don't
+        // do this, then any changes we make will affect the stored version.
+        $pagedata = unserialize(serialize(xarVarGetCached('Blocks.xarpages', 'pagedata')));
+        //$pagedata = unserialize(serialize($pagedata));
         // If the cached tree does not contain the current page,
         // then we cannot use it.
         if (!isset($pagedata['pages'][$pid])) {
@@ -165,6 +177,28 @@ function xarpages_menublock_display($blockinfo)
     // function handles it for the current page, but there is no
     // point the block providing links to pages that cannot be
     // accessed.
+
+    // Optionally prune branches from the tree.
+    // TODO: Make sure we only prune above the root nodes. Trust the user for now to do that.
+    //$prune_pids = array(15);
+    if (!empty($prune_pids)) {
+        foreach($prune_pids as $prune_pid) {
+            if (isset($pagedata['pages'][$prune_pid])) {
+                // The page exists.
+                // Move the current page if necessary.
+                if ($pagedata['pages'][$pid]['left'] > $pagedata['pages'][$prune_pid]['left'] && $pagedata['pages'][$pid]['left'] < $pagedata['pages'][$prune_pid]['right']) {
+                    // Move the current page down from within the pruned section, to
+                    // the current pruning point.
+                    $pid = $prune_pid;
+                }
+
+                // Reset any of the pruning point's children.
+                $pagedata['pages'][$prune_pid]['child_keys'] = array();
+                $pagedata['pages'][$prune_pid]['has_children'] = false;
+                //var_dump($pagedata);
+            }
+        }
+    }
 
     // Here we add the various flags to the pagedata, based on
     // the current page.

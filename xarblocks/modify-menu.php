@@ -34,6 +34,7 @@ function xarpages_menublock_modify($blockinfo)
     if (!isset($vars['default_pid'])) {$vars['default_pid'] = 'AUTO';}
     if (!isset($vars['max_level'])) {$vars['max_level'] = 0;}
     if (!isset($vars['root_pids'])) {$vars['root_pids'] = array();}
+    if (!isset($vars['prune_pids'])) {$vars['prune_pids'] = array();}
 
     // Get a list of all pages for the drop-downs.
     // Get the tree of all pages, without the DD for speed.
@@ -58,6 +59,15 @@ function xarpages_menublock_modify($blockinfo)
             $vars['root_pids'][$key] = $vars['all_pages']['pages'][$key]['slash_separated'];
         } else {
             $vars['root_pids'][$key] = xarML('Unknown');
+        }
+    }
+
+    $vars['prune_pids'] = array_flip($vars['prune_pids']);
+    foreach($vars['prune_pids'] as $key => $value) {
+        if (isset($vars['all_pages']['pages'][$key])) {
+            $vars['prune_pids'][$key] = $vars['all_pages']['pages'][$key]['slash_separated'];
+        } else {
+            $vars['prune_pids'][$key] = xarML('Unknown');
         }
     }
 
@@ -115,6 +125,27 @@ function xarpages_menublock_update($blockinfo)
         $vars['root_pids'] = array_flip($vars['root_pids']);
         // Reorder the keys.
         $vars['root_pids'] = array_values($vars['root_pids']);
+    }
+
+    // The pruning pages define sections of the page landscape that this block applies to.
+    if (!isset($vars['prune_pids'])) {
+        $vars['prune_pids'] = array();
+    }
+    if (xarVarFetch('new_prune_pid', 'int:0', $new_prune_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_prune_pid)) {
+        $vars['prune_pids'][] = $new_prune_pid;
+    }
+    if (xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_prune_pid)) {
+        // Easier to check with the keys and values flipped.
+        $vars['prune_pids'] = array_flip($vars['prune_pids']);
+        foreach($remove_prune_pid as $remove) {
+            if (isset($vars['prune_pids'][$remove])) {
+                unset($vars['prune_pids'][$remove]);
+            }
+        }
+        // Flip keys and values back.
+        $vars['prune_pids'] = array_flip($vars['prune_pids']);
+        // Reorder the keys.
+        $vars['prune_pids'] = array_values($vars['prune_pids']);
     }
 
     // The maximum number of levels that are displayed.
