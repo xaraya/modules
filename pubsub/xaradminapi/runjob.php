@@ -38,8 +38,8 @@ function pubsub_adminapi_runjob($args)
     }
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubregtable = $xartable['pubsub_reg'];
     $pubsubeventstable = $xartable['pubsub_events'];
 

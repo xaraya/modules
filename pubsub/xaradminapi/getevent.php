@@ -38,8 +38,8 @@ function pubsub_adminapi_getevent($args)
     if (!xarModAPILoad('categories','user')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];

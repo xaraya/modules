@@ -26,8 +26,8 @@ function pubsub_adminapi_processq($args)
     extract($args);
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Get all jobs in pending state

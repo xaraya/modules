@@ -59,8 +59,8 @@ function pubsub_adminapi_updateevent($args)
     if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:$eventid:All:All")) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // Update the item

@@ -29,8 +29,8 @@ function pubsub_adminapi_gettemplate($args)
     if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$templateid")) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     // Update the item

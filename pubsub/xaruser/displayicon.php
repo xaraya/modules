@@ -100,8 +100,8 @@ function pubsub_user_displayicon($args)
      * Fetch the eventid to check
      */
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubregtable = $xartable['pubsub_reg'];

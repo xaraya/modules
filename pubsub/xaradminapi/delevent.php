@@ -43,8 +43,8 @@ function pubsub_adminapi_delevent($args)
     if (!xarSecurityCheck('DeletePubSub')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // Delete item from events table

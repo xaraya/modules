@@ -45,8 +45,8 @@ function pubsub_adminapi_updatejob($args)
     if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:$handlingid:All")) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Update the item

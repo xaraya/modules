@@ -25,8 +25,8 @@
 function pubsub_init()
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $prefix = xarDBGetSiteTablePrefix();
 
     xarDBLoadTableMaintenanceAPI();
@@ -205,10 +205,10 @@ function pubsub_upgrade($oldversion)
 
     switch ($oldversion) {
         case '1.0':
-            list($dbconn) = xarDBGetConn();
+            $dbconn =& xarDBGetConn();
             $prefix = xarDBGetSiteTablePrefix();
             
-            $xarTables = xarDBGetTables();
+            $xarTables =& xarDBGetTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
             $pubsubtemplatetable = $prefix.'_pubsub_template';
 
@@ -231,8 +231,8 @@ function pubsub_upgrade($oldversion)
             if (!$result) return;
 
         case 1.1:
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $prefix = xarDBGetSiteTablePrefix();
 
             $pubsubtemplatestable = $xartable['pubsub_templates'];
@@ -279,8 +279,8 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
             // fall through to the next upgrade
 
         case 1.2:
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $prefix = xarDBGetSiteTablePrefix();
 
             $query = xarDBDropTable($xartable['pubsub_eventcids']);
@@ -431,8 +431,8 @@ function pubsub_delete()
     }
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();

@@ -29,8 +29,8 @@ function pubsub_adminapi_deljob($args)
     if (!xarSecurityCheck('DeletePubSub', 1, 'item', "All:All:$handlingid:All")) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Delete item

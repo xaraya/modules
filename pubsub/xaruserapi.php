@@ -47,8 +47,8 @@ function pubsub_userapi_updatesubscription($args)
     if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All:$pubsubid')) return;
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // Update the item
@@ -87,8 +87,8 @@ function pubsub_userapi_delsubscriptions($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // Delete item

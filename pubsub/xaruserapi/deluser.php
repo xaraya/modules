@@ -44,8 +44,8 @@ function pubsub_userapi_deluser($args)
     if (!xarSecurityCheck('DeletePubSub', 1, 'item', 'All::$pubsubid')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // Delete item

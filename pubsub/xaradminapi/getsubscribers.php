@@ -38,8 +38,8 @@ function pubsub_adminapi_getsubscribers($args)
         return $events;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $rolestable           = $xartable['roles'];
     $modulestable         = $xartable['modules'];

@@ -11,8 +11,8 @@ function pubsub_adminapi_getalltemplates($args)
     $templates = array();
     if (!xarSecurityCheck('AdminPubSub')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     $query = "SELECT xar_templateid,

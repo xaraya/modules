@@ -59,8 +59,8 @@ function pubsub_adminapi_processevent($args)
 //    if (!xarSecurityCheck('AddPubSub')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubsubeventstable  = $xartable['pubsub_events'];
     $pubsubregtable     = $xartable['pubsub_reg'];
     $pubsubprocesstable = $xartable['pubsub_process'];
