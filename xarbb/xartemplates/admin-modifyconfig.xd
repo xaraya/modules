@@ -112,7 +112,7 @@
                 </xar:if>
             <xar:else />
  		        <span style="float: right; width: 78%; text-align: left;">
-		        <em><xar:mlstring>HTML Module is not installed</xar:mlstring></em>
+		        <em><xar:mlstring>HTML Module is not available.</xar:mlstring></em>
 		        </span>
             </xar:if>
 		</span>
@@ -131,7 +131,7 @@
                 </xar:if>
             <xar:else />
  		        <span style="float: right; width: 78%; text-align: left;">
-		        <em><xar:mlstring>BBCode Module is not installed</xar:mlstring></em>
+		        <em><xar:mlstring>BBCode Module is not available</xar:mlstring></em>
 		        </span>
             </xar:if>
 		</span>

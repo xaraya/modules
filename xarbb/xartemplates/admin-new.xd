@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
-<!-- 
+<!--
 	// Enter name of mandatory fields
 	var fieldRequired = Array("fname", "fdesc");
 	// Enter field description to appear in the dialog box
@@ -81,7 +81,7 @@
 
 	<div style="clear: both; padding-top: 10px;">
 	    <span style="float: left; width: 20%; text-align: right;">
-	        <span class="help" title="#xarML('Default value for HTML in a new forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
+	        <span class="help" title="#xarML('Allow HTML in this forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
 		    </span>
 		    <span style="float: right; width: 78%; text-align: left;">
 	        <xar:if condition="xarModIsAvailable('html')">
@@ -92,7 +92,7 @@
                 </xar:if>
             <xar:else />
  		        <span style="float: right; width: 78%; text-align: left;">
-		        <em><xar:mlstring>HTML Module is not installed</xar:mlstring></em>
+		        <em><xar:mlstring>HTML Module is not available.</xar:mlstring></em>
 		        </span>
             </xar:if>
 		</span>
@@ -100,7 +100,7 @@
  
 	<div style="clear: both; padding-top: 10px;">
 	    <span style="float: left; width: 20%; text-align: right;">
-	        <span class="help" title="#xarML('Default value for BBCode in a new forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
+	        <span class="help" title="#xarML('Allow BBCode in this forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
 		    </span>
 		    <span style="float: right; width: 78%; text-align: left;">
             <xar:if condition="xarModIsAvailable('bbcode')">
@@ -111,7 +111,7 @@
                 </xar:if>
             <xar:else />
  		        <span style="float: right; width: 78%; text-align: left;">
-		        <em><xar:mlstring>BBCode Module is not installed</xar:mlstring></em>
+		        <em><xar:mlstring>BBCode Module is not available.</xar:mlstring></em>
 		        </span>
             </xar:if>
 		</span>
