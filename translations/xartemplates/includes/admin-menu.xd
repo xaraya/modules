@@ -1,0 +1,6 @@
+<!-- include the module header on all admin pages -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Translations administration</xar:mlstring>
+  </span>
+</div>

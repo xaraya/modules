@@ -123,7 +123,7 @@
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     include 'modules/translations/class/PHPParser.php';
-    //include 'modules/translations/class/TPLParser.php';
+    include 'modules/translations/class/TPLParser.php';
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];

@@ -1,31 +1,3 @@
-<p>
-<form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations', 'admin', 'update_working_locale')#" method="post">
-    <xar:mlstring>Choose the working locale</xar:mlstring>:
-    <select name="locale" id="locale" onchange="document.workingLocaleForm.submit();">
-        <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
-            <xar:if condition="$locales[$i] eq $working_locale">
-                <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
-            <xar:else />
-                <option value="#$locales[$i]#">#$locales[$i]#</option>
-            </xar:if>
-        </xar:for>
-    </select>
-</form>
-</p>
-<ul>
-  <li>
-  <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'core'))#">
-    <xar:mlstring>Translate the core</xar:mlstring>
-    </a>
-  </li>
-  <li>
-    <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'module'))#">
-    <xar:mlstring>Translate a module</xar:mlstring>
-    </a>
-  </li>
-  <li>
-  <a href="#xarModURL('translations', 'admin', 'update_info', array('ctxtype'=>'theme'))#">
-    <xar:mlstring>Translate a theme</xar:mlstring>
-    </a>
-  </li>
-</ul>
+<xar:template file="admin-menu" type="module"/>
+
+Overview screen translations
