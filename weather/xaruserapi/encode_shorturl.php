@@ -34,11 +34,11 @@ function weather_userapi_encode_shorturl(&$params)
         $path .= $params['xwloc'].'/';
     }
     if(!empty($path) && isset($params['xwunits'])) {
-        $join = empty($extra) ? '?' : '&amp;';
+        $join = empty($extra) ? '?' : '&';
         $extra .= $join . 'xwunits=' . $params['xwunits'];
     }
     if(!empty($path) && isset($params['xwday'])) {
-        $join = empty($extra) ? '?' : '&amp;';
+        $join = empty($extra) ? '?' : '&';
         $extra .= $join . 'xwday=' . $params['xwday'];
     }
     return $path.$extra;
