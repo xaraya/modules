@@ -28,11 +28,11 @@ function categories_userapi_isdescendant($args)
         return false;
     }
 
-    // If there is just one cid, then it may have a prefix to be stripped.
-    if (count($cids) == 1) {$cids[0] = str_replace('_', '', $cids[0]);}
-
     if (empty($cids)) {$cids = array($cid);}
     if (empty($branches)) {$branches = array($branch);}
+
+    // If there is just one cid, then it may have a prefix to be stripped.
+    if (count($cids) == 1) {$cids[0] = str_replace('_', '', $cids[0]);}
 
     $cids = array_filter($cids, 'is_numeric');
     $branches = array_filter($branches, 'is_numeric');
