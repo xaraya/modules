@@ -16,7 +16,7 @@
     </td>
     <td valign="top">
         <xar:loop id="trails" name="$cattrails">
-            <xar:loop id="catitems" name="$catitems">
+            <xar:loop id="catitems" name="$loop:trails:item['catitems']">
                 #$loop:catitems:item['catjoin']#
                 <xar:if condition="empty($loop:catitems:item['catlink'])">
                     #$loop:catitems:item['catlabel']#
