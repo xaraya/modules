@@ -58,6 +58,7 @@ function bkview_user_browseview($args)
         $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
         $files[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $files[$counter]['relfile']=substr($dir,0,strlen($dir)-1)."/".basename($name);
+        $files[$counter]['available'] = file_exists($name);
         if(xarModIsAvailable('mime') && file_exists($name)) {
             $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $name));
             $files[$counter]['icon'] = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));

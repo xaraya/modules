@@ -40,9 +40,13 @@
       <xar:loop name="$files">
         <tr class="csets">
           <td class="csets">
+          <xar:if condition="$loop:item['available']">
             <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
               <img src="#$loop:item['icon']#" alt="file" />
             </a>
+          <xar:else/>
+              <img src="#xarTplGetImage('bkmissing.png')#" title="#xarML('This file is not available in the filesystem, perhaps it is checked in.')#" alt="missing"/>
+          </xar:if>
           </td>
           <td class="csets">
             <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
