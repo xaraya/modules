@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Site Contact
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -17,6 +17,7 @@ $modversion['name']           = 'sitecontact';
 $modversion['displayname']    = xarML('Site Contact');
 $modversion['id']             = '890';
 $modversion['version']        = '0.0.1';
+$modversion['displayname']    = xarML('SiteContact');
 $modversion['description']    = 'Contact site admin by email';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
