@@ -23,6 +23,10 @@ define('BK_SEARCH_FILE',   4);
 define('BK_SEARCH_CSET',   1);
 define('BK_SEARCH_DELTAS', 2);
 
+define('BK_FIELD_MARKER','|');
+define('BK_NEWLINE_MARKER','<nl/>');
+
+
 /**
  *  Class to model a repository
  *

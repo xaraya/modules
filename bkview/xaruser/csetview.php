@@ -31,7 +31,7 @@ function bkview_user_csetview($args)
     if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
     
     $repo = new bkRepo($item['repopath']);
-    $formatstring = "':TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)<br/>}'";
+    $formatstring = "':TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}'";
     $list = $repo->bkChangeSets($revs,$range,$formatstring,$showmerge,$sort,$user);
 
     $counter=1;
@@ -39,8 +39,8 @@ function bkview_user_csetview($args)
     $csets=array();
     while (list($key,$val) = each($list)) {
         list($tag,$age, $author, $rev, $comments) = explode('|',$val);
-        $comments=str_replace("<br/>","\n",$comments);
-        $comments=nl2br(htmlspecialchars($comments));
+        $comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
+        $comments=nl2br(xarVarPrepForDisplay($comments));
         $csets[$counter]['tag']=$tag;
         $csets[$counter]['age']=$age;
         $csets[$counter]['author']=$author;

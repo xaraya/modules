@@ -28,7 +28,7 @@ function bkview_user_deltaview($args)
     $data['deltalist']=array();
     $deltalist=array();
     $counter=1;
-    $formatstring="':TAG:|:GFILE:|:REV:|:D:|:T:|:USER:|:DOMAIN:|\$each(:C:){(:C:)<br />}'";
+    $formatstring="':TAG:|:GFILE:|:REV:|:D:|:T:|:USER:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}'";
     $repo = new bkRepo($item['repopath']);
     $changeset= new bkChangeSet($repo,$rev);
     $deltas=$changeset->bkDeltas($formatstring);
@@ -43,7 +43,8 @@ function bkview_user_deltaview($args)
         $deltalist[$counter]['time']=$time;
         $deltalist[$counter]['user']=$user;
         $deltalist[$counter]['domain']=$domain;
-        $deltalist[$counter]['comments']=$comments;
+        $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
+        $deltalist[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $counter++;
     }
 
