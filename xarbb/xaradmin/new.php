@@ -31,6 +31,7 @@ function xarbb_admin_new()
     if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hottopic','int:1:',$hottopic, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showcats','checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('linknntp','checkbox', $linknntp, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
@@ -113,6 +114,12 @@ function xarbb_admin_new()
             xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
                                                                      'callerItemType'   => $forum['fid'],
                                                                      'hookModName'      => 'comments'));
+
+            if (!empty($allowbbcode)){
+                xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
+                                                                         'callerItemType'   => $fid,
+                                                                         'hookModName'      => 'bbcode'));
+            }
 
             $settings = array();
             $settings['postsperpage']       = $postsperpage;

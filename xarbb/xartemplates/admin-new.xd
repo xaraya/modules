@@ -88,6 +88,17 @@
 	</span>
 	</div>
 
+	<xar:if condition="xarModIsAvailable('bbcode')">
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Allow BBCode in this forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
+		</span>
+		</div>
+	</xar:if>
+
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('Show category trails')#"><label for="showcats"><xar:mlstring>Show Categories</xar:mlstring></label>:</span>

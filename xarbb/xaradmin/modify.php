@@ -104,6 +104,7 @@ function xarbb_admin_modify()
             if (!xarVarFetch('hottopic','int:1:',$hottopic, 20 ,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showcats','checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('linknntp','checkbox', $linknntp, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
@@ -133,6 +134,16 @@ function xarbb_admin_modify()
             $settings['nntpserver']         = $nntpserver;
             $settings['nntpgroup']          = $nntpgroup;
             xarModSetVar('xarbb', 'settings.'.$fid, serialize($settings));
+
+            if (!empty($allowbbcode)){
+                xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
+                                                                         'callerItemType'   => $fid,
+                                                                         'hookModName'      => 'bbcode'));
+            } else {
+                xarModAPIFunc('modules','admin','disablehooks', array('callerModName'       => 'xarbb',
+                                                                         'callerItemType'   => $fid,
+                                                                         'hookModName'      => 'bbcode'));
+            }
             // Redirect
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'modify', array('fid' => $fid)));
             break;

@@ -68,7 +68,8 @@ function xarbb_user_viewtopic()
                                                        $tid,
                                                  array($data['tpost'],
                                                        $data['ttitle']),
-                                                       'xarbb');
+                                                       'xarbb',
+                                                       $data['fid']);
 
     // The user API function is called
     $posterdata = xarModAPIFunc('roles',
@@ -100,13 +101,6 @@ function xarbb_user_viewtopic()
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
 
-        list($comments[$i]['xar_text'],
-             $comments[$i]['xar_title']) = xarModCallHooks('item',
-                                                           'transform',
-                                                            $tid,
-                                                            array($comment['xar_text'],
-                                                                  $comment['xar_title']),
-                                                            'xarbb');
         if ($allowhtml){
             $comments[$i]['xar_text']=xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
             $comments[$i]['xar_title']=xarVarPrepHTMLDisplay($comments[$i]['xar_title']);
@@ -114,6 +108,15 @@ function xarbb_user_viewtopic()
             $comments[$i]['xar_text']=xarVarPrepForDisplay($comments[$i]['xar_text']);
             $comments[$i]['xar_title']=xarVarPrepForDisplay($comments[$i]['xar_title']);
         }
+        // This has to come after the html call.
+        list($comments[$i]['xar_text'],
+             $comments[$i]['xar_title']) = xarModCallHooks('item',
+                                                           'transform',
+                                                            $tid,
+                                                            array($comment['xar_text'],
+                                                                  $comment['xar_title']),
+                                                            'xarbb',
+                                                            $data['fid']);
 
         // The user API function is called
         $comments[$i]['usertopics'] = xarModAPIFunc('xarbb',
@@ -211,5 +214,4 @@ function xarbb_user_viewtopic()
 
     return $data;
 }
-
 ?>

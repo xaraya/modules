@@ -17,6 +17,51 @@
 		</td>
 	</tr>
 </table>
+<xar:if condition="isset($preview)">
+	<table width="98%" border="0">
+		<tr>
+			<th>
+				<xar:mlstring>
+					Preview
+				</xar:mlstring>
+			</th>
+		</tr>
+		<tr>
+			<td class="xar-accent">
+				<span>
+					<xar:mlstring>
+						Posted
+					</xar:mlstring>: 
+						#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', time())# &nbsp;&nbsp;&nbsp; 
+					<xar:mlstring>
+						Post subject
+					</xar:mlstring>:
+					#$transformedtitle#
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="xar-norm">
+				<table width="100%">
+					<tr>
+						<td>
+							#$transformedtext#<br /><br />
+							<xar:if condition="isset($properties) and count($properties) gt 0">
+								<xar:set name="$hide">$properties['signature']->value</xar:set>
+								<xar:if condition="$hide">
+									<p>
+										-----------------------------	<br />
+										<xar:data-output property="$properties['signature']" />
+									</p>
+								</xar:if>
+							</xar:if>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</xar:if>
 <form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" method="post" name="post" id="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
 <table border="0" width="98%">
 	<tr style="border: 1px solid #000;"> 
@@ -102,7 +147,7 @@
 					<xar:mlstring>
 						HTML is
 					</xar:mlstring>
-					<xar:if condition="xarModGetVar('xarbb', 'allowhtml')">
+					<xar:if condition="$allowhtml">
 						<span style="color: green;">
 							On
 						</span>
@@ -115,7 +160,7 @@
 					<xar:mlstring>
 						BBCode is
 					</xar:mlstring>
-					<xar:if condition="xarModIsHooked('bbcode')">
+					<xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
 						<span style="color: green;">
 							On
 						</span>
@@ -128,7 +173,7 @@
 					<xar:mlstring>
 						Smilies are
 					</xar:mlstring>
-					<xar:if condition="xarModIsHooked('smilies')">
+					<xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
 						<span style="color: green;">
 							On
 						</span>
@@ -193,8 +238,8 @@
 				<input type="hidden" name="authid" id="authid" value="#$authid#" />
 				<input type="hidden" name="fid" id="fid" value="#$fid#" />
 				<input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
-				<input type="submit" name="preview" value="#$previewlabel#" />&nbsp;
-				<input type="submit" tabindex="6" value="#$submitlabel#" />
+				<input type="submit" id="preview" name="preview" value="#$previewlabel#" />&nbsp;
+				<input type="submit" value="#$submitlabel#" />
 			</td>
 		</tr>
 </table>

@@ -86,6 +86,15 @@ function xarbb_userapi_createtopic($args)
         }
     }
 
+    list($tpost,
+         $ttitle) = xarModCallHooks('item',
+                                    'transform-input',
+                                     $nextId,
+                                     array($tpost,
+                                           $ttitle),
+                                           'xarbb',
+                                           $fid);
+
     // Add item
     $query = "INSERT INTO $xbbtopicstable (
               xar_tid,
@@ -122,6 +131,9 @@ function xarbb_userapi_createtopic($args)
     $args['module'] = 'xarbb';
     $args['itemtype'] = $fid; // topic
     $args['itemid'] = $tid;
+
+
+
     xarModCallHooks('item', 'create', $tid, $args);
 
     // Return the id of the newly created link to the calling process

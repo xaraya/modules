@@ -33,6 +33,9 @@ function xarbb_user_newreply()
             return;
         }
 
+        $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$data['fid']));
+        $data['allowhtml']      = $settings['allowhtml'];
+
         $package['title'] = xarVarPrepForDisplay($data['ttitle']);
         if ($phase == 'quote'){
             $package['text'] = '[quote]'. $data['tpost'] .'[/quote]';
@@ -103,6 +106,4 @@ function xarbb_user_newreply()
 
     return $data;
 }
-
-
 ?>

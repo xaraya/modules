@@ -125,7 +125,7 @@
 					<xar:mlstring>
 						HTML is
 					</xar:mlstring>
-					<xar:if condition="xarModGetVar('xarbb', 'allowhtml')">
+					<xar:if condition="$allowhtml">
 						<span style="color: green;">
 							On
 						</span>
@@ -138,7 +138,7 @@
 					<xar:mlstring>
 						BBCode is
 					</xar:mlstring>
-					<xar:if condition="xarModIsHooked('bbcode')">
+					<xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
 						<span style="color: green;">
 							On
 						</span>
@@ -151,7 +151,7 @@
 					<xar:mlstring>
 						Smilies are
 					</xar:mlstring>
-					<xar:if condition="xarModIsHooked('smilies')">
+					<xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
 						<span style="color: green;">
 							On
 						</span>

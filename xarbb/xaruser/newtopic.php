@@ -25,6 +25,7 @@ function xarbb_user_newtopic()
 	if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_DONT_SET)) return;
 	if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
 	if (!xarVarFetch('redirect', 'str', $redirect, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('preview',  'isset', $preview,   NULL, XARVAR_DONT_SET)) return;
 
     if(isset($tid))    {
         // The user API function is called.
@@ -39,9 +40,9 @@ function xarbb_user_newtopic()
                               'getforum',
                               array('fid' => $fid));
     }
-    $data['fid'] = $fid;
-
-
+    $data['fid']            = $fid;
+    $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$data['fid']));
+    $data['allowhtml']      = $settings['allowhtml'];
     if (empty($data)) return;
 
     // Security Check
@@ -54,8 +55,17 @@ function xarbb_user_newtopic()
 
     }
 
-    if (empty($phase)){
+    if (isset($preview)){
         $phase = 'form';
+        $data['preview'] = 1;
+        list($data['transformedtext'],
+             $data['transformedtitle']) = xarModCallHooks('item',
+                                                          'transform',
+                                                           $tid,
+                                                     array($tpost,
+                                                           $ttitle),
+                                                           'xarbb',
+                                                           $data['fid']);
     }
 
     switch(strtolower($phase)) {
@@ -121,7 +131,7 @@ function xarbb_user_newtopic()
                 if (!xarModAPIFunc('xarbb',
                                'user',
                                'updatetopic',
-                               array('tid' => $tid,
+                               array('tid'      => $tid,
                                      'fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
