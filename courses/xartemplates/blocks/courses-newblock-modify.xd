@@ -1,4 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <tr align="left" valign="middle">
 	<td>
 		<label for="numitems#$blockid#"><xar:mlstring>Number of courses to display</xar:mlstring></label>
