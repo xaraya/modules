@@ -19,14 +19,9 @@
 */
 function xarbb_admin_modify()
 {
-    list($fid,
-         $phase) = xarVarCleanFromInput('fid',
-                                        'phase');
-
-    if (empty($phase)){
-        $phase = 'form';
-    }
-
+    // Get parameters
+    if (!xarVarFetch('fid','id', $fid)) return;
+	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     switch(strtolower($phase)) {
 
         case 'form':
@@ -61,12 +56,10 @@ function xarbb_admin_modify()
             break;
 
         case 'update':
-            // Get parameters
-            list($fid,
-                 $fname,
-                 $fdesc) = xarVarCleanFromInput('fid',
-                                                'fname',
-                                                'fdesc');
+
+            if (!xarVarFetch('fname', 'str:1:', $fname, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('fdesc', 'str:1:', $fdesc, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('fstatus','int', $fstatus, 0)) return;
 
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
@@ -75,18 +68,16 @@ function xarbb_admin_modify()
             if(!xarModAPIFunc('xarbb',
                               'admin',
                               'update',
-                               array('fid'   => $fid,
-                                     'fname' => $fname,
-                                     'fdesc' => $fdesc))) return;
+                               array('fid'      => $fid,
+                                     'fname'    => $fname,
+                                     'fdesc'    => $fdesc,
+                                     'fstatus'  => $fstatus))) return;
 
             // Redirect
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
 
             break;
     }
-
 	return $data;
-
 }
-
 ?>

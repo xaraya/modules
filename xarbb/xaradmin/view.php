@@ -52,6 +52,13 @@ function xarbb_admin_view()
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < $totlinks; $i++) {
         $link = $links[$i];
+
+        if (!$links[$i]['fstatus']){
+            $links[$i]['fstatus'] = xarML('Ready');
+        } else {
+            $links[$i]['fstatus'] = xarML('Locked');
+        }
+
         if (xarSecurityCheck('EditxarBB', 0)) {
             $links[$i]['editurl'] = xarModURL('xarbb',
                                               'admin',

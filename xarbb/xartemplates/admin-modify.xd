@@ -39,6 +39,23 @@
 	</span>
 	</div>
 
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The status of the forum that is being created.')#"><label for="fstatus"><xar:mlstring>Forum Status</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<select name="fstatus" id="fstatus" size="1">
+			<xar:if condition="$fstatus eq 0">
+				<option value="0" selected="selected"><xar:mlstring>Ready</xar:mlstring></option>
+				<option value="1"><xar:mlstring>Locked</xar:mlstring></option>
+			<xar:else />
+				<option value="0"><xar:mlstring>Ready</xar:mlstring></option>
+				<option value="1" selected="selected"><xar:mlstring>Locked</xar:mlstring></option>
+			</xar:if>
+		</select>
+	</span>
+	</div>
+
 	#$hooks#
 	<div style="clear: both; padding-top: 10px;">
 		<span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span>

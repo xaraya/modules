@@ -12,6 +12,9 @@
 			<xar:mlstring>Forum Description</xar:mlstring>
 		</th>
         <th>
+			<xar:mlstring>Forum Status</xar:mlstring>
+		</th>
+        <th>
 			<xar:mlstring>Options</xar:mlstring>
 		</th>
 	</tr>
@@ -21,8 +24,11 @@
         <td class="xar-norm">
 			#$loop:item['fname']#
 		</td>
-        <td class="xar-norm">
+        <td class="xar-norm" align="center">
 			#$loop:item['fdesc']#
+		</td>
+        <td class="xar-norm" align="center">
+			#$loop:item['fstatus']#
 		</td>
 		<td align="center" class="xar-norm">
            <xar:if condition="empty($loop:item['editurl'])">
@@ -43,8 +49,11 @@
         <td class="xar-accent">
 			#$loop:item['fname']#
 		</td>
-        <td class="xar-accent">
+        <td class="xar-accent" align="center">
 			#$loop:item['fdesc']#
+		</td>
+        <td class="xar-accent" align="center">
+			#$loop:item['fstatus']#
 		</td>
 		<td align="center" class="xar-accent">
            <xar:if condition="empty($loop:item['editurl'])">

@@ -42,8 +42,8 @@ function xarbb_init()
     'xar_ftopics'      => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_fposts'       => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_fposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment' => false, 'primary_key' => false),
-    'xar_fpostid'      => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0')//,
-    //'xar_fstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny')
+    'xar_fpostid'      => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
+    'xar_fstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny')
     //'xar_fpostid'      => array('type'=>'datetime','null'=>false,'default'=>'1970-01-01 00:00')
     );
 
