@@ -77,8 +77,8 @@ function & images_userapi_transform ( $body )
                     
                     $args['fileId'] = $id;
                     
-                    $args['width']  = urlencode($args['width']);
-                    $args['height'] = urlencode($args['height']);
+                    $args['width']  = $args['width'];
+                    $args['height'] = $args['height'];
                     
                     $replacement = xarModURL('images', 'user', 'display', $args);
                 }  
