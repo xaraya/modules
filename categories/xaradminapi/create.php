@@ -26,7 +26,7 @@ function categories_adminapi_create ($args)
        )
     {
         $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new UserException($msg));
         return;
     }
 
