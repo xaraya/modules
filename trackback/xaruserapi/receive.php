@@ -21,7 +21,7 @@ function trackback_userapi_receive($args)
           return true;
     }
 
-	if (!xarSecurityCheck('Viewtrackback')) return;
+    if (!xarSecurityCheck('Viewtrackback')) return;
 
     // explode the id
     list($module, $itemtype, $objectid) = explode(",", $id);
