@@ -356,11 +356,16 @@ function articles_user_view($args)
 
     $catinfo = array();
     if ($showcategories) {
+
+// TODO: replace with getallcatbases if/when it supports returning plain cids without
+//       all the unnecessary category lookups (or when it can return all child infos too)
+
         // get root categories for this publication type
         $catlinks = xarModAPIFunc('articles',
                                   'user',
                                   'getrootcats',
-                                  array('ptid' => $ptid));
+                                  array('ptid' => $ptid,
+                                        'all' => true)); // get base categories for all if needed
         // grab the name and link of all children too
         foreach ($catlinks as $info) {
             $cattree = xarModAPIFunc('articles',

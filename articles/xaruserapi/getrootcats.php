@@ -4,6 +4,8 @@
  * get an array of root categories with links
  *
  * @param $args['ptid'] publication type ID
+ * @param $args['all'] boolean if we need to return all root categories when
+ *                     ptid is empty (default false)
  * @returns array
 // TODO: specify return format
  */
@@ -15,15 +17,47 @@ function articles_userapi_getrootcats($args)
         $ptid = null;
     }
 
-    if (empty($ptid)) {
-        $cidstring = xarModGetVar('articles', 'mastercids');
+    // see which root categories we need to handle
+    $rootcats = array();
+    if (!empty($ptid)) {
+        $cidstring = xarModGetVar('articles','mastercids.'.$ptid);
+        if (!empty($cidstring)) {
+            $rootcats = explode(';',$cidstring);
+        }
+    } elseif (empty($all)) {
+        $cidstring = xarModGetVar('articles','mastercids');
+        if (!empty($cidstring)) {
+            $rootcats = explode(';',$cidstring);
+        }
     } else {
-        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
+        // Get publication types
+        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        // get base categories for all publication types here
+        $publist = array_keys($pubtypes);
+        // add the defaults too, in case we have other base categories there
+        $publist[] = '';
+        // build the list of root categories for all required publication types
+        $catlist = array();
+        foreach ($publist as $pubid) {
+            if (empty($pubid)) {
+                $cidstring = xarModGetVar('articles','mastercids');
+            } else {
+                $cidstring = xarModGetVar('articles','mastercids.'.$pubid);
+            }
+            if (!empty($cidstring)) {
+                $rootcats = explode(';',$cidstring);
+                foreach ($rootcats as $cid) {
+                    $catlist[$cid] = 1;
+                }
+            }
+        }
+        if (count($catlist) > 0) {
+            $rootcats = array_keys($catlist);
+        }
     }
-    if (empty($cidstring)) {
+
+    if (count($rootcats) < 1) {
         return array();
-    } else {
-        $rootcats = explode(';',$cidstring);
     }
 
     if (!xarModAPILoad('categories', 'user')) return;
