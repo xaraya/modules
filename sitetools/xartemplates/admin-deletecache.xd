@@ -73,7 +73,7 @@
 	</div>
 
         <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
-            <input type="submit" value="#$confirmbutton#" align="center" />
+            <input type="submit" value="#$confirmbutton#"  />
         </span>
      </form>
       <span class="xar-mod-title" style="float: left; padding-top: 30px; width: 98%; text-align: center;">
