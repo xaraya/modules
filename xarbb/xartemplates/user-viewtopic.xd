@@ -4,23 +4,6 @@
 <xar:comment>
     using css-driven template, avoiding excess tables for layout, especially nested ones
 </xar:comment>
-
-<xar:comment>
-Comment out all this javascript for now. Not required in this template.
-functions.js is deprecated and replicates confirmlink.js
-<xar:base-include-javascript module="base" filename="confirmlink.js" />
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
-<script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var fieldRequired = Array("package[text]");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Reply Post body text");
-//-->
-</script>
-</xar:comment>
-
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
 <xar:if condition="$post ne '1'">
@@ -144,7 +127,6 @@ functions.js is deprecated and replicates confirmlink.js
                             </a>
                         </strong>
                     </div>
-                    <xar:if condition="xarUserIsLoggedIn()">
                         <div class="xar-sub">
                             <xar:if condition="isset($properties['avatar']) and !empty($posterdata[$tposter]['avatar'])">
                                 <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
@@ -156,19 +138,18 @@ functions.js is deprecated and replicates confirmlink.js
                             : #xarLocaleGetFormattedDate('medium', $posterdatestamp)#
                             <br />
                             <xar:mlstring>
-                                Posts 
+                                Posts
                             </xar:mlstring>
                             : #$usertopics#
                             <xar:if condition="isset($properties['location']) and !empty($posterdata[$tposter]['location'])">
                                <br />
                                 <xar:mlstring>
-                                   Location 
+                                   Location
                                 </xar:mlstring>
-                                : 
+                                :
                                 <xar:data-output property="$properties['location']" value="$posterdata[$tposter]['location']" />
                             </xar:if>
                         </div>
-                    </xar:if>
                 </td>
                 <td class="xar-norm message">
                     <div class="xarbb-messagecontrols">
@@ -187,31 +168,31 @@ functions.js is deprecated and replicates confirmlink.js
                                         <xar:if condition="isset($allowbbcode) and ($allowbbcode eq 'true')">
                                        <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                             <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#">
-                                                #$quoteimg# 
+                                                #$quoteimg#
                                             </a>
                                         </xar:if>
                                     </xar:sec>
 
                                     <xar:if condition="xarUserGetVar('uid') eq $tposter">
                                         <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
-                                            #$editimg# 
+                                            #$editimg#
                                         </a>
                                         <xar:else />
                                         <xar:sec mask="ModxarBB" catch="false">
                                             <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
-                                                #$editimg# 
+                                                #$editimg#
                                             </a>
                                         </xar:sec>
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
                                     <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onClick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')">
-                                        #$deleteimg# 
+                                        #$deleteimg#
                                     </a>
                                 </xar:sec>
                                 <xar:sec mask="AdminxarBB" catch="false">
                                     <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $thostname))#">
-                                        #$ipimg# 
+                                        #$ipimg#
                                     </a>
                                 </xar:sec>
                             </xar:if>
@@ -228,7 +209,7 @@ functions.js is deprecated and replicates confirmlink.js
                         </div>
                     </div>
                     <div>
-                        #$transformedtext# 
+                        #$transformedtext#
                         <xar:if condition="isset($properties['signature']) and !empty($posterdata[$tposter]['signature'])">
                             <p class="hiddensignature">
                                <xar:data-output property="$properties['signature']" value="$posterdata[$tposter]['signature']" />
@@ -241,7 +222,7 @@ functions.js is deprecated and replicates confirmlink.js
                 <td class="xar-norm author">
                     <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
                         <xar:mlstring>
-                            Back to top 
+                            Back to top
                         </xar:mlstring>
                     </a>
                     <xar:if condition="isset($changelog)">
@@ -249,7 +230,7 @@ functions.js is deprecated and replicates confirmlink.js
                             <br />
                             <a href="#xarModUrl('changelog', 'admin', 'showlog', array('modid' => '300', 'itemtype' => $fid, 'itemid' => $tid))#">
                                 <xar:mlstring>
-                                    View changes 
+                                    View changes
                                 </xar:mlstring>
                             </a>
                         </xar:sec>
@@ -257,6 +238,11 @@ functions.js is deprecated and replicates confirmlink.js
                 </td>
                 <td class="xar-alt">
                     <xar:if condition="xarUserIsLoggedIn()">
+                   <xar:comment>
+                       jojodee: This is not strictly correct as anon users may have permission to send PMs etc
+                                Each of these should really have their own xar:sec ....
+                   </xar:comment>
+
                         <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
                             <img src="#xarTplGetImage('new/icon_profile.gif')#" alt="#xarML('Profile')#" />
                         </a>
@@ -293,12 +279,12 @@ functions.js is deprecated and replicates confirmlink.js
                                 <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
                             </a>
                         </xar:if>
-                    </xar:if>
+                   </xar:if>
                 </td>
             </tr>
         </xar:if>
         <xar:comment>
-            start the post replies and add alternating row colors 
+            start the post replies and add alternating row colors
         </xar:comment>
         <xar:foreach in="$items" value="$item" key="$key">
             <xar:if condition="(($key+1) % 2)">
@@ -333,7 +319,7 @@ functions.js is deprecated and replicates confirmlink.js
                             </xar:sec>
                         </xar:if>
                     </strong>
-                    <xar:if condition="xarUserIsLoggedIn()">
+                  <!--  <xar:if condition="xarUserIsLoggedIn()"> -->
                         <span class="xar-sub">
                             <xar:if condition="$item['xar_postanon'] eq 0">
                                 <br />
@@ -361,7 +347,7 @@ functions.js is deprecated and replicates confirmlink.js
                                 </xar:if>
                             </xar:if>
                         </span>
-                    </xar:if>
+                  <!--  </xar:if> -->
                 </td>
                 <td class="#$myclass# message">
                     <div class="xarbb-messagecontrols">
@@ -451,7 +437,11 @@ functions.js is deprecated and replicates confirmlink.js
                     </xar:if>
                 </td>
                 <td class="xar-alt">
-                    <xar:if condition="xarUserIsLoggedIn()">
+                   <xar:if condition="xarUserIsLoggedIn()">
+                   <xar:comment>
+                       jojodee: This is not strictly correct as anon users may have permission to send PMs etc
+                                Each of these should really have their own xar:sec ....
+                   </xar:comment>
                         <xar:if condition="$item['xar_postanon'] eq 0">
                             <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
                                 <img src="#xarTplGetImage('new/icon_profile.gif')#" alt="#xarML('Profile')#" />
@@ -490,7 +480,7 @@ functions.js is deprecated and replicates confirmlink.js
                                 </a>
                             </xar:if>
                         </xar:if>
-                    </xar:if>
+                   </xar:if>
                 </td>
             </tr>
         </xar:foreach>
