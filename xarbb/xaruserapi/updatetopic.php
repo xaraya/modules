@@ -46,12 +46,11 @@ function xarbb_userapi_updatetopic($args)
     }
 
     // for sec check
-    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
-    $fid = $topic['fid'];
+    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
     // Security Check
     // it would have to be ModxarBB, but because posting results in an update, it has to be Post Permission
-    if(!xarSecurityCheck('ReadxarBB',1,'Forum',"$fid:All")) return;    // todo
+    if(!xarSecurityCheck('PostxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;    // todo
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();

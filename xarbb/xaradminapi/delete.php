@@ -20,23 +20,17 @@ function xarbb_adminapi_delete($args)
         return;
     }
 
-    // The user API function is called
-    $link = xarModAPIFunc('xarbb',
+    // The user API function is called.
+    $data = xarModAPIFunc('xarbb',
                           'user',
                           'getforum',
                           array('fid' => $fid));
 
-    if ($link == false) {
-        $msg = xarML('No Such Forum Present',
-                    'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
-        return;
-    }
+    if (empty($data)) return;
+	
 
     // Security Check
-    if(!xarSecurityCheck('DeletexarBB',1,'Forum',"$fid:All")) return;
+    if(!xarSecurityCheck('DeletexarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
 	// topics and comments are deleted in delete gui func so do not care
     // shouldn't this call be here?

@@ -33,10 +33,9 @@ function xarbb_adminapi_deletereplies($args)
         $tid = $comment[0]['xar_objectid'];
 
         if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
-		$fid = $topic['fid'];
+		
 
-    	if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")/* ||
-        	!xarSecurityCheck('ModxarBB',1,'Topic',"$tid")*/) continue;  // TODO
+    	if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;  // TODO
 
         if(!xarModAPIFunc("comments","admin","delete_branch",array("node" => $cid)))
         	return;

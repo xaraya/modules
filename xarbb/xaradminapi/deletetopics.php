@@ -34,11 +34,10 @@ function xarbb_adminapi_deletetopics($args)
 
     foreach($tids as $tid)	{
     	// get forum id
-        if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
-		$fid = $topic['fid'];
+        if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;		
 
 	    // Item Specific Security Check
-	    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) continue;
+	    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;
 
 		// Delete comments
         if(!xarModAPIFunc("xarbb","admin","deleteallreplies",array(

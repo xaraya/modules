@@ -39,13 +39,13 @@ function xarbb_user_newreply()
     }
 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
-    $fid = $topic['fid'];
 
     // Security Check
-    if($phase == "edit")
-	    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) return;
-	else
-   	    if(!xarSecurityCheck('ReadxarBB',1,'Forum',"$fid:All")) return;
+    if($phase == "edit")    {
+	    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
+	}    else	{
+   	    if(!xarSecurityCheck('PostxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
+    }
 
     // Var Set-up
     $header['input-title']  = xarML('Post a Reply');

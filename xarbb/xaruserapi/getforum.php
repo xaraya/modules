@@ -12,7 +12,7 @@ function xarbb_userapi_getforum($args)
 
     if (empty($fid) && empty($fname)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'get', 'xarbb');
+                    '', 'userapi', 'get', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -24,28 +24,37 @@ function xarbb_userapi_getforum($args)
     $xbbforumstable = $xartable['xbbforums'];
 
     // Get link
+    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                   array('cids' => array(),
+                                        'modid' => xarModGetIDFromName('xarbb')));
+
+    // Get links
     $query = "SELECT xar_fid,
                    xar_fname,
                    xar_fdesc,
                    xar_ftopics,
                    xar_fposts,
                    xar_fposter,
-                   xar_fpostid
-            FROM $xbbforumstable";
+                   xar_fpostid,
+                   {$categoriesdef['cid']}
+            FROM $xbbforumstable
+            LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = xar_fid
+            {$categoriesdef['more']}
+            WHERE {$categoriesdef['where']}";
     if (!empty($fid) && is_numeric($fid)) {
-        $query .= " WHERE xar_fid = " . xarVarPrepForStore($fid);
+        $query .= " AND xar_fid = " . xarVarPrepForStore($fid);
     } else {
-        $query .= " WHERE xar_fname = '" . xarVarPrepForStore($fname) . "'";
+        $query .= " AND xar_fname = '" . xarVarPrepForStore($fname) . "'";
     }
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid) = $result->fields;
+    list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid,$catid) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('ViewxarBB', 0, 'Forum',"$fid:All")) {
-        return false;
+    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum',"$catid:$fid")) {
+        return;
     }
     $forum = array('fid'     => $fid,
                    'fname'   => $fname,
@@ -53,7 +62,8 @@ function xarbb_userapi_getforum($args)
                    'ftopics' => $ftopics,
                    'fposts'  => $fposts,
                    'fposter' => $fposter,
-                   'fpostid' => $fpostid);
+                   'fpostid' => $fpostid,
+                   'catid'   => $catid);
 
     return $forum;
 }

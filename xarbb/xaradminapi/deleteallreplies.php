@@ -23,10 +23,9 @@ function xarbb_adminapi_deleteallreplies($args)
     }
 
     // get forum id
-    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
-    $fid = $topic['fid'];
+    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
-    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) return;
+    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
 
     $comments = xarModAPIFunc("comments","user","get_multiple",
     	array("modid" => xarModGetIdFromName('xarbb'),"objectid" => $tid));

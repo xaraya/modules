@@ -14,16 +14,17 @@ function xarbb_admin_modify()
 
         case 'form':
         default:
+            
             // The user API function is called.
-            $data = xarModAPIFunc('xarbb',
-                                  'user',
-                                  'getforum',
-                                  array('fid' => $fid));
-
-            if ($data == false) return;
-
+	    $data = xarModAPIFunc('xarbb',
+	                          'user',
+	                          'getforum',
+	                          array('fid' => $fid));
+	
+	    if (empty($data)) return;
+		
             // Security Check
-            if(!xarSecurityCheck('EditxarBB',1,'Forum','$fid:All')) return;
+            if(!xarSecurityCheck('EditxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
             $data['module'] = 'xarbb';
             $data['itemtype'] = 1; // forum

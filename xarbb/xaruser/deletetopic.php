@@ -7,12 +7,11 @@ function xarbb_user_deletetopic()
          $confirmation) = xarVarCleanFromInput('tid',
                                               'confirmation');
 
-	// for sec check                                              
+	// for sec check
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
-    $fid = $topic['fid'];
 
     // Security Check
-    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) return;
+    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
@@ -26,11 +25,6 @@ function xarbb_user_deletetopic()
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-
-
-    $topic = xarModAPIFunc('xarbb','user','gettopic',array("tid" => $tid));
-    if(!$topic)
-    	return;
 
     if (!xarModAPIFunc('xarbb',
 		               'admin',

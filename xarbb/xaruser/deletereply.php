@@ -11,17 +11,16 @@ function xarbb_user_deletereply()
     if(!$comment = xarModAPIFunc('comments','user','get_one',array('cid' => $cid))) return;
     $tid = $comment[0]['xar_objectid'];
 
-    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
-    $fid = $topic['fid'];
+    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
     // Security Check
-    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) return;
+    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
         //Load Template
         $data['authid'] = xarSecGenAuthKey();
-	    $data['cid'] = $cid;
+	    $data['catid'] = $cid;
         return $data;
     }
 

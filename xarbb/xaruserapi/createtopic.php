@@ -27,7 +27,7 @@ function xarbb_userapi_createtopic($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB',1,'Forum')) return;
+    if(!xarSecurityCheck('PostxarBB',1,'Forum')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();

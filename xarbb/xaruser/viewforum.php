@@ -3,11 +3,19 @@
 function xarbb_user_viewforum()
 {
     // Get parameters from whatever input we need
-    xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED);
-    xarVarFetch('fid', 'id', $fid);
+    if(!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('fid', 'id', $fid)) return;
+
+    // The user API function is called.
+    $data = xarModAPIFunc('xarbb',
+                          'user',
+                          'getforum',
+                          array('fid' => $fid));
+
+    if (empty($data)) return;
 
     // Security Check
-    if(!xarSecurityCheck('ViewxarBB',1,'Forum',"$fid:All")) return;
+    if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
     $data['items'] = array();
 

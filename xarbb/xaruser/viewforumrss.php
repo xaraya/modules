@@ -5,10 +5,16 @@ function xarbb_user_viewforumrss()
 
     $fid = xarVarCleanFromInput('fid');
 
-    $data['items'] = array();
+    // The user API function is called.
+    $data = xarModAPIFunc('xarbb',
+                          'user',
+                          'getforum',
+                          array('fid' => $fid));
+
+    if (empty($data)) return;
 
     // Security Check
-    if(!xarSecurityCheck('ViewxarBB',1,'Forum',"$fid:All")) return;
+    if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
     // The user API function is called
     $topics = xarModAPIFunc('xarbb',

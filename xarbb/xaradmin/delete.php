@@ -13,10 +13,10 @@ function xarbb_admin_delete()
                           'getforum',
                           array('fid' => $fid));
 
-    if ($data == false) return;
+    if (empty($data)) return;
 
     // Security Check
-    if(!xarSecurityCheck('DeletexarBB', 1, 'Forum', '$fid:All')) return;
+    if(!xarSecurityCheck('DeletexarBB', 1, 'Forum', $data['catid'].':'.$data['fid'])) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {

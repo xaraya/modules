@@ -18,9 +18,32 @@ function xarbb_user_newtopic()
                                       'fid',
                                       'tid',
                                       'redirect');
+	if(isset($tid))	{
+	    // The user API function is called.
+	    $data = xarModAPIFunc('xarbb',
+	                          'user',
+	                          'gettopic',
+	                          array('tid' => $tid));
+    } else  {
+        // The user API function is called.
+	    $data = xarModAPIFunc('xarbb',
+	                          'user',
+	                          'getforum',
+	                          array('fid' => $fid));
+	}
+
+
+    if (empty($data)) return;
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB',1,'Forum',"$fid:All")) return;
+
+    if(isset($tid))	{
+    	if(!xarSecurityCheck('ModxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
+    }
+    else	{
+    	if(!xarSecurityCheck('PostxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
+
+    }
 
     if (empty($phase)){
         $phase = 'form';
@@ -33,7 +56,6 @@ function xarbb_user_newtopic()
             if(isset($tid))	{
             	$data = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid));
             } else  {
-                $data['fid'] = $fid;
                 if (empty($tpost)){
              	   $data['tpost'] = '';
 	            } else {
@@ -67,11 +89,11 @@ function xarbb_user_newtopic()
             // Check arguments
             if (empty($ttitle)) {
                 $warning = xarML('No Topic Subject Entered');
-                xarResponseRedirect(xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid, 'tpost' => $tpost, 'warning' => $warning)));
+                xarResponseRedirect(xarModURL('xarbb', 'user', 'newtopic', array('fid' => $data['fid'], 'tpost' => $tpost, 'warning' => $warning)));
             }
             if (empty($tpost)) {
                 $warning = xarML('No Topic Text Entered');
-                xarResponseRedirect(xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid, 'ttitle' => $ttitle, 'warning' => $warning)));
+                xarResponseRedirect(xarModURL('xarbb', 'user', 'newtopic', array('fid' => $data['fid'], 'ttitle' => $ttitle, 'warning' => $warning)));
             }
 
             $tposter = xarUserGetVar('uid');
@@ -81,7 +103,7 @@ function xarbb_user_newtopic()
                                'user',
                                'updatetopic',
                                array('tid' => $tid,
-                               		 'fid'      => $fid,
+                               		 'fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter))) return;
@@ -89,7 +111,7 @@ function xarbb_user_newtopic()
 	            if (!xarModAPIFunc('xarbb',
                                'user',
                                'createtopic',
-                               array('fid'      => $fid,
+                               array('fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter))) return;
@@ -98,13 +120,13 @@ function xarbb_user_newtopic()
             if (!xarModAPIFunc('xarbb',
                                'user',
                                'updateforumview',
-                               array('fid'      => $fid,
+                               array('fid'      => $data['fid'],
                                      'fposter'  => $tposter))) return;
 
             if($redirect == 'topic')
             	xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
             else
-	            xarResponseRedirect(xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid)));
+	            xarResponseRedirect(xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid'])));
 
             break;
 

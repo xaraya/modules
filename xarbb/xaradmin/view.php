@@ -17,7 +17,7 @@ function xarbb_admin_view()
     // The user API function is called
     $links = xarModAPIFunc('xarbb',
                            'user',
-                           'getallforums',
+                           'getforums',
                            array('startnum' => $startnum,
                                  'numitems' => xarModGetVar('xarbb',
                                                             'itemsperpage')));

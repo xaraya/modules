@@ -92,7 +92,7 @@ function xarbb_init()
 
     //-----------------------------------------------------------------------------------
     // Forum
-    $instances = array(
+  /* $instances = array(
         array('header' => 'Forum ID:',
             'query' => "SELECT distinct xar_fid FROM " . $xbbforumstable,
             'limit' => 20
@@ -101,16 +101,24 @@ function xarbb_init()
             'query' => "SELECT distinct xar_fname FROM ".$xbbforumstable,  // Todo
             'limit' => 20
             )
-        );
+        ); */
+    $instances = array(
+                    array('header' => 'external', // this keyword indicates an external "wizard"
+                    'query'  => xarModURL('xarbb', 'admin', 'privileges'),
+                    'limit'  => 0
+                   )
+           );
     xarDefineInstance('xarbb', 'Forum', $instances);
     // Register Masks
-    xarRegisterMask('ReadxarBB','All','xarbb','Forum','All:All','ACCESS_READ');     // Allows Posting Replys and Topics
+    // Mask = Categorie : Id : Name
+    xarRegisterMask('ReadxarBB','All','xarbb','Forum','All:All','ACCESS_READ');     // Allows reading Topics and Postings
+    xarRegisterMask('ViewxarBB','All','xarbb','Read','All:All','ACCESS_OVERVIEW');	// Allows seeing Forum
     xarRegisterMask('EditxarBB','All','xarbb','Forum','All:All','ACCESS_EDIT');
     xarRegisterMask('AddxarBB','All','xarbb','Forum','All:All','ACCESS_ADD');
     xarRegisterMask('DeletexarBB','All','xarbb','Forum','All:All','ACCESS_DELETE');
     xarRegisterMask('AdminxarBB','All','xarbb','Forum','All:All','ACCESS_ADMIN');	// Allows all ;D
     xarRegisterMask('ModxarBB','All','xarbb','Forum','All:All','ACCESS_MODERATE');	// Allows Editing + Deleting Replys + Topics
-    xarRegisterMask('ViewxarBB','All','xarbb','Forum','All:All','ACCESS_OVERVIEW'); // Allows seeing Forum + reading Forum
+    xarRegisterMask('PostxarBB','All','xarbb','Forum','All:All','ACCESS_COMMENT');  // Allows Posting Replys and Topics
 	// for what is moderate good?
 
  /*   //-----------------------------------------------------------------------------------

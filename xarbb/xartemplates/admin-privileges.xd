@@ -1,0 +1,97 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Articles for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
+<div style="margin: auto;">
+
+<form method="post" action="#xarModURL('xarbb','admin','privileges')#">
+    <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+    <input type="hidden" name="extname" id="extname" value="#$extname#" />
+    <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+    <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+    <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+
+<table border="1" cellpadding="8" cellspacing="0">
+
+<tr><th valign="top" align="right">
+<xar:mlstring>Category</xar:mlstring>
+</th><td>
+    <xar:foreach in="$cats" key="$catid">
+        #$cats[$catid]#<br /><br />
+    </xar:foreach>
+</td></tr>
+
+<tr><th valign="top" align="right">
+<xar:mlstring>Forum</xar:mlstring>
+</th><td>
+    <xar:mlstring>Select specific Forum</xar:mlstring> : 
+    <!-- TODO: show dropdown box for all relevant articles (if not too many) -->
+    <select name="fid" id="fid" onchange="submit()">
+    	<option value="All">All(-)</option>
+    	<xar:foreach in="$fids" value="$forum">
+    		<xar:if condition="$forum['fid'] eq $fid">
+    			<option value="#$forum['fid']#" selected>#$forum['fname']#(#$forum['fid']#)</option>
+    		<xar:else />
+    			<option value="#$forum['fid']#">#$forum['fname']#(#$forum['fid']#)</option>
+    		</xar:if>
+    	</xar:foreach>
+    	
+    </select>
+</td></tr>
+
+<tr><th valign="top" align="right">
+<xar:mlstring>Access Level</xar:mlstring>
+</th><td>
+    <select name="extlevel" id="extlevel">
+        <xar:if condition="$extlevel eq 0">
+        	<option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
+        <xar:else />
+        	<option value="0"><xar:mlstring>No Access</xar:mlstring></option>
+        </xar:if>						
+        <xar:if condition="$extlevel eq 100">
+        	<option value="100" selected="selected"><xar:mlstring>Overview</xar:mlstring></option>
+        <xar:else />
+        	<option value="100"><xar:mlstring>Overview</xar:mlstring></option>
+        </xar:if>						
+        <xar:if condition="$extlevel eq 200">
+        	<option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
+        <xar:else />
+        	<option value="200"><xar:mlstring>Read</xar:mlstring></option>
+        </xar:if>						
+        <xar:if condition="$extlevel eq 300">
+        	<option value="300" selected="selected"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+        <xar:else />
+        	<option value="300"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+        </xar:if>						
+        <xar:if condition="$extlevel eq 500">
+        	<option value="500" selected="selected"><xar:mlstring>Edit / Approve</xar:mlstring></option>
+        <xar:else />
+        	<option value="500"><xar:mlstring>Edit / Approve</xar:mlstring></option>
+        </xar:if>						
+        <xar:if condition="$extlevel eq 700">
+        	<option value="700" selected="selected"><xar:mlstring>Delete</xar:mlstring></option>
+        <xar:else />
+        	<option value="700"><xar:mlstring>Delete</xar:mlstring></option>
+        </xar:if>						
+        <xar:if condition="$extlevel eq 800">
+        	<option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
+        <xar:else />
+        	<option value="800"><xar:mlstring>Admin</xar:mlstring></option>
+        </xar:if>						
+    </select>
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$refreshlabel#" />
+</td></tr>
+</table>
+
+<br />
+<xar:ml><xar:mlstring>There are #(1) forums matching these selection criteria at the moment</xar:mlstring><xar:mlvar>#$numitems#</xar:mlvar></xar:ml>
+<br /><hr /><br />
+(Instance Definition #$extinstance#)
+<br /><br />
+<input type="submit" name="apply" value="#$applylabel#" />
+</form>
+<br />
+
+</div>
+</div>
