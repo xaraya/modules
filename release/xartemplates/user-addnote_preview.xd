@@ -3,7 +3,7 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Release Module :: Preview</xar:mlstring></h2>
 
-<center>
+<div align="center">
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -159,4 +159,4 @@
 		<br /><br />
 		<input type="submit" value="<xar:mlstring>Announce!</xar:mlstring>" align="middle" tabindex="6" />
 	</form>
-</center>
+</div>

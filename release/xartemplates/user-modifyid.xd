@@ -3,7 +3,7 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Release Module :: Modify A Release ID</xar:mlstring></h2>
 
-<center>
+<div align="center">
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -55,4 +55,4 @@
 		<br /><br />
 		<input type="submit" value="<xar:mlstring>Modify ID</xar:mlstring>" align="middle" tabindex="6" />
 	</form>
-</center>
+</div>

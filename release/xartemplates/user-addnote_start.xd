@@ -7,7 +7,7 @@
 <xar:else />
 
 <xar:mlstring>From this screen, you will be adding a release note for your module or theme.  Please enter all applicable information.  Release notes are held for validation.  If your module or theme has never had a release before, it may take extra time to determine the certification status.  For more information on the certification of modules and themes, and their benefits, please read this information (insert link).</xar:mlstring>
-<center>
+<div align="center">
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -43,5 +43,5 @@
 		<br /><br />
 		<input type="submit" value="<xar:mlstring>Continue</xar:mlstring>" align="middle" tabindex="6" />
 	</form>
-</center>
+</div>
 </xar:if>

@@ -4,7 +4,7 @@
 <h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
 
 <xar:mlstring>Enter your module or theme ID below, so the system can begin the release notification process.</xar:mlstring>
-<center>
+<div align="center">
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -22,4 +22,4 @@
 		<br /><br />
 		<input type="submit" value="<xar:mlstring>Begin Release Notification</xar:mlstring>" align="middle" tabindex="6" />
 	</form>
-</center>
+</div>

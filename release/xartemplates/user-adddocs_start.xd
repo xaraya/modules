@@ -7,7 +7,7 @@
 <xar:else />
 
 <xar:mlstring>From this screen, you will be adding a documentation for your module or theme.  Please enter all applicable information.  Documentation is held for validation.  If your module or theme is certified, your documentation will be syndicated into the help module, as well as notification of the module or theme status.  For more information on the certification of modules and themes, and their benefits, please read this information (insert link).</xar:mlstring>
-<center>
+<div align="center">
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -55,5 +55,5 @@
 		</xar:if>
 		<input type="submit" value="<xar:mlstring>Continue</xar:mlstring>" align="middle" tabindex="6" />
 	</form>
-</center>
+</div>
 </xar:if>
