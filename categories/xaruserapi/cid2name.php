@@ -6,10 +6,13 @@ function categories_userapi_cid2name ($args)
 {
     extract($args);
     list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $categoriestable = $xartable['categories'];
+
     if (empty($cid) || !is_numeric($cid)) {
         $cid = 1;
     }
-    $query = "SELECT xar_parent, xar_description FROM xar_categories WHERE xar_cid = '"
+    $query = "SELECT xar_parent, xar_description FROM $categoriestable WHERE xar_cid = '"
              . xarVarPrepForStore($cid) . "'";
     $result = $dbconn->Execute($query);
     if (!$result) return;

@@ -27,7 +27,7 @@
             <xar:if condition="empty($loop:catchildren:item['clink'])">
                 <b>#$loop:catchildren:item['clabel']#</b>
             <xar:else />
-                <a href="#$loop:catchildren:item['clink']#">#$loop:catitems:item['clabel']#</a>
+                <a href="#$loop:catchildren:item['clink']#">#$loop:catchildren:item['clabel']#</a>
             </xar:if>
             <xar:if condition="!empty($loop:catchildren:item['ccount'])">
                 (#$loop:catchildren:item['ccount']#)
