@@ -1,4 +1,27 @@
 <?php
+/**
+ * File: $Id
+ *
+ * The main user function
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ * 
+ * @subpackage adminpanels module
+ * @author Andy Varganov <andyv@xaraya.com>
+*/
+/**
+ * Incorporate external sites or apps
+ *
+ * @author  Shawn McKenzie (AbraCadaver)
+ * @author  Yassen Yotov (CyberOto)
+ * @access  public
+ * @param   no parameters
+ * @return  data on success or void on falure
+ * @throws  XAR_SYSTEM_EXCEPTION, 'NOT_ALLOWED'
+*/
 function window_user_main($args) 
 {
     extract($args);
