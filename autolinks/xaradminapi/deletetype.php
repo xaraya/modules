@@ -89,7 +89,7 @@ function autolinks_adminapi_deletetype($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Let any hooks know that we have deleted a link
+    // Let any hooks know that we have deleted a link type (as an item)
     xarModCallHooks(
         'item', 'delete', $tid,
         array(
@@ -97,6 +97,14 @@ function autolinks_adminapi_deletetype($args)
             'module' => 'autolinks'
         )
     );
+
+    // Let any hooks know that we have deleted a link type (as an item type)
+    // TODO: we don't have that kind of hook yet.
+    //xarModCallHooks(
+    //    'item', 'delete', $linktype['itemtype'], 
+    //    array('itemtype' => , 'module' => 'autolinks')
+    //);
+
 
     // Let the calling process know that we have finished successfully
     return true;

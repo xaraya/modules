@@ -113,13 +113,20 @@ function autolinks_adminapi_updatetype($args)
         if (!$result) {return;}
     }
 
-    // Update hooks - set DD property values etc.
+    // Update/config hooks - set DD property values etc.
+
+    // Config hooks for the type as an itemtype.
+    xarModCallHooks(
+        'module', 'updateconfig', 'autolinks',
+        array('module' => 'autolinks', 'itemtype' => $type['itemtype'])
+    );
+
+    // Hooks for the autolink type as an item.
     xarModCallHooks(
         'item', 'update', $tid,
         array(
-            'itemtype' => xarModGetVar('autolinks', 'typeitemtype'),
             'module' => 'autolinks',
-            'urlparam' => 'tid'
+            'itemtype' => xarModGetVar('autolinks', 'typeitemtype')
         )
     );
 

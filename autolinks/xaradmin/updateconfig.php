@@ -89,6 +89,17 @@ function autolinks_admin_updateconfig()
         return;
     }
 
+    $typeitemtype = xarModGetVar('autolinks', 'typeitemtype');
+    if (empty($typeitemtype)) {
+        xarModSetVar('autolinks', 'typeitemtype', 1);
+    }
+    
+    // Config update hooks for the autolink type.
+    xarModCallHooks(
+        'module', 'updateconfig', 'autolinks',
+        array('itemtype' => $typeitemtype, 'module' => 'autolinks')
+    );
+    
     xarResponseRedirect(xarModURL('autolinks', 'admin', 'modifyconfig'));
     return true;
 }

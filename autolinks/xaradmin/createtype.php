@@ -83,6 +83,7 @@ function autolinks_admin_createtype()
         );
     }
 
+    // Redirect to the modify screen.
     xarResponseRedirect(
         xarModURL(
             'autolinks', 'admin', 'modifytype',

@@ -128,7 +128,7 @@ function autolinks_adminapi_create($args)
     xarModCallHooks(
         'item', 'create', $lid,
         array(
-            'itemtype' => $tid,
+            'itemtype' => $type['itemtype'],
             'module' => 'autolinks',
             'urlparam' => 'lid'
         )

@@ -85,6 +85,8 @@ function autolinks_admin_modifytype($args)
                 } else {
                     xarResponseRedirect(xarModURL('autolinks', 'admin', 'viewtype'));
                 }
+                // Return true to redirect.
+                $type = true;
             } else {
                 // Error in API.
 
@@ -99,20 +101,21 @@ function autolinks_admin_modifytype($args)
         $type = $currenttype;
     }
 
-    // Do config hooks for the items.
-    $hooks = xarModCallHooks(
-        'module', 'modifyconfig', 'autolinks',
-        array('itemtype' => $currenttype['itemtype'], 'module' => 'autolinks'));
-    $type['itemhooks'] = $hooks;
+    if (is_array($type)) {
+        $type['authid'] = xarSecGenAuthKey();
 
-    // Do modify hooks for the item type itself.
-    $hooks = xarModCallHooks(
-        'item', 'modify', $tid, 
-        array('itemtype' => xarModGetVar('autolinks', 'typeitemtype'), 'module' => 'autolinks')
-    );
-    $type['typehooks'] = $hooks;
+        // Do config hooks for the autolink type as an item type.
+        $type['itemhooks'] = xarModCallHooks(
+            'module', 'modifyconfig', 'autolinks',
+            array('module' => 'autolinks', 'itemtype' => $type['itemtype'])
+        );
 
-    $type['authid'] = xarSecGenAuthKey();
+        // Do modify hooks for the autolink item type as an item.
+        $type['typehooks'] = xarModCallHooks(
+            'item', 'modify', $tid, 
+            array('itemtype' => xarModGetVar('autolinks', 'typeitemtype'), 'module' => 'autolinks')
+        );
+    }
 
     return $type;
 }

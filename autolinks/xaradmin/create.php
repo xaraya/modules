@@ -97,6 +97,9 @@ function autolinks_admin_create()
                 'tid' => $tid
             )
         );
+
+        // Fetch it back, to get the item type.
+        $link = xarModAPIFunc('autolinks', 'user', 'get', array('lid'=>$lid));
     }
 
     // Error in creating the item.

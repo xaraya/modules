@@ -103,7 +103,9 @@ function autolinks_adminapi_createtype($args)
         if (!$result) {return;}
     }
 
-    // Let any hooks know that we have created a new link type
+    // Let any hooks know that we have created a new link type (an instance
+    // of a new item of type 'link type'.
+    // Note: there are no specific creation hooks for item types.
     xarModCallHooks(
         'item', 'create', $tid,
         array(
