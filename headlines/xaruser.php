@@ -34,7 +34,8 @@ function headlines_user_main()
     $links = xarModAPIFunc('headlines',
                            'user',
                            'getall',
-                            array('startnum' => $startnum,
+                            array('catid' => $data['catid'],
+                                  'startnum' => $startnum,
                                   'numitems' => xarModGetVar('headlines', 'itemsperpage')));
 
     //if (empty($links)) return

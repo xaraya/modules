@@ -34,8 +34,26 @@ function headlines_userapi_getall($args)
                      xar_desc,
                      xar_url,
                      xar_order
-            FROM $headlinestable
-            ORDER BY xar_order";
+            FROM $headlinestable";
+
+    if (!empty($catid) && xarModIsHooked('categories','headlines',1)) {
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('cids' => array($catid),
+                                            'modid' => xarModGetIDFromName('headlines')));
+        if (!empty($categoriesdef)) {
+            $query .= ' LEFT JOIN ' . $categoriesdef['table'];
+            $query .= ' ON ' . $categoriesdef['field'] . ' = xar_hid';
+            if (!empty($categoriesdef['more'])) {
+                $query .= $categoriesdef['more'];
+            }
+            if (!empty($categoriesdef['where'])) {
+                $query .= ' WHERE ' . $categoriesdef['where'];
+            }
+        }
+    }
+
+    $query .= " ORDER BY xar_order";
+
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 

@@ -11,10 +11,8 @@ function headlines_userapi_get($args)
     extract($args);
 
     if (!isset($hid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'get', 'Headlines');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'userapi', 'get', 'Headlines');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
