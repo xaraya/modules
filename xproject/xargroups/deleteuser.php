@@ -23,7 +23,7 @@ function xproject_groups_deleteuser()
 		$output->SetInputMode(_XH_VERBATIMINPUT);
 		$func = xarVarCleanFromInput('func');
 		if($func == "deleteuser") $output->Text(xarModAPIFunc('xproject','user','menu'));
-		$output->ConfirmAction(_DELETEUSERSURE,
+		$output->ConfirmAction(xarML('Remove user from this group'),
 							   xarModURL('xproject', 'groups',
 										'deleteuser'),
 							   _CANCEL,

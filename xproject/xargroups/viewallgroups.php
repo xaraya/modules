@@ -18,7 +18,7 @@ function xproject_groups_viewallgroups()
 			   'groups',
 			   'getall');
 
-    $tableHead = array(_GROUP, _OPTION);
+    $tableHead = array(xarML('Team'), _OPTION);
 
     $output->TableStart('', $tableHead, 1);
 
@@ -40,7 +40,7 @@ function xproject_groups_viewallgroups()
 	    $actions[] = $output->URL(xarModURL('xproject',
 					       'groups',
 					       'modifygroup', array('gid'   => $group['gid'],
-								    'gname' => $group['name'])), _RENAMEGROUP);
+								    'gname' => $group['name'])), xarML('Rename group'));
 
 	}
 	if (xarSecAuthAction(0, 'Groups::', "$group[name]::$group[gid]", ACCESS_DELETE)) {

@@ -15,7 +15,7 @@ function xproject_groups_adduser()
 
     $output->SetInputMode(_XH_VERBATIMINPUT);
 	
-    $output->Title(_USERTOADD .' :: '. xarVarPrepForDisplay($group['gname']));
+    $output->Title(xarML('Add new team member') .' :: '. xarVarPrepForDisplay($group['gname']));
     $output->SetInputMode(_XH_PARSEINPUT);
 
     if (!xarSecAuthAction(0, 'Groups::', "::", ACCESS_ADD)) {
@@ -44,7 +44,7 @@ function xproject_groups_adduser()
     $row = array();
     $output->SetOutputMode(_XH_RETURNOUTPUT);
     $row[] = $output->FormSelectMultiple('uid', $userlist);
-    $row[] = $output->FormSubmit(_ADDUSER);
+    $row[] = $output->FormSubmit(xarML('Add member'));
     $output->SetOutputMode(_XH_KEEPOUTPUT);
 
     $output->SetInputMode(_XH_VERBATIMINPUT);

@@ -22,15 +22,15 @@ function xproject_groups_viewgroup($args)
 
 	$group = xarModAPIFunc('xproject','groups','get',array('gid' => $gid));
 	
-    $output->Title(_USERSINGROUP .': '.  xarVarPrepForDisplay($group['gname']));
+    $output->Title(xarML('Team members') .': '.  xarVarPrepForDisplay($group['gname']));
     $output->URL(xarModURL('xproject',
 						  'groups',
 						  'adduser', array('gid' => $group['gid'])),
-				_ADDUSERTOGROUP);
+				xarML('Add team member'));
     $output->LineBreak();
     $output->SetInputMode(_XH_PARSEINPUT);
 
-    $tableHead = array(_USERNAME, _OPTION);
+    $tableHead = array(xarML('Member name'), _OPTION);
 
     $output->TableStart('', $tableHead, 1);
 

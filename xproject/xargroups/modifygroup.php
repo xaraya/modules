@@ -19,11 +19,11 @@ function xproject_groups_modifygroup()
     $output->TableStart(_MODIFYGROUP);
     $output->LineBreak();
     $output->FormStart(xarModURL('xproject', 'groups', 'renamegroup'));
-    $output->Text(_GROUXARAME);
+    $output->Text(xarML('Team name'));
     $output->FormText('gname', $gname, 20, 20);
     $output->FormHidden('gid', $gid);
     $output->FormHidden('authid', xarSecGenAuthKey());
-    $output->FormSubmit(_RENAMEGROUP);
+    $output->FormSubmit(xarML('Rename group'));
     $output->TableEnd();
 
     return $output->GetOutput();

@@ -14,7 +14,7 @@ function xproject_groups_newgroup()
     }
     $output->FormStart(xarModURL('xproject', 'groups', 'addgroup'));
     $output->LineBreak();
-    $output->Text(_GROUXARAME);
+    $output->Text(xarML('Team name'));
     $output->FormText('gname', '', 20, 20);
     $output->FormHidden('authid', xarSecGenAuthKey());
     $output->LineBreak(2);
