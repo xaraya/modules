@@ -1,0 +1,53 @@
+<object name="dyn_example">
+  <objectid>56</objectid>
+  <label>Dynamic Example</label>
+  <moduleid>66</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>nothing yet</config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>292</id>
+      <label>Id</label>
+      <type>21</type>
+      <default>0</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>293</id>
+      <label>Name</label>
+      <type>2</type>
+      <default>your name</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>1:30</validation>
+    </property>
+    <property name="age">
+      <id>294</id>
+      <label>Age</label>
+      <type>15</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:125</validation>
+    </property>
+    <property name="picture">
+      <id>295</id>
+      <label>Picture</label>
+      <type>12</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
+

@@ -1,0 +1,33 @@
+<object name="usersettings_dyn_example">
+  <objectid>12</objectid>
+  <label>User Settings For Dyn_example</label>
+  <moduleid>27</moduleid>
+  <itemtype>66</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="bold">
+      <id>174</id>
+      <label>Show name in bold</label>
+      <type>14</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="itemsperpage">
+      <id>175</id>
+      <label>Items per page</label>
+      <type>15</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>1:100</validation>
+    </property>
+  </properties>
+</object>
+

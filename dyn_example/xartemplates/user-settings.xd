@@ -1,0 +1,31 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br />
+
+<h2><xar:mlstring>My Settings for Dynamic Example</xar:mlstring></h2>
+
+<p><xar:mlstring>This uses dynamic user settings, i.e. you can add/remove the user settings available to your users dynamically too. But you could use the 'normal' hard-coded approach here as well...</xar:mlstring></p>
+
+<form method="post" action="#xarModURL('dynamicdata','admin','update')#">
+<input type="hidden" name="authid" value="#xarSecGenAuthKey('dynamicdata')#" />
+<input type="hidden" name="modid" value="#xarModGetIDFromName('roles')#" />
+<input type="hidden" name="itemtype" value="#xarModGetIDFromName('dyn_example')#" />
+<input type="hidden" name="itemid" value="#$uid#" />
+<input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
+
+<table border="0" cellspacing="0" cellpadding="4">
+
+<xar:data-form module="roles" itemtype="66" itemid="$uid" />
+
+</table>
+
+<br />
+<input type="submit" value="#$submitlabel#" />
+</form>
+
+<br /><br />
+<b>This part could be made available in Your Account...</b>
+
