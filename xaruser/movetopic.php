@@ -52,12 +52,15 @@ function xarbb_user_movetopic()
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
             // First let's move the topic
+            // Actually, lets do this last.  Should not affect anything, but we need to reference 
+            // the shadowed topic so we can delete that later if needed.
+            /*
             if (!xarModAPIFunc('xarbb',
                             'user',
                             'updatetopic',
                              array('fid'      => $fid,
                                    'tid'      => $tid))) return;
-
+            */
             // Then update the new forum
             if (!xarModAPIFunc('xarbb',
                                'user',
@@ -117,16 +120,47 @@ function xarbb_user_movetopic()
                 $ttitle = xarML('Moved') . ' -- ' . $data['ttitle'];
                 $tpost = $tid;
 
+                $shadow = xarModAPIFunc('xarbb',
+                                        'user',
+                                        'createtopic',
+                                         array('fid'      => $data['fid'],
+                                               'ttitle'   => $ttitle,
+                                               'tpost'    => $tpost,
+                                               'tposter'  => $data['tposter'],
+                                               'treplier' => $data['treplier'],
+                                               'treplies' => $data['treplies'],
+                                               'tstatus'  => 5)); 
+
+                // Now lets reference this shadow in the old topic.
+                // We don't want to kill any subscribers by adding a shadow.
+                // I'd give it 2 hours and there would be a bug report for that.
+                // Why can't I be lazy sometimes?
+                if (!empty($data['toptions'])){
+                    $topicoptions = unserialize($data['toptions']);
+                    $topicoptions['shadow'] = array();
+                    array_push($topicoptions['shadow'], $shadow);
+                    $mergedarray = serialize($topicoptions);
+                } else {
+                    $topicoptions['shadow'] = array($shadow);
+                    $mergedarray = serialize($topicoptions);
+                }
+
                 if (!xarModAPIFunc('xarbb',
-                                   'user',
-                                   'createtopic',
-                                   array('fid'      => $data['fid'],
-                                         'ttitle'   => $ttitle,
-                                         'tpost'    => $tpost,
-                                         'tposter'  => $data['tposter'],
-                                         'treplier' => $data['treplier'],
-                                         'treplies' => $data['treplies'],
-                                         'tstatus'  => 5))) return;
+                                'user',
+                                'updatetopic',
+                                 array('fid'      => $fid,
+                                       'ttime'    => $data['ttime'],
+                                       'toptions' => $mergedarray,
+                                       'tid'      => $tid))) return;
+
+            // No Shadow, No Reference
+            } else {
+                if (!xarModAPIFunc('xarbb',
+                                'user',
+                                'updatetopic',
+                                 array('fid'      => $fid,
+                                       'ttime'    => $data['ttime'],
+                                       'tid'      => $tid))) return;
             }
             xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
             break;

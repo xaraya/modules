@@ -42,6 +42,22 @@ function xarbb_user_deletetopic()
                        'admin',
                        'deletetopics',
                         array('tid' => $tid))) return;
+    
+    // Let's get rid of the old shadow as well...
+    // Was there anything in the toptions field?
+    if (!empty($topic['toptions'])){
+        // Was that a shadow reference?
+        $topicoptions = unserialize($topic['toptions']);
+        // OK, question of the day, is there anything in the $shadow var?
+        if (!empty($topicoptions['shadow'])){
+            // Kill that shadow as well.
+            if (!xarModAPIFunc('xarbb',
+                               'admin',
+                               'deletetopics',
+                                array('tid' => $topicoptions['shadow']))) return;
+        }
+    }
+    // Blee, Blee, no more shadow, continue with processing.
 
     // Get the last topic from this forum again
     $numtopics = xarModAPIFunc('xarbb', 'user', 'counttopics',
