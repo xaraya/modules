@@ -97,6 +97,8 @@ function recommend_delete()
     // Remove Masks and Instances
     xarRemoveMasks('recommend');
     xarRemoveInstances('recommend');
+    xarTplUnregisterTag('recommend-sendtofriend');
+
     return true;
 }
 
