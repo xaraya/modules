@@ -210,15 +210,31 @@ function pubsub_delete()
     $query = xarDBDropTable($xartable['pubsub_events']);
     if (empty($query)) return; // throw back
 
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
     $query = xarDBDropTable($xartable['pubsub_reg']);
     if (empty($query)) return; // throw back
 
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
     $query = xarDBDropTable($xartable['pubsub_process']);
     if (empty($query)) return; // throw back
 
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
     $query = xarDBDropTable($xartable['pubsub_template']);
     if (empty($query)) return; // throw back
 
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
     // Deletion successful
     return true;
 }
