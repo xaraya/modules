@@ -173,6 +173,13 @@ function html_init()
                            'user',
                            'transforminput')) return;
 
+    if (!xarModRegisterHook('item',
+                           'transform',
+                           'API',
+                           'html',
+                           'user',
+                           'transformoutput')) return;
+
 
     // Initialisation successful
     return true;
@@ -196,6 +203,13 @@ function html_upgrade($oldversion)
                                    'html',
                                    'user',
                                    'transforminput')) return;
+
+            if (!xarModRegisterHook('item',
+                                   'transform',
+                                   'API',
+                                   'html',
+                                   'user',
+                                   'transformoutput')) return;
             return true;
             break;
     }
