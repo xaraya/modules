@@ -79,7 +79,12 @@ class phpOpenTracker_Config {
         } else {
             $config["db_type"] = xarCore_getSystemVar('DB.Type');
         }
-      	$config["db_host"] = xarCore_getSystemVar('DB.Host');
+        if (strpos(xarCore_getSystemVar('DB.Host'), ":") != false) {
+            list($config["db_host"], $config["db_port"]) =
+                    split(":", xarCore_getSystemVar('DB.Host'));
+        } else {
+            $config["db_host"] = xarCore_getSystemVar('DB.Host');
+        }
       	$config["db_database"] = xarCore_getSystemVar('DB.Name');
       	$config["db_user"] = xarCore_getSystemVar('DB.UserName');
       	$config["db_password"] = xarCore_getSystemVar('DB.Password');
