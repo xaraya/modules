@@ -47,7 +47,7 @@ function xlink_adminapi_removehook($args)
     $xlink = $xartable['xlink'];
 
     // Delete the entries
-    $queryl = "DELETE FROM $xlink
+    $query = "DELETE FROM $xlink
                WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'";
 
     $result =& $dbconn->Execute($query);
