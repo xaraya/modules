@@ -1,83 +1,170 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Module</xar:mlstring></span></div>
-     <xar:set name="totitems">count($items)</xar:set>
-     <xar:set name="totitemspercol">round($totitems/$displaycolumns)</xar:set>
-     <xar:set name="divwidth">round(95/$displaycolumns)</xar:set>
-
-<xar:if condition="empty($status)">
-
 <xar:comment>
-	Nav Tabs moved to the includes folder
+	License: GPL http://www.gnu.org/copyleft/gpl.html 
 </xar:comment>
-<xar:template file="navtabs" type="module" />
-	<div style="clear: both; padding-top: 10px;">
-    <p></p>
-    <xar:if condition="empty($items)">
-        <p><h4><xar:mlstring>No keywords found !</xar:mlstring></h4></p>
-    <xar:else />
-     <div style="clear:both;">
-        <xar:set name="i">1</xar:set>
-        <xar:set name="j">0</xar:set>
-        <div style="float:left; width: #$divwidth#%; text-align: left;">
-            <ul>
-            <xar:foreach in="$items" value="$item">
-                <xar:set name="j">++$j</xar:set>
-                <xar:if condition="$i++ lt $totitemspercol">
-                    <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)</li>
-                <xar:elseif condition="($j eq $totitems)" />
-                    <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)</li>
-                        <xar:set name="i">1</xar:set>
-                <xar:else />
-                    <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)</li>
-                    </ul></div>
-                    <div style="float:left; width: #$divwidth#%; text-align: left;">
-                    <ul>
-                        <xar:set name="i">1</xar:set>
-               </xar:if>
-
-            </xar:foreach>
-                        </ul>
-                    </div>
-        </div>
-    </div>
-    </xar:if>
-    </div>
-<xar:elseif condition="$status eq 1 and !empty($keyword)" />
-    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-    <h4><xar:ml><xar:mlstring>Keyword : #(1)</xar:mlstring><xar:mlvar>#$keyword#</xar:mlvar></xar:ml></h4>
-    </div>
-    <div>
-    <ul>
-    <xar:foreach in="$items" key="$id" value="$item">
-        <li>
-        <xar:if condition="!empty($item['modname'])">
-            [#$item['modname']#]
-        </xar:if>
-        <xar:if condition="!empty($item['url']) and !empty($item['label'])">
-            <a href="#$item['url']#">#$item['label']#</a>
-        <xar:elseif condition="!empty($item['url'])"/>
-            <xar:comment> you could skip these items </xar:comment>
-            <a href="#$item['url']#"><xar:ml><xar:mlstring>item #(1)</xar:mlstring><xar:mlvar>#$item['itemid']#</xar:mlvar></xar:ml></a>
-        <xar:else/>
-            <xar:comment> you could skip these items </xar:comment>
-            <xar:mlstring>item</xar:mlstring> #$item['moduleid']# #$item['itemtype']# #$item['itemid']#</a>
-        </xar:if>
-        </li>
-    </xar:foreach>
-    </ul>
-    <p><a href="javascript:history.back(-1)"><xar:mlstring>Click here to go back</xar:mlstring></a></p>
+<div class="xar-mod-head">
+	<span class="xar-mod-title">
+		<xar:mlstring>
+			Keywords Module 
+		</xar:mlstring>
+	</span>
 </div>
-<xar:elseif condition="$status eq 1 and empty($keyword)" />
-<xar:mlstring>No keywords</xar:mlstring>
-
-<xar:elseif condition="$status eq 2" />
-    <h2><xar:mlstring>Overview of Keyword Assignments</xar:mlstring></h2>
-    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
-<xar:elseif condition="$status eq 3" />
-    <h2><xar:mlstring>Overview of Keyword Assignments</xar:mlstring></h2>
-    <xar:mlstring>Unable to find module for the corresponding item</xar:mlstring>
-<xar:else />
-    <h2><xar:mlstring>Overview of Keyword Assignments</xar:mlstring></h2>
-    <xar:mlstring>Unknown status</xar:mlstring>
+<xar:set name="totitems">
+	count($items) 
+</xar:set>
+<xar:set name="totitemspercol">
+	round($totitems/$displaycolumns) 
+</xar:set>
+<xar:set name="divwidth">
+	round(95/$displaycolumns) 
+</xar:set>
+<xar:if condition="empty($status)">
+	<xar:comment>
+		Nav Tabs moved to the includes folder 
+	</xar:comment>
+	<xar:template file="navtabs" type="module" />
+	<div style="clear: both; padding-top: 10px;">
+		<xar:if condition="empty($items)">
+			<h4>
+				<xar:mlstring>
+					No keywords found ! 
+				</xar:mlstring>
+			</h4>
+			<xar:else />
+			<div style="clear:both;">
+				<xar:set name="i">
+					1 
+				</xar:set>
+				<xar:set name="j">
+					0 
+				</xar:set>
+				<div style="float:left; width: #$divwidth#%; text-align: left;">
+					<ul>
+						<xar:foreach in="$items" value="$item">
+							<xar:set name="j">
+								++$j 
+							</xar:set>
+							<xar:if condition="$i++ lt $totitemspercol">
+								<li>
+									<a href="#$item['url']#">
+										#$item['label']# 
+									</a>
+									(#$item['count']#) 
+								</li>
+								<xar:elseif condition="($j eq $totitems)" />
+								<li>
+									<a href="#$item['url']#">
+										#$item['label']# 
+									</a>
+									(#$item['count']#) 
+								</li>
+								<xar:set name="i">
+									1 
+								</xar:set>
+								<xar:else />
+								<li>
+									<a href="#$item['url']#">
+										#$item['label']# 
+									</a>
+									(#$item['count']#) 
+								</li>
+								<xar:set name="i">
+									1 
+								</xar:set>
+							</xar:if>
+						</xar:foreach>
+					</ul>
+				</div>
+			</div>
+		</xar:if>
+	</div>
+	<xar:elseif condition="$status eq 1 and !empty($keyword)" />
+	<div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+		<h4>
+			<xar:ml>
+				<xar:mlstring>
+					Keyword : #(1) 
+				</xar:mlstring>
+				<xar:mlvar>
+					#$keyword# 
+				</xar:mlvar>
+			</xar:ml>
+		</h4>
+	</div>
+	<div>
+		<ul>
+			<xar:foreach in="$items" key="$id" value="$item">
+				<li>
+					<xar:if condition="!empty($item['modname'])">
+						[#$item['modname']#] 
+					</xar:if>
+					<xar:if condition="!empty($item['url']) and !empty($item['label'])">
+						<a href="#$item['url']#">
+							#$item['label']# 
+						</a>
+						<xar:elseif condition="!empty($item['url'])" />
+						<xar:comment>
+							you could skip these items 
+						</xar:comment>
+						<a href="#$item['url']#">
+							<xar:ml>
+								<xar:mlstring>
+									item #(1) 
+								</xar:mlstring>
+								<xar:mlvar>
+									#$item['itemid']# 
+								</xar:mlvar>
+							</xar:ml>
+						</a>
+						<xar:else />
+						<xar:comment>
+							you could skip these items 
+						</xar:comment>
+						<xar:mlstring>
+							item 
+						</xar:mlstring>
+						#$item['moduleid']# #$item['itemtype']# #$item['itemid']# 
+<!-- 					</a> -->
+					</xar:if>
+				</li>
+			</xar:foreach>
+		</ul>
+		<p>
+			<a href="javascript:history.back(-1)">
+				<xar:mlstring>
+					Click here to go back 
+				</xar:mlstring>
+			</a>
+		</p>
+	</div>
+	<xar:elseif condition="$status eq 1 and empty($keyword)" />
+	<xar:mlstring>
+		No keywords 
+	</xar:mlstring>
+	<xar:elseif condition="$status eq 2" />
+	<h2>
+		<xar:mlstring>
+			Overview of Keyword Assignments 
+		</xar:mlstring>
+	</h2>
+	<xar:mlstring>
+		Unable to find corresponding item 
+	</xar:mlstring>
+	<xar:elseif condition="$status eq 3" />
+	<h2>
+		<xar:mlstring>
+			Overview of Keyword Assignments 
+		</xar:mlstring>
+	</h2>
+	<xar:mlstring>
+		Unable to find module for the corresponding item 
+	</xar:mlstring>
+	<xar:else />
+	<h2>
+		<xar:mlstring>
+			Overview of Keyword Assignments 
+		</xar:mlstring>
+	</h2>
+	<xar:mlstring>
+		Unknown status 
+	</xar:mlstring>
 </xar:if>
-
