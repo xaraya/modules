@@ -329,8 +329,8 @@ class bkRepo
         }
         list($startRev,$startSerial) = explode('|',$revs[0]);
         
-        // Do the same for the endmarker, but dont use forward ordering
-        $cmd = "bk prs -hr$end -nd':REV:|:DS:' $file";
+        // Do the same for the endmarker
+        $cmd = "bk prs -fhr$end -nd':REV:|:DS:' $file";
         $revs = $this->_run($cmd);
         if(empty($revs)) {
             $endRev = $startRev;
@@ -345,28 +345,43 @@ class bkRepo
             $startRev = $endRev;
             $endRev = $tmp;
         }
+        
         $edges = array(); $nodes = array(); $nodeIndex = array();
         $inEdges = array(); $lateMergeNodes = array();
-        $cmd = "bk prs -hr$startRev..$endRev -nd':REV:|:KIDS:|:DS:|:P:' $file";
-        $rawdata = $this->_run($cmd);
+        $graph = array('nodes' => $nodes, 'edges' => $edges, 'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
+        
+        $nrOfChanges = abs($endSerial - $startSerial);
+        xarLogMessage("BK: trying to graph $nrOfChanges changes");
+        if($nrOfChanges > 500 | $nrOfChanges == 0) {
+            $graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '');
+            return $graph;
+        }
+        $cmd = "bk prs -hr$startRev..$endRev -nd':TAGS:|:REV:|:KIDS:|:DS:|:P:' $file";
+        $rawdata = $this->_run($cmd); $tags = array();
         foreach($rawdata as $primeLine) {
-            list($rev, $kids,$serial, $author) = explode('|',$primeLine);
+            if(substr($primeLine,0,1) != '|') {
+                // We have a tagline
+                $tags[] = str_replace('S ','',$primeLine);
+                continue;
+            }
+            list(, $rev, $kids,$serial, $author) = explode('|',$primeLine);
+            
             if(!empty($kids)) $kids = explode(' ',$kids); else $kids = array();
             $nodeIndex[$serial] = $rev;
-            $nodes[$serial] = array('rev' => $rev,'author' => $author);
+            $nodes[$serial] = array('rev' => $rev,'author' => $author, 'tags' => implode(',',$tags));
+            $tags = array(); // reset
             foreach($kids as $next) {
                 if($rev != $next && $next != $startRev && $rev != $endRev) 
                 {
                     $edges[] = array($rev => $next);
                     $inEdges[$next][] = $rev;
-                } else {
-                    // Usally means a tag is on the cset if $rev == $next
-                }
+                } 
             }
         }
         // Compare the values of the total nodes and the ones which have arrows coming into them
         $lateMergeNodes = array_diff($nodeIndex, array_keys($inEdges));
-        if($startKey = array_search($startRev, $lateMergeNodes)) unset($lateMergeNodes[$startKey]);
+        if($Key = array_search($startRev, $lateMergeNodes)) unset($lateMergeNodes[$Key]);
+        if($Key = array_search($endRev, $lateMergeNodes)) unset($lateMergeNodes[$Key]);
         ksort($nodes);
         
         $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
