@@ -1,0 +1,15 @@
+<!--- This call will initialize the overlib js library --->
+<xar:overlib-init />
+
+<!--- Here we set up the popup parameters --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="monkey" 
+    text="some test text" 
+    offsetx="-5" 
+    offsety="-5" />
+<xar:overlib-popup-close name="$olclose"/>
+    
+<a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">test mouse over</a>
+   
