@@ -91,17 +91,11 @@ function AddressBook_utilapi_handleException ($args) {
 
                         $subject = __ADDRESSBOOK__." Exception Raised";
 
-                        //Plain Text formatted message
+                        //Unformatted message used for both Plain Text & HTML emails
                         $message  = '';
-                        $message .= "You are receiving this email because your AddressBook ";
-                        $message .= "This is an automatically generated email from the Xaraya ";
-                        $message .= "AddressBook Module. An error was encountered in the ";
-                        $message .= "AddressBook module and an email has been generated for ";
-                        $message .= "the development team.\n\n";
+                        $message .= "This is an automatically generated email from the Xaraya AddressBook Module. An error was encountered and this message will notify the development team to investigate.\n\n";
 
-                        $message .= "You may disable these emails under Admin->AddressBook->";
-                        $message .= "ModifyConfig->AdminMessages. Visit http://xaraya.blacktower.com ";
-                        $message .= "for AddressBook updates.\n\n";
+                        $message .= "If you do not wish to receive these emails, change the setting under Admin->AddressBook->ModifyConfig->AdminMessages. Visit %s for AddressBook updates.\n\n";
 
                         $message .= "**** Exception Details ****\n";
                         $message .= "Version: ".$abModInfo['version']."\n";
@@ -109,27 +103,17 @@ function AddressBook_utilapi_handleException ($args) {
                         $message .= "The following error(s) occurred.\n\n";
                         $message .= $xarException['text'];
 
+                        //Plain Text formatted message
+                        $textmessage = sprintf ($message,"http://xaraya.blacktower.com");
+
                         //HTML formatted message
-                        $htmlmessage .= "You are receiving this email because your AddressBook ";
-                        $htmlmessage .= "This is an automatically generated email from the Xaraya ";
-                        $htmlmessage .= "AddressBook Module. An error was encountered in the ";
-                        $htmlmessage .= "AddressBook module and an email has been generated for ";
-                        $htmlmessage .= "the development team.<br /><br />";
-
-                        $htmlmessage .= "You may disable these emails under Admin->AddressBook->";
-                        $htmlmessage .= "ModifyConfig->AdminMessages. Visit <a href=\"http://xaraya.blacktower.com\">http://xaraya.blacktower.com</a> ";
-                        $htmlmessage .= "for AddressBook updates.<br /><br />";
-
-                        $htmlmessage .= "**** Exception Details ****<br />";
-                        $htmlmessage .= "Version: ".$abModInfo['version']."<br />";
-                        $htmlmessage .= "Build "._AB_BUILD_VER."<br /><br />";
-                        $htmlmessage .= "The following error(s) occurred.<br /><br />";
-                        $htmlmessage .= $xarException['htmltext'];
+                        $htmlmessage = nl2br($message);
+                        $htmlmessage = sprintf ($htmlmessage,"<a href=\"http://xaraya.blacktower.com\">http://xaraya.blacktower.com</a>");
 
                         // following vars are required by xarMail api
                         $xarMail = array (
                                  'subject' => $subject
-                                ,'message' => $message
+                                ,'message' => $textmessage
                                 ,'htmlmessage' => $htmlmessage
                                 ,'from' => $from['email']
                                 ,'fromname' => $from['name']
