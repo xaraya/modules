@@ -1,16 +1,23 @@
-<xar:set name="$buttonlabel"><xar:mlstring>Move</xar:mlstring></xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Move Autolink</xar:mlstring></h2><br />
 <div style="margin: auto;">
 
 <form method="post" action="#xarModURL('autolinks', 'admin', 'move')#" method="post" enctype="application/x-www-form-urlencoded"/>
-    <div><input type="hidden" name="authid" id="authid" value="#$authid#"/></div>
+    <div>
+        <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+    </div>
 
-    <h2><xar:mlstring>Current details</xar:mlstring></h2>
-    <p><strong><xar:mlstring>Name:</xar:mlstring></strong> #xarVarPrepForDisplay($link['name'])#</p>
-    <p><strong><xar:mlstring>Type:</xar:mlstring></strong> #xarVarPrepForDisplay($link['type_name'])#</p>
-    <p><strong><xar:mlstring>Matching Key:</xar:mlstring></strong> #xarVarPrepForDisplay($link['keyword'])#</p>
+    <!--- Details of existing link. --->
+    <xar:if condition="isset($link)">
+        <h2><xar:mlstring>Current details</xar:mlstring></h2>
+        <p><strong><xar:mlstring>Name:</xar:mlstring></strong> #xarVarPrepForDisplay($link['name'])#</p>
+        <p><strong><xar:mlstring>Matching Key:</xar:mlstring></strong> #xarVarPrepForDisplay($link['keyword'])#</p>
+        <p><strong><xar:mlstring>Type Name:</xar:mlstring></strong> #xarVarPrepForDisplay($link['type_name'])#</p>
+        <p><strong><xar:mlstring>Type Desc:</xar:mlstring></strong> #xarVarPrepForDisplay($link['type_desc'])#</p>
+        <div><input type="hidden" name="lid" id="lid" value="#$link['lid']#"/></div>
+    </xar:if>
 
+    <!-- Choice of types to move link to. --->
     <xar:if condition="isset($types)">
         <h2><xar:mlstring>Move</xar:mlstring></h2>
         <p><label for="tid"><xar:mlstring>Move To Autolink Type</xar:mlstring></label>&nbsp;&nbsp;
@@ -25,9 +32,26 @@
         </select></p>
     </xar:if>
 
-    <div class="xar-error"><xar:mlstring>TODO: This functionality not yet complete</xar:mlstring></div>
+    <!-- Details of selected type to move link to. --->
+    <xar:if condition="isset($type)">
+        <h2><xar:mlstring>Move to</xar:mlstring></h2>
+        <p><strong><xar:mlstring>Type Name:</xar:mlstring></strong> #xarVarPrepForDisplay($type['type_name'])#</p>
+        <p><strong><xar:mlstring>Type Desc:</xar:mlstring></strong> #xarVarPrepForDisplay($type['type_desc'])#</p>
+        <div><input type="hidden" name="tid" id="tid" value="#$tid#"/></div>
+    </xar:if>
 
-    <div><input type="submit" value="#$buttonlabel#" align="middle"/></div>
+    <!-- A type has been selected; show confirm/back buttons. --->
+    <xar:if condition="!empty($type)">
+        <xar:set name="$buttonlabel"><xar:mlstring>Confirm</xar:mlstring></xar:set>
+        <xar:set name="$buttonlabel2"><xar:mlstring>Back</xar:mlstring></xar:set>
+        <div>
+            <input type="submit" name="confirm" value="#$buttonlabel#" align="middle"/>
+            <input type="submit" name="cancel" value="#$buttonlabel2#" align="middle"/>
+        </div>
+    <xar:else/>
+        <xar:set name="$buttonlabel"><xar:mlstring>Move</xar:mlstring></xar:set>
+        <div><input type="submit" name="submit" value="#$buttonlabel#" align="middle"/></div>
+    </xar:if>
 </form>
 
 </div>

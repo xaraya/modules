@@ -1,2 +1,10 @@
 <!--- Displays the URL in square brackets after the keyword --->
+<xar:set name="$stdattributes['href']">#$url#</xar:set>
+<xar:set name="$stdattributes['title']">#$title#</xar:set>
+<xar:if condition="!empty($target)">
+    <xar:set name="$stdattributes['target']">#$target#</xar:set>
+</xar:if>
+<xar:if condition="!empty($style)">
+    <xar:set name="$stdattributes['style']">#$style#</xar:set>
+</xar:if>
 #$match# [<a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $stdattributes)#>#$url#</a>]

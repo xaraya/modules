@@ -3,7 +3,7 @@ Variables available in this template:
     match - the complete matched text
     template_base - the template base name
     template_name - the template main name
-    error_text - the full error text (prepared for HTML)
+    error_text - the full error text
 --->
 <xar:set name="$error_desc"><xar:mlstring>Dynamic Autolink Error in template</xar:mlstring></xar:set>
-<strong><a href="#" title="#$error_desc#: #$template_base#-#$template_name#:- #$error_text#" style="color:red;">#$match#</a></strong>
+<strong><a href="#" title="#$error_desc#: #$template_base#-#$template_name#:- #xarVarPrepHTMLdisplay($error_text)#" style="color:red;">#$match#</a></strong>

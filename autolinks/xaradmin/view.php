@@ -35,6 +35,7 @@ function autolinks_admin_view()
     $authid = xarSecGenAuthKey();
 
     if (is_array($links)) {
+        $counttypes = xarModAPIfunc('autolinks', 'user', 'counttypes');
         foreach($links as $lid => $link) {
             if (xarSecurityCheck('EditAutolinks', 0)) {
                 $links[$lid]['editurl'] = xarModURL(
@@ -43,7 +44,7 @@ function autolinks_admin_view()
                 );
                 // A move is appropriate only if there are other link types to
                 // move the link to.
-                if (xarModAPIfunc('autolinks', 'user', 'counttypes') > 1) {
+                if ($counttypes > 1) {
                     $links[$lid]['moveurl'] = xarModURL(
                         'autolinks', 'admin', 'move',
                         array('lid' => $lid)

@@ -110,7 +110,7 @@ function autolinks_userapi_getreplace($args)
 
         // Execute the template.
         $result = xarTplModule(
-            'Autolinks',
+            'autolinks',
             xarModGetVar('autolinks', 'templatebase'),
             $template_name = $link['template_name'],
             $template_data
@@ -118,25 +118,26 @@ function autolinks_userapi_getreplace($args)
 
         // Catch any exceptions.
         if (xarExceptionMajor()) {
-            $error = xarExceptionRender('text');
-
-            // Free the exception since we have handled it.
-            // TODO: replace with xarExceptionHandled() when we know
-            // how to handle multiple exceptions on the stack.
-            xarExceptionFree();
+            // Handle the exception since we have rendered it.
+            xarExceptionHandled();
 
             // Do we want the error displayed in-line?
             if (xarModGetVar('autolinks', 'showerrors') || xarVarGetCached('autolinks', 'showerrors')) {
                 // Pass the error through the error template.
                 // This mode of operation is used during setup.
-                $result = xarTplModule('Autolinks', 'error', 'match',
+                $result = xarTplModule('autolinks', 'error', 'match',
                     array(
                         'match' => '$1',
                         'template_base' => xarModGetVar('autolinks', 'templatebase'),
                         'template_name' => $link['template_name'],
-                        'error_text' => xarVarPrepHTMLdisplay(xarExceptionRender($error))
+                        'error_text' => xarExceptionRender('text')
                     )
                 );
+                // Even the error template errored.
+                if (xarExceptionMajor()) {
+                    $result = '$1';
+                    xarExceptionHandled();
+                }
             } else {
                 // Don't highlight the error - just return the matched text.
                 // This is the normal (i.e. after debugging) mode of operation.

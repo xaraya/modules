@@ -34,19 +34,22 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
                     'match' => $matched_text,
                     'template_base' => xarModGetVar('autolinks', 'templatebase'),
                     'template_name' => $template_name,
-                    'error_text' => xarVarPrepHTMLdisplay(xarExceptionRender('text'))
+                    'error_text' => xarExceptionRender('text')
                 )
             );
+            if (xarExceptionMajor()) {
+                // The error template errored - just return the matched text.
+                xarExceptionHandled();
+                $replace = $matched_text;
+            }
         } else {
             // Don't highlight the error - just return the matched text.
             // This is the normal mode of operation.
             $replace = $matched_text;
         }
  
-        // Free up the error since we have handled it here.
-        // TODO: replace with xarExceptionHandled() when we know
-        // how to handle multiple exceptions on the stack.
-        xarExceptionFree();
+        // Handle the error since we have rendered it here.
+        xarExceptionHandled();
     } else {
         // Trim whitespace from template output by default, until we have a choice
         // on how to handle whitespace from within the template.
