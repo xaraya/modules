@@ -183,7 +183,7 @@ function pubsub_adminapi_runjob($args)
          }
       // TODO: make configurable too ?
       
-         if(  xarModGetVar('pubsub','sendcontent') == 1 )
+         if(  xarModGetVar('pubsub','subjecttitle') == 1 )
          {
              $subject = $tplData['title'];
          } else {
