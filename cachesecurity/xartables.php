@@ -25,6 +25,8 @@ function cachesecurity_xartables()
     $tables['security_cache_rolesgraph']      = $sitePrefix . '_seccache_rolesgraph';
     $tables['security_cache_privsgraph']      = $sitePrefix . '_seccache_privsgraph';
 
+    $tables['security_cache_privsmasks']      = $sitePrefix . '_seccache_privsmasks';
+
     // Return the table information
     return $tables;
 }

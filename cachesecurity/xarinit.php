@@ -362,6 +362,11 @@ function cachesecurity_deactivate()
  */
 function cachesecurity_upgrade($oldversion)
 {
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
+    xarDBLoadTableMaintenanceAPI();
+    $sitePrefix = xarDBGetSiteTablePrefix();
+
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case '0.1.0':
@@ -379,21 +384,48 @@ function cachesecurity_upgrade($oldversion)
                 array('callerModName' => 'roles', 'hookModName' => 'cachesecurity'));
             xarModAPIFunc('modules','admin','enablehooks',
                 array('callerModName' => 'privileges', 'hookModName' => 'cachesecurity'));
-            break;
-        case '0.2.0':
-            // Code to upgrade from the 0.2 version
-            $cacheSecurityDir = xarCoreGetVarDirPath() . '/security';
-            mkdir($cacheSecurityDir.'/masks', 0777);
-            break;
-        case '0.4.0':
-            // Code to upgrade from the 0.4 version (base module level caching)
-            break;
-        case '1.0.0':
-            // Code to upgrade from version 1.0 goes here
-            break;
+
+        case '0.3.0':
+            xarConfigSetVar('CacheSecurity.on', false);
+
+            // Set up database tables
+            $query = xarDBCreateTable($tables['security_cache_privsmasks'],
+                 array('xar_priv_id'  => array('type'       => 'integer',
+                                          'null'        => false,
+                                          'default'     => '0',
+                                          'increment'   => false,
+                                          'primary_key' => false),
+                           'xar_mask_id'  => array('type'       => 'integer',
+                                          'null'        => false,
+                                          'default'     => '0',
+                                          'increment'   => false,
+                                          'primary_key' => false),
+                        ));
+
+            if (!$dbconn->Execute($query)) return;
+
+            $index = array(
+                'name'      => 'i_'.$sitePrefix.'_seccache_privsmasks_main',
+                'fields'    => array('xar_priv_id', 'xar_mask_id'),
+                'unique'    => true);
+            $query = xarDBCreateIndex($tables['security_cache_privsmasks'],$index);
+            if (!$dbconn->Execute($query)) return;
+
+            xarDB_importTables(array('security_cache_privsmasks' => $tables['security_cache_privsmasks']));
+
+        case '0.8.0':
+            $query = xarDBDropIndex($tables['security_masks'],
+                                array('name' => 'i_'.$sitePrefix.'_seccache_masks'));
+            if (empty($query)) return; // throw back
+            if (!$dbconn->Execute($query)) return;
+
+            $query = xarDBDropIndex($tables['privileges'],
+                                    array('name' => 'i_'.$sitePrefix.'_seccache_privileges'));
+            if (empty($query)) return; // throw back
+            if (!$dbconn->Execute($query)) return;
+
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
-            break;
     }
     // Update successful
     return true;
@@ -426,16 +458,6 @@ function cachesecurity_delete()
     if (!$dbconn->Execute($query)) return;
 
     $query = xarDBDropTable($tables['security_cache_privsgraph']);
-    if (empty($query)) return; // throw back
-    if (!$dbconn->Execute($query)) return;
-
-    $query = xarDBDropIndex($tables['security_masks'],
-                            array('name' => 'i_'.$sitePrefix.'_seccache_masks'));
-    if (empty($query)) return; // throw back
-    if (!$dbconn->Execute($query)) return;
-
-    $query = xarDBDropIndex($tables['privileges'],
-                            array('name' => 'i_'.$sitePrefix.'_seccache_privileges'));
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
 

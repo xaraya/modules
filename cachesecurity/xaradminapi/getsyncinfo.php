@@ -9,6 +9,7 @@ function cachesecurity_adminapi_getsyncinfo()
 
     $synchronized['rolesgraph'] = xarConfigGetVar('CacheSecurity.rolesgraph');
     $synchronized['privsgraph'] = xarConfigGetVar('CacheSecurity.privsgraph');
+    $synchronized['privsmasks'] = xarConfigGetVar('CacheSecurity.privsmasks');
 
     return $synchronized;
 }

@@ -101,6 +101,27 @@
                       </a></td>
                     <td><xar:mlstring>Synchronizes just the roles structure cache.</xar:mlstring></td>
                 </tr>
+
+                <tr>
+                    <td>
+                        <xar:if condition="$syncinfo['privsmasks']">
+                            <div style="background-color: green">
+                                <xar:mlstring>Ok</xar:mlstring>
+                            </div>
+                        <xar:else />
+                            <div style="background-color: red">
+                                <xar:mlstring>Not Ok</xar:mlstring>
+                            </div>
+                        </xar:if>
+                    </td>
+                      <td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('sync'=>'privsmasks', 'authid' => $authid))#">
+                          <xar:mlstring>Synchronize Privileges x Masks Relationship</xar:mlstring>
+                      </a></td>
+                    <td><xar:mlstring>Synchronizes just the privileges and masks relationship cache.</xar:mlstring></td>
+                </tr>
+
+
+
                 <xar:if condition="$ison">
                     <tr>
                         <td>
