@@ -70,8 +70,6 @@ function commerce_categoriesblock_display($blockinfo)
 
     $categories_string = '';
 
-  $categories_string = '';
-
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['categories'],'xc');
     $q->addtable($xartables['commerce_categories'],'c');
@@ -90,11 +88,16 @@ function commerce_categoriesblock_display($blockinfo)
     $q->setorder('c.sort_order');
     $q->addorder('cd.categories_name');
     if(!$q->run()) return;
-    $foo[0] = array('name' => '',
+
+    //if no active categories found don't show the block
+    if ($q->output() == array()) return;
+
+/*    $foo[0] = array('name' => '',
                     'parent' => 0,
                     'level' => 0,
                     'path' => 0,
                     'next_id' => false);
+*/
     foreach ($q->output() as $categories)  {
         $foo[$categories['cid']] = array(
                                             'name' => $categories['categories_name'],
@@ -140,25 +143,24 @@ function commerce_categoriesblock_display($blockinfo)
             $q->addorder('cd.categories_name');
             if(!$q->run()) return;
 
-            $category_check = $q->getrows();
-            if ($category_check > 0) {
+            if ($q->getrows() > 0) {
                 $new_path .= $value;
                 foreach ($q->output() as $row) {
-                    $foo[$row['categories_id']] = array(
+                    $foo[$row['cid']] = array(
                                                       'name' => $row['categories_name'],
-                                                      'parent' => $row['parent_id'],
+                                                      'parent' => $row['parent'],
                                                       'level' => $key+1,
-                                                      'path' => $new_path . '_' . $row['categories_id'],
+                                                      'path' => $new_path . '_' . $row['cid'],
                                                       'next_id' => false);
 
-                    if (isset($prev_id)) $foo[$prev_id]['next_id'] = $row['categories_id'];
-                    $prev_id = $row['categories_id'];
-                    if (!isset($first_id)) $first_id = $row['categories_id'];
-                    $last_id = $row['categories_id'];
+                    if (isset($prev_id)) $foo[$prev_id]['next_id'] = $row['cid'];
+                    $prev_id = $row['cid'];
+                    if (!isset($first_id)) $first_id = $row['cid'];
+                    $last_id = $row['cid'];
                 }
-                        $foo[$last_id]['next_id'] = $foo[$value]['next_id'];
-                        $foo[$value]['next_id'] = $first_id;
-                        $new_path .= '_';
+                $foo[$last_id]['next_id'] = $foo[$value]['next_id'];
+                $foo[$value]['next_id'] = $first_id;
+                $new_path .= '_';
             } else {
                 break;
             }
