@@ -5,7 +5,7 @@
 <table border="0" cellpadding="5">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <xar:data-form object="$object" />
-    #$hooks#
+    <tr><td colspan="2">#$hooks#</td></tr>
     <tr><td colspan="2" align="center"><input type="submit" name="confirm" value="#$confirm#" /></td></tr>
 </table>
 </form>

@@ -24,6 +24,8 @@ function xlink_user_main($args)
     } elseif (empty($base)) {
         $base = '';
     }
+    xarLogMessage("Base: $base");
+    xarLogMessage("Id: $id");
 // TODO: show list of valid id's per base ?
     $item = xarModAPIFunc('xlink','user','getitem',
                           array('basename' => $base,
@@ -50,7 +52,10 @@ function xlink_user_main($args)
                          array('itemtype' => $item['itemtype'],
                                'itemid' => $item['itemid']));
     }
-
+    
+    // FIXME: can we redirect without changing address?
+    // if so, we could have complete replacement for short url encode/decode in data,
+    // which would obviously be more flexible (user configurable)
     xarResponseRedirect($url);
     return true;
 }
