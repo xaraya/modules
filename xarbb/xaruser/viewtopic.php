@@ -116,6 +116,15 @@ function xarbb_user_viewtopic()
     $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" />';
     $data['pm']         = '<img src="' . xarTplGetImage('pm.gif') . '" />';
 
+    $item = array();
+    $item['module'] = 'xarbb';
+    $item['itemtype'] = 2; // Forum Topics
+    $item['itemid'] = $tid;
+    // for display hooks, we need to pass a returnurl
+    $item['returnurl'] = xarModURL('xarbb','user','viewtopic',
+                                   array('tid' => $tid));
+    $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
+
     // Return the template variables defined in this function
     return $data;
 }

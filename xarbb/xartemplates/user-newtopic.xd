@@ -61,32 +61,41 @@
                         </td>
                         <td>
                             <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" size="32" maxlength="100" tabindex="1" />
-						</td>
-					</tr>
+                        </td>
+                    </tr>
                     <tr align="left" valign="middle">
                         <td>
                             <xar:mlstring>Form Controls</xar:mlstring>
                         </td>
                         <td>
-							#$formhooks['formdisplay']#
-						</td>
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Message Body</xar:mlstring>
-						</td>
-						<td>
-							<textarea name="tpost" rows="10" cols="50" tabindex="2">#$tpost#</textarea>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<xar:if condition="!isset($tid)">
-		<input type="submit" value="#xarML('New Topic')#" align="middle" tabindex="3" />
-	<xar:else />
-		<input type="submit" value="#xarML('Edit Topic')#" align="middle" tabindex="3" />
-	</xar:if>
-	
+                            #$formhooks['formdisplay']#
+                        </td>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Message Body</xar:mlstring>
+                        </td>
+                        <td>
+                            <textarea name="tpost" rows="10" cols="50" tabindex="2">#$tpost#</textarea>
+                        </td>
+                    </tr>
+                <xar:if condition="!empty($hooks) and count($hooks) gt 0">
+                  <xar:foreach in="$hooks" key="$hookmodule">
+                    <tr align="left" valign="middle">
+                        <td colspan="2">
+                             #$hooks[$hookmodule]#
+                        </td>
+                    </tr>
+                  </xar:foreach>
+                </xar:if>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <xar:if condition="!isset($tid)">
+        <input type="submit" value="#xarML('New Topic')#" align="middle" tabindex="3" />
+    <xar:else />
+        <input type="submit" value="#xarML('Edit Topic')#" align="middle" tabindex="3" />
+    </xar:if>
+    
 </form>
 </div>

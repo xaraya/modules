@@ -84,6 +84,10 @@
   </tr>
 </table>
 </xar:if>
+<!--- insert polls hook at the top for a nicer display --->
+<xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
+    #$hooks['polls']#
+</xar:if>
 <br />
 <table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
   <tr>
@@ -259,3 +263,13 @@
     </td>
   </tr>
 </table>
+<xar:if condition="!empty($hooks) and count($hooks) gt 0">
+    <xar:foreach in="$hooks" key="$hookmodule">
+    <!--- xarbb already deals with comments directly via API, using itemtype 0 (for now ?) --->
+    <!--- and polls are already inserted at the top for a nicer display --->
+        <xar:if condition="$hookmodule ne 'comments' and $hookmodule ne 'polls'">
+            #$hooks[$hookmodule]#
+        </xar:if>
+    </xar:foreach>
+</xar:if>
+

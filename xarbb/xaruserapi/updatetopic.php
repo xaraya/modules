@@ -76,7 +76,7 @@ function xarbb_userapi_updatetopic($args)
     $args['module'] = 'xarbb';
     $args['itemtype'] = 2; // topic
     $args['itemid'] = $tid;
-    xarModCallHooks('item', 'modify', $tid, $args);
+    xarModCallHooks('item', 'update', $tid, $args);
 
     // Return the id of the newly created link to the calling process
     return true;
