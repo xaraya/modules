@@ -67,6 +67,8 @@ class bkRepo {
     function _getconfig() {
         // Read configuration of this repository and store in properties
         $config=$this->_root."/BitKeeper/etc/config";
+        $cmd = "bk get -qS $config";
+        $this->_run($cmd);
         if (!file_exists($config)) {
             return false;
         } else {
@@ -207,7 +209,7 @@ class bkRepo {
     }
     
     function bkFileList($dir='/') {
-        $cmd="bk prs -hn -r+ -d':GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)<br>}' ".$this->_root."/".$dir;
+        $cmd="bk prs -hn -r+ -d':GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)<br/>}' ".$this->_root."/".$dir;
         $filelist = $this->_run($cmd);
         asort($filelist);
         return $filelist;

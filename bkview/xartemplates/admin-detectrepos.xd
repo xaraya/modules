@@ -1,0 +1,29 @@
+<xar:template file="admin-menu" type="module"/>
+
+<xar:if condition="count($repositories) != 0">
+<table class="csets">
+  <tr>
+  	<th><xar:mlstring>Name</xar:mlstring></th>
+    <th><xar:mlstring>Path</xar:mlstring></th>
+  </tr>
+  
+  <xar:loop name="$repositories">
+    <tr class="csets">
+      <td class="csets">
+        <a href="&xar-modurl-bkview-admin-new;&amp;repopath=#$loop:key#&amp;reponame=#$loop:item['config']['description']#">
+        <xar:if condition="$loop:item['config']['description'] != ''">
+            #$loop:item['config']['description']#
+        <xar:else/>
+            &lt;<xar:mlstring>untitled</xar:mlstring>&gt;
+        </xar:if>
+        </a>
+        </td>
+      <td class="csets">#$loop:key#</td>
+    </tr>
+  </xar:loop>
+</table>
+<xar:else/>
+  <div>
+    <xar:mlstring>No repositories have been detected</xar:mlstring>
+  </div>
+</xar:if>

@@ -33,6 +33,8 @@ function bkview_user_deltaview($args)
     $changeset= new bkChangeSet($repo,$rev);
     $deltas=$changeset->bkDeltas($formatstring);
     while (list($key,$val) = each($deltas)){
+        // FIXME: if comments contain a | only the part before it is shown
+        // (example: exclude csets )
         list($tag,$file,$revision,$date,$time,$user,$domain,$comments)= explode('|',$val);
         $deltalist[$counter]['tag']=$tag;
         $deltalist[$counter]['file']=$file;

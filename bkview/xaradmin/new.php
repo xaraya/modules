@@ -20,16 +20,20 @@
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
  */
-function bkview_admin_new()
+function bkview_admin_new($args)
 {
     // Security check
     if (!xarSecurityCheck('AdminAllRepositories')) return;
-    
+ 
+    xarVarFetch('repopath',"str::",$repopath,'/var/bk/repo');
+    xarVarFetch('reponame',"str::",$reponame,'<'.xarML('untitled').'>');
+    extract($args);
+
     // Generate the items which need to be in the form
     $data['authid'] = xarSecGenAuthKey();
     $data['submitbutton'] = xarVarPrepForDisplay(xarML('Add repository'));
-    $data['reponame'] = xarVarPrepForDisplay(xarML('<untitled>'));
-    $data['repopath'] = xarVarPrepForDisplay(xarML('/var/bk/repo'));
+    $data['reponame'] = $reponame;
+    $data['repopath'] = $repopath;
     $item = array();
     $item['module'] = 'bkview';
     $hooks = xarModCallHooks('item','new','',$item);

@@ -4,3 +4,9 @@
 <form method="post" action="&xar-modurl-bkview-admin-create;">
   <xar:template file="repo-form" type="module"/>
 </form>
+
+<div>
+    <xar:mlstring>Maybe you want me to try to</xar:mlstring> 
+      <a href="&xar-modurl-bkview-admin-detectrepos;"><xar:mlstring>detect</xar:mlstring></a>
+    <xar:mlstring> the repositories installed on this server?</xar:mlstring>
+</div>  
