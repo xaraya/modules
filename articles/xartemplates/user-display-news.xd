@@ -1,81 +1,142 @@
 <xar:template file="publinks" type="module" />
 <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" />
-
 <div class="xar-norm-outline">
-	<h1>#$title#
-	<xar:if condition="!empty($editurl)">
-		[<a href="#$editurl#">#$edittitle#</a>]
-	</xar:if>
-	</h1>
-          <span class="xar-sub">
-          <xar:if condition="!empty($profile)">
-              <xar:set name="$author_string">'<a href="'.$profile.'">'.$author.'</a>'</xar:set>
-          <xar:else />
-              <xar:set name="$author_string">#$author#</xar:set>
-          </xar:if>
-          <xar:ml>
-              <xar:mlstring>Posted by: #(1) on #(2)</xar:mlstring>
-              <xar:mlvar>#$author_string#</xar:mlvar>
-              <xar:mlvar>#$date#</xar:mlvar>
-          </xar:ml>
-          <xar:if condition="!empty($counter)">
-              <xar:ml>
-                  <xar:mlstring>(#(1) Reads)</xar:mlstring>
-                  <xar:mlvar>#$counter#</xar:mlvar>
-              </xar:ml>
-          </xar:if>
-          </span>
-          <div style="text-align: right;">
-            <span class="xar-sub">
-              #$topic_icons#
-            </span>
-          </div>
-          <br />
-          #$summary#
-          <br />
-          <br />
-          #$body#
-          <br />
-          <xar:if condition="!empty($notes)">
-          <br />
-          <span class="xar-quote">
-                Note : <i>#$notes#</i>
-          </span>
-          </xar:if>
-          <xar:if condition="!empty($previous) and !empty($next)">
-          <div class="xar-normal" style="text-align:right; padding:.25em;">
+    <h1>
+        #$title# 
+        <xar:if condition="!empty($editurl)">
+            [<a href="#$editurl#">#$edittitle#</a>] 
+        </xar:if>
+    </h1>
+    <span class="xar-sub">
+        <xar:if condition="!empty($profile)">
+            <xar:set name="$author_string">
+                '<a href="'.$profile.'">'.$author.'</a>'
+            </xar:set>
+            <xar:else />
+            <xar:set name="$author_string">
+                #$author#
+            </xar:set>
+        </xar:if>
+        <xar:ml>
+            <xar:mlstring>
+                Posted by: #(1) on #(2)
+            </xar:mlstring>
+            <xar:mlvar>
+                #$author_string#
+            </xar:mlvar>
+            <xar:mlvar>
+                #$date#
+            </xar:mlvar>
+        </xar:ml>
+        <xar:if condition="!empty($counter)">
+            <xar:ml>
+                <xar:mlstring>
+                    (#(1) Reads)
+                </xar:mlstring>
+                <xar:mlvar>
+                    #$counter#
+                </xar:mlvar>
+            </xar:ml>
+        </xar:if>
+    </span>
+    <div style="text-align: right;">
+        <span class="xar-sub">
+            #$topic_icons# 
+        </span>
+    </div>
+    <br />
+    #$summary# 
+    <br />
+    <br />
+    #$body# 
+    <br />
+    <xar:if condition="!empty($notes)">
+        <br />
+        <span class="xar-quote">
+            Note : 
+            <i>
+                #$notes#
+            </i>
+        </span>
+    </xar:if>
+    <xar:if condition="!empty($previous) and !empty($next)">
+        <div class="xar-normal" style="text-align:right; padding:.25em;">
             <span>
-              #$previous#
+                #$previous# 
             </span>
             <span>
-              #$next#
+                #$next# 
             </span>
-          </div>
-          </xar:if>
+        </div>
+    </xar:if>
 </div>
-
 <xar:if condition="!empty($prevart) || !empty($nextart)">
-<div class="xar-normal">
-    <span style="text-align: left;"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; <xar:mlstring>prev</xar:mlstring> </a></xar:if>&nbsp;</span>
-    <span style="text-align: right; float: right;">&nbsp;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></span>
-</div>
+    <div class="xar-normal">
+        <span style="text-align: left;">
+            <xar:if condition="!empty($prevart)">
+                <a href="#$prevart#">
+                    &lt; 
+                    <xar:mlstring>
+                        prev
+                    </xar:mlstring>
+                </a>
+            </xar:if>
+            &nbsp;
+        </span>
+        <span style="text-align: right; float: right;">
+            &nbsp;
+            <xar:if condition="!empty($nextart)">
+                <a href="#$nextart#">
+                    <xar:mlstring>
+                        next
+                    </xar:mlstring>
+                    &gt;</a>
+            </xar:if>
+        </span>
+    </div>
 </xar:if>
-
 <xar:if condition="!empty($hooks)">
-<br />
-<xar:foreach in="$hooks" key="$hookmodule">
-#$hooks[$hookmodule]#
-</xar:foreach>
+    <br />
+    <xar:foreach in="$hooks" key="$hookmodule">
+        #$hooks[$hookmodule]# 
+    </xar:foreach>
 </xar:if>
-
-<br />
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
-<div style="text-align: left; padding: 10px">
-    <xar:if condition="!empty($maplink)">
-        <span style="text-align: left; padding: 50px"><a href="#$maplink#">#$maplabel#</a></span>
-    </xar:if>
-    <xar:if condition="!empty($archivelink)">
-	    <span style="text-align: left; padding: 50px"><a href="#$archivelink#">#$archivelabel#</a></span>
-    </xar:if>
-</div>
+    <ul style="margin:0;padding:0;">
+        <xar:if condition="!empty($maplink)">
+            <li style="display:inline;padding:0 .5em;">
+                <a href="#$maplink#">
+                    #$maplabel# 
+                </a>
+            </li>
+        </xar:if>
+        <xar:if condition="!empty($archivelink)">
+            <li style="display:inline;padding:0 .5em;">
+                <a href="#$archivelink#">
+                    #$archivelabel# 
+                </a>
+            </li>
+        </xar:if>
+    </ul>
 </xar:if>
+<xar:comment>
+    <!--    see new and more structurally correct alternative above - I left this (old) piece of template commented out for comparing
+            it wasnt rendering nicely due to disproportionally large padding and shifting to the right, please delete it when reviewed..
+            perhaps we could make a list widget in the future to be able to render vertical and horisontal lists like that [andyv] -->
+    <xar:if condition="!empty($maplink) or !empty($archivelink)">
+        <div style="text-align: left; padding: 10px">
+            <xar:if condition="!empty($maplink)">
+                <span style="text-align: left; padding: 50px">
+                    <a href="#$maplink#">
+                        #$maplabel#</a>
+                </span>
+            </xar:if>
+            <xar:if condition="!empty($archivelink)">
+                <span style="text-align: left; padding: 50px">
+                    <a href="#$archivelink#">
+                        #$archivelabel#</a>
+                </span>
+            </xar:if>
+        </div>
+    </xar:if>
+</xar:comment>
