@@ -4,6 +4,11 @@
     <div xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd" class="xar-mod-body">
     <div style="padding: 1px;" class="xar-norm-outline">
 
+	<xar:if condition="isset($itemtype) AND ($itemtype != 0)">
+		<h3>#$common['itemtype_array'][$itemtype]['name']# Configuration</h3>
+	<xar:else />
+		<h3>HookBridge Base Configuration</h3>
+	</xar:if>
 <form method="post" action="#$action#">
 
     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
@@ -15,27 +20,41 @@
             <col/>
         </colgroup>
 
-    
-
-        <tr>
-            <td><label for="supportshorturls"><xar:mlstring>Short URL Support</xar:mlstring></label></td>
-            <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
-                <xar:data-input id="supportshorturls" type="checkbox" name="supportshorturls" value="$supportshorturls"/>
-            </td>
-        </tr>
-
-        <tr>
-            <td><label for="supportshorturls"><xar:mlstring>Path to HookBridge Functions</xar:mlstring></label></td>
-            <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
-                <xar:data-input id="hookbridge_functionpath" type="textbox" name="hookbridge_functionpath" value="$hookbridge_functionpath"/>
-            </td>
-        </tr>
-
+		<xar:if condition="isset($itemtype) AND ($itemtype != 0)">
+			<tr>
+				<td><label for="supportshorturls"><xar:mlstring>Enable</xar:mlstring> #$common['itemtype_array'][$itemtype]['name']#</label></td>
+				<td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
+					<xar:data-input id="hookenabled" type="checkbox" name="hookenabled" value="$hookenabled"/>
+				</td>
+			</tr>
+	
+			<tr>
+				<td><label for="supportshorturls">#$common['itemtype_array'][$itemtype]['name']# <xar:mlstring>Functions</xar:mlstring></label></td>
+				<td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
+					<xar:data-input id="hookfunctions" type="checkboxlist" name="hookfunctions" value="$hookfunctions" validation="$available_hook_functions"/>
+				</td>
+			</tr>
+		<xar:else />
+			<tr>
+				<td><label for="supportshorturls"><xar:mlstring>Short URL Support</xar:mlstring></label></td>
+				<td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
+					<xar:data-input id="supportshorturls" type="checkbox" name="supportshorturls" value="$supportshorturls"/>
+				</td>
+			</tr>
+	
+			<tr>
+				<td><label for="supportshorturls"><xar:mlstring>Path to HookBridge Functions</xar:mlstring></label></td>
+				<td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
+					<xar:data-input id="hookbridge_functionpath" type="textbox" name="hookbridge_functionpath" value="$hookbridge_functionpath"/>
+				</td>
+			</tr>
+		</xar:if>
 
     
 
         <tr>
             <td colspan="2" align="center">
+                <input type="hidden" name="itemtype" value="#$itemtype#"/>
                 <input type="submit" value="#xarML('Modify')#"/>
                 <input type="submit" name="cancel" value="#xarML('Cancel')#"/>
             </td>

@@ -5,7 +5,7 @@
         <span class="help" title="#xarML('Add your help text.')#"><xar:mlstring  >Hook Bridge</xar:mlstring>:</span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-        <xar:mlstring  >No options yet.</xar:mlstring>
+        <xar:mlstring  >No options yet. [display]</xar:mlstring>
     </span>
     </div>
 
