@@ -3,7 +3,8 @@
 // load defined constants
 xarModAPILoad('uploads', 'user');
 
-function uploads_admin_get_files() {
+function uploads_admin_get_files() 
+{
     
     if (!xarSecurityCheck('AddUploads')) return;
 
