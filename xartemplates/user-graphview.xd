@@ -1,7 +1,7 @@
 <div id="bkview-modbody-id" class="xar-mod-body" >
     <xar:template file="user-menu" />
 
-    <a href="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#">
+    <a href="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#&amp;spc=#$spc#">
         Image only (debug)
     </a>
     <form action="&xar-modurl-bkview-user-graphview;&amp;repoid=#$repoid#" method="post">
@@ -11,10 +11,17 @@
         <input id="bkgraph_startrange" type="text" name="start" value="#$start#"/>
         <label for="bkgraph_endrange"><xar:mlstring>End graph at:</xar:mlstring></label>
         <input id="bkgraph_startrange" type="text" name="end" value="#$end#"/>
+        <xar:if condition="$spc">
+            <input id="bkgraph_showpastconnectors" type="checkbox" name="spc" value="1" checked="checked"/>
+         <xar:else/>
+            <input id="bkgraph_showpastconnectors" type="checkbox" name="spc" value="1" />
+        </xar:if>
+        <label for="bkgraph_showpastconnectors"><xar:mlstring>Show early merge points</xar:mlstring></label>
+         
         <input type="submit" value="Show"/>
     </form>
     <div style="text-align: center; border: thin solid black; overflow: auto; height: 400pt;">
-        <img usemap="#G" border="1" src="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#"/>
-        <xar:module main="false" module="bkview" func="graphproducer" format="cmapx" repoid="$repoid" file="$file" start="$start" end="$end"/>
+        <img usemap="#G" border="1" src="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#&amp;spc=#$spc#"/>
+        <xar:module main="false" module="bkview" func="graphproducer" format="cmapx" repoid="$repoid" file="$file" start="$start" end="$end" spc="$spc"/>
     </div>
 </div>

@@ -338,7 +338,8 @@ class bkRepo
             $endRev = $revs[0];
         }
                 
-        $edges = array(); $nodes = array(); $lateMergeNodes = array();
+        $edges = array(); $nodes = array(); 
+        $inEdges = array(); $lateMergeNodes = array();
         $cmd = "bk prs -hr$start..$end -nd':REV:|:KIDS:' $file";
         $rawdata = $this->_run($cmd);
         foreach($rawdata as $primeLine) {
@@ -347,8 +348,12 @@ class bkRepo
             $nodes[] = $rev;
             foreach($kids as $next) {
                 $edges[] = array($rev => $next);
+                $inEdges[$next][] = $rev;
             }
         }
+        $lateMergeNodes = array_diff($nodes, array_keys($inEdges));
+        $startKey = array_search($startRev, $lateMergeNodes);
+        if($startKey) unset($lateMergeNodes[$startKey]);
         $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes);
         return $graph;
     
