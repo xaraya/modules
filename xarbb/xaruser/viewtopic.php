@@ -13,16 +13,23 @@
  * @author John Cox
 */
 
-include 'includes/xarDate.php';
-
 function xarbb_user_viewtopic()
 {
    // Get parameters from whatever input we need
     if(!xarVarFetch('startnum', 'id', $startnum,1, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('tid', 'id', $tid)) return;
 
+    // Lets deal with the cookie in a more sane manner
+    if (xarUserIsLoggedIn()){
+        $time    = serialize(time());
+        setcookie(xarModGetVar('xarbb', 'cookiename') . '_t_' . $tid, $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+        // Easier to set a cookie for the last visit than it is
+        // roll through all the forums to check the time set.
+        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+    }
+
     //$tid = xarVarCleanFromInput('tid');
-    $allowhtml = xarModGetVar('xarbb', 'allowhtml');
+
 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
@@ -31,6 +38,10 @@ function xarbb_user_viewtopic()
         xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
         return;
     }
+
+    $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));
+    $allowhtml              = $settings['allowhtml'];
+    $postperpage            = $settings['postsperpage'];
 
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
@@ -49,6 +60,8 @@ function xarbb_user_viewtopic()
         $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
     }
     xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
+
+    // Need to get this working for new itemtypes
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
                                                       'transform',
@@ -58,20 +71,10 @@ function xarbb_user_viewtopic()
                                                        'xarbb');
 
     // The user API function is called
-    // <jojodee> Do we need to call this? - is not same data returned in gettopic call above
-    //  $forumdata = xarModAPIFunc('xarbb',
-    //                              'user',
-    //                              'getforum',
-    //                               array('fid' => $data['fid']));
-
-    // The user API function is called
     $posterdata = xarModAPIFunc('roles',
                                 'user',
                                 'get',
                                 array('uid' => $data['tposter']));
-
-    //TODO: still need to get tftime and ttime out in proper format 
-    // to pass to template for formatting
 
     // The user API function is called
     $topiccount = xarModAPIFunc('xarbb',
@@ -85,19 +88,13 @@ function xarbb_user_viewtopic()
 
     $data['items'] = array();
 
-    // Need to load the renderer since we are making a direct call to the API
-    //<jojodee> Do we really need to load this here? Not just for display?
-    if (!xarModLoad('comments','renderer')) return;
-
-    //Get posts for each page
-    $postsforpage=xarModGetVar('xarbb', 'postsperpage');
     $comments = xarModAPIFunc('comments',
                               'user',
                               'get_multiple',
                               array('modid'       => $header['modid'],
                                     'objectid'    => $header['objectid'],
                                     'startnum' => $startnum,
-                                    'numitems' => xarModGetVar('xarbb', 'postsperpage')));
+                                    'numitems' => $postperpage));
 
     $totalcomments=count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
@@ -206,7 +203,7 @@ function xarbb_user_viewtopic()
 
                                     xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',
                                                                                   'tid'          => $tid)),
-                                    xarModGetVar('xarbb', 'postsperpage'));
+                                    $postperpage);
 
     // Return the template variables defined in this function
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));

@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'xarBB';
 $modversion['id'] = '300';
-$modversion['version'] = '1.0.6';
+$modversion['version'] = '1.0.7';
 $modversion['description'] = 'A lightweight BB for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
@@ -24,7 +24,7 @@ $modversion['license'] = 'xardocs/license.txt';
 $modversion['coding'] = 'xardocs/coding.txt';
 $modversion['official'] = 1;
 $modversion['author'] = 'John Cox';
-$modversion['contact'] = 'admin@dinerminor.com';
+$modversion['contact'] = 'niceguyeddie@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
 $modversion['securityschema'] = array();

@@ -1,31 +1,86 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<script language="JavaScript">
+<!--
+	// Enter name of mandatory fields
+	var fieldRequired = Array("hottopic", "fdesc");
+	// Enter field description to appear in the dialog box
+	var fieldDescription = Array("Hot Topic", "Forum Description");
+//-->
+</script>
+
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarBB Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify xarBB Configuration</xar:mlstring></h2><br />
 <div style="margin: auto;">
 
 <form method="post" action="#xarModURL('xarbb', 'admin', 'modifyconfig', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
 
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short Urls</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<xar:if condition="xarModGetVar('xarbb', 'SupportShortURLs')">
+			<input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
+		<xar:else />
+			<input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
+		</xar:if>
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The name of the cookie that xarBB will create.')#"><label for="cookiename"><xar:mlstring>Cookie Name</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="cookiename" id="cookiename" value="#xarModGetVar('xarbb', 'cookiename', 1)#" size="32" maxlength="100" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The domain for the xarBB cookie.  Leave blank if you are unsure')#"><label for="cookiedomain"><xar:mlstring>Cookie Domain</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="cookiename" id="cookiedomain" value="#xarModGetVar('xarbb', 'cookiedomain', 1)#" size="32" maxlength="100" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The path for the xarBB cookie.  Leave blank if you are unsure')#"><label for="cookiepath"><xar:mlstring>Cookie Path</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="cookiepath" id="cookiepath" value="#xarModGetVar('xarbb', 'cookiepath', 1)#" size="32" maxlength="100" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+		#$hooks#
+	</div>
+
+	<xar:set name="$mlupdateconf"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
+
+	<div style="clear: both; padding-top: 10px; width:98%;">
+		<span style="float: left; width: 30%; text-align: right;">
+			<input type="submit" value="#$mlupdateconf#" />
+		</span>
+	</div>
+	</form>
+</div>
+</div>
+
+<!-- Moved to individual forum configuration
+<p><xar:mlstring>Forums Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="forumsperpage" id="forumsperpage" value="#xarModGetVar('xarbb', 'forumsperpage')#" size="2" maxlength="4" /></p>
 <p><xar:mlstring>Hot Topic</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="hottopic" id="hottopic" value="#xarModGetVar('xarbb', 'hottopic')#" size="2" maxlength="3" /></p>
 <p><xar:mlstring>Posts Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="postsperpage" id="postsperpage" value="#xarModGetVar('xarbb', 'postsperpage')#" size="2" maxlength="4" /></p>
-<p><xar:mlstring>Topics Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="topicsperpage" id="topicsperpage" value="#xarModGetVar('xarbb', 'topicsperpage')#" size="2" maxlength="4" /></p>
-<p><xar:mlstring>Forums Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="forumsperpage" id="forumsperpage" value="#xarModGetVar('xarbb', 'forumsperpage')#" size="2" maxlength="4" /></p>
-<p><xar:mlstring>Support short URLs</xar:mlstring>:&nbsp;&nbsp;
-<xar:if condition="xarModGetVar('xarbb', 'SupportShortURLs')">
-    <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
-<xar:else />
-    <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
-</xar:if></p>
+<p><xar:mlstring>Topics Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="topicsperpage" id="topicsperpage" value="#xarModGetVar('xarbb', 'topicsperpage')#" size="2" maxlength="4" /></p> 
 <p><xar:mlstring>Allow HTML?</xar:mlstring>:&nbsp;&nbsp;
 <xar:if condition="xarModGetVar('xarbb', 'allowhtml')">
     <input type="checkbox" name="allowhtml" id="allowhtml" value="1" checked="checked" />
 <xar:else />
     <input type="checkbox" name="allowhtml" id="allowhtml" value="1" />
 </xar:if></p>
-#$hooks#
-
-<xar:set name="$mlupdateconf"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
-<p><input type="submit" value="#$mlupdateconf#"  tabindex="3" /></p>
-</form>
-</div>
-</div>
+-->

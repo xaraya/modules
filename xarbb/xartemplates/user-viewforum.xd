@@ -33,7 +33,7 @@
 		<xar:sec mask="PostxarBB" catch="false">
 			<td align="left" valign="middle" width="50">
 				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-					#$newtopic#
+						<img src="#xarTplGetImage('new/post.gif')#" alt="#xarML('New Topic')#" />
 				</a>
 			</td>
 		</xar:sec>
@@ -57,7 +57,7 @@
 		</td>
 		<td align="right" valign="bottom" nowrap="nowrap">
 			<span class="xar-sub">
-				<a href="#xarModUrl('xarbb', 'user', 'redirect', array('fid' => $fid))#">
+				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid, 'read' => 1))#">
 					<xar:mlstring>
 					    Mark all topics as read
 					</xar:mlstring>
@@ -122,7 +122,7 @@
 						#$loop:item['ttitle']#
 					</a>
 				<xar:else />
-					<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => 	$loop:item['tid']))#">
+					<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => 	$loop:item['tid']))#">
 						#$loop:item['ttitle']#
 					</a>
 				</xar:if>
@@ -167,7 +167,7 @@
 		<xar:sec mask="PostxarBB" catch="false">
 			<td align="left" valign="middle" width="50">
 				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-					#$newtopic#
+					<img src="#xarTplGetImage('new/post.gif')#" alt="#xarML('New Topic')#" />
 				</a>
 			</td>
 		</xar:sec>
@@ -213,7 +213,7 @@
 			<table cellspacing="3" cellpadding="0" border="0">
 				<tr>
 					<td width="20" align="left">
-						#$newpost#
+						<img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -224,7 +224,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td width="20" align="center">
-						#$nonewpost#
+						<img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -235,7 +235,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td width="20" align="center">
-						#$announcetopic#
+						<img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -245,7 +245,7 @@
 				</tr>
 				<tr> 
 					<td width="20" align="left">
-						#$newannouncetopic#
+						<img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -256,7 +256,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td width="20" align="left">
-						#$newhottopic#
+						<img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -267,7 +267,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td width="20" align="center">
-						#$hottopic#
+						<img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -280,7 +280,7 @@
 				</tr>
 				<tr>
 					<td width="20" align="center">
-						#$stickytopic#
+						<img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -291,7 +291,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td class="xar-sub">
-						#$newstickytopic#
+						<img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
@@ -302,7 +302,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td class="xar-sub">
-						#$locked#
+						<img src="#xarTplGetImage('new/folder_locked.gif')#" alt="#xarML('Locked topic')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>

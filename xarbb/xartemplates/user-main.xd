@@ -149,7 +149,7 @@
 			<td class="xar-norm" width="100%" height="50">
 				<span class="xar-title">
 					<xar:if condition="$forum['fstatus'] ne 1">
-						<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $forum['fid']))#" title="#$forum['fname']#">
+						<a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $forum['fid']))#" title="#$forum['fname']#">
 							#$forum['fname']#
 						</a><br />
 					<xar:else />
@@ -186,13 +186,15 @@
 <table width="98%">
 	<tr> 
 		<td align="left">
-			<span class="xar-sub">
-				<a href="#xarModURL('xarbb', 'user', 'redirect')#">
-					<xar:mlstring>
-					    Mark all forums as read
-					</xar:mlstring>
-				</a>
-			</span>
+			<xar:if condition="xarUserIsLoggedIn()">
+				<span class="xar-sub">
+					<a href="#xarModURL('xarbb', 'user', 'main', array('read' => 1))#">
+						<xar:mlstring>
+							Mark all forums as read
+						</xar:mlstring>
+					</a>
+				</span>
+			</xar:if>
 		</td>
 		<td align="right">
 			<span class="xar-sub">

@@ -27,9 +27,19 @@ function xarbb_user_main()
    // Get parameters from whatever input we need
     if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
     // Security Check
     if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
+
+    // Lets deal with the cookie in a more sane manner
+    if (isset($read)){
+        $time    = serialize(time());
+        setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_all', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+        // Easier to set a cookie for the last visit than it is
+        // roll through all the forums to check the time set.
+        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+    }
 
     // Variable Needed for output
     $args               = array();
@@ -104,12 +114,19 @@ function xarbb_user_main()
         xarModAPIFunc('xarbb', 'user', 'countforums'),
         xarModURL('xarbb', 'user', 'main', array('startnum' => '%%')),
         xarModGetVar('xarbb', 'forumsperpage'));
-    // Check the cookie for the date to display
-    if (isset($_COOKIE["xarbb_lastvisit"])){
-        $data['lastvisitdate'] = unserialize($_COOKIE["xarbb_lastvisit"]);
-    } else {
-        $data['lastvisitdate'] = 1;
+
+    // Don't really need to do this for visitors, just users.
+    if (xarUserIsLoggedIn()){
+        // Cookie Name for Last Visit
+        $cookie_name_last_visit = xarModGetVar('xarbb', 'cookiename') . 'lastvisit';
+        // Check the cookie for the date to display
+        if (isset($_COOKIE["$cookie_name_last_visit"])){
+            $data['lastvisitdate'] = unserialize($_COOKIE["$cookie_name_last_visit"]);
+        } else {
+            $data['lastvisitdate'] = time();
+        }
     }
+
     return $data;
 }
 
@@ -124,6 +141,10 @@ function xarbb_user__getforuminfo($args)
 {
     $forums = $args;
     $totalforums = count($forums);
+
+    // Cookie Name for Mark All Read
+    $cookie_name_all_read = xarModGetVar('xarbb', 'cookiename') . '_f_all';
+
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
         // Get the name of the poster.  Does it make sense to split this 
@@ -139,23 +160,28 @@ function xarbb_user__getforuminfo($args)
         if ($forum['fstatus'] == 1){
             $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('Forum Locked').'" />';
         } else {
-            // Here we can check the updated images or standard ones.
-            // Images
-            if (isset($_COOKIE["xarbb_all"])){
-                $alltimecompare = unserialize($_COOKIE["xarbb_all"]);
-            } else {
-                $alltimecompare = '';
-            }
-            $fid = $forum['fid'];
-            if (isset($_COOKIE["xarbb_f_$fid"])){
-                $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
-            } else {
-                $forumtimecompare = '';
-            }
-            if (($alltimecompare > $forum['fpostid']) || ($forumtimecompare > $forum['fpostid'])){
+            if (xarUserIsLoggedIn()){
+                // Here we can check the updated images or standard ones.
+                // Images
+                if (isset($_COOKIE["$cookie_name_all_read"])){
+                    $alltimecompare = unserialize($_COOKIE["$cookie_name_all_read"]);
+                } else {
+                    $alltimecompare = '';
+                }
+                $fid = $forum['fid'];
+                if (isset($_COOKIE["xarbb_f_$fid"])){
+                    $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
+                } else {
+                    $forumtimecompare = '';
+                }
+                $time_compare = max($alltimecompare, $forumtimecompare);
+                if ($time_compare > $forum['fpostid']) {
+                    $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
+                } else {
+                    $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+                }
+            } else { 
                 $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
-            } else {
-                $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
             }
         }
     }

@@ -149,15 +149,14 @@ function xarbb_init()
                                                          'hookModName'      => 'categories'));
 
     // modvars
-    xarModSetVar('xarbb', 'hottopic', 10);
-    xarModSetVar('xarbb', 'redhottopic', 20);
-    xarModSetVar('xarbb', 'topicsperpage', 50);
-    xarModSetVar('xarbb', 'forumsperpage', 20);
-    xarModSetVar('xarbb', 'postsperpage', 20);
+    xarModSetVar('xarbb', 'cookiename', 'xarbb');
+    xarModSetVar('xarbb', 'cookiepath', '/');
+    xarModSetVar('xarbb', 'cookiedomain', '');
+    xarModSetVar('xarbb', 'forumsperpage', 50);
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('xarbb', 'SupportShortURLs', 0);
-    xarModSetVar('xarbb', 'allowhtml', 1);
+    // xarModSetVar('xarbb', 'allowhtml', 1);
     $xarbbcid = xarModAPIFunc('categories',
         'admin',
         'create',
@@ -335,6 +334,7 @@ function xarbb_upgrade($oldversion)
                 $settings = array();
                 $settings['postsperpage']       = 20;
                 $settings['topicsperpage']      = 20;
+                $settings['hottopic']           = 20;
                 $settings['allowhtml']          = NULL;
                 $settings['showcats']           = NULL;
                 $settings['linknntp']           = NULL;
@@ -344,6 +344,17 @@ function xarbb_upgrade($oldversion)
                 foreach($forums as $forum) {
                     xarModSetVar('xarbb', 'settings.'.$forum['fid'], serialize($settings));
                 }
+            break;
+        case '1.0.6':
+            xarModDelVar('xarbb', 'hottopic');
+            xarModDelVar('xarbb', 'redhottopic');
+            xarModDelVar('xarbb', 'topicsperpage');
+            xarModDelVar('xarbb', 'postsperpage');
+            xarModDelVar('xarbb', 'allowhtml');
+            xarModSetVar('xarbb', 'cookiename', 'xarbb');
+            xarModSetVar('xarbb', 'cookiepath', '/');
+            xarModSetVar('xarbb', 'cookiedomain', '');
+            xarModSetVar('xarbb', 'forumsperpage', 50);
             break;
         default:
             break;

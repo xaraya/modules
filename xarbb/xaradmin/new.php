@@ -29,6 +29,7 @@ function xarbb_admin_new()
     if (!xarVarFetch('new_cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('postsperpage','int:1:',$postsperpage, 20 ,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hottopic','int:1:',$hottopic, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showcats','checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('linknntp','checkbox', $linknntp, false, XARVAR_NOT_REQUIRED)) return;
@@ -116,6 +117,7 @@ function xarbb_admin_new()
             $settings = array();
             $settings['postsperpage']       = $postsperpage;
             $settings['topicsperpage']      = $topicsperpage;
+            $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
             $settings['showcats']           = $showcats;
             $settings['linknntp']           = $linknntp;

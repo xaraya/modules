@@ -61,6 +61,15 @@
 	</span>
 	</div>
 
+	<div style="clear: both; padding-top: 10px; width:98%;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Threshhold for individual topics to be considered hot.')#"><label for="hottopic"><xar:mlstring>Hot Topic</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
+	</span>
+	</div>
+
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The number of topics to show per page in this forum.')#"><label for="postsperpage"><xar:mlstring>Posts per page</xar:mlstring></label>:</span>
