@@ -4,7 +4,7 @@
 - Fix the Firefox double <p> bug in empty text areas
 - Move all table controls to new Table plugin
 - Change language charset - English now en rather than uk
-- Incorporating the tinymce version 1.XX
+- Incorporating the tinymce version 1.41
 
 * Version 0.3.1 10 Jan 05
 - Incorporating tinymce version 1.40
