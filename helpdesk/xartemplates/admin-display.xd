@@ -1,0 +1,13 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">Helpdesk</th>
+    </tr>
+</table>
+<br />
+
+<h2><xar:mlstring>Display</xar:mlstring></h2>
+
+<xar:data-display module="helpdesk" itemtype="$itemtype" itemid="$itemid" />
+
+<!-- add the output from display hooks here -->
+#$hookoutput#

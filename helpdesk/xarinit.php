@@ -287,7 +287,7 @@ function helpdesk_delete()
 
     // Get database information
     $dbconn   =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $xartable =  xarDBGetTables();
 
     // Delete tables
     $query = xarDBDropTable($xartable['helpdesk_tickets']);
@@ -309,9 +309,9 @@ function helpdesk_delete()
     }
 
     $objectid = xarModGetVar('helpdesk','representativeobjectid');
-    //if (!empty($objectid)) {
+    if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    //}
+    }
 
     xarModDelAllVars('helpdesk');
     
