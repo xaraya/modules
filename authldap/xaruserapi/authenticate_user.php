@@ -147,23 +147,14 @@ function authldap_userapi_authenticate_user($args)
 
             $usergroup = xarModGetVar('authldap','defaultgroup');
 
-            // Get the list of groups
-            if (!$groupRoles = xarGetGroups()) 
-                return XARUSER_AUTH_FAILED;
+            // Get the role for this group
+            $role = xarFindRole($usergroup);
 
-            $groupId = 0;
-            while (list($key,$group) = each($groupRoles)) {
-                if ($group['name'] == $usergroup) { 
-                    $groupId = $group['uid'];
-                    break;
-                }
-            }
-
-            if ($groupId == 0)
+            if (!isset($role))
                 return XARUSER_AUTH_FAILED;
 
             // Insert the user into the default users group
-            if( !xarMakeRoleMemberByID($rid, $groupId))
+            if (!xarMakeRoleMemberByID($rid, $role->getID()))
                return XARUSER_AUTH_FAILED; 
 
         } else {
@@ -209,7 +200,7 @@ function authldap_userapi_authenticate_user($args)
  * @param args['uname'] user name of user
  * @param args['pass'] password of user
  * @returns int
- * @return uid on success, XARUSER_AUTH_FAILED on failure
+ * @return uid on success, XARUSER_AUTH_FAILED or XARUSER_AUTH_DENIED on failure
  */
 function authldap_authentication_failover($uname, $pass)
 {
@@ -225,8 +216,28 @@ function authldap_authentication_failover($uname, $pass)
                                    'pass' => $pass));
         return $uid;
     } else {
-        // Return authentication failed
-        return XARUSER_AUTH_FAILED;
+        // We only want to deny access to those users that were
+        // added by the authldap module.  Access by Admins and
+        // other groups should still be allowed.
+        $usergroup = xarModGetVar('authldap','defaultgroup');
+
+        // Get the role for the user and default group
+        $userRole = xarUFindRole($uname);
+        $groupRole = xarFindRole($usergroup);
+
+        if (!isset($userRole) || !isset($groupRole))
+            return XARUSER_AUTH_DENIED;
+
+        // Check the user's parents and see if one matches
+        // the corresponding authldap generated parent group
+        if ($userRole->isParent($groupRole)) {
+            // User is part of group, so return authentication denied 
+            return XARUSER_AUTH_DENIED;
+        } else {
+            // Return authentication failed so Xaraya can check
+            // user authentication
+            return XARUSER_AUTH_FAILED;
+        }
     }
 }
 
