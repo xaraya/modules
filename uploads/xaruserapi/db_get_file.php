@@ -139,8 +139,8 @@ function uploads_userapi_db_get_file( $args )
         $fileInfo['fileTypeInfo']  = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
         $fileInfo['storeType']     = $row['xar_store_type'];
         $fileInfo['mimeImage']     = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
-        $fileInfo['fileURL']       = xarServerGetBaseURL() . str_replace($base_directory, '', $fileInfo['fileLocation']);
         $fileInfo['fileDownload']  = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
+        $fileInfo['fileURL']       = $fileInfo['fileDownload'];
         $fileInfo['DownloadLabel'] = xarML('Download file: #(1)', $fileInfo['fileName']);
         
         if (stristr($fileInfo['fileLocation'], $importDir)) {
