@@ -30,17 +30,20 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
 
     $cachingConfig = join('', file($cachingConfigFile));
     
+    // place the settings in modvars for safe keeping
+    // and replace the cachingConfig with the new values
     foreach ($configSettings as $configKey => $configValue) {
         if (is_numeric($configValue)) {
+            xarModSetVar('xarcachemanager', $configKey, $configValue);
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*(|\")(.*)\\1;/', "['$configKey'] = $configValue;", $cachingConfig);
         } elseif (is_array($configValue)) {
+            xarModSetVar('xarcachemanager', $configKey, 'array-' . serialize($configValue));
             $configValue = "'" . join("','",$configValue) . "'";
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['$configKey'] = array($configValue);", $cachingConfig);
         } else {
+            xarModSetVar('xarcachemanager', $configKey, $configValue);
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*(\'|\")(.*)\\1;/', "['$configKey'] = '$configValue';", $cachingConfig);
         }
-        // place the config setting in a modvar for save keeping
-        xarModSetVar('xarcachemanager', $configKey, $configValue);
     }
     
     $fp = fopen ($cachingConfigFile, 'wb');

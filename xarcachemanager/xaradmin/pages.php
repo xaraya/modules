@@ -23,27 +23,11 @@ function xarcachemanager_admin_pages($args)
         return $data;
     }
 
-    $cachingConfigFile = $varCacheDir . '/config.caching.php';
+    $cachingConfiguration = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                          array('from' => 'file'));
 
-    if (!file_exists($cachingConfigFile)) {
-        $msg=xarML('That is strange.  The #(1) file seems to be 
-                    missing.', $cachingConfigFile);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
-                        new SystemException($msg));
-            
-        return false;
-    }
-
-    include $cachingConfigFile;
-
-    $keyslist = str_replace( '.', '', array_keys($cachingConfiguration));
-    $valueslist = array_values($cachingConfiguration);
-    $data['settings'] = array();
-    
-    $arraysize = sizeof($keyslist);
-    for ($i=0;$i<$arraysize;$i++) {
-        $data['settings'][$keyslist[$i]] = $valueslist[$i];
-    }
+    $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'config_tpl_prep',
+                                      $cachingConfiguration);
 
     $filter = array('Class' => 2);
     $data['themes'] = xarModAPIFunc('themes',
@@ -131,8 +115,7 @@ function xarcachemanager_admin_pages($args)
         $configSettings['AutoCache.KeepStats'] = $autocache['keepstats'];
         
         xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
-                      array('configSettings' => $configSettings,
-                            'cachingConfigFile' => $cachingConfigFile));
+                      array('configSettings' => $configSettings));
 
         // set the cache dir
         $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output';

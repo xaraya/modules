@@ -561,9 +561,7 @@ function xarcachemanager_delete()
     $result = $datadict->dropTable($cacheblockstable);
 
     // Remove module variables
-    xarModDelVar('xarcachemanager','FlushOnNewComment');
-    xarModDelVar('xarcachemanager','FlushOnNewRating');
-    xarModDelVar('xarcachemanager','FlushOnNewPollvote');
+    xarModDelAllVars('xarcachemanager');
 
     // Remove Masks and Instances
     xarRemoveMasks('xarcachemanager');

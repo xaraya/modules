@@ -35,28 +35,9 @@ function xarcachemanager_admin_modifyconfig()
     } else {
         $data['blockCachingEnabled'] = 0;
     }
-
-    $cachingConfigFile = $varCacheDir . '/config.caching.php';
-
-    if (!file_exists($cachingConfigFile)) {
-        $msg=xarML('That is strange.  The #(1) file seems to be 
-                    missing.', $cachingConfigFile);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
-                        new SystemException($msg));
-            
-        return false;
-    }
-
-    include $cachingConfigFile;
-
-    $keyslist = str_replace( '.', '', array_keys($cachingConfiguration));
-    $valueslist = array_values($cachingConfiguration);
-    $data['settings'] = array();
     
-    $arraysize = sizeof($keyslist);
-    for ($i=0;$i<$arraysize;$i++) {
-        $data['settings'][$keyslist[$i]] = $valueslist[$i];
-    }
+    $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                         array('from' => 'file', 'tpl_prep' => TRUE));
 
     if(!isset($data['settings']['OutputSizeLimit'])) {
         $data['settings']['OutputSizeLimit'] = 262144;
