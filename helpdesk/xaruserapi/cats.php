@@ -3,7 +3,8 @@
     Gets categories
     @author Brian McGilligan
 */
-function helpdesk_userapi_cats($args){
+function helpdesk_userapi_cats($args)
+{
     extract($args);
 
     $cats = xarModAPIFunc('categories', 'user', 'getchildren', 
