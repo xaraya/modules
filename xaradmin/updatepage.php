@@ -45,6 +45,7 @@ function xarpages_admin_updatepage()
     // TODO: allow the admin to propagate the status to all child pages (when ACIVE or INACTIVE).
     $statuses = xarModAPIfunc('xarpages', 'user', 'getstatuses');
     if (!xarVarFetch('status', 'pre:upper:enum:' . implode(':', array_keys($statuses)), $status, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status_recurse', 'bool', $status_recurse, NULL, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('moving', 'bool', $moving)) return;
     if (!xarVarFetch('movepage', 'bool', $movepage, false, XARVAR_NOT_REQUIRED)) return;
@@ -72,7 +73,8 @@ function xarpages_admin_updatepage()
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,
-                'status'        => $status
+                'status'        => $status,
+                'status_recurse' => $status_recurse
             )
         )) {return;}
     } else {

@@ -87,7 +87,7 @@
                     </p>
                     <p class="param">
                         <label for="status_recurse"><xar:mlstring>Status recursive</xar:mlstring></label>
-                        <input type="checkbox" name="status_recurse" id="status_recurse" value="true" checked="checked" />(TODO)
+                        <input type="checkbox" name="status_recurse" id="status_recurse" value="true" />
                     </p>
 
                     <p class="param">

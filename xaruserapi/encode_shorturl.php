@@ -30,7 +30,7 @@ function xarpages_userapi_encode_shorturl($args)
         // Fetch all pages, with no DD required.
         $pages = xarModAPIfunc(
             'xarpages', 'user', 'getpages',
-            array('dd_flag' => false, 'key' => 'pid', 'status' => 'ACTIVE')
+            array('dd_flag' => false, 'key' => 'pid' /*, 'status' => 'ACTIVE'*/)
         );
     }
 

@@ -47,8 +47,9 @@ function xarpages_adminapi_updatepage($args)
         return;
     }
 
-    // Curtain changes can only be made if we have delete privilege on the page.
+    // Certain changes can only be made if we have delete privilege on the page.
     // Null those arguments out if we do not have the privs.
+    // TODO: determine if there are other changes that should be disabled.
     if (!xarSecurityCheck('DeletePage', 0, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
         // We do not allow the page to be renamed or moved if we only have edit priv.
         // TODO: perhaps there are other [arbitrary] attibutes that we would like to
@@ -112,6 +113,23 @@ function xarpages_adminapi_updatepage($args)
 
     $result = $dbconn->execute($query, $bind);
     if (!$result) {return;}
+
+    // If the status should be recursed to descendants, then do so.
+    if (!empty($status_recurse) && !empty($status) && ($status == 'ACTIVE' || $status == 'INACTIVE')) {
+        $query = 'UPDATE ' . $tablename
+            . ' SET xar_status = ?'
+            . ' WHERE xar_status <> ?'
+            . ' AND (xar_status = \'ACTIVE\' OR xar_status = \'INACTIVE\')'
+            . ' AND xar_left BETWEEN ? AND ?';
+        $result = $dbconn->execute(
+            $query,
+            array(
+                (string)$status, (string)$status,
+                (int)$page['left'], (int)$page['right']
+            )
+        );
+        if (!$result) {return;}
+    }
 
     // Call update hooks.
     xarModCallHooks(

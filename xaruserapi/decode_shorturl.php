@@ -73,7 +73,7 @@ function xarpages_userapi_decode_shorturl($params)
         // Walk the page tree, matching as many path components as possible.
         $pid = $rootpage['pid'];
 
-        while (isset($params[0]) && array_key_exists($params[0], $tree['child_refs']['names'][$pid])) {
+        while (isset($params[0]) && isset($tree['child_refs']['names'][$pid]) && array_key_exists($params[0], $tree['child_refs']['names'][$pid])) {
             $pid = $tree['child_refs']['names'][$pid][$params[0]];
             array_shift($params);
         }

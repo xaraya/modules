@@ -2,7 +2,6 @@ Various stuff to do:
 
 - Import/export (itemtypes and items, with hook data, esp. DD)
 - Sample page types and pages (use the import function for this)
-- Sample functions (perhaps handling a publication type and categories)
 - A screen to give sample mod_rewrite rules to support the config (i.e. to
   remove the index.php/[xarpages] part of the path; if provided  by an API
   then a trigger or hook could be developed to automatically update
@@ -32,6 +31,8 @@ Various stuff to do:
 - Privileges (registered, but not yet actually used) - DONE
 - Overview of module in the 'admin/main' template - DONE
 - Write a module delete/remove function - DONE
+- Allow page status to be changed recursively - DONE
+- Sample functions (perhaps handling a publication type and categories) - DONE
 
 
 To get this thing working in the meantime, create a page type called 'html'
