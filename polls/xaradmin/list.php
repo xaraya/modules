@@ -16,15 +16,24 @@ function polls_admin_list()
         return;
     }
 
+    $hooked = xarVarCleanFromInput('hooked');
+    if (empty($hooked)) {
+        $modid = xarModGetIDFromName('polls');
+    } else {
+        $modid = null;
+    }
+
     $polls = xarModAPIFunc('polls',
                             'user',
                             'getall',
-                            array('startnum' => $startnum,
+                            array('modid' => $modid,
+                                  'startnum' => $startnum,
                                   'numitems' => xarModGetVar('polls', 'itemsperpage')));
     $data = array();
     if (!$polls) {
 		return $data;
     }
+    $data['hooked'] = $hooked;
     $numrows = count($polls);
     $authid = xarSecGenAuthKey();
     $data['polls'] = array();

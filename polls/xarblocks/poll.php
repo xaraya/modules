@@ -137,7 +137,8 @@ function polls_pollblock_modify($blockinfo)
 
     // Row
     $data['polls'] = array();
-    $polls = xarModAPIFunc('polls', 'user', 'getall');
+    $polls = xarModAPIFunc('polls', 'user', 'getall',
+                           array('modid' => xarModGetIDFromName('polls')));
     $vars['polls'] = array();
     $vars['sel_pid'] = $vars['pid'];
     $vars['polls'][] = array('pid' => -1,

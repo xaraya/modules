@@ -26,7 +26,8 @@ function polls_user_list($args)
     $items = xarModAPIFunc('polls',
                           'user',
                           'getall',
-                          array('startnum' => $startnum,
+                          array('modid' => xarModGetIDFromName('polls'),
+                                'startnum' => $startnum,
                                 'numitems' => $numitems));
     $data = array();
     if (!$items) {

@@ -1,13 +1,15 @@
 <?php
-// File: $Id: s.xartables.php 1.4 03/01/01 15:16:38-06:00 dracos@numenor. $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Table information for Polls module
-// ----------------------------------------------------------------------
+/**
+ * File: $Id$
+ * 
+ * Polls table definitions function
+ * 
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * This function is called internally by the core whenever the module is

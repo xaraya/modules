@@ -1,17 +1,19 @@
 <?php
-// File: $Id: s.xarversion.php 1.5 03/01/01 15:16:38-06:00 dracos@numenor. $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Polls version information
-// ----------------------------------------------------------------------
+/**
+ * File: $Id$
+ * 
+ * Polls version information
+ * 
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 $modversion['name'] = 'polls';
 $modversion['id'] = '23';
-$modversion['version'] = '1.2';
+$modversion['version'] = '1.3';
 $modversion['description'] = 'Conduct polls';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

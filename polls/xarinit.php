@@ -1,13 +1,15 @@
 <?php
-// File: $Id: s.xarinit.php 1.5 03/01/01 15:16:38-06:00 dracos@numenor. $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Initialisation functions for Polls
-// ----------------------------------------------------------------------
+/**
+ * File: $Id$
+ *
+ * Polls initialization functions
+ *
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * initialise the polls module
@@ -119,12 +121,45 @@ function polls_init()
                             'polls', 'user', 'displayhook')) {
         return;
     }
+    if (!xarModRegisterHook('item', 'new', 'GUI',
+                           'polls', 'admin', 'newhook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'create', 'API',
+                           'polls', 'admin', 'createhook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'modify', 'GUI',
+                           'polls', 'admin', 'modifyhook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'update', 'API',
+                           'polls', 'admin', 'updatehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'delete', 'API',
+                           'polls', 'admin', 'deletehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('module', 'remove', 'API',
+                           'polls', 'admin', 'removehook')) {
+        return false;
+    }
+
+/* // TODO: show something in user menu someday ?
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+                            'polls', 'user', 'usermenu')) {
+        return false;
+    }
+*/
 
     /*********************************************************************
     * Define instances for this module
     * Format is
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
+
+// TODO: define instances based on module, itemtype and itemid later
 
     $query1 = "SELECT DISTINCT ".$prefix."_title FROM ".$prefix."_polls";
     $query2 = "SELECT DISTINCT ".$prefix."_type FROM ".$prefix."_polls";
@@ -267,6 +302,32 @@ function polls_upgrade($oldversion)
                 return;
             }
 
+        case 1.2:
+            if (!xarModRegisterHook('item', 'new', 'GUI',
+                                   'polls', 'admin', 'newhook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'create', 'API',
+                                   'polls', 'admin', 'createhook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'modify', 'GUI',
+                                   'polls', 'admin', 'modifyhook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'update', 'API',
+                                   'polls', 'admin', 'updatehook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'delete', 'API',
+                                   'polls', 'admin', 'deletehook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('module', 'remove', 'API',
+                                   'polls', 'admin', 'removehook')) {
+                return false;
+            }
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
@@ -327,6 +388,39 @@ function polls_delete()
                               'polls', 'user', 'displayhook')) {
         return;
     }
+    // Remove module hooks
+    if (!xarModUnregisterHook('item', 'new', 'GUI',
+                              'polls', 'admin', 'newhook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'create', 'API',
+                              'polls', 'admin', 'createhook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'modify', 'GUI',
+                              'polls', 'admin', 'modifyhook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'update', 'API',
+                              'polls', 'admin', 'updatehook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'delete', 'API',
+                              'polls', 'admin', 'deletehook')) {
+        return false;
+    }
+    // when a whole module is removed, e.g. via the modules admin screen
+    // (set object ID to the module name !)
+    if (!xarModUnregisterHook('module', 'remove', 'API',
+                              'polls', 'admin', 'removehook')) {
+        return false;
+    }
+/* // TODO: show something in user menu someday ?
+    if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
+                              'polls', 'user', 'usermenu')) {
+        return false;
+    } 
+*/
 
     // Remove Masks and Instances
     xarRemoveMasks('polls');

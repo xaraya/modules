@@ -44,7 +44,10 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The are no included hooks at this time.</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>display -- Allows you to display a poll for a particular module item (e.g. an article, xarbb topic, ...)</xar:mlstring></li>
+                <li><xar:mlstring>new/create/modify/update/delete -- Allows you to create/update a poll for a particular module item</xar:mlstring></li>
+            </ul>
         </div>
     </div>
 </div>

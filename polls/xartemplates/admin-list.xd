@@ -29,5 +29,10 @@
     </tr>
     </xar:loop>
 </table>
+<xar:if condition="empty($hooked)">
+    <p><a href="&xar-modurl-polls-admin-list;&amp;hooked=1"><xar:mlstring>Include Hooked Polls</xar:mlstring></a></p>
+<xar:else/>
+    <p><a href="&xar-modurl-polls-admin-list;"><xar:mlstring>Hide Hooked Polls</xar:mlstring></a></p>
+</xar:if>
 </xar:if>
 </div>

@@ -2,6 +2,7 @@
 
 /**
  * get all polls
+ * @param $args['modid'] module id for the polls to get
  * @returns array
  * @return array of items, or false on failure
  */
@@ -40,6 +41,12 @@ function polls_userapi_getall($args)
     $pollstable = $xartable['polls'];
     $prefix = xarConfigGetVar('prefix');
 
+    if (!empty($modid) && is_numeric($modid)) {
+        $where = " WHERE ".$prefix."_modid = ".$modid;
+    } else {
+        $where = '';
+    }
+
     // Get polls
     $sql = "SELECT ".$prefix."_pid,
                    ".$prefix."_title,
@@ -50,7 +57,7 @@ function polls_userapi_getall($args)
                    ".$prefix."_votes,
                    ".$prefix."_reset
             FROM $pollstable
-            WHERE ".$prefix."_modid = ".xarModGetIDFromName('polls')."
+            $where
             ORDER BY ".$prefix."_pid DESC";
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 

@@ -21,7 +21,8 @@ function polls_userapi_get($args)
     if (!empty($pid)) {
         $extra = "WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
     } else {
-        $extra = "ORDER BY ".$prefix."_pid DESC";
+        $extra = "WHERE ".$prefix."_modid = " . xarModGetIDFromName('polls');
+        $extra .= " ORDER BY ".$prefix."_pid DESC";
     }
 
     // Get item
