@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: checkforie.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: checkforie.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
  *
  * AddressBook util checkForIE
  *
@@ -22,16 +22,21 @@
  */
 function addressbook_utilapi_checkforie() 
 {
+    if (xarModLoad('sniffer','user')) {
+        xarModAPIFunc('sniffer','user','sniff');
 
-    xarModAPIFunc('sniffer','user','sniff');
-
-    if (!stristr(xarSessionGetVar('browsername'),'internet explorer')) {
-        return FALSE;
-    }
-    if (xarSessionGetVar('browserversion') < 5) {
-        return FALSE;
-    }
-    return TRUE;
+        if (!stristr(xarSessionGetVar('browsername'),'internet explorer')) {
+            return FALSE;
+        }
+        if (xarSessionGetVar('browserversion') < 5) {
+            return FALSE;
+        }
+        return TRUE;
+	} else {
+        xarErrorFree();
+        xarCoreExceptionFree();	
+	}
+    return FALSE;
 
 } //END checkForIE
 

@@ -42,7 +42,7 @@
 		    <td><ul>
 		      <li><xar:mlstring>Free format note field for each contact</xar:mlstring></li>
 		      <li><xar:mlstring>Auto-fill company address by lookup feature</xar:mlstring></li>
-		      <li><xar:mlstring>Copy to clipboard feature (Internet Explorer only)</xar:mlstring></li>
+		      <li><xar:mlstring>Copy to clipboard feature (Internet Explorer only / requires Xaraya &quot;sniffer&quot; module to be installed)</xar:mlstring></li>
 		      <li><xar:mlstring>Auto-detect mail and url contact labels</xar:mlstring></li>
 		      <li><xar:mlstring>Global and/or private contacts</xar:mlstring></li>
 		      <li><xar:mlstring>Show postal code before city (International) option</xar:mlstring></li>

@@ -30,5 +30,4 @@ $modversion['user']         = 1;
 $modversion['securityschema']   = array('AddressBook::' => '::');
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-$modversion['dependency']   = array(775);
 ?>
