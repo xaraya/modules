@@ -80,15 +80,41 @@ function xarcachemanager_admin_modifyhook($args)
              xar_expire
              FROM $blocksettings WHERE xar_bid = $itemid ";
     $result =& $dbconn->Execute($query);
-    if ($result) {
+    if ($result && !$result->EOF) {
         list ($noCache, $pageShared, $userShared, $blockCacheExpireTime) = $result->fields;
+    } else {
+        $noCache = 0;
+        $pageShared = 0;
+        $userShared = 0;
+        $blockCacheExpireTime = null;
+        // Get the instance details.
+        $instance = xarModAPIfunc('blocks', 'user', 'get', array('bid' => $itemid));
+        // Try loading some defaults from the block init array (cfr. articles/random)
+        if (!empty($instance) && !empty($instance['module']) && !empty($instance['type'])) {
+            $initresult = xarModAPIfunc('blocks', 'user', 'read_type_init',
+                                        array('module' => $instance['module'],
+                                              'type' => $instance['type']));
+            if (!empty($initresult) && is_array($initresult)) {
+                if (isset($initresult['nocache'])) {
+                    $noCache = $initresult['nocache'];
+                }
+                if (isset($initresult['pageshared'])) {
+                    $pageShared = $initresult['pageshared'];
+                }
+                if (isset($initresult['usershared'])) {
+                    $userShared = $initresult['usershared'];
+                }
+                if (isset($initresult['cacheexpire'])) {
+                    $blockCacheExpireTime = $initresult['cacheexpire'];
+                }
+            }
+        }
     }
     if (!empty($blockCacheExpireTime)) {
         $blockCacheExpireTime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                array('starttime' => $blockCacheExpireTime,
                                                      'direction' => 'from'));
     }
-
     return xarTplModule('xarcachemanager','admin','modifyhook',
                         array('noCache' => $noCache,
                               'pageShared' => $pageShared,
