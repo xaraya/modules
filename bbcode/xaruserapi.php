@@ -226,7 +226,7 @@ function bbcode_encode_quote($message)
   //Fast Path: is we know our string is well formed, then we can do a batch replace
   if($is_well_formed && empty($stack)) {
     //No str_ireplace until PHP 5.0 :-(
-    $message = preg_replace('/\[quote\]/i', '<p>' . xarML(Quote) . ':</p><blockquote>', $message);
+    $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote>', $message);
     $message = preg_replace('/\[\/quote\]/i', '</blockquote>', $message);
     return $message;
   }
@@ -240,7 +240,7 @@ function bbcode_encode_quote($message)
   $new_offset = 0;
   foreach($tags_found as $k => $v) {
     if($v == 's') {
-      $message = & substr_replace($message, '<p>' . xarML(Quote) . ':</p><blockquote>', $k + $new_offset, 7);
+      $message = & substr_replace($message, '<p>' . xarML('Quote') . ':</p><blockquote>', $k + $new_offset, 7);
       $new_offset += 11;
     }
     else {
