@@ -64,13 +64,7 @@ function multisites_admin_updateconfig()
                                               'varpath');
 
     // Auth Key
-    if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for creating new item',
-                     'multisites');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecConfirmAuthKey()) return;
 
     // Security
     if (!xarSecAuthAction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
@@ -557,11 +551,7 @@ function template_admin_updateconfig()
     // authorisation code attached to it.  If it did not then the function will
     // proceed no further as it is possible that this is an attempt at sending
     // in false data to the system
-    if (!xarSecConfirmAuthKey()) {
-        xarSessionSetVar('errormsg', _BADAUTHKEY);
-        xarResponseRedirect(xarModURL('Template', 'admin', 'view'));
-        return true;
-    }
+    if (!xarSecConfirmAuthKey()) return;
 
     // Update module variables.  Note that depending on the HTML structure used
     // to obtain the information from the user it is possible that the values
