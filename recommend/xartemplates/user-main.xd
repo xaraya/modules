@@ -23,11 +23,11 @@
 				<xar:else />
 				<input type="text" name="username" id="username" value="" size="25" maxlength="25" />
 				</xar:if>
-		</span><span style="text-align: left; padding-right: 40px;">
+		</span><br /><span style="text-align: left; padding-right: 40px;">
 				<xar:if condition = "xarUserIsLoggedIn()">
 					<xar:mlstring>Your Email</xar:mlstring>:
 				<xar:else/>
-					<label for="usermail"><xar:mlstring>Your Email</xar:mlstring></label>:
+					<label for="useremail"><xar:mlstring>Your Email</xar:mlstring></label>:
 				</xar:if>
 		</span><span style="text-align: left">
 				<xar:if condition = "xarUserIsLoggedIn()">
@@ -36,23 +36,23 @@
 				<xar:else />
 				<input type="text" name="useremail" id="useremail" value="" size="25" maxlength="25" />
 				</xar:if>
-		</span><span style="text-align: left; padding-right: 40px;">
+		</span><br /><span style="text-align: left; padding-right: 40px;">
 				<label for="fname"><xar:mlstring>Your Friend's Name</xar:mlstring></label>:
 		</span><span style="text-align: left">
 				<input type="text" name="fname" id="fname" value="" size="25" maxlength="25" />
-		</span><span style="text-align: left; padding-right: 40px;">
+		</span><br /><span style="text-align: left; padding-right: 40px;">
 				<label for="info"><xar:mlstring>Your Friend's Email Address</xar:mlstring></label>:
 		</span><span style="text-align: left">
 				<input type="text" name="info" id="info" value="" size="35" maxlength="255" />
-		</span>
+		</span><br />
 		<xar:if condition="xarModGetVar('recommend', 'usernote')">
 		<span style="text-align: left; padding-right: 40px;">
 				<label for="usernote"><xar:mlstring>Your Added Notes</xar:mlstring></label>:
 		</span><span style="text-align: left">
 				<textarea name="usernote" id="usernote" rows="10" cols="40" /></textarea>
-		</span>
+		</span><br />
 		</xar:if>				 
-	<span style="text-align: left; padding-right: 40px;"><input type="submit" value="#$submit#" align="middle" /></span>
+	<span style="text-align: left; padding-right: 40px;"><input type="submit" value="#$submit#" /></span>
 	</div>
 	</div>
 </form>
