@@ -26,8 +26,8 @@ function figlet_init()
     xarModSetVar('figlet', 'defaultfont', 'standard.flf');
 
     //Register Mask
-    xarRegisterMask('ReadFiglet','All','figlet','All','All',ACCESS_READ);
-    xarRegisterMask('AdminFiglet','All','figlet','All','All',ACCESS_ADMIN);
+    xarRegisterMask('ReadFiglet','All','figlet','All','All','ACCESS_READ');
+    xarRegisterMask('AdminFiglet','All','figlet','All','All','ACCESS_ADMIN');
 
     return true;
 }
