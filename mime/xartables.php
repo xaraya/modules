@@ -27,8 +27,22 @@
  */
 function mime_xartables()
 { 
-    return array();
-
+    // Initialise table array 
+    $xartable = array(); 
+ 
+    $mime_type      = xarDBGetSiteTablePrefix() . '_mime_type'; 
+    $mime_subtype   = xarDBGetSiteTablePrefix() . '_mime_subtype'; 
+    $mime_extension = xarDBGetSiteTablePrefix() . '_mime_extension'; 
+    $mime_magic     = xarDBGetSiteTablePrefix() . '_mime_magic'; 
+ 
+    // Set the table name 
+    $xartable['mime_type']      = $mime_type;
+    $xartable['mime_subtype']   = $mime_subtype;
+    $xartable['mime_extension'] = $mime_extension;
+    $xartable['mime_magic']     = $mime_magic;
+ 
+    // Return the table information 
+    return $xartable; 
 } 
 
 ?>

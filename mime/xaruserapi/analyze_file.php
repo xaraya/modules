@@ -16,20 +16,27 @@
 function mime_userapi_analyze_file( $args )
 {
     extract($args);
-    
     if (!isset($fileName)) {
         $msg = xarML('Unable to retrieve mime type. No filename supplied!');
         xarExeptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
+    if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
+        return mime_content_type($fileName);
+    }
+    
+    $fileSize = fileSize($fileName);
+        
+    if (!$fileSize) { 
+        return 'application/octet-stream';
+    }
+    
     if (!($fp = @fopen($fileName, 'rb'))) {
         $msg = xarML('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_OPEN', new SystemException($msg));
         return FALSE;
     } else {
-        $fileSize = filesize($fileName);
-        
         include ("modules/mime/xarincludes/mime.magic.php");
         
         foreach($mime_list as $mime_type => $mime_info) {
