@@ -1,24 +1,31 @@
 <xar:if condition="empty($warning)">
-    <div><xar:mlstring>Headlines from:</xar:mlstring>
-        <div><a href="#$chanlink#">#xarVarPrepForDisplay($chantitle)#</a></div>
+  <div>
+  <xar:if condition="$show_chantitle">
+    <xar:mlstring>Headlines from:</xar:mlstring>
+        <a href="#$chanlink#">#xarVarPrepForDisplay($chantitle)#</a>
+  </xar:if>
+  <xar:if condition="$show_chandesc">
         <xar:if condition="!empty($chandesc)">
-             <div class="xar-sub">#xarVarPrepForDisplay($chandesc)#</div>
+        <div class="xar-sub">#xarVarPrepForDisplay($chandesc)#</div>
         </xar:if>
-    </div>
-    <xar:if condition="!empty($feedcontent)">
-        <xar:loop name="$feedcontent">
-            <div style="padding-top: 1em;">
-                <xar:if condition="!empty($loop:item['link'])">
-                    &bull; <a href="#xarVarPrepForDisplay($loop:item['link'])#">#$loop:item['title']#</a>
-                <xar:else />
-                    &bull; <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
-                </xar:if>
-            </div>
-            <xar:if condition="!empty($loop:item['description'])">
-                <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item['description'])#</div>
-            </xar:if>
-        </xar:loop>
-    </xar:if>
+  </xar:if>
+  </div>
+  <xar:if condition="!empty($feedcontent)">
+    <ul>
+      <xar:loop name="$feedcontent">
+        <li >         
+          <xar:if condition="!empty($loop:item['link'])">
+              <a href="#xarVarPrepForDisplay($loop:item['link'])#">#$loop:item['title']#</a>
+          <xar:else />
+              <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
+          </xar:if>         
+          <xar:if condition="!empty($loop:item['description'])">
+            <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item['description'])#</div>
+          </xar:if>
+        </li>
+      </xar:loop>
+    </ul>
+  </xar:if>
 <xar:else />
-    <div>#xarVarPrepForDisplay($warning)#</div>
+  <div>#xarVarPrepForDisplay($warning)#</div>
 </xar:if>
