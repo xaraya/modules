@@ -63,14 +63,7 @@ function censor_admin_create($args)
     extract($args);
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for creating new item',
-                    'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
-
+    if (!xarSecConfirmAuthKey()) return;
     // Check arguments
     if (empty($keyword)) {
         $msg = xarML('No Keyword Provided, Please Go Back and Provide censor Keyword');
@@ -152,13 +145,7 @@ function censor_admin_update($args)
     }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for creating new item',
-                    'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecConfirmAuthKey()) return;
 
     if (!xarModAPIFunc('censor',
                        'admin',
@@ -217,13 +204,7 @@ function censor_admin_delete($args)
     // If we get here it means that the user has confirmed the action
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for creating new item',
-                    'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecConfirmAuthKey()) return;
 
     // The API function is called
     if (!xarModAPIFunc('censor',
@@ -328,13 +309,7 @@ function censor_admin_updateconfig()
 {
     $replace= xarVarCleanFromInput('replace');
 
-    if (!xarSecConfirmAuthKey()) {
-        $msg = xarML('Invalid authorization key for creating new item',
-                    'censor');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecConfirmAuthKey()) return;
 
     if (!isset($replace)) {
         $replace = '*****';
