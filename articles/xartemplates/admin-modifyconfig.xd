@@ -71,7 +71,11 @@
                                 </label> 
                             </td>
                             <td>
-                                <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturls# /> 
+                                <xar:if conditon="$shorturls">
+                                    <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                                <xar:else/>
+                                    <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                                </xar:if>
                             </td>
                         </tr>
                         <tr>
@@ -180,7 +184,11 @@
                             </label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" #$usetitleforurl# /> 
+                            <xar:if condition="$usetitleforurl">
+                                <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" checked="checked" />
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -411,7 +419,11 @@
                                 <i>($categories)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="showcategories" id="showcategories" value="1" #$showcategories# /> 
+                            <xar:if condition="$showcategories">
+                                <input type="checkbox" name="showcategories" id="showcategories" value="1" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="showcategories" id="showcategories" value="1" /> 
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -423,7 +435,11 @@
                                 <i>($showcatcount)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="showcatcount" id="showcatcount" value="1" #$showcatcount# /> 
+                            <xar:if condition="$showcatcount">
+                                <input type="checkbox" name="showcatcount" id="showcatcount" value="1" checked="checked"/> 
+                            <xar:else/>
+                                <input type="checkbox" name="showcatcount" id="showcatcount" value="1" /> 
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -435,7 +451,11 @@
                                 <i>($showprevnext)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="showprevnext" id="showprevnext" value="1" #$showprevnext# /> 
+                            <xar:if condition="$showprevnext">
+                                <input type="checkbox" name="showprevnext" id="showprevnext" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="showprevnext" id="showprevnext" value="1" /> 
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -448,7 +468,11 @@
                         </td>
                         <xar:if condition="$showcommentsoptions">
                             <td>
-                                <input type="checkbox" name="showcomments" id="showcomments" value="1" #$showcomments# /> 
+                                <xar:if condition="$showcomments">
+                                    <input type="checkbox" name="showcomments" id="showcomments" value="1" checked="checked" />
+                                <xar:else/>
+                                    <input type="checkbox" name="showcomments" id="showcomments" value="1" />
+                                </xar:if>
                             </td>
                             <xar:else />
                             <td>
@@ -469,7 +493,11 @@
                         </td>
                         <xar:if condition="$showhitcountsoptions">
                             <td>
-                                <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" #$showhitcounts# /> 
+                                <xar:if condition="$showhticounts">
+                                    <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" checked="checked" />
+                                <xar:else />
+                                    <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" />
+                                </xar:if>
                             </td>
                             <xar:else />
                             <td>
@@ -490,7 +518,11 @@
                         </td>
                         <xar:if condition="$showratingsoptions">
                             <td>
-                                <input type="checkbox" name="showratings" id="showratings" value="1" #$showratings# /> 
+                                <xar:if condition="$showratings">
+                                    <input type="checkbox" name="showratings" id="showratings" value="1" checked="checked" />
+                                <xar:else/>
+                                    <input type="checkbox" name="showratings" id="showratings" value="1" />
+                                </xar:if>
                             </td>
                             <xar:else />
                             <td>
@@ -510,7 +542,11 @@
                                 <i>($showpublinks + includes/publinks.xd)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="showpublinks" id="showpublinks" value="1" #$showpublinks# /> 
+                            <xar:if condition="$showpublinks">
+                                <input type="checkbox" name="showpublinks" id="showpublinks" value="1" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="showpublinks" id="showpublinks" value="1" /> 
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -522,7 +558,11 @@
                                 <i>($showpubcount)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="showpubcount" id="showpubcount" value="1" #$showpubcount# /> 
+                            <xar:if condition="$showpubcount">
+                                <input type="checkbox" name="showpubcount" id="showpubcount" value="1" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="showpubcount" id="showpubcount" value="1" />
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -534,7 +574,11 @@
                                 <i>($archivelink + $archivelabel)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="showarchives" id="showarchives" value="1" #$showarchives# /> 
+                            <xar:if condition="$showarchives">
+                                <input type="checkbox" name="showarchives" id="showarchives" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="showpubcount" id="showpubcount" value="1" />
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -546,7 +590,11 @@
                                 <i>($maplink + $maplabel)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="showmap" id="showmap" value="1" #$showmap# /> 
+                            <xar:if condition="$showmap">
+                                <input type="checkbox" name="showmap" id="showmap" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="showmap" id="showmap" value="1" />
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -558,7 +606,11 @@
                             </label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="dotransform" id="dotransform" value="1" #$dotransform# /> 
+                            <xar:if condition="$dotransform">
+                                <input type="checkbox" name="dotransform" id="dotransform" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="showmap" id="showmap" value="1" />
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -570,7 +622,11 @@
                             </label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="titletransform" id="titletransform" value="1" #$titletransform# /> 
+                            <xar:if condition="$titletransform">
+                                <input type="checkbox" name="titletransform" id="titletransform" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="titletransform" id="titletransform" value="1" />
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -591,7 +647,11 @@
                                 <i>($prevart + $nextart)</i></label> 
                         </td>
                         <td>
-                            <input type="checkbox" name="prevnextart" id="prevnextart" value="1" #$prevnextart# /> 
+                            <xar:if condition="$prevnextart">
+                                <input type="checkbox" name="prevnextart" id="prevnextart" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="prevnextart" id="prevnextart" value="1" />
+                            </xar:if>
                         </td>
                     </tr>
                     <tr>
