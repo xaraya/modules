@@ -24,7 +24,7 @@
 function html_admin_deletetype()
 {
     // Security Check
-	if(!xarSecurityCheck('DeleteHTML')) return;
+    if(!xarSecurityCheck('DeleteHTML')) return;
 
     // Get parameters from input
     if (!xarVarFetch('id', 'int:0:', $id)) return;

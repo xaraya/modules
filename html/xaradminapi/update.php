@@ -44,7 +44,7 @@ function html_adminapi_update($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('EditHTML')) return;
+    if(!xarSecurityCheck('EditHTML')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

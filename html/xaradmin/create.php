@@ -35,7 +35,7 @@ function html_admin_create($args)
     if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
-	if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurityCheck('AddHTML')) return;
 
     // Check arguments
     if (empty($tag)) {

@@ -24,7 +24,7 @@
 function html_admin_edittype()
 {
     // Security Check
-	if(!xarSecurityCheck('EditHTML')) return;
+    if(!xarSecurityCheck('EditHTML')) return;
 
     // Get parameters from input
     if (!xarVarFetch('id', 'int:0:', $id)) return;

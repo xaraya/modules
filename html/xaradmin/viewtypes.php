@@ -29,12 +29,12 @@ function html_admin_viewtypes()
     $data['authid'] = xarSecGenAuthKey();
 
     // Security Check
-	if(!xarSecurityCheck('AdminHTML')) return;
+    if(!xarSecurityCheck('AdminHTML')) return;
 
     // The user API function is called.
     $tagtypes = xarModAPIFunc('html',
-	                          'user',
-			                  'getalltypes');
+                              'user',
+                              'getalltypes');
 
     // Check for exceptions
     if (!isset($tagtypes) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back

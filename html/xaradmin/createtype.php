@@ -30,7 +30,7 @@ function html_admin_createtype($args)
     if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
-	if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurityCheck('AddHTML')) return;
 
     // Check arguments
     if (empty($tagtype)) {

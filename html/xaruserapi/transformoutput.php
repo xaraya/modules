@@ -72,7 +72,7 @@ function html_userapitransformoutput($text)
     } elseif ($transformtype == 3){
         $text = $text;
     }
-	//$text = preg_replace("/(\015\012)|(\015)|(\012)/","</p><p>",$text); 
+    //$text = preg_replace("/(\015\012)|(\015)|(\012)/","</p><p>",$text); 
     // This call is what is driving the bugs because it is transforming more
     // than we want.  The problem without the call though, it the output from
     // this function is not xhtml compliant.

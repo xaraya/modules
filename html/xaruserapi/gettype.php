@@ -38,7 +38,7 @@ function html_userapi_gettype($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('ReadHTML')) return;
+    if(!xarSecurityCheck('ReadHTML')) return;
 
     // Get database setup
     $dbconn =& xarDBGetConn();

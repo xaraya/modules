@@ -24,7 +24,7 @@
 function html_admin_edit()
 {
     // Security Check
-	if(!xarSecurityCheck('EditHTML')) return;
+    if(!xarSecurityCheck('EditHTML')) return;
 
     // Get parameters from input
     if (!xarVarFetch('cid', 'int:0:', $cid)) return;

@@ -22,10 +22,10 @@
 function html_admin_newtype()
 {
     // Security Check
-	if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurityCheck('AddHTML')) return;
     
     $data['authid'] = xarSecGenAuthKey();
-	$data['createbutton'] = xarML('Create Tag Type');
+    $data['createbutton'] = xarML('Create Tag Type');
 
     // Include 'formcheck' JavaScript.
     // TODO: move this to a template widget when available.

@@ -51,7 +51,7 @@ function html_adminapi_create($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurityCheck('AddHTML')) return;
 
     // Trim input 
     $type = trim($type);

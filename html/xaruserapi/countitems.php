@@ -27,7 +27,7 @@
 function html_userapi_countitems()
 {
     // Security Check
-	if(!xarSecurityCheck('ReadHTML')) return;
+    if(!xarSecurityCheck('ReadHTML')) return;
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

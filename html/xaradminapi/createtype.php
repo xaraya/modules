@@ -42,7 +42,7 @@ function html_adminapi_createtype($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurityCheck('AddHTML')) return;
 
     // Trim input
     $tagtype = trim($tagtype);

@@ -24,7 +24,7 @@
 function html_admin_main()
 {
     // Security Check
-	if(!xarSecurityCheck('EditHTML')) return;
+    if(!xarSecurityCheck('EditHTML')) return;
 
     // Get the admin menu
     $data = xarModAPIFunc('html', 'admin', 'menu');

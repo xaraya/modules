@@ -28,7 +28,7 @@ function html_admin_updateset()
     if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
-	if(!xarSecurityCheck('AdminHTML')) return;
+    if(!xarSecurityCheck('AdminHTML')) return;
 
     // Get parameters from the input
     if (!xarVarFetch('tags', 'array:1:', $tags)) {

@@ -32,7 +32,7 @@ function html_userapi_getalltypes($args)
     $types = array();
 
     // Security Check
-	if (!xarSecurityCheck('ReadHTML')) {
+    if (!xarSecurityCheck('ReadHTML')) {
         return $types;
     }
 
