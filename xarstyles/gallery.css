@@ -3,7 +3,6 @@
     margin:0;
     padding:0;
     font-size:100%;
-
 }
 
 #wrap{
@@ -104,4 +103,8 @@ img{
     border:1px solid;
     border-color:#666 #EEE #EEE #666;
  */
+}
+
+#photoholder {
+  background: url('../xarimages/loading.gif') 50% 50% no-repeat;
 }

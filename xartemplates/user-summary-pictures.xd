@@ -25,7 +25,7 @@
                             <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" width="150px" alt="#$title#" />
                         </xar:if>
                         <span>
-                            #$notes#
+                            #$title#
                         </span>
                     </a>
                 </li> 
