@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Scheduler initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -13,6 +13,7 @@
 $modversion['name']           = 'Scheduler';
 $modversion['id']             = '189';
 $modversion['version']        = '1.1.0';
+$modversion['displayname']    = xarML('Scheduler');
 $modversion['description']    = 'Schedule Xaraya jobs at certain times of the day/week/month (cron)';
 $modversion['credits']        = '';
 $modversion['help']           = '';
