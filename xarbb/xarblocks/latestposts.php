@@ -143,7 +143,7 @@ function xarbb_latestpostsblock_display($blockinfo)
         }
     }
 
-    if ($vars['addposts']=='on'){
+    if ($vars['addposts']=='on'){ //separated - only do this work if required
         foreach ($alltopics as $topics) {
             foreach ($topics as $topic) {
                 //Get all the most recent replies irrespective of topic
@@ -152,6 +152,7 @@ function xarbb_latestpostsblock_display($blockinfo)
                                    'get_allposts',
                                    array('objectid'    => $topic['tid'],
                                          'numitems'    => $vars['howmany']));
+                $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
                  //Put post data in suitable list
                  if (count($posts) >0 ) {
                      foreach ($posts as $post) {
