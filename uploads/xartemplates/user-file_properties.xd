@@ -131,7 +131,7 @@
                                 <td align="center">
                                     <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#"> 
                                         <xar:if condition="xarModIsAvailable('images')">
-                                            <xar:image-resize src="$fileInfo[fileId]" width="200px" constrain="1" label="$fileInfo[fileName]" />
+                                            <xar:template file="image-thumbnail" type="module" />
                                         <xar:else />
                                             <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
                                                  height="#$fileInfo['image']['height']#" 

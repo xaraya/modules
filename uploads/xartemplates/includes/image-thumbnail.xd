@@ -1,0 +1,1 @@
+<xar:image-resize src="$fileInfo[fileId]" width="200px" constrain="1" label="$fileInfo[fileName]" />
