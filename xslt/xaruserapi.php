@@ -28,7 +28,7 @@ function xslt_userapi_transform($args)
     if ((!isset($objectid)) ||
             (!isset($extrainfo))) {
         $msg = xarML('Invalid Parameters for XSLT Transform Hook');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -154,7 +154,7 @@ function xslt_trap_error($parser, $errorno, $level, $fields)
     } else {
         $M .= "$fields";
     }
-    xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+    xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                     new SystemException($M));
 }
 

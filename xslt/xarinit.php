@@ -23,7 +23,7 @@ function xslt_init()
     // Make sure that XSLT is available
     if (!extension_loaded('xslt')) {
         $msg=xarML('Your PHP configuration does not seem to include the required XSLT extension. Please refer to http://www.php.net/manual/en/ref.xslt.php on how to install it.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }
