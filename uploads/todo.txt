@@ -34,4 +34,5 @@ Bit : Attribute Function             : Name
  4  : File Location Trusted          : _UPLOADS_LOCATION_TRUSTED
  5  : File Location Untrusted        : _UPLOADS_LOCATION_UNTRUSTED
  6  : File Location Other            : _UPLOADS_LOCATION_OTHER
- 0
+
+
