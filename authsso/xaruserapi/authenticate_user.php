@@ -82,7 +82,7 @@ function authsso_userapi_authenticate_user($args)
             $realname = '';
             $email = '';
 
-            if ($ssoconfig['getfromldap'] == 'true') {
+            if (($ssoconfig['getfromldap'] == 'true') && (xarModIsAvailable('xarldap') == 'true')) {
                 $ldap = new xarLDAP();
                 $ldap->open();
                 $bindResult = $ldap->bind_to_server();

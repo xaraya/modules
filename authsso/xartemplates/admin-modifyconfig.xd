@@ -9,7 +9,7 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <div style="clear: both; padding: 5px;">
             <span>
-                <span class="help" title="#xarML('If a user has been authenticated by the web server but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below and entering the email domain, a user that has been authenticated by the web server  will be automatically added to the Xaraya database and allowed to login.')#"><label for="itemsperpage">#$adduser#:</label></span>
+                <span class="help" title="#$adduserhelp#"><label for="adduservalue">#$adduser#:</label></span>
             </span>
             <span>
                 <xar:if condition="$adduservalue eq 'checked' ">
@@ -22,7 +22,7 @@
         <xar:if condition="xarModIsAvailable('xarldap') eq 'true'">
             <div style="clear: both; padding: 5px;">
                 <span>
-                    #$useldap#
+                    <span class="help" title="#$useldaphelp#"><label for="useldapvalue">#$useldap#:</label></span>
                 </span>
                 <span>
                     <xar:if condition="$useldapvalue eq 'checked' ">
@@ -33,10 +33,10 @@
                 </span>
             </div>
         </xar:if>
-        <xar:if condition="$useldapvalue eq 'checked' ">
+        <xar:if condition="$useldapvalue eq 'checked' and xarModIsAvailable('xarldap') eq 'true' ">
             <div style="clear: both; padding: 5px;">
                 <span>
-                    #$ldapnameattr#
+                    #$ldapnameattr#:
                 </span>
                 <span>
                     <input type="text" name="ldapnamevalue" value="#$ldapnamevalue#" />
@@ -44,7 +44,7 @@
             </div>
             <div style="clear: both; padding: 5px;">
                 <span>
-                    #$ldapmailattr#
+                    #$ldapmailattr#:
                 </span>
                 <span>
                     <input type="text" name="ldapmailvalue" value="#$ldapmailvalue#" />
@@ -53,7 +53,7 @@
         <xar:else />
             <div style="clear: both; padding: 5px;">
                 <span>
-                    #$addusermaildomain#
+                    #$addusermaildomain#:
                 </span>
                 <span>
                     <input type="text" name="addusermaildomain" value="#$addusermailvalue#" />
@@ -62,7 +62,7 @@
         </xar:if>
         <div style="clear: both; padding: 5px;">
             <span>
-                #$defaultgrouplabel#
+                #$defaultgrouplabel#:
             </span>
             <span>
                 <select name="defaultgroup" id="defaultgroup">
@@ -76,12 +76,9 @@
                 </select>
             </span>
         </div>
+        <br />
         <!-- submit button -->
-        <br /><br />
-        <span>
-            #$submitlabel#
-        </span>
-        <span>
+        <span style="padding: 20px; ">
             <input type="submit" value="#$submitbutton#" />
         </span>
 </form>

@@ -29,12 +29,14 @@ function authsso_admin_modifyconfig()
     $data['title'] = xarVarPrepForDisplay(xarML('Administration'));
     $data['configadmin'] = xarVarPrepForDisplay(xarML('Configure AuthSSO'));
     $data['adduser'] = xarVarPrepForDisplay(xarML('Add SSO User to Xaraya Database on Login'));
+    $data['adduserhelp'] = xarVarPrepForDisplay(xarML('If a user has been authenticated by the web server but does not have a login account to Xaraya, the user will not be able to login. By selecting this option, a user that has been authenticated by the web server will be automatically added to the Xaraya database and allowed to login.'));
     if (xarModGetVar('authsso', 'add_user') == 'true') {
         $data['adduservalue'] = 'checked';
     } else {
         $data['adduservalue'] = '';
     }
     $data['useldap'] = xarVarPrepForDisplay(xarML('Use LDAP to Retrieve User Information'));
+    $data['useldaphelp'] = xarVarPrepForDisplay(xarML('User information can be retrieved from an LDAP server via the xarLDAP module. Be sure that xarLDAP is configured appropriately.'));
     if (xarModGetVar('authsso','getfromldap') == 'true') {
         $data['useldapvalue'] = 'checked';
     } else {
@@ -46,8 +48,7 @@ function authsso_admin_modifyconfig()
     $data['ldapnamevalue'] = xarVarPrepForDisplay(xarModGetVar('authsso','ldapdisplayname'));
     $data['ldapmailattr'] = xarVarPrepForDisplay(xarML('LDAP Email Attribute'));
     $data['ldapmailvalue'] = xarVarPrepForDisplay(xarModGetVar('authsso','ldapmail'));
-    $data['submitlabel'] = xarVarPrepForDisplay(xarML('Click "Submit" to update the configuration:'));
-    $data['submitbutton'] = xarVarPrepForDisplay(xarML('Submit'));
+    $data['submitbutton'] = xarVarPrepForDisplay(xarML('Update AuthSSO Configuration'));
 
     // Get groups
     $data['defaultgrouplabel'] = xarVarPrepForDisplay(xarML('Default Group'));
