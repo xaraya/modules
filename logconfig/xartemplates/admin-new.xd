@@ -1,6 +1,6 @@
 <xar:template file="menu" />
 
-<h2><xar:mlstring>Add a Dynamic Example</xar:mlstring></h2>
+<h2><xar:mlstring>Add a Logger</xar:mlstring></h2>
 
 <xar:if condition="!empty($preview)">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
