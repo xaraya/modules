@@ -243,23 +243,25 @@ class bkRepo {
         return $result;
     }
     
-    function bkGetStats() {
-        $cmd = "prs -h -d'\$if(:Li: -gt 0){:USER:|:UTC:}\n' ChangeSet";
-        $rawresults = $this->_run($cmd);
-        // :UTC: is like 20021003152103 
-        //               yyyymmddhhmmss
-        $month_ago = date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m")-1,date("d"),date("Y")));
-        
-        foreach($rawresults as $rawresult) {
-            list($user, $timestamp) = explode("|",$rawresult);
-            $results[$user]['user'] = $user; 
-            if(!array_key_exists('nrtotal',$results[$user])) $results[$user]['nrtotal'] = 0;
-            if(!array_key_exists('nrrecent',$results[$user])) $results[$user]['nrrecent'] = 0;
-            $results[$user]['nrtotal']++;
-            if($timestamp > $month_ago) {
-                $results[$user]['nrrecent']++;
-            }
+    function bkGetStats($user='') {
+        $params = '';
+        if($user!='') {
+            $params.='-u'.$user.' ';
         }
+
+        // Get all stats info at once, we can sort out later
+        $cmd = "bk changes $params -d'\$if(:Li: -gt 0){:USER:|:UTC:}\n'";
+        $rawresults = $this->_run($cmd);
+        
+        // Construct a slightly more friendly array to return
+        foreach($rawresults as $rawresult) {
+            list($user,$timestamp) = explode("|",$rawresult);
+            // FIXME: How do we treat double timestamps?
+            $results[$timestamp] = $user;
+        }
+        // We sort the stats such that the newest comes first.
+        krsort($results);
+    
         return $results;
     }
 }

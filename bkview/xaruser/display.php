@@ -67,8 +67,8 @@ function bkview_user_display($args)
         $data['pageinfo']=xarML("Changeset activity ");
     } else {
         $data['pageinfo']=xarML("Changeset activity for #(1)",$user);
-        $data['user'] =$user;
     }
+    $data['user'] =$user;
     $data['rangetext'] = $rangetext;
     $data['allsets']=$allsets;
     $data['mrgsets']=$mrgsets;
