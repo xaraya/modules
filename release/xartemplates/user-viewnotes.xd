@@ -22,20 +22,32 @@
 <xar:if condition="!empty($message)">
 	<b>#$message#</b>
 <xar:else />
-
-<hr width="100%"><br />
+          
 <xar:loop name="$items">
-<br />
-<b>#$type# Author:</b>&nbsp;&nbsp; <a href="#$contacturl#">#$realname#</a><br />
-<b>#$type# Name:</b>&nbsp;&nbsp; <a href="#$displaylink#">#$name#</a><br />
-<b>Date Added</b>:&nbsp;&nbsp; #$time#<br /><br />
-<b>Description of #$type#:</b>&nbsp;&nbsp; #$desc#<br />
-<b>Version:</b>&nbsp;&nbsp; #$version#<br /><br />
+<div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
+<div class="xar-norm" style="padding: 3px;">
+<h1><a class="xar-title" href="#$displaylink#">#$type#: #$name#</a></h1>
+<div class="xar-accent" style="padding: 2px;"><span class="xar-sub">
+<xar:mlstring>Posted by</xar:mlstring>: 
+<a href="#$contacturl#">#$realname#</a>
+<xar:mlstring>on</xar:mlstring>
+#$time#
+		<xar:if condition="!empty($counter)">
+		   (#$hitcount# <xar:mlstring>Reads</xar:mlstring>)
+		</xar:if>
 
-<b><xar:mlstring>Comments</xar:mlstring></b> #$comments# <br />
-<b><xar:mlstring>Read</xar:mlstring></b> #$hitcount#<br />
-<br />
-<hr width="100%">
+</span></div>
+<b>Version:</b>&nbsp;&nbsp; #$version#<br /><br />
+#$desc#<br /><br />
+<div align="right">
+<a href="#$displaylink#"><xar:mlstring>Read More</xar:mlstring></a>
+    <xar:if condition="!empty($comments)">
+             -- #$comments# <xar:mlstring>Comments</xar:mlstring>
+    </xar:if>
+            <br />
+          </div>
+</div>
+</div>
 </xar:loop>
 
 </xar:if>
