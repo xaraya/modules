@@ -407,8 +407,10 @@ function articles_user_search($args)
                     if (!empty($pubtypes[$curptid]['config']['pubdate']['label'])
                         && !empty($article['pubdate'])) {
                         $date = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article['pubdate']);
+                        $pubdate = $article['pubdate'];
                     } else {
                         $date = '';
+                        $pubdate = 0;
                     }
                     if (empty($article['title'])) {
                         $article['title'] = xarML('(none)');
@@ -446,6 +448,7 @@ function articles_user_search($args)
                     $items[] = array('title' => xarVarPrepHTMLDisplay($article['title']),
                                      'link' => $link,
                                      'date' => $date,
+                                     'pubdate' => $pubdate,
                                      'categories' => $categories);
                 }
                 unset($articles);

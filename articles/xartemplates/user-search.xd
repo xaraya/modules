@@ -114,7 +114,7 @@
                     #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
                 </xar:foreach> ]
             </xar:if>
-            <a href="#$item['link']#">#$item['title']#</a> #$item['date']#
+            <a href="#$item['link']#">#$item['title']#</a> <xar:if condition="!empty($item['pubdate'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['pubdate'])#</xar:if>
         </li>
     </xar:foreach>
     </ul>

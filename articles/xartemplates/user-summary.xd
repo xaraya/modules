@@ -15,12 +15,12 @@
     <xar:if condition="isset($author)">
     <p>#$author#</p>
     </xar:if>
-    <xar:if condition="isset($date)">
+    <xar:if condition="isset($pubdate)">
     <p>
         <xar:ml>
             <xar:mlstring>#(1) #(2)</xar:mlstring>
-            <xar:mlvar>#xarLocaleGetFormattedDate('long',$date)#</xar:mlvar>
-            <xar:mlvar>#xarLocaleGetFormattedTime('long',$date)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long',$pubdate)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('long',$pubdate)#</xar:mlvar>
         </xar:ml>
     </p>
     </xar:if>

@@ -25,7 +25,7 @@
                 #$author_string#
             </xar:mlvar>
             <xar:mlvar>
-                #$date#
+                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $pubdate)#
             </xar:mlvar>
         </xar:ml>
         <xar:if condition="!empty($counter)">
