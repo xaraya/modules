@@ -49,11 +49,19 @@ function sitetools_adminapi_backupdb ($args)
     $backtickchar   = '';
     $quotechar      = '\'';
     $buffer_size    = 32768;
+	$usedbprefix = xarModGetVar('sitetools','usedbprefix');
     $items['number_of_cols'] = xarModGetVar('sitetools','colnumber');
     $number_of_cols=$items['number_of_cols'];
     $lineterminator = xarModGetVar('sitetools','lineterm'); // not in use  --hard coded with \n for now
     $backupabsolutepath= xarModGetVar('sitetools','backuppath').'/';
     $items['warning']=0;
+    
+    //Let's make dbname as a prefix configurable
+    if ($usedbprefix==1) {
+        $thedbprefix=$dbname.'.';
+    } else {
+        $thedbprefix='';
+    }
 
     if (xarModGetVar('sitetools','timestamp') ==1) {
         $items['backuptimestamp'] = '.'.date('Y-m-d');
@@ -71,7 +79,7 @@ function sitetools_adminapi_backupdb ($args)
     }
     $items['authid']     = xarSecGenAuthKey();
     $backuptimestamp    = $items['backuptimestamp'];
-    $fullbackupfilename = $dbname.'.xar_backup'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
+    $fullbackupfilename = $dbname.'xar_backup'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
     $partbackupfilename = $dbname.'.xar_backup_partial'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
     $strubackupfilename = $dbname.'.xar_backup_structure'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
     $tempbackupfilename = $dbname.'.xar_backup.temp.sql'.($GZ_enabled ? '.gz' : '');
@@ -269,7 +277,7 @@ function sitetools_adminapi_backupdb ($args)
 		    	    $structureline .= ' ('.implode(',', $keyfieldnames).')';
 			        $structurelines[] = $structureline;
     		    }
-   	    	    $tablestructure  = "CREATE TABLE ".$dbname.".".$SelectedTables["$dbname"]["$t"]." (\n";
+   	    	    $tablestructure  = "CREATE TABLE ".$thedbprefix.$SelectedTables["$dbname"]["$t"]." (\n";
                 $tablestructure .= "  ".implode(",\n  ", $structurelines)."\n";
 		        $tablestructure .= ");\n\n";
     		    $alltablesstructure .= str_replace(' ,', ',', $tablestructure);

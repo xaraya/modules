@@ -24,10 +24,11 @@ function sitetools_admin_updateconfig()
     if (!xarVarFetch('rsspath', 'str:4:128', $rsspath, '')) return;
     if (!xarVarFetch('templpath', 'str:4:128', $templpath,'')) return;
     if (!xarVarFetch('backuppath', 'str:4:128', $backuppath,'')) return;
-    if (!xarVarFetch('defaultbktype', 'str:4', $defaultbktype,'')) return;    
+    if (!xarVarFetch('defaultbktype', 'str:4', $defaultbktype,'')) return;
     if (!xarVarFetch('lineterm', 'str:2:4', $lineterm,'')) return;
-    if (!xarVarFetch('usetimestamp', 'int:1:', $usetimestamp,'')) return;
-    if (!xarVarFetch('colnumber', 'int:1:', $colnumber,'')) return;
+    if (!xarVarFetch('usetimestamp', 'int:1:', $usetimestamp, true)) return;
+    if (!xarVarFetch('usedbprefix', 'int:1:', $usedbprefix, false)) return;
+    if (!xarVarFetch('colnumber', 'int:1:', $colnumber,3)) return;
     if (!xarVarFetch('confirm', 'str:4:128', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
@@ -40,7 +41,8 @@ function sitetools_admin_updateconfig()
     xarModSetVar('sitetools','backuppath', $backuppath);
 //    xarModSetVar('sitetools','lineterm', $lineterm);
     xarModSetVar('sitetools','timestamp', $usetimestamp);
-    xarModSetVar('sitetools','colnumber',$colnumber);  
+    xarModSetVar('sitetools','usedbprefix', $usedbprefix);    
+    xarModSetVar('sitetools','colnumber',$colnumber);
     xarModSetVar('sitetools','defaultbktype',$defaultbktype);
 
     if (xarModIsAvailable('scheduler')) {

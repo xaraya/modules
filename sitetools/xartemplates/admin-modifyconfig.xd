@@ -4,6 +4,8 @@
 <xar:set name="templcachel"><xar:mlstring>Template Cache Path:</xar:mlstring></xar:set>
 <xar:set name="backuppathl"><xar:mlstring>Backup Path:<br />Must be writeable chmod 777</xar:mlstring></xar:set>
 <xar:set name="timestampl"><xar:mlstring>Use timestamp in backup filename:</xar:mlstring></xar:set>
+<xar:set name="dbprefixl"><xar:mlstring>Use database prefix in backup table create sql:</xar:mlstring></xar:set>
+
 <xar:set name="lineopl"><xar:mlstring>Line termination type:</xar:mlstring></xar:set>
 <xar:set name="cacheoptions"><xar:mlstring>Cache Options</xar:mlstring></xar:set>
 <xar:set name="backupoptions"><xar:mlstring>Backup Options</xar:mlstring></xar:set>
@@ -16,6 +18,7 @@
 <xar:set name="deftem"><xar:mlstring>Default Template Cache path is </xar:mlstring></xar:set>
 <xar:set name="bkup"><xar:mlstring>Relative path from your root document directory to the backup directory on your server, where backup files will be created. It must be writeable chmod 777. No trailing slash.</xar:mlstring></xar:set>
 <xar:set name="tshelp"><xar:mlstring>If checked a time stamp will be added to the backup file name.</xar:mlstring></xar:set>
+<xar:set name="dbprefixhelp"><xar:mlstring>If checked the database name will prefix all table names in the backup file sql table create statements.</xar:mlstring></xar:set>
 <xar:set name="lineoption1"><xar:mlstring>*nix (default)</xar:mlstring></xar:set>
 <xar:set name="lineoption2"><xar:mlstring>Windows</xar:mlstring></xar:set>
 <xar:set name="lineoption3"><xar:mlstring>Macintosh</xar:mlstring></xar:set>
@@ -93,7 +96,7 @@
     <div style="clear: both; width: 98%; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$tshelp#">
-            <label for="backuppath">#$timestampl#</label>
+            <label for="timestampl">#$timestampl#</label>
         </span>
 		</span>
 		<span style="float: right; width: 68%; text-align: left;">
@@ -104,6 +107,21 @@
             </xar:if>
         </span>
     </div>
+    <div style="clear: both; width: 98%; padding-top: 5px;">
+		<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#$dbprefixhelp#">
+            <label for="usedbprefix">#$dbprefixl#</label>
+        </span>
+		</span>
+		<span style="float: right; width: 68%; text-align: left;">
+            <xar:if condition="$usedbprefix eq 1">
+                <input type="checkbox" name="usedbprefix" id="usedbprefix" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="usedbprefix" id="usedbprefix" value="1" />
+            </xar:if>
+        </span>
+    </div>
+
    <div style="clear: both; width: 98%; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$colnumhelp#">
