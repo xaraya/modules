@@ -13,6 +13,8 @@ $cachingConfiguration['Page.TimeExpiration'] = 1800;
 $cachingConfiguration['Page.DisplayView'] = 0;
 // Should we show when the cached page was created or not
 $cachingConfiguration['Page.ShowTime'] = 1;
+// Allow page caching for the following user groups (besides anonymous)
+$cachingConfiguration['Page.CacheGroups'] = '';
 // Maximum life time of block cache in seconds
 $cachingConfiguration['Block.TimeExpiration'] = 7200;
 ?>
