@@ -34,10 +34,13 @@ function bkview_user_deltaview($args)
         // want it in the class
         $delta->repoid = $repoid;
         $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->_file)) . "']";
+        $type = $arrayindex . "['type']";
+        eval("$type = 'file';");
+        $arrayindex .= "['".$delta->_rev."']";
         // mwuhahaha
         eval("$arrayindex = \$delta;");
     }
-
+    //xarLogMessage('deltatree :' . print_r($deltatree,true),XARLOG_LEVEL_WARNING);
     $data['deltatree'] =  array('deltatree' => $deltatree);
     $hooks='';
     // We have to construct an artificial $hookId because we don't use the database

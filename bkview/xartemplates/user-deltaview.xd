@@ -29,6 +29,9 @@ div.csetsummary {
 </div>
 
 <!-- Let's try something daring, recursive templating -->
+<div class="xar-mod-title" style="margin-top: 1em;">
+    <xar:mlstring>Modified files and included deltas by this changeset</xar:mlstring>
+</div>
 <div style="margin-left: 1em;">
   <xar:template file="deltatree" subdata="$deltatree"/>
 </div>

@@ -65,7 +65,7 @@ class bkRepo
         // We need to do this here, because this class changes the cwd secretly and we dont 
         // know what kind of effect this has on the environment
         if(function_exists('xarLogMessage')) {
-            xarLogMessage("BK: $cmd", XARLOG_LEVEL_WARNING);
+            xarLogMessage("BK: $cmd", XARLOG_LEVEL_DEBUG);
         }
         return $out;
     }
