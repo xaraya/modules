@@ -11,43 +11,43 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <em><xar:mlstring>XML-RPC is a Xaraya Utility Module.</xar:mlstring></em>
-			<p>
-			  <xar:mlstring>The XML-RPC server module is responsible for exposing certain procedure calls using XML as
-			  the transport format. Each command is send as an http request in a specified format. The XML-RPC
-			  server answers to that call with a properly formatted XML-RPC response.</xar:mlstring>
-			</p>
-			<p>
-			  <xar:mlstring>The XML-RPC server can be extended by defining API modules to extend the functionality offered
-			  by Xaraya over XML-RPC. The XML-RPC standard is defined at</xar:mlstring>: <a href="http://www.xmlrpc.org">http://www.xmlrpc.org</a>
-			</p>
-			<p>
-			  <xar:mlstring>An XML-RPC enabled service can be used to</xar:mlstring>:
-			  <ul>
-				<li><xar:mlstring>use Xaraya remotely</xar:mlstring></li>
-				<li><xar:mlstring>let Xaraya interoperate with other applications or other Xaraya installations</xar:mlstring></li>
-				<li><xar:mlstring>use desktop clients to manage or work with Xaraya</xar:mlstring></li>
-			  </ul>
-			</p>
+            <p>
+              <xar:mlstring>The XML-RPC server module is responsible for exposing certain procedure calls using XML as
+              the transport format. Each command is send as an http request in a specified format. The XML-RPC
+              server answers to that call with a properly formatted XML-RPC response.</xar:mlstring>
+            </p>
+            <p>
+              <xar:mlstring>The XML-RPC server can be extended by defining API modules to extend the functionality offered
+              by Xaraya over XML-RPC. The XML-RPC standard is defined at</xar:mlstring>: <a href="http://www.xmlrpc.org">http://www.xmlrpc.org</a>
+            </p>
+            <p>
+              <xar:mlstring>An XML-RPC enabled service can be used to</xar:mlstring>:
+              <ul>
+                <li><xar:mlstring>use Xaraya remotely</xar:mlstring></li>
+                <li><xar:mlstring>let Xaraya interoperate with other applications or other Xaraya installations</xar:mlstring></li>
+                <li><xar:mlstring>use desktop clients to manage or work with Xaraya</xar:mlstring></li>
+              </ul>
+            </p>
 
-			<p>
-			  <xar:mlstring>The XML-RPC server can be configured to serve multiple APIs The currently supported APIs are</xar:mlstring>:
-			  <ol>
-				<li>
-				  <a href="http://plant.blogger.com/api/index.html">blogger API</a> : <xar:mlstring>use Xaraya as a Blogging site installation. 
-				  (Note: the blogger.setTemplate and blogger.getTemplate functions are currently not implemented)</xar:mlstring>
-				</li>
-				<li><a href="http://validator.xmlrpc.com">validation API</a> : <xar:mlstring>used to validate XML-RPC conformance</xar:mlstring></li>
-				<li><a href="http://scripts.incutio.com/xmlrpc/introspection.html">Introspection API</a> : <xar:mlstring>Get information about the XML-RPC server and its methods</xar:mlstring></li>
-			  </ol>
-			  </ul>
-			</p>
+            <p>
+              <xar:mlstring>The XML-RPC server can be configured to serve multiple APIs The currently supported APIs are</xar:mlstring>:
+              <ol>
+                <li>
+                  <a href="http://plant.blogger.com/api/index.html">blogger API</a> : <xar:mlstring>use Xaraya as a Blogging site installation. 
+                  (Note: the blogger.setTemplate and blogger.getTemplate functions are currently not implemented)</xar:mlstring>
+                </li>
+                <li><a href="http://validator.xmlrpc.com">validation API</a> : <xar:mlstring>used to validate XML-RPC conformance</xar:mlstring></li>
+                <li><a href="http://scripts.incutio.com/xmlrpc/introspection.html">Introspection API</a> : <xar:mlstring>Get information about the XML-RPC server and its methods</xar:mlstring></li>
+              </ol>
+              </ul>
+            </p>
 
-			<p>
-			  <xar:mlstring>Support is planned for</xar:mlstring>:
-			  <ol>
-				<li>metaWeblog API</li>
-				<li>The Xaraya API over XML-RPC</li>
-			  </ol>
+            <p>
+              <xar:mlstring>Support is planned for</xar:mlstring>:
+              <ol>
+                <li>metaWeblog API</li>
+                <li>The Xaraya API over XML-RPC</li>
+              </ol>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
