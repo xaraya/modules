@@ -104,7 +104,7 @@
 		  	            <td colspan="2"><br /><xar:mlstring>All path names are relative to the directory where Xaraya is installed.</xar:mlstring><br /><br />
 		  	            </td>
 		  	        </tr>
-<!---					<tr align="left" valign="middle">
+<xar:comment>					<tr align="left" valign="middle">
 						<td width="30%"><br />
 							<xar:mlstring>Default Theme Path</xar:mlstring>:
 						</td>
@@ -120,7 +120,7 @@
 						<input type="text" name="varpath" id="varpath" size="20" maxlength="30" value="#xarModGetVar('multisites', 'varpath')#" />
 						(/Don't want this changed!)</td>
 					</tr>
---->
+</xar:comment>
 					<tr align="left" valign="middle">
 						<td width="30%">
 							<xar:mlstring>Default Master Data Directory Path</xar:mlstring>:

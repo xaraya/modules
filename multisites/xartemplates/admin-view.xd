@@ -1,4 +1,4 @@
-<!--- $Id --->
+<xar:comment> $Id </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View All Sites</xar:mlstring></h2><br />
 <div style="margin: auto;">

@@ -70,7 +70,7 @@
 						</td>
 					</tr>
 
-<!--- TO DO: Additional options to be added later
+<xar:comment> TO DO: Additional options to be added later
 
 					<tr align="left" valign="middle">
 						<td>
@@ -90,7 +90,7 @@
 						<td><xar:mlstring>Pending is the default state.</xar:mlstring>
 						</td>
 					</tr>
---->
+</xar:comment>
 	                <tr align="left" valign="middle">
 				        <td>
                             <xar:mlstring>Create Database</xar:mlstring>?
