@@ -64,9 +64,6 @@ function html_userapi_transforminput($args)
  */
 function html_userapitransforminput($text)
 {
-    static $alsearch = array();
-    static $alreplace = array();
-
     $validxhtml     = xarModGetVar('html', 'validxhtml');
     $addparagraphs  = xarModGetVar('html', 'addparagraphs');
 
@@ -74,10 +71,10 @@ function html_userapitransforminput($text)
     // Credit to Rabbitt for fixing
     // hexey's (http://www.evilwalrus.com/viewcode.php?codeEx=482)
     // stuff that didn't work - THIS WAS A PITA !!!
-    $search  = array ("'(<\/?)(br|img|hr)([^>]*)( />)'ie",
-                      "'(<\/?)(br|img|hr)([^>]*)(/>)'ie",
+    $search  = array ("'(<\/?)(br|hr)([^>]*)( />)'ie",
+                      "'(<\/?)(br|hr)([^>]*)(/>)'ie",
                       "'(\w+=)\"([A-Za-z0-9%:;_ -]+)\"'ie",
-                      "'(<\/?)(br|img|hr)([^>]*)(>)'ie",
+                      "'(<\/?)(br|hr)([^>]*)(>)'ie",
                       "'(\w+=)(\w+)'ie",
                       "'(\w+=)([|])([A-Za-z0-9%:;_ -]+)([|])'ie"
                      );

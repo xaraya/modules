@@ -64,9 +64,6 @@ function html_userapi_transformoutput($args)
  */
 function html_userapitransformoutput($text)
 {
-    static $alsearch = array();
-    static $alreplace = array();
-
     //$text = nl2br($text);
     // Credit to myphpnuke team and the text sanitizer.
 	$text    = preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text); 
