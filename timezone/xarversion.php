@@ -14,8 +14,8 @@ $modversion['author']         = 'Roger Raymond';
 $modversion['contact']        = 'http://xaraya.simiansynapse.com/';
 $modversion['admin']          = 0;
 $modversion['user']           = 0;
-$modversion['class']          = 'Complete';
-$modversion['category']       = 'Content';
+$modversion['class']          = 'Utility';
+$modversion['category']       = 'Miscellaneous';
 $modversion['dependency']     = array(8); // we need the icalendar module installed
 $modversion['securityschema'] = array();
 

@@ -3,77 +3,105 @@
 
 function timezone_user_main()
 {
-// some timing for now to see how fast|slow the parser is
-include_once('Benchmark/Timer.php');
-//$t =& new Benchmark_Timer;
-//$t->start();
-    $ical =& xarModAPIFunc('icalendar','user','factory','ical_parser');
-//$t->setMarker('Class Instantiated');    
     xarVarFetch('tz','str::',$tz);
-//$t->setMarker('File Var Fetched');    
-    //$ical->setFile('modules/timezone/zoneinfo/America/Phoenix.ics');
+    $bldata =& timezone_getCurrentTime($tz);
+    return $bldata;
+}
+
+function &timezone_getCurrentTime(&$tz)
+{
+    $ical =& xarModAPIFunc('icalendar','user','factory','ical_parser');
     $ical->setFile("modules/timezone/zoneinfo/$tz.ics");
-//$t->setMarker('File Set');
     $ical->parse();
-//$t->setMarker('Parsing Complete');
-
-//$t->stop(); 
     
-    ob_start();
-        print_r($ical);
-        $ical_out = ob_get_contents();
-    ob_end_clean();
+    if(!isset($ical->vcalendar[0]['vtimezone'][0]['standard'])) {
+        // this should at least exist
+        return false;
+    }
     
-
+    // grab the standard times and sort them
+    $standard =& $ical->vcalendar[0]['vtimezone'][0]['standard'];
+    //usort($standard,'dtstart_asort');
     
-    /*
-        In order to do this correctly we need to do a couple of things
-        Calculate the UTC standard time for the current TZ
-        Calculate the UTC daylight time for the current TZ
-        Determine which RRULE the date falls into
-        return the correct time.
+    // check for the existence of daylight saving time and sort
+    if(isset($ical->vcalendar[0]['vtimezone'][0]['daylight'])) {
+        // this timezone has daylight saving time
+        $daylight =& $ical->vcalendar[0]['vtimezone'][0]['daylight'];
+        //usort($daylight,'dtstart_asort');
+    } else {
+        // this timezone does not have daylight saving time
+        $daylight = false;
+    }
     
-    */
-    $st_offset =& $ical->vcalendar[0]['vtimezone'][0]['standard'][0]['TZOFFSETTO'];
-    $dt_offset =& $ical->vcalendar[0]['vtimezone'][0]['daylight'][0]['TZOFFSETTO'];
-    $st_name =& $ical->vcalendar[0]['vtimezone'][0]['standard'][0]['TZNAME'];
-    $dt_name =& $ical->vcalendar[0]['vtimezone'][0]['daylight'][0]['TZNAME'];
+    // initialize some counter and place holders
+    $spos = 0; 
+    $scount = 0;
     
-    preg_match('/([-+])? #optional -+ signs
-                ([\d]{2}) # first 0-9
-                ([\d]{2}) # second 0-9
-                /x', $st_offset, $st_matches);
+    // loop through each standard time definition
+    // see which one, if any, applies to us
+    foreach($standard as $s){
+        // remove the T and Z elements to aide in mathmatical comparisons
+        $dtstart = str_replace(array('T','Z'),'',$s['DTSTART']);
+        if(currentUTC() >= $dtstart) {
+            // ok, we have a definition to check
+            if(isset($s['RDATE'])) {
+                // this is rather simple to check
+                // first check to see if any of the dates match
+                foreach($s['RDATE'] as $d) {
+                    // grab the CCYYMMDD portion of the date string
+                    $tmp_date = (int) substr($d,0,8);
+                    if((int)currentUTCDate() < $tmp_date) {
+                        // no need to go any further with this RDATE
+                        continue;
+                    } else {
+                        // we found a date match so we need to check the time
+                        $tmp_time = (int) substr($d,9,6);
+                        if((int)currentUTCTime() < $tmp_time) {
+                            // this time has not yet come
+                            continue;
+                        } else {
+                            // we should mark this as a possible setting
+                            $spos = $scount;
+                        }
+                    }
+                }
+            } elseif(isset($s['RRULE'])) {
+                // this takes a bit more time
+            }
+        }
+        $scount++;
+    }
     
-    preg_match('/([-+])? #optional -+ signs
-                ([\d]{2}) # first 0-9
-                ([\d]{2}) # second 0-9
-                /x', $dt_offset, $dt_matches);
+    echo $spos;
+    
+    if($daylight) {
+        $dpos = 0; $dcount = 0;
+        foreach($daylight as $d){
+            // remove the T and Z elements
+            $dtstart = str_replace(array('T','Z'),'',$d['DTSTART']);
+            if(currentUTC() >= $dtstart) {
+                $dpos = $dcount;
+            }
+            $dcount++;
+        }
+    }   
+    mydump($ical);
+    //mydump("spos: $spos"); 
+    //mydump("dpos: $dpos");
+    
+    $st_offset =& $standard[0]['TZOFFSETTO'];
+    $dt_offset =& $daylight[0]['TZOFFSETTO'];
+    $st_name =& $standard[0]['TZNAME'];
+    $dt_name =& $daylight[0]['TZNAME'];
     
     $utc = time();
-    $st_h =& $st_matches[2];
-    $st_m =& $st_matches[3]/60;
-    $dt_h =& $dt_matches[2];
-    $dt_m =& $dt_matches[3]/60;
+    $st = xarModAPIFunc('timezone','user','parseOffset',$st_offset);
+    $dt = xarModAPIFunc('timezone','user','parseOffset',$dt_offset);
     
-    switch($st_matches[1]) {
-        case '-':
-            $st_utc = $utc - (int)($st_h+$st_m)*3600;
-            break;
-        default:
-            $st_utc = $utc + (int)($st_h+$st_m)*3600;
-            break;
-    }
-    switch($dt_matches[1]) {
-        case '-':
-            $dt_utc = $utc - (int)($dt_h+$dt_m)*3600;
-            break;
-        default:
-            $dt_utc = $utc + (int)($dt_h+$dt_m)*3600;
-            break;
-    }
+    $st_utc = $utc + $st['total'];
+    $dt_utc = $utc + $dt['total'];
     
     $bl_data = array(
-        'ical'=>$ical_out,
         'st_offset'=>$st_offset,
         'dt_offset'=>$dt_offset,
         'st_name'=>$st_name,
@@ -81,12 +109,67 @@ include_once('Benchmark/Timer.php');
         'st_utc'=>$st_utc,
         'dt_utc'=>$dt_utc,
         'utc'=>$utc
-  //      'profile'=>$t->getOutput()
     );
     
     return $bl_data;
-    
-    
+}
+
+function __dtstart_rsort($a,$b)
+{
+    $a['DTSTART'] = (int) str_replace(array('T','Z'),'',$a['DTSTART']);
+    $b['DTSTART'] = (int) str_replace(array('T','Z'),'',$b['DTSTART']);
+    if($a['DTSTART'] == $b['DTSTART']) {
+        return 0;
+    } elseif($a['DTSTART'] < $b['DTSTART']) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+function __dtstart_asort($a,$b)
+{
+    $a['DTSTART'] = (int) str_replace(array('T','Z'),'',$a['DTSTART']);
+    $b['DTSTART'] = (int) str_replace(array('T','Z'),'',$b['DTSTART']);
+    if($a['DTSTART'] == $b['DTSTART']) {
+        return 0;
+    } elseif($a['DTSTART'] < $b['DTSTART']) {
+        return -1;
+    } else {
+        return 1;
+    }
+}
+/**
+ *  returns the current utc datetime in ical format 
+ */
+function currentUTC()
+{
+    return xarLocaleFormatUTCDate('%Y%m%d%H%M%S',time());
+}
+/**
+ *  returns the current utc date in ical format 
+ */
+function currentUTCDate()
+{
+    return xarLocaleFormatUTCDate('%Y%m%d',time());
+}
+/**
+ *  returns the current utc time in ical format 
+ */
+function currentUTCTime()
+{
+    return xarLocaleFormatUTCDate('%H%M%S',time());
+}
+
+function mydump($var) 
+{
+    if(is_array($var)) {
+        echo '<pre>'; print_r($var); echo '</pre>';
+    } elseif(is_object($var)) {
+        echo '<pre>'; print_r($var); echo '</pre>';
+    } else {
+        echo '<pre>'; echo $var; echo '</pre>';
+    }
+    echo "\n\n";
 }
 
 ?>
