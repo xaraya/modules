@@ -11,6 +11,6 @@ $cachingConfiguration['Page.DefaultTheme'] = 'Xaraya_Classic';
 $cachingConfiguration['Page.DisplayView'] = 0;
 // Should we show when the cached page was created or not
 $cachingConfiguration['Page.ShowTime'] = 1;
-// Size in MB to limit the output cache to
-$cachingConfiguration['Output.SizeLimit'] = 2;
+// Size in bytes to limit the output cache to
+$cachingConfiguration['Output.SizeLimit'] = 2097152;
 ?>

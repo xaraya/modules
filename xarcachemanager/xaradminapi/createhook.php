@@ -76,7 +76,7 @@ function xarcachemanager_adminapi_createhook($args)
             if ($extrainfo['status'] == 0) {
                 break;
             }
-            $cacheKey = "articles-user-";
+            $cacheKey = "articles-";
             xarPageFlushCached($cacheKey);
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified

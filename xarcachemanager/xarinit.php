@@ -23,8 +23,7 @@ function xarcachemanager_init()
     xarDBLoadTableMaintenanceAPI();
 
     // set up the output cache directory
-    $systemVarDir = xarCoreGetVarDirPath();
-    $varCacheDir = $systemVarDir . '/cache';
+    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
 
     if (is_writable($varCacheDir) || is_dir($varCacheDir.'/output')) {
         if (!is_dir($varCacheDir.'/output')) {
@@ -71,22 +70,22 @@ function xarcachemanager_init()
     }
 
     // set up the config file.
-    $defaultconfigfile = 'modules/xarcachemanager/config.caching.php.dist';
-    $cachingconfigfile = $varCacheDir .'/config.caching.php';
-    if (!file_exists($defaultconfigfile)) {
+    $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
+    $cachingConfigFile = $varCacheDir .'/config.caching.php';
+    if (!file_exists($defaultConfigFile)) {
         $msg=xarML('That is strange.  The default, distributed configuration 
-                   file, normally ' . $defaultconfigfile . ', seems to be 
+                   file, normally ' . $defaultConfigFile . ', seems to be 
                    missing.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
                         new SystemException($msg));
         
         return false;
     }
-    if (is_writable($varCacheDir) || is_writable($cachingconfigfile)) {
-        $handle = fopen($defaultconfigfile, "rb");
-        $defaultconfig = fread ($handle, filesize ($defaultconfigfile));
-        $fp = @fopen($cachingconfigfile,"wb");
-        fwrite($fp, $defaultconfig);
+    if (is_writable($varCacheDir) || is_writable($cachingConfigFile)) {
+        $handle = fopen($defaultConfigFile, "rb");
+        $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
+        $fp = @fopen($cachingConfigFile,"wb");
+        fwrite($fp, $defaultConfig);
         fclose($fp);
     } else {
         // tell them that cache needs to be writable or manually create config file
@@ -180,6 +179,14 @@ function xarcachemanager_upgrade($oldversion)
         case 0.1:
             // Code to upgrade from the 0.1 version (base page level caching)
             // todo: do conversion of MB to bytes in config file
+            $cachingConfigFile = xarCoreGetVarDirPath() . '/cache/config.caching.php';
+            include($cachingConfigFile);
+            $cachesizelimit = $cachingConfiguration['Output.SizeLimit'] * 1048576;
+            $cachingConfig = join('', file($cachingConfigFile));
+            $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
+            $fp = fopen ($cachingConfigFile, 'wb');
+            fwrite ($fp, $cachingConfig);
+            fclose ($fp);
             break;
         case 0.2:
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
@@ -214,8 +221,7 @@ function xarcachemanager_delete()
     xarDBLoadTableMaintenanceAPI();
     
     //if still there, remove the cache.touch file, this turns everything off
-    $systemVarDir = xarCoreGetVarDirPath();
-    $varCacheDir = $systemVarDir . '/cache';
+    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
     if (file_exists($varCacheDir . '/output') && is_dir($varCacheDir . '/output')) {
         if (file_exists($varCacheDir . '/output/cache.touch')) {
             @unlink($varCacheDir . '/output/cache.touch');

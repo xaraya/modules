@@ -16,31 +16,27 @@ function xarcachemanager_admin_modifyconfig()
     if (!xarSecurityCheck('AdminXarCache')) return;
 
     $data = array();
+
+    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
     
-    $systemVarDir = xarCoreGetVarDirPath();
-    
-    if (file_exists($systemVarDir . '/cache/output/cache.touch')) {
+    if (file_exists($varCacheDir . '/output/cache.touch')) {
         $data['CachingEnabled'] = 1;
     } else {
         $data['CachingEnabled'] = 0;
     }
 
-    $configFile = $systemVarDir . '/cache/config.caching.php';
-    if (!file_exists($configFile)) {
-        // if the file doesn't exist, we could recreate it
-        /*$defaultconfigfile = 'modules/xarcachemanager/config.caching.php.dist';
-        $handle = fopen($defaultconfigfile, "r");
-        $defaultconfig = fread ($handle, filesize ($defaultconfigfile));
-        $fp = @fopen($configFile,"w");
-        fwrite($fp,$defaultconfig);
-        fclose($fp);
-        echo 'WARNING: var/cache/config.caching.php file was missing. New config file was created';*/
-        // but I figure it is better to let the admin know something that should not have
-        // been messed up, is.
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'MODULE_FILE_NOT_EXIST', $configFile);
-        return;
+    $cachingConfigFile = $varCacheDir . '/config.caching.php';
+
+    if (!file_exists($cachingConfigFile)) {
+        $msg=xarML('That is strange.  The ' . $cachingConfigFile . ', seems to be 
+                    missing.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
+                        new SystemException($msg));
+            
+        return false;
     }
-    include $configFile;
+
+    include $cachingConfigFile;
 
     $keyslist = str_replace( '.', '', array_keys($cachingConfiguration));
     $valueslist = array_values($cachingConfiguration);
@@ -58,11 +54,12 @@ function xarcachemanager_admin_modifyconfig()
         $data['settings']['PageViewTime'] = 0;
     }
     if(!isset($data['settings']['OutputSizeLimit'])) {
-        $data['settings']['OutputSizeLimit'] = 0.2;
+        $data['settings']['OutputSizeLimit'] = 262144;
     }
-    
+
+    $data['settings']['OutputSizeLimit'] /= 1048576;
+
     // reformat seconds as hh:mm:ss
-    //$data['settings']['PageMinuteExpiration'] = $data['settings']['PageTimeExpiration']/60;
     $data['settings']['PageTimeExpiration'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                              array('starttime' => $data['settings']['PageTimeExpiration'],
                                                                    'direction' => 'from'));

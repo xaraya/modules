@@ -21,7 +21,7 @@ function xarcachemanager_admin_flushcache($args)
     if (!xarVarFetch('flushkey', 'str', $flushkey, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
     
-    $outputcachedir = xarCoreGetVarDirPath() . '/cache/output/';
+    $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
 
     if (empty($confirm)) {
 
@@ -30,7 +30,7 @@ function xarcachemanager_admin_flushcache($args)
         $data['message']    = false;
         $data['cachekeys'] = array();
 
-        $handle = opendir($outputcachedir);
+        $handle = opendir($outputCacheDir);
         while ($file = readdir($handle)) {
             if ($file[0] != '.' && (strstr($file, '.php') !== false)) {
                 $ckey = substr($file, 0, (strrpos($file, '-')));
@@ -60,9 +60,9 @@ function xarcachemanager_admin_flushcache($args)
         if (!xarSecConfirmAuthKey()) return;
         
         //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
-        if (!file_exists($outputcachedir . 'cache.touch')) {
+        if (!file_exists($outputCacheDir . 'cache.touch')) {
             include_once('includes/xarCache.php');
-            xarCache_init(array('cacheDir' => $outputcachedir));
+            xarCache_init(array('cacheDir' => $outputCacheDir));
         }
 
         //Make sure their is an authkey selected

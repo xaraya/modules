@@ -27,22 +27,23 @@ function xarcachemanager_admin_updateconfig()
     // Security Check
     if (!xarSecurityCheck('AdminXarCache')) return;
 
-    // todo: do this this standard way, check the variable cache
-    $systemVar = xarCoreGetVarDirPath();
+    // set the cache dir
+    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
 
     // turn caching on or off
     if(!empty($cacheenabled)) {
-        if(!file_exists($systemVar . '/cache/output/cache.touch')) {
-            touch($systemVar . '/cache/output/cache.touch');
+        if(!file_exists($varCacheDir . '/output/cache.touch')) {
+            touch($varCacheDir . '/output/cache.touch');
         }
     } else {
-        if(file_exists($systemVar . '/cache/output/cache.touch')) {
-            unlink($systemVar . '/cache/output/cache.touch');
+        if(file_exists($varCacheDir . '/output/cache.touch')) {
+            unlink($varCacheDir . '/output/cache.touch');
         }
     }
+
+    $cachesizelimit *= 1048576;
     
     //turn hh:mm:ss back into seconds
-    //$expiretime = $expiretime * 60;
     $expiretime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                              array('starttime' => $expiretime,
                                                                    'direction' => 'to'));
@@ -58,11 +59,21 @@ function xarcachemanager_admin_updateconfig()
         $cachetimestamp = 0;
     }
     if(empty($cachesizelimit)) {
-        $cachesizelimit = 0.2;
+        $cachesizelimit = 262144;
     }
     
     // updated the config.caching settings
-    $cachingConfigFile = $systemVar . '/cache/config.caching.php';
+    $cachingConfigFile = $varCacheDir . '/config.caching.php';
+    
+    if (!is_writable($cachingConfigFile)) {
+        $msg=xarML('The caching configuration file is not writable by the web server.
+                    '. $cachingConfigFile .' must be writable by the web server for 
+                   the output caching to be managed by xarCacheManager.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                        new SystemException($msg));
+        return false;
+    }
+
     $cachingConfig = join('', file($cachingConfigFile));
 
     $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $expiretime;", $cachingConfig);
