@@ -12,15 +12,27 @@ function articles_admin_view()
     if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
 
+    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+
     // Default parameters
-    if ($ptid === NULL) {
-/*
-        $ptid = null;
-*/
+    if (!isset($ptid)) {
         if (!empty($itemtype) && is_numeric($itemtype)) {
+            // when we use some categories filter
             $ptid = $itemtype;
         } else {
-            $ptid = xarModGetVar('articles','defaultpubtype');
+            // we default to this for convenience
+            $default = xarModGetVar('articles','defaultpubtype');
+            if (!empty($default) && !xarSecurityCheck('EditArticles',0,'Article',"$default:All:All:All")) {
+                // try to find some alternate starting pubtype if necessary
+                foreach ($pubtypes as $id => $pubtype) {
+                    if (xarSecurityCheck('EditArticles',0,'Article',"$id:All:All:All")) {
+                        $ptid = $id;
+                        break;
+                    }
+                }
+            } else {
+                $ptid = $default;
+            }
         }
     }
     if (empty($ptid)) {
@@ -46,45 +58,26 @@ function articles_admin_view()
     }
     $data['catid'] = $catid;
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
-
-/* forget about trying to check parent/child category access for now - let individual article checks handle it
-    if (count($cids) > 0) {
-// TODO: do we want all-or-nothing access here, or is one access enough ?
-        foreach ($cids as $cid) {
-            if (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:$cid:All:All")) {
-                $catinfo = xarModAPIFunc('categories', 'user', 'getcatinfo',
-                                         array('cid' => $cid));
-                if (empty($catinfo['name'])) {
-                    $catinfo['name'] = $cid;
-                }
-                $msg = xarML('You have no permission to edit #(1) in category #(2)',
-                             $pubtypes[$ptid]['descr'],$catinfo['name']);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                                new SystemException($msg));
-                return;
-            }
-        }
-    } else {
-*/
-        if (empty($ptid)) {
-            if (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:All:All:All")) {
-                $msg = xarML('You have no permission to edit #(1)',
-                             'Articles');
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                                new SystemException($msg));
-                return;
-            }
-        } elseif (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:All:All:All")) {
+    if (empty($ptid)) {
+        if (!xarSecurityCheck('EditArticles',0,'Article',"All:All:All:All")) {
             $msg = xarML('You have no permission to edit #(1)',
-                         $pubtypes[$ptid]['descr']);
+                         'Articles');
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                             new SystemException($msg));
             return;
         }
-/*
+    } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
+        $msg = xarML('Invalid publication type');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        new SystemException($msg));
+        return;
+    } elseif (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:All:All:All")) {
+        $msg = xarML('You have no permission to edit #(1)',
+                     $pubtypes[$ptid]['descr']);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                        new SystemException($msg));
+        return;
     }
-*/
 
     if (!empty($ptid)) {
         $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
@@ -235,16 +228,6 @@ function articles_admin_view()
 
     // Create filters based on publication type
     $pubfilters = array();
-/*
-    $pubitem = array();
-    if (empty($ptid)) {
-        $pubitem['plink'] = '';
-    } else {
-        $pubitem['plink'] = xarModURL('articles','admin','view',array());
-    }
-    $pubitem['ptitle'] = xarML('All');
-    $pubfilters[] = $pubitem;
-*/
     foreach ($pubtypes as $id => $pubtype) {
         if (!xarSecurityCheck('EditArticles',0,'Article',"$id:All:All:All")) {
             continue;
