@@ -15,8 +15,12 @@
 
 function bkview_user_annotateview($args)
 {
-    if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
+    if($file == 'ChangeSet') {
+        // No annotate of Changeset, display the cset referred to
+        return xarModFunc('bkview','user','deltaview');
+    }
+    if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('rev','str::',$rev,'1.0')) return;
     extract($args);
 

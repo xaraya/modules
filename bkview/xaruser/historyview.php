@@ -17,10 +17,16 @@
 
 function bkview_user_historyview($args)
 {
-    if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if($file == 'ChangeSet') {
+        // We really dont wanna be here at all, the history of the ChangeSet file is handled
+        // somewhere else (mainly because it is huge)
+        return xarModFunc('bkview','user','display');
+    }
     if(!xarVarFetch('user','str::',$user,'')) return;
     extract($args);
+
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back

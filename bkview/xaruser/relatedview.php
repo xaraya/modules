@@ -16,7 +16,7 @@
 function bkview_user_relatedview($args)
 {
     if(!xarVarFetch('repoid','id',$repoid)) return;
-    if(!xarVarFetch('file','str::',$file,'/ChangeSet')) return;
+    if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));

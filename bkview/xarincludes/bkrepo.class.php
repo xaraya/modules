@@ -95,6 +95,7 @@ class bkRepo
     
     function bkChangeSet($file,$rev) 
     {
+        if($file == 'ChangeSet') return $rev;
         $file = __fileproper($file);
         $cmd="bk r2c -r".$rev." ".$file;
         $cset = $this->_run($cmd);
