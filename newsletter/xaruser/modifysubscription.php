@@ -35,6 +35,7 @@ function newsletter_user_modifysubscription()
     if (!xarUserIsLoggedIn()) {
         $data['uid'] = 0;
         $data['loggedin'] = false;
+        $hooks = '';
     } else {
         $data['loggedin'] = true;
 
