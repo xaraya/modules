@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * File: $Id$
  * 
  * View forums
@@ -18,7 +18,7 @@
  * @ View existing forums
 */
 function xarbb_admin_view()
-{
+{  
     // Get parameters from whatever input we need
     if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
 
@@ -84,7 +84,6 @@ function xarbb_admin_view()
     // Add the array of items to the template variables
     $data['items'] = $links;
 
-    // TODO : add a pager (once it exists in BL)
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('xarbb', 'user', 'countforums'),
         xarModURL('xarbb', 'admin', 'view', array('startnum' => '%%')),

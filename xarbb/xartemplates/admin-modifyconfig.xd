@@ -37,7 +37,7 @@
 	<span style="float: right; width: 78%; text-align: left;">
 		<input type="text" name="cookiename" id="cookiename" value="#xarModGetVar('xarbb', 'cookiename', 1)#" size="32" maxlength="100" />
 	</span>
-	</div>
+	</div> 
 
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 20%; text-align: right;">
@@ -55,7 +55,102 @@
 	<span style="float: right; width: 78%; text-align: left;">
 		<input type="text" name="cookiepath" id="cookiepath" value="#xarModGetVar('xarbb', 'cookiepath', 1)#" size="32" maxlength="100" />
 	</span>
+	</div> 
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Default number of forums to show per page in admin view.')#"><label for="forumsperpage"><xar:mlstring>
+        Forums per page in admin view</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="forumsperpage" id="forumsperpage" value="#xarModGetVar('xarbb', 'forumsperpage', 1)#"" size="2" maxlength="4" />
+	</span>
 	</div>
+
+	<!-- Start Default Forum configuration -->
+    <!-- Moved to individual forum configuration 
+         but - we can set overall defaults here for new forums -->
+	<div style="clear: both; padding-top: 10px;">
+	<h2><xar:mlstring>Default Values for New Forums</xar:mlstring></h2>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Default number of topics to show per page in a forum.')#"><label for="topicsperpage"><xar:mlstring>Topics per page</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px; width:98%;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Default Threshhold for individual topics to be considered hot.')#"><label for="hottopic"><xar:mlstring>Hot Topic</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Default number of topics to show per page in a forum.')#"><label for="postsperpage"><xar:mlstring>Posts per page</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
+	</span>
+	</div>
+
+
+	<div style="clear: both; padding-top: 10px;">
+	    <span style="float: left; width: 20%; text-align: right;">
+	        <span class="help" title="#xarML('Default value for HTML in a new forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;">
+	        <xar:if condition="xarModIsAvailable('html')">
+                <xar:if condition="$allowhtml">
+		            <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="allowhtml" id="aallowhtml" value="1" />
+                </xar:if>
+            <xar:else />
+ 		        <span style="float: right; width: 78%; text-align: left;">
+		        <em><xar:mlstring>HTML Module is not installed</xar:mlstring></em>
+		        </span>
+            </xar:if>
+		</span>
+    </div>
+
+	<div style="clear: both; padding-top: 10px;">
+	    <span style="float: left; width: 20%; text-align: right;">
+	        <span class="help" title="#xarML('Default value for BBCode in a new forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;">
+	        <xar:if condition="xarModIsAvailable('bbcode')">
+                <xar:if condition="$allowbbcode">
+		            <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="allowbbcode" id="allowbbcode" value="1" />
+                </xar:if>
+            <xar:else />
+ 		        <span style="float: right; width: 78%; text-align: left;">
+		        <em><xar:mlstring>BBCode Module is not installed</xar:mlstring></em>
+		        </span>
+            </xar:if>
+		</span>
+    </div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Show category trails')#"><label for="showcats"><xar:mlstring>Show Categories</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+    <xar:if condition="$showcats">
+		<input type="checkbox" name="showcats" id="showcats" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="showcats" id="showcats" value="1" />
+    </xar:if>
+	</span>
+	</div>
+    	</div>
+	<!-- End Default Forum configuration -->
 
 	<div style="clear: both; padding-top: 10px;">
 		#$hooks#
@@ -72,15 +167,3 @@
 </div>
 </div>
 
-<!-- Moved to individual forum configuration
-<p><xar:mlstring>Forums Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="forumsperpage" id="forumsperpage" value="#xarModGetVar('xarbb', 'forumsperpage')#" size="2" maxlength="4" /></p>
-<p><xar:mlstring>Hot Topic</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="hottopic" id="hottopic" value="#xarModGetVar('xarbb', 'hottopic')#" size="2" maxlength="3" /></p>
-<p><xar:mlstring>Posts Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="postsperpage" id="postsperpage" value="#xarModGetVar('xarbb', 'postsperpage')#" size="2" maxlength="4" /></p>
-<p><xar:mlstring>Topics Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="topicsperpage" id="topicsperpage" value="#xarModGetVar('xarbb', 'topicsperpage')#" size="2" maxlength="4" /></p> 
-<p><xar:mlstring>Allow HTML?</xar:mlstring>:&nbsp;&nbsp;
-<xar:if condition="xarModGetVar('xarbb', 'allowhtml')">
-    <input type="checkbox" name="allowhtml" id="allowhtml" value="1" checked="checked" />
-<xar:else />
-    <input type="checkbox" name="allowhtml" id="allowhtml" value="1" />
-</xar:if></p>
--->

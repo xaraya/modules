@@ -46,8 +46,6 @@ function xarbb_adminapi_delete($args)
 
 	// topics and comments are deleted in delete gui func so do not care
     // shouldn't this call be here?
-    // <jojodee> - probably need to delete topics and comments here too 
-    // else they may be left hanging in db
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
@@ -60,13 +58,12 @@ function xarbb_adminapi_delete($args)
               WHERE xar_fid = " . xarVarPrepForStore($fid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
-    // Let any hooks know that we have deleted a forum
+   // Let any hooks know that we have deleted a forum
     $args['module'] = 'xarbb';
-    $args['itemtype'] = 1; // forum
-    $args['itemid'] = $fid;  
+    $args['itemtype'] = 0; // forum
+    $args['itemid'] = $fid;
     xarModCallHooks('item', 'delete', $fid, $args);
-
+ 
     // Let the calling process know that we have finished successfully
     return true;
 }

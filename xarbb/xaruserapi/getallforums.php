@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id$ 
  * 
  * Get all forums
  * 
@@ -39,10 +39,11 @@ function xarbb_userapi_getallforums($args)
 
     // Get links
     //<jojodee> Make sure we only get forums itemtype=1 else duplicates bug #2335 revisited
-    $query = "SELECT xar_fid,
+    //Fix for older xarbb versions
+    $query = "SELECT DISTINCT xar_fid,
                    xar_fname,
                    xar_fdesc,
-                   xar_ftopics,
+                   xar_ftopics, 
                    xar_fposts,
                    xar_fposter,
                    xar_fpostid,
@@ -61,8 +62,6 @@ function xarbb_userapi_getallforums($args)
             if (!empty($categoriesdef['where'])) {
                 $query .= ' WHERE ' . $categoriesdef['where'];
             }
-            //Make sure we only get forums itemtype=1 else duplicates bug #2335 revisited
-            $query .= ' AND '.$categoriesdef['table'].'.xar_itemtype=1';
            
         }
     }

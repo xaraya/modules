@@ -27,7 +27,7 @@ function xarbb_adminapi_deletetopics($args)
         $msg = xarML('Invalid Parameter count in #(1), #(2), #(3)', 'admin', 'delete', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
-    } 
+    }  
     if(!isset($tids))
     	$tids = Array($tid);
     // Get datbase setup
@@ -48,8 +48,8 @@ function xarbb_adminapi_deletetopics($args)
 	    if (!$result) return;
         // Let any hooks know that we have deleted a topic
         $args['module'] = 'xarbb';
-	    $args['itemtype'] = 2; // topic
-	    $args['itemid']=$tid;
+	    $args['itemtype'] =$topic['fid']; // forum
+	    $args['itemid']= $tid;
 	    xarModCallHooks('item', 'delete', $tid, $args);
 	}
     // Let the calling process know that we have finished successfully

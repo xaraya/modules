@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id$ 
  * 
  * Main user function to display list of all existing forums
  * And existing categories
@@ -43,7 +43,7 @@ function xarbb_user_main()
     // Variable Needed for output
     $args               = array();
     $args['modid']      = xarModGetIDfromName('xarbb');
-    $args['itemtype']   = 1;
+    $args['itemtype']   = 0;
     $data               = array();
     $data['pager']      = '';    
     $data['uid']        = xarUserGetVar('uid');
@@ -57,7 +57,7 @@ function xarbb_user_main()
     $data['submitlabel']= xarML('Submit');
 
     // List the categories available as well
-
+ 
     // Regular Categories
     if (isset($catid)){
         $args['cid'] = $catid;

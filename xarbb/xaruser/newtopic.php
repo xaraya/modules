@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * File: $Id$
  * 
  * Add new or edit existing forum topic
@@ -23,7 +23,6 @@ function xarbb_user_newtopic()
 	if (!xarVarFetch('tstatus', 'int', $tstatus, '', XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
 	if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_DONT_SET)) return;
-	if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
 	if (!xarVarFetch('redirect', 'str', $redirect, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('preview',  'isset', $preview,  NULL, XARVAR_DONT_SET)) return;
 
@@ -44,13 +43,14 @@ function xarbb_user_newtopic()
         $data['fid']            = $fid;
     }
     $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$data['fid']));
+
     $data['allowhtml']      = $settings['allowhtml'];
+    $data['allowbbcode']    = $settings['allowbbcode'];
     if (empty($data)) return;
 
     // Security Check
 
     if(isset($tid))    {
-        $data['tid']=$tid;
         if(!xarSecurityCheck('ModxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
     }
     else    {
@@ -61,7 +61,7 @@ function xarbb_user_newtopic()
     if (isset($preview)){
        $phase = 'form';
     }
- 
+
     switch(strtolower($phase)) {
 
         case 'form':
@@ -79,13 +79,16 @@ function xarbb_user_newtopic()
                         $data['ttitle'] = $ttitle;
                     }
                 }
+
                 $item = $data;
+
                 $item['module'] = 'xarbb';
-                $item['itemtype'] =2;// Forum Topics
-                $item['itemid'] = $tid;
-                $data['hooks'] = xarModCallHooks('item','modify',$tid,$item);
+                $item['itemtype'] = $fid;// Forum Topics
+                $item['itemid'] = $tid;// Forum Topics
+                /*$data['hooks'] = xarModCallHooks('item','modify',$tid, $item);*/
 
             } else  {
+
                 if (empty($tpost)){
                     $data['tpost'] = '';
                 } else {
@@ -96,11 +99,13 @@ function xarbb_user_newtopic()
                 } else {
                     $data['ttitle'] = $ttitle;
                 }
+
                 $item = $data;
+
                 $item['module'] = 'xarbb';
-                $item['itemtype'] = 2;// Forum Topics
+                $item['itemtype'] = $fid;
                 $item['itemid'] = '';
-                $data['hooks'] = xarModCallHooks('item','new','',$item);
+                /*$data['hooks'] = xarModCallHooks('item','new','',$item);*/
             }
 
             $data['authid'] = xarSecGenAuthKey();
@@ -116,8 +121,9 @@ function xarbb_user_newtopic()
             } else {
                 $data['redirect'] = $redirect;
             }
-
-            $formhooks = xarModAPIFunc('xarbb','user','formhooks');
+            //<jojodee> Have to pass the item type now as we have different itemtypes
+            //pass specific forum itemtype $fid 
+            $formhooks = xarModAPIFunc('xarbb','user','formhooks',array('itemtype'=>$data['fid']));
             $data['formhooks']      = $formhooks;
             $data['submitlabel']    = xarML('Submit');
             $data['previewlabel']   = xarML('Preview');
@@ -189,15 +195,14 @@ function xarbb_user_newtopic()
     }
      //Now we have everything, transform
             list($data['transformedtext'],
-            $data['transformedtitle']) = xarModCallHooks('item',
-                                                         'transform',
-                                                         $tid,
+            $data['transformedtitle']) = xarModCallHooks('item','transform',$tid,
                                                      array($data['tpost'],
                                                            $data['ttitle']),
                                                            'xarbb',
-                                                           $fid);
+                                                           $data['fid']);
     //Make sure we return the preview state
     $data['preview']=$preview;
+
     // Return the output
    return $data;
 }

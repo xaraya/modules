@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id$ 
  *
  * Standard function to pass individual links to menu or whatever
  * 
@@ -26,12 +26,12 @@ function xarbb_userapi_getitemlinks($args)
 
     $itemlinks = array();
 
-    if (empty($itemtype)) {
-        $itemtype = 2; // xarbb accesses some hooks directly without itemtype atm
-    }
+//    if (empty($itemtype)) {
+//        $itemtype = 0; // xarbb accesses some hooks directly without itemtype atm
+//    } 
 
     // forums
-    if ($itemtype == 1) {
+    if ($itemtype > 0) {
          $forums = xarModAPIFunc('xarbb','user','getallforums');
          if (empty($forums)) {
              return $itemlinks;

@@ -136,36 +136,52 @@ function xarbb_init()
     xarRegisterMask('ModxarBB','All','xarbb','Topic','All','ACCESS_MODERATE');    */
 	// for what is moderate good?
 
-
-    // Initialisation successful
-
-    // do this stuff only once
-    // <jojodee> What is this? I'm commenting out for now.
-    // if (xarModGetVar('xarbb', 'hottopic')) return true;
-
-    // Enable categories hooks for xarbb forums (= item type 1)
-    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
-                                                         'hookModName'      => 'categories'));
+    // Enable categories hooks for xarbb forums
+    if (xarModIsAvailable('categories')) {
+        xarModAPIFunc('modules','admin','enablehooks', 
+                       array('callerModName' => 'xarbb', 'hookModName' => 'categories'));
+    }
+    if (xarModIsAvailable('comments')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                       array('callerModName' => 'xarbb','hookModName' => 'comments'));
+    }
+    if (xarModIsAvailable('hitcount')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                       array('callerModName' => 'xarbb','hookModName' => 'hitcount'));
+    }
 
     // modvars
     xarModSetVar('xarbb', 'cookiename', 'xarbb');
     xarModSetVar('xarbb', 'cookiepath', '/');
     xarModSetVar('xarbb', 'cookiedomain', '');
-    xarModSetVar('xarbb', 'forumsperpage', 50);
+    xarModSetVar('xarbb', 'forumsperpage', 20); //only need this for admin view
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('xarbb', 'SupportShortURLs', 0);
     // xarModSetVar('xarbb', 'allowhtml', 1);
-    $xarbbcid = xarModAPIFunc('categories',
-        'admin',
-        'create',
-        Array('name' => 'xarbb',
-            'description' => 'XarBB Categories',
-            'parent_id' => 0));
-    // Assign category to item type 1 (= forums)
+
+    // default settings for xarbb
+    $settings = array();
+    $settings['postsperpage']       = 20;
+    $settings['topicsperpage']      = 20;
+    $settings['hottopic']           = 20;
+    $settings['allowhtml']          = false;
+    $settings['allowbbcode']        = false;
+    $settings['showcats']           = false;
+    $settings['linknntp']           = false;
+    $settings['nntpport']           = 119;
+    $settings['nntpserver']         = 'news.xaraya.com';
+    $settings['nntpgroup']          = 'xaraya.test';
+
+    //Create the default categories for xarbb
+    $xarbbcid = xarModAPIFunc('categories','admin','create',
+                        Array('name' => 'xarbb',
+                              'description' => 'XarBB Categories',
+                              'parent_id' => 0));
+    // Assign category to item type 1 (= forums) - <jojodee> NO this is outdated
     // Note: you can have more than 1 mastercid (cfr. articles module)
-    xarModSetVar('xarbb', 'number_of_categories.1', 1);
-    xarModSetVar('xarbb', 'mastercids.1', $xarbbcid);
+    xarModSetVar('xarbb', 'number_of_categories', 1);
+    xarModSetVar('xarbb', 'mastercids', $xarbbcid);
     $xarbbcategories = array();
     $xarbbcategories[] = array('name' => "Forum Category One",
         'description' => "description one");
@@ -181,7 +197,8 @@ function xarbb_init()
                 'description'   => $subcat['description'],
                 'parent_id'     => $xarbbcid));
     }
-
+    //Set default settings
+    xarModSetVar('xarbb', 'settings', serialize($settings));
     return true;
 }
 
@@ -333,6 +350,7 @@ function xarbb_upgrade($oldversion)
                 $settings = array();
                 $settings['postsperpage']       = 20;
                 $settings['topicsperpage']      = 20;
+                $settings['forumsperpage']      = 20;
                 $settings['hottopic']           = 20;
                 $settings['allowhtml']          = NULL;
                 $settings['showcats']           = NULL;
@@ -355,11 +373,20 @@ function xarbb_upgrade($oldversion)
             xarModSetVar('xarbb', 'cookiepath', '/');
             xarModSetVar('xarbb', 'cookiedomain', '');
             xarModSetVar('xarbb', 'forumsperpage', 50);
+            return xarbb_upgrade('1.0.7');
             break;
         case '1.0.7':
-            //update the itemtypes for topics to the category linkages table
-            $updateitemtypes=xarbb_dotopicitemtypes();
-            if (!$updateitemtypes)  return;
+            return xarbb_upgrade('1.0.8');
+            //catlinkage table updated with itemtype 2 - not required now
+            break; 
+        case '1.0.8':
+            //let's clean up the catlinkage table incase anyone got 1.0.8
+            //And make sure all forums have a catlink entry for each existing forum
+            //in prior versions hooks were not consistently called and mixed itemtypes added
+            //TODO
+            $cleanupxarbb=xarbb_cleanitemtypes();
+                if (!$cleanupxarbb)  return;
+            break;
         default:
             break;
     }
@@ -554,18 +581,25 @@ function xarbb_convertdates()
 return true;
 }
 
-function xarbb_dotopicitemtypes()
-{
+function xarbb_cleanupxarbb()
+{   //We have to assume here everyone has been working with itemtype = 1 for forums
+    //As has been setin upgrade in 0.9 above
 	//Let's first get all the forums
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    //$categories_linkage= $xartable['categories_linkage'];
-    $categories_linkage =  xarDBGetSiteTablePrefix() . '_categories_linkage';
-    $modid = xarModGetIDFromName('xarbb');
-    $forums = xarModAPIFunc('xarbb','user','getallforums');
+    $linkagetable = $xartable['categories_linkage'];
 
-    //Now if there are forums, let's identify all the topics associated with each forum
-    // and delete al the replies associated with each topic
+            // update item type in categories - you need to upgrade categories first :-)
+            $modid = xarModGetIDFromName('xarbb');
+            $update =  "UPDATE $linkagetable SET xar_itemtype = 1 WHERE xar_modid = $modid";
+            $result =& $dbconn->Execute($update);
+            if (!$result) return;
+
+
+    //Remove all xarbb entries from category linkage table
+
+    //Add in an entry for every existing forum
+    $forums = xarModAPIFunc('xarbb','user','getallforums');
     foreach($forums as $forum) {
         $topics= xarModAPIFunc('xarbb','user','getalltopics',
                                   array('fid'=>$forum['fid']));

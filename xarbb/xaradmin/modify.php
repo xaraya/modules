@@ -1,7 +1,7 @@
 <?php
 /**
  * File: $Id$
- * 
+ *  
  * Xaraya Modify an existing forum
  * 
  * @package Xaraya eXtensible Management System
@@ -11,7 +11,7 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
-*/
+*/ 
 
 /**
  * @author John Cox
@@ -46,6 +46,7 @@ function xarbb_admin_modify()
                 $data['postsperpage']           = empty($settings['postsperpage']) ? 20 : $settings['postsperpage'];
                 $data['hottopic']               = empty($settings['hottopic']) ? 20 : $settings['hottopic'];
                 $data['allowhtml']              = !empty($settings['allowhtml']) ? 'checked="checked"' : '';
+                $data['allowbbcode']            = !empty($settings['allowbbcode']) ? 'checked="checked"' : '';
                 $data['showcats']               = !empty($settings['showcats']) ? 'checked="checked"' : '';
                 $data['linknntp']               = !empty($settings['linknntp']) ? 'checked="checked"' : '';
                 $data['nntpserver']             = empty($settings['nntpserver']) ? 'news.xaraya.com' : $settings['nntpserver'];
@@ -64,6 +65,9 @@ function xarbb_admin_modify()
             if (!isset($data['allowhtml'])) {
                 $data['allowhtml'] = '';
             }
+            if (!isset($data['allowbbcode'])) {
+                $data['allowbbcode'] = '';
+            }
             if (!isset($data['showcats'])) {
                 $data['showcats'] = '';
             }
@@ -80,9 +84,9 @@ function xarbb_admin_modify()
                 $data['nntpgroup'] = 'xaraya.test';
             }		
             $data['module'] = 'xarbb';
-            $data['itemtype'] = 1; // forum
+            $data['itemtype'] = 0; // forum
             $data['itemid'] = $fid;
-            $hooks = xarModCallHooks('item','modify',$fid,$data);
+            $hooks = xarModCallHooks('item','modify',$fid, $data);
             if (empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
@@ -94,6 +98,7 @@ function xarbb_admin_modify()
             //Load Template
             $data['authid'] = xarSecGenAuthKey();
             $data['createlabel'] = xarML('Submit');
+
             break;
 
         case 'update':
@@ -114,6 +119,7 @@ function xarbb_admin_modify()
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
 
+
             // The API function is called.
             if(!xarModAPIFunc('xarbb',
                               'admin',
@@ -128,26 +134,61 @@ function xarbb_admin_modify()
             $settings['topicsperpage']      = $topicsperpage;
             $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
+            $settings['allowbbcode']        = $allowbbcode;
             $settings['showcats']           = $showcats;
             $settings['linknntp']           = $linknntp;
             $settings['nntpport']           = $nntpport;
             $settings['nntpserver']         = $nntpserver;
             $settings['nntpgroup']          = $nntpgroup;
+
             xarModSetVar('xarbb', 'settings.'.$fid, serialize($settings));
 
-            if (!empty($allowbbcode)){
-                xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
-                                                                         'callerItemType'   => $fid,
-                                                                         'hookModName'      => 'bbcode'));
-            } else {
-                xarModAPIFunc('modules','admin','disablehooks', array('callerModName'       => 'xarbb',
-                                                                         'callerItemType'   => $fid,
-                                                                         'hookModName'      => 'bbcode'));
+           // Enable bbcode hooks for modified forum
+            if (xarModIsAvailable('bbcode')) {
+                 //Make sure the overall module hook is disabled so we can do each forum
+                  xarModAPIFunc('modules','admin','disablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => 0,
+                                  'hookModName'      => 'bbcode'));
+
+                  if ($settings['allowbbcode']) {
+
+                    xarModAPIFunc('modules','admin','enablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $fid,
+                                  'hookModName'      => 'bbcode'));
+                } else {
+                    xarModAPIFunc('modules','admin','disablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $fid,
+                                  'hookModName'      => 'bbcode'));
+                }
+            }
+
+            // Enable html hooks for this forum's topics
+            if (xarModIsAvailable('html')) {
+                xarModAPIFunc('modules','admin','disablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => 0,
+                                  'hookModName'      => 'html'));
+
+                if ($settings['allowhtml']) {
+                     xarModAPIFunc('modules','admin','enablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $fid,
+                                  'hookModName'      => 'html'));
+                } else {
+                    xarModAPIFunc('modules','admin','disablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $fid,
+                                  'hookModName'      => 'html'));
+                }
             }
             // Redirect
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'modify', array('fid' => $fid)));
             break;
-    }
+        }
+
 	return $data;
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * File: $Id$
- * 
+ *  
  * Delete all replies
  * 
  * @package Xaraya eXtensible Management System
@@ -19,7 +19,7 @@
  * @return true on success, false on failure
  */
 function xarbb_adminapi_deletereplies($args)
-{
+{ 
     extract($args);
 
     // Argument check
@@ -38,9 +38,9 @@ function xarbb_adminapi_deletereplies($args)
         $tid = $comment[0]['xar_objectid'];
         if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
         if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;  // TODO
-        if(!xarModAPIFunc("comments","admin","delete_branch",array("node" => $cid))) return;
+        if(!xarModAPIFunc("comments","admin","delete_branch",array('node' => $cid))) return;
         // update topics view, must do this here, because cids can contain different tids
-        if(!xarModAPIFunc('xarbb','user','updatetopicsview',array("tid" => $tid))) return;
+        if(!xarModAPIFunc('xarbb','user','updatetopicsview',array('tid' => $tid))) return;
     }
     // Hooks should be called from comments module
     // Let the calling process know that we have finished successfully

@@ -64,7 +64,7 @@ function xarbb_userapi_getalltopics($args)
     // make only one query to speed up
     // Get links
     //Fix for duplicates listings of topics with topic itemtypes - select distinct - get bug #2335
-    $query = "SELECT DISTINCT xar_tid,
+    $query = "SELECT xar_tid,
                      $xbbtopicstable.xar_fid,
                      xar_ttitle,
                      xar_tpost,
@@ -76,7 +76,7 @@ function xarbb_userapi_getalltopics($args)
                      xar_treplier,
                      xar_fname,
                      xar_fdesc,
-                     xar_ftopics,
+                     xar_ftopics, 
                      xar_fposts,
                      xar_fposter,
                      xar_fpostid,
@@ -87,14 +87,11 @@ function xarbb_userapi_getalltopics($args)
             WHERE {$categoriesdef['where']} ";
      if (isset($fid)) {
         $query .= "AND $xbbforumstable.xar_fid = " . xarVarPrepForStore($fid);
-        //#bug 2335 - older upgrades of xarbb seem to need the following to prevent duplicates
-        //Better - clean out hooks table for xarbb and reset all hooks for xarbb
-        //$query .= " AND {$categoriesdef['itemtype']} = 2";
-
+        //#bug 2335 - some older upgrades of xarbb seem to need the following to prevent duplicates
+        $query .= " AND {$categoriesdef['itemtype']} = 0";
      } else {
         $query .= " AND xar_tid IN (" . join(', ', $tids) . ")";
     }
-
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 
@@ -104,7 +101,7 @@ function xarbb_userapi_getalltopics($args)
     } else {
         $result =& $dbconn->Execute($query);
     }
-
+ 
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,

@@ -33,7 +33,7 @@ function xarbb_adminapi_update($args)
                        new SystemException($msg));
         return;
     }
-
+  
     // The user API function is called.
     $data = xarModAPIFunc('xarbb',
                           'user',
@@ -54,10 +54,12 @@ function xarbb_adminapi_update($args)
             WHERE xar_fid = " . xarVarPrepForStore($fid);
     $result =& $dbconn->Execute($query);
      if (!$result) return;
-    // Let any hooks know that we have updated a forum
+
+    // Let any hooks know that we have modified a forum itemtype
     $args['module'] = 'xarbb';
-    $args['itemtype'] = 1; // forum
+    $args['itemtype'] = 0; // forum
     $args['itemid'] = $fid;
+    $args['cids'] = $cids;
     xarModCallHooks('item', 'update', $fid, $args);
     // Let the calling process know that we have finished successfully
     return true;

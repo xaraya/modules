@@ -17,7 +17,7 @@
 		</td>
 	</tr>
 </table>
-
+ 
 <xar:if condition="isset($preview)">
 <div style="width:98%; margin-bottom:20px;">
 	<table width="98%" border="1">
@@ -112,9 +112,9 @@
 			<input type="text" name="ttitle" id="ttitle" value="#$ttitle#" size="45" maxlength="60" style="width:450px" />
 		</td>
 	</tr>
-	<xar:if condition="xarModIsHooked('bbcode')">
-		<tr> 
-			<td class="xar-accent" valign="top" style="border: 1px solid #000;"> 
+	<xar:if condition="xarModIsHooked('bbcode','xarbb',$fid)"> 
+		<tr>
+			<td class="xar-accent" valign="top" style="border: 1px solid #000;">
 				<h3>
 					<xar:mlstring>
 						Form Controls
@@ -126,7 +126,7 @@
 			</td>
 		</tr>
 	</xar:if>
-		<tr> 
+		<tr>
 			<td class="xar-accent" valign="top" style="border: 1px solid #000;"> 
 				<h3>
 					<xar:mlstring>
@@ -151,7 +151,7 @@
 					<xar:mlstring>
 						HTML is
 					</xar:mlstring>
-					<xar:if condition="isset($allowhtml)">
+					<xar:if condition="xarModIsHooked('html','xarbb',$fid)">
 						<span style="color: green;">
 							On
 						</span>
@@ -164,7 +164,7 @@
 					<xar:mlstring>
 						BBCode is
 					</xar:mlstring>
-					<xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
+					<xar:if condition="xarModIsHooked('bbcode','xarbb',$fid)">
 						<span style="color: green;">
 							On
 						</span>
@@ -177,7 +177,7 @@
 					<xar:mlstring>
 						Smilies are
 					</xar:mlstring>
-					<xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
+					<xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
 						<span style="color: green;">
 							On
 						</span>
@@ -227,6 +227,7 @@
 		</tr>
 		<xar:if condition="!empty($hooks) and count($hooks) gt 0">
 			<xar:foreach in="$hooks" key="$hookmodule">
+
 				<tr align="left" valign="middle">
 					<td colspan="2">
 						#$hooks[$hookmodule]#

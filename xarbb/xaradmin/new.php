@@ -43,10 +43,25 @@ function xarbb_admin_new()
         case 'form':
         default:
 
+            $xarsettings= xarModGetVar('xarbb', 'settings');
+            if (!empty($xarsettings)) {
+                $settings = unserialize($xarsettings);
+            }
+            $data['postsperpage']    = !isset($settings['postsperpage']) ? 20 :$settings['postsperpage'];
+            $data['topicsperpage']   = !isset($settings['topicsperpage']) ? 20 :$settings['topicsperpage'];
+            $data['hottopic']        = !isset($settings['hottopic']) ? 20 :$settings['hottopic'];
+            $data['allowhtml']       = !isset($settings['allowhtml']) ? false :$settings['allowhtml'];
+            $data['allowbbcode']     = !isset($settings['allowbbcode']) ? false :$settings['allowbbcode'];
+            $data['showcats']        = !isset($settings['showcats']) ? false :$settings['showcats'];
+            $data['linknntp']        = !isset($settings['linknntp']) ? false :$settings['linknntp'];
+            $data['nntpport']        = !isset($settings['nntpport']) ? 119 :$settings['nntpport'];
+            $data['nntpserver']      = !isset($settings['nntpserver']) ? 'news.xaraya.com' :$settings['nntpserver'];
+            $data['nntpgroup']       = !isset($settings['nntpgroup']) ? '' :$settings['nntpgroup'];
+ 
             $item = array();
             $item['module'] = 'xarbb';
-            $item['itemtype'] = 1; // forum
-            $hooks = xarModCallHooks('item','new','',$item);
+            $item['itemtype'] = 0; // forum
+            $hooks = xarModCallHooks('item', 'new','', $item); // forum
             if (empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
@@ -68,32 +83,32 @@ function xarbb_admin_new()
             } else {
                 $data['cids'] = array();
             }
-            //var_dump($cids); return;
+
             $tposter = xarUserGetVar('uid');
 
             // The API function is called
-            if (!xarModAPIFunc('xarbb',
-                               'admin',
-                               'create',
+            $newfid= xarModAPIFunc('xarbb',
+                                   'admin',
+                                  'create',
                                array('fname'    => $data['fname'],
                                      'fdesc'    => $data['fdesc'],
                                      'cids'     => $data['cids'],
                                      'fposter'  => $tposter,
                                      'ftopics'  => 1,
                                      'fposts'   => 1,
-                                     'fstatus'  => $data['fstatus']))) return;
+                                     'fstatus'  => $data['fstatus']));
+        if (!$newfid) return; 
 
- 
-            // Get New Forum ID
+           // Get New Forum ID
             $forum = xarModAPIFunc('xarbb',
                                    'user',
                                    'getforum',
-                                   array('fname' => $data['fname']));
+                                   array('fid' => $newfid));
 
 
-            // Need to create a topic so we don't get the nasty empty error when viewing the forum.
-            $ttitle = xarML('Welcome to ').$data['fname'];
-            $tpost = xarML('This is the first topic for ').$data['fname'];
+                // Need to create a topic so we don't get the nasty empty error when viewing the forum.
+            $ttitle = xarML('Welcome to ').$forum['fname'];
+            $tpost = xarML('This is the first topic for ').$forum['fname'];
 
             $tid= xarModAPIFunc('xarbb',
                                'user',
@@ -104,35 +119,57 @@ function xarbb_admin_new()
                                      'tposter'  => $tposter));
            if (!$tid) return;
 
-           // Let's hook to hitcount and comments here instead of the init, since we are not creating
-           // predetermined forums on install.
-           // Enable hitcount hooks for xarbb topics
+           // Enable hitcount hooks for xarbb forum
             xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
                                                                      'callerItemType'   => $forum['fid'],
                                                                      'hookModName'      => 'hitcount'));
 
-            // Enable comment hooks for xarbb topics
-            //<jojodee> not sure why this is here after being commented out above
+            // Enable comment hooks for xarbb forum - let's just make sure
             xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
                                                                      'callerItemType'   => $forum['fid'],
                                                                      'hookModName'      => 'comments'));
-
-            if (!empty($allowbbcode)){
-                xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
-                                                                         'callerItemType'   => $forum['fid'],
-                                                                         'hookModName'      => 'bbcode'));
+            // Enable bbcode hooks for new xarbb forum
+            if (xarModIsAvailable('bbcode')) {
+                if ($allowbbcode) {
+                    xarModAPIFunc('modules','admin','enablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $forum['fid'],
+                                  'hookModName'      => 'bbcode'));
+                } else {
+                    xarModAPIFunc('modules','admin','disablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $forum['fid'],
+                                  'hookModName'      => 'bbcode'));
+                }
             }
+            // Enable html hooks for xarbb forums
+            if (xarModIsAvailable('html')) {
+                if ($allowhtml) {
+                    xarModAPIFunc('modules','admin','enablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $forum['fid'],
+                                  'hookModName'      => 'html'));
+                } else {
+                    xarModAPIFunc('modules','admin','disablehooks',
+                            array('callerModName'    => 'xarbb',
+                                  'callerItemType'   => $forum['fid'],
+                                  'hookModName'      => 'html'));
+                }
+            }
+
 
             $settings = array();
             $settings['postsperpage']       = $postsperpage;
             $settings['topicsperpage']      = $topicsperpage;
             $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
+            $settings['allowbbcode']        = $allowbbcode;
             $settings['showcats']           = $showcats;
             $settings['linknntp']           = $linknntp;
             $settings['nntpport']           = $nntpport;
             $settings['nntpserver']         = $nntpserver;
             $settings['nntpgroup']          = $nntpgroup;
+
             xarModSetVar('xarbb', 'settings.'.$forum['fid'], serialize($settings));
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
             break;

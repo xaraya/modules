@@ -1,5 +1,5 @@
 <table width="98%" border="0">
-	<tr> 
+	<tr>  
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
@@ -82,8 +82,8 @@
 			</xar:if>
 		</td>
 	</tr>
-	<xar:if condition="xarModIsHooked('bbcode')">
-		<tr> 
+    <xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
+		<tr>
 			<td class="xar-accent" valign="top" style="border: 1px solid #000;"> 
 				<h3>
 					<xar:mlstring>
@@ -125,7 +125,7 @@
 					<xar:mlstring>
 						HTML is
 					</xar:mlstring>
-					<xar:if condition="isset($allowhtml)">
+					<xar:if condition="xarModIsHooked('html', 'xarbb', $fid)">
 						<span style="color: green;">
 							On
 						</span>

@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
-<!--
+<!-- 
 	// Enter name of mandatory fields
 	var fieldRequired = Array("fname", "fdesc");
 	// Enter field description to appear in the dialog box
@@ -57,7 +57,7 @@
 		<span class="help" title="#xarML('The number of topics to show per page in this forum.')#"><label for="topicsperpage"><xar:mlstring>Topics per page</xar:mlstring></label>:</span>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="topicsperpage" id="topicsperpage" value="20" size="2" maxlength="4" />
+		<input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
 	</span>
 	</div>
 
@@ -66,7 +66,7 @@
 		<span class="help" title="#xarML('Threshhold for individual topics to be considered hot.')#"><label for="hottopic"><xar:mlstring>Hot Topic</xar:mlstring></label>:</span>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="hottopic" id="hottopic" value="20" size="2" maxlength="4" />
+		<input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
 	</span>
 	</div>
 
@@ -75,36 +75,58 @@
 		<span class="help" title="#xarML('The number of topics to show per page in this forum.')#"><label for="postsperpage"><xar:mlstring>Posts per page</xar:mlstring></label>:</span>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="postsperpage" id="postsperpage" value="20" size="2" maxlength="4" />
+		<input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
 	</span>
 	</div>
 
 	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Allow HTML in this forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
-	</span>
-	</div>
-
-	<xar:if condition="xarModIsAvailable('bbcode')">
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Allow BBCode in this forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
+	    <span style="float: left; width: 20%; text-align: right;">
+	        <span class="help" title="#xarML('Default value for HTML in a new forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;">
+	        <xar:if condition="xarModIsAvailable('html')">
+                <xar:if condition="$allowhtml">
+		            <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="allowhtml" id="allowhtml"  />
+                </xar:if>
+            <xar:else />
+ 		        <span style="float: right; width: 78%; text-align: left;">
+		        <em><xar:mlstring>HTML Module is not installed</xar:mlstring></em>
+		        </span>
+            </xar:if>
 		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
+    </div>
+ 
+	<div style="clear: both; padding-top: 10px;">
+	    <span style="float: left; width: 20%; text-align: right;">
+	        <span class="help" title="#xarML('Default value for BBCode in a new forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="xarModIsAvailable('bbcode')">
+                <xar:if condition="$allowbbcode">
+		            <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="allowbbcode" id="allowbbcode"  />
+                </xar:if>
+            <xar:else />
+ 		        <span style="float: right; width: 78%; text-align: left;">
+		        <em><xar:mlstring>BBCode Module is not installed</xar:mlstring></em>
+		        </span>
+            </xar:if>
 		</span>
-		</div>
-	</xar:if>
+    </div>
 
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('Show category trails')#"><label for="showcats"><xar:mlstring>Show Categories</xar:mlstring></label>:</span>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-	   <input type="checkbox" name="showcats" id="showcats" />
+    <xar:if condition="$showcats">
+		<input type="checkbox" name="showcats" id="showcats" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="showcats" id="showcats" value="1" />
+    </xar:if>
 	</span>
 	</div>
 

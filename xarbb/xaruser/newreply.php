@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * File: $Id$
  * 
@@ -35,7 +35,9 @@ function xarbb_user_newreply()
 
         $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$data['fid']));
         $data['allowhtml']      = $settings['allowhtml'];
+        $data['allowbbcode']      = $settings['allowbbcode']; 
 
+ 
         $package['title'] = xarVarPrepForDisplay($data['ttitle']);
         if ($phase == 'quote'){
             $package['text'] = '[quote]'. $data['tpost'] .'[/quote]';
@@ -97,7 +99,8 @@ function xarbb_user_newreply()
     $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
 
     // Form Hooks
-    $formhooks = xarModAPIFunc('xarbb','user','formhooks');
+    $itemtype=$data['fid'];
+    $formhooks = xarModAPIFunc('xarbb','user','formhooks',array('itemtype'=>$itemtype));
     $data['hooks']      = $formhooks;
     $data['receipt']    = $receipt;
     $data['package']    = $package;

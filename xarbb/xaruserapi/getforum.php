@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id$ 
  * 
  * Get info for a forum
  * 
@@ -32,10 +32,11 @@ function xarbb_userapi_getforum($args)
 
     $xbbforumstable = $xartable['xbbforums'];
 
-    // Get link
+    // Get link 
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => array(),
                                         'modid' => xarModGetIDFromName('xarbb')));
+    
     // Get links
     $query = "SELECT xar_fid,
                    xar_fname,
@@ -75,7 +76,7 @@ function xarbb_userapi_getforum($args)
                    'fstatus' => $fstatus,
                    'catid'   => $catid);
 
-    return $forum;
+   return $forum;
 }
 
 ?>

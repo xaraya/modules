@@ -12,7 +12,7 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
-/**
+/** 
  * utility function to retrieve the list of item types of this module (if any)
  *
  * @returns array
@@ -21,10 +21,10 @@
 function xarbb_userapi_getitemtypes($args)
 {
     $itemtypes = array();
-
-    $itemtypes[1] = array('label' => xarML('Main Forum Configuration'),
+    //<jojodee>Item type still exists - just don't display in hook list - confusing
+    /*$itemtypes[0] = array('label' => xarML('Main Forum Configuration'),
     				      'title' => xarML('Main Forum Configuration'),
-                          'url' => xarModURL('xarbb','user','main',array()));
+                          'url' => xarModURL('xarbb','user','main',array()));*/
 
     $forums = xarModAPIFunc('xarbb',
                             'user',

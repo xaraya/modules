@@ -190,7 +190,7 @@ function xarbb_user_viewtopic()
     $item['returnurl'] = xarModURL('xarbb','user','viewtopic',
                                    array('tid' => $tid,
                                          'startnum'=>$startnum));
-
+ 
     $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
 
     // Let's handle the changelog a little differently 

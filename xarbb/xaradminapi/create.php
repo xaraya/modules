@@ -52,7 +52,6 @@ function xarbb_adminapi_create($args)
         $fposts=0;
     }
 
-
     // Security Check
     if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
 
@@ -79,7 +78,7 @@ function xarbb_adminapi_create($args)
     // Get Time
     if ((!isset($fpostid)) || (empty($fpostid))){
         $fpostid= time();
-    }
+    } 
     // Add item
     $query = "INSERT INTO $xbbforumstable (
               xar_fid,
@@ -106,18 +105,18 @@ function xarbb_adminapi_create($args)
     $fid = $dbconn->PO_Insert_ID($xbbforumstable, 'xar_fid');
 
     if (empty($cids)) {
-        $cids[] = xarModGetVar('xarbb', 'mastercids.1');
+        //Set them to the master categories
+        $cids[] = xarModGetVar('xarbb', 'mastercids');
     }
- 
     // Let any hooks know that we have created a new forum
     $args['module'] = 'xarbb';
-    $args['itemtype'] = 1; // forum
-    $args['itemid'] = $fid;
+    $args['itemtype'] = 0; // forum
+    $args['itemid'] =$fid; // forum
     $args['cids'] = $cids;
-    xarModCallHooks('item', 'create', $fid, $args);
+    xarModCallHooks('item', 'create', $fid, $args);// forum
 
     // Return the id of the newly created link to the calling process
     return $fid;
 }
-
+ 
 ?>

@@ -8,18 +8,25 @@
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.org
- *
+ * @param $itemtype - pass itemtype for multiple itemtype transformation
  * @subpackage  xarbb Module
- * @author John Cox
+ * @author John Cox, jojodee
 */
-
-function xarbb_userapi_formhooks()
+ 
+function xarbb_userapi_formhooks($args)
 {
+	extract($args);
+    if (!isset($itemtype) || empty($itemtype)) {
+       $itemtype='';
+    }
 
     $hooks = array();
     // call the right hooks, i.e. not the ones for the comments module :)
-    $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'xarbb');
-    $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'xarbb');
+    //<jojodee> also add the correct itemtype - we can then call specific form transform
+    $hooks['formaction'] =  xarModCallHooks('item', 'formaction', '', array(), 'xarbb',$itemtype);
+    $hooks['formdisplay'] = xarModCallHooks('item', 'formdisplay','', array(), 'xarbb',$itemtype);
+
+
 
     if (empty($hooks['formaction'])){
         $hooks['formaction'] = '';
