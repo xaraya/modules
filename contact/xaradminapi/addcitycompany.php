@@ -75,13 +75,10 @@ function contact_adminapi_addCityCompany($args)
               xar_id,
               xar_name,
               xar_cid)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarVarPrepForStore($number) . "')";
+            VALUES (?,?,?)";
 
-     $result = $dbconn->Execute($query);
-
+    $bindvars = array($nextId, (string) $name, $number);
+    $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

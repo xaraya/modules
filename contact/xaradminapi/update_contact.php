@@ -174,61 +174,69 @@ function contact_adminapi_update_contact($args)
     // the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "UPDATE $contacttable
-            SET xar_firstname = '" . xarVarPrepForStore($firstname) . "',
-                xar_lastname = '" . xarVarPrepForStore($lastname) . "',
-                xar_address = '" . xarVarPrepForStore($address) . "',
-                xar_address2 = '" . xarVarPrepForStore($address2) . "',
-                xar_city = '" . xarVarPrepForStore($city) . "',
-                xar_state = '" . xarVarPrepForStore($state) . "',
-                xar_zip = '" . xarVarPrepForStore($zip) . "',
-                xar_country = '" . xarVarPrepForStore($country) . "',
-                xar_mail = '" . xarVarPrepForStore($mail) . "',
-                xar_phone = '" . xarVarPrepForStore($phone) . "',
-                xar_fax = '" . xarVarPrepForStore($fax) . "',
-                xar_mobile = '" . xarVarPrepForStore($mobile) . "',
-                xar_pager = '" . xarVarPrepForStore($pager) . "',
-                xar_typephone = '" . xarVarPrepForStore($typephone) . "',
-                xar_typefax = '" . xarVarPrepForStore($typefax) . "',
-                xar_typemobile = '" . xarVarPrepForStore($typemobile) . "',
-                xar_typepager = '" . xarVarPrepForStore($typepager) . "',
-                xar_active = '" . xarVarPrepForStore($active) . "',
-                xar_ICQ = '" . xarVarPrepForStore($ICQ) . "',
-                xar_AIM = '" . xarVarPrepForStore($AIM) . "',
-                xar_YIM = '" . xarVarPrepForStore($YIM) . "',
-                xar_MSNM = '" . xarVarPrepForStore($MSNM) . "',
-                xar_titleID = '" . xarVarPrepForStore($titleID) . "',
-                xar_image = '" . xarVarPrepForStore($image) . "',
-                xar_hide = '" . xarvarPrepForStore($hide) . "'
-            WHERE xar_id = " . xarVarPrepForStore($id);
+            SET xar_firstname = ?,
+                xar_lastname = ?,
+                xar_address = ?,
+                xar_address2 = ?,
+                xar_city = ?,
+                xar_state = ?,
+                xar_zip = ?,
+                xar_country = ?,
+                xar_mail = ?,
+                xar_phone = ?,
+                xar_fax = ?,
+                xar_mobile = ?,
+                xar_pager = ?,
+                xar_typephone = ?,
+                xar_typefax = ?,
+                xar_typemobile = ?,
+                xar_typepager = ?,
+                xar_active = ?,
+                xar_ICQ = ?,
+                xar_AIM = ?,
+                xar_YIM = ?,
+                xar_MSNM = ?,
+                xar_titleID = ?,
+                xar_image = ?,
+                xar_hide = ?
+            WHERE xar_id = ?";
 
-    $result = $dbconn->Execute($query);
+     $bindvars = array($firstname, $lastname, $address, $address2, $city, $state, $zip, $country,
+                       $mail, $phone, $fax, $mobile, $pager, $typephone, $typefax, $typemobile, $typepager, $active,
+                       $ICQ, $AIM, $YIM, $MSNM, $titleID, $image, $hide, $id);
+
+    $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
 
      $query = "UPDATE $contacttable1
-            SET xar_showname = '" . xarVarPrepForStore($showname) . "',
-                xar_showaddress = '" . xarVarPrepForStore($showaddress) . "',
-                xar_showaddress2 = '" . xarVarPrepForStore($showaddress2) . "',
-                xar_showcity = '" . xarVarPrepForStore($showcity) . "',
-                xar_showstate = '" . xarVarPrepForStore($showstate) . "',
-                xar_showzip = '" . xarVarPrepForStore($showzip) . "',
-                xar_showcountry = '" . xarVarPrepForStore($showcountry) . "',
-                xar_showemail = '" . xarVarPrepForStore($showemail) . "',
-                xar_showphone = '" . xarVarPrepForStore($showphone) . "',
-                xar_showfax = '" . xarVarPrepForStore($showfax) . "',
-                xar_showmobile = '" . xarVarPrepForStore($showmobile) . "',
-                xar_showpager = '" . xarVarPrepForStore($showpager) . "',
-                xar_showICQ = '" . xarVarPrepForStore($showICQ) . "',
-                xar_showAIM = '" . xarVarPrepForStore($showAIM) . "',
-                xar_showYIM = '" . xarVarPrepForStore($showYIM) . "',
-                xar_showMSNM = '" . xarVarPrepForStore($showMSNM) . "',
-                xar_showtitle = '" . xarVarPrepForStore($showtitle) . "',
-                xar_showdepartment = '" . xarVarPrepForStore($showdepartment) . "',
-                xar_showimage = '" . xarvarPrepForStore($showimage) . "'
-            WHERE xar_id = " . xarVarPrepForStore($id);
+            SET xar_showname = ?,
+                xar_showaddress = ?,
+                xar_showaddress2 = ?,
+                xar_showcity = ?,
+                xar_showstate = ?,
+                xar_showzip = ?,
+                xar_showcountry = ?,
+                xar_showemail = ?,
+                xar_showphone = ?,
+                xar_showfax = ?,
+                xar_showmobile = ?,
+                xar_showpager = ?,
+                xar_showICQ = ?,
+                xar_showAIM = ?,
+                xar_showYIM = ?,
+                xar_showMSNM = ?,
+                xar_showtitle = ?,
+                xar_showdepartment = ?,
+                xar_showimage = ?
+            WHERE xar_id = ?";
 
-     $result = $dbconn->Execute($query);
+     $bindvars = array($showname, $showaddress, $showaddress2, $showcity, $showstate, $showzip,
+                       $showcountry, $showemail, $showphone, $showfax, $showmobile, $showpager,
+                       $showICQ, $showAIM, $showYIM, $showMSNM, $showtitle, $showdepartment, $showimage, $id);
+
+    $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

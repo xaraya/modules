@@ -102,20 +102,21 @@ function contact_adminapi_update($args)
     // the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "UPDATE $contacttable
-            SET xar_name = '" . xarVarPrepForStore($name) . "',
-                xar_address = '" . xarVarPrepForStore($address) . "',
-                xar_address2 = '" . xarVarPrepForStore($address2) . "',
-                xar_city = '" . xarVarPrepForStore($city) . "',
-                xar_state = '" . xarVarPrepForStore($state) . "',
-                xar_zip = '" . xarVarPrepForStore($zipcode) . "',
-                xar_country = '" . xarVarPrepForStore($country) . "',
-                xar_phone = '" . xarVarPrepForStore($phone) . "',
-                xar_fax = '" . xarVarPrepForStore($fax) . "',
-                xar_mail = '" . xarVarPrepForStore($email) . "',
-                xar_logo = '" . xarvarPrepForStore($companylogo) . "'
-            WHERE xar_id = " . xarVarPrepForStore($company_id);
+            SET xar_name = ?,
+                xar_address = ?,
+                xar_address2 = ?,
+                xar_city = ?,
+                xar_state = ?,
+                xar_zip = ?,
+                xar_country = ?,
+                xar_phone = ?,
+                xar_fax = ?,
+                xar_mail = ?,
+                xar_logo = ?
+            WHERE xar_id = ?";
 
-    $result = $dbconn->Execute($query);
+    $bindvars = array($name, $address, $address2, $city, $state, $zipcode, $country, $phone, $fax, $email, $companylogo, $company_id);
+    $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

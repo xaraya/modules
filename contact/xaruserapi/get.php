@@ -76,8 +76,8 @@ function contact_userapi_get($args)
                    xar_image,
                    xar_hide
                    FROM $contacttable
-           WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+           WHERE xar_id = ?";
+    $result = &$dbconn->Execute($query,(array)$id);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -97,9 +97,9 @@ function contact_userapi_get($args)
 
      $query = "SELECT xar_depid
             FROM $contacttable2
-            WHERE xar_id = $id";
+            WHERE xar_id = ?";
 
-    $resultDept = $dbconn->Execute($query);
+    $resultDept = $dbconn->Execute($query,(array)$id);
 
      if (!$resultDept) return;
 
@@ -108,9 +108,9 @@ function contact_userapi_get($args)
 
                  $query = "SELECT xar_name
                            FROM $contacttable3
-                           WHERE xar_id = $departmentID";
+                           WHERE xar_id = ?";
 
-                 $resultName = $dbconn->Execute( $query );
+                 $resultName = $dbconn->Execute( $query , (array)$departmentID);
                  if (!$resultName) return;
 
                      for (; !$resultName->EOF; $resultName->MoveNext() ) {
@@ -119,9 +119,9 @@ function contact_userapi_get($args)
         }
         $query = "SELECT xar_name
                            FROM $contacttable4
-                           WHERE xar_id = $titleID";
+                           WHERE xar_id = ?";
 
-                 $resultTitle = $dbconn->Execute( $query );
+                 $resultTitle = $dbconn->Execute( $query, (array)$titleID );
                  if (!$resultTitle) return;
 
                      for (; !$resultTitle->EOF; $resultTitle->MoveNext() ) {
@@ -130,9 +130,9 @@ function contact_userapi_get($args)
 
          $query = "SELECT xar_name
                            FROM $contacttable5
-                           WHERE xar_cid = $typephone";
+                           WHERE xar_cid = ?";
 
-                 $resultTypePhone = $dbconn->Execute( $query );
+                 $resultTypePhone = $dbconn->Execute( $query ,(array)$typephone);
                  if (!$resultTypePhone) return;
 
                      for (; !$resultTypePhone->EOF; $resultTypePhone->MoveNext() ) {
@@ -140,9 +140,9 @@ function contact_userapi_get($args)
                     }
          $query = "SELECT xar_name
                            FROM $contacttable5
-                           WHERE xar_cid = $typefax";
+                           WHERE xar_cid = ?";
 
-                 $resultTypeFax = $dbconn->Execute( $query );
+                 $resultTypeFax = $dbconn->Execute( $query, (array)$typefax );
                  if (!$resultTypeFax) return;
 
                      for (; !$resultTypeFax->EOF; $resultTypeFax->MoveNext() ) {
@@ -151,9 +151,9 @@ function contact_userapi_get($args)
 
          $query = "SELECT xar_name
                            FROM $contacttable5
-                           WHERE xar_cid = $typemobile";
+                           WHERE xar_cid = ?";
 
-                 $resultTypeMobile = $dbconn->Execute( $query );
+                 $resultTypeMobile = $dbconn->Execute( $query ,(array)$typemobile);
                  if (!$resultTypeMobile) return;
 
                      for (; !$resultTypeMobile->EOF; $resultTypeMobile->MoveNext() ) {
@@ -161,9 +161,9 @@ function contact_userapi_get($args)
                     }
           $query = "SELECT xar_name
                            FROM $contacttable5
-                           WHERE xar_cid = $typepager";
+                           WHERE xar_cid = ?";
 
-                 $resultTypePager = $dbconn->Execute( $query );
+                 $resultTypePager = $dbconn->Execute( $query ,(array)$typepager );
                  if (!$resultTypePager) return;
 
                      for (; !$resultTypePager->EOF; $resultTypePager->MoveNext() ) {
@@ -190,9 +190,9 @@ function contact_userapi_get($args)
                            xar_showdepartment,
                            xar_showimage
                            FROM $contacttable6
-                           WHERE xar_id = $id";
+                           WHERE xar_id = ?";
 
-                 $resultShow = $dbconn->Execute( $query );
+                 $resultShow = $dbconn->Execute( $query, (array)$id );
                  if (!$resultShow) return;
 
                      for (; !$resultShow->EOF; $resultShow->MoveNext() ) {

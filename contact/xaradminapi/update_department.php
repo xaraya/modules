@@ -49,17 +49,20 @@ function contact_adminapi_update_department($args)
            $updatecid = $cid[$i];
            $updatehideID = $hide[$i];
     $query = "UPDATE $contacttable
-            SET xar_email = '" . xarVarPrepForStore($updateemail) . "',
-                xar_name = '" . xarVarPrepForStore($updatename) . "',
-                xar_phone = '" . xarVarPrepForStore($updatephone) . "',
-                xar_fax = '" . xarVarPrepForStore($updatefax) . "',
-                xar_state = '" . xarVarPrepForStore($updatestate) . "',
-                xar_country = '" . xarVarPrepForStore($updatecountry) . "',
-                xar_cid = '" . xarVarPrepForStore($updatecid) . "',
+            SET xar_email = ?,
+                xar_name = ?,
+                xar_phone = ?,
+                xar_fax = ?,
+                xar_state = ?,
+                xar_country = ?,
+                xar_cid = ?,
                 xar_hide = 0
-            WHERE xar_id = " . xarVarPrepForStore($updatedepartmentID);
+            WHERE xar_id = ?";
 
-    $result = $dbconn->Execute($query);
+    $bindvars = array($updateemail, $updatename, $updatephone, $updatefax, $updatestate,
+                      $updatecountry, $updatecid, $updatedepartmentID);
+
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -73,8 +76,8 @@ function contact_adminapi_update_department($args)
        for($i = 0; $i < count($hideID); $i++) {
            $updatehideID = $hide[$i];
            $query = "UPDATE $contacttable
-                     SET xar_hide = 1 WHERE xar_id = " . xarVarPrepForStore($updatehideID);
-           $result = $dbconn->Execute($query);
+                     SET xar_hide = 1 WHERE xar_id = ?";
+           $result = $dbconn->Execute($query, $updatehideID);
            // Check for an error with the database code, adodb has already raised
            // the exception so we just return
            if (!$result) return;

@@ -88,17 +88,10 @@ function contact_adminapi_create_department($args)
               xar_country,
               xar_cid,
               xar_hide)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($email) . "',
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarVarPrepForStore($phone) . "',
-              '" . xarVarPrepForStore($fax) . "',
-              '" . xarVarPrepForStore($state) . "',
-              '" . xarVarPrepForStore($country) . "',
-              '" . xarVarPrepForStore($number) . "',
-              '" . xarVarPrepForStore($hide) . "')";
-    $result = $dbconn->Execute($query);
+            VALUES (?,?,?,?,?,?,?,?,?)";
+
+    $bindvars = array($nextId, $email, $name, $phone, $fax, $state, $country, $number, $hide);
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

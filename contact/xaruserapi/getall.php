@@ -90,9 +90,9 @@ function contact_userapi_getall($args)
 
       $query = "SELECT xar_depid
             FROM $contacttable2
-            WHERE xar_id = $id";
+            WHERE xar_id = ?";
 
-    $resultDept = $dbconn->Execute($query);
+    $resultDept = $dbconn->Execute($query,(array)$id);
 
      if (!$resultDept) return;
 
@@ -101,9 +101,9 @@ function contact_userapi_getall($args)
 
                  $query = "SELECT xar_name
                            FROM $contacttable3
-                           WHERE xar_id = $departmentID";
+                           WHERE xar_id = ?";
 
-                 $resultName = $dbconn->Execute( $query );
+                 $resultName = $dbconn->Execute( $query, (array)$departmentID );
                  if (!$resultName) return;
 
                      for (; !$resultName->EOF; $resultName->MoveNext() ) {

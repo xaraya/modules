@@ -66,16 +66,16 @@ function contact_adminapi_delete($args)
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "DELETE FROM $contacttable
-            WHERE xar_id = " . xarVarPrepForStore($id);
-    $result = $dbconn->Execute($query);
+            WHERE xar_id = ?";
+    $result = $dbconn->Execute($query,$id);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
 
      $query = "DELETE FROM $contacttable1
-            WHERE xar_id = " . xarVarPrepForStore($id);
-     $result = $dbconn->Execute($query);
+            WHERE xar_id = ?";
+    $result = &$dbconn->Execute($query,array($id));
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

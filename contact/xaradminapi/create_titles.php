@@ -67,11 +67,10 @@ function contact_adminapi_create_titles($args)
               xar_id,
               xar_name,
               xar_cid)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($newtitles) . "',
-              " . xarvarPrepForStore($cid) . ")";
-    $result = $dbconn->Execute($query);
+            VALUES (?,?,?)";
+
+    $bindvars = array($nextId, $newtitles, $cid);
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

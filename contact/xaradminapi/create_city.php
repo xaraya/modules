@@ -68,11 +68,9 @@ function contact_adminapi_create_city($args)
               xar_id,
               xar_name,
               xar_cid)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($newcity) . "',
-              " . xarvarPrepForStore($cid) . ")";
-    $result = $dbconn->Execute($query);
+            VALUES (?,?,?)";
+    $bindvars = array($nextId, $newcity, $cid);
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

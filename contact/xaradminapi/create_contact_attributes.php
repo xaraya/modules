@@ -128,30 +128,12 @@ function contact_adminapi_create_contact_attributes($args)
               xar_showtitle,
               xar_showdepartment,
               xar_showimage)
-            VALUES (
-              '" . xarVarPrepForStore($id) . "',
-              '" . xarVarPrepForStore($contacttype) . "',
-              '" . xarVarPrepForStore($showname) . "',
-              '" . xarVarPrepForStore($showaddress) . "',
-              '" . xarVarPrepForStore($showaddress2) . "',
-              '" . xarVarPrepForStore($showcity) . "',
-              '" . xarVarPrepForStore($showstate) . "',
-              '" . xarVarPrepForStore($showpostalcode) . "',
-              '" . xarVarPrepForStore($showcountry) . "',
-              '" . xarVarPrepForStore($showemail) . "',
-              '" . xarVarPrepForStore($showphone) . "',
-              '" . xarVarPrepForStore($showfax) . "',
-              '" . xarVarPrepForStore($showmobile) . "',
-              '" . xarVarPrepForStore($showpager) . "',
-              '" . xarVarPrepForStore($showICQ) . "',
-              '" . xarVarPrepForStore($showAIM) . "',
-              '" . xarVarPrepForStore($showYIM) . "',
-              '" . xarVarPrepForStore($showMSNM) . "',
-              '" . xarVarPrepForStore($showtitle) . "',
-              '" . xarVarPrepForStore($showdepartment) . "',
-              '" . xarVarPrepForStore($showimage) . "')";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $result = $dbconn->Execute($query);
+    $bindvars = array($id, $contacttype, $showname, $showaddress, $showaddress2, $showcity, $showstate,
+                      $showpostalcode, $showcountry, $showemail, $showphone, $showfax, $showmobile,
+                      $showpager, $showICQ, $showAIM, $showYIM, $showMSNM, $showtitle, $showdepartment, $showimage);
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

@@ -84,7 +84,9 @@ function contact_adminapi_create_contact($args)
     if (!isset($titleID) || !is_numeric($titleID)) {
         $invalid[] = 'titleID';
     }
-
+    if (!isset($hide) || !is_numeric($hide)) {
+          $hide= 0;
+    }
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -147,34 +149,13 @@ function contact_adminapi_create_contact($args)
               xar_titleID,
               xar_image,
               xar_hide)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($firstname) . "',
-              '" . xarVarPrepForStore($lastname) . "',
-              '" . xarVarPrepForStore($address) . "',
-              '" . xarVarPrepForStore($address2) . "',
-              '" . xarVarPrepForStore($city) . "',
-              '" . xarVarPrepForStore($state) . "',
-              '" . xarVarPrepForStore($zip) . "',
-              '" . xarVarPrepForStore($country) . "',
-              '" . xarVarPrepForStore($mail) . "',
-              '" . xarVarPrepForStore($phone) . "',
-              '" . xarVarPrepForStore($fax) . "',
-              '" . xarVarPrepForStore($mobile) . "',
-              '" . xarVarPrepForStore($pager) . "',
-              '" . xarVarPrepForStore($typephone) . "',
-              '" . xarVarPrepForStore($typefax) . "',
-              '" . xarVarPrepForStore($typemobile) . "',
-              '" . xarVarPrepForStore($typepager) . "',
-              '" . xarVarPrepForStore($active) . "',
-              '" . xarVarPrepForStore($ICQ) . "',
-              '" . xarVarPrepForStore($AIM) . "',
-              '" . xarVarPrepForStore($YIM) . "',
-              '" . xarVarPrepForStore($MSNM) . "',
-              '" . xarVarPrepForStore($titleID) . "',
-              '" . xarVarPrepForStore($image) . "',
-              '" . xarVarPrepForStore($hide) . "')";
-    $result = $dbconn->Execute($query);
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    $bindvars = array($nextId, $firstname, $lastname, $address, $address2, $city, $state, $zip,
+                      $country, $mail, $phone, $fax, $mobile, $pager, $typephone, $typefax, $typemobile,
+                      $typepager, $active,$ICQ, $AIM, $YIM, $MSNM, $titleID, $image, $hide);
+
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

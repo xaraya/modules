@@ -44,11 +44,12 @@ function contact_adminapi_update_city($args)
 
 
     $query = "UPDATE $contacttable
-            SET xar_name = '" . xarVarPrepForStore($updatename) . "'
+            SET xar_name = ?
 
-            WHERE xar_id = " . xarVarPrepForStore($updatecityID);
+            WHERE xar_id = ?";
 
-    $result = $dbconn->Execute($query);
+    $bindvars = array($updatename, $updatecityID);
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

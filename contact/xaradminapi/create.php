@@ -110,21 +110,9 @@ function contact_adminapi_create($args)
               xar_fax,
               xar_mail,
               xar_logo)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarVarPrepForStore($address) . "',
-              '" . xarVarPrepForStore($address2) . "',
-              '" . xarVarPrepForStore($city) . "',
-              '" . xarVarPrepForStore($state) . "',
-              '" . xarVarPrepForStore($zipcode) . "',
-              '" . xarVarPrepForStore($country) . "',
-              '" . xarVarPrepForStore($phone) . "',
-              '" . xarVarPrepForStore($fax) . "',
-              '" . xarVarPrepForStore($email) . "',
-              '" . xarvarPrepForStore($company_logo_upload) . "')";
-    $result = $dbconn->Execute($query);
-
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    $bindvars = array($nextId,(string)$name,$address,$address2,$city,$state,$zipcode,$country,$phone,$fax,$email,$company_logo_upload);
+    $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

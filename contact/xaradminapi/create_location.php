@@ -68,11 +68,10 @@ function contact_adminapi_create_location($args)
               xar_id,
               xar_name,
               xar_cid)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($newlocation) . "',
-              " . xarvarPrepForStore($cid) . ")";
-    $result = $dbconn->Execute($query);
+            VALUES (?,?,?)";
+
+    $bindvars = array($nextId, $newlocation, $cid);
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

@@ -251,7 +251,7 @@ function contact_admin_create_contact($args)
     // Success
     xarSessionSetVar('statusmsg', xarML('CONTACTCREATED'));
 
-    $contacttype = xarVarPrepForStore("P");
+    $contacttype = ("P");
     list($showname,
          $showaddress,
          $showaddress2,

@@ -42,11 +42,10 @@ function contact_adminapi_create_contact_departments($args)
     $query = "INSERT INTO $contacttable (
               xar_id,
               xar_depid)
-            VALUES (
-              '" . xarVarPrepForStore($id) . "',
-              '" . xarVarPrepForStore($department) . "')";
+            VALUES (?,?)";
 
-    $result = $dbconn->Execute($query);
+   $bindvars = array($id, $department);
+    $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
