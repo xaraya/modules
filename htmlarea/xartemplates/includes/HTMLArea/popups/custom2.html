@@ -1,7 +1,7 @@
 <html style="width:300px; Height: 60px;">
  <head>
   <title>Select Phrase</title>
-<script language="javascript">
+<script type="text/javascript">
 
 var myTitle = window.dialogArguments;
 document.title = myTitle;
@@ -17,10 +17,10 @@ function returnSelected() {
 
 </script>
 </head>
-<body bgcolor="#FFFFFF" topmargin=15 leftmargin=0>
+<body>
 
-<form method=get onSubmit="Set(document.all.ColorHex.value); return false;">
-<div align=center>
+<form method="get" onsubmit="Set(document.all.ColorHex.value); return false;">
+<div align="center">
 
 <select name="textPulldown">
 <option>The quick brown</option>
@@ -28,7 +28,7 @@ function returnSelected() {
 <option>the lazy dog.</option>
 </select>
 
-<input type="button" value=" Go " onClick="returnSelected()">
+<input type="button" value=" Go " onclick="returnSelected()">
 
 </div>
 </form>
