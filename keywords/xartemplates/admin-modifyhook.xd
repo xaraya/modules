@@ -1,7 +1,8 @@
-<div class="xar-title"><span><xar:mlstring>Keywords</xar:mlstring></span></div>
-
-<div>
-  <span><label for="keywords"><xar:mlstring>Keywords</xar:mlstring></label></span>
-  <span><input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" /></span>
-</div>
-
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Keywords</xar:mlstring>:
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
+	</span>
+	</div>
