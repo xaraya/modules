@@ -3,7 +3,7 @@
         <th colspan="2" style="text-align: center;">
             <xar:mlstring>Categories</xar:mlstring>
 <xar:if condition="!empty($newcat)">
-            [ <a href="&xar-modurl-categories-admin-modifycat;"><xar:mlstring>New</xar:mlstring></a> ]
+            [ <a href="&xar-modurl-categories-admin-modifycat;"><xar:mlstring>Add</xar:mlstring></a> ]
 </xar:if>
         </th>
     </tr>
