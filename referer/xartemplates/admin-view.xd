@@ -19,10 +19,12 @@
 <xar:else />
 
 <div class="xar-norm-outline">
-	<span style="text-align: left;"><xar:mlstring>Url</xar:mlstring></span>
-	<span style="text-align: right; float: right;"><xar:mlstring>Frequency</xar:mlstring></span>
+	<div class="xar-norm">
+		<span style="text-align: left;"><xar:mlstring>Url</xar:mlstring></span><span style="text-align: right; float: right;"><xar:mlstring>Frequency</xar:mlstring></span>
+	</div>
 		<xar:loop name="$items">
 			<xar:if condition="(($loop:index + 1) % 2)">
+			<div class="xar-norm">
 				<span style="text-align: left;">
 					<xar:if condition="$loop:item['url'] eq 'bookmark'">
 						#$loop:item['url']#
@@ -33,13 +35,16 @@
 				<span style="text-align: right; float: right;">
 					#$loop:item['frequency']#
 				</span>
+			</div>
 			<xar:else />
-				<span class="xar-accent" style="text-align: left;">
+			<div class="xar-accent">
+				<span style="text-align: left;">
 					<a href="#$loop:item['url']#" target="_BLANK">#$loop:item['urldisplay']#</a>
 				</span>
-				<span class="xar-accent" style="text-align: right; float: right;">
+				<span style="text-align: right; float: right;">
 					#$loop:item['frequency']#
 				</span>
+			</div>
 			</xar:if>
 		</xar:loop>
 </div>
