@@ -257,7 +257,7 @@ function xarbb_upgrade($oldversion)
         case '.9':
             // Set up module hooks
             xarRegisterMask('ViewxarBB','All','xarbb','Forum','All:All','ACCESS_OVERVIEW');
-            break;
+            // fall through to next upgrade
 
         case '0.9.1.0':
             // Load database tables etc.
@@ -273,11 +273,9 @@ function xarbb_upgrade($oldversion)
             $update =  "UPDATE $linkagetable SET xar_itemtype = 1 WHERE xar_modid = $modid";
             $result =& $dbconn->Execute($update);
             if (!$result) return;
-            return xarbb_upgrade('1.0.0');
-            break;
+            // fall through to next upgrade
+
         case '1.0':
-            return xarbb_upgrade('1.0.0');
-            break;
         case '1.0.0':
         // New modvars
             xarModSetVar('xarbb', 'forumsperpage', 20);
@@ -304,8 +302,8 @@ function xarbb_upgrade($oldversion)
             //or use the first post reply time - (or maybe user reg date?) - use first post for now.
             $dotopicstable=xarbb_updatetopicstable();
             if (!$dotopicstable)  return;
-            return xarbb_upgrade('1.0.1');
-            break;
+            // fall through to next upgrade
+
         case '1.0.1':
             //<jojodee> Start of upgrade function and conversion of date fields
             //<jojodee> TODO: is working, still requires some additional error checking/except. messages
@@ -355,9 +353,8 @@ function xarbb_upgrade($oldversion)
             //move to new fields and drop temp fields
             $coyptopicdates=xarbb_copydates();
             if (!$coyptopicdates)  return;
+            // fall through to next upgrade
 
-            return xarbb_upgrade('1.0.2');
-            break;
         case '1.0.2':
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -375,12 +372,12 @@ function xarbb_upgrade($oldversion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return; 
-            return xarbb_upgrade('1.0.3');
-            break;
+            // fall through to next upgrade
+
         case '1.0.3':
             xarModSetVar('xarbb', 'allowhtml', 1);
-            return xarbb_upgrade('1.0.4');
-            break;
+            // fall through to next upgrade
+
         case '1.0.4':
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -398,8 +395,8 @@ function xarbb_upgrade($oldversion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-            return xarbb_upgrade('1.0.5');
-            break;
+            // fall through to next upgrade
+
         case '1.0.5':
                 $forums = xarModAPIFunc('xarbb','user','getallforums');
                 //Need to start the settings
@@ -418,8 +415,8 @@ function xarbb_upgrade($oldversion)
                 foreach($forums as $forum) {
                     xarModSetVar('xarbb', 'settings.'.$forum['fid'], serialize($settings));
                 }
-            return xarbb_upgrade('1.0.6');
-            break;
+            // fall through to next upgrade
+
         case '1.0.6':
             xarModDelVar('xarbb', 'hottopic');
             xarModDelVar('xarbb', 'redhottopic');
@@ -430,12 +427,12 @@ function xarbb_upgrade($oldversion)
             xarModSetVar('xarbb', 'cookiepath', '/');
             xarModSetVar('xarbb', 'cookiedomain', '');
             xarModSetVar('xarbb', 'forumsperpage', 50);
-            return xarbb_upgrade('1.0.7');
-            break;
+            // fall through to next upgrade
+
         case '1.0.7':
             //catlinkage table updated with itemtype 2 - not required now
-            return xarbb_upgrade('1.0.8');
-            break;
+            // fall through to next upgrade
+
         case '1.0.8':
             //Update the new default cid
             $oldcatno =xarModGetVar('xarbb','number_of_categories.1');
@@ -452,7 +449,8 @@ function xarbb_upgrade($oldversion)
             //TODO
             $cleanupxarbb=xarbb_cleanitemtypes();
                 if (!$cleanupxarbb)  return;
-            continue;
+            // fall through to next upgrade
+
         case '1.0.9':
             if (!xarModRegisterHook('item', 'create', 'API',
                                    'xarbb', 'admin', 'createhook')) {
@@ -463,17 +461,48 @@ function xarbb_upgrade($oldversion)
                                    'xarbb', 'admin', 'newhook')) {
                 return false;
             }
-            return xarbb_upgrade('1.1.0');
-            continue;
+            // fall through to next upgrade
+
         case '1.1.0':
-            return xarbb_upgrade('1.1.1');
-            break;
         case '1.1.1':
             // search hook
             if (!xarModRegisterHook('item', 'search', 'GUI', 'xarbb', 'user', 'search')) {
                 return false;
             }
-            break;
+            // fall through to next upgrade
+
+        case '1.1.2':
+            // Load database tables etc.
+            xarModAPILoad('comments','user');
+
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $topicstable = $xartable['xbbtopics'];
+            $commentstable = $xartable['comments'];
+
+            // update item type of replies in comments, based on forum id
+            $query = "SELECT DISTINCT xar_objectid, xar_fid
+                      FROM $commentstable
+                      LEFT JOIN $topicstable
+                      ON xar_objectid = xar_tid
+                      WHERE xar_modid = ? AND xar_itemtype = ?";
+            $modid = xarModGetIDFromName('xarbb');
+            $bindvars = array((int)$modid,0);
+            $result =& $dbconn->Execute($query,$bindvars);
+            if (!$result) return;
+
+            $update = "UPDATE $commentstable
+                       SET xar_itemtype = ?
+                       WHERE xar_modid = ? AND xar_itemtype = ? AND xar_objectid = ?";
+            while (!$result->EOF) {
+                list($objectid,$fid) = $result->fields;
+                $bindvars = array((int)$fid,(int)$modid,0,(int)$objectid);
+                $dbconn->Execute($update,$bindvars);
+                $result->MoveNext();
+            }
+            $result->Close();
+            // fall through to next upgrade
 
         default:
             break;
