@@ -59,6 +59,15 @@ function autolinks_adminapi_getmenulinks()
                               'label' => xarML('Modify Config'));
     }
 
+    // Security Check
+    if (xarSecurityCheck('AdminAutolinks', 0)) {
+        $menulinks[] = Array(
+            'url'   => xarModURL('autolinks', 'util', 'main'),
+            'title' => xarML('Autolink utilities'),
+            'label' => xarML('Utlilities')
+        );
+    }
+
     if (empty($menulinks)){
         $menulinks = '';
     }
