@@ -39,7 +39,6 @@
 <h3><xar:mlstring>Updated in the last day</xar:mlstring></h3>
 	<xar:loop name="$links">
 	<xar:if condition="($loop:item['when'] lt 86400) AND ($loop:item['when'] gt 14400)">
-		<h3><xar:mlstring>Updated in the last day</xar:mlstring></h3>
 		<p>
 			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
 			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
@@ -58,7 +57,6 @@
 <h3><xar:mlstring>Updates over a week old</xar:mlstring></h3>
 	<xar:loop name="$links">
 	<xar:if condition="$loop:item['when'] gt 604800">
-		<h3><xar:mlstring>Updated more than a week old.</xar:mlstring></h3>
 		<p>
 			<a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
 			<xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
