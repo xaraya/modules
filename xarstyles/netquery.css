@@ -1,11 +1,15 @@
 img.gobutton {
   border-style: none;
+  width: 21px;
+  height: 22px;
   padding: 0;
   margin:  0 2px 2px 0;
   vertical-align: top;
 }
 input.gobutton {
   border-style: none;
+  width: 21px;
+  height: 22px;
   padding: 0;
   margin:  0 2px 2px 0;
   vertical-align: top;
@@ -14,6 +18,8 @@ input.outset {
   border-style: outset;
   border-width: 4px;
   border-color: #CCCC99;
+  width: 45px;
+  height: 27px;
   padding: 0;
   margin:  0 2px 2px 0;
 }
@@ -21,6 +27,8 @@ input.inset {
   border-style: inset;
   border-width: 4px;
   border-color: #99CCCC;
+  width: 45px;
+  height: 27px;
   padding: 0;
   margin:  0 2px 2px 0;
 }

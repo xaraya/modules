@@ -8,7 +8,7 @@ function netquery_admin_ptnew()
     switch(strtolower($phase)) {
         case 'form':
         default:
-            $data['flags'] = xarModAPIFunc('netquery', 'admin', 'getflags');
+            $data['flags'] = xarModAPIFunc('netquery', 'user', 'getflags');
             if ($data['flags'] == false) return;
             $data['portnum']        = $portnum;
             $data['authid']         = xarSecGenAuthKey();

@@ -1,26 +1,26 @@
 <?php
-function netquery_adminapi_getportflag($args)
+function netquery_userapi_getportdata($args)
 {
     extract($args);
-    if (!isset($flag)) {
+    if (!isset($port)) {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    $portflag = array();
+    $portdata = array();
     if (!xarSecurityCheck('OverviewNetquery')) {
-        return $portflag;
+        return $portdata;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];
-    $query = "SELECT * FROM $PortsTable WHERE flag = ?";
-    $bindvars = array($flag);
+    $query = "SELECT * FROM $PortsTable WHERE flag < 99 AND port = ?";
+    $bindvars = array($port);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     for (; !$result->EOF; $result->MoveNext()) {
         list($port_id, $port, $protocol, $service, $comment, $flag) = $result->fields;
-        $portflag[] = array('port_id'  => $port_id,
+        $portdata[] = array('port_id'  => $port_id,
                             'port'     => $port,
                             'protocol' => $protocol,
                             'service'  => $service,
@@ -28,6 +28,6 @@ function netquery_adminapi_getportflag($args)
                             'flag'     => $flag);
     }
     $result->Close();
-    return $portflag;
+    return $portdata;
 }
 ?>

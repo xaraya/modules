@@ -4,7 +4,7 @@ function netquery_admin_flview()
     if(!xarSecurityCheck('EditNetquery')) return;
     $data['items'] = array();
     $data['authid'] = xarSecGenAuthKey();
-    $flags = xarModAPIFunc('netquery', 'admin', 'getflags');
+    $flags = xarModAPIFunc('netquery', 'user', 'getflags');
     if (empty($flags)) {
         $msg = xarML('There are no service flags registered');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));

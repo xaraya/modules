@@ -5,7 +5,7 @@ function netquery_admin_lgview()
     if(!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
     $data['authid'] = xarSecGenAuthKey();
-    $routers = xarModAPIFunc('netquery', 'admin', 'getrouters', array('startnum' => $startnum));
+    $routers = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => $startnum));
     if (empty($routers)) {
         $msg = xarML('There are no looking glass routers registered');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));

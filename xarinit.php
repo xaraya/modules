@@ -16,6 +16,8 @@ function netquery_init()
     xarModSetVar('netquery', 'looking_glass_enabled', 1);
     xarModSetVar('netquery', 'whois_max_limit', 3);
     xarModSetVar('netquery', 'user_submissions', 1);
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+    xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('ReadNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('EditNetquery','All','netquery','All','All','ACCESS_EDIT');
@@ -38,6 +40,8 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'user_submissions', 1);
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
             create_lgrequesttable();
             create_lgroutertable();
@@ -47,28 +51,44 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'user_submissions', 1);
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
             create_portstable();
             break;
         case '1.2.0':
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'user_submissions', 1);
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             create_flagstable();
             create_portstable();
             break;
         case '1.3.0':
-            create_flagstable();
             xarModSetVar('netquery', 'user_submissions', 1);
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
+            create_flagstable();
             break;
         case '1.3.1':
-            create_flagstable();
             xarModSetVar('netquery', 'user_submissions', 1);
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
+            create_flagstable();
             break;
         case '2.0.0':
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             break;
         case '2.1.0':
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
             break;
         case '2.2.0':
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+            xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
+            break;
+        case '2.3.0':
         default:
             break;
     }
@@ -90,6 +110,7 @@ function netquery_delete()
     xarModDelVar('netquery', 'whoisip_enabled');
     xarModDelVar('netquery', 'whois_enabled');
     xarModDelVar('netquery', 'capture_log_enabled');
+    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
     xarRemoveMasks('netquery');
     xarRemoveInstances('netquery');
     drop_portstable();

@@ -11,7 +11,7 @@ function netquery_admin_ptmodify()
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getport', array('port_id' => $port_id));
             if ($data == false) return;
-            $data['flags'] = xarModAPIFunc('netquery', 'admin', 'getflags');
+            $data['flags'] = xarModAPIFunc('netquery', 'user', 'getflags');
             if ($data['flags'] == false) return;
             $data['pflag'] = $pflag;
             $data['authid']         = xarSecGenAuthKey();

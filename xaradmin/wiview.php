@@ -5,7 +5,7 @@ function netquery_admin_wiview()
     if(!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
     $data['authid'] = xarSecGenAuthKey();
-    $links = xarModAPIFunc('netquery', 'admin', 'getlinks', array('startnum' => $startnum));
+    $links = xarModAPIFunc('netquery', 'user', 'getlinks', array('startnum' => $startnum));
     if (empty($links)) {
         $msg = xarML('There are no whois links registered');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));

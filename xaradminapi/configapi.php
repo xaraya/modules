@@ -19,10 +19,10 @@ function netquery_adminapi_configapi()
     $data['user_submissions'] = xarModGetVar('netquery', 'user_submissions');
     $data['submitlabel'] = xarML('Submit');
     $data['cancellabel'] = xarML('Cancel');
-    $data['pingexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'ping'));
-    $data['traceexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'trace'));
-    $data['logfile'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'log'));
-    $data['lgdefault'] = xarModAPIFunc('netquery', 'admin', 'getlgrdata', array('router' => 'default'));
+    $data['pingexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'ping'));
+    $data['traceexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'trace'));
+    $data['logfile'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'log'));
+    $data['lgdefault'] = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => 'default'));
     $data['portsubmits'] = xarModAPIFunc('netquery', 'admin', 'countportflag', array('flag' => '99'));
     $data['whoislimits'] = Array(1, 2, 3, 4, 5);
     $startoptions = array();
