@@ -50,7 +50,7 @@ function hitcount_userapi_get($args)
 
 // TODO: re-evaluate this for hook calls !!
     // Security check
-	if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$objectid")) return;
+    if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$objectid")) return;
 
     // Database information
     $dbconn =& xarDBGetConn();

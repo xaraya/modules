@@ -49,7 +49,7 @@ function hitcount_adminapi_create($args)
 // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-	if(!xarSecurityCheck('ReadHitcountItem',1,'Item',"$modname:$itemtype:$objectid")) return;
+    if(!xarSecurityCheck('ReadHitcountItem',1,'Item',"$modname:$itemtype:$objectid")) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

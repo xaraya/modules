@@ -43,10 +43,10 @@ function hitcount_userapi_leftjoin($args)
     // Security check
     if (count($itemids) > 0) {
         foreach ($itemids as $itemid) {
-			if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:All:$itemid")) return;
+            if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:All:$itemid")) return;
         }
     } else {
-		if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:All:All")) return;
+        if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:All:All")) return;
     }
 
     // Table definition

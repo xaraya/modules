@@ -9,7 +9,7 @@
 function hitcount_userapi_getmodules($args)
 {
 // Security Check
-	if(!xarSecurityCheck('ViewHitcountItems')) return;
+    if(!xarSecurityCheck('ViewHitcountItems')) return;
 
     // Database information
     $dbconn =& xarDBGetConn();
