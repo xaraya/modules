@@ -12,7 +12,7 @@ function weirdmind_adminapi_getmenulinks()
                                                   'admin',
                                                   'sshfaq'),
                              'title' => xarML('Read the Mindterm Frequently 
-			     Asked Questions'),
+                 Asked Questions'),
                              'label' => xarML('View FAQ'));
 
         $menulinks[] = Array('url'   => xarModURL('weirdmind',
