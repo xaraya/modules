@@ -1,20 +1,11 @@
 <?php
 function headlines_admin_create($args)
 {
-    // Get parameters from whatever input we need
-    $url = xarVarCleanFromInput('url');
-
+    if (!xarVarFetch('url','str:1:',$url)) return;
     extract($args);
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-
-    // Check arguments
-    if (empty($url)) {
-        $msg = xarML('No Address for Feed Provided');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
 
       if (!ereg("^http://|https://|ftp://", $url)) {
         $msg = xarML('Invalid Address for Feed');

@@ -3,9 +3,7 @@ function headlines_admin_import()
 {
     // Security Check
     if(!xarSecurityCheck('EditHeadlines')) return;
-
-    // Get parameters from whatever input we need
-    $hid = xarVarCleanFromInput('hid');
+    xarVarFetch('hid', 'id', $hid);
 
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');

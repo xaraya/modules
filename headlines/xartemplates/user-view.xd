@@ -1,6 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#"> #$chantitle# </a></h2>
 <div style="margin: auto;">
+<script type="text/javascript" src="modules/headlines/xartemplates/includes/popup.js"></script>
 <xar:if condition="xarModIsHooked('categories','headlines')">
 <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" itemid="$hid" />
 </xar:if>
@@ -18,6 +19,11 @@
             </xar:if>
             <xar:if condition="!empty($loop:item['description'])">
                 <p>#$loop:item['description']#</p>
+				<xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
+					<p class="xar-sub">
+						[ <a href="#xarModUrl('headlines', 'admin', 'importitem', array('theme' => 'print', 'title' => $loop:item['title'], 'description' => $loop:item['description'], 'authid' => $authid, 'hid' => $hid))#"><xar:mlstring>Import to News Queue</xar:mlstring></a> ]
+					</p>
+				</xar:if>
             </xar:if>
         </xar:loop>
     </xar:if>

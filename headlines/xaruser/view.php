@@ -115,6 +115,8 @@ function headlines_user_view()
         $data['hooks'] = $hooks;
     }
 
+    $data['authid'] = xarSecGenAuthKey();
+
     return $data;
 }
 ?>
