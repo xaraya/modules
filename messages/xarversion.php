@@ -16,4 +16,5 @@ $modversion['user'] = 1;
 $modversion['securityschema'] = array('messages::Item' => 'messages item name::messages item ID');
 $modversion['class'] = 'Admin';
 $modversion['category'] = 'Content';
+$modversion['dependency'] = array(14);
 ?>
