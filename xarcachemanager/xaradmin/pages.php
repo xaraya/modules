@@ -67,6 +67,21 @@ function xarcachemanager_admin_pages($args)
             }
         }
     
+        xarVarFetch('sessionless','isset',$sessionless,'',XARVAR_NOT_REQUIRED);
+        $urllist = '';
+        if (!empty($sessionless)) {
+            $urls = preg_split('/\s+/',$sessionless,-1,PREG_SPLIT_NO_EMPTY);
+            $baseurl = xarServerGetBaseURL();
+            $checkurls = array();
+            foreach ($urls as $url) {
+                if (empty($url) || !strstr($url,$baseurl)) continue;
+                $checkurls[] = $url;
+            }
+            if (count($checkurls) > 0) {
+                $urllist = "'" . join("','",$checkurls) . "'";
+            }
+        }
+
         if (!is_writable($cachingConfigFile)) {
             $msg=xarML('The caching configuration file is not writable by the web server.  
                        #(1) must be writable by the web server for 
@@ -81,9 +96,14 @@ function xarcachemanager_admin_pages($args)
         $cachegroups = join(';', $grouplist); 
         $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
     
+        $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($urllist);", $cachingConfig);
+
         $fp = fopen ($cachingConfigFile, 'wb');
         fwrite ($fp, $cachingConfig);
         fclose ($fp);
+
+        xarResponseRedirect(xarModURL('xarcachemanager','admin','pages'));
+        return true;
 
     } elseif (!empty($data['settings']['PageCacheGroups'])) {
         $grouplist = explode(';',$data['settings']['PageCacheGroups']);
@@ -92,6 +112,15 @@ function xarcachemanager_admin_pages($args)
                 $data['groups'][$idx]['checked'] = 1;
             }
         }
+    }
+
+    if (!isset($data['settings']['PageSessionLess'])) {
+        $data['sessionless'] = xarML("Please add the following line to your config.caching.php file :\n#(1)",
+                                     '$cachingConfiguration[\'Page.SessionLess\'] = array();');
+    } elseif (!empty($data['settings']['PageSessionLess']) && count($data['settings']['PageSessionLess']) > 0) {
+        $data['sessionless'] = join("\n",$data['settings']['PageSessionLess']);
+    } else {
+        $data['sessionless'] = '';
     }
 
     // Get some page caching configurations

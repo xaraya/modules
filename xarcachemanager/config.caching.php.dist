@@ -17,6 +17,8 @@ $cachingConfiguration['Page.ShowTime'] = 1;
 $cachingConfiguration['Page.ExpireHeader'] = 1;
 // Allow page caching for the following user groups (besides anonymous)
 $cachingConfiguration['Page.CacheGroups'] = '';
+// Allow session-less page caching of these URLs for first-time visitors
+$cachingConfiguration['Page.SessionLess'] = array();
 // Maximum life time of block cache in seconds
 $cachingConfiguration['Block.TimeExpiration'] = 7200;
 ?>
