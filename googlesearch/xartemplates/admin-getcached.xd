@@ -1,0 +1,163 @@
+<style>
+  .leftColumn {
+    float: left;
+    width: 50%;
+    margin: 0;
+  }
+  .rightColumn {
+    float: right;
+    width: 50%;
+    margin: 0;
+  }
+  .clearer {
+    clear: both;
+    line-height: 0px;
+    height: 0px;
+  }
+  legend {
+    color: lightgrey;
+  }
+  legend.section {
+    font-size: larger;
+    font-weight: bold;
+  }
+  legend.subsection {
+    font-weight: bold;
+  }
+</style>
+<script language="Javascript" type="text/javascript" src="modules/googlesearch/xartemplates/includes/admin.js"></script>
+
+<div style="margin-top: 1em; margin-bottom: 1em;">
+<h2>Retrieve Cached Pages from Google</h2>
+<fieldset>
+  <legend class="section">1. <xar:mlstring>Generate the URL's of pages to retrieve: </xar:mlstring></legend>
+  <div class="leftColumn">
+    <form method="get" action="index.php">
+    <fieldset>
+      <legend class="subsection">a. <xar:mlstring>Query Google: </xar:mlstring></legend>
+      <input type="hidden" name="module" value="googlesearch">
+      <input type="hidden" name="type" value="admin">
+      <input type="hidden" name="func" value="getcached">
+      <input type="text"  name="q" value="#$q#" size="50">
+      &nbsp;
+      <input type="submit" value="GoogleIt">
+      <xar:mlstring>You have run </xar:mlstring>#xarModGetVar('googlesearch', 'queryCount')# <xar:mlstring> out of </xar:mlstring>#xarModGetVar('googlesearch', 'maxQueries')# <xar:mlstring> today</xar:mlstring>
+    </fieldset>
+    </form>
+  </div>
+  <div class="rightColumn">
+    <form method="get" action="index.php">
+    <fieldset>
+      <legend class="subsection">b. <xar:mlstring>Add URL manually: </xar:mlstring></legend>
+      <input type="hidden" name="module" value="googlesearch">
+      <input type="hidden" name="type" value="admin">
+      <input type="hidden" name="func" value="getcached">
+      <input type="text"  name="url" value="#$url#" size="50">
+      &nbsp;
+      <input type="submit" value="Add URL">
+      <input type="submit" name="action" value="Fetch">
+    </fieldset>
+    </form>
+  </div>
+  <div class="clearer">&nbsp;</div>
+
+  <xar:if condition="!empty($googlelinks) and sizeof($googlelinks) gt 0">
+  <form method="post" action="#xarModURL('googlesearch', 'admin', 'getcached')###googlelinks">
+  <fieldset>
+    <legend class="subsection"><a name="googlelinks">&nbsp;</a><xar:mlstring>The results of the query: </xar:mlstring> &nbsp; <a target="googleit" title="Run the query in a new window on google's site" href="http://www.google.com/search?q=#$searchQuery#">#$searchQuery#</a></legend>
+    #$searchComments#
+    <div>
+      <xar:if condition="$prev ge 0">
+      <a href="#xarModURL('googlesearch', 'admin', 'getcached', array('q'=>$q, 'page'=>$prev))###googlelinks">&lt;&lt;Prev</a>
+      <xar:else />
+      &lt;&lt;Prev
+      </xar:if>
+      &nbsp; &nbsp; <span style="font-style: italic">
+      <xar:mlstring>Viewing Results </xar:mlstring> #$viewrange# <xar:mlstring> of </xar:mlstring> #$estimatedTotalResultsCount#
+      </span> &nbsp; &nbsp;
+      <xar:if condition="!$lastpage">
+      <a href="#xarModURL('googlesearch', 'admin', 'getcached', array('q'=>$q, 'page'=>$next))###googlelinks">Next&gt;&gt;</a>
+      <xar:else />
+      Next&gt;&gt;
+      </xar:if>
+    </div>
+
+    <div><input type="button" value="Select All" onclick="checkAll(this, this.value == 'Select All');"></div>
+    <xar:foreach in="$googlelinks" value="$item">
+      <div>
+        <xar:if condition="$item['cachedSize'] gt 0">
+        <input type="checkbox" name="googleURLs[#$item['URL']#]" value="1"> <span class="help" title="#$item['title']#">#$item['URL']#</span> (#$item['cachedSize']#)
+        &nbsp;
+        <xar:if condition="isset($savedPages[$item['URL']]) and file_exists('var/cache/google/'.$savedPages[$item['URL']].'.html')">
+          [<a title="View the saved cache for: #$item['URL']#" href="var/cache/google/#$savedPages[$item['URL']]#.html">View</a>]
+        <xar:else />
+          [<a title="Retrieve and save the cache for: #$item['URL']#" href="#xarModURL('googlesearch', 'admin', 'getcached', array('url'=>$item['URL'], 'action'=>'Fetch'))###googlelinks">Fetch</a>]
+        </xar:if>
+        <xar:else />
+        <input type="checkbox" disabled> <span style="text-decoration: line-through">#$item['URL']#</span> (<xar:mlstring>Cache is not available</xar:mlstring>)
+        </xar:if>
+      </div>
+    </xar:foreach>
+
+    <input type="submit" value="Add Selected URL's">
+    <input type="submit" name="action" value="Fetch">
+  </fieldset>
+  </form>
+  </xar:if>
+
+</fieldset>
+
+<xar:set name="linkcount">sizeof($links)</xar:set>
+<xar:if condition="!empty($links) and $linkcount gt 0">
+<form method="post" action="#xarModURL('googlesearch', 'admin', 'getcached')###links">
+<fieldset>
+  <legend class="section"><a name="links">&nbsp;</a>2. <xar:mlstring>Double-check the list of pages to retrieve </xar:mlstring> (#$linkcount#):</legend>
+
+    <div><input type="button" value="Select All" onclick="checkAll(this, this.value == 'Select All');"></div>
+    <xar:foreach in="$links" value="$item">
+      <div>
+        <input type="checkbox" name="savedlinks[#$item#]" value="1"><a target="view" title="Visit the url: #$item#" href="#$item#">#$item#</a>
+        &nbsp; [
+        <xar:if condition="isset($savedPages[$item]) and file_exists('var/cache/google/'.$savedPages[$item].'.html')">
+          <a title="View the saved cache for: #$item#" href="#xarModURL('googlesearch', 'admin', 'managecached', array('cache'=>$savedPages[$item]))#">View</a>
+        <xar:else />
+          <a title="Retrieve and save the cache for: #$item#" href="#xarModURL('googlesearch', 'admin', 'getcached', array('url'=>$item, 'action'=>'Fetch'))###links">Fetch</a>
+        </xar:if>
+         |
+        <a title="Delete the url: #$item#" href="#xarModURL('googlesearch', 'admin', 'getcached', array('url'=>$item, 'action'=>'Delete'))###links">Delete</a>
+        ]
+      </div>
+    </xar:foreach>
+
+    <input type="submit" name="action" value="Delete">
+    <input type="submit" name="action" value="Fetch">
+    &nbsp; [<a href="#xarModURL('googlesearch', 'admin', 'getcached', array('action'=>'sortlinks'))###links">Sort Links</a>]
+    <xar:if condition="isset($errors['Fetch']) and is_array($errors['Fetch'])">
+    <xar:foreach in="$errors['Fetch']" key="$url" value="$error">
+      <div>$url: $error</div>
+    </xar:foreach>
+    </xar:if>
+</fieldset>
+</form>
+
+
+<fieldset>
+  <legend class="section">3. <xar:mlstring>Retrieve a page: </xar:mlstring></legend>
+
+  <div class="leftColumn">
+  <fieldset>
+    <legend class="subsection">a. Manual</legend>
+    Click the link next to the URL above to manually retrieve that page from Google's cache.
+  </fieldset>
+  </div>
+
+  <div class="rightColumn">
+  <fieldset>
+    <legend class="subsection">b. Schedule</legend>
+    TODO
+  </fieldset>
+  </div>
+
+</fieldset>
+</div>
+</xar:if>

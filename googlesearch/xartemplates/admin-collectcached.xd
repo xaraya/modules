@@ -1,0 +1,76 @@
+<style>
+  .leftColumn {
+    float: left;
+    width: 50%;
+    margin: 0;
+  }
+  .rightColumn {
+    float: right;
+    width: 50%;
+    margin: 0;
+  }
+  .clearer {
+    clear: both;
+    line-height: 0px;
+    height: 0px;
+  }
+  legend {
+    color: lightgrey;
+  }
+  legend.section {
+    font-size: larger;
+    font-weight: bold;
+  }
+  legend.subsection {
+    font-weight: bold;
+  }
+</style>
+<script language="Javascript" type="text/javascript" src="modules/googlesearch/xartemplates/includes/admin.js"></script>
+
+<div style="margin-top: 1em; margin-bottom: 1em;">
+<h2><xar:mlstring>Collect Stored Cached Pages</xar:mlstring>:</h2>
+<form>
+<fieldset>
+  <legend class="section">1. <xar:mlstring>Enter the URL to the xaraya remote system</xar:mlstring>:</legend>
+  <input type="hidden" name="module" value="googlesearch">
+  <input type="hidden" name="type" value="admin">
+  <input type="hidden" name="func" value="collectcached">
+  <input type="text"  name="url" value="#$url#" size="50">
+  &nbsp;
+  <input type="submit" value="Retrieve List of Pages">
+  &nbsp; (no trailing '/')
+  <div style="font-style: italic; font-weight: bold">#$message#</div>
+</fieldset>
+</form>
+
+
+<xar:set name="filecount">sizeof($files)</xar:set>
+<xar:if condition="!empty($files) and $filecount gt 0">
+<form method="post" action="#xarModURL('googlesearch', 'admin', 'collectcached')###files">
+<fieldset>
+  <legend class="section"><a name="files">&nbsp;</a>2. <xar:mlstring>Select which pages to import </xar:mlstring> (#$filecount#):</legend>
+    <div><input type="button" value="Select All" onclick="checkAll(this, this.value == 'Select All');"></div>
+    <xar:foreach in="$files" key="$hash" value="$url">
+      <div>
+        <input type="checkbox" name="import[#$hash#]" value="1"><a target="view" title="Visit the url: #$url#" href="#$url#">#$url#</a>
+        &nbsp; [
+        <xar:if condition="isset($savedPages[$url]) and file_exists('var/cache/google/'.$hash.'.html')">
+          <a title="View the saved cache for: #$url#" href="#xarModURL('googlesearch', 'admin', 'managecached', array('cache'=>$hash))#">View</a>
+        <xar:else />
+          <a title="Import the cache for: #$url#" href="#xarModURL('googlesearch', 'admin', 'collectcached', array('cache'=>$hash, 'action'=>'Import'))###files">Import</a>
+        </xar:if>
+        ]
+      </div>
+    </xar:foreach>
+
+    <input type="submit" name="action" value="Import">
+    <xar:if condition="isset($errors['Import']) and is_array($errors['Import'])">
+    <xar:foreach in="$errors['Import']" key="$url" value="$error">
+      <div>$url: $error</div>
+    </xar:foreach>
+    </xar:if>
+</fieldset>
+</form>
+</xar:if>
+
+</div>

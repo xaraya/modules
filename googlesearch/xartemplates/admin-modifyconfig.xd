@@ -1,0 +1,60 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Google Search Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Google Search Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post" action="#xarModURL('googlesearch', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <span style="float: left; width: 20%; text-align: right;">
+      <span class="help" title="#xarML('Your Google API Key.')#"><label for="license-key"><a href="https://www.google.com/accounts/NewAccount?continue=http://api.google.com/createkey&followup=http://api.google.com/createkey"><xar:mlstring>Google API Key</xar:mlstring></a></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+      <input type="text" name="license-key" id="license-key" value="#xarModGetVar('googlesearch', 'license-key', 1)#" size="30" maxlength="100" />
+    </span>
+    </div>
+
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <span style="float: left; width: 20%; text-align: right;">
+      <span class="help" title="#xarML('The maximum queries allowed in a single day')#"><label for="maxQueries"><a href="https://www.google.com/accounts/NewAccount?continue=http://api.google.com/createkey&followup=http://api.google.com/createkey"><xar:mlstring>Max Queries / Day</xar:mlstring></a></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+      <input type="text" name="maxQueries" id="maxQueries" value="#xarModGetVar('googlesearch', 'maxQueries')#" size="4" maxlength="4" />
+    </span>
+    </div>
+
+    <div style="clear: both; padding-top: 10px;">
+    <xar:set name="queryCountDay">date('m/d/Y', xarModGetVar('googlesearch', 'queryCountDay'))</xar:set>
+    <xar:set name="queryCount">xarModGetVar('googlesearch', 'queryCount')</xar:set>
+
+    <xar:if condition="$queryCount == 1">
+      <xar:set name="queryString">xarML(' query on ')</xar:set>
+    <xar:else />
+      <xar:set name="queryString">xarML(' queries on ')</xar:set>
+    </xar:if>
+
+    <span style="float: right; width: 78%; text-align: left;">
+      <xar:mlstring>So far, You have run </xar:mlstring>#$queryCount# <xar:mlstring> out of </xar:mlstring>#xarModGetVar('googlesearch', 'maxQueries')# #$queryString# #$queryCountDay#
+    </span>
+    <div class="clearer">&nbsp;</div>
+    </div>
+
+    <fieldset>
+      <legend>Reset Module Variables</legend>
+      <div><input type="checkbox" name="reset[cacheQuery]"> cacheQuery</div>
+      <div><input type="checkbox" name="reset[cacheGoogleSearchResponse]"> cacheGoogleSearchResponse</div>
+      <div><input type="checkbox" name="reset[cacheGoogleSearchPage]"> cacheGoogleSearchPage</div>
+      <div><input type="checkbox" name="reset[cacheLinks]"> cacheLinks</div>
+      <div><input type="checkbox" name="reset[cacheRetrievedPages]"> cacheRetrievedPages</div>
+      <div><input type="checkbox" name="reset[cacheRemoteURL]"> cacheRemoteURL</div>
+      <div><input type="checkbox" name="reset[cacheRemoteFiles]"> cacheRemoteFiles</div>
+      <div><input type="checkbox" name="reset[cachePageIndex]"> cachePageIndex</div>
+      <div><input type="checkbox" name="reset[cachePageHash]"> cachePageHash</div>
+    </fieldset>
+
+
+    <div style="float: left; width: 30%; text-align: right; margin-top: 5px;"><input type="submit" value="#$createlabel#" /></div>
+    <div style="clear:both;line-height:0;height:0">&nbsp;</div>
+</form>
+</div>
+</div>

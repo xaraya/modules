@@ -1,0 +1,30 @@
+<style>
+  .label {
+    float: left;
+    text-align: right;
+    width: 18%;
+  }
+  .value {
+    float: right;
+    text-align: left;
+    width: 60%;
+  }
+  .clearer {
+    clear:both;
+    line-height: 0px;
+    height: 0px;
+  }
+</style>
+
+<form method="post" action="">
+<fieldset>
+  TODO: need to create a form and fill it with the extracted elements, the form should be dynamic if the extracted
+  elements are dynamic (different pubtypes have different fields).
+  <fieldset>
+    <legend>For example:</legend>
+    <xar:foreach in="$extracted" key="$title" value="$value">
+      <div><span class="label">#$title#:</span><span class="value">#$value#</span><div class="clearer">&nbsp;</div></div>
+    </xar:foreach>
+  </fieldset>
+</fieldset>
+</form>

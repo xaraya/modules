@@ -1,0 +1,95 @@
+<style>
+  .leftColumn {
+    float: left;
+    width: 50%;
+    margin: 0;
+  }
+  .rightColumn {
+    float: right;
+    width: 50%;
+    margin: 0;
+  }
+  .clearer {
+    clear: both;
+    line-height: 0px;
+    height: 0px;
+  }
+  legend {
+    color: lightgrey;
+  }
+  legend.section {
+    font-size: larger;
+    font-weight: bold;
+  }
+  legend.subsection {
+    font-weight: bold;
+  }
+</style>
+
+<div style="margin-top: 1em; margin-bottom: 1em;">
+<h2>Manage Cached Pages from Google</h2>
+<fieldset>
+  <legend class="section"><a name="pages">&nbsp;</a>Saved Pages (in var/cache/google) <span style="font-size: smaller">[<a title="rebuild from the actual files on the filesystem" href="#xarModURL('googlesearch', 'admin', 'rebuildcachekeys')#">Rebuild CACHEKEYS</a>]</span></legend>
+
+    <div style="margin: 0 auto; text-align: center; border-bottom: 1px solid black">
+      <xar:if condition="$pagecount gt 0">
+      <xar:if condition="$prev ge 0">
+      <a href="#xarModURL('googlesearch', 'admin', 'managecached', array('page'=>$prev))###pages">&lt;&lt;Prev</a>
+      <xar:else />
+      &lt;&lt;Prev
+      </xar:if>
+      &nbsp; &nbsp; <span style="font-style: italic">
+      <xar:mlstring>Viewing Pages </xar:mlstring> #$viewrange# <xar:mlstring> of </xar:mlstring> #$pagecount#
+      </span> &nbsp; &nbsp;
+      <xar:if condition="!$lastpage">
+      <a href="#xarModURL('googlesearch', 'admin', 'managecached', array('page'=>$next))###pages">Next&gt;&gt;</a>
+      <xar:else />
+      Next&gt;&gt;
+      </xar:if>
+      </xar:if>
+    </div>
+
+    <xar:foreach in="$pages" key="$cache" value="$url">
+      <div style="float: left; padding-left: 1em; padding-right: 1px">
+        <xar:if condition="$cachePage ne $cache">
+        <a title="View the cache for: #$url#" href="#xarModURL('googlesearch', 'admin', 'managecached', array('cache'=>$cache))###pages">#$url#</a>
+        <xar:else />
+       <span style="font-style: italic; font-weight: bold">#$url#</span>
+        </xar:if>
+      </div>
+    </xar:foreach>
+
+</fieldset>
+
+<xar:if condition="$cachePage ne ''">
+  <span style="float: right">[<a href="#xarModURL('googlesearch', 'admin', 'managecached', array('cache'=>$cachePage, 'action'=>'Delete'))#">Delete Current Page</a>]</span>
+  <div class="clearer">&nbsp;</div>
+</xar:if>
+
+<form method="post" action="#xarModURL('googlesearch', 'admin', 'managecached')#">
+<fieldset>
+  <legend>Filter settings: (<span class="help" title="Sets the filter string for the pages below. The filters are defined in 'viewcached' function.">Use a comma separated list</span>)</legend>
+  <label for="filter">Display Filter: </label><input id="filter" name="filter" value="#$filter#">
+  &nbsp; &nbsp;
+  <label for="datafilter">Data Filter: </label><input id="datafilter" name="datafilter" value="#$datafilter#">
+  &nbsp;
+  <input type="submit" name="action" value="Set Filters">
+</fieldset>
+</form>
+
+<xar:if condition="!empty($cacheURL)">
+<fieldset>
+  <legend>Filtered Page: <a target="_blank" title="View filtered page in a different window" href="#xarModURL('googlesearch', 'admin', 'viewcached', array('cache'=>$cachePage, 'filter'=>$filter))#">#$cacheURL#</a></legend>
+  <iframe src="#xarModURL('googlesearch', 'admin', 'viewcached', array('cache'=>$cachePage, 'filter'=>$filter))#" width="99%" height="200px" border="0"></iframe>
+</fieldset>
+
+<fieldset>
+  <legend>Filtered Source: <a target="_blank" title="View source in a different window" href="#xarModURL('googlesearch', 'admin', 'viewcached', array('cache'=>$cachePage, 'filter'=>$filter.',2'))#">#$cacheURL#</a></legend>
+  <iframe src="#xarModURL('googlesearch', 'admin', 'viewcached', array('cache'=>$cachePage, 'filter'=>$filter.',2'))#" width="99%" height="200px" border="0"></iframe>
+</fieldset>
+
+<fieldset>
+  <legend>Extracted Data: <a target="_blank" title="View extracted data in a different window" href="#xarModURL('googlesearch', 'admin', 'viewcached', array('cache'=>$cachePage, 'filter'=>$datafilter))#">#$cacheURL#</a></legend>
+  <iframe src="#xarModURL('googlesearch', 'admin', 'viewcached', array('cache'=>$cachePage, 'filter'=>$datafilter))#" width="99%" height="200px" border="0"></iframe>
+</fieldset>
+</xar:if>
