@@ -77,7 +77,7 @@ function pubsub_user_displayicon($args)
 
     $modid = xarModGetIDFromName($modname);
 
-/// check for unsubscrib
+/// check for unsubscribe
     /**
      * Fetch the eventid to check
      */
@@ -106,6 +106,7 @@ function pubsub_user_displayicon($args)
         $data['subscribe'] = TRUE;
     } // end if
 
+    $data['modname'] = $modname;
     $data['modid'] = xarVarPrepForDisplay($modid);
     $data['cid'] = xarVarPrepForDisplay($cid);
     $data['itemtype'] = xarVarPrepForDisplay($itemtype);
