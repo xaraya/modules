@@ -625,7 +625,8 @@ function workflow_upgrade($oldversion)
                               array(),
                               'workflow_userapi_handleinstancestag');
             // fall through to next upgrade
-
+        case '1.4':
+        case 1.4:
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;

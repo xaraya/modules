@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Workflow';
 $modversion['id']             = '188';
-$modversion['version']        = '1.4';
+$modversion['version']        = '1.4.0';
 $modversion['description']    = 'Workflow Module based on the Galaxia Workflow Engine';
 $modversion['credits']        = '';
 $modversion['help']           = '';
