@@ -60,8 +60,9 @@
                 </xar:if>
                 <br />
                 <xar:mlstring>
-                    This will cause urls to be displayed in a condescenced format.<br />
+                    This will cause urls to be displayed in a condescenced format.
                 </xar:mlstring>
+                <br />
             </p>
             <p>
                 <input type="submit" name="update" value="#xarMl('Update Configuration')#">
