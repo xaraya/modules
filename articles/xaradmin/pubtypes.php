@@ -259,6 +259,8 @@ function articles_admin_pubtypes()
         $data['item'] = $pubtypes[$ptid];
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Delete');
+        $data['numitems'] = xarModAPIFunc('articles','user','countitems',
+                                          array('ptid' => $ptid));
         $data['link'] = xarModURL('articles','admin','pubtypes',
                                  array('action' => 'confirm'));
     }

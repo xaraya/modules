@@ -107,6 +107,10 @@
         <td style="text-align: left;">#$item['descr']#</td>
     </tr>
 </table>
+<p><xar:ml>
+    <xar:mlstring>The #(1) articles of this publication type will also be deleted.</xar:mlstring>
+    <xar:mlvar>#$numitems#</xar:mlvar>
+</xar:ml></p>
 <br /><input type="submit" value="#$buttonlabel#" /><br /><br />
 <a href="&xar-modurl-articles-admin-pubtypes;"><xar:mlstring>Cancel Delete</xar:mlstring></a>
 </div>
