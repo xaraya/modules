@@ -64,6 +64,8 @@ function newsletter_admin_modifysubscription()
             // should all be either html or text mail
             $data['htmlmail'] = $subscriptions[0]['htmlmail'];
             $data['name'] = $subscriptions[0]['name'];
+        } else {
+            $data['publications'][$idx]['checked'] = false;
         }
     }
 
