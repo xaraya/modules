@@ -1,8 +1,3 @@
-<!--- $Id: user-viewall.xd,v 1.3 2003/06/21 05:50:18 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  Template to modify admin settings            --->
-<!--- -------------------------------------------------------------- --->
 <xar:template compile="false" file="mod-title" type="module" />
 <div class="xar-mod-body" style="display:block;">
 <div class="xar-alt-outline">
@@ -24,7 +19,7 @@
       <p><xar:set name="$text">xarML("Please contact the <a href=\"mailto:#(1)\">Site Admin</a> for further assistance",xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail'))</xar:set>#$text#</p>
     </div>
     <xar:else />
-	<!--- START: display the menu & data --->
+	<!-- START: display the menu & data -->
     <div>
     <xar:if condition="!$show_menu_off">
       <div>

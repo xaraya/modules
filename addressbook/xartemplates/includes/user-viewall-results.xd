@@ -1,11 +1,5 @@
-<!--- $Id: user-viewall-results.xd,v 1.1 2003/06/19 17:06:46 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  Template to display address book result list --->
-<!--- -------------------------------------------------------------- --->
-
 <table class="xar-alt-outline" cellpadding="2" cellspacing="1">
-<!--- END Header row --->
+<!-- END Header row -->
   <tr>
     <xar:foreach in="$headers" value="$header">
     <th>
@@ -19,8 +13,8 @@
 	  <label class="xar-mod-title"><xar:mlstring>ACTION</xar:mlstring></label>
 	</th>
   </tr>
-<!--- END Header row --->
-<!--- Results --->
+<!-- END Header row -->
+<!-- Results -->
   <xar:set name="$i">1</xar:set>
   <xar:foreach in="$displayRows" value="$row">
 	<xar:if condition="($i % 2) eq 1">

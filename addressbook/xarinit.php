@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.5 2003/07/19 06:18:28 garrett Exp $
+ * File: $Id: xarinit.php,v 1.9 2004/01/10 22:52:37 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -219,10 +219,30 @@ function addressbook_init()
         if (!$result) return;
     }
 
-    // $abModVars set in xarglobal.php and is used to ease maintenance
-    foreach ($abModVars as $modvar=>$value) {
-        xarModSetVar(__ADDRESSBOOK__, $modvar, $value);
-    }
+    xarModSetVar(__ADDRESSBOOK__, 'abtitle', 'Xaraya Address Book');
+    xarModSetVar(__ADDRESSBOOK__, 'guestmode', 1);
+    xarModSetVar(__ADDRESSBOOK__, 'usermode', 7);
+    xarModSetVar(__ADDRESSBOOK__, 'itemsperpage', 30);
+    xarModSetVar(__ADDRESSBOOK__, 'globalprotect', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'menu_off', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'custom_tab', '');
+    xarModSetVar(__ADDRESSBOOK__, 'zipbeforecity', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'hidecopyright', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'use_prefix', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'use_img', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'textareawidth', 60);
+    xarModSetVar(__ADDRESSBOOK__, 'dateformat', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'numformat', '9,999.99');
+    xarModSetVar(__ADDRESSBOOK__, 'sortorder_1', 'sortname,sortcompany');
+    xarModSetVar(__ADDRESSBOOK__, 'sortorder_2', 'sortcompany,sortname');
+    xarModSetVar(__ADDRESSBOOK__, 'menu_semi', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'name_order', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'special_chars_1', 'ÄÖÜäöüß');
+    xarModSetVar(__ADDRESSBOOK__, 'special_chars_2', 'AOUaous');
+    xarModSetVar(__ADDRESSBOOK__, 'SupportShortURLs', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminFlag', 1);
+    xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminEmail', xarModGetVar('mail','adminmail'));
+    xarModSetVar(__ADDRESSBOOK__, 'rptErrDevFlag', 1);
 
     /*********************************************************************
     * Define instances for this module
@@ -346,14 +366,8 @@ function addressbook_delete() {
         // could care less if the tables did not exist in the first place
     }
 
-    /**
-     * Delete any module variables
-     */
-    foreach ($abModVars as $modvar=>$value) {
-        xarModDelVar(__ADDRESSBOOK__, $modvar);
-    }
-
-    // Remove Masks and Instances
+    // Remove remaining Variables, Masks, and Instances
+    xarModDelAllVars(__ADDRESSBOOK__);
     xarRemoveMasks(__ADDRESSBOOK__);
     xarRemoveInstances(__ADDRESSBOOK__);
 

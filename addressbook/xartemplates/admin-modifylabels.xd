@@ -1,18 +1,13 @@
-<!--- $Id: admin-modifylabels.xd,v 1.1 2003/06/19 16:56:22 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  Template to modify admin settings            --->
-<!--- -------------------------------------------------------------- --->
-<!--- START TITLE BAR -----------------------------------------------------------  --->
+<!-- START TITLE BAR -->
 <xar:template compile="false" file="mod-admin-title" type="module" />
-<!--- END TITLE BAR -------------------------------------------------------------  --->
+<!-- END TITLE BAR -->
 <div class="xar-mod-body">
   <h2><xar:mlstring>Configure Labels</xar:mlstring></h2>
-<!--- START WARN DISPLAY -----------------------------------------------------------  --->
+<!-- START WARN DISPLAY -->
   <div style="text-align:center;">
   <xar:template compile="false" file="mod-warn-msg" type="module" />
   </div>
-<!--- END WARN DISPLAY -------------------------------------------------------------  --->
+<!-- END WARN DISPLAY -->
   <div class="xar-norm-outline" style="padding:.25em;">
   	<div style="margin:0em 1em; text-align:center;">
     <div id="formContainer" style="width:60%;">

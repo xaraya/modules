@@ -1,17 +1,12 @@
-<!--- $Id: user-viewdetail.xd,v 1.2 2003/06/21 05:50:19 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  Template to modify admin settings            --->
-<!--- -------------------------------------------------------------- --->
 <xar:template compile="false" file="mod-title" type="module" />
-<!--- START: outline or work area--->
+<!-- START: outline or work area -->
 <div class="xar-alt-outline" style="padding:1em">
     
 	<div id="changeHistory" style="text-align:left; padding:.5em 0em .5em .25em; margin-bottom:.25em;">
       <span class="xar-title">#$info#</span>
     </div>
 
-<!--- CONTACT info --->
+<!-- CONTACT info -->
 	
     <div id="contactInfo" class="xar-alt-outline" style="margin:.5em 0em;">
 	<div style="padding:.5em;">
@@ -21,7 +16,7 @@
 		<div style="padding:0em 1em 0em 0em;">
 <xar:if condition="!empty($lname)">
   <xar:if condition="!empty($fname)">
-		  <strong>#$fname# #$lname#</strong><br /><br />
+		  <strong>#$fname#&nbsp;#$lname#</strong><br /><br />
     <xar:if condition="!empty($company)">
 	      #$company#<br />
 	</xar:if>
@@ -102,7 +97,7 @@
 	</div>
     </div>
 
-<!--- CUSTOM info --->
+<!-- CUSTOM info -->
 <xar:if condition="!empty($custom_tab)">
   <div id="customInfo" class="xar-alt-outline" style="margin:.5em 0em;;">
     <div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
@@ -147,7 +142,7 @@
   </div>		
 </xar:if>
 
-<!--- BUTTONS --->
+<!-- BUTTONS -->
   <div style="padding:1em; text-align:center;">
     <form name="navForm" method="post" action="">
 <xar:if condition="isset($clip)">

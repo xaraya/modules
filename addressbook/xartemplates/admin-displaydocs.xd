@@ -1,11 +1,6 @@
-<!--- $Id: admin-main.xd,v 1.1 2003/06/19 16:56:30 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  Template to display admin main data          --->
-<!--- -------------------------------------------------------------- --->
-<!--- START TITLE BAR -----------------------------------------------------------  --->
+<!-- START TITLE BAR -->
 <xar:template compile="false" file="mod-admin-title" type="module" />
-<!--- END TITLE BAR -------------------------------------------------------------  --->
+<!-- END TITLE BAR -->
 <div class="xar-mod-body">
   <h2><xar:mlstring>Administrator Documentation</xar:mlstring></h2>
   <div class="xar-norm-outline" style="padding:.25em;">

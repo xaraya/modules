@@ -1,14 +1,9 @@
-<!--- $Id: mod-title.xd,v 1.3 2003/06/21 05:50:27 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  Template to display module title             --->
-<!--- -------------------------------------------------------------- --->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Administration - Address Book</xar:mlstring>
     </span>
 </div>
-<!--- START INFO DISPLAY -----------------------------------------------------------  --->
+<!-- START INFO DISPLAY -->
 <xar:if condition="!empty($abExceptions['abInfoMsg'])">
 <br />
 <div style="border-width: 1px; background-color:#CCFFCC; border-style: solid; border-color: #009900; padding: 2px; text-align:center;">
@@ -16,7 +11,7 @@
 </div>
 <br />
 </xar:if>
-<!--- END INFO DISPLAY -------------------------------------------------------------  --->
-<!--- START DEBUG DISPLAY -----------------------------------------------------------  --->
+<!-- END INFO DISPLAY -->
+<!-- START DEBUG DISPLAY -->
 <xar:template compile="false" file="mod-debug" type="module" />
-<!--- END DEBUG DISPLAY -------------------------------------------------------------  --->
+<!-- END DEBUG DISPLAY -->

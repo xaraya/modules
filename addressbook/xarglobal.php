@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarglobal.php,v 1.10 2003/09/15 00:29:58 garrett Exp $
+ * File: $Id: xarglobal.php,v 1.12 2004/01/10 22:52:37 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -36,34 +36,6 @@ define('_TZOFFSETS','0 1 2 3 4 5 6 7 8 8.5 9 10 11 12 13 14 15 15.5 16 16.5 17 1
 define('_AB_INIT_CREATETABLEFAILED', 'Table creation failed');
 define('_AB_INIT_UPDATETABLEFAILED', 'Table update failed');
 define('_AB_INIT_DELETETABLEFAILED', 'Table deletion failed.');
-
-// Module Variables: key = modvar name / value = modvar value
-// must be set but xarModVarSet
-$abModVars = array ('abtitle'           => 'Xaraya Address Book'
-                   ,'guestmode'         => 1
-                   ,'usermode'          => 7
-                   ,'itemsperpage'      => 30
-                   ,'globalprotect'     => 0
-                   ,'menu_off'          => 0
-                   ,'custom_tab'        => ''
-                   ,'zipbeforecity'     => 0
-                   ,'hidecopyright'     => 0
-                   ,'use_prefix'        => 0
-                   ,'use_img'           => 0
-                   ,'textareawidth'     => 60
-                   ,'dateformat'        => 0
-                   ,'numformat'         => '9,999.99'
-                   ,'sortorder_1'       => 'sortname,sortcompany'
-                   ,'sortorder_2'       => 'sortcompany,sortname'
-                   ,'menu_semi'         => 0
-                   ,'name_order'        => 0
-                   ,'special_chars_1'   => 'ÄÖÜäöüß'
-                   ,'special_chars_2'   => 'AOUaous'
-                   ,'SupportShortURLs'  => 0
-                   ,'rptErrAdminFlag'   => 1
-                   ,'rptErrAdminEmail'  => xarModGetVar('mail','adminmail')
-                   ,'rptErrDevFlag'     => 1
-                   );
 
 /**
  * Custom Field Defines
@@ -292,8 +264,8 @@ define('_AB_MRS',               xarML('Mrs.'));
 /**
  * Developer QA Contact information
  */
-define('_AB_DEVQA_NAME',    __ADDRESSBOOK__."QualityControl");
-define('_AB_DEVQA_EMAIL',   __ADDRESSBOOK__."@blacktower.com");
+define('_AB_DEVQA_NAME',	__ADDRESSBOOK__."QualityControl");
+define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
 
 ////////////////
 //

@@ -1,21 +1,16 @@
-<!--- $Id: user-insertedit.xd,v 1.2 2003/06/19 20:21:20 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  Template to modify admin settings            --->
-<!--- -------------------------------------------------------------- --->
-<!--- START TITLE BAR -----------------------------------------------------------  --->
+<!-- START TITLE BAR -->
 <xar:template compile="false" file="mod-title" type="module" />
-<!--- END TITLE BAR -------------------------------------------------------------  --->
+<!-- END TITLE BAR -->
 <div class="xar-mod-body" style="display:block;">
-  <!--- START WARN DISPLAY -----------------------------------------------------------  --->
+  <!-- START WARN DISPLAY -->
   <div style="text-align:center;">
   <xar:template compile="false" file="mod-warn-msg" type="module" />
   </div>
-<!--- END WARN DISPLAY -------------------------------------------------------------  --->
+<!-- END WARN DISPLAY -->
 	<xar:if condition="!isset($insertStatus)">
 	<div class="xar-alt-outline" style="padding:.25; text-align:center;">
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
-<!--- START MENUVALUES --->
+<!-- START MENUVALUES -->
 <input name="id" type="hidden" value="#$id#" id="id">
 <input name="formcall" type="hidden" value="#$formcall#" id="formcall">
 <input name="authid" type="hidden" value="#$authid#" id="authid">
@@ -27,7 +22,7 @@
 <input name="total" type="hidden" value="#$total#" id="total">
 <input name="page" type="hidden" value="#$page#" id="page">
 <input name="char" type="hidden" value="#$char#" id="char">
-<!--- END MENUVALUES --->
+<!-- END MENUVALUES -->
 
 <input name="action" type="hidden" value="#$action#" id="action">
 <input name="user_id" type="hidden" value="#$user_id#" id="user_id">
@@ -48,35 +43,35 @@
 <td>
 <xar:if condition="$action eq _AB_TEMPLATE_NAME">
     <xar:template file="user-name" compile="false" type="module" />
-    <!--- the following templates are used to hold all the hidden vars --->
+    <!-- the following templates are used to hold all the hidden vars -->
     <xar:template file="var-address" compile="false" type="module" />
     <xar:template file="var-contact" compile="false" type="module" />
     <xar:template file="var-custom" compile="false" type="module" />
     <xar:template file="var-note" compile="false" type="module" />
 <xar:elseif condition="$action eq _AB_TEMPLATE_ADDR" />
     <xar:template file="user-address" compile="false" type="module" />
-    <!--- the following templates are used to hold all the hidden vars --->
+    <!-- the following templates are used to hold all the hidden vars -->
     <xar:template file="var-name" compile="false" type="module" />
     <xar:template file="var-contact" compile="false" type="module" />
     <xar:template file="var-custom" compile="false" type="module" />
     <xar:template file="var-note" compile="false" type="module" />
 <xar:elseif condition="$action eq _AB_TEMPLATE_CONTACT" />
     <xar:template file="user-contact" compile="false" type="module" />
-    <!--- the following templates are used to hold all the hidden vars --->
+    <!-- the following templates are used to hold all the hidden vars -->
     <xar:template file="var-name" compile="false" type="module" />
     <xar:template file="var-address" compile="false" type="module" />
     <xar:template file="var-custom" compile="false" type="module" />
     <xar:template file="var-note" compile="false" type="module" />
 <xar:elseif condition="$action eq _AB_TEMPLATE_CUST" />
     <xar:template file="user-custom" compile="false" type="module" />
-    <!--- the following templates are used to hold all the hidden vars --->
+    <!-- the following templates are used to hold all the hidden vars -->
     <xar:template file="var-name" compile="false" type="module" />
     <xar:template file="var-address" compile="false" type="module" />
     <xar:template file="var-contact" compile="false" type="module" />
     <xar:template file="var-note" compile="false" type="module" />
 <xar:elseif condition="$action eq _AB_TEMPLATE_NOTE" />
     <xar:template file="user-note" compile="false" type="module" />
-    <!--- the following templates are used to hold all the hidden vars --->
+    <!-- the following templates are used to hold all the hidden vars -->
     <xar:template file="var-name" compile="false" type="module" />
     <xar:template file="var-address" compile="false" type="module" />
     <xar:template file="var-contact" compile="false" type="module" />

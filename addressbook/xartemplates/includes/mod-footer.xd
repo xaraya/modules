@@ -1,8 +1,3 @@
-<!--- $Id: mod-title.xd,v 1.3 2003/06/21 05:50:27 garrett Exp $      --->
-<!--- -------------------------------------------------------------- --->
-<!--- Original Author of file: Garrett Hunter                        --->
-<!--- Purpose of file:  display footer info                          --->
-<!--- -------------------------------------------------------------- --->
 <xar:if condition="!xarModGetVar(__ADDRESSBOOK__, 'hidecopyright')">
 <xar:set id="modInfo" name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));</xar:set>
 <div style="text-align:center; padding:.5em;">
