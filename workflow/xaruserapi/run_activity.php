@@ -45,6 +45,10 @@ if (empty($activity)) {
 }
 $process->getProcess($activity->getProcessId());
 
+if (!empty($args['iid']) && empty($instance->instanceId)) {
+    $instance->getInstance($args['iid']);
+}
+
 $source = GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
 $shared = GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/shared.php';
 

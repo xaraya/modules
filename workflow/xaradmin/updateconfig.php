@@ -31,6 +31,19 @@ function workflow_admin_updateconfig()
         xarModSetVar('workflow','itemsperpage',$numitems);
     }
 
+    if (!xarVarFetch('jobs','isset',$jobs,array(),XARVAR_NOT_REQUIRED)) return;
+    if (empty($jobs)) {
+        $jobs = array();
+    }
+    $savejobs = array();
+    foreach ($jobs as $job) {
+        if (!empty($job['activity']) && !empty($job['interval'])) {
+            $savejobs[] = $job;
+        }
+    }
+    $serialjobs = serialize($savejobs);
+    xarModSetVar('workflow','jobs',$serialjobs);
+
     xarResponseRedirect(xarModURL('workflow', 'admin', 'modifyconfig'));
 
     return true;

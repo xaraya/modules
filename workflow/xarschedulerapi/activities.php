@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * run all scheduled workflow activities (executed by the scheduler module)
+ * 
+ * @author mikespub
+ * @access public 
+ */
+function workflow_schedulerapi_activities($args)
+{
+// We need to keep track of our own set of jobs here, because the scheduler won't know what
+// workflow activities to run when. Other modules will typically have 1 job that corresponds
+// to 1 API function, so they won't need this...
+
+    $log = xarML('Starting scheduled workflow activities') . "<br/>\n";
+    $serialjobs = xarModGetVar('workflow','jobs');
+    if (!empty($serialjobs)) {
+        $jobs = unserialize($serialjobs);
+    } else {
+        $jobs = array();
+    }
+    $now = time() + 60; // add some margin here
+    foreach ($jobs as $id => $job) {
+        $lastrun = $job['lastrun'];
+        if (!empty($lastrun)) {
+            if (!preg_match('/(\d+)(\w)/',$job['interval'],$matches)) {
+                continue;
+            }
+            $count = $matches[1];
+            $interval = $matches[2];
+            $skip = 0;
+            switch ($interval) {
+                case 'h':
+                    if ($now - $lastrun < $count * 60 * 60) {
+                        $skip = 1;
+                    }
+                    break;
+                case 'd':
+                    if ($now - $lastrun < $count * 24 * 60 * 60) {
+                        $skip = 1;
+                    }
+                    break;
+                case 'w':
+                    if ($now - $lastrun < $count * 7 * 24 * 60 * 60) {
+                        $skip = 1;
+                    }
+                    break;
+                case 'm': // work with day of the month here
+                    $new = getdate($now);
+                    $old = getdate($lastrun);
+                    $new['mon'] += 12 * ($new['year'] - $old['year']);
+                    if ($new['mon'] < $old['mon'] + $count) {
+                        $skip = 1;
+                    } elseif ($new['mon'] == $old['mon'] + $count && $new['mday'] < $old['mday']) {
+                        $skip = 1;
+                    }
+                    break;
+            }
+            if ($skip) {
+                continue;
+            }
+        }
+        $log .= xarML('Workflow activity #(1)',$job['activity']) . ' ';
+        if (!xarModAPIFunc('workflow','user','run_activity',
+                           array('activityId' => $job['activity']), 0)) {
+            $jobs[$id]['result'] = xarML('failed');
+            $log .= xarML('failed');
+        } else {
+            $jobs[$id]['result'] = xarML('OK');
+            $log .= xarML('succeeded');
+        }
+        $jobs[$id]['lastrun'] = $now - 60; // remove the margin here
+        $log .= "<br/>\n";
+    }
+    $serialjobs = serialize($jobs);
+    xarModSetVar('workflow','jobs',$serialjobs);
+
+    $log .= xarML('Finished scheduled workflow activities');
+
+    return $log;
+}
+
+?>

@@ -111,6 +111,62 @@ function workflow_admin_modifyconfig()
         }
     }
 
+    // get all stand-alone activities that are not interactive
+    $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='standalone' and isInteractive='n'");
+
+    // build a list of activity ids and names
+    $data['standalone'] = array();
+    foreach ($activities['data'] as $info) {
+        if (isset($pid2name[$info['pId']])) {
+            $data['standalone'][$info['activityId']] = $pid2name[$info['pId']] . ' - ' . $info['name'];
+        }
+    }
+
+// We need to keep track of our own set of jobs here, because the scheduler won't know what
+// workflow activities to run when. Other modules will typically have 1 job that corresponds
+// to 1 API function, so they won't need this...
+
+    $serialjobs = xarModGetVar('workflow','jobs');
+    if (!empty($serialjobs)) {
+        $data['jobs'] = unserialize($serialjobs);
+    } else {
+        $data['jobs'] = array();
+    }
+    $data['jobs'][] = array('activity' => '',
+                            'interval' => '',
+                            'lastrun' => '',
+                            'result' => '');
+
+    $data['intervals'] = array(
+                               '1h' => xarML('every hour'),
+                               '2h' => xarML('every #(1) hours',2),
+                               '3h' => xarML('every #(1) hours',3),
+                               '4h' => xarML('every #(1) hours',4),
+                               '5h' => xarML('every #(1) hours',5),
+                               '6h' => xarML('every #(1) hours',6),
+                               '6h' => xarML('every #(1) hours',6),
+                               '8h' => xarML('every #(1) hours',8),
+                               '9h' => xarML('every #(1) hours',9),
+                               '10h' => xarML('every #(1) hours',10),
+                               '11h' => xarML('every #(1) hours',11),
+                               '12h' => xarML('every #(1) hours',12),
+                               '1d' => xarML('every day'),
+                               '2d' => xarML('every #(1) days',2),
+                               '3d' => xarML('every #(1) days',3),
+                               '4d' => xarML('every #(1) days',4),
+                               '5d' => xarML('every #(1) days',5),
+                               '6d' => xarML('every #(1) days',6),
+                               '1w' => xarML('every week'),
+                               '2w' => xarML('every #(1) weeks',2),
+                               '3w' => xarML('every #(1) weeks',3),
+                               '1m' => xarML('every month'),
+                               '2m' => xarML('every #(1) months',2),
+                               '3m' => xarML('every #(1) months',3),
+                               '4m' => xarML('every #(1) months',4),
+                               '5m' => xarML('every #(1) months',5),
+                               '6m' => xarML('every #(1) months',6),
+                              );
+
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }

@@ -1,9 +1,10 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 <div style="margin: auto;">
 <form method="post" action="#xarModURL('workflow', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
+<h3><xar:mlstring>Global Configuration</xar:mlstring></h3>
     <label for="isalias"><xar:mlstring>Enable Short URLs :</xar:mlstring></label>
     <xar:if condition="!empty($isalias)">
     <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
@@ -13,8 +14,11 @@
 <br/><br/>
     <label for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>
     <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
+<br/><br/>
+
+<h3><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h3>
     <p><xar:mlstring><b>Description:</b> first enable workflow hooks for a particular module+itemtype,
-then specify here which workflow process should be started when a particular hook is called by that module+itemtype</xar:mlstring></p>
+then specify here which workflow process should be started when a particular hook is called by that module+itemtype. Only non-interactive start activities can be used here...</xar:mlstring></p>
 	<table border="0" cellpadding="8" cellspacing="0">
 	<xar:foreach in="$settings" key="$modname" value="$config">
 		<tr>
@@ -64,10 +68,63 @@ then specify here which workflow process should be started when a particular hoo
 		</tr>
 	</xar:foreach>
 	</table>
+<p><xar:mlstring>Note: at the moment, only one activity can be started in each hook call from each module+itemtype.
+If necessary, this can be modified but perhaps you might rethink your processes instead :-)</xar:mlstring></p>
+<br/>
+
+<h3><xar:mlstring>Configuration of Scheduled Activities</xar:mlstring></h3>
+    <p><xar:mlstring><b>Description:</b> in order to execute time-based activities (e.g. escalation in the workflow process, status change after a certain time, ...), you need to install the 'scheduler' module first, and configure it to run the ('workflow' - 'scheduler' - 'activities') job.
+    Then you can specify here which workflow activities should be executed, and how often. Only non-interactive stand-alone activities can be used here...</xar:mlstring></p>
+<table border="0" cellpadding="4" cellspacing="0">
+  <tr>
+    <th><xar:mlstring>Activity</xar:mlstring></th>
+    <th><xar:mlstring>Interval</xar:mlstring></th>
+    <th><xar:mlstring>Last Run</xar:mlstring></th>
+    <th><xar:mlstring>Result</xar:mlstring></th>
+  </tr>
+  <xar:foreach in="$jobs" key="$id" value="$job">
+    <tr>
+      <td>
+        <select name="jobs[#$id#][activity]">
+          <option value=""></option>
+          <xar:foreach in="$standalone" key="$activity" value="$name">
+            <xar:if condition="!empty($job['activity']) and $job['activity'] eq $activity">
+              <option value="#$activity#" selected="selected">#$name#</option>
+            <xar:else/>
+              <option value="#$activity#">#$name#</option>
+            </xar:if>
+          </xar:foreach>
+        </select>
+      <td>
+        <select name="jobs[#$id#][interval]">
+          <option value=""></option>
+          <xar:foreach in="$intervals" key="$name" value="$display">
+            <xar:if condition="!empty($job['interval']) and $job['interval'] eq $name">
+              <option value="#$name#" selected="selected">#$display#</option>
+            <xar:else/>
+              <option value="#$name#">#$display#</option>
+            </xar:if>
+          </xar:foreach>
+        </select>
+      </td>
+      <td>
+        <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#" />
+        <xar:if condition="!empty($job['lastrun'])">
+          #xarLocaleFormatDate('%x %X %z',$job['lastrun'])#
+        </xar:if>
+      </td>
+      <td>
+        <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
+        #$job['result']#
+      </td>
+    </tr>
+  </xar:foreach>
+</table>
+<p><xar:mlstring>Note: the scheduler module will call one API function to execute all the scheduled workflow activities.
+You should therefore choose an interval there that is at least as small as the ones you specify here, so that each scheduled workflow activity can be executed on time.</xar:mlstring></p>
+
 	<br /><br />
 	<input type="submit" value="Update Workflow Configuration" />
 </form>
-<p><xar:mlstring>Note: at the moment, only one activity can be started in each hook call from each module+itemtype.
-If necessary, this can be modified but perhaps you might rethink your processes instead :-)</xar:mlstring></p>
 </div>
 </div>
