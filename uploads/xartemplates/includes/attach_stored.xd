@@ -6,9 +6,9 @@
         </xar:set>
         
         <xar:if condition="isset($$multiple) AND $$multiple eq TRUE">
-            <select name="#$id#_attach_stored[]" multiple="multiple" size="5">
+            <select name="#$id#_attach_stored[]" id="#$id#_attach_stored_id" multiple="multiple" size="5">
         <xar:else />
-            <select name="#$id#_attach_stored[]" size="5">
+            <select name="#$id#_attach_stored[]" id="#$id#_attach_stored_id" size="5">
         </xar:if>
             <xar:loop name="$storedList">
                 <xar:if condition="isset($loop:item['selected'])">

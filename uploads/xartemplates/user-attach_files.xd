@@ -44,5 +44,5 @@
         <xar:template file="attach_stored" type="module" />
     </div>
     
-    <input type="hidden" name="#$id#_attach_type" value="#$getAction['STORED']#" />
+    <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
 </p>

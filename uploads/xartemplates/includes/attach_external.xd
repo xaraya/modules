@@ -1,2 +1,2 @@
     <xar:mlstring>Attach External File: </xar:mlstring><br />
-    <input type="text" name="#$id#_attach_external" value="" size="40" maxlength="128" />
+    <input type="text" name="#$id#_attach_external" id="#$id#_attach_external_id" value="" size="40" maxlength="128" />
