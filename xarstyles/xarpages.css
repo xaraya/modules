@@ -140,3 +140,9 @@ img.xar-xarpages-tree {
     background-position: left;
     padding-left: 20px;
 }
+.xar-xarpages-status-EMPTY {
+    background-image: url("../xarimages/empty.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+    padding-left: 20px;
+}

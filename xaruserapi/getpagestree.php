@@ -54,10 +54,18 @@ function xarpages_userapi_getpagestree($args)
             $children_names[$page['parent_key']] = array();
             $children_pages[$page['parent_key']] = array();
         }
+
         // Don't allow item 0 to loop back onto itself.
         // Item 0 points to all the root pages retrieved.
         if ($key != 0 || $page['parent_key'] != 0) {
-            //$children_pids[$page['parent_pid']][$page['pid']] = $page['pid'];
+            // Set flag for menus.
+            // FIXME: the isset() is necessary because some parent pages
+            // are not there. Why not? It shouldn't happen.
+            if (isset($pages[$page['parent_key']])) {
+                $pages[$page['parent_key']]['has_children'] = true;
+            }
+
+            // Create the references.
             $children_keys[$page['parent_key']][$key] = $key;
             $children_names[$page['parent_key']][$page['name']] = $key;
             $children_pages[$page['parent_key']][$key] =& $pages[$key];
@@ -80,7 +88,8 @@ function xarpages_userapi_getpagestree($args)
 
         $pathstack[$key] = $page['name'];
         // This item is the path for each page, based on names.
-        // Imploding it can give a directory-style path.
+        // Imploding it can give a directory-style path, which is handy
+        // in admin pages and reports.
         $pages[$key]['namepath'] = $pathstack;
     }
 

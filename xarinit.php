@@ -245,7 +245,14 @@ function xarpages_init()
     // for pagetypes. NOTE: this is now done the first time a page
     // type is created.
 
-    // TODO: create blocks
+    // Register block types.
+    if (!xarModAPIFunc(
+        'blocks', 'admin', 'register_block_type',
+        array(
+            'modName' => 'xarpages',
+            'blockType'=> 'menu'
+        )
+    )) return;
 
     // Initialisation successful.
     return true;
@@ -310,6 +317,19 @@ function xarpages_upgrade($oldversion)
             if (!$result) {return;}
 
         case '0.1.2':
+            // Upgrading from 0.1.2
+            // Register a 'menu' block type.
+
+            // Register block types.
+            if (!xarModAPIFunc(
+                'blocks', 'admin', 'register_block_type',
+                array(
+                    'modName' => 'xarpages',
+                    'blockType'=> 'menu'
+                )
+            )) return;
+
+        case '0.2.1':
             break;
     }
 

@@ -41,8 +41,15 @@ function xarpages_userapi_getpages($args)
     }
 
     if (isset($status)) {
-        $where[] = 'tpages.xar_status = ?';
-        $bind[] = strtoupper($status);
+        // If a list of statuses have been provided, then select for any of them.
+        if (strpos($status, ',') === false) {
+            $where[] = 'tpages.xar_status = ?';
+            $bind[] = strtoupper($status);
+        } else {
+            $statuses = explode(',', strtoupper($status));
+            $where[] = 'tpages.xar_status IN (?' . str_repeat(',?', count($statuses)-1) . ')';
+            $bind = array_merge($bind, $statuses);
+        }
     }
 
     if (isset($pid)) {
@@ -160,7 +167,38 @@ function xarpages_userapi_getpages($args)
                 $theme, $function, $page_template
             ) = $result->fields;
 
+            // Fetch the next record as soon as we have the value, so
+            // we can skip pages more easily.
+            $result->MoveNext();
+
             $pid = (int)$pid;
+
+            // At this point check the privileges of the page fetched.
+            // To prevent broken trees, if a page is not assessible, prune
+            // (ie discard) descendant pages of that page. Descendants will have
+            // a left value between the left and right values of the
+            // inaccessible page. 
+
+            if (!empty($prune_left)) {
+                if ($left <= $prune_left) {
+                    // The current page is still a descendant of the unprivileged page.
+                    continue;
+                } else {
+                    $prune_left = 0;
+                }
+            }
+
+            $typename = $pagetypes[$itemtype]['name'];
+            if (!xarSecurityCheck('ReadPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
+                // Save the right value. We need to skip all subsequent
+                // pages until we get to a page to the right of this one.
+                // The pages will be in 'left' order, so the descendants
+                // will be contiguous and will immediately follow this page.
+                $prune_left = $right;
+
+                // Skip to the next page.
+                continue;
+            }
 
             // Note: ['parent_pid'] is the parent page ID,
             // but ['parent'] is the parent item key in the
@@ -194,10 +232,9 @@ function xarpages_userapi_getpages($args)
                 'encode_url' => $encode_url,
                 'decode_url' => $decode_url,
                 'function' => $function,
-                'pagetype' => $pagetypes[$itemtype]
+                'pagetype' => &$pagetypes[$itemtype]
             );
 
-            $result->MoveNext();
             $index += 1;
         }
 

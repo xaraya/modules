@@ -125,7 +125,7 @@ function xarpages_treeapi_array_maptree($items)
 
         // first start by placing the depth point in the matrix
         // if the current comment has children place a P connetor
-        if (!empty($items[$counter]['children'])) {
+        if (!empty($items[$counter]['child_keys'])) {
             $matrix[$current_depth] = _XARPAGES_P_CONNECTOR;
         } else {
             // if the current comment doesn't have children

@@ -1,4 +1,4 @@
-
+<div lang="en-GB">
 <h2>Overview</h2>
 <p>Xarpages is basically a module for managing pages on a site. It's main aim is to provide a rigid framework within which a site designer can structure the site from a visitor's point of view. There is an emphasis on a hierarchical page structure, which feeds into the menus and short URLs.</p>
 <p>Xarpages does not manage content. It does not hold or store any content directly, rather it relies on other modules to provide that content. Content may be provided using as simple a method as creating a Dynamic Data text field for entering HTML. It may be as complex as hooking in categories, looking up stories, rendering them in a special template, pulling in blocks related to that page and adding in additional dynamic content through extensions to the short URL.</p>
@@ -61,11 +61,16 @@
   <li>Active</li>
   <li>Inactive</li>
   <li>Template</li>
+  <li>Empty</li>
 </ul>
-<p>Only active pages are normally displayed. A future enhancement may pull the
+<p>Only active and empty pages are normally displayed. A future enhancement may pull the
   status into the privileges so that the display of inactive pages could be enabled
   for certain user groups. Inactive pages are not normally displayed. They exist
   as placeholders, while a page is being developed, or when a page has been withdrawn.</p>
+<p>An empty page is one which has no content, and to which you cannot navigate to directly.
+  Attempting to navigate to an empty page will take you to the page's first displayable
+  child page. It allows an administrator to set a 'placeholder' page to define a section,
+  without that placeholder page having to carry content.</p>
 <p>A template-status page is used as a template when creating new pages. Just
   create a template page as normal, set its status to 'template', and that page
   will be used to provide default values for future created pages of that type.
@@ -78,8 +83,9 @@
 <p>The privileges have been designed to allow sub-editors to manage content, without being able to modify the structure of the pages.</p>
 <p>See the privileges.txt file in the documentation set of this module.</p>
 <h2>TODO List</h2>
-<p>See the TODO.txt file in the documentation set of this module for a full list.</p>
+<p>See the <a href="modules/xarpages/xardocs/TODO.txt">TODO.txt</a> file in the documentation set of this module for a full list.</p>
 <p>The main missing functionality at this point are an import/export function, which would also be used to setup initial sample pages, and blocks to display hierarchical menus based on the current page and its position in the hierarchy.</p>
 <h2>Author</h2>
 <p>Jason Judge</p>
-<p align="right"><a href="mailto:judgej@xaraya.com">judgej@xaraya.com</a></p>
+<p><a href="mailto:judgej@xaraya.com">judgej@xaraya.com</a></p>
+</div>

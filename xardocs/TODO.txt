@@ -14,25 +14,38 @@ Various stuff to do:
   to do this, but to use an external search engine on the rendered pages
 - Some good docs with examples and diagrams
 - Fix page view so that the image on the first item displays correctly - it
-  is currently displayed as an empty root node regardless of whether it has
-  children
-- Completely templatize the selection of images in the tree view
+  is currently displayed in the admin view screen as an empty root node
+  regardless of whether it has children
+- Completely templatize the selection of images in the admin tree view
 - Provide selection methods (by tree etc) on the admin/view page to help
   view large numbers of pages
 - Provide selection box when there is more than one template page for a
   given page type (possibly including -none- as an option) - when creating
   a new page
-- Cache the page details so that they can be used by blocks
-- Implement customisable page template as well as item template field to
-  the page
 - Nicer error when an attempt is made to create a duplicate page type;
   currently the user gets a complex database error
+- Support generating a page URL by specifying its name or path. This would
+  make adding links to pages in a document easier, e.g. by matching
+  #pagelink:/about/company# using Autolinks, without having to know the ID
+  or even the full path of the page.
 
 - Privileges (registered, but not yet actually used) - DONE
 - Overview of module in the 'admin/main' template - DONE
 - Write a module delete/remove function - DONE
 - Allow page status to be changed recursively - DONE
 - Sample functions (perhaps handling a publication type and categories) - DONE
+- Add new status 'EMPTY' to signify an active, but empty page. An empty page
+  will switch (internally - not via a redirect) to its first displayable
+  child page. It will allow a visitor to be taken to the first page in a
+  section without the need to provide content for the section master page.
+  e.g. page 'training' may have children pages 'overview', 'managerial' and
+  'technical'. If the 'training' page is empty, then navigating to it will
+  actually display the 'overview' page. It allows the overview to be a
+  sibling of the main pages in a section rather than the parent of pages
+  in that section, which works better on some kinds of site - DONE
+- Cache the page details so that they can be used by blocks - DONE
+- Implement customisable page template as well as item template field to
+  the page - DONE
 
 
 To get this thing working in the meantime, create a page type called 'html'

@@ -32,7 +32,7 @@ function xarpages_userapi_decode_shorturl($params)
     // Look for a root page with the name as the first part of the path.
     $rootpage = xarModAPIfunc(
         'xarpages', 'user', 'getpage',
-        array('name' => $params[0], 'parent' => 0, 'status' => 'ACTIVE', 'key' => 'pid')
+        array('name' => $params[0], 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
     );
 
     // If no root page matches, and an alias was provided, look for a non-root start page.
@@ -40,7 +40,7 @@ function xarpages_userapi_decode_shorturl($params)
     if (empty($rootpage) && $args['module_alias'] != 'xarpages') {
         $rootpage = xarModAPIfunc(
             'xarpages', 'user', 'getpage',
-            array('name' => $params[0], 'status' => 'ACTIVE', 'key' => 'pid')
+            array('name' => $params[0], 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
         );
     }
 
@@ -63,7 +63,7 @@ function xarpages_userapi_decode_shorturl($params)
                 'left_range' => array($rootpage['left'], $rootpage['right']),
                 'dd_flag' => false,
                 'key' => 'pid',
-                'status' => 'ACTIVE'
+                'status' => 'ACTIVE,EMPTY'
             )
         );
 

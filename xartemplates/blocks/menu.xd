@@ -1,0 +1,14 @@
+
+<xar:comment>
+    If the root page is 'empty' then don't display it - go straight for the next level.
+</xar:comment>
+
+<xar:if condition="$root_page.status eq 'EMPTY'">
+    <xar:template file="side-menu" subdata="array('parent'=&gt;$root_page,'pages'=&gt;$pages,'root_depth'=&gt;$root_page.depth+1)" />
+<xar:else />
+    <ul>
+        <li>#$root_page.name#
+            <xar:template file="side-menu" subdata="array('parent'=&gt;$root_page,'pages'=&gt;$pages,'root_depth'=&gt;$root_page.depth+1)" />
+        </li>
+    </ul>
+</xar:if>

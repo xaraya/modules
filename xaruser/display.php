@@ -18,12 +18,12 @@ function xarpages_user_display($args)
     }
 
     // Get the current page details.
-    // Only fetch active pages.
+    // Only fetch active or empty pages.
     // TODO: allow the administrator to display other statuses.
     if (!empty($pid)) {
         $current_page = xarModAPIfunc(
             'xarpages', 'user', 'getpage',
-            array('pid' => $pid, 'status' => 'ACTIVE')
+            array('pid' => $pid, 'status' => 'ACTIVE,EMPTY')
         );
 
         // If no page found, try the 'notfound' page.
@@ -32,13 +32,13 @@ function xarpages_user_display($args)
         // make some choices.
         if (empty($current_page)) {
             $pid = xarModGetVar('xarpages', 'notfoundpage');
-        }
 
-        if (!empty($pid)) {
-            $current_page = xarModAPIfunc(
-                'xarpages', 'user', 'getpage',
-                array('pid' => $pid, 'status' => 'ACTIVE')
-            );
+            if (!empty($pid)) {
+                $current_page = xarModAPIfunc(
+                    'xarpages', 'user', 'getpage',
+                    array('pid' => $pid, 'status' => 'ACTIVE')
+                );
+            }
         }
     }
 
@@ -50,6 +50,8 @@ function xarpages_user_display($args)
     )) {
         // If we don't have a special page reserved for handling lack of
         // privileges, then return now with a generic error.
+        // The security check would have been called up with error handling
+        // enabled if there were a 'no privs' page.
         if (empty($noprivspage)) {return;}
 
         // No privileges to read this page.
@@ -86,7 +88,7 @@ function xarpages_user_display($args)
         return array();
     }
 
-    // TODO: allow relevent privileges to overlook the status.
+    // TODO: allow relevent privileges to over-ride the status.
     // Get the complete tree for this section of pages.
     $data = xarModAPIfunc(
         'xarpages', 'user', 'getpagestree',
@@ -94,12 +96,32 @@ function xarpages_user_display($args)
             'tree_contains_pid' => $pid,
             'dd_flag' => true,
             'key' => 'pid',
-            'status' => 'ACTIVE'
+            'status' => 'ACTIVE,EMPTY'
         )
     );
 
+    // If the selected page is EMPTY, scan its children to find
+    // an ACTIVE child.
+    if ($data['pages'][$pid]['status'] == 'EMPTY') {
+        if (!empty($data['pages'][$pid]['child_keys'])) {
+            foreach($data['pages'][$pid]['child_keys'] as $scan_key) {
+                // If the page is displayable, then treat it as the new page.
+                if ($data['pages'][$scan_key]['status'] == 'ACTIVE') {
+                    $pid = $data['pages'][$scan_key]['pid'];
+                    break;
+                }
+            }
+            //var_dump($data['pages'][$pid]['child_keys']);
+        }
+    }
+
     // Point the current page at the page in the tree.
     $data['current_page'] =& $data['pages'][$pid];
+
+    // TODO: at this point, if the page is 'EMPTY', then scan its children
+    // for a non-empty page, and move to that child as the current page.
+    // The same process should be followed in the short URL generation.
+
 
     // Create an ancestors array.
     // We don't do that in getpagestree() since that function does not
@@ -112,10 +134,16 @@ function xarpages_user_display($args)
     // Ancestors will include self - filter out in the template if required.
     $ancestors = array();
     $pid_ancestor = $pid;
+
     // TODO: protect against infinite loops if we never reach a parent of zero.
     // This *could* happen if a root page is set to INACTIVE and a child page is
     // set as a module alias.
     while ($data['pages'][$pid_ancestor]['parent_pid'] > 0) {
+        // Set flag for menus.
+        $data['pages'][$pid_ancestor]['is_ancestor'] = true;
+        // Reference the page. Note we are working back down the tree
+        // towards the root page, so will unshift each page to the front
+        // of the ancestors array.
         array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
         $pid_ancestor = $data['pages'][$pid_ancestor]['parent_key'];
     }
@@ -126,6 +154,9 @@ function xarpages_user_display($args)
     $data['children'] = array();
     if (!empty($data['current_page']['child_keys'])) {
         foreach ($data['current_page']['child_keys'] as $key => $child) {
+            // Set flag for menus.
+            $data['pages'][$key]['is_child'] = true;
+            // Reference the child page.
             $data['children'][$key] =& $data['pages'][$child];
         }
     }
@@ -139,9 +170,17 @@ function xarpages_user_display($args)
     if (!empty($data['current_page']['parent_key'])) {
         // Loop though all children of the parent.
         foreach ($data['pages'][$data['current_page']['parent_key']]['child_keys'] as $key => $child) {
+            // Set flag for menus.
+            $data['pages'][$key]['is_sibling'] = true;
+            // Reference the page.
             $data['siblings'][$key] =& $data['pages'][$child];
         }
     }
+
+    // Provide a reference to the 'root' page.
+    // There will only be one root page, possibly empty.
+    $data['root_page'] =& $ancestors[0];
+    //var_dump($data['root_page']);
 
     // Provide a 'rolled up' version of the current page (or page and
     // ancestors) that contain inherited values from the pages before it.
@@ -168,7 +207,7 @@ function xarpages_user_display($args)
     // complete args, with any changes or additions.
     // Return values:
     //  NULL    continue processing (the function may not exist)
-    //  true    continue processing (the function executed successuly, but did not change the data)
+    //  true    continue processing (the function executed successfuly, but did not change the data)
     //  false   stop processing now (the function raised an explicit error)
     //  array   updated data returned (the function changed the data)
     if (!empty($inherited['function'])) {
@@ -178,9 +217,9 @@ function xarpages_user_display($args)
             // Call up the function, suppressing errors in case it does not exist.
             $data2 = xarModAPIfunc('xarpages', 'func', $function, $data, false);
 
-            // If an array was returned, then assume it contains updated values.
-            if (is_array($data2)) {
-                $data =& $data2;
+            if (!isset($data2)) {
+                // Try the next function if this one is not set (i.e. NULL)
+                continue;
             }
 
             // If the function returned a 'false' then do nothing more.
@@ -188,8 +227,46 @@ function xarpages_user_display($args)
             if ($data2 === false) {
                 return;
             }
+
+            // If an array was returned, then assume it contains updated values.
+            if (is_array($data2)) {
+                $data =& $data2;
+            }
+
+            // The function returned some other value, e.g. 'true'.
+            // These have no significance at the moment. The option
+            // remains open to use other values for specific purposes.
+            // Carry on processing any further functions.
         }
     }
+
+
+    // Set up a bunch of flags against pages to allow hierarchical menus
+    // to be generated. We do not want to make any assumptions here as to
+    // how the menus will look and function (i.e. what will be displayed,
+    // what will be suppressed, hidden etc) but rather just provide flags
+    // that allow a template to build a menu of its choice.
+    //
+    // The basic flags are:
+    // 'depth' - 0 for root, counting up for each subsequent level [done]
+    // 'is_ancestor' - flag indicates an ancestor of the current page [done]
+    // 'is_child' - flag indicates a child of the current page [done]
+    // 'is_sibling' - flag indicates a sibling of the current page [done]
+    // 'is_current' - flag indicates the current page [done]
+    // 'is_root' - flag indicates the page is a root page of the hierarchy - good
+    //      starting point for menus [done]
+    // 'has_children' - flag indicates a page has children [done - in getpagestree]
+    //
+    // Any page will have a depth flag, and may have one or more of the
+    // remaining flags.
+    // NOTE: with the exception of the following, all the above flags are
+    // set in previous loops.
+
+    $data['pages'][$pid]['is_current'] = true;
+
+    // Now we can cache all this data away for the blocks.
+    // The blocks should have access to exactly the same data as the page.
+    xarVarSetCached('Blocks.xarpages', 'pagedata', $data);
 
     // Set the theme.
     // Use rolled-up page here so the theme is inherited.

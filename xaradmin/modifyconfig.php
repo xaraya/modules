@@ -10,7 +10,7 @@ function xarpages_admin_modifyconfig()
     $data = array();
 
     // Need admin priv to modify config.
-    if (!xarSecurityCheck('AdminPage', 1)) {
+    if (!xarSecurityCheck('AdminPage')) {
         return;
     }
 

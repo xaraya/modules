@@ -2,7 +2,12 @@
 
 function xarpages_admin_main()
 {
-    return xarModFunc('xarpages', 'admin', 'viewpages');
+    // Need admin priv to view the info page.
+    if (!xarSecurityCheck('AdminPage')) {
+        return;
+    }
+
+    return array();
 }
 
 ?>

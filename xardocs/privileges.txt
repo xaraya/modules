@@ -28,20 +28,25 @@ ACCESS_READ     ReadPage        A page can be viewed (user display).
 ACCESS_COMMENT  
 ACCESS_MODERATE ModeratePage    Overview of pages allowed.
 ACCESS_EDIT     EditPage        A page content and hooks can be changed.
-ACCESS_ADD      AddPage         New pages can be added.
+ACCESS_ADD      AddPage         New pages can be added ++
 ACCESS_DELETE   DeletePage      A page can be moved, renamed or removed completely.
-ACCESS_ADMIN    
+ACCESS_ADMIN    AdminPage       Administer the module.
+++ may have to think about AddPage a little more. A user may have AddPage priv
+and be able to create a new page at any location, but then not be able to rename
+or move it once created. I expect the DeletePage privilege will be more useful
+then AddPage, i.e. EditPage is for an editor to manage content and DeletePage
+is for an administrator to manage structure.
 
 The masks for the pagetype component are:
 
-ACCESS_OVERVIEW n/a
-ACCESS_READ     n/a
-ACCESS_COMMENT  n/a
-ACCESS_MODERATE Overview of page type allowed.
-ACCESS_EDIT     Change description and hooks
-ACCESS_ADD      n/a
-ACCESS_DELETE   n/a
-ACCESS_ADMIN    Page types can be added, deleted and renamed.
+ACCESS_OVERVIEW 
+ACCESS_READ     
+ACCESS_COMMENT  
+ACCESS_MODERATE ModeratePagetype Overview of page type allowed.
+ACCESS_EDIT     EditPagetype    Change description and hooks
+ACCESS_ADD      
+ACCESS_DELETE   
+ACCESS_ADMIN    AdminPagetype   Page types can be added, deleted and renamed.
 
 
 Note: if a user does not have privileges to add or delete a page, then they
