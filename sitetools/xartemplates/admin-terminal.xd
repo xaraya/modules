@@ -1,0 +1,46 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Site Tools Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>SQL Terminal</xar:mlstring></h2>
+    <p>
+        <xar:mlstring>The contents of the textarea is passed verbatim to the Execute method of the adodb driver of the database behind this Xaraya installation</xar:mlstring>
+    </p>
+    <div style="margin: auto;">
+        <form method="post" action="&xar-modurl-sitetools-admin-terminal;">
+           <textarea name="term_input" id="term_input" cols="80" rows="10">#$term_input#</textarea>
+           <input type="submit"/>
+        </form>
+    </div>
+    <div style="height: 250pt; font-family: monospace, monaco; overflow: auto; ">
+       <h2>Output</h2>
+       <xar:if condition="!empty($term_output)">
+       <table style="cellpadding:0; cellspacing:0; border:0;">
+        <xar:loop name="$term_output">
+           <xar:if condition="(($loop:index+1) % 2)">
+               <xar:set name="myclass">'xar-norm'</xar:set>
+           <xar:else />
+               <xar:set name="myclass">'xar-accent'</xar:set>
+           </xar:if>
+          <xar:if condition="$loop:index == 0">
+           <tr>
+               <th>Seq</th>
+               <xar:foreach in="$loop:item" key="$field">
+               <th>#$field#</th>
+               </xar:foreach>
+           </tr>
+           </xar:if>
+            <tr class="#$myclass#">
+               <td class="#$myclass#">#$loop:index#</td>
+               <xar:foreach in="$loop:item" value="$value">
+                   <td class="#$myclass#">#$value#</td>
+               </xar:foreach>
+           </tr>
+         </xar:loop>
+        </table>
+        </xar:if>
+    </div>
+</div>

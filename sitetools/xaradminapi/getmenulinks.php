@@ -39,7 +39,11 @@ function sitetools_adminapi_getmenulinks()
                 'backup'),
             'title' => xarML('Backup a database'),
             'label' => xarML('Backup database'));
-
+        $menulinks[] = Array('url' => xarModURL('sitetools',
+                             'admin',
+                             'terminal'),
+            'title' => xarML('Access MySQL via simple web terminal'),
+            'label' => xarML('MySQL Terminal'));
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'cacheview'),
