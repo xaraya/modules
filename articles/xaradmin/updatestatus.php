@@ -36,6 +36,11 @@ function articles_admin_updatestatus()
         $ptid = null;
     }
 
+    // We need to tell some hooks that we are coming from the update status screen
+    // and not the update the actual article screen.  Right now, the keywords vanish
+    // into thin air.  Bug 1960 and 3161
+    xarVarSetCached('Hooks.all','noupdate',1);
+
     foreach ($aids as $aid => $val) {
         if ($val != 1) {
             continue;
@@ -78,10 +83,6 @@ function articles_admin_updatestatus()
         } else {
             // Update the status now
             $article['status'] = $status;
-            // We need to tell some hooks that we are coming from the update status screen
-            // and not the update the actual article screen.  Right now, the keywords vanish
-            // into thin air.  Bug 1960
-            $article['statusflag'] = true;
 
             // Pass to API
             if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
