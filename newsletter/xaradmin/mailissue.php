@@ -57,7 +57,7 @@ function newsletter_admin_mailissue()
     // Add field to track source of issue.  This will be set to 
     // either 'web' or 'email'.  This can be used to optionally
     // track hits of issue through AWStats, etc.
-    $issue['source'] = 'web';
+    $issue['source'] = 'email';
 
     // Get the publication for display
     $publication = xarModAPIFunc('newsletter',

@@ -67,7 +67,7 @@ function newsletter_user_previewissue($args)
     // Add field to track source of issue.  This will be set to 
     // either 'web' or 'email'.  This can be used to optionally
     // track hits of issue through AWStats, etc.
-    $issue['source'] = 'email';
+    $issue['source'] = 'web';
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
