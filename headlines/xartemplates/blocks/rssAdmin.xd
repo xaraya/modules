@@ -1,8 +1,8 @@
-	<tr>
-		<td>
-			<xar:mlstring>RSS File URL:</xar:mlstring>
-		</td>
-		<td>
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Select the RSS file to syndicate.  This option is configured within the Headlines module')#"><label for="rssurl#$blockid#"><xar:mlstring>RSS File URL:</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
 			<select name="rssurl" id="rssurl#$blockid#">
 			<xar:loop name="$items">
 				<xar:if condition="$rssurl eq $url">
@@ -12,17 +12,18 @@
 				</xar:if>
 			</xar:loop>
 			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<label for="showdescriptions#$blockid#"><xar:mlstring>Display article descriptions</xar:mlstring></label>:
-		</td>
-		<td>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Select this option if you want to show article descriptions, depending on the RSS version of the incoming feed.')#"><label for="showdescriptions#$blockid#"><xar:mlstring>Display article descriptions</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
 			<xar:if condition = "$showdescriptions eq 1">
 			<input type="checkbox" name="showdescriptions#$blockid#" value="1" checked>
 			<xar:else />
 			<input type="checkbox" name="showdescriptions#$blockid#" value="1">
 			</xar:if>
-		</td>
-	</tr>
+		</span>
+		</div>
