@@ -1,57 +1,84 @@
-<table border="0" width="100%">
-  <tr>
-    <th colspan="4" align="center">
-      <xar:mlstring>Blogger API Administration</xar:mlstring>
-    </th>
-  </tr>
-</table>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Blogger API Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<p>
+			  <xar:mlstring>The Blogger API is a XML-RPC API used for blogging. The API is very simple and is 
+			  basically a way to exchange strings between xmlrpc clients and servers.</xar:mlstring>
+			</p>
+			<p><xar:mlstring>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+			  needed for the Blogger API functionality. This module will not function without
+			  the webservices module activated.</xar:mlstring>
+			</p>
 
-<h1>Overview of the Blogger API</h1>
+			<p>
+			  <xar:mlstring>You can find the specification of the Blogger API at </xar:mlstring>
+			  <a href="http://plant.blogger.com/api/index.html">
+				http://plant.blogger.com/api/index.html
+			  </a>
+			</p>
 
-<p>
-  The Blogger API is a XML-RPC API used for blogging. The API is very simple and is 
-  basically a way to exchange strings between xmlrpc clients and servers.
-</p>
-<p>In Xaraya the webservices module is responsible for providing the xmlrpc transport
-  needed for the Blogger API functionality. This module will not function without
-  the webservices module activated.
-</p>
+			<h1><xar:mlstring>Little survival guide for using Blogging tools with Xaraya</xar:mlstring></h1>
+			<p>
+			  <xar:mlstring>Make sure you have enabled the following modules</xar:mlstring>:
+			</p>
+			<ul>
+			  <li><xar:mlstring>Webservices</xar:mlstring></li>
+			  <li><xar:mlstring>Categories</xar:mlstring></li>
+			  <li><xar:mlstring>Articles</xar:mlstring></li>
+			</ul>
 
-<p>
-  You can find the specification of the Blogger API at 
-  <a href="http://plant.blogger.com/api/index.html">
-    http://plant.blogger.com/api/index.html
-  </a>
-</p>
-
-<h1>Little survival guide for using Blogging tools with Xaraya</h1>
-<p>
-  Make sure you have enabled the following modules:
-</p>
-<ul>
-  <li>Webservices</li>
-  <li>Categories</li>
-  <li>Articles</li>
-</ul>
-
-<p>
-  When these modules are activated, configure the categories modules and create some
-  categories which should hold the postings made from Blogs. While not necessary, it 
-  is adviced to create a publication type for blog postings specifically and link this
-  type to the category-tree you created for blog postings.
-</p>
-<p>
-  Go into the config section of the BloggerAPI module and configure the publication type
-  to use for blog postings. Select either News articles or your publication type which 
-  you created.
-</p>
-<p>
-  Basically you're all set now to start blogging. Use your favorite tool for managing your
-  blog postings. For windows we recommend <a href="http://www.bloggar.com">w.bloggar</a> and
-  for other operating systems <a href="http://mozblog.mozdev.org">The mozilla blogger</a>. 
-  These two are the ones we test the API with and make sure that it at least works with those.
-</p>
-<p>
-  Point your blogging client to the url: http://www.yourxaraya.com/ws.php?type=xmlrpc and use
-  your Xaraya account for authentication. The rest should be self-explanatory.
-</p>
+			<p>
+			  <xar:mlstring>When these modules are activated, configure the categories modules and create some
+			  categories which should hold the postings made from Blogs. While not necessary, it 
+			  is adviced to create a publication type for blog postings specifically and link this
+			  type to the category-tree you created for blog postings.</xar:mlstring>
+			</p>
+			<p>
+			  <xar:mlstring>Go into the config section of the BloggerAPI module and configure the publication type
+			  to use for blog postings. Select either News articles or your publication type which 
+			  you created.</xar:mlstring>
+			</p>
+			<p>
+			  <xar:mlstring>Basically you're all set now to start blogging. Use your favorite tool for managing your
+			  blog postings. For windows we recommend </xar:mlstring><a href="http://www.bloggar.com">w.bloggar</a> <xar:mlstring>and
+			  for other operating systems </xar:mlstring><a href="http://mozblog.mozdev.org">The mozilla blogger</a>. 
+			  <xar:mlstring>These two are the ones we test the API with and make sure that it at least works with those.</xar:mlstring>
+			</p>
+			<p>
+			  <xar:mlstring>Point your blogging client to the url: http://www.yourxaraya.com/ws.php?type=xmlrpc and use
+			  your Xaraya account for authentication. The rest should be self-explanatory.</xar:mlstring>
+			</p>
+		</div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<b>
+			<xar:mlstring>There are no included blocks.</xar:mlstring>
+            </b>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>There are no included hooks.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>
