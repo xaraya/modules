@@ -39,8 +39,8 @@ function uploads_userapi_file_store( $args ) {
     
     if (xarSecurityCheck('AddUploads', 1, 'File', $instance)) {
 
-        if (!isset($store_type)) {
-                $store_type = _UPLOADS_STORE_FSDB;
+        if (!isset($storeType)) {
+                $storeType = _UPLOADS_STORE_FSDB;
         }
 
         // first, make sure the file isn't already stored in the db/filesystem
@@ -48,8 +48,8 @@ function uploads_userapi_file_store( $args ) {
         // FIXME: need to rethink how this is handled - maybe give the user a choice
         //        to rename the file ... (rabbitt)
         $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', 
-                                array('fileName' => $fileInfo['fileName'],
-                                    'fileSize' => $fileInfo['fileSize']));
+                                array('fileLocation' => $fileInfo['fileLocation'],
+                                      'fileSize' => $fileInfo['fileSize']));
 
         // If we already have the file, then return the info we have on it
         if (is_array($fInfo) && count($fInfo)) {
@@ -60,15 +60,14 @@ function uploads_userapi_file_store( $args ) {
         }
 
         // If this is just a file dump, return the dump
-        if ($store_type & _UPLOADS_STORE_TEXT) {
+        if ($storeType & _UPLOADS_STORE_TEXT) {
             $fileInfo['fileData'] = xarModAPIFunc('uploads','user','file_dump', $fileInfo);
         }
         // If the store db_entry bit is set, then go ahead 
         // and set up the database meta information for the file
-        if ($store_type & _UPLOADS_STORE_DB_ENTRY) {
+        if ($storeType & _UPLOADS_STORE_DB_ENTRY) {
 
-            $fileInfo['fileLocation'] =& $fileInfo['fileDest'];
-
+            $fileInfo['store_type'] = $storeType;
             $fileId = xarModAPIFunc('uploads','user','db_add_file', $fileInfo);
 
             if ($fileId) {
@@ -76,7 +75,7 @@ function uploads_userapi_file_store( $args ) {
             }
         } 
 
-        if ($store_type & _UPLOADS_STORE_FILESYSTEM) {
+        if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
 
             if ($fileInfo['fileSrc'] != $fileInfo['fileDest']) {
                 $result = xarModAPIFunc('uploads','user','file_move', $fileInfo);
@@ -104,7 +103,7 @@ function uploads_userapi_file_store( $args ) {
             }
         }
 
-        if ($store_type & _UPLOADS_STORE_DB_DATA) {
+        if ($storeType & _UPLOADS_STORE_DB_DATA) {
 
             if (!xarModAPIFunc('uploads', 'user', 'file_db_store_contents', $fileInfo)) {
                 // If we couldn't add the files contents to the database,

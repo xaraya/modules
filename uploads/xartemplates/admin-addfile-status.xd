@@ -11,7 +11,7 @@
     </tr>
     <tr>
         <td>
-            <a href="#xarModURL('uploads', 'user', 'uploadform')#" alt="#xarML('Add more files.')#">
+            <a href="#xarModURL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
                 <xar:mlstring>
                     Add Files
                 </xar:mlstring>
@@ -165,7 +165,7 @@
                 </xar:loop>
             </table>
             <br />
-            <a href="#xarModURL('uploads', 'user', 'uploadform')#" alt="#xarML('Add more files.')#">
+            <a href="#xarModURL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
                 <xar:mlstring>
                     Add Files
                 </xar:mlstring>

@@ -32,6 +32,7 @@ $modversion['official'] = 1;
 $modversion['author'] = 'Marie Altobelli (Ladyofdragons); Michael Cortez (mcortez); Carl P. Corliss (rabbitt)';
 $modversion['contact'] = 'ladyofdragons@xaraya.com; mcortez@xaraya.com; rabbitt@xaraya.com';
 $modversion['admin'] = 1;
+$modversion['user']  = 0;
 $modversion['securityschema'] = array('uploads::File' => 'Content Type:Content Subtype:File ID');
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Global';

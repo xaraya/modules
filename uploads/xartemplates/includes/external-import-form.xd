@@ -11,8 +11,8 @@
                     <input type="text" name="import" value="" size="40" id="import" maxlength="128" />
                 </td>
                 <td class="xar-norm" align="center" width="28%">
-                    <input type="radio" name="storeType" id="storeType" value="#_UPLOADS_STORE_DB_FULL#"  /> 
-                    <input type="radio" name="storeType" id="storeType" value="#_UPLOADS_STORE_DB_FILESYSTEM#" checked="checked"  />
+                    <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> 
+                    <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
                 </td>
                 <td class="xar-norm" align="center" width="27%">
                     <input type="submit" name="button" id="button" value="#xarML('Import')#" />

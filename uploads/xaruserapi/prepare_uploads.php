@@ -20,16 +20,20 @@
  */
 
 
-function uploads_userapi_prepare_uploads( &$args ) {
+function uploads_userapi_prepare_uploads( $args ) {
 
-    // if there are no files, return an empty array.
-    if (empty($_FILES) || !is_array($_FILES) || count($_FILES) <= 0) {
-        return array();
-    }
-        
     extract ( $args );
         
-        $fileList = array();
+    // if there are no files, return an empty array.
+    if (!isset($fileInfo)) {
+        if (empty($_FILES) || !is_array($_FILES) || count($_FILES) <= 0) {
+            return array();
+        } else { 
+            $fileInfo = $_FILES[0];
+        }
+    }
+     
+    $fileList = array();
         
     /**
      *  Initial variable checking / setup 
@@ -44,91 +48,84 @@ function uploads_userapi_prepare_uploads( &$args ) {
         $savePath = xarModGetVar('uploads', 'path.uploads-directory');
     }
     
-    foreach ($_FILES as $uploadId => $fileInfo) {
-         
-        // If we don't have the right data structure, then we can't do much 
-        // here, so return immediately with an exception set  
-        if ((!isset($fileInfo)          || !is_array($fileInfo))      || 
-             !isset($fileInfo['name'])  || !isset($fileInfo['type'])  || 
-             !isset($fileInfo['error']) || !isset($fileInfo['size'])  || 
-             !isset($fileInfo['tmp_name']))  {
-                
-                $fileInfo['fileType']   = 'unknown';
-                $fileInfo['fileSrc']    = 'missing';
-                $fileInfo['fileSize']   = 0;
-                $fileInfo['fileName']   = xarML('Missing File!');
-                $fileInfo['errors'][0]['errorMsg'] = xarML('Invalid data format for upload ID: [#(1)]', $uploadId);
-                $fileInfo['errors'][0]['errorId']  = _UPLOADS_ERROR_BAD_FORMAT;
-                $fileList[] = $fileInfo;
-                continue;
-        }
+    // If we don't have the right data structure, then we can't do much 
+    // here, so return immediately with an exception set  
+    if ((!isset($fileInfo)          || !is_array($fileInfo))      || 
+         !isset($fileInfo['name'])  || !isset($fileInfo['type'])  || 
+         !isset($fileInfo['error']) || !isset($fileInfo['size'])  || 
+         !isset($fileInfo['tmp_name']))  {
 
-        $fileInfo['fileType'] = $fileInfo['type'];
-        $fileInfo['fileSrc']    = $fileInfo['tmp_name'];
-        $fileInfo['fileSize']   = $fileInfo['size'];
-        $fileInfo['fileName']   = $fileInfo['name'];
+            $fileInfo['fileType']   = 'unknown';
+            $fileInfo['fileSrc']    = 'missing';
+            $fileInfo['fileSize']   = 0;
+            $fileInfo['fileName']   = xarML('Missing File!');
+            $fileInfo['errors'][0]['errorMsg'] = xarML('Invalid data format for upload ID: [#(1)]', $fileInfoId);
+            $fileInfo['errors'][0]['errorId']  = _UPLOADS_ERROR_BAD_FORMAT;
+            return array("$fileInfo[fileLocation]" => $fileInfo);
+    }
 
-        // Check to see if we're importing and, if not, check the file and ensure that it 
-        // meets any requirements we might have for it. If it doesn't pass the tests,
-        // then return FALSE
-        if (!xarModAPIFunc('uploads','user','validate_upload', array('fileInfo' => $fileInfo))) {
-            $errorObj = xarExceptionValue();
+    $fileInfo['fileType']   = $fileInfo['type'];
+    $fileInfo['fileSrc']    = $fileInfo['tmp_name'];
+    $fileInfo['fileSize']   = $fileInfo['size'];
+    $fileInfo['fileName']   = $fileInfo['name'];
 
-            if (is_object($errorObj)) {
-                $fileError['errorMesg'] = $errorObj->getShort();
-                $fileError['errorId']   = $errorObj->getID();
-            } else {
-                $fileError['errorMesg'] = 'Unknown Error!';
-                $fileError['errorId']   = _UPLOADS_ERROR_UNKOWN;
-            }
-            $fileInfo['errors']      = array($fileError);
-            
-            // clear the exception
-            xarExceptionHandled();
-            
-            // continue on to the next uploaded file in the list
-            $fileList[] = $fileInfo;
-            continue;
-        }
+    // Check to see if we're importing and, if not, check the file and ensure that it 
+    // meets any requirements we might have for it. If it doesn't pass the tests,
+    // then return FALSE
+    if (!xarModAPIFunc('uploads','user','validate_upload', array('fileInfo' => $fileInfo))) {
+        $errorObj = xarExceptionValue();
 
-        /** 
-        *  Start the process of adding an uploaded file
-        */
-
-        unset($fileInfo['tmp_name']);
-        unset($fileInfo['size']);
-        unset($fileInfo['name']);
-        unset($fileInfo['type']);
-        unset($fileInfo['error']);
-
-        $fileInfo['fileType']   = xarModAPIFunc('mime','user','analyze_file', 
-                                                 array('fileName' => $fileInfo['fileSrc']));
-
-        // Check to see if we need to obfuscate the filename
-        if ($obfuscate_fileName) {
-            $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name', 
-                                        array('fileName' => $fileInfo['fileName']));
-
-            if (empty($obf_fileName) || FALSE === $obf_fileName) {
-                // If the filename was unable to be obfuscated, 
-                // set an error, but don't die - let the caller 
-                // do what they want with this.
-                $fileError['errorMesg'] = 'Unable to obfuscate filename!';
-                $fileError['errorId']   = _UPLOADS_ERROR_NO_OBFUSCATE;
-                $fileInfo['errors']      = array($fileError);
-            } else {
-                $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
-            }
+        if (is_object($errorObj)) {
+            $fileError['errorMesg'] = $errorObj->getShort();
+            $fileError['errorId']   = $errorObj->getID();
         } else {
-            // if we're not obfuscating it, 
-            // just use the name of the uploaded file
-            $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+            $fileError['errorMesg'] = 'Unknown Error!';
+            $fileError['errorId']   = _UPLOADS_ERROR_UNKOWN;
         }
-        $fileInfo['isUpload'] = TRUE;
-        $fileList[] =  $fileInfo;
-    }    
+        $fileInfo['errors']      = array($fileError);
+
+        // clear the exception
+        xarExceptionHandled();
+
+        // continue on to the next uploaded file in the list
+        return array("$fileInfo[fileLocation]" => $fileInfo);
+    }
+
+    /** 
+    *  Start the process of adding an uploaded file
+    */
+
+    unset($fileInfo['tmp_name']);
+    unset($fileInfo['size']);
+    unset($fileInfo['name']);
+    unset($fileInfo['type']);
+    unset($fileInfo['error']);
+
+    $fileInfo['fileType']   = xarModAPIFunc('mime','user','analyze_file', 
+                                            array('fileName' => $fileInfo['fileSrc']));
+
+    // Check to see if we need to obfuscate the filename
+    if ($obfuscate_fileName) {
+        $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name', 
+                                    array('fileName' => $fileInfo['fileName']));
+
+        if (empty($obf_fileName) || FALSE === $obf_fileName) {
+            // If the filename was unable to be obfuscated, 
+            // set an error, but don't die - let the caller 
+            // do what they want with this.
+            $fileError['errorMesg'] = 'Unable to obfuscate filename!';
+            $fileError['errorId']   = _UPLOADS_ERROR_NO_OBFUSCATE;
+            $fileInfo['errors']      = array($fileError);
+        } else {
+            $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
+        }
+    } else {
+        // if we're not obfuscating it, 
+        // just use the name of the uploaded file
+        $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+    }
     
-    return $fileList;
+    return array("$fileInfo[fileLocation]" => $fileInfo);
 }
  
 ?>

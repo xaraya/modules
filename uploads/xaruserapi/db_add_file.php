@@ -19,7 +19,7 @@
 function uploads_userapi_db_add_file( $args ) {
     
     extract($args);
-    
+
     if (!isset($fileName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
                      'filename','db_add_file','uploads');
@@ -28,8 +28,8 @@ function uploads_userapi_db_add_file( $args ) {
     }
     
     if (!isset($fileLocation)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module (#3)]', 
-                     'location','db_add_file','uploads');
+        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
+                     'fileLocation','db_add_file','uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -42,6 +42,20 @@ function uploads_userapi_db_add_file( $args ) {
         $fileStatus = _UPLOADS_STATUS_SUBMITTED;
     }
     
+    if (!isset($fileSize)) {
+        $fileSize = 0;
+    } else {
+        // FIXME: only normalize the filesize before it's passed to a template
+        //        otherwise, keep it as an integer <rabbitt>
+        if (is_array($fileSize)) {
+            if (stristr($fileSize['long'], ',')) {
+                $fileSize = str_replace(',', '', $fileSize['long']);
+            } else {
+                $fileSize = $fileSize['long'];
+            }
+        }
+    }
+
     if (!isset($store_type)) {
         $store_type = _UPLOADS_STORE_FILESYSTEM;
     } 

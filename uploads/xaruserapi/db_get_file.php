@@ -59,7 +59,7 @@ function uploads_userapi_db_get_file( $args )  {
     }
 
     if (isset($fileLocation) && !empty($fileLocation)) {
-        $where[] = "(xar_location LIKE '$fileType')";
+        $where[] = "(xar_location LIKE '$fileLocation')";
     }
 
     if (count($where) > 1) {
