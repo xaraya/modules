@@ -381,7 +381,7 @@ function bbcode_encode_code($message, $is_html_disabled)
                     // at the lower level..
                     // also, don't escape them if HTML is disabled in this post. it'll already be done
                     // by the posting routines.
-                    $after_replace = htmlspecialchars($after_replace);    
+                    // $after_replace = htmlspecialchars($after_replace);    
                 }
                 
                 $str_to_match = $start_tag . $before_replace . $end_tag;

@@ -110,15 +110,11 @@ function bbcode_userapi_code($args)
                     // at the lower level..
                     // also, don't escape them if HTML is disabled in this post. it'll already be done
                     // by the posting routines.
-                    $after_replace = htmlspecialchars($after_replace);    
+                    // $after_replace = htmlspecialchars($after_replace);    
                 }
                 
                 $str_to_match = $start_tag . $before_replace . $end_tag;
-
-                if (phpversion() > "4.2.0"){
-                    highlight_string($after_replace, TRUE);
-                }
-                
+             
                 $message = preg_replace("/$str_to_match/si", xarML('Code') . ": <div class='bbcode_code' style=' padding: 5px; white-space: normal'> " . bbcode_br2nl($after_replace) . "</div>", $message);
             }
         }
