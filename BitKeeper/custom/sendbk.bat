@@ -15,7 +15,9 @@
 
 :initial
 
-set patchfile=my.patch
+set patchfile=amoro.patch
+
+if "%1" == "-help" goto help
 if "%1" == "" goto defaultrange
 set range=%1
 if "%2" == "" goto defaultmail
@@ -29,23 +31,29 @@ goto sendit
 
 :defaultrange
 set range=-r+
+goto sendit
 
-:error
-
+:help
 echo ===============================================================
-echo Usage: mysend -r1.1028.. address@xaraya.com
-echo The email argument is optional (defaults to patches.xaraya.com)
-echo ============================================================== 
+echo Usage: save this file with name sendbk.bat
+echo sendbk
+echo     sends patch using range -r+ to patches@xaraya.com
+echo sendbk -r1.1000..
+echo     sends patch using range -r1.1000 to patches@xaraya.com
+echo sendbk -r1.1000 mail@mymail.com
+echo     sends patch using range -r1.1000 to mail@mymail.com    
+echo ===============================================================
 goto done
 
 :sendit
-echo range = %range%
-echo recipient = %recipient%
-echo patchfile = %patchfile%
+echo Using bk makepatch to create patch file %patchfile% using range %range% 
 bk makepatch %range%>%patchfile%
-blat %patchfile% -to %recipient%
+
+echo Invoking blat.exe to send file to %recipient% ...
+blat %patchfile% -to %recipient% -subject "[xar patch] range %range%"
+
 del %patchfile%
-echo %patchfile% removed
+echo File %patchfile% sent and removed
 
 :done
 
