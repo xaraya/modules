@@ -232,7 +232,7 @@ function xarbb_upgrade($oldversion)
             $result =& $dbconn->Execute($update);
             if (!$result) return;
             break;
-
+        case '1.0':
         default:
             break;
     }
