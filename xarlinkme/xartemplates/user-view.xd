@@ -35,7 +35,7 @@
          </div>
     </xar:foreach>
          <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
-             #$textlink#<br><br>
+             #$textlink#<br/><br/>
          </div>
          <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
            <a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><br />
