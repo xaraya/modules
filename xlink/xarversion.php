@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'CrossLink';
 $modversion['id']             = '186';
-$modversion['version']        = '1.1';
+$modversion['version']        = '1.1.0';
 $modversion['description']    = 'Establish relationship between module items and some independent identifier, e.g. for shortcut or foreign key';
 $modversion['credits']        = '';
 $modversion['help']           = '';

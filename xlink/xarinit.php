@@ -157,6 +157,8 @@ function xlink_upgrade($oldversion)
             if (!xlink_init()) return;
             xarModSetVar('xlink', 'SupportShortURLs', 1);
             break;
+        case '1.1':
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
