@@ -20,6 +20,7 @@
 			</th>
 		</tr>
 		<xar:loop name="$items">
+                <xar:set name="$allowed">#$loop:item['allowed']#</xar:set>
 		<tr>
 			<td width="70%" align="center">
 				#$loop:item['htmltag']# 
