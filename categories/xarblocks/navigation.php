@@ -874,8 +874,17 @@ function categories_navigationblock_display($blockinfo)
     }
     $data['blockid'] = $blockinfo['bid'];
 
-    // Populate block info and pass to theme
-    $blockinfo['content'] = xarTplBlock('categories','nav',$data,$template);
+    // Populate block info for passing back to theme.
+
+    // The template base is set by this block if not already provided.
+    // The base is 'nav-tree', 'nav-trails' or 'nav-prevnext', but allow
+    // the admin to override this completely.
+    if (empty($blockinfo['_bl_template_base'])) {
+        $blockinfo['_bl_template_base'] = 'nav-' . $template;
+    }
+
+    // Return data, not rendered content.
+    $blockinfo['content'] = $data;
     if (!empty($blockinfo['content'])) {
         return $blockinfo;
     }
