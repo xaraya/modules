@@ -74,7 +74,7 @@ function xslt_userapi_transform($args)
                     // Pass the absolute minimum on parameters to the stylesheet, so the document
                     // can be transformed properly
                     // What will be the uri under which this item will be reachable (so anchors in xsl can be properly transformed)
-                    $xar_docuri = xarServerGetCurrentURL();
+                    $xar_docuri = xarServerGetCurrentURL(array(), false);
                     // Pass in the web path to the xsl file, so relative links can be resolved from there if needed
                     $xar_webpath = dirname($xsl);
                     $params = array('xar_docuri'  => $xar_docuri,
