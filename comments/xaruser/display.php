@@ -101,7 +101,7 @@ function comments_user_display($args)
     } elseif (isset($header['selected_cid'])) {
         $args['selected_cid'] = $header['selected_cid'];
     } else {
-        xarVarFetch('selected_cid','isset',$selected_cid,NULL,XARVAR_NOT_REQUIRED);
+        xarVarFetch('selected_cid', 'isset', $selected_cid, NULL, XARVAR_NOT_REQUIRED);
         $args['selected_cid'] = $selected_cid;
         $header['selected_cid'] = $selected_cid;
     }
@@ -144,15 +144,13 @@ function comments_user_display($args)
     // run text and title through transform hooks
     if (!empty($package['comments'])) {
         foreach ($package['comments'] as $key => $comment) {
+            $comment['xar_text'] = xarVarPrepHTMLDisplay($comment['xar_text']);
+            $comment['xar_title'] = xarVarPrepForDisplay($comment['xar_title']);
             // say which pieces of text (array keys) you want to be transformed
-            if ($package['settings']['render'] != _COM_VIEW_THREADED) {
-                $comment['transform'] = array('xar_title', 'xar_text');
-            } else {
-                $comment['transform'] = array('xar_text');
-            }
+            $comment['transform'] = array('xar_text');
             // call the item transform hooks
             // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
-            $package['comments'][$key] = xarModCallHooks('item','transform',$comment['xar_cid'],$comment,'comments');
+            $package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['xar_cid'], $comment, 'comments');
         }
     }
     $header['input-title']            = xarML('Post a new comment');

@@ -22,58 +22,44 @@ function comments_userapi_add($args)
 {
     extract($args);
 
-    if (!isset($modid)) {
-        $modid = xarVarCleanFromInput('modid');
-        if (empty($modid)) {
-            $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                     'modid', 'userapi', 'add', 'comments');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
-        }
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
+                                 'modid', 'userapi', 'add', 'comments');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     if (empty($itemtype) || !is_numeric($itemtype)) {
         $itemtype = 0;
     }
 
-    if (!isset($objectid)) {
-        $objectid = xarVarCleanFromInput('objectid');
-        if (empty($objectid)) {
-            $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                     'objectid', 'userapi', 'add', 'comments');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
-        }
+    if (!isset($objectid) || empty($objectid)) {
+        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
+                                 'objectid', 'userapi', 'add', 'comments');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
-    if (!isset($pid)) {
-        $pid = xarVarCleanFromInput('pid');
-        if (empty($pid)) $pid = 0;
+    if (!isset($pid) || empty($pid)) 
+        $pid = 0;
     }
 
-    if (!isset($title)) {
-        $title = xarVarCleanFromInput('title');
-        if (empty($title)) {
-            $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                     'title', 'userapi', 'add', 'comments');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
-        }
+    if (!isset($title) || empty($title)) {
+        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
+                                 'title', 'userapi', 'add', 'comments');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
-    if (!isset($comment)) {
-        $comment = xarVarCleanFromInput('comment');
-        if (empty($comment)) {
-            $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                     'comment text', 'userapi', 'add', 'comments');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
-        }
+    if (!isset($comment) || empty($comment)) {
+        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
+                                 'comment text', 'userapi', 'add', 'comments');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
-    if (!isset($postanon)) {
-        $postanon = xarVarCleanFromInput('postanon');
-        if (empty($postanon)) $postanon = 0;
+    if (!isset($postanon) || empty($postanon)) {
+        $postanon = 0;
     }
 
     if (!isset($author)) {
@@ -98,16 +84,20 @@ function comments_userapi_add($args)
     // left and right values cuz we're adding the new comment
     // as a top level comment
     if ($pid == 0) {
-        $root_lnr = xarModAPIFunc('comments','user','get_node_root',array('modid' => $modid, 'objectid' => $objectid, 'itemtype' => $itemtype));
+        $root_lnr = xarModAPIFunc('comments','user','get_node_root',
+                                   array('modid' => $modid, 
+                                         'objectid' => $objectid, 
+                                         'itemtype' => $itemtype));
 
         // ok, if the there was no root left and right values then
         // that means this is the first comment for this particular
         // modid/objectid combo -- so we need to create a dummy (root)
         // comment from which every other comment will branch from
         if (!count($root_lnr)) {
-            $pid = xarModAPIFunc('comments','user','add_rootnode', array('modid'    => $modid,
-                                                                          'objectid' => $objectid, 
-                                                                          'itemtype' => $itemtype));
+            $pid = xarModAPIFunc('comments','user','add_rootnode', 
+                                  array('modid'    => $modid,
+                                        'objectid' => $objectid,
+                                        'itemtype' => $itemtype));
         } else {
             $pid = $root_lnr['xar_cid'];
         }
@@ -136,7 +126,6 @@ function comments_userapi_add($args)
             return;
     }
 
-    // the comment's date will be autoinserted by database
     $cdate    = time();
     $left     = $parent_lnr['xar_right'];
     $right    = $left + 1;

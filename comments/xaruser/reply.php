@@ -47,13 +47,13 @@ function comments_user_reply()
                 return;
             }
             xarModAPIFunc('comments','user','add',
-                                        array('modid'    => $header['modid'],
-                                              'itemtype' => $header['itemtype'],
-                                              'objectid' => $header['objectid'],
-                                              'pid'      => $header['pid'],
-                                              'comment'  => $package['text'],
-                                              'title'    => $package['title'],
-                                              'postanon' => $package['postanon']));
+                           array('modid'    => $header['modid'],
+                                 'itemtype' => $header['itemtype'],
+                                 'objectid' => $header['objectid'],
+                                 'pid'      => $header['pid'],
+                                 'comment'  => $package['text'],
+                                 'title'    => $package['title'],
+                                 'postanon' => $package['postanon']));
 
             xarResponseRedirect($receipt['returnurl']['decoded']);
             return true;
