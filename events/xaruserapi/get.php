@@ -47,8 +47,9 @@ function events_userapi_get($args)
     $query = "SELECT xar_name,
                    xar_number
             FROM $eventstable
-            WHERE xar_exid = " . xarVarPrepForStore($exid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_exid = ?";
+    $bindvars = array($exid);
+    $result =& $dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

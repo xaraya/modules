@@ -67,8 +67,9 @@ function events_adminapi_delete($args)
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "DELETE FROM $eventstable
-            WHERE xar_exid = " . xarVarPrepForStore($exid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_exid = ?";
+    $bindvars = array($exid);
+    $result =& $dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

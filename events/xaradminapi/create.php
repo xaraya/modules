@@ -72,10 +72,11 @@ function events_adminapi_create($args)
               xar_name,
               xar_number)
             VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              " . xarvarPrepForStore($number) . ")";
-    $result =& $dbconn->Execute($query);
+              ?,
+              ?,
+              ?)";
+    $bindvars = array($nextId, $name, $number);
+    $result =& $dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -100,6 +101,4 @@ function events_adminapi_create($args)
     // Return the id of the newly created item to the calling process
     return $exid;
 }
-
-
 ?>
