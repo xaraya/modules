@@ -1,4 +1,4 @@
-<xar:comment> $Id$ </xar:comment>
+<xar:comment>$Id$</xar:comment>
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
@@ -26,7 +26,7 @@
 
 <xar:if condition="!empty($items)">
 
-<div class="xar-norm-outline" xstyle="padding: 0px 0px 5px 0px;">
+<div class="xar-norm-outline">
 <table cellspacing="0" cellpadding="4" border="1">
     <tr>
         <th><xar:mlstring>Type</xar:mlstring></th>
@@ -36,14 +36,14 @@
         <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$items" value="$item">
-        <xar:comment> TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items? </xar:comment>
+        <xar:comment>TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items?</xar:comment>
         <xar:if condition="!empty($item['enabled'])">
-            <xar:set name="$bgrow">'#DDFFDD'</xar:set>
+            <xar:set name="enabled_class">'xar-accent'</xar:set>
         <xar:else/>
-            <xar:set name="$bgrow">'#FFDDDD'</xar:set>
+            <xar:set name="enabled_class">''</xar:set>
         </xar:if>
 
-        <tr style="background-color: #$bgrow#;">
+        <tr class="#$enabled_class#">
             <td>
                 <xar:if condition="empty($item['edittypeurl'])">
                     #xarVarPrepForDisplay($item['type_name'])#
@@ -135,11 +135,15 @@
 </div>
 <br />
 
-<!-- add the pager here -->
+<!-- pager -->
 #$pager#
 
-<xar:else/>
-<xar:mlstring>No Autolinks defined</xar:mlstring>
+<xar:else />
+    <div><xar:mlstring>No Autolinks defined</xar:mlstring></div>
+    <div>
+        <xar:mlstring>Click here to install sample Autolinks: </xar:mlstring>
+        <a href="#xarModURL('autolinks','admin','modifyconfig')#"><xar:mlstring>Autolinks Config</xar:mlstring></a>
+    </div>
 </xar:if>
 </div>
 </div>

@@ -37,15 +37,6 @@ function autolinks_admin_modify($args)
     // Security Check
     if(!xarSecurityCheck('EditAutolinks')) {return;}
 
-    // Prepare some strings for the form.
-    $link['prepcomment'] = xarVarPrepForDisplay($link['comment']);
-    $link['prepkeyword'] = xarVarPrepForDisplay($link['keyword']);
-    $link['preptitle'] = xarVarPrepForDisplay($link['title']);
-    $link['prepsample'] = xarVarPrepForDisplay($link['sample']);
-    $link['prepname'] = xarVarPrepForDisplay($link['name']);
-    $link['preptypename'] = xarVarPrepForDisplay($link['type_name'] );
-    $link['preptype_desc'] = xarVarPrepForDisplay($link['type_desc'] );
-
     $link['cancelurl'] = xarModURL('autolinks', 'admin', 'view', array('startnumitem' => $startnumitem));
     $link['updateurl'] = xarModURL('autolinks', 'admin', 'update', array('startnumitem' => $startnumitem));
     $link['edittypeurl'] = xarModURL('autolinks', 'admin', 'modifytype', array('tid' => $link['tid']));

@@ -1,7 +1,7 @@
 <xar:comment> $Id </xar:comment>
 <xar:set name="$modifybuttonlabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Edit Autolink</xar:mlstring> #$prepname#</h2>
+<div class="xar-mod-body"><h2><xar:mlstring>Edit Autolink</xar:mlstring> #xarVarPrepForDisplay($name)#</h2>
 <div style="margin: auto;">
 <form method="post" action="#$updateurl#" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -18,9 +18,9 @@
         </xar:if>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        #$preptypename#
-        <xar:if condition="!empty($preptype_desc)">
-        <br/><span style="font-style: italic;">#$preptype_desc#</span>
+        #xarVarPrepForDisplay($type_name)#
+        <xar:if condition="!empty($type_desc)">
+        <br/><span style="font-style: italic;">#xarVarPrepForDisplay($type_desc)#</span>
         </xar:if>
     </div>
     <br style="clear: both; height=0;"/>
@@ -33,7 +33,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <input type="text" name="name" id="name" value="#$prepname#" size="20" maxlength="30"/>
+        <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($name)#" size="20" maxlength="30"/>
     </div>
     <br style="clear: both; height=0;"/>
 
@@ -60,7 +60,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <input type="text" name="keyword" id="keyword" value="#$prepkeyword#" size="32" maxlength="100"/>
+        <input type="text" name="keyword" id="keyword" value="#xarVarPrepForDisplay($keyword)#" size="32" maxlength="100"/>
     </div>
     <br style="clear: both; height=0;"/>
 
@@ -86,7 +86,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <input type="text" name="title" id="title" value="#$preptitle#" size="32" maxlength="100"/>
+        <input type="text" name="title" id="title" value="#xarVarPrepForDisplay($title)#" size="32" maxlength="100"/>
     </div>
     <br style="clear: both; height=0;"/>
 
@@ -96,7 +96,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200"/>
+        <input type="text" name="url" id="url" value="#xarVarPrepForDisplay($url)#" size="40" maxlength="200"/>
     </div>
     <br style="clear: both; height=0;"/>
 
@@ -106,7 +106,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <textarea name="comment" id="comment" cols="32" rows="5" >#$prepcomment#</textarea>
+        <textarea name="comment" id="comment" cols="32" rows="5" >#xarVarPrepForDisplay($comment)#</textarea>
     </div>
     <br style="clear: both; height=0;"/>
 
@@ -126,7 +126,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <input type="text" name="sample" id="sample" value="#$prepsample#" size="40" maxlength="200"/>
+        <input type="text" name="sample" id="sample" value="#xarVarPrepForDisplay($sample)#" size="40" maxlength="200"/>
     </div>
     <br style="clear: both; height=0;"/>
 
