@@ -59,7 +59,12 @@ function xmlrpcserver_userapi_createresponse($args)
         }
         $data = array('params' => $data);
     }
-
+    
+    // Fault response?
+    if(isset($fault)) {
+        $data['fault'] = true;
+    }
+    
     //xarLogMessage(print_r($data,true), XARLOG_LEVEL_WARNING);
     // We need to disable the template comments, if they are enabled, otherwise
     // the response will be invalid
@@ -74,7 +79,7 @@ function xmlrpcserver_userapi_createresponse($args)
  * Private function which recursively scans the supplied params and returns the
  * proper data array to submit to the generic template. Basically what we're
  * doing is replacing the numeric indices of the passed in nested array with
- * the appropriate associative ones
+ 
  *
  * @todo We're translating one type of array into another, messy
  */

@@ -21,18 +21,15 @@ function xmlrpcserver_userapi_faultresponse($args)
 {
     $errno = 1; $errorstring =  xarML('No error');
     extract($args, EXTR_OVERWRITE);
-
-    $tplData = array();
-    $tplData['errno'] = XMLRPC_USER_ERR + $errno;
-    $tplData['errorstring'] = $errorstring;
     
-    // Disable inserting template comments if set
-    $themecomments=xarModGetVar('themes','ShowTemplates');
-    if($themecomments != 0) xarModSetVar('themes','ShowTemplates',0);
+    $data=array(); $members = array(); $params = array();
+    $members[] = array('faultCode', 'int', XMLRPC_USER_ERR + $erono);
+    $members[] = array('faultString', 'string', $errorstring);
+    $params[]  = array('struct', $members);
     
-    $response = xarTplFile('modules/xmlrpcserver/xartemplates/xmlrpc-faultresponse.xd',$tplData);
-    if($themecomments !=0) xarModSetVar('themes','ShowTemplates',$themecomments);
-
-    return $response;
+    $data['params'] = $params;
+    $data['fault']  = 1;
+    
+    return xarModApiFunc('xmlrpcserver','user','createresponse', $data);
 }
 ?>
