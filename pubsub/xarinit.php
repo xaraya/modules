@@ -1,13 +1,24 @@
 <?php 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-
+/**
+ * File: $Id$
+ * 
+ * Pubsub Initialise Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Pubsub Module
+ * @author Chris Dudley
+*/ 
+ 
 /**
  * initialise the pubsub module
+ *
+ * @access public
+ * @param none
+ * @returns bool
+ * @raise DATABASE_ERROR
  */
 function pubsub_init()
 {
@@ -26,17 +37,9 @@ function pubsub_init()
         'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
         'xar_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
     );
-    $sql = xarDBCreateTable($pubsubeventstable,$eventsfields);
-    if (empty($sql)) return;
-    $dbconn->Execute($sql);
-
-    // Check database result
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-   }
+    $query = xarDBCreateTable($pubsubeventstable,$eventsfields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     $pubsubregtable = $xartable['pubsub_reg'];
     $regfields = array(
@@ -45,17 +48,9 @@ function pubsub_init()
         'xar_users'=>array('type'=>'text','size'=>'medium','null'=>FALSE),
         'xar_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
     );
-    $sql = xarDBCreateTable($pubsubregtable,$regfields);
-    if (empty($sql)) return;
-    $dbconn->Execute($sql);
-
-    // Check database result
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $query = xarDBCreateTable($pubsubregtable,$regfields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     $pubsubprocesstable = $xartable['pubsub_process'];
     $processfields = array(
@@ -64,36 +59,20 @@ function pubsub_init()
         'xar_objectid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
     );
-    $sql = xarDBCreateTable($pubsubprocesstable,$processfields);
-    if (empty($sql)) return;
-    $dbconn->Execute($sql);
+    $query = xarDBCreateTable($pubsubprocesstable,$processfields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
-    // Check database result
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-    
     $pubsubtemplatetable = $xartable['pubsub_template'];
     $templatefields = array(
         'xar_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_template'=>array('type'=>'text','size'=>'long','null'=>FALSE)
     );
-    $sql = xarDBCreateTable($pubsubtemplatetable,$templatefields);
-    if (empty($sql)) return;
-    $dbconn->Execute($sql);
+    $query = xarDBCreateTable($pubsubtemplatetable,$templatefields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
-    // Check database result
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-    
     // Set up module hooks
     if (!xarModRegisterHook('item',
                            'create',
@@ -142,6 +121,9 @@ function pubsub_init()
 
 /**
  * upgrade the pubsub module from an old version
+ * 
+ * @access public
+ * @param oldversion float "Previous version upgrading from"
  */
 function pubsub_upgrade($oldversion)
 {
