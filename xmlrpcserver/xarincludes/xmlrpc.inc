@@ -604,7 +604,7 @@ class xmlrpcresp
         if($this->fn) {
             $faultCode = $this->fn;
             $faultString = $this->fs;
-            return xarModApiFunc('xmlrpcserver','user','createfaultresponse',array('errno' => $faultCode, 'errorstring' => $faultString));
+            return xarModApiFunc('xmlrpcserver','user','faultresponse',array('errno' => $faultCode, 'errorstring' => $faultString));
         } else {
             // FIXME: $this->xv should ALWAYS be an object
             $rs="<methodResponse>\n";

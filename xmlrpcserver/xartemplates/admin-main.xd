@@ -28,6 +28,17 @@
                 <li><xar:mlstring>use desktop clients to manage or work with Xaraya</xar:mlstring></li>
               </ul>
             </p>
+            <p>
+                <xar:mlstring>
+                    The most well known usage of XML-RPC are the API's used for blogging (see below). These API's are used in Xaraya to write
+                    articles on a Xaraya site, using a desktop client. Examples of blog clients include:
+                </xar:mlstring>
+                <ol>
+                    <li><a href="http://bloggar.com">w.bloggar (windows)</a></li>
+                    <li><a href="http://ecto.kung-foo.tv">ecto (OSX)</a></li>
+                    <li><a href="http://blogtk.sourceforge.net">bLoGTK (Linux)</a></li>
+                </ol>
+            </p>
 
             <p>
               <xar:mlstring>The XML-RPC server can be configured to serve multiple APIs The currently supported APIs are</xar:mlstring>:
@@ -38,14 +49,19 @@
                 </li>
                 <li><a href="http://validator.xmlrpc.com">validation API</a> : <xar:mlstring>used to validate XML-RPC conformance</xar:mlstring></li>
                 <li><a href="http://scripts.incutio.com/xmlrpc/introspection.html">Introspection API</a> : <xar:mlstring>Get information about the XML-RPC server and its methods</xar:mlstring></li>
+                <li>
+                    <a href="http://http://www.xmlrpc.com/metaWeblogApi">MetaWeblog API</a> : <xar:mlstring>An extension of the Blogger API which adds more rich support for the message content and the ability to upload media objects
+                    (Note: the categories support in this API is limited and the metaWeblog.newMediaObject method hasn't been implemented yet.</xar:mlstring></li>
               </ol>
               </ul>
             </p>
 
             <p>
-              <xar:mlstring>Support is planned for</xar:mlstring>:
+              <xar:mlstring>Rough to do list(in roughly this order)</xar:mlstring>:
               <ol>
-                <li>metaWeblog API</li>
+                <li>Finish the metaweblogapi</li>
+                <li>Adding the system.getCapabilities method, including the informal specification or errorcodes</li>
+                <li>The Moveable Type API</li>
                 <li>The Xaraya API over XML-RPC</li>
               </ol>
         </div>

@@ -5,7 +5,11 @@
       <member>
         <name>#$member['name']#</name>
         <value>
-          <xar:template file="xmlrpc-types" subdata="$member['value']"/>
+          <xar:if condition="is_array($member['value'])">
+            <xar:template file="xmlrpc-types" subdata="$member['value']"/>
+          <xar:else/>
+            #$member['value']#
+          </xar:if>
         </value>
       </member>
     </xar:foreach>
@@ -16,7 +20,11 @@
     <data>
       <xar:foreach in="$members" value="$member">
         <value>
-          <xar:template file="xmlrpc-types" subdata="$member['value']"/>
+          <xar:if condition="is_array($member['value'])">
+            <xar:template file="xmlrpc-types" subdata="$member['value']"/>
+          <xar:else/>
+            #$member['value']#
+          </xar:if>
         </value>
       </xar:foreach>
     </data>

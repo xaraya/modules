@@ -90,16 +90,18 @@ function __scan_param($root)
     switch($root[0]) {
         case 'struct':
             $members = array();
-            foreach($root[2] as $member) {
-                $members[] = array('name'  => $root[1],
-                                   'value' => __scan_param($member));
+            foreach($root[1] as $member) {
+                $members[] = array('name'  => $member[0],
+                                   'type'  => $member[1],
+                                   'value' => is_array($member[2]) ? __scan_param($member[2]) : $member[2]);
             }
             $data = array('type' => $root[0], 'members' => $members);
             break;
         case 'array' :
             $members = array();
             foreach($root[1] as $member) {
-                $members[] = array('value' => __scan_param($member));
+                $members[] = array('type' => $member[0],
+                                   'value' => is_array($member[1]) ? __scan_param($member[1]) : $member[1]);
             }
             $data = array('type' => $root[0], 'members' => $members);
             break;
