@@ -998,7 +998,7 @@ class Graph {
 
 	if( empty($HTTP_GET_VARS[_CSIM_DISPLAY]) ) {
 	    echo $this->GetHTMLImageMap($aCSIMName);
-	    echo "<img src='".$aScriptName."?"._CSIM_DISPLAY."=1' ismap usemap='#".$aCSIMName."' border=$aBorder>";
+	    echo "<img src='".$aScriptName."?"._CSIM_DISPLAY."=1' ismap usemap='#".$aCSIMName."' border=\"$aBorder\">";
 	}
 	else {
 	    $this->Stroke();
