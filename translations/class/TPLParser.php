@@ -6,10 +6,8 @@
 // http://www.xaraya.org
 // ----------------------------------------------------------------------
 // Original Author of file: Marco Canini
-// Purpose of file:
+// Purpose of file: Templates file parsing
 // ----------------------------------------------------------------------
-
-//
 
 class TPLParser
 {
@@ -25,11 +23,15 @@ class TPLParser
     var $_token;
     var $_right;
     var $_string;
+    var $filename;
+
     var $tokenarray;
-    var $lasttokenarray;
     var $endtokenarray;
     var $isfunctiontokenarray;
     var $iskeytokenarray;
+    var $strlentokenarray;
+    var $strlenendtokenarray;
+    var $lasttokenarray;
 
     function TPLParser()
     {
@@ -67,7 +69,6 @@ class TPLParser
                 $this->_token = $n;
             }
         }
-        // list($this->_pos,$this->_token) = $this->findfirstof($this->_buf, $this->lasttokenarray, $this->_offs);
         if ($this->_pos != -1) {
             // if (defined('TPLPARSERDEBUG'))
                 // printf("Found %s token %s[%d] at pos %d<br />\n", $this->_right?'end':'begin', htmlspecialchars(substr($this->_buf, $this->_pos, strlen($this->tokenarray[$this->_token]))), $this->_token, $this->_pos);
@@ -85,8 +86,8 @@ class TPLParser
                 $this->_right = true;
                 $this->lasttokenarray = $this->endtokenarray[$this->_token];
                 if ($this->_get_token()) {
-                    if (defined('TPLPARSERDEBUG'))
-                       printf("Result: %s<br />\n", $this->_string);
+                    // if (defined('TPLPARSERDEBUG'))
+                       // printf("Result: %s<br />\n", $this->_string);
                     if (!$this->isfunctiontokenarray[$this->_token])
                         $this->_string = trim($this->_string);
                     if ($this->iskeytokenarray[$this->_token]) {
@@ -119,7 +120,6 @@ class TPLParser
                     break;
                 }
             }
-            // $this->_offs = $this->_len;
             $this->_offs = 0;
         }
         return $found;
@@ -140,6 +140,7 @@ class TPLParser
         $this->_offs = 0;
         $this->_len = 0;
         $this->_right = false;
+        $this->_line = 0;
         $this->lasttokenarray = $this->tokenarray;
 
         while (!feof($this->_fd)) {
