@@ -65,7 +65,7 @@ function xarbb_admin_new()
             }
             if (empty($fdesc)) {
                 $warning = xarML('Forum Description is empty');
-                xarResponseRedirect(xarModURL('xarbb', 'admin', 'new', array('fdesc' => $fname, 'warning' => $warning)));
+                xarResponseRedirect(xarModURL('xarbb', 'admin', 'new', array('fname' => $fname, 'warning' => $warning)));
             }
 
             // Confirm authorisation code.
