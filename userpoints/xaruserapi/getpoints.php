@@ -1,4 +1,4 @@
-<?
+<?php
 function userpoints_userapi_getpoints($args)
 {
 

@@ -1,4 +1,4 @@
-<?
+<?php
 function userpoints_userapi_getpointstypes()
 {
 //get a list of points types.
