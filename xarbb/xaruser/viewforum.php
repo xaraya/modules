@@ -25,21 +25,15 @@ function xarbb_user_viewforum()
                           array('fid' => $fid));
 
     if (empty($data)) return;
-
     if ($data['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- has been locked by administrator', $data['fname']);
         xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
         return;
     }
-    xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
-
-    // While we are here, lets do the hot topics, etc.
-    $hotTopic       = xarModGetVar('xarbb', 'hottopic');
-
-    // Take this outside the loop for efficiency
-    // Monitor the cookie so we can do the images in the loop
+    xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
+    // Cookie
     if (isset($_COOKIE["xarbb_all"])){
         $allforumtimecompare = unserialize($_COOKIE["xarbb_all"]);
     } else {
@@ -56,9 +50,16 @@ function xarbb_user_viewforum()
         $alltimecompare = $allforumtimecompare;
     }
 
-    // This is needed for the redirect function to set the cookie for the main page.
-    $data['fid']    = $fid;
-    $data['items'] = array();
+    // Settings and disply
+    $data['items']          = array();
+    $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
+    $data['showcats']       = $settings['showcats'];
+    $data['xbbname']        = xarModGetVar('themes', 'SiteName');
+    // Login
+    $data['return_url']      = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
+    $data['submitlabel']     = xarML('Submit');
+    // TODO, should be a forum setting
+    $hotTopic               = xarModGetVar('xarbb', 'hottopic');
 
     // The user API function is called
     $topics = xarModAPIFunc('xarbb',
@@ -66,7 +67,7 @@ function xarbb_user_viewforum()
                             'getalltopics',
                             array('fid' => $fid,
                                   'startnum' => $startnumitem,
-                                  'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
+                                  'numitems' => $settings['topicsperpage']));
     $totaltopics=count($topics);
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
@@ -166,22 +167,10 @@ function xarbb_user_viewforum()
 
         $topics[$i]['replyname'] = $getreplyname['name'];
     }
-
-    $forums = xarModAPIFunc('xarbb',
-                            'user',
-                            'getforum',
-                            array('fid' => $fid));
-
-    //Forum Name
-    $data['xbbname']    = xarModGetVar('themes', 'SiteName');
-
-    // Add the array of items to the template variables
-    $data['fid'] = $fid;
     sort_topics($topics);
     $data['items'] = $topics;
-    $data['fname'] = $forums['fname'];
 
-    // Images
+    // Images TODO -- Move these to the template.
     // These are dependant on the time functions being changed
     $data['newtopic']    = '<img src="' . xarTplGetImage('new/post.gif') . '" alt="'.xarML('New topic').'" />';
     $data['newpost']    = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
@@ -196,28 +185,13 @@ function xarbb_user_viewforum()
     $data['newstickytopic']  = '<img src="' . xarTplGetImage('new/folder_sticky_new.gif') . '" alt="'.xarML('New Sticky Topic').'" />';
 
 
-    // User Specifics
-    $data['uid']    = xarUserGetVar('uid');
-    $data['now']    = time();
-    xarModSetVar('xarbb', 'lastvisitdate', $data['now']);
-    xarModSetVar('xarbb', 'lastvisitdate.'.$fid, $data['now']);
-    $data['lastvisitdate'] = xarModGetUserVar('xarbb', 'lastvisitdate', $data['uid']);
-    // need to think about this a bit
-    if ($data['lastvisitdate'] != $data['now']){
-        xarModSetUserVar('xarbb', 'lastvisitdate.'.$fid, $data['now'], $data['uid']);
-    }
-
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnumitem,
                                     xarModAPIFunc('xarbb', 'user', 'counttopics', array('fid' => $fid)),
                                     xarModURL('xarbb', 'user', 'viewforum', array('startnumitem' => '%%',
                                                                                   'fid'          => $fid)),
-                                    xarModGetVar('xarbb', 'topicsperpage'));
-
-    // Login
-    $data['return_url']      = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
-    $data['submitlabel']    = xarML('Submit');
+                                    $settings['topicsperpage']);
 
     // Return the template variables defined in this function
     return $data;

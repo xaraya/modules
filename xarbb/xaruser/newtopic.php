@@ -138,6 +138,17 @@ function xarbb_user_newtopic()
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter,
                                      'tstatus'  => $tstatus))) return;
+                 // NNTP?
+                 $settings   = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
+                 if ($settings['linknntp']){
+                     if (!xarModAPIFunc('xarbb',
+                                   'user',
+                                   'sendnntp',
+                                   array('fid'      => $data['fid'],
+                                         'ttitle'   => $ttitle,
+                                         'tpost'    => $tpost,
+                                         'tposter'  => $tposter))) return;
+                 }
 
                  // We don't want to update the forum counter on an updated reply.
                  if (!xarModAPIFunc('xarbb',

@@ -6,28 +6,21 @@
       Icons that are used for actions such as New Post, Edit, Delete and so on.
       These images must exist with names indicated in your xarbb/xarimages/
       folder or theme equivalent.
-
-      You can replace the <xar:mlstring>Action text</xar:mlstring> areas with corresponding
-      icon variables as #$nameofvar# to display the named gif file -
-
-         #$newtopic#   newpost.gif        New Topic
-         #$newreply#   replypost.gif'     New reply
-         #$edit#       edit.gif           Edit
-         #$delete#     delete.gif         Delete
-         #$profile#    infoicon.gif       User Profile or account if logged in
-         #$subscribe#  subscribe.gif      Subscribe to a forum  - not implemented
       
       If you have images called folder.gif, hot_folder.gif, and hot_red_folder.gif  
       you can uncomment the lines in two places to display     #$loop:item['folder']#
       which will display these icons dependent on number of topics - and your config settings.
 --->
-<table border="0" cellpadding="3" cellspacing="0" width="100%">
-	<tr>
-		<td colspan="2">
-			<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
-		</td>
-	</tr>
-</table>
+
+<xar:if condition="$showcats">
+	<table border="0" cellpadding="3" cellspacing="0" width="100%">
+		<tr>
+			<td colspan="2">
+				<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+			</td>
+		</tr>
+	</table>
+</xar:if>
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr> 

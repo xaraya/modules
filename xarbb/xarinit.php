@@ -275,7 +275,7 @@ function xarbb_upgrade($oldversion)
         case '1.0.1':
             // Upgrade Path TODO
             // Time Fields
-            // Forum Status
+            // Still need to do this:(
             break;
         case '1.0.2':
             $dbconn =& xarDBGetConn();
@@ -314,6 +314,22 @@ function xarbb_upgrade($oldversion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return; 
+            break;
+        case '1.0.5':
+                $forums = xarModAPIFunc('xarbb','user','getallforums');
+                //Need to start the settings
+                $settings = array();
+                $settings['postsperpage']       = 20;
+                $settings['topicsperpage']      = 20;
+                $settings['allowhtml']          = NULL;
+                $settings['showcats']           = NULL;
+                $settings['linknntp']           = NULL;
+                $settings['nntpport']           = 119;
+                $settings['nntpserver']         = 'news.xaraya.com';
+                $settings['nntpgroup']          = 'xaraya.test';
+                foreach($forums as $forum) {
+                    xarModSetVar('xarbb', 'settings.'.$forum['fid'], serialize($settings));
+                }
             break;
         default:
             break;
