@@ -1,6 +1,6 @@
 <?php
-function window_user_main($args) {
-
+function window_user_main($args) 
+{
     extract($args);
 
     $allow_local_only = xarModGetVar('window', 'allow_local_only');

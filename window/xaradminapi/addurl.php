@@ -1,6 +1,7 @@
 <?php
 //Add a Url
-function window_adminapi_addurl($args) {
+function window_adminapi_addurl($args) 
+{
     if (!xarSecurityCheck('AdminWindow')) return;
 
     if (!xarVarFetch('reg_user_only', 'int', $reg_user_only, 0, XARVAR_NOT_REQUIRED)) return;

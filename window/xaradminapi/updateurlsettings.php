@@ -1,5 +1,6 @@
 <?php
-function window_adminapi_updateurlsettings($var) {
+function window_adminapi_updateurlsettings($var) 
+{
     if (!xarSecurityCheck('AdminWindow')) return;
 
     if (!xarVarFetch('reg_user_only', 'int', $reg_user_only, 0, XARVAR_NOT_REQUIRED)) return;

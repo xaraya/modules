@@ -1,5 +1,6 @@
 <?php
-function window_adminapi_geturls() {
+function window_adminapi_geturls() 
+{
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $urltable = $xartable['window'];
