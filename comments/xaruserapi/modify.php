@@ -53,11 +53,24 @@ function comments_userapi_modify($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $text .= "\n<br />\n<br />\n";
+    $text .= "\n<p>\n";
+
+    // Let's leave a link for the changelog module if it is hooked to track comments
+    if (xarModIsHooked('changelog', 'comments', 0)){
+        $url = xarModUrl('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $cid));
+        $text .= '<a href="' . $url . '" title="' . xarML('See Changes') .'">';
+    }
+
     $text .= xarML('[Modified by: #(1) (#(2)) on #(3)]', 
                    xarUserGetVar('name'),
                    xarUserGetVar('uname'),
                    $modified_date);
+
+    if (xarModIsHooked('changelog', 'comments', 0)){
+        $text .= '</a>';
+    }
+
+    $text .= "\n</p>\n";
 
     $sql =  "UPDATE $xartable[comments]
                 SET xar_title    = '". xarVarPrepForStore($title) ."',
