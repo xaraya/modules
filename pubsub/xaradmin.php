@@ -32,11 +32,11 @@ function pubsub_admin_view()
 {
     $data['items'] = array();
     $data['namelabel'] = xarVarPrepForDisplay(xarMLByKey('PUBSUBNAME'));
-    $data['modnamelabel'] = xarVarPrepForDisplay(xarMLByKey('Module Name'));
-    $data['categorylabel'] = xarVarPrepForDisplay(xarMLByKey('Category'));
-    $data['itemlabel'] = xarVarPrepForDisplay(xarMLByKey('Item'));
-    $data['numsubscriberslabel'] = xarVarPrepForDisplay(xarMLByKey('Number of Subscribers'));
-    $data['templatelabel'] = xarVarPrepForDisplay(xarMLByKey('Template'));
+    $data['modnamelabel'] = xarVarPrepForDisplay(xarML('Module Name'));
+    $data['categorylabel'] = xarVarPrepForDisplay(xarML('Category'));
+    $data['itemlabel'] = xarVarPrepForDisplay(xarML('Item'));
+    $data['numsubscriberslabel'] = xarVarPrepForDisplay(xarML('Number of Subscribers'));
+    $data['templatelabel'] = xarVarPrepForDisplay(xarML('Template'));
     $data['authid'] = xarSecGenAuthKey();
     $data['pager'] = '';
 
