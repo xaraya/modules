@@ -1,7 +1,8 @@
 <?php
 
 
-function uploads_adminapi_dd_configure($confString = NULL) {
+function uploads_adminapi_dd_configure($confString = NULL)
+{
 
     $multiple = TRUE;
     // Default stored is on
