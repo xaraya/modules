@@ -110,20 +110,27 @@ function articles_featureditemsblock_display(& $blockinfo)
         $fields[] = 'summary';
     }
 
+    $fields[] = 'dynamicdata';
+
     // Initialize arrays
     $data['feature'] = array();
     $data['items'] = array();
 
     // Setup featured item
     if ($featuredaid > 0) {
-        $featuredart = xarModAPIFunc(
-            'articles','user','get',
-            array(
-                'aid' => $featuredaid,
-                'fields' => $fields
-            )
-        );
 
+        if (xarModIsHooked('uploads', 'articles', $vars['pubtypeid'])) {
+            xarVarSetCached('Hooks.uploads','ishooked',1);
+        }
+        
+        $featuredart = current(xarModAPIFunc(
+            'articles','user','getall',
+            array(
+                'aids' => array($featuredaid),
+                'extra' => array('dynamicdata')
+            )
+        ));
+        
         $featuredlink = xarModURL(
             'articles', 'user', 'display',
             array(
@@ -144,8 +151,8 @@ function articles_featureditemsblock_display(& $blockinfo)
             'featuredbody'      => $featuredart['body']
         );
     }
-
-    // Setup additional items 
+    
+    // Setup additional items
     if (!empty($vars['moreitems'])) {
         $articles = xarModAPIFunc(
             'articles', 'user', 'getall',
