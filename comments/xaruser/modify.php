@@ -101,6 +101,10 @@ function comments_user_modify()
                                          array($comments[0]['xar_text'],
                                                $comments[0]['xar_title']));
 
+            $comments[0]['transformed-text']    = xarVarPrepHTMLDisplay($comments[0]['transformed-text']);
+            $comments[0]['transformed-title']   = xarVarPrepForDisplay($comments[0]['transformed-title']);
+            $comments[0]['xar_text']            = xarVarPrepHTMLDisplay($comments[0]['xar_text']);
+            $comments[0]['xar_title']           = xarVarPrepForDisplay($comments[0]['xar_title']);
 
             $package['comments']                = $comments;
             $package['title']                   = $comments[0]['xar_title'];
@@ -121,6 +125,11 @@ function comments_user_modify()
                                                                   $header['pid'],
                                                                   array($package['text'],
                                                                         $package['title']));
+
+            $package['transformed-text']  = xarVarPrepHTMLDisplay($package['transformed-text']);
+            $package['transformed-title'] = xarVarPrepForDisplay($package['transformed-title']);
+            $package['text']              = xarVarPrepHTMLDisplay($package['text']);
+            $package['title']             = xarVarPrepForDisplay($package['title']);
 
             $comments[0]['xar_text']     = $package['text'];
             $comments[0]['xar_title']    = $package['title'];

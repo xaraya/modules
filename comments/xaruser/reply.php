@@ -118,8 +118,11 @@ function comments_user_reply()
                                                $comments[0]['xar_title']));
 
 
+            $comments[0]['xar_text']         = xarVarPrepHTMLDisplay($comments[0]['xar_text']);
+            $comments[0]['xar_title']        = xarVarPrepForDisplay($comments[0]['xar_title']);
+
             $package['comments']             = $comments;
-            $package['new_title']            = $new_title;
+            $package['new_title']            = xarVarPrepForDisplay($new_title);
             $receipt['action']               = 'reply';
             $output['header']                = $header;
             $output['package']               = $package;
@@ -135,21 +138,26 @@ function comments_user_reply()
                                                       array($package['text'],
                                                             $package['title']));
 
-            $comments[0]['xar_text']     = $package['text'];
-            $comments[0]['xar_title']    = $package['title'];
-            $comments[0]['xar_modid']    = $header['modid'];
-            $comments[0]['xar_itemtype'] = $header['itemtype'];
-            $comments[0]['xar_objectid'] = $header['objectid'];
-            $comments[0]['xar_pid']      = $header['pid'];
-            $comments[0]['xar_author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
-            $comments[0]['xar_cid']      = 0;
-            $comments[0]['xar_postanon'] = $package['postanon'];
-            $comments[0]['xar_date']     = xarLocaleFormatDate("%d %b %Y %H:%M:%S %Z",time());
-            $comments[0]['xar_hostname'] = 'somewhere';
+            $package['transformed-text']  = xarVarPrepHTMLDisplay($package['transformed-text']);
+            $package['transformed-title'] = xarVarPrepForDisplay($package['transformed-title']);
+            $package['text']              = xarVarPrepHTMLDisplay($package['text']);
+            $package['title']             = xarVarPrepForDisplay($package['title']);
 
-            $package['comments']         = $comments;
-            $package['new_title']        = $package['title'];
-            $receipt['action']           = 'reply';
+            $comments[0]['xar_text']      = $package['text'];
+            $comments[0]['xar_title']     = $package['title'];
+            $comments[0]['xar_modid']     = $header['modid'];
+            $comments[0]['xar_itemtype']  = $header['itemtype'];
+            $comments[0]['xar_objectid']  = $header['objectid'];
+            $comments[0]['xar_pid']       = $header['pid'];
+            $comments[0]['xar_author']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+            $comments[0]['xar_cid']       = 0;
+            $comments[0]['xar_postanon']  = $package['postanon'];
+            $comments[0]['xar_date']      = xarLocaleFormatDate("%d %b %Y %H:%M:%S %Z",time());
+            $comments[0]['xar_hostname']  = 'somewhere';
+
+            $package['comments']          = $comments;
+            $package['new_title']         = $package['title'];
+            $receipt['action']            = 'reply';
 
             break;
 

@@ -100,6 +100,20 @@ function comments_user_search( $args )
 
     if (!empty($package['comments'])) {
 
+        foreach ($package['comments'] as $key => $comment) {
+            if ($header['text']) {
+                // say which pieces of text (array keys) you want to be transformed
+                $comment['transform'] = array('xar_text');
+                // call the item transform hooks
+                // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
+                $comment = xarModCallHooks('item', 'transform', $comment['xar_cid'], $comment, 'comments');
+                $package['comments'][$key]['xar_text'] = xarVarPrepHTMLDisplay($comment['xar_text']);
+            }
+            if ($header['title']) {
+                $package['comments'][$key]['xar_title'] = xarVarPrepForDisplay($comment['xar_title']);
+            }
+        }
+
         $header['modid'] = $package['comments'][0]['xar_modid'];
         $header['itemtype'] = $package['comments'][0]['xar_itemtype'];
         $header['objectid'] = $package['comments'][0]['xar_objectid'];
