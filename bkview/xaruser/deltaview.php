@@ -29,7 +29,7 @@ function bkview_user_deltaview($args)
 
     // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
-    if(!empty($changeset->deltas)) {
+    if(!empty($changeset->_deltas)) {
         foreach($changeset->_deltas as $delta_id => $delta) {
             // Repo id is a xaraya thing, add it sneaky to the object because we dont
             // want it in the class

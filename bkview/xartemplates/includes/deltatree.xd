@@ -24,9 +24,11 @@ li.delta {
     <xar:if condition="$nodename != 'ChangeSet'">
       <xar:if condition="is_array($deltatree[$nodename])">
          <xar:if condition="array_key_exists('type',$deltatree[$nodename]) && $deltatree[$nodename]['type']=='file'">
-            <li class="node"><a title="#xarML('View revision history of this file')#" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#">#$nodename#</a>
-                <!-- Recursive call into this very same template!! -->
-                <xar:template file="deltatree" subdata="array('deltatree' =&gt; $deltatree[$nodename])" />
+            <xar:set name="delta">end($deltatree[$nodename])</xar:set>
+            <li class="node">
+              <a title="#xarML('View revision history of this file')#" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#">#$nodename#</a>
+              <!-- Recursive call into this very same template!! -->
+              <xar:template file="deltatree" subdata="array('deltatree' =&gt; $deltatree[$nodename])" />
             </li>
         <xar:else/>
             <li class="subtree">#$nodename#

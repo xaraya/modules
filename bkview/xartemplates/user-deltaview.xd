@@ -18,8 +18,9 @@ div.csetsummary {
 
 <!-- Summary of the cset -->
 <div class="xar-norm-outline xar-accent csetsummary">
-  <table class="csetsummary">
-    <tr><td><xar:mlstring>Author</xar:mlstring> :</td><td>#$author#</td></tr>
+  <table class="csetsummary"> 
+    <tr><td><xar:mlstring>Author</xar:mlstring> :</td>
+        <td><a title="#xarML('Show the changeset activity of this user')#" href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$author#">#$author#</a></td></tr>
     <tr><td><xar:mlstring>Revision</xar:mlstring> :</td><td>#$rev#</td></tr>
     <tr><td><xar:mlstring>Key</xar:mlstring> :</td><td>#$key#</td></tr>
     <tr><td><xar:mlstring>Patch</xar:mlstring> :</td><td><a title="#xarML('View differences')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#"><xar:mlstring>View diff</xar:mlstring></a> | Download BK patch</td></tr>
