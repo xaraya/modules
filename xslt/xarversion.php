@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * XSLT Transform Hook
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
@@ -14,6 +14,7 @@
 $modversion['name']           = 'XSLT';
 $modversion['id']             = '184';
 $modversion['version']        = '1.0.0';
+$modversion['displayname']    = xarML('XSLT');
 $modversion['description']    = 'XSLT Transform Hook';
 $modversion['credits']        = '';
 $modversion['help']           = '';
