@@ -12,8 +12,8 @@ function changelog_userapi_getmodules($args)
    if (!xarSecurityCheck('ReadChangeLog')) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $changelogtable = $xartable['changelog'];
 
     // Get items

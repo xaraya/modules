@@ -54,8 +54,8 @@ function changelog_adminapi_createhook($args)
          }
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $changelogtable = $xartable['changelog'];
 
     $editor = xarUserGetVar('uid');

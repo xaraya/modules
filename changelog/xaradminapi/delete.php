@@ -18,8 +18,8 @@ function changelog_adminapi_delete($args)
     if (!xarSecurityCheck('AdminChangeLog')) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $changelogtable = $xartable['changelog'];
 
     $query = "DELETE FROM $changelogtable ";

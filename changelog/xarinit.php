@@ -18,8 +18,8 @@
  */
 function changelog_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $changelogtable = $xartable['changelog'];
 
@@ -189,8 +189,8 @@ function changelog_upgrade($oldversion)
  */
 function changelog_delete()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 
