@@ -11,7 +11,7 @@ function loadContent(url) {
         document.body.style.cursor='wait';
         req = new XMLHttpRequest();
         req.onreadystatechange = processReqChange;
-        req.open("POST", url + postfix, true);
+        req.open("GET", url + postfix, true);
         req.send(null);
         return false;
     } else if (window.ActiveXObject) {
@@ -19,7 +19,7 @@ function loadContent(url) {
         req = new ActiveXObject("Microsoft.XMLHTTP");
         if (req) {
             req.onreadystatechange = processReqChange;
-            req.open("POST", url + postfix, true);
+            req.open("GET", url + postfix, true);
             req.send();
         }
         return false;
