@@ -134,12 +134,10 @@ function xarcachemanager_upgrade($oldversion)
             // Code to upgrade from the 0.1 version (base page level caching)
             // Do conversion of MB to bytes in config file
             include($cachingConfigFile);
-            $cachesizelimit = $cachingConfiguration['Output.SizeLimit'] * 1048576;
-            $cachingConfig = join('', file($cachingConfigFile));
-            $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
-            $fp = fopen ($cachingConfigFile, 'wb');
-            fwrite ($fp, $cachingConfig);
-            fclose ($fp);
+            $cachingConfiguration['Output.SizeLimit'] = $cachingConfiguration['Output.SizeLimit'] * 1048576;
+            xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                  array('configSettings' => $cachingConfiguration,
+                        'cachingConfigFile' => $cachingConfigFile));
         case 0.2:
         case '0.2.0':
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
