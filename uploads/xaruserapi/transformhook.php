@@ -31,7 +31,7 @@ function & uploads_userapi_transformhook ( $args )
 function & uploads_userapi_transform ( $body )
 {
     
-    while(eregi('#(ulid|ulidd|ulfn|fileURL|fileIcon|fileName):([^#]*)#', $body, $matches)) {
+    while(eregi('#(ulid|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]*)#', $body, $matches)) {
         array_shift($matches);
         list($type, $id) = $matches;
         
