@@ -80,6 +80,12 @@ function newsletter_admin_publishissue()
         $data['issuetitle'] = xarVarPrepForDisplay($issue['title']);
         $data['published'] = false;
 
+        // Get subscription count
+        $data['count'] = xarModAPIFunc('newsletter',
+                                       'admin',
+                                       'countsubscriptions',
+                                       array('id' => $issue['pid']));
+
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
 

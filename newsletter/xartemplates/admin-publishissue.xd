@@ -51,12 +51,15 @@
                     <tr>
                         <td>
                             <span class="xar-title"><xar:mlstring>Confirm publication of issue:</xar:mlstring></span>
-                    <br />
-                    <span class="xar-title"><xar:mlstring>Publication:</xar:mlstring></span>&nbsp;&nbsp;
-                    #$publicationtitle#
-                    <br />
-                    <span class="xar-title"><xar:mlstring>Issue:</xar:mlstring></span>&nbsp;&nbsp;
-                    #$issuetitle#
+                            <br />
+                            <span class="xar-title"><xar:mlstring>Publication:</xar:mlstring></span>&nbsp;&nbsp;
+                            #$publicationtitle#
+                            <br />
+                            <span class="xar-title"><xar:mlstring>Issue:</xar:mlstring></span>&nbsp;&nbsp;
+                            #$issuetitle#
+                            <br />
+                            <span class="xar-title"><xar:mlstring>Number of subscriptions:  </xar:mlstring></span>
+                            #$count#
                         </td>
                     </tr>
                     <tr>
