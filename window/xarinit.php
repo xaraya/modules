@@ -123,7 +123,7 @@ function window_delete()
     xarRemoveMasks('window');
     xarRemoveInstances('window');
     // Drop all ModVars
-    xarModDelAllVars('window')
+    xarModDelAllVars('window');
     //Success
     return true;
 }
