@@ -166,37 +166,18 @@ function xarcachemanager_upgrade($oldversion)
             }
         case '0.3.0':
             // Code to upgrade from the 0.3.0
-            // Bring the config file up to current version            
-            if (@include($cachingConfigFile)) {
-                $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
-                $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
-                $pageexpiretime = $cachingConfiguration['Page.TimeExpiration'];
-                $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
-                $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
-                $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
-                if (isset($cachingConfiguration['Page.CacheGroups'])) {
-                    $cachegroups = $cachingConfiguration['Page.CacheGroups'];
-                }
+            // Bring the config file up to current version
+            if (file_exists($cachingConfigFile)) {
+                $configSettings = xarModAPIFunc('xarcachemanager',
+                                                'admin',
+                                                'get_cachingconfig',
+                                                array('from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile));
                 @unlink($cachingConfigFile);
-                $handle = fopen($defaultConfigFile, "rb");
-                $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
-                $fp = @fopen($cachingConfigFile,"wb");
-                fwrite($fp, $defaultConfig);
-                fclose($fp);
-                $cachingConfig = join('', file($cachingConfigFile));
-                $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
-                $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
-                $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
-                $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
-                $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
-                $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
-                if (isset($cachegroups)) {
-                    $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
-                }
-
-                $fp = fopen ($cachingConfigFile, 'wb');
-                fwrite ($fp, $cachingConfig);
-                fclose ($fp);
+                copy($defaultConfigFile, $cachingConfigFile); 
+                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                  array('configSettings' => $configSettings,
+                        'cachingConfigFile' => $cachingConfigFile));                
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
