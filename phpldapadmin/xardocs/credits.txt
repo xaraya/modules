@@ -1,8 +1,13 @@
 // ----------------------------------------------------------------------
 // Credits
 //
-// phpLDAPadmin Author:  David Smith uugdave@users.sourceforge.net 
+// phpLDAPadmin Developers:
+//     David Smith      uugdave@users.sourceforge.net       Project Manager
+//     Nate Rotschafer  nrotschafer@users.sourceforge.net   Developer
+//     Xavier Renard    xrenard@users.sourceforge.net       Developer 
+//
 // 
-// Module Author:   Richard Cave rcave@xaraya.com
+// Module Author:   
+//     Richard Cave rcave@xaraya.com
 //
 // ----------------------------------------------------------------------
