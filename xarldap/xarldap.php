@@ -66,7 +66,7 @@ class xarldap {
     /**
      * exists
      *
-	 * Check for existence of the LDAP PHP extension
+     * Check for existence of the LDAP PHP extension
      *
      * @author  Richard Cave <rcave@xaraya.com>
      * @access  public
