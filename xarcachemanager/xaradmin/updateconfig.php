@@ -51,7 +51,7 @@ function xarcachemanager_admin_updateconfig()
     if ($cacheblocks && $cacheenabled) {
         xarModSetVar('xarcachemanager','CacheBlockOutput', 1);
         // flush adminpanels blocks to show new options if necessary
-        if (!file_exists($outputCacheDir . 'cache.touch')) {
+        if (!file_exists($outputCacheDir . '/cache.touch')) {
             include_once('includes/xarCache.php');
             xarCache_init(array('cacheDir' => $outputCacheDir));
         }
