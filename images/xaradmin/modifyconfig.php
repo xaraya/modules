@@ -3,7 +3,7 @@
 function images_admin_modifyconfig()
 {
 
-    // Security check 
+    // Security check
     if (!xarSecurityCheck('AdminImages')) return;
 
     xarModAPILoad('images');
@@ -19,8 +19,12 @@ function images_admin_modifyconfig()
                                'ImageMagick' => _IMAGES_LIBRARY_IMAGEMAGICK,
                                'NetPBM'      => _IMAGES_LIBRARY_NETPBM);
 
+    $shortURLs = xarModGetVar('images', 'SupportShortURLs');
+
+    $data['shortURLs'] = empty($shortURLs) ? 0 : 1;
+
     $hooks = xarModCallHooks('module', 'modifyconfig', 'images', array());
-    
+
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {

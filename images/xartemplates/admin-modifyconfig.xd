@@ -17,7 +17,7 @@
                 <input type="text" name="path[derivative-store]" value="#$path['derivative-store']#" size="70">
                 <br />
                 <xar:mlstring>
-                    This is the full path to the directory where Derivative images will be stored.  
+                    This is the full path to the directory where Derivative images will be stored.
                     It is stronly recommended that this directory be located outside of your web directory.
                     <br />NOTE: This directory MUST be writable by the webserver.
                 </xar:mlstring>
@@ -49,6 +49,18 @@
                     <em>
                         <strong>Note:</strong> currently, only GD >= 2.0.1 is supported
                     </em>
+                </xar:mlstring>
+            </p>
+            <p>
+                <strong><xar:mlstring>Support Short URLs</xar:mlstring>:</strong>&nbsp;&nbsp;
+                <xar:if condition="$shortURLs eq TRUE">
+                    <input type="checkbox" name="shortURLs" value="true" checked="checked">
+                <xar:else />
+                    <input type="checkbox" name="shortURLs" value="true">
+                </xar:if>
+                <br />
+                <xar:mlstring>
+                    This will cause urls to be displayed in a condescenced format.<br />
                 </xar:mlstring>
             </p>
             <p>
