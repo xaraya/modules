@@ -38,16 +38,20 @@ function xarbb_userapi_searchreplies($args)
               FROM  $xartable[comments]
              WHERE  $ctable[modid] = 300
                AND  (";
+               
+    $bindvars = array();
 
     if (isset($title)) {
-        $sql .= "$ctable[title] LIKE '$title'";
+        $sql .= "$ctable[title] LIKE ?";
+        $bindvars[] = $title;
     }
 
     if (isset($text)) {
         if (isset($title)) {
             $sql .= " OR ";
         }
-        $sql .= "$ctable[comment] LIKE '$text'";
+        $sql .= "$ctable[comment] LIKE ?";
+        $bindvars[] = $text;
     }
 
     if (isset($author)) {
@@ -55,15 +59,19 @@ function xarbb_userapi_searchreplies($args)
             $sql .= " OR ";
         }
         if ($author == 'anonymous') {
-            $sql .= " $ctable[author] = '$uid' OR $ctable[postanon] = '1'";
+            $sql .= " $ctable[author] = ? OR $ctable[postanon] = ?";
+            $bindvars[] = $uid;
+            $bindvars[] = 1;
         } else {
-            $sql .= " $ctable[author] = '$uid' AND $ctable[postanon] != '1'";
+            $sql .= " $ctable[author] = ? AND $ctable[postanon] != ?";
+            $bindvars[] = $uid;
+            $bindvars[] = 1;
         }
     }
 
     $sql .= ") ORDER BY $ctable[left]";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql, $bindvars);
     if (!$result) return;
 
     // if we have nothing to return

@@ -30,27 +30,32 @@ function xarbb_userapi_searchtopics($args)
               FROM  $ctable
               WHERE  (";
 
+    $bindvars = array();
+
     if (isset($title)) {
-        $sql .= "xar_ttitle LIKE '$title'";
+        $sql .= "xar_ttitle LIKE ?";
+        $bindvars[] = $title;
     }
 
     if (isset($text)) {
         if (isset($title)) {
             $sql .= " OR ";
         }
-        $sql .= "xar_tpost LIKE '$text'";
+        $sql .= "xar_tpost LIKE ?";
+        $bindvars[] = $text;
     }
 
     if (isset($author)) {
         if (isset($title) || isset($text)) {
             $sql .= " OR ";
         }
-        $sql .= " xar_tposter = '$uid'";
+        $sql .= " xar_tposter = ?";
+        $bindvars[] = $uid;
     }
 
     $sql .= ")  ORDER BY xar_ttime DESC";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql, $bindvars);
     if (!$result) return;
 
     // if we have nothing to return
