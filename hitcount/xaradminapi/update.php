@@ -94,7 +94,7 @@ function hitcount_adminapi_update($args)
               WHERE xar_moduleid = ?
               AND xar_itemtype = ?
               AND xar_itemid = ?";
-    $bindvars = array($modid, $itemtype,$objectid);
+    $bindvars = array((int)$modid, (int)$itemtype, (int)$objectid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

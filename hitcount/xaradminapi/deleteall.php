@@ -43,7 +43,7 @@ function hitcount_adminapi_deleteall($args)
 
     $query = "DELETE FROM $hitcounttable
             WHERE xar_moduleid = ?";
-    $result =& $dbconn->Execute($query,array($modid));
+    $result =& $dbconn->Execute($query,array((int)$modid));
     if (!$result) return;
 
     // hmmm, I think we'll skip calling more hooks here... :-)
