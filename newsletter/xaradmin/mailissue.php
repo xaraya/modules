@@ -229,8 +229,7 @@ function newsletter__single_email($args)
                                             'mailissue',
                                             array('publication'  => $publication,
                                                   'issue'        => $issue,
-                                                  'recipients'   => array($userData['email
-'] => $userData['name']),
+                                                  'recipients'   => array($userData['email'] => $userData['name']),
                                                   'issueText'    => $issueText,
                                                   'issueHTML'    => $issueHTML,
                                                   'type'         => 'html'));
@@ -241,8 +240,7 @@ function newsletter__single_email($args)
                                             'mailissue',
                                             array('publication'  => $publication,
                                                   'issue'        => $issue,
-                                                  'recipients'   => array($userData['email
-'] => $userData['name']),
+                                                  'recipients'   => array($userData['email'] => $userData['name']),
                                                   'issueText'    => $issueText,
                                                   'issueHTML'    => $issueHTML,
                                                   'type'         => 'text'));
