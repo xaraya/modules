@@ -6,6 +6,6 @@
 </span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body"><br />
-<div align="center">
+<div style="text-align: center;">
 <!-- headline of module -->
 <!-- module body template -->

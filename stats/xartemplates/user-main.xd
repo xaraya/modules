@@ -34,28 +34,32 @@
 	<div>
 		<h3><xar:mlstring>Top 10 Browsers</xar:mlstring></h3>
 		<a href="#xarModURL('stats', 'user', 'details_browser')#"><xar:mlstring>More details</xar:mlstring></a>
+		<xar:if condition="!empty($browser)">
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$browsers">
 				<tr>
-					<td><img src="#$picpath#/#$loop:item['pic']#" border="0" alt="#$loop:item['name']#" /></td>
+					<td><img src="#$picpath#/#$loop:item['pic']#" alt="#$loop:item['name']#" /></td>
 					<td>#$loop:item['name']#</td>
 					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
 				</tr>
 			</xar:loop>
 		</table>
+		</xar:if>
 	</div>
 	<div>
 		<h3><xar:mlstring>Top 10 Operating systems</xar:mlstring></h3>
 		<a href="#xarModURL('stats', 'user', 'details_os')#"><xar:mlstring>More details</xar:mlstring></a>
+		<xar:if condition="!empty($browser)">
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$os">
 				<tr>
-					<td><img src="#$picpath#/#$loop:item['pic']#" border="0" alt="#$loop:item['name']#" /></td>
+					<td><img src="#$picpath#/#$loop:item['pic']#" alt="#$loop:item['name']#" /></td>
 					<td>#$loop:item['name']#</td>
 					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
 				</tr>
 			</xar:loop>
 		</table>
+		</xar:if>
 	</div>
 	<div>
 		<h3><xar:mlstring>Visitors by hour</xar:mlstring></h3>
@@ -107,12 +111,12 @@
 		<h3><xar:mlstring>Miscellaneous stats</xar:mlstring></h3>
 		<table cellspacing="0" cellpadding="2">
 			<tr valign="bottom">
-				<td><img src="#$picpath#/users.gif" border="0" alt="" /></td>
+				<td><img src="#$picpath#/users.gif" alt="" /></td>
 				<td><xar:mlstring>Registered users</xar:mlstring>:</td>
 				<td align="right">#$misc['users']#</td>
 			</tr>
 			<tr valign="bottom">
-				<td><img src="#$picpath#/sections.gif" border="0" alt="" /></td>
+				<td><img src="#$picpath#/sections.gif" alt="" /></td>
 				<td><xar:mlstring>System version</xar:mlstring>:</td>
 				<td align="right">#$misc['sysversion']#</td>
 			</tr>
