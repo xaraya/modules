@@ -81,20 +81,20 @@ function pubsub_adminapi_getsubscribers($args)
         {
             if( $userid == -1 )
             {
-				$emailinfo = explode(' ',$email,2);
+                $emailinfo = explode(' ',$email,2);
                 $username    = $emailinfo[0];
-				if( isset($emailinfo[1]) )
-				{
-					$displayname = $emailinfo[1];
-				} else {
-					$displayname = '';
-				}
+                if( isset($emailinfo[1]) )
+                {
+                    $displayname = $emailinfo[1];
+                } else {
+                    $displayname = '';
+                }
             } else {
-				$displayname = '';
-			}
+                $displayname = '';
+            }
         
             $subscribers[] = array('username'  => $username
-			                      ,'displayname' => $displayname
+                                  ,'displayname' => $displayname
                                   ,'modname'   => $modname
                                   ,'modid'     => $modid
                                   ,'itemtype'  => $itemtype
