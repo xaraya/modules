@@ -24,12 +24,27 @@ function smilies_user_main()
     if(!xarSecurityCheck('OverviewSmilies')) return;
     // Get parameters from whatever input we need
     if(!xarVarFetch('startnum', 'isset',    $startnum, 1,     XARVAR_NOT_REQUIRED)) {return;}
+
+    // check to see if the print theme was called for documentation
+    $theme = xarVarGetCached('Themes.name','CurrentTheme');
+    if ($theme == 'print'){
+        $print = true;
+    }
+
     $data['items'] = array();
     // Specify some labels for display
-    $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('smilies', 'user', 'countitems'),
-                                    xarModURL('smilies', 'user', 'main', array('startnum' => '%%')),
-                                    xarModGetVar('smilies', 'itemsperpage'));
+    if (isset($print)){
+        $data['pager'] = xarTplGetPager($startnum,
+                                        xarModAPIFunc('smilies', 'user', 'countitems'),
+                                        xarModURL('smilies', 'user', 'main', array('startnum' => '%%', 'theme' => 'print')),
+                                        xarModGetVar('smilies', 'itemsperpage'));
+    } else {
+        $data['pager'] = xarTplGetPager($startnum,
+                                        xarModAPIFunc('smilies', 'user', 'countitems'),
+                                        xarModURL('smilies', 'user', 'main', array('startnum' => '%%')),
+                                        xarModGetVar('smilies', 'itemsperpage'));
+    }
+
     // The user API function is called
     $links = xarModAPIFunc('smilies',
                            'user',
