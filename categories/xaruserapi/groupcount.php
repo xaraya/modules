@@ -4,7 +4,8 @@
  * count number of items per category, or number of categories for each item
  * @param $args['groupby'] group entries by 'category' or by 'item'
  * @param $args['modid'] module´s ID
- * @param $args['item type'] item type
+ * @param $args['itemtype'] item type
+ * @param $args['iids'] optional array of item IDs that we are selecting on
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['groupcids'] the number of categories you want items grouped by

@@ -112,18 +112,34 @@ function categories_userapi_getancestors($args) {
 
     // Loop for each starting cid.
     foreach ($cids as $cid) {
+        // Keep a trace of descendants as we walk back up the tree.
+        // The descendants are not cached as they will vary
+        // depending upon where the ancestor walk starts from.
+        $descendants = "$cid";
+
         // 'self' added only if required.
         if (!isset($info[$cid]) && $self) {
             $info[$cid] = $cached[$cid];
         }
-        // Tranverse remaining ancestors until we either hit the end
-        // or an ancestor that has already been set.
+
+        // Tranverse remaining ancestors until we either hit a root node.
+        // TODO: put a limit on the loop in case of infinite loops.
         $nextcid = $cached[$cid]['parent'];
-        while ($nextcid > 0 && !isset($info[$nextcid])) {
-            $info[$nextcid] = $cached[$nextcid];
+        while ($nextcid > 0) {
+            if (!isset($info[$nextcid])) {
+                $info[$nextcid] = $cached[$nextcid];
+            }
+
+            // Store the descendant trail against this category.
+            $info[$nextcid]['descendants'][] = $descendants;
+
+            // Add this descendant onto the list for the next category up.
+            $descendants = $nextcid . ':' . $descendants;
+
             $nextcid = $cached[$nextcid]['parent'];
         }
     }
+    //echo "<pre>"; var_dump($info); echo "</pre><br/>";
 
     return $info;
 }

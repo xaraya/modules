@@ -20,9 +20,11 @@ function categories_userapi_deepcount($args)
     // Get the non-zero counts.
     // These are the leaf nodes that we then extend back to the top ancestor(s).
     $catcount = xarModAPIfunc(
-        'categories', 'user', 'groupcount',
-        array('modid' => $modid, 'itemtype' => $itemtype)
+        'categories', 'user', 'groupcount', $args
     );
+
+    // Throw back errors as an empty list.
+    if (empty($catcount)) {return $count;}
 
     $allcounts = $catcount;
 
