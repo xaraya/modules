@@ -1,23 +1,23 @@
-<h2><xar:mlstring>Syndicated Headlines</xar:mlstring></h2>
-<xar:mlstring>Below are predefined syndicated headlines for your browsing pleasure</xar:mlstring>
-<hr width="100%" />
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Syndicated Headlines</xar:mlstring></h2>
+<div style="margin: auto;">
+<p><xar:mlstring>Below are predefined syndicated headlines for your browsing pleasure</xar:mlstring></p>
+
 <xar:loop name="$indlinks">
-    <table width="100%" border="0" cellpadding="2" cellspacing="0">
-        <tr>
-            <td valign="top">
-                <!-- NOTE: target="_BLANK" is not valid XHTML -->
-                <a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a><br />
-                #$loop:item['chandesc']#
-            </td>
-            <td align="right">
-                <a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a><br />
-                #$loop:item['comments']#<br />
-				<xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
-					<a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a><br />
-				</xar:if>
-            </td>
-        </tr>
-    </table>
-    <hr width="100%" />
+<div class="xar-norm-outline">
+	<span style="text-align: left;"><a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a> -- #$loop:item['chandesc']#</span>
+	<span style="text-align: right;"><a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a></span>
+	<br />
+	<span style="text-align: right;">#$loop:item['comments']#</span>
+	<br />
+	<xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
+		<span style="text-align: right;"><a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a></span>
+		<br />
+	</xar:if>
+</div>
 </xar:loop>
+
 <p>#$pager#</p>
+
+</div>
+</div>

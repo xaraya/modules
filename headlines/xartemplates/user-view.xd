@@ -1,6 +1,6 @@
 <xar:if condition="empty($warning)">
     <br />
-    <h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#" target = "_BLANK"> #$chantitle# </a></h2>
+    <h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#"> #$chantitle# </a></h2>
     <xar:if condition="!empty($chandesc)">
          #$chandesc#<br/><br/>
     </xar:if>
