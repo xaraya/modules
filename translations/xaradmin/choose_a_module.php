@@ -19,7 +19,7 @@ function translations_admin_choose_a_module()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!($modlist = xarModAPIFunc('modules', 'admin', 'GetList'))) return;
+    if (!($modlist = xarModAPIFunc('modules', 'admin', 'GetList', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
 
     $tplData = translations_create_choose_a_module_druidbar(CHOOSE);
     $tplData['modlist'] = $modlist;

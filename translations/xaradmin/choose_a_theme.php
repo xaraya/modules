@@ -19,7 +19,7 @@ function translations_admin_choose_a_theme()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!($themelist = xarModAPIFunc('themes','admin','GetThemeList',array()))) return;
+    if (!($themelist = xarModAPIFunc('themes','admin','GetThemeList',array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
 
     $tplData = translations_create_choose_a_theme_druidbar(CHOOSE);
     $tplData['themelist'] = $themelist;
