@@ -83,7 +83,7 @@ function bbcode_encode($message, $is_html_disabled) {
     $message = bbcode_encode_code($message, $is_html_disabled);
 
     // change newlines to <br />'s
-    $message = preg_replace("/\n/si","\n<br />\n",$message);
+    // $message = preg_replace("/\n/si","\n<br />\n",$message);
     
     // First: If there isn't a "[" and a "]" in the message, don't bother.
     if (! (strpos($message, "[") && strpos($message, "]")) )
