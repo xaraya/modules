@@ -12,71 +12,71 @@
 function uploads_adminapi_download( $args )
 {
     //security check    
-	if (!xarSecurityCheck('ReadUploads')) return;
-	
-	extract($args);
+    if (!xarSecurityCheck('ReadUploads')) return;
+    
+    extract($args);
 
-	// Lookup download
+    // Lookup download
     $info = xarModAPIFunc('uploads',
                           'user',
                           'get',
-						  array('ulid'=>$ulid));
-	// Check if download is not approved for viewing
-	if( $info['ulhash'] == '' )
-	{
-		// Check if download exists
-		if( $info['ulfile'] != '' )
-		{
-			$fname="NotApproved.gif";
-			$file="modules/uploads/xarimages/NotApproved.gif";
-		} else {
-			$fname="NotFound.gif";
-			$file="modules/uploads/xarimages/NotFound.gif";
-		}
-	} else {
-		$fname=$info['ulfile'];
-		$uploads_directory = xarModGetVar('uploads', 'uploads_directory');
-		$file=trim($uploads_directory).trim($info['ulhash']);
-		
-		if( !file_exists( $file ) )
-		{
-			$fname="NotFound.gif";
-			$file="modules/uploads/xarimages/NotFound.gif";
-		}
-	}
-	$size=filesize($file);
-	ob_end_clean();
+                          array('ulid'=>$ulid));
+    // Check if download is not approved for viewing
+    if( $info['ulhash'] == '' )
+    {
+        // Check if download exists
+        if( $info['ulfile'] != '' )
+        {
+            $fname="NotApproved.gif";
+            $file="modules/uploads/xarimages/NotApproved.gif";
+        } else {
+            $fname="NotFound.gif";
+            $file="modules/uploads/xarimages/NotFound.gif";
+        }
+    } else {
+        $fname=$info['ulfile'];
+        $uploads_directory = xarModGetVar('uploads', 'uploads_directory');
+        $file=trim($uploads_directory).trim($info['ulhash']);
+        
+        if( !file_exists( $file ) )
+        {
+            $fname="NotFound.gif";
+            $file="modules/uploads/xarimages/NotFound.gif";
+        }
+    }
+    $size=filesize($file);
+    ob_end_clean();
 //     header("Cache-Control: no-cache, must-revalidate");
 //     header("Pragma: no-cache");
-	header("Pragma: ");
-	header("Cache-Control: ");
+    header("Pragma: ");
+    header("Cache-Control: ");
 
-	if( function_exists("getimagesize") )
-	{
-		$imageInfo = getImageSize( $file );
-		if( $imageInfo )
-		{
-			header( "Content-type: ".$imageInfo['mime'] );
-		} else {
-			header("Content-type: application/octet-stream");
-		}
-	} else {
-		header("Content-type: application/octet-stream");
-	}
+    if( function_exists("getimagesize") )
+    {
+        $imageInfo = getImageSize( $file );
+        if( $imageInfo )
+        {
+            header( "Content-type: ".$imageInfo['mime'] );
+        } else {
+            header("Content-type: application/octet-stream");
+        }
+    } else {
+        header("Content-type: application/octet-stream");
+    }
 
-	
-	header("Content-Disposition: attachment; filename=\"".$fname."\"");
-	header("Content-length: $size");
-	$fp = fopen($file,"rb");
-	if( is_resource($fp) )
-	{
-		while( !feof($fp) )
-		{
-			echo fread($fp, 1024);
-		}
-	}
-	fclose($fp);
-	exit();
+    
+    header("Content-Disposition: attachment; filename=\"".$fname."\"");
+    header("Content-length: $size");
+    $fp = fopen($file,"rb");
+    if( is_resource($fp) )
+    {
+        while( !feof($fp) )
+        {
+            echo fread($fp, 1024);
+        }
+    }
+    fclose($fp);
+    exit();
 }
 
 
@@ -86,36 +86,36 @@ function uploads_adminapi_download( $args )
 function uploads_adminapi_getuploads($args)
 {
     //security check    
-	if (!xarSecurityCheck('EditUploads')) return;
-	
-	extract($args);
-		
-		if ($filter == 'waiting') {
-		    $whereclause = 'WHERE xar_ulapp = 0';
-		} else {
-		    $whereclause = '';
-		}
-		
-		// Get database setup
+    if (!xarSecurityCheck('EditUploads')) return;
+    
+    extract($args);
+        
+        if ($filter == 'waiting') {
+            $whereclause = 'WHERE xar_ulapp = 0';
+        } else {
+            $whereclause = '';
+        }
+        
+        // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-		
-		// table and column definitions
+        
+        // table and column definitions
     $uploadstable = $xartable['uploads'];
-		
-		// Get items
+        
+        // Get items
     $sql = "SELECT xar_ulid,
-				 	 				 xar_ulmod,
-									 xar_ulmodid,
-									 xar_uluid,
-				 	 				 xar_ulfile,
-									 xar_ulhash,
+                                       xar_ulmod,
+                                     xar_ulmodid,
+                                     xar_uluid,
+                                       xar_ulfile,
+                                     xar_ulhash,
                    xar_ulapp
             FROM $uploadstable
             $whereclause;";
     $result = $dbconn->Execute($sql);
-		
-		// Check for an error with the database code, and if so set an appropriate
+        
+        // Check for an error with the database code, and if so set an appropriate
     // error message and return
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $sql);
@@ -123,62 +123,62 @@ function uploads_adminapi_getuploads($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-		if ($result->EOF) {
-		   return array();
-		}
-		
+        if ($result->EOF) {
+           return array();
+        }
+        
     for (; !$result->EOF; $result->MoveNext()) {
-		    list($ulid, $ulmod, $ulmodid, $uluid, $ulfile, $ulhash, $ulapp) = $result->fields;
+            list($ulid, $ulmod, $ulmodid, $uluid, $ulfile, $ulhash, $ulapp) = $result->fields;
         if (xarSecurityCheck('EditUploads')) {
             $items[] = array('ulid' => $ulid,
                              'ulmod' => $ulmod,
                              'ulmodid' => $ulmodid,
-							 'uluid' => xarUserGetVar('name',$uluid),
-							 'ulfile' => $ulfile,
-							 'ulhash' => $ulhash,
-							 'ulapp' => $ulapp);
+                             'uluid' => xarUserGetVar('name',$uluid),
+                             'ulfile' => $ulfile,
+                             'ulhash' => $ulhash,
+                             'ulapp' => $ulapp);
         }
-		}
+        }
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
-		
-		return $items;
+        
+        return $items;
 }
 function uploads_adminapi_getuploadinfo($args)
 {
     //security check    
-	if (!xarSecurityCheck('EditUploads')) return;
-	extract($args);
-		
-	if (!isset($ulid) || !is_numeric($ulid)) 
-	{
-		$msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+    if (!xarSecurityCheck('EditUploads')) return;
+    extract($args);
+        
+    if (!isset($ulid) || !is_numeric($ulid)) 
+    {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'upload ID', 'admin', 'getuploadinfo', 'uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-		
-		// Get database setup
+        
+        // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-		
-		// table and column definitions
+        
+        // table and column definitions
     $uploadstable = $xartable['uploads'];
-		
-		// Get items
+        
+        // Get items
     $sql = "SELECT xar_ulid,
-				 	 				 xar_ulmod,
-									 xar_ulmodid,
-									 xar_uluid,
-				 	 				 xar_ulfile,
-									 xar_ulhash,
+                                       xar_ulmod,
+                                     xar_ulmodid,
+                                     xar_uluid,
+                                       xar_ulfile,
+                                     xar_ulhash,
                    xar_ulapp
             FROM $uploadstable
             WHERE xar_ulid = $ulid;";
     $result = $dbconn->Execute($sql);
-		
-		// Check for an error with the database code, and if so set an appropriate
+        
+        // Check for an error with the database code, and if so set an appropriate
     // error message and return
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $sql);
@@ -195,53 +195,53 @@ function uploads_adminapi_getuploadinfo($args)
         return;
     }
     for (; !$result->EOF; $result->MoveNext()) 
-	{
-		list($ulid, $ulmod, $ulmodid, $uluid, $ulfile, $ulhash, $ulapp) = $result->fields;
+    {
+        list($ulid, $ulmod, $ulmodid, $uluid, $ulfile, $ulhash, $ulapp) = $result->fields;
         if (xarSecurityCheck('EditUploads')) {
             $items[] = array('ulid' => $ulid,
                              'ulmod' => $ulmod,
                              'ulmodid' => $ulmodid,
-							 'uluid' => xarUserGetVar('name',$uluid),
-							 'ulfile' => $ulfile,
-							 'ulhash' => $ulhash,
-							 'ulapp' => $ulapp);
+                             'uluid' => xarUserGetVar('name',$uluid),
+                             'ulfile' => $ulfile,
+                             'ulhash' => $ulhash,
+                             'ulapp' => $ulapp);
         }
-	}
+    }
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
-		
-	return $items;
+        
+    return $items;
 }
 function uploads_adminapi_approveupload($args)
 {
     //security check    
-	if (!xarSecurityCheck('EditUploads')) return;
-	extract($args);
-		
-	if (!isset($ulid) || !is_numeric($ulid)) {
+    if (!xarSecurityCheck('EditUploads')) return;
+    extract($args);
+        
+    if (!isset($ulid) || !is_numeric($ulid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'upload ID', 'admin', 'approveupload', 'uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-	
-	// Get database setup
+    
+    // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-		
-	// table and column definitions
+        
+    // table and column definitions
     $uploadstable = $xartable['uploads'];
-		
-		
-		
-		// Get items
+        
+        
+        
+        // Get items
     $sql = "UPDATE $uploadstable
-				    SET xar_ulapp = 1
+                    SET xar_ulapp = 1
             WHERE xar_ulid = $ulid;";
     $result = $dbconn->Execute($sql);
-		
-		// Check for an error with the database code, and if so set an appropriate
+        
+        // Check for an error with the database code, and if so set an appropriate
     // error message and return
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $sql);
@@ -249,8 +249,8 @@ function uploads_adminapi_approveupload($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-		
-		return True;
+        
+        return True;
 }
 /**
  * utility function pass individual menu items to the main menu
@@ -293,10 +293,10 @@ function uploads_adminapi_getmenulinks()
 function uploads_adminapi_reject($args)
 {
     //security check    
-	if (!xarSecurityCheck('EditUploads')) return;
-	extract($args);
-		
-	if (!isset($ulid) || !is_numeric($ulid)) {
+    if (!xarSecurityCheck('EditUploads')) return;
+    extract($args);
+        
+    if (!isset($ulid) || !is_numeric($ulid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'upload ID', 'admin', 'approveupload', 'uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -305,31 +305,31 @@ function uploads_adminapi_reject($args)
     $info = xarModAPIFunc('uploads',
                           'admin',
                           'getuploadinfo',
-						  array('ulid'=>$ulid));
-	$info = $info[0];
-	print_r($info);
-	if( $info['ulapp'] == 0 )
-	{
-		$uploads_directory = xarModGetVar('uploads', 'uploads_directory');
-		$fulloldfile = $uploads_directory.$info['ulhash'];
-	} else {
-		$fulloldfile = $info['ulfile'];
-	}
-	// Get database setup
+                          array('ulid'=>$ulid));
+    $info = $info[0];
+    print_r($info);
+    if( $info['ulapp'] == 0 )
+    {
+        $uploads_directory = xarModGetVar('uploads', 'uploads_directory');
+        $fulloldfile = $uploads_directory.$info['ulhash'];
+    } else {
+        $fulloldfile = $info['ulfile'];
+    }
+    // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-		
-	// table and column definitions
+        
+    // table and column definitions
     $uploadstable = $xartable['uploads'];
-		
-		
-		
-	// Remove item
+        
+        
+        
+    // Remove item
     $sql = "DELETE FROM $uploadstable
             WHERE xar_ulid = $ulid;";
     $result = $dbconn->Execute($sql);
-		
-	// Check for an error with the database code, and if so set an appropriate
+        
+    // Check for an error with the database code, and if so set an appropriate
     // error message and return
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $sql);
@@ -337,21 +337,17 @@ function uploads_adminapi_reject($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-	
-	return True;
+    
+    return True;
 }
 
 
 function uploads_adminapi_createhook( $args )
 {
     extract($args);
-	// TODO: update the upload's module-ID to correspond to the article's ID
-	return $extrainfo;	
-}
-function uploads_adminapi_newhook( $args )
-{
-    extract($args);
-	// TODO: update the upload's module-ID to correspond to the article's ID
-	return $extrainfo;	
+    // TODO: do you really want to handle some input field here or not ?
+
+    // TODO: update the upload's module-ID to correspond to the article's ID
+    return $extrainfo;    
 }
 ?>

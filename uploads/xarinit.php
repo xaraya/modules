@@ -101,7 +101,7 @@ function uploads_init()
      * Register hooks
      */
     // when a new module item is being specified
-    if (!xarModRegisterHook('item', 'new', 'API'
+    if (!xarModRegisterHook('item', 'new', 'GUI'
 	                       ,'uploads', 'admin', 'newhook')) {
          $msg = xarML('Could not register hook');
          xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -147,7 +147,18 @@ function articles_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case .01:
-            //Got the darn thing working and ready for initial beta release
+        case .02:
+            // change newhook from API to GUI
+            list($dbconn) = xarDBGetConn();
+
+            $hookstable = xarDBGetSiteTablePrefix() . '_hooks';
+            $query = "UPDATE $hookstable
+                      SET xar_tarea='GUI'
+                      WHERE xar_tmodule='uploads' AND xar_tfunc='newhook'";
+
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
             break;
     }
     return true;
