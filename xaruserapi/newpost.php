@@ -15,14 +15,13 @@ function metaweblogapi_userapi_newpost($args)
     // Extract the parameters from the xmlrpc msg
     $sn0=$msg->getParam(0);  $blogid   = $sn0->scalarval();
     $sn1=$msg->getParam(1);  $username = $sn1->scalarval();
-    $sn2=$msg->getParam(2);  $password  = $sn2->scalarval();
-    $sn4=$msg->getParam(4);  $publish   = $sn4->scalarval();
+    $sn2=$msg->getParam(2);  $password = $sn2->scalarval();
+    $sn4=$msg->getParam(4);  $publish  = $sn4->scalarval();
 
     // Get the members from the struct which represents the content
-    // TODO: move this to an api function
-    $sn3=$msg->getParam(3);
-    $struct = $sn3->getval();
+    $sn3=$msg->getParam(3); $struct = $sn3->getval();
     
+    // TODO: add support for more members
     $title = $struct['title'];
     $content = $struct['description'];
     if(array_key_exists('dateCreated', $struct)) {
@@ -38,9 +37,7 @@ function metaweblogapi_userapi_newpost($args)
             $categories[] = $category->scalarval();
         }
     }
-    
-    // We now have gathered all our stuff, use this to post to xaraya through
-    // the API
+    // We now have gathered all our stuff, use this to post to xaraya through the API
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
     } else {
@@ -52,7 +49,7 @@ function metaweblogapi_userapi_newpost($args)
         // Deal with the summary
         $summary = $content;
         
-        // Deal with the categories
+        // Deal with the categories, make sure the post is in the main category at least.
         $cids[] = $blogid; 
         if(!empty($categories)) {
             // Match the names we got from the client to ids, we only have to
@@ -61,7 +58,6 @@ function metaweblogapi_userapi_newpost($args)
                 $cids[] = xarModAPIFunc('categories','user','name2cid',array('name' => $name));
             }
         }
-       
         $bodytype = ' ';  $bodytext = $content; $language = ' ';
         
         if ($publish) {
@@ -81,7 +77,7 @@ function metaweblogapi_userapi_newpost($args)
                                                                   'language'=>$language,
                                                                   'status' => $status,
                                                                   'pubdate' => $pubDate));
-        xarLogMessage("Created article $postid with status $status ($publish) ");
+        xarLogMessage("Created article $postid with status $status ($publish) in (".join(',',$cids).")");
         if (!$postid) {
             xarErrorFree();
             $err = xarML("Failed to create new post #(1) (permission problem?)",$postid);
@@ -90,10 +86,9 @@ function metaweblogapi_userapi_newpost($args)
     
     if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-    }    else {
+    } else {
         $data['postid'] = array('string', $postid);
-        $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
-                                array('params'  => $data));
+        $output = xarModAPIFunc('xmlrpcserver','user','createresponse',array('params'  => $data));
     }
     return $output;
 }
