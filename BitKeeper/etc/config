@@ -1,5 +1,5 @@
-repository: xaraya-modules
-description: Xaraya modules repository
+repository: xaraya-xarldap-modules
+description: Xaraya xarldap modules repository
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
