@@ -1,0 +1,158 @@
+<?php
+// File: $Id: s.related.php 1.10 03/01/14 22:12:32+00:00 mikespub@sasquatch.pulpcontent.com $
+// ----------------------------------------------------------------------
+// Xaraya eXtensible Management System
+// Copyright (C) 2002 by the Xaraya Development Team.
+// http://www.xaraya.org
+// ----------------------------------------------------------------------
+// Original Author of file: Jim McDonald
+// Purpose of file: Articles Block
+// ----------------------------------------------------------------------
+
+/**
+ * initialise block
+ */
+function articles_glossaryblock_init()
+{
+    // TODO: initialise data.
+    return true;
+}
+
+/**
+ * get information on block
+ */
+function articles_glossaryblock_info()
+{
+    // Values
+    return array(
+        'text_type' => 'Glossary',
+        'module' => 'articles',
+        'text_type_long' => 'Show a glossary summary in a side block.',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+        'show_preview' => true
+    );
+}
+
+/**
+ * display block
+ */
+function articles_glossaryblock_display($blockinfo)
+{
+    // Security check.
+    // TODO: this is being phased out.
+    //if(!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
+
+    // Get variables from content block
+    $vars = @unserialize($blockinfo['content']);
+
+    // Get the glossary parameter.
+    // TODO: make parameter name configurable.
+    xarVarFetch($vars['paramname'], 'str', $glossaryterm, NULL, XARVAR_NOT_REQUIRED);
+
+    if (empty($glossaryterm)) {
+        // No glossary parameter found.
+        return;
+    }
+
+    $articlecriteria = array();
+    $articlecriteria['title'] = $glossaryterm;
+
+    if (!empty($vars['ptid'])) {
+        $articlecriteria['ptid'] = $vars['ptid'];
+    }
+
+    if (!empty($vars['cid'])) {
+        $articlecriteria['withcids'] = true;
+    }
+
+    // Attempt to find an article with this title and optional category/pubtype.
+    $article = xarModAPIfunc('articles', 'user', 'get', $articlecriteria);
+
+    if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
+        // Category not assigned to article.
+        return;
+    }
+
+    // No glossary item found.
+    if (empty($article)) {return;}
+
+    $vars['definition'] = $article['summary'];
+    $vars['term'] = $glossaryterm;
+    $vars['detailurl'] = xarModURL(
+        'articles', 'user', 'display',
+        array('aid' => $article['aid'], 'ptid' => $article['pubtypeid'])
+    );
+    $vars['detailavailable'] = !empty($article['body']);
+
+    // TODO: who uses blockid? Can this be done centrally?
+    $vars['blockid'] = $blockinfo['bid'];
+
+    // Replace the string '{term}' in the title with the term.
+    $blockinfo['title'] = str_replace('{term}', $glossaryterm, $blockinfo['title']);
+
+    $blockinfo['content'] = $vars;
+    return $blockinfo;
+}
+
+
+/**
+ * modify block settings
+ */
+function articles_glossaryblock_modify($blockinfo)
+{
+    // Get current content
+    $vars = @unserialize($blockinfo['content']);
+
+    // Pub type drop-down list values.
+    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
+
+    // Categories drop-down list values.
+    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+
+    // Defaults.
+    if (empty($vars['ptid'])) {
+        $vars['ptid'] = 0;
+    }
+    if (empty($vars['cid'])) {
+        $vars['cid'] = 0;
+    }
+    if (empty($vars['paramname'])) {
+        $vars['paramname'] = 'glossaryterm';
+    }
+
+    $vars['bid'] = $blockinfo['bid'];
+
+    // Return output
+    // TODO: just return $vars, and allow the handler to call the template (articles/admin-glossary)
+    return xarTplBlock('articles', 'glossaryAdmin', $vars);
+}
+
+/**
+ * update block settings
+ */
+function articles_glossaryblock_update($blockinfo)
+{
+    $vars = array();
+
+    xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
+
+    $blockinfo['content'] = serialize($vars);
+    return $blockinfo;
+}
+
+/**
+ * built-in block help/information system.
+ */
+function articles_glossaryblock_help()
+{
+    return (
+        'Use {term} in the block title as a placeholder for the glossary term.'
+        . ' Glossary terms will match an article title.'
+    );
+}
+
+?>

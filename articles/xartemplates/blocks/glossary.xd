@@ -1,0 +1,6 @@
+<div>
+    #xarVarPrepForDisplay($definition)#
+    <xar:if condition="!empty($detailavailable)">
+        <br/><a href="#$detailurl#" title="#xarML('Expanded glossary definition')#"><xar:mlstring>Further details...</xar:mlstring></a>
+    </xar:if>
+</div>

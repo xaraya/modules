@@ -263,6 +263,12 @@ function articles_init()
                        array('modName'  => 'articles',
                              'blockType'=> 'random'))) return;
 
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'glossary'))) return;
+
     if (!xarModRegisterHook('item', 'search', 'GUI',
                            'articles', 'user', 'search')) {
         return false;
