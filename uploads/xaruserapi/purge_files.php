@@ -29,15 +29,15 @@ function uploads_userapi_purge_files( $args ) {
         }
         
         if ($fileInfo['storeType'] & _UPLOADS_STORE_DB_DATA) {
-            // TODO: add the file's contents to the database
+            // TODO: remove the file's contents from the database
             continue;
         }
-        // If the store db_entry bit is set, then go ahead 
-        // and set up the database meta information for the file
+        // go ahead and delete the file from the database.
+        
         xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileInfo['fileId']));
         
     }
- 
+     
     return TRUE;
 }
 
