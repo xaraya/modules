@@ -15,12 +15,12 @@
 			  <a href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">#$loop:item['rev']#<br />#$loop:item['tag']#</a>
       </td>
       <td class="csets" nowrap>
-				<a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=..#$loop:item['rev']#">
+				<a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;revs=..#$loop:item['rev']#">
 					<xar:mlstring>Earlier csets</xar:mlstring>
 				</a>
 			</td>
       <td class="csets" nowrap>
-				<a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['rev']#..&amp;sort=1">
+				<a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;revs=#$loop:item['rev']#..&amp;sort=1">
 					<xar:mlstring>Later csets</xar:mlstring>
 				</a>
 			</td>

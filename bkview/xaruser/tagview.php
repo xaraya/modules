@@ -25,7 +25,7 @@ function bkview_user_tagview($args)
     $repo= new bkRepo($item['repopath']);
         
     $formatstring="'\$if(:TAG:){:AGE:|:TAG:|:REV:|\$each(:C:){(:C:)<br />}}'";
-    $changesets=$repo->bkChangeSets('',$formatstring,false);
+    $changesets=$repo->bkChangeSets('','',$formatstring,false);
     $data['csetlist']=array();
     $csetlist=array();
     $counter=1;

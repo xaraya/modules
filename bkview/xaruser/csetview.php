@@ -19,6 +19,7 @@ function bkview_user_csetview($args)
 {
     xarVarFetch('repoid','id',$repoid);
     xarVarFetch('range','str::',$range,NULL,XARVAR_NOT_REQUIRED);
+    xarVarFetch('revs','str::',$revs,NULL,XARVAR_NOT_REQUIRED);
     xarVarFetch('showmerge','int:0:1',$showmerge,0);
     xarVarFetch('sort','str::',$sort,0);
     extract($args);
@@ -29,7 +30,7 @@ function bkview_user_csetview($args)
     
     $repo = new bkRepo($item['repopath']);
     $formatstring = "':TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)<br/>}'";
-    $list = $repo->bkChangeSets($range,$formatstring,$showmerge,$sort);
+    $list = $repo->bkChangeSets($revs,$range,$formatstring,$showmerge,$sort);
 
     $counter=1;
     $data['csets']=array();

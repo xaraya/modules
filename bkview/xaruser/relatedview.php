@@ -28,14 +28,14 @@ function bkview_user_relatedview($args)
 
     $changesets=$the_file->bkChangeSets();
     // Make the list of changesets into a range
-    $range='';
+    $revs='';$range='';
     while (list(,$cset) = each($changesets)) {
-        $range.="$cset,";
+        $revs.="$cset,";
     }
     
-    $range=substr($range,0,strlen($range)-1);
+    $revs=substr($revs,0,strlen($revs)-1);
     $formatstring = "':AGE:|:P:|:REV:|\$each(:C:){(:C:)<br />}'";
-    $list = $repo->bkChangeSets($range,$formatstring,false);
+    $list = $repo->bkChangeSets($revs,$range,$formatstring,false);
     
     $data['csets']=array();
     $csets=array();
