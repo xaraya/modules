@@ -5,7 +5,7 @@ function release_user_rssviewids()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    xarVarFetch('phase', 'enum:all:themes:modules', $phase, 'all', XARVAR_NOT_RERQUIRED);
+    xarVarFetch('phase', 'enum:all:themes:modules', $phase, 'all', XARVAR_NOT_REQUIRED);
 
     if (empty($phase)){
         $phase = 'all';
