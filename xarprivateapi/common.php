@@ -50,17 +50,28 @@ function hookbridge_privateapi_common( $args )
     }
 
     // Item Types Array
-    $itemtypes[1] = xarML( 'Create Hook' );
-    $itemtypes[2] = xarML( 'Update Hook' );
-    $itemtypes[3] = xarML( 'Delete Hook' );
-    $itemtypes[4] = xarML( 'Transform Input Hook' );
-    $itemtypes[5] = xarML( 'Transform Output Hook' );
-    $itemtypes[6] = xarML( 'GUI Display Hook' );
-    $itemtypes[7] = xarML( 'GUI Modify Hook' );
-    $itemtypes[8] = xarML( 'GUI New Hook' );
-    $itemtypes[9] = xarML( 'Module Update Config Hook' );
-    $itemtypes[10] = xarML( 'Module Remove Hook' );
-    $itemtypes[11] = xarML( 'Module GUI Modify Config Hook' );
+    $itemtypes[1]['name'] = xarML( 'Create Hook' );
+    $itemtypes[1]['var']  = 'create';
+    $itemtypes[2]['name'] = xarML( 'Update Hook' );
+    $itemtypes[2]['var']  = 'update';
+    $itemtypes[3]['name'] = xarML( 'Delete Hook' );
+    $itemtypes[3]['var']  = 'delete';
+    $itemtypes[4]['name'] = xarML( 'Transform Input Hook' );
+    $itemtypes[4]['var']  = 'transforminput';
+    $itemtypes[5]['name'] = xarML( 'Transform Output Hook' );
+    $itemtypes[5]['var']  = 'transformoutput';
+    $itemtypes[6]['name'] = xarML( 'GUI Display Hook' );
+    $itemtypes[6]['var']  = 'display';
+    $itemtypes[7]['name'] = xarML( 'GUI Modify Hook' );
+    $itemtypes[7]['var']  = 'modify';
+    $itemtypes[8]['name'] = xarML( 'GUI New Hook' );
+    $itemtypes[8]['var']  = 'new';
+    $itemtypes[9]['name'] = xarML( 'Module Update Config Hook' );
+    $itemtypes[9]['var']  = 'updateconfig';
+    $itemtypes[10]['name'] = xarML( 'Module Remove Hook' );
+    $itemtypes[10]['var']  = 'remove';
+    $itemtypes[11]['name'] = xarML( 'Module GUI Modify Config Hook' );
+    $itemtypes[11]['var']  = 'modifyconfig';
     $common['itemtype_array'] = $itemtypes;
 
     return array( 'common' => $common );

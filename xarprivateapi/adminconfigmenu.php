@@ -35,7 +35,7 @@ function hookbridge_privateapi_adminconfigmenu( $args )
     foreach( $itemtype_array as $itemtype_key => $itemtype_info )
     {
         $menu[] = array(
-                'title' =>  $itemtype_info,
+                'title' =>  $itemtype_info['name'],
                 'url'   =>  xarModURL('hookbridge','admin','config',array('itemtype'=>$itemtype_key)));
     }
     
