@@ -1,9 +1,0 @@
-// ----------------------------------------------------------------------
-// Help
-//
-// The DaveDAP module is a wrapper for DaveDAP.  Information about 
-// DaveDap can be found at the following website:
-//   http://davedap.sourceforge.net/
-// 
-//
-// ----------------------------------------------------------------------

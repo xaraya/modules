@@ -1,0 +1,8 @@
+// ----------------------------------------------------------------------
+// Credits
+//
+// phpLDAPadmin Author:  David Smith uugdave@users.sourceforge.net 
+// 
+// Module Author:   Richard Cave rcave@xaraya.com
+//
+// ----------------------------------------------------------------------

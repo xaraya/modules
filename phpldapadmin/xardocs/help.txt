@@ -1,0 +1,8 @@
+// ----------------------------------------------------------------------
+// Help
+//
+// The phpLDAPadmin module is a wrapper for phpLDAPadmin.  Information 
+// about phpLDAPadmin can be found at the following website:
+//   http://phpldapadmin.sourceforge.net/
+//
+// ----------------------------------------------------------------------
