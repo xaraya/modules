@@ -74,9 +74,9 @@
 		</td>
 		<td class="xar-norm" width="78%">
 			<xar:if condition="isset($package['new_title'])">
-				<input type="text" name="package[title]" id="package-title" size="45" maxlength="60" style="width:450px" value="#$package['new_title']#" />
+				<input type="text" name="package[title]" id="package-title" size="45" maxlength="60" style="width:450px" value="#xarVarPrepForDisplay($package['new_title'])#" />
 			<xar:elseif condition="!empty($package['title'])" />
-				<input type="text" name="package[title]" id="package-title" size="45" maxlength="60" style="width:450px" value="#$package['title']#" />
+				<input type="text" name="package[title]" id="package-title" size="45" maxlength="60" style="width:450px" value="#xarVarPrepForDisplay($package['title'])#" />
 			<xar:else />
 				<input type="text" name="package[title]" id="package-title" size="45" maxlength="60" style="width:450px" value="" />
 			</xar:if>
@@ -106,7 +106,7 @@
 			</td>
 			<td class="xar-norm" width="78%">
 				<xar:if condition="isset($package['text'])">
-					<textarea rows="15" cols="35" wrap="virtual" style="width:450px" name="package[text]" id="package-text">#$package['text']#</textarea>
+					<textarea rows="15" cols="35" wrap="virtual" style="width:450px" name="package[text]" id="package-text">#xarVarPrepForDisplay($package['text'])#</textarea>
 				<xar:else />
 					<textarea rows="15" cols="35" wrap="virtual" style="width:450px" name="package[text]" id="package-text"></textarea>
 				</xar:if>

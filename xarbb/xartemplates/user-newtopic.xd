@@ -109,7 +109,7 @@
 			</h3>
 		</td>
 		<td class="xar-norm" width="78%">
-			<input type="text" name="ttitle" id="ttitle" value="#$ttitle#" size="45" maxlength="60" style="width:450px" />
+			<input type="text" name="ttitle" id="ttitle" value="#xarVarPrepForDisplay($ttitle)#" size="45" maxlength="60" style="width:450px" />
 		</td>
 	</tr>
 	<xar:if condition="xarModIsHooked('bbcode','xarbb',$fid)"> 
@@ -135,7 +135,7 @@
 				</h3>
 			</td>
 			<td class="xar-norm" width="78%">
-				<textarea name="tpost" rows="15" cols="35" wrap="virtual" style="width:450px">#$tpost#</textarea>
+				<textarea name="tpost" rows="15" cols="35" wrap="virtual" style="width:450px">#xarVarPrepForDisplay($tpost)#</textarea>
 			</td>
 		</tr>
 		<tr> 
