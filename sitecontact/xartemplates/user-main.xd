@@ -100,7 +100,7 @@
         <xar:mlstring>Your message:</xar:mlstring></label></span><span style="color:red;">*</span>
     </span>
 
-    <span style="float: left; width="68%"; ">
+    <span style="float: left; width:68%;">
                 <textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea></span>
 
     </div>
