@@ -1,8 +1,16 @@
 <?php
 
-function timezone_init()
+function timezone_init($keepSettings = false)
 {
+    if(!$keepSettings) {
+        // what is the default timezone
+        xarModSetVar('timezone','default','Etc/UTC');
+        // what is the correction, in seconds, we'll make for the server's utc timestamp
+        xarModSetVar('timezone','server_correction',0);
+    }
+    
     // give us as much time as necessary as this may take a moment
+    // supress warnings/errors in case this function does not exist
     @set_time_limit(0);
     
     // grab the timezone array so we can create the SQL inserts
@@ -22,13 +30,14 @@ function timezone_init()
     //======================================================================
     //  GET TIMEZONE DB TABLE INFORMATION
     //======================================================================
-    $xartable           =& xarDBGetTables();
-    $zones_table        = $xartable['timezone_zones'];
-    $zones_data_table   = $xartable['timezone_zones_data'];
-    $links_table        = $xartable['timezone_links'];
-    $rules_table        = $xartable['timezone_rules'];
-    $rules_data_table   = $xartable['timezone_rules_data'];
-    $zones_data_has_rules_table   = $xartable['timezone_zones_data_has_rules'];
+    $xartable                   = & xarDBGetTables();
+    $zones_table                = & $xartable['timezone_zones'];
+    $zones_data_table           = & $xartable['timezone_zones_data'];
+    $links_table                = & $xartable['timezone_links'];
+    $rules_table                = & $xartable['timezone_rules'];
+    $rules_data_table           = & $xartable['timezone_rules_data'];
+    $zones_data_has_rules_table = & $xartable['timezone_zones_data_has_rules'];
+    $zones_has_links_table      = & $xartable['timezone_zones_has_links'];
     
     //======================================================================
     //  ZONES TABLE FIELDS
@@ -66,6 +75,11 @@ function timezone_init()
         'gmtoff' => array(
             'type'=>'varchar',
             'size'=>20,
+            'null'=>true
+            ),
+        'rules'=> array(
+            'type'=>'varchar',
+            'size'=>10,
             'null'=>true
             ),
         'format' => array(
@@ -179,18 +193,12 @@ function timezone_init()
             'increment'=>true,
             'primary_key'=>true
             ),
-        'zones_id' => array(
-            'type'=>'integer',
-            'unsigned'=>true,
-            'null'=>false
-            ),
         'name' => array(
             'type'=>'varchar',
             'size'=>255,
             'null'=>false
             )
         );
-        
     //======================================================================
     //  ZONES_DATA_HAS_RULES TABLE
     //======================================================================
@@ -202,6 +210,24 @@ function timezone_init()
             'primary_key'=>true
             ),
         'rules_id' => array(
+            'type'=>'integer',
+            'unsigned'=>true,
+            'null'=>false,
+            'primary_key'=>true
+            )
+        );
+  
+    //======================================================================
+    //  ZONES_HAS_LINKS TABLE
+    //======================================================================
+    $zones_has_links_fields = array(
+        'zones_id' => array(
+            'type'=>'integer',
+            'unsigned'=>true,
+            'null'=>false,
+            'primary_key'=>true
+            ),
+        'links_id' => array(
             'type'=>'integer',
             'unsigned'=>true,
             'null'=>false,
@@ -242,14 +268,14 @@ function timezone_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     
-    //======================================================================
-    // CREATE ADDITIONAL TABLE INDEXES
-    //======================================================================
-    $query = xarDBCreateIndex($links_table,array('name'=>'links_FKIndex1', 'fields'=>array('zones_id')));
+    $query = xarDBCreateTable($zones_has_links_table, $zones_has_links_fields);
     if (empty($query)) return; // throw back
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     
+    //======================================================================
+    // CREATE ADDITIONAL TABLE INDEXES
+    //======================================================================
     $query = xarDBCreateIndex($rules_data_table,array('name'=>'rules_data_FKIndex1', 'fields'=>array('rules_id')));
     if (empty($query)) return; // throw back
     $result =& $dbconn->Execute($query);
@@ -269,7 +295,32 @@ function timezone_init()
     if (empty($query)) return; // throw back
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
+    
+    $query = xarDBCreateIndex($zones_has_links_table,array('name'=>'zones_has_links_FKIndex1', 'fields'=>array('zones_id')));
+    if (empty($query)) return; // throw back
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $query = xarDBCreateIndex($zones_has_links_table,array('name'=>'zones_has_links_FKIndex2', 'fields'=>array('links_id')));
+    if (empty($query)) return; // throw back
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $query = xarDBCreateIndex($links_table,array('name'=>'idx_name_id', 'fields'=>array('name','id')));
+    if (empty($query)) return; // throw back
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $query = xarDBCreateIndex($zones_table,array('name'=>'idx_name_id', 'fields'=>array('name','id')));
+    if (empty($query)) return; // throw back
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $query = xarDBCreateIndex($rules_table,array('name'=>'idx_name_id', 'fields'=>array('name','id')));
+    if (empty($query)) return; // throw back
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
     //======================================================================
     // POPULATE THE RULES TABLES
     //======================================================================
@@ -286,7 +337,7 @@ function timezone_init()
         $rules_id = $dbconn->GenId($rules_table);
         // insert the Rule Name into the rules table
         $name = xarVarPrepForStore($name);
-        $sql_rules = "INSERT INTO $rules_table (id, name) VALUES ('$rules_id', '$name');";
+        $sql_rules = "INSERT INTO $rules_table (id, name) VALUES ('$rules_id', '$name')";
         $result =& $dbconn->Execute($sql_rules);
         //TODO::return an exception
         if(!$result) return false;
@@ -330,12 +381,12 @@ function timezone_init()
     //======================================================================
     
     // this array contains the value type of the fields for each zone entry
-    $zones_data_field_names = array('gmtoff','rule','format','untilyear','untilmonth','untilday','untiltime');
+    $zones_data_field_names = array('gmtoff','rules','format','untilyear','untilmonth','untilday','untiltime');
     // loop over the Zones
     foreach($Zones as $name => $zones_data) {
         $zones_id = $dbconn->GenID($zones_table);
         $name = xarVarPrepForStore($name);
-        $sql_zones = "INSERT INTO $zones_table (id, name) VALUES ('$zones_id', '$name');";
+        $sql_zones = "INSERT INTO $zones_table (id, name) VALUES ('$zones_id', '$name')";
         $result =& $dbconn->Execute($sql_zones);
         //TODO::return an exception
         if(!$result) return false;
@@ -355,15 +406,28 @@ function timezone_init()
             $hasRule = false;
             $rule_id = 0;
             foreach($zones_data[$i] as $data) {
-                if($zones_data_field_names[$p] == 'rule') {
-                    // grab the rule id or set to 0 when no rule applies
-                    $getRuleSql = "SELECT id FROM $rules_table WHERE name = '".xarVarPrepForStore($data)."'";
-                    $result =& $dbconn->Execute($getRuleSql);
-                    if($result && !$result->EOF) {
-                        $hasRule = true;
-                        $rule_id = $result->fields[0];
+                if($zones_data_field_names[$p] == 'rules') {
+                    $zones_data_insert_fields .= ',' . xarVarPrepForStore($zones_data_field_names[$p]);
+                    
+                    if(preg_match('/[\d]+:[\d]+/',$data)) {
+                        // this is a time element and not a rule name
+                        // insert it into the zone table
+                        $zones_data_insert_values .= ',\'';
+                        $zones_data_insert_values .= xarVarPrepForStore($data);
+                        $zones_data_insert_values .= '\'';
+                    } else {
+                        // insert a null value so we load the rule
+                        $zones_data_insert_values .= ',NULL';
+                        // grab the rule id or set to 0 when no rule applies
+                        $getRuleSql = "SELECT id FROM $rules_table WHERE name = '".xarVarPrepForStore($data)."'";
+                        $result =& $dbconn->Execute($getRuleSql);
+                        if($result && !$result->EOF) {
+                            $hasRule = true;
+                            $rule_id = $result->fields[0];
+                        
+                        }
+                        $result->Close();
                     }
-                    $result->Close();
                 } else {
                     $zones_data_insert_fields .= ',' . xarVarPrepForStore($zones_data_field_names[$p]);
                     $zones_data_insert_values .= ',\'';
@@ -404,19 +468,29 @@ function timezone_init()
     //======================================================================
     foreach($Links as $name => $zone) {
         $sqlGetZone = "SELECT id FROM $zones_table WHERE name = '".xarVarPrepForStore($zone)."'";
-        $result =& $dbconn->Execute($sqlGetZone);
-        if(!$result || $result->EOF) {
+        $result_sqlGetZone =& $dbconn->Execute($sqlGetZone);
+        if(!$result_sqlGetZone || $result_sqlGetZone->EOF) {
             // we don't have anything to link
             continue;
         } else {
+            // insert the Link into the links table
             $links_id = $dbconn->GenId($links_table);
-            $sql_links = "INSERT INTO $links_table (id,zones_id,name)
-                          VALUES (".xarVarPrepForStore($links_id).",
-                                  ".xarVarPrepForStore($result->fields[0]).",
+            $sql_links = "INSERT INTO $links_table (id,name)
+                          VALUES ('".xarVarPrepForStore($links_id)."',
                                   '".xarVarPrepForStore($name)."')";
-            $result =& $dbconn->Execute($sql_links);
-            if(!$result) return false;
-            $result->Close();
+            $result_sql_links =& $dbconn->Execute($sql_links);
+            if(!$result_sql_links) return false;
+            $result_sql_links->Close();
+            
+            // insert the zones_id and links_id into the relation table
+            $links_id = $dbconn->PO_Insert_ID($links_table,'id');
+            $sql_zones_has_links = "INSERT INTO $zones_has_links_table (zones_id, links_id)
+                                    VALUES ('".xarVarPrepForStore($result_sqlGetZone->fields[0])."',
+                                            '".xarVarPrepForStore($links_id)."')";
+            $result_sqlGetZone->Close();
+            $result_zones_has_links =& $dbconn->Execute($sql_zones_has_links);
+            if(!$result_zones_has_links) return false;
+            $result_zones_has_links->Close();
         }
     }
     unset($Links);
@@ -439,7 +513,7 @@ function timezone_upgrade($oldversion)
         // Upgrade From Version 0.2.0
         case '0.2.0':
             // remove the old 0.2.0 tables
-            timezone__delete_020_tables();
+            timezone__delete_tables('020');
             // re-run the init to install the new tables
             timezone_init();
             break;
@@ -456,61 +530,76 @@ function timezone_upgrade($oldversion)
         // Upgrade From Version 0.2.2 
         case '0.2.2':
             // remove the old 0.2.1 tables
-            timezone__delete_021_tables();
+            timezone__delete_tables('021');
             // re-run the init to install the new tables
             timezone_init();
             break;
        
-        // Upgrade From Version 0.2.3
+        // Upgrade From Version 0.2.3 through 0.2.5
         case '0.2.3':
-            break;     
+        case '0.2.4':
+        case '0.2.5':
+            // remove the old tables
+            timezone__delete_tables('022');
+            // re-run init to create the new table structure
+            timezone_init();
+            break; 
+            
+        // Upgrade from Version 0.3.0
+        case '0.3.0':
+            // a modified version of tzdata.php is available for 0.3.1
+            timezone_delete();
+            timezone_init();
+            break;
+            
+        // Upgrade from Version 0.3.1
+        case '0.3.1':
+            // added a rules column in zones for 0.3.2 to hold
+            // rules that only consist of a timestamp
+            // also added some indexes to the zones, rules and links table
+            timezone_delete();
+            timezone_init();
+            break;
+        
+        // Upgrade from Version 0.3.2
+        case '0.3.2':
+            break;   
         
     }
     
     return true;
 }
 
-function timezone_delete()
+function timezone_delete($keepSettings = false)
 {
-    list($dbconn) = xarDBGetConn();
+    
+    if(!$keepSettings) {
+        // Delete the module vars
+        xarModDelAllVars('timezone');
+    }
+    
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
     
-    // drop timezone_zones
-    $query = xarDBDropTable($xartable['timezone_zones']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    // tables in the 0.2.2 version
+    $tables = array(
+        $xartable['timezone_zones'],
+        $xartable['timezone_zones_data'],
+        $xartable['timezone_rules'],
+        $xartable['timezone_rules_data'],
+        $xartable['timezone_links'],
+        $xartable['timezone_zones_data_has_rules'],
+        $xartable['timezone_zones_has_links'],
+        );
     
-    // drop timezone_zones_data
-    $query = xarDBDropTable($xartable['timezone_zones_data']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_rules
-    $query = xarDBDropTable($xartable['timezone_rules']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_rules_data
-    $query = xarDBDropTable($xartable['timezone_rules_data']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_links
-    $query = xarDBDropTable($xartable['timezone_links']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_links
-    $query = xarDBDropTable($xartable['timezone_zones_data_has_rules']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    foreach($tables as $table) {
+        $query = xarDBDropTable($table);
+        if (empty($query)) return; // throw back
+        $result = &$dbconn->Execute($query);
+        if (!$result) return;
+        $result->Close();
+    }
     
     return true;
 }
@@ -531,89 +620,54 @@ function timezone__getMonth($month)
 }
 
 /**
- *  Function to remove the 0.2.0 version tables
+ *  Function to remove old tables not in $xartables
  *  @access private
  */
-function timezone__delete_020_tables()
+function timezone__delete_tables($version)
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDBGetConn();
     xarDBLoadTableMaintenanceAPI();
+    $prefix = xarDBGetSiteTablePrefix();
     
-    // drop timezone_zones
-    $query = xarDBDropTable($xartable['timezone_zones']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    // tables in the 0.2.0 version
+    $tables_020 = array(
+        '_timezone_zones',
+        '_timezone_zones_data',
+        '_timezone_rules',
+        '_timezone_rules_data',
+        '_timezone_links'
+        );
     
-    // drop timezone_zones_data
-    $query = xarDBDropTable($xartable['timezone_zones_data']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    // tables in the 0.2.1 version
+    $tables_021 = array(
+        '_timezone_zones',
+        '_timezone_zones_data',
+        '_timezone_rules',
+        '_timezone_rules_data',
+        '_timezone_links',
+        '_timezone_zones_has_rules'
+        );
     
-    // drop timezone_rules
-    $query = xarDBDropTable($xartable['timezone_rules']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    // tables in the 0.2.2 - 0.2.5 version
+    $tables_022 = array(
+        '_timezone_zones',
+        '_timezone_zones_data',
+        '_timezone_rules',
+        '_timezone_rules_data',
+        '_timezone_links',
+        '_timezone_zones_data_has_rules'
+        );
     
-    // drop timezone_rules_data
-    $query = xarDBDropTable($xartable['timezone_rules_data']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    // reference the correct tables array
+    $tables =& ${'tables_'.$version};
     
-    // drop timezone_links
-    $query = xarDBDropTable($xartable['timezone_links']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    return true;
-}
-
-function timezone__delete_021_tables()
-{
-    list($dbconn) = xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    xarDBLoadTableMaintenanceAPI();
-    
-    // drop timezone_zones
-    $query = xarDBDropTable($xartable['timezone_zones']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_zones_data
-    $query = xarDBDropTable($xartable['timezone_zones_data']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_rules
-    $query = xarDBDropTable($xartable['timezone_rules']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_rules_data
-    $query = xarDBDropTable($xartable['timezone_rules_data']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_links
-    $query = xarDBDropTable($xartable['timezone_links']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
-    // drop timezone_links
-    $query = xarDBDropTable(xarDBGetSiteTablePrefix().'_timezone_zones_has_rules');
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    foreach($tables as $table) {
+        $query = xarDBDropTable($prefix.$table);
+        if (empty($query)) return; // throw back
+        $result = &$dbconn->Execute($query);
+        if (!$result) return;
+        $result->Close();
+    }
     
     return true;
 }
