@@ -177,16 +177,20 @@ class xmlrpc_server {
                     if ($sysCall) { 
                         xarLogMessage("calling syscall: " . $dmap[$methName]['function']);
                         $xarayafunc = __constructxarfunc($dmap[$methName]['function'],'array(\'server\' => $this, \'msg\' => $m)');
-                        xarLogMessage($xarayafunc);
-                        eval('$r=' . $xarayafunc);
                     } else {
                         xarLogMessage("calling " . $dmap[$methName]['function']);
                         // we need to split the function in three parts here to be 'split independent'
                         // for xaraya and to allow the implicit loading to work
                         // module_type_function -> xarModFunc(module,type,function)
                         $xarayafunc = __constructxarfunc($dmap[$methName]['function'],'$m');
-                        eval('$r=' . $xarayafunc);
                     }
+                    eval('$r=' . $xarayafunc);
+                    // Check whether an exception was there and deliver that as the error to the user
+                    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+                        $error = xarErrorGet();
+                        $r=new xmlrpcresp(0,  800,
+                                          sprintf($error[0]['type'] . ': ' .$error[0]['title'] . ': ' . $error[0]['short'])); 
+                    } 
                 } else {
                     xarLogMessage("Signature is wrong");
                     $r=new xmlrpcresp(0,
@@ -201,7 +205,7 @@ class xmlrpc_server {
             }
         }
         //xarLogMessage("Going to return");
-        //xarLogMessage($r);
+        //xarLogMessage(print_r($r,true));
         return $r;
     }
     
