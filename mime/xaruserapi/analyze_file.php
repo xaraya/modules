@@ -34,6 +34,12 @@ function mime_userapi_analyze_file( $args )
         return $fileInfo['mime'];
     }
     
+    if (!file_exists($fileName)) {
+        $msg = xarML('Unable to find file #(1)', $fileName);
+        xarExeptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return FALSE;
+    }
+
     // Otherwise, see if the file is empty and, if so
     // return it as octet-stream
     $fileSize = fileSize($fileName);    
@@ -78,7 +84,7 @@ function mime_userapi_analyze_file( $args )
 
                 if ($magicInfo['offset'] >= 0) {
                     if (@fseek($fp, $magicInfo['offset'], SEEK_SET)) {
-                        $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]',
+                        $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]' ,
                                       $magicInfo['offset'], $fileName);
                         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SEEK', new SystemException($msg));
                         return FALSE;
@@ -86,7 +92,7 @@ function mime_userapi_analyze_file( $args )
                 }
                
                 if (!($value = @fread($fp, $magicInfo['length']))) {
-                    $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].', 
+                    $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].' , 
                                  $magicInfo['length'], $fileName);
                     xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
                     return FALSE;
@@ -130,7 +136,14 @@ function mime_userapi_analyze_file( $args )
         // which, in a binary file, there shouldn't be any
         $value = str_replace(array("\n","\r","\t"), '', $value);
 
-        if (ctype_print($value)) {
+        // ctype is not included by default before PHP 4.2.0
+        if (function_exists('ctype_print')) {
+            if (ctype_print($value)) {
+                $mime_type = 'text/plain';
+            } else {
+                $mime_type = 'application/octet-stream';
+            }
+        } elseif (!preg_match('/[\x00-\x1f]/',$value)) {
             $mime_type = 'text/plain';
         } else {
             $mime_type = 'application/octet-stream';
