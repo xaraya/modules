@@ -38,6 +38,10 @@ function weather_userapi_decode_shorturl(&$params)
             $args['xwloc'] = $params[1];
     }
     
+    if (empty($func)){
+        $func = array();
+    }
+
     // return the decoded information
     return array($func,$args);
 
