@@ -327,6 +327,7 @@ function articles_user_view()
                 foreach ($cattree as $catitem) {
                     $catinfo[$catitem['id']] = array('name' => $catitem['name'],
                                                      'link' => $catitem['link'],
+                                                     'image'=> $catitem['image'],
                                                      'root' => $info['catid']);
                 }
             }
@@ -536,7 +537,7 @@ function articles_user_view()
             $article['comments'] = '';
         }
 
-    // TODO: to be defined
+// TODO: improve the case where we have several icons :)
         $article['topic_icons'] = '';
         // categories this article belongs to
         $article['categories'] = array();
@@ -566,6 +567,13 @@ function articles_user_view()
                     $item['cjoin'] = '|';
                 }
                 $article['categories'][] = $item;
+                if (!empty($catinfo[$cid]['image'])) {
+                    $image = xarTplGetImage($catinfo[$cid]['image'],'categories');
+                    $article['topic_icons'] .= '<a href="'. $catinfo[$cid]['link'] .'">'.
+                                            '<img src="'. $image .
+                                            '" border="0" alt="'. xarVarPrepForDisplay($catinfo[$cid]['name']) .'" />'.
+                                            '</a>';
+                }
             }
         }
 
