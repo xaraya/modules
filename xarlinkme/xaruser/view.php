@@ -5,7 +5,6 @@
   */
 function xarlinkme_user_view()
 { 
-
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
      // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing.
@@ -33,7 +32,8 @@ function xarlinkme_user_view()
     }
     asort($filelist);
     foreach($filelist as $key => $file) {
-       if ($file == "." || $file == ".." || $file == "index.htm"  || $file == "index.html") {
+       if ($file == "." || $file == ".." || $file == "index.htm"  || $file == "index.html" 
+           || $file == "SCCS" || $file == "Thumbs.db" ) {
        } else {
            $links[]=$filelist[$key];
          }
