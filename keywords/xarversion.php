@@ -14,6 +14,7 @@
 $modversion['name']           = 'Keywords';
 $modversion['id']             = '187';
 $modversion['version']        = '1.0.4';
+$modversion['displayname']    = xarML('Keywords');
 $modversion['description']    = 'Assign keywords to module items (taxonomy) and look up items by keyword';
 $modversion['credits']        = '';
 $modversion['help']           = '';
