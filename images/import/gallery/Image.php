@@ -19,7 +19,8 @@
  */
 ?>
 <?php
-class Image {
+class Image 
+{
 	var $name;
 	var $type;
 	var $width;
@@ -33,14 +34,16 @@ class Image {
 	var $raw_height;
 	var $version;
 
-	function Image() {
+	function Image() 
+    {
 		global $gallery;
 
 		// Seed new images with the appropriate version.
 		$this->version = $gallery->album_version;
 	}
 
-	function setFile($dir, $name, $type) {
+	function setFile($dir, $name, $type) 
+    {
 		$this->name = $name;
 		$this->type = $type;
 
@@ -53,7 +56,8 @@ class Image {
 		}
 	}
 
-	function integrityCheck($dir) {
+	function integrityCheck($dir) 
+    {
 		global $gallery;
 
 		if (!strcmp($this->version, $gallery->album_version)) {
@@ -93,7 +97,8 @@ class Image {
 		return $changed;
 	}
 
-	function resize($dir, $target, $pathToResized="") {
+	function resize($dir, $target, $pathToResized="") 
+    {
 		global $gallery;
 
 		/* getting rid of the resized image */
@@ -128,7 +133,8 @@ class Image {
 		}	
 	}
 
-	function delete($dir) {
+	function delete($dir) 
+    {
 		if (fs_file_exists("$dir/$this->resizedName.$this->type")) {
 			fs_unlink("$dir/$this->resizedName.$this->type");
 		}
@@ -138,7 +144,8 @@ class Image {
 		fs_unlink("$dir/$this->name.$this->type");
 	}
 
-	function getTag($dir, $full=0, $size=0, $attrs="") {
+	function getTag($dir, $full=0, $size=0, $attrs="") 
+    {
 		global $gallery;
 
 		$name = $this->getName($dir);
@@ -173,7 +180,8 @@ class Image {
 		}
 	}
 
-	function getName($dir, $full=0) {
+	function getName($dir, $full=0) 
+    {
 		if ((!$full) && (fs_file_exists("$dir/$this->resizedName.$this->type"))) {
 			return $this->resizedName;
 		} else {
@@ -181,11 +189,13 @@ class Image {
 		}
 	}
 
-	function getId($dir) {
+	function getId($dir) 
+    {
 		return $this->name;
 	}
 	
-	function getPath($dir, $full=0) {
+	function getPath($dir, $full=0) 
+    {
 		if ($full || !$this->resizedName) {
 		    $name = $this->name;
 		} else {
@@ -194,7 +204,8 @@ class Image {
 		return "$dir/$name.$this->type";
 	}
 
-	function isResized() {
+	function isResized() 
+    {
 		if ($this->resizedName) {
 			return 1;
 		} else {
@@ -202,17 +213,20 @@ class Image {
 		}
 	}
 
-	function setDimensions($w, $h) {
+	function setDimensions($w, $h) 
+    {
 		$this->width = $w;
 		$this->height = $h;
 	}
 
-	function setRawDimensions($w, $h) {
+	function setRawDimensions($w, $h) 
+    {
 		$this->raw_width = $w;
 		$this->raw_height = $h;
 	}
 
-	function getDimensions($size=0) {
+	function getDimensions($size=0) 
+    {
 	    if ($size) {
                 if ($this->width > $this->height) {
                     $width = $size;
@@ -229,19 +243,22 @@ class Image {
 		return array($width, $height);
 	}
 
-	function setThumbRectangle($x, $y, $w, $h) {
+	function setThumbRectangle($x, $y, $w, $h) 
+    {
 		$this->thumb_x = $x;
 		$this->thumb_y = $y;
 		$this->thumb_width = $w;
 		$this->thumb_height = $h;
 	}
 
-	function getThumbRectangle() {
+	function getThumbRectangle() 
+    {
 		return array($this->thumb_x, $this->thumb_y,
 		             $this->thumb_width, $this->thumb_height);
 	}
 
-	function getRawDimensions() {
+	function getRawDimensions() 
+    {
 		return array($this->raw_width, $this->raw_height);
 	}
 }	

@@ -19,11 +19,13 @@
  */
 ?>
 <?php
-class AlbumDB {
+class AlbumDB 
+{
 	var $albumList;
 	var $albumOrder;
 
-	function AlbumDB($loadphotos=TRUE) {
+	function AlbumDB($loadphotos=TRUE) 
+    {
 		global $gallery;
 
 		$dir = $gallery->app->albumDir;
@@ -77,7 +79,8 @@ class AlbumDB {
 		}
 	}
 
-	function renameAlbum($oldName, $newName) {
+	function renameAlbum($oldName, $newName) 
+    {
 		global $gallery;
 
 		$dir = $gallery->app->albumDir;
@@ -102,7 +105,8 @@ class AlbumDB {
 		return 1;
 	}
 
-	function newAlbumName() {
+	function newAlbumName() 
+    {
 		global $gallery;
 
 		$name = "album01";
@@ -128,11 +132,13 @@ class AlbumDB {
 		return $name;
 	}
 
-	function numAlbums($user) {
+	function numAlbums($user) 
+    {
 		return sizeof($this->getVisibleAlbums($user));
 	}
 	
-	function numPhotos($user) {
+	function numPhotos($user) 
+    {
 		$numPhotos = 0;
 		foreach ($this->albumList as $album) {
 			if ($user->canWriteToAlbum($album)) {
@@ -145,7 +151,8 @@ class AlbumDB {
 		return $numPhotos;
 	}
 
-	function getCachedNumPhotos($user) {
+	function getCachedNumPhotos($user) 
+    {
 		$numPhotos = 0;
 		foreach ($this->albumList as $album) {
 			if ($user->canReadAlbum($album)) {
@@ -155,7 +162,8 @@ class AlbumDB {
 		return $numPhotos;
 	}
 
-	function getAlbum($user, $index) {
+	function getAlbum($user, $index) 
+    {
 		global $gallery;
 		$list = $this->getVisibleAlbums($user);
 		if (!$list[$index-1]->transient->photosloaded) {
@@ -164,7 +172,8 @@ class AlbumDB {
 		return $list[$index-1];
 	}
 
-	function getAlbumbyName($name) {
+	function getAlbumbyName($name) 
+    {
 		global $gallery;
 		/* Look for an exact match */
 		foreach ($this->albumList as $album) {
@@ -189,7 +198,8 @@ class AlbumDB {
 		return 0;
 	}
 
-	function moveAlbum($user, $index, $newIndex) {
+	function moveAlbum($user, $index, $newIndex) 
+    {
 
 		// This is tricky.  The old and new indices are only relevant
 		// within the list of albums that this user is able to see!  
@@ -230,7 +240,8 @@ class AlbumDB {
 		return;
 	}
 
-	function moveAlbumAbsolute($index, $newIndex) {
+	function moveAlbumAbsolute($index, $newIndex) 
+    {
 		/* Pull album out */
 		$name = array_splice($this->albumOrder, $index, 1);
 
@@ -238,7 +249,8 @@ class AlbumDB {
 		array_splice($this->albumOrder, $newIndex, 0, $name);
 	}
 
-	function getVisibleAlbums($user) {
+	function getVisibleAlbums($user) 
+    {
 		global $gallery;
 		$list = array();
 		foreach ($this->albumList as $album) {
@@ -250,7 +262,8 @@ class AlbumDB {
 		return $list;
 	}
 
-	function save() {
+	function save() 
+    {
 		global $gallery;
 		$success = 0;
 

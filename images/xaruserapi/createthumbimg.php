@@ -105,7 +105,8 @@ function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE)
 } # end createthumb
 
 
-function LoadJpeg ($imgname) {
+function LoadJpeg ($imgname) 
+{
     $im = @imagecreatefromjpeg ($imgname); /* Attempt to open */
     if (!$im) { /* See if it failed */
         $im  = imagecreate (150, 30); /* Create a blank image */
@@ -118,7 +119,8 @@ function LoadJpeg ($imgname) {
     return $im;
 }
 /*
-function ImageCopyResampleBicubic (&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h) {
+function ImageCopyResampleBicubic (&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h) 
+{
   ImagePaletteCopy ($dst_img, $src_img);
   $rX = $src_w / $dst_w;
   $rY = $src_h / $dst_h;

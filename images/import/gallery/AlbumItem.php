@@ -19,7 +19,8 @@
  */
 ?>
 <?php
-class AlbumItem {
+class AlbumItem 
+{
 	var $image;
 	var $thumbnail;
 	var $caption;
@@ -37,13 +38,15 @@ class AlbumItem {
 	var $extraFields;
 	var $version;
 
-	function AlbumItem() {
+	function AlbumItem() 
+    {
 	        global $gallery;
 		$this->version = $gallery->album_version;
 		$this->extraFields = array();
 	}
 	
-	function setUploadDate($uploadDate="") { //upload date should only be set at file upload time.
+	function setUploadDate($uploadDate="") 
+    { //upload date should only be set at file upload time.
 		global $gallery;
 
 		if ($uploadDate) { // set the upload time from the time provided
@@ -57,7 +60,8 @@ class AlbumItem {
 		}
 	}
 
-	function getUploadDate() {
+	function getUploadDate() 
+    {
 		if (!$this->uploadDate) {
 			return 0;
 		} else {
@@ -65,7 +69,8 @@ class AlbumItem {
 		}
 	}
 
-	function setItemCaptureDate($itemCaptureDate="") {
+	function setItemCaptureDate($itemCaptureDate="") 
+    {
 		global $gallery;
 		/*$itemCaptureDate should be passed in as an associative array with the following elements:
 	 	$itemCaptureDate["hours"]
@@ -89,7 +94,8 @@ class AlbumItem {
 		$this->itemCaptureDate = $itemCaptureDate;
 	}
 
-	function getItemCaptureDate() {
+	function getItemCaptureDate() 
+    {
 		// need to set this value for old photos that don't yet contain it.
 		if (!$this->itemCaptureDate) {
 			return 0;
@@ -98,7 +104,8 @@ class AlbumItem {
 		}
 	}
 
-	function getExif($dir, $forceRefresh=0) {
+	function getExif($dir, $forceRefresh=0) 
+    {
 		global $gallery;
 		$file = $dir . "/" . $this->image->name . "." . $this->image->type;
 
@@ -123,15 +130,18 @@ class AlbumItem {
 		return array($status, $this->exifData, $needToSave);
 	}
 
-	function numComments() {
+	function numComments() 
+    {
 		return sizeof($this->comments);
 	}
 
-	function getComment($commentIndex) {
+	function getComment($commentIndex) 
+    {
 		return $this->comments[$commentIndex-1];
 	}
 
-	function integrityCheck($dir) {
+	function integrityCheck($dir) 
+    {
 		global $gallery;
 		$changed = 0;
 
@@ -167,7 +177,8 @@ class AlbumItem {
 		return $changed;
 	}
 
-	function addComment($comment, $IPNumber, $name) {
+	function addComment($comment, $IPNumber, $name) 
+    {
 		global $gallery;
 
 		if ($gallery->user) {
@@ -183,49 +194,59 @@ class AlbumItem {
 		return 0;
 	}
 
-	function deleteComment($comment_index) {
+	function deleteComment($comment_index) 
+    {
 		array_splice($this->comments, $comment_index-1, 1);
 	}
 
-	function setKeyWords($kw) {
+	function setKeyWords($kw) 
+    {
 		$this->keywords = $kw;
 	}
 
-	function getKeyWords() {
+	function getKeyWords() 
+    {
 		return $this->keywords;
         }
 
-	function resetItemClicks() {
+	function resetItemClicks() 
+    {
 		$this->clicks = 0;
 	}
 
-	function getItemClicks() {
+	function getItemClicks() 
+    {
 		if (!isset($this->clicks)) {
 			$this->resetItemClicks();
 		}
 		return $this->clicks;
 	}
 
-	function incrementItemClicks() {
+	function incrementItemClicks() 
+    {
 		if (!isset($this->clicks)) {
 			$this->resetItemClicks();
 		}
 		$this->clicks++;
 	}
 
-	function hide() {
+	function hide() 
+    {
 		$this->hidden = 1;
 	}
 
-	function unhide() {
+	function unhide() 
+    {
 		$this->hidden = 0;
 	}
 
-	function isHidden() {
+	function isHidden() 
+    {
 		return $this->hidden;
 	}
 
-	function setHighlight($dir, $bool) {
+	function setHighlight($dir, $bool) 
+    {
 		global $gallery;
 		
 		$this->highlight = $bool;
@@ -301,11 +322,13 @@ class AlbumItem {
 		}	
 	}
 
-	function isHighlight() {
+	function isHighlight() 
+    {
 		return $this->highlight;
 	}
 
-	function getThumbDimensions($size=0) {
+	function getThumbDimensions($size=0) 
+    {
 		if ($this->thumbnail) {
 			return $this->thumbnail->getDimensions($size);
 		} else {
@@ -313,7 +336,8 @@ class AlbumItem {
 		}
 	}
 
-	function getDimensions() {
+	function getDimensions() 
+    {
 		if ($this->image) {
 			return $this->image->getDimensions();
 		} else {
@@ -321,12 +345,14 @@ class AlbumItem {
 		}
 	}
 
-	function isResized() {
+	function isResized() 
+    {
 		$im = $this->image;
 		return $im->isResized();
 	}
 
-	function rotate($dir, $direction, $thumb_size) {
+	function rotate($dir, $direction, $thumb_size) 
+    {
 		global $gallery;
 
 		$name = $this->image->name;
@@ -349,7 +375,8 @@ class AlbumItem {
 		$this->makeThumbnail($dir, $thumb_size);
 	}
 
-	function setPhoto($dir, $name, $tag, $thumb_size, $pathToThumb="") {
+	function setPhoto($dir, $name, $tag, $thumb_size, $pathToThumb="") 
+    {
 		global $gallery;
 
 		/*
@@ -423,7 +450,8 @@ class AlbumItem {
 	}
 
 
-	function getThumbnailTag($dir, $size=0, $attrs="") {
+	function getThumbnailTag($dir, $size=0, $attrs="") 
+    {
 		if ($this->thumbnail) {
 			return $this->thumbnail->getTag($dir, 0, $size, $attrs);
 		} else {
@@ -431,7 +459,8 @@ class AlbumItem {
 		}
 	}
 
-	function getHighlightTag($dir, $size=0, $attrs) {
+	function getHighlightTag($dir, $size=0, $attrs) 
+    {
 		if (is_object($this->highlightImage)) {
 			return $this->highlightImage->getTag($dir, 0, $size, $attrs);
 		} else {
@@ -439,7 +468,8 @@ class AlbumItem {
 		}
 	}
 
-	function getPhotoTag($dir, $full=0) {
+	function getPhotoTag($dir, $full=0) 
+    {
 		if ($this->image) {
 			return $this->image->getTag($dir, $full);
 		} else {
@@ -447,7 +477,8 @@ class AlbumItem {
 		}
 	}
 
-	function getPhotoPath($dir, $full=0) {
+	function getPhotoPath($dir, $full=0) 
+    {
 		if ($this->image) {
 			return $this->image->getPath($dir, $full);
 		} else {
@@ -455,7 +486,8 @@ class AlbumItem {
 		}
 	}
 
-	function getPhotoId($dir) {
+	function getPhotoId($dir) 
+    {
 		if ($this->image) {
 			return $this->image->getId($dir);
 		} else {
@@ -463,7 +495,8 @@ class AlbumItem {
 		}
 	}
 
-	function delete($dir) {
+	function delete($dir) 
+    {
 		if ($this->image) {
 			$this->image->delete($dir);
 		}
@@ -473,27 +506,33 @@ class AlbumItem {
 		}
 	}
 
-	function setCaption($cap) {
+	function setCaption($cap) 
+    {
 		$this->caption = $cap;
 	}
 
-	function getCaption() {
+	function getCaption() 
+    {
 		return $this->caption;
 	}
 
-	function setIsAlbumName($name) {
+	function setIsAlbumName($name) 
+    {
 		$this->isAlbumName = $name;
 	}
 
-	function getIsAlbumName() {
+	function getIsAlbumName() 
+    {
 		return $this->isAlbumName;
 	}
 
-	function isMovie() {
+	function isMovie() 
+    {
 		return isMovie($this->image->type);
 	}
 
-	function resize($dir, $target, $pathToResized="") {
+	function resize($dir, $target, $pathToResized="") 
+    {
 		if ($this->image) {
 			$this->image->resize($dir, $target, $pathToResized);
 		}
