@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * File: $Id$
- * 
+ *
  * Pubsub Initialise Module
  *
  * @package Xaraya eXtensible Management System
@@ -11,8 +11,8 @@
  *
  * @subpackage Pubsub Module
  * @author Chris Dudley <miko@xaraya.com>
-*/ 
- 
+*/
+
 /**
  * initialise the pubsub module
  *
@@ -28,7 +28,7 @@ function pubsub_init()
     $xartable = xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
-    
+
     // Create tables
     $pubsubeventstable = $xartable['pubsub_events'];
     $eventsfields = array(
@@ -160,12 +160,12 @@ function pubsub_init()
     xarDefineInstance('pubsub','Item',$instances);
 
     // Define mask definitions for security checks
-    xarRegisterMask('OverviewPubSub','All','pubsub','All','All',ACCESS_OVERVIEW);
-    xarRegisterMask('ReadPubSub','All','pubsub','All','All',ACCESS_READ);
-    xarRegisterMask('EditPubSub','All','pubsub','All','All',ACCESS_EDIT);
-    xarRegisterMask('AddPubSub','All','pubsub','All','All',ACCESS_ADD);
-    xarRegisterMask('DeletePubSub','All','pubsub','All','All',ACCESS_DELETE);
-    xarRegisterMask('AdminPubSub','All','pubsub','All','All',ACCESS_ADMIN);
+    xarRegisterMask('OverviewPubSub','All','pubsub','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadPubSub','All','pubsub','All','All','ACCESS_READ');
+    xarRegisterMask('EditPubSub','All','pubsub','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddPubSub','All','pubsub','All','All','ACCESS_ADD');
+    xarRegisterMask('DeletePubSub','All','pubsub','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminPubSub','All','pubsub','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -173,7 +173,7 @@ function pubsub_init()
 
 /**
  * upgrade the pubsub module from an old version
- * 
+ *
  * @access public
  * @param oldversion float "Previous version upgrading from"
  * @returns bool
@@ -257,35 +257,35 @@ function pubsub_delete()
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $query = xarDBDropTable($xartable['pubsub_eventcids']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $query = xarDBDropTable($xartable['pubsub_reg']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $query = xarDBDropTable($xartable['pubsub_process']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $query = xarDBDropTable($xartable['pubsub_template']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     // Deletion successful
     return true;
 }
