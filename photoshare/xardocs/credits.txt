@@ -1,0 +1,8 @@
+Photoshare (C) 2002-2003 Jørn Lind-Nielsen
+---------------------------------------------------------------
+Converted to Xaraya module by Chris van de Steeg aka "Alley"
+---------------------------------------------------------------
+
+Thanks to Bolke De Bruin for CVS hosting, patches and coding.
+
+Thanks to all the beta testers.

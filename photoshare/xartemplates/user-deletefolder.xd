@@ -1,0 +1,19 @@
+<xar:template file="header" />
+<xar:template file="folderinfo" />
+<form action="#$actionUrl#" method="post">
+<input type="hidden" name="fid" value="#$folderID#" />
+<input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+<xar:mlstring>You are deleting the album</xar:mlstring> '#$folder.title#'
+<br /><br />
+<input type="radio" name="deletesubfolders" value="0" /><xar:mlstring>Delete only the album and move all sub-albums to parent album.</xar:mlstring>
+<br />
+<input checked="checked" type="radio" name="deletesubfolders" value="1" /><xar:mlstring>Delete album and all it's sub-albums.</xar:mlstring>
+<br /><br />
+<input type="submit" name="submit" value="#xarMl('delete')#" />
+<input type="button" name="cancel"
+	value="#xarMl('cancel')#"
+	onclick="location.href= '#xarModURL('photoshare', 'user', 'view', isset($folderID) ? array('fid' => $folderID) : (isset($parentFolderID) ? array('fid' => $parentFolderID) : array()) )#'"
+	/>
+
+</form>
+<xar:template file="footer" />

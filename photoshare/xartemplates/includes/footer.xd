@@ -1,0 +1,13 @@
+<br /><br />
+<xar:set name="$userInfo">xarModAPIFunc('photoshare', 'user', 'getuserinfo')</xar:set>
+<xar:set name="$maxSize">$userInfo['imageSizeLimitTotal']</xar:set>
+<xar:set name="$size">$userInfo['totalCapacityUsed']</xar:set>
+<xar:set name="$scale">1000000.0</xar:set>
+<xar:set name="$progress_leftSize">intval($maxSize > 0 ? ($size*100)/$maxSize : 100)</xar:set>
+<xar:set name="$progress_rightSize">intval($maxSize > 0 ? 100-$progress_leftSize : 0)</xar:set>
+<xar:set name="$progress_text">xarMl('Storage').': '.$progress_leftSize.'%'.sprintf("(%.2f %s %.2f Mb)", $size/$scale, xarMl('of'), $maxSize/$scale)</xar:set>
+
+<img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/bar_left.gif" height="5"
+	width="#$progress_leftSize#" /><img
+		src="#xarServerGetBaseURL()#modules/photoshare/xarimages/bar_right.gif" height="5" width="#$progress_rightSize#">
+ #$progress_text#

@@ -1,0 +1,19 @@
+Photoshare (C) 2002-2003 Jørn Lind-Nielsen
+------------------------------------------
+
+KNOWN BUGS
+
+* Photoshare is unable to detect whether or not the GD function
+  ImageCreateTrueColor exists and some versions of PHP may crash without any
+  trace of what happend when the function is called.
+
+  To avoid this you should have GD version 2.0 or newer installed as well as
+  PHP should be at least of version 4.0.6. If this cannot be done then find
+  the following lines in "pnuserapi.php":
+
+      // If the check for imagecreatetruecolor fails then insert the next line
+    // $hasTrueColorImage = false;
+
+  Then insert the second line (remove the two leading slashes
+
+  Signs: Photoshare stops and leaves the screen blank after image upload.

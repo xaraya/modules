@@ -1,0 +1,205 @@
+/*****************************************************************************
+  PhotoShare Cascading Stylesheets Setup
+*****************************************************************************/
+
+/*=[ Window layout ]==========================================================*/
+
+table.photoshare-header {
+  border: 1px solid black;
+  padding: 0px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+tr.photoshare-header-title {
+  background-color: #1A4C86;
+}
+
+tr.photoshare-header-title td {
+  padding: 4px 1px 4px 10px;
+}
+
+tr.photoshare-header-menu {
+  background-color: #E0E0E0;
+  width: 100%;
+}
+
+tr.photoshare-header-menu table td {
+  padding: 2px 8px 2px 8px;
+}
+
+tr.photoshare-header-icons {
+  background-color: #E0E0E0;
+  width: 100%;
+}
+
+tr.photoshare-header-icons td {
+  border-top: 1px solid #D0D0D0;
+  border-bottom: 1px solid #808080;
+}
+
+tr.photoshare-header-bottom {
+  background-color: #1A4C86;
+}
+
+
+/*=[ Title and trail ]========================================================*/
+
+div.photoshare-title {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+}
+
+div.photoshare-trail {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #D0D0D0;
+}
+
+div.photoshare-trail a {
+  color: #D0D0D0;
+  text-decoration: underline;
+}
+
+div.photoshare-trail a:link {
+}
+
+div.photoshare-trail a:visited {
+}
+
+div.photoshare-trail a:hover {
+  color: white;
+}
+
+div.photoshare-trail a:active {
+}
+
+
+/*=[ Toolbar ]================================================================*/
+
+table.photoshare-toolbar-main,
+table.photoshare-toolbar-main td,
+table.photoshare-toolbar-main tr {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  border-collapse: collapse;
+}
+
+table.photoshare-toolbar-main {
+}
+
+table.photoshare-toolbar td {
+  height: 20px;
+  width: 20px;
+  text-align:  center;
+  border-top: 1px solid #D0D0D0;
+  border-left: 1px solid #D0D0D0;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+}
+
+
+/*============================================================================*/
+
+.photoshare-heading {
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 4px;
+}
+
+.photoshare-button {
+  cursor: pointer;  /* Correct name */
+  cursor: hand;     /* IE name */
+}
+
+table.photoshare-image td.title {
+  width: 100px;
+}
+
+img.photoshare-selected {
+  border: 1px solid red;
+  cursor: pointer;  /* Correct name */
+  cursor: hand;     /* IE name */
+}
+
+img.photoshare-unselected {
+  border: 1px solid white;
+  cursor: pointer;  /* Correct name */
+  cursor: hand;     /* IE name */
+}
+
+table.photoshare-editform input.photoshare-edittitle,
+table.photoshare-editform input.photoshare-editfile {
+  width: 350px;
+}
+
+table.photoshare-editform textarea {
+  width: 350px;
+}
+
+.photoshare-clickable
+{
+  cursor: pointer;  /* Correct name */
+  cursor: hand;     /* IE name */
+}
+
+/*=[ Menu handling ]==========================================================*/
+
+  /* Surrounding DIV tag */
+div.psmenu {
+  position: absolute;
+  visibility: hidden;
+  font: arial, sans-serif;
+
+  border-top:       1px solid #D0D0D0;
+  border-left:      1px solid #D0D0D0;
+  border-right:     1px solid black;
+  border-bottom:    1px solid black;
+  border-collapse:  collapse;
+
+  background-color: #E0E0E0;
+}
+
+
+  /* Make sure there's no spacing between the rows in the menu (use padding instead) */
+div.psmenu table,
+div.psmenu tr,
+div.psmenu td {
+  border-collapse: collapse;
+  border: none;
+  margin: none;
+}
+
+  /* Menu item row (off) */
+.psmenu-menuItem {
+  cursor: pointer;
+  cursor: hand;
+}
+
+  /* Menu item row (on) 
+     - we could colorize the whole row here, but the icon graphics is not good on blue background */
+.psmenu-menuItemOn {
+  cursor: pointer;
+  cursor: hand;
+}
+
+
+  /* Some space around the icon */
+td.psmenu-icon {
+  padding: 2px 2px;
+}
+
+  /* Some space around the icon */
+.psmenu-menuItemOn td.psmenu-title {
+  background-color: darkblue;
+  color:            white;
+}
+
+  /* Some space around the menu item title */
+td.psmenu-title {
+  padding: 2px 5px;
+}
+

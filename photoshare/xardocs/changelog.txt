@@ -1,0 +1,26 @@
+Version 3.0
+-----------
+* Added support for upload of zipped images.
+* Removed filename extension from title when adding image without specific title ('Bornholm.jpg' => 'Bornholm').
+
+
+Version 2.1
+-----------
+* Added random image block
+
+
+Version 2.0
+-----------
+* New templating system that allows site administrators to design their own image presentations.
+* Multiple images can now be selected and rotatede/deleted/copied/moved to other albums.
+* Albums may be published by e-mail for specific persons.
+* The main album list can now be sorted by date, title, author, and topic.
+* Albums can now be hidden from the main album list (although they still adhere to the access control).
+* The admin interface is improved with a bit more server information.
+* Stylesheets are now loaded from files in Photoshare's directory structure. So you do not have to modify the theme's stylesheets.
+* The overall performance has been improved by change of the SQL statements and the addition of some database indecies.
+
+Bugfixes:
+* Content-type was missing for images which made it impossible to view them on PostNuke systems with compression enabled.
+* The image count is updated after image upload.
+* The caching mechanism has been fixed.

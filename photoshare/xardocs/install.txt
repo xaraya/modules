@@ -1,0 +1,85 @@
+INSTALLING PHOTOSHARE
+---------------------
+
+1) Copy the "photoshare" directory and all it's sub-directories into
+   the PostNuke "modules" directory.
+
+2) Go to PostNuke's admin page and find the "modules" setup. Here you
+   regenerate the module list and then initialize and activate Photoshare.
+
+3) Goto Photoshare's admin menu and make sure the settings are correct.
+
+   > Decide whether you want images to be stored in files on the disc
+     or directly in the database.
+
+     YOU SHOULD NOT CHANGE THIS AFTER THE FIRST IMAGE HAS BEEN INSERTED!
+     - if you do so, you won't be able to use the image from before the
+       change (the images are although available when you switch back
+       to the old mode).
+
+   > If you choose to save images on disc then specify a file directory
+     in which they should be stored. Photoshare uses *only* this directory
+     and no sub-directories in it. MAKE SURE PHOTOSHARE (the webserver) HAS
+     WRITE ACCESS TO THIS DIRECTORY.
+
+     This directory SHOULD be outside the webserver's document root, if it
+     is not, then your users will be able to access the files independently
+     of your access permissions.
+
+     If you have PHP's OPEN_BASEDIR enabled then the admin window will
+     display this folder. You directories MUST reside somewhere below
+     the OPEN_BASEDIR.
+
+   > You must supply a valid file directory in which Photoshare can
+     store it's temporary files. MAKE SURE PHOTOSHARE (the webserver) HAS
+     WRITE ACCESS TO THIS DIRECTORY. This also applies if you store your
+     images in the database.
+
+   > Specify the size of your thumbnails (in pixels)
+
+   > Specify maximum file size of a single image and the total sum allowed
+     for a single user.
+
+4) Permissions:
+
+     Group          Component       Instance   Permission
+     All groups     Photoshare::    .*         read
+     Users          Photoshare::    .*         edit
+
+   This will give all users access to viewing published albums, and "Editors"
+   access to create albums.
+
+5) The URL to editing in Photoshare is:
+
+     http://somewhere/index.php?module=photoshare
+
+   whereas the URL to the list of all albums is:
+
+     http://somewhere/index.php?module=photoshare&func=viewallfolders
+
+   You can also use [photoshare] in PN's menu - this leads to the folder index.
+
+
+
+UPGRADING PHOTOSHARE FROM 1.0
+-----------------------------
+
+1) Backup 
+   - your database.
+   - your image files (if using images on disc instead of in database).
+   - your modules/photoshare directory.
+   - your themes/your_theme/styles/style.css if you added photoshare styles to
+     it in last install.
+
+2) If you made changes to Photoshare's default stylesheet then copy the 
+   directory "modules/photoshare/themes/photoshare"
+   to "modules/photoshare/themes/your_theme" and re-insert your changes in 
+   the "styles.css" file.
+
+3) Remove/delete/undo/whatever all your Photoshare related changes in your 
+   theme's stylesheet (themes/your_theme/styles/style.css).
+
+4) Go to PostNuke's admin page and find the "modules" setup. Here you
+   regenerate the module list and then upgrade and activate Photoshare.
+
+

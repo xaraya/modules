@@ -1,0 +1,141 @@
+TEMPLATE INTERFACE
+==================
+
+Templates must be installed in "photoshare/templates/<template-name>". In this 
+directory at least one file must exist - namely the main template handler 
+"template.php". See Photoshare's default templates for some examples.
+
+The template handler file "template.php" is loaded on demand - for instance
+when Photoshare tries to get the list of installed templates.
+
+The template handler must define at least a function named 
+"photoshare_template_<template-name>". This function must return an instance
+of a template object.
+
+The template object interface is specified below.
+
+
+Template directory structure
+----------------------------
+
+( 1)  templates
+( 2)  +- myTemplate
+( 3)     +- template.php
+( 4)     +- docs
+( 5)     |  +- manual.html
+( 6)     +- images
+( 7)     +- javascript
+( 8)     +- lang
+( 9)     |  +- lang1
+(10)     |  |  +- global.php
+(11)     |  +- lang2
+(12)     |     +- global.php
+(13)     +- themes
+(14)        +- theme1
+(15)        |  +- style.css
+(16)        +- theme2
+(17)           +- style.css
+
+
+( 1) Top directory containg all templates.
+( 2) Directory containing a template. The name of the directory is considered the name (ID) of the template.
+( 3) Mandatory file containing template definition (see later section).
+( 4) Directory containing documentation.
+( 5) Mandatory help file opened from the folder setup window (at the template selection).
+( 6) Directory containing optional images for the template.
+( 7) Directory containing optional javascript files for the template.
+( 8) Directory containing language files for the template.
+( 9) Directory for first language.
+(10) The language definition (works the same way as PostNuke's language files).
+(11) Directory for second language.
+(12) The language definition.
+(13) Directory contaning special stylesheet files - categorized by theme name.
+(14) First theme.
+(15) Mandatory style sheet file (unless template object signals no stylesheet is needed).
+(16) Second theme.
+(17) Style sheet.
+
+
+
+Special query parameters
+------------------------
+You can override the default template for an album with the "template" query variable.
+For instance:
+
+   http://your-site/index.php?module=photoshare&func=showimages&fid=1&iid=17&template=slideshow
+
+
+
+Version 1 template class definition
+-----------------------------------
+
+class MyTemplate
+{
+    // Return which version (integer) of the interface this template works for.
+    // This function is always called to check which other functions to expect in the class.
+    // For the version 1 interface it of course returns 1.
+  function getVersion() ...
+
+
+    // Return localized display title (string) for this template.
+    // This title should be a short and hopefully descriptive as well as distinctive string.
+  function getTitle() ...
+
+
+    // Return the recursion level (integer) of folders this template requires.
+    // A thumbnail and slideshow template would require level 1 - that's all images in the folder.
+    // A more advanced template could require level 2 - that's all images in the folder and all
+    // sub-folders together with their images.
+  function getFolderDepth() ...
+
+
+    // Return true if this template requires it's own CSS file (and false otherwise). The CSS file 
+    // must be named 'style.css' and be placed in 'templates/<TemplateName>/themes/<ThemeName>'. 
+    // Photoshare will automatically add a style sheet link to it.
+  function usesStyleSheet() ...
+
+
+    // This function outputs whatever it wants to the pnHTML object $output.
+    // The template data input is an associative array (struct) (let's call it Folder) 
+    // with the following elements:
+    // 
+    //   Folder:
+    //     folder     => FolderInfo struct
+    //     images     => array of ImageInfo struct
+    //     subfolders => array of Folder struct
+    //
+    //   FolderInfo:
+    //     title        => string
+    //     description  => string
+    //     owner        => PostNuke user ID
+    //     ownername    => PostNuke user name (preferably real name but uname is used if real name is empty)
+    //     topic        => PostNuke topic ID
+    //     createdDate  => creation date
+    //
+    //   ImageInfo
+    //     title        => string
+    //     description  => string
+    //     owner        => PostNuke user ID
+    //     ownername    => PostNuke user name (preferably real name but uname is used if real name is empty)
+    //     createdDate  => creation date
+    //     modifiedDate => last modification date
+    //
+    // The templateHelper is an object that can be used to generate image URLs without knowing anything else
+    // than the folder and image IDs. These URL functions *must* be used in order to ensure correct use
+    // of view keys (for publishing by mail). See below for definition.
+
+  function show(&$output, $templateData, $templateHelper) ...
+}
+
+
+Version 1 TemplateHelper class definition
+-----------------------------------------
+
+class TemplateHelper
+{
+    // Get URL to full image
+  function imageUrl($folderID, $imageID) ...
+
+    // Get URL to thumbnail
+  function thumbnailUrl($folderID, $imageID) ...
+};

@@ -1,0 +1,141 @@
+/*****************************************************************************
+  Photoshare Cascading Stylesheets Setup
+*****************************************************************************/
+
+  /* Main 'Photoshare' title */
+.photoshare-pagetitle
+{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+  /* Current page title */
+.photoshare-title
+{
+  font-size: 18px;
+}
+
+  /* Sub-title (headings in 'publish album' page) */
+.photoshare-heading
+{
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 4px;
+}
+
+  /* Table surrounding slideshow window */
+table.photoshare-show
+{
+  background-color: #336699;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+  /* Table surrounding slideshow buttons */
+table.photoshare-show-buttons 
+{
+}
+
+table.photoshare-show-buttons td
+{
+  margin: 0;
+}
+
+  /* Table surrounding slideshow button 'play' (adding distance between buttons) */
+td.photoshare-show-play
+{
+  padding-right: 10px;
+}
+
+  /* Table surrounding slideshow button 'prev' (adding distance between buttons) */
+td.photoshare-show-prev
+{
+  padding-left:  10px;
+  padding-right: 4px;
+}
+
+  /* Table surrounding slideshow button 'next' (adding distance between buttons) */
+td.photoshare-show-next
+{
+  padding-right: 30px;
+}
+
+  /* The table cell that contains the current image count in the slideshow */
+td.photoshare-show-count
+{
+  font-size: 16;
+
+  background-color: white;
+  color:            black;
+
+  border-top:    2px solid black;
+  border-right:  2px solid gray;
+  border-bottom: 2px solid gray;
+  border-left:   2px solid black;
+}
+
+  /* The table cell that contains the image title in the slideshow */
+td.photoshare-show-title
+{
+  font-size:   14;
+  font-weight: bold;
+  text-align:  center;
+
+  background-color: white;
+  color:            black;
+
+  border-top:    1px solid black;
+  border-right:  1px solid black;
+  border-bottom: none;
+  border-left:   1px solid black;
+}
+
+  /* The table cell that contains the image description in the slideshow */
+td.photoshare-show-description
+{
+  font-size:  12;
+  text-align: center;
+  vertical-align: top;
+
+  background-color: white;
+  color:            black;
+
+  height: 2em;
+
+  border-top:    none;
+  border-right:  1px solid black;
+  border-bottom: 1px solid black;
+  border-left:   1px solid black;
+}
+
+
+  /* Table cell surrounding the image itself in the slideshow */
+td.photoshare-show-image
+{
+  background-color: white;
+  
+  padding: 10px;
+}
+
+  /* Elements where the cursor should be changed to a hand/pointer - such as the button images */
+.photoshare-button {
+  cursor: pointer;  /* Correct name */
+  cursor: hand;     /* IE name */
+}
+
+  /* Table cell where the image title is placed on the thumbnail overview page. We add a width here to 
+     avoid too wide titles (which would screw up the table layout) */
+table.photoshare-image td.title {
+  width: 100px;
+}
+
+  /* Selected image in the thumbnail overview page */
+img.photoshare-selected {
+  border: 1px solid red;
+}
+
+  /* Unselected image in the thumbnail overview page (we cannot remove border completely since this would
+     make everything move by one pixel when the style is changed - so it is hidden by coloring) */
+img.photoshare-unselected {
+  border: 1px solid white;
+}

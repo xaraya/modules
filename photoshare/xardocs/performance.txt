@@ -1,0 +1,10 @@
+PERFORMANCE TUNING
+------------------
+Since Photoshare accesses the PostNuke group membership table each and every
+time it verifies access to a certain image or folder you should add a
+database index to that table.
+
+Assuming your PostNuke table prefix is "PREFIX" then you should execute the
+following SQL statement:
+
+  alter table PREFIX_group_membership add index (pn_uid)
