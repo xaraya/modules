@@ -1,0 +1,8 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$title#</span>
+</div>
+<div class="xar-mod-body">
+    <object data="#$page#" type="text/html" width="#$hsize#" height="#$vsize#">
+    </object>
+</div>
+

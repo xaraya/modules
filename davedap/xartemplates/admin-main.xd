@@ -1,0 +1,48 @@
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+        <xar:if condition="file_exists('modules/davedap/xarimages/admin.gif')" >
+            <img src="modules/davedap/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <xar:else />
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The DaveDAP module is a web-based LDAP admin tool written in PHP. You can browse your LDAP tree, create, delete, edit, and copy objects, perform searches, and view your server's schema. You can even copy objects between two LDAP servers and recursively delete or copy entire trees.</xar:mlstring>
+            <br /><br />
+            <xar:mlstring>So, what does DaveDAP stand for? DaveDAP's a Very Easy Directory Administration Program</xar:mlstring>
+            <br /><br />
+            <xar:mlstring>Check out our <a href="http://sourceforge.net/projects/davedap/">SourceForge project page</a> for bugs, stats, etc.</xar:mlstring>
+            <br /><br />
+            <xar:mlstring>Feature list:</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Tree browser</xar:mlstring></li>
+                <li><xar:mlstring>Edit entries</xar:mlstring></li>
+                <li><xar:mlstring>Copy entries</xar:mlstring></li>
+                <li><xar:mlstring>Recursively copy containers (sub-trees)</xar:mlstring></li>
+                <li><xar:mlstring>Delete entries</xar:mlstring></li>
+                <li><xar:mlstring>Recursively delete containers (sub-trees)</xar:mlstring></li>
+                <li><xar:mlstring>View/edit jpegPhotos</xar:mlstring></li>
+                <li><xar:mlstring>Browse LDAP schema</xar:mlstring></li>
+                <li><xar:mlstring>Create entries</xar:mlstring></li>
+                <li><xar:mlstring>Custom templates for object creation</xar:mlstring></li>
+                <li><xar:mlstring>Perform LDAP searches (simple and advanced)</xar:mlstring></li>
+                <li><xar:mlstring>LDIF export</xar:mlstring></li>
+                <li><xar:mlstring>Rename entries</xar:mlstring></li>
+                <li><xar:mlstring>Copy objects between servers</xar:mlstring></li>
+                <li><xar:mlstring>Password hashes for userPassword (sha, crypt, md5)</xar:mlstring></li>
+                <li><xar:mlstring>It's PHP, so you can add your own features quite easily...</xar:mlstring></li>
+                <li><xar:mlstring><a href="http://sourceforge.net/tracker/?func=add&group_id=80217&atid=559085">Request a new feature</a></xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+        </div>
+    </div>
+</div>

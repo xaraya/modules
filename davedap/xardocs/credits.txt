@@ -1,0 +1,9 @@
+// ----------------------------------------------------------------------
+// Credits
+//
+// DaveDAP Author:  David Smith uugdave@users.sourceforge.net 
+// 
+// Module Author:   Richard Cave rcave@schwabfoundation.org
+//                               rcave@xaraya.com
+//
+// ----------------------------------------------------------------------
