@@ -14,7 +14,9 @@ function autolinks_adminapi_samples($args)
 
     extract($args);
 
-    if (!isset($action)) {$action = 'noop';}
+    if (!isset($action)) {
+        $action = 'noop';
+    }
 
     $setuptypes = array(
         'autolink-types' => array(

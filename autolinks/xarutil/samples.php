@@ -4,7 +4,8 @@
  * Create sample Autolink data (from an array - not quite an import)
  */
 
-function autolinks_util_samples() {
+function autolinks_util_samples()
+{
     // Security Check
     if (!xarSecurityCheck('AdminAutolinks')) {return;}
 
