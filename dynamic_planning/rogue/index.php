@@ -56,7 +56,7 @@ function viewproject() {
   $myts = new myTextSanitizer;
   $result = mysql_query("SELECT trackid, trackname, tracklead, tracktext, trackstatus, trackcat FROM $tracks ORDER BY trackname");
   if(!$result) {
-    echo mysql_errno(). ": ".mysql_error(). "<br><br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br /><br />"; exit();
   }
 
   echo "<div style=\"text-align: left;\">";
@@ -84,8 +84,8 @@ function viewproject() {
     <p class=\"pn-title\" style=\"margin-left: 20px;\">Most Recent News:</p>
     <p class=\"pn-normal\" style=\"margin-left: 20px;\">$tracknews</p>
     <p class=\"pn-title\" style=\"text-align: right;\">Updated:<span class=\"pn-normal\"> $trackstatus</span>
-    <br>Print View: <a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=tracksummary&amp;trackid=$trackid\">Summary</a> |  <a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=trackcomplete&amp;trackid=$trackid\">Planning Sheets</a></p>
-    </div><br>";
+    <br />Print View: <a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=tracksummary&amp;trackid=$trackid\">Summary</a> |  <a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=trackcomplete&amp;trackid=$trackid\">Planning Sheets</a></p>
+    </div><br />";
   }
   echo "<p class=\"pn-normal\">Print Project <a class=\"pn-normal\" href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=projectcomplete\">Summary</a></p>";
 
@@ -101,11 +101,11 @@ global $tracks , $tasks ;
 
   $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate, '%b %d, %y'), DATE_FORMAT(enddate, '%b %d, %y'), DATE_FORMAT(lastdate, '%b %d, %y'), percent FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
   if(!$result1) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   $result2 = mysql_query("SELECT trackname, tracklead, tracktext, trackstatus FROM $tracks WHERE trackid='$trackid'");
   if(!$result2) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   list($trackname, $tracklead, $tracktext, $trackstatus) = mysql_fetch_row($result2);
 
@@ -139,12 +139,12 @@ global $tracks , $tasks , $trackmsg;
 
   $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate,'%y-%m-%d'), DATE_FORMAT(enddate,'%y-%m-%d'), DATE_FORMAT(lastdate,'%y-%m-%d'), percent FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
   if(!$result1) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
 
   $result2 = mysql_query("SELECT trackname, tracklead, tracktext, trackstatus FROM $tracks WHERE trackid='$trackid'");
   if(!$result2) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   list($trackname, $tracklead, $tracktext, $trackstatus) = mysql_fetch_row($result2);
 
@@ -233,11 +233,11 @@ global $tracks , $tasks ;
 
   $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate, '%b %d, %y'), DATE_FORMAT(enddate, '%b %d, %y'), DATE_FORMAT(lastdate, '%b %d, %y'), percent, steps, team FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
   if(!$result1) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   $result2 = mysql_query("SELECT trackname, tracklead, tracktext, trackstatus FROM $tracks WHERE trackid='$trackid'");
   if(!$result2) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   list($trackname, $tracklead, $tracktext, $trackstatus) = mysql_fetch_row($result2);
 
@@ -267,11 +267,11 @@ function editsheet($trackid) {
   include("header.php");
   $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate,'%y-%m-%d'), DATE_FORMAT(enddate,'%y-%m-%d'), DATE_FORMAT(lastdate,'%y-%m-%d'), percent, steps, team FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
   if(!$result1) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   $result2 = mysql_query("SELECT trackname, tracklead, tracktext, trackstatus FROM $tracks WHERE trackid='$trackid'");
   if(!$result2) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   list($trackname, $tracklead, $tracktext, $trackstatus) = mysql_fetch_row($result2);
 
@@ -315,7 +315,7 @@ function adminproject() {
   if (authorised(0,"Dynamic::",0,ACCESS_ADMIN)) {
   $result = mysql_query("SELECT trackid, trackname, tracklead, trackcat FROM $tracks");
   if(!$result) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   echo "<div style=\"text-align: left;\">";
   echo "<h3><a href=\"modules.php?op=modload&amp;name=NS-Dynamic_Planning&amp;file=index&amp;func=main\">Project Page</a> : $trackmsg</h3>";
@@ -368,11 +368,11 @@ global $tracks , $tasks ;
 
   $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate, '%b %d, %y'), DATE_FORMAT(enddate, '%b %d, %y'), DATE_FORMAT(lastdate, '%b %d, %y'), percent FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
   if(!$result1) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   $result2 = mysql_query("SELECT trackname, tracklead, tracktext, trackstatus FROM $tracks WHERE trackid='$trackid'");
   if(!$result2) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   list($trackname, $tracklead, $tracktext, $trackstatus) = mysql_fetch_row($result2);
   $brtt = nl2br($tracktext);
@@ -416,15 +416,15 @@ global $tracks , $tasks ;
   ";
   $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate, '%b %d, %y'), DATE_FORMAT(enddate, '%b %d, %y'), DATE_FORMAT(lastdate, '%b %d, %y'), percent FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
   if(!$result1) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   $result2 = mysql_query("SELECT trackname, tracklead, tracktext, trackstatus FROM $tracks WHERE trackid='$trackid'");
   if(!$result2) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   $result3 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate, '%b %d, %y'), DATE_FORMAT(enddate, '%b %d, %y'), DATE_FORMAT(lastdate, '%b %d, %y'), percent, steps, team FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
   if(!$result1) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   list($trackname, $tracklead, $tracktext, $trackstatus) = mysql_fetch_row($result2);
 
@@ -467,7 +467,7 @@ function printprojectcomplete() {
   global $sitename, $tracks , $tasks ;
   $result = mysql_query("SELECT trackid, trackname, tracklead, trackstatus FROM $tracks ORDER BY trackname");
   if(!$result) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   echo "
   <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
@@ -485,7 +485,7 @@ function printprojectcomplete() {
     <p>Last Updated: $trackstatus</p>";
     $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate, '%b %d, %y'), DATE_FORMAT(enddate, '%b %d, %y'), DATE_FORMAT(lastdate, '%b %d, %y'), percent FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
     if(!$result1) {
-      echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+      echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
     }
     echo"<h3>Tasks:</h3>";
     echo "<table width=\"100%\"><tr><td>-Task-</td><td>-Start-</td><td>-End-</td><td>-%-</td></tr>";
@@ -504,7 +504,7 @@ function printprojectsummary() {
   global $sitename, $tracks , $tasks ;
   $result = mysql_query("SELECT trackname, tracklead, trackstatus FROM $tracks ORDER BY trackname");
   if(!$result) {
-    echo mysql_errno(). ": ".mysql_error(). "<br>"; exit();
+    echo mysql_errno(). ": ".mysql_error(). "<br />"; exit();
   }
   echo "
   <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
