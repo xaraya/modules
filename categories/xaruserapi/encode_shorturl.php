@@ -35,8 +35,9 @@ function categories_userapi_encode_shorturl($args)
 /* needs the full path to the Top here */
             $name = xarModAPIFunc('categories','user','cid2name',
                                  array('cid' => $catid,
-                                       // for DMOZ-like URLs
-                                       'usedescr' => 1));
+                                       // for DMOZ-like URLs with the description field containing
+                                       // the full path, use 1
+                                       'usedescr' => 0));
             if (!empty($name)) {
                 $path = '/' . $module . '/' . $name;
             } else {

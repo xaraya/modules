@@ -38,8 +38,9 @@ function categories_userapi_decode_shorturl($params)
         $name = join('/',$list);
         $catid = xarModAPIFunc('categories','user','name2cid',
                                array('name' => $name,
-                                     // for DMOZ-like URLs
-                                     'usedescr' => 1));
+                                     // for DMOZ-like URLs with the description field containing
+                                     // the full path, use 1
+                                     'usedescr' => 0));
         if (!empty($catid)) {
             $args['catid'] = $catid;
         }

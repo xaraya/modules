@@ -192,6 +192,10 @@ function categories_userapi_getcat($args) {
                 $right
                ) = $result->fields;
         $result->MoveNext();
+
+        if (!xarSecurityCheck('ViewCategories',0,'Category',"$name:$cid")) {
+             continue;
+        }
 /*
         // FIXME: Move max/min depth into the SQL
         if ((

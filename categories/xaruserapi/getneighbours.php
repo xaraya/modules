@@ -70,6 +70,10 @@ function categories_userapi_getneighbours($args) {
     $info = array();
     while (!$result->EOF) {
         list($cid, $name, $description, $image, $parent, $cleft, $cright) = $result->fields;
+        if (!xarSecurityCheck('ViewCategories',0,'Category',"$name:$cid")) {
+             $result->MoveNext();
+             continue;
+        }
 //        if ($cid == $curparent) {
 //            $link = 'parent';
 //        } elseif ($cleft == $right + 1) {

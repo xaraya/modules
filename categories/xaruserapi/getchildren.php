@@ -50,6 +50,10 @@ function categories_userapi_getchildren($args) {
     $info = array();
     while (!$result->EOF) {
         list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
+        if (!xarSecurityCheck('ViewCategories',0,'Category',"$name:$cid")) {
+             $result->MoveNext();
+             continue;
+        }
         $info[$cid] = Array(
                             "cid"         => $cid,
                             "name"        => $name,

@@ -135,6 +135,10 @@ function categories_userapi_getancestors($args) {
         // TODO: put a limit on the loop in case of infinite loops.
         $nextcid = $cached[$cid]['parent'];
         while ($nextcid > 0) {
+
+// TODO: what if we have no permission to access one of the ancestors ?
+// cfr. getparents() but more difficult because of the caching + descendants stuff :-)
+
             if (!isset($info[$nextcid])) {
                 $info[$nextcid] = $cached[$nextcid];
             }
