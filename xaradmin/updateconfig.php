@@ -24,8 +24,10 @@ function tinymce_admin_updateconfig()
         case 'basic':
             if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinymode','str:1:',$tinymode,'textareas',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyloadmode','str:1:',$tinyloadmode,'auto',XARVAR_NOT_REQUIRED)) return;
                 xarModSetVar('base','editor', $defaulteditor);
                 xarModSetVar('tinymce', 'tinymode', $tinymode);
+                xarModSetVar('tinymce', 'tinyloadmode', $tinyloadmode);
 
             break;
         case 'general':
@@ -163,16 +165,11 @@ function tinymce_admin_updateconfig()
             xarModSetVar('tinymce','iusebrowse',0);
     }
 
-    $thismode=xarModGetVar('tinymce','tinymode');
     //Turn our settings into javascript for insert into template
     //Let's call the variable jstext
     $jstext='';
     //start the string
-    if ($thismode <>'manual') {
-        $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
-    }else{
-       $jstext = 'mode : "textareas",';
-    }
+    $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
     $jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
     if (trim(xarModGetVar('tinymce','tinycsslist')) <> '') {

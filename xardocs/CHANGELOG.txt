@@ -1,3 +1,7 @@
+* Version 0.4.1  10 Mar 05
+- Split the activation method (auto vs manual) and the mode (All areas vs Labelled)
+- Tidy up the templates
+
 * Version 0.4.0  9 Mar 05
 - Added 1.43 code bug fix release
 - Updated language packs

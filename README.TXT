@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.4.0
+INSTALLATION AND USE - XarTinyMCE Version 0.4.1
 
-UPGRADES to 0.4.0: 
+UPGRADES to 0.4.1:
 PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -33,10 +33,11 @@ To INSTALL and get started:
    - choose the tab "Other"
    - on the wysiwyg editor dropdown choose "tinymce" as the default editor
 
-3. You can use XarTinyMCE module to enable wysiwyg in three basic ways
-   (there are variations on these) by setting the MODE:
+3. You can use XarTinyMCE module to enable wysiwyg in two basic ways
+   (there are variations on these) by setting the MODE and ACTIVATION method:
 
-   a. Set the Mode to All Text areas. This will automatically enable WYSIWYG 
+  B. Setting the Mode : All Text Areas or Specifically Labelled
+   a. Set the Mode to All Text areas. This will automatically enable WYSIWYG
       in ALL textareas. From Version 0.4.0 you *do not* need to
      add anything to your templates.
 
@@ -58,13 +59,18 @@ To INSTALL and get started:
      This will give you a WYSIWYG editor property where you want it without
      having to add any tags to your templates.
 
-  c. Choose the Mode of "Manual -auto disabled"
-     By adding the following template snippet at the top of any of your
-     page templates. You can add this to your site wide page template
-     (wysiwyg in all text areas on your site) or in specific templates
-     (xarbb templates, or articles new and modify templates) to only provide
-     wysiwyg in those modules or textareas. The snipped to add is:
-
+  B. Setting the Activation Method : Manual or Automatic
+     Choose Automatic to have xarTinyMce automatically activated. You do not have to add any 
+     template snippets. Alternatively choose <strong>Manual Override</strong> if you wish to 
+     turn off automatic activation. 
+     
+     You can then manually override the loading of the WYSIWYG by adding your specific template 
+     snippet code below to your page or other specific templates. All textareas contained or 
+     included in the template where you have the XarTinymce tags are converted to WYSIWYG 
+     according to the "All Text Area" or "Special Labelled Only" setting above.
+     Alternatively, replace the variable "jstring" in an override template for the tinymce_insert.xd 
+     template with your own tinymce variables.
+     
       <xar:if condition="xarModGetVar('base','editor') eq 'tinymce'">
           <xar:template file="tinymce_insert" module="tinymce" type="module" />
       </xar:if>

@@ -59,7 +59,7 @@ function tinymce_admin_modifyconfig()
     $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser'); 
     $data['editorcss']=xarModGetVar('tinymce', 'tinyeditorcss');   
     $data['tinynowrap']=xarModGetVar('tinymce', 'tinynowrap');   
-                         
+    $data['tinyloadmode']=xarModGetVar('tinymce', 'tinyloadmode');   
     if (strpos($data['tinyplugins'], 'insertdatetime')) {
         $data['dateplug']=1;
     } else {
