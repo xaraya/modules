@@ -1,5 +1,5 @@
   <xar:template file="user_bar" type="module"/>
-    
+
   <xar:template file="help"/>
 
   <div style="margin: auto;">
@@ -62,5 +62,4 @@
       <xar:template file="pager"/>
     </div>
     <xar:template file="galaxfooter"/>
-  </div>
   </div>
