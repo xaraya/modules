@@ -49,7 +49,7 @@ function translations_admin_translate_subtype()
     $dnName = xarSessionGetVar('translations_dnName');
 
     $tplData = $entries;
-    $action = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries']));
+    $action = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
     $tplData['action'] = $action;
 
     $opbar = translations_create_opbar(TRANSLATE);

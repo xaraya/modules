@@ -34,12 +34,12 @@ class PHPParser
 
     function PHPParser()
     {
-        $this->tokenarray = array("xarML('", "xarMLByKey('", 'xarML("', 'xarMLByKey("', '{ML_dont_parse', '{ML_include', '{ML_add_string', '{ML_add_key', 'include_once', 'include', 'require_once', 'require');
-        $this->endtokenarray = array(array("')","',"), array("')","',"), array('")','",'), array('")','",'), array('}'), array('}'), array('}'), array('}'), array(';'), array(';'), array(';'), array(';'));
-        $this->tokenarraytype = array('function', 'function', 'function', 'function', 'ML_dont_parse', 'ML_include', 'ML_add_string', 'ML_add_key', 'include', 'include', 'include', 'include');
-        $this->iskeytokenarray = array(0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0);
-        $this->strlentokenarray = array(7, 12, 7, 12, 14, 11, 14, 11, 12, 7, 12, 7);
-        $this->strlenendtokenarray = array(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1);
+        $this->tokenarray = array("xarML('", "xarMLByKey('", 'xarML("', 'xarMLByKey("', '{ML_dont_parse', '{ML_include', '{ML_add_string', '{ML_add_key', "include_once '", "include '", "require_once '", "require '", 'include_once "', 'include "', 'require_once "', 'require "', 'include_once(', 'include(', 'require_once(', 'require(');
+        $this->endtokenarray = array(array("')","',"), array("')","',"), array('")','",'), array('")','",'), array('}'), array('}'), array('}'), array('}'), array("';"), array("';"), array("';"), array("';"), array('";'), array('";'), array('";'), array('";'), array(');'), array(');'), array(');'), array(');'));
+        $this->tokenarraytype = array('function', 'function', 'function', 'function', 'ML_dont_parse', 'ML_include', 'ML_add_string', 'ML_add_key', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include');
+        $this->iskeytokenarray = array(0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        $this->strlentokenarray = array(7, 12, 7, 12, 14, 11, 14, 11, 14, 9, 14, 9, 14, 9, 14, 9, 13, 8, 13, 8);
+        $this->strlenendtokenarray = array(2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
     }
 
     function getTransEntries()
@@ -126,7 +126,7 @@ class PHPParser
                         $this->transKeyEntries[$this->_string][] = array('line' => $line, 'file' => $filename);
                         break;
                     case 'include':
-                        $this->_string = trim($this->_string, " \t'");
+                        $this->_string = trim($this->_string, " \t\"'");
                         //disregrd loggers
                         if (!preg_match('/loggers/', $this->_string, $match)) {
                             $this->includedFiles[$this->_string] = true;

@@ -62,6 +62,7 @@ function translations_adminapi_getcontextentries($args)
     $maxReferences = 5;
 
     $numEntries = 0;
+    $numEmptyEntries = 0;
     $entries = array();
     while (list($string, $translation) = $backend->enumTranslations()) {
         $entry = array('string' => htmlspecialchars($string), 'translation' => htmlspecialchars($translation), 'tid' => $backend->getTransientId($string));
@@ -75,9 +76,11 @@ function translations_adminapi_getcontextentries($args)
         }
         $entries[] = $entry;
         $numEntries++;
+        if (empty($translation)) $numEmptyEntries++;
     }
 
     $numKeyEntries = 0;
+    $numEmptyKeyEntries = 0;
     $keyEntries = array();
     while (list($key, $translation) = $backend->enumKeyTranslations()) {
         $keyEntry = array('key' => htmlspecialchars($key), 'translation' => htmlspecialchars($translation));
@@ -96,10 +99,11 @@ function translations_adminapi_getcontextentries($args)
         $keyEntry['en_translation'] = $en_translation;
         $keyEntries[] = $keyEntry;
         $numKeyEntries++;
+        if (empty($translation)) $numEmptyKeyEntries++;
     }
 
-    return array('entries'=>$entries, 'numEntries'=> $numEntries,
-                 'keyEntries'=>$keyEntries, 'numKeyEntries'=> $numKeyEntries);
+    return array('entries'=>$entries, 'numEntries'=> $numEntries, 'numEmptyEntries'=>$numEmptyEntries,
+                 'keyEntries'=>$keyEntries, 'numKeyEntries'=> $numKeyEntries, 'numEmptyKeyEntries'=> $numEmptyKeyEntries,);
 }
 
 function translations_grab_source_code($references, $maxReferences = NULL)

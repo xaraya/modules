@@ -7,9 +7,29 @@
 	<select name="defaultcontext" id="defaultcontext" size="1">
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
 		<xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
-			<option value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">#$subtypes[$i]#:#$subnames[$i]#&nbsp;(#$entrydata[$i]['numEntries']# strings, #$entrydata[$i]['numKeyEntries']# keys)</option>
+			<option value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
+            <xar:ml>
+            <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
+            <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
+            <xar:mlvar>#$subnames[$i]#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numEntries']#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numKeyEntries']#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numEmptyEntries']#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
+            </xar:ml>
+            </option>
 		<xar:else />
-			<option value="#$subtypes[$i]#:#$subnames[$i]#">#$subtypes[$i]#:#$subnames[$i]#&nbsp;(#$entrydata[$i]['numEntries']# strings, #$entrydata[$i]['numKeyEntries']# keys)</option>
+			<option value="#$subtypes[$i]#:#$subnames[$i]#">
+            <xar:ml>
+            <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
+            <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
+            <xar:mlvar>#$subnames[$i]#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numEntries']#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numKeyEntries']#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numEmptyEntries']#</xar:mlvar>
+            <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
+            </xar:ml>
+            </option>
 		</xar:if>
     </xar:for>
 	</select>
