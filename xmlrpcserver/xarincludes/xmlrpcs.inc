@@ -53,66 +53,66 @@ class xmlrpc_server {
     var $dmap=array();
     
     function xmlrpc_server($dispMap, $serviceNow=1) {
-		global $HTTP_RAW_POST_DATA;
-		// dispMap is a despatch array of methods
-		// mapped to function names and signatures
-		// if a method
-		// doesn't appear in the map then an unknown
-		// method error is generated
-		$this->dmap=$dispMap;
-		if ($serviceNow) {
-			$this->service();
-		}
+        global $HTTP_RAW_POST_DATA;
+        // dispMap is a despatch array of methods
+        // mapped to function names and signatures
+        // if a method
+        // doesn't appear in the map then an unknown
+        // method error is generated
+        $this->dmap=$dispMap;
+        if ($serviceNow) {
+            $this->service();
+        }
     }
     
    
-	function service() {
-		$r=$this->parseRequest();
-		$payload="<?xml version=\"1.0\"?>\n";
+    function service() {
+        $r=$this->parseRequest();
+        $payload="<?xml version=\"1.0\"?>\n";
         // XARAYA : allow string return, preparation to let blocklayout do all the answers :-)))
         if(!is_string($r)) {
-            $payload .=	$r->serialize();
+            $payload .=    $r->serialize();
         } else {
             $payload .= $r;
         }
-		Header("Content-type: text/xml\r\nContent-length: " . 
+        Header("Content-type: text/xml\r\nContent-length: " . 
                strlen($payload));
         // even in debugging this might be too much
         //xarLogMessage("PAYLOAD:" . $payload, XARLOG_LEVEL_WARNING);
-		print $payload;
-	}
+        print $payload;
+    }
     
-	function verifySignature($in, $sig) {
-		for($i=0; $i<sizeof($sig); $i++) {
-			// check each possible signature in turn
-			$cursig=$sig[$i];
-			if (sizeof($cursig)==$in->getNumParams()+1) {
-				$itsOK=1;
-				for($n=0; $n<$in->getNumParams(); $n++) {
-					$p=$in->getParam($n);
-					// print "<!-- $p -->\n";
-					if ($p->kindOf() == "scalar") {
-						$pt=$p->scalartyp();
-					} else {
-						$pt=$p->kindOf();
-					}
-					// $n+1 as first type of sig is return type
-					if ($pt != $cursig[$n+1]) {
-						$itsOK=0;
-						$pno=$n+1; $wanted=$cursig[$n+1]; $got=$pt;
-						break;
-					}
-				}
-				if ($itsOK) 
-					return array(1);
-			} else {
+    function verifySignature($in, $sig) {
+        for($i=0; $i<sizeof($sig); $i++) {
+            // check each possible signature in turn
+            $cursig=$sig[$i];
+            if (sizeof($cursig)==$in->getNumParams()+1) {
+                $itsOK=1;
+                for($n=0; $n<$in->getNumParams(); $n++) {
+                    $p=$in->getParam($n);
+                    // print "<!-- $p -->\n";
+                    if ($p->kindOf() == "scalar") {
+                        $pt=$p->scalartyp();
+                    } else {
+                        $pt=$p->kindOf();
+                    }
+                    // $n+1 as first type of sig is return type
+                    if ($pt != $cursig[$n+1]) {
+                        $itsOK=0;
+                        $pno=$n+1; $wanted=$cursig[$n+1]; $got=$pt;
+                        break;
+                    }
+                }
+                if ($itsOK) 
+                    return array(1);
+            } else {
                 $wanted=sizeof($cursig) . " parameters";
                 $got = $in->getNumParams()+1;
                 $pno = $got;
             }
-		}
-		return array(0, "Wanted ${wanted}, got ${got} at param ${pno})");
-	}
+        }
+        return array(0, "Wanted ${wanted}, got ${got} at param ${pno})");
+    }
     
     function parseRequest($data="") {
         global $_xh,$HTTP_RAW_POST_DATA;
