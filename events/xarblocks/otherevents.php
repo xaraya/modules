@@ -156,7 +156,7 @@ function example_othersblock_modify($blockinfo)
  */
 function example_othersblock_update($blockinfo)
 {
-    $vars['numitems'] = xarVarCleanFromInput('numitems');
+    if (!xarVarFetch('numitems', 'int:1', $numitems, 1, XARVAR_NOT_REQUIRED)) return;
 
     // Define a default block title
     if (empty($blockinfo['title'])) {
