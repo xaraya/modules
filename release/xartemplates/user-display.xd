@@ -167,7 +167,7 @@
                 <xar:mlstring>Author</xar:mlstring>:
                 <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
                 <xar:mlstring>on</xar:mlstring>
-                #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
+                #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $loop:item['time'])#
             </span>
             </div>
             <div style="clear: both; padding-top:5px;">
