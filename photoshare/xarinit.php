@@ -223,6 +223,10 @@ function photoshare_init()
 // -----------------------------------------------------------------------
 function photoshare_upgrade($oldversion)
 {
+    switch($oldversion){
+        case '3.0a':
+
+    }
 	return true;
 }
 
