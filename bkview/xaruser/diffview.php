@@ -29,13 +29,11 @@ function bkview_user_diffview($args)
     $changeset= new bkChangeSet($repo,$csetrev);
     $delta = new bkDelta($changeset,$file,$rev);
       
-    if(xarModIsAvailable('mime') && file_exists($repo->_root . '/' . $file)) {
+    if(xarModIsAvailable('mime') && $delta->checkedout) {
         $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $repo->_root . '/' . $file));
         $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
-        $delta->available = true;
     } else {
         $delta->icon = xarTplGetImage('file.gif','bkview');
-        $delta->available = false;
     }
     
     $delta->repoid = $repoid;

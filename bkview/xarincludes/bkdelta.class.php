@@ -16,19 +16,22 @@
  */
 class bkDelta 
 {
-    var $cset;     // in which cset is this delta
-    var $file;     // which file
-    var $rev;      // what revision?
-    var $author;   // who authored it?
-    var $age;      // how long ago?
-    var $domain;   // from where?
-    var $comments; // what were the comments?
-    var $date;     // exact date of the delta
+    var $cset;       // in which cset is this delta
+    var $file;       // which file
+    var $rev;        // what revision?
+    var $author;     // who authored it?
+    var $age;        // how long ago?
+    var $domain;     // from where?
+    var $comments;   // what were the comments?
+    var $date;       // exact date of the delta
+    var $checkedout; // is the file containing this delta check out?
     
     function bkDelta(&$cset,$file,$rev) 
    {
         $file = __fileproper($file);
         $this->file=$file;
+        $abspath =  $cset->_repo->_root . '/' . $this->file;
+        $this->checkedout = file_exists($abspath);
         $this->rev=$rev;
         $this->cset=$cset;
         $cmd ="bk prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";

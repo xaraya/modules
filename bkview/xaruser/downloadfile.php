@@ -22,12 +22,12 @@ function bkview_user_downloadfile($args)
     // Get the file from the repo and sent it to the browser
     $repo_info = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     $repo = $repo_info['repo'];
-    xarLogVariable('BK: repo', $repo_info);
+    
     // Gather info about the file and download it
     $fullname = $repo->_root . '/'. $filename;
     $basename = basename($filename);
     $size = filesize($fullname);
-    xarLogMessage("BK: $fullname");
+    
     // Try to determine mime-type
     // Try different methods
     // 1. php function

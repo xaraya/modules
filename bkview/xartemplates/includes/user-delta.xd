@@ -23,7 +23,7 @@
                 <xar:if condition="!isset($icon)">
                     <xar:set name="icon">xarTplGetImage('file.gif','bkview')</xar:set>
                 </xar:if>
-                <xar:if condition="isset($available) && $available">
+                <xar:if condition="isset($checkedout) && $checkedout">
                     <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$file#">
                         <img class="bkicon" src="#$icon#" alt="file" />
                     </a>

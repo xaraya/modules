@@ -43,16 +43,13 @@ function bkview_user_deltaview($args)
             
             // Make sure our delta object contains what we need
             $delta->repoid = $repoid;
-            $delta->cset ='';
 
             $absfile = $repo->_root . '/' . $delta->file;
-            if(xarModIsAvailable('mime') && file_exists($absfile)) {
+            if(xarModIsAvailable('mime') && $delta->checkedout) {
                 $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $absfile));
                 $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
-                $delta->available = true;
             } else {
                 $delta->icon = xarTplGetImage('file.gif','bkview');
-                $delta->available = false;
             }
             // construct an array which has each part of the path to the file in an index
             $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->file)) . "']";
