@@ -19,8 +19,8 @@ function stats_userapi_getbybrowser($args)
 	$data = array();
 
 	// get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
     $sniffertable = $xartable['sniffer'];
 

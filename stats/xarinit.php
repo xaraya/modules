@@ -36,8 +36,8 @@ function stats_init()
     xarModSetVar('stats', 'startdate', time());
     xarModSetVar('stats', 'countadmin', 0);
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
 
     // Load the Table Maintainance API
@@ -100,8 +100,8 @@ function stats_init()
 function stats_upgrade($oldversion)
 {
     // Get database setup
-//    list($dbconn) = xarDBGetConn();
-//    $xartable = xarDBGetTables();
+//    $dbconn =& xarDBGetConn();
+//    $xartable =& xarDBGetTables();
 
     // load the table maintenance API
 //    xarDBLoadTableMaintenanceAPI();
@@ -138,8 +138,8 @@ function stats_upgrade($oldversion)
 function stats_delete()
 {
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Load the Table Maintainance API
     xarDBLoadTableMaintenanceAPI();

@@ -24,8 +24,8 @@ function stats_userapi_gettopday($args)
     }
 
     // get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
 
     // create query

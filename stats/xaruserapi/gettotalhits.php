@@ -11,8 +11,8 @@
 function stats_userapi_gettotalhits()
 {
     // get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
 
     // create query

@@ -40,8 +40,8 @@ function stats_eventapi_OnServerRequest($arg)
     }
 */
     // get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
 
     // get the user agent string id (internal browser id) from the session vars

@@ -14,8 +14,8 @@ function stats_userapi_getday($args)
     extract($args);
 
     // get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
 
     // create query

@@ -17,8 +17,8 @@ function stats_userapi_getperhour()
     }
 
     // get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
 
     // Get per hour
