@@ -1,17 +1,17 @@
 <div style="font-size: xx-small; text-align: center">
-<a href="#$url###item_statistics"> #$item_statistics_title# </a> |
-<a href="#$url###pages"> <xar:mlstring>Top Pages</xar:mlstring> </a> |
-<a href="#$url###mods"> <xar:mlstring>Top Modules</xar:mlstring> </a> |
-<a href="#$url###referers"> <xar:mlstring>Top Referers</xar:mlstring> </a> |
-<a href="#$url###entry_pages"> <xar:mlstring>Top Entry Pages</xar:mlstring> </a> |
-<a href="#$url###exit_pages"> <xar:mlstring>Top Exit Pages</xar:mlstring> </a> |
-<a href="#$url###exit_targets"> <xar:mlstring> Top Exit Targets</xar:mlstring> </a> |
-<a href="#$url###hosts"> <xar:mlstring>Top Hosts</xar:mlstring> </a>
+<a href="#$url##item_statistics"> #$item_statistics_title# </a> |
+<a href="#$url##pages"> <xar:mlstring>Top Pages</xar:mlstring> </a> |
+<a href="#$url##mods"> <xar:mlstring>Top Modules</xar:mlstring> </a> |
+<a href="#$url##referers"> <xar:mlstring>Top Referers</xar:mlstring> </a> |
+<a href="#$url##entry_pages"> <xar:mlstring>Top Entry Pages</xar:mlstring> </a> |
+<a href="#$url##exit_pages"> <xar:mlstring>Top Exit Pages</xar:mlstring> </a> |
+<a href="#$url##exit_targets"> <xar:mlstring> Top Exit Targets</xar:mlstring> </a> |
+<a href="#$url##hosts"> <xar:mlstring>Top Hosts</xar:mlstring> </a>
 <br />
-<a href="#$url###operating_systems"> <xar:mlstring>Top Operating Systems</xar:mlstring> </a> |
-<a href="#$url###user_agents"> <xar:mlstring>Top User Agents</xar:mlstring> </a> |
-<a href="#$url###search_engines"> <xar:mlstring>Top Search Engines</xar:mlstring> </a> |
-<a href="#$url###search_keywords"> <xar:mlstring>Top Search Keywords</xar:mlstring> </a>
+<a href="#$url##operating_systems"> <xar:mlstring>Top Operating Systems</xar:mlstring> </a> |
+<a href="#$url##user_agents"> <xar:mlstring>Top User Agents</xar:mlstring> </a> |
+<a href="#$url##search_engines"> <xar:mlstring>Top Search Engines</xar:mlstring> </a> |
+<a href="#$url##search_keywords"> <xar:mlstring>Top Search Keywords</xar:mlstring> </a>
 </div>
 <br />
 <br />
