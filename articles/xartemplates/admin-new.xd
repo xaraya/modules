@@ -35,26 +35,33 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
 
-<table width="100%" border="0" cellspacing="0" cellpadding="2">
 <xar:foreach in="$fields" value="$field">
-<tr>
-    <td style="vertical-align:top;"><label for="#$field['id']#">#$field['label']#</label></td>
-    <td><xar:articles-field definition="$field['definition']" /></td>
-</tr>
+<div style="margin: 5pt;">
+    <div style="width: 100px; float:left;">
+    <span style="vertical-align:top;"><label for="#$field['id']#">#$field['label']#</label></span>
+    </div>
+    <span><xar:articles-field definition="$field['definition']" /></span>
+</div>
 </xar:foreach>
+
 <xar:if condition="!empty($formhooks['formdisplay'])">
-<tr>
-	<td style="vertical-align:top;"><xar:mlstring>Form Controls</xar:mlstring></td>
-	<td>
+<div>
+	<span style="vertical-align:top;"><xar:mlstring>Form Controls</xar:mlstring></span>
+	<span>
 		#$formhooks['formdisplay']#
-	</td>
-</tr>
+	</span>
+</div>
 </xar:if>
+
+<!-- put the hooks in, each hook should be a block level element thus keeping the form valid -->
 <xar:if condition="!empty($hooks)">
 	<xar:foreach in="$hooks" key="$hookmodule">
 	#$hooks[$hookmodule]#
 	</xar:foreach>
 </xar:if>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
 <tr>
     <td style="vertical-align:top;"><xar:mlstring>Allowed HTML tags</xar:mlstring></td>
     <td>#$allowedhtml#</td>

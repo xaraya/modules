@@ -25,18 +25,25 @@
 
     <input type="hidden" name="aid" id="aid" value="#$aid#" />
     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-<table width="100%" border="1" cellspacing="0" cellpadding="2">
-<tr>
-    <td style="white-space: nowrap;"><xar:mlstring>Publication Type</xar:mlstring></td>
-    <td>#$values['pubtype']#</td>
-</tr>
+
+<div>
+    <div style="float: left; width:100px;">
+    <span style="white-space: nowrap;"><xar:mlstring>Publication Type</xar:mlstring></span>
+    </div>
+    <span>#$values['pubtype']#</span>
+</div>
+
 
 <xar:foreach in="$fields" value="$field">
-<tr>
-    <td style="vertical-align:top;white-space: nowrap;"><label for="#$field['id']#">#$field['label']#</label></td>
-    <td><xar:articles-field definition="$field['definition']" /></td>
-</tr>
+<div style="margin: 5pt;">
+    <div style="float:left; width: 100px;">
+    <span style="vertical-align:top;white-space: nowrap;"><label for="#$field['id']#">#$field['label']#</label></span>
+    </div>
+    <span><xar:articles-field definition="$field['definition']" /></span>
+</div>
 </xar:foreach>
+
+<table width="100%" border="1" cellspacing="0" cellpadding="2">
 
 <xar:if condition="!empty($formhooks['formdisplay'])">
 <tr>
