@@ -6,10 +6,14 @@
 	<p><label for="font"><xar:mlstring>Available Fonts</xar:mlstring></label>: 
 	<select name="font" id="font" size="1">
 	<xar:loop name="$fontselect">
-		<option value="#$loop:item['fontname']#">#$loop:item['fontname']#</option>
+		<xar:if condition="$font eq $loop:item['fontname']">
+            <option value="#$loop:item['fontname']#" selected="selected">#$loop:item['fontname']#</option>
+        <xar:else/>
+            <option value="#$loop:item['fontname']#">#$loop:item['fontname']#</option>
+        </xar:if>
 	</xar:loop>
 	</select></p>
-	<p><label for="text"><xar:mlstring>Text To Transform</xar:mlstring></label>: <input type="text" name="text" id="text" size="20" /></p>
+	<p><label for="text"><xar:mlstring>Text To Transform</xar:mlstring></label>: <input type="text" name="text" id="text" size="20" value="#$text#"/></p>
 	<input type="submit" value="#$submit#">
 	</form>
 

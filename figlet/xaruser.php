@@ -82,7 +82,9 @@ function figlet_user_main()
     }
 
     $data['submit'] = xarML('submit');
-
+    $data['font'] = $font;
+    $data['text'] = $text;
+    
     return $data;
 }
 
