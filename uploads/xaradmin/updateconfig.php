@@ -3,8 +3,9 @@
 function uploads_admin_updateconfig()
 {
     // Get parameters
-    if (!xarVarFetch('file', 'list:str:1:', $file, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('path', 'list:str:1:', $path, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('file',   'list:str:1:', $file,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('path',   'list:str:1:', $path,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ddprop', 'array:1:',    $ddprop, '', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.  
     if (!xarSecConfirmAuthKey()) return;
@@ -43,6 +44,30 @@ function uploads_admin_updateconfig()
         }
     }
 
+    if (isset($ddprop['trusted'])) {
+        xarModSetVar('uploads', 'dd.fileupload.trusted', 1);
+    } else {
+        xarModSetVar('uploads', 'dd.fileupload.trusted', 0);
+    }
+
+    if (isset($ddprop['external'])) {
+        xarModSetVar('uploads', 'dd.fileupload.external', 1);
+    } else {
+        xarModSetVar('uploads', 'dd.fileupload.external', 0);
+    }
+
+    if (isset($ddprop['stored'])) {
+        xarModSetVar('uploads', 'dd.fileupload.stored', 1);
+    } else {
+        xarModSetVar('uploads', 'dd.fileupload.stored', 0);
+    }
+
+    if (isset($ddprop['upload'])) {
+        xarModSetVar('uploads', 'dd.fileupload.upload', 1);
+    } else {
+        xarModSetVar('uploads', 'dd.fileupload.upload', 0);
+    }
+    
     // FIXME: change only if the imports-directory was changed? <rabbitt>
     // Now update the 'current working imports directory' in case the 
     // imports directory was changed. We do this by first deleting the modvar
@@ -50,14 +75,10 @@ function uploads_admin_updateconfig()
     // xarModDelVar('uploads', 'path.imports-cwd');
     xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
 
-    xarModCallHooks('module',
-                    'updateconfig',
-                    'uploads',
-                    array('module' => 'uploads'));
-
+    xarModCallHooks('module', 'updateconfig', 'uploads', array('module' => 'uploads'));
     xarResponseRedirect(xarModURL('uploads', 'admin', 'modifyconfig'));
 
     // Return
-    return true;
+    return TRUE;
 }
 ?>

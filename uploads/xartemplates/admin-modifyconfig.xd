@@ -13,7 +13,7 @@
         <form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#">
             <input type="hidden" name="authid" value="#$authid#">
             <p>
-                <b><xar:mlstring>Uploads Directory</xar:mlstring>:</b>&nbsp;&nbsp;
+                <strong><xar:mlstring>Uploads Directory</xar:mlstring>:</strong>&nbsp;&nbsp;
                 <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="70">
                 <br />
                 <xar:mlstring>
@@ -23,27 +23,27 @@
                 </xar:mlstring>
             </p>
             <p>
-                <b>
+                <strong>
                     <xar:mlstring>
-                        Import Directory:
+                        Trusted Directory:
                     </xar:mlstring>
-                </b>&nbsp;&nbsp;
+                </strong>&nbsp;&nbsp;
                 <input type="text" name="path[imports-directory]" value="#$path['imports-directory']#" size="70">
                 <br />
                 <xar:mlstring>
-                    This is the full path to the local import sandbox. Files located in this directory will 
-                    be available for users with Add privileges to be able to attach to articles, etc. Files 
-                    in this directory are <strong>not</strong> counted in the disk usage totals. It is strongly
-                    recommended that this directory be located outside of your web directory.
-                    <br />NOTE: This directory MUST be writable by the webserver.
+                    This is the full path to the local trusted directory. Files located in this directory will 
+                    be immediately available for users to attach to other objects (ie: articles). Files in this directory 
+                    are <strong>not</strong> counted in the disk usage summary totals. It is strongly recommended 
+                    that this directory be located outside of your web directory. 
+                    <br />NOTE: This directory MUST be readable and should <strong>not</strong> be writable by the webserver.
                 </xar:mlstring>
             </p>
 
-                <b>
+                <strong>
                     <xar:mlstring>
                         Maximum Upload Size in bytes (commas are fine):
                     </xar:mlstring>
-                </b>&nbsp;&nbsp;
+                </strong>&nbsp;&nbsp;
                 <input type="text" name="file[maxsize]" value="#$file['maxsize']#">
                 <br />
                 <xar:mlstring>
@@ -53,11 +53,11 @@
                 </xar:mlstring>
             </p>
             <p>
-                <b>
+                <strong>
                     <xar:mlstring>
                         Confirm deletion of files:
                     </xar:mlstring>
-                </b>&nbsp;&nbsp;
+                </strong>&nbsp;&nbsp;
                 
                 <xar:if condition="$file['delete-confirmation'] eq FALSE">
                     <input type="radio" name="file[delete-confirmation]" value="1"> Yes
@@ -72,11 +72,11 @@
                 </xar:mlstring>
             </p>
             <p>
-                <b>
+                <strong>
                     <xar:mlstring>
                         Auto purge files marked as 'rejected':
                     </xar:mlstring>
-                </b>&nbsp;&nbsp;
+                </strong>&nbsp;&nbsp;
                     
                 <xar:if condition="$file['auto-purge'] eq FALSE">
                     <input type="radio" name="file[auto-purge]" value="1"> Yes
@@ -93,7 +93,7 @@
                 </xar:mlstring>
             </p>
             <p>
-                <b>
+                <strong>
                     <xar:mlstring>
                         Obfuscate/Secure Imported Files:
                     </xar:mlstring>
@@ -115,7 +115,7 @@
                     <xar:mlstring>
                         Obfuscate/Secure Uploaded Files:
                     </xar:mlstring>
-                </b>&nbsp;&nbsp;
+                </strong>&nbsp;&nbsp;
                 <xar:if condition="$file['obfuscate-on-upload'] eq FALSE">
                     <input type="radio" name="file[obfuscate-on-upload]" value="1"> Yes
                     <input type="radio" name="file[obfuscate-on-upload]" value="0" checked="true"> No
@@ -133,7 +133,77 @@
                     of the implications behind turning it off.
                 </xar:mlstring>
             </p>
-            <p>
+            
+            <h2>
+                <xar:mlstring>Dynamic File Upload Property Configuration</xar:mlstring>
+            </h2>
+            <xar:mlstring>
+                <p>
+                    These settings allow you to redefine certain characteristics of the FileUpload DynamicData Property. 
+                    These settings only take effect if you have 'hooked' the uploads module to the module using the 
+                    FileUpload property.
+                </p>
+            </xar:mlstring>
+            
+            <strong>
+                <xar:mlstring>
+                    Select available file sources for the FileUpload Property:
+                </xar:mlstring>
+            </strong>
+            <xar:mlstring>
+                <p>
+                Note: be sure to choose at <strong>least</strong> one!
+                </p>
+            </xar:mlstring>
+            <div>
+                <span>
+                    <xar:if condition="$ddprop['trusted'] eq TRUE">
+                        <input type="checkbox" name="ddprop[trusted]" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="ddprop[trusted]" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Files located in the Trusted directory</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="$ddprop['external'] eq TRUE">
+                        <input type="checkbox" name="ddprop[external]" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="ddprop[external]" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Externally located files (http / ftp / file)</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="$ddprop['upload'] eq TRUE">
+                        <input type="checkbox" name="ddprop[upload]" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="ddprop[upload]" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Files located in the Uploads directory</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="$ddprop['stored'] eq TRUE">
+                        <input type="checkbox" name="ddprop[stored]" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="ddprop[stored]" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Files previously stored</xar:mlstring>
+                </span>
+            </div>
+
                 <input type="submit" name="update" value="#xarMl('Update Configuration')#">
             </p>
         </form>

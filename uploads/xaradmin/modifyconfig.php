@@ -18,13 +18,14 @@ function uploads_admin_modifyconfig()
     $data['file']['auto-purge']             = xarModGetVar('uploads', 'file.auto-purge');
     $data['file']['obfuscate-on-import']    = xarModGetVar('uploads', 'file.obfuscate-on-import');
     $data['file']['obfuscate-on-upload']    = xarModGetVar('uploads', 'file.obfuscate-on-upload');
-    $data['bleh']['testing']                = xarModGetVar('uploads', 'some fucking var');
+    $data['ddprop']['trusted']              = xarModGetVar('uploads', 'dd.fileupload.trusted');
+    $data['ddprop']['external']             = xarModGetVar('uploads', 'dd.fileupload.external');
+    $data['ddprop']['stored']               = xarModGetVar('uploads', 'dd.fileupload.stored');
+    $data['ddprop']['upload']               = xarModGetVar('uploads', 'dd.fileupload.upload');
     $data['authid']                         = xarSecGenAuthKey();
 
-    $hooks = xarModCallHooks('module',
-                             'modifyconfig',
-                             'uploads',
-                             array('uploads' => 'example'));
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'uploads', array('uploads' => 'example'));
+    
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {

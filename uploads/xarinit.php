@@ -41,6 +41,10 @@ function uploads_init()
     xarModSetVar('uploads', 'file.obfuscate-on-import', FALSE);
     xarModSetVar('uploads', 'file.obfuscate-on-upload', TRUE);
     xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
+    xarModSetVar('uploads', 'dd.fileupload.stored',   TRUE);
+    xarModSetVar('uploads', 'dd.fileupload.external', TRUE);
+    xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
+    xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
 
     $data['filters']['inverse']                     = FALSE;
     $data['filters']['mimetypes'][0]['typeId']      = 0;
@@ -450,7 +454,10 @@ function uploads_upgrade($oldversion)
             xarModSetVar('uploads','file.delete-confirmation', ($file_delete_confirmation) ? $file_delete_confirmation : FALSE);
             xarModSetVar('uploads','file.auto-purge',          FALSE);
             xarModSetVar('uploads','path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
-
+            xarModSetVar('uploads', 'dd.fileupload.stored',   TRUE);
+            xarModSetVar('uploads', 'dd.fileupload.external', TRUE);
+            xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
+            xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
         
             $data['filters']['inverse']                     = FALSE;
             $data['filters']['mimetypes'][0]['typeId']      = 0;
