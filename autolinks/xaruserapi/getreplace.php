@@ -17,7 +17,7 @@ function autolinks_userapi_getreplace($args)
 
     // Either a lid or a pre-fetched autolink detail has been passed in.
     if (!isset($lid) && !isset($link)) {
-        $msg = xarML('Invalid Parameter Count',
+        $msg = xarML('Invalid parameter count for #(1) function #(2)() in module #(3)',
                     'userapi', 'getreplace', 'autolinks');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
@@ -33,7 +33,7 @@ function autolinks_userapi_getreplace($args)
 
     if (!$link) {
         if (isset($lid)) {
-            $result['error'] = xarML('Link ID ('.$lid.') invalid');
+            $result['error'] = xarML('Link ID (#(1)) invalid', $lid);
         } else {
             $result['error'] = xarML('Link details not supplied');
         }
