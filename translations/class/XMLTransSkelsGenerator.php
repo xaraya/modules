@@ -181,16 +181,6 @@ class XMLTranslationsSkelsGenerator {
 
         fwrite($this->fp, "\t<keyEntry>\n");
         fwrite($this->fp, "\t\t<key>".$key."</key>\n");
-/*
-        The xpath query can also be elaborated at run time
-        if ($this->ctx['locale'] != $this->ctx['modlocale']) {
-            list($ostype, $oslocale) = pnVarPrepForOS($this->ctx['type'], $this->ctx['module_locale']);
-            $file = 'modules/'.$this->ctx['moddir']."/pnlang/xml/$oslocale/pn$ostype.xml";
-            $xpath ="/translations/keyEntry[./key/text()='$key']/translation";
-
-            fwrite($this->fp, "\t\t<original file=\"$file\" xpath=\"$xpath\" />\n");
-        }
-*/
         fwrite($this->fp, "\t\t<translation>".$translation."</translation>\n");
         fwrite($this->fp, "\t\t<references>\n");
         foreach($references as $reference) {
