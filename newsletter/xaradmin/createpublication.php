@@ -31,6 +31,7 @@
  * @param 'disclaimerId' disclaimer id for the publication
  * @param 'introduction' introduction of the publication
  * @param 'private' publication is open for subscription or private
+ * @param 'subject' email subject (title) for an issue
  * @returns bool
  * @return true on success, false on failure
  */
@@ -79,6 +80,7 @@ function newsletter_admin_createpublication()
     if (!xarVarFetch('introduction', 'str:1:', $introduction, '')) return;
     if (!xarVarFetch('altcids', 'array:1:', $altcids, array())) return;
     if (!xarVarFetch('private', 'int:0:1:', $private, 0)) return;
+    if (!xarVarFetch('subject', 'id', $subject, 0)) return;
 
     // Add new disclaimer if field isn't empty
     if (!empty($newdisclaimer)) {
@@ -110,7 +112,8 @@ function newsletter_admin_createpublication()
                                  'linkRegistration' => $linkRegistration,
                                  'disclaimerId' => $disclaimerId,  
                                  'description' => $description,
-                                 'private' => $private));
+                                 'private' => $private,
+                                 'subject' => $subject));
 
     // Check return value
     if (!isset($pubId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
