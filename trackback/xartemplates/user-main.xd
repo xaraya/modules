@@ -1,0 +1,12 @@
+#$title#
+<br />
+<ul>
+<xar:loop name="$moditems">
+    <li> <a href="#$link#">#$name#</a> =&gt; #$numitems# items </li>
+    <ul>
+    <xar:loop name="$tophits">
+       <li> item #$itemid# =&gt; #$hits# url </li>
+    </xar:loop>
+    </ul>
+</xar:loop>
+</ul>
