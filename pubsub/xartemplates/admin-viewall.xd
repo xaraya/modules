@@ -1,4 +1,4 @@
-<!---
+<xar:comment>
   File: $Id$
 
   Pubsub Admin->View Template
@@ -11,7 +11,7 @@
   @subpackage Pubsub Module
   @author Chris Dudley <miko@xaraya.com>
   @author Garrett Hunter <garrett@blacktower.com>
---->
+</xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">

@@ -1,4 +1,4 @@
-<!---
+<xar:comment>
   File: $Id$
 
   Pubsub User->DisplayIcon Template
@@ -11,7 +11,7 @@
   @subpackage Pubsub Module
   @author Chris Dudley <miko@xaraya.com>
   @author Garrett Hunter <garrett@blacktower.com>
---->
+</xar:comment>
 <xar:if condition="!isset($donotdisplay)">
     <xar:if condition="$subscribe == TRUE">
     &nbsp;<a href="#$subURL#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#$subTEXT#" /></a>
