@@ -330,6 +330,33 @@ CREATE TABLE xar_seccache_rolesgraph (
     xarDB_importTables(array('security_cache_rolesgraph' => $tables['security_cache_rolesgraph']));
 
 
+    //Creates indexes in the main privileges/masks tables
+    $index = array('name'      => 'i_'.$sitePrefix.'_seccache_privileges',
+                   'fields'    => array('xar_realm (20)',
+                                                  'xar_module (20)',
+                                                  'xar_component (20)',
+                                                  'xar_pid',
+                                                  'xar_instance',
+                                                  'xar_level'),
+                   'unique'    => false); //Table doesnt support unique subkeys
+    $query = xarDBCreateIndex($tables['privileges'],$index);
+    if (!$dbconn->Execute($query)) return;
+    
+
+    //Creates indexes in the main privileges/masks tables
+    $index = array('name'      => 'i_'.$sitePrefix.'_seccache_masks',
+                   'fields'    => array('xar_name (20)',
+                                                  'xar_realm (20)',
+                                                  'xar_module (20)',
+                                                  'xar_component (20)',
+                                                  'xar_instance',
+                                                  'xar_level'),
+                   'unique'    => false); //This should be true, but we have
+                   //incongruent data in the database by the default install
+    $query = xarDBCreateIndex($tables['security_masks'],$index);
+    if (!$dbconn->Execute($query)) return;
+
+
     // set up permissions masks.
     xarRegisterMask('AdminCacheSecurity', 'All', 'cachesecurity', 'Item', 'All', 'ACCESS_ADMIN');
 
@@ -398,7 +425,7 @@ function cachesecurity_delete()
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
-/*
+
     $query = xarDBDropTable($tables['security_cache_privileges']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
@@ -406,7 +433,7 @@ function cachesecurity_delete()
     $query = xarDBDropTable($tables['security_cache_masks']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
-*/
+
     $query = xarDBDropTable($tables['security_cache_rolesgraph']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
@@ -414,6 +441,16 @@ function cachesecurity_delete()
     $query = xarDBDropTable($tables['security_cache_privsgraph']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
+
+/*
+    $query = xarDBDropIndex($tables['security_masks'],  'i_'.$sitePrefix.'_seccache_masks');
+    if (empty($query)) return; // throw back
+    if (!$dbconn->Execute($query)) return;
+
+    $query = xarDBDropIndex($tables['privileges'],  'i_'.$sitePrefix.'_seccache_privileges');
+    if (empty($query)) return; // throw back
+    if (!$dbconn->Execute($query)) return;
+*/
 
     // Remove Masks and Instances
     xarRemoveMasks('AdminCacheSecurity');
