@@ -105,7 +105,7 @@
     <div style="clear: both; padding-top: 20px;">
     <span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
         <span class="help" title="#xarML('Included in email to user - use HTML only if email configured for HTML')#"><label for="notetouser">
-        <xar:mlstring>Emailed note to user:</xar:mlstring></label></span>
+        <xar:mlstring>Default emailed note to user (in template as ##$notetouser##):</xar:mlstring></label></span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
             <textarea name="notetouser" id="notetouser" rows="10" cols="50">#$notetouser#</textarea>

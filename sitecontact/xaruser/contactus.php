@@ -95,55 +95,49 @@ function sitecontact_user_contactus()
         xarModSetVar('mail','html',0);
     }
 
-
-
     $adminname= xarModGetVar('mail','adminname');
     $sitename = xarModGetVar('themes','SiteName');
     $siteurl = xarServerGetBaseURL();
     $subject = $requesttext;
+    //Prepare the html text message to user
+    $htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
+    $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
+    $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
+    $htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
+    $userhtmlmessage= xarTplModule('sitecontact',
+                                   'user',
+                                   'usermail',
+                                    array('notetouser' => $htmlnotetouser,
+                                          'username'   => $username,
+                                          'useremail'  => $useremail,
+                                          'company'    => $htmlcompany,
+                                          'requesttext'=> $htmlsubject,
+                                          'usermessage'=> $htmlusermessage,
+                                          'sitename'   => $sitename,
+                                          'siteurl'    => $siteurl,
+                                          'todaydate'  => $todaydate),
+                                    'html');
 
-       //do the html message to be used if html mail is set
-        $htmlmessage  = '<br />'.xarVarPrepHTMLDisplay($notetouser);
-        $htmlmessage .='<br /><br />';
-        $htmlmessage .=xarML('You submitted the following information:');
-        $htmlmessage .='<br />';
-        $htmlmessage .= xarML('Name:').' '.($username);
-        $htmlmessage .='<br />';
-        $htmlmessage .= xarML('Email:').' '.$useremail;
-        $htmlmessage .='<br />';
-        $htmlmessage .= xarML('Organization:').' '.html_entity_decode(xarVarPrepHTMLDisplay($company));
-        $htmlmessage .='<br />';
-        $htmlmessage .= xarML('Subject: ').html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
-        $htmlmessage .='<br /><br />';
-        $htmlmessage .= xarML('Comments:').'<br />'.html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
-        $htmlmessage .='<br /><br />';
-        $htmlmessage .=('____________________________________________________________');
-        $htmlmessage .='<br /><br />';
-        $htmlmessage .=$sitename.' '.xarML('at').' '.$siteurl;
-        $htmlmessage .='<br /><br />'.$todaydate;
-        $htmlmessage .='<br /><br />';
 
-        //do the text message
-        $message  = "\n".$notetouser;
-        $message .="\n\n";
-        $message .=xarML('You submitted the following information:');
-        $message .="\n\n";
-        $message .= xarML('Name:').'           '.$username;
-        $message .="\n";
-        $message .= xarML('Email:').'           '.$useremail;
-        $message .="\n";
-        $message .= xarML('Organization:').' '.html_entity_decode($company);
-        $message .="\n";
-        $message .= xarML('Subject:').'        '.html_entity_decode($requesttext);
-        $message .="\n\n";
-        $message .= xarML('Comments:')."\n".html_entity_decode($usermessage);
-        $message .="\n\n";
-        $message .=('____________________________________________________________');
-        $message .="\n\n";
-        $message .=xarML('Site Name:')." ".$sitename."\n";
-        $message .=xarML('Site URL:')." ".$siteurl."\n";
-        $message .="\n\n $todaydate";
-        $message .="\n\n";
+        //prepare the text message to user
+        $textsubject = html_entity_decode($requesttext);
+        $textcompany = html_entity_decode($company);
+        $textusermessage = html_entity_decode($usermessage);
+        $textnotetouser = $notetouser;
+        $usertextmessage= xarTplModule('sitecontact',
+                                   'user',
+                                   'usermail',
+                                    array('notetouser' => $textnotetouser,
+                                          'username'   => $username,
+                                          'useremail'  => $useremail,
+                                          'company'    => $textcompany,
+                                          'requesttext'=> $textsubject,
+                                          'usermessage'=> $textusermessage,
+                                          'sitename'   => $sitename,
+                                          'siteurl'    => $siteurl,
+                                          'todaydate'  => $todaydate),
+                                    'text');
+
 
    if (($allowcopy) and ($sendcopy)) {
     /* let's send a copy of the feedback form to the sender
@@ -155,72 +149,46 @@ function sitecontact_user_contactus()
                        array('info'         => $useremail,
                              'name'         => $username,
                              'subject'      => $subject,
-                             'message'      => $message,
-                             'htmlmessage'  => $htmlmessage,
+                             'message'      => $usertextmessage,
+                             'htmlmessage'  => $userhtmlmessage,
                              'from'         => $setmail,
                              'fromname'     => $adminname))) return;
     }//allow copy
 
     //now let's do the html message to admin
-    $htmladminmessage   ='<br />'.xarML('Submitted By:').' '.$username;
-    $htmladminmessage .='<br /><br />';
-    $htmladminmessage  .= ('____________________________________________________________');
-    $htmladminmessage  .='<br /><br />';
-    $htmladminmessage  .= xarML('Name:').' '.($username);
-    $htmladminmessage  .='<br />';
-    $htmladminmessage  .= xarML('Email:').' '.$useremail;
-    $htmladminmessage  .='<br />';
-    $htmladminmessage  .= xarML('Organization:').' '.html_entity_decode(xarVarPrepHTMLDisplay($company));
-    $htmladminmessage  .='<br />';
-    $htmladminmessage  .= xarML('Subject: ').' '.html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
-    $htmladminmessage  .='<br /><br />';
-    $htmladminmessage  .= xarML('Comments:').'<br />';
-    $htmladminmessage  .= html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
-    $htmladminmessage  .='<br /><br />';
-    $htmladminmessage  .=('____________________________________________________________');
-    $htmladminmessage  .='<br /><br />';
-    $htmladminmessage .=xarML('User information:');
-    $htmladminmessage .='<br />';
-    $htmladminmessage .=xarML('Sender:').'   '.$useripaddress;
-    $htmladminmessage  .='<br />';
-    $htmladminmessage .=xarML('Referer:').'  '.$userreferer;
-    $htmladminmessage .='<br /><br />';
-    $htmladminmessage .=('____________________________________________________________');
-    $htmladminmessage.='<br /><br />';
-    $htmladminmessage .=xarML('Site Name:').' '.$sitename.'<br />';
-    $htmladminmessage .=xarML('Site URL:').' '.$siteurl.'<br />';
-    $htmladminmessage.='<br /><br />'.$todaydate;
-    $htmladminmessage .='<br /><br />';
+
+   $adminhtmlmessage= xarTplModule('sitecontact',
+                                   'user',
+                                   'adminmail',
+                                    array('notetouser' => $htmlnotetouser,
+                                          'username'   => $username,
+                                          'useremail'  => $useremail,
+                                          'company'    => $htmlcompany,
+                                          'requesttext'=> $htmlsubject,
+                                          'usermessage'=> $htmlusermessage,
+                                          'sitename'   => $sitename,
+                                          'siteurl'    => $siteurl,
+                                          'todaydate'  => $todaydate,
+                                          'useripaddress' => $useripaddress,
+                                          'userreferer' => $userreferer),
+                                          'html');
 
     //Let's do admin text message
-    $adminmessage   ="\n". xarML('Submitted By:').' '.$username;
-    $adminmessage  .="\n\n";
-    $adminmessage  .= ('____________________________________________________________');
-    $adminmessage  .="\n";
-    $adminmessage  .= xarML('Name:').' '.$username;
-    $adminmessage  .="\n";
-    $adminmessage  .= xarML('Email:').' '.$useremail;
-    $adminmessage  .="\n";
-    $adminmessage  .= xarML('Organization:').' '.html_entity_decode($company);
-    $adminmessage  .="\n";
-    $adminmessage  .= xarML('Subject: ').html_entity_decode($requesttext);
-    $adminmessage  .="\n\n";
-    $adminmessage  .= xarML('Comments:')."\n".html_entity_decode($usermessage);
-    $adminmessage  .="\n\n";
-    $adminmessage  .=('____________________________________________________________');
-    $adminmessage  .="\n\n";
-    $adminmessage  .=xarML('User information:');
-    $adminmessage  .="\n";
-    $adminmessage  .=xarML('Sender:').'   '.$useripaddress;
-    $adminmessage  .="\n";
-    $adminmessage  .=xarML('Referer:').'   '.$userreferer;
-    $adminmessage  .="\n\n";
-    $adminmessage  .=('____________________________________________________________');
-    $adminmessage  .="\n";
-    $adminmessage .=xarML('Site Name:').'  '.$sitename."\n";
-    $adminmessage .=xarML('Site URL:').' '.$siteurl."\n";
-    $adminmessage  .="\n".$todaydate;
-
+  $admintextmessage= xarTplModule('sitecontact',
+                                   'user',
+                                   'adminmail',
+                                    array('notetouser' => $textnotetouser,
+                                          'username'   => $username,
+                                          'useremail'  => $useremail,
+                                          'company'    => $textcompany,
+                                          'requesttext'=> $textsubject,
+                                          'usermessage'=> $textusermessage,
+                                          'sitename'   => $sitename,
+                                          'siteurl'    => $siteurl,
+                                          'todaydate'  => $todaydate,
+                                          'useripaddress' => $useripaddress,
+                                          'userreferer' => $userreferer),
+                                          'text');
     //send email to admin
     if (!xarModAPIFunc('mail',
                        'admin',
@@ -228,8 +196,8 @@ function sitecontact_user_contactus()
                        array('info'         => $setmail,
                              'name'         => $adminname,
                              'subject'      => $subject,
-                             'message'      => $adminmessage,
-                             'htmlmessage'  => $htmladminmessage,
+                             'message'      => $admintextmessage,
+                             'htmlmessage'  => $adminhtmlmessage,
                              'from'         => $useremail,
                              'fromname'     => $username))) return;
 

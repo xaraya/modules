@@ -1,0 +1,25 @@
+<p>#$notetouser#</p>
+<xar:mlstring>You submitted the following information:</xar:mlstring>
+<p>
+    <xar:mlstring>Name:</xar:mlstring> #$username#
+</p>
+<p>
+    <xar:mlstring>Email:</xar:mlstring> #$useremail#
+</p>
+<p>
+    <xar:mlstring>Organization:</xar:mlstring> #$company#
+</p>
+<p>
+    <xar:mlstring>Subject:</xar:mlstring> #$requesttext#
+</p>
+<p>
+    <xar:mlstring>Comments:</xar:mlstring> #$usermessage#
+</p>
+<hr>
+<p>
+    #$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+</p>
+<p>
+    #$todaydate#
+</p>
+

@@ -20,13 +20,16 @@
             Once installed, setup the module configuration in Modify Config option.</xar:mlstring> 
             <p>There are a number of variables you can set in the Modify Config 
                 option. If any are left blank, a default is provided. </p>
-            <p>You can use HTML in your emails or in the configurable text that 
-                displays in SiteContact pages. But, please, if you do, make sure 
-                you have HTML allowed in your site, and you have configured the 
-                Mail module to use HTML if you put HTML in the email text.</p>
-            <p>By default, all emails are sent to the administrator email address 
-                specified in the Mail module. You can override this for each of 
-                the Subject options of your feedback form. Just add the subject 
+            <p>You can use HTML in your emails or in the configurable text that
+                displays in SiteContact pages. But, please, if you do, make sure
+                you have HTML allowed in your site by configuring the
+                HTML module to use the HTML tags you wish to use.</p>
+            <p>Note that you <strong>can</strong> use HTML email in Sitecontact by checking the <code>Use HTML Email</code> 
+            option in the SiteContact configuration. This will allow HTML mail just for Sitecontact module, 
+            even if your default mail setup is text.</p>
+            <p>By default, all emails are sent to the administrator email address
+                specified in the Mail module. You can override this for each of
+                the Subject options of your feedback form. Just add the subject
                 option and alternative email in the form:</p>
         </div></div>
 <blockquote>
@@ -36,14 +39,18 @@
 </div>
 </blockquote>
 <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p>The line <strong>must end with a comma</strong>. The semi-colon 
-                and optional email can be omitted. Don't forget to test your setup 
+            <p>The line <strong>must end with a comma</strong>. The semi-colon
+                and optional email can be omitted. Don't forget to test your setup
                 by sending yourself an email through SiteContact!</p>
+            <p>The HTML and text emails sent to the website contact (admin or other) and the user are based on 
+            templates in the module's xartemplate directory. There is a text and an HTML version for both the 
+            Admin notification email (user-adminmail-text.xd and user-adminmail-html.xd) and the user (user-
+            usermail-text.xd and user-usermail-html.xd).</p>
         </div><br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;"> 
-            <xar:mlstring>Included Blocks</xar:mlstring> 
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
         </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left; margin-top: 10px;"> 
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left; margin-top: 10px;">
             None at this stage 
         </div><br />
         <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;"> 
