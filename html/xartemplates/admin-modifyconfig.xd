@@ -2,7 +2,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>Modify HTML Configuration</xar:mlstring></h2>
-<form method="post" action="#xarModURL('html', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+<form action="#xarModURL('html', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
   <div>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="phase" id="phase" value="update" />
@@ -52,4 +52,3 @@
     </div>
 </form>
 </div>
-
