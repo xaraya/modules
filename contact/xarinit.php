@@ -31,8 +31,8 @@ function contact_init(){
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $contact_departments = $xartable['contact_departments'];
 
@@ -651,8 +651,8 @@ function contact_upgrade($oldversion)
     // Load table maintenance API
     xarDBLoadTableMaintenanceAPI();
 
-    list($dbconn)   = xarDBGetConn();
-    $xartable        = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable        =& xarDBGetTables();
     if(!is_array($xartable)){
         echo "<p><b>No tables found to update!</b></p>";
         return false;
@@ -871,8 +871,8 @@ function contact_delete()
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Load table maintenance API
     xarDBLoadTableMaintenanceAPI();

@@ -9,8 +9,8 @@
 function contact_admin_createcompanyinfo($args)
 {
    if (phpversion() >="4.2.0") extract($_POST);
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $companytable = $xartable['contact_company'];
     $query = "SELECT xar_id FROM $companytable";
     $result = $dbconn->Execute($query);

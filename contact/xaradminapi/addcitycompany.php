@@ -42,8 +42,8 @@ function contact_adminapi_addCityCompany($args)
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
@@ -55,8 +55,8 @@ function contact_adminapi_addCityCompany($args)
     // out in a database-portable fashion
     $nextId = $dbconn->GenId($contacttable);
 
-     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+     $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $companytable = $xartable['contact_city'];
     $query = "SELECT count(*) FROM $companytable";
     $result = $dbconn->Execute($query);
