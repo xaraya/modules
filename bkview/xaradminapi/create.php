@@ -40,11 +40,9 @@ function bkview_adminapi_create($args)
               xar_repoid,
               xar_name,
               xar_path)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($reponame) . "',
-              '" . xarvarPrepForStore($repopath) . "')";
-	if(!$dbconn->Execute($sql)) return;
+            VALUES (?,?,?)";
+    $bindvars = array($nextId,$reponame,$repopath);
+	if(!$dbconn->Execute($sql,$bindvars)) return;
 	
 	$repoid = $dbconn->PO_Insert_ID($bkviewtable, 'xar_repoid');
 	

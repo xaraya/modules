@@ -56,10 +56,10 @@ function bkview_adminapi_update($args)
     $bkviewtable = $xartable['bkview'];
 
     $sql = "UPDATE $bkviewtable
-            SET xar_name = '" . xarVarPrepForStore($reponame) . "',
-                xar_path = '" . xarVarPrepForStore($repopath) . "'
-            WHERE xar_repoid = " . xarVarPrepForStore($repoid);
-    if(!$dbconn->Execute($sql)) return;
+            SET xar_name = ?, 
+                xar_path = ?
+            WHERE xar_repoid = ?";
+    if(!$dbconn->Execute($sql,array($reponame,$repopath,$repoid))) return;
 
     // Let any hooks know that we have updated an item.  As this is an
     // update hook we're passing the updated $item array as the extra info

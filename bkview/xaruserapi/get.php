@@ -45,8 +45,8 @@ function bkview_userapi_get($args)
                    xar_name,
                    xar_path
             FROM $bkviewtable
-            WHERE xar_repoid = " . xarVarPrepForStore($repoid);
-    $result = $dbconn->Execute($sql);
+            WHERE xar_repoid = ?";
+    $result = $dbconn->Execute($sql,array($repoid));
     if(!$result) return;
 
     // Check for no rows found, and if so, close the result set and return an exception

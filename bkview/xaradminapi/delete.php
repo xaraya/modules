@@ -46,13 +46,11 @@ function bkview_adminapi_delete($args)
 	
 	$bkviewtable = $xartable['bkview'];
 
-	$sql = "DELETE FROM $bkviewtable
-            WHERE xar_repoid = " . xarVarPrepForStore($repoid);
-	if(!$dbconn->Execute($sql)) return;
+	$sql = "DELETE FROM $bkviewtable WHERE xar_repoid = ?";
+	if(!$dbconn->Execute($sql,array($repoid))) return;
 
 	// Let any hooks know that we have deleted an item.  As this is a
 	// delete hook we're not passing any extra info
-	//    xarModCallHooks('item', 'delete', $exid, '');
 	$item['module'] = 'bkview';
 	$item['itemid'] = $repoid;
 	xarModCallHooks('item', 'delete', $repoid, $item);
