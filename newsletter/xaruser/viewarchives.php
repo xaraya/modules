@@ -89,7 +89,8 @@ function newsletter_user_viewarchives($args)
                                   'orderby' => $orderby,
                                   'owner' => $owner,
                                   'display' => 'published',
-                                  'publicationId' => $publicationId));
+                                  'publicationId' => $publicationId,
+                                  'external' => true));
 
     // Check for exceptions
     if (!isset($issues) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
@@ -104,17 +105,13 @@ function newsletter_user_viewarchives($args)
 
     // Loop through issues and check if external or private
     for ($idx = 0; $idx < count($issues); $idx++) {
-        if ($issues[$idx]['external']) {
-            if(xarSecurityCheck('ReadNewsletter', 0)) { 
-                // Create preview title and url
-                $issues[$idx]['previewtitle'] = xarML('Preview');
-                $issues[$idx]['previewurl'] = xarModURL('newsletter',
-                                                        'user',
-                                                        'previewissue',
-                                                        array('issueId' => $issues[$idx]['id']));
-            }
-        } else {
-            $issues[$idx]['previewurl'] = '';
+        if(xarSecurityCheck('ReadNewsletter', 0)) { 
+            // Create preview title and url
+            $issues[$idx]['previewtitle'] = xarML('Preview');
+            $issues[$idx]['previewurl'] = xarModURL('newsletter',
+                                                    'user',
+                                                    'previewissue',
+                                                    array('issueId' => $issues[$idx]['id']));
         }
     }
 

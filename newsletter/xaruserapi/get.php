@@ -27,6 +27,7 @@
  * @param $args['orderby'] order by 'ASC' or 'DESC' (default = ASC)
  * @param $args['publicationId'] get items for a specific publication
  * @param $args['issueId'] get items for a specific issue
+ * @param $args['external'] get items for a external viewing in archives  (1 = true, 0 =false)
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
@@ -58,6 +59,10 @@ function newsletter_userapi_get($args)
 
     if (!isset($orderby)) {
         $orderby = 'ASC';
+    }
+
+    if (!isset($external)) {
+        $external = 0;
     }
 
     // Argument check
@@ -310,7 +315,7 @@ function newsletter_userapi_get($args)
                                  'commentarySource' => $commentarySource,
                                  'articleid'=>$articleid);
             }
-
+            
             // Close result set
             $result->Close();
 
@@ -398,6 +403,12 @@ function newsletter_userapi_get($args)
             
             if ($publicationId) {
                 $query .= " AND $issuesTable.xar_pid = " . $publicationId;
+            }
+
+            // Check if we want to display external issues.  This is only
+            // applicable to viewing issue archives.
+            if ($external) {
+                $query .= " AND $issuesTable.xar_external = 1";
             }
 
             if (isset($sortby)) {
