@@ -25,7 +25,7 @@ function logconfig_adminapi_structuretophp($args)
     //PHP/Xaraya Constants should be OK.
     elseif (is_string($structure))
     {
-        $php_operators = array("||", "|", "&", "&&", "<<", ">>", "xor", "XOR", "and", "AND", "or", "OR");
+        $php_operators = array("||", "|", "&", "&&", "<<", ">>", "xor", "XOR", "and", "AND", "or", "OR", "^");
         $constants_with_operator = str_replace($php_operators, "", $structure);
         
         $array = explode(' ', $constants_with_operator);
@@ -36,16 +36,20 @@ function logconfig_adminapi_structuretophp($args)
                 }
         } 
         
-        if  ($constants) {
+        if  ($constants || is_numeric($structure)) {
             $return = $structure;
         } else {
             $return = "'". addcslashes($structure, '$\\\'') ."'";
         }
     }
-//    elseif (is_numeric($structure) || is_bool($structure))
-    else
+    // is_bool($structure)
+    elseif (is_bool($structure))
     {
         $return = $structure;
+    } else {
+        //Maybe log an error here? I dont know what more could appear...
+        //Gonna play safe.
+        $return = "'". addcslashes($structure, '$\\\'') ."'";
     }
     
      return $return;
