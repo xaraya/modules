@@ -5,7 +5,7 @@
             <div class="xar-accent" style="padding: 4px;" align="left">
                 <h4 style="display: inline;"> #$loop:item['xar_title']# </h4>
                 <br />
-                <span class="xar-sub"> 
+                <span class="xar-sub">
                     <xar:mlstring>
                         Posted by:
                     </xar:mlstring>
@@ -14,28 +14,28 @@
                         <xar:else />
                         <xar:sec catch="false" mask="Comments-Moderator">
                             <xar:mlstring>
-                                Anonymous 
+                                Anonymous
                             </xar:mlstring>
                             (#$loop:item['xar_author']#)
                             <xar:else />
                             <xar:mlstring>
-                                Anonymous 
+                                Anonymous
                             </xar:mlstring>
                         </xar:sec>
                     </xar:if>
                     <br />
                     <xar:mlstring>
-                        On: 
+                        On:
                     </xar:mlstring>
                     #$loop:item['xar_date']#
                     <xar:sec mask="Comments-Admin" catch="false">
                         <br />
                         <xar:mlstring>
-                            IP Address 
+                            IP Address
                         </xar:mlstring>
                         : #$loop:item['xar_hostname']#
                     </xar:sec>
-                </span> 
+                </span>
             </div>
             <div class="xar-norm" style="padding: 4px;" align="left">
                 #$loop:item['xar_text']#
@@ -68,3 +68,4 @@
             </div>
         </div>
     </xar:loop>
+</div>
