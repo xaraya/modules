@@ -200,6 +200,16 @@ class bkRepo {
         asort($filelist);
         return $filelist;
     }
+
+    function bkGetId($type='package') {
+        if($type =='package') {
+            $cmd="bk id";
+        } else {
+            $cmd="bk id -r";
+        }
+        $package_id = $this->_run($cmd);
+        return $package_id;
+    }
 }
 
 // Class to model a changeset
