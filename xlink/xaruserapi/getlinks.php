@@ -52,7 +52,7 @@ function xlink_userapi_getlinks($args)
                 AND xar_itemid = ?
               ORDER BY xar_basename ASC, xar_refid ASC";
 
-	$bindvars = array((int) $modid, (int) $itemtype, (int) $itemid);
+    $bindvars = array((int) $modid, (int) $itemtype, (int) $itemid);
 
     if (isset($numitems) && is_numeric($numitems)) {
         if (empty($startnum)) {
