@@ -45,8 +45,7 @@
                 </xar:if>
             </div>
             <div class="xar-norm" style="padding: 1px;" align="left">
-                <br />
-                <br />
+				<p>
                 <xar:sec catch="false" mask="Comments-Reply" instance="$header[modid]:$header[objectid]:ALL">
                     <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;">
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" /> 
@@ -54,7 +53,7 @@
 						<input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
 						<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
 						<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
-						<input type="submit" name="receipt[action]" id="receipt-action-reply" value="reply" />
+						<input type="submit" name="submit" id="submit" value="reply" />
                     </form>
                 </xar:sec>
                 <xar:if condition="xarUserIsLoggedIn()">
@@ -82,6 +81,7 @@
 						<input type="submit" name="submit" id="submit" value="#xarML('Delete')#" />
                     </form>
                 </xar:sec>
+				</p>
             </div>
         </div>
     </xar:loop>
