@@ -57,11 +57,22 @@ function images_userapi_resize($args)
         
     }
     
-    $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $src));
+    $attribs = '';
+		$allowedAttribs = array(
+						'border', 'class', 'id', 'style', 'align', 'hspace', 'vspace', 
+						'onclick', 'onmousedown', 'onmouseup', 'onmouseout', 'onmouseover');
+		
+		foreach ($args as $key => $value) {
+	 		if (in_array(strtolower($key), $allowedAttribs))
+			   $attribs .= sprintf(' %s="%s"', $key, $value);		 
+		}
+
+
+		$image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $src));
     if (!is_object($image)) {
-        return '<img src="" alt="' . xarML('File not found.') . '">';
+        return sprintf('<img src="" alt="%s" %s />', xarML('File not found.'), $attribs) . '">';
     } 
-    
+
     if (isset($width)) {
         eregi('([0-9]+)(px|%)', $width, $parts);
         $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
@@ -98,12 +109,14 @@ function images_userapi_resize($args)
         }
     }
 
+		$attribs .= sprintf(' width="%s" height="%s"', $image->getWidth(), $image->getHeight());
+		
     $url = xarModURL('images', 'user', 'display', 
                       array('fileId' => $src, 
                             'height' => $image->getHeight(),
                             'width'  => $image->getWidth()));
-
-    $imgTag = sprintf('<img src="%s" alt="%s" />', $url, $label);
+								
+    $imgTag = sprintf('<img src="%s" alt="%s" title="%s" %s />', $url, $label, $label, $attribs);
 
     if (!$image->getDerivative()) {
         if ($image->resize()) {
