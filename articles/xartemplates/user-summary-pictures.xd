@@ -8,23 +8,26 @@
     </xar:if>
 
 
-    <xar:comment> TODO: allow images to be uploaded with the uploads mod.
-                  This code is no good because BL baulks on xar:image-resize
-                  unless the images module is installed.
+    <xar:comment> TODO: figure out a good way to be able to use the image-resize
+                        tag when available, without upsetting BL when it is not.</xar:comment>
 
     <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
       <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body))</xar:set>
       <xar:foreach in="$img_output" key="$fileid" value="$fileinfo">
         <a href="#$link#">
-          (xar:image-resize src="$fileid" label="$title" width="150px" height="150px" constrain="true" /)</a><br>
+          <xar:comment>Please MrB, make unregistered tags get ignored silently.
+          <xar:if condition="xarModIsAvailable('images')">
+            (xar:image-resize src="$fileid" label="$title" width="150px" height="150px" constrain="true" /)</a><br />
+          <xar:else /></xar:comment>
+            <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileinfo['fileId']))#"  
+                                                 width="150px" 
+                                                 alt="#$title#" /><br />
+          <xar:comment></xar:if></xar:comment>
       </xar:foreach>
     <xar:else />
         <a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br />
     </xar:if>
-    </xar:comment>
 
-
-        <a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br />
             <xar:if condition="!empty($title)">
                 <a class="xar-title" href="#$link#">#$title#</a><br />
             </xar:if>
