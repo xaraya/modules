@@ -167,6 +167,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
     
     // Setup additional items
+   $fields = array('aid', 'title', 'pubtypeid', 'cids');
     if (!empty($vars['moreitems'])) {
         $articles = xarModAPIFunc(
             'articles', 'user', 'getall',
@@ -215,12 +216,17 @@ function articles_featureditemsblock_display(& $blockinfo)
             } else {
                 $count = 0;
             }
-
+            if (isset($article['cids'])) {
+               $cids=$article['cids'];
+            }else{
+               $cids='';
+            }
             // Pass $desc to items[] array so that the block template can render it
             $data['items'][] = array(
                 'label' => $article['title'],
                 'link' => $link,
                 'count' => $count,
+                'cids'=>$cids,
                 'desc' => (!empty($vars['showsummary']) ? $article['summary'] : '')
             );
         }
