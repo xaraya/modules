@@ -58,7 +58,7 @@ function articles_userapi_leftjoin($args)
 
     // Add available columns in the articles table (for now)
     $columns = array('aid','title','summary','authorid','pubdate','pubtypeid',
-                     'notes','status','body');
+                     'notes','status','body','language');
     foreach ($columns as $column) {
         $leftjoin[$column] = $articlestable . '.xar_' . $column;
     }
@@ -90,6 +90,9 @@ function articles_userapi_leftjoin($args)
     }
     if (!empty($enddate) && is_numeric($enddate)) {
         $whereclauses[] = $leftjoin['pubdate'] . ' < ' . $enddate;
+    }
+    if (!empty($language) && is_string($language)) {
+        $whereclauses[] = $leftjoin['language'] . " = '" . xarVarPrepForStore($language) . "'";
     }
     if (count($aids) > 0) {
         $allaids = join(', ', $aids);

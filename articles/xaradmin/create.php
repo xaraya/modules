@@ -86,7 +86,7 @@ function articles_admin_create()
     }
 
     if (empty($article['language'])) {
-        $article['language'] = 'eng';
+        $article['language'] = xarMLSGetCurrentLocale();
     }
 
     if (!empty($cids) && count($cids) > 0) {

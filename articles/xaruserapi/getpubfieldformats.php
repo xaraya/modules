@@ -20,15 +20,17 @@ function articles_userapi_getpubfieldformats($args)
         'textarea_large'  => xarML('Large Text Area'),
         'dropdown'        => xarML('Dropdown List'),
         'textupload'      => xarML('Text Upload'),
+        'fileupload'      => xarML('File Upload'),
         'url'             => xarML('URL'),
         'urltitle'        => xarML('URL + Title'),
         'image'           => xarML('Image'),
         'imagelist'       => xarML('Image List'),
-        'username'        => xarML('Username'),
         'calendar'        => xarML('Calendar'),
-        'status'          => xarML('Status'),
-        'fileupload'      => xarML('File Upload'),
         'webpage'         => xarML('HTML Page'),
+        'username'        => xarML('Username'),
+        'userlist'        => xarML('User List'),
+        'status'          => xarML('Status'),
+        'language'        => xarML('Language List'),
 // TODO: add more property types after testing
     );
 }

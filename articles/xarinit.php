@@ -116,6 +116,15 @@ function articles_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+        'fields'    => array('xar_language'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($articlestable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     // Create tables
     $pubtypestable = $xartable['publication_types'];
 /*
@@ -396,7 +405,6 @@ function articles_upgrade($oldversion)
                     return false;
                 }
             }
-            //break;
 
         // no upgrade for random block here - you can register it via blocks admin
         case '1.5':
@@ -410,14 +418,32 @@ function articles_upgrade($oldversion)
                 )
             )) {return;}
 
-            break;
-
         case '1.5.1':
             // Code to upgrade from version 1.5.1 goes here
-            break;
+
+/* skip for now...
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+
+            //Load Table Maintainance API
+            xarDBLoadTableMaintenanceAPI();
+
+            $articlestable = $xartable['articles'];
+
+            $index = array(
+                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+                'fields'    => array('xar_language'),
+                'unique'    => false
+            );
+            $query = xarDBCreateIndex($articlestable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+*/
+
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
-            break;
+
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;

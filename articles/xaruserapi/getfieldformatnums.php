@@ -27,6 +27,8 @@ function articles_userapi_getfieldformatnums($args)
         'image'           => 12,
         'webpage'         => 13,
         'imagelist'       => 35,
+        'language'        => 36,
+        'userlist'        => 37,
         'textupload'      => 38,
         'urltitle'        => 41,
 // TODO: add more property types after testing

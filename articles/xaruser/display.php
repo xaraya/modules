@@ -275,6 +275,7 @@ function articles_user_display($args)
         }
         switch ($value['format']) {
             case 'username':
+            case 'userlist':
                 $data[$field] = $article[$field];
         // TODO: replace by authorid and sync with templates
                 $data['author'] = xarUserGetVar('name', $article[$field]);

@@ -52,7 +52,7 @@ function articles_adminapi_create($args)
     if (empty($authorid) || !is_numeric($authorid)) {
         $authorid = xarUserGetVar('uid');
         if (empty($authorid)) {
-            $authorid = 1;
+            $authorid = _XAR_ID_UNREGISTERED;
         }
         // for security check below
         $args['authorid'] = $authorid;
@@ -89,9 +89,9 @@ function articles_adminapi_create($args)
         $status = 0;
     }
 
-    // TODO: Default language is ... ???
+    // Default language is current locale
     if (empty($language)) {
-        $language = '';
+        $language = xarMLSGetCurrentLocale();
     }
 
     // Default summary is empty
