@@ -13,7 +13,7 @@ function multisites_adminapi_msconfigsetvar($args)
     return $msg;
     }
    // Connect to master db - and get the config table
-   list($dbconn) 	= xarDBGetConn();
+   $dbconn =& xarDBGetConn();
    $xartable 		=& xarDBGetTables();
    $configtable     = $xartable['config_vars'];
    $olddbtype       = xarDBGetType();
