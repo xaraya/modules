@@ -48,8 +48,8 @@ function makeUserDropdownList($myname,$selected_names,$selected_project, $emty_c
        $result = $dbconn->Execute("SELECT xar_uid, xar_uname FROM $pntable[roles] ORDER BY xar_uname");
        $usercnt = $result->PO_RecordCount();
     } else {
-       $todolist_users_column = &$pntable['todolist_users_column'];    
-       $result = $dbconn->Execute("SELECT $todolist_users_column[usernr] FROM $pntable[todolist_users]");
+       $todolist_project_members_column = &$pntable['todolist_project_members_column'];    
+       $result = $dbconn->Execute("SELECT DISTINCT $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]");
        $usercnt = $result->PO_RecordCount();
     }
 
@@ -1124,7 +1124,7 @@ function todolist_admin_viewusers()
 
     foreach ($items as $item) {
         $row = array();
-        if (pnSecAuthAction(0, 'todolist::', "$item[user_name]::$item[user_id]", ACCESS_READ)) {
+        if (pnSecAuthAction(0, 'todolist::', "::$item[user_id]", ACCESS_READ)) {
             $row[] = pnUserGetVar('uname',$item['user_id']);
             $row[] = $item['user_email_notify'];
             $row[] = $item['user_primary_project'];
@@ -1133,10 +1133,10 @@ function todolist_admin_viewusers()
 
             $options = array();
             $output->SetOutputMode(_PNH_RETURNOUTPUT);
-            if (pnSecAuthAction(0, 'todolist::', "$item[user_name]::$item[user_id]", ACCESS_EDIT)) {
+            if (pnSecAuthAction(0, 'todolist::', "::$item[user_id]", ACCESS_EDIT)) {
                 $options[] = $output->URL(pnModURL('todolist','admin','modifyuser',
                                                    array('user_id' => $item['user_id'])), xarML('Edit'));
-                if (pnSecAuthAction(0, 'todolist::', "$item[user_name]::$item[user_id]", ACCESS_DELETE)) {
+                if (pnSecAuthAction(0, 'todolist::', "::$item[user_id]", ACCESS_DELETE)) {
                     $options[] = $output->URL(pnModURL('todolist','admin','deleteuser',
                                                        array('user_id' => $item['user_id'])), xarML('Delete'));
                 }

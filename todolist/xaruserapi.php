@@ -318,22 +318,18 @@ function todolist_userapi_getallusers($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
-
-    $sql = "SELECT $todolist_users_column[usernr],$todolist_users_column[email_notify], 
-         $todolist_users_column[primary_project],$todolist_users_column[my_tasks],
-         $todolist_users_column[show_icons]
-         FROM $pntable[todolist_users] ORDER BY $todolist_users_column[usernr]";
-
+    $todolist_project_members_column = &$pntable['todolist_project_members_column'];    
+    $sql = "SELECT DISTINCT $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]";
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-
     if ($dbconn->ErrorNo() != 0) {
         pnSessionSetVar('errormsg', xarML('Items load failed'));
         return false;
     }
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($uid, $unotify, $u1project, $umytasks, $ushowicons) = $result->fields;
+        list($uid) = $result->fields;
+        $userpref = xarModGetUserVar('todolist','userpref',$uid);
+        list($unotify, $u1project, $umytasks, $ushowicons) = explode(';',$userpref);
         if (pnSecAuthAction(0, 'todolist::', "::$uid", ACCESS_READ)) {
             $items[] = array('user_id' => $uid,
                              'user_email_notify' => $unotify,
@@ -362,36 +358,18 @@ function todolist_userapi_getuser($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-
-    $todolist_users_column = &$pntable['todolist_users_column'];
-
-    $sql = "SELECT $todolist_users_column[usernr],$todolist_users_column[email_notify], 
-         $todolist_users_column[primary_project],$todolist_users_column[my_tasks],
-         $todolist_users_column[show_icons]
-         FROM $pntable[todolist_users] WHERE $todolist_users_column[usernr] = " .
-         pnVarPrepForStore($user_id);
-
-    $result = $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
+    $userpref = xarModGetUserVar('todolist','userpref',$user_id);
+    if (!empty($userpref)) {
+        list($unotify, $u1project, $umytasks, $ushowicons) = explode(';',$userpref);
+    } else {
         return false;
     }
 
-    if ($result->EOF) {
+    if (!pnSecAuthAction(0, 'todolist::', "::$user_id", ACCESS_READ)) {
         return false;
     }
 
-    list($uid, $unotify, $u1project, $umytasks, $ushowicons) = $result->fields;
-
-    $result->Close();
-
-    if (!pnSecAuthAction(0, 'todolist::', "::$uid", ACCESS_READ)) {
-        return false;
-    }
-
-    $item = array('user_id' => $uid,
+    $item = array('user_id' => $user_id,
                   'user_email_notify' => $unotify,
                   'user_primary_project' => $u1project,
                   'user_my_tasks' => $umytasks,
@@ -409,14 +387,20 @@ function todolist_userapi_countusers()
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $sql = "SELECT COUNT(1) FROM $pntable[todolist_users]";
+    $todolist_project_members_column = &$pntable['todolist_project_members_column'];    
+
+    // FIXME convert query to COUNT
+    // $sql = "SELECT COUNT(1) $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]";
+    // $result = $dbconn->Execute($sql);
+    // list($numitems) = $result->fields;
+
+    $sql = "SELECT DISTINCT $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]";
     $result = $dbconn->Execute($sql);
+    $numitems = $result->PO_RecordCount();
 
     if ($dbconn->ErrorNo() != 0) {
         return false;
     }
-
-    list($numitems) = $result->fields;
 
     $result->Close();
 
@@ -443,21 +427,9 @@ function todolist_userapi_updateuser($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $userpref = $new_email_notify.';'.$new_primary_project.';'.$new_my_tasks.';'.$showicons;
+    xarModSetUserVar('todolist','userpref',$userpref,$user_id);
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
-    $query="UPDATE $pntable[todolist_users] SET
-            $todolist_users_column[email_notify]=$new_email_notify,
-            $todolist_users_column[primary_project]='".$new_primary_project."',
-            $todolist_users_column[my_tasks]=".$new_my_tasks.",
-            $todolist_users_column[show_icons]=".$showicons.
-            " WHERE $todolist_users_column[usernr]=$user_id";
-    $result = $dbconn->Execute($query);
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Update attempt failed'));
-        return false;
-    }
     pnSessionSetVar('errormsg', xarML('User info was updated'));
     return true;
 }

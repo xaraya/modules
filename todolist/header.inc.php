@@ -177,9 +177,9 @@ function page_top($page,$printlayout)
                 //AND project_id=$selected_project");
 
         if (pnSessionGetVar('todolist_selected_project') != "all") {
-             $query .= ' AND $todos_column[project_id]='.pnSessionGetVar('todolist_selected_project');
+             $query .= " AND $todos_column[project_id]=".pnSessionGetVar('todolist_selected_project');
         } else {
-             $query .= ' AND $todos_column[project_id] in '.pnSessionGetVar('todolist_my_projects');
+             $query .= " AND $todos_column[project_id] in ".pnSessionGetVar('todolist_my_projects');
         }
 
         if (pnSessionGetVar('todolist_my_tasks') == 1) {

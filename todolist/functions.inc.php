@@ -501,12 +501,12 @@ function generateMail($id,$action)
 
         // get the notes:
         $todolist_notes_column = &$pntable['todolist_notes_column'];
-        $todolist_users_column = &$pntable['todolist_users_column'];
+        $users_column = &$pntable['users_column'];
         $result = $dbconn->Execute("SELECT $todolist_notes_column[text],
-                $todolist_notes_column[date],$todolist_users_column[usernr]
-                FROM $pntable[todolist_notes], $pntable[todolist_users]
+                $todolist_notes_column[date],xar_uid
+                FROM $pntable[todolist_notes], $pntable[roles]
                 WHERE $todolist_notes_column[todo_id]=$id
-                AND $todolist_notes_column[usernr]=$todolist_users_column[usernr]");
+                AND $todolist_notes_column[usernr]=xar_uid");
 
         if ($result->PO_RecordCount() > 0 ) {
             $message_text .= "\n\nNotes:\n";
@@ -527,9 +527,9 @@ function generateMail($id,$action)
         }
 
         // get the receipients 
-        $todolist_users_column = &$pntable['todolist_users_column'];
-        $query ="SELECT $todolist_users_column[usernr] FROM $pntable[todolist_users]";
-        $query.=" WHERE $todolist_users_column[usernr] in (";
+        $users_column = &$pntable['users_column'];
+        $query ="SELECT $users_column[usernr] FROM $pntable[roles]";
+        $query.=" WHERE xar_uid in (";
 
         while ($neu=array_pop($responsible_users)){
             $query .= $neu;
@@ -538,7 +538,8 @@ function generateMail($id,$action)
             else
                 $query .= ') ';
         }
-        $query .= " AND $todolist_users_column[email_notify] != 0";
+        // FIXME
+        // $query .= " AND $todolist_users_column[email_notify] != 0";
 
         $result = $dbconn->Execute($query);
 
@@ -661,18 +662,19 @@ function makeUserDropdown($myname,$selected_names,$selected_project, $emty_choic
         $selected_project = 'all';
     }
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
+    $users_column = &$pntable['users_column'];
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
 
-    $query="SELECT distinct($todolist_users_column[usernr])
-            FROM $pntable[todolist_users], $pntable[todolist_project_members]";
+    $query="SELECT distinct(xar_uid)
+            FROM $pntable[roles], $pntable[todolist_project_members]";
     if ($selected_project != "all") {
-        $query .= " WHERE $todolist_users_column[usernr] = $todolist_project_members_column[member_id]
+        $query .= " WHERE xar_uid=$todolist_project_members_column[member_id]
                     AND $todolist_project_members_column[project_id]=".$selected_project;
     } else {
         $query .= " WHERE $todolist_project_members_column[project_id] in ".
                   pnSessionGetVar('todolist_my_projects');
     }
+
     $result = $dbconn->Execute($query);
     $usercnt = $result->PO_RecordCount();
 
@@ -707,9 +709,10 @@ function makeUserDropdown($myname,$selected_names,$selected_project, $emty_choic
     $i = 0;
     if ($usercnt > 0)
     {
-        for (;!$result->EOF;$result->MoveNext())
+        for (;!$usercnt;$usercnt--)
         {
             $usernr = $result->fields[0];
+            $result->MoveNext();
             $user_name  = stripslashes(pnUserGetVar('name',$usernr));
             if (empty($user_name)) $user_name  = stripslashes(pnUserGetVar('uname',$usernr));
 

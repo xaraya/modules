@@ -360,28 +360,15 @@ function todolist_adminapi_createuser($args)
         return false;
     }
 
+    $userpref = $user_email_notify.';'.$user_primary_project.';'.$user_my_tasks.';'.$user_show_icons;
+    xarModSetUserVar('todolist','userpref',$userpref,$user_id);
+
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
-
-    $sql = "INSERT INTO $pntable[todolist_users] (
-                $todolist_users_column[usernr], 
-                $todolist_users_column[email_notify], 
-                $todolist_users_column[primary_project], 
-                $todolist_users_column[my_tasks], 
-                $todolist_users_column[show_icons]) 
-        VALUES ('$user_id',$user_email_notify,$user_primary_project,$user_my_tasks, $user_show_icons)";
-    echo $sql;
-    $result = $dbconn->Execute($sql);
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Insert error occured'));
-        return false;
-    }
-
     // Every user is member of project 1 (default)
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
-    $dbconn->Execute("INSERT INTO $pntable[todolist_project_members] VALUES (1,$user_id)");
+    $result = $dbconn->Execute("INSERT INTO $pntable[todolist_project_members] VALUES (1,$user_id)");
     if ($result === false) {
         pnSessionSetVar('errormsg', xarML('Insert error occured'));
         return false;
@@ -413,18 +400,9 @@ function todolist_adminapi_updateuser($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
-    $query="UPDATE $pntable[todolist_users] SET
-            $todolist_users_column[email_notify]=$new_email_notify,
-            $todolist_users_column[primary_project]='".$new_primary_project."',
-            $todolist_users_column[my_tasks]=".$new_my_tasks.",
-            $todolist_users_column[show_icons]=".$showicons.
-            " WHERE $todolist_users_column[usernr]=$user_id";
-    $result = $dbconn->Execute($query);
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Update error occured'));
-        return false;
-    }
+    $userpref = $new_email_notify.';'.$new_primary_project.';'.$new_my_tasks.';'.$showicons;
+    xarModSetUserVar('todolist','userpref',$userpref,$user_id);
+
     pnSessionSetVar('errormsg', xarML('User was updated'));
     return true;
 }
@@ -449,13 +427,7 @@ function todolist_adminapi_deleteuser($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
-    $result = $dbconn->Execute("DELETE FROM $pntable[todolist_users]
-           WHERE $todolist_users_column[usernr]=$user_id");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Delete error occured'));
-        return false;
-    }
+    xarModDelUserVar('todolist','userpref',$user_id);
 
     $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_responsible_persons]

@@ -1,7 +1,7 @@
 <?php // $Id: s.xarversion.php 1.5 02/12/01 14:28:40+01:00 marcel@hsdev.com $
 $modversion['name'] = 'Todolist';
 $modversion['id'] = '67';
-$modversion['version'] = '0.9.13';
+$modversion['version'] = '0.9.14';
 $modversion['description'] = 'Todolist';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';

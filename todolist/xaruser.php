@@ -51,10 +51,8 @@ if (!pnUserLoggedIn()) {
     $output->SetInputMode(_PNH_PARSEINPUT);
     return $output->GetOutput();
 } else {
-    $todolist_users_column = &$pntable['todolist_users_column'];
-    $result = $dbconn->Execute("SELECT * FROM $pntable[todolist_users] WHERE
-              $todolist_users_column[usernr]='".pnUserGetVar('uid')."'");
-    if(!$result->PO_RecordCount()) {
+    $userpref = xarModGetUserVar('todolist','userpref',pnUserGetVar('uid'));
+    if (empty($userpref)) {
         // user doesn't exist
         $output->SetInputMode(_PNH_VERBATIMINPUT);
         $output->Text(xarML('User unknown!'));
@@ -62,8 +60,9 @@ if (!pnUserLoggedIn()) {
         return $output->GetOutput();
     }
 
-    pnSessionSetVar('todolist_show_icons',$result->fields[4]);
-    pnSessionSetVar('todolist_my_tasks',$result->fields[3]);
+    list($user_email_notify,$user_primary_project,$user_my_tasks, $user_show_icons) = explode(';',$userpref);
+    pnSessionSetVar('todolist_show_icons',$user_show_icons);
+    pnSessionSetVar('todolist_my_tasks',$user_my_tasks);
 
     // Cache the projects a user is member in. Format '(proj1,proj2,..)'
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
@@ -91,12 +90,16 @@ if (!pnUserLoggedIn()) {
     if (!in_array(pnSessionGetVar('todolist_selected_project'),
         explode (",", substr(pnSessionGetVar('todolist_my_projects'), 1, -1)))) {
         pnSessionSetVar('todolist_selected_project',"all");
-        
-        $todolist_users_column = &$pntable['todolist_users_column'];
-        $sql2 = "UPDATE $pntable[todolist_users]
-              SET $todolist_users_column[primary_project]='all'
-              WHERE $todolist_users_column[usernr]=".pnUserGetVar('uid')."";
-        $dbconn->Execute($sql2);
+
+        $userpref = xarModGetUserVar('todolist','userpref');
+        if (!empty($userpref)) {
+            list($user_email_notify,$user_primary_project,$user_my_tasks, $user_show_icons) = explode(';',$userpref);
+        } else {
+            list($user_email_notify,$user_primary_project,$user_my_tasks, $user_show_icons) = explode(';','1;all;0;1');
+        }
+        $user_primary_project = 'all';
+        $userpref = $user_email_notify.';'.$user_primary_project.';'.$user_my_tasks.';'.$user_show_icons;
+        xarModSetUserVar('todolist','userpref',$userpref);
     }
 }
 

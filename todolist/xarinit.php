@@ -100,23 +100,11 @@ function todolist_init()
             PRIMARY KEY  (pn_todo_id))";
     $dbconn->Execute($sql);
 
-    $sql = "CREATE TABLE $pntable[todolist_users] (
-            pn_usernr int(11) NOT NULL,
-            pn_email_notify smallint(6) NOT NULL default '1',
-            pn_primary_project char(3) NOT NULL default '1',
-            pn_my_tasks smallint(6) NOT NULL default '1',
-            pn_show_icons smallint(6) NOT NULL default '1',
-            UNIQUE pn_usernr (pn_usernr))";
-    $dbconn->Execute($sql);
-
     $current_user = pnUserGetVar('uid');
     $sql = "INSERT INTO $pntable[todolist_projects] VALUES (1,'default','the default project',$current_user)";
     $dbconn->Execute($sql);
 
     $sql = "INSERT INTO $pntable[todolist_project_members] VALUES (1,$current_user)";
-    $dbconn->Execute($sql);
-
-    $sql = "INSERT INTO $pntable[todolist_users] VALUES ($current_user,1,'all',0,1)";
     $dbconn->Execute($sql);
 
     // Check for an error with the database code, and if so set an
@@ -153,6 +141,8 @@ function todolist_init()
     pnModSetVar('todolist', 'VERY_IMPORTANT_DAYS', 3);
     pnModSetVar('todolist', 'ITEMS_PER_PAGE', 20);
 
+    pnModSetVar('todolist','userpref','1;all;0;1');
+
     // Initialisation successful
     return true;
 }
@@ -165,14 +155,21 @@ function todolist_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 0.9:
-            // Code to upgrade from version 0.9 goes here
-            break;
-        case 1.0:
-            // Code to upgrade from version 1.0 goes here
-            break;
-        case 2.0:
-            // Code to upgrade from version 2.0 goes here
+        case '0.9.13':
+            // Code to upgrade from version 0.9.13 goes here
+            pnModSetVar('todolist','userpref','1;all;0;1');
+            
+            list($dbconn) = pnDBGetConn();
+            $todolist_users = pnConfigGetVar('prefix') . '_todolist_users';
+            $sql = "DROP TABLE $todolist_users";
+            $dbconn->Execute($sql);
+
+            // Check for an error with the database code, and if so set an
+            // appropriate error message and return
+            if ($dbconn->ErrorNo() != 0) {
+               // Report failed deletion attempt
+               return false;
+            }
             break;
     }
 
@@ -214,8 +211,6 @@ function todolist_delete()
     $dbconn->Execute($sql);
     $sql = "DROP TABLE $pntable[todolist_todos]";
     $dbconn->Execute($sql);
-    $sql = "DROP TABLE $pntable[todolist_users]";
-    $dbconn->Execute($sql);
 
     // Check for an error with the database code, and if so set an
     // appropriate error message and return
@@ -245,6 +240,8 @@ function todolist_delete()
     pnModDelVar('todolist', 'VERY_IMPORTANT_COLOR');
     pnModDelVar('todolist', 'VERY_IMPORTANT_DAYS');
     pnModDelVar('todolist', 'ITEMS_PER_PAGE');
+
+    pnModDelVar('todolist','userpref');
 
     // Deletion successful
     return true;

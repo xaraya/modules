@@ -98,15 +98,6 @@ function todolist_xartables()
         'changed_by'    => $todolist_todos . '.pn_changed_by',
         'status' => $todolist_todos . '.pn_status');
 
-    $todolist_users = pnConfigGetVar('prefix') . '_todolist_users';
-    $pntable['todolist_users'] = $todolist_users;
-    $pntable['todolist_users_column'] = array(
-        'usernr'    => $todolist_users . '.pn_usernr',
-        'email_notify'    => $todolist_users . '.pn_email_notify',
-        'primary_project'    => $todolist_users . '.pn_primary_project',
-        'my_tasks'    => $todolist_users . '.pn_my_tasks',
-        'show_icons'    => $todolist_users . '.pn_show_icons');
-
     // Return the table information
     return $pntable;
 }

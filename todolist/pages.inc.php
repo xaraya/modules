@@ -52,14 +52,13 @@ function printToDoTable($xquery, $xis_search, $page) {
         $project = pnSessionGetVar('todolist_selected_project');
     }
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
     $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
     $todolist_todos_column = &$pntable['todolist_todos_column'];
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
 
     $query = "SELECT distinct($todolist_responsible_persons_column[todo_id]),
-        $todolist_users_column[usernr]
-        FROM $pntable[todolist_users], $pntable[todolist_responsible_persons],
+        xar_uid
+        FROM $pntable[roles], $pntable[todolist_responsible_persons],
         $pntable[todolist_todos], $pntable[todolist_project_members]";
 
     if (pnSessionGetVar('todolist_selected_project') != "all") {
@@ -70,7 +69,7 @@ function printToDoTable($xquery, $xis_search, $page) {
     }
     $query .= " 
         AND $todolist_todos_column[todo_id] = $todolist_responsible_persons_column[todo_id]
-        AND $todolist_users_column[usernr] = $todolist_responsible_persons_column[user_id]";
+        AND xar_uid = $todolist_responsible_persons_column[user_id]";
 
     $result = $dbconn->Execute($query);
     for (;!$result->EOF;$result->MoveNext()) {
@@ -687,9 +686,9 @@ function details_page($id){
 
     $result->Close();
 
-    $todolist_users_column = &$pntable['todolist_users_column'];
-    if (!($result = $dbconn->Execute("SELECT * FROM $pntable[todolist_users]
-        WHERE $todolist_users_column[usernr] IN ($created_by, $changed_by)")))
+    $users_column = &$pntable['users_column'];
+    if (!($result = $dbconn->Execute("SELECT $users_column[uname] FROM $pntable[roles]
+        WHERE xar_uid IN ($created_by, $changed_by)")))
         return false;
 
     for (;!$result->EOF;$result->MoveNext()){
@@ -785,13 +784,13 @@ function details_page($id){
     $str .= "<br /><br />";
 
     $todolist_notes_column = &$pntable['todolist_notes_column'];
-    $todolist_users_column = &$pntable['todolist_users_column'];
+    $users_column = &$pntable['users_column'];
 
     $result = $dbconn->Execute("SELECT $todolist_notes_column[note_id],$todolist_notes_column[text],
-              $todolist_notes_column[date],$todolist_users_column[usernr]
-              FROM $pntable[todolist_notes], $pntable[todolist_users]
+              $todolist_notes_column[date],xar_uid
+              FROM $pntable[todolist_notes], $pntable[roles]
               WHERE $todolist_notes_column[todo_id]=$id
-              AND $todolist_notes_column[usernr]=$todolist_users_column[usernr]");
+              AND $todolist_notes_column[usernr]=xar_uid");
     $anzahl = $result->PO_RecordCount();
   
     $i = 0;
