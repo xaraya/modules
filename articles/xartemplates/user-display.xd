@@ -45,4 +45,4 @@
         <p>#$hooks[$hookmodule]#</p>
         </xar:foreach>
     </xar:if>
-
+</div>
