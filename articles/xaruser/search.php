@@ -334,6 +334,7 @@ function articles_user_search($args)
                         foreach ($cattree as $catitem) {
                             $catinfo[$catitem['id']] = array('name' => $catitem['name'],
                                                              'link' => $catitem['link'],
+                                                             'left' => $catitem['left'],
                                                              'root' => $info['catid']);
                         }
                     }
@@ -366,9 +367,11 @@ function articles_user_search($args)
                     if ($showcategories && !empty($article['cids']) &&
                         is_array($article['cids']) && count($article['cids']) > 0) {
 
-                        // order cids by root category (to be improved)
                         $cidlist = $article['cids'];
+                        // order cids by root category (to be improved)
                         usort($cidlist,'articles_search_sortbyroot');
+                        // order cids by position in Celko tree
+                        //usort($cidlist,'articles_search_sortbyleft');
 
                         $join = '';
                         foreach ($cidlist as $cid) {
@@ -472,6 +475,12 @@ function articles_search_sortbyroot ($a,$b)
 {
     if ($GLOBALS['artsearchcatinfo'][$a]['root'] == $GLOBALS['artsearchcatinfo'][$b]['root']) return 0;
     return ($GLOBALS['artsearchcatinfo'][$a]['root'] > $GLOBALS['artsearchcatinfo'][$b]['root']) ? 1 : -1;
+}
+
+function articles_search_sortbyleft ($a,$b)
+{
+    if ($GLOBALS['artsearchcatinfo'][$a]['left'] == $GLOBALS['artsearchcatinfo'][$b]['left']) return 0;
+    return ($GLOBALS['artsearchcatinfo'][$a]['left'] > $GLOBALS['artsearchcatinfo'][$b]['left']) ? 1 : -1;
 }
 
 ?>

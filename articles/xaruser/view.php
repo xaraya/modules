@@ -367,7 +367,7 @@ function articles_user_view($args)
                                   array('ptid' => $ptid,
                                         'all' => true)); // get base categories for all if needed
         // grab the name and link of all children too
-        foreach ($catlinks as $info) {
+        foreach ($catlinks as $idx => $info) {
             $cattree = xarModAPIFunc('articles',
                                      'user',
                                      'getchildcats',
@@ -383,6 +383,7 @@ function articles_user_view($args)
                 $catinfo[$catitem['id']] = array('name' => $catitem['name'],
                                                  'link' => $catitem['link'],
                                                  'image'=> $catitem['image'],
+                                                 'left' => $catitem['left'],
                                                  'root' => $info['catid']);
             }
         }
@@ -606,9 +607,11 @@ function articles_user_view($args)
         if ($showcategories && !empty($article['cids']) &&
             is_array($article['cids']) && count($article['cids']) > 0) {
 
-            // order cids by root category (to be improved)
             $cidlist = $article['cids'];
+            // order cids by root category (to be improved)
             usort($cidlist,'articles_view_sortbyroot');
+            // order cids by position in Celko tree
+            //usort($cidlist,'articles_view_sortbyleft');
 
             $isfirst = 1;
             foreach ($cidlist as $cid) {
@@ -788,6 +791,12 @@ function articles_view_sortbyroot ($a,$b)
 {
     if ($GLOBALS['artviewcatinfo'][$a]['root'] == $GLOBALS['artviewcatinfo'][$b]['root']) return 0;
     return ($GLOBALS['artviewcatinfo'][$a]['root'] > $GLOBALS['artviewcatinfo'][$b]['root']) ? 1 : -1;
+}
+
+function articles_view_sortbyleft ($a,$b)
+{
+    if ($GLOBALS['artviewcatinfo'][$a]['left'] == $GLOBALS['artviewcatinfo'][$b]['left']) return 0;
+    return ($GLOBALS['artviewcatinfo'][$a]['left'] > $GLOBALS['artviewcatinfo'][$b]['left']) ? 1 : -1;
 }
 
 ?>
