@@ -22,6 +22,7 @@ function xarcachemanager_admin_flushcache($args)
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
     
     $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
+    $outputDirs = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachedirs', $outputCacheDir);
 
     if (empty($confirm)) {
 
@@ -29,7 +30,7 @@ function xarcachemanager_admin_flushcache($args)
 
         $data['message']    = false;
         $data['cachekeys'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachekeys', $outputCacheDir);
-        $data['cachedirs'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachedirs', $outputCacheDir);
+        $data['cachedirs'] = $outputDirs;
 
         if (!$data['cachekeys']) {
             $data['empty']  = true;
@@ -59,7 +60,7 @@ function xarcachemanager_admin_flushcache($args)
             $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
             if (!empty($flushkey) && !strpos($flushkey, '-')) {
-                xarOutputFlushCached('', "$outputCacheDir/$flushkey");
+                xarOutputFlushCached('', $flushkey);
             } else {
                 xarOutputFlushCached($flushkey);
             }
@@ -73,6 +74,14 @@ function xarcachemanager_admin_flushcache($args)
                                     'label' => xarML('Back'));
 
         $data['message'] = true;
+    }
+    
+    $data['cachesize'] = round(xarCacheGetDirSize($outputCacheDir) / 1048576, 2) . ' MB';
+    
+    foreach ($outputDirs as $dirname => $dirpath) {
+        $data['outputdirs'][] = array('name' => $dirname,
+                                      'size' => round(xarCacheGetDirSize($dirpath) / 1048576, 2) . ' MB'
+                                      );
     }
 
     return $data;

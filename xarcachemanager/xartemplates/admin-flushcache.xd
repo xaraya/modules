@@ -53,5 +53,24 @@
         </span>
     </div>
 </xar:if>
+<div style="clear: both; padding: 10px;"><xar:mlstring>The Output Cache size is currently:</xar:mlstring> #$cachesize#</div>
+<div style="clear: both; padding: 10px;">
+    <table border="1">
+        <thead>
+            <tr>
+                <th><xar:mlstring>Directory</xar:mlstring></th>
+                <th><xar:mlstring>Size in MB</xar:mlstring></th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:foreach in="$outputdirs" value="$outputdir">
+                <tr>
+                    <td>#$outputdir['name']#</td>
+                    <td>#$outputdir['size']#</td>
+                </tr>
+            </xar:foreach>
+        </tbody>
+    </table>
+</div>
 </div>
 </div>

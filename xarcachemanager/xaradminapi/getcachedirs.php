@@ -10,9 +10,9 @@
  * @subpackage xarCacheManager module
  * @author jsb
  *
- * @param $dir directory to start the search for cachekeys in
+ * @param $dir directory to start the search for subdirectories in
  * @returns array
- * @return sorted array of cache sub directories, with key and value both set to directory name
+ * @return sorted array of cache sub directories, with key set to directory name and value set to path
  * @todo do not include empty directories in the array
 */
 
@@ -26,7 +26,7 @@ function xarcachemanager_adminapi_getcachedirs($dir = FALSE)
             while (($item = readdir($dirId)) !== FALSE) {
                 if ($item[0] != '.') {
                     if (is_dir($dir . $item)) {
-                        $cachedirs[$item] = $item;
+                        $cachedirs[$item] = $dir . $item;
                         $cachedirs = array_merge($cachedirs, xarcachemanager_adminapi_getcachedirs($dir . $item));
                     }
                 }

@@ -41,7 +41,6 @@ function xarcachemanager_admin_modifyhook($args)
     
     // we are only interested in the config of block output caching for now
     if ($modname !== 'blocks') {
-        error_log('not right, module name is ' . $modname);
         return '';
     }
     // only display config hooks if block level output caching has been enabled
@@ -49,7 +48,6 @@ function xarcachemanager_admin_modifyhook($args)
     //  even when output caching has been temporarily disabled)
     if (!file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.blocklevel')) {
         return '';
-        error_log('not right, file should exist');
     }
 
     $modid = xarModGetIDFromName($modname);
