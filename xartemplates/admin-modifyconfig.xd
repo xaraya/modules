@@ -78,7 +78,8 @@
                     <ol>
                         <li>
                             <xar:mlstring>
-                                The back button (history functionality) will not be updated while navigating bkview
+                                The back button (history functionality) will not be updated while navigating bkview.<br/>
+                                UPDATE: An emulation for this has been implemented.
                             </xar:mlstring>
                         </li>
                         <li>

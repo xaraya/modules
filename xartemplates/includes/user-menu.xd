@@ -4,6 +4,12 @@
 <xar:if condition="strtolower($usexmlhttp) eq 'on'">
     <!-- Experimenting with http requests only when module is surrounded by element with an id -->
     <script src="/modules/bkview/xarincludes/xmlhttprequest.js" ></script>
+    <!-- Pathetic attempt to get some backbutton functionality when using xmlhttprequest -->
+    <xar:set name="prev_bkview">
+        <xar:var scope="session" name="bkview.previous.url"/>
+    </xar:set>
+    <xar:set name="curr_bkview">xarServerGetCurrentURL(array('pageName' => ''),true)</xar:set>
+    <xar:set name="dummy">xarSessionSetVar('bkview.previous.url',$curr_bkview)</xar:set>  
 </xar:if>
 
 <div class="xar-mod-head">
@@ -73,6 +79,15 @@
                 <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
                     <img src="#xarTplGetImage('bkstats.gif')#" alt="#xarML('User statistics')#" />
                     <xar:mlstring>User statistics</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="strtolower($usexmlhttp) eq 'on'">
+            <dd>
+                <!-- Using xmlhttprequest will be easier if we simulate the back button -->
+                <a href="#$prev_bkview#" onclick="return loadContent(this.href);">
+                    <img src="#xarTplGetImage('backarrow.gif')#" alt="#xarML('Go back to the previous view')#" />
+                    <xar:mlstring>Back to previous view</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
