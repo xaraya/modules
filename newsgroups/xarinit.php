@@ -23,7 +23,7 @@ function newsgroups_init()
     xarModSetVar('newsgroups', 'port', 119);
     xarModSetVar('newsgroups', 'numitems', 50);
 
-    xarModSetVar('newsgroups', 'wildmat', 'xaraya.*');
+    xarModSetVar('newsgroups', 'wildmat', 'xaraya.*,ddf.*');
     xarModSetVar('newsgroups', 'SupportShortURLs', 0);
 
     // Register Masks

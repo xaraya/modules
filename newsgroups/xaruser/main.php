@@ -17,7 +17,16 @@ function newsgroups_user_main()
 
     $newsgroups = new Net_NNTP();
     $newsgroups -> connect($server, $port);
-    $data['items'] = $newsgroups -> getGroups(true, $wildmat);
+    if (empty($wildmat) || !strstr($wildmat,',')) {
+        $data['items'] = $newsgroups->getGroups(true, $wildmat);
+    } else {
+        $matches = explode(',',$wildmat);
+        $data['items'] = array();
+        foreach ($matches as $match) {
+            $items = $newsgroups->getGroups(true, $match);
+            $data['items'] = array_merge($data['items'], $items);
+        }
+    }
     $newsgroups->quit();
 
     // Debug

@@ -474,13 +474,14 @@ class Net_NNTP extends PEAR
      *               existing newsgroups
      * @author Morgan Christiansson <mog@linux.nu>
      */
-    function getGroups($fetch = true, $wildmat)
+    function getGroups($fetch = true, $wildmat = null)
     {
         if (!empty($wildmat)) {
             $this->command("LIST ACTIVE $wildmat");
         } else {
             $this->command("LIST");
         }
+        $groups = array();
         foreach($this->_getData() as $line) {
             $arr = explode(" ",$line);
             $groups[$arr[0]]["group"] = $arr[0];
