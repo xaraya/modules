@@ -58,6 +58,7 @@ function xarcachemanager_adminapi_updatehook($args)
     }
 
     switch($modname) {
+        case 'privileges': // fall-through all modules that should flush the entire cache
         case 'blocks':
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush everything
