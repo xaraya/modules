@@ -2,7 +2,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>Edit Cloud</xar:mlstring></h2>
-<form method="post" action="#xarModURL('sitecloud', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('sitecloud', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" >
 	<div style="clear: both; padding-top: 10px;">
 	<input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="id" id="id" value="#$id#" />

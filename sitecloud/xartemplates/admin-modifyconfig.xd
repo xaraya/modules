@@ -2,7 +2,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>Site Cloud Configuration</xar:mlstring></h2>
-<form method="post" action="#xarModURL('sitecloud', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('sitecloud', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <p><xar:mlstring>Items Per Page</xar:mlstring>: <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('sitecloud', 'itemsperpage')#" />
 #$hooks#
