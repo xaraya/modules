@@ -85,7 +85,7 @@
                         <tr>
                             <td class="xar-norm" width="20%">
                                 <xar:mlstring>
-                                    Uplaoded By
+                                    Uploaded By
                                 </xar:mlstring>
                             </td>
                             <td class="xar-norm" width="80%">&nbsp;

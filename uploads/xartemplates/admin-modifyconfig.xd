@@ -35,7 +35,7 @@
                     be immediately available for users to attach to other objects (ie: articles). Files in this directory 
                     are <strong>not</strong> counted in the disk usage summary totals. It is strongly recommended 
                     that this directory be located outside of your web directory. 
-                    <br />NOTE: This directory MUST be readable and should <strong>not</strong> be writable by the webserver.
+                    <br />NOTE: This directory MUST be readable and should also be writable by the webserver.
                 </xar:mlstring>
             </p>
 
@@ -112,7 +112,7 @@
                 </xar:if>
                 <br/>
                 <xar:mlstring>
-                    Normally, when you reject files, have to manually purge them by clicking on 
+                    Normally, when you reject files, you have to manually purge them by clicking on 
                     the 'Purge Rejected' button located on the <em>Admin->Uploads->View page</em>. This 
                     option forces any file you set to 'rejected' status to be deleted right away.
                 </xar:mlstring>
@@ -154,7 +154,7 @@
                     <br />
                     <strong style="color: red;">NOTE:</strong>Setting this option to 'No' can open a possible route for users
                     to upload and run malicious scripts on your site. It is <strong>highly</strong>
-                    recommended that you leave this option on unless you have a throrough understanding
+                    recommended that you leave this option on unless you have a thorough understanding
                     of the implications behind turning it off.
                 </xar:mlstring>
             </p>

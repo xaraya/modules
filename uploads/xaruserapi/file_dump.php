@@ -33,7 +33,7 @@ function uploads_userapi_file_dump( $args )
     } 
 
     if (!file_exists($fileSrc)) {
-        $msg = xarML('Unable to locate file [#(1)]. Are you sure it\s there??', $fileSrc);
+        $msg = xarML('Unable to locate file [#(1)]. Are you sure it\'s there??', $fileSrc);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NOT_EXIST', new SystemException($msg));
         return FALSE;
     }
