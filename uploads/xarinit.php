@@ -15,7 +15,10 @@
  * initialise the module
  */
 function uploads_init()
-{
+{	
+	// load the predefined constants
+	xarModAPILoad('uploads', 'user');
+
     if(xarServerGetVar('PATH_TRANSLATED')) {
         $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
     } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
