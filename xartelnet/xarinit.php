@@ -17,8 +17,8 @@ function xartelnet_init()
     xarModSetVar('xartelnet','prompt', '</html>');
     xarRegisterMask('OverviewXarTelnet','All','xartelnet','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('AdminXarTelnet','All','xartelnet','All','All','ACCESS_ADMIN');
-						
-						
+                        
+                        
     return true;
 }
 
