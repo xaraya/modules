@@ -257,6 +257,12 @@ function articles_init()
                        array('modName'  => 'articles',
                              'blockType'=> 'featureditems'))) return;
 
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'random'))) return;
+
     if (!xarModRegisterHook('item', 'search', 'GUI',
                            'articles', 'user', 'search')) {
         return false;
@@ -385,6 +391,9 @@ function articles_upgrade($oldversion)
                 }
             }
             break;
+
+        // no upgrade for random block here - you can register it via blocks admin
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
