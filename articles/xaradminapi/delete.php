@@ -51,8 +51,8 @@ function articles_adminapi_delete($args)
 
     // Delete item
     $query = "DELETE FROM $articlestable
-            WHERE xar_aid = " . xarVarPrepForStore($aid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_aid = ?";
+    $result =& $dbconn->Execute($query,array($aid));
     if (!$result) return;
 
     return true;

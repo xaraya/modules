@@ -163,9 +163,9 @@ function articles_init()
         $query = "INSERT INTO $pubtypestable
                 (xar_pubtypeid, xar_pubtypename, xar_pubtypedescr,
                  xar_pubtypeconfig)
-                VALUES ($nextId, '$name', '$descr', '"
-                . xarVarPrepForStore($config) ."')";
-        $result =& $dbconn->Execute($query);
+                VALUES (?,?,?,?)";
+        $bindvars = array($nextId, $name, $descr, $config);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
         $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'xar_pubtypeid');
         $pubid[$id] = $ptid;

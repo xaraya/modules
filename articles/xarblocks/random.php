@@ -115,7 +115,7 @@ function articles_randomblock_display($blockinfo)
 
         /* TODO fix to check categories
         if (!empty($vars['cid'])) {
-            $andlist[] = "cid='".xarVarPrepForStore($vars['cid'])."'";
+            $andlist[] = "cid=". $dbconn->qstr($vars['cid']);
         }*/
 
         // create sql where string from AND and OR lists

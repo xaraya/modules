@@ -59,49 +59,58 @@ function articles_adminapi_update($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
-
+    $bindvars = array();
     // Update the item
     $query = "UPDATE $articlestable
-            SET xar_title = '" . xarVarPrepForStore($title) . "'";
-
+            SET xar_title = ?";
+    $bindvars[] = $title;
 // Note : we use isset() here because we *do* care whether it's set to ''
 //        or if it's not set at all
 
     if (isset($summary)) {
-        $query .= ", xar_summary = '" . xarVarPrepForStore($summary) . "'";
+        $query .= ", xar_summary = ?";
+        $bindvars[] = $summary;
     }
 
     if (isset($body)) {
-        $query .= ", xar_body = '" . xarVarPrepForStore($body) . "'";
+        $query .= ", xar_body = ?";
+        $bindvars[] = $body;
     }
 
     if (isset($notes)) {
-        $query .= ", xar_notes = '" . xarVarPrepForStore($notes) . "'";
+        $query .= ", xar_notes = ?";
+        $bindvars[] = $notes;
     }
 
     if (isset($status) && is_numeric($status)) {
-        $query .= ", xar_status = '" . xarVarPrepForStore($status) . "'";
+        $query .= ", xar_status = ?";
+        $bindvars[] = $status;
     }
 
     // not recommended
     if (isset($ptid) && is_numeric($ptid)) {
-        $query .= ", xar_pubtypeid = '" . xarVarPrepForStore($ptid) . "'";
+        $query .= ", xar_pubtypeid = ?";
+        $bindvars[] = $ptid;
     }
 
     if (isset($pubdate) && is_numeric($pubdate)) {
-        $query .= ", xar_pubdate = '" . xarVarPrepForStore($pubdate) . "'";
+        $query .= ", xar_pubdate = ?";
+        $bindvars[] = $pubdate;
     }
 
     // not recommended
     if (isset($authorid) && is_numeric($authorid)) {
-        $query .= ", xar_authorid = '" . xarVarPrepForStore($authorid) . "'";
+        $query .= ", xar_authorid = ?";
+        $bindvars[] = $authorid;
     }
 
     if (isset($language)) {
-        $query .= ", xar_language = '" . xarVarPrepForStore($language) . "'";
+        $query .= ", xar_language = ?";
+        $bindvars[] = $language;
     }
-    $query .= " WHERE xar_aid = " . xarVarPrepForStore($aid);
-    $result =& $dbconn->Execute($query);
+    $query .= " WHERE xar_aid = ?";
+    $bindvars[] =  $aid;
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     if (empty($cids)) {

@@ -48,16 +48,16 @@ function articles_adminapi_deletepubtype($args)
 
     // Delete the publication type
     $query = "DELETE FROM $pubtypestable
-            WHERE xar_pubtypeid = " . xarVarPrepForStore($ptid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_pubtypeid = ?";
+    $result =& $dbconn->Execute($query,array($ptid));
     if (!$result) return;
 
     $articlestable = $xartable['articles'];
 
     // Delete all articles for this publication type
     $query = "DELETE FROM $articlestable
-            WHERE xar_pubtypeid = " . xarVarPrepForStore($ptid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_pubtypeid = ?";
+    $result =& $dbconn->Execute($query,array($ptid));
     if (!$result) return;
 
 // TODO: call some kind of itemtype delete hooks here, once we have those

@@ -64,11 +64,9 @@ function articles_adminapi_createpubtype($args)
     // Insert the publication type
     $query = "INSERT INTO $pubtypestable (xar_pubtypeid, xar_pubtypename,
             xar_pubtypedescr, xar_pubtypeconfig)
-            VALUES ($nextId,
-                    '" . xarVarPrepForStore($name) . "',
-                    '" . xarVarPrepForStore($descr) . "',
-                    '" . xarVarPrepForStore(serialize($config)) . "')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?,?,?,?)";
+    $bindvars = array($nextId, $name, $descr, serialize($config));
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get ptid to return

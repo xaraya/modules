@@ -133,18 +133,9 @@ function articles_adminapi_create($args)
               xar_notes,
               xar_status,
               xar_language)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($title) . "',
-              '" . xarvarPrepForStore($summary) . "',
-              '" . xarvarPrepForStore($body) . "',
-              '" . xarvarPrepForStore($authorid) . "',
-              '" . xarVarPrepForStore($pubdate) . "',
-              '" . xarvarPrepForStore($ptid) . "',
-              '" . xarvarPrepForStore($notes) . "',
-              '" . xarvarPrepForStore($status) . "',
-              '" . xarvarPrepForStore($language) . "')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?,?,?,?,?,?,?,?,?,?)";
+    $bindvars = array($nextId, $title, $summary, $body, $authorid, (string) $pubdate, $ptid, $notes, $status, $language);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get aid to return
