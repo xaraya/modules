@@ -21,12 +21,6 @@
  *
  */
 function bloggerapi_init() {
-    // The blogger api needs xmlrpcserver
-    if(!xarModIsAvailable('xmlrpcserver')) {
-        $msg=xarML('The xmlrpcserver module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',$msg);
-        return;
-    }
 
     // Publication type for blogger api 0 = no pubtype
     xarModSetVar('bloggerapi','bloggerpubtype','0');

@@ -40,7 +40,13 @@ function bloggerapi_userapi_newpost($msg) {
     if (!xarUserLogin($username,$password)) {
       $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
     } else {
-	    $title = xarML("Post from #(1) on: #(2)",$username,date("Y-m-d"));
+        // Fix for w.bloggar via marsel@phatcom.net (David Taylor)
+        ereg("<title>(.*)</title>",$content, $title);
+        $title = xarML($title[1]);
+        $content = ereg_replace("<title>(.*)</title>","",$content);
+        if (empty($title)){
+	        $title = xarML("Post from #(1) on: #(2)",$username,date("Y-m-d"));
+        }
         $summary = $content;
 		$cids=array(); $cids[] = $category;
         $bodytype = ' ';
