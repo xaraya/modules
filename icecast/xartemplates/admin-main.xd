@@ -11,24 +11,27 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>This icecast module interacts with the icecast streaming audio server.</xar:mlstring></em>
+            <em><xar:mlstring>This icecast module interacts with the icecast streaming server and 
+            the ices streaming source.</xar:mlstring></em>
             <br />
-            <xar:mlstring>Icecast is licensed under the GPL and can be found at <a href="http://icecast.org/">icecast.org</a></xar:mlstring>
+            NOTE: this module will only work with icecast and ices versions >=2.0.
+            <br />
+            <xar:mlstring>Icecast and Ices is licensed under the GPL and can be found at <a href="http://icecast.org/">icecast.org</a></xar:mlstring>
             <br />
             <br />
-            <xar:mlstring>It is currently does the following:</xar:mlstring>
+            <xar:mlstring>It currently does the following:</xar:mlstring>
             <ul>
-                <li><xar:mlstring>nothing</xar:mlstring></li>
+                <li><xar:mlstring>parses icecast stats</xar:mlstring></li>
+                <li><xar:mlstring>provides a block that lists streams that are currently playing</xar:mlstring></li>
             </ul>
             <br />
             <xar:mlstring>TODO</xar:mlstring>
             <ul>
                 <li><xar:mlstring>provide a script for the icecast server to use to determine next playlist item</xar:mlstring></li>
-                <li><xar:mlstring>parse icecast admin options.</xar:mlstring></li>
-                <li><xar:mlstring>parse icecast status</xar:mlstring></li>
                 <li><xar:mlstring>manage icecast server options</xar:mlstring></li>
-                <li><xar:mlstring>provide user interface to icecast</xar:mlstring></li>
-                <li><xar:mlstring>authenticate against icecast</xar:mlstring></li>
+                <li><xar:mlstring>create a stream search?</xar:mlstring></li>
+                <li><xar:mlstring>authenticate against icecast (HTTP AUTH)</xar:mlstring></li>
+                <li><xar:mlstring>allow icecast to authenticate users through xaraya (would requre icecast code mod)</xar:mlstring></li>
             </ul>
         </div>
         <br />
@@ -47,7 +50,8 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ul>
-                <li><xar:mlstring> TODO: playlist </xar:mlstring></li>
+                <li><xar:mlstring> "Now Playing" - lists all currently connected mounts and allow the user to listen
+                    to a stream through a link. </xar:mlstring></li>
             </ul>
         </div>
         <br />

@@ -41,7 +41,7 @@ function icecast_init()
                              'blockType' => 'nowplaying'))) return;
 
     xarRegisterMask('ReadIcecastBlock', 'All', 'icecast', 'Block', 'All', 'ACCESS_OVERVIEW');
-    //xarRegisterMask('Viewicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('Viewicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     //xarRegisterMask('Readicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_READ');
     //xarRegisterMask('Editicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_EDIT');
     //xarRegisterMask('Addicecast', 'All', 'icecast', 'Item', 'All:All:All', 'ACCESS_ADD');
@@ -90,6 +90,7 @@ function icecast_delete()
                     'blockType' => 'nowplaying'))) return;
 
     xarRemoveMasks('icecast');
+    xarRemoveInstances('icecast');
 
 
     // Deletion successful
