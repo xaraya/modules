@@ -1,7 +1,8 @@
 <xar:comment>
     Anywhere where we need to display a delta on a file, this template
-    should be used. It expects the following variables:
-    $tag    : the tag if the delta was in a cset which was tagged
+    should be used. It expects the following variables: ([$vars] are optional)
+    [$tag]  : the tag if the delta was in a cset which was tagged
+    [$icon] : icon for the file (url to an image really)
     $repoid : id of the repo this delta was in
     $file   : file on which this delta applies
     $author : author of the file
@@ -9,7 +10,7 @@
     $age    : age of the delta
 </xar:comment>
 
-<div class="xar-norm-outline" style="margin-bottom: 5pt; padding-left: 2pt;">
+<div class="xar-norm-outline delta">
     <xar:set name="csetclass">'xar-norm'</xar:set>
     <xar:set name="csettag">''</xar:set>
     <xar:if condition="!empty($tag)">
@@ -17,6 +18,25 @@
         <xar:set name="csettag">#$tag#</xar:set>
     </xar:if>
     <div class="#$csetclass#">
+        <div>
+            <span>
+                <xar:if condition="!isset($icon)">
+                    <xar:set name="icon">xarTplGetImage('file.gif','bkview')</xar:set>
+                </xar:if>
+                <xar:if condition="file_exists($file)">
+                    <a href="&xar-modurl-bkview-user-downloadfile;&amp;file=#$file#">
+                        <img class="bkicon" src="#$icon#" alt="file" />
+                    </a>
+                <xar:else/>
+                    <img class="bkicon" src="#$icon#" alt="file" />
+                </xar:if>
+            </span>
+            <xar:set name="filename">basename($file)</xar:set>
+            <span style="vertical-align: top;">
+                <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#">
+                #$filename#</a>
+            </span>
+        </div>
         <span><xar:mlstring>Delta</xar:mlstring></span>
         <span>
           <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
@@ -35,8 +55,10 @@
       
       <div class="comments">#$comments#</div>
       
-      <div style="text-align: right; padding-right: 5pt; font-size: smaller">
-        <a href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$rev#&amp;file=#$file#" onclick="return loadContent(this.href);">
-        <xar:mlstring>Corresponding cset</xar:mlstring></a>
+      <div style="text-align: right; font-size: smaller;">
+        <a onclick="return loadContent(this.href);"  title="#xarML('View the changeset in which this delta was created')#" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$rev#&amp;file=#$file#">
+            <xar:mlstring>Corresponding cset</xar:mlstring></a> | 
+        <a  onclick="return loadContent(this.href);" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-diffview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+            <xar:mlstring>View differences</xar:mlstring></a>
      </div>
 </div>

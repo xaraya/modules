@@ -29,56 +29,7 @@
     
   <div class="csets">
     <xar:loop name="$files">
-      <div class="xar-norm-outline " style="margin-bottom: 5pt; padding-left: 3pt; padding-top: 3pt;">
-          <div style="padding: 0pt;">
-           <span>
-             <xar:if condition="$loop:item['available']">
-               <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#" >
-                 <img class="bkicon" src="#$loop:item['icon']#" alt="file" />
-               </a>
-             <xar:else/>
-               <img class="bkicon" src="#xarTplGetImage('bkmissing.png')#" title="#xarML('This file is not available in the filesystem, perhaps it is checked in.')#" alt="missing"/>
-             </xar:if>
-           </span>
-           <span style="vertical-align: top;">
-             <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#" onclick="return loadContent(this.href);">
-               #$loop:item['basename']#
-             </a>
-           </span>
-           <span style="vertical-align: top;"><xar:mlstring>: revision</xar:mlstring></span>
-           <xar:set name="csetclass">'xar-norm'</xar:set>
-           <xar:if condition="!empty($loop:item['tag']) && $loop:item['relfile']!='ChangeSet'">
-             <xar:set name="csetclass">'xar-accent'</xar:set>
-           </xar:if>
-           <span class="#$csetclass#" style="vertical-align: top;"> 
-             <xar:if condition="$loop:item['relfile']=='ChangeSet'">
-               <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#" onclick="return loadContent(this.href);">
-                  #$loop:item['rev']# #$loop:item['tag']#</a>
-             <xar:else/>
-               <a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#&amp;rev=#$loop:item['rev']#" onclick="return loadContent(this.href);">
-                  #$loop:item['rev']# #$loop:item['tag']#</a>
-             </xar:if>
-           </span>
-           <span style="vertical-align: top;"><xar:mlstring>created by</xar:mlstring>
-           <span style="vertical-align: top;">
-             <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;user=#$loop:item['author']#" onclick="return loadContent(this.href);">
-               #$loop:item['author']#</a>
-           </span>
-           <span style="vertical-align: top;">
-             <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#" onclick="return loadContent(this.href);">
-               #$loop:item['age']#</a>
-           </span>
-           <span style="vertical-align: top;"><xar:mlstring>ago</xar:mlstring></span>
-         </div>
-           <div class="comments" style="padding: 0;">
-             #$loop:item['comments']#
-           </div>
-           <div style="text-align: right; padding-right: 5pt; font-size: smaller">
-             <a href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#" onclick="return loadContent(this.href);">
-               <xar:mlstring> Other changesets</xar:mlstring></a>
-           </div>
-
-     </div>
+      <xar:template file="user-delta" subdata="$loop:item"/>
    </xar:loop>
   </div>
 </div>

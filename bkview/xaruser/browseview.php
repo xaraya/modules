@@ -49,15 +49,13 @@ function bkview_user_browseview($args)
     $counter=1;
     while (list(,$file) = each($filelist)) {
         list($tag,$name,$rev,$age,$author,$comments) = explode('|',$file);
-        $files[$counter]['name']=$name;
-        $files[$counter]['basename']=basename($name);
+        $files[$counter]['repoid'] = $repoid;
         $files[$counter]['rev']=$rev;
         $files[$counter]['author']=$author;
         $files[$counter]['age']=$age;
-        $files[$counter]['age_code'] = bkAgeToRangeCode($age);
         $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
         $files[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
-        $files[$counter]['relfile']=substr($dir,0,strlen($dir)-1)."/".basename($name);
+        $files[$counter]['file']=substr($dir,0,strlen($dir)-1)."/".basename($name);
         $files[$counter]['available'] = file_exists($name);
         if(xarModIsAvailable('mime') && file_exists($name)) {
             $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $name));
@@ -65,8 +63,7 @@ function bkview_user_browseview($args)
         } else {
             $files[$counter]['icon'] = xarTplGetImage('file.gif','bkview');
         }
-        // FIXME: huge performance penalty for this, make it configurable
-        //$the_file= new bkFile($repo,$files[$counter]['relfile']);
+
         $files[$counter]['tag'] = $tag;
         $counter++;
     }

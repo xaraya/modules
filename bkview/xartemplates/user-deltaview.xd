@@ -2,48 +2,6 @@
 
 <div style="float: left; margin-top: 1em; width: 100%">
 
-    <style type="text/css">
-    table.csetsummary {
-        width: 99%;
-    }
-    table.csetsummary td:first-child {
-        width: 2%;
-        white-space: nowrap;
-        font-weight: bold;
-        text-align: right;
-        vertical-align: top;
-        padding-right: 3pt;
-    }
-
-    div.csetsummary {
-        padding: 5pt;
-    }
-
-    div.csetdetails ul.subtree  {
-      padding: 0em 0em 0em 2em;
-    }
-
-    div.csetdetails ul li.subtree {
-      list-style-image: url(#xarTplGetImage('dir.gif','bkview')#);
-      list-style-type: none;
-    }
-
-    div.csetdetails ul li.node {
-        list-style-image: url(#xarTplGetImage('file.gif','bkview')#);
-        list-style-type: none;
-    }
-
-    div.csetdetails ul li.delta {
-      list-style-image: none;
-      list-style-type: none;
-    }
-    
-    ul.subtree li {
-        background-image: none;
-    }
-    </style>
-
-
     <!-- Summary of the cset -->
     <xar:template file="user-cset" subdata="$cset"/>
     
@@ -52,7 +10,7 @@
         <xar:mlstring>Modified files and included deltas by this changeset</xar:mlstring>
     </div>
 
-    <div class="csetdetails" style="margin-left: 1em;">
+    <div class="csetdetails">
       <xar:template file="deltatree" subdata="$deltatree"/>
     </div>
 </div>

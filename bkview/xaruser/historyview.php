@@ -40,7 +40,6 @@ function bkview_user_historyview($args)
     while (list(,$row) = each($history)) {
         list($age, $author, $filerev, $comments) = explode('|',$row);
         $histlist[$counter]['age']=$age;
-        $histlist[$counter]['age_code'] = bkAgeToRangeCode($age);
         $histlist[$counter]['author']=$author;
         $histlist[$counter]['rev']=$filerev;
         $histlist[$counter]['comments']=xarVarPrepForDisplay($comments);

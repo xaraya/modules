@@ -381,53 +381,53 @@ class bkChangeSet
 // Class to model a delta
 class bkDelta 
 {
-    var $_cset;     // in which cset is this delta
-    var $_file;     // which file
-    var $_rev;      // what revision?
-    var $_author;   // who authored it?
-    var $_age;      // how long ago?
-    var $_domain;   // from where?
-    var $_comments; // what were the comments?
-    var $_date;     // exact date of the delta
+    var $cset;     // in which cset is this delta
+    var $file;     // which file
+    var $rev;      // what revision?
+    var $author;   // who authored it?
+    var $age;      // how long ago?
+    var $domain;   // from where?
+    var $comments; // what were the comments?
+    var $date;     // exact date of the delta
     
     function bkDelta($cset='',$file,$rev) 
     {
         $file = __fileproper($file);
-        $this->_file=$file;
-        $this->_rev=$rev;
-        $this->_cset=$cset;
+        $this->file=$file;
+        $this->rev=$rev;
+        $this->cset=$cset;
         $cmd ="bk prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
         
-        $info = $this->_cset->_repo->_run($cmd);
+        $info = $this->cset->_repo->_run($cmd);
         list($date,$time,$age, $author,$domain, $comments) = explode('|',$info[0]);
-        $this->_date = $date;
-        $this->_time = $time;
-        $this->_age=$age;
-        $this->_author=$author;
-        $this->_domain=$domain;
-        $this->_comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
+        $this->date = $date;
+        $this->time = $time;
+        $this->age=$age;
+        $this->author=$author;
+        $this->domain=$domain;
+        $this->comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
     }
     
     function bkDiffs() 
     {
-        $cmd="bk diffs -hu -R".$this->_rev." ".$this->_file;
-        return $this->_cset->_repo->_run($cmd);
+        $cmd="bk diffs -hu -R".$this->rev." ".$this->file;
+        return $this->cset->_repo->_run($cmd);
     }
     
     function bkAnnotate() 
     {
-        $cmd="bk annotate -aum -r".$this->_rev." ".$this->_file;
-        return $this->_cset->_repo->_run($cmd);
+        $cmd="bk annotate -aum -r".$this->rev." ".$this->file;
+        return $this->cset->_repo->_run($cmd);
     }
     
     function bkFile() 
     {
-        return $this->_file;
+        return $this->file;
     }
     
     function bkRev() 
     {
-        return $this->_rev;
+        return $this->rev;
     }
 }
 

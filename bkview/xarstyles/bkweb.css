@@ -34,3 +34,42 @@ img.bkicon {
 dd a img {
     padding-top: 3pt;
 }
+
+table.csetsummary {
+    width: 99%;
+}
+table.csetsummary td:first-child {
+    width: 2%;
+    white-space: nowrap;
+    font-weight: bold;
+    text-align: right;
+    vertical-align: top;
+    padding-right: 3pt;
+}
+
+div.csetsummary {
+    padding: 5pt;
+}
+
+li.subtree {
+    list-style-image: url("/modules/bkview/xarimages/dir.gif");
+    list-style-position: inside;
+    background-image: none;
+}
+
+li.node {
+    list-style-image: none;
+    background-image: none;
+}
+
+li.delta {
+    list-style-image: none;
+}
+
+div.delta {
+    padding-top: 2pt;
+    padding-left: 5pt;
+    padding-right: 5pt;
+    margin-bottom: 5pt;
+}
+

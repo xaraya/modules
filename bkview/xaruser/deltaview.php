@@ -40,15 +40,18 @@ function bkview_user_deltaview($args)
             // Repo id is a xaraya thing, add it sneaky to the object because we dont
             // want it in the class
             $delta->repoid = $repoid;
-            $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->_file)) . "']";
+            $delta->cset ='';
+            //$arr = (array) $delta;
+            //xarLogVariable('delta',$arr);
+            $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->file)) . "']";
             $type = $arrayindex . "['type']";
             eval("$type = 'file';");
-            $arrayindex .= "['".$delta->_rev."']";
+            $arrayindex .= "['".$delta->rev."']";
             // mwuhahaha
-            eval("$arrayindex = \$delta;");
+            eval("$arrayindex = (array) \$delta;");
         }
     }   
-    //xarLogMessage('deltatree :' . print_r($deltatree,true),XARLOG_LEVEL_WARNING);
+    //xarLogMessage(print_r($deltatree,true));
     $data['deltatree'] =  array('deltatree' => $deltatree);
     $hooks='';
     // We have to construct an artificial $hookId because we don't use the database

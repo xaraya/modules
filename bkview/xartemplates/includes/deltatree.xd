@@ -1,4 +1,6 @@
-<!-- This renders a part of a delta tree -->
+<xar:comment>
+    This renders a part of a delta tree
+</xar:comment>
 
 <xar:if condition="empty($deltatree)">
   <xar:mlstring>No deltas in this changeset</xar:mlstring>
@@ -6,36 +8,20 @@
     <ul class="subtree">
       <xar:foreach in="$deltatree" key="$nodename" value="$delta">
         <xar:if condition="$nodename != 'ChangeSet'">
-          <xar:if condition="is_array($deltatree[$nodename])">
-             <xar:if condition="array_key_exists('type',$deltatree[$nodename]) && $deltatree[$nodename]['type']=='file'">
-                <xar:set name="delta">end($deltatree[$nodename])</xar:set>
-                <li class="node">
-                  <a  onclick="return loadContent(this.href);" title="#xarML('View revision history of this file')#" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#">#$nodename#</a>
-                  <!-- Recursive call into this very same template!! -->
-                  <xar:template file="deltatree" subdata="array('deltatree' =&gt; $deltatree[$nodename])" />
-                </li>
-            <xar:else/>
-                <li class="subtree">#$nodename#
-                    <!-- Recursive call into this very same template!! -->
-                    <xar:template file="deltatree" subdata="array('deltatree' =&gt; $deltatree[$nodename])" />
-                </li>
-            </xar:if>
-          <xar:else/>
-            <xar:if condition="$nodename !='type'">
-            <li class="delta">
-              <a  onclick="return loadContent(this.href);" title="#xarML('View annotated contents of this revision of the file')#" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#&amp;rev=#$delta-&gt;_rev#">
-                 #$delta-&gt;_rev#</a>
-              [ <a  onclick="return loadContent(this.href);" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-diffview;&amp;repoid=#$delta-&gt;repoid#&amp;file=#$delta-&gt;_file#&amp;rev=#$delta-&gt;_rev#">
-                 <xar:mlstring>View differences</xar:mlstring></a>
-              ] #$delta-&gt;_date# #$delta-&gt;_time#
-              <br/>
-              #$delta-&gt;_comments#
+          <xar:if condition="array_key_exists('type',$deltatree[$nodename]) && $deltatree[$nodename]['type']=='file'">
+            <li class="node">
+              <xar:foreach in="$deltatree[$nodename]" key="$field" value="$value">
+                <xar:if condition="$field == 'type'"><xar:continue/></xar:if>
+                <xar:template file="user-delta" subdata="$value"/>
+              </xar:foreach>
             </li>
-            </xar:if>
+          <xar:else/>
+            <li class="subtree">#$nodename#
+              <!-- Recursive call into this very same template!! -->
+              <xar:template file="deltatree" subdata="array('deltatree' =&gt; $deltatree[$nodename])" /> 
+            </li>
           </xar:if>
-        <xar:else/>
-          <!-- changeset is something special -->
-        </xar:if>
+        </xar:if>  
       </xar:foreach>
     </ul>
 </xar:if>
