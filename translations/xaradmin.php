@@ -40,6 +40,7 @@ define('RELEASE', 4);
 
     if (!xarVarFetch('locale', 'str:1:', $locale)) return;
     translations_working_locale($locale);
+    translations_release_locale($locale);
     xarResponseRedirect(xarModURL('translations', 'admin','start'));
 }
 

@@ -23,7 +23,7 @@ function translations_adminapi_getmenulinks()
     $menuLinks[] = array('url'   => xarModURL('translations','admin','start'),
                          'title' => xarML('Work on translations'),
                          'label' => xarML('Translate'));
-    $menuLinks[] = array('url'   => xarModURL('translations','admin','generate_trans_info'),
+    $menuLinks[] = array('url'   => xarModURL('translations','admin','generate_trans'),
                          'title' => xarML('Package a finished translation'),
                          'label' => xarML('Package'));
 
