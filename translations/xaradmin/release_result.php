@@ -30,6 +30,10 @@ function translations_admin_release_result()
         $args['modid'] = $extid;
         $res = xarModAPIFunc('translations','admin','release_module_trans',$args);
         break;
+        case XARMLS_DNTYPE_THEME:
+        $args['themeid'] = $extid;
+        $res = xarModAPIFunc('translations','admin','release_theme_trans',$args);
+        break;
     }
     if (!isset($res)) return;
 
