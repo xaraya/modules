@@ -1,0 +1,48 @@
+<xar:if condition="$tz_set">
+<div style="border: 1px solid green; background-color:lightgreen; padding:5px; margin:5px; text-align:center;">
+    <xar:mlstring>TimeZone Saved</xar:mlstring>
+</div>
+</xar:if>
+<form method="post" name="timezone" id="timezone" action="#xarModURL('timezone','user','list')#">
+Timezone:
+<select name="timezone">
+<xar:foreach in="$timezones" key="$k" value="$v">
+    <xar:if condition="$v.name == $selected_tz">
+        <option value="#$v.name#" selected="selected">#$v.name#</option>
+    <xar:else />
+        <option value="#$v.name#">#$v.name#</option>
+    </xar:if>
+</xar:foreach>
+</select>
+<input type="submit" name="submit" value="change" />
+</form>
+
+
+<p>
+<xar:set name="timestamp1">gmmktime(6,59,0,10,24,2004)</xar:set>
+<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp1))</xar:set>
+UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp1)#&nbsp;
+#xarLocaleGetFormattedUTCTime('long',$timestamp1)#<br />
+LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
+#xarLocaleGetFormattedTime('long',$currenttime)#
+</p>
+<!---
+<p>
+<xar:set name="timestamp2">gmmktime(7,0,0,10,24,2004)</xar:set>
+<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp2))</xar:set>
+UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp2)#&nbsp;
+#xarLocaleGetFormattedUTCTime('long',$timestamp2)#<br />
+LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
+#xarLocaleGetFormattedTime('long',$currenttime)#
+</p>
+
+<p>
+<xar:set name="timestamp3">gmmktime(8,0,0,4,4,2005)</xar:set>
+<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp3))</xar:set>
+
+UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp3)#&nbsp;
+#xarLocaleGetFormattedUTCTime('long',$timestamp3)#<br />
+LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
+#xarLocaleGetFormattedTime('long',$currenttime)#
+</p>
+--->

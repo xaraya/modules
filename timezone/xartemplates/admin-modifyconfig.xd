@@ -1,0 +1,16 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - TimeZone</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>TimeZone</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <em><xar:mlstring>TimeZone is a Xaraya Utility Module.</xar:mlstring></em><br />
+            <xar:mlstring>It is currently responsible for handling all timezone related issue.</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Automatically showing the user's correct time.</xar:mlstring></li>
+                <li><xar:mlstring>Automatically applying Daylight Savings Time modifications.</xar:mlstring></li>
+                <li><xar:mlstring>Automatically showing time for multiple timezones.</xar:mlstring></li>
+                <li><xar:mlstring>Allowing the selection of timezones for user preferences.</xar:mlstring></li>
+            </ul>
+        </div>
+    </div>
+</div>

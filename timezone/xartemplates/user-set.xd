@@ -1,0 +1,18 @@
+<xar:if condition="isset($tz_set)">
+    <div style="border: 1px solid green; background-color: lightgreen">
+        new timezone setting recorded
+    </div>
+</xar:if>
+<form method="post" name="timezone" id="timezone" action="#xarModURL('timezone','user','settimezone')#">
+Timezone:
+<select name="timezone">
+<xar:foreach in="$timezones" key="$k" value="$v">
+    <xar:if condition="$v.id == $selected_tz">
+        <option value="#$v.id#" selected="selected">#$v.name#</option>
+    <xar:else />
+        <option value="#$v.id#">#$v.name#</option>
+    </xar:if>
+</xar:foreach>
+</select>
+<input type="submit" name="submit" value="change" />
+</form>

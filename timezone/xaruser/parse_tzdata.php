@@ -3,9 +3,10 @@
 
 function timezone_user_parse_tzdata()
 {
-    //xarVarFetch('files','str::',$files);
-    
     $dir = 'modules/timezone/tzdata';
+    // these are the timezone files we want to gather data from
+    // some of this are ommitted because they currently don't contain anything useful
+    // we will not be using the leapseconds data, we'll leave that to the OS
     $files = array('africa',
                    'antarctica',
                    'asia',
@@ -13,26 +14,27 @@ function timezone_user_parse_tzdata()
                    'etcetera',
                    'europe',
                    'northamerica',
-                   'pacificnew',
-                   'solar87',
-                   'solar88',
-                   'solar89',
+                   //'pacificnew',
+                   //'solar87',
+                   //'solar88',
+                   //'solar89',
                    'southamerica',
-                   'systemv',
-                   'leapseconds',
+                   //'systemv',
+                   //'leapseconds',
                    'backward');
     
     $tzdata = array();
     foreach($files as $file) {
         $contents = file("$dir/$file");
         foreach($contents as $c) {
+            // remove comments
             $c = trim(preg_replace('/#.*$/i','',$c));
             if(!empty($c)) {
-                $c = trim(preg_replace('/(\t|\s)+/i',"\t",$c));
-                array_push($tzdata,$c);
+                $tzdata[] = trim(preg_replace('/(\t|\s)+/i',"\t",$c));
             }
         }
     }
+    ksort($tzdata);
     unset($contents);
     $results = parse_data($tzdata);
     unset($tzdata);
@@ -58,8 +60,8 @@ function parse_data(&$tzdata) {
     $leaps_script = $leap_last = null;
     
     // since the array is large, this method provides better performance over foreach
-    while(list($k,$v) = each($tzdata)) {
-        
+    foreach($tzdata as $k=>$v) {
+            
         $data = explode("\t",$v);
     
         if($data[0] == 'Rule') $last = 'rule';
@@ -75,7 +77,7 @@ function parse_data(&$tzdata) {
                 // get the name of this Rule
                 $name = array_shift($data); 
                 if($rules_script == null) {
-                    $rules_script .= '//'.str_repeat('=',72)."\n";
+                    $rules_script .= "\n".'//'.str_repeat('=',72)."\n";
                     $rules_script .= "//\tTimeZone Rules\n";
                     $rules_script .= '//'.str_repeat('=',72)."\n";
                     $rules_script .= "\$Rules = array();\n";
@@ -189,40 +191,4 @@ function parse_data(&$tzdata) {
     $results = $rules_script.$zones_script.$links_script.$leaps_script;
     return $results;
 }
-
-
-/**
- *  returns the current utc datetime in ical format 
- */
-function currentUTC()
-{
-    return xarLocaleFormatUTCDate('%Y%m%d%H%M%S',time());
-}
-/**
- *  returns the current utc date in ical format 
- */
-function currentUTCDate()
-{
-    return xarLocaleFormatUTCDate('%Y%m%d',time());
-}
-/**
- *  returns the current utc time in ical format 
- */
-function currentUTCTime()
-{
-    return xarLocaleFormatUTCDate('%H%M%S',time());
-}
-
-function mydump(&$var) 
-{
-    if(is_array($var)) {
-        echo '<pre>'; print_r($var); echo '</pre>';
-    } elseif(is_object($var)) {
-        echo '<pre>'; print_r($var); echo '</pre>';
-    } else {
-        echo '<pre>'; echo $var; echo '</pre>';
-    }
-    echo "\n\n";
-}
-
 ?>
