@@ -97,7 +97,7 @@ function overlib_userapi_bl_open($args=array())
     if (isset($delay)) { $retval .= ",DELAY,$delay"; }
     if (!empty($hauto)) { $retval .= ",HAUTO"; }
     if (!empty($vauto)) { $retval .= ",VAUTO"; }
-    $retval .= ');"';
+    $retval .= ');"; ';
 	
 	return $retval;
 
@@ -109,7 +109,7 @@ function overlib_userapi_bl_close($args=array())
 {
     extract($args); unset($args);
     if (empty($name)) { $name = '$olclose'; }
-    return "$name = 'return nd();'";
+    return "$name = 'return nd();'; ";
 }
 
 ?>
