@@ -55,13 +55,7 @@ function pubsub_userapi_adduser($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub::', "$eventid:$actionid", ACCESS_READ)) {
-    	$msg = xarML('Not authorized to subscribe to #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$eventid')) return;
 
     // Database information
     list($dbconn) = xarDBGetConn();
@@ -132,13 +126,7 @@ function pubsub_userapi_deluser($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', "$pubsubid::", ACCESS_DELETE)) {
-    	$msg = xarML('Not authorized to unsubscribe #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('DeletePubSub', 1, 'item', 'All::$pubsubid')) return;
     
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -184,13 +172,7 @@ function pubsub_userapi_updatesubscription($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', "$pubsubid::", ACCESS_EDIT)) {
-    	$msg = xarML('Not authorized to edit #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All:$pubsubid')) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -294,7 +276,7 @@ function pubsub_userapi_getall($args)
 {
     extract($args);
     $events = array();
-    if (!xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_READ)) {
+    if (!xarSecurityCheck('ReadPubSub', 0)) {
         return $events;
     }
 
@@ -340,7 +322,7 @@ function pubsub_userapi_getall($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($modname, $category, $item, $numsubscribers, $template) = $result->fields;
-        if (xarSecAuthAction(0, 'Pubsub::', "::", ACCESS_READ)) {
+        if (xarSecurityCheck('ReadPubSub', 0)) {
             $events[] = array('modname'       => $modname,
                              'category'       => $category,
                              'item'           => $item,

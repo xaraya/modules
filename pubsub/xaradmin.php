@@ -19,13 +19,7 @@
 function pubsub_admin_main()
 {
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
-        $msg = xarML('Not authorized to access to #(1)',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('EditPubSub')) return;
 
     // Return the template variables defined in this function
     return array();
@@ -46,10 +40,8 @@ function pubsub_admin_view()
     $data['authid'] = xarSecGenAuthKey();
     $data['pager'] = '';
 
-    if (!xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    if (!xarSecurityCheck('EditPubSub')) return;
+
     // The user API function is called
     $events = xarModAPIFunc('pubsub',
                           'user',

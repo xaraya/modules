@@ -189,13 +189,7 @@ function pubsub_adminapi_delevent($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
-	$msg = xarML('Not authorized to delete #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('DeletePubSub')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -259,13 +253,7 @@ function pubsub_adminapi_updateevent($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', "$name::$eventid", ACCESS_EDIT)) {
-	$msg = xarML('Not authorized to edit #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All::$eventid')) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -313,13 +301,7 @@ function pubsub_adminapi_processevent($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-	$msg = xarML('Not authorized to add #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('AddPubSub')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -532,13 +514,7 @@ function pubsub_adminapi_deljob($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_DELETE)) {
-	$msg = xarML('Not authorized to delete #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('DeletePubSub', 1, 'item', 'All::$handlingid')) return;
     
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -592,13 +568,7 @@ function pubsub_adminapi_updatejob($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_EDIT)) {
-	$msg = xarML('Not authorized to edit #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All::$handlingid')) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -645,13 +615,7 @@ function pubsub_adminapi_addtemplate($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-	    $msg = xarML('Not authorized to add #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('AddPubSub')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -718,13 +682,7 @@ function pubsub_adminapi_deltemplate($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
-	$msg = xarML('Not authorized to delete #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('DeletePubSub')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -774,13 +732,7 @@ function pubsub_adminapi_updatetemplate($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', "$name::$templateid", ACCESS_EDIT)) {
-	$msg = xarML('Not authorized to edit #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
-    }
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All::$templateid')) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -806,7 +758,7 @@ function pubsub_adminapi_updatetemplate($args)
  */
 function pubsub_adminapi_getmenulinks()
 {
-    if (xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
+    if (xarSecurityCheck('EditPubSub', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('pubsub',
                                                   'admin',

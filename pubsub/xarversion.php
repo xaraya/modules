@@ -8,7 +8,7 @@ $modversion['author'] = 'Chris Dudley';
 $modversion['contact'] = 'miko@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('Pubsub::' => 'PubsubID:EventID:HandlingID');
+$modversion['securityschema'] = array('pubsub::item' => 'Pubsub ID:Event ID:Handling ID:Template ID');
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Global';
 ?>

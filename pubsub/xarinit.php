@@ -133,6 +133,40 @@ function pubsub_init()
         return false;
     }
 
+    // Define instances for this module
+    $query1 = "SELECT DISTINCT xar_pubsubid FROM " . $pubsubregtable;
+    $query2 = "SELECT DISTINCT xar_eventid FROM " . $pubsubeventstable;
+    $query3 = "SELECT DISTINCT xar_handlingid FROM " . $pubsubprocesstable;
+    $query4 = "SELECT DISTINCT xar_templateid FROM " . $pubsubtemplatetable;
+
+    $instances = array(
+                        array('header' => 'Pubsub ID:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Event ID:',
+                                'query' => $query2,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Handling ID:',
+                                'query' => $query3,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Template ID:',
+                                'query' => $query4,
+                                'limit' => 20
+                            )
+                    );
+    xarDefineInstance('pubsub','Item',$instances);
+
+    // Define mask definitions for security checks
+    xarRegisterMask('OverviewPubSub','All','pubsub','All','All',ACCESS_OVERVIEW);
+    xarRegisterMask('ReadPubSub','All','pubsub','All','All',ACCESS_READ);
+    xarRegisterMask('EditPubSub','All','pubsub','All','All',ACCESS_EDIT);
+    xarRegisterMask('AddPubSub','All','pubsub','All','All',ACCESS_ADD);
+    xarRegisterMask('DeletePubSub','All','pubsub','All','All',ACCESS_DELETE);
+    xarRegisterMask('AdminPubSub','All','pubsub','All','All',ACCESS_ADMIN);
+
     // Initialisation successful
     return true;
 }
@@ -212,6 +246,7 @@ function pubsub_delete()
     // Get database information
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
+
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
 
