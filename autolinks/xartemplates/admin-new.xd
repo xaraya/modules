@@ -22,7 +22,7 @@
 	</div>
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="This is the URL that you will be pointing the text to link to when found."><label for="url"><xar:mlstring>URL</xar:mlstring></label>
+		<span class="help" title="This is the URL that you will be pointing the text to link to when found."><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
 	</span>
 	<span style="float: right; width: 335px; text-align: left;">
 		<input type="text" name="url" id="url" value="" size="40" maxlength="200" />
@@ -30,7 +30,7 @@
 	</div>
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="This is merely a comment for your reference when searching autolinks."><label for="comment"><xar:mlstring>Comment</xar:mlstring></label>
+		<span class="help" title="This is a comment for your reference when searching autolinks."><label for="comment"><xar:mlstring>Comment</xar:mlstring></label></span>
 	</span>
 	<span style="float: right; width: 335px; text-align: left;">
 		<input type="text" name="comment" id="comment" value="" size="40" maxlength="200" />
