@@ -23,7 +23,7 @@
     </xar:if>
     <br/>
     <!-- The buttons which producte the behaviour -->
-    <input type="submit" value="Search">
-    <input type="reset" value="Clear search">
+    <input type="submit" value="Search"/>
+    <input type="reset" value="Clear search"/>
 </form>
 </div>

@@ -28,7 +28,7 @@ function search_user_handlesearch() {
     // The module we want to search and the search terms are required.
     xarVarFetch('formodule','str:1:',$search_in_module);
     xarVarFetch('searchterms','str:0:',$search_terms);
-    xarVarFetch('startnum','int::',$startnum,1,XARVAR_NOT_REQUIRED);
+    xarVarFetch('startnum','int::',$startnum,0,XARVAR_NOT_REQUIRED);
     
     // Some modules allow searching only specific itemtypes, the generic
     // searchform supports this.
@@ -45,6 +45,8 @@ function search_user_handlesearch() {
     }
 
     function highlight_match(&$match,$key, $term) {    
+        // FIXME: This doesn't belong in code, it's a template function
+        // <xar:transform> or something like that. Transform hook seems a bit over the top for this
         $match['context'] = str_replace($term, "<span class=\"xar-search-match\">$term</span>",$match['context']);
     }
 
@@ -89,6 +91,8 @@ function search_user_handlesearch() {
     $total = count($searchresults);
     $itemsperpage = xarModGetUserVar('search','resultsperpage');
     $searchresults = array_slice($searchresults,$startnum, $itemsperpage); 
+    if($total < $itemsperpage) $itemsperpage = $total;
+
     $urltemplate = xarModUrl('search','user','handlesearch',array('startnum' => '%%',
                                                                   'formodule' => $search_in_module,
                                                                   'searchterms' => $search_terms,
@@ -102,7 +106,7 @@ function search_user_handlesearch() {
     $data['searchterms'] = $search_terms;
     $data['searchresults'] = $searchresults;
     $data['searchtotal'] = $total;
-    $data['searchstart'] = $startnum;
+    $data['searchstart'] = $startnum + 1;
     $data['searchend'] = $startnum + $itemsperpage;
     return $data;
 }

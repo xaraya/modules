@@ -33,8 +33,8 @@
   <span class="xar-mod-title"><xar:mlstring>Search again</xar:mlstring></span>
   <xar:foreach in="$searchform" key="$module" value="$form">
     #$form#
-  
 </div>
+
 <!-- TODO: set the values of the searchform to the values searched on -->
 
 <div id="searchtotal">
