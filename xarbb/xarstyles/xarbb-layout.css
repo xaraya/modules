@@ -1,0 +1,158 @@
+/* debug rule - dont uncomment */
+/* * { outline: 1px dotted orange; } */
+
+/* lets minimize use of tables for layout and use instead css-driven templates */
+div#xarbb-topics,
+div.xarbb-tablewrapper,
+div.xarbb-noteswrapper,
+div.xarbb-topiccontrols,
+div.xarbb-messagecontrols {
+	float: left;
+	width: 100%;
+	margin: .5em 0;
+}
+
+div#xarbb-topics ul.xar-sub {
+	float: left;
+	width: 48%;
+	text-align: left;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+div#xarbb-topics ul {
+	float: right;
+	width: 48%;
+	text-align: right;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+div.xarbb-messagecontrols {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: .5em;
+}
+
+div.xarbb-messagecontrols .leftnote {
+	float: left;
+	width: 48%;
+}
+
+div.xarbb-messagecontrols .rightnote {
+	float: right;
+	width: 48%;
+	text-align: right;
+}
+
+/* forum table - perfectly styleable with css - see http://www.w3.org/TR/REC-CSS2/tables.html */
+div#xarbb-tablewrapper {
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+
+div.xarbb-tablewrapper table {
+	padding: 1px;
+	margin: 1em auto;
+	width: 100%;
+	border-collapse: separate;
+	border: 3px solid #ccc;
+	border-spacing: 1px;
+	empty-cells: show;
+}
+
+div.xarbb-tablewrapper table td,
+div.xarbb-tablewrapper table th {
+	margin: 1px;
+	padding: 0 .5em;
+	border-bottom: 1px solid #000;
+}
+
+div.xarbb-tablewrapper table th,
+div.xarbb-tablewrapper table td.forumgroup {
+	padding: 0 .5em;
+	line-height: 2em;
+	text-align: left;
+}
+
+div.xarbb-tablewrapper table td.icon {
+	height: 4em;
+	width: 20px;
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+	text-align: center;
+}
+
+div.xarbb-tablewrapper table td.forumname {
+	vertical-align: middle;
+	height: 4em;
+}
+
+div.xarbb-tablewrapper table td.author {
+	width: 11em;
+	border: 1px solid #ccc;
+	vertical-align: top;
+}
+
+div.xarbb-tablewrapper table td.authorname { width: 7em; }
+
+div.xarbb-tablewrapper table td.lastpost {
+	width: 8em;
+	white-space: nowrap;
+}
+
+div.xarbb-tablewrapper table td.stats { width: 5em; }
+
+div.xarbb-tablewrapper table td.message {
+	border: 0 none;
+	vertical-align: top;
+}
+
+div.xarbb-tablewrapper table td p.hiddensignature { border-top: 1px dotted #000; }
+
+/* notes just below table */
+div.xarbb-noteswrapper .leftnote {
+	float: left;
+	width: 48%;
+}
+
+div.xarbb-noteswrapper .rightnote {
+	float: right;
+	width: 48%;
+	text-align: right;
+}
+
+/* login form */
+div#xarbb-loginwrapper {
+	width: 100%;
+	text-align: center;
+}
+
+div#xarbb-loginwrapper label { padding: 0 .2em 0 1em; }
+
+/* legend icons */
+div#xarbb-legendwrapper {
+	width: 100%;
+	float:left;
+	margin-top: .5em;
+	text-align: center;
+}
+
+div#xarbb-legendwrapper span { padding: 0 .2em 0 1em; }
+
+div#xarbb-legendwrapper span.spacedout {
+	width: 15em;
+	float: left;
+	text-align:left;
+}
+
+div#xarbb-legendwrapper span img,
+div.xarbb-topiccontrols span img {
+	vertical-align: middle;
+	display: inline;
+}
+
+div.xarbb-topiccontrols span a { padding: 0 .2em; }
