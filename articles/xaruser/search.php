@@ -405,7 +405,7 @@ function articles_user_search($args)
                         }
                     }
 
-                    $items[] = array('title' => xarVarPrepForDisplay($article['title']),
+                    $items[] = array('title' => xarVarPrepHTMLDisplay($article['title']),
                                      'link' => $link,
                                      'date' => $date,
                                      'categories' => $categories);
