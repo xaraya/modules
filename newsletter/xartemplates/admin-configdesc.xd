@@ -48,7 +48,7 @@
                 <ul>
                     <li><xar:mlstring><b>NewsletterPublisher</b> (AdminNewsletter privilege)</xar:mlstring></li>
                     <br />
-                    <xar:mlstring>Can create, edit and delete stories, issues, publications and subscriptions.  Can set configuration for the information block.  Can publish issues.</xar:mlstring>
+                    <xar:mlstring>Can create, edit and delete stories, issues, publications and subscriptions.  Can publish issues.  Can modify the configuration of the module.</xar:mlstring>
                     <li><xar:mlstring><b>NewsletterEditor</b> (DeleteNewsletter privilege)</xar:mlstring></li>
                     <br />
                     <xar:mlstring>Can create, edit and delete stories or issues.  Cannot publish issues.</xar:mlstring>

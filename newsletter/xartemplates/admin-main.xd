@@ -45,13 +45,13 @@
                 <ul>
                     <li><xar:mlstring><b>Publisher</b></xar:mlstring></li>
                     <br />
-                    <xar:mlstring>Can create, edit and delete stories, issues, publications and subscriptions.  Can modify the default configuration.  Can publish issues.</xar:mlstring>
+                    <xar:mlstring>Can create, edit and delete stories, issues, publications and subscriptions.  Can publish issues.  Can modify the configuration of the module.</xar:mlstring>
                     <li><xar:mlstring><b>Editor</b></xar:mlstring></li>
                     <br />
-                    <xar:mlstring>Can create, edit and delete stories and issues.</xar:mlstring>
+                    <xar:mlstring>Can create, edit and delete stories or issues.  Cannot publish issues.</xar:mlstring>
                     <li><xar:mlstring><b>Writer</b></xar:mlstring></li>
                     <br />
-                    <xar:mlstring>Can add or edit stories and issues.</xar:mlstring>
+                    <xar:mlstring>Can add, edit or delete stories.  Cannot publish issues.</xar:mlstring>
                 </ul>
                 <br />
                 <xar:mlstring><b>Publication Items</b></xar:mlstring>
@@ -292,7 +292,7 @@
                             <xar:mlstring>Private Publication</xar:mlstring>
                         </td>
                         <td halign="center">
-                            <xar:mlstring>If the publication is private, then registered users will not be allowed to subscribe to the publication.  The editor of the publication will need to add subscribers through the "Edit Subscriptions" menu.</xar:mlstring>
+                            <xar:mlstring>If the publication is private, then registered users will not be allowed to subscribe to the publication.  The publisher of the publication will need to add subscribers through the "Edit Subscriptions" menu.</xar:mlstring>
                         </td>
                     </tr>
                     <tr>
