@@ -12,6 +12,7 @@
  * @param $args['eventtype'] the event type
  * @returns int
  * @return event ID on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_addevent($args)
 {
@@ -19,11 +20,28 @@ function pubsub_adminapi_addevent($args)
 
     // Get arguments from argument array
     extract($args);
+    $invalid = array();
+    if (!isset($module) || !is_string($module)) {
+        $invalid[] = 'module';
+    }
+    if (!isset($eventtype) || !is_string($eventtype)) {
+        $invalid[] = 'eventtype';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'addevent', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to add #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get datbase setup
@@ -46,8 +64,10 @@ function pubsub_adminapi_addevent($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _CREATEFAILED);
-        return false;
+	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+	pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     // return eventID
@@ -59,6 +79,7 @@ function pubsub_adminapi_addevent($args)
  * @param $args['eventid'] ID of the item
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_deleteevent($args)
 {
@@ -66,15 +87,25 @@ function pubsub_adminapi_deleteevent($args)
     extract($args);
 
     // Argument check
-    if (!isset($eventid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    $invalid = array();
+    if (!isset($eventid) || !is_numeric($eventid)) {
+        $invalid[] = 'eventid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'deleteevent', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to delete #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get datbase setup
@@ -88,8 +119,10 @@ function pubsub_adminapi_deleteevent($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _DELETEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     return true;
@@ -104,6 +137,7 @@ function pubsub_adminapi_deleteevent($args)
  * @param $args['actionid'] the new action id for the item
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_updateevent($args)
 {
@@ -111,19 +145,37 @@ function pubsub_adminapi_updateevent($args)
     extract($args);
 
     // Argument check
-    if ((!isset($eventid)) ||
-        (!isset($module)) ||
-        (!isset($eventtype)) ||
-        (!isset($groupdescr)) ||
-        (!isset($actionid))) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    $invalid = array();
+    if (!isset($eventid) || !is_numeric($eventid)) {
+        $invalid[] = 'eventid';
+    }
+    if (!isset($module) || !is_string($module)) {
+        $invalid[] = 'module';
+    }
+    if (!isset($eventtype) || !is_string($eventtype)) {
+        $invalid[] = 'eventtype';
+    }
+    if (!isset($groupdescr) || !is_string($groupdescr)) {
+        $invalid[] = 'groupdescr';
+    }
+    if (!isset($actionid) || !is_numeric($actionid)) {
+        $invalid[] = 'actionid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'updateevent', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', "$name::$eventid", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to edit #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get database setup
@@ -141,8 +193,10 @@ function pubsub_adminapi_updateevent($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _UPDATEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     return true;
@@ -154,6 +208,7 @@ function pubsub_adminapi_updateevent($args)
  * @param $args['objectid'] the specific object in the module
  * @returns int
  * @return handling ID on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_processevent($args)
 {
@@ -161,11 +216,28 @@ function pubsub_adminapi_processevent($args)
 
     // Get arguments from argument array
     extract($args);
+    $invalid = array();
+    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
+        $invalid[] = 'pubsubid';
+    }
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $invalid[] = 'objectid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'processevent', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM', 
+                       new SystemException($msg));
+        return;
+    }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to add #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get datbase setup
@@ -190,8 +262,10 @@ function pubsub_adminapi_processevent($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _CREATEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
     // TODO implement queuing properly
     // for now we'll just go parse the queue immediately
@@ -205,6 +279,7 @@ function pubsub_adminapi_processevent($args)
  * Process the queue and run all pending jobs
  * @returns bool
  * @return number of jobs run on success, false if not
+ * @raise DATABASE_ERROR
  */
 function pubsub_adminapi_processq($args)
 {
@@ -226,8 +301,10 @@ function pubsub_adminapi_processq($args)
     $count = 0;
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', 'SQL Error');
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     } else {
         while (!$result->EOF) {
             // run the job passing it the pubsub and object ids.
@@ -245,6 +322,7 @@ function pubsub_adminapi_processq($args)
  * @param $args['objectid'] the specific object in the module
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, DATABASE_ERROR
  */
 function pubsub_adminapi_runjob($args)
 {
@@ -252,10 +330,19 @@ function pubsub_adminapi_runjob($args)
     extract($args);
 
     // Argument check
-    if ((!isset($pubsubid)) ||
-        (!isset($objectid))) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    $invalid = array();
+    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
+        $invalid[] = 'pubsubid';
+    }
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $invalid[] = 'objectid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'runjob', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
     
     // Database information
@@ -269,6 +356,12 @@ function pubsub_adminapi_runjob($args)
             FROM $pubsubregtable
             WHERE pn_pubsubid = '" . pnVarPrepForStore($pubsubid) . "'";
     $result   = $dbconn->Execute($sql);
+    if ($dbconn->ErrorNo() != 0) {
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
     $actionid = $result->fields[0];
     $eventid  = $result->fields[1]);
     list($action,$info)   =  explode(':', $actionid);
@@ -276,8 +369,11 @@ function pubsub_adminapi_runjob($args)
 	// check mail address is a valid email address
 	if (!eregi("^([A-Za-z0-9_]|\\-|\\.)+@(([A-Za-z0-9_]|\\-)+\\.)[A-Za-z]{2,4}$", $info)) {
 	    // address invalid
-	    pnSessionSetVar('errormsg', _PUBSUBINVALIDEMAIL);
-	    return false;
+	    $msg = pnML('Invalid E-mail address #(1)',
+                    $info);
+            pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                     new SystemException($msg));
+            return;
 	} else {
        	    // Database information
     	    $pubsubtemplatetable = $pntable['pubsub_template'];
@@ -286,6 +382,12 @@ function pubsub_adminapi_runjob($args)
             	    FROM $pubsubtemplatetable
             	    WHERE pn_eventid = '" . pnVarPrepForStore($eventid) . "'";
     	    $result   = $dbconn->Execute($sql);
+            if ($dbconn->ErrorNo() != 0) {
+ 	         $msg = pnMLByKey('DATABASE_ERROR', $sql);
+                 pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                 return;
+            }
     	    $template = $result->fields[0];
 	    // *** TODO  ***
 	    // need to define some variables for user firstname and surname,etc.
@@ -329,9 +431,12 @@ function pubsub_adminapi_runjob($args)
         }
     } else {
         // invalid action - update queue accordingly
-        pnSessionSetVar('errormsg', _PUBSUBNOACTIONERROR);
 	pubsub_adminapi_updatejob($handlingid,$pubsubid,$objectid,'error');
-        return false;
+	$msg = pnML('Invalid #(1) action',
+                 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                 new SystemException($msg));
+        return;
     }
     return true;
 }
@@ -341,6 +446,7 @@ function pubsub_adminapi_runjob($args)
  * @param $args['handlingid'] ID of the job to delete
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_deljob($args)
 {
@@ -348,15 +454,25 @@ function pubsub_adminapi_deljob($args)
     extract($args);
 
     // Argument check
-    if (!isset($handlingid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    $invalid = array();
+    if (!isset($handlingid) || !is_numeric($handlingid)) {
+        $invalid[] = 'handlingid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'deletejob', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to delete #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
     
     // Get datbase setup
@@ -370,8 +486,10 @@ function pubsub_adminapi_deljob($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _DELETEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     return true;
@@ -385,6 +503,7 @@ function pubsub_adminapi_deljob($args)
  * @param $args['status']   the new status for the item
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */ 
 function pubsub_adminapi_updatejob($args)
 {
@@ -392,18 +511,34 @@ function pubsub_adminapi_updatejob($args)
     extract($args);
     
     // Argument check
-    if ((!isset($handlingid)) ||
-        (!isset($pubsubid))   ||
-	(!isset($objectid))   ||
-        (!isset($status))) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-                return false;
+    $invalid = array(); 
+    if (!isset($handlingid) || !is_numeric($handlingid)) {
+        $invalid[] = 'handlingid';
+    }
+    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
+        $invalid[] = 'pubsubid';
+    }
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $invalid[] = 'objectid';
+    }
+    if (!isset($status) || !is_string($status)) {
+        $invalid[] = 'status';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'updatejob', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to edit #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get database setup
@@ -420,8 +555,10 @@ function pubsub_adminapi_updatejob($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _UPDATEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }    
     return true;
 }
@@ -432,6 +569,7 @@ function pubsub_adminapi_updatejob($args)
  * @param $args['template'] the template text
  * @returns int
  * @return template ID on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_addtemplate($args)
 {
@@ -439,11 +577,28 @@ function pubsub_adminapi_addtemplate($args)
 
     // Get arguments from argument array
     extract($args);
+    $invalid = array(); 
+    if (!isset($template) || !is_string($template)) {
+        $invalid[] = 'template';
+    }
+    if (!isset($eventid) || !is_numeric($eventid)) {
+        $invalid[] = 'eventid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'addtemplate', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to add #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get datbase setup
@@ -466,8 +621,10 @@ function pubsub_adminapi_addtemplate($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _CREATEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     // return eventID
@@ -479,6 +636,7 @@ function pubsub_adminapi_addtemplate($args)
  * @param $args['templateid'] ID of the item
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_deletetemplate($args)
 {
@@ -486,15 +644,25 @@ function pubsub_adminapi_deletetemplate($args)
     extract($args);
 
     // Argument check
-    if (!isset($templateid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    $invalid = array();
+    if (!isset($templateid) || !is_numeric($templateid)) {
+        $invalid[] = 'templateid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'deletetemplate', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to delete #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get datbase setup
@@ -508,8 +676,10 @@ function pubsub_adminapi_deletetemplate($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _DELETEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     return true;
@@ -522,6 +692,7 @@ function pubsub_adminapi_deletetemplate($args)
  * @param $args['template'] the new template text of the item
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_updatetemplate($args)
 {
@@ -529,17 +700,31 @@ function pubsub_adminapi_updatetemplate($args)
     extract($args);
 
     // Argument check
-    if ((!isset($templateid)) ||
-        (!isset($eventid)) ||
-        (!isset($template))) (
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    $invalid = array(); 
+    if (!isset($eventid) || !is_numeric($eventid)) {
+        $invalid[] = 'eventid';
+    }
+    if (!isset($temnplateid) || !is_numeric($templateid)) {
+        $invalid[] = 'templateid';
+    }
+    if (!isset($template) || !is_string($template)) {
+        $invalid[] = 'template';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'updatetemplate', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', "$name::$templateid", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+	$msg = pnML('Not authorized to edit #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get database setup
@@ -555,8 +740,10 @@ function pubsub_adminapi_updatetemplate($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _UPDATEFAILED);
-        return false;
+ 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     return true;

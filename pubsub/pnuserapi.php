@@ -13,6 +13,7 @@
  * @param $args['userid'] UID of User to subscribe (optional)
  * @returns bool
  * @return pubsub ID on success, false if not
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_subscribe($args)
 {
@@ -20,9 +21,18 @@ function pubsub_userapi_subscribe($args)
     extract($args);
 
     // Argument check
-    if ((!isset($eventid)) ||
-        (!isset($actionid))) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
+    $invalid = array();
+    if (!isset($eventid) || !is_numeric($eventid)) {
+        $invalid[] = 'eventid';
+    }
+    if (!isset($actionid) || !is_numeric($actionid)) {
+        $invalid[] = 'actionid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'user', 'subscribe', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
         return;
     }
 
@@ -39,6 +49,10 @@ function pubsub_userapi_subscribe($args)
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub::', "$eventid:$actionid", ACCESS_READ)) {
+    	$msg = pnML('Not authorized to subscribe to #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
         return;
     }
 
@@ -64,8 +78,10 @@ function pubsub_userapi_subscribe($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _CREATEFAILED);
-        return false;
+    	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+	pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     // return pubsub ID 
@@ -77,6 +93,7 @@ function pubsub_userapi_subscribe($args)
  * @param $args['pubsubid'] ID of the subscription to delete
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_unsubscribe($args)
 {
@@ -84,15 +101,25 @@ function pubsub_userapi_unsubscribe($args)
     extract($args);
 
     // Argument check
-    if (!isset($pubsubid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    $invalid = array();
+    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
+        $invalid[] = 'pubsubid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'user', 'unsubscribe', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', "$pubsubid::", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+    	$msg = pnML('Not authorized to ubsubscribe #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
     
     // Get datbase setup
@@ -106,8 +133,10 @@ function pubsub_userapi_unsubscribe($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _DELETEFAILED);
-        return false;
+     	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     return true;
@@ -119,6 +148,7 @@ function pubsub_userapi_unsubscribe($args)
  * @param $args['actionid'] the new action id for the item
  * @returns bool
  * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_updatesubscription($args)
 {
@@ -126,16 +156,28 @@ function pubsub_userapi_updatesubscription($args)
     extract($args);
 
     // Argument check
-    if ((!isset($pubsubid)) ||
-        (!isset($actionid))) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-	        return false;
+    $invalid = array();
+    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
+        $invalid[] = 'pubsubid';
+    }
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $invalid[] = 'objectid';
+    }
+    if (count($invalid) > 0) {
+        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'user', 'updatesubscription', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM', 
+                       new SystemException($msg));
+        return;
     }
 
     // Security check
     if (!pnSecAuthAction(0, 'Pubsub', "$pubsubid::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _PUBSUBNOAUTH);
-        return false;
+    	$msg = pnML('Not authorized to edit #(1) items',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Get database setup
@@ -150,8 +192,10 @@ function pubsub_userapi_updatesubscription($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _UPDATEFAILED);
-        return false;
+     	$msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     return true;
