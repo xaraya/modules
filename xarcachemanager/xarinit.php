@@ -25,34 +25,93 @@ function xarcachemanager_init()
     // set up the output cache directory
     $systemVarDir = xarCoreGetVarDirPath();
     $varCacheDir = $systemVarDir . '/cache';
-    if (is_writable($varCacheDir)) {
-         if (!is_dir($varCacheDir.'/output')) {
+
+    if (is_writable($varCacheDir) || is_dir($varCacheDir.'/output')) {
+        if (!is_dir($varCacheDir.'/output')) {
+            // set up the output directory
             $old_umask = umask(0);
             mkdir($varCacheDir.'/output', 0777);
             umask($old_umask);
-         } elseif (!is_writable($varCacheDir.'/output')) {
-            return false; // todo: give a meaningful error
-         }
-         // avoid directory browsing
-         if (!file_exists($varCacheDir.'/output/index.html')) {
-             @touch($varCacheDir.'/output/index.html');
-         }
+        }
+        if (!is_writable($varCacheDir.'/output')) {
+            // tell them output dir needs to be writable
+            $msg=xarML('The var/cache/output directory must be writable 
+                       by the web server for output caching to work.  
+                       The xarCacheManager module has not been installed, 
+                       please make the var/cache/output directory 
+                       writable by the web server before re-trying to 
+                       install this module.');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                            new SystemException($msg));
+            return false;
+        }
     } else {
-        return false;  // todo: give a meaningful error
+        // tell them that cache needs to be writable or manually create output dir
+        $msg=xarML('The var/cache directory must be writable 
+                   by the web server for the install script to 
+                   set up output caching for you.
+                   The xarCacheManager module has not been installed, 
+                   please make the var/cache directory 
+                   writable by the web server before re-trying to 
+                   install this module.  
+                   Alternatively, you can manually create the 
+                   var/cache/output directory and copy the 
+                   xarcachemanager/config.caching.php.dist 
+                   file to var/cache/config.caching.php - the output 
+                   directory and the config.caching.php file must be 
+                   writable by the web server for output caching to work.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                        new SystemException($msg));
+        return false;
+    }
+    
+    // avoid directory browsing
+    if (!file_exists($varCacheDir.'/output/index.html')) {
+        @touch($varCacheDir.'/output/index.html');
     }
 
     // set up the config file.
-    // todo: error checking
     $defaultconfigfile = 'modules/xarcachemanager/config.caching.php.dist';
-    if (file_exists($defaultconfigfile)) {
+    $cachingconfigfile = $varCacheDir .'/config.caching.php';
+    if (!file_exists($defaultconfigfile)) {
+        $msg=xarML('That is strange.  The default, distributed configuration 
+                   file, normally ' . $defaultconfigfile . ', seems to be 
+                   missing.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
+                        new SystemException($msg));
+        
+        return false;
+    }
+    if (is_writable($varCacheDir) || is_writable($cachingconfigfile)) {
         $handle = fopen($defaultconfigfile, "rb");
         $defaultconfig = fread ($handle, filesize ($defaultconfigfile));
-        $fp = @fopen($varCacheDir .'/config.caching.php',"wb");
-        fwrite($fp,$defaultconfig);
+        $fp = @fopen($cachingconfigfile,"wb");
+        fwrite($fp, $defaultconfig);
         fclose($fp);
     } else {
-        return false;  // todo: give a meaningful error
+        // tell them that cache needs to be writable or manually create config file
+        $msg=xarML('The var/cache directory must be writable 
+                   by the web server for the install script to 
+                   set up output caching for you.
+                   The xarCacheManager module has not been installed, 
+                   please make the var/cache directory 
+                   writable by the web server before re-trying to 
+                   install this module.  
+                   Alternatively, you can manually copy the 
+                   xarcachemanager/config.caching.php.dist 
+                   file to var/cache/config.caching.php - the 
+                   config.caching.php file must be writable by the
+                   web server for output caching to be managed with
+                   the xarcachemanager module.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                        new SystemException($msg));
+        return false;
     }
+    
+    // Set up module variables
+    xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
+    xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
+    xarModSetVar('xarcachemanager','FlushOnNewPollvote', 0);
 
     if (!xarModRegisterHook('item', 'create', 'API',
                             'xarcachemanager', 'admin', 'createhook')) {
@@ -119,7 +178,17 @@ function xarcachemanager_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case 0.1:
-            // Should we need to change anything
+            // Code to upgrade from the 0.1 version (base page level caching)
+            // todo: do conversion of MB to bytes in config file
+            break;
+        case 0.2:
+            // Code to upgrade from the 0.2 version (cleaned-up page level caching)
+            break;
+        case 0.3:
+            // Code to upgrade from the 0.3 version (base block level caching)
+            break;
+        case 0.4:
+            // Code to upgrade from the 0.4 version (base module level caching)
             break;
         case 1.0:
             // Code to upgrade from version 1.0 goes here
@@ -172,13 +241,16 @@ function xarcachemanager_delete()
         @unlink($varCacheDir . '/config.caching.php');
     }
 
-    // Remove module hooks
+    // Remove module variables
+    xarModDelVar('xarcachemanager','FlushOnNewComment');
+    xarModDelVar('xarcachemanager','FlushOnNewRating');
+    xarModDelVar('xarcachemanager','FlushOnNewPollvote');
 
+    // Remove module hooks
     if (!xarModUnregisterHook('item', 'create', 'API',
                               'xarcachemanager', 'admin', 'createhook')) {
         return false;
     }
-
     if (!xarModUnregisterHook('item', 'update', 'API',
                               'xarcachemanager', 'admin', 'updatehook')) {
         return false;
