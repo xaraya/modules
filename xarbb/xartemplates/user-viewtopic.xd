@@ -422,6 +422,7 @@
 	</tr>
     </xar:foreach>
 </table>
+<br />
 <table width="98%" border="0">
 	<tr> 
 		<xar:if condition="$tstatus ne 3">
@@ -469,7 +470,32 @@
 		</td>
 	</tr>
 </table>
-
+<xar:sec mask="ModxarBB" catch="false">
+	<table align="left">
+		<tr>
+			<xar:if condition="$tstatus ne 3">
+				<td width="20" align="center">
+					<a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'tid' => $tid))#">
+						<img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
+					</a>
+				</td>
+			<xar:else />
+				<td width="20" align="center">
+					<a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#">
+						<img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Lock Topic')#" />
+					</a>
+				</td>
+			</xar:if>
+			<xar:sec mask="DeletexarBB" catch="false">
+				<td width="20" align="center">
+					<a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onClick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')">
+						#$deleteimg#
+					</a>
+				</td>
+			</xar:sec>
+		</tr>
+	</table>
+</xar:sec>
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
     <xar:foreach in="$hooks" key="$hookmodule">
     <!--- xarbb already deals with comments directly via API, using itemtype 0 (for now ?) --->
