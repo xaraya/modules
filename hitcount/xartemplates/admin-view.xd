@@ -53,7 +53,7 @@
                             #$moditem['numhits']#
                         </td>
                         <td align="center" valign="center" width="25%">
-                            <a href="#$moditem['delete']#"><b>Delete</b></a>
+                            <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
                         </td>
                     </tr>
                     <tr>
@@ -73,7 +73,7 @@
                         <b>#$numhits#</b>
                     </td>
                     <td align="center" valign="center" width="25%">
-                        <a href="#$delete#">Delete All</a>
+                        <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
                     </td>
                 </tr>
             </xar:if>
@@ -153,7 +153,7 @@
                             #$moditem['numhits']#
                         </td>
                         <td align="center" valign="center" width="25%">
-                            <a href="#$moditem['delete']#"><b>Delete</b></a>
+                            <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
                         </td>
                     </tr>
                     <tr>
