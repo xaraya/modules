@@ -22,7 +22,8 @@ function navigator_user_menutype_list( $args )
 
     $data = xarModAPIFunc('navigator', 'user', 'process_menu_attributes', $args);
 
-    if (isset($data['current_primary_id']) && $data['current_primary_id'] == 0) {
+    if (is_array($data) && count($data) &&
+        isset($data['current_primary_id']) && $data['current_primary_id'] == 0) {
          return;
     }
 
