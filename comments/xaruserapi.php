@@ -40,13 +40,11 @@ function comments_userapi_activate($comment_id) {
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $ctable = &$xartable['comments_column'];
-
     // First grab the objectid and the modid so we can
     // then find the root node.
     $sql = "UPDATE $xartable[comments]
-            SET $ctable[status]='" . _COM_STATUS_ON."'
-            WHERE $ctable[cid]='$comment_cid'";
+            SET xar_status='" . _COM_STATUS_ON."'
+            WHERE xar_cid='$comment_cid'";
 
     $result =& $dbconn->Execute($sql);
 
@@ -73,13 +71,11 @@ function comments_userapi_deactivate($comment_id) {
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $ctable = &$xartable['comments_column'];
-
     // First grab the objectid and the modid so we can
     // then find the root node.
     $sql = "UPDATE $xartable[comments]
-            SET $ctable[status]='"._COM_STATUS_OFF."'
-            WHERE $ctable[cid]='$comment_cid'";
+            SET xar_status='"._COM_STATUS_OFF."'
+            WHERE xar_cid='$comment_cid'";
 
     $result =& $dbconn->Execute($sql);
 
@@ -320,21 +316,19 @@ function comments_userapi_create_gap($startpoint, $gapsize = 2, $endpoint = NULL
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-    $ctable = &$xartable['comments_column'];
-
 
     $sql_left  = "UPDATE $xartable[comments]
-                     SET $ctable[left] = ($ctable[left] + $gapsize)
-                   WHERE $ctable[left] > $startpoint";
+                     SET xar_left = (xar_left + $gapsize)
+                   WHERE xar_left > $startpoint";
 
     $sql_right = "UPDATE $xartable[comments]
-                     SET $ctable[right] = ($ctable[right] + $gapsize)
-                   WHERE $ctable[right] >= $startpoint";
+                     SET xar_right = (xar_right + $gapsize)
+                   WHERE xar_right >= $startpoint";
 
     // if we have an endpoint, use it :)
     if (!empty($endpoint) && $endpoint !== NULL) {
-        $sql_left   .= " AND $ctable[left] <= $endpoint";
-        $sql_right  .= " AND $ctable[right] <= $endpoint";
+        $sql_left   .= " AND xar_left <= $endpoint";
+        $sql_right  .= " AND xar_right <= $endpoint";
     }
 
     $result1 =& $dbconn->Execute($sql_left);
@@ -361,21 +355,19 @@ function comments_userapi_remove_gap($startpoint, $endpoint, $gapsize) {
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-    $ctable = &$xartable['comments_column'];
-
 
     $sql_left  = "UPDATE $xartable[comments]
-                     SET $ctable[left] = ($ctable[left] - $gapsize)
-                   WHERE $ctable[left] > $startpoint";
+                     SET xar_left = (xar_left - $gapsize)
+                   WHERE xar_left > $startpoint";
 
     $sql_right = "UPDATE $xartable[comments]
-                     SET $ctable[right] = ($ctable[right] - $gapsize)
-                   WHERE $ctable[right] >= $startpoint";
+                     SET xar_right = (xar_right - $gapsize)
+                   WHERE xar_right >= $startpoint";
 
     // if we have an endpoint, use it :)
     if (!empty($endpoint) && $endpoint !== NULL) {
-        $sql_left   .= " AND $ctable[left] <= $endpoint";
-        $sql_right  .= " AND $ctable[right] <= $endpoint";
+        $sql_left   .= " AND xar_left <= $endpoint";
+        $sql_right  .= " AND xar_right <= $endpoint";
     }
 
     $result1 =& $dbconn->Execute($sql_left);
@@ -415,34 +407,43 @@ function comments_userapi_add_rootnode($modid, $objectid) {
 
     $commenttable=$xartable['comments'];
 
-    // don't trust the value of $nextId, it can be zero for some databases.
+    // Set left and right values;
+    $left = $maxright + 1;
+    $right = $maxright + 2;
+    $cdate = time();
+
+    // Get next ID in table.  For databases like MySQL, this value will
+    // be zero but the auto_increment type on the column will create
+    // the correct value.
     $nextId = $dbconn->GenId($commenttable);
 
     $sql = "INSERT INTO $xartable[comments] (
-                                $ctable[cid],
-                                $ctable[pid],
-                                $ctable[comment],
-                                $ctable[title],
-                                $ctable[author],
-                                $ctable[left],
-                                $ctable[right],
-                                $ctable[status],
-                                $ctable[objectid],
-                                $ctable[modid]
+                                xar_cid,
+                                xar_pid,
+                                xar_text,
+                                xar_title,
+                                xar_author,
+                                xar_left,
+                                xar_right,
+                                xar_status,
+                                xar_objectid,
+                                xar_modid,
+                                xar_hostname,
+                                xar_date
                                             )
                     VALUES (    $nextId,
                                 0,
-                                'This is for internal use and works only as a place holder. PLEASE do NOT delete this comment
-                                as it could have detrimental effects on the consistency of the comments table.',
+                                'This is for internal use and works only as a place holder. PLEASE do NOT delete this comment as it could have detrimental effects on the consistency of the comments table.',
                                 'ROOT NODE - PLACEHOLDER. DO NOT DELETE!',
                                 1,
-                                ($maxright + 1),
-                                ($maxright + 2),'".
-                                _COM_STATUS_ROOT_NODE."',
+                                $left,
+                                $right,
+                                "._COM_STATUS_ROOT_NODE.",
                                 $objectid,
-                                $modid
+                                $modid,
+                                '',
+                                $cdate 
                             )";
-
 
     $result =& $dbconn->Execute($sql);
 
@@ -450,14 +451,9 @@ function comments_userapi_add_rootnode($modid, $objectid) {
         return;
 
     // Return the cid of the created record just now.
-    // We can't return insertid directly because dbs which have no genid
-    // functionality will just return zero.
+    $cid = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
 
-    $sql = "SELECT MAX($ctable[cid]) FROM $xartable[comments]";
-    $result =& $dbconn->Execute($sql);
-    $row = $result->fields;
-
-    return $row[0];
+    return $cid;
 }
 
 /**
@@ -1086,19 +1082,19 @@ function comments_userapi_add($args) {
     }
 
     $sql = "INSERT INTO $xartable[comments]
-                ($ctable[cid],
-                 $ctable[modid],
-                 $ctable[objectid],
-                 $ctable[author],
-                 $ctable[title],
-                 $ctable[cdate],
-                 $ctable[hostname],
-                 $ctable[comment],
-                 $ctable[left],
-                 $ctable[right],
-                 $ctable[pid],
-                 $ctable[status],
-                 $ctable[postanon])
+                (xar_cid,
+                 xar_modid,
+                 xar_objectid,
+                 xar_author,
+                 xar_title,
+                 xar_date,
+                 xar_hostname,
+                 xar_text,
+                 xar_left,
+                 xar_right,
+                 xar_pid,
+                 xar_status,
+                 xar_anonpost)
           VALUES ("
         .xarVarPrepForStore($cid).",'"
         .xarVarPrepForStore($modid)."','"
@@ -1119,7 +1115,7 @@ function comments_userapi_add($args) {
     if (!$result) {
         return;
     } else {
-        $cid = $dbconn->PO_Insert_ID($xartable['comments'], $ctable['cid']);
+        $cid = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
         return $cid;
     }
 }
@@ -1217,17 +1213,15 @@ function comments_userapi_modify($args) {
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $ctable = &$xartable['comments_column'];
-
     $text .= "\n<br />\n<br />\n" . xarML('[Modified by: #(1) (#(2)) on #(3)]', xarUserGetVar('name'),
                                                                           xarUserGetVar('uname'),
                                                                           $modified_date);
 
     $sql =  "UPDATE $xartable[comments]
-                SET $ctable[title]    = '". xarVarPrepForStore($title) ."',
-                    $ctable[comment]  = '". xarVarPrepForStore($text) ."',
-                    $ctable[postanon] = '". xarVarPrepForStore($postanon) ."'
-              WHERE $ctable[cid]='$cid'";
+                SET xar_title    = '". xarVarPrepForStore($title) ."',
+                    xar_text  = '". xarVarPrepForStore($text) ."',
+                    xar_anonpost = '". xarVarPrepForStore($postanon) ."'
+              WHERE xar_cid='$cid'";
 
     $result = &$dbconn->Execute($sql);
 

@@ -428,6 +428,10 @@ function comments_user_delete() {
     $header = xarRequestGetVar('header');
     $receipt = xarRequestGetVar('receipt');
 
+    // Make sure some action was submitted
+    if (!array_key_exists('action', $receipt))
+        $receipt['action'] = 'confirm-delete';
+
     $output['header'] = $header;
     $output['receipt'] = $receipt;
     $output['package']['delete_url'] = xarModURL('comments','user','delete');
