@@ -14,18 +14,13 @@ function headlines_schedulerapi_compare()
     foreach ($links as $link){
         // We need to grab the current url right now for the string and the date
         // Get the feed file (from cache or from the remote site)
-        $feeddata = xarModAPIFunc('base', 'user', 'getfile',
-                                  array('url' => $feedfile,
-                                        'cached' => true,
-                                        'cachedir' => 'cache/rss',
-                                        'refresh' => 3600,
-                                        'extension' => '.xml'));
-        if (!$feeddata) {
-            return; // throw back
-        }
+        $filedata = xarModAPIFunc('base', 'user', 'getfile',
+                                  array('url'       =>  $link['url'],
+                                        'cached'    =>  false));
 
         $compare['string']     = md5($filedata);
         $compare['date']       = time();
+
         if ($compare['string'] != $link['string']){
             // Get datbase setup
             $dbconn =& xarDBGetConn();
@@ -36,17 +31,23 @@ function headlines_schedulerapi_compare()
             $query = "UPDATE $headlinestable
                       SET xar_string   = ?,
                           xar_date     = ?
-                      WHERE xar_id     = ?";
-            $bindvars = array($compare['string'], $compare['date'], $link['id']);
+                      WHERE xar_hid     = ?";
+            $bindvars = array($compare['string'], $compare['date'], $link['hid']);
             $result =& $dbconn->Execute($query,$bindvars);
             if (!$result) return;
+
+            // Require the xmlParser class
+            require_once('modules/base/xarclass/xmlParser.php');
+
+            // Require the feedParser class
+            require_once('modules/base/xarclass/feedParser.php');
 
             // Now that the compare is done, we need to actually update the list.
             // Create a need feedParser object
             $p = new feedParser();
 
             // Tell feedParser to parse the data
-            $info = $p->parseFeed($feeddata);
+            $info = $p->parseFeed($filedata);
 
             if (empty($info['warning'])){
                 foreach ($info as $content){

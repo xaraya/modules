@@ -31,11 +31,7 @@ function headlines_admin_view()
                                 'numitems' => xarModGetVar('headlines',
                                                           'itemsperpage')));
 
-    if (empty($links)) {
-        $msg = xarML('No Headlines in database, please add a site.', 'headlines');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
+    if (empty($links)) return;
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {

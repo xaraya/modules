@@ -19,7 +19,6 @@ function headlines_adminapi_getmenulinks()
                               'title' => xarML('Add a new Headline into the system'),
                               'label' => xarML('Add'));
     }
-
     if(xarSecurityCheck('EditHeadlines')) {
 
         $menulinks[] = Array('url'   => xarModURL('headlines',
@@ -28,7 +27,6 @@ function headlines_adminapi_getmenulinks()
                               'title' => xarML('View and Edit Headlines'),
                               'label' => xarML('View'));
     }
-
     if(xarSecurityCheck('AdminHeadlines')) {
 
         $menulinks[] = Array('url'   => xarModURL('headlines',
@@ -37,12 +35,9 @@ function headlines_adminapi_getmenulinks()
                               'title' => xarML('Edit the Headlines Configuration'),
                               'label' => xarML('Modify Config'));
     }
-
-
     if (empty($menulinks)){
         $menulinks = '';
     }
-
     return $menulinks;
 }
 ?>

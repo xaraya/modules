@@ -31,7 +31,9 @@ function headlines_userapi_getall($args)
                      xar_title,
                      xar_desc,
                      xar_url,
-                     xar_order
+                     xar_order,
+                     xar_string,
+                     xar_date
             FROM $headlinestable";
 
     if (!empty($catid) && xarModIsHooked('categories','headlines')) {
@@ -56,18 +58,18 @@ function headlines_userapi_getall($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($hid, $title, $desc, $url, $order) = $result->fields;
+        list($hid, $title, $desc, $url, $order, $string, $date) = $result->fields;
         if (xarSecurityCheck('OverviewHeadlines')) {
             $links[] = array('hid'      => $hid,
                              'title'    => $title,
                              'desc'     => $desc,
                              'url'      => $url,
-                             'order'    => $order);
+                             'order'    => $order,
+                             'string'   => $string,
+                             'date'     => $date);
         }
     }
-
     $result->Close();
-
     return $links;
 }
 ?>

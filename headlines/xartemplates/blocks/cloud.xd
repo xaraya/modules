@@ -1,8 +1,8 @@
 <xar:if condition="!empty($feedcontent)">
 	<xar:loop name="$feedcontent">
 		<div style="padding-top: 1em;">
-			<xar:if condition="!empty($loop:item['link'])">
-				&bull; <a href="#xarVarPrepForDisplay($loop:item['link'])#">#$loop:item['title']#</a>
+			<xar:if condition="!empty($loop:item['url'])">
+				&bull; <a href="#xarVarPrepForDisplay($loop:item['url'])#">#$loop:item['title']#</a>
 			<xar:else />
 				&bull; <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
 			</xar:if>
