@@ -33,7 +33,7 @@ function bkview_userapi_get($args)
     if (!isset($repoid) || !is_numeric($repoid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'item ID', 'user', 'get', 'Bkview');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return;
     }
@@ -53,7 +53,7 @@ function bkview_userapi_get($args)
     if ($result->EOF) {
         $result->Close();
         $msg = xarML('This item does not exists:').$sql;
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }

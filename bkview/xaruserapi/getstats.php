@@ -19,7 +19,7 @@ function bkview_userapi_getstats($args)
         // repo should have been passed in
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'repository object', 'userapi', 'getstats', 'Bkview');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return;
     }
