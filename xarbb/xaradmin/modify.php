@@ -40,7 +40,7 @@ function xarbb_admin_modify()
 
             //Load Template
             $data['authid'] = xarSecGenAuthKey();
-
+            $data['createlabel'] = xarML('Submit');
             break;
 
         case 'update':

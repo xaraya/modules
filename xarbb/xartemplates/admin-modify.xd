@@ -1,35 +1,46 @@
+<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<script language="JavaScript">
+<!--
+	// Enter name of mandatory fields
+	var fieldRequired = Array("fname", "fdesc");
+	// Enter field description to appear in the dialog box
+	var fieldDescription = Array("Forum Name", "Forum Description");
+//-->
+</script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>Modify a Forum</xar:mlstring></h2>
-<form method="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<input type="hidden" name="fid" id="fid" value="#$fid#" />
-    <table border="0" width="100%">
-        <tr>
-            <td>
-                <table border="0" width="100%">
-                    <tr align="left" valign="middle">
-                        <td>
-                            <xar:mlstring>Forum Name</xar:mlstring>
-                        </td>
-                        <td>
-                            <input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" tabindex="1" />
-						</td>
-					</tr>
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Forum Description</xar:mlstring>
-						</td>
-						<td>
-							<textarea name="fdesc" rows="10" cols="50">#$fdesc#</textarea>
-						</td>
-					</tr>
-					#$hooks#
-				</table>
-			</td>
-		</tr>
-	</table>
-	<input type="submit" value="Modify Forum" align="middle" tabindex="5" />
+	<h2><xar:mlstring>Modify Existing Forum</xar:mlstring></h2>
+	<xar:if condition="!empty($warning)">
+		#$warning#
+		<br /><br />
+	</xar:if>
+
+	<form method="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" />
+
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The name of the forum that you are creating.')#"><label for="fname"><xar:mlstring>Forum Name</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The description of the forum that is being created.')#"><label for="fname"><xar:mlstring>Forum Description</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<textarea name="fdesc" rows="10" cols="50">#$fdesc#</textarea>
+	</span>
+	</div>
+
+	#$hooks#
+
+	<br /><br /><span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span>
+
 </form>
 </div>

@@ -53,6 +53,7 @@ function xarbb_admin_new()
                 $data['warning'] = $warning;
             }
 
+            $data['createlabel'] = xarML('Submit');
             $data['authid'] = xarSecGenAuthKey();
             break;
 
