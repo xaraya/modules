@@ -69,7 +69,8 @@ function uploads_init()
     unset($mimetypes);
     
     // Get datbase setup
-    list($dbconn) =& xarDBGetConn();
+    $dbconn =& xarDBGetConn();
+
     $xartable =& xarDBGetTables();
     
     $file_entry_table = $xartable['file_entry'];
@@ -164,7 +165,8 @@ function uploads_upgrade($oldversion)
         case .01:
         case .02:
             // change newhook from API to GUI
-            list($dbconn) =& xarDBGetConn();
+
+           $dbconn =& xarDBGetConn();
 
             $hookstable = xarDBGetSiteTablePrefix() . '_hooks';
             $query = "UPDATE $hookstable
@@ -181,8 +183,8 @@ function uploads_upgrade($oldversion)
             
             
             // Had problems with unregister not working in beta testing... So forcefully removing these
-            list($dbconn) =& xarDBGetConn();
-        
+            $dbconn =& xarDBGetConn();
+
             $hookstable = xarDBGetSiteTablePrefix() . '_hooks';
             $query = "DELETE FROM $hookstable
                             WHERE xar_tmodule='uploads' 
@@ -199,12 +201,13 @@ function uploads_upgrade($oldversion)
 //            ALTER TABLE `xar_uploads` ADD `ulmime` VARCHAR( 128 ) DEFAULT 'application/octet-stream' NOT NULL ;
 
             // Get database information
-            list($dbconn) =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+
+			$xartable =& xarDBGetTables();
             $linkagetable =& $xartable['uploads'];
 
             xarDBLoadTableMaintenanceAPI();
-            
+
             // add the xar_itemtype column
             $query = xarDBAlterTable($linkagetable,
                                      array('command' => 'add',
@@ -215,8 +218,8 @@ function uploads_upgrade($oldversion)
                                            'default' => 'application/octet-stream'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-        case .10: 
-        
+        case .10:
+
             //Not needed anymore with the dependency checks.
             if (!xarModIsAvailable('mime')) {
                 $msg = xarML('The mime module should be activated first');
@@ -226,18 +229,19 @@ function uploads_upgrade($oldversion)
 
             xarModAPILoad('uploads','user');
             xarDBLoadTableMaintenanceAPI();
-            
-            list($dbconn)        =& xarDBGetConn();
+
+            $dbconn =& xarDBGetConn();
+
             $xartables           =& xarDBGetTables();
-            
+
             $uploads_table       = xarDBGetSiteTablePrefix() . "_uploads";
             $uploads_blobs_table = xarDBGetSiteTablePrefix() . "_uploadblobs";
- 
+
             $file_entry_table    =& $xartables['file_entry'];
             $file_assoc_table    =& $xartables['file_associations'];
             $file_data_table     =& $xartables['file_data'];
-            
-            
+
+
             // Grab all the file entries from the db
             $query = "SELECT xar_ulid,
                              xar_uluid,
@@ -247,13 +251,13 @@ function uploads_upgrade($oldversion)
                              xar_ultype,
                              xar_ulmime
                         FROM $uploads_table";
-            
+
             $result  =& $dbconn->Execute($query);
-            if (!$result)  
+            if (!$result)
                 return;
-            
+
             $fileEntries = array();
-            
+
             while (!$result->EOF) {
                 $row = $result->GetRowAssoc(false);
                 $entry['xar_fileEntry_id']  = $row['xar_ulid'];
@@ -262,21 +266,21 @@ function uploads_upgrade($oldversion)
                 $entry['xar_location']      = $row['xar_ulhash'];
                 $entry['xar_status']        = ($row['xar_ulapp']) ? _UPLOADS_STATUS_APPROVED : _UPLOADS_STATUS_SUBMITTED;
                 $entry['xar_filesize']      = @filesize($row['xar_ulhash']) ? filesize($row['xar_ulhash']) : 0;
-                
+
                 switch(strtolower($row['xar_ultype'])) {
-                    case 'd':   
+                    case 'd':
                                 $entry['xar_store_type'] = _UPLOADS_STORE_DATABASE;
                                 break;
                     default:
-                    case 'f': 
+                    case 'f':
                                 $entry['xar_store_type'] = _UPLOADS_STORE_FILESYSTEM;
-                                break;  
+                                break;
                 }
                 $entry['xar_mime_type']     = xarModAPIFunc('mime','user','analyze_file', array('fileName' => $row['xar_ulhash']));
                 $fileEntries[] = $entry;
                 $result->MoveNext();
             }
-            
+
             // Create the new tables
             $file_entry_fields = array(
                 'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
@@ -294,16 +298,16 @@ function uploads_upgrade($oldversion)
             // raise an exception if it fails, in this case $sql is empty
             $query   =  xarDBCreateTable($file_entry_table, $file_entry_fields);
             $result  =& $dbconn->Execute($query);
-            if (!$result) { 
+            if (!$result) {
                 $query = xarDBDropTable($file_entry_table);
                 $result =& $dbconn->Execute($query);
                 return;
             }
-            
+
             // Add files to new database
             foreach ($fileEntries as $fileEntry) {
                 $query = "INSERT INTO $file_entry_table
-                                    ( 
+                                    (
                                       xar_fileEntry_id,
                                       xar_user_id,
                                       xar_filename,
@@ -331,7 +335,7 @@ function uploads_upgrade($oldversion)
                     return;
                 }
             }
-            
+
             $file_data_fields = array(
                 'xar_fileData_id'  => array('type'=>'integer','size'=>'big','null'=>FALSE,'increment'=>TRUE, 'primary_key'=>TRUE),
                 'xar_fileEntry_id' => array('type'=>'integer','size'=>'big','null'=>FALSE),
@@ -343,7 +347,7 @@ function uploads_upgrade($oldversion)
             $query  =  xarDBCreateTable($file_data_table, $file_data_fields);
             $result =& $dbconn->Execute($query);
             if (!$result) {
-                // if there was an error, make sure to remove the tables 
+                // if there was an error, make sure to remove the tables
                 // so the user can try the upgrade again
                 $query[] = xarDBDropTable($file_entry_table);
                 $query[] = xarDBDropTable($file_data_table);
@@ -366,7 +370,7 @@ function uploads_upgrade($oldversion)
             $query   =  xarDBCreateTable($file_assoc_table, $file_assoc_fields);
             $result  =& $dbconn->Execute($query);
             if (!$result) {
-                // if there was an error, make sure to remove the tables 
+                // if there was an error, make sure to remove the tables
                 // so the user can try the upgrade again
                 $query[] = xarDBDropTable($file_entry_table);
                 $query[] = xarDBDropTable($file_data_table);
@@ -379,7 +383,7 @@ function uploads_upgrade($oldversion)
 
             /*
              * Note: the ones below need to be moved over to the image module...
-             
+
                 xarModSetVar('uploads', 'max_image_width', '600');
                 xarModSetVar('uploads', 'max_image_height', '800');
                 xarModSetVar('uploads', 'thumbnail_setting', '0');
@@ -388,23 +392,23 @@ function uploads_upgrade($oldversion)
 
              *
              */
-             
+
             xarRemoveMasks('uploads');
             xarRemoveInstances('uploads');
-            
+
             xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
             xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
             xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
             xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
             xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
-                         
+
             $xartable =& xarDBGetTables();
             $instances[0]['header'] = 'external';
             $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
             $instances[0]['limit']  = 0;
 
             xarDefineInstance('uploads', 'File', $instances);
-            
+
             if(xarServerGetVar('PATH_TRANSLATED')) {
                 $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
             } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
@@ -412,24 +416,24 @@ function uploads_upgrade($oldversion)
             } else {
                 $base_directory = './';
             }
-            
+
             // Grab the old values
             $path_uploads_directory   = xarModGetVar('uploads','uploads_directory');
             if (empty($path_uploads_directory)) {
                 $path_uploads_directory = $base_directory . '/var/imports';
             }
-            
+
             $path_imports_directory   = xarModGetVar('uploads','import_directory');
             if (empty($import_directory)) {
                $path_imports_directory = $base_directory . '/var/imports';
             }
-            
+
             $file_maxsize             = xarModGetVar('uploads','maximum_upload_size');
             $file_censored_mimetypes  = serialize(array('application','video','audio', 'other', 'message'));
             $file_delete_confirmation = xarModGetVar('uploads','confirm_delete') ? 1 : 0;
             $file_obfuscate_on_import = xarModGetVar('uploads','obfuscate_imports') ? 1 : 0;
             $file_obfuscate_on_upload = TRUE;
-            
+
             // Now remove the old module vars
             xarModDelVar('uploads','uploads_directory');
             xarModDelVar('uploads','maximum_upload_size');
@@ -442,7 +446,7 @@ function uploads_upgrade($oldversion)
             xarModDelVar('uploads','netpbm_path');
             xarModDelVar('uploads','import_directory');
             xarModDelVar('uploads','obfuscate_imports');
-            
+
             // Now set up the new ones :)
             xarModSetVar('uploads','path.uploads-directory', $path_uploads_directory);
             xarModSetVar('uploads','path.imports-directory', $path_imports_directory);
@@ -456,7 +460,7 @@ function uploads_upgrade($oldversion)
             xarModSetVar('uploads', 'dd.fileupload.external', TRUE);
             xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
             xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
-        
+
             $data['filters']['inverse']                     = FALSE;
             $data['filters']['mimetypes'][0]['typeId']      = 0;
             $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
@@ -478,26 +482,26 @@ function uploads_upgrade($oldversion)
             unset($mimetypes);
 
             xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
-            
-            /** 
+
+            /**
              * Last, but not least, we drop the old tables:
-             * We wait to do this until the very end so that, in the event there 
+             * We wait to do this until the very end so that, in the event there
              * was a problem, we can retry at some point in time
              */
             $query = xarDBDropTable($uploads_table);
             $result =& $dbconn->Execute($query);
-            if (!$result) 
+            if (!$result)
                 return;
-            
+
             $query = xarDBDropTable($uploads_blobs_table);
             $result =& $dbconn->Execute($query);
-            if (!$result) 
+            if (!$result)
                 return;
-                
+
             return true;
         case .75:
-        default: 
-            return true;            
+        default:
+            return true;
     }
     return true;
 }
@@ -524,15 +528,16 @@ function uploads_delete()
     xarModUnregisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
 
     // Get database information
-    list($dbconn)   =& xarDBGetConn();
+
+    $dbconn =& xarDBGetConn();
     $xartables      =& xarDBGetTables();
-    
+
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartables['file_entry']);
-    if (empty($query)) 
+    if (empty($query))
         return; // throw back
 
     // Drop the table and send exception if returns false.
@@ -542,7 +547,7 @@ function uploads_delete()
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartables['file_data']);
-    if (empty($query)) 
+    if (empty($query))
         return; // throw back
 
     // Drop the table and send exception if returns false.
@@ -551,13 +556,13 @@ function uploads_delete()
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartables['file_associations']);
-    if (empty($query)) 
+    if (empty($query))
         return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     xarExceptionHandled();
-    
+
     return true;
 }
 
