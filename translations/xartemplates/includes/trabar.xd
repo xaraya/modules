@@ -33,7 +33,7 @@
 		</xar:if>
     </xar:for>
 	</select>
-    <input type="submit" value="Select"  />
+    <input type="submit" value="#xarML('Select')#"  />
     </form>
 <xar:else />
   <p>

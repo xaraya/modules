@@ -66,7 +66,7 @@
 					#xarConfigGetVar('Site.MLS.DefaultLocale')#
 				</a>
 			</span>
-			(recommended: utf)
+			<xar:mlstring>(recommended: utf)</xar:mlstring>
 			<br/>
 			<span><xar:mlstring>MLS Mode</xar:mlstring>:</span>
 			<span class="xar-title">
