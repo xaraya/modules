@@ -1,5 +1,5 @@
-repository: xaraya authsql module
-description: Xaraya authsql module repository
+repository: xaraya authinvision2 module
+description: Xaraya authinvision2 module repository
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
@@ -9,8 +9,8 @@ compression: gzip
 autofix: yes
 checkout:edit
 [marcel]checkout: get
-contact: Marcel van der Boom 
-email: marcel@xaraya.com
+contact: Jo Dalle Nogare
+email: jojodee@xaraya.com
 street: 
 city: 
 state: 
