@@ -25,23 +25,27 @@ function navigator_userapi_nested_tree_find_node( $args )
         return FALSE;
     }
 
-    $found = FALSE;
-
-    foreach ($tree as $node) {
+    foreach ($tree as $key => $node) {
         if ($node['cid'] != $search) {
             if (count($node['children'])) {
-                if (xarModAPIFUnc('navigator', 'user', 'nested_tree_find_node',
-                                    array('tree' => $node['children'],
-                                          'search' => $search))) {
+
+                $curr_found = xarModAPIFUnc('navigator', 'user', 'nested_tree_find_node',
+                                             array('tree' => &$tree[$key]['children'],
+                                                   'search' => $search));
+                if ($curr_found) {
+                    $tree[$key]['trail'] = 1;
+                    $args['tree'] = $tree;                    
                     return TRUE;
-                }
-            }
+                } 
+            } 
         } else {
+            $tree[$key]['trail'] = 1;
+            $args['tree'] = $tree;
             return TRUE;
         }
     }
-
-    return FALSE;
+    
+    return FALSE; 
 }
 
 

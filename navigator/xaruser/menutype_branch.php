@@ -94,12 +94,13 @@ function navigator_user_menutype_branch( $args )
 
     $found = FALSE;
     $search = $primary['id'];
-    foreach ($tree as $node) {
+    foreach ($tree as $key => $node) {
         if ($node['cid'] != $search) {
-            if (count($node['children'])) {
+            if (count($node['children']) && !$found) {
                 if (xarModAPIFUnc('navigator', 'user', 'nested_tree_find_node',
-                                    array('tree' => $node['children'],
+                                    array('tree' => &$tree[$key]['children'],
                                           'search' => $search))) {
+                    $found = TRUE;
                     continue;
                 }
             }
@@ -153,7 +154,6 @@ function navigator_user_menutype_branch( $args )
 
     $data['primary']  = $primary;
     $data['tree']     = $tree;
-    // xarDerefData('$data', $data, TRUE);
     return $data;
 }
 
