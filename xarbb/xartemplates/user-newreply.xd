@@ -10,10 +10,10 @@
 <script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("package[title]", "package[text]");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Reply Post Subject", "Reply Post body text");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("package[title]", "package[text]");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Reply Post Subject", "Reply Post body text");
 //-->
 </script>
 <div class="xarbb-topiccontrols">
