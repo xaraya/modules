@@ -72,25 +72,26 @@ function articles_glossaryblock_display($blockinfo)
 
     if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
         // Category not assigned to article.
-        return;
+        unset($article);
     }
 
-    // No glossary item found.
-    if (empty($article)) {return;}
-
-    $vars['definition'] = $article['summary'];
-    $vars['term'] = $glossaryterm;
-    $vars['detailurl'] = xarModURL(
-        'articles', 'user', 'display',
-        array('aid' => $article['aid'], 'ptid' => $article['pubtypeid'])
-    );
-    $vars['detailavailable'] = !empty($article['body']);
+    // Matching glossary item found.
+    if (!empty($article)) {
+        $vars['definition'] = $article['summary'];
+        $vars['term'] = $glossaryterm;
+        $vars['detailurl'] = xarModURL(
+            'articles', 'user', 'display',
+            array('aid' => $article['aid'], 'ptid' => $article['pubtypeid'])
+        );
+        $vars['detailavailable'] = !empty($article['body']);
+    }
 
     // TODO: who uses blockid? Can this be done centrally?
     $vars['blockid'] = $blockinfo['bid'];
 
     // Replace the string '{term}' in the title with the term.
-    $blockinfo['title'] = str_replace('{term}', $glossaryterm, $blockinfo['title']);
+    // Note: the prep display prevents injected tags being rendered.
+    $blockinfo['title'] = str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $blockinfo['title']);
 
     // TODO: return $vars without rendering when the core supports it. The following
     // (commented out) line should be all that is needed.
