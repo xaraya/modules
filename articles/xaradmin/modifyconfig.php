@@ -31,8 +31,8 @@ function articles_admin_modifyconfig()
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
     if (isset($settings) && is_array($settings)) {
-        $data['itemsperpage']           = $settings['itemsperpage'];
-        $data['adminitemsperpage']      = $settings['adminitemsperpage'];
+        $data['itemsperpage']           = empty($settings['itemsperpage']) ? 20 : $settings['itemsperpage'];
+        $data['adminitemsperpage']      = empty($settings['adminitemsperpage']) ? 20 : $settings['adminitemsperpage'];
         $data['numcols']                = $settings['number_of_columns'];
         $data['defaultview']            = $settings['defaultview'];
         $data['showcategories']         = !empty($settings['showcategories']) ? 'checked' : '';
