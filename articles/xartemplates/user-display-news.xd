@@ -38,6 +38,16 @@
                 Note : <i>#$notes#</i>
           </span>
           </xar:if>
+          <xar:if condition="!empty($previous) and !empty($next)">
+          <div class="xar-normal" style="text-align:right; padding:.25em;">
+            <span>
+              #$previous#
+            </span>
+            <span>
+              #$next#
+            </span>
+          </div>
+          </xar:if>
 </div>
 
 <xar:if condition="!empty($prevart) || !empty($nextart)">

@@ -1,10 +1,10 @@
 <xar:template file="publinks" type="module" />
-<b>
+<strong>
 <xar:mlstring>Note : when you create a new publication type, the articles module will automatically
-use the templates <i>user-display-[publicationtype].xd</i> and <i>user-summary-[publicationtype].xd</i>
+use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em>
 <br /><br />
 If those templates don't exist when you try to preview or display a new article, you'll get this warning :-)</xar:mlstring>
-</b><br /><br />
+</strong><br /><br />
 
 <table border="0" cellspacing="0" cellpadding="4">
     <tr>
@@ -31,6 +31,15 @@ If those templates don't exist when you try to preview or display a new article,
         <td><xar:mlstring>Notes</xar:mlstring></td>
         <td>#$notes#</td>
     </tr>
+    <xar:if condition="!empty($previous) and !empty($next)">
+    <tr>
+    <td align="left">
+        #$previous#
+    </td><td align="right">
+        #$next#
+    </td>
+    </tr>
+    </xar:if>
 </table>
 
 <xar:mlstring>More fields may be available via dynamicdata...</xar:mlstring><br />

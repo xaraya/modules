@@ -26,6 +26,16 @@
           <span class="xar-quote">
             #$notes#
           </span>
+          <xar:if condition="!empty($previous) and !empty($next)">
+          <div class="xar-normal" style="text-align:right; padding:.25em;">
+            <span>
+              #$previous#
+            </span>
+            <span>
+              #$next#
+            </span>
+          </div>
+          </xar:if>
     </td>
   </tr>
 </table>
