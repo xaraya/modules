@@ -5,7 +5,7 @@
     <form method="post" action="#xarModUrl('sitecloud', 'admin', 'settings')#">
         <div>
         <div class="xar-norm-outline" style="padding: 0px;">
-            <!--- Module List Sort and Filter Controls table --->
+            <xar:comment> Module List Sort and Filter Controls table </xar:comment>
             <table width="100%" border="0" cellspacing="1" cellpadding="1">
               <tr>
                 <th nowrap="nowrap">
