@@ -83,7 +83,7 @@ function articles_user_viewmap()
 
     $maplink = xarModURL('articles','user','viewmap',array('by' => 'cat'));
 
-    $dump .= '<br /><form method="post" action="' . $maplink . '">';
+    $dump .= '<br /><form method="post" action="' . $maplink . '"><div>';
 
     $dump .= xarML('Filter') . ' : ';
 
@@ -98,7 +98,7 @@ function articles_user_viewmap()
                                     'values' => &$seencid,
                                     'multiple' => 0));
     }
-    $dump .= '&nbsp;&nbsp;&nbsp;<input type="submit" name="go" value="Go"></form><br />';
+    $dump .= '&nbsp;&nbsp;&nbsp;<input type="submit" name="go" value="Go" /></div></form><br />';
 
 
         // create the category tree for each root category
@@ -197,14 +197,14 @@ function articles_user_viewmap()
 
     $maplink = xarModURL('articles','user','viewmap',array('by' => 'pub'));
 
-    $dump .= '<br /><form method="post" action="' . $maplink . '">';
+    $dump .= '<br /><form method="post" action="' . $maplink . '"><div>';
 
-    $dump .= xarML('Filter') . ' : <select name="ptid" onchange="submit()"><option value=""> ' . xarML('Publication');
+    $dump .= xarML('Filter') . ' : <select name="ptid" onchange="submit()"><option value=""> ' . xarML('Publication') . '</option>';
     foreach ($publinks as $pub) {
         if ($pub['pubid'] == $ptid) {
-            $dump .= '<option value="' . $pub['pubid'] . '" selected> - ' . $pub['pubtitle'];
+            $dump .= '<option value="' . $pub['pubid'] . '" selected="selected"> - ' . $pub['pubtitle'] . '</option>';
         } else {
-            $dump .= '<option value="' . $pub['pubid'] . '"> - ' . $pub['pubtitle'];
+            $dump .= '<option value="' . $pub['pubid'] . '"> - ' . $pub['pubtitle'] . '</option>';
         }
     }
     $dump .= '</select>';
@@ -231,7 +231,7 @@ function articles_user_viewmap()
                                     'values' => &$seencid,
                                     'multiple' => 0));
     }
-    $dump .= '&nbsp;&nbsp;&nbsp;<input type="submit" name="go" value="Go"></form><br />';
+    $dump .= '&nbsp;&nbsp;&nbsp;<input type="submit" name="go" value="Go" /></div></form><br />';
 
 /* skip this for real sites...
     // get the counts for all groups of (N) categories

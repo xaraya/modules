@@ -341,9 +341,9 @@ function articles_user_search($args)
     $dump .= xarML('Filter') . ' : <select name="ptids[]" multiple><option value=""> ' . xarML('Publication');
     foreach ($pubtypes as $pubid => $pubtype) {
         if ($pubid == $ptid) {
-            $dump .= '<option value="' . $pubid . '" selected> - ' . xarVarPrepForDisplay($pubtype['descr']);
+            $dump .= '<option value="' . $pubid . '" selected="selected"> - ' . xarVarPrepForDisplay($pubtype['descr']) . '</option>';
         } else {
-            $dump .= '<option value="' . $pubid . '"> - ' . xarVarPrepForDisplay($pubtype['descr']);
+            $dump .= '<option value="' . $pubid . '"> - ' . xarVarPrepForDisplay($pubtype['descr']) . '</option>';
         }
     }
     $dump .= '</select>';
