@@ -154,8 +154,12 @@ function articles_topitemsblock_display($blockinfo)
             $ptid = $vars['pubtypeid'];
         }
         
-        if (!empty($ptid) && isset($pubtypes[$ptid]['descr']) && !empty($vars['dynamictitle'])) {
-            $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
+        if (!empty($vars['dynamictitle'])) {
+            if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
+                $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
+            } else {
+                $blockinfo['title'] .= ' ' . xarML('Content');
+            }
         }
     }
 
