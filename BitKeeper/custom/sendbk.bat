@@ -1,8 +1,15 @@
 :: Simple batch file to send bitkeeper patches to xaraya
-:: Usage: save this file with name sendbk.bat
-::        type sendbk -r[range] recipient@address.com
-::        the second argument is optional (defaults to patches@xaraya.com)
 :: by Andrea Moro andream@bufera.org
+:: Released in the public domain
+::
+:: Usage: save this file with name sendbk.bat
+::	  sendbk
+::		sends patch using range -r+ to patches@xaraya.com
+::        sendbk -r1.1000..
+::		sends patch using range -r1.1000 to patches@xaraya.com
+::	  sendbk -r1.1000 mail@mymail.com
+::	  	sends patch using range -r1.1000 to mail@mymail.com    
+::
 
 @echo off
 
@@ -19,6 +26,10 @@ goto sendit
 
 set recipient=patches@xaraya.com
 goto sendit
+
+:defaultrange
+set range=-r+
+
 
 :error
 
