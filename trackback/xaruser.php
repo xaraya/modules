@@ -14,30 +14,30 @@
 
 /**
  * the main user function (nothing interesting here - might be removed)
+ *
+ * @return array data to the template
  */
 function trackback_user_main()
 {
     // Security check
-    if (!xarSecAuthAction(0, 'Trackback::', '::', ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    if (!xarSecurityCheck('ViewTrackBack')) return;
+
 
     $data['title'] = "Modules we're currently counting display trackbacks for : (test)";
     $data['moditems'] = array();
 
-    $modlist = xarModAPIFunc('trackback','user','getmodules');
-    foreach ($modlist as $modid => $numitems) {
-        $modinfo = xarModGetInfo($modid);
-        $moditem = array();
-        $moditem['name'] = $modinfo['name'];
-        $moditem['numitems'] = $numitems;
-        $moditem['link'] = xarModURL($modinfo['name'],'user','main');
+    $modList = xarModAPIFunc('trackback','user','getmodules');
+    foreach ($modList as $modId => $numItems) {
+        $modInfo = xarModGetInfo($modId);
+        $modItem = array();
+        $modItem['name'] = $modInfo['name'];
+        $modItem['numitems'] = $numItems;
+        $modItem['link'] = xarModURL($modinfo['name'],'user','main');
 
-        $data['moditems'][] = $moditem;
+        $data['moditems'][] = $modItem;
     }
 
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Trackback Items')));
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Track Back Items')));
 
     // Return output
     return $data;
@@ -64,21 +64,21 @@ function trackback_user_display($args)
         }
     }
 
-// TODO: do you need the returnurl here too for some reason ?
+    // TODO: do you need the returnurl here too for some reason ?
 
-    $trackback = xarModAPIFunc('trackback',
+    $trackBack = xarModAPIFunc('trackback',
                              'user',
                              'get',
                              $args);
 
-    if (isset($trackback)) {
+    if (isset($trackBack)) {
         // Display current trackback or set the cached variable
         if (!xarVarIsCached('Hooks.trackback','save') ||
             xarVarGetCached('Hooks.trackback','save') == false ) {
         // TODO: do something here :-)
-            return '(' . join('-',$trackback) . ' ' . xarML('TODO: trackback output ?') . ')';
+            return '(' . join('-',$trackBack) . ' ' . xarML('TODO: trackback output ?') . ')';
         } else {
-            xarVarSetCached('Hooks.trackback','value',$trackback);
+            xarVarSetCached('Hooks.trackback','value',$trackBack);
         }
     }
 

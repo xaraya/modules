@@ -21,62 +21,70 @@ function trackback_init()
 {
     // Get database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $tables = xarDBGetTables();
 
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
-    // Create tables
-    $query = xarDBCreateTable($xartable['trackback'],
-                             array('xar_trackbackid' => array('type'        => 'integer',
-                                                            'null'        => false,
-                                                            'default'     => '0',
-                                                            'increment'   => true,
-                                                            'primary_key' => true),
-                                   'xar_moduleid'   => array('type'        => 'integer',
-                                                            'unsigned'    => true,
-                                                            'null'        => false,
-                                                            'default'     => '0'),
-                                   'xar_itemid'     => array('type'        => 'integer',
-                                                            'unsigned'    => true,
-                                                            'null'        => false,
-                                                            'default'     => '0'),
-                                   'xar_url'       => array('type'        => 'varchar',
-                                                            'null'        => false,
-                                                            'size'        => 255,
-                                                            'default'     => ''),
-                                   'xar_blog_name'       => array('type'        => 'varchar',
-                                                            'null'        => false,
-                                                            'size'        => 255,
-                                                            'default'     => ''),
-                                   'xar_title'       => array('type'        => 'varchar',
-                                                            'null'        => false,
-                                                            'size'        => 255,
-                                                            'default'     => ''),
-                                   'xar_excerpt'       => array('type'        => 'text')));
+    // $query = "CREATE TABLE $trackBackTable (
+    // trackbackid int(11) NOT NULL auto_increment,
+    // moduleid int(11) NOT NULL default 0,
+    // itemid int(11) NOT NULL default 0,
+    // url varchar(255) NOT NULL default '',
+    // blog_name varchar(255) NOT NULL default '',
+    // title varchar(255) NOT NULL default '',
+    // excerpt text,
+    // PRIMARY KEY(trackbackid))";
+    $query = xarDBCreateTable($tables['trackback'],
+                             array('trackbackid' => array('type'        => 'integer',
+                                                          'null'        => false,
+                                                          'default'     => '0',
+                                                          'increment'   => true,
+                                                          'primary_key' => true),
+                                   'moduleid'    => array('type'        => 'integer',
+                                                          'unsigned'    => true,
+                                                          'null'        => false,
+                                                          'default'     => '0'),
+                                   'itemid'      => array('type'        => 'integer',
+                                                          'unsigned'    => true,
+                                                          'null'        => false,
+                                                          'default'     => '0'),
+                                   'url'         => array('type'        => 'varchar',
+                                                          'null'        => false,
+                                                          'size'        => 255,
+                                                          'default'     => ''),
+                                   'blog_name'   => array('type'        => 'varchar',
+                                                          'null'        => false,
+                                                          'size'        => 255,
+                                                          'default'     => ''),
+                                   'title'       => array('type'        => 'varchar',
+                                                          'null'        => false,
+                                                          'size'        => 255,
+                                                          'default'     => ''),
+                                   'excerpt'     => array('type'        => 'text')));
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBCreateIndex($xartable['trackback'],
+    $query = xarDBCreateIndex($tables['trackback'],
                              array('name'   => 'i_'.xarDBGetSiteTablePrefix().'_trackback_moduleid',
-                                   'fields' => array('xar_moduleid'),
+                                   'fields' => array('moduleid'),
                                    'unique' => false));
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBCreateIndex($xartable['trackback'],
+    $query = xarDBCreateIndex($tables['trackback'],
                              array('name'   => 'i_'.xarDBGetSiteTablePrefix().'_trackback_itemid',
-                                   'fields' => array('xar_itemid'),
+                                   'fields' => array('itemid'),
                                    'unique' => false));
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBCreateIndex($xartable['trackback'],
+    $query = xarDBCreateIndex($tables['trackback'],
                              array('name'   => 'i_'.xarDBGetSiteTablePrefix().'_trackback_url',
-                                   'fields' => array('xar_url'),
+                                   'fields' => array('url'),
                                    'unique' => false));
 
     $result =& $dbconn->Execute($query);
@@ -107,6 +115,13 @@ function trackback_init()
                            'trackback', 'admin', 'deleteall')) {
         return false;
     }
+
+    // Define Privilege Masks
+    xarRegisterMask('ViewTrackBack', 'All', 'trackback', 'TrackBack', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('AddTrackBack','All','trackback','TrackBack','All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteTrackBack','All','trackback','TrackBack','All:All:All','ACCESS_DELETE');
+
+
 
     // Initialisation successful
     return true;
@@ -163,16 +178,20 @@ function trackback_delete()
 
     // Get database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $tables = xarDBGetTables();
 
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
     // Delete tables
-    $query = xarDBDropTable($xartable['trackback']);
+    $query = xarDBDropTable($tables['trackback']);
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
+    // Remove Privilege Masks and Instances
+    xarRemoveMasks('trackback');
+    xarRemoveInstances('trackback');
 
     // Deletion successful
     return true;

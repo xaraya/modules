@@ -14,7 +14,6 @@ $modversion['author'] = 'Gregor J. Rothfuss';
 $modversion['contact'] = 'http://greg.abstrakt.ch/';
 $modversion['admin'] = 0;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('Trackback::' => 'Module name::Item ID');
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Content';
 ?>

@@ -32,39 +32,38 @@ function trackback_userapi_get($args)
     }
 
     // Security check
-    if (!xarSecAuthAction(0, 'Trackback::', "$modname::$objectid", ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+    if (!xarSecurityCheck('ViewTrackBack', 1, 'TrackBack', "$modname:$objectid:All")) {
         return;
     }
 
-    $modid = xarModGetIDFromName($modname);
-    if (empty($modid)) {
+    $modId = xarModGetIDFromName($modname);
+    if (empty($modId)) {
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return;
     }
 
     // Database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $trackbacktable = $xartable['trackback'];
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
 
     // TODO: add item type
 
     // Get items
-    $query = "SELECT xar_url, xar_blog_name, xar_title, xar_excerpt
-            FROM $trackbacktable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'";
+    $query = "SELECT url, blog_name, title, excerpt
+            FROM $trackBackTable
+            WHERE moduleid = '" . xarVarPrepForStore($modId) . "'
+              AND itemid = '" . xarVarPrepForStore($objectid) . "'";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $res['url'] = $result->fields[0];
-    $res['blogname'] = $result->fields[1];
-    $res['title'] = $result->fields[2];
-    $res['exerpt'] = $result->fields[3];
+    $trackBack['url'] = $result->fields[0];
+    $trackBack['blogname'] = $result->fields[1];
+    $trackBack['title'] = $result->fields[2];
+    $trackBack['exerpt'] = $result->fields[3];
     $result->close();
 
-    return $res;
+    return $trackBack;
 }
 
 /**
@@ -84,8 +83,8 @@ function trackback_userapi_getitems($args)
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return;
     }
-    $modid = xarModGetIDFromName($modname);
-    if (empty($modid)) {
+    $modId = xarModGetIDFromName($modname);
+    if (empty($modId)) {
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return;
     }
@@ -97,30 +96,28 @@ function trackback_userapi_getitems($args)
     // Security check
     if (count($itemids) > 0) {
         foreach ($itemids as $itemid) {
-            if (!xarSecAuthAction(0, 'Trackback::', "$modname::$itemid", ACCESS_OVERVIEW)) {
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+            if (!xarSecurityCheck('ViewTrackBack', 1, 'TrackBack', "$modname:All:$itemid")) {
                 return;
             }
         }
     } else {
-        if (!xarSecAuthAction(0, 'Trackback::', "$modname::", ACCESS_OVERVIEW)) {
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-            return;
-        }
+            if (!xarSecurityCheck('ViewTrackBack', 1, 'TrackBack', "$modname:All:All")) {
+                return;
+            }
     }
 
     // Database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $trackbacktable = $xartable['trackback'];
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
 
     // Get items
-    $query = "SELECT xar_itemid, xar_url, xar_title, xar_excerpt
-            FROM $trackbacktable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'";
+    $query = "SELECT itemid, url, title, excerpt
+            FROM $trackBacktTable
+            WHERE moduleid = '" . xarVarPrepForStore($modId) . "'";
     if (count($itemids) > 0) {
-        $allids = join(', ',$itemids);
-        $query .= " AND xar_itemid IN ('" . xarVarPrepForStore($allids) . "')";
+        $allIds = join(', ',$itemids);
+        $query .= " AND itemid IN ('" . xarVarPrepForStore($allIds) . "')";
     }
     $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -128,12 +125,12 @@ function trackback_userapi_getitems($args)
     $tblist = array();
     while (!$result->EOF) {
         list($id,$url, $title, $exerpt) = $result->fields;
-        $tblist[$id] = $url;
+        $tbList[$id] = $url;
         $result->MoveNext();
     }
     $result->close();
 
-    return $tblist;
+    return $tbList;
 }
 
 /**
@@ -144,33 +141,30 @@ function trackback_userapi_getitems($args)
 function trackback_userapi_getmodules($args)
 {
     // Security check
-    if (!xarSecAuthAction(0, 'Trackback::', "::", ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    if (!xarSecurityCheck('ViewTrackBack')) return;
 
     // Database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $trackbacktable = $xartable['trackback'];
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
 
     // Get items
-    $query = "SELECT xar_moduleid, COUNT(xar_itemid)
-            FROM $trackbacktable
-            GROUP BY xar_moduleid";
+    $query = "SELECT moduleid, COUNT(itemid)
+            FROM $trackBackTable
+            GROUP BY moduleid";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $modlist = array();
+    $modList = array();
     while (!$result->EOF) {
-        list($modid,$numitems) = $result->fields;
-        $modlist[$modid] = $numitems;
+        list($modId,$numItems) = $result->fields;
+        $modList[$modId] = $numItems;
         $result->MoveNext();
     }
     $result->close();
 
-    return $modlist;
+    return $modList;
 }
 
 /**
@@ -187,13 +181,13 @@ function trackback_userapi_getmodules($args)
  * @param string $args['modname'] name of the module you want items from, or
  * @param int $args['modid'] ID of the module you want items from
  * @param array $args['itemids'] optional array of itemids that we are selecting on
- * @return array('table' => 'xar_trackback',
- *               'field' => 'xar_trackback.xar_itemid',
- *               'where' => 'xar_trackback.xar_itemid IN (...)
- *                           AND xar_trackback.xar_moduleid = 123',
- *               'moduleid'  => 'xar_trackback.xar_moduleid',
+ * @return array('table' => 'trackback',
+ *               'field' => 'trackbackid.itemid',
+ *               'where' => 'trackbackid.itemid IN (...)
+ *                           AND trackbackid.moduleid = 123',
+ *               'moduleid'  => 'trackbackid.moduleid',
  *               ...
- *               'urls'  => 'xar_trackback.xar_url')
+ *               'urls'  => 'trackbackid.xurl')
  */
 function trackback_userapi_leftjoin($args)
 {
@@ -216,63 +210,62 @@ function trackback_userapi_leftjoin($args)
     // Security check
     if (count($itemids) > 0) {
         foreach ($itemids as $itemid) {
-            if (!xarSecAuthAction(0, 'Trackback::', "$modname::$itemid", ACCESS_OVERVIEW)) {
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+
+            if (!xarSecurityCheck('ViewTrackBack', 1, 'TrackBack', "$modname:All:$itemid")) {
                 return;
             }
         }
     } else {
-        if (!xarSecAuthAction(0, 'Trackback::', "$modname::", ACCESS_OVERVIEW)) {
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        if (!xarSecurityCheck('ViewTrackBack', 1, 'TrackBack', "$modname:All:All")) {
             return;
         }
     }
 
     // Table definition
-    $xartable = xarDBGetTables();
-    $userstable = $xartable['trackback'];
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
 
-    $leftjoin = array();
+    $leftJoin = array();
 
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
-    $leftjoin['table'] = $xartable['trackback'];
+    $leftJoin['table'] = $tables['trackback'];
     if (!empty($modid)) {
-        $leftjoin['field'] = $xartable['trackback'] . '.xar_moduleid = ' . $modid;
-        $leftjoin['field'] .= ' AND ' . $xartable['trackback'] . '.xar_itemid';
+        $leftJoin['field'] = $tables['trackback'] . '.moduleid = ' . $modid;
+        $leftJoin['field'] .= ' AND ' . $tables['trackback'] . '.itemid';
     } else {
-        $leftjoin['field'] = $xartable['trackback'] . '.xar_itemid';
+        $leftJoin['field'] = $tables['trackback'] . '.itemid';
     }
 
     if (count($itemids) > 0) {
-        $allids = join(', ', $itemids);
-        $leftjoin['where'] = $xartable['trackback'] . '.xar_itemid IN (' .
-                             xarVarPrepForStore($allids) . ')';
+        $allIds = join(', ', $itemids);
+        $leftJoin['where'] = $tables['trackback'] . '.itemid IN (' .
+                             xarVarPrepForStore($allIds) . ')';
 /*
         if (!empty($modid)) {
-            $leftjoin['where'] .= ' AND ' .
-                                  $xartable['trackback'] . '.xar_moduleid = ' .
+            $leftJoin['where'] .= ' AND ' .
+                                  $tables['trackback'] . '.moduleid = ' .
                                   $modid;
         }
 */
     } else {
 /*
         if (!empty($modid)) {
-            $leftjoin['where'] = $xartable['trackback'] . '.xar_moduleid = ' .
+            $leftJoin['where'] = $tables['trackback'] . '.moduleid = ' .
                                  $modid;
         } else {
-            $leftjoin['where'] = '';
+            $leftJoin['where'] = '';
         }
 */
-        $leftjoin['where'] = '';
+        $leftJoin['where'] = '';
     }
 
     // Add available columns in the trackback table
     $columns = array('moduleid','itemid','urls');
     foreach ($columns as $column) {
-        $leftjoin[$column] = $xartable['trackback'] . '.xar_' . $column;
+        $leftJoin[$column] = $tables['trackback'] . $column;
     }
 
-    return $leftjoin;
+    return $leftJoin;
 }
 
 ?>

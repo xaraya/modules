@@ -42,8 +42,8 @@ function trackback_adminapi_create($args)
     if (empty($modname)) {
         $modname = xarModGetName();
     }
-    $modid = xarModGetIDFromName($modname);
-    if (empty($modid)) {
+    $modId = xarModGetIDFromName($modname);
+    if (empty($modId)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'create', 'trackback');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
@@ -55,51 +55,51 @@ function trackback_adminapi_create($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecAuthAction(0, 'Trackback::', "$modname::$objectid", ACCESS_READ)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+    if (!xarSecurityCheck('AddTrackBack', 1, 'TrackBack', "$modname:$objectid:All")) {
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $trackbacktable = $xartable['trackback'];
-
-    // Get a new trackback ID
-    $nextId = $dbconn->GenId($trackbacktable);
     // Create new trackback
     if (!isset($url)) {
-         if (isset($extrainfo['url'])) {
-             $url = $extrainfo['url'];
+         if (isset($extraInfo['url'])) {
+             $url = $extraInfo['url'];
          }
     }
 
     if (!isset($title)) {
-         if (isset($extrainfo['title'])) {
-             $title = $extrainfo['title'];
+         if (isset($extraInfo['title'])) {
+             $title = $extraInfo['title'];
          }
     }
 
     if (!isset($blogname)) {
-         if (isset($extrainfo['blogname'])) {
-             $blogname = $extrainfo['blogname'];
+         if (isset($extraInfo['blogname'])) {
+             $blogname = $extraInfo['blogname'];
          }
     }
 
     if (!isset($excerpt)) {
-         if (isset($extrainfo['excerpt'])) {
-             $excerpt = $extrainfo['excerpt'];
+         if (isset($extraInfo['excerpt'])) {
+             $excerpt = $extraInfo['excerpt'];
          }
     }
 
-    $query = "INSERT INTO $trackbacktable(xar_trackbackid,
-                                       xar_moduleid,
-                                       xar_itemid,
-                                       xar_url,
-                                       xar_blog_name,
-                                       xar_title,
-                                       xar_excerpt)
+    list($dbconn) = xarDBGetConn();
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
+
+    // Get a new trackback ID
+    $nextId = $dbconn->GenId($trackbackTable);
+
+    $query = "INSERT INTO $trackBackTable(trackbackid,
+                                          moduleid,
+                                          itemid,
+                                          url,
+                                          blog_name,
+                                          title,
+                                          excerpt)
             VALUES ($nextId,
-                    '" . xarVarPrepForStore($modid) . "',
+                    '" . xarVarPrepForStore($modId) . "',
                     '" . xarVarPrepForStore($objectid) . "',
                     '" . xarVarPrepForStore($url) . "',
                     '" . xarVarPrepForStore($blogname) . "',
@@ -109,7 +109,7 @@ function trackback_adminapi_create($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $tbid = $dbconn->PO_Insert_ID($trackbacktable, 'xar_trackbackid');
+    $tbId = $dbconn->PO_Insert_ID($trackBackTable, 'trackbackid');
 
     // hmmm, I think we'll skip calling more hooks here... :-)
     //xarModCallHooks('item', 'create', $tbid, 'trackbackid');
@@ -117,11 +117,11 @@ function trackback_adminapi_create($args)
     // Return the extra info with the id of the newly created item
     // (not that this will be of any used when called via hooks, but
     // who knows where else this might be used)
-    if (!isset($extrainfo)) {
-        $extrainfo = array();
+    if (!isset($extraInfo)) {
+        $extraInfo = array();
     }
-    $extrainfo['tbid'] = $tbid;
-    return $extrainfo;
+    $extraInfo['tbid'] = $tbId;
+    return $extraInfo;
 }
 
 /**
@@ -150,8 +150,8 @@ function trackback_adminapi_delete($args)
     if (empty($modname)) {
         $modname = xarModGetName();
     }
-    $modid = xarModGetIDFromName($modname);
-    if (empty($modid)) {
+    $modId = xarModGetIDFromName($modname);
+    if (empty($modId)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'delete', 'trackback');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
@@ -159,23 +159,23 @@ function trackback_adminapi_delete($args)
         return false;
     }
 
-// TODO: re-evaluate this for hook calls !!
+    // TODO: re-evaluate this for hook calls !!
+
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecAuthAction(0, 'Trackback::', "$modname::$objectid", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+    if (!xarSecurityCheck('DeleteTrackBack', 1, 'TrackBack', "$modname:$objectid:All")) {
         return;
     }
 
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $trackbacktable = $xartable['trackback'];
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
 
     // Don't bother looking if the item exists here...
 
-    $query = "DELETE FROM $trackbacktable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'";
+    $query = "DELETE FROM $trackBackTable
+            WHERE moduleid = '" . xarVarPrepForStore($modId) . "'
+              AND itemid = '" . xarVarPrepForStore($objectid) . "'";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -183,10 +183,10 @@ function trackback_adminapi_delete($args)
     //xarModCallHooks('item', 'delete', $exid, '');
 
     // Return the extra info
-    if (!isset($extrainfo)) {
-        $extrainfo = array();
+    if (!isset($extraInfo)) {
+        $extraInfo = array();
     }
-    return $extrainfo;
+    return $extraInfo;
 }
 
 /**
@@ -211,8 +211,8 @@ function trackback_adminapi_deleteall($args)
         return false;
     }
 
-    $modid = xarModGetIDFromName($objectid);
-    if (empty($modid)) {
+    $modId = xarModGetIDFromName($objectid);
+    if (empty($modId)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'deleteall', 'Trackback');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
@@ -224,17 +224,16 @@ function trackback_adminapi_deleteall($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecAuthAction(0, 'Trackback::', "$objectid::", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+    if (!xarSecurityCheck('DeleteTrackBack', 1, 'TrackBack', "All:$objectid:All")) {
         return;
     }
 
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $trackbacktable = $xartable['trackback'];
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
 
-    $query = "DELETE FROM $trackbacktable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'";
+    $query = "DELETE FROM $trackBackTable
+            WHERE moduleid = '" . xarVarPrepForStore($modId) . "'";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -242,10 +241,10 @@ function trackback_adminapi_deleteall($args)
     //xarModCallHooks('item', 'delete', '', '');
 
     // Return the extra info
-    if (!isset($extrainfo)) {
-        $extrainfo = array();
+    if (!isset($extraInfo)) {
+        $extraInfo = array();
     }
-    return $extrainfo;
+    return $extraInfo;
 }
 
 ?>
