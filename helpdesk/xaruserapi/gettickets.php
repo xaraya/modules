@@ -204,8 +204,6 @@ function helpdesk_userapi_gettickets($args)
     $sql .= " LIMIT  $startnum , $numitems";
 
     $results = $dbconn->Execute($sql, $bindvars); //$numitems, $startnum-1);
-echo $sql;
-echo var_dump($bindvars);
     // Check for an error
     if (!$results) { return false; }
 
