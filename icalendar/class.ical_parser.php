@@ -510,9 +510,9 @@ class iCal_Parser
             case 'DTSTART':
                 // see if the date is represented in UTC
                 $zulu = (substr($this->data,-1)=='Z') ? true : false;
-		        $this->data  = str_replace('T','',$this->data); // remove the T for easier processing
-		        $this->data  = str_replace('Z','',$this->data); // remove the Z if it exists
-		        $this->field = str_replace(';VALUE=DATE-TIME','',$this->field); // yep, we know :)
+                $this->data  = str_replace('T','',$this->data); // remove the T for easier processing
+                $this->data  = str_replace('Z','',$this->data); // remove the Z if it exists
+                $this->field = str_replace(';VALUE=DATE-TIME','',$this->field); // yep, we know :)
 
                 // DTSTART for timezones should be simple and only contain a datetime
                 // without a lot of extra parameters.
