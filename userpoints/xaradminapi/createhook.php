@@ -59,7 +59,7 @@ function userpoints_adminapi_createhook($args)
       $args['uptid'] = $uptid;
       $args['points'] = $points;
       $args['uid'] = $uid;
-
+      $args['itemtype'] = $itemtype;
       $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
  
 	// Return the extra info

@@ -52,7 +52,12 @@ function userpoints_init()
     if (!$result) return;
     
     
-    xarModSetVar('userpoints', 'defaultscore', 10);
+    xarModSetVar('userpoints', 'defaultcreate', 10.00);
+	xarModSetVar('userpoints', 'defaultdelete', 10.00);
+    xarModSetVar('userpoints', 'defaultdisplay', 0.01);
+    xarModSetVar('userpoints', 'defaultupdate', 0.01);
+    xarModSetVar('userpoints', 'defaultfrontpage', 5.00);
+
 
     //when user performs any of the CRUD actions, have the hook fire.
     if (!xarModRegisterHook('module', 'remove', 'API',
@@ -191,7 +196,11 @@ function userpoints_delete()
     }
 
     // Delete module variables
-    xarModDelVar('userpoints', 'defaultscore');
+    xarModDelVar('userpoints', 'defaultcreate');
+    xarModDelVar('userpoints', 'defaultdelete');
+    xarModDelVar('userpoints', 'defaultdisplay');
+    xarModDelVar('userpoints', 'defaultupdate');
+    xarModDelVar('userpoints', 'defaultfrontpage');
 
     // Get database information
     $dbconn =& xarDBGetConn();

@@ -10,10 +10,42 @@
 			<td colspan="2"><b>#$config['label']#</b></td>
 		</tr>
 		<tr>
-			<td><xar:mlstring>Points Earned:</xar:mlstring></td>
+			<td><xar:mlstring>Create Points:</xar:mlstring></td>
 			<td>
 
-        <input type="text" name="score[#$modname#]" id="score[#$modname#]" size="3" maxlength="3" value="#$config['score']#" />				
+        <input type="text" name="createscore[#$modname#]" id="createscore[#$modname#]" size="3" maxlength="7" value="#$config['create_score']#" />				
+
+			</td>
+		</tr>
+                <tr>
+			<td><xar:mlstring>Delete Points:</xar:mlstring></td>
+			<td>
+
+        <input type="text" name="deletescore[#$modname#]" id="deletescore[#$modname#]" size="3" maxlength="7" value="#$config['delete_score']#" />				
+
+			</td>
+		</tr>
+                <tr>
+			<td><xar:mlstring>Display Points:</xar:mlstring></td>
+			<td>
+
+        <input type="text" name="displayscore[#$modname#]" id="displayscore[#$modname#]" size="3" maxlength="7" value="#$config['display_score']#" />				
+
+			</td>
+		</tr>
+                <tr>
+			<td><xar:mlstring>Update Points:</xar:mlstring></td>
+			<td>
+
+        <input type="text" name="updatescore[#$modname#]" id="updatescore[#$modname#]" size="3" maxlength="7" value="#$config['update_score']#" />				
+
+			</td>
+		</tr>
+                <tr>
+			<td><xar:mlstring>Frontpage Points:</xar:mlstring></td>
+			<td>
+
+        <input type="text" name="frontpagescore[#$modname#]" id="frontpagescore[#$modname#]" size="3" maxlength="7" value="#$config['frontpage_score']#" />				
 
 			</td>
 		</tr>

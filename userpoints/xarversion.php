@@ -11,7 +11,7 @@
  * @author Vassilis Stratigakis 
  */
 $modversion['name']           = 'Userpoints';
-$modversion['id']             = '4579';
+$modversion['id']             = '782';
 $modversion['version']        = '1.0.0';
 $modversion['description']    = 'Earn Points For Participating';
 $modversion['credits']        = 'xardocs/credits.txt';

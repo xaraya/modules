@@ -15,11 +15,19 @@ function userpoints_admin_modifyconfig()
     // Security Check
     if (!xarSecurityCheck('AdminUserpoints')) return;
 
-    $defaultscore = xarModGetVar('userpoints', 'defaultscore');
+    $defaultcreate    = xarModGetVar('userpoints', 'defaultcreate');
+    $defaultdelete    = xarModGetVar('userpoints', 'defaultdelete');
+    $defaultdisplay   = xarModGetVar('userpoints', 'defaultdisplay');
+    $defaultupdate    = xarModGetVar('userpoints', 'defaultupdate');
+    $defaultfrontpage = xarModGetVar('userpoints', 'defaultfrontpage');
 
     $data['settings'] = array();
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
-                                         'score' => $defaultscore);
+		                                 'create_score'    => $defaultcreate,
+		                                 'delete_score'    => $defaultdelete,
+		                                 'display_score'   => $defaultdisplay,
+		                                 'update_score'    => $defaultupdate,
+		                                 'frontpage_score' => $defaultfrontpage);
 
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'userpoints'));
@@ -33,9 +41,25 @@ function userpoints_admin_modifyconfig()
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {
-                    $score = xarModGetVar('userpoints', "points.$modname.$itemtype");
-                    if (empty($score)) {
-                        $score = $defaultscore;
+                    $create_score = xarModGetVar('userpoints', "createpoints.$modname.$itemtype");
+                    if (empty($create_score)) {
+                        $create_score = $defaultcreate;
+                    }
+					$delete_score = xarModGetVar('userpoints', "deletepoints.$modname.$itemtype");
+                    if (empty($delete_score)) {
+                        $delete_score = $defaultdelete;
+                    }
+					$display_score = xarModGetVar('userpoints', "displaypoints.$modname.$itemtype");
+                    if (empty($display_score)) {
+                        $display_score = $defaultdisplay;
+                    }
+					$update_score = xarModGetVar('userpoints', "updatepoints.$modname.$itemtype");
+                    if (empty($update_score)) {
+                        $update_score = $defaultupdate;
+                    }
+					$frontpage_score = xarModGetVar('userpoints', "frontpagepoints.$modname.$itemtype");
+                    if (empty($frontpage_score)) {
+                        $frontpage_score = $defaultfrontpage;
                     }
                     if (isset($mytypes[$itemtype])) {
                         $type = $mytypes[$itemtype]['label'];
@@ -45,16 +69,40 @@ function userpoints_admin_modifyconfig()
                         $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
-                                                                    'score' => $score);
+                                                                    'create_score'    => $create_score,
+						                                            'delete_score'    => $delete_score,
+						                                            'display_score'   => $display_score,
+						                                            'update_score'    => $update_score,
+						                                            'frontpage_score' => $frontpage_score);
                 }
             } else {
-                $score = xarModGetVar('userpoints', 'points.' . $modname);
-                if (empty($score)) {
-                    $score = $defaultscore;
-                } 
+                    $create_score = xarModGetVar('userpoints', "createpoints.$modname");
+                    if (empty($create_score)) {
+                        $create_score = $defaultcreate;
+                    }
+					$delete_score = xarModGetVar('userpoints', "deletepoints.$modname");
+                    if (empty($delete_score)) {
+                        $delete_score = $defaultdelete;
+                    }
+					$display_score = xarModGetVar('userpoints', "displaypoints.$modname");
+                    if (empty($display_score)) {
+                        $display_score = $defaultdisplay;
+                    }
+					$update_score = xarModGetVar('userpoints', "updatepoints.$modname");
+                    if (empty($update_score)) {
+                        $update_score = $defaultupdate;
+                    }
+					$frontpage_score = xarModGetVar('userpoints', "frontpagepoints.$modname");
+                    if (empty($frontpage_score)) {
+                        $frontpage_score = $defaultfrontpage;
+                    }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
-                                                    'score' => $score);
+                                                    'create_score'    => $create_score,
+						                            'delete_score'    => $delete_score,
+						                            'display_score'   => $display_score,
+						                            'update_score'    => $update_score,
+						                            'frontpage_score' => $frontpage_score);
             }
         }
     }
