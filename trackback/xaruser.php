@@ -1,13 +1,16 @@
-<?php 
-// File: $Id: s.xaruser.php 1.11 02/12/22 21:48:43-05:00 John.Cox@mcnabb. $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Gregor J. Rothfuss
-// Purpose of file:  trackback user display functions
-// ----------------------------------------------------------------------
+<?php
+/**
+ * File: $Id$
+ *
+ * Trackback User Display
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage trackback
+ * @author Gregor J. Rothfuss
+ */
 
 /**
  * the main user function (nothing interesting here - might be removed)
@@ -41,11 +44,10 @@ function trackback_user_main()
 }
 
 /**
- * display the trackback (= display hook)
+ * Display the trackback (= display hook)
  *
- * @param $args['objectid'] ID of the item this trackback is for
- * @param $args['extrainfo'] not particularly relevant here
- * @returns output
+ * @param int $args['objectid'] ID of the item this trackback is for
+ * @param array $args['extrainfo'] not particularly relevant here
  * @return output with trackback information
  */
 function trackback_user_display($args)
@@ -73,7 +75,7 @@ function trackback_user_display($args)
         // Display current trackback or set the cached variable
         if (!xarVarIsCached('Hooks.trackback','save') ||
             xarVarGetCached('Hooks.trackback','save') == false ) {
-// TODO: do something here :-)
+        // TODO: do something here :-)
             return '(' . join('-',$trackback) . ' ' . xarML('TODO: trackback output ?') . ')';
         } else {
             xarVarSetCached('Hooks.trackback','value',$trackback);

@@ -1,16 +1,21 @@
-<?php 
-// File: $Id: s.xarinit.php 1.12 03/01/22 15:54:10+00:00 mikespub@sasquatch.pulpcontent.com $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Gregor J. Rothfuss
-// Purpose of file:  Initialisation functions for trackback
-// ----------------------------------------------------------------------
+<?php
+/**
+ * File: $Id$
+ *
+ * Trackback Initialialization File
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage trackback
+ * @author Gregor J. Rothfuss
+ */
 
 /**
- * initialise the trackback module
+ * Initialise the trackback module
+ *
+ * @return bool
  */
 function trackback_init()
 {
@@ -108,7 +113,10 @@ function trackback_init()
 }
 
 /**
- * upgrade the trackback module from an old version
+ * Upgrade the trackback module from an old version
+ *
+ * @param string oldVersion
+ * @return bool
  */
 function trackback_upgrade($oldversion)
 {
@@ -129,7 +137,9 @@ function trackback_upgrade($oldversion)
 }
 
 /**
- * delete the trackback module
+ * Delete the trackback module
+ *
+ * @return bool
  */
 function trackback_delete()
 {

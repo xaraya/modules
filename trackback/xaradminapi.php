@@ -1,26 +1,28 @@
-<?php 
-// File: $Id: s.xaradminapi.php 1.11 03/01/06 21:31:06-05:00 John.Cox@mcnabb. $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Gregor J. Rothfuss
-// Purpose of file:  trackback administration API
-// ----------------------------------------------------------------------
+<?php
+/**
+ * File: $Id$
+ *
+ * Trackback Admin API
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage trackback
+ * @author Gregor J. Rothfuss
+ */
 
 /**
- * create a new trackback item - hook for ('item','create','API')
+ * Create a new trackback item - hook for ('item','create','API')
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @param $args['modname'] name of the calling module (not used in hook calls)
- * @param $args['url'] url where the item is tracked (not used in hook calls)
- * @param $args['blogname'] name of the site where the item is tracked (not used in hook calls)
- * @param $args['title'] title of the trackback post (not used in hook calls)
- * @param $args['excerpt'] exccerpt from the trackback post (not used in hook calls)
- * @returns int
- * @return trackback item ID on success, void on failure
+ * @param int    $args['objectid'] ID of the object
+ * @param array  $args['extrainfo'] extra information
+ * @param string $args['modname'] name of the calling module (not used in hook calls)
+ * @param string $args['url'] url where the item is tracked (not used in hook calls)
+ * @param string $args['blogname'] name of the site where the item is tracked (not used in hook calls)
+ * @param string $args['title'] title of the trackback post (not used in hook calls)
+ * @param string $args['excerpt'] exccerpt from the trackback post (not used in hook calls)
+ * @return int trackback item ID on success, void on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function trackback_adminapi_create($args)
@@ -49,7 +51,8 @@ function trackback_adminapi_create($args)
         return;
     }
 
-// TODO: re-evaluate this for hook calls !!
+    // TODO: re-evaluate this for hook calls !!
+
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!xarSecAuthAction(0, 'Trackback::', "$modname::$objectid", ACCESS_READ)) {
@@ -67,27 +70,27 @@ function trackback_adminapi_create($args)
     if (!isset($url)) {
          if (isset($extrainfo['url'])) {
              $url = $extrainfo['url'];
-         } 
+         }
     }
 
     if (!isset($title)) {
          if (isset($extrainfo['title'])) {
              $title = $extrainfo['title'];
-         } 
+         }
     }
 
     if (!isset($blogname)) {
          if (isset($extrainfo['blogname'])) {
              $blogname = $extrainfo['blogname'];
-         } 
+         }
     }
 
     if (!isset($excerpt)) {
          if (isset($extrainfo['excerpt'])) {
              $excerpt = $extrainfo['excerpt'];
-         } 
+         }
     }
-    
+
     $query = "INSERT INTO $trackbacktable(xar_trackbackid,
                                        xar_moduleid,
                                        xar_itemid,
@@ -122,13 +125,12 @@ function trackback_adminapi_create($args)
 }
 
 /**
- * delete a trackback item - hook for ('item','delete','API')
+ * Delete a trackback item - hook for ('item','delete','API')
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @param $args['modname'] name of the calling module (not used in hook calls)
- * @returns bool
- * @return true on success, false on failure
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
+ * @param string $args['modname'] name of the calling module (not used in hook calls)
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function trackback_adminapi_delete($args)
@@ -188,12 +190,11 @@ function trackback_adminapi_delete($args)
 }
 
 /**
- * delete all trackback items for a module - hook for ('module','remove','API')
+ * Delete all trackback items for a module - hook for ('module','remove','API')
  *
- * @param $args['objectid'] ID of the object (must be the module name here !!)
- * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
+ * @param int $args['objectid'] ID of the object (must be the module name here !!)
+ * @param array $args['extrainfo'] extra information
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function trackback_adminapi_deleteall($args)
@@ -219,7 +220,8 @@ function trackback_adminapi_deleteall($args)
         return false;
     }
 
-// TODO: re-evaluate this for hook calls !!
+    // TODO: re-evaluate this for hook calls !!
+
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!xarSecAuthAction(0, 'Trackback::', "$objectid::", ACCESS_DELETE)) {

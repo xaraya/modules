@@ -1,20 +1,23 @@
-<?php 
-// File: $Id: s.xaruserapi.php 1.12 03/01/06 21:31:07-05:00 John.Cox@mcnabb. $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Gregor J. Rothfuss
-// Purpose of file:  trackback Hook User API
-// ----------------------------------------------------------------------
+<?php
+/**
+ * File: $Id$
+ *
+ * Trackback User API
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage trackback
+ * @author Gregor J. Rothfuss
+ */
 
 /**
- * get a trackback for a specific item
- * @param $args['modname'] name of the module this trackback is for
- * @param $args['objectid'] ID of the item this trackback is for
- * @returns int
- * @return hits the corresponding hit count, or void if no hit exists
+ * Get a trackback for a specific item
+ *
+ * @param string $args['modname'] name of the module this trackback is for
+ * @param int $args['objectid'] ID of the item this trackback is for
+ * @return int hits the corresponding hit count, or void if no hit exists
  */
 function trackback_userapi_get($args)
 {
@@ -45,7 +48,7 @@ function trackback_userapi_get($args)
     $xartable = xarDBGetTables();
     $trackbacktable = $xartable['trackback'];
 
-// TODO: add item type
+    // TODO: add item type
 
     // Get items
     $query = "SELECT xar_url, xar_blog_name, xar_title, xar_excerpt
@@ -65,11 +68,11 @@ function trackback_userapi_get($args)
 }
 
 /**
- * get a trackback for a list of items
- * @param $args['modname'] name of the module you want items from
- * @param $args['itemids'] array of item IDs
- * @returns array
- * @return $array[$itemid] = $urls;
+ * Get a trackback for a list of items
+ *
+ * @param string $args['modname'] name of the module you want items from
+ * @param array $args['itemids'] array of item IDs
+ * @return array $array[$itemid] = $urls;
  */
 function trackback_userapi_getitems($args)
 {
@@ -134,10 +137,9 @@ function trackback_userapi_getitems($args)
 }
 
 /**
- * get the list of modules for which we're counting items
+ * Get the list of modules for which we're counting items
  *
- * @returns array
- * @return $array[$modid] = $numitems
+ * @return array $array[$modid] = $numitems
  */
 function trackback_userapi_getmodules($args)
 {
@@ -172,7 +174,8 @@ function trackback_userapi_getmodules($args)
 }
 
 /**
- * return the field names and correct values for joining on trackback table
+ * Return the field names and correct values for joining on trackback table
+ *
  * example : SELECT ..., $moduleid, $itemid, $hits,...
  *           FROM ...
  *           LEFT JOIN $table
@@ -181,10 +184,9 @@ function trackback_userapi_getmodules($args)
  *               AND $hits > 1000
  *               AND $where
  *
- * @param $args['modname'] name of the module you want items from, or
- * @param $args['modid'] ID of the module you want items from
- * @param $args['itemids'] optional array of itemids that we are selecting on
- * @returns array
+ * @param string $args['modname'] name of the module you want items from, or
+ * @param int $args['modid'] ID of the module you want items from
+ * @param array $args['itemids'] optional array of itemids that we are selecting on
  * @return array('table' => 'xar_trackback',
  *               'field' => 'xar_trackback.xar_itemid',
  *               'where' => 'xar_trackback.xar_itemid IN (...)
