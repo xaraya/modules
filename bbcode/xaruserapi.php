@@ -85,7 +85,7 @@ function bbcode_encode($message, $is_html_disabled)
     $message = bbcode_encode_code($message, $is_html_disabled);
 
     // change newlines to <br />'s
-    $dotransform = xarModGetVar('bbcode', 'dotransform');
+    $dotransform = xarModGetVar('bbcode', 'dolinebreak');
     if ($dotransform == 1){
         $transformtype = xarModGetVar('bbcode', 'transformtype');
         if ($transformtype == 1){
