@@ -32,9 +32,6 @@ function release_user_viewids()
 
     $data = array();
 
-    // Load API
-    if (!xarModAPILoad('release', 'user')) return;
-
     // The user API function is called. 
     $items = xarModAPIFunc('release',
                            'user',
@@ -105,9 +102,6 @@ function release_user_addid()
                                new SystemException($msg));
                 return;
             }
-
-            // Load API
-            if (!xarModAPILoad('release', 'user')) return;
 
             // The user API function is called. 
             if (!xarModAPIFunc('release',
