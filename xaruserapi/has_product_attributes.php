@@ -14,7 +14,7 @@
   function commerce_userapi_has_product_attributes($products_id) {
     $attributes_query = new xenQuery("select count(*) as count from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id = '" . $products_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $attributes = $q->output();
 
     if ($attributes['count'] > 0) {

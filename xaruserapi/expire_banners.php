@@ -17,7 +17,7 @@ require_once(DIR_FS_INC . 'xtc_set_banner_status.inc.php');
     $banners_query = new xenQuery("select b.banners_id, b.expires_date, b.expires_impressions, sum(bh.banners_shown) as banners_shown from " . TABLE_BANNERS . " b, " . TABLE_BANNERS_HISTORY . " bh where b.status = '1' and b.banners_id = bh.banners_id group by b.banners_id");
     if ($banners_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($banners = $q->output()) {
         if (xarModAPIFunc('commerce','user','not_null',array('arg' => $banners['expires_date']))) {
           if (date('Y-m-d H:i:s') >= $banners['expires_date']) {

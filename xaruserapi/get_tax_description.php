@@ -15,7 +15,7 @@
     if ($tax_query->getrows()) {
       $tax_description = '';
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($tax = $q->output()) {
         $tax_description .= $tax['tax_description'] . ' + ';
       }

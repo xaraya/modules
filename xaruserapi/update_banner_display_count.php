@@ -14,7 +14,7 @@
   function commerce_userapi_update_banner_display_count($banner_id) {
     $banner_check_query = new xenQuery("select count(*) as count from " . TABLE_BANNERS_HISTORY . " where banners_id = '" . $banner_id . "' and date_format(banners_history_date, '%Y%m%d') = date_format(now(), '%Y%m%d')");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $banner_check = $q->output();
 
     if ($banner_check['count'] > 0) {
@@ -23,6 +23,6 @@
     $q = new xenQuery("insert into " . TABLE_BANNERS_HISTORY . " (banners_id, banners_shown, banners_history_date) values ('" . $banner_id . "', 1, now())");
     }
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   }
 ?>

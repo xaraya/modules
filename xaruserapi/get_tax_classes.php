@@ -21,7 +21,7 @@ function commerce_userapi_get_tax_classes()
                   array('tax_class_id AS id','tax_class_title AS text')
                  );
     $q->setorder('tax_class_title');
-    $q->run();
+    if(!$q->run()) return;
     return $q->output();
 }
 ?>

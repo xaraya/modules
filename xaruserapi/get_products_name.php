@@ -33,7 +33,7 @@ function commerce_userapi_get_products_name($args)
     $q = new xenQuery('SELECT', $xartables['commerce_products_description']);
     $q->eq('products_id',$product_id);
     $q->eq('language_id',$language);
-    $q->run();
+    if(!$q->run()) return;
     $product = $q->row();
     return $product['products_name'];
 }

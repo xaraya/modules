@@ -16,7 +16,7 @@
     } elseif ($action == 'static') {
       $banner_query = new xenQuery("select banners_id, banners_title, banners_image, banners_html_text from " . TABLE_BANNERS . " where status = '1' and banners_id = '" . $identifier . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       return $q->output();
     } else {
       return false;

@@ -20,7 +20,7 @@ function commerce_userapi_get_address_formats($args)
                       array('address_format_id AS id','address_format_id AS text')
                      );
     $q->setorder('address_format_id');
-    $q->run();
+    if(!$q->run()) return;
     return $q->output();
   }
 ?>

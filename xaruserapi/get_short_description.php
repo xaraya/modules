@@ -16,7 +16,7 @@
 
     $product_query = new xenQuery("select products_short_description from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . $product_id . "' and language_id = '" . $language . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['products_short_description'];

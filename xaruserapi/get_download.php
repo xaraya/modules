@@ -18,7 +18,7 @@ function commerce_userapi_get_download($content_id) {
                     WHERE content_id='".$content_id."'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $content_data=$q->output();
     // update file counter
 

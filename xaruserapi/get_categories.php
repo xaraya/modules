@@ -18,7 +18,7 @@
 
     $categories_query = new xenQuery("select c.categories_id, cd.categories_name from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where parent_id = '" . xtc_db_input($parent_id) . "' and c.categories_id = cd.categories_id and cd.language_id = '" . $_SESSION['languages_id'] . "' order by sort_order, cd.categories_name");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($categories = $q->output()) {
       $categories_array[] = array('id' => $categories['categories_id'],
                                   'text' => $indent . $categories['categories_name']);

@@ -14,7 +14,7 @@
     $address_format_query = new xenQuery("select address_format_id as format_id from " . TABLE_COUNTRIES . " where countries_id = '" . $country_id . "'");
     if ($address_format_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $address_format = $q->output();
       return $address_format['format_id'];
     } else {

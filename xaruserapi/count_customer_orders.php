@@ -28,7 +28,7 @@
 
     $orders_check_query = new xenQuery("select count(*) as total from " . TABLE_ORDERS . " where customers_id = '" . (int)$id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $orders_check = $q->output();
     return $orders_check['total'];
   }

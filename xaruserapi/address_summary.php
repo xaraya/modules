@@ -16,7 +16,7 @@ function commerce_userapi_address_summary($customers_id, $address_id) {
 
     $address_query = new xenQuery("select ab.entry_street_address, ab.entry_suburb, ab.entry_postcode, ab.entry_city, ab.entry_state, ab.entry_country_id, ab.entry_zone_id, c.countries_name, c.address_format_id from " . TABLE_ADDRESS_BOOK . " ab, " . TABLE_COUNTRIES . " c where ab.address_book_id = '" . xtc_db_input($address_id) . "' and ab.customers_id = '" . xtc_db_input($customers_id) . "' and ab.entry_country_id = c.countries_id");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $address = $q->output();
 
     $street_address = $address['entry_street_address'];
@@ -28,7 +28,7 @@ function commerce_userapi_address_summary($customers_id, $address_id) {
 
     $address_format_query = new xenQuery("select address_summary from " . TABLE_ADDRESS_FORMAT . " where address_format_id = '" . $address['address_format_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $address_format = $q->output();
 
 //    eval("\$address = \"{$address_format['address_summary']}\";");

@@ -18,14 +18,14 @@
       $products_query = new xenQuery("select count(*) as total from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c where p.products_id = p2c.products_id and p.products_status = '1' and p2c.categories_id = '" . $category_id . "'");
     }
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $products = $q->output();
     $products_count += $products['total'];
 
     $child_categories_query = new xenQuery("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . $category_id . "'");
     if ($child_categories_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($child_categories = $q->output()) {
         $products_count += xtc_count_products_in_category($child_categories['categories_id'], $include_inactive);
       }

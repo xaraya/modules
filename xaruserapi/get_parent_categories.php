@@ -15,7 +15,7 @@
   function commerce_userapi_get_parent_categories(&$categories, $categories_id) {
     $parent_categories_query = new xenQuery("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" . $categories_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($parent_categories = $q->output()) {
       if ($parent_categories['parent_id'] == 0) return true;
       $categories[sizeof($categories)] = $parent_categories['parent_id'];

@@ -12,6 +12,6 @@
 
 function commerce_userapi_get_customer_status_name() {
     $row = xarModAPIFunc('commerce','user','get_customer_status');
-    return $row['name'];
+    return $row['customers_status_name'];
 }
 ?>

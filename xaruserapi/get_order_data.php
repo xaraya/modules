@@ -48,7 +48,7 @@ $order_query = new xenQuery("SELECT
                     WHERE orders_id='".$_GET['oID']."'");
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $order_data= $q->output();
   // get order status name
  $order_status_query=new xenQuery("SELECT
@@ -57,7 +57,7 @@ $order_query = new xenQuery("SELECT
                 WHERE orders_status_id='".$order_data['orders_status']."'
                 AND language_id='".$_SESSION['languages_id']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
  $order_status_data=$q->output();
  $order_data['orders_status']=$order_status_data['orders_status_name'];
  // get language name for payment method

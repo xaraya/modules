@@ -19,7 +19,7 @@ function commerce_userapi_format_price_graduated($price_string,$price_special,$c
                                             FROM ". TABLE_CURRENCIES ." WHERE
                                             code = '".$_SESSION['currency'] ."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $currencies_value=$q->output();
     $currencies_data=array();
     $currencies_data=array(

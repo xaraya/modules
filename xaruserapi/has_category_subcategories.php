@@ -13,7 +13,7 @@
   function commerce_userapi_has_category_subcategories($category_id) {
     $child_category_query = new xenQuery("select count(*) as count from " . TABLE_CATEGORIES . " where parent_id = '" . $category_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $child_category = $q->output();
 
     if ($child_category['count'] > 0) {

@@ -28,7 +28,7 @@
     $q->eq('language_id',$currentlang['id']);
     $q->setorder('customers_status_id');
     $i=1;
-    $q->run();
+    if(!$q->run()) return;
     foreach ($q->output() as $customers_statuses) {
        $i=$customers_statuses['customers_status_id'];
        $customers_statuses_array[] = array('id' => $customers_statuses['customers_status_id'],

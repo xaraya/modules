@@ -21,7 +21,7 @@ function commerce_uerapi_format_special_price ($special_price,$price,$price_spec
                                             FROM ". TABLE_CURRENCIES ." WHERE
                                             code = '".$_SESSION['currency'] ."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $currencies_value=$q->output();
     $currencies_data=array();
     $currencies_data=array(

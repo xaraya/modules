@@ -13,7 +13,7 @@
   function commerce_userapi_get_products_special_price($product_id) {
     $product_query = new xenQuery("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . $product_id . "' and status");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $product = $q->output();
 
     return $product['specials_new_products_price'];

@@ -20,7 +20,7 @@ function commerce_userapi_get_single_products_price($products_id,$price_special,
                                             WHERE
                                             products_id = '".$products_id."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $product_price = $q->output();
         $price_data=array();
         $price_data=array(

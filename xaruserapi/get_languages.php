@@ -12,7 +12,6 @@
 
 function commerce_userapi_get_languages() {
     include_once 'modules/xen/xarclasses/xenquery.php';
-    xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
 
     $q = new xenQuery('SELECT',
@@ -20,7 +19,7 @@ function commerce_userapi_get_languages() {
                       array('languages_id as id','name','code','image','directory')
                      );
     $q->setorder('sort_order');
-    $q->run();
+    if(!$q->run()) return;
     return $q->output();
 }
 ?>

@@ -16,7 +16,7 @@
 
       $customer_query = "select customers_firstname, customers_lastname from " . TABLE_CUSTOMERS . " where customers_id = '" . $_SESSION['customer_id'] . "'";
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $customer = $q->output();
 
       $wo_full_name = addslashes($customer['customers_firstname'] . ' ' . $customer['customers_lastname']);
@@ -34,11 +34,11 @@
 
     // remove entries that have expired
     $q = new xenQuery("delete from " . TABLE_WHOS_ONLINE . " where time_last_click < '" . $xx_mins_ago . "'");
-      $q->run();
+      if(!$q->run()) return;
 
     $stored_customer_query = new xenQuery("select count(*) as count from " . TABLE_WHOS_ONLINE . " where session_id = '" . $wo_session_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $stored_customer = $q->output();
 
     if ($stored_customer['count'] > 0) {

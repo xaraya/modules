@@ -15,7 +15,7 @@
                                FROM ".TABLE_PRODUCTS."
                                where products_id='".$products_id."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $tax_query_data=$q->output();
 
     return $tax_query_data['products_tax_class_id'];

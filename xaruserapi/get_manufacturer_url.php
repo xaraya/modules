@@ -10,18 +10,16 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_language($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
-    xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
-
+function commerce_userapi_get_manufacturer_url($args)
+{
     extract($args);
-    $q = new xenQuery('SELECT',
-                      $xartables['commerce_languages'],
-                      array('languages_id as id','name','code','image','directory')
-                     );
-    $q->eq('directory',$locale);
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    $xartables = xarDBGetTables();
+    $q = new xenQuery('SELECT', $xartables['commerce_manufacturers_info'], array('manufacturers_url'));
+    $q->eq('manufacturers_id', $manufacturers_id);
+    $q->eq('languages_id', $language_id);
     if(!$q->run()) return;
-    return $q->row();
+    $manufacturer = $q->row();
+    return $manufacturer['manufacturers_url'];
 }
 ?>

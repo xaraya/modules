@@ -16,7 +16,7 @@
     $banners_query->run();
     if ($banners_query->getrows($banners_query)) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($banners = $q->output()) {
         if (date('Y-m-d H:i:s') >= $banners['date_scheduled']) {
           xtc_set_banner_status($banners['banners_id'], '1');

@@ -14,7 +14,7 @@
     $products_id = xtc_get_prid($products_id);
     $stock_query = new xenQuery("select products_quantity from " . TABLE_PRODUCTS . " where products_id = '" . $products_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $stock_values = $q->output();
 
     return $stock_values['products_quantity'];

@@ -8,10 +8,13 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_recalculate_price($price, $discount)
-    {
-      $price=-100*$price/($discount-100)/100*$discount;
-      return $price;
+// parameters $price, $discount
 
-      }
- ?>
+function commerce_userapi_recalculate_price($args)
+{
+    extract($args);
+    if(!isset($discount)) $discount = 100;
+    $price = -100*$price/($discount-100)/100*$discount;
+    return $price;
+}
+?>

@@ -31,7 +31,7 @@ function commerce_userapi_get_countries($args)
         $q->setorder('countries_name');
         if ($with_iso_codes == true) {
             $q->addfields('countries_iso_code_2', 'countries_iso_code_3');
-            $q->run();
+            if(!$q->run()) return;
             echo $q->output();
             $countries_values = $q->output();
             $countries_array = array('countries_name' => $countries_values['countries_name'],
@@ -39,7 +39,7 @@ function commerce_userapi_get_countries($args)
                                      'countries_iso_code_3' => $countries_values['countries_iso_code_3']);
         }
         else {
-            $q->run();
+            if(!$q->run()) return;
             $countries_array = $q->row();
 //            $countries_array = array('countries_name' => $countries_values['countries_name']);
         }
@@ -50,7 +50,7 @@ function commerce_userapi_get_countries($args)
                           array('countries_id AS id','countries_name AS text')
                          );
         $q->setorder('countries_name');
-        $q->run();
+        if(!$q->run()) return;
         $countries_array = $q->output();
     }
     return $countries_array;

@@ -16,7 +16,7 @@
     $specials_query = new xenQuery("select specials_id from " . TABLE_SPECIALS . " where status = '1' and now() >= expires_date and expires_date > 0");
     if ($specials_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($specials = $q->output() {
         xtc_set_specials_status($specials['specials_id'], '0');
       }

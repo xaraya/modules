@@ -10,7 +10,7 @@
 function commerce_userapi_get_currencies_values($code) {
     $currency_values = new xenQuery("select * from " . TABLE_CURRENCIES . " where code = '" . $code . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $currencie_data=$q->output();
     return $currencie_data;
   }

@@ -17,7 +17,7 @@
                                   FROM ".TABLE_PRODUCTS_ATTRIBUTES."
                                   WHERE products_attributes_id='".$attribute_id."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
        $stock_data=$q->output();
     $stock_left = $stock_data['attributes_stock'] - $products_quantity;
     $out_of_stock = '';

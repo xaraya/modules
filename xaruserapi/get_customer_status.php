@@ -12,7 +12,7 @@
 
 function commerce_userapi_get_customer_status($args) {
     include_once 'modules/xen/xarclasses/xenquery.php';
-    xarModAPILoad('commerce');
+//    xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
 
     extract($args);

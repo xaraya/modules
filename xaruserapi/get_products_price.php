@@ -39,7 +39,7 @@ function commerce_userapi_get_products_price($args)
                                             products_id = '".$products_id."'");
         $product_price_query->run();
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $product_price = $q->output();
         $price_data=array();
         $price_data=array(
@@ -68,7 +68,7 @@ function commerce_userapi_get_products_price($args)
                                              FROM personal_offers_by_customers_status_".$_SESSION['customers_status']['customers_status_id']."
                                              WHERE products_id='".$products_id."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
             $group_price_data=$q->output();
             // if we found a price, everything is ok if not, we will use normal price
             if  ($group_price_data['personal_offer']!='' and $group_price_data['personal_offer']!='0.0000') {
@@ -92,7 +92,7 @@ function commerce_userapi_get_products_price($args)
                                                           WHERE products_id='".$products_id."'
                                                           AND quantity<='".$qty."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
                      $graduated_price_data=$q->output();
                      // get singleprice
                      $graduated_price_query=new xenQuery("SELECT personal_offer
@@ -100,7 +100,7 @@ function commerce_userapi_get_products_price($args)
                                                           WHERE products_id='".$products_id."'
                                                             AND quantity='".$graduated_price_data['max(quantity)']."'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
                      $graduated_price_data=$q->output();
                      $price_string=$graduated_price_data['personal_offer'];
                  } // end $_SESSION['customers_status']['customers_status_graduated_prices']=='1'

@@ -27,7 +27,7 @@ function commerce_userapi_get_shipping_status()
                  );
     $q->eq('language_id',$currentlang['id']);
     $q->setorder('shipping_status_name');
-    $q->run();
+    if(!$q->run()) return;
 
     return $q->output();
 }

@@ -13,7 +13,7 @@
   function commerce_userapi_get_subcategories(&$subcategories_array, $parent_id = 0) {
     $subcategories_query = new xenQuery("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . $parent_id . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($subcategories = $q->output()) {
       $subcategories_array[sizeof($subcategories_array)] = $subcategories['categories_id'];
       if ($subcategories['categories_id'] != $parent_id) {

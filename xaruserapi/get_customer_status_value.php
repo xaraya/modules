@@ -23,7 +23,7 @@ function commerce_userapi_get_customer_status_value($customer_id) {
   }
 
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   $customer_status_value = $q->output();
 
   xtc_session_register('customer_status_value');

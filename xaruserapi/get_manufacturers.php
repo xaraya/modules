@@ -23,7 +23,7 @@ function commerce_userapi_get_manufacturers($args)
                   array('manufacturers_id AS id','manufacturers_name AS text')
                  );
     $q->setorder('manufacturers_name');
-    $q->run();
+    if(!$q->run()) return;
 
     return array_merge($manufacturers_array,$q->output());
 }

@@ -49,7 +49,7 @@ $class_id = 1;
 
     $q->eq('tr.tax_class_id',$class_id);
     $q->setgroup('tr.tax_priority');
-    $q->run();
+    if(!$q->run()) return;
 //    $q->qecho();exit;
 
     if ($q->output() != array()) {
