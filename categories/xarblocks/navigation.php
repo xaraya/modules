@@ -143,6 +143,8 @@ function categories_navigationblock_display($blockinfo)
             return;
         }
 
+        $mastercids = array_unique($mastercids);
+
         if (!empty($startmodule)) {
             $rootcids = $mastercids;
         }
