@@ -31,8 +31,7 @@ function html_adminapi_delete($args)
 
     // Argument check
     if (!isset($cid) || !is_numeric($cid)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     'cid', 'adminapi', 'delete', 'html');
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'cid', 'adminapi', 'delete', 'html');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -51,17 +50,14 @@ function html_adminapi_delete($args)
 
     // Security Check
 	if(!xarSecurityCheck('DeleteHTML')) return;
-
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $htmltable = $xartable['html'];
 
     // Delete the tag
-    $query = "DELETE FROM $htmltable
-              WHERE xar_cid = " . xarVarPrepForStore($cid);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE FROM $htmltable WHERE xar_cid = ?";
+    $result =& $dbconn->Execute($query,array($cid));
     if (!$result) return;
 
     // If this is an html tag, then
@@ -72,9 +68,7 @@ function html_adminapi_delete($args)
                              array('id' => $html['tid']));
     
     if ($tagtype['type'] == 'html') {
-
         $allowedhtml = array();
-
         // Get the current tags from config vars
         foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $key => $value) {
             // Remove the deleted html tag from the config vars
@@ -82,16 +76,12 @@ function html_adminapi_delete($args)
                 $allowedhtml[$key] = $value;
             }
         }
-
         // Set the config vars
         xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
     }
-
     // Let any hooks know that we have deleted a html
     xarModCallHooks('item', 'delete', $cid, '');
-
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

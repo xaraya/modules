@@ -30,8 +30,7 @@ function html_adminapi_deletetype($args)
 
     // Argument check
     if (!isset($id) || !is_numeric($id)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     'id', 'adminapi', 'deletetype', 'html');
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'id', 'adminapi', 'deletetype', 'html');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -60,15 +59,13 @@ function html_adminapi_deletetype($args)
     $htmltypestable = $xartable['htmltypes'];
 
     // Delete the tag type
-    $query = "DELETE FROM $htmltypestable
-              WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE FROM $htmltypestable WHERE xar_id = ?";
+    $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;
 
     // Also delete the associated tags from the xar_html table
-    $query = "DELETE FROM $htmltable
-              WHERE xar_tid = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE FROM $htmltable WHERE xar_tid = ?";
+    $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;
 
 
@@ -76,16 +73,12 @@ function html_adminapi_deletetype($args)
     // also delete the tags from the config vars
     if ($type['type'] == 'html') {
         $allowedhtml = array();
-
         // Set the config vars to an empty array
         xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
     }
-
     // Let any hooks know that we have deleted a tag type
     xarModCallHooks('item', 'deletetype', $id, '');
-
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

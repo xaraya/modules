@@ -38,8 +38,7 @@ function html_adminapi_edit($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ',$invalid), 'adminapi', 'edit', 'html');
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'edit', 'html');
         $msg = xarML('Invalid Parameter Count');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -70,9 +69,9 @@ function html_adminapi_edit($args)
 
     // Update the html
     $query = "UPDATE $htmltable
-              SET xar_tag = '" . xarVarPrepForStore($tag) . "'
-              WHERE xar_cid = " . xarVarPrepForStore($cid);
-    $result =& $dbconn->Execute($query);
+              SET xar_tag = ?
+              WHERE xar_cid = ?";
+    $result =& $dbconn->Execute($query,array($tag, $cid));
     if (!$result) return;
 
     // If this is an html tag, then
@@ -83,9 +82,7 @@ function html_adminapi_edit($args)
                              array('id' => $html['tid']));
     
     if ($tagtype['type'] == 'html') {
-
         $allowedhtml = array();
-
         // Get the current html tags from config vars
         foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $key => $value) {
             // Update html tag from the config vars
@@ -93,19 +90,14 @@ function html_adminapi_edit($args)
             $allowedhtml[$key] = $value;
             }
         }
-
         // Add the new html tag
         $allowedhtml[$tag] = $html['allowed'];
-
         // Set the config vars
         xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
     }
-
     // Let any hooks know that we have deleted a html
     xarModCallHooks('item', 'edit', $cid, '');
-
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

@@ -38,8 +38,7 @@ function html_adminapi_edittype($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ',$invalid), 'adminapi', 'edittype', 'html');
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'edittype', 'html');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -69,16 +68,13 @@ function html_adminapi_edittype($args)
 
     // Update the tag type
     $query = "UPDATE $htmltypestable
-              SET xar_type = '" . xarVarPrepForStore($tagtype) . "'
-              WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+              SET xar_type = ?
+              WHERE xar_id = ?";
+    $result =& $dbconn->Execute($query,array($tagtype, $id));
     if (!$result) return;
-
     // Let any hooks know that we have deleted a html
     xarModCallHooks('item', 'edittype', $id, '');
-
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

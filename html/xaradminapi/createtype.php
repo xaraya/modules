@@ -46,22 +46,16 @@ function html_adminapi_createtype($args)
 
     // Trim input
     $tagtype = trim($tagtype);
-
-    // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
-    // Set tables
     $htmltypestable = $xartable['htmltypes'];
-
     // Make sure $type is lowercase
     $tagtype = strtolower($tagtype);
-
     // Check for existence of tag type
     $query = "SELECT xar_id
               FROM $htmltypestable
-              WHERE xar_type = '" . xarVarPrepForStore($tagtype) . "'";
-    $result =& $dbconn->Execute($query);
+              WHERE xar_type = ?";
+    $result =& $dbconn->Execute($query,array($tagtype));
     if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
@@ -72,28 +66,21 @@ function html_adminapi_createtype($args)
 
     // Get next ID in table
     $nextId = $dbconn->GenId($htmltypestable);
-
     // Add item
     $query = "INSERT INTO $htmltypestable (
               xar_id,
               xar_type)
             VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($tagtype) . "')";
+                    ?,
+                    ?)";
 
-    $result =& $dbconn->Execute($query);
-
-    // Check for errors
+    $result =& $dbconn->Execute($query,array($nextId, $tagtype));
     if (!$result) return;
-
     // Get the ID of the item that we inserted
     $id = $dbconn->PO_Insert_ID($htmltypestable, 'xar_id');
-
     // Let any hooks know that we have created a new tag type
     xarModCallHooks('item', 'createtype', $id, 'id');
-
     // Return the id of the newly created tag to the calling process
     return $id;
 }
-
 ?>

@@ -53,26 +53,21 @@ function html_userapi_gettype($args)
         $query = "SELECT $htmltypestable.xar_id,
                          $htmltypestable.xar_type
                   FROM  $htmltypestable
-                  WHERE $htmltypestable.xar_id = " . xarVarPrepForStore($id);
+                  WHERE $htmltypestable.xar_id = ?";
+        $result =& $dbconn->Execute($query,array($id));
     } else {
         // Get tag type by type
         $query = "SELECT $htmltypestable.xar_id,
                          $htmltypestable.xar_type
                   FROM  $htmltypestable
-                  WHERE $htmltypestable.xar_type = '" . xarVarPrepForStore($type) . "'";
+                  WHERE $htmltypestable.xar_type = ?";
+        $result =& $dbconn->Execute($query,array($type));
     }
-
-
-    $result =& $dbconn->Execute($query);
     if (!$result) return;
-
     list($id, $type) = $result->fields;
     $result->Close();
-
     $tagtype = array('id'        => $id,
                      'type'     => $type);
-
     return $tagtype;
 }
-
 ?>

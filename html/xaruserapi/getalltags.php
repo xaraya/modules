@@ -51,17 +51,9 @@ function html_userapi_getalltags($args)
         // Get ID of type 
         $query = "SELECT xar_id
                   FROM $htmltypestable
-                  WHERE xar_type = '" . xarVarPrepForStore($type) . "'";
-
-        $result =& $dbconn->Execute($query);
-
-        // Check for errors
-        if (!$result) {
-            $msg = xarML('Invalid type #(1) for #(2) function #(3)() in module #(4)',
-                         $type, 'adminapi', 'create', 'html');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
-        }
+                  WHERE xar_type = ?";
+        $result =& $dbconn->Execute($query,array($type));
+        if (!$result) return;
 
         // Get type
         list($typeid) = $result->fields;
@@ -105,8 +97,6 @@ function html_userapi_getalltags($args)
 
     // Close result set
     $result->Close();
-
     return $tags;
 }
-
 ?>

@@ -25,7 +25,6 @@
  */
 function html_adminapi_getmenulinks()
 {
-
     if (xarSecurityCheck('AddHTML')) {
 
         $menulinks[] = Array('url'   => xarModURL('html',
@@ -40,7 +39,6 @@ function html_adminapi_getmenulinks()
                               'title' => xarML('Add a new tag type for use on your site.'),
                               'label' => xarML('Add Tag Type'));
     }
-
     if (xarSecurityCheck('AdminHTML')) {
         $menulinks[] = Array('url'   => xarModURL('html',
                                                   'admin',
@@ -53,7 +51,6 @@ function html_adminapi_getmenulinks()
                               'title' => xarML('Modify the configuration of the HTML Module'),
                               'label' => xarML('Modify Config'));
     }
-
     if (xarSecurityCheck('ReadHTML')) {
         $menulinks[] = Array('url'   => xarModURL('html',
                                                   'admin',
@@ -61,20 +58,9 @@ function html_adminapi_getmenulinks()
                               'title' => xarML('View and edit tag types.'),
                               'label' => xarML('View Tag Types'));
     }
-
-/*
-    if (xarSecurityCheck('AdminHTML')) {
-        $menulinks[] = Array('url'   => xarModURL('html',
-                                                   'admin',
-                                                   'modifyconfig'),
-                              'title' => xarML('Modify the configuration for the HTML Module'),
-                              'label' => xarML('Modify Config'));
-    }
-*/
     if (empty($menulinks)){
         $menulinks = '';
     }
-
     return $menulinks;
 }
 ?>

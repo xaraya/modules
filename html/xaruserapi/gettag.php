@@ -31,8 +31,7 @@ function html_userapi_gettag($args)
 
     // Argument check
     if (!isset($cid) || !is_numeric($cid)) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     'cid', 'userapi', 'get', 'html');
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', 'cid', 'userapi', 'get', 'html');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -43,8 +42,6 @@ function html_userapi_gettag($args)
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
-    // Set table names
     $htmltable = $xartable['html'];
     $htmltypestable = $xartable['htmltypes'];
 
@@ -55,27 +52,22 @@ function html_userapi_gettag($args)
                      $htmltable.xar_tag,
                      $htmltable.xar_allowed
               FROM $htmltable, $htmltypestable
-              WHERE $htmltable.xar_cid = " . xarVarPrepForStore($cid) . "
+              WHERE $htmltable.xar_cid = ?
               AND $htmltable.xar_tid = $htmltypestable.xar_id";
 
-    $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,array($cid));
     if (!$result) return;
-
     list($cid, 
          $tid,
          $type, 
          $tag, 
          $allowed) = $result->fields;
-
     $result->Close();
-
     $tag = array('cid'      => $cid,
                  'tid'      => $tid,
                  'type'     => $type,
                  'tag'      => $tag,
                  'allowed'  => $allowed);
-
     return $tag;
 }
-
 ?>

@@ -45,8 +45,7 @@ function html_adminapi_create($args)
         $allowed = 0;
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ',$invalid), 'adminapi', 'create', 'html');
+        $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)', join(', ',$invalid), 'adminapi', 'create', 'html');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -84,12 +83,12 @@ function html_adminapi_create($args)
               xar_tag,
               xar_allowed)
             VALUES (
-              $nextId,
-              " . xarVarPrepForStore($tagtype['id']) . ",
-              '" . xarVarPrepForStore($tag) . "',
-              $allowed)";
+              ?,
+              ?,
+              ?,
+              ?)";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query,array($nextId, $tagtype['id'], $tag, $allowed));
 
     // Check for errors
     if (!$result) return;
@@ -102,20 +101,15 @@ function html_adminapi_create($args)
     if ($tagtype['type'] == 'html') {
         // Get the current html tags from config vars
         $allowedhtml = xarConfigGetVar('Site.Core.AllowableHTML');
-
         // Add the new html tag
         $allowedhtml[$tag] = $allowed;
-
-error_log($tag . " " . $allowed);
+        error_log($tag . " " . $allowed);
         // Set the config vars
         xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
     }
-
     // Let any hooks know that we have created a new tag
     xarModCallHooks('item', 'create', $cid, 'cid');
-
     // Return the id of the newly created tag to the calling process
     return $cid;
 }
-
 ?>
