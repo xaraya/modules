@@ -16,7 +16,12 @@ function categories_admin_modifycatbase()
 
         // Security check
         // TODO: category links - what security check is needed here? AdminCategoryLink? Check for base id?
-        if(!xarSecurityCheck('DeleteCategoryLink', 1, 'Link', "$modid:All:All:All")) {return;}
+        if (!empty($itemtype)) {
+            $modtype = $itemtype;
+        } else {
+            $modtype = 'All';
+        }
+        if(!xarSecurityCheck('DeleteCategoryLink', 1, 'Link', "$modid:$modtype:All:All")) {return;}
 
         $data['catbase'] = xarModAPIFunc(
             'categories', 'user', 'getcatbase',

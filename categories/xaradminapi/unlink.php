@@ -43,10 +43,16 @@ function categories_adminapi_unlink($args)
             return true;
         }
 
+        if (!empty($itemtype)) {
+            $modtype = $itemtype;
+        } else {
+            $modtype = 'All';
+        }
+
     // Note : yes, edit is enough here (cfr. updatehook)
         $cids = array_keys($childiids);
         foreach ($cids as $cid) {
-            if(!xarSecurityCheck('EditCategoryLink',1,'Link',"$modid:All:$iid:$cid")) return;
+            if(!xarSecurityCheck('EditCategoryLink',1,'Link',"$modid:$modtype:$iid:$cid")) return;
         }
     }
 

@@ -38,6 +38,11 @@ function categories_adminapi_linkcat($args)
     } else { 
         $itemtype = 0;
     }
+    if (!empty($itemtype)) {
+        $modtype = $itemtype;
+    } else {
+        $modtype = 'All';
+    }
 
     foreach ($args['cids'] as $cid) {
         $cat = xarModAPIFunc('categories',
@@ -76,7 +81,7 @@ function categories_adminapi_linkcat($args)
             {
                 foreach (array_keys($childiids) as $cid)
                 {
-                    if(!xarSecurityCheck('EditCategoryLink',1,'Link',"$args[modid]:All:$iid:$cid")) return;
+                    if(!xarSecurityCheck('EditCategoryLink',1,'Link',"$args[modid]:$modtype:$iid:$cid")) return;
                 }
             }
             // Delete old links
@@ -91,7 +96,7 @@ function categories_adminapi_linkcat($args)
             // Security check
             foreach ($args['iids'] as $iid)
             {
-                if(!xarSecurityCheck('EditCategoryLink',1,'Link',"$args[modid]:All:$iid:All")) return;
+                if(!xarSecurityCheck('EditCategoryLink',1,'Link',"$args[modid]:$modtype:$iid:All")) return;
             }
         }
     }
@@ -101,7 +106,7 @@ function categories_adminapi_linkcat($args)
        foreach ($args['cids'] as $cid)
        {
           // Security check
-          if(!xarSecurityCheck('SubmitCategoryLink',1,'Link',"$args[modid]:All:$iid:$cid")) return;
+          if(!xarSecurityCheck('SubmitCategoryLink',1,'Link',"$args[modid]:$modtype:$iid:$cid")) return;
 
           // Insert the link
           $sql = "INSERT INTO $categorieslinkagetable (

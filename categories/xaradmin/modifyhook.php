@@ -60,7 +60,12 @@ function categories_admin_modifyhook($args)
     }
 
     // Security check (return empty hook output if not allowed) - to be refined per cat
-    if (!xarSecurityCheck('EditCategoryLink',0,'Link',"$modid:All:All:All")) return '';
+    if (!empty($extrainfo['itemtype'])) {
+        $modtype = $extrainfo['itemtype'];
+    } else {
+        $modtype = 'All';
+    }
+    if (!xarSecurityCheck('EditCategoryLink',0,'Link',"$modid:$modtype:All:All")) return '';
 
     if (empty($extrainfo['mastercids']) || !is_array($extrainfo['mastercids'])) {
         // try to get cids from current settings
