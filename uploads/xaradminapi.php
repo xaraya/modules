@@ -32,11 +32,11 @@ function uploads_adminapi_download( $args )
         // Check if download exists
         if( $info['ulfile'] != '' )
         {
-            $fname="NotApproved.gif";
-            $file="modules/uploads/xarimages/NotApproved.gif";
+            $fname="notapproved.gif";
+            $file="modules/uploads/xarimages/notapproved.gif";
         } else {
-            $fname="NotFound.gif";
-            $file="modules/uploads/xarimages/NotFound.gif";
+            $fname="notfound.gif";
+            $file="modules/uploads/xarimages/notfound.gif";
         }
     } else {
         $fname=$info['ulfile'];
@@ -50,8 +50,8 @@ function uploads_adminapi_download( $args )
         
         if( !file_exists( $file ) )
         {
-            $fname="NotFound.gif";
-            $file="modules/uploads/xarimages/NotFound.gif";
+            $fname="notfound.gif";
+            $file="modules/uploads/xarimages/notfound.gif";
         } else {
 			if ( 
 					(isset($thumbwidth) && ($thumbwidth>0)) 
