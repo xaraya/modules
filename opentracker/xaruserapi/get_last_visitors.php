@@ -19,7 +19,7 @@ function opentracker_userapi_get_last_visitors($args) {
     if (!isset($modname)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'Module name', 'opentracker', 'get last visitors', 'Opentracker');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } 
     
