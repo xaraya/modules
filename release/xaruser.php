@@ -179,13 +179,20 @@ function release_user_display()
 
         case 'view':
         default:
-            $data['hooks'] = xarModCallHooks('item',
-                                             'display',
-                                             $id['rid'],
-                                             xarModURL('release',
-                                                       'user',
-                                                       'display',
-                                                        array('rid' => $rid)));
+            $hooks = xarModCallHooks('item',
+                                     'display',
+                                     $id['rid'],
+                                     xarModURL('release',
+                                               'user',
+                                               'display',
+                                               array('rid' => $rid)));
+            if (empty($hooks)) {
+                $data['hooks'] = '';
+            } elseif (is_array($hooks)) {
+                $data['hooks'] = join('',$hooks);
+            } else {
+                $data['hooks'] = $hooks;
+            }
             $data['version'] = 0;
             $data['docs'] = 0;
             $data['general'] = 2;
@@ -1140,14 +1147,20 @@ function release_user_displaynote()
                               array('uid' => $id['uid']));
 
 
-    $item['hooks'] = xarModCallHooks('item',
-                                     'display',
-                                     $item['rnid'],
-                                     xarModURL('release',
-                                               'user',
-                                               'displaynote',
-                                                array('rnid' => $rnid)));
-
+    $hooks = xarModCallHooks('item',
+                             'display',
+                             $item['rnid'],
+                             xarModURL('release',
+                                       'user',
+                                       'displaynote',
+                                       array('rnid' => $rnid)));
+    if (empty($hooks)) {
+        $item['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $item['hooks'] = join('',$hooks);
+    } else {
+        $item['hooks'] = $hooks;
+    }
     if ($item['certified'] == 2){
         $item['certifiedstatus'] = xarML('Yes');
     } else {
