@@ -29,10 +29,11 @@ function sitecloud_schedulerapi_compare()
 
             // Update the link
             $query = "UPDATE $sitecloudtable
-                      SET xar_string   = '" . xarVarPrepForStore($compare['string']) . "',
-                          xar_date     = '" . xarVarPrepForStore($compare['date']) . "'
-                      WHERE xar_id  = " . xarVarPrepForStore($link['id']);
-            $result =& $dbconn->Execute($query);
+                      SET xar_string = ?,
+                          xar_date   = ?
+                      WHERE xar_id   = ?";
+            $bindvars = array($compare['string'], $compare['date'], $link['id']);
+            $result =& $dbconn->Execute($query, $bindvars);
             if (!$result) return;
         }
     }
