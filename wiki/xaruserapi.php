@@ -278,7 +278,7 @@ function wiki_userapitransform($cContent)
             $retour = XARwikiInclude($aContenu[0]);
             $retour = preg_replace("|(%%%%)(.*?)(%%%%)|", "\\2", $retour);
             $retour = wiki_userapitransform($retour);
-            $retour = "<table border=0 cellpadding=8 cellspacing=1 width=100%><tr><td align=\"left\">" . $retour . "</td></tr></table>";
+            $retour = "<table border=\"0\" cellpadding=\"8\" cellspacing=\"1\" width=\"100%\"><tr><td align=\"left\">" . $retour . "</td></tr></table>";
             $tmpline = $retour . preg_replace("|(%%%%)(.*?)(%%%%)|",
                 "",
                 $tmpline);
@@ -442,8 +442,8 @@ function XARLinkImage($url, $alt = '')
 
     $cRetour = "\n";
     $cRetour .= "<!-- inclusion de la photo de l'article. -->\n";
-    $cRetour .= "<table cellspacing=0 cellpadding=5 border=0 align=left>\n";
-    $cRetour .= "<tr><td valign=top justify>\n";
+    $cRetour .= "<table cellspacing=\"0\" cellpadding=\"5\" border=\"0\" align=\"left\">\n";
+    $cRetour .= "<tr><td valign=\"top\">\n";
 
     if (!(empty($link))) {
         $cRetour .= "<a href=" . $link ;
