@@ -1,57 +1,58 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
-</xar:if>
 <xar:base-include-javascript module="base" filename="formcheck.js" />
-
+<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+</xar:if>
 <xar:template file="admin-menu" type="module"/>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring> Translations Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Translations Configuration</xar:mlstring></h2><br />
-<div id="tabnav">
-    <div class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</div>
+<div class="xar-mod-body"><h3><xar:mlstring>Modify Translations Configuration</xar:mlstring></h3>
+
+<dl class="xar-tabs">
+    <dt class="help" title="Choose a set of configuration options">
+        <xar:mlstring>Actions</xar:mlstring> : 
+    </dt>
     <xar:if condition="$tab eq 'locales'">
-        <div>
+        <dd class="active">
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#" class="active">
                 <xar:mlstring>Languages and Locales</xar:mlstring>
             </a>
-        </div>    
+        </dd>    
     <xar:else />
-        <div>
+        <dd>
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#">    
                 <xar:mlstring>Languages and Locales</xar:mlstring>
             </a>
-        </div>    
+        </dd>    
     </xar:if>
     <xar:if condition="$tab eq 'display'">
-        <div>
+        <dd class="active">
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
                 <xar:mlstring>Translations Display</xar:mlstring>
             </a>
-        </div>    
+        </dd>
     <xar:else />
-        <div>
+        <dd>
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">    
                 <xar:mlstring>Translations Display</xar:mlstring>
             </a>
-        </div>    
+        </dd>    
     </xar:if>
     <xar:if condition="$tab eq 'release'">
-        <div>
+        <dd class="active">
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#" class="active">
                 <xar:mlstring>Translations Release</xar:mlstring>
             </a>
-        </div>    
+        </dd>
     <xar:else />
-        <div>
+        <dd>
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#">    
                 <xar:mlstring>Translations Release</xar:mlstring>
             </a>
-        </div>    
+        </dd>    
     </xar:if>
-    </div>
+    </dl>
+
     <div style="border: 1px solid #ccc; text-align: left; width: 100%; border-top: none; padding-left: 5px;">
-    
-<xar:comment> ----------------- Begin Locale Options ------------------- </xar:comment>
+    <xar:comment> ----------------- Begin Locale Options ------------------- </xar:comment>
     <xar:if condition="$tab eq 'locales'">
         <!-- Initialization of some information -->
         <xar:set name="mlsmode">#xarConfigGetVar('Site.MLS.MLSMode')#</xar:set>
@@ -73,7 +74,7 @@
             </div>
         </form>
     
-<xar:comment> ----------------- Begin Display Options ------------------- </xar:comment>
+    <xar:comment> ----------------- Begin Display Options ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'display'" />
         <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -119,7 +120,7 @@
             </div>
         </form>
 
-<xar:comment> ----------------- Begin Release Options ------------------- </xar:comment>
+    <xar:comment> ----------------- Begin Release Options ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'release'" />
         <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -152,5 +153,5 @@
             </div>
         </form>
     </xar:if>
-</div>
+    </div>
 </div>
