@@ -51,7 +51,7 @@ function bbcode_userapi_code($args)
     //Fast Path: is we know our string is well formed, then we can do a batch replace
     if($is_well_formed && empty($stack)) {
         //No str_ireplace until PHP 5.0 :-(
-        $message = preg_replace('/\[code\]/i', '<p>' . xarML('code') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $message);
+        $message = preg_replace('/\[code\]/i', '<p>' . xarML('code') . ':</p><blockquote><div style="width: 90%; overflow: auto;">', $message);
         $message = preg_replace('/\[\/code\]/i', '</div></blockquote>', $message);
         return $message;
     }

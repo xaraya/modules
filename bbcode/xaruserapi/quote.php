@@ -51,7 +51,7 @@ function bbcode_userapi_quote($args)
     //Fast Path: is we know our string is well formed, then we can do a batch replace
     if($is_well_formed && empty($stack)) {
         //No str_ireplace until PHP 5.0 :-(
-        $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $message);
+        $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; overflow: auto;">', $message);
         $message = preg_replace('/\[\/quote\]/i', '</div></blockquote>', $message);
         return $message;
     }
@@ -65,7 +65,7 @@ function bbcode_userapi_quote($args)
     $new_offset = 0;
     foreach($tags_found as $k => $v) {
         if($v == 's') {
-            $message = & substr_replace($message, '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $k + $new_offset, 7);
+            $message = & substr_replace($message, '<p>' . xarML('Quote') . ':</p><blockquote><div style="width: 90%; overflow: auto;">', $k + $new_offset, 7);
             $new_offset += 11;
         } else {
             $message = & substr_replace($message, '</div></blockquote>', $k + $new_offset, 8);
