@@ -73,6 +73,46 @@ function xarcachemanager_adminapi_updatehook($args)
 
     switch($modname) {
         case 'blocks':
+            // first save the new settings
+            list(
+                 $nocache,
+                 $pageshared,
+                 $usershared,
+                 $cacheexpire
+                 ) = xarVarCleanFromInput(
+                                          'nocache',
+                                          'pageshared',
+                                          'usershared',
+                                          'cacheexpire'
+                                          );
+            if ($cacheexpire > 0 ) {
+                $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                              array('starttime' => $cacheexpire,
+                                                    'direction' => 'to'));
+            }
+            $systemPrefix = xarDBGetSystemTablePrefix();
+            $blocksettings = $systemPrefix . '_cache_blocks';
+            $dbconn =& xarDBGetConn();
+            $query = "SELECT xar_nocache
+                        FROM $blocksettings WHERE xar_bid = $objectid ";
+            $result =& $dbconn->Execute($query);
+            if (count($result) > 0) {
+                $query = "DELETE FROM
+                         $blocksettings WHERE xar_bid = $objectid ";
+                $result =& $dbconn->Execute($query);
+            }
+            $query = "INSERT INTO $blocksettings (xar_bid,
+                                                  xar_nocache,
+                                                  xar_page,
+                                                  xar_user,
+                                                  xar_expire)
+                        VALUES ('" . xarVarPrepForStore($objectid) . "',
+                                '" . xarVarPrepForStore($nocache) . "',
+                                '" . xarVarPrepForStore($pageshared) . "',
+                                '" . xarVarPrepForStore($usershared) . "',
+                                '" . xarVarPrepForStore($cacheexpire) . "')";
+            $result =& $dbconn->Execute($query);
+            
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
             $cacheKey = "-user-";

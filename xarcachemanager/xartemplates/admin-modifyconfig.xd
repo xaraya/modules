@@ -60,7 +60,7 @@
             </td>
         </tr>
         <tr>
-            <td><span class="help" title="The maximum lifetime of a cached page. Set to zero for no expiration."><label for="pageexpiretime">
+            <td><span class="help" title="The maximum lifetime of a cached page. Set to zero for no time based expiration."><label for="pageexpiretime">
                 <xar:mlstring>Page Cache Expiration Time (in hh:mm:ss):</xar:mlstring>
             </label></span></td>
             <td>
@@ -142,7 +142,7 @@
             </td>
         </tr>
         <tr>
-            <td><span class="help" title="The maximum lifetime of a cached block. Set to zero for no expiration."><label for="blockexpiretime">
+            <td><span class="help" title="The maximum lifetime of a cached block. Set to zero for no time based sexpiration."><label for="blockexpiretime">
                 <xar:mlstring>Block Cache Expiration Time (in hh:mm:ss):</xar:mlstring>
             </label></span></td>
             <td>

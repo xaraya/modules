@@ -19,6 +19,11 @@ function xarcachemanager_adminapi_convertseconds($args)
 
     $convertedtime = '';
     
+    // if the value is set to zero, we can leave it that way
+    if ($starttime === 0) {
+        return $starttime;
+    }
+    
     switch($direction) {
         case 'from':
             // convert to hours
@@ -45,7 +50,6 @@ function xarcachemanager_adminapi_convertseconds($args)
     }
 
     return $convertedtime;
-    
 }
 
 ?>

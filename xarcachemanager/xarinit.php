@@ -116,17 +116,17 @@ function xarcachemanager_init()
     * CREATE TABLE xar_cache_blocks (
     * xar_bid int(11) NOT NULL default '0',
     * xar_nocache tinyint(4) NOT NULL default '0',
-    * xar_dynamic tinyint(4) NOT NULL default '1',
-    * xar_priv tinyint(4) NOT NULL default '2',
-    * xar_priv int(11)
+    * xar_page tinyint(4) NOT NULL default '0',
+    * xar_user tinyint(4) NOT NULL default '0',
+    * xar_expire int(11)
     * );
     *****************************************************************/
     
     $flds = "
         xar_bid             I           NotNull DEFAULT 0,
         xar_nocache         L           NotNull DEFAULT 0,
-        xar_dynamic         L           NotNull DEFAULT 0,
-        xar_priv            L           NotNull DEFAULT 0,
+        xar_page            L           NotNull DEFAULT 0,
+        xar_user            L           NotNull DEFAULT 0,
         xar_expire          I           Null
     ";
     
@@ -149,6 +149,10 @@ function xarcachemanager_init()
     }
     if (!xarModRegisterHook('item', 'delete', 'API',
                             'xarcachemanager', 'admin', 'deletehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item', 'modify', 'GUI',
+                            'xarcachemanager', 'admin', 'modifyhook')) {
         return false;
     }
     if (!xarModRegisterHook('module', 'updateconfig', 'API',
@@ -286,6 +290,10 @@ function xarcachemanager_delete()
     }
     if (!xarModUnregisterHook('item', 'delete', 'API',
                               'xarcachemanager', 'admin', 'deletehook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'modify', 'GUI',
+                              'xarcachemanager', 'admin', 'modifyhook')) {
         return false;
     }
     if (!xarModUnregisterHook('module', 'updateconfig', 'API',

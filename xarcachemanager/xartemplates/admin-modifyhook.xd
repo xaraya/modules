@@ -1,0 +1,72 @@
+	<div style="clear: both; padding-top: 10px;">
+        <p style="float: left; width: 100%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Check this box if you do not want the output of this block to ever be cached.')#">
+                    <label for="nocache">
+                        <xar:mlstring>Do Not Cache Output:</xar:mlstring>
+                    </label>
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <xar:if condition="!empty($noCache)">
+                    <input type="checkbox" name="nocache" id="nocache" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="nocache" id="nocache" value="1" />
+                </xar:if>
+            </span>
+        </p>
+        <p style="float: left; width: 100%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Check this box if the content of this block is NOT generated dynamically based on the URI query string.')#">
+                    <label for="pageshared">
+                        <xar:mlstring>URI String Independant:</xar:mlstring>
+                    </label>
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <xar:if condition="$pageShared eq 1 ">
+                    <input type="checkbox" name="pageshared" id="pageshared" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="pageshared" id="pageshared" value="1" />
+                </xar:if>
+            </span>
+        </p>
+        <p style="float: left; width: 100%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('If the output cache of this block can be shared between users, select an appropriate level.')#">
+                    <label for="usershared">
+                        <xar:mlstring>Cache Sharing between Users:</xar:mlstring>
+                    </label>
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <select name="usershared" id="usershared" size="1">
+                    <option value="0"> No Sharing</option>
+                    <xar:if condition="$userShared eq 1">
+                        <option value="1" selected="selected">
+                    <xar:else />
+                        <option value="1">
+                    </xar:if>
+                    Group Members</option>
+                    <xar:if condition="$userShared eq 2">
+                        <option value="2" selected="selected">
+                    <xar:else />
+                        <option value="2">
+                    </xar:if>
+                    All Users</option>
+                </select>
+            </span>
+        </p>
+        <p style="float: left; width: 100%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('The maximum lifetime of the output cache of this block. Set to zero for no time based expiration.')#">
+                    <label for="cacheexpire">
+                        <xar:mlstring>Output Cache Expiration Time (in hh:mm:ss):</xar:mlstring>
+                    </label>
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <input type="text" name="cacheexpire" id="cacheexpire" value="#$cacheExpire#" size="9" maxlength="9" />
+            </span>
+        </p>
+        </div>
