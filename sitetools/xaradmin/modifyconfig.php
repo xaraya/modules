@@ -33,6 +33,7 @@ function sitetools_admin_modifyconfig()
     $data['usetimestamp']= xarModGetVar('sitetools','timestamp');
     $data['lineterm']    = xarModGetVar('sitetools','lineterm');
     $data['colnumber']    = xarModGetVar('sitetools','colnumber');    
+    $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype'); 
     $data['updatebutton']= xarVarPrepForDisplay(xarML('Update Configuration'));
 
     $data['defadopath']   = xarCoreGetVarDirPath()."/cache/adodb";

@@ -138,6 +138,7 @@ function sitetools_init()
     xarModSetVar('sitetools','lineterm','\n');
     xarModSetVar('sitetools','timestamp',1);
     xarModSetVar('sitetools','colnumber',3);
+    xarModSetVar('sitetools','defaultbktype','complete');
     /**
      * Register the module components that are privileges objects
      * Format is
@@ -250,6 +251,7 @@ function sitetools_upgrade($oldversion)
             xarModSetVar('sitetools','objectid_links',$objectid);
             //update vars for backup tool
             xarModSetVar('sitetools','colnumber',3);
+            xarModSetVar('sitetools','defaultbktype','complete');
         case 1.0:
             // Code to upgrade from version 1.0 goes here
         case 2.0:
@@ -301,6 +303,7 @@ function sitetools_delete()
     xarModDelVar('sitetools','lineterm'); 
     xarModDelVar('sitetools','timestamp');
     xarModDelVar('sitetools','colnumber');
+    xarModDelVar('sitetools','defaultbktype');
 
     // Remove Masks and Instances
     xarRemoveMasks('sitetools');
