@@ -1,0 +1,22 @@
+<xar:if condition="isset($sort) && ($sort == 'title')">
+	<xar:comment>Added to automatically display an alpha pager when articles are sorted by title.</xar:comment>
+
+	<xar:if condition="xarTplAddStyleLink('articles', 'alphapager')"></xar:if>
+
+	<xar:set name="$baselinkurl">xarModURL('articles','user','view',array('ptid' => !empty($ptid) ? $ptid : null))."&displayletter"</xar:set>
+
+	<div class="alphapager-wrapper">
+		<xar:for start="$i = 65" test="$i le 90" iter="$i++">
+			<xar:set name="$letter">chr($i)</xar:set>
+	
+			<xar:if condition="$displayletter == $letter">
+				<span>#$letter#</span>
+			<xar:else />
+				<a href="#$baselinkurl#=#$letter#">#$letter#</a>
+			</xar:if>
+	
+		</xar:for>
+		<a href="#$baselinkurl#=other">Other</a>
+	</div>
+	
+</xar:if>
