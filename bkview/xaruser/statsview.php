@@ -31,6 +31,8 @@ function bkview_user_statsview($args)
     $userlist=array();
     $counter=1;
     
+    // Bk web uses this as base:
+    // prs -h -d'$if(:Li: -gt 0){:USER: :AGE:}\n' ChangeSet
     // My slow machine wasnt going in time retrying allcsets and recentsets
     set_time_limit ( 100 );
     

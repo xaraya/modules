@@ -1,7 +1,6 @@
 <!-- common formcontent for adding and modifying a repo -->
 <input type="hidden" name="authid" value="#$authid#" />
 
-#$hooks#
 
 <table>
   <tr>
@@ -25,6 +24,10 @@
     </td>
   </tr>
 </table>
+
+<div>
+#$hooks#
+</div>
 
 <div>
   <input type="submit" value="#$submitbutton#">

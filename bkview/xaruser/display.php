@@ -58,7 +58,7 @@ function bkview_user_display($args)
     $mrgsets=$allsets - $repo->bkCountChangeSets();
     
     // Call the generic item search hook (this page is the overall search page)
-    $data['hooks'] = xarModCallHooks('item','search',$repoid,array(),'bkview');
+    $data['hooks'] = xarModCallHooks('item','search',$repoid,array());
 
     
     // Deliver the data to BL compiler
