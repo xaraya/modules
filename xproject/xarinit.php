@@ -205,6 +205,7 @@ function xproject_upgrade($oldversion)
 {
     switch($oldversion) {
         case 0.1:
+        case '0.1.0':
             break;
         case 1.0:
             break;
