@@ -19,9 +19,27 @@ function translations_admin_translate_subtype()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!xarVarFetch('subtype', 'regexp:/^(file|templates|templateincludes|templateblocks|blocks|admin|adminapi|user|userapi)$/', $subtype)) return;
+    $contexts = $GLOBALS['MLS']->getContexts();
+    $regexstring = "";
+    $i=0;
+    foreach($contexts as $context) {
+        if ($i>0) $regexstring .= "|";
+        $regexstring .= $context->getName();
+        $i++;
+    }
+    $regexstring = 'regexp:/^(' . $regexstring . ')$/';
+//    if (!xarVarFetch('subtype', 'regexp:/^(file|templates|templateincludes|templateblocks|blocks|admin|adminapi|user|userapi)$/', $subtype)) return;
+    if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
 
+    $args = array();
+    $args['subtype'] = $subtype;
+    $args['subname'] = $subname;
+    $entries = xarModAPIFunc('translations','admin','getcontextentries',$args);
+
+    $dnType = xarSessionGetVar('translations_dnType');
+    $dnName = xarSessionGetVar('translations_dnName');
+/*
     $dnType = xarSessionGetVar('translations_dnType');
     $dnName = xarSessionGetVar('translations_dnName');
 
@@ -105,6 +123,10 @@ function translations_admin_translate_subtype()
 
     $action = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$numEntries, 'numKeyEntries'=>$numKeyEntries));
     $tplData = array('entries'=>$entries, 'keyEntries'=>$keyEntries, 'action'=>$action);
+*/
+    $tplData = $entries;
+    $action = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries']));
+    $tplData['action'] = $action;
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar($subtype,$subname);
@@ -116,36 +138,5 @@ function translations_admin_translate_subtype()
     xarTplAddStyleLink('translations', 'translate_subtype');
     return $tplData;
 }
-
-function translations_grab_source_code($references, $maxReferences = NULL)
-{
-    static $files = array();
-    $result = array();
-    if ($maxReferences == NULL) {
-        $maxReferences = count($references);
-    }
-    for ($i = 0; $i < count($references) && $i < $maxReferences; $i++) {
-        $ref = $references[$i];
-        if (!isset($files[$ref['file']])) {
-            $files[$ref['file']] = file($ref['file']);
-        }
-        $j = $ref['line'] - 3;
-        if ($j < 0) $j = 0;
-        $source = array('pre'=>'', 'code'=>'', 'post'=>'');
-        for ($c = 0; $c < 5 && $j < count($files[$ref['file']]); $c++, $j++) {
-            if ($j < $ref['line'] - 1) {
-                $source['pre'] .= htmlspecialchars($files[$ref['file']][$j]).'<br/>';
-            } elseif ($j == $ref['line'] - 1) {
-                $source['code'] = htmlspecialchars($files[$ref['file']][$j]).'<br/>';
-            } else {
-                $source['post'] .= htmlspecialchars($files[$ref['file']][$j]).'<br/>';
-            }
-        }
-        $ref['source'] = $source;
-        $result[] = $ref;
-    }
-    return $result;
-}
-
 
 ?>

@@ -1,5 +1,13 @@
 <xar:template type="module" file="admin-menu"/>
 
+<h4>
+<xar:ml>
+  <xar:mlstring>Translating: #(1) #(2)</xar:mlstring>
+  <xar:mlvar>#$dnType#</xar:mlvar>
+  <xar:mlvar>#xarSessionGetVar('translations_dnName')#</xar:mlvar>
+</xar:ml>
+</h4>
+
 <xar:template type="module" file="trabar" />
 <xar:if condition="count($subnames) gt 0">
   <p>
@@ -9,6 +17,7 @@
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
       <li>
         <a href="#xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subnames[$i]))#">#$subnames[$i]#</a>
+        &nbsp;(#$entrydata[$i]['numEntries']# strings, #$entrydata[$i]['numKeyEntries']# keys)
       </li>
     </xar:for>
   </ul>

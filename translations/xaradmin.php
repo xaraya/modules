@@ -318,7 +318,26 @@ define('RELEASE', 4);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         return;
     }
-    $tplData['subnames'] = $backend->getContextNames($context->getType());
+    $subtype = $context->getType();
+    $subnames = $backend->getContextNames($context->getType());
+    $args = array();
+    $entrydata = array();
+    $i=0;
+    $subnams = $subnames;
+    $args['subtype'] = $context->getName();
+    foreach($subnams as $subname) {
+        $args['subname'] = $subname;
+        $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
+        if ($entry['numEntries']+$entry['numKeyEntries'] == 0) {
+            array_splice($subnames,$i,1);
+        }
+        else {
+            $entrydata[] = $entry;
+        }
+        $i++;
+    }
+    $tplData['subnames'] = $subnames;
+    $tplData['entrydata'] = $entrydata;
     $tplData['subtype'] = $context->getName();
 
     $opbar = translations_create_opbar(TRANSLATE);
@@ -469,12 +488,22 @@ function translations_create_trabar($subtype, $subname, $backend=NULL)
         case XARMLS_DNTYPE_MODULE:
         $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',
                                   array('moddir'=>$dnName));
+
+        $args = array();
+        $args['subtype'] = "file";
+        $subnams = $subnames;
+
         $j = 0;
-        foreach ($subnames as $subnameinlist) {
-            $traLabels[$j] = $subnameinlist;
-            $traURLs[$j] = xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'file', 'subname'=>$subnameinlist));
-            $enabledTras[$j] = true;
-            $j++;
+        foreach ($subnams as $subnameinlist) {
+            $args['subname'] = $subnameinlist;
+            $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
+            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                array_splice($subnames,$j,1);
+                $traLabels[$j] = $subnameinlist;
+                $traURLs[$j] = xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'file', 'subname'=>$subnameinlist));
+                $enabledTras[$j] = true;
+                $j++;
+            }
         }
 
         if ($backend == NULL) {
@@ -499,8 +528,8 @@ function translations_create_trabar($subtype, $subname, $backend=NULL)
         }
 
         if ($subtype !="") {
-                if($subtype =="file") {
-                $currentTra = array_search("init", $traLabels);
+            if($subtype =="file") {
+                $currentTra = array_search($subname, $traLabels);
             }
             else {
                 $currentContext = $GLOBALS['MLS']->getContextByName($subtype);
