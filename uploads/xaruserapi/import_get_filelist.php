@@ -27,6 +27,20 @@ function uploads_userapi_import_get_filelist( $args )
         $onlyNew = FALSE;
     }
 
+    if ((isset($search) && isset($exclude)) && $search == $exclude) {
+        return array();
+    }
+
+    if (!isset($search)) {
+        $search = '.*';
+    }
+
+    if (!isset($exclude)) {
+        $exclude = NULL;
+    }
+
+    // if search and exclude are the same, we would get no results
+    // so return no results.
     $fileList = array();
 
     if (!isset($fileLocation)) {
@@ -66,9 +80,11 @@ function uploads_userapi_import_get_filelist( $args )
     } else {
         $type = -1;
     }
+
     switch ($type) {
         case _INODE_TYPE_FILE:
             if ($onlyNew) {
+
                 $file = xarModAPIfunc('uploads', 'user', 'db_get_file',
                                        array('fileLocation' => $fileLocation));
                 if (count($file)) {
@@ -76,8 +92,13 @@ function uploads_userapi_import_get_filelist( $args )
                 }
             }
             $fileName = $fileLocation;
-            $fileList["$type:$fileName"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
-                                                          array('fileLocation' => $fileLocation));
+            // if we are searching for specific files, then check and break if search doesn't match
+            if ((isset($search) && preg_match("/$search/", $fileName)) &&
+                (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
+                    $fileList["$type:$fileName"] =
+                        xarModAPIFunc('uploads', 'user', 'file_get_metadata',
+                                       array('fileLocation' => $fileLocation));
+            }
             break;
         case _INODE_TYPE_DIRECTORY:
             if ($fp = opendir($fileLocation)) {
@@ -119,22 +140,31 @@ function uploads_userapi_import_get_filelist( $args )
                             }
                             $file = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
                                                 array('fileLocation' => $fileName));
-                            $fileList["$file[inodeType]:$fileName"] = $file;
+
+                            if ((isset($search) && preg_match("/$search/", $fileName)) &&
+                                (isset($exclude) && !preg_match("/$exclude/", $fileName))) {
+                                    $file = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
+                                                        array('fileLocation' => $fileName));
+                                    $fileList["$file[inodeType]:$fileName"] = $file;
+                            }
                             break;
                         case _INODE_TYPE_DIRECTORY:
                             $dirName = "$fileLocation/$inode";
                             if ($descend) {
                                 $files = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                                         array('fileLocation' => $dirName,
-                                                            'descend' => TRUE));
+                                                          'descend' => TRUE,
+                                                          'exclude' => $exclude,
+                                                          'search' => $search));
                                 $fileList += $files;
                             } else {
-                                $files = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
-                                                        array('fileLocation' => $dirName));
 
-                                // Now we add the fileList from the directory
-                                // to the directories inode in the direoctory list
-                                $fileList["$files[inodeType]:$inode"] = $files;
+                                if ((isset($search) && preg_match("/$search/", $fileName)) &&
+                                    (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
+                                        $files = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
+                                                            array('fileLocation' => $fileName));
+                                        $fileList["$files[inodeType]:$inode"] = $files;
+                                }
                             }
                             break;
                         default:
