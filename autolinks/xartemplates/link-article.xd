@@ -16,9 +16,6 @@
 <xar:if condition="empty($aid) and 2 &gt; 1">
     #$match#
 <xar:else/>
-    <xar:comment> Array used to fetch the article or create a URL. </xar:comment>
-    <xar:comment><xar:set name="$aidarray['aid']">#$aid#</xar:set></xar:comment>
-
     <xar:comment> The trigger - the URL - can be used to select different portions of this template. </xar:comment>
     <xar:if condition="$url eq 'display'">
         <xar:comment> Provide a link to an article, given its aid, extracting the article title to display. </xar:comment>

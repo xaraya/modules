@@ -28,41 +28,53 @@
     <xar:set name="$func">'user'</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($idname) and !empty($idvalue)">
-    <xar:set name="$params[$idname]">#$idvalue#</xar:set>
+<xar:if condition="empty($idname)">
+    <xar:set name="$idname">''</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($idname2) and !empty($idvalue2)">
-    <xar:set name="$params[$idname2]">#$idvalue2#</xar:set>
+<xar:if condition="empty($idvalue)">
+    <xar:set name="$idvalue">''</xar:set>
+</xar:if>
+
+<xar:if condition="empty($idname2)">
+    <xar:set name="$idname2">''</xar:set>
+</xar:if>
+
+<xar:if condition="empty($idvalue2)">
+    <xar:set name="$idvalue2">''</xar:set>
 </xar:if>
 
 <xar:if condition="!empty($module)">
-    <xar:if condition="!empty($params)">
-        <xar:set name="$attributes['href']">#xarModURL($module,$type,$func,$params)#</xar:set>
+    <xar:if condition="!empty($idname)">
+        <xar:if condition="!empty($idname2)">
+            <xar:set name="$href">#xarModURL($module, $type, $func, array($idname =&gt; $idvalue, $idname2 =&gt; $idvalue2))#</xar:set>
+        <xar:else/>
+            <xar:set name="$href">#xarModURL($module, $type, $func, array($idname =&gt; $idvalue))#</xar:set>
+        </xar:if>
     <xar:else/>
-        <xar:set name="$attributes['href']">#xarModURL($module,$type,$func)#</xar:set>
+        <xar:set name="$href">#xarModURL($module, $type, $func)#</xar:set>
     </xar:if>
 </xar:if>
 
-<xar:if condition="empty($attributes['href'])">
-    <xar:set name="$attributes['href']">#$url#</xar:set>
+<xar:if condition="empty($href)">
+    <xar:set name="$href">#$url#</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($title)">
-    <xar:set name="$attributes['title']">#xarML($title)#</xar:set>
+<xar:if condition="empty($title)">
+    <xar:set name="$title">#xarML($title)#</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($target)">
-    <xar:set name="$attributes['target']">#$target#</xar:set>
+<xar:if condition="empty($target)">
+    <xar:set name="$target">''</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($style)">
-    <xar:set name="$attributes['style']">#$style#</xar:set>
+<xar:if condition="empty($style)">
+    <xar:set name="$style">''</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($class)">
-    <xar:set name="$attributes['class']">#$class#</xar:set>
+<xar:if condition="empty($class)">
+    <xar:set name="$class">''</xar:set>
 </xar:if>
 
 <xar:comment> Now create the actual link, based on the attributes we have defined above. </xar:comment>
-<a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $attributes)#>#xarML($text)#</a>
+<a href="#$href#" title="#$title#" class="#$class#" style="#$style#" target="#$target#">#xarML($text)#</a>
