@@ -20,7 +20,7 @@ function mime_userapi_analyze_file( $args )
 
     if (!isset($fileName)) {
         $msg = xarML('Unable to retrieve mime type. No filename supplied!');
-        xarExeptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
