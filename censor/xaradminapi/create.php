@@ -22,8 +22,8 @@ function censor_adminapi_create($args)
     // Security Check
     if (!xarSecurityCheck('AddCensor')) return;
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $censortable = $xartable['censor'];
     // Get next ID in table

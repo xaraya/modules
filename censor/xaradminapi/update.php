@@ -36,8 +36,8 @@ function censor_adminapi_update($args)
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return; 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $censortable = $xartable['censor']; 
     // Update the link

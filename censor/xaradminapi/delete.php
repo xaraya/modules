@@ -32,8 +32,8 @@ function censor_adminapi_delete($args)
     // Security Check
     if (!xarSecurityCheck('DeleteCensor')) return; 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $censortable = $xartable['censor']; 
     // Delete the item

@@ -17,8 +17,8 @@ function censor_userapi_get($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Security Check
     if(!xarSecurityCheck('ReadCensor')) return;

@@ -20,8 +20,8 @@ xarDBLoadTableMaintenanceAPI();
 function censor_init()
 {
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     // Set up module variables
     xarModSetVar('censor', 'itemsperpage', 20);
     xarModSetVar('censor', 'replace', '****');
@@ -82,8 +82,8 @@ function censor_delete()
         return false;
     }
     // Drop the table
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $censortable = $xartable['censor'];
     $query = xarDBDropTable($censortable);

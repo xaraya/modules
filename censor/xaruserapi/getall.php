@@ -23,8 +23,8 @@ function censor_userapi_getall($args)
         return $censors;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $censortable = $xartable['censor'];
 
