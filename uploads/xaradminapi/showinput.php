@@ -6,6 +6,7 @@
  * @param  $args ['value'] string the current value(s)
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
  * @param  $args ['multiple'] boolean allow multiple uploads or not
+ * @param  $args ['methods'] array of allowed methods 'trusted', 'external', 'stored' and/or 'upload'
  * @returns string
  * @return string containing the input fields
  */
@@ -25,6 +26,9 @@ function uploads_adminapi_showinput($args)
     }
     if (empty($format)) {
         $format = 'fileupload';
+    }
+    if (empty($methods)) {
+        $methods = null;
     }
 
     $data = array();
@@ -48,12 +52,21 @@ function uploads_adminapi_showinput($args)
     // used to allow selection of multiple files
     $data['multiple_' . $id] = $multiple;
 
-    $data['methods'] = array(
-        'trusted' => xarModGetVar('uploads', 'dd.fileupload.trusted') ? TRUE : FALSE,
-        'external' => xarModGetVar('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
-        'upload' => xarModGetVar('uploads', 'dd.fileupload.upload') ? TRUE : FALSE,
-        'stored' => xarModGetVar('uploads', 'dd.fileupload.stored') ? TRUE : FALSE,
-    );
+    if (isset($methods) && count($methods) > 0) {
+        $data['methods'] = array(
+            'trusted' => in_array('trusted',$methods) ? TRUE : FALSE,
+            'external' => in_array('external',$methods) ? TRUE : FALSE,
+            'upload' => in_array('upload',$methods) ? TRUE : FALSE,
+            'stored' => in_array('stored',$methods) ? TRUE : FALSE,
+        );
+    } else {
+        $data['methods'] = array(
+            'trusted' => xarModGetVar('uploads', 'dd.fileupload.trusted') ? TRUE : FALSE,
+            'external' => xarModGetVar('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
+            'upload' => xarModGetVar('uploads', 'dd.fileupload.upload') ? TRUE : FALSE,
+            'stored' => xarModGetVar('uploads', 'dd.fileupload.stored') ? TRUE : FALSE,
+        );
+    }
 
     if (!empty($value)) {
         // We use array_filter to remove any values from 

@@ -7,6 +7,7 @@
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
  * @param  $args ['multiple'] boolean allow multiple uploads or not
  * @param  $args ['maxsize'] integer maximum size for upload files
+ * @param  $args ['methods'] array allowed methods 'trusted', 'external', 'stored' and/or 'upload'
  * @returns array
  * @return array of (result, value) with result true, false or NULL (= error)
  */
@@ -30,14 +31,26 @@ function uploads_adminapi_validatevalue($args)
     if (empty($maxsize)) {
         $maxsize = 1000000;
     }
+    if (empty($methods)) {
+        $methods = null;
+    }
 
     xarModAPILoad('uploads','user');
 
-    $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-    $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
-    $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
-    $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
-    $typeCheck .= ':';
+    if (isset($methods) && count($methods) > 0) {
+        $typeCheck = 'enum:0';
+        $typeCheck .= in_array('stored',$methods) ? ':' . _UPLOADS_GET_STORED : '';
+        $typeCheck .= in_array('external',$methods) ? ':' . _UPLOADS_GET_EXTERNAL : '';
+        $typeCheck .= in_array('trusted',$methods) ? ':' . _UPLOADS_GET_LOCAL : '';
+        $typeCheck .= in_array('upload',$methods) ? ':' . _UPLOADS_GET_UPLOAD : '';
+        $typeCheck .= ':';
+    } else {
+        $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
+        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
+        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
+        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
+        $typeCheck .= ':';
+    }
 
     if (!xarVarFetch($id . '_attach_type', $typeCheck, $action, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!isset($action)) {
