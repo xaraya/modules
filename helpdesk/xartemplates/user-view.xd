@@ -7,7 +7,7 @@
 <br />
 </xar:comment>
 <xar:if condition="!empty($catid)">
-    <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="$catid" showcatcount="0" showempty="0" />
+    <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="$catid" showcatcount="0" showempty="1" />
 </xar:if>
 
 
@@ -22,6 +22,7 @@ Filter by Status:
 <form action="#xarModURL('helpdesk', 'user', 'view')#" name="options" method="post">   
 <input type="hidden" name="selection" value="#$selection#" />
 <input type="hidden" name="sortorder" value="#$sortorder#" />
+<input type="hidden" name="catid" value="#$catid#" />
 <!--<input type="hidden" name="order" value="#$order#" />-->
 <select name="statusfilter" onChange="javascript:document.options.submit();">
 <option value=""></option>

@@ -47,16 +47,10 @@ function helpdesk_user_view($args)
     $data['showlastmodifiedinsummary']  = xarModGetVar('helpdesk', 'ShowLastModifiedInSummary');
     $data['showdateenteredinsummary']   = xarModGetVar('helpdesk', 'ShowDateEnteredInSummary');
     $data['showstatusinsummary']        = xarModGetVar('helpdesk', 'ShowStatusInSummary');
-    $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');    
-    if(empty($catid))
-    {
-        $cat  = xarModAPIFunc('categories', 'user', 'getcatbase', 
-                               array('modid'    => 910,
-                                     'itemtype' => '1',
-                                     'bid' => 1));
-        $catid = $cat['cid'];
-    }
-
+    $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');
+    
+    /*
+*/
 
     // Lets get the ticket now for the view
     $data['mytickets_data']  = xarModAPIFunc('helpdesk', 
@@ -70,6 +64,15 @@ function helpdesk_user_view($args)
                                                    'startnum'  => $startnum,
                                                    'statusfilter' => $statusfilter));
     $totaltickets = sizeOf($data['mytickets_data']);    
+
+    if(empty($catid))
+    {
+        $cat  = xarModAPIFunc('categories', 'user', 'getcatbase', 
+                               array('modid'    => 910,
+                                     'itemtype' => '1',
+                                     'bid' => 1));
+        $catid = '_' . $cat['cid'];
+    }    
     
     //Setup args for pager so we don't lose our place                                                                                  
     $args = array('selection' => $selection,

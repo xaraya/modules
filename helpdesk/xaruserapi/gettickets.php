@@ -24,32 +24,37 @@ function helpdesk_userapi_gettickets($args)
     //Joins on Catids
     if(!empty($catid))
     {
-        $catlj = xarModAPIFunc('categories', 'user', 'leftjoin', 
-                               array('modid'    => 910,
-                                     'itemtype' => 1,
-                                     'cids'     => array($catid)));
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
+                              array('modid'    => 910,
+                                    'itemtype' => 1,
+                                    'cids'     => array($catid),
+                                    'andcids'  => 0));
     }
     
     // Get items Ticket Number/Date/Subject/Status/Last Update
     $sql = "SELECT DISTINCT  $helpdeskcolumn[ticket_id],
-		    $helpdeskcolumn[ticket_date],
-		    $helpdeskcolumn[ticket_subject],
-		    $helpdeskcolumn[ticket_statusid],
-		    $helpdeskcolumn[ticket_priorityid],
-		    $helpdeskcolumn[ticket_lastupdate],
-		    $helpdeskcolumn[ticket_assignedto],
-		    $helpdeskcolumn[ticket_openedby],
-		    $helpdeskcolumn[ticket_closedby]
-	    FROM    $helpdesktable ";
-	
-    if(!empty($catlj))
-    {
-        $sql .= ", " . $catlj['table'];
-        if(!empty($catlj['more']))
-        {
-            $sql .= " " . $catlj['more'];
-        }
-        $sql .= " WHERE " . $catlj['where'];
+            $helpdeskcolumn[ticket_date],
+            $helpdeskcolumn[ticket_subject],
+            $helpdeskcolumn[ticket_statusid],
+            $helpdeskcolumn[ticket_priorityid],
+            $helpdeskcolumn[ticket_lastupdate],
+            $helpdeskcolumn[ticket_assignedto],
+            $helpdeskcolumn[ticket_openedby],
+            $helpdeskcolumn[ticket_closedby]
+        FROM    $helpdesktable ";
+    $from ='';
+    if (!empty($catid) && count(array($catid)) > 0) {
+        // add this for SQL compliance when there are multiple JOINs
+        // Add the LEFT JOIN ... ON ... parts from categories
+        $from .= ' LEFT JOIN ' . $categoriesdef['table'];
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_id';
+        /*
+        if (!empty($categoriesdef['more'])) {
+            $from = '(' . $from . ')';
+            $from .= $categoriesdef['more'];
+        }*/
+        $from .= " WHERE " . $categoriesdef['where'];
+        $sql .= $from;
     }
     else
     {
@@ -122,33 +127,33 @@ function helpdesk_userapi_gettickets($args)
     }
     
     switch($sortorder) {
-	case 'TICKET_ID':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_id] $order";
-	    break;
-	case 'DATEUPDATED':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_lastupdate] $order";
-	    break;
-	case 'DATE':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_date] $order";
-	    break;
-	case 'SUBJECT':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_subject] $order";
-	    break;
-	case 'PRIORITY':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_priorityid] $order";
-	    break;
-	case 'STATUS':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_statusid] $order";
-	    break;
-	case 'OPENEDBY':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_openedby] $order";
-	    break;
-	case 'ASSIGNEDTO':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_assignedto] $order";
-	    break;
-	case 'CLOSEDBY':
-	    $sql .= " ORDER BY $helpdeskcolumn[ticket_closedby] $order";
-	    break;
+    case 'TICKET_ID':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_id] $order";
+        break;
+    case 'DATEUPDATED':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_lastupdate] $order";
+        break;
+    case 'DATE':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_date] $order";
+        break;
+    case 'SUBJECT':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_subject] $order";
+        break;
+    case 'PRIORITY':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_priorityid] $order";
+        break;
+    case 'STATUS':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_statusid] $order";
+        break;
+    case 'OPENEDBY':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_openedby] $order";
+        break;
+    case 'ASSIGNEDTO':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_assignedto] $order";
+        break;
+    case 'CLOSEDBY':
+        $sql .= " ORDER BY $helpdeskcolumn[ticket_closedby] $order";
+        break;
     }
     
     $pagerows = xarModGetVar('helpdesk', 'Default rows per page');
@@ -166,18 +171,18 @@ function helpdesk_userapi_gettickets($args)
     $fieldresults = array();
     while(list($ticket_id,  $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
           $assignedto, $openedby,   $closedby) = $results->fields) {
-	$fieldresults[] = array(
-	    'ticket_id'     => $ticket_id, 
-	    'ticketdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $ticketdate)),
-	    'subject'       => $subject,
-	    'status'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'status', 'itemid'   => $statusid, 'field'=> '')),
-	    'priority'      => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'priority', 'itemid' => $priorityid)),
-	    'lastupdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $lastupdate)),
-	    'assignedto'    => $assignedto,
-	    'openedby'      => $openedby,
-	    'closedby'      => $closedby
-	    );
-	$results->MoveNext();
+    $fieldresults[] = array(
+        'ticket_id'     => $ticket_id, 
+        'ticketdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $ticketdate)),
+        'subject'       => $subject,
+        'status'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'status', 'itemid'   => $statusid, 'field'=> '')),
+        'priority'      => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'priority', 'itemid' => $priorityid)),
+        'lastupdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $lastupdate)),
+        'assignedto'    => $assignedto,
+        'openedby'      => $openedby,
+        'closedby'      => $closedby
+        );
+    $results->MoveNext();
     }
     
     $results->close();
