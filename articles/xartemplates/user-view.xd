@@ -2,6 +2,12 @@
 <xar:if condition="!empty($ptid) or !empty($catid)">
     <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
 </xar:if>
+
+    <xar:comment>
+        You can use different user-view-[pubtype].xd templates for different pubtypes,
+        and also a separate user-view-frontpage.xd template for the articles frontpage
+    </xar:comment>
+
 <xar:if condition="!empty($author)">
     <h2>
         <xar:ml>

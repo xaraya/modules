@@ -1,6 +1,11 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Delete Article</xar:mlstring></h2>
 <div style="margin: auto;text-align: center;">
+
+    <xar:comment>
+        You can use different admin-delete-[pubtype].xd templates for different pubtypes
+    </xar:comment>
+
 <h3><xar:mlstring>Delete this article?</xar:mlstring></h3>
 <form method="post" action="&xar-modurl-articles-admin-delete;">
 <div>

@@ -57,8 +57,11 @@ function articles_admin_delete()
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
 
+        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $template = $pubtypes[$ptid]['name'];
+
         // Return the template variables defined in this function
-        return $data;
+        return xarTplModule('articles', 'admin', 'delete', $data, $template);
     }
 
     // Confirmation present

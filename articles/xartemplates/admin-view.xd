@@ -11,6 +11,11 @@
             View Articles
         </xar:mlstring>
     </h2>
+
+    <xar:comment>
+        You can use different admin-view-[pubtype].xd templates for different pubtypes
+    </xar:comment>
+
     <div>
         <xar:template file="navtabs" type="module" />
         <xar:template file="navtabs-status" type="module" />
