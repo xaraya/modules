@@ -30,3 +30,7 @@ img.bkicon {
     border: 0;
     margin: 0;
 }
+
+dd a img {
+    padding-top: 3pt;
+}
