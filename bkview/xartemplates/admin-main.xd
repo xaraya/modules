@@ -17,17 +17,17 @@
         with BK does essentially the same with these differences:
         <ol>
             <li>it's not templateable, which makes it hard to embed into a site</li>
-            <li>it relies on de bk-daemon which has to be started in a specific way, the bkview module is less restrictive</li>
+            <li>it relies on the bk-daemon which has to be started in a specific way, the bkview module is less restrictive, it just requires BK to be installed</li>
             <li>bkweb is packaged as is, it's not extensible, bkview is delivered as php module, so extra features are added easily</li>
             <li>bkview is embedded into xaraya, so it can use the features from any other xaraya module if necessary</li>
-            <li><strike>bkweb requires an internet connected computer, bkview doesn't</strike></li>
         </ol>
         <br/>
         This module has the following disadvantages:
         <ol>
             <li>It's probably very hard to get it working reliably under windows</li>
-            <li><strike>bkview is slower than bkweb, because it adds another level of abstraction (the php layer)</strike>
-            UPDATE: When used with page/item caching and the xmlhttprequest option it's about 35%-50% faster than bkweb :-)</li>
+            <li>bkview is slower than bkweb, because it adds another level of abstraction (the php layer) however, with proper configuration of
+               (output) caching in Xaraya and using the xmlhttprequest it can be made 35%-50% faster than bkweb at the cost of real-time consistency of the data.</strike>
+           </li>
             <li>It relies on spawning bk commands on the server, parsing the output those commands generate, this is
                 far from ideal, both in terms of performance and security</li>
         </ol>
@@ -50,8 +50,6 @@
         <ol>
             <li>Counting of csets isn't consistent (discrepancy with bkweb, assuming that one is correct</li>
             <li>No security is in place</li>
-            <li>No check is done in admin section whether the pointed to path is actually a bk repository</li>
-            <li><strike>The templates are horrible</strike></li>
             <li>It doesn't work on windows</li>
         </ol>
     </div>
