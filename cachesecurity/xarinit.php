@@ -346,6 +346,17 @@ function cachesecurity_activate()
 }
 
 /**
+ * deactivates the cache security module
+ * Synchronizes the cache and turns on the module
+ */
+function cachesecurity_deactivate()
+{
+    if (!xarModAPIFunc('cachesecurity','admin','turnoff')) return;
+    
+    return true;
+}
+
+/**
  * upgrade the xarcachemanager module from an old version
  * This function can be called multiple times
  */
@@ -400,6 +411,7 @@ function cachesecurity_delete()
     $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
 
+/*
     $query = xarDBDropTable($tables['security_cache_privileges']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
@@ -407,7 +419,7 @@ function cachesecurity_delete()
     $query = xarDBDropTable($tables['security_cache_masks']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
-
+*/
     $query = xarDBDropTable($tables['security_cache_rolesgraph']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
@@ -416,7 +428,6 @@ function cachesecurity_delete()
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
 
-/*
     $query = xarDBDropIndex($tables['security_masks'],  'i_'.$sitePrefix.'_seccache_masks');
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
@@ -424,7 +435,6 @@ function cachesecurity_delete()
     $query = xarDBDropIndex($tables['privileges'],  'i_'.$sitePrefix.'_seccache_privileges');
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
-*/
 
     // Remove Masks and Instances
     xarRemoveMasks('AdminCacheSecurity');
