@@ -1,21 +1,26 @@
 <?php
-function authinvision_registerblock_init() {
+function authinvision_registerblock_init() 
+{
    return true;
 }
-function authinvision_registerblock_info() {
+function authinvision_registerblock_info() 
+{
     return array('text_type' => 'invisionregister',
                  'module' => 'authinvision',
                  'text_type_long' => 'Register with Invision Board');
 }
-function authinvision_registerblock_display($blockinfo) {
+function authinvision_registerblock_display($blockinfo) 
+{
      $mainfile = xarModGetVar('authinivision','mainfile');
      require($mainfile);
 	 $regtext = show_reg();
 }
-function authinvision_registerblock_modify() {
+function authinvision_registerblock_modify() 
+{
    return true;
 }
-function authinvision_registerblock_update() {
+function authinvision_registerblock_update() 
+{
    return true;
 }
 ?>
