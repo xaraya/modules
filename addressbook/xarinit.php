@@ -255,6 +255,10 @@ function AddressBook_upgrade($oldversion) {
 
 	switch($oldversion) {
         case '1.0':
+			// New Admin Message mod vars in 1.1 & later 
+            xarModSetVar (__ADDRESSBOOK__,'rptErrAdminFlag', 1);
+            xarModSetVar (__ADDRESSBOOK__,'rptErrAdminEmail', xarModGetVar('mail','adminmail'));
+            xarModSetVar (__ADDRESSBOOK__,'rptErrDevFlag', 1);
 			break;
 	}
 

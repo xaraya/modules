@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarglobal.php,v 1.2 2003/07/02 08:07:14 garrett Exp $
+ * File: $Id: xarglobal.php,v 1.3 2003/07/09 00:12:23 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -13,15 +13,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
-
-/**
- * Developer control stuff. Production values as follows:
- *
- * _AB_DEBUG = 0
- *
- */
-define('_AB_DEBUG',             1);
 
 
 // Gives a common control across the module in the strange event our external mod name needs to change
@@ -69,6 +60,9 @@ $abModVars = array ('abtitle'           => 'Xaraya Address Book'
                    ,'special_chars_1'   => 'ÄÖÜäöüß'
                    ,'special_chars_2'   => 'AOUaous'
                    ,'SupportShortURLs'  => 0
+                   ,'rptErrAdminFlag'   => 1
+                   ,'rptErrAdminEmail'  => xarModGetVar('mail','adminmail')
+                   ,'rptErrDevFlag'     => 1
                    );
 
 /**
@@ -299,7 +293,11 @@ define('_AB_QUICKLIST',         'Quicklist');   //admin;
 define('_AB_MR',                'Mr.');
 define('_AB_MRS',               'Mrs.');
 
-
+/**
+ * Developer QA Contact information
+ */
+define('_AB_DEVQA_NAME',	__ADDRESSBOOK__);
+define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
 
 
 ////////////////
@@ -330,7 +328,6 @@ class abUserException extends DefaultUserException {
     {
         $text = '';
 
-//        if (is_array($this->msg) || is_object($this->msg)) {
         if (is_object($this->msg)) {
             ob_start();
             print_r($this->msg);

@@ -74,6 +74,11 @@ function AddressBook_admin_modifyconfig() {
 		    if (!xarVarFetch ('textareawidth','int:4:100',   $formData['textareawidth'], 60)) return;
 		    if (!xarVarFetch ('dateformat',  'str:1:',       $formData['dateformat'],    0)) return;
 		    if (!xarVarFetch ('numformat',   'str:1:',       $formData['numformat'],     '9,999.99')) return;
+
+			// Admin messages
+		    if (!xarVarFetch ('rptErrAdminFlag','checkbox',$formData['rptErrAdminFlag'], 1)) return;
+		    if (!xarVarFetch ('rptErrAdminEmail','str:1:128',$formData['rptErrAdminEmail'], FALSE)) return;
+		    if (!xarVarFetch ('rptErrDevFlag','checkbox',$formData['rptErrDevFlag'], 1)) return;
 			
 			if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updateconfig',$formData)) {
 				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
@@ -232,6 +237,11 @@ function AddressBook_admin_modifyconfig() {
 	    $output['numformat'][] = array('id'=>'9,999.99', 'name'=>'9,999.99');
 	    $output['numformat'][] = array('id'=>'9.999,99', 'name'=>'9.999,99');
 	    $output['numformat_selected'] = xarModGetVar(__ADDRESSBOOK__, 'numformat');
+	
+		// Admin Message config
+	    $output['rptErrAdminFlag']    = xarModGetVar(__ADDRESSBOOK__, 'rptErrAdminFlag');
+	    $output['rptErrAdminEmail']   = xarModGetVar(__ADDRESSBOOK__, 'rptErrAdminEmail');
+	    $output['rptErrDevFlag']      = xarModGetVar(__ADDRESSBOOK__, 'rptErrDevFlag');
 	
 	    // Generate a one-time authorisation code for this operation
 	    $output['authid'] = xarSecGenAuthKey();
