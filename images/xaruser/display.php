@@ -14,13 +14,13 @@ function images_user_display( $args )
 {
 
     extract ($args);
-    
+
     if (!xarVarFetch('fileId', 'int:1:', $fileId)) return;
     if (!xarVarFetch('width',  'str:1:', $width,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) return;
 
     $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId));
-    
+
     if (!is_object($image)) {
         return FALSE;
     }
@@ -76,21 +76,15 @@ function images_user_display( $args )
 
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    do {
-        $pageBuffer[] = ob_get_contents();
-    } while (@ob_end_clean());
-    $buffer = array_reverse($pageBuffer);
-    $pageBuffer = $buffer;
-    unset($buffer);
-    
-    // Start buffering for the file
+    $pageBuffer = xarModAPIFunc('uploads', 'user', 'flush_page_buffer');
+
     ob_start();
-    
+
     $fileSize = @filesize($fileLocation);
     if (empty($fileSize)) {
         $fileSize = 0;
     }
-    
+
     $fp = @fopen($fileLocation, 'rb');
     if(is_resource($fp))   {
 
@@ -105,7 +99,7 @@ function images_user_display( $args )
 
         fclose($fp);
     }
-    
+
     // Headers -can- be sent after the actual data
     // Why do it this way? So we can capture any errors and return if need be :)
     // not that we would have any errors to catch at this point but, mine as well
@@ -115,7 +109,7 @@ function images_user_display( $args )
     // not like headers being sent for iamges - so leave them out for those particular cases
     $osName      = xarSessionGetVar('osname');
     $browserName = xarSessionGetVar('browsername');
-    
+
     if ($osName != 'mac' || ($osName == 'mac' && !stristr($browserName, 'internet explorer'))) {
         header("Pragma: ");
         header("Cache-Control: ");
