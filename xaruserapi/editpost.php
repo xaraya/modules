@@ -54,8 +54,15 @@ function bloggerapi_userapi_editpost($args)
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
         $modId = xarModGetIDFromName('articles');
         $cids = array_keys(xarModAPIFunc('categories','user','getlinks',array('iids'=>$iids,'modid'=>$modId,'itemtype' => $pubType,'reverse'=>0)));
+        if ($publish) {
+            $status ='publishstatus'; 
+        } else {
+            $status = 'draftstatus';
+        }
+        $status = xarModGetVar('bloggerapi',$status);
+        if(empty($status)) $status = 0; // Submitted
         if (!xarModAPIFunc('articles','admin','update',array('aid'=>$article['aid'], 'title'=>$title,
-                                                            'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids,
+                                                            'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids, 'status' => $status,
                                                             'bodytype'=>'normal', 'bodytext'=>$article['body'],'language'=>' '))) {
                $err = "Failed to update post: $postid";
           }
