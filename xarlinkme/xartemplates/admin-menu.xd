@@ -1,7 +1,7 @@
 
 <!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span></div>
+<!-- the variables used in this menu come from xarlinkme_admin_menu() -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarLinkMe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
 <div style="margin: auto;">
 

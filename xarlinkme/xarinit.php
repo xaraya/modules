@@ -76,7 +76,7 @@ function xarlinkme_init()
 }
 
 /**
- * upgrade the example module from an old version
+ * upgrade the xarLinkMe module from an old version
  * This function can be called multiple times
  */
 function xarlinkme_upgrade($oldversion)
@@ -99,7 +99,7 @@ function xarlinkme_upgrade($oldversion)
 }
 
 /**
- * delete the example module
+ * delete the xarLinkMe module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */

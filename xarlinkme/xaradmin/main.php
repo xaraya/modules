@@ -26,7 +26,7 @@ function xarlinkme_admin_main()
         // If you want to go directly to some default function, instead of
         // having a separate main function, you can simply call it here, and
         // use the same template for admin-main.xard as for admin-view.xard
-        // return xarModFunc('example','admin','view');
+        // return xarModFunc('xarlinkme','admin','view');
         // Initialise the $data variable that will hold the data to be used in
         // the blocklayout template, and get the common menu configuration - it
         // helps if all of the module pages have a standard menu at the top to
