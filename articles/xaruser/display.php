@@ -95,31 +95,19 @@ function articles_user_display($args)
     $data['ptid'] = $ptid;
 
     // Security check for EDIT access
-    $edit = true;
-    if (isset($article['cids']) && count($article['cids']) > 0) {
-// TODO: do we want all-or-nothing access here, or is one access enough ?
-        foreach ($article['cids'] as $cid) {
-            if (!xarSecurityCheck('EditArticles',0,'Article',"$article[pubtypeid]:$cid:$article[authorid]:$article[aid]")) {
-                $edit = false;
-                break;
-            }
+    if (!$preview) {
+        $input = array();
+        $input['article'] = $article;
+        $input['mask'] = 'EditArticles';
+        if (xarModAPIFunc('articles','user','checksecurity',$input)) {
+            $data['editurl'] = xarModURL('articles', 'admin', 'modify',
+                                         array('aid' => $article['aid']));
+        // don't show unapproved articles to non-editors
+        } elseif ($article['status'] < 2) {
+            $status = xarModAPIFunc('articles', 'user', 'getstatusname',
+                                    array('status' => $article['status']));
+            return xarML('You have no permission to view this item [Status: #(1)]', $status);
         }
-    } else {
-        if (!xarSecurityCheck('EditArticles',0,'Article',"$article[pubtypeid]:All:$article[authorid]:$article[aid]")) {
-            $edit = false;
-        }
-    }
-    if ($edit) {
-        $data['editurl'] = xarModURL('articles',
-                                    'admin',
-                                    'modify',
-                                    array('aid' => $article['aid']));
-    // don't show unapproved articles to non-editors
-    } elseif (!$preview && $article['status'] < 2) {
-
-    $status = xarModAPIFunc('articles', 'user', 'getstatusname', array('status' => $article['status']));
-
-        return xarML('You have no permission to view this item [Status: #(1)]', $status);
     }
     $data['edittitle'] = xarML('Edit');
 
