@@ -76,7 +76,7 @@ function stats_init()
 
     // set index
     $query = xarDBCreateIndex($statstable,
-                              array('name'   => 'i_stats_wd',
+                              array('name'   => 'i_'.xarDBGetSiteTablePrefix().'stats_wd',
                                     'fields' => array('xar_sta_weekday')));
 
     // Pass the generated query to adodb to create the table
