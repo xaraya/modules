@@ -846,7 +846,7 @@ class Net_NNTP extends Net_NNTP_Protocol
     // Loop through all header field lines
         foreach ($headers as $field) {
             // Separate header name and value
-            if (!preg_match('/([\S]+)\:\s*([^\r\n]+)\s*/', $field, $matches)) {
+            if (!preg_match('/^([\S]+)\:\s*([^\r\n]+)\s*/', $field, $matches)) {
                 continue; // Fail...
             }
 
