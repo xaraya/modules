@@ -140,7 +140,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'featuredbody'      => $featuredart['body'],
                 'featuredcids'      => $featuredart['cids'],
                 'pubtypeid'         => $featuredart['pubtypeid'],
-                'featureaid'        => $featuredart['aid'],
+                'featuredaid'       => $featuredart['aid'],
                 'featureddate'      => $featuredart['pubdate']
             );
 
