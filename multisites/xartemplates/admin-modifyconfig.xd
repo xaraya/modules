@@ -40,6 +40,6 @@
         </tr>
    </table>
    <br /><br />
-        <input type="submit" value="<xar:mlstring>Update Multisites Configuration</xar:mlstring>" align="middle" tabindex="3" />
+        <input type="submit" value="#$btnUpdateConfig#" align="middle" tabindex="3" />
 </form>
 </div>

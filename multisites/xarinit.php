@@ -17,7 +17,6 @@
 
 function multisites_init()
 	{
-
     xarModSetVar('multisites', 'servervar', 'httphost');
 
 	$lIsMultisites = xarConfigGetVar('multiSites');
@@ -26,6 +25,20 @@ function multisites_init()
 		// forbidden to initialize this module or forbidden to create it a second time.
 		return false;
 		}
+
+    
+   /**
+     * Register the module components that are privileges objects
+     * Format is
+     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+     */
+
+    xarRegisterMask('ReadMultisites','All','multisites','All','All','ACCESS_READ');
+    xarRegisterMask('EditMultisites','All','multisites','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddMultisites','All','multisites','All','All','ACCESS_ADD');
+    xarRegisterMask('DeleteMultisites','All','multisites','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminMultisites','All','multisites','All','All','ACCESS_ADMIN');
+    // Initialisation successful
     return true;
 }
 
