@@ -78,6 +78,7 @@
 </table>
 <br /><input type="submit" value="#$buttonlabel#" />
 </form>
+<a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#"><xar:mlstring>Export Definition to XML</xar:mlstring></a>
 </xar:if>
 
 <xar:if condition="isset($action) and $action eq 'delete'">
