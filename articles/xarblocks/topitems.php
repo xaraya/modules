@@ -56,7 +56,7 @@ function articles_topitemsblock_info()
 function articles_topitemsblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
     if (is_string($blockinfo['content'])) {

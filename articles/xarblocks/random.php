@@ -55,7 +55,7 @@ function articles_randomblock_info()
 function articles_randomblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from block content.
     if (!is_array($blockinfo['content'])) {

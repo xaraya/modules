@@ -67,7 +67,7 @@ function articles_featureditemsblock_display(& $blockinfo)
 {
     // Security check
     // TODO: can be removed when handled centrally.
-    if (!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
     if (is_string($blockinfo['content'])) {
