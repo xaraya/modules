@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * File: $Id$
+ *
+ * Get filenames list from module directory
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage translations
+ * @author Marco Canini
+ * @author Marcel van der Boom <marcel@xaraya.com>
+*/
+
+//  This function returns an array containing all the php files
+//  in a given directory that start with "xar"
+function translations_adminapi_get_module_phpfiles($args)
+{
+    // Get arguments
+    extract($args);
+
+    // Argument check
+    assert('isset($moddir)');
+
+    $names = array();
+    if (file_exists("modules/$moddir")) {
+        $dd = opendir("modules/$moddir");
+        while ($filename = readdir($dd)) {
+//            if (is_dir("modules/$moddir/$filename") && (substr($filename,0,3) == "xar")) {
+//                $names[] = ereg_replace("^xar","",$filename);
+//                continue;
+//            }
+            if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
+            $phpname = $matches[1];
+            if ($phpname == 'xarversion') continue;
+            if ($phpname == 'xartables') continue;
+            $names[] = ereg_replace("^xar","",$phpname);
+        }
+        closedir($dd);
+    }
+//  no longer applicable
+/*
+    $names2 = array('admin','user','adminapi','userapi');
+    foreach ($names2 as $name2) {
+        if (!file_exists("modules/$moddir/xar$name2.php")) {
+            if (file_exists("modules/$moddir/xar$name2")) {
+                $names[] = $name2;
+            }
+        }
+    }
+*/
+    return $names;
+}
+
+?>
