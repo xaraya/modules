@@ -42,12 +42,12 @@ function AddressBook_user_viewdetail() {
 
     // General information
     // headline
-    $cats = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormCategories');
     $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '._AB_UNFILED);
     if ($output['cat_id'] > 0) {
-        foreach ($cats as $c) {
-            if ($output['cat_id'] == $c['nr']) {
-                $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '.$c['name']);
+	    $cats = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'categories'));
+        foreach ($cats as $cat) {
+            if ($output['cat_id'] == $cat['id']) {
+                $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '.$cat['name']);
             }
         }
     }
@@ -68,10 +68,10 @@ function AddressBook_user_viewdetail() {
         if (!empty($output[$the_contact])) {
         	//FIXME:<garrett> if there is a record with a set of contact labels
         	// and ALL those labels were deleted & new ones added, this will fail to
-        	// to build the contact array because none of the old labels['nr'] will
+        	// to build the contact array because none of the old labels['id'] will
         	// be found in the new label list.
             foreach ($labels as $lab) {
-                if ($output[$the_label] == $lab['nr']) {
+                if ($output[$the_label] == $lab['id']) {
                     $contact['label'] = xarVarPrepHTMLDisplay($lab['name']);
                     if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$output[$the_contact]))) {
                         if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$output[$the_contact]))) {
