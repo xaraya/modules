@@ -8,7 +8,8 @@
  * 'encode string' collection of functions.
  */
 
-function newsgroups_userapi_encode_quoted_printable($args) {
+function newsgroups_userapi_encode_quoted_printable($args)
+{
     $le = "\n";
 
     extract($args);
