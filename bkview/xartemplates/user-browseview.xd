@@ -53,7 +53,7 @@
             </a>
 		</xar:if>
         </td>
-        <td id="csets">
+        <td class="csets">
             <a href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
 				<xar:mlstring>Csets</xar:mlstring>
 			</a>
