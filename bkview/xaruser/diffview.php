@@ -29,10 +29,19 @@ function bkview_user_diffview($args)
     $changeset= new bkChangeSet($repo,$csetrev);
     $delta = new bkDelta($changeset,$file,$rev);
       
+    if(xarModIsAvailable('mime') && file_exists($repo->_root . '/' . $file)) {
+        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $repo->_root . '/' . $file));
+        $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+        $delta->available = true;
+    } else {
+        $delta->icon = xarTplGetImage('file.gif','bkview');
+        $delta->available = false;
+    }
+    
+    $delta->repoid = $repoid;
+    $delat->csetrev = $delta->cset->_rev;
+    $delta->tag = $changeset->_tag;
     $data['delta'] = (array) $delta;
-    $data['delta']['repoid'] = $repoid;
-    $data['delta']['csetrev'] = $delta->cset->_rev;
-    $data['delta']['tag'] = $changeset->_tag;
     
     // Show differences for this file and revision
     $diffs=$delta->bkDiffs();
