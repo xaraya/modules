@@ -29,6 +29,7 @@
  * @param  'searchuserdn'
  * @param  'adminid'
  * @param  'adminpasswd'
+ * @param  'tls'
  * @return array containing the menulinks for the main menu items.
  * @throws none
  * @todo   none
@@ -38,7 +39,6 @@
 function xarldap_admin_updateconfig()
 {
     // Get parameters
-    
     list($ldapserver,
          $portnumber,
          $anonymousbind,
@@ -46,14 +46,16 @@ function xarldap_admin_updateconfig()
          $uidfield,
          $searchuserdn,
          $adminid,
-         $adminpasswd) = xarVarCleanFromInput('ldapserver', 
-                                              'portnumber', 
-                                              'anonymousbind', 
-                                              'binddn', 
-                                              'uidfield', 
-                                              'searchuserdn', 
-                                              'adminid', 
-                                              'adminpasswd');
+         $adminpasswd,
+         $tls) = xarVarCleanFromInput('ldapserver', 
+                                      'portnumber', 
+                                      'anonymousbind', 
+                                      'binddn', 
+                                      'uidfield', 
+                                      'searchuserdn', 
+                                      'adminid', 
+                                      'adminpasswd',
+                                      'tls');
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -95,6 +97,12 @@ function xarldap_admin_updateconfig()
         $ldap->set_variable('anonymous_bind', 'false');
     } else {
         $ldap->set_variable('anonymous_bind', 'true');
+    }
+    
+    if(!$tls){
+        $ldap->set_variable('tls', 'false');
+    } else {
+        $ldap->set_variable('tls', 'true');
     }
     
     // lets update status and display updated configuration

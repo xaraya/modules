@@ -34,6 +34,7 @@ class xarldap {
     var $admin_password; // Admin password
     var $connection;     // The connection to the LDAP server
     var $key;            // Key used to encrypt/decrypt the admin password
+    var $tls;            // Use TLS connection (LDAP Protocol 3 only)
     
     /**
      * xarldap: constructor for the class
@@ -59,6 +60,7 @@ class xarldap {
         $this->admin_password = '';
         $this->connection = '';
         $this->key = '';
+        $this->tls = false; // LDAP Protocol 3 only
     }
 
     /**
@@ -111,6 +113,22 @@ class xarldap {
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
             return;
+        }
+
+        // Fix for Bug 2669 - Allow TLS for LDAP Protocol 3
+        if ($this->tls == 'true') {
+            if (!$this->set_option(LDAP_OPT_PROTOCOL_VERSION, 3)) {
+                $msg = xarML('LDAP Error:  Failed to set LDAP Protocol version to 3');
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                           new SystemException($msg));
+                return;
+            }
+            if (!ldap_start_tls($this->connection)) {
+                $msg = xarML('LDAP Error:  Failed to start TLS');
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                           new SystemException($msg));
+                return;
+            }
         }
 
         return true;
@@ -520,6 +538,7 @@ class xarldap {
         $this->admin_login = $this->get_variable('admin_login');
         $this->admin_password = $this->get_variable('admin_password');
         $this->key = $this->get_variable('key');
+        $this->tls = $this->get_variable('tls');
         
         return true;
     }
@@ -548,6 +567,7 @@ class xarldap {
         $this->set_variable('admin_login', $this->admin_login);
         $this->set_variable('admin_password', $this->admin_password);
         $this->set_variable('key', $this->key);
+        $this->set_variable('tls', $this->tls);
         
         return true;
     }

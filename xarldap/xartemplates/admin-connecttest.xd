@@ -73,6 +73,14 @@
                         <input disabled type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
                     </td>
                 </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
+                    </td>
+                    <td>
+                        #$tls#
+                    </td>
+                </tr>
                 <tr align="center">
                     <td colspan="2">
                         <br />

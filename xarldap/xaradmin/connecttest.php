@@ -70,6 +70,13 @@ function xarldap_admin_connecttest()
     $adminpasswd = $ldap->encrypt($ldap->admin_password, 0);
     $data['adminpasswdvalue'] = xarVarPrepForDisplay($adminpasswd);
 
+    // Use TLS - LDAP Protocol 3 only
+    if ($ldap->tls == 'true') {    
+        $data['tls'] = xarVarPrepForDisplay("yes");
+    } else {
+        $data['tls'] = xarVarPrepForDisplay("no");
+    }
+
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     
