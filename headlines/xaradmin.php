@@ -181,6 +181,15 @@ function headlines_admin_import()
         return;
     }
 
+    $importpubtype = xarModGetVar('headlines','importpubtype');
+    if (empty($importpubtype)) {
+        $importpubtype = xarModGetVar('articles','defaultpubtype');
+        if (empty($importpubtype)) {
+            $importpubtype = 1;
+        }
+        xarModSetVar('headlines','importpubtype',1);
+    }
+
     foreach ($imports as $import){
 
         $article['title'] = $import['title'];
@@ -193,6 +202,7 @@ function headlines_admin_import()
         $article['summary'] .= $info['channel']['title'];
         $article['summary'] .= '</a>';
         $article['aid'] = 0;
+        $article['ptid'] = $importpubtype;
         xarModAPIFunc('articles', 'admin', 'create', $article);
     }
     

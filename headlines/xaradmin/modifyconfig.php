@@ -23,6 +23,15 @@ function headlines_admin_modifyconfig()
     xarModAPIfunc('base', 'javascript', 'modulefile', array('module'=>'base', 'filename'=>'formcheck.js'));
     $data['submitlabel'] = xarML('Submit');
     $data['authid'] = xarSecGenAuthKey();
+
+    $data['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
+    $data['importpubtype'] = xarModGetVar('headlines','importpubtype');
+    if (empty($data['importpubtype'])) {
+        $data['importpubtype'] = xarModGetVar('articles','defaultpubtype');
+        if (empty($data['importpubtype'])) {
+            $data['importpubtype'] = 1;
+        }
+    }
     return $data;
 }
 ?>
