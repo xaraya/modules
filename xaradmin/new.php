@@ -34,7 +34,7 @@ function example_admin_new($args)
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('number', 'str:1:', $number, $number,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('invalid', 'array', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return; 
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
     // helps if all of the module pages have a standard menu at the top to
