@@ -90,10 +90,10 @@ function newsletter_userapi_encode_shorturl($args)
         // you should set the path to directly to that other function
 
     } elseif ($func == 'newsubscription') {
-        $path = '/' . $module . '/subscribe.html';
+        $path = '/' . $module . '/subscribe';
 
     } elseif ($func == 'modifysubscription') {
-        $path = '/' . $module . '/modify.html';
+        $path = '/' . $module . '/modify';
 
         // we'll add the optional $startnum parameter below, as a regular
         // URL parameter
