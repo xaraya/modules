@@ -61,7 +61,7 @@ function sitetools_admin_deletecache($args)
         $var = is_dir($adopath);
         if ($var) {
             if (!is_writable($adopath)) {
-                $msg = xarML("The ADODB cache directory and files in ".$adopath." could not be deleted!");
+                $msg = xarML("The ADODB cache directory and files in #(1) could not be deleted!", $adopath);
                 xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
                     return $msg;
             } else { //making a few assumptions about structure of adodb cache subdirs and files here
@@ -96,7 +96,7 @@ function sitetools_admin_deletecache($args)
         if ($var) {
             //chmod($templpath,0755); path should already be writable
             if (!is_writable($rsspath)) {
-                $msg = xarML("The RSS cache directory and files in ".$rsspath." could not be deleted!");
+                $msg = xarML("The RSS cache directory and files in #(1) could not be deleted!", $rsspath);
                 xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
                     return $msg;
              } else {
@@ -124,7 +124,7 @@ function sitetools_admin_deletecache($args)
         if ($var) {
             //chmod($templpath,0755); ath should already be writable
             if (!is_writable($templpath)) {
-                $msg = xarML("The Template cache directory and files in ".$templpath." could not be deleted!");
+                $msg = xarML("The Template cache directory and files in #(1) could not be deleted!", $templpath);
                 xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
                     return $msg;
             } else {
