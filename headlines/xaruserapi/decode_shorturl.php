@@ -30,6 +30,7 @@ function headlines_userapi_decode_shorturl($params)
         $hid = $matches[1];
         $args['hid'] = $hid;
         return array('view', $args);
+    }
     // default : return nothing -> no short URL decoded
 } 
 

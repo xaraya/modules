@@ -26,13 +26,13 @@ function headlines_userapi_encode_shorturl($args)
     // specify some short URLs relevant to your module
     if ($func == 'main') {
         $path = '/' . $module . '/'; 
-        /* Needs a little work
+
     } elseif ($func == 'view') {
         // check for required parameters
         if (isset($hid) && is_numeric($hid)) {
             $path = '/' . $module . '/' . $hid; 
         }
-        */
+
     }
     if (!empty($path)) {
         if (isset($startnum)) {
