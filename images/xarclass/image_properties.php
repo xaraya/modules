@@ -14,7 +14,6 @@ class Image_Properties {
     var $_tmpFile;
     
     function __constructor($fileLocation, $thumbsdir = NULL) {
-        
         $this->fileLocation = $fileLocation;
         $this->fileName = basename($fileLocation);
         
@@ -79,40 +78,50 @@ class Image_Properties {
         return $old_mime;
     }
 
+    function Constrain($toSide = NULL) {
+        if ($toSide == NULL) {
+            return FALSE;
+        } else {
+            switch(strtolower($toSide)) {
+                case 'height': 
+                    $this->setWidth($this->getWidth2HeightRatio() * $this->height);
+                    break;
+                case 'width':
+                    $this->setHeight($this->getHeight2WidthRatio() * $this->width);
+                    break;
+            }
+        }
+        return true;
+    }
+    
     function getHeight( ) {
         return $this->height;
     }
-
-    function setHeight($height, $constrain = FALSE) {
-        if ($constrain) {
-            $this->setWidth($this->getWidth2HeightRatio() * $height);
-        }
+   
+    function setHeight($height) {
         $new_hpercent = @($height / $this->_oheight);
         $this->_percent['height'] = $new_hpercent * 100;
         $this->height = ceil($height);
-        return $old_height;
+        return $this->height;
     }
 
     function getWidth( ) {
         return $this->width;
     }
 
-    function setWidth($width, $constrain = FALSE) {
-        if ($constrain) {
-            $this->setHeight($this->getHeight2WidthRatio() * $width);
-        }
+    function setWidth($width) {
         $new_wpercent = @($width / $this->_owidth);
         $this->_percent['width'] = $new_wpercent * 100;
         $this->width = ceil($width);
-        return $old_width;
+        return $this->width;
     }
 
     function getWidth2HeightRatio() {
-        return $this->width / $this->height;
+        return $this->_owidth / $this->_oheight;
     }
 
     function getHeight2WidthRatio() {
-        return $this->height / $this->width;
+        return @($this->_oheight / $this->_owidth);
     }
 
     function getPercent() {
@@ -182,23 +191,57 @@ class Image_Properties {
     
     function save() {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
-            copy($this->_tmpFile, $this->fileLocation);
-            unlink($this->_tmpFile);
+            if (@copy($this->_tmpFile, $this->fileLocation)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
         }
         return TRUE;
     }
     
     function saveDerivative() {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
-            $derivName = $this->_thumbsdir . '/' . $this->fileName . "-{$this->width}x{$this->height}.jpg";
-            copy($this->_tmpFile, $derivName);
-            unlink($this->_tmpFile);
+            // remove any file name extension from the file name 
+            $fileParts = explode('.', $this->fileName);
+            if (count($fileParts) > 1) {
+                array_pop($fileParts);
+                if (count($fileParts) > 1) {
+                    $fileName = implode('.', $fileParts);
+                } else {
+                    $fileName = $fileParts[0];
+                }
+            } 
+
+            $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
+            if (copy($this->_tmpFile, $derivName)) {
+                return $derivName;
+            } else {
+                return NULL;
+            }                
+        } else {
+            return NULL;
         }
-        return TRUE;
     }
     
     function getDerivative() {
-        $derivName = $this->_thumbsdir . '/' . $this->fileName . "-{$this->width}x{$this->height}.jpg";
+        
+        // remove any file name extension from the file name 
+        $fileParts = explode('.', $this->fileName);
+        if (count($fileParts) > 1) {
+            array_pop($fileParts);
+            if (count($fileParts) > 1) {
+                $fileName = implode('.', $fileParts);
+            } else {
+                $fileName = $fileParts[0];
+            }
+        } 
+        if ($this->width == $this->_owidth && $this->height == $this->_oheight) {
+            $derivName = $this->fileLocation;
+        } else {
+            $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
+        }
+
         if (file_exists($derivName)) {
             return $derivName;
         } else {

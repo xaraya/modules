@@ -36,17 +36,14 @@ class Image_GD extends Image_Properties {
         
         if (is_resource($origImage)) {
             $this->_tmpFile = tempnam(NULL, 'xarimage-');
-            
             $newImage = imageCreateTrueColor($this->width, $this->height);
             imageCopyResampled($newImage, $origImage, 0, 0, 0, 0, $this->width, $this->height, $this->_owidth, $this->_oheight);
             imageJPEG($newImage, $this->_tmpFile);
             imageDestroy($newImage);
             imageDestroy($origImage);
-            $this->saveDerivative();
         } else {
             return FALSE;
         } 
-        
         return TRUE;
     }
     

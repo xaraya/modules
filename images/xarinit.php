@@ -25,11 +25,11 @@
 function images_init()
 {
     if (!xarModIsAvailable('uploads')) {
-        $msg = xarML('The uploads module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
+        $msg = xarML('The module [#(1)] should be activated first.', 'uploads');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
         return;
     }
-
+    
     if(xarServerGetVar('PATH_TRANSLATED')) {
         $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
     } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
@@ -37,13 +37,20 @@ function images_init()
     } else {
         $base_directory = './';
     }
-
+    
     // Load any predefined constants
     xarModAPILoad('images', 'user');
     
     // Set up module variables
     xarModSetVar('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
     xarModSetVar('images', 'path.derivative-store', $base_directory . '/images/.thumbs');
+    
+    $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),
+                             new xarTemplateAttribute('height',      XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+                             new xarTemplateAttribute('width',       XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+                             new xarTemplateAttribute('constrain',   XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+                             new xarTemplateAttribute('label',       XAR_TPL_REQUIRED | XAR_TPL_STRING));
+    xarTplRegisterTag('images', 'image', $imageAttributes, 'images_userapi_handle_image_tag');
      
     // Initialisation successful
     return true;
@@ -77,6 +84,7 @@ function images_delete()
     xarModDelVar('images', 'type.graphics-library');
     xarModDelVar('images', 'path.derivative-store');
 
+    xarTplUnregisterTag('image');
     // Deletion successful
     return true;
 }
