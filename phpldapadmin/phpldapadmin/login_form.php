@@ -77,3 +77,5 @@ check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars
 </table>
 </form>
 </center>
+<?php
+?>

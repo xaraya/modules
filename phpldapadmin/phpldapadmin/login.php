@@ -105,3 +105,5 @@ if( ! $res1 || ! $res2 )
 </body>
 </html>
 
+<?php
+?>

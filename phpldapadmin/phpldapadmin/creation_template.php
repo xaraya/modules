@@ -43,3 +43,4 @@ else
 		"</b> for this template. But, this handler does not exist in the 'templates/creation' directory." );
 
 
+?>

@@ -131,3 +131,5 @@ Enter the value you would like to add:<br />
 
 </body>
 </html>
+<?php
+?>

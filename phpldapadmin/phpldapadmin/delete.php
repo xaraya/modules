@@ -63,3 +63,4 @@ if( $del_result )
 } else {
 	pla_error( "Could not delete the object: " . htmlspecialchars( utf8_decode( $dn ) ), ldap_error( $ds ), ldap_errno( $ds ) );
 }
+?>

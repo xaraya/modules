@@ -44,3 +44,4 @@ if( $result )
 	header( "Location: edit.php?server_id=$server_id&dn=$encoded_dn&updated_attr=$encoded_attr" );
 else
 	pla_error( "Failed to add the attribute.", ldap_error( $ds ) , ldap_errno( $ds ) );
+?>

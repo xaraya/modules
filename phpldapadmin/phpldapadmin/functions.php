@@ -346,7 +346,8 @@ function get_object_attrs( $server_id, $dn, $lower_case_attr_names = false )
  * ASCII characters. Otherwise (like if it contains binary data),
  * returns false.
  */
-function is_printable_str($temp) {
+function is_printable_str($temp) 
+{
 	$len = strlen($temp);
 	for ($i=0; $i<$len; $i++) {
 		$ascii_val = ord( substr( $temp,$i,1 ) );

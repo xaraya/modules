@@ -111,3 +111,4 @@ function pla_rdelete( $server_id, $dn )
 	}
 
 }
+?>

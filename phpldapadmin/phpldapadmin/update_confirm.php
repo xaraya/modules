@@ -138,6 +138,5 @@ foreach( $new_values as $attr => $new_val )
 <?php } ?>
 
 </form>
-
-
-
+<?php
+?>

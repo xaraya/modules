@@ -80,5 +80,5 @@ have_auth_info( $server_id ) or pla_error( "Not enough information to login to s
 	<br /><input type="submit" value="Create OU" />
 	</center>
 
-<?php } ?>
-
+<?php } 
+?>

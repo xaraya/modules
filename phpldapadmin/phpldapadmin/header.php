@@ -9,3 +9,5 @@
 	<link rel="stylesheet" href="style.css" />
 	<script src="entry_chooser.js"></script>
 </head>
+<?php
+?>

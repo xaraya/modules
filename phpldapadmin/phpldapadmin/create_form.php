@@ -79,3 +79,5 @@ $server_menu_html .= '</select>';
 
 </body>
 </html>
+<?php
+?>

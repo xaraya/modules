@@ -182,5 +182,5 @@ if( $step == 2 )
 		<input type="submit" name="submit" value="Create Object" />
 	</center>
 
-<?php } ?>
-
+<?php } 
+?>

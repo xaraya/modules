@@ -84,3 +84,5 @@ Copy <b><?php echo htmlspecialchars($rdn); ?></b> to a new object:<br />
 </center>
 </body>
 </html>
+<?php
+?>

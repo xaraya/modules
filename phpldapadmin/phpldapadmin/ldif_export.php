@@ -91,3 +91,4 @@ function is_safe_ascii( $str )
 			return false;
 	return true;
 }
+?>
