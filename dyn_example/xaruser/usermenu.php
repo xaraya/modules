@@ -16,13 +16,7 @@ function dyn_example_user_usermenu($args)
 
     // First, lets find out where we are in our logic.  If the phase
     // variable is set, we will load the correct page in the loop.
-    $phase = xarVarCleanFromInput('phase');
-
-    // Lets set the phase variable in case we are on the icon page.
-    // E_ALL fix so we don't have undefined variable.
-    if (empty($phase)){
-        $phase = 'menu';
-    }
+    if(!xarVarFetch('phase','str', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
 
     switch(strtolower($phase)) {
         case 'menu':
