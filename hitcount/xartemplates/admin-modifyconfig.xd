@@ -5,24 +5,24 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="phase" id="phase" value="update" />
     <table border="0" cellpadding="2" cellspacing="0">
-	    <tr>
+        <tr>
             <td><label for="countadmin"><xar:mlstring>Count Administrator Hits</xar:mlstring>:</label></td>
             <td>
-		<xar:if condition="xarModGetVar('hitcount', 'countadmin')">
-			<input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
-		<xar:else />
-			<input type="checkbox" name="countadmin" id="countadmin" value="1" />
-		</xar:if></td>
+        <xar:if condition="xarModGetVar('hitcount', 'countadmin')">
+            <input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="countadmin" id="countadmin" value="1" />
+        </xar:if></td>
         </tr>
-	<tr>
+    <tr>
             <td><label for="numitems"><xar:mlstring>Number of top items shown to users</xar:mlstring>:</label></td>
             <td><input type="text" name="numitems" id="numitems" size="4" maxlength="4" value="#$numitems#" /></td>
         </tr>
-	<tr>
+    <tr>
             <td><label for="numstats"><xar:mlstring>Number of items shown in statistics</xar:mlstring>:</label></td>
             <td><input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" /></td>
         </tr>
-	<tr>
+    <tr>
             <td><label for="showtitle"><xar:mlstring>Show the item title in statistics</xar:mlstring>:</label></td>
             <td><xar:if condition="!empty($showtitle)">
                   <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
@@ -32,8 +32,8 @@
             </td>
         </tr>
     </table>
-	<br /><br />
-	<input type="submit" value="#$updatelabel#"  />
+    <br /><br />
+    <input type="submit" value="#$updatelabel#"  />
 </form>
 </div>
 <div style="margin: auto;">
