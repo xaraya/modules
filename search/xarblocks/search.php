@@ -23,7 +23,11 @@
  */
 function search_searchblock_init()
 {
-    return true;
+    return array(
+        'nocache' => 1, // don't cache by default
+        'pageshared' => 1, // share across pages
+        'usershared' => 1, // share for group members
+        'cacheexpire' => null);
 } 
 
 /**
