@@ -16,7 +16,7 @@
 */
 
 $modversion['name']             = 'bbcode';
-$modversion['version']          = '1.00';
+$modversion['version']          = '1.0.0';
 $modversion['id']                 = '778';
 $modversion['description']      = 'BBCode Hook';
 $modversion['credits']          = 'xardocs/credits.txt';
