@@ -13,6 +13,7 @@ function hitcount_user_main()
 
     $data['title'] = "Modules we're currently counting display hits for : (test)";
     $data['moditems'] = array();
+    $moduleList = array();
 
     $numitems = xarModGetVar('hitcount','numitems');
     if (empty($numitems)) {
