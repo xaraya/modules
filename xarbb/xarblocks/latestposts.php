@@ -111,33 +111,45 @@ function xarbb_latestpostsblock_display($blockinfo)
     }
     $modid=xarModGetIDFromName('xarbb');
     $alltopics=array();
+    $forumnames = array();
     //Get all latest topics for given forums
     foreach($forumset as $forum) {
+// TODO: retrieve topics from all (selected) forums at once ?
         $alltopics[]=xarModAPIFunc('xarbb','user','getalltopics',array('fid'=>$forum['fid'],
                                                                        'numitems'=>$vars['howmany']));
+        // keep track of the forum names
+        $forumnames[$forum['fid']] = $forum['fname'];
     }
     $postlist=array();
     $topiclist=array();
+    $usernames = array();
     //Get all topic posters for given topics
     foreach ($alltopics as $topics) {
         foreach ($topics as $topic) {
-            $forum=array();
-            $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
+            $forumname = $forumnames[$topic['fid']];
 
             if (($vars['addtopics']=='on') ||($vars['latestpost'] =='on')) {
-                $posterdata=xarModAPIFunc('roles',
-                                          'user',
-                                          'get',
-                                          array('uid' => $topic['tposter']));
+                if (!isset($usernames[$topic['tposter']])) {
+                    $posterdata=xarModAPIFunc('roles',
+                                              'user',
+                                              'get',
+                                              array('uid' => $topic['tposter']));
+                    if (empty($posterdata)) {
+                        $usernames[$topic['tposter']] = '-';
+                    } else {
+                        $usernames[$topic['tposter']] = $posterdata['name'];
+                    }
+                }
+                $username = $usernames[$topic['tposter']];
 
                 //Put each topic in consistent format for post comparison
                 $postlist[]=array(
                           'tid'       => $topic['tid'],
                           'fid'       => $topic['fid'],
-                          'fname'     => $forum['fname'],
+                          'fname'     => $forumname,
                           'title'     => substr($topic['ttitle'],0,$vars['truncate']),
                           'poster'    => $topic['tposter'],
-                          'postername'=> $posterdata['name'],
+                          'postername'=> $username,
                           'ptime'     => $topic['tftime'],
                           'ptext'     => substr($topic['tpost'],0,$vars['truncate']),
                           'anon'      => 0,
@@ -148,10 +160,10 @@ function xarbb_latestpostsblock_display($blockinfo)
                   $topiclist[]=array(
                           'tid'       => $topic['tid'],
                           'fid'       => $topic['fid'],
-                          'fname'     => $forum['fname'],
+                          'fname'     => $forumname,
                           'title'     => substr($topic['ttitle'],0,$vars['truncate']),
                           'poster'    => $topic['tposter'],
-                          'postername'=> $posterdata['name'],
+                          'postername'=> $username,
                           'ptime'     => $topic['tftime'],
                           'ptext'     => substr($topic['tpost'],0,$vars['truncate']),
                           'anon'      => 0,
@@ -167,6 +179,8 @@ function xarbb_latestpostsblock_display($blockinfo)
         if ($vars['latestpost'] =='on') { //let's set how many posts to get
             $getnumber =1; // we only want latest post
         }else {
+// TODO: skip retrieving comments when we already have 'howmany' topics/comments
+//       and the topic last post is older ?
             $getnumber = $vars['howmany'];
         }
 
@@ -177,21 +191,16 @@ function xarbb_latestpostsblock_display($blockinfo)
                                        'user',
                                        'get_allposts',
                                    array('objectid'    => $topic['tid'],
+                                         'itemtype'    => $topic['fid'],
                                          'numitems'    => $getnumber));
-                $forum=array();
-                $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
+                $forumname = $forumnames[$topic['fid']];
                  //Put post data in suitable list
                  if (count($posts) >0 ) {
                      foreach ($posts as $post) {
-                         $posterdata=xarModAPIFunc('roles',
-                                                  'user',
-                                                  'get',
-                                                  array('uid' => $post['xar_uid']));
-
-                                    $postlist[]=array(
+                          $postlist[]=array(
                                           'tid'       => $topic['tid'],
                                           'fid'       => $topic['fid'],
-                                          'fname'     => $forum['fname'],
+                                          'fname'     => $forumname,
                                           'title'     => substr($post['xar_title'],0,$vars['truncate']),
                                           'poster'    => $post['xar_uid'],
                                           'postername'=> $post['xar_author'],
@@ -205,7 +214,7 @@ function xarbb_latestpostsblock_display($blockinfo)
                                 $topiclist[]=array(
                                           'tid'       => $topic['tid'],
                                           'fid'       => $topic['fid'],
-                                          'fname'     => $forum['fname'],
+                                          'fname'     => $forumname,
                                           'title'     => substr($post['xar_title'],0,$vars['truncate']),
                                           'poster'    => $post['xar_uid'],
                                           'postername'=> $post['xar_author'],

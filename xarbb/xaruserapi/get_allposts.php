@@ -92,24 +92,25 @@ function xarbb_userapi_get_allposts($args)
               FROM  $xartable[comments]
              WHERE  $ctable[modid]=? AND $ctable[objectid]=?
                AND  $ctable[status]=?";
-    $bindvars = array($modid, $objectid, $status);
+// objectid is still a string for now
+    $bindvars = array((int) $modid, (string) $objectid, (int) $status);
 
 
     if (isset($itemtype) && is_numeric($itemtype)) {
         $sql .= " AND $ctable[itemtype]=?";
-        $bindvars[] = $itemtype;
+        $bindvars[] = (int) $itemtype;
     }
 
     if (isset($author) && $author > 0) {
         $sql .= " AND $ctable[author] = ?";
-        $bindvars[] = $author;
+        $bindvars[] = (int) $author;
     }
 
     if ($cid > 0) {
         $sql .= " AND ($ctable[left] >= ?";
-        $bindvars[] = $nodelr['xar_left'];
+        $bindvars[] = (int) $nodelr['xar_left'];
         $sql .= " AND  $ctable[right] <= ?)";
-        $bindvars[] =  $nodelr['xar_right'];
+        $bindvars[] =  (int) $nodelr['xar_right'];
     }
 
 
