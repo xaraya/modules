@@ -125,7 +125,9 @@
     </table>
         <hr>
         <div align="right">
-        <a href="index.php?module=messages&func=send&action=post"><img src="modules/messages/xarimages/newpm.gif" border="0"></a>
+            <a href="#xarModURL('messages','user','send',array('action'=>'post'))#">
+                <img src="modules/messages/xarimages/newpm.gif" border="0">
+            </a>
         </div>
 <xar:else />
     <br />
