@@ -173,7 +173,7 @@ function dyn_example_init()
     if (empty($objectid)) return;
     xarModSetVar('dyn_example','usersettings',$objectid);
 
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
 /*
     $instancestable = $xartable['block_instances'];
