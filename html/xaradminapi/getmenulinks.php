@@ -47,6 +47,11 @@ function html_adminapi_getmenulinks()
                                                   'set'),
                               'title' => xarML('Set the allowed tags for use on your site'),
                               'label' => xarML('Set Tags'));
+        $menulinks[] = Array('url'   => xarModURL('html',
+                                                  'admin',
+                                                  'modifyconfig'),
+                              'title' => xarML('Modify the configuration of the HTML Module'),
+                              'label' => xarML('Modify Config'));
     }
 
     if (xarSecurityCheck('ReadHTML')) {

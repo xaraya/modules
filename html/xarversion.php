@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'HTML';
 $modversion['id'] = '779';
-$modversion['version'] = '1.3.0';
+$modversion['version'] = '1.4.0';
 $modversion['description'] = 'Configure the allowed HTML or your site';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

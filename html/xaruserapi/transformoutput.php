@@ -64,10 +64,24 @@ function html_userapi_transformoutput($args)
  */
 function html_userapitransformoutput($text)
 {
-    $text = preg_replace("/\n/si","</p><p>",$text);
+    $transformtype = xarModGetVar('html', 'transformtype');
+    if ($transformtype == 1){
+        $text = preg_replace("/\n/si","</p><p>",$text);
+    } elseif ($transformtype == 2){
+        $text = preg_replace("/\n/si","</p><p>",$text);
+    }
 	//$text = preg_replace("/(\015\012)|(\015)|(\012)/","</p><p>",$text); 
-    $text = "<p> " . $text . " </p>\n";
+    // This call is what is driving the bugs because it is transforming more
+    // than we want.  The problem without the call though, it the output from
+    // this function is not xhtml compliant.
+    //
+    // So, a configuration in the html script will allow a replacement of 
+    // paragraphs or line breaks.  If paragraphs are used, the template must
+    // open and close the paragraphs tags before and after the transformed output.
+    //$text = "<p> " . $text . " </p>\n";
     $text = str_replace ("<p></p>", "", $text);
+    $text = str_replace ("<br />", "", $text);
+    $text = str_replace ("<br>", "", $text);
     return $text;
 }
 

@@ -2,10 +2,39 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>Modify HTML Configuration</xar:mlstring></h2>
-<form method="post" action="#xarModURL('html', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" value="#$authid#" />
-	<p><xar:mlstring>Tags per page</xar:mlstring>&nbsp;&nbsp;<input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('html', 'itemsperpage')#" size="3" maxlength="3" /></p>
-	<input type="submit" value="#$submitlabel#"  />
+<form method="post" action="#xarModURL('html', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+  <div>
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="phase" id="phase" value="update" />
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Transform linebreaks as either paragraphs or linebreaks.')#"><label for="priority"><xar:mlstring>Type of linebreak transform</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<select name="transformtype" id="transformtype" size="1">
+				<xar:if condition="xarModGetVar('html', 'transformtype') eq '1'">
+					<option label="Linebreaks" value="1" selected="selected">Linebreaks</option>
+					<option label="Paragraphs" value="2">Paragraphs</option>
+				<xar:elseif condition="xarModGetVar('html', 'transformtype') eq '2'" />
+					<option label="Linebreaks" value="1">Linebreaks</option>
+					<option label="Paragraphs" value="2" selected="selected">Paragraphs</option>
+				</xar:if>									
+			</select>
+		</span>
+		</div>
+		<div style="clear: both; padding-top: 10px;">
+			<xar:if condition="!empty($hooks)">
+				<h4><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h4>
+				<p><xar:mlstring>Default hooks for user roles.</xar:mlstring></p>
+				<xar:foreach in="$hooks" key="$hookmodule">
+					#$hooks[$hookmodule]#
+				</xar:foreach>
+			</xar:if>
+		</div>
+
+		<div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
+			<input type="submit" value="#$dubmitlabel#" />
+		</div>
 </form>
 </div>
 </div>

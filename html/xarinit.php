@@ -27,6 +27,7 @@ function html_init()
 {
     // Set up module variables
     xarModSetVar('html', 'itemsperpage', 20);
+    xarModSetVar('html', 'transformtype', 1);
 
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
@@ -409,9 +410,14 @@ function html_upgrade($oldversion)
             // fall through to the next upgrade
         case '1.3':
         case '1.3.0':
+            xarModSetVar('html', 'transformtype', 1);
             // Code to upgrade from version 1.3 goes here
             break;
 
+        case '1.4':
+        case '1.4.0':
+            // Code to upgrade from version 1.3 goes here
+            break;
         default:
             // Couldn't find a previous version to upgrade
             return;
