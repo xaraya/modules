@@ -24,8 +24,6 @@
 
 <!-- the specific template for the current function comes here -->
 
-<xar:blockgroup name="topnav" id="topnav" />
-
 <!-- some status given by the function using this template -->
 
 <xar:if condition="!empty($status)">
