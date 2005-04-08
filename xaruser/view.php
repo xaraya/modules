@@ -231,8 +231,8 @@ function articles_user_view($args)
         $showcomments = 0;
     }
     // allow articles to work without keywords being activated
-    if ($showcomments && !xarModIsHooked('keywords','articles',$ptid)) {
-        $showcomments = 0;
+    if ($showkeywords && !xarModIsHooked('keywords','articles',$ptid)) {
+        $showkeywords = 0;
     }
     // allow articles to work without hitcounts being activated
     if ($showhitcounts && !xarModIsHooked('hitcount','articles',$ptid)) {
