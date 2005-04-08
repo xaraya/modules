@@ -124,6 +124,13 @@ function articles_user_view($args)
             $showcomments = 1;
         }
     }
+    if (!isset($showkeywords)) {
+        if (empty($settings['showkeywords'])) {
+            $showkeywords = 0;
+        } else {
+            $showkeywords = 1;
+        }
+    }
     if (!isset($showhitcounts)) {
         if (empty($settings['showhitcounts'])) {
             $showhitcounts = 0;
@@ -219,11 +226,12 @@ function articles_user_view($args)
         $numcols = 0;
     }
 
-    // Load APIs
-    if (!xarModAPILoad('articles', 'user')) return;
-    if (!xarModAPILoad('categories', 'user')) return;
     // allow articles to work without comments being activated
     if ($showcomments && !xarModIsHooked('comments','articles',$ptid)) {
+        $showcomments = 0;
+    }
+    // allow articles to work without keywords being activated
+    if ($showcomments && !xarModIsHooked('keywords','articles',$ptid)) {
         $showcomments = 0;
     }
     // allow articles to work without hitcounts being activated
@@ -355,7 +363,6 @@ function articles_user_view($args)
         $where = null;
     }
 
-
     // Modify the where clause if an Alpha filter has been specified.
     if (!empty($letter))
     {
@@ -397,7 +404,6 @@ function articles_user_view($args)
         } else {
             $where .= $extrawhere;
         }
-        
     }
 
     // Get articles
@@ -552,6 +558,22 @@ function articles_user_view($args)
                                   'objectids' => $aidlist));
     }
 
+    // retrieve the keywords for each article
+    if ($showkeywords) {
+        $aidlist = array();
+        foreach ($articles as $article) {
+            $aidlist[] = $article['aid'];
+        }
+            //$dump = var_export($aidlist, 1); return $dump;
+            $keywords = xarModAPIFunc('keywords',
+                                      'user',
+                                      'getmultiplewords',
+                                      array('modid' => xarModGetIDFromName('articles'),
+                                            'objectids' =>  $aidlist,
+                                            'itemtype'  => $ptid));
+        //$dump = var_export($keywords, 1); return $dump;
+    }
+
     // retrieve the categories for each article
     $catinfo = array();
     if ($showcategories) {
@@ -703,6 +725,17 @@ function articles_user_view($args)
         } else {
             $article['comments'] = '';
         }
+        // keywords for this article
+        if ($showkeywords) {
+            if (empty($keywords[$article['aid']])) {
+                $article['keywords'] = '';
+            } else {
+                $article['keywords'] = $keywords[$article['aid']];
+            }
+        } else {
+            $article['keywords'] = '';
+        }
+        //$dump = var_export($article['keywords'], 1); return $dump;
 
 // TODO: improve the case where we have several icons :)
         $article['topic_icons'] = '';
@@ -773,22 +806,18 @@ function articles_user_view($args)
             $columns[$col] = array();
         }
         
-        /*BIG COMMENT FOR MIKE
-            BIG COMMENT FOR MIKE
-                BIG COMMENT FOR MIKE
-                    I am processing the RSS values for the RSS theme here for the time being, until we have the work around;) -- jc*/
+        // RSS Processing
+        $current_theme = xarVarGetCached('Themes.name', 'CurrentTheme');
+        if (($current_theme == 'rss') or ($current_theme == 'atom')){
+            $article['rsstitle'] = htmlspecialchars($article['title']);
+            //$article['rssdate'] = strtotime($article['date']);
+            $article['rsssummary'] = preg_replace('<br />',"\n",$article['summary']);
+            $article['rsssummary'] = xarVarPrepForDisplay(strip_tags($article['rsssummary']));
+            $article['rsscomment'] = xarModURL('comments','user','display',array('modid' => xarModGetIDFromName('articles'),'objectid' => $article['aid']));
+            // $article['rsscname'] = htmlspecialchars($item['cname']);
+            // <category>#$rsscname#</category>
+        }
 
-        $article['rsstitle'] = htmlspecialchars($article['title']);
-        //$article['rssdate'] = strtotime($article['date']);
-        $article['rsssummary'] = preg_replace('<br />',"\n",$article['summary']);
-        $article['rsssummary'] = xarVarPrepForDisplay(strip_tags($article['rsssummary']));
-        $article['rsscomment'] = xarModURL('comments','user','display',array('modid' => xarModGetIDFromName('articles'),'objectid' => $article['aid']));
-        // $article['rsscname'] = htmlspecialchars($item['cname']);
-        // <category>#$rsscname#</category>
-
-        /* END BIG COMMENT
-            END BIG COMMENT
-                END BIG COMMENT */
 
     // TODO: clean up depending on field format
         $article['title'] = xarVarPrepHTMLDisplay($article['title']);
@@ -943,6 +972,4 @@ function articles_view_sortbyorder ($a,$b)
     }
     return ($GLOBALS['artviewcatinfo'][$a]['order'] > $GLOBALS['artviewcatinfo'][$b]['order']) ? 1 : -1;
 }
-
-
 ?>

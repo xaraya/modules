@@ -1,731 +1,705 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('articles', 'forms-modifyconfig')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration 
+            Articles Administration
         </xar:mlstring>
-    </span> 
+    </span>
 </div>
 <div class="xar-mod-body">
-    <h2> 
+    <h2>
         <xar:mlstring>
-            Articles Configuration 
+            Modify Configuration
         </xar:mlstring>
-    </h2> 
-    <div style="margin: auto;">
-        <xar:template file="navtabs" type="module" />
-
-        <form method="post" action="&xar-modurl-articles-admin-updateconfig;">
-            <div>
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="ptid" id="ptid" value="#$ptid#" /> 
-                <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                    <xar:if condition="empty($ptid)">
-                        <tr>
-                            <td colspan="2">
-                                <h3> 
-                                    <xar:mlstring>
-                                        Global Configuration 
-                                    </xar:mlstring>
-                                </h3> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="defaultpubtype"> 
-                                    <xar:mlstring>
-                                        Default Publication Type for the Articles "Front Page" 
-                                        <br />
-                                        <i>Note: selecting "Defaults" here implies navigating (by category) across all publication types</i> 
-                                    </xar:mlstring>
-                                </label> 
-                            </td>
-                            <td>
-                                <select name="defaultpubtype" id="defaultpubtype"> 
-                                    <xar:foreach in="$pubfilters" value="$pubfilter">
-                                        <xar:if condition="$pubfilter['pid'] eq $defaultpubtype">
-                                            <option value="#$pubfilter['pid']#" selected="selected">
-                                                #$pubfilter['ptitle']# 
-                                            </option>
-                                            <xar:else />
-                                            <option value="#$pubfilter['pid']#">
-                                                #$pubfilter['ptitle']# 
-                                            </option>
-                                        </xar:if>
-                                    </xar:foreach>
-                                </select> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="shorturls"> 
-                                    <xar:mlstring>
-                                        Support short URLs 
-                                    </xar:mlstring>
-                                </label> 
-                            </td>
-                            <td>
-                                <xar:if condition="$shorturls">
-                                    <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-                                <xar:else/>
-                                    <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-                                </xar:if>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="sortpubtypes"> 
-                                    <xar:mlstring>
-                                        Sort order for Publication Types in menus, article map etc. 
-                                    </xar:mlstring>
-                                </label> 
-                            </td>
-                            <td>
-                                <select name="sortpubtypes" id="sortpubtypes"> 
-                                    <xar:if condition="$sortpubtypes eq 'id'">
-                                        <option value="id" selected="selected">
-                                            <xar:mlstring>
-                                                ID 
-                                            </xar:mlstring>
-                                        </option>
-                                        <xar:else />
-                                        <option value="id">
-                                            <xar:mlstring>
-                                                ID 
-                                            </xar:mlstring>
-                                        </option>
-                                    </xar:if>
-                                    <xar:if condition="$sortpubtypes eq 'name'">
-                                        <option value="name" selected="selected">
-                                            <xar:mlstring>
-                                                Name 
-                                            </xar:mlstring>
-                                        </option>
-                                        <xar:else />
-                                        <option value="name">
-                                            <xar:mlstring>
-                                                Name 
-                                            </xar:mlstring>
-                                        </option>
-                                    </xar:if>
-                                    <xar:if condition="$sortpubtypes eq 'descr'">
-                                        <option value="descr" selected="selected">
-                                            <xar:mlstring>
-                                                Description 
-                                            </xar:mlstring>
-                                        </option>
-                                        <xar:else />
-                                        <option value="descr">
-                                            <xar:mlstring>
-                                                Description 
-                                            </xar:mlstring>
-                                        </option>
-                                    </xar:if>
-                                </select> 
-                            </td>
-                        </tr>
-                    </xar:if>
-                    <tr>
-                        <td colspan="2">
-                            <h3> 
-                                <xar:mlstring>
-                                    Website Configuration 
-                                </xar:mlstring>
-                            </h3> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="usealias"> 
-                                <xar:ml>
-                                    <xar:mlstring>
-                                        Use '#(1)' as alias in short URLs 
-                                    </xar:mlstring>
-                                    <xar:mlvar>
-                                        #$alias# 
-                                    </xar:mlvar>
-                                </xar:ml>
-                            </label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$usealias">
-                                <input type="checkbox" name="usealias" id="usealias" checked="checked" /> 
+    </h2>
+    <xar:template file="navtabs" type="module" />
+    <form class="xar-formwidget" action="&xar-modurl-articles-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <xar:if condition="empty($ptid)">
+            <fieldset class="formelements xar-norm">
+                <legend>
+                    <strong>
+                        <xar:mlstring>
+                            Global Configuration
+                        </xar:mlstring>
+                    </strong>
+                </legend>
+                <p class="param">
+                    <label for="defaultpubtype">
+                        <span class="help" title="#xarML('Note: selecting Defaults here implies navigating (by category) across all publication types')#">
+                            <xar:mlstring>
+                                Default Publication Type for the Articles "Front Page" 
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                    <select name="defaultpubtype" id="defaultpubtype"> 
+                        <xar:foreach in="$pubfilters" value="$pubfilter">
+                            <xar:if condition="$pubfilter['pid'] eq $defaultpubtype">
+                                <option value="#$pubfilter['pid']#" selected="selected">
+                                    #$pubfilter['ptitle']# 
+                                </option>
                                 <xar:else />
-                                <input type="checkbox" name="usealias" id="usealias" /> 
+                                <option value="#$pubfilter['pid']#">
+                                    #$pubfilter['ptitle']# 
+                                </option>
                             </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="page_template"> 
-                                <xar:mlstring>
-                                    Use different page template 
-                                </xar:mlstring>
-                            </label> 
-                        </td>
-                        <td>
-                            <input type="text" name="page_template" id="page_template" size="20" maxlength="60" value="#$page_template#" /> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="usetitleforurl"> 
-                                <xar:mlstring>
-                                    Use Title in short URLs 
-                                    <br />
-                                    <i>Note: if a title contains characters that are illegal in a URL, the title will not be used.</i> 
-                                </xar:mlstring>
-                            </label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$usetitleforurl">
-                                <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" checked="checked" />
-                            <xar:else/>
-                                <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" />
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <h3> 
-                                <xar:mlstring>
-                                    Overview Configuration 
-                                </xar:mlstring>
-                            </h3> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="defaultview"> 
-                                <xar:mlstring>
-                                    Default start view 
-                                </xar:mlstring>
-                            </label> 
-                        </td>
-                        <td>
-                            <select name="defaultview" id="defaultview"> 
-                                <xar:foreach in="$viewoptions" value="$viewoption">
-                                    <xar:if condition="$viewoption['value'] eq $defaultview">
-                                        <option value="#$viewoption['value']#" selected="selected">
-                                            #$viewoption['label']# 
-                                        </option>
-                                        <xar:else />
-                                        <option value="#$viewoption['value']#">
-                                            #$viewoption['label']# 
-                                        </option>
-                                    </xar:if>
-                                </xar:foreach>
-                            </select> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="defaultsort"> 
-                                <xar:mlstring>
-                                    Default sort order 
-                                </xar:mlstring>
-                            </label> 
-                        </td>
-                        <td>
-                            <select name="defaultsort" id="defaultsort"> 
-                                <xar:if condition="$defaultsort eq 'date'">
-                                    <option value="date" selected="selected">
-                                        <xar:mlstring>
-                                            Date 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="date">
-                                        <xar:mlstring>
-                                            Date 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                                <xar:if condition="$defaultsort eq 'title'">
-                                    <option value="title" selected="selected">
-                                        <xar:mlstring>
-                                            Title 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="title">
-                                        <xar:mlstring>
-                                            Title 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                                <xar:if condition="$showhitcountsoptions">
-                                    <xar:if condition="$defaultsort eq 'hits'">
-                                        <option value="hits" selected="selected">
-                                            <xar:mlstring>
-                                                Hits 
-                                            </xar:mlstring>
-                                        </option>
-                                        <xar:else />
-                                        <option value="hits">
-                                            <xar:mlstring>
-                                                Hits 
-                                            </xar:mlstring>
-                                        </option>
-                                    </xar:if>
-                                </xar:if>
-                                <xar:if condition="$showratingsoptions">
-                                    <xar:if condition="$defaultsort eq 'rating'">
-                                        <option value="rating" selected="selected">
-                                            <xar:mlstring>
-                                                Rating 
-                                            </xar:mlstring>
-                                        </option>
-                                        <xar:else />
-                                        <option value="rating">
-                                            <xar:mlstring>
-                                                Rating 
-                                            </xar:mlstring>
-                                        </option>
-                                    </xar:if>
-                                </xar:if>
-                                <xar:if condition="$defaultsort eq 'aid'">
-                                    <option value="aid" selected="selected">
-                                        <xar:mlstring>
-                                            Article ID 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="aid">
-                                        <xar:mlstring>
-                                            Article ID 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                                <xar:if condition="$defaultsort eq 'author'">
-                                    <option value="author" selected="selected">
-                                        <xar:mlstring>
-                                            Author 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="author">
-                                        <xar:mlstring>
-                                            Author 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                                <xar:if condition="$defaultsort eq 'summary'">
-                                    <option value="summary" selected="selected">
-                                        <xar:mlstring>
-                                            Summary 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="summary">
-                                        <xar:mlstring>
-                                            Summary 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                                <xar:if condition="$defaultsort eq 'notes'">
-                                    <option value="notes" selected="selected">
-                                        <xar:mlstring>
-                                            Notes 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="notes">
-                                        <xar:mlstring>
-                                            Notes 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                                <xar:if condition="$defaultsort eq 'date ASC'">
-                                    <option value="date ASC" selected="selected">
-                                        <xar:mlstring>
-                                            Date (oldest first) 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="date ASC">
-                                        <xar:mlstring>
-                                            Date (oldest first) 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                                <xar:comment>
-                                    adapt to your own preferred sort order(s) 
-                                </xar:comment>
-                                <xar:if condition="$defaultsort eq 'pubtypeid,date'">
-                                    <option value="pubtypeid,date" selected="selected">
-                                        <xar:mlstring>
-                                            Customized 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:else />
-                                    <option value="pubtypeid,date">
-                                        <xar:mlstring>
-                                            Customized 
-                                        </xar:mlstring>
-                                    </option>
-                                </xar:if>
-                            </select> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="number_of_columns"> 
-                                <xar:mlstring>
-                                    Number of columns 
-                                </xar:mlstring>
-                                <i>($numcols)</i></label> 
-                        </td>
-                        <td>
-                            <input type="text" name="number_of_columns" id="number_of_columns" size="1" maxlength="2" value="#$numcols#" /> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="itemsperpage"> 
-                                <xar:mlstring>
-                                    Items per page on user view 
-                                </xar:mlstring>
-                                <i>($number)</i></label> 
-                        </td>
-                        <td>
-                            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="adminitemsperpage"> 
-                                <xar:mlstring>
-                                    Items per page on admin view 
-                                </xar:mlstring>
-                                <i>($number)</i></label> 
-                        </td>
-                        <td>
-                            <input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$adminitemsperpage#" /> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showcategories"> 
-                                <xar:mlstring>
-                                    Show category links in article summaries 
-                                </xar:mlstring>
-                                <i>($categories)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$showcategories">
-                                <input type="checkbox" name="showcategories" id="showcategories" value="1" checked="checked" />
-                            <xar:else />
-                                <input type="checkbox" name="showcategories" id="showcategories" value="1" /> 
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showcatcount"> 
-                                <xar:mlstring>
-                                    Show number of articles in category navigation 
-                                </xar:mlstring>
-                                <i>($showcatcount)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$showcatcount">
-                                <input type="checkbox" name="showcatcount" id="showcatcount" value="1" checked="checked"/> 
-                            <xar:else/>
-                                <input type="checkbox" name="showcatcount" id="showcatcount" value="1" /> 
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showprevnext"> 
-                                <xar:mlstring>
-                                    Show previous/next category 
-                                </xar:mlstring>
-                                <i>($showprevnext)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$showprevnext">
-                                <input type="checkbox" name="showprevnext" id="showprevnext" value="1" checked="checked" />
-                            <xar:else/>
-                                <input type="checkbox" name="showprevnext" id="showprevnext" value="1" /> 
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showcomments"> 
-                                <xar:mlstring>
-                                    Show number of comments 
-                                </xar:mlstring>
-                                <i>($comments)</i></label> 
-                        </td>
-                        <xar:if condition="$showcommentsoptions">
-                            <td>
-                                <xar:if condition="$showcomments">
-                                    <input type="checkbox" name="showcomments" id="showcomments" value="1" checked="checked" />
-                                <xar:else/>
-                                    <input type="checkbox" name="showcomments" id="showcomments" value="1" />
-                                </xar:if>
-                            </td>
-                            <xar:else />
-                            <td>
-                                <input type="hidden" name="showcomments" id="showcomments" value="#$showcomments#" /> 
-                                <xar:mlstring>
-                                    N/A 
-                                </xar:mlstring>
-                            </td>
-                        </xar:if>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showhitcounts"> 
-                                <xar:mlstring>
-                                    Show hit counts 
-                                </xar:mlstring>
-                                <i>($counter)</i></label> 
-                        </td>
-                        <xar:if condition="$showhitcountsoptions">
-                            <td>
-                                <xar:if condition="$showhitcounts">
-                                    <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" checked="checked" />
-                                <xar:else />
-                                    <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" />
-                                </xar:if>
-                            </td>
-                            <xar:else />
-                            <td>
-                                <input type="hidden" name="showhitcounts" id="showhitcounts" value="#$showhitcounts#" /> 
-                                <xar:mlstring>
-                                    N/A 
-                                </xar:mlstring>
-                            </td>
-                        </xar:if>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showratings"> 
-                                <xar:mlstring>
-                                    Show ratings 
-                                </xar:mlstring>
-                                <i>($rating)</i></label> 
-                        </td>
-                        <xar:if condition="$showratingsoptions">
-                            <td>
-                                <xar:if condition="$showratings">
-                                    <input type="checkbox" name="showratings" id="showratings" value="1" checked="checked" />
-                                <xar:else/>
-                                    <input type="checkbox" name="showratings" id="showratings" value="1" />
-                                </xar:if>
-                            </td>
-                            <xar:else />
-                            <td>
-                                <input type="hidden" name="showratings" id="showratings" value="#$showratings#" /> 
-                                <xar:mlstring>
-                                    N/A 
-                                </xar:mlstring>
-                            </td>
-                        </xar:if>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showpublinks"> 
-                                <xar:mlstring>
-                                    Show links to publication types 
-                                </xar:mlstring>
-                                <i>($showpublinks + includes/publinks.xd)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$showpublinks">
-                                <input type="checkbox" name="showpublinks" id="showpublinks" value="1" checked="checked" />
-                            <xar:else />
-                                <input type="checkbox" name="showpublinks" id="showpublinks" value="1" /> 
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showpubcount"> 
-                                <xar:mlstring>
-                                    Show number of articles in publication links 
-                                </xar:mlstring>
-                                <i>($showpubcount)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$showpubcount">
-                                <input type="checkbox" name="showpubcount" id="showpubcount" value="1" checked="checked" />
-                            <xar:else />
-                                <input type="checkbox" name="showpubcount" id="showpubcount" value="1" />
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showarchives"> 
-                                <xar:mlstring>
-                                    Show link to archives 
-                                </xar:mlstring>
-                                <i>($archivelink + $archivelabel)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$showarchives">
-                                <input type="checkbox" name="showarchives" id="showarchives" value="1" checked="checked" />
-                            <xar:else/>
-                                <input type="checkbox" name="showarchives" id="showarchives" value="1" />
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="showmap"> 
-                                <xar:mlstring>
-                                    Show link to article map 
-                                </xar:mlstring>
-                                <i>($maplink + $maplabel)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$showmap">
-                                <input type="checkbox" name="showmap" id="showmap" value="1" checked="checked" />
-                            <xar:else/>
-                                <input type="checkbox" name="showmap" id="showmap" value="1" />
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="dotransform"> 
-                                <xar:mlstring>
-                                    Call transform hooks in summaries 
-                                </xar:mlstring>
-                            </label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$dotransform">
-                                <input type="checkbox" name="dotransform" id="dotransform" value="1" checked="checked" />
-                            <xar:else/>
-                                <input type="checkbox" name="dotransform" id="dotransform" value="1" />
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="titletransform"> 
-                                <xar:mlstring>
-                                    Call transform hooks on titles 
-                                </xar:mlstring>
-                            </label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$titletransform">
-                                <input type="checkbox" name="titletransform" id="titletransform" value="1" checked="checked" />
-                            <xar:else/>
-                                <input type="checkbox" name="titletransform" id="titletransform" value="1" />
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <h3> 
-                                <xar:mlstring>
-                                    Article Display Configuration 
-                                </xar:mlstring>
-                            </h3> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="prevnextart"> 
-                                <xar:mlstring>
-                                    Show link to previous/next article in display 
-                                </xar:mlstring>
-                                <i>($prevart + $nextart)</i></label> 
-                        </td>
-                        <td>
-                            <xar:if condition="$prevnextart">
-                                <input type="checkbox" name="prevnextart" id="prevnextart" value="1" checked="checked" />
-                            <xar:else/>
-                                <input type="checkbox" name="prevnextart" id="prevnextart" value="1" />
-                            </xar:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <i> 
-                                <xar:mlstring>
-                                    Note: the ($...) indicates the name of the variable used in the different templates 
-                                </xar:mlstring>
-                            </i> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <h3> 
-                                <xar:mlstring>
-                                    Article Status Options 
-                                </xar:mlstring>
-                            </h3> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="defaultstatus"> 
-                                <xar:mlstring>
-                                    Default start status 
-                                </xar:mlstring>
-                            </label> 
-                        </td>
-                        <xar:if condition="!empty($withstatus)">
-                            <td>
-                                <select name="defaultstatus" id="defaultstatus"> 
-                                    <xar:foreach in="$statusoptions" value="$statusoption">
-                                        <xar:if condition="$statusoption['value'] eq $defaultstatus">
-                                            <option value="#$statusoption['value']#" selected="selected">
-                                                #$statusoption['label']# 
-                                            </option>
-                                            <xar:else />
-                                            <option value="#$statusoption['value']#">
-                                                #$statusoption['label']# 
-                                            </option>
-                                        </xar:if>
-                                    </xar:foreach>
-                                </select> 
-                            </td>
-                            <xar:else />
-                            <td>
-                                <input type="hidden" name="defaultstatus" value="2" /> 
-                                <xar:mlstring>
-                                    N/A 
-                                </xar:mlstring>
-                            </td>
-                        </xar:if>
-                    </tr>
-                    <xar:if condition="!empty($hooks)">
-                        <tr>
-                            <td colspan="2">
-                                <h3> 
-                                    <xar:mlstring>
-                                        Configuration of Hooked Modules 
-                                    </xar:mlstring>
-                                </h3> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <xar:foreach in="$hooks" key="$hookmodule">
-                                    <xar:if condition="!empty($ptid) or $hookmodule ne 'dynamicdata'">
-                                        #$hooks[$hookmodule]# 
-                                    </xar:if>
-                                </xar:foreach>
-                            </td>
-                        </tr>
+                        </xar:foreach>
+                    </select> 
+                </p>
+                <p class="param">
+                    <label for="shorturls">
+                        <span class="help" title="#xarML('Support short URLs ')#">
+                            <xar:mlstring>
+                                Support short URLs 
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                    <xar:if condition="$shorturls">
+                        <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                     </xar:if>
-                    <tr>
-                        <td colspan="2" style="text-align: center;">
-                            <br />
-                            <input type="submit" value="#$updatelabel#" /> 
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
+                </p>
+                <p class="param">
+                    <label for="sortpubtypes">
+                        <span class="help" title="#xarML('Sort order for Publication Types in menus, article map etc.')#">
+                            <xar:mlstring>
+                                Sort Order
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                    <select name="sortpubtypes" id="sortpubtypes"> 
+                        <xar:if condition="$sortpubtypes eq 'id'">
+                            <option value="id" selected="selected">
+                                <xar:mlstring>
+                                    ID 
+                                </xar:mlstring>
+                            </option>
+                            <xar:else />
+                            <option value="id">
+                                <xar:mlstring>
+                                    ID 
+                                </xar:mlstring>
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$sortpubtypes eq 'name'">
+                            <option value="name" selected="selected">
+                                <xar:mlstring>
+                                    Name 
+                                </xar:mlstring>
+                            </option>
+                            <xar:else />
+                            <option value="name">
+                                <xar:mlstring>
+                                    Name 
+                                </xar:mlstring>
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$sortpubtypes eq 'descr'">
+                            <option value="descr" selected="selected">
+                                <xar:mlstring>
+                                    Description 
+                                </xar:mlstring>
+                            </option>
+                            <xar:else />
+                            <option value="descr">
+                                <xar:mlstring>
+                                    Description 
+                                </xar:mlstring>
+                            </option>
+                        </xar:if>
+                    </select> 
+                </p>
+            </fieldset>
+        </xar:if>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Website Configuration
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="ptid" id="ptid" value="#$ptid#" /> 
+            <p class="param">
+                <label for="usealias">
+                    <span class="help" title="#xarML('Removes the articles module name from the short url.')#">
+                        <xar:ml>
+                            <xar:mlstring>
+                                Use '#(1)' as alias in short URLs 
+                            </xar:mlstring>
+                            <xar:mlvar>
+                                #$alias# 
+                            </xar:mlvar>
+                        </xar:ml>
+                    </span>
+                </label>
+                <xar:if condition="$usealias">
+                    <input type="checkbox" name="usealias" id="usealias" checked="checked" /> 
+                    <xar:else />
+                    <input type="checkbox" name="usealias" id="usealias" /> 
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="page_template">
+                    <span class="help" title="#xarML('Change the theme/themename/pages/ template that you use with this publication type.')#">
+                        <xar:mlstring>
+                            Use different page template
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="page_template" id="page_template" size="20" maxlength="60" value="#$page_template#" /> 
+            </p>
+            <p class="param">
+                <label for="usetitleforurl">
+                    <span class="help" title="#xarML('Note: if a title contains characters that are illegal in a URL, the title will not be used..')#">
+                    <xar:mlstring>
+                        Use Title in short URLs 
+                    </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="$usetitleforurl">
+                    <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" />
+                </xar:if>
+            </p>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Overview Configuration 
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <p class="param">
+                <label for="defaultview">
+                    <span class="help" title="#xarML('Sorting by default.')#">
+                    <xar:mlstring>
+                        Default start view 
+                    </xar:mlstring>
+                    </span>
+                </label>
+                <select name="defaultview" id="defaultview"> 
+                    <xar:foreach in="$viewoptions" value="$viewoption">
+                        <xar:if condition="$viewoption['value'] eq $defaultview">
+                            <option value="#$viewoption['value']#" selected="selected">
+                                #$viewoption['label']# 
+                            </option>
+                            <xar:else />
+                            <option value="#$viewoption['value']#">
+                                #$viewoption['label']# 
+                            </option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </p>
+            <p class="param">
+                <label for="defaultsort">
+                    <span class="help" title="#xarML('Sorting by default.')#">
+                    <xar:mlstring>
+                        Default sort order
+                    </xar:mlstring>
+                    </span>
+                </label>
+                <select name="defaultsort" id="defaultsort"> 
+                    <xar:if condition="$defaultsort eq 'date'">
+                        <option value="date" selected="selected">
+                            <xar:mlstring>
+                                Date 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="date">
+                            <xar:mlstring>
+                                Date 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$defaultsort eq 'title'">
+                        <option value="title" selected="selected">
+                            <xar:mlstring>
+                                Title 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="title">
+                            <xar:mlstring>
+                                Title 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$showhitcountsoptions">
+                        <xar:if condition="$defaultsort eq 'hits'">
+                            <option value="hits" selected="selected">
+                                <xar:mlstring>
+                                    Hits 
+                                </xar:mlstring>
+                            </option>
+                            <xar:else />
+                            <option value="hits">
+                                <xar:mlstring>
+                                    Hits 
+                                </xar:mlstring>
+                            </option>
+                        </xar:if>
+                    </xar:if>
+                    <xar:if condition="$showratingsoptions">
+                        <xar:if condition="$defaultsort eq 'rating'">
+                            <option value="rating" selected="selected">
+                                <xar:mlstring>
+                                    Rating 
+                                </xar:mlstring>
+                            </option>
+                            <xar:else />
+                            <option value="rating">
+                                <xar:mlstring>
+                                    Rating 
+                                </xar:mlstring>
+                            </option>
+                        </xar:if>
+                    </xar:if>
+                    <xar:if condition="$defaultsort eq 'aid'">
+                        <option value="aid" selected="selected">
+                            <xar:mlstring>
+                                Article ID 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="aid">
+                            <xar:mlstring>
+                                Article ID 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$defaultsort eq 'author'">
+                        <option value="author" selected="selected">
+                            <xar:mlstring>
+                                Author 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="author">
+                            <xar:mlstring>
+                                Author 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$defaultsort eq 'summary'">
+                        <option value="summary" selected="selected">
+                            <xar:mlstring>
+                                Summary 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="summary">
+                            <xar:mlstring>
+                                Summary 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$defaultsort eq 'notes'">
+                        <option value="notes" selected="selected">
+                            <xar:mlstring>
+                                Notes 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="notes">
+                            <xar:mlstring>
+                                Notes 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$defaultsort eq 'date ASC'">
+                        <option value="date ASC" selected="selected">
+                            <xar:mlstring>
+                                Date (oldest first) 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="date ASC">
+                            <xar:mlstring>
+                                Date (oldest first) 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:comment>
+                        adapt to your own preferred sort order(s) 
+                    </xar:comment>
+                    <xar:if condition="$defaultsort eq 'pubtypeid,date'">
+                        <option value="pubtypeid,date" selected="selected">
+                            <xar:mlstring>
+                                Customized 
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="pubtypeid,date">
+                            <xar:mlstring>
+                                Customized 
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select> 
+            </p>
+            <p class="param">
+                <label for="number_of_columns">
+                    <span class="help" title="#xarML('Number of columns to display on view pages.')#">
+                        <xar:mlstring>
+                            Number of columns 
+                        </xar:mlstring>
+                        <i>($numcols)</i>
+                    </span>
+                </label>
+                <input type="text" name="number_of_columns" id="number_of_columns" size="1" maxlength="2" value="#$numcols#" />
+            </p>
+            <p class="param">
+                <label for="itemsperpage">
+                    <span class="help" title="#xarML('Number of items to display on user view.')#">
+                        <xar:mlstring>
+                            Items per page on user view 
+                        </xar:mlstring>
+                        <i>($number)</i>
+                    </span>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /> 
+            </p>
+            <p class="param">
+                <label for="adminitemsperpage">
+                    <span class="help" title="#xarML('Number of items to display on admin view.')#">
+                        <xar:mlstring>
+                            Items per page on admin view 
+                        </xar:mlstring>
+                        <i>($number)</i>
+                    </span>
+                </label>
+                <input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$adminitemsperpage#" /> 
+            </p>
+            <p class="param">
+                <label for="showcategories">
+                    <span class="help" title="#xarML('Show category links in article summaries .')#">
+                        <xar:mlstring>
+                            Show category links in article summaries 
+                        </xar:mlstring>
+                        <i>($categories)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showcategories">
+                    <input type="checkbox" name="showcategories" id="showcategories" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="showcategories" id="showcategories" value="1" /> 
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showcatcount">
+                    <span class="help" title="#xarML('Show number of articles in category navigation.')#">
+                        <xar:mlstring>
+                            Show number of articles in category navigation 
+                        </xar:mlstring>
+                        <i>($showcatcount)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showcatcount">
+                    <input type="checkbox" name="showcatcount" id="showcatcount" value="1" checked="checked"/> 
+                <xar:else/>
+                    <input type="checkbox" name="showcatcount" id="showcatcount" value="1" /> 
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showprevnext">
+                    <span class="help" title="#xarML('Show previous/next category.')#">
+                        <xar:mlstring>
+                            Show previous/next category 
+                        </xar:mlstring>
+                        <i>($showprevnext)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showprevnext">
+                    <input type="checkbox" name="showprevnext" id="showprevnext" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="showprevnext" id="showprevnext" value="1" /> 
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showcomments">
+                    <span class="help" title="#xarML('Show comments on view page.')#">
+                        <xar:mlstring>
+                            Show number of comments 
+                        </xar:mlstring>
+                        <i>($comments)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showcommentsoptions">
+                    <xar:if condition="$showcomments">
+                        <input type="checkbox" name="showcomments" id="showcomments" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="showcomments" id="showcomments" value="1" />
+                    </xar:if>
+                <xar:else />
+                    <input type="hidden" name="showcomments" id="showcomments" value="#$showcomments#" /> 
+                    <xar:mlstring>
+                        N/A 
+                    </xar:mlstring>
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showkeywords">
+                    <span class="help" title="#xarML('Show keywords on view page.')#">
+                        <xar:mlstring>
+                            Show Keywords
+                        </xar:mlstring>
+                        <i>($keywords)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showkeywordsoptions">
+                    <xar:if condition="$showkeywords">
+                        <input type="checkbox" name="showkeywords" id="showkeywords" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="showkeywords" id="showkeywords" value="1" />
+                    </xar:if>
+                <xar:else />
+                    <input type="hidden" name="showkeywords" id="showkeywords" value="#$showkeywords#" /> 
+                    <xar:mlstring>
+                        N/A 
+                    </xar:mlstring>
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showhitcounts">
+                    <span class="help" title="#xarML('Show hit counts on view page.')#">
+                        <xar:mlstring>
+                            Show Hit Counts
+                        </xar:mlstring>
+                        <i>($counter)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showhitcountsoptions">
+                    <xar:if condition="$showhitcounts">
+                        <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" />
+                    </xar:if>
+                <xar:else />
+                    <input type="hidden" name="showhitcounts" id="showhitcounts" value="#$showhitcounts#" /> 
+                    <xar:mlstring>
+                        N/A 
+                    </xar:mlstring>
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showratings">
+                    <span class="help" title="#xarML('Show ratings on view page.')#">
+                        <xar:mlstring>
+                            Show Ratings
+                        </xar:mlstring>
+                        <i>($ratings)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showratingsoptions">
+                    <xar:if condition="$showratings">
+                        <input type="checkbox" name="showratings" id="showratings" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="showratings" id="showratings" value="1" />
+                    </xar:if>
+                <xar:else />
+                    <input type="hidden" name="showratings" id="showratings" value="#$showratings#" /> 
+                    <xar:mlstring>
+                        N/A 
+                    </xar:mlstring>
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showpublinks">
+                    <span class="help" title="#xarML('Show links to publication types.')#">
+                        <xar:mlstring>
+                            Show links to publication types 
+                        </xar:mlstring>
+                        <i>($showpublinks + includes/publinks.xd)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showpublinks">
+                    <input type="checkbox" name="showpublinks" id="showpublinks" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="showpublinks" id="showpublinks" value="1" /> 
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showpubcount">
+                    <span class="help" title="#xarML('Show links to publication types.')#">
+                        <xar:mlstring>
+                            Show number of articles in publication links 
+                        </xar:mlstring>
+                        <i>($showpubcount)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showpubcount">
+                    <input type="checkbox" name="showpubcount" id="showpubcount" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="showpubcount" id="showpubcount" value="1" />
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showarchives">
+                    <span class="help" title="#xarML('Show link to archives.')#">
+                        <xar:mlstring>
+                            Show link to archives 
+                        </xar:mlstring>
+                        <i>($showpubcount)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showarchives">
+                    <input type="checkbox" name="showarchives" id="showarchives" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="showarchives" id="showarchives" value="1" />
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="showmap">
+                    <span class="help" title="#xarML('Show link to article map.')#">
+                        <xar:mlstring>
+                            Show link to article map
+                        </xar:mlstring>
+                        <i>($maplink + $maplabel)</i>
+                    </span>
+                </label>
+                <xar:if condition="$showmap">
+                    <input type="checkbox" name="showmap" id="showmap" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="showmap" id="showmap" value="1" />
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="dotransform">
+                    <span class="help" title="#xarML('Call transform hooks in summaries.')#">
+                        <xar:mlstring>
+                            Call transform hooks in summaries 
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="$dotransform">
+                    <input type="checkbox" name="dotransform" id="dotransform" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="dotransform" id="dotransform" value="1" />
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="titletransform">
+                    <span class="help" title="#xarML('Call transform hooks in titles.')#">
+                        <xar:mlstring>
+                            Call transform hooks in titles
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="$titletransform">
+                    <input type="checkbox" name="titletransform" id="titletransform" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="titletransform" id="titletransform" value="1" />
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="titletransform">
+                    <span class="help" title="#xarML('Call transform hooks in titles.')#">
+                        <xar:mlstring>
+                            Call transform hooks in titles
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="$titletransform">
+                    <input type="checkbox" name="titletransform" id="titletransform" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="titletransform" id="titletransform" value="1" />
+                </xar:if>
+            </p>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Article Display Configuration
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <p class="param">
+                <label for="prevnextart">
+                    <span class="help" title="#xarML('Show link to previous/next article in display.')#">
+                        <xar:mlstring>
+                            Show link to previous/next article in display
+                        </xar:mlstring>
+                        <i>($prevart + $nextart)</i>
+                    </span>
+                </label>
+                <xar:if condition="$prevnextart">
+                    <input type="checkbox" name="prevnextart" id="prevnextart" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="prevnextart" id="prevnextart" value="1" />
+                </xar:if>
+            </p>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Article Status Options 
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <p class="param">
+                <label for="defaultstatus">
+                    <span class="help" title="#xarML('Default start status.')#">
+                        <xar:mlstring>
+                            Default start status
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="!empty($withstatus)">
+                        <select name="defaultstatus" id="defaultstatus"> 
+                            <xar:foreach in="$statusoptions" value="$statusoption">
+                                <xar:if condition="$statusoption['value'] eq $defaultstatus">
+                                    <option value="#$statusoption['value']#" selected="selected">
+                                        #$statusoption['label']# 
+                                    </option>
+                                    <xar:else />
+                                    <option value="#$statusoption['value']#">
+                                        #$statusoption['label']# 
+                                    </option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select> 
+                    <xar:else />
+                        <input type="hidden" name="defaultstatus" value="2" /> 
+                        <xar:mlstring>
+                            N/A 
+                        </xar:mlstring>
+                </xar:if>
+            </p>
+            </fieldset>
+            <xar:if condition="!empty($hooks)">
+                <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong>
+                            <xar:mlstring>
+                                Configuration of Hooked Modules
+                            </xar:mlstring>
+                        </strong>
+                    </legend>
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                        <xar:if condition="!empty($ptid) or $hookmodule ne 'dynamicdata'">
+                            #$hooks[$hookmodule]# 
+                        </xar:if>
+                    </xar:foreach>
+                </fieldset>
+            </xar:if>
+            <p class="param">
+                <xar:mlstring>
+                    Note: the ($...) indicates the name of the variable used in the different templates 
+                </xar:mlstring>
+            </p>
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
+    </form>
 </div>

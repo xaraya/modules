@@ -41,6 +41,7 @@ function articles_admin_modifyconfig()
         $data['defaultview']            = $settings['defaultview'];
         // Note: the current template uses the variables both for testing and the value attribute for the tag, dont use true/false to be sure
         $data['showcategories']         = !empty($settings['showcategories']) ? 1 : 0;
+        $data['showkeywords']           = !empty($settings['showkeywords']) ? 1 : 0;
         $data['showcatcount']           = !empty($settings['showcatcount']) ? 1 : 0;
         $data['showprevnext']           = !empty($settings['showprevnext']) ? 1 : 0;
         $data['showcomments']           = !empty($settings['showcomments']) ? 1 : 0;
@@ -72,6 +73,9 @@ function articles_admin_modifyconfig()
     }
     if (!isset($data['showcategories'])) {
         $data['showcategories'] = 0;
+    }
+    if (!isset($data['showkeywords'])) {
+        $data['showkeywords'] = 0;
     }
     if (!isset($data['showcatcount'])) {
         $data['showcatcount'] = 0;
@@ -176,6 +180,12 @@ function articles_admin_modifyconfig()
     else {
         $data['showratingsoptions'] = false;
     }
+    if (!empty($seenhook['keywords'])) {
+        $data['showkeywordsoptions'] = true;
+    }
+    else {
+        $data['showkeywordsoptions'] = false;
+    }
 
     $viewoptions = array();
     $viewoptions[] = array('value' => 1, 'label' => xarML('Latest Items'));
@@ -262,9 +272,7 @@ function articles_admin_modifyconfig()
         $data['usealias'] = false;
     }
     $data['authid'] = xarSecGenAuthKey();
-
     // Return the template variables defined in this function
     return $data;
 }
-
 ?>

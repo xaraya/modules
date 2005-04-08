@@ -49,3 +49,14 @@
         (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
     </xar:if>
 </xar:if>
+
+<div class="xar-articles-keywords">
+    <xar:if condition="!empty($keywords)">
+        <xar:mlstring>
+            Keywords
+        </xar:mlstring>:
+        <xar:loop name="$keywords">
+            <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>  
+        </xar:loop>
+    </xar:if>
+</div>

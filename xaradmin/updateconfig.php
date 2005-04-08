@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Update configuration
  */
@@ -7,7 +6,6 @@ function articles_admin_updateconfig()
 {
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
-
     // Get parameters
     //A lot of these probably are bools, still might there be a need to change the template to return
     //'true' and 'false' to use those...
@@ -20,6 +18,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultview',       'isset', $defaultview,       1,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showcategories',    'isset', $showcategories,    0,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('showkeywords',      'isset', $showkeywords,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showcatcount',      'isset', $showcatcount,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showprevnext',      'isset', $showprevnext,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showcomments',      'isset', $showcomments,      0,  XARVAR_NOT_REQUIRED)) {return;}
@@ -39,6 +38,13 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('titletransform',    'isset', $titletransform,    0,  XARVAR_NOT_REQUIRED)) {return;}
 
     if (empty($ptid)) {
+        $ptid = '';
+        if (!xarSecurityCheck('AdminArticles')) return;
+    } else {
+        if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
+    }
+
+    if (empty($ptid)) {
         xarModSetVar('articles', 'SupportShortURLs', $shorturls);
         xarModSetVar('articles', 'defaultpubtype', $defaultpubtype);
         xarModSetVar('articles', 'sortpubtypes', $sortpubtypes);
@@ -50,6 +56,7 @@ function articles_admin_updateconfig()
     $settings['number_of_columns']  = $number_of_columns;
     $settings['defaultview']        = $defaultview;
     $settings['showcategories']     = $showcategories;
+    $settings['showkeywords']       = $showkeywords;
     $settings['showcatcount']       = $showcatcount;
     $settings['showprevnext']       = $showprevnext;
     $settings['showcomments']       = $showcomments;
@@ -68,7 +75,6 @@ function articles_admin_updateconfig()
     $settings['defaultsort']        = $defaultsort;
     $settings['usetitleforurl']     = $usetitleforurl;
     
-
     if (!empty($ptid)) {
         xarModSetVar('articles', 'settings.'.$ptid, serialize($settings));
 
@@ -96,14 +102,11 @@ function articles_admin_updateconfig()
         xarModCallHooks('module','updateconfig','articles',
                         array('module' => 'articles'));
     }
-
     if (empty($ptid)) {
         $ptid = null;
     }
     xarResponseRedirect(xarModURL('articles', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid)));
-
     return true;
 }
-
 ?>

@@ -1,27 +1,35 @@
-<table border="0" cellpadding="5" cellspacing="0" width="100%">
-    <tr>
-        <td align="left" valign="top" class="xar-normal">
-            <xar:if condition="!empty($categories) and count($categories) gt 0">
-                [ <xar:foreach in="$categories" value="$cat">
-                    #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
-                </xar:foreach> ]
+<div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
+    <div class="xar-norm" style="padding: 3px;">
+        <xar:if condition="!empty($categories) and count($categories) gt 0">
+            [ <xar:foreach in="$categories" value="$cat">
+                #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+            </xar:foreach> ]
+        </xar:if>
+        <a class="xar-title" href="#$redirect#">#$title#</a><br />
+        <xar:mlstring>Description</xar:mlstring>: #$summary#<br />
+        <xar:mlstring>Added on</xar:mlstring>:
+        #xarLocaleGetFormattedDate('long',$pubdate)#
+        #xarLocaleGetFormattedTime('long',$pubdate)#
+        <xar:if condition="!empty($rating)">
+            - <xar:mlstring>Rating</xar:mlstring>: #$rating#
+        </xar:if>
+        <xar:if condition="!empty($counter)">
+            <xar:if condition="$counter eq 1">
+                (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
+            <xar:else />
+                (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
             </xar:if>
-            <a class="xar-title" href="#$redirect#">#$title#</a><br />
-            <xar:mlstring>Description</xar:mlstring>: #$summary#<br />
-            <xar:mlstring>Added on</xar:mlstring>:
-            #xarLocaleGetFormattedDate('long',$pubdate)#
-            #xarLocaleGetFormattedTime('long',$pubdate)#
-            <xar:if condition="!empty($rating)">
-                - <xar:mlstring>Rating</xar:mlstring>: #$rating#
+        </xar:if>
+        | <a href="#$link#"><xar:mlstring>Rate / Comment</xar:mlstring></a>
+        <div class="xar-articles-keywords">
+            <xar:if condition="!empty($keywords)">
+                <xar:mlstring>
+                    Keywords
+                </xar:mlstring>:
+                <xar:loop name="$keywords">
+                    <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>  
+                </xar:loop>
             </xar:if>
-            <xar:if condition="!empty($counter)">
-                <xar:if condition="$counter eq 1">
-                    (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
-                <xar:else />
-                    (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
-                </xar:if>
-            </xar:if>
-            | <a href="#$link#"><xar:mlstring>Rate / Comment</xar:mlstring></a>
-        </td>
-    </tr>
-</table>
+        </div>
+    </div>
+</div>
