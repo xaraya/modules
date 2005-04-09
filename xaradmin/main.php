@@ -32,6 +32,5 @@ function keywords_admin_main()
     } 
     // success
     return true;
-} 
-
+}
 ?>

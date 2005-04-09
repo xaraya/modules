@@ -15,19 +15,17 @@
  */
 function keywords_admin_updateconfig()
 { 
-    
+    // Confirm authorisation code
+    if (!xarSecConfirmAuthKey()) return; 
+    if (!xarSecurityCheck('AdminKeywords')) return;
     // Get parameters
     xarVarFetch('restricted','int:0:1',$restricted, NULL, XARVAR_DONT_SET);
     xarVarFetch('useitemtype','int:0:1',$useitemtype, NULL, XARVAR_DONT_SET);
     xarVarFetch('keywords','isset',$keywords,'', XARVAR_DONT_SET);
     xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
+    xarVarFetch('showsort','isset',$showsort,'', XARVAR_DONT_SET);
     xarVarFetch('displaycolumns','isset',$displaycolumns,'', XARVAR_DONT_SET);
     xarVarFetch('delimiters','isset',$delimiters,'', XARVAR_DONT_SET);
-
-    // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return; 
-
-    if (!xarSecurityCheck('AdminKeywords')) return;
 
     if (isset($restricted)) {
         xarModSetVar('keywords','restricted',$restricted);
@@ -61,14 +59,16 @@ function keywords_admin_updateconfig()
             } 
         } 
     } 
-    
-
     if (empty($isalias)) {
         xarModSetVar('keywords','SupportShortURLs',0);
     } else {
         xarModSetVar('keywords','SupportShortURLs',1);
     }
-    
+    if (empty($showsort)) {
+        xarModSetVar('keywords','showsort',0);
+    } else {
+        xarModSetVar('keywords','showsort',1);
+    }
     if (empty($displaycolumns)) {
         xarModSetVar('keywords','displaycolumns',2);
     } else {
@@ -77,11 +77,7 @@ function keywords_admin_updateconfig()
     if (isset($delimiters)) {
         xarModSetVar('keywords','delimiters',trim($delimiters));
     }
-
-
     xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));
-
     return true;
 }
-
 ?>

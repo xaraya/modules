@@ -8,67 +8,72 @@
         </xar:mlstring>
     </span>
 </div>
-<xar:set name="totitems">
-    count($items)
-</xar:set>
-<xar:if condition="empty($status)">
-    <xar:comment>
-        Nav Tabs moved to the includes folder
-    </xar:comment>
-    <xar:template file="navtabs" type="module" />
-    <div style="clear: both; padding-top: 10px;">
-        <xar:if condition="empty($items)">
-            <h4>
-                <xar:mlstring>
-                    No keywords found !
-                </xar:mlstring>
-            </h4>
-    <xar:else /> <!-- Start the list column output -->
-        <xar:set name="totitemspercol">
-            round($totitems/$displaycolumns)
-        </xar:set>
-        <xar:set name="divwidth">
-            round(95/$displaycolumns)
-        </xar:set>
-        <!-- Begin the column wrapping div -->
-        <div style="clear:both;">
-            <xar:set name="i">1</xar:set>
-            <xar:set name="j">0</xar:set>
-            <!-- Begin first list column div -->
-            <!-- TODO: well, what can i say, does the author still know what happens here? -->
-            <div style="float:left; width: #$divwidth#%; text-align: left;">
-                <ul>
-                    <xar:foreach in="$items" value="$item">
-                        <xar:set name="j">++$j</xar:set>
-                        <xar:if condition="$i++ lt $totitemspercol">
-                            <li>
-                                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                            </li>
-                        <xar:elseif condition="($j eq $totitems)" />
-                            <li>
-                                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                            </li>
-                            <xar:set name="i">1</xar:set>
-                        <xar:else />
-                            <li>
-                                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                            </li>
-                            </ul>
-                            </div> <!-- end list column -->
+<div class="xar-mod-body">
+    <xar:set name="totitems">
+        count($items)
+    </xar:set>
+    <xar:if condition="empty($status)">
+        <xar:comment>
+            Nav Tabs moved to the includes folder
+        </xar:comment>
+        <xar:if condition="xarModGetVar('keywords', 'showsort')">
+            <xar:template file="navtabs" type="module" />
+        </xar:if>
+        <div style="clear: both; padding-top: 10px;">
+            <xar:if condition="empty($items)">
+                <h4>
+                    <xar:mlstring>
+                        No keywords found !
+                    </xar:mlstring>
+                </h4>
+            <xar:else /> 
+            <xar:comment>
+                Start the list column output
+             </xar:comment>
+            <xar:set name="totitemspercol">
+                round($totitems/$displaycolumns)
+            </xar:set>
+            <xar:set name="divwidth">
+                round(95/$displaycolumns)
+            </xar:set>
+            <xar:comment> Begin the column wrapping div </xar:comment>
+            <div style="clear:both;">
+                <xar:set name="i">1</xar:set>
+                <xar:set name="j">0</xar:set>
+                <xar:comment> Begin first list column div </xar:comment>
+                <xar:comment> TODO: well, what can i say, does the author still know what happens here? </xar:comment>
+                <div style="float:left; width: #$divwidth#%; text-align: left;">
+                    <ul>
+                        <xar:foreach in="$items" value="$item">
+                            <xar:set name="j">++$j</xar:set>
+                            <xar:if condition="$i++ lt $totitemspercol">
+                                <li>
+                                    <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                                </li>
+                            <xar:elseif condition="($j eq $totitems)" />
+                                <li>
+                                    <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                                </li>
+                                <xar:set name="i">1</xar:set>
+                            <xar:else />
+                                <li>
+                                    <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                                </li>
+                                </ul>
+                                </div> <xar:comment> end list column </xar:comment>
 
-                            <!-- begin list column -->
-                            <div style="float:left; width: #$divwidth#%; text-align: left;">
-                                <ul>
-                                    <xar:set name="i">1</xar:set>
-                        </xar:if>
-                    </xar:foreach>
-               </ul>
-            </div>              <!-- end last column div -->
-        </div>  <!-- End all column wrapping div -->
-    </xar:if>
-    </div>    <!-- End div for wrapping whole if section -->
-    <xar:elseif condition="$status eq 1 and !empty($keyword)" />
-    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+                                <xar:comment> begin list column </xar:comment>
+                                <div style="float:left; width: #$divwidth#%; text-align: left;">
+                                    <ul>
+                                        <xar:set name="i">1</xar:set>
+                            </xar:if>
+                        </xar:foreach>
+                   </ul>
+                </div>              <xar:comment> end last column div </xar:comment>
+            </div>  <xar:comment> End all column wrapping div </xar:comment>
+        </xar:if>
+        </div>    <xar:comment> End div for wrapping whole if section </xar:comment>
+        <xar:elseif condition="$status eq 1 and !empty($keyword)" />
         <h4>
             <xar:ml>
                 <xar:mlstring>
@@ -79,82 +84,82 @@
                 </xar:mlvar>
             </xar:ml>
         </h4>
-    </div>
-    <div>
-        <ul>
-            <xar:foreach in="$items" key="$id" value="$item">
-                <li>
-                    <xar:if condition="!empty($item['modname'])">
-                        [#$item['modname']#] 
-                    </xar:if>
-                    <xar:if condition="!empty($item['url']) and !empty($item['label'])">
-                        <a href="#$item['url']#">
-                            #$item['label']# 
-                        </a>
-                        <xar:elseif condition="!empty($item['url'])" />
-                        <xar:comment>
-                            you could skip these items 
-                        </xar:comment>
-                        <a href="#$item['url']#">
-                            <xar:ml>
-                                <xar:mlstring>
-                                    item #(1) 
-                                </xar:mlstring>
-                                <xar:mlvar>
-                                    #$item['itemid']# 
-                                </xar:mlvar>
-                            </xar:ml>
-                        </a>
-                        <xar:else />
-                        <xar:comment>
-                            you could skip these items 
-                        </xar:comment>
-                        <xar:mlstring>
-                            item 
-                        </xar:mlstring>
-                        #$item['moduleid']# #$item['itemtype']# #$item['itemid']# 
-<!--                     </a> -->
-                    </xar:if>
-                </li>
-            </xar:foreach>
-        </ul>
-        <p>
-            <a href="javascript:history.back(-1)">
-                <xar:mlstring>
-                    Click here to go back 
-                </xar:mlstring>
-            </a>
-        </p>
-    </div>
-    <xar:elseif condition="$status eq 1 and empty($keyword)" />
-    <xar:mlstring>
-        No keywords 
-    </xar:mlstring>
-    <xar:elseif condition="$status eq 2" />
-    <h2>
+        <div>
+            <ul>
+                <xar:foreach in="$items" key="$id" value="$item">
+                    <li style="liststyle: none;">
+                        <xar:if condition="!empty($item['modname'])">
+                            [#$item['modname']#] 
+                        </xar:if>
+                        <xar:if condition="!empty($item['url']) and !empty($item['label'])">
+                            <a href="#$item['url']#">
+                                #$item['label']# 
+                            </a>
+                            <xar:elseif condition="!empty($item['url'])" />
+                            <xar:comment>
+                                you could skip these items 
+                            </xar:comment>
+                            <a href="#$item['url']#">
+                                <xar:ml>
+                                    <xar:mlstring>
+                                        item #(1) 
+                                    </xar:mlstring>
+                                    <xar:mlvar>
+                                        #$item['itemid']# 
+                                    </xar:mlvar>
+                                </xar:ml>
+                            </a>
+                            <xar:else />
+                            <xar:comment>
+                                you could skip these items 
+                            </xar:comment>
+                            <xar:mlstring>
+                                item 
+                            </xar:mlstring>
+                            #$item['moduleid']# #$item['itemtype']# #$item['itemid']# 
+                            <xar:comment></a></xar:comment>
+                        </xar:if>
+                    </li>
+                </xar:foreach>
+            </ul>
+            <p>
+                <a href="javascript:history.back(-1)">
+                    <xar:mlstring>
+                        Click here to go back 
+                    </xar:mlstring>
+                </a>
+            </p>
+        </div>
+        <xar:elseif condition="$status eq 1 and empty($keyword)" />
         <xar:mlstring>
-            Overview of Keyword Assignments 
+            No keywords 
         </xar:mlstring>
-    </h2>
-    <xar:mlstring>
-        Unable to find corresponding item 
-    </xar:mlstring>
-    <xar:elseif condition="$status eq 3" />
-    <h2>
+        <xar:elseif condition="$status eq 2" />
+        <h2>
+            <xar:mlstring>
+                Overview of Keyword Assignments 
+            </xar:mlstring>
+        </h2>
         <xar:mlstring>
-            Overview of Keyword Assignments 
+            Unable to find corresponding item 
         </xar:mlstring>
-    </h2>
-    <xar:mlstring>
-        Unable to find module for the corresponding item 
-    </xar:mlstring>
-    <xar:else />
-    <h2>
+        <xar:elseif condition="$status eq 3" />
+        <h2>
+            <xar:mlstring>
+                Overview of Keyword Assignments 
+            </xar:mlstring>
+        </h2>
         <xar:mlstring>
-            Overview of Keyword Assignments 
+            Unable to find module for the corresponding item 
         </xar:mlstring>
-    </h2>
-    <xar:mlstring>
-        Unknown status 
-    </xar:mlstring>
-</xar:if>
+        <xar:else />
+        <h2>
+            <xar:mlstring>
+                Overview of Keyword Assignments 
+            </xar:mlstring>
+        </h2>
+        <xar:mlstring>
+            Unknown status 
+        </xar:mlstring>
+    </xar:if>
+</div>

@@ -107,12 +107,10 @@ function keywords_admin_modifyconfig()
     }
     
     $data['isalias'] = xarModGetVar('keywords','SupportShortURLs');
+    $data['showsort'] = xarModGetVar('keywords','showsort');
     $data['displaycolumns'] = xarModGetVar('keywords','displaycolumns');
     $data['delimiters'] = xarModGetVar('keywords','delimiters');
-
     $data['authid'] = xarSecGenAuthKey();
-
     return $data;
 }
-
 ?>
