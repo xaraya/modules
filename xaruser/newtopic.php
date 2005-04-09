@@ -186,6 +186,7 @@ function xarbb_user_newtopic()
                                      'tstatus'  => $tstatus));
                  // NNTP?
                  $settings   = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
+                 /*
                  if ($settings['nntp']){
                     if (!xarModAPIFunc('newsgroups','admin','postarticle',
                                        array('group'     => $settings['nntp'],
@@ -194,7 +195,7 @@ function xarbb_user_newtopic()
                                              'name'      => xarUserGetVar('name'),
                                              'email'     => xarUserGetVar('email')))) return;
                  }
-
+                 */
                  // We don't want to update the forum counter on an updated reply.
                  if (!xarModAPIFunc('xarbb',
                                    'user',
