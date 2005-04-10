@@ -128,8 +128,11 @@
                             <label for="keywords[#$modname#]">
                                 <span class="help" title="#xarML('Define keywords for the')# #$modname# #xarML('module')#">
                                     <xar:mlstring>
-                                        Allowed Keywords
+                                        Allowed Keywords for module
                                     </xar:mlstring>
+                                    <strong>
+                                        #$modname#
+                                    </strong>
                                 </span>
                             </label>
                            <textarea name="keywords[#$modname#]" id="keywords[#$modname#]" cols="32" rows="3" >#xarVarPrepForDisplay($config['keywords'])#</textarea>
@@ -137,14 +140,16 @@
                     </xar:foreach>
                 <xar:else/>
                     <xar:foreach in="$settings" key="$modname" value="$module">
+                        <xar:foreach in="$module" key="$itemtype" value="$item">
                         <p class="param">
                             <label for="keywords[#$modname#.#$itemtype#]">
-                                <span class="help" title="#xarML('Define keywords for the')# #$modname# #xarML('module')#">
-                                    #xarML('Configuration for itemtype in module')#: <b>#$modname#</b>
+                                    <span class="help" title="#xarML('Define keywords for this itemtype of the')# #$modname# #xarML('module')#">
+                                       #xarML('Allowed Keywords for:')# <strong>#$item['label']#</strong> [module #$modname#]
                                 </span>
                             </label>
                            <textarea name="keywords[#$modname#.#$itemtype#]" id="keywords[#$modname#]" cols="32" rows="2" >#xarVarPrepForDisplay($item['keywords'])#</textarea>
                         </p>
+                    </xar:foreach>
                     </xar:foreach>
                 </xar:if>
             </xar:if>

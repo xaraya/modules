@@ -85,7 +85,7 @@ function keywords_admin_modifyconfig()
                                 $link = xarModURL($mod,'user','view',array('itemtype' => $itemtype));
                     }
                             $label = $item['label'];
-                            $data['settings'][$mod][$itemtype] = array('label' => xarML('Keywords for <a href="#(1)">#(2)</a>', $link, $label),
+                            $data['settings'][$mod][$itemtype] = array('label'     => $label,
                                                                     'keywords'   => $keywords);
                 
              }
@@ -100,7 +100,7 @@ function keywords_admin_modifyconfig()
                                                  array('moduleid' => $moduleid));
 
                 $link = xarModURL($modname,'user','main');
-                $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
+                $data['settings'][$modname] = array('label'    => $modname,
                                                     'keywords'   => $keywords);
             }
         }
