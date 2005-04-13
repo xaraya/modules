@@ -3,6 +3,7 @@
 // Get all matching pages.
 // Retrieve the page type details here too
 // pid: page ID (optional)
+// pids: list of page ID (optional)
 // name: page name
 // itemtype: page itemtype
 // parent: page parent (0=root page)
@@ -56,6 +57,17 @@ function xarpages_userapi_getpages($args)
     if (isset($pid)) {
         $where[] = 'tpages.xar_pid = ?';
         $bind[] = (int)$pid;
+    } elseif (!empty($pids)) {
+        $addwhere = array();
+        foreach ($pids as $mypid) {
+            if (!empty($mypid) && is_numeric($mypid)) {
+                $addwhere[] = '?';
+                $bind[] = (int)$mypid;
+            }
+        }
+        if (!empty($addwhere)) {
+            $where[] = 'tpages.xar_pid IN (' . join(', ', $addwhere) . ')';
+        }
     }
 
     if (isset($itemtype)) {

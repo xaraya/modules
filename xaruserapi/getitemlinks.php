@@ -23,6 +23,7 @@ function xarpages_userapi_getitemlinks($args)
 
     $pages = xarModAPIFunc('xarpages','user','getpages',
                            array('itemtype' => $itemtype,
+                                 'pids'     => $itemids,
                                  'key'      => 'pid',
                                  'dd_flag'  => false));
 

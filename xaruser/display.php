@@ -260,6 +260,16 @@ function xarpages_user_display($args)
         xarTplSetPageTemplateName($inherited['page_template']);
     }
 
+    // Call display hooks
+// CHECKME: see where you'd like to put the hook output in $data
+    $item = $data['current_page'];
+    $item['module'] = 'xarpages';
+    $item['itemtype'] = $data['current_page']['ptid'];
+    $item['itemid'] = $pid;
+    $item['returnurl'] = xarModURL('xarpages','user','display',
+                                   array('pid' => $pid));
+    $data['hooks'] = xarModCallHooks('item', 'display', $pid, $item);
+
     // TODO: provide an alternative, configurable, default template, for when none found,
     // ultimately falling back to 'page'. We need to start messing around consuming
     // errors from the error stack to do that though, as xarTplModule() does not have a
