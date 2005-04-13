@@ -7,7 +7,6 @@
  *  desc: group description
  *  insertpoint: ID of group inserting relative to
  *  offset: relationship to insertpoint ('after', 'before', 'firstchild', 'lastchild')
- * TODO: allow explicit DD fields to be passed into this API
  * TODO: check the page type is valid
  * TODO: default most values and raise an error in missing mandatory values
  */
@@ -109,15 +108,11 @@ function xarpages_adminapi_createpage($args)
         $pid = $dbconn->PO_Insert_ID($tablename, $idname);
     }
 
-    // Create hooks.
-    xarModCallHooks(
-        'item', 'create', $pid,
-        array(
-            'itemtype' => $itemtype,
-            'module' => 'xarpages',
-            'urlparam' => 'pid'
-        )
-    );
+    // Create hooks - by passing the original $args list, any DD fields will also be passed
+    $args['module'] = 'xarpages';
+    $args['itemtype'] = $itemtype;
+    $args['itemid'] = $pid;
+    xarModCallHooks('item', 'create', $pid, $args);
 
     // Set this page as a module alias if necessary.
     if (!empty($alias)) {

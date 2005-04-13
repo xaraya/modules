@@ -131,11 +131,11 @@ function xarpages_adminapi_updatepage($args)
         if (!$result) {return;}
     }
 
-    // Call update hooks.
-    xarModCallHooks(
-        'item', 'update', $pid,
-        array('module' => 'xarpages', 'itemtype' => $page['itemtype'])
-    );
+    // Update hooks - by passing the original $args list, any DD fields will also be passed
+    $args['module'] = 'xarpages';
+    $args['itemtype'] = $page['itemtype'];
+    $args['itemid'] = $pid;
+    xarModCallHooks('item', 'update', $pid, $args);
 
     return true;
 }
