@@ -9,6 +9,7 @@
  *  offset: relationship to insertpoint ('after', 'before', 'firstchild', 'lastchild')
  * TODO: check the page type is valid
  * TODO: default most values and raise an error in missing mandatory values
+ * @TODO: specifying pid is not supported by xarpages createpage yet ! (cfr. DD migrate)
  */
 
 function xarpages_adminapi_createpage($args)

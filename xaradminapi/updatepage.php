@@ -18,6 +18,7 @@
  * @return true on success, false on failure
  *
  * @todo Allow the status of a page to be propagated to all child pages.
+ * @TODO: changing itemtype is not supported by xarpages updatepage yet ! (cfr. DD migrate)
  */
 
 function xarpages_adminapi_updatepage($args)
