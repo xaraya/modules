@@ -106,7 +106,7 @@ function articles_featureditemsblock_display(& $blockinfo)
         if (xarModIsHooked('uploads', 'articles', $vars['pubtypeid'])) {
             xarVarSetCached('Hooks.uploads','ishooked',1);
         }
-        
+
         /* $featuredart = array();
         if ($featuredart = current(xarModAPIFunc(
             'articles','user','getall',
@@ -115,14 +115,14 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'extra' => array('cids','dynamicdata')
             )
         ))) {*/
-        	
-        	
-        	if($featart = xarModAPIFunc(
+
+
+          if($featart = xarModAPIFunc(
             'articles','user','getall',
             array(
                 'aids' => array($featuredaid),
                 'extra' => array('cids','dynamicdata')))) {
-                
+
                 foreach($featart as $featuredart) {
 
             $fieldlist = array('aid', 'title', 'summary', 'authorid', 'pubdate',
@@ -266,7 +266,7 @@ function articles_featureditemsblock_display(& $blockinfo)
         // Nothing to display.
         return;
     }
-    
+
     // Set the data to return.
     $blockinfo['content'] = $data;
     return $blockinfo;
