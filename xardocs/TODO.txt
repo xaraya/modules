@@ -1,6 +1,8 @@
 Various stuff to do:
 
-- Import/export (itemtypes and items, with hook data, esp. DD)
+- Import/export (itemtypes and items, with hook data, esp. DD) - partially done
+- Allow specifying pid in createpage (for DD migrate)
+- Allow changing itemtype in updatepage (for DD migrate
 - Sample page types and pages (use the import function for this)
 - A screen to give sample mod_rewrite rules to support the config (i.e. to
   remove the index.php/[xarpages] part of the path; if provided  by an API
@@ -10,7 +12,9 @@ Various stuff to do:
 - Have a really good think about how to implement searches. This won't be
   easy as each page type could get its data from a different place, and this
   module has no inside knowledge of how to access that data - am tempted not
-  to do this, but to use an external search engine on the rendered pages
+  to do this, but to use an external search engine on the rendered pages.
+  For page types relying on name, desc and DD fields, this could be done
+  though...
 - Some good docs with examples and diagrams
 - Fix admin page view so that the image on the first item displays correctly.
   It is currently displayed in the admin view screen as an empty root node
