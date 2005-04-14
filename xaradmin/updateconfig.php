@@ -33,11 +33,11 @@ function images_admin_updateconfig()
             if (NULL !== xarModGetVar('images', 'path.' . $varname)) {
                 if (!file_exists($value) || !is_dir($value)) {
                     $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $value);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'INVALID_DIRECTORY', new SystemException($msg));
+                    xarErrorSet(XAR_USER_EXCEPTION, 'INVALID_DIRECTORY', new DefaultUserException($msg));
                     return;
                 } elseif (!is_writable($value)) {
                     $msg = xarML('Location [#(1)] can not be written to - please check permissions and try again!', $value);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NOT_WRITABLE', new SystemException($msg));
+                    xarErrorSet(XAR_USER_EXCEPTION, 'NOT_WRITABLE', new DefaultUserException($msg));
                     return;
                 } else {
                     xarModSetVar('images', 'path.' . $varname, $value);
