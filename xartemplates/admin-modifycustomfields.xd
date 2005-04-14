@@ -14,7 +14,6 @@
         <div style="width:60%;">
         <form name="modcustfield" id="modcustfield" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifycustomfields')#"><!-- enctype="application/x-www-form-urlencoded"> -->
         <div id="tableContainer">
-        <div id="tableContainer">
           <table style="width:60%; border:0em; padding:.5em;">
           <tr>
             <th>
