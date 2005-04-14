@@ -103,6 +103,7 @@
                         <xar:if condition="!empty($templates)">
                             <xar:mlstring>or</xar:mlstring>
                             <select name="template_select" id="template_select">
+                                <option value="default" style="color: gray;">[<xar:mlstring>default</xar:mlstring>]</option>
                                 <xar:if condition="$page.template eq ''">
                                     <option value="" selected="selected" style="color: gray;">[<xar:mlstring>inherited</xar:mlstring>]</option>
                                 <xar:else />

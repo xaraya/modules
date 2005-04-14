@@ -255,19 +255,21 @@ function xarpages_user_display($args)
     // Set the page template.
     // Use rolled-up page here so the theme is inherited.
     // The special case theme name 'default' will disable this feature
-    // and just use the default theme.
+    // and just use the default page template.
     if (!empty($inherited['page_template']) && $inherited['page_template'] != 'default') {
         xarTplSetPageTemplateName($inherited['page_template']);
     }
 
     // Call display hooks
-// CHECKME: see where you'd like to put the hook output in $data
     $item = $data['current_page'];
     $item['module'] = 'xarpages';
     $item['itemtype'] = $data['current_page']['ptid'];
     $item['itemid'] = $pid;
-    $item['returnurl'] = xarModURL('xarpages','user','display',
-                                   array('pid' => $pid));
+    $item['returnurl'] = xarModURL(
+        'xarpages','user','display',
+        array('pid' => $pid)
+    );
+    // All hook data in the 'hooks' element.
     $data['hooks'] = xarModCallHooks('item', 'display', $pid, $item);
 
     // TODO: provide an alternative, configurable, default template, for when none found,
@@ -280,7 +282,10 @@ function xarpages_user_display($args)
     // Use rolled-up page here so templates are inherited, i.e. so that setting a
     // template on a branch will apply to all pages within that branch, except
     // where sub-branches are explicitly over-ridden.
-    return xarTplModule('xarpages', 'page', $inherited['pagetype']['name'], $data, $inherited['template']);
+    return xarTplModule(
+        'xarpages', 'page', $inherited['pagetype']['name'], $data,
+        ($inherited['template'] == 'default' ? '' : $inherited['template'])
+    );
 }
 
 ?>
