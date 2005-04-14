@@ -106,14 +106,24 @@ function articles_featureditemsblock_display(& $blockinfo)
         if (xarModIsHooked('uploads', 'articles', $vars['pubtypeid'])) {
             xarVarSetCached('Hooks.uploads','ishooked',1);
         }
-        $featuredart = array();
+        
+        /* $featuredart = array();
         if ($featuredart = current(xarModAPIFunc(
             'articles','user','getall',
             array(
                 'aids' => array($featuredaid),
                 'extra' => array('cids','dynamicdata')
             )
-        ))) {
+        ))) {*/
+        	
+        	
+        	if($featart = xarModAPIFunc(
+            'articles','user','getall',
+            array(
+                'aids' => array($featuredaid),
+                'extra' => array('cids','dynamicdata')))) {
+                
+                foreach($featart as $featuredart) {
 
             $fieldlist = array('aid', 'title', 'summary', 'authorid', 'pubdate',
                                'pubtypeid', 'notes', 'status', 'body', 'cids');
@@ -251,7 +261,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'aid' => $article['aid']
             );
         }
-    }
+    }}
     if (empty($data['feature']) && empty($data['items'])) {
         // Nothing to display.
         return;
