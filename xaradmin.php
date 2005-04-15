@@ -235,14 +235,14 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
 
     if ($backend->bindDomain($dnType, $dnName)) {
         $enabledOps[TRANSLATE] = true; // Enables Translate
-        $enabledOps[GEN_TRANS] = true; // Enables Generate translations
+        $enabledOps[GEN_TRANS] = false; // Enables Generate translations
         $args['interface'] = 'TranslationsBackend';
         $args['locale'] = $locale;
         $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
         if (!isset($backend)) return;
         if ($backend->bindDomain($dnType, $dnName)) {
             // Enables Release translations package
-            $enabledOps[RELEASE] = true;
+            $enabledOps[RELEASE] = false;
         }
     }
     return array('opLabels'=>$opLabels, 'opURLs'=>$opURLs, 'enabledOps'=>$enabledOps, 'currentOp'=>$currentOp);
