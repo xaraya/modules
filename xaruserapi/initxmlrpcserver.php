@@ -31,7 +31,7 @@ function xmlrpcserver_userapi_initxmlrpcserver()
     $functions=array();
     
     // Loop over the potentially available api's
-    $apis = array('xmlrpcsystemapi', 'xmlrpcvalidatorapi', 'bloggerapi', 'metaweblogapi');
+    $apis = array('xmlrpcsystemapi', 'xmlrpcvalidatorapi', 'bloggerapi', 'metaweblogapi', 'moveabletype');
     foreach($apis as $index => $api) {
         if (xarModIsAvailable($api)) {
             xarLogMessage("xmlrpcserver: registering XML-RPC methods for $api");
