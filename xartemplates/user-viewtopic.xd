@@ -184,6 +184,12 @@
                             : 
                             <xar:data-output property="$properties['location']" value="$posterdata[$tposter]['location']" />
                         </xar:if>
+                        <br />
+                        <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $tposter))#">
+                            <xar:mlstring>
+                                Other Topics
+                            </xar:mlstring>
+                        </a>
                     </div>
                 </td>
                 <td class="xar-norm message">
@@ -379,6 +385,12 @@
                                 <br />
                             </xar:if>
                         </xar:if>
+                        <br />
+                        <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $item['xar_uid']))#">
+                            <xar:mlstring>
+                                Other Topics
+                            </xar:mlstring>
+                        </a>
                     </span>
 <!--  </xar:if> -->
                 </td>
