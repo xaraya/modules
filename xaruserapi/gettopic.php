@@ -73,9 +73,10 @@ function xarbb_userapi_gettopic($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
         return;
     }
-    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname,              $toptions, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
+    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname, $toptions, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
-    if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
+    // Bug 4307
+    // if (!xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid")) return;
     $topic = array('tid'        => $tid,
                    'fid'        => $fid,
                    'ttitle'     => $ttitle,
