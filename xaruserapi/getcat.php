@@ -149,9 +149,8 @@ function categories_userapi_getcat($args)
            return Array();
        }
        //$SQLquery .= " AND P1.xar_left
-                      //NOT BETWEEN ? AND ? ";
-        $SQLquery .= " AND P1.xar_left
-                       < ? OR P1.xar_left > ?";
+       //               NOT BETWEEN ? AND ? ";
+       $SQLquery .= " AND (P1.xar_left < ? OR P1.xar_left > ?)";
        $bindvars[] = $ecat['left']; $bindvars[] = $ecat['right'];
     }
 
