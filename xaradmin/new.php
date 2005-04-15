@@ -21,8 +21,6 @@ function xarbb_admin_new()
     if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
 
     // Get parameters
-    if (!xarVarFetch('fname', 'str:1:', $data['fname'], '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'], '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fstatus','int', $data['fstatus'], 0)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
@@ -44,6 +42,8 @@ function xarbb_admin_new()
         case 'form':
         default:
 
+            if (!xarVarFetch('fname', 'str:1:', $data['fname'], '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'], '', XARVAR_NOT_REQUIRED)) return;
             $xarsettings= xarModGetVar('xarbb', 'settings');
             if (!empty($xarsettings)) {
                 $settings = unserialize($xarsettings);
@@ -99,6 +99,9 @@ function xarbb_admin_new()
         case 'update':
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
+
+            if (!xarVarFetch('fname', 'str:1:', $data['fname'])) return;
+            if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'])) return;
 
             if (!empty($cids) && count($cids) > 0) {
                 $data['cids'] = array_values(preg_grep('/\d+/',$cids));
