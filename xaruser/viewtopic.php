@@ -63,7 +63,11 @@ function xarbb_user_viewtopic($args)
     }
 
     $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));
-    $allowhtml              = $settings['allowhtml'];
+    if (isset($settings['allowhtml'])) {
+        $allowhtml  = $settings['allowhtml'];
+    } else {
+        $allowhtml = false;
+    }
     if (isset($settings['allowbbcode'])) {
         $allowbbcode  = $settings['allowbbcode'];
     } else {
@@ -80,6 +84,14 @@ function xarbb_user_viewtopic($args)
 
     $data['pager'] = '';
 
+    if ($allowhtml == true) {
+        $data['tpost'] = xarVarPrepHTMLDisplay($data['tpost']);
+        $data['ttitle'] = xarVarPrepHTMLDisplay($data['ttitle']);
+    } else {
+        $data['tpost'] = xarVarPrepForDisplay($data['tpost']);
+        $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
+    }
+
     // Need to get this working for new itemtypes
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
@@ -90,13 +102,6 @@ function xarbb_user_viewtopic($args)
                                                        'xarbb',
                                                        $data['fid']);
 
-    if ($allowhtml) {
-        $data['tpost'] = xarVarPrepHTMLDisplay($data['tpost']);
-        $data['ttitle'] = xarVarPrepHTMLDisplay($data['ttitle']);
-    } else {
-        $data['tpost'] = xarVarPrepForDisplay($data['tpost']);
-        $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
-    }
     xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
     // The user API function is called
     $posterdata = xarModAPIFunc('roles',
@@ -158,12 +163,12 @@ function xarbb_user_viewtopic($args)
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
 
-        if ($allowhtml){
-            $comments[$i]['xar_text']=xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
-            $comments[$i]['xar_title']=xarVarPrepHTMLDisplay($comments[$i]['xar_title']);
+        if ($allowhtml == true){
+            $comment['xar_text']=xarVarPrepHTMLDisplay($comment['xar_text']);
+            $comment['xar_title']=xarVarPrepHTMLDisplay($comment['xar_title']);
         } else {
-            $comments[$i]['xar_text']=xarVarPrepForDisplay($comments[$i]['xar_text']);
-            $comments[$i]['xar_title']=xarVarPrepForDisplay($comments[$i]['xar_title']);
+            $comment['xar_text']=xarVarPrepForDisplay($comment['xar_text']);
+            $comment['xar_title']=xarVarPrepForDisplay($comment['xar_title']);
         }
 
 /*
