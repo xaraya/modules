@@ -26,15 +26,6 @@ function xarbb_user_newtopic()
     if (!xarVarFetch('redirect', 'str', $redirect, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('preview',  'isset', $preview,  NULL, XARVAR_DONT_SET)) return;
 
-    if (!empty($redirect)){
-        if (!xarUserIsLoggedIn()){
-            unset($tid);
-            $msg = xarML('You do not have access to modify this topic.');
-            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-            return;
-        }
-    }
-
     if(isset($tid))    {
         // The user API function is called.
         $data = xarModAPIFunc('xarbb',
