@@ -55,8 +55,8 @@ function navigator_userapi_count_articles_bycat($args)
             $secondary_list = '0';
         }
 
-        $query = "SELECT pri.xar_cid as pri,
-                         sec.xar_cid as sec,
+        $query = "SELECT pri.xar_cid as primary_cid,
+                         sec.xar_cid as secondary_cid,
                          COUNT(DISTINCT $artTable.xar_aid) AS total
                     FROM $artTable
                LEFT JOIN $catLinkTable as pri
@@ -88,7 +88,7 @@ function navigator_userapi_count_articles_bycat($args)
             $primary_list = '0';
         }
 
-        $query = "SELECT catlink.xar_cid as primary,
+        $query = "SELECT catlink.xar_cid as primary_cid,
                          COUNT(DISTINCT art.xar_aid) AS total
                     FROM $artTable as art
                LEFT JOIN $catLinkTable AS catlink
@@ -116,12 +116,12 @@ function navigator_userapi_count_articles_bycat($args)
         $row = $result->GetRowAssoc(false);
 
         if ($matrix) {
-            $sec = &$row['secondary'];
+            $sec = &$row['secondary_cid'];
             $total = &$row['total'];
 
             $list[$sec] = $total;
         } else {
-            $pri = &$row['primary'];
+            $pri = &$row['primary_cid'];
             $total = &$row['total'];
 
             $list[$pri] = $total;
