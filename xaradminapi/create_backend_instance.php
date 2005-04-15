@@ -29,7 +29,7 @@ function translations_adminapi_create_backend_instance($args)
     switch ($bt) {
     case 'php':
         xarLogMessage("MLS: Creating PHP backend");
-        include_once 'includes/xarMLSPHPBackend.php';
+        // include_once 'includes/xarMLSPHPBackend.php';
         return new xarMLS__PHPTranslationsBackend(array($locale));
     case 'xml':
         xarLogMessage("MLS: Creating XML backend");
@@ -39,7 +39,7 @@ function translations_adminapi_create_backend_instance($args)
     case 'xml2php':
         xarLogMessage("MLS: Creating XML2PHP backend");
         // FIXME: why does this come from core and php backend does not?
-        include_once 'includes/xarMLSXML2PHPBackend.php';
+        include_once 'includes/xarMLSXMLBackend.php';
         return new xarMLS__XML2PHPTranslationsBackend(array($locale));
     }
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
