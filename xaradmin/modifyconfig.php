@@ -43,12 +43,14 @@ function example_admin_modifyconfig()
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',
         array('module' => 'example'));
     if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('', $hooks);
+        $data['hookoutput'] = '';
     } else {
-        $data['hooks'] = $hooks;
+        // You can use the output from individual hooks in your template too, e.g. with
+        // $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+        $data['hookoutput'] = $hooks;
     } 
+// TODO: remove this legacy template stuff
+    $data['hooks'] = '';
     // Return the template variables defined in this function
     return $data;
 } 

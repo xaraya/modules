@@ -78,11 +78,6 @@ function example_admin_modify($args)
     // $menu = xarModAPIFunc('example','admin','menu','modify');
     $item['module'] = 'example';
     $hooks = xarModCallHooks('item', 'modify', $exid, $item);
-    if (empty($hooks)) {
-        $hooks = '';
-    } elseif (is_array($hooks)) {
-        $hooks = join('', $hooks);
-    } 
     // Return the template variables defined in this function
     return array('authid'       => xarSecGenAuthKey(),
                  'namelabel'    => xarVarPrepForDisplay(xarML('Example Name:')),
@@ -91,7 +86,9 @@ function example_admin_modify($args)
                  'number'       => $number,
                  'invalid'      => $invalid,
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update Example')),
-                 'hooks'        => $hooks,
+                 'hookoutput'   => $hooks,
+// TODO: remove this legacy template stuff
+                 'hooks'        => '',
                  'item'         => $item);
 } 
 

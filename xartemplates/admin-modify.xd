@@ -64,7 +64,13 @@
                 </span>
             </div>
 
-            #$hooks#
+            <!-- add the output from the different item modify hooks here -->
+            <xar:if condition="!empty($hookoutput)">
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                    #$hookoutput[$hookmodule]#
+                </xar:foreach>
+            </xar:if>
+
             <div style="clear: both; padding-top: 10px;">
             <!--
                 // Add an authorisation ID - this adds a hidden field in the form that

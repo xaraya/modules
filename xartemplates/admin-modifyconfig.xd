@@ -48,7 +48,12 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        #$hooks#
+                        <!-- add the output from the different module modifyconfig hooks here -->
+                        <xar:if condition="!empty($hookoutput)">
+                            <xar:foreach in="$hookoutput" key="$hookmodule">
+                                #$hookoutput[$hookmodule]#
+                            </xar:foreach>
+                        </xar:if>
                     </td>
                 </tr>
                 <tr>
