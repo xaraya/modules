@@ -55,8 +55,8 @@ function navigator_userapi_count_articles_bycat($args)
             $secondary_list = '0';
         }
 
-        $query = "SELECT pri.xar_cid as primary,
-                         sec.xar_cid as secondary,
+        $query = "SELECT pri.xar_cid as pri,
+                         sec.xar_cid as sec,
                          COUNT(DISTINCT $artTable.xar_aid) AS total
                     FROM $artTable
                LEFT JOIN $catLinkTable as pri
