@@ -31,7 +31,7 @@ function example_admin_modify($args)
     extract($args);
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
+    // function should be obtained from xarVarFetch(), xar VarCleanFromInput()
     // is a degraded function.  xarVarFetch allows the checking of the input
     // variables as well as setting default values if needed.  Getting vars
     // from other places such as the environment is not allowed, as that makes
