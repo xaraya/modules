@@ -12,7 +12,7 @@
         <xar:mlstring>Number of comments to display</xar:mlstring>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="howmany" value="&xar-var-howmany;" size="3" maxlength="3" tabindex="1" />
+        <input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="1" />
     </span>
 </div>
 <div style="clear: both; padding-top: 10px;"> 
