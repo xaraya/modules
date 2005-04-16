@@ -91,7 +91,7 @@ function comments_user_rss($args)
         $items[$i]['rsssummary'] = xarVarPrepForDisplay(strip_tags($item['xar_text']));
     } 
 
-    $output = var_export($items, 1); return "<pre>$output</pre>";
+    //$output = var_export($items, 1); return "<pre>$output</pre>";
     $data['items'] = $items;
     return $data;
 }
