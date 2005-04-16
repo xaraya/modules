@@ -42,11 +42,11 @@ function categories_visualapi_listarray ($args)
         return;
     }
 
+    $startindent = 0;
     if (!empty($args['cid']) && is_numeric($args['cid'])) {
         $root = $args['cid'];
     } else {
         $root = 0;
-        $startindent = 0;
     }
     $oldcid = 0;
     $oldindent = 0;
