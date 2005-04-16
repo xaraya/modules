@@ -84,7 +84,7 @@ function comments_user_rss($args)
             }
         } else {
             // We'll use the comment link instead
-            $items[$i]['link'] = xarModUrl('comments', 'user', 'display' array('cid' => $item['xar_cid']);
+            $items[$i]['link'] = xarModUrl('comments', 'user', 'display', array('cid' => $item['xar_cid']));
         }
 
         $items[$i]['rsssummary'] = preg_replace('<br />',"\n",$item['xar_text']);
