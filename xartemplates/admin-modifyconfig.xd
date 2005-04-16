@@ -62,7 +62,7 @@
     </div>
 </xar:if>
     <form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" value="&xar-var-authid;" />
+    <input type="hidden" name="authid" value="#$authid#" />
         
     <table border="0" width="98%" align="center">
       <th align="center" valign="middle" colspan="2"> <xar:mlstring>Server Configuration</xar:mlstring> 
