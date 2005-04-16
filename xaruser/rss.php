@@ -66,7 +66,7 @@ function comments_user_rss($args)
         }
     }
     $args['modarray']   = $todolist;
-    $args['howmany']    = 25;
+    $args['howmany']    = xarModGetVar('comments', 'rssnumitems');
     $items = xarModAPIFunc('comments','user','get_multipleall', $args);
 
     for ($i = 0; $i < count($items); $i++) {
