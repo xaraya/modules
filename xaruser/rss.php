@@ -78,14 +78,20 @@ function comments_user_rss($args)
                                                           'itemids'  => array($item['xar_objectid'])),
                                       // don't throw an exception if this function doesn't exist
                                                      0);
-        foreach($linkarray as $url){
-            $items[$i]['link'] = $url['url'];
+        if (!empty($linkarray)){
+            foreach($linkarray as $url){
+                $items[$i]['link'] = $url['url'];
+            }
+        } else {
+            // We'll use the comment link instead
+            $items[$i]['link'] = xarModUrl('comments', 'user', 'display' array('cid' => $item['xar_cid']);
         }
+
         $items[$i]['rsssummary'] = preg_replace('<br />',"\n",$item['xar_text']);
         $items[$i]['rsssummary'] = xarVarPrepForDisplay(strip_tags($item['xar_text']));
     } 
 
-    //$output = var_export($items, 1); return "<pre>$output</pre>";
+    $output = var_export($items, 1); return "<pre>$output</pre>";
     $data['items'] = $items;
     return $data;
 }
