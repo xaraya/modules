@@ -19,28 +19,30 @@
             </xar:mlvar>
         </xar:ml>
     </h2>
-    <br />
 </xar:if>
+
 <xar:if condition="!empty($numcols) and $number gt 0">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-            <xar:foreach in="$columns" key="$col">
-                <td style="vertical-align: top;text-align: center;width: #$colwidth#%;">
-                    <xar:foreach in="$columns[$col]" key="$row">
-                        #$columns[$col][$row]# 
-                    </xar:foreach>
-                </td>
-            </xar:foreach>
-        </tr>
-    </table>
-    <xar:elseif condition="!empty($number)" />
+    <div id="article-columns" style="width: 98%;">
+        <xar:foreach in="$columns" key="$col">
+            <div style="left: 1px; float: left; width: #$colwidth#%; vertical-align: top;">
+                <xar:foreach in="$columns[$col]" key="$row">
+                    #$columns[$col][$row]# 
+                </xar:foreach>
+            </div>
+        </xar:foreach>
+    </div>
+<xar:elseif condition="!empty($number)" />
     <xar:foreach in="$columns" key="$col">
         <xar:foreach in="$columns[$col]" key="$row">
             #$columns[$col][$row]# 
         </xar:foreach>
     </xar:foreach>
 </xar:if>
+
 #$output# 
+
+<br style="clear:both" />
+
 <xar:if condition="!empty($showcols)">
     <xar:if condition="$showcols eq 1">
         <a href="#xarModURL('articles','user','view',array('numcols' => 1))#">
