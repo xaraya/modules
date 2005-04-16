@@ -78,7 +78,9 @@ function comments_user_rss($args)
                                                           'itemids'  => array($item['xar_objectid'])),
                                       // don't throw an exception if this function doesn't exist
                                                      0);
-        $items[$i]['link'] = $linkarray[1]['url'];
+        foreach($linkarray as $url){
+            $items[$i]['link'] = $url['url'];
+        }
         $items[$i]['rsssummary'] = preg_replace('<br />',"\n",$item['xar_text']);
         $items[$i]['rsssummary'] = xarVarPrepForDisplay(strip_tags($item['xar_text']));
     } 
