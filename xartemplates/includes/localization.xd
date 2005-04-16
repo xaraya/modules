@@ -6,7 +6,6 @@
         <xar:set name="$position">2</xar:set>
     </xar:if>
 </xar:if>
-
 <xar:if condition="count($categories) eq 0">
     <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="false" />
     <input type="hidden" name="refcid[#$cid#]" id="refcid_#$cid#" value="#$refcid#" />
@@ -15,9 +14,15 @@
 <xar:else />
     <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="true" />
     <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="true" />
-    <tr align="left" valign="middle">
-        <td><label for="refcid_#$cid#"><xar:mlstring>In relation to this category</xar:mlstring></label></td>
-        <td><select name="refcid[#$cid#]" id="refcid_#$cid#">
+    <p class="param">
+        <label for="refcid[#$cid#]">
+            <span class="help" title="#xarML('Category relationship hiearchy.')#">
+                <xar:mlstring>
+                    In relation to this category
+                </xar:mlstring>
+            </span>
+        </label>
+        <select name="refcid[#$cid#]" id="refcid_#$cid#">
             <xar:for start="$i = 0" test="$i lt count($categories)" iter="$i++">
                 <xar:if condition="$categories[$i]['left'] eq $category['left']-1">
                     <option value="#$categories[$i]['cid']#" selected="selected">
@@ -30,14 +35,20 @@
                 </xar:if>
                 #$categories[$i]['slash_separated']#</option>
             </xar:for>
-        </select></td>
-    </tr>
+        </select>
+    </p>
     <xar:comment> The position needs to be set after categories select because
           There is no position which we can have a selected category that will
           work in all cases  </xar:comment>
-    <tr>
-        <td><label for="position_#$cid#"><xar:mlstring>Position</xar:mlstring></label></td>
-        <td><select name="position[#$cid#]" id="position_#$cid#">
+    <p class="param">
+        <label for="position[#$cid#]">
+            <span class="help" title="#xarML('Position of this category.')#">
+                <xar:mlstring>
+                    Position
+                </xar:mlstring>
+            </span>
+        </label>
+        <select name="position[#$cid#]" id="position_#$cid#">
             <xar:if condition="$position eq 1">
                 <option value="1" selected="selected">
                     <xar:mlstring>Right before, in the same level</xar:mlstring>
@@ -77,8 +88,6 @@
                     <xar:mlstring>The last child category</xar:mlstring>
                 </option>
             </xar:if>
-
-        </select></td>
-    </tr>
+        </select>
+    </p>
 </xar:if>
-
