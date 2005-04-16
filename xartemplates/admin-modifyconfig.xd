@@ -231,6 +231,17 @@
                     <input type="checkbox" name="xar_wrap" id="xar_wrap" value="1" />
                 </xar:if>
             </p>
+            <p class="param">
+                <label for="rssnumitems">
+                    <span class="help" title="#xarML('Number of items in RSS Feed')#">
+                        <xar:mlstring>
+                            Number of Items in Statistics
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:set name="$rssnumitems">#xarModGetVar('comments','rssnumitems')#</xar:set>
+                <input type="text" name="rssnumitems" id="rssnumitems" size="4" maxlength="4" value="#$rssnumitems#" />
+            </p>
         </fieldset>
         <fieldset class="formelements xar-norm">
             <p class="param">

@@ -12,7 +12,11 @@ function comments_admin_modifyconfig()
     // Security Check
     if(!xarSecurityCheck('Comments-Admin'))
         return;
-    $numstats = xarModGetVar('comments','numstats');
+    $numstats       = xarModGetVar('comments','numstats');
+    $rssnumitems    = xarModGetVar('comments','rssnumitems');
+    if (empty($rssnumitems)) {
+        xarModSetVar('comments', 'rssnumitems', 25);
+    }
     if (empty($numstats)) {
         xarModSetVar('comments', 'numstats', 100);
     }

@@ -12,6 +12,7 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_wrap','checkbox', $xar_wrap, false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rssnumitems', 'int', $rssnumitems, 25, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showoptions', 'checkbox', $showoptions, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_postanon', 'checkbox', $xar_postanon, false, XARVAR_NOT_REQUIRED)) return;
@@ -30,6 +31,7 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'editstamp', $editstamp);
     xarModSetVar('comments', 'wrap', $xar_wrap);
     xarModSetVar('comments', 'numstats', $numstats);
+    xarModSetVar('comments', 'rssnumitems', $rssnumitems);
     xarModSetVar('comments', 'showtitle', $showtitle);
     xarModSetVar('comments', 'showoptions', $showoptions);
     xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
