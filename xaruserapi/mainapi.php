@@ -1,7 +1,11 @@
 <?php
 function netquery_userapi_mainapi()
 {
+    include_once "modules/netquery/xarincludes/nqSniff.class.php";
+    include_once "modules/netquery/xarincludes/nqTimer.class.php";
     $data = array();
+    $data['timer'] =& new nqTimer();
+    $data['timer']->start('main');
     $data['authid'] = xarSecGenAuthKey();
     $data['maintitle']  = xarVarPrepForDisplay(xarML('Netquery'));
     $data['subtitle']   = xarVarPrepForDisplay(xarML('Netquery User Options'));
@@ -25,10 +29,13 @@ function netquery_userapi_mainapi()
     $data['lgparamlabel'] = xarVarPrepForDisplay(xarML('Parameter'));
     $data['lgrouterlabel'] = xarVarPrepForDisplay(xarML('Router'));
     $data['querytype_default'] = xarModGetVar('netquery', 'querytype_default');
+    $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
     $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
+    $data['capture_log_allowuser'] = xarModGetVar('netquery', 'capture_log_allowuser');
     $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
     $data['capture_log_dtformat'] = xarModGetVar('netquery', 'capture_log_dtformat');
     $data['clientinfo_enabled'] = xarModGetVar('netquery', 'clientinfo_enabled');
+    $data['topcountries_limit'] = xarModGetVar('netquery', 'topcountries_limit');
     $data['whois_enabled'] = xarModGetVar('netquery', 'whois_enabled');
     $data['whois_max_limit'] = xarModGetVar('netquery', 'whois_max_limit');
     $data['whois_default'] = xarModGetVar('netquery', 'whois_default');
@@ -52,8 +59,12 @@ function netquery_userapi_mainapi()
     $data['traceexec_remote'] = xarModGetVar('netquery', 'traceexec_remote');
     $data['traceexec_remote_t'] = xarModGetVar('netquery', 'traceexec_remote_t');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
-    $data['browserinfo'] = xarModAPIFunc('netquery', 'user', 'getsniff');
+    $data['browserinfo'] =& new nqSniff();
     $data['geoip'] = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $data['browserinfo']->property('ip')));
+    $geoip = $data['geoip'];
+    $data['geoflag'] = "modules/netquery/xarimages/geoflags/".$geoip['cc'].".gif";
+    if (!file_exists($data['geoflag'])) $data['geoflag'] = "";
+    $data['countries'] = xarModAPIFunc('netquery', 'user', 'getcountries', array('numitems' => $data['topcountries_limit']));
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['lgrouters'] = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => '2'));
     $data['lgdefault'] = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => 'default'));
@@ -134,12 +145,25 @@ function netquery_userapi_mainapi()
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('formtype' => $data['formtype'])),
                              'title' => xarML('Clear results and return'),
                              'label' => xarML('Clear'));
+    $data['countrieslink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('formtype' => 'countries')),
+                             'title' => xarML('Display top user countries'),
+                             'label' => xarML('Top Countries'));
+    $data['returnlink'] = Array('url' => xarModURL('netquery', 'user', 'main'),
+                             'title' => xarML('Return to main user interface'),
+                             'label' => xarML('User Interface'));
     $data['submitlink'] = Array('url' => xarModURL('netquery', 'user', 'submit', array('portnum' => $data['portnum'])),
                              'title' => xarML('Submit new service/exploit'),
                              'label' => xarML('Submit'));
     $data['hlplink'] = Array('url' => 'modules/netquery/xardocs/manual.html#using',
                              'title' => xarML('Netquery online user manual'),
                              'label' => xarML('Online Manual'));
+    if (file_exists($data['capture_log_filepath'])) {
+        $data['loglink'] = Array('url'   => xarML($data['capture_log_filepath']),
+                                 'title' => xarML('View operations logfile'),
+                                 'label' => xarML('View Log'));
+    } else {
+        $data['loglink'] = '';
+    }
     return $data;
 }
 if (!function_exists('checkdnsrr'))

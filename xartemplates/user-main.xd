@@ -5,13 +5,6 @@
 
 <div class="xar-mod-head">
 <span class="xar-mod-title">#$maintitle#</span>
-<xar:if condition="$clientinfo_enabled">
-    <xar:mlstring>Client Info</xar:mlstring><br />
-    <xar:if condition="!empty($geoip.cn)">#$geoip.cn# - </xar:if>
-    <xar:mlstring>IP</xar:mlstring>: #$browserinfo->property("ip")# -
-    <xar:mlstring>OS</xar:mlstring>: #$browserinfo->property("platform")# #$browserinfo->property("os")# -
-    <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("browser")# #$browserinfo->property("version")#
-</xar:if>
 </div>
 
 <div class="xar-mod-body">
@@ -253,7 +246,54 @@
     <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
   <br /></p></form>
 </xar:if>
-<br />
+
+<xar:if condition="$formtype eq 'countries'">
+  <table>
+    <th>Code</th><th>Country</th><th>Flag</th><th>Latitude</th><th>Longitude</th><th>Users</th>
+    <xar:foreach in="$countries" value="$country">
+      <xar:if condition="!empty($country.cn)">
+          <tr><td>#$country.cc#</td><td>
+          <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$country.lat#&amp;longitude=#$country.lon#&amp;zoom=0" target="_blank">#$country.cn#</a>
+          </td><td>
+          <xar:if condition="!empty($country.geoflag)">
+            <img class="geoflag" src="#$country.geoflag#" />
+          <xar:else />
+            <img class="geoflag" src="modules/netquery/xarimages/geoflags/blank.gif" />
+          </xar:if>
+          </td><td>
+          #$country.lat#
+          </td><td>
+          #$country.lon#
+          </td><td>
+          #$country.users#
+          </td></tr>
+      </xar:if>
+    </xar:foreach>
+  </table>
+  <br />
+  <a href="#$returnlink.url#">#$returnlink.label#</a>
+<xar:else />
+  <br />
+  <xar:if condition="$clientinfo_enabled">
+    <xar:mlstring>Client Info</xar:mlstring> - 
+    <xar:if condition="!empty($geoip.cn)">
+      <xar:if condition="!empty($geoflag)"><img class="geoflag" src="#$geoflag#" /></xar:if>
+      <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0" target="_blank">#$geoip.cn#</a> - 
+    </xar:if>
+    <xar:mlstring>IP</xar:mlstring>: #$browserinfo->property("ip")# -
+    <xar:mlstring>OS</xar:mlstring>: #$browserinfo->property("platform")# #$browserinfo->property("os")# -
+    <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("browser")# #$browserinfo->property("version")#
+    <br /><br />
+  </xar:if>
+  <a href="#$countrieslink.url#">#$countrieslink.label#</a>
+</xar:if>
+
+<xar:if condition="!empty($loglink) and $capture_log_allowuser">
+  - <a href="javascript:popUp('#$loglink.url#','console','400','600');">#$loglink.label#</a>
+</xar:if>
+<xar:if condition="$exec_timer_enabled">
+  - <xar:mlstring>Execution time</xar:mlstring>: #$timer->get_current('main')#
+</xar:if>
 </div>
 
 </div>

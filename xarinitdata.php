@@ -217,7 +217,10 @@ function create_geocctable()
     $geoccfields = array(
          'ci' => array('type'=>'integer','size'=>'tiny','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
         ,'cc' => array('type'=>'char','size'=>2,'null'=>FALSE,'default'=>'')
-        ,'cn' => array('type'=>'varchar','size'=>50,'null'=>FALSE,'default'=>''));
+        ,'cn'    => array('type'=>'varchar','size'=>50,'null'=>FALSE,'default'=>'')
+        ,'lat'   => array('type'=>'float','size'=>'decimal','width'=>'7','decimals'=>'4','null'=>FALSE,'default'=>'0.0000')
+        ,'lon'   => array('type'=>'float','size'=>'decimal','width'=>'7','decimals'=>'4','null'=>FALSE,'default'=>'0.0000')
+        ,'users' => array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'));
     $query = xarDBCreateTable($GeoccTable,$geoccfields);
     if (empty($query)) return;
     $result =& $dbconn->Execute($query);
@@ -227,12 +230,12 @@ function create_geocctable()
             new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-    $geoccitem = array(1, 'XX', '<a href="http://virtech.org/tools/">No GeoIP</a>');
-    list($ci,$cc,$cn) = $geoccitem;
+    $geoccitem = array(1, 'XX', '<a href="http://virtech.org/tools/">No GeoIP</a>', '0.0000', '0.0000', '0');
+    list($ci,$cc,$cn,$lat,$lon,$users) = $geoccitem;
     $query = "INSERT INTO $GeoccTable
-            (ci, cc, cn)
-            VALUES (?,?,?)";
-    $bindvars = array((int)$ci, (string)$cc, (string)$cn);
+            (ci, cc, cn, lat, lon, users)
+            VALUES (?,?,?,?,?,?)";
+    $bindvars = array((int)$ci, (string)$cc, (string)$cn, $lat, $lon, (int)$users);
     $result =& $dbconn->Execute($query,$bindvars);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $query);

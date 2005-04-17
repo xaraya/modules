@@ -16,6 +16,13 @@
             </xar:if>
             <xar:mlstring>Client Info</xar:mlstring>
             </option>
+            <xar:if condition="$blockquery eq 'topcountries'">
+                <option value="topcountries" selected="selected">
+            <xar:else/>
+                <option value="topcountries">
+            </xar:if>
+            <xar:mlstring>Top Countries</xar:mlstring>
+            </option>
           <xar:if condition="$whois_enabled">
             <xar:if condition="$blockquery eq 'whois'">
                 <option value="whois" selected="selected">

@@ -7,95 +7,106 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <style type="text/css">
 body {
-  font-family: "trebuchet ms", "luxi sans", verdana, helvetica, sans-serif;
-  font-size: 100.01%;
-  line-height: 125%;
-  margin: 5px 1%;
-  padding: 0;
-  color: #000000;
-  background-color: #FFFFFF;
-  background-image: url(images/page_bg.gif);
-  background-repeat: repeat-x;
-  background-position: 0% 0%;
-  background-attachment: fixed;
-  text-align: left;
+    font-family: "trebuchet ms", "luxi sans", verdana, helvetica, sans-serif;
+    font-size: 100.01%;
+    line-height: 125%;
+    margin: 5px 1%;
+    padding: 0;
+    color: #000000;
+    background-color: #FFFFFF;
+    background-image: url(images/page_bg.gif);
+    background-repeat: repeat-x;
+    background-position: 0% 0%;
+    background-attachment: fixed;
+    text-align: left;
 }
 a:link {
-  color: #003366;
-  text-decoration: none;
+	color: #003366;
+	text-decoration: none;
 }
 a:visited {
-  color: #323232;
-  text-decoration: none;
+	color: #323232;
+	text-decoration: none;
 }
 a:link:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 a:visited:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 a:link:active {
-  color: #800000;
-  text-decoration: underline;
+	color: #800000;
+	text-decoration: underline;
 }
 a:visited:active {
-  color: red;
-  text-decoration: underline;
+	color: red;
+	text-decoration: underline;
+}
+h1 {
+  text-align: center;
 }
 h3 {
-  background-color: #A0C0F0;
-  color: #000000;
-  width: 98%;
-  padding: 3px 6px;
+	background-color: #A0C0F0;
+	color: #000000;
+	width: 98%;
+	padding: 3px 6px;
 }
 img {
-  border-style: none;
-  margin: 2px 2px 2px 2px;
+	border-style: none;
+	margin: 2px 2px 2px 2px;
 }
 img.zero {
-  border-style: none;
-  margin: 0 0 0 0;
+	border-style: none;
+	margin: 0 0 0 0;
+}
+img.floatright {
+  border-style: outset;
+  border-width: 4px;
+  border-color: #CCCC99;
+	padding: 0;
+	margin: 0 20 0 0;
+	float: right;
 }
 img.outset {
   border-style: outset;
   border-width: 4px;
   border-color: #CCCC99;
-  padding: 0;
-  margin: 0 0 0 0;
+	padding: 0;
+	margin: 0 0 0 0;
 }
 table {
-  text-align: left;
-  margin-left: 10px;
-  background-color: #D0E0F0;
-  border-collapse: collapse;
+	text-align: left;
+	margin-left: 10px;
+	background-color: #D0E0F0;
+        border-collapse: collapse;
 }
 th {
-  border-bottom: 1px solid #404050;
-  border-right: 1px dotted #606070;
-  border-top: none;
-  border-left: none;
-  padding: 0px 5px 1px 5px;
-  font-weight: bold;
-  background-color: #A0C0F0;
+	border-bottom: 1px solid #404050;
+	border-right: 1px dotted #606070;
+        border-top: none;
+        border-left: none;
+	padding: 0px 5px 1px 5px;
+	font-weight: bold;
+	background-color: #A0C0F0;
 }
 td {
-  padding: 0px 5px 1px 5px;
-  border-right: 1px dotted #606070;
-  border-left: none;
-  border-bottom: none;
-  border-top: none;
+	padding: 0px 5px 1px 5px;
+	border-right: 1px dotted #606070;
+        border-left: none;
+        border-bottom: none;
+        border-top: none;
 }
 .help-topic {
-  font-weight : bold;
-  font-size : 1em;
-  color : black;
-  background-color : #A0C0F0;
+        font-weight : bold;
+        font-size : 1em;
+        color : black;
+        background-color : #A0C0F0;
 }
 .item-heading {
-  font-weight : bold;
-  vertical-align : top;
-  text-align : center;
-  background-color: #CCCC99;
+        font-weight : bold;
+        vertical-align : top;
+        text-align : center;
+        background-color: #CCCC99;
 }
 .item {
 }
@@ -105,25 +116,28 @@ td {
 </head>
 
 <body>
-<h1 align="center">
-<a name="top"><img src="../xarimages/nqtoppix.gif" class="outset" width="225" height="111" alt="" /></a>
-<br />Netquery Manual</h1>
+<h1><a name="top">Netquery Manual</a></h1>
 
 <h2><a name="summary">Summary</a></h2>
 
 <p>Netquery, the complete PHP/SQL toolkit of network information utilities, includes the following
 major features:</p><ul>
-<li>client &quot;sniffer&quot; with log &amp; display options,</li>
-<li>multidomain &amp; IP/AS whois with autodiscovery,</li>
+<li>client &quot;sniffer&quot; with GeoIP option,</li>
+<a href="http://www.virtech.org/tools/"><img class="floatright" src="../xarimages/nqtoppix.gif" width="225" height="111" alt="" /></a>
+<li>updateable GeoIP &amp; ports data paks,</li>
+<li>multidomain &amp; IP/AS whois lookups,</li>
+<li>autodiscovery for whois TLD server,</li>
 <li>DNS and Dig (ANY, SOA, NS, MX) queries,</li>
 <li>email address format &amp; MX validation,</li>
-<li>port services &amp; exploits lookup with status check,</li>
+<li>port check with services lookup option,</li>
 <li>HTTP HEAD and GET requests,</li>
 <li>ICMP pings (local and/or remote),</li>
 <li>traceroutes (local and/or remote),</li>
 <li>looking glass router interrogation,</li>
-<li>GeoIP and ports data installer module options,</li>
-<li>user submissions with admin notice &amp; approval.</li></ul>
+<li>user data logging and display,</li>
+<li>user inputs with admin notice &amp; approval,</li>
+<li>multi-instance sideblocks in CMS editions,</li>
+<li>full XHTML 1.0 Strict &amp; CSS compliance.</li></ul>
 
 <p>Netquery is fully configurable. The administrator can enable or disable each feature individually
 and can select local execution and/or a remote server script for the ping and traceroute features.

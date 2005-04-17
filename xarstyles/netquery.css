@@ -1,3 +1,9 @@
+img.geoflag {
+  border-style: none;
+  padding: 0;
+  margin: 2px 2px 0px 0px;
+  vertical-align: middle;
+}
 img.gobutton {
   border-style: none;
   width: 21px;

@@ -15,6 +15,7 @@ function netquery_netquickblock_info()
 }
 function netquery_netquickblock_display($blockinfo)
 {
+    include_once "modules/netquery/xarincludes/nqSniff.class.php";
     if (!xarSecurityCheck('OverviewNetquery')) {
         return;
     }
@@ -25,16 +26,22 @@ function netquery_netquickblock_display($blockinfo)
     if (!isset($vars['blockquery'])) {
         $vars['blockquery'] = 'whois';
     }
-    $browserinfo = xarModAPIFunc('netquery','user','getsniff');
+    $browserinfo =& new nqSniff();
     $geoip = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $browserinfo->property('ip')));
-    $links = xarModAPIFunc('netquery','user','getlinks');
+    $geoflag = "modules/netquery/xarimages/geoflags/".$geoip['cc'].".gif";
+    if (!file_exists($geoflag)) $geoflag = "";
+    $topcountries_limit = xarModGetVar('netquery', 'topcountries_limit');
+    $countries = xarModAPIFunc('netquery', 'user', 'getcountries', array('numitems' => $topcountries_limit));
     $whois_default = xarModGetVar('netquery', 'whois_default');
+    $links = xarModAPIFunc('netquery','user','getlinks');
     $email = 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $httpurl = 'http://'.$_SERVER['SERVER_NAME'];
     $blockinfo['content'] = array('browserinfo'   => $browserinfo,
                                   'geoip'         => $geoip,
-                                  'links'         => $links,
+                                  'geoflag'       => $geoflag,
+                                  'countries'     => $countries,
                                   'whois_default' => $whois_default,
+                                  'links'         => $links,
                                   'email'         => $email,
                                   'httpurl'       => $httpurl,
                                   'vars'          => $vars);

@@ -42,9 +42,12 @@ function netquery_xartables()
         $netqueryGeoccTable = xarDBGetSiteTablePrefix() . '_netquery_geocc';
         $xartable['netquery_geocc'] = $netqueryGeoccTable;
         $xartable['netquery_geocc_column'] = array(
-                'ci' => $netqueryGeoccTable . '.ci',
-                'cc' => $netqueryGeoccTable . '.cc',
-                'cn' => $netqueryGeoccTable . '.cn');
+                'ci'    => $netqueryGeoccTable . '.ci',
+                'cc'    => $netqueryGeoccTable . '.cc',
+                'cn'    => $netqueryGeoccTable . '.cn',
+                'lat'   => $netqueryGeoccTable . '.lat',
+                'lon'   => $netqueryGeoccTable . '.lon',
+                'users' => $netqueryGeoccTable . '.users');
         $netqueryGeoipTable = xarDBGetSiteTablePrefix() . '_netquery_geoip';
         $xartable['netquery_geoip'] = $netqueryGeoipTable;
         $xartable['netquery_geoip_column'] = array(

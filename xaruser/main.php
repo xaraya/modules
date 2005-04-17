@@ -126,6 +126,8 @@ function netquery_user_main()
           $ipname = gethostbyaddr($target);
           $msg .= $ipname." [".$geoipc['cn']."]";
         }
+        $geoflag = "modules/netquery/xarimages/geoflags/".$geoipc['cc'].".gif";
+        if (file_exists($geoflag)) $msg .= " <img class=\"geoflag\" src=\"".$geoflag."\" />";
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
     }
@@ -399,7 +401,14 @@ function netquery_user_main()
             $write = fputs($fp, $string);
             @fclose($fp);
         }
+        $dbconn =& xarDBGetConn();
+        $xartable =& xarDBGetTables();
+        $GeoccTable = $xartable['netquery_geocc'];
+        $query = "UPDATE $GeoccTable SET users = users + 1 WHERE cc = ?";
+        $bindvars = array($geoip['cc']);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
+    $data['timer']->stop('main');
     return $data;
 }
 ?>
