@@ -22,38 +22,65 @@
  * @return array containing func the function to be called and args the query
  *          string arguments, or empty if it failed
  */
+
+/*
+ * Supported URLs:
+ *
+ * [/<xarbb-alias>]/index
+ * [/<xarbb-alias>]/forum/<forum-id>
+ * [/<xarbb-alias>]/topic/<topic-id>
+ * [/<xarbb-alias>]/category/<category-id>
+ *
+ * Notes:
+ * - TODO: support category and forum names.
+ * - Missing IDs or an unrecognised path will result in a redirect to '<xarbb-alias>/index'
+ * - Additional path arguments will be ignored.
+ * - The IDs are extracted as the left-most digits only (e.g. 3.html => 3)
+ */
+
 function xarbb_userapi_decode_shorturl($params)
-{ 
+{
     // Initialise the argument list we will return
-    $args = array(); 
-    // Analyse the different parts of the virtual path
-    // $params[1] contains the first part after index.php/xarbb
-    // In general, you should be strict in encoding URLs, but as liberal
-    // as possible in trying to decode them...
-    if (empty($params[1])) {
-        // nothing specified -> we'll go to the main function
-        return array('main', $args);
-    } elseif (preg_match('/^index/i', $params[1])) {
-        // some search engine/someone tried using index.html (or similar)
-        // -> we'll go to the main function
-        return array('main', $args);
-    } elseif (preg_match('/^forum/i', $params[1])) {
-        // something that starts with 'list' is probably for the view function
-        // Note : make sure your encoding/decoding is consistent ! :-)
-        if (preg_match('/^(\d+)/', $params[2], $matches)) {
-           $fid = $matches[1];
-           $args['fid'] = $fid;
-        }
-        return array('viewforum', $args);
-    } elseif (preg_match('/^topic/i', $params[1])) {
-        // something that starts with 'list' is probably for the view function
-        // Note : make sure your encoding/decoding is consistent ! :-)
-        if (preg_match('/^(\d+)/', $params[2], $matches)) {
-           $tid = $matches[1];
-           $args['tid'] = $tid;
-        }
-        return array('viewtopic', $args);
-    } else {
+    $args = array();
+
+    // Shift the alias out if it is equal to the module name.
+    // This allows us to use, say, 'topics' or 'forum' as the module alias.
+    if (strtolower($params[0]) == 'xarbb') {
+        array_shift($params);
+    }
+
+    // If no path components then return.
+    if (empty($params)) {
+        return;
+    }
+
+    // The default function if we don't match any others.
+    $func = 'main';
+
+    // Decode the ID, if present.
+    if (!empty($params[1]) && preg_match('/^(\d+)/', $params[1], $matches)) {
+        $id = $matches[1];
+    }
+
+    // forum
+    if (preg_match('/^forum|^viewforum/i', $params[0]) && !empty($id)) {
+       $args['fid'] = $id;
+       $func = 'viewforum';
+    }
+
+    // topic
+    if (preg_match('/^topic|^viewtopic/i', $params[0]) && !empty($id)) {
+       $args['tid'] = $id;
+       $func = 'viewtopic';
+    }
+
+    // category
+    if (preg_match('/^category/i', $params[0]) && !empty($id)) {
+       $args['catid'] = $id;
+    }
+
+    return array($func, $args);
+    
         // the first part might be something variable like a category name
         // In order to match that, you'll have to retrieve all relevant
         // categories for this module, and compare against them...
@@ -85,8 +112,6 @@ function xarbb_userapi_decode_shorturl($params)
         // forget about trying to decode this thing
         // you *could* return the main function here if you want to
         // return array('main', $args);
-    } 
-    // default : return nothing -> no short URL decoded
 } 
 
 ?>
