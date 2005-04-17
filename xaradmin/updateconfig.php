@@ -25,6 +25,7 @@ function polls_admin_updateconfig()
     if (!xarVarFetch('imggraph', 'str:0:3', $imggraph, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('voteinterval', 'str:1:', $voteinterval, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('previewresults', 'str:1:', $previewresults, 'single', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showtotalvotes', 'int', $showtotalvotes, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturl', 'str:1:', $shorturl, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
@@ -76,6 +77,7 @@ function polls_admin_updateconfig()
     xarModSetVar('polls', 'imggraph', $imggraph);
     xarModSetVar('polls', 'voteinterval', $voteinterval);
     xarModSetVar('polls', 'previewresults', $previewresults);
+    xarModSetVar('polls', 'showtotalvotes', $showtotalvotes);
     xarModSetVar('polls', 'SupportShortURLs', $shorturl);
 
     xarModCallHooks('module','updateconfig','polls',

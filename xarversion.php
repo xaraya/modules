@@ -13,7 +13,7 @@
 
 $modversion['name'] = 'polls';
 $modversion['id'] = '23';
-$modversion['version'] = '1.4.0';
+$modversion['version'] = '1.4.1';
 $modversion['displayname']    = xarML('Polls');
 $modversion['description'] = 'Conduct polls';
 $modversion['credits'] = 'xardocs/credits.txt';

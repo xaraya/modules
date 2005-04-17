@@ -74,6 +74,7 @@ function polls_user_results($args)
     $barscale = xarModGetVar('polls', 'barscale');
     $imggraph = xarModGetVar('polls', 'imggraph');
     $data['imggraph'] = ($imggraph >= 2)?1:0;
+    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $voteinterval = xarModGetVar('polls', 'voteinterval');
 
     if($voteinterval == 86400){

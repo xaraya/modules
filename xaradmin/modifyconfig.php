@@ -29,6 +29,7 @@ function polls_admin_modifyconfig()
     $data['barscale'] = xarModGetVar('polls', 'barscale');
     $data['defaultopts'] = xarModGetVar('polls', 'defaultopts');
     $data['previewresults'] = xarModGetVar('polls', 'previewresults');
+    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $data['shorturl'] = xarModGetVar('polls', 'SupportShortURLs');
 
     $data['imggraphs'] = array();

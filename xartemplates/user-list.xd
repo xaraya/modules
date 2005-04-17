@@ -45,10 +45,12 @@
                                         Closed
                                     </xar:mlstring>
                                 </xar:if>)
-                            #$loop:item['votes']#
-                            <xar:mlstring>
-                                Votes
-                            </xar:mlstring>
+                            <xar:if condition="$showtotalvotes eq 1">
+                                #$loop:item['votes']#
+                                <xar:mlstring>
+                                    Votes
+                                </xar:mlstring>
+                            </xar:if>
                             <xar:if condition="$loop:item['private']">
                                 [
                                 <span class="xar-error">

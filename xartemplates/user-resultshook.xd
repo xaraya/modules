@@ -34,6 +34,7 @@
         </table>
     </xar:if>
     <br />
+    <xar:if condition="$showtotalvotes eq 1">
     <b>
         <xar:mlstring>
             Total votes
@@ -41,6 +42,7 @@
         : #$totalvotes#
     </b>
     <br /><br />
+    </xar:if>
     <span class="xar-sub">
         <xar:mlstring>
             We allow just one vote

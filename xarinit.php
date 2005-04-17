@@ -106,6 +106,7 @@ function polls_init()
     xarModSetVar('polls', 'imggraph', 0);
     xarModSetVar('polls', 'voteinterval', '-1');
     xarModSetVar('polls', 'previewresults', 1);
+    xarModSetVar('polls', 'showtotalvotes', 1);
     xarModSetVar('polls', 'uservotes', serialize(array()));
     xarModSetVar('polls', 'SupportShortURLs', 1);
 
@@ -415,6 +416,9 @@ function polls_upgrade($oldversion)
         $result =& $dbconn->Execute($query);
         if (!$result) return;
 
+        case '1.4.0':
+            xarModSetVar('polls', 'showtotalvotes', 1);          
+        
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;

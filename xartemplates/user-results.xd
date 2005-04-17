@@ -48,6 +48,7 @@
         </xar:if>
     </div>
     <div style="clear: both; padding-top: 10px;">
+        <xar:if condition="$showtotalvotes eq 1">
         <span style="float: left; width: 100%; text-align: center;">
             <b>
                 <xar:mlstring>
@@ -56,6 +57,7 @@
                 : #$totalvotes#
             </b>
         </span>
+        </xar:if>
         <span class="xar-sub" style="float: left; width: 100%; text-align: center;">
             <xar:mlstring>
                 We allow just one vote

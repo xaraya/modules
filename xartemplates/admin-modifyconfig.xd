@@ -112,6 +112,23 @@
                 </div>
                 <div style="clear: both; padding-top: 10px;">
                     <span style="float: left; width: 35%; text-align: right;">
+                        <label for="showtotalvotes">
+                            <xar:mlstring>
+                                Allow users to see total votes?
+                            </xar:mlstring>
+                            :
+                        </label>
+                    </span>
+                    <span style="float: right; width: 63%; text-align: left;">
+                        <xar:if condition="$showtotalvotes == 1">
+                            <input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1" checked="checked">
+                        <xar:else />
+                            <input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1">
+                        </xar:if>
+                    </span>
+                </div>
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 35%; text-align: right;">
                         <label for="shorturl">
                             <xar:mlstring>
                                 Enable Short URLs?

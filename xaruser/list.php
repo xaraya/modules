@@ -45,6 +45,7 @@ function polls_user_list($args)
     // posted a failure message so no action is required
 
     $data['previewresults'] = xarModGetVar('polls', 'previewresults');
+    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $data['polls'] = array();
     // TODO - loop through each item and display it
     foreach ($items as $item) {
