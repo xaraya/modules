@@ -163,18 +163,18 @@ function comments_init()
                 continue;
             }
         }
-		if (strpos($domain, '[\w\-_.]')) {
-			$domaim = str_replace('[\w\-_.]','[-\w\_.]', $domain);
-		}
-		$ps = strpos($domain, '/');
-		while ($ps !== false) {
-			if ($ps == 0) {
-				$domain = '\\' + $domain;
-			} else if (substr($domain, $ps-1, 1) != '\\') {
-				$domain = substr_replace($domain, '\/', $ps, 1); 
-			}
-			$ps = strpos($domain, '/', $ps+2);
-		}
+        if (strpos($domain, '[\w\-_.]')) {
+            $domaim = str_replace('[\w\-_.]','[-\w\_.]', $domain);
+        }
+        $ps = strpos($domain, '/');
+        while ($ps !== false) {
+            if ($ps == 0) {
+                $domain = '\\' + $domain;
+            } else if (substr($domain, $ps-1, 1) != '\\') {
+                $domain = substr_replace($domain, '\/', $ps, 1); 
+            }
+            $ps = strpos($domain, '/', $ps+2);
+        }
         $domain = trim($domain);
         if ($domain != ""){
             $nextId = $dbconn->GenId($btable);
