@@ -135,6 +135,58 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    // Create blacklist tables
+    $btable = $xartable['blacklist'];
+    $bbtable = &$xartable['blacklist_column'];
+
+    $fields = array(
+        'xar_id'       => array('type'=>'integer',  'null'=>FALSE,  'increment'=> TRUE, 'primary_key'=>TRUE),
+        'xar_domain'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255)
+    );
+
+    $query = xarDBCreateTable($xartable['blacklist'], $fields);
+
+    $result =& $dbconn->Execute($query);
+    if (!$result)
+        return;
+
+    // fill blacklist table
+    $file = file('modules/comments/xarincludes/blacklist.txt');
+    for ($i=0; $i<count($file); $i++) {
+        $data = $file[$i];
+        $domain = "";
+        for ($j=0; $j<strlen($data); $j++)  {
+            if ($data[$j]==" " || $data[$j] == "#"){
+                break;
+            } else {
+                $domain .= $data[$j];
+                continue;
+            }
+        }
+		if (strpos($domain, '[\w\-_.]')) {
+			$domaim = str_replace('[\w\-_.]','[-\w\_.]', $domain);
+		}
+		$ps = strpos($domain, '/');
+		while ($ps !== false) {
+			if ($ps == 0) {
+				$domain = '\\' + $domain;
+			} else if (substr($domain, $ps-1, 1) != '\\') {
+				$domain = substr_replace($domain, '\/', $ps, 1); 
+			}
+			$ps = strpos($domain, '/', $ps+2);
+		}
+        $domain = trim($domain);
+        if ($domain != ""){
+            $nextId = $dbconn->GenId($btable);
+            $query = "INSERT INTO $btable(xar_id, 
+                                          xar_domain)
+                      VALUES (?,?)";
+            $bindvars = array($nextId, $domain);
+            $result =& $dbconn->Execute($query,$bindvars);
+            if (!$result) return;
+        }
+    }
+        
     // Set up module variables
     xarModSetVar('comments','render',_COM_VIEW_THREADED);
     xarModSetVar('comments','sortby',_COM_SORTBY_THREAD);
@@ -248,6 +300,12 @@ function comments_delete()
     if(!$result)
         return;
 
+    $query = xarDBDropTable($xartable['blacklist']);
+    $result =& $dbconn->Execute($query);
+
+    if(!$result)
+        return;
+
     // Delete module variables
     xarModDelVar('comments','render');
     xarModDelVar('comments','sortby');
@@ -354,7 +412,61 @@ function comments_upgrade($oldversion)
 
             // fall through to the next upgrade
         case '1.2':
-            // compatability upgrade
+        case '1.2.0':
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            xarDBLoadTableMaintenanceAPI();
+            // Create blacklist tables
+            $btable = $xartable['blacklist'];
+            $bbtable = &$xartable['blacklist_column'];
+
+            $fields = array(
+                'xar_id'       => array('type'=>'integer',  'null'=>FALSE,  'increment'=> TRUE, 'primary_key'=>TRUE),
+                'xar_domain'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255)
+            );
+
+            $query = xarDBCreateTable($xartable['blacklist'], $fields);
+
+            $result =& $dbconn->Execute($query);
+            if (!$result)
+                return;
+
+            $file = file('modules/comments/xarincludes/blacklist.txt');
+            for ($i=0; $i<count($file); $i++) {
+                $data = $file[$i];
+                $domain = "";
+                for ($j=0; $j<strlen($data); $j++)  {
+                    if ($data[$j]==" " || $data[$j] == "#"){
+                        break;
+                    } else {
+                        $domain .= $data[$j];
+                        continue;
+                    }
+                }
+                if (strpos($domain, '[\w\-_.]')) {
+                    $domaim = str_replace('[\w\-_.]','[-\w\_.]', $domain);
+                }
+                $ps = strpos($domain, '/');
+                while ($ps !== false) {
+                    if ($ps == 0) {
+                        $domain = '\\' + $domain;
+                    } else if (substr($domain, $ps-1, 1) != '\\') {
+                        $domain = substr_replace($domain, '\/', $ps, 1); 
+                    }
+                    $ps = strpos($domain, '/', $ps+2);
+                }
+                $domain = trim($domain);
+                if ($domain != ""){
+                    $nextId = $dbconn->GenId($btable);
+                    $query = "INSERT INTO $btable(xar_id, 
+                                                  xar_domain)
+                              VALUES (?,?)";
+                    $bindvars = array($nextId, $domain);
+                    $result =& $dbconn->Execute($query,$bindvars);
+                    if (!$result) return;
+                }
+            }
         case '2.0':
             // Code to upgrade from version 2.0 goes here
             // fall through to the next upgrade
@@ -364,5 +476,4 @@ function comments_upgrade($oldversion)
     }
     return true;
 }
-
 ?>

@@ -75,6 +75,21 @@ function comments_userapi_add($args)
         }
     }
 
+    // Lets check the blacklist first before we process.
+    // If the comment does not pass, we will return an exception
+    // Perhaps in the future we can store the comment for later 
+    // review, but screw it for now...
+    if (xarModGetVar('comments', 'useblacklist') == true){
+        $items = xarModAPIFunc('comments', 'user', 'get_blacklist');
+        foreach ($items as $item) {
+            if (preg_match("/$item[domain]/i", $comment)){
+                $msg = xarML('Your entry has triggered comments moderation due to suspicious URL entry');
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                return;
+            }
+        }
+    }
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -180,5 +195,4 @@ function comments_userapi_add($args)
         return $id;
     }
 }
-
 ?>

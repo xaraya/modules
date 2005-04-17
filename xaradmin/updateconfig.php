@@ -16,6 +16,7 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showoptions', 'checkbox', $showoptions, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_postanon', 'checkbox', $xar_postanon, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_useblacklist', 'checkbox', $xar_useblacklist, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_depth', 'str:1:', $xar_depth, _COM_MAX_DEPTH, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_render', 'str:1:', $xar_render, _COM_VIEW_THREADED, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_sortby', 'str:1:', $xar_sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
@@ -34,6 +35,7 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'rssnumitems', $rssnumitems);
     xarModSetVar('comments', 'showtitle', $showtitle);
     xarModSetVar('comments', 'showoptions', $showoptions);
+    xarModSetVar('comments', 'useblacklist', $xar_useblacklist);
     xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
     xarResponseRedirect(xarModURL('comments', 'admin', 'modifyconfig'));
     return true;

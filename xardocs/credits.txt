@@ -5,3 +5,4 @@ Gregor J. Rothfuss - Motivation and guidance
 Jim McDonald       - Inspiration
 Doug Daulton       - HTML Design of the Renderings
 hidetaka <gdtjpmw@users.sourceforge.jp> -- Bug 4210
+comment blacklist  - Inspiration and install routing from Fahim (fahim@farook.org).  Original MT_Blacklist Jay Allen's (http://jayallen.org)

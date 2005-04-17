@@ -1,5 +1,4 @@
 <?php
-
 /**
  * File: $Id$
  *
@@ -12,17 +11,18 @@
  * @subpackage comments
  * @author Carl P. Corliss <rabbitt@xaraya.com>
 */
-
 function comments_xartables()
 {
     // Initialise table array
     $xartable = array();
 
     // Name for template database entities
-    $comments_table = xarDBGetSiteTablePrefix() . '_comments';
+    $comments_table     = xarDBGetSiteTablePrefix() . '_comments';
+    $blacklist_table    = xarDBGetSiteTablePrefix() . '_blacklist';
 
     // Table name
-    $xartable['comments'] = $comments_table;
+    $xartable['comments']   = $comments_table;
+    $xartable['blacklist']  = $blacklist_table;
 
     // Column names
     $xartable['comments_column'] = array('cid'      => $comments_table . '.xar_cid',
@@ -40,8 +40,12 @@ function comments_xartables()
                                          'status'   => $comments_table . '.xar_status',
                                          'postanon' => $comments_table . '.xar_anonpost'
                                         );
+
+    // Column names
+    $xartable['blacklist_column'] = array('id'       => $blacklist_table . '.xar_id',
+                                          'pid'      => $blacklist_table . '.xar_domain'
+                                          );
     // Return table information
     return $xartable;
 }
-
 ?>
