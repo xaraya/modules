@@ -31,12 +31,12 @@
                 <select name="cachetheme" id="cachetheme" size="1">
                     <option value="">All Themes</option>
                     <xar:loop name="$themes">
-                        <xar:if condition="$loop:item['name'] eq $settings.OutputDefaultTheme">
-                            <option value="#$loop:item['name']#" selected="selected">
+                        <xar:if condition="$loop:item['osdirectory'] eq $settings.OutputDefaultTheme">
+                            <option value="#$loop:item['osdirectory']#" selected="selected">
                                 #$loop:item['name']#
                             </option>
                             <xar:else />
-                            <option value="#$loop:item['name']#">
+                            <option value="#$loop:item['osdirectory']#">
                                 #$loop:item['name']#
                             </option>
                         </xar:if>
