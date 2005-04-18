@@ -412,7 +412,7 @@ function xarcachemanager_fs_setup($args)
         if (is_dir($setupDir)) {
             if (!is_writable($setupDir)) {
                 $msg=xarML('The #(1) directory is not writable by the web 
-                           web server. The #(1) must be writable by the web 
+                           web server. The #(1) directory must be writable by the web 
                            server process owner for output caching to work. 
                            Please change the permission on the #(1) directory
                            so that the web server can write to it.', $setupDir);

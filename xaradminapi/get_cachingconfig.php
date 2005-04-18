@@ -43,6 +43,9 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
                     $value = substr($value, 6);
                     $value = unserialize($value);
                 }
+                if (is_numeric($value)) {
+                    $value = intval($value);
+                }
                 $cachingConfiguration[$key] = $value;
             }
 
@@ -88,12 +91,16 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
         }
     
         if (!file_exists($cachingConfigFile)) {
-            $msg=xarML('That is strange.  The #(1) file seems to be 
-                        missing.', $cachingConfigFile);
-            xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
-                            new SystemException($msg));
-                
-            return false;
+            // try to restore the missing file
+            if (!xarModAPIFunc('xarcachemanager', 'admin', 'restore_cachingconfig')) {
+                $msg=xarML('The #(1) file is missing.  Please restore #(1)   
+                            from backup, or the xarcachemanager/config.cashing.php.dist 
+                            file.', $cachingConfigFile);
+                xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
+                                new SystemException($msg));
+                    
+                return false;
+            }
         }
     
         include $cachingConfigFile;
