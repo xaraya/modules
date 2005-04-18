@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.5 2004/11/17 07:08:57 garrett Exp $
+ * File: $Id: xarinit.php,v 1.6 2005/03/28 21:32:20 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -259,12 +259,12 @@ function addressbook_init()
     * Format is
     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
-    xarRegisterMask('AdminAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ReadAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');
+    xarRegisterMask('EditAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_EDIT');
+    xarRegisterMask('AddAddressBook',    'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminAddressBook',  'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
 
-    xarRegisterMask('ModerateAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_MODERATE');
-    xarRegisterMask('EditAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_EDIT');
-
-    xarRegisterMask('ViewAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');
 
     // Initialisation successful
     return true;
@@ -421,6 +421,20 @@ function addressbook_upgrade($oldversion)
             xarModSetVar(__ADDRESSBOOK__, 'display_prefix', 0);
 
             break;
+
+		case '1.2.7':
+		/*
+		 * This release will fix the user privileges problem where only Admins may insert records
+		 */
+            xarRemoveMasks(__ADDRESSBOOK__);
+
+            xarRegisterMask('ReadAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');
+            xarRegisterMask('EditAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_EDIT');
+            xarRegisterMask('AddAddressBook',    'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADD');
+            xarRegisterMask('DeleteAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_DELETE');
+            xarRegisterMask('AdminAddressBook',  'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
+			
+		    break;
     }
 
     return true;

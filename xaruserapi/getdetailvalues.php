@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getdetailvalues.php,v 1.7 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: getdetailvalues.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
  *
  * AddressBook user getDetailValues
  *
@@ -29,7 +29,7 @@ function addressbook_userapi_getDetailValues($args)
     /**
      * Security check
      */
-    if (!xarSecurityCheck('ViewAddressBook',0)) return FALSE;
+    if (!xarSecurityCheck('ReadAddressBook',0)) return FALSE;
 
     extract($args);
 

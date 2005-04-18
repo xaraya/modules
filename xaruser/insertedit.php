@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertedit.php,v 1.4 2004/11/17 07:08:08 garrett Exp $
+ * File: $Id: insertedit.php,v 1.5 2005/03/28 21:38:10 garrett Exp $
  *
  * AddressBook user insertEdit
  *
@@ -25,7 +25,8 @@ function addressbook_user_insertedit()
     /**
      * Security check first
      */
-    if (xarSecurityCheck('AdminAddressBook',0)) {
+    if (xarSecurityCheck('AddAddressBook',0)   ||
+        xarSecurityCheck('EditAddressBook',0)) {
 
         // Get the form values
         $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues',array('output'=>$output));
@@ -184,7 +185,7 @@ function addressbook_user_insertedit()
                 /**
                  * Handle images
                  */
-                if (xarModGetVar(__ADDRESSBOOK__,'use_img') && xarSecurityCheck('AdminAddressBook',0)) {
+                if (xarModGetVar(__ADDRESSBOOK__,'use_img') && xarSecurityCheck('ReadAddressBook',0)) {
                     $modInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
                     $handle = @opendir("modules/".$modInfo['directory']."/xarimages");
                     $output['imgFiles'][] = array('id'=>'','name'=>_AB_NOIMAGE);

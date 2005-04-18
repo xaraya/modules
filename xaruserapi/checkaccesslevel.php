@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: checkaccesslevel.php,v 1.4 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: checkaccesslevel.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
  *
  * AddressBook user checkAccessLevel
  *
@@ -30,7 +30,7 @@ function addressbook_userapi_checkAccessLevel($args)
     switch($option) {
         case 'view':
             if (xarUserIsLoggedIn()) {
-                if ((xarSecurityCheck('EditAddressBook',0)) || (xarSecurityCheck('ModerateAddressBook',0))) {
+                if (xarSecurityCheck('ReadAddressBook',0)) {
                     $access = true;
                     break;
                 }
@@ -57,7 +57,7 @@ function addressbook_userapi_checkAccessLevel($args)
             }
         case 'create':
             if (xarUserIsLoggedIn()) {
-                if ((xarSecurityCheck('EditAddressBook',0)) || (xarSecurityCheck('ModerateAddressBook',0))) {
+                if (xarSecurityCheck('AddAddressBook',0)) {
                     $access = true;
                     break;
                 }
@@ -84,7 +84,7 @@ function addressbook_userapi_checkAccessLevel($args)
             }
         case 'edit':
             if (xarUserIsLoggedIn()) {
-                if ((xarSecurityCheck('EditAddressBook',0)) || (xarSecurityCheck('ModerateAddressBook',0))) {
+                if (xarSecurityCheck('EditAddressBook',0)) {
                     $access = true;
                     break;
                 }

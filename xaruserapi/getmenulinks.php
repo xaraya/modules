@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getmenulinks.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
+ * File: $Id: getmenulinks.php,v 1.4 2005/03/28 22:54:57 garrett Exp $
  *
  * AddressBook user getMenuLinks
  *
@@ -31,7 +31,7 @@ function addressbook_userapi_getmenulinks()
                               'label' => xarML('New Address'));
     }
 
-    if (xarSecurityCheck('ViewAddressBook',0)) {
+    if (xarSecurityCheck('ReadAddressBook',0)) {
 
         $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
                                                    'user',

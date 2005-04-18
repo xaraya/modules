@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: viewall.php,v 1.3 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: viewall.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
  *
  * AddressBook user viewAll
  *
@@ -24,7 +24,7 @@ function addressbook_user_viewall()
 
     $output['userIsLoggedIn'] = xarUserIsLoggedIn();
     $output['globalprotect'] = xarModGetVar(__ADDRESSBOOK__, 'globalprotect');
-    $output['userCanViewModule'] = xarSecurityCheck('ViewAddressBook',0);
+    $output['userCanViewModule'] = xarSecurityCheck('ReadAddressBook',0);
 
     /**
      * not sure how this differs from xarSecurityCheck above...
