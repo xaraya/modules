@@ -422,10 +422,10 @@ function addressbook_upgrade($oldversion)
 
             break;
 
-		case '1.2.7':
-		/*
-		 * This release will fix the user privileges problem where only Admins may insert records
-		 */
+        case '1.2.7':
+        /*
+         * This release will fix the user privileges problem where only Admins may insert records
+         */
             xarRemoveMasks(__ADDRESSBOOK__);
 
             xarRegisterMask('ReadAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');
@@ -433,8 +433,8 @@ function addressbook_upgrade($oldversion)
             xarRegisterMask('AddAddressBook',    'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADD');
             xarRegisterMask('DeleteAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_DELETE');
             xarRegisterMask('AdminAddressBook',  'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
-			
-		    break;
+
+            break;
     }
 
     return true;
