@@ -183,9 +183,7 @@ function comments_userapi_add($args)
         if (function_exists('xarOutputFlushCached') &&
             xarModGetVar('xarcachemanager','FlushOnNewComment')) {
             $modinfo = xarModGetInfo($modid);
-            // this may not be agressive enough flushing for all sites
-            // we could flush "$modinfo[name]-" to remove all output cache associated with a module
-            xarOutputFlushCached("$modinfo[name]-user-display-");
+            xarOutputFlushCached("$modinfo[name]-");
         }
         // Call create hooks for categories, hitcount etc.
         $args['module'] = 'comments';
