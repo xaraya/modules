@@ -11,8 +11,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-
-
 /**
  * generate translations XML skels for the core
  * @param $args['locale'] locale name
@@ -58,7 +56,14 @@ function translations_adminapi_generate_core_skels($args)
         !$core_backend->loadContext('core:', 'core')) return;
 
     // Generate translations skels
-    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $locale));
+    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+       if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
+       $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
+    } else {
+       $genLocale = $locale;
+    }
+
+    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_CORE)) return;
     if (!$gen->create('core:', 'core')) return;
@@ -91,4 +96,5 @@ function translations_adminapi_generate_core_skels($args)
 
     return array('time' => $endTime - $startTime, 'statistics' => $statistics);
 }
+
 ?>

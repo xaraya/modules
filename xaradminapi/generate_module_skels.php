@@ -137,7 +137,14 @@ function translations_adminapi_generate_module_skels($args)
 
     // Create skels
     $subnames = array_keys($transEntriesCollection);
-    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $locale));
+    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
+        $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
+    } else {
+        $genLocale = $locale;
+    }
+         
+    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
 
