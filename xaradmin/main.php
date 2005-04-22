@@ -27,9 +27,9 @@ function tinymce_admin_main()
         return $data;
     } else {
         xarResponseRedirect(xarModURL('tinymce', 'admin', 'modifyconfig'));
-    } 
+    }
     // success
     return true;
-} 
+}
 
 ?>

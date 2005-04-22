@@ -1,3 +1,39 @@
+Version 1.44 RC1 (2005-04-20)
+    Fixed bug where width/height attributes of a image wasn't stored some times in Firefox/Mozilla.
+    Fixed bug where P elements where created if a user pressed return/enter within a h1-h6 in Firefox/Mozilla.
+    Fixed bug where the remove format fuction didn't work some times in MSIE.
+    Fixed so backspace/delete gets added in one undo level in MSIE (improves performance).
+    Fixed so the "Could not find element by id or name" alert only shows when the debug option is set to true.
+    Fixed bug where bold/italic didn't work in Mozilla 1.3.
+    Fixed bug where width/height of a hidden TinyMCE instance where incorrect.
+    Fixed so the function layout of classes in tiny_mce_src.js uses prototype keyword instead of TinyMCE_ prefix (reduces size).
+    Fixed bug where triggerNodeChange produced javascript error some times in MSIE.
+    Fixed some issues in the Swedish and Spanish language packs.
+    Fixed bug where first undo level wasn't working correctly.
+    Fixed so flash plugin loads it's needed CSS data from within the plugin.
+    Fixed button images and CSS in the simple theme.
+    Fixed so the simple example shows how to use the simple theme instead of the default theme.
+    Fixed so cleanup default values can be set to empty. For example alt= generated alt="" on img elements.
+    Fixed memory leaks in MSIE (circular closure problem) events are now removed in a better way.
+    Fixed bug where URLs where converted incorrectly if the editor page URL contained / characters.
+    Fixed bug where table guidlines didn't work correctly when using the build in Mozilla table buttons.
+    Fixed bug where the Flash plugin was breaking other elements.
+    Added new contextmenu plugin, this plugin adds a menu if the user right clicks/uses the contextmenu on elements.
+    Added new multiple configuration support, the init method may now be called multiple times.
+    Added new remove_linebreaks option, this option is enabled by default and removes all HTML code linebreaks.
+    Added new behavior to the textarea_trigger option, if mode is textareas and trigger is false those elements will not be converted into editors.
+    Added new entity_encoding option, enabled user to better control the behavior of how character are converted into entities.
+    Added new isDirty command to TinyMCEControl, this method returns true if the user has done any modifications to the content.
+    Added new onchange_callback option, this callback is executed when contents within the editor instance is changed.
+    Added new init function for themes/plugins this gets called when a editor instance has finished it's setup.
+    Added new init_instance_callback option this callback is executed when instances are added to the editor.
+    Added new cleanup option this option enables users to totaly disable the whole cleanup process.
+    Added new importCSS method to TinyMCE. This method allows plugins and themes to load custom CSS files on initialization.
+    Added new getSelectedHTML method to TinyMCEControl class, this method returns the currently selected HTML contents.
+    Added new getSelectedText method to TinyMCEControl class, this method returns the currently selected contents as text.
+    Added new removeclass behavior to the removeformat button. The current class will be removed if no contents is selected.
+    Added new queryInstanceCommandValue and queryInstanceCommandState methods.
+    Added new option button_tile_map, this option contols the usage of button tile maps and is disabled by default.
 Version 1.43 (2005-03-06)
     Fixed bug with ask option not working at all.
     Fixed bug where a "instance is not defined bug" error was produced.

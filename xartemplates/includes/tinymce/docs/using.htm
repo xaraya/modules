@@ -100,7 +100,7 @@ optional and is not a requierd setting.<br>
   <tr> 
     <td><strong>[textarea_trigger]</strong></td>
     <td>Name of textarea trigger attribute, this defaults to &quot;mce_editable&quot;. 
-      This option is only used when &quot;mode&quot; is set to specific_textareas.</td>
+      If the option &quot;mode&quot; is set to &quot;specific_textareas&quot; only elements with the trigger set to &quot;true&quot; will be converted, if the &quot;mode&quot; option is set to textareas or exact all elements except those with the trigger set to &quot;false&quot; will be converted.</td>
   </tr>
   <tr> 
     <td><strong>[valid_elements]</strong></td>
@@ -363,6 +363,10 @@ optional and is not a requierd setting.<br>
     <td>Comma separated list of the entitiy lookup table used to convert char codes into names such as &amp;oring;. This list is in a odd, even format where odd values are the numbers to be converted and the even is the entity name that represents that number. For example: &quot;8205,zwj,8206,lrm,8207,rlm,173,shy&quot;.</td>
   </tr>
   <tr>
+    <td><strong>[entity_encoding]</strong></td>
+    <td>Controls how characters are encoded into entity values. This option can be set to &quot;numeric&quot; to get &amp;#&lt;char num&gt;; codes or &quot;named&quot; to use the &quot;entities&quot; option to encode chars into names or &quot;raw&quot; to skip encoding. The default value of this option is named. </td>
+  </tr>
+  <tr>
     <td><strong>[cleanup_callback]</strong></td>
     <td>Custom cleanup callback function, this enabled users to add custom cleanup logic to extend the build in one. This callback is called separatly from the default one, it doesn't replace the old one it just extends it. Check the <a href="themes.htm#cleanup">plugin cleanup</a> function for more details.</td>
   </tr>
@@ -389,6 +393,30 @@ optional and is not a requierd setting.<br>
   <tr>
     <td><strong>[oninit]</strong></td>
     <td>Gets called when all editor instances are initialized, this should contain a string. For example: &quot;myfunc();&quot;.</td>
+  </tr>
+  <tr>
+    <td><strong>[oninit]</strong></td>
+    <td>Gets called when all editor instances are initialized, this should contain a string. For example: &quot;myfunc();&quot;.</td>
+  </tr>
+  <tr>
+    <td><strong>[onchange_callback]</strong></td>
+    <td>Gets executed when content changed within a editor instance, the function format is &quot;callback(instance);&quot;.</td>
+  </tr>
+  <tr>
+    <td><strong>[init_instance_callback]</strong></td>
+    <td>Gets executed when content changed within a editor instance is added to the editor, the function format is &quot;callback(instance);&quot;.</td>
+  </tr>
+  <tr>
+    <td><strong>[cleanup]</strong></td>
+    <td>Enabled or disables the cleanup process. If this option is set to false all cleanup will be skipped and the raw browser content will be returned from editor. This mode should only be used for debugging purposes since MSIE doesn't generate valid HTML. This option defaults to &quot;true&quot;. </td>
+  </tr>
+  <tr>
+    <td><strong>[remove_linebreaks]</strong></td>
+    <td>Enabled or disables the removal of line breaks from the HTML code. Since many systems autoconverts new lines to br elements on submit the default behavior of TinyMCE is to place all HTML code on one line. </td>
+  </tr>
+  <tr>
+    <td><strong>[button_tile_map]</strong></td>
+    <td>Enabled or disables the usage of button tile maps, for performance TinyMCE can use a single image instead of a image for each button. This option is disabled by default. </td>
   </tr>
   <tr bgcolor="#CCCCCC"> 
     <td colspan="2"><strong>Advanced theme specific settings </strong></td>

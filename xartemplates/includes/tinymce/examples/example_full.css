@@ -22,15 +22,6 @@ pre {
     font-size: 10px;
 }
 
-/* Custom class needed by the flash plugin */
-.mce_plugin_flash {
-    border: 1px dotted #cc0000;
-    background-image: url(../jscripts/tiny_mce/plugins/flash/images/flash.gif);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #ffffcc;
-}
-
 .example1 {
     font-weight: bold;
     font-size: 14px

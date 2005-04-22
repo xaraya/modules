@@ -28,3 +28,4 @@ tinyMCELang['lang_table_cell_desc'] = 'Table cell properties';
 tinyMCELang['lang_insert_table_valign'] = 'Vertical alignment';
 tinyMCELang['lang_insert_table_align_top'] = 'Top';
 tinyMCELang['lang_insert_table_align_bottom'] = 'Bottom';
+tinyMCELang['lang_table_props_desc'] = 'Table properties';

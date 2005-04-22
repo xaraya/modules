@@ -1,4 +1,4 @@
-    /* Import plugin specific language pack */
+/* Import plugin specific language pack */
 //tinyMCE.importPluginLanguagePack('zoom', 'en,sv,pt,fr_ca,fr,de');
 
 /**

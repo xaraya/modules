@@ -1,3 +1,13 @@
+* Version 0.5.0 22 April 05
+- New mce_editable="false" added to textarea prevents wysiwyg 
+  editor when All Text Area mode is active
+- New multiple configuration support - with manual mode can be set
+  multiple times on page with different config settings
+- Many new features including custom config settings from the GUI in xartinymce
+- Language file fixes
+- Many bug fixes including image width/height in advimg with Mozilla/FF
+- See the tinymce changelog file in /modules/tinymce/xartemplates/includes/tinymce/docs
+
 * Version 0.4.1  10 Mar 05
 - Split the activation method (auto vs manual) and the mode (All areas vs Labelled)
 - Tidy up the templates

@@ -28,3 +28,4 @@ tinyMCELang['lang_table_cell_desc'] = 'Zelleneigenschaften';
 tinyMCELang['lang_insert_table_valign'] = 'Vertikale Ausrichtung';
 tinyMCELang['lang_insert_table_align_top'] = 'Oben';
 tinyMCELang['lang_insert_table_align_bottom'] = 'Unten';
+tinyMCELang['lang_table_props_desc'] = 'Table properties';

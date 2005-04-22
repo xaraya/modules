@@ -103,6 +103,12 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinybuttonsremove', $tinybuttonsremove);
 
            break;
+    case 'customconfig':
+           if (!xarVarFetch('tinycustom','str:1:',$tinycustom,'',XARVAR_NOT_REQUIRED)) return;
+                
+                xarModSetVar('tinymce', 'tinycustom', $tinycustom);
+    break;
+
     }
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
@@ -262,6 +268,9 @@ function tinymce_admin_updateconfig()
 
     if (xarModGetVar('tinymce','tinyencode')){
         $jstext .='encoding : "'.xarModGetVar('tinymce','tinyencode').'", ';
+    }
+    if (strlen(trim(xarModGetVar('tinymce','tinycustom')))>0) {
+       $jstext .=xarModGetVar('tinymce','tinycustom');
     }
    // $jstext .='force_br_newlines : "",';    //works only for IE at the moment
     $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';

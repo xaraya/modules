@@ -21,11 +21,13 @@ function tinymce_adminapi_getmenulinks()
 
     // Security Check
     if (xarSecurityCheck('AdminTinyMCE', 0)) {
-        $menulinks[] = Array('url' => xarModURL('tinymce',
-                'admin',
-                'modifyconfig'),
-            'title' => xarML('Modify the configuration for the module'),
-            'label' => xarML('Modify Config'));
+       $menulinks[] = Array('url' => xarModURL('tinymce', 'admin','overview'),
+                                               'title' => xarML('Overview'),
+                                               'label' => xarML('XarTinyMCE Overview'));
+
+       $menulinks[] = Array('url' => xarModURL('tinymce','admin','modifyconfig'),
+                            'title' => xarML('Modify the configuration for the module'),
+                            'label' => xarML('Modify Config'));
     }
     if (empty($menulinks)) {
         $menulinks = '';

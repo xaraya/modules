@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.4.1
+INSTALLATION AND USE - XarTinyMCE Version 0.5.0
 
-UPGRADES to 0.4.1:
+UPGRADES to 0.5.0:
 PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -36,7 +36,7 @@ To INSTALL and get started:
 3. You can use XarTinyMCE module to enable wysiwyg in two basic ways
    (there are variations on these) by setting the MODE and ACTIVATION method:
 
-  B. Setting the Mode : All Text Areas or Specifically Labelled
+  I. Setting the Mode : All Text Areas or Specifically Labelled
    a. Set the Mode to All Text areas. This will automatically enable WYSIWYG
       in ALL textareas. From Version 0.4.0 you *do not* need to
      add anything to your templates.
@@ -59,7 +59,7 @@ To INSTALL and get started:
      This will give you a WYSIWYG editor property where you want it without
      having to add any tags to your templates.
 
-  B. Setting the Activation Method : Manual or Automatic
+  II. Setting the Activation Method : Manual or Automatic
      Choose Automatic to have xarTinyMce automatically activated. You do not have to add any 
      template snippets. Alternatively choose <strong>Manual Override</strong> if you wish to 
      turn off automatic activation. 

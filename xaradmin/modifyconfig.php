@@ -59,7 +59,22 @@ function tinymce_admin_modifyconfig()
     $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser'); 
     $data['editorcss']=xarModGetVar('tinymce', 'tinyeditorcss');   
     $data['tinynowrap']=xarModGetVar('tinymce', 'tinynowrap');   
-    $data['tinyloadmode']=xarModGetVar('tinymce', 'tinyloadmode');   
+    $data['tinyloadmode']=xarModGetVar('tinymce', 'tinyloadmode'); 
+    $data['tinycustom']=xarModGetVar('tinymce', 'tinycustom');
+    $data['jstext']=xarModGetVar('tinymce','jstext');
+
+    $data['jsstrings']="";
+    $jsstrings=explode('",',$data['jstext']);
+
+     foreach ($jsstrings as $key => $value) {
+       if (strlen($value) > 70){
+        $data['jsstrings'].="\n".wordwrap($value, 75,"\n",1 ).'",';
+       }elseif (substr(trim($value),-1)=='"'){
+           $data['jsstrings'] .="\n ".$value;
+       }else{
+          $data['jsstrings'] .="\n ".$value.'",';
+       }
+       }
     if (strpos($data['tinyplugins'], 'insertdatetime')) {
         $data['dateplug']=1;
     } else {
@@ -67,6 +82,9 @@ function tinymce_admin_modifyconfig()
     }
     if (!isset($data['tab'])) {
         $data['tab']='basic';
+    }
+    if (!isset($data['tinycustom'])) {
+        $data['tinycustom']='';
     }
      //get list of valid themes
     $tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";

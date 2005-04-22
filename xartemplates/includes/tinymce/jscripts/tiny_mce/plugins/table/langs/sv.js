@@ -28,3 +28,4 @@ tinyMCELang['lang_table_cell_desc'] = 'Tabellcellsinst&auml;llningar';
 tinyMCELang['lang_insert_table_valign'] = 'Vertikal justering';
 tinyMCELang['lang_insert_table_align_top'] = 'Toppen';
 tinyMCELang['lang_insert_table_align_bottom'] = 'Botten';
+tinyMCELang['lang_table_props_desc'] = 'Tabell egenskaper';
