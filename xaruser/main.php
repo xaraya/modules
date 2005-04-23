@@ -126,8 +126,7 @@ function netquery_user_main()
           $ipname = gethostbyaddr($target);
           $msg .= $ipname." [".$geoipc['cn']."]";
         }
-        $geoflag = "modules/netquery/xarimages/geoflags/".$geoipc['cc'].".gif";
-        if (file_exists($geoflag)) $msg .= " <img class=\"geoflag\" src=\"".$geoflag."\" />";
+        if (!empty($geoipc['geoflag'])) $msg .= " <img class=\"geoflag\" src=\"".$geoipc['geoflag']."\" />";
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
     }
@@ -135,6 +134,7 @@ function netquery_user_main()
     {
         $target = $data['host'];
         $digparam = $data['digparam'];
+        $digexec_local = $data['digexec_local'];
         $msg = ('<p><b>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if (eregi("[a-zA-Z]", $target))
           $ntarget = gethostbyname($target);
@@ -145,16 +145,14 @@ function netquery_user_main()
         } else {
           if (! eregi("[a-zA-Z]", $target) ) $target = $ntarget;
           if ($data['winsys']) {
-            if ($data['use_win_nslookup']) {
-              if (@exec("nslookup -type=$digparam $target", $output, $ret))
+              if (@exec("$digexec_local -type=$digparam $target", $output, $ret))
                   while (list($k, $line) = each($output)) {
                     $msg .= $line.'<br />';
                   }
               else
                   $msg .= "The <i>nslookup</i> command is not working on your system.";
-            }
           } else {
-              if (! $msg .= trim(nl2br(`dig $digparam '$target'`)))
+              if (! $msg .= trim(nl2br(`$digexec_local $digparam '$target'`)))
                   $msg .= "The <i>dig</i> command is not working on your system.";
           }
         }
@@ -169,7 +167,7 @@ function netquery_user_main()
           $addmsg = "Format Check: Correct format.";
           $msg .= $addmsg;
           list ($username,$domain) = split ("@",$target,2);
-          if (!$data['winsys'] || $data['use_win_nslookup']) {
+          if (!$data['winsys'] || $data['dns_dig_enabled']) {
             if (checkdnsrr($domain.'.', 'MX') ) $addmsg = "<br />DNS Record Check: MX record returned OK.";
             else if (checkdnsrr($domain.'.', 'A') ) $addmsg = "<br />DNS Record Check: A record returned OK.";
             else if (checkdnsrr($domain.'.', 'CNAME') ) $addmsg = "<br />DNS Record Check: CNAME record returned OK.";
@@ -298,6 +296,7 @@ function netquery_user_main()
     }
     else if ($data['querytype'] == 'pingrem')
     {
+        $target = $data['host'];
     }
     else if ($data['querytype'] == 'trace')
     {
@@ -318,9 +317,11 @@ function netquery_user_main()
     }
     else if ($data['querytype'] == 'tracerem')
     {
+        $target = $data['host'];
     }
     else if ($data['querytype'] == 'lgquery')
     {
+        $target = $data['router'];
         $lgdefault  = $data['lgdefault'];
         $lgrequests = $data['lgrequests'];
         $lgreq      = $data['request'];
@@ -386,6 +387,10 @@ function netquery_user_main()
         }
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
+    }
+    else
+    {
+        $target = "";
     }
     if ($data['querytype'] != 'none' && $data['capture_log_enabled'] && $data['capture_log_filepath'])
     {

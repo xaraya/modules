@@ -50,7 +50,7 @@
             <xar:mlstring>DNS Lookup</xar:mlstring>
             </option>
           </xar:if>
-          <xar:if condition="$dns_dig_enabled and (!$winsys)">
+          <xar:if condition="$dns_dig_enabled">
             <xar:if condition="$blockquery eq 'dig'">
                 <option value="dig" selected="selected">
             <xar:else/>

@@ -17,9 +17,9 @@ function netquery_adminapi_configapi()
     $data['whoisip_enabled'] = xarModGetVar('netquery', 'whoisip_enabled');
     $data['dns_lookup_enabled'] = xarModGetVar('netquery', 'dns_lookup_enabled');
     $data['dns_dig_enabled'] = xarModGetVar('netquery', 'dns_dig_enabled');
+    $data['digexec_local'] = xarModGetVar('netquery', 'digexec_local');
     $data['email_check_enabled'] = xarModGetVar('netquery', 'email_check_enabled');
     $data['query_email_server'] = xarModGetVar('netquery', 'query_email_server');
-    $data['use_win_nslookup'] = xarModGetVar('netquery', 'use_win_nslookup');
     $data['port_check_enabled'] = xarModGetVar('netquery', 'port_check_enabled');
     $data['user_submissions'] = xarModGetVar('netquery', 'user_submissions');
     $data['http_req_enabled'] = xarModGetVar('netquery', 'http_req_enabled');

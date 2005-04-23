@@ -17,7 +17,7 @@
   <xar:if condition="$whois_enabled"><input name="b1" id="b1" type="image" src="modules/netquery/xarimages/btn_whois.gif" class="#$b1class#" alt="Whois" /></xar:if>
   <xar:if condition="$whoisip_enabled"><input name="b2" id="b2" type="image" src="modules/netquery/xarimages/btn_whoisip.gif" class="#$b2class#" alt="Whois IP" /></xar:if>
   <xar:if condition="$dns_lookup_enabled"><input name="b3" id="b3" type="image" src="modules/netquery/xarimages/btn_dns.gif" class="#$b3class#" alt="DNS Lookup" /></xar:if>
-  <xar:if condition="$dns_dig_enabled and (!$winsys or $use_win_nslookup)"><input name="b4" id="b4" type="image" src="modules/netquery/xarimages/btn_dig.gif" class="#$b4class#" alt="DNS Dig" /></xar:if>
+  <xar:if condition="$dns_dig_enabled"><input name="b4" id="b4" type="image" src="modules/netquery/xarimages/btn_dig.gif" class="#$b4class#" alt="DNS Dig" /></xar:if>
   <xar:if condition="$email_check_enabled"><input name="b12" id="b12" type="image" src="modules/netquery/xarimages/btn_email.gif" class="#$b12class#" alt="Validate Email" /></xar:if>
   <xar:if condition="$port_check_enabled"><input name="b5" id="b5" type="image" src="modules/netquery/xarimages/btn_port.gif" class="#$b5class#" alt="Port Check" /></xar:if>
   <xar:if condition="$http_req_enabled"><input name="b6" id="b6" type="image" src="modules/netquery/xarimages/btn_http.gif" class="#$b6class#" alt="HTTP Request" /></xar:if>
@@ -255,11 +255,7 @@
           <tr><td>#$country.cc#</td><td>
           <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$country.lat#&amp;longitude=#$country.lon#&amp;zoom=0" target="_blank">#$country.cn#</a>
           </td><td>
-          <xar:if condition="!empty($country.geoflag)">
-            <img class="geoflag" src="#$country.geoflag#" />
-          <xar:else />
-            <img class="geoflag" src="modules/netquery/xarimages/geoflags/blank.gif" />
-          </xar:if>
+          <img class="geoflag" src="#$country.geoflag#" />
           </td><td>
           #$country.lat#
           </td><td>
@@ -277,7 +273,7 @@
   <xar:if condition="$clientinfo_enabled">
     <xar:mlstring>Client Info</xar:mlstring> - 
     <xar:if condition="!empty($geoip.cn)">
-      <xar:if condition="!empty($geoflag)"><img class="geoflag" src="#$geoflag#" /></xar:if>
+      <xar:if condition="!empty($geoip.geoflag)"><img class="geoflag" src="#$geoip.geoflag#" /></xar:if>
       <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0" target="_blank">#$geoip.cn#</a> - 
     </xar:if>
     <xar:mlstring>IP</xar:mlstring>: #$browserinfo->property("ip")# -

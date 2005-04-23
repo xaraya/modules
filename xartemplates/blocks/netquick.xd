@@ -1,8 +1,8 @@
 <xar:sec mask="OverviewNetquery" catch="false">
   <xar:if condition="$vars['blockquery'] eq 'clientinfo'">
     <xar:if condition="!empty($geoip.cn)">
-      <xar:if condition="!empty($geoflag)">
-        <img class="geoflag" src="#$geoflag#" /><br />
+      <xar:if condition="!empty($geoip.geoflag)">
+        <img class="geoflag" src="#$geoip.geoflag#" /><br />
       </xar:if>
       &para; <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0" target="_blank">#$geoip.cn#</a><br />
     </xar:if>

@@ -164,13 +164,13 @@
       <xar:else />
         <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable DNS (Dig) Query</xar:mlstring> ~ 
-      <xar:if condition="$use_win_nslookup">
-        <input type="checkbox" name="use_win_nslookup" id="use_win_nslookup" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="use_win_nslookup" id="use_win_nslookup" value="1" />
-      </xar:if>
-      <xar:mlstring>Use Windows nslookup</xar:mlstring>
+      <xar:mlstring>Enable Dig (UNIX/Linux) or NSLookup (Windows)</xar:mlstring>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span class="help" title="#xarML('Local DNS lookup EXECUTABLE including path if necessary')#"><label for="digexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
+      <input type="text" name="digexec_local" id="digexec_local" value="#$digexec_local#" size="30" maxlength="100" />
     </td>
   </tr>
   <tr align="left">
