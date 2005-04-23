@@ -5,7 +5,7 @@
 <script language="javascript">
 var url = tinyMCE.getParam("external_link_list_url");
 if (url != null)
-	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
+    document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
 </script>
 <script language="javascript" type="text/javascript">
 <!--
@@ -72,36 +72,36 @@ if (url != null)
             }
         }
         var myTarget = tinyMCE.getWindowArg('target');
-		myTarget = myTarget != "" ? myTarget : "_self";
+        myTarget = myTarget != "" ? myTarget : "_self";
         formObj.target.value    = myTarget;
         formObj.href.value      = tinyMCE.getWindowArg('href');
         formObj.linktitle.value = tinyMCE.getWindowArg('title');
         setMyTarget(myTarget);
 
-		// Handle file browser
-		if (tinyMCE.getParam("file_browser_callback") != null) {
-			document.getElementById('href').style.width = '280px';
+        // Handle file browser
+        if (tinyMCE.getParam("file_browser_callback") != null) {
+            document.getElementById('href').style.width = '280px';
 
-			var html = '';
+            var html = '';
 
-			html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
-			html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-			html += ' onmouseout="tinyMCE.restoreClass(this);"';
-			html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-			html += ' onclick="javascript:tinyMCE.openFileBrowser(\'href\',document.forms[0].href.value,\'file\',window);"';
-			html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-			html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+            html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
+            html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
+            html += ' onmouseout="tinyMCE.restoreClass(this);"';
+            html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
+            html += ' onclick="javascript:tinyMCE.openFileBrowser(\'href\',document.forms[0].href.value,\'file\',window);"';
+            html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
+            html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
 
-			document.getElementById('browser').innerHTML = html;
-		}
+            document.getElementById('browser').innerHTML = html;
+        }
 
-		// Auto select link in list
-		if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
-			for (var i=0; i<formObj.link_list.length; i++) {
-				if (formObj.link_list.options[i].value == tinyMCE.getWindowArg('href'))
-					formObj.link_list.options[i].selected = true;
-			}
-		}
+        // Auto select link in list
+        if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
+            for (var i=0; i<formObj.link_list.length; i++) {
+                if (formObj.link_list.options[i].value == tinyMCE.getWindowArg('href'))
+                    formObj.link_list.options[i].selected = true;
+            }
+        }
 
         window.focus();
     }
@@ -301,24 +301,24 @@ if (url != null)
                             </tr>
                           </table></td>
                     </tr>
-					  <!-- Link list -->
-					  <script language="javascript">
-						if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
-							var html = "";
+                      <!-- Link list -->
+                      <script language="javascript">
+                        if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
+                            var html = "";
 
-							html += '<tr><td align="right">{$lang_link_list}:</td>';
-							html += '<td><select name="link_list" style="width: 300px" onchange="this.form.href.value=this.options[this.selectedIndex].value;">';
-							html += '<option value="">---</option>';
+                            html += '<tr><td align="right">{$lang_link_list}:</td>';
+                            html += '<td><select name="link_list" style="width: 300px" onchange="this.form.href.value=this.options[this.selectedIndex].value;">';
+                            html += '<option value="">---</option>';
 
-							for (var i=0; i<tinyMCELinkList.length; i++)
-								html += '<option value="' + tinyMCELinkList[i][1] + '">' + tinyMCELinkList[i][0] + '</option>';
+                            for (var i=0; i<tinyMCELinkList.length; i++)
+                                html += '<option value="' + tinyMCELinkList[i][1] + '">' + tinyMCELinkList[i][0] + '</option>';
 
-							html += '</select></td></tr>';
+                            html += '</select></td></tr>';
 
-							document.write(html);
-						}
-					  </script>
-					  <!-- /Link list -->
+                            document.write(html);
+                        }
+                      </script>
+                      <!-- /Link list -->
                     <tr>
                         <td align="right">{$lang_theme_insert_link_titlefield}:</td>
                         <td><input name="linktitle" type="text" id="linktitle" value="" style="width: 300px;" /></td>
