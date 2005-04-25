@@ -450,7 +450,7 @@
                <input type="text"name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="65" maxlength="240" >
             </p>
                     <span class="fullright"><xar:mlstring><strong>Available plugins:</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
-                     advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak</xar:mlstring>
+                     advimage, advlink, flash, advhr, searchreplace, print, table, contextmenu, xarpagebreak</xar:mlstring>
                     </span>
 
 
