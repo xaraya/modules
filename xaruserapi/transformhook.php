@@ -70,6 +70,9 @@ function & uploads_userapi_transform ( $body )
                 $file = end($file);
                 $replacement = $file['fileName'];
                 break;
+            default:                                                                                                                                                                                
+                $body = xarML("The text '#(1)' is not a valid replacement placeholder","#$type:$id#");                                                                                              
+                return $body;
         }
 
         $body = ereg_replace("#$type:$id#", $replacement, $body);
