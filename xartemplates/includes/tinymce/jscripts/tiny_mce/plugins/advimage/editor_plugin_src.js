@@ -22,7 +22,7 @@ function TinyMCE_advimage_getInsertImageTemplate() {
  * Setup content function.
  */
 function TinyMCE_advimage_handleEvent(editor_id, body, doc) {
-        // Convert all links to absolute
+    // Convert all links to absolute
 
-        alert(editor_id + "," + body.innerHTML);
+    alert(editor_id + "," + body.innerHTML);
 }

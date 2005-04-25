@@ -1,3 +1,24 @@
+Version 1.44 RC2 (2005-04-25)
+    Fixed bug with host prefixes and port numbers when having relative_urls set to false and remove_script_host set to true.
+    Fixed bug when site absolute URLs for example /something was converted incorrectly in Firefox/Mozilla.
+    Fixed bug where the link wasn't auto selected in the drop list in the advanced themes default link dialog.
+    Fixed bug issue with the flash plugin and croping out characters before and after the movie.
+    Fixed bug where the editor jumped to top of editor area on enter/return when doctype was set to XML Transitional.
+    Fixed bug where context menu was appearing in the wrong location if the window was resized.
+    Fixed bug in the context menu where table properties wasn't working.
+    Fixed bug where a selectorText exception was trown if the CSS file contained @import or @charset.
+    Fixed bug where bold/italic/strikethough/underline wasn't selected/unselected in toolbar some times.
+    Fixed issue with hspace and vspace when having the inline_styles option enabled. Contributed by speednet.
+    Fixed bug where access denied error was thrown sometimes in MSIE.
+    Fixed so images without src won't be inserted.
+    Fixed some issues with width/height fields in the advimage plugin.
+    Fixed so the contextmenu plugin doesn't appear in MSIE 5.0, now functions with 5.5+.
+    Added filebrowser icon to mouse over and mouse out fields in the advimage plugin.
+    Added filebrowser icon to popup field in the advlink plugin.
+    Added so the triggerSave function gets auto executed when a user calls submit on a form, this can be disabled with the submit_patch option.
+    Added missing readme.txt file for the context menu plugin.
+    Added new border and background color fields to table dialog, based on contribution by Neirda. Enable them by the table_color_fields option.
+    Removed some old outdated items from FAQ.
 Version 1.44 RC1 (2005-04-20)
     Fixed bug where width/height attributes of a image wasn't stored some times in Firefox/Mozilla.
     Fixed bug where P elements where created if a user pressed return/enter within a h1-h6 in Firefox/Mozilla.

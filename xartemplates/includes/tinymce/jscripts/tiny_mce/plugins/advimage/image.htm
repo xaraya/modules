@@ -207,8 +207,10 @@ if (url != null)
 
     function getImageData() {
         preloadImg = new Image();
+
         tinyMCE.addEvent(preloadImg, "load", updateImageData);
         tinyMCE.addEvent(preloadImg, "error", function () {var formObj = document.forms[0];formObj.width.value = formObj.height.value = "";});
+
         preloadImg.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
 
         var src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
@@ -232,7 +234,7 @@ if (url != null)
                         <td align="right" nowrap="nowrap">{$lang_insert_image_src}:</td> 
                       <td colspan="2"><table border="0" cellspacing="0" cellpadding="0"> 
                             <tr> 
-                              <td><input name="src" type="text" id="src" value="" style="width: 280px" onchange="getImageData();" /></td> 
+                              <td><input name="src" type="text" id="src" value="" style="width: 280px" onchange="resetImageData();getImageData();" /></td> 
                               <td id="browser1"></td> 
                             </tr> 
                           </table></td> 

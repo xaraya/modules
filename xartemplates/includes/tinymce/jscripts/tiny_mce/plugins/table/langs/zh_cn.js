@@ -29,3 +29,5 @@ tinyMCELang['lang_insert_table_valign'] = '´¹Ö±¶ÔÆë';
 tinyMCELang['lang_insert_table_align_top'] = '¶¥¶Ë';
 tinyMCELang['lang_insert_table_align_bottom'] = 'µ×²¿';
 tinyMCELang['lang_table_props_desc'] = 'Table properties';
+tinyMCELang['lang_table_bordercolor'] = 'Border color';
+tinyMCELang['lang_table_bgcolor'] = 'Bg color';

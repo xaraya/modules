@@ -7,6 +7,10 @@ if (!tinyMCE.settings['contextmenu_skip_plugin_css'])
 var TinyMCE_contextmenu_contextMenu = null;
 
 function TinyMCE_contextmenu_initInstance(inst) {
+    // Is not working on MSIE 5.0
+    if (tinyMCE.isMSIE5_0)
+        return;
+
     // Add hide event handles
     tinyMCE.addEvent(inst.getDoc(), "click", TinyMCE_contextmenu_hideContextMenu);
     tinyMCE.addEvent(inst.getDoc(), "keypress", TinyMCE_contextmenu_hideContextMenu);
@@ -107,7 +111,7 @@ function TinyMCE_contextmenu_commandHandler(command, value) {
 
     // UI must be true on these
     var ui = false;
-    if (command == "mceTableCellProps" || command == "mceTableRowProps")
+    if (command == "mceInsertTable" || command == "mceTableCellProps" || command == "mceTableRowProps")
         ui = true;
 
     TinyMCE_contextmenu_contextMenu.inst.execCommand(command, ui);

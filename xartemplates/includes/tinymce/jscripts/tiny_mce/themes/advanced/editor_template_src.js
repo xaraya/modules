@@ -677,6 +677,24 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
         }
     } while (!breakOut && (alignNode = alignNode.parentNode));
 
+    // Do special text
+    if (tinyMCE.isGecko && node.nodeType == 3) {
+        var inst = tinyMCE.getInstanceById(editor_id);
+        var doc = inst.getDoc();
+
+        if (doc.queryCommandState("Bold"))
+            tinyMCE.switchClassSticky(editor_id + '_bold', 'mceButtonSelected');
+
+        if (doc.queryCommandState("Italic"))
+            tinyMCE.switchClassSticky(editor_id + '_italic', 'mceButtonSelected');
+
+        if (doc.queryCommandState("Underline"))
+            tinyMCE.switchClassSticky(editor_id + '_underline', 'mceButtonSelected');
+
+        if (doc.queryCommandState("Strikethrough"))
+            tinyMCE.switchClassSticky(editor_id + '_strikethrough', 'mceButtonSelected');
+    }
+
     // Handle elements
     do {
         switch (node.nodeName.toLowerCase()) {
