@@ -107,18 +107,12 @@ if (url != null)
         // Handle file browser
         if (tinyMCE.getParam("file_browser_callback") != null) {
             document.getElementById('src').style.width = '260px';
+            document.getElementById('onmouseover').style.width = '260px';
+            document.getElementById('onmouseout').style.width = '260px';
 
-            var html = '';
-
-            html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
-            html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-            html += ' onmouseout="tinyMCE.restoreClass(this);"';
-            html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-            html += ' onclick="javascript:tinyMCE.openFileBrowser(\'src\',document.forms[0].src.value,\'image\',window);"';
-            html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-            html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
-
-            document.getElementById('browser').innerHTML = html;
+            document.getElementById('browser1').innerHTML = getBrowserHTML('src');
+            document.getElementById('browser2').innerHTML = getBrowserHTML('onmouseover');
+            document.getElementById('browser3').innerHTML = getBrowserHTML('onmouseout');
         }
 
         // Auto select image in list
@@ -151,6 +145,20 @@ if (url != null)
             if (option.value == value)
                 option.selected = true;
         }
+    }
+
+    function getBrowserHTML(name) {
+        var html = "";
+
+        html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
+        html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
+        html += ' onmouseout="tinyMCE.restoreClass(this);"';
+        html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
+        html += ' onclick="javascript:tinyMCE.openFileBrowser(\'' + name + '\',document.forms[0].' + name + '.value,\'image\',window);"';
+        html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
+        html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+
+        return html;
     }
 
 // added 2004-11-10 by Michael Keck (me@michaelkeck.de)
@@ -222,10 +230,10 @@ if (url != null)
                     </tr> 
                     <tr> 
                         <td align="right" nowrap="nowrap">{$lang_insert_image_src}:</td> 
-                      <td colspan="2">                          <table border="0" cellspacing="0" cellpadding="0"> 
+                      <td colspan="2"><table border="0" cellspacing="0" cellpadding="0"> 
                             <tr> 
                               <td><input name="src" type="text" id="src" value="" style="width: 280px" onchange="getImageData();" /></td> 
-                              <td id="browser"></td> 
+                              <td id="browser1"></td> 
                             </tr> 
                           </table></td> 
                     </tr> 
@@ -296,7 +304,12 @@ if (url != null)
                     </tr> 
                     <tr> 
                         <td align="right" nowrap="nowrap" id="showInput1">{$lang_insert_image_mouseover}:</td> 
-                        <td colspan="2"><input name="onmouseover" type="text" id="onmouseover" value=""  style="width: 280px" /></td> 
+                        <td colspan="2"><table border="0" cellspacing="0" cellpadding="0"> 
+                            <tr> 
+                              <td><input name="onmouseover" type="text" id="onmouseover" value=""  style="width: 280px" /></td> 
+                              <td id="browser2"></td> 
+                            </tr> 
+                          </table></td> 
                     </tr> 
                  <!-- Image list --> 
                  <script language="javascript"> 
@@ -318,7 +331,12 @@ if (url != null)
                  <!-- /Image list --> 
                     <tr> 
                         <td align="right" nowrap="nowrap" id="showInput2">{$lang_insert_image_mouseout}:</td> 
-                        <td colspan="2"><input name="onmouseout" type="text" id="onmouseout" value=""  style="width: 280px" /></td> 
+                        <td colspan="2"><table border="0" cellspacing="0" cellpadding="0"> 
+                            <tr> 
+                              <td><input name="onmouseout" type="text" id="onmouseout" value=""  style="width: 280px" /></td> 
+                              <td id="browser3"></td> 
+                            </tr> 
+                          </table></td> 
                     </tr> 
                  <!-- Image list --> 
                  <script language="javascript"> 
