@@ -24,9 +24,13 @@ function navigator_user_menutype_list( $args )
     }
 
     $data = xarModAPIFunc('navigator', 'user', 'process_menu_attributes', $args);
+    if (isset($args['noheaders']) && stristr($args['noheaders'], 'true')) {
+        $data['noheaders'] = TRUE;
+    } else {
+        $data['noheaders'] = FALSE;
+    }
 
-    if (is_array($data) && count($data) &&
-        isset($data['current_primary_id']) && $data['current_primary_id'] == 0) {
+    if (!isset($data) || empty($data) || !is_array($data)) {
          return;
     }
 
@@ -69,6 +73,7 @@ function navigator_user_menutype_list( $args )
     $data['matrix']   = $matrix;
     $data['primary']  = $primary;
     $data['tree']     = $list;
+
     return $data;
 }
 
