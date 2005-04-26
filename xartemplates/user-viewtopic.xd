@@ -4,7 +4,7 @@
 <xar:comment>
     using css-driven template, avoiding excess tables for layout, especially nested ones 
 </xar:comment>
-<xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
+<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
 </xar:if>
 <xar:if condition="$post ne '1'">
     <div class="xarbb-noteswrapper">

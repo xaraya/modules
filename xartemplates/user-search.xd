@@ -1,4 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
+<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
 </xar:if>
 
 <h2>

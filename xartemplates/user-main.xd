@@ -4,7 +4,7 @@
 <xar:comment>
     lets minimize use of tables for layout and use instead a css-driven template 
 </xar:comment>
-<xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
+<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
 </xar:if>
 <xar:if condition="isset($catid)">
     <div class="xarbb-noteswrapper">
