@@ -41,7 +41,7 @@
                         <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
                     </td>
                     <td>
-                        <xar:if condition="$anonymousbindvalue eq 1">
+                        <xar:if condition="$anonymousbindvalue eq 'true'">
                             <input type="checkbox" name="anonymousbind" value="1" checked="checked"/>
                         <xar:else/>
                             <input type="checkbox" name="anonymousbind" value="1" />
@@ -69,7 +69,7 @@
                         <xar:mlstring>Search User DN</xar:mlstring>
                     </td>
                     <td>
-                        <xar:if condition="$searchuserdnvalue eq 1">
+                        <xar:if condition="$searchuserdnvalue eq 'true'">
                             <input type="checkbox" name="searchuserdn" value="1" checked="checked"/>
                         <xar:else/>
                             <input type="checkbox" name="searchuserdn" value="1" />
@@ -97,7 +97,7 @@
                         <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
                     </td>
                     <td>
-                        <xar:if condition="$tls eq 1">
+                        <xar:if condition="$tls eq 'true'">
                             <input type="checkbox" name="tls" value="1" checked="checked"/>
                         <xar:else/>
                             <input type="checkbox" name="tls" value="1" />
