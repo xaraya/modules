@@ -62,7 +62,7 @@ function addressbook_adminapi_decCustomfields($args)
             $returnCode = FALSE;
         } elseif ($result->EOF) {
             xarErrorSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
-                        new abUserException(xarML("No such field ID $id")));
+                        new abUserException(xarML("No such field ID #(1)", $id)));
             $returnCode = FALSE;
         } else {
             list($seq) = $result->fields;
