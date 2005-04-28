@@ -27,7 +27,7 @@
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ol>
-                <li><xar:mlstring>Install this module like you would any other Xaraya module. That is:</xar:mlstring>
+                <li style="margin-top:20px;"><xar:mlstring>Install this module like you would any other Xaraya module. That is:</xar:mlstring>
                     <ul>
                       <li><xar:mlstring>put the tinymce folder in your Xaraya modules directory</xar:mlstring>
                        </li>
@@ -36,7 +36,7 @@
                        <li><xar:mlstring> Click on the &quot;install&quot; link of the tinymce module</xar:mlstring></li>
                     </ul>
                 </li>
-                <li> <xar:mlstring>The XarTinyMCE editor is not turned on by default.
+                <listyle="margin-top:20px;"> <xar:mlstring>The XarTinyMCE editor is not turned on by default.
                       Once the tinymce module is installed it needs to be turned on. You can now do this in the XarTinyMCE
                       Module Configuration area <strong>or</strong>:</xar:mlstring>
                      <ul>
@@ -46,9 +46,8 @@
                         </li>
                     </ul>
                 </li>
-                <li><xar:mlstring>Once installed and set as the default editor XarTinyMCE module is automatically enabled for WYSIWYG. However, you have two basic ways (with variations on these) to customize which templates are used and how to activate the WYSIWYG areas:</xar:mlstring>
+                <li style="margin-top:20px;"><xar:mlstring>Once installed and set as the default editor, XarTinyMCE module is automatically enabled for WYSIWYG. However, you have two basic ways (with variations on these) to customize which templates are used for WYSIWYG areas:</xar:mlstring>
                 <br />
-                <h5><xar:mlstring>A. All Text Areas or Special Labelled Only</xar:mlstring></h5>
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
                              <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage.</xar:mlstring>
@@ -61,21 +60,24 @@
                             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring><a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
                         </li>
                      </ol>
-                    <h5><xar:mlstring>B. Automatic or Manual Activation</xar:mlstring></h5>
-                     <ul>
+               <li style="margin-top:20px;"><xar:mlstring>You also have two basic ways to activate xartinymce - automatically or by using manual configuration in the templates.</xar:mlstring>
+
+                     <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
-                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated. You do not have to add any template snippets.
-                         Alternatively choose <strong>Manual Override</strong> if you wish to turn off automatic activation.
+                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated. You do not have to add any template snippets.</xar:mlstring></li>
+
+                         <li style="margin-top:20px;">
+                         <xar:mlstring>Choose <strong>Manual Override</strong> if you wish to turn off automatic activation.
                          You can then manually override the loading of the WYSIWYG by adding your specific template snippet code below to your page or other specific templates.
                          All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
-                         Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring>                        </li>
-                    </ul>
+                         Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring></li>
+                    </ol>
                 </li>
                 </ol>
                 <pre>
-                    &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
-                        &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
-                    &lt;/xar:if&gt;
+        &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
+            &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
+        &lt;/xar:if&gt;
                 </pre>
 
                 <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring></p>
@@ -162,7 +164,7 @@
          </ul>
          </div>
         <div style="float:right;margin-left: 1em; margin-right: 1em; text-align:left;" class="xar-sub">
-         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.1&nbsp; 2005-03-09 jojodee
+         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.4&nbsp; 2005-04-28 jojodee
          </p>
          </div>
          <div style="clear:both;"><!-- --></div>

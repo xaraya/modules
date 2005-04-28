@@ -89,7 +89,7 @@
             <legend>
             <strong><xar:mlstring>1. Set tags in HTML Module</xar:mlstring></strong>
             </legend>
-        <p style="margin-left:20px;">
+        <p class="xar-norm">
             <ol style="list-style-type:lower-alpha;">
                 <li><xar:mlstring>Go to the HTML module</xar:mlstring></li>
                 <li><a href="index.php?module=html&amp;type=admin&amp;func=set" rel="ext"><xar:mlstring>Set HTML tags allowed</xar:mlstring></a><xar:mlstring> eg code, span, image, h1 and so on so they are rendered.</xar:mlstring>
@@ -117,15 +117,14 @@
                </xar:if>
                </select>
            </p>
-        <p style="margin-left:20px;">
+        <p class="xar-norm">
             <xar:mlstring>(You can also set installed editors in <a href="index.php?module=base&amp;type=admin&amp;func=modifyconfig&amp;tab=other" rel="ext">Base Module - Modify Config - Other Tab</a>)</xar:mlstring>
          </p>
          </fieldset>
         <fieldset class="formelements xar-norm">
             <legend>
-               <strong><xar:mlstring>3. Set the Mode</xar:mlstring></strong>
+               <strong><xar:mlstring>3. Set Operation Mode</xar:mlstring></strong>
             </legend>
-           <h5><xar:mlstring>A. All Text Areas or Special Labelled Only</xar:mlstring></h5>
            <p class="param">
                 <label for="tinymode">
                   <span class="help" title="#xarML('Select default replacement mode for TinyMCE')#">
@@ -142,24 +141,27 @@
                  </xar:if>
                </select>
            </p>
-         <p style="margin-left:20px;margin-top:20px;">
+         <p class="xar-norm" >
            <xar:mlstring>You can choose either of the following ways to add a WYSIWYG editor:</xar:mlstring>
         </p>
 
         <ol style="list-style-type:lower-alpha; ">
-            <li style="margin-top:10px;">
+          <li>
                 <xar:mlstring><strong>All Text Areas Mode</strong>: every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage, or turn off WYSIWYG in a specific textarea by adding the attribute <code>mce_editable="false"</code> to the textarea. This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring>
-            </li>
-          <li style="margin-top:10px;"><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the <code>mce_editable="true"</code> are activated. You can do this manually by adding the attribute to any textarea in your templates, or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
+          </li>
+          <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the <code>mce_editable="true"</code> are activated. You can do this manually by adding the attribute to any textarea in your templates, or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
             This DD Property automatically marks the div or textarea of the field with the attribute <code>mce_editable="true"</code> and acts as the marker for the WYSIWYG conversion.
             You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
           <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>
         </li>
        </ol>
-        <h5><xar:mlstring>B. Automatic or Manual Activation</xar:mlstring></h5>
-
-           <p class="param">
+       </fieldset>
+      <fieldset class="formelements xar-norm">
+            <legend>
+               <strong><xar:mlstring>4. Set Activation Method</xar:mlstring></strong>
+            </legend>
+           <p class="param ">
                 <label for="tinyloadmode">
                     <span class="help" title="#xarML('Select automatic activation or manual')#">
                         <label for="tinyloadmode"><xar:mlstring>Automatic activation or manual?</xar:mlstring></label>
@@ -176,19 +178,20 @@
                </select>
         </p>
        <ol style="list-style-type:lower-alpha;">
-         <li style="margin-top:10px;">
+         <li class="xar-norm" >
              <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated without the need to add any template snippets.</xar:mlstring>
          </li>
-         <li style="margin-top:10px;"><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation. You can then manually override the loading of the WYSIWYG by adding your specific template snippet code, as below, to your page or other specific templates.
+         <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation. You can then manually override the loading of the WYSIWYG by adding your specific template snippet code, as below, to your page or other specific templates.
            All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
            Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring>
          </li>
       </ol>
-      <pre>
-            &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
-                &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
-            &lt;/xar:if&gt;
-         </pre>
+      <br />
+      <pre style="font-size:10px;">
+&lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
+     &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
+&lt;/xar:if&gt;
+     </pre>
       </fieldset>
         <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring></p>
 
@@ -290,11 +293,11 @@
             <p class="param">
                 <label for="tinywidth">
                 <span class="help" title="#xarML('Defaults to width of individual textareas if left blank')#">
-                    <label for="tinywidth"><xar:mlstring>Override width for textareas:</xar:mlstring></label>
+                    <label for="tinywidth"><xar:mlstring>Override width for all textareas:</xar:mlstring></label>
                 </span>
                 </label>
                 <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="8" maxlength="8" />
-                <xar:mlstring>Eg "110%" or "450px".  Affects all WYSIWYG textareas.</xar:mlstring>
+                <xar:mlstring>Eg "110%" or "450px". </xar:mlstring>
             </p>
             <p class="param">
                 <label for="tinyheight">
@@ -303,7 +306,7 @@
                 </span>
             </label>
                 <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="8" maxlength="8" />
-                <xar:mlstring>Eg "110%" or "450px". Affects all WYSIWYG textareas.</xar:mlstring>
+                <xar:mlstring>Eg "110%" or "450px". </xar:mlstring>
            </p>
 
             <p class="param">
@@ -383,7 +386,7 @@
 
         <fieldset class="formelements xar-norm">
             <legend>
-                <strong><xar:mlstring>Set CSS, Style and Plugin Options</xar:mlstring></strong>
+                <strong><xar:mlstring>Set CSS and Style Options</xar:mlstring></strong>
             </legend>
              <p class="param">
                 <label for="tinyinlinestyle">
@@ -409,13 +412,13 @@
                 </span>
                 </label>
                 <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="70" maxlength="240" />
-               <span class="fullright">
+          </p>
+           <p class="xar-norm" style="margin-bottom:10px;">
                <xar:mlstring>Make sure you have 'style' and 'class' as allowed attributes in img or a tags if you need them.
                 *[*] allows all tags and attributes. Use with disallowed tags below. Your HTML module settings will
                 finally filter all tags (but not attributes).</xar:mlstring>
-                </span>
             </p>
-        
+
            <p class="param">
                 <label for="tinyinvalid">
                 <span class="help" title="#xarML('List of html tags that are not allowed, separated by commas. These will be stripped from the textarea.')#">
@@ -441,6 +444,12 @@
                 </label>
               <input type="text" name="editorcss" id="editorcss" value="#$editorcss#" size="65" maxlength="120" />
            </p>
+          </fieldset>
+                <fieldset class="formelements xar-norm">
+            <legend>
+                <strong><xar:mlstring>Plugin Options</xar:mlstring></strong>
+            </legend>
+
           <p class="param">
                 <label for="tinyplugins">
                 <span class="help" title="#xarML('Add names of any extra plugins you wish to load here.')#">
@@ -449,10 +458,10 @@
                 </label>
                <input type="text"name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="65" maxlength="240" >
             </p>
-                    <span class="fullright"><xar:mlstring><strong>Available plugins:</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
+            <p class="xar:norm;" style="margin-bottom:10px;">
+                    <xar:mlstring><strong>Available plugins:</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
                      advimage, advlink, flash, advhr, searchreplace, print, table, contextmenu, xarpagebreak</xar:mlstring>
-                    </span>
-
+             </p>
 
         <xar:if condition="$dateplug eq '1'">
           <p class="param">
@@ -463,9 +472,9 @@
                 </label>
                 <input type="text" name="tinydate" id="tinydate" value="#$tinydate#" size="15" maxlength="25" />
                 <xar:mlstring>Default is YYYY-MM-DD</xar:mlstring>
-                <span class="fullright">
+         </p>
+         <p class="xar-norm;">
                     <xar:mlstring>%y as year range 00 to 99, %Y as year YYYY, %d day range 01 to 31, %m month range 01 to 12, %D same as %m/%d/%y</xar:mlstring>
-                </span>
           </p>
           <p class="param">
                 <label for="tinytime">
@@ -475,9 +484,9 @@
                 </label>
                 <input type="text" name="tinytime" id="tinytime" value="#$tinytime#" size="15" maxlength="25" />
                 <xar:mlstring>Default is HH:MM:SS</xar:mlstring>
-                <span class="fullright">
+          </p>
+          <p class="xar-norm;">
                     <xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring>
-                </span>
             </p>
         </xar:if>
 
@@ -487,10 +496,7 @@
                         <label for="useibrowser"><xar:mlstring>Auto add Image Browser?</xar:mlstring></label>
                    </span>
                </label>
-                <xar:mlstring>Adds the plugin, changes theme to Advanced, adds the Ibrowser button, and remove
-                the Image button.</xar:mlstring>
-
-                <select name="useibrowser" id="useibrowser" size="1">
+               <select name="useibrowser" id="useibrowser" size="1">
                 <xar:if condition="$useibrowser eq 0">
                     <option value="0" selected="selected"><xar:mlstring>Manual set</xar:mlstring></option>
                     <option value="1"><xar:mlstring>Auto add</xar:mlstring></option>
@@ -505,13 +511,18 @@
                     <option value="2" selected="selected"><xar:mlstring>Auto remove</xar:mlstring></option>
                 </xar:if>
                 </select>
+                </p>
+                <p class="param">
+                          <xar:mlstring>Adds the plugin, changes theme to Advanced, adds the Ibrowser button, and removes
+                the Image button.</xar:mlstring>
+
             </p>
 
-         <span class="fullright">
+         <p class="xar-norm">
             <xar:mlstring><strong>TO USE IMAGE BROWSER YOU MUST:</strong> Update the <a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file
             at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a> for the IBrowser Plugin - then chmod 444
             for added security. </xar:mlstring>
-         </span>
+         </p>
          </fieldset>
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
             <input type="submit" value="#$updatebutton#" />
@@ -579,12 +590,14 @@
                 </label>
                 <textarea name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" mce_editable="false" >#$tinyadvformat#</textarea>
            </p>
-           <span class="fullright"><xar:mlstring>These default to p, address, pre, h1, h2, h3, h4, h5 and h6 if left blank.</xar:mlstring></span>
+           <p class="xar-norm">
+           <xar:mlstring>These default to p, address, pre, h1, h2, h3, h4, h5 and h6 if left blank.</xar:mlstring>
+           </p>
           </fieldset>
 
           <fieldset class="formelements xar-norm">
             <legend>
-                        <strong><xar:mlstring>Customizing the Editor Layout</xar:mlstring></strong>
+                        <strong><xar:mlstring>Customize Advanced Theme Layout</xar:mlstring></strong>
            </legend>
            <p class="xar-norm">
                <xar:mlstring>If you wish to change the DEFAULTS then you can add or remove buttons, or define
@@ -603,7 +616,7 @@
                      <strong><xar:mlstring>Add EXTRA Buttons: </xar:mlstring></strong>
                      </span>
                  </label>
-                 <xar:mlstring>Add the following extra buttons to your editor toolbar.</xar:mlstring>
+                 <xar:mlstring>Add these extra buttons to your editor toolbar.</xar:mlstring>
             </p>
             <p class="param">
                 <label for="tinybuttons">
@@ -705,9 +718,7 @@
            <p class="param">
             <xar:mlstring>Current wysiwyg configuration:</xar:mlstring>
             </p>
-            <pre style="width:95%; padding:5px; border:1px solid #efefef;">
-              #$jsstrings#
-            </pre>
+            <pre style="padding:1px; border:1px solid #efefef; font-size:small;">#$jsstrings#</pre>
 
           </fieldset>
 
