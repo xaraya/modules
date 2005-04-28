@@ -203,9 +203,11 @@ function articles_userapi_getall($args)
         $from .= ' ON ' . $usersdef['field'] . ' = ' . $articlesdef['authorid'];
         $addme = 1;
     }
+    
     if (!empty($required['counter']) && isset($hitcountdef)) {
         // add this for SQL compliance when there are multiple JOINs
-        if ($addme) {
+        // bug 4429: sqlite doesnt like the parentheses
+        if ($addme && ($dbconn->databaseType != 'sqlite')) {
             $from = '(' . $from . ')';
         }
         // Add the LEFT JOIN ... ON ... parts from hitcount
@@ -215,7 +217,8 @@ function articles_userapi_getall($args)
     }
     if (!empty($required['rating']) && isset($ratingsdef)) {
         // add this for SQL compliance when there are multiple JOINs
-        if ($addme) {
+        // bug 4429: sqlite doesnt like the parentheses
+        if ($addme && ($dbconn->databaseType != 'sqlite')) {
             $from = '(' . $from . ')';
         }
         // Add the LEFT JOIN ... ON ... parts from ratings
@@ -225,13 +228,14 @@ function articles_userapi_getall($args)
     }
     if (count($cids) > 0) {
         // add this for SQL compliance when there are multiple JOINs
-        if ($addme) {
+        // bug 4429: sqlite doesnt like the parentheses
+        if ($addme && ($dbconn->databaseType != 'sqlite')) {
             $from = '(' . $from . ')';
         }
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
         $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $articlesdef['aid'];
-        if (!empty($categoriesdef['more'])) {
+        if (!empty($categoriesdef['more']) && ($dbconn->databaseType != 'sqlite')) {
             $from = '(' . $from . ')';
             $from .= $categoriesdef['more'];
         }
