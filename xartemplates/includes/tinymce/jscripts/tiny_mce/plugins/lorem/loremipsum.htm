@@ -8,7 +8,7 @@
 <script language="javascript" type="text/javascript">
 <!--
 var arrSentences=new Array();
-		 
+         
 function init(){
     var formObj = document.forms[0];
     for (var i=0;i<arrText.length;i++){
@@ -23,59 +23,59 @@ function init(){
         formObj.lorem_select.options[i]=new Option(tmpText,i);
     }
     //fill listbox with values based on the first 3 words in the sentences, no extra check made for sentences shorter than 3 words, so cross our fingers!
-	window.focus();
+    window.focus();
 }
 function generate(){
-	var insertedText='';
-	if (window.opener){
-	    var formObj = document.forms[0];
-	    count=formObj.lorem_count.value;
-	    selectedText=formObj.lorem_select.value;
-		    switch (formObj.lorem_formatum.value){
-		    	case '0'://unformatted	    		
-		    		insertedText=gimmeSentences(count,selectedText);
-		    	break;
-		    	case '1'://para
-		    		for (var counter=0;counter<count;counter++){
-		    			countElem=getRandom(3,6);//so many sentences in paragraph
-		    			insertedText+='<p>'+gimmeSentences(countElem,selectedText)+'</p>';		    			
-		    		}
-		    	break;
-		    	case '2'://ul
-		    		insertedText+='<ul>';
-		    		for (var counter=0;counter<count;counter++){
-		    			countElem=getRandom(1,2);//so many sentences in listelement
-		    			insertedText+='<li>'+gimmeSentences(countElem,selectedText)+'</li>';		    			
-		    		}
-		    		insertedText+='</ul>';
-		    	break;
-		    	case '3'://ol
-		    		insertedText+='<ol>';
-		    		for (var counter=0;counter<count;counter++){
-		    			countElem=getRandom(1,2);//so many sentences in listelement
-		    			insertedText+='<li>'+gimmeSentences(countElem,selectedText)+'</li>';		    			
-		    		}
-		    		insertedText+='</ol>';
-		    	break;
-		    }//switch
-		    tinyMCE.execCommand('mceInsertContent',false,insertedText,'html');
-		    window.top.close();
-	}//if window.opener
+    var insertedText='';
+    if (window.opener){
+        var formObj = document.forms[0];
+        count=formObj.lorem_count.value;
+        selectedText=formObj.lorem_select.value;
+            switch (formObj.lorem_formatum.value){
+                case '0'://unformatted                
+                    insertedText=gimmeSentences(count,selectedText);
+                break;
+                case '1'://para
+                    for (var counter=0;counter<count;counter++){
+                        countElem=getRandom(3,6);//so many sentences in paragraph
+                        insertedText+='<p>'+gimmeSentences(countElem,selectedText)+'</p>';                        
+                    }
+                break;
+                case '2'://ul
+                    insertedText+='<ul>';
+                    for (var counter=0;counter<count;counter++){
+                        countElem=getRandom(1,2);//so many sentences in listelement
+                        insertedText+='<li>'+gimmeSentences(countElem,selectedText)+'</li>';                        
+                    }
+                    insertedText+='</ul>';
+                break;
+                case '3'://ol
+                    insertedText+='<ol>';
+                    for (var counter=0;counter<count;counter++){
+                        countElem=getRandom(1,2);//so many sentences in listelement
+                        insertedText+='<li>'+gimmeSentences(countElem,selectedText)+'</li>';                        
+                    }
+                    insertedText+='</ol>';
+                break;
+            }//switch
+            tinyMCE.execCommand('mceInsertContent',false,insertedText,'html');
+            window.top.close();
+    }//if window.opener
 }
 function getRandom(from,to){
-	return Math.round((Math.random()*(to-1))+from);
+    return Math.round((Math.random()*(to-1))+from);
 }
 function gimmeSentences(howmany,selText){
-	var ret='';
-	var arrTmp=new Array();
-	for (var i=0;i<howmany;i++){
-		arrTmp.push(arrSentences[selText][0]);
-		arrSentences[selText].push(arrSentences[selText].shift());
-		//make first sentence array element last,
-		//in order to avoid paragraphs and list begin always with the same sentence		
-	}
-	ret=arrTmp.join(' ');
-	return ret;
+    var ret='';
+    var arrTmp=new Array();
+    for (var i=0;i<howmany;i++){
+        arrTmp.push(arrSentences[selText][0]);
+        arrSentences[selText].push(arrSentences[selText].shift());
+        //make first sentence array element last,
+        //in order to avoid paragraphs and list begin always with the same sentence        
+    }
+    ret=arrTmp.join(' ');
+    return ret;
 }
 //-->
 </script>
