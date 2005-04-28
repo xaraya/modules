@@ -29,8 +29,14 @@ function articles_userapi_countitems($args)
 
 // TODO: make sure this is SQL standard
     // Start building the query
-    $query = 'SELECT COUNT(DISTINCT ' . $articlesdef['field'] . ')';
-    $query .= ' FROM ' . $articlesdef['table'];
+    if($dbconn->databaseType == 'sqlite') {
+        $query = 'SELECT COUNT(*)
+                  FROM ( SELECT DISTINCT '. $articlesdef['field'].'
+                         FROM '. $articlesdef['table']; // WATCH OUT, UNBALANCED
+    } else {
+        $query = 'SELECT COUNT(DISTINCT ' . $articlesdef['field'] . ')';
+        $query .= ' FROM ' . $articlesdef['table'];
+    }
 
     if (!isset($args['cids'])) {
         $args['cids'] = array();
@@ -70,6 +76,8 @@ function articles_userapi_countitems($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
+    // Balance parentheses
+    if($dbconn->databaseType == 'sqlite') $query .=')';
     // Run the query - finally :-)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
