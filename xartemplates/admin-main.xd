@@ -8,45 +8,59 @@
     <div>
         <div style="float:right;display:block;background-color:#ffffff;padding:10px;"> 
             <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" /> 
-        </div><div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;"> 
-            <xar:mlstring>What is it?</xar:mlstring> </div><br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <em><xar:mlstring>SiteContact 
-            is a simple module that allows visitors to easily contact the Site 
-            Administrator by email.</xar:mlstring></em> </div><br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;"> 
-            <xar:mlstring>How to use it?</xar:mlstring> </div><br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Install 
-            from the administration module listing. There are no tables involved. 
-            Once installed, setup the module configuration in Modify Config option.</xar:mlstring> 
-            <p>There are a number of variables you can set in the Modify Config 
-                option. If any are left blank, a default is provided. </p>
-            <p>You can use HTML in your emails or in the configurable text that
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring> 
+        </div><br />
+        <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <em><xar:mlstring>SiteContact
+            is a simple module that allows visitors to easily contact the Site
+            Administrator by email.</xar:mlstring></em>
+        </p>
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring> 
+        </div><br />
+        <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Install SiteContact
+            as usual from the administration Module listing. There are no tables involved. Then, setup the module configuration in Modify Config option.</xar:mlstring>
+        </p>
+        <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <xar:mlstring>There are a number of variables you can set in the Modify Config
+                option. If any are left blank, a default is provided.</xar:mlstring>
+        </p>
+          <ol>
+            <li><xar:mlstring>Check the Short URL checkbox to use short urls</xar:mlstring></li>
+            <li><xar:mlstring>You can use HTML in your emails or in the configurable text that
                 displays in SiteContact pages. But, please, if you do, make sure
                 you have HTML allowed in your site by configuring the
-                HTML module to use the HTML tags you wish to use.</p>
-            <p>Note that you <strong>can</strong> use HTML email in Sitecontact by checking the <code>Use HTML Email</code> 
-            option in the SiteContact configuration. This will allow HTML mail just for Sitecontact module, 
-            even if your default mail setup is text.</p>
-            <p>By default, all emails are sent to the administrator email address
+                HTML module to use the HTML tags you wish to use.</xar:mlstring></li>
+            <li><xar:mlstring>Note that you <strong>can</strong> use HTML email in Sitecontact by checking the <code>Use HTML Email</code>
+            option in the SiteContact configuration. This will allow HTML mail just for Sitecontact module,
+            even if your default mail setup is text.</xar:mlstring></li>
+            <li><xar:mlstring>By default, all emails are sent to the administrator email address
                 specified in the Mail module. You can override this for each of
                 the Subject options of your feedback form. Just add the subject
-                option and alternative email in the form:</p>
-        </div></div>
-<blockquote>
-    <div class="xar-mod-body" style="display:block;">
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"><strong>Subject-line<span style="color:#FF0000;">;</span>optional-email<span style="color:#FF0000;">,</span></strong>
+                option and alternative email in the form:</xar:mlstring>
+
+        <blockquote>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <strong>Subject-line<span style="color:#FF0000;">;</span>optional-email<span style="color:#FF0000;">,</span></strong>
         </div>
-</div>
-</blockquote>
-<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p>The line <strong>must end with a comma</strong>. The semi-colon
+        </blockquote>
+            </li>
+            <li><xar:mlstring>The line <strong>must end with a comma</strong>. The semi-colon
                 and optional email can be omitted. Don't forget to test your setup
-                by sending yourself an email through SiteContact!</p>
-            <p>The HTML and text emails sent to the website contact (admin or other) and the user are based on 
-            templates in the module's xartemplate directory. There is a text and an HTML version for both the 
+                by sending yourself an email through SiteContact!
+            </xar:mlstring></li>
+            <li><xar:mlstring>The HTML and text emails that are sent to the website contact (admin or other) and the user are based on
+            templates in the module's xartemplate directory. There is a text and an HTML version for both the
             Admin notification email (user-adminmail-text.xd and user-adminmail-html.xd) and the user (user-
-            usermail-text.xd and user-usermail-html.xd).</p>
-        </div><br />
+            usermail-text.xd and user-usermail-html.xd).
+            </xar:mlstring></li>
+            <li><xar:mlstring><strong>Hook Dynamic Data to Site Contact</strong> and setup your custom dynamic data property fields.
+            These currently assume the output of the dynamic data is string type. 
+            Your Dynamic Data fields will be included in outgoing emails by default, but you can further template the dynamic data output in the respective templates.
+
+            </xar:mlstring></li>
+        </ol>
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>
         </div>
@@ -57,4 +71,5 @@
             <xar:mlstring>Extended information about this module can be found 
             at <a href="http://xaraya.athomeandabout.com" title="http://xaraya.athomeandabout.com" target="_blank">http://xaraya.athomeandabout.com</a></xar:mlstring>
         </div>
+    </div>
     </div>

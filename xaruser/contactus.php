@@ -18,10 +18,11 @@
  * @ Param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
  * @ Author jojodee
  * @ parameters Takes parameters passed by user_sendtofriend to generate info used by email mod
- * @ TODO: convert this all to use templates
+ * @ TODO: discriminate between the different DD types, and prep the data appropriately for display
  */
-function sitecontact_user_contactus()
+function sitecontact_user_contactus($args)
 {
+  extract($args);
     // Get parameters
     if (!xarVarFetch('username', 'str:1:', $username, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('useremail', 'str:1:', $useremail, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -34,6 +35,33 @@ function sitecontact_user_contactus()
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
+    $dditems=array();
+    $propdata=array();
+    if (xarModIsAvailable('dynamicdata')) {
+        // get the Dynamic Object defined for this module (and itemtype, if relevant)
+        $object = xarModAPIFunc('dynamicdata','user','getobject',
+                             array('module' => 'sitecontact'));
+        if (!isset($object)) return;  // throw back
+
+        // check the input values for this object and do ....what here?
+        $isvalid = $object->checkInput();
+
+        //we just want a copy of data - don't need to save it in a table (no request yet anyway!)
+        $dditems =& $object->getProperties();
+
+        foreach ($dditems as $itemid => $fields) {
+            $items[$itemid] = array();
+            foreach ($fields as $name => $value) {
+                $items[$itemid][$name] = ($value);
+            }
+
+            $propdata=array();
+            foreach ($items as $key => $value) {
+                $propdata[$value['name']]['label']=$value['label'];
+                $propdata[$value['name']]['value']=$value['value'];
+            }
+        }
+     }
 
     // Security Check
 //    if(!xarSecurityCheck('ReadSiteContact')) return;
@@ -115,6 +143,8 @@ function sitecontact_user_contactus()
     $htmlcompany = strtr(xarVarPrepHTMLDisplay($company), $trans);
     $htmlusermessage  = strtr(xarVarPrepHTMLDisplay($usermessage), $trans);
     $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
+   
+
     // jojodee: html_entity_decode only available in php >=4.3
     //$htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
     //  $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
@@ -131,6 +161,7 @@ function sitecontact_user_contactus()
                                           'usermessage'=> $htmlusermessage,
                                           'sitename'   => $sitename,
                                           'siteurl'    => $siteurl,
+                                          'propdata'    => $propdata,
                                           'todaydate'  => $todaydate),
                                     'html');
 
@@ -140,7 +171,8 @@ function sitecontact_user_contactus()
         $textcompany = strtr($company,$trans);
         $textusermessage = strtr($usermessage,$trans);
         $textnotetouser = strtr($notetouser,$trans);
-        $usertextmessage= xarTplModule('sitecontact',
+
+         $usertextmessage= xarTplModule('sitecontact',
                                    'user',
                                    'usermail',
                                     array('notetouser' => $textnotetouser,
@@ -151,6 +183,7 @@ function sitecontact_user_contactus()
                                           'usermessage'=> $textusermessage,
                                           'sitename'   => $sitename,
                                           'siteurl'    => $siteurl,
+                                          'propdata'    => $propdata,
                                           'todaydate'  => $todaydate),
                                     'text');
 
@@ -186,6 +219,7 @@ function sitecontact_user_contactus()
                                           'siteurl'    => $siteurl,
                                           'todaydate'  => $todaydate,
                                           'useripaddress' => $useripaddress,
+                                          'propdata'    => $propdata,
                                           'userreferer' => $userreferer),
                                           'html');
 
@@ -203,6 +237,7 @@ function sitecontact_user_contactus()
                                           'siteurl'    => $siteurl,
                                           'todaydate'  => $todaydate,
                                           'useripaddress' => $useripaddress,
+                                          'propdata'    => $propdata,
                                           'userreferer' => $userreferer),
                                           'text');
     //send email to admin

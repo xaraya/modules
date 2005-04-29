@@ -73,6 +73,24 @@ function sitecontact_user_main()
     }
     $data['requesttext']=$requesttext;
 
+    $properties = null;
+        $withupload = (int) false;
+            if (xarModIsAvailable('dynamicdata')) {
+                // get the Dynamic Object defined for this module
+                $object =& xarModAPIFunc('dynamicdata','user','getobject', array('module' => 'sitecontact'));
+                if (isset($object) && !empty($object->objectid)) {
+                    $properties =& $object->getProperties();
+                }
+                if (is_array($properties)) {
+                    foreach ($properties as $key => $ddprop) {
+                        if (isset($ddprop->upload) && $ddprop->upload == true) {
+                            $withupload = (int) true;
+                        }
+                    }
+                }
+            }
+    unset($properties);
+    $data['withupload']=$withupload;
     $webconfirmtext = trim(xarModGetVar('sitecontact','webconfirmtext'));
     if ((empty($webconfirmtext)) || (!isset($webconfirmtext))) {
 

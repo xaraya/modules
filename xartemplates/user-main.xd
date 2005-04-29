@@ -30,8 +30,12 @@
         <p>
             #$customtext#
         </p>
-
-        <form class="xar-formwidget" action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+       
+       <xar:if condition="isset($withupload) and $withupload">
+            <form class="xar-formwidget" action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="multipart/form-data" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <xar:else/>
+            <form class="xar-formwidget" action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        </xar:if>
             <fieldset class="formelements xar-norm">
                 <legend>
                     <strong>
@@ -109,7 +113,25 @@
                     </span>
                 </label>
                 <textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea>
-            </p>   
+            </p>
+            <xar:comment>
+                Dynamic Data properties added here for input
+            </xar:comment>
+            <xar:if  condition="xarModIsAvailable('dynamicdata') and xarModIsHooked('dynamicdata','sitecontact')" >
+                <xar:data-getitem name="$properties" module="sitecontact" itemid="0" />
+                <xar:if condition="isset($properties) and count($properties) gt 0">
+                    <xar:foreach in="$properties" key="$name">
+                    <p class="param">
+                        <label for="$properties[$name]">
+                            <span class="help" title="#$properties[$name]#">
+                                <xar:data-label property="$properties[$name]" label="id" />
+                            </span>
+                        </label>
+                        <xar:data-input property="$properties[$name]" />
+                    </p>
+                    </xar:foreach>
+                </xar:if>
+            </xar:if>
 
             <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
                 <p class="param">
@@ -129,5 +151,5 @@
             </p>
         </fieldset>
     </form>
-</div>
 </xar:if>
+</div>

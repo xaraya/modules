@@ -17,6 +17,15 @@
 <p>
     #$usermessage#
 </p>
+
+<xar:if condition="isset($propdata) and count($propdata) gt 0">
+    <xar:foreach in="$propdata" key="$name">
+<p>
+    #$propdata[$name]['label']#:  #$propdata[$name]['value']#
+</p>
+    </xar:foreach>
+</xar:if>
+
 <hr />
 <p>
     <xar:mlstring>User information:</xar:mlstring>

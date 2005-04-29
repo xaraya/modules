@@ -14,8 +14,18 @@
 
 #$usermessage#
 
+ <xar:if condition="isset($propdata) and count($propdata) gt 0">
+    <xar:foreach in="$propdata" key="$name">
+    
+#$propdata[$name]['label']#:  #$propdata[$name]['value']#
+
+    </xar:foreach>
+</xar:if>
+
 -------------------------------------------------------------
 
 #$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
 
 #$todaydate#
+
+

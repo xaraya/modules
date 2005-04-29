@@ -21,6 +21,11 @@ function sitecontact_adminapi_getmenulinks()
      // Security Check
     if (xarSecurityCheck('AdminSiteContact', 0)) {
         $menulinks[] = Array('url' => xarModURL('sitecontact',
+                                                'admin',
+                                                'overview'),
+            'title' => xarML('SiteContact Overview'),
+            'label' => xarML('Overview'));
+        $menulinks[] = Array('url' => xarModURL('sitecontact',
                 'admin',
                 'modifyconfig'),
             'title' => xarML('Modify the configuration for the module'),
