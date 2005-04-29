@@ -63,4 +63,4 @@ function navigator_userapi_nested_tree_hide_emptygroups( $args )
     return $hasChildWithArticle; 
 }
 
-
+?>
