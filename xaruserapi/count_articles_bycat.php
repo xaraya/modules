@@ -22,15 +22,17 @@ function navigator_userapi_count_articles_bycat($args)
 
     $articlesId   = xarModGetIDFromName('articles');
     $now          = time();
-
-    $current_cids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
-
-    if (empty($current_cids)) {
-        return array();
-    } else {
-        extract($current_cids);
+    
+    
+    if (!isset($primaryId)) {
+        $current_cids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
+    
+        if (empty($current_cids)) {
+            return array();
+        } else {
+            $primaryId = $current_cids['primary']['id'];
+        }
     }
-
     // Get the cat ids from the cache and
     // make sure there is something to work with
     if (xarModGetVar('navigator', 'style.matrix')) {
@@ -70,7 +72,7 @@ function navigator_userapi_count_articles_bycat($args)
                          AND sec.xar_cid IN ($secondary_list)
                GROUP BY  pri.xar_cid, sec.xar_cid";
 
-        $query_args = array($now, $articlesId, $primary['id']);
+        $query_args = array($now, $articlesId, $primaryId);
 
     } else {
 

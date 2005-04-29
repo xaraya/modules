@@ -69,6 +69,15 @@ function navigator_user_menutype_branch( $args )
             }
         }
     }
+    
+
+    xarModAPIFunc('navigator', 'user', 'nested_tree_hide_emptygroups', 
+        array(
+            'reInit' => TRUE,
+            'tree'   => &$tree
+        )
+    );
+    
     $curcids[0] = $primary;
     $curcids[1] = NULL;
     if (!empty($exclude)) {

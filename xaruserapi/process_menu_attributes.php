@@ -103,7 +103,7 @@ function navigator_userapi_process_menu_attributes( $args )
             $current_cids['secondary'] = 0;
         }
     }
-    
+
     // if we don't have a valid list of cids or a valid tree
     // then return don't display anything....
     if (empty($current_cids) || empty($tree)) {
@@ -130,6 +130,9 @@ function navigator_userapi_process_menu_attributes( $args )
                 $cids = explode(';',$primary['id'] . ';' . $secondary['id']);
             } else {
                 $cids = explode(';',$primary['id']);
+            }
+            if ($primary['id'] == 0) {
+                xarVarDelCached('Blocks.articles', 'cids');
             }
             xarVarSetCached('Blocks.articles', 'cids', $cids);
         } else {

@@ -24,6 +24,7 @@ function navigator_userapi_nested_tree_create( $args )
     // set up the elements that we will need
     foreach ($tree as $node) {
         $tmpTree[$index]['primary']  = (isset($node['primary']) ? $node['primary'] : NULL);
+        $tmpTree[$index]['total']  = (isset($node['total']) ? $node['total'] : NULL);
         $tmpTree[$index]['name']     = $node['name'];
         $tmpTree[$index]['cid']      = $node['cid'];
         $tmpTree[$index]['pid']      = (isset($node['parent']) ? $node['parent'] : $node['pid']);

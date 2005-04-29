@@ -25,8 +25,13 @@ function navigator_userapi_nested_tree_remove_node( $args )
         if (isset($args['type']) && eregi('(primary|secondary)', $args['type'])) {
             $type = strtolower($args['type']);
             $current_ids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
-            $primary   = (isset($curcids['primary']) ? $curcids['primary']['id'] : $current_ids['primary']['id']);
-            $secondary = (isset($curcids['secondary']) ? $curcids['secondary']['id'] : $current_ids['secondary']['id']);
+            if (!isset($current_ids) || empty($current_ids)) {
+                $primary = 0;
+                $secondary = 0;
+            } else {
+                $primary   = (isset($curcids['primary']) ? $curcids['primary']['id'] : $current_ids['primary']['id']);
+                $secondary = (isset($curcids['secondary']) ? $curcids['secondary']['id'] : $current_ids['secondary']['id']);
+            }
         } else {
             $type = 'primary';
         }
