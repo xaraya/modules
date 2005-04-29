@@ -6,11 +6,15 @@
         <applet code="IRCApplet.class" archive="irc.jar,pixx.jar" codebase="modules/chat/xarjava" width="640" height="400">
         <param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab" />
         <xar:if condition="xarUserIsLoggedIn()">
-            <param name="nick" value="#xarUserGetVar('uname')#" />
+            <xar:set name="nick">xarUserGetVar('uname')</xar:set>
+            <xar:if condition="strtolower($nick) == 'admin'">
+                <xar:set name="nick">str_shuffle('xar_'.$nick)</xar:set>
+            </xar:if>
+            <param name="nick" value="#$nick#" />
             <param name="name" value="#xarUserGetVar('name')#" />
         <xar:else />
-            <param name="nick" value="Anonymous" />
-            <param name="alternatenick" value="Anon???" />
+            <param name="nick" value="#xarServerGetHost()#_Anonymous" />
+            <param name="alternatenick" value="#xarServerGetHost()#_Anon???" />
             <param name="name" value="Xaraya User" />
         </xar:if>
 
