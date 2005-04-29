@@ -32,11 +32,11 @@ function navigator_userapi_get_current_cats( /* VOID */ )
 
         $matrix = xarModGetVar('navigator', 'style.matrix') ? TRUE : FALSE;
         $catList = xarVarGetCached('Blocks.articles', 'cids');
-
-        if (!is_array($catList)) {
+        
+        if (!is_array($catList) || empty($catList)) {
             return array();
         }
-
+    
         // Grab the default Parent Category List
         $prilist  = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
         $seclist  = @unserialize(xarModGetVar('navigator', 'categories.list.secondary'));
@@ -85,9 +85,11 @@ function navigator_userapi_get_current_cats( /* VOID */ )
                 $secondary = xarModGetVar('navigator', 'categories.secondary.default');
                 $list['secondary'] = array('id' => $secondary, 'name' => $secondary_list[$secondary]['name']);
             } else {
-                $list = array();
+                $list['primary']['id'] = 0;
+                $list['primary']['name'] = '';
             }
         }
+
         return $list;
     }
 

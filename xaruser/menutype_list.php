@@ -23,7 +23,10 @@ function navigator_user_menutype_list( $args )
         return;
     }
 
+    extract($args);
+
     $data = xarModAPIFunc('navigator', 'user', 'process_menu_attributes', $args);
+
     if (isset($args['noheaders']) && stristr($args['noheaders'], 'true')) {
         $data['noheaders'] = TRUE;
     } else {
@@ -38,7 +41,6 @@ function navigator_user_menutype_list( $args )
         return;
     } else {
         extract($data);
-        extract($args);
     }
 
     foreach ($tree as $key => $item) {
@@ -53,6 +55,7 @@ function navigator_user_menutype_list( $args )
         }
     }
 
+    
     if (!isset($list) || empty($list)) {
         $list = array();
     }

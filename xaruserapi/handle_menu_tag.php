@@ -61,12 +61,12 @@ function navigator_userapi_handle_menu_tag( $args )
         }
     }
 
-    if (!isset($base) || !eregi('^(primary|secondary)$', $base)) {
+    if (!isset($base) && $type != 'branch') {
         $msg = xarML('Required attribute \'#(1)\' for tag <xar:navigator-menu> is missing.', 'base');
         $msg .= $errorAddendum;
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Attribute'), new DefaultUserException($msg));
         return '';
-    } elseif (!eregi('^(primary|secondary)$', $base)) {
+    } elseif (isset($base) && !eregi('^(primary|secondary)$', $base)) {
         $msg =  xarML('Incorrect \'#(1)\' attribute value [\'#(2)\'] for tag <xar:navigation-menu>.', 'base', $base);
         $msg .= xarML('Attribute value must be either "primary" or "secondary" - ');
         $msg .= $errorAddendum;

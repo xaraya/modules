@@ -11,18 +11,22 @@
 function navigator_userapi_nested_tree_remove_node( $args )
 {
     $matrix    = xarModGetVar('navigator', 'style.matrix') ? TRUE : FALSE;
+    
     $primary   = 'All';
     $secondary = 'All';
+    
+    if (isset($args['curcids'])) {
+        $curcids = $args['curcids'];
+    } else {
+        $curcids = NULL;
+    }
+    
     if ($matrix) {
-        
         if (isset($args['type']) && eregi('(primary|secondary)', $args['type'])) {
             $type = strtolower($args['type']);
-            
             $current_ids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
-            if (count($current_ids)) {
-                $primary   = $current_ids['primary']['id'];
-                $secondary = $current_ids['secondary']['id'];
-            }
+            $primary   = (isset($curcids['primary']) ? $curcids['primary']['id'] : $current_ids['primary']['id']);
+            $secondary = (isset($curcids['secondary']) ? $curcids['secondary']['id'] : $current_ids['secondary']['id']);
         } else {
             $type = 'primary';
         }
@@ -30,7 +34,6 @@ function navigator_userapi_nested_tree_remove_node( $args )
         $type = 'primary';
     }
     
-
     if (isset($args['keep-parent']) && $args['keep-parent'] == TRUE) {
         $keep_parent = TRUE;
     } else {

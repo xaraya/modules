@@ -34,12 +34,19 @@ function navigator_userapi_process_menu_attributes( $args )
         $oneblock = FALSE;
     }
 
+    if (isset($id) && !trim($id)) {
+        $search = '[^A-Za-z0-9._-]';
+        $replace = '_';
+        $data['templateName'] = strtolower(preg_replace($search, $replace, $id));
+    }
+    
     if (!isset($exclude) || empty($exclude)) {
         $exclude = array();
     } else {
         $exclude = explode(',', $exclude);
     }
-
+    $data['exclude'] = $exclude;
+    
     if (isset($maxdepth) && is_numeric($maxdepth)) {
         $data['maxdepth'] = $maxdepth;
     }
@@ -50,15 +57,19 @@ function navigator_userapi_process_menu_attributes( $args )
         if ('none' == $intersects) {
             $intersects = (int) -1;
         }
-
-        $intersects = xarModAPIFunc('navigator', 'user',
-                                    'check_current_intersections',
-                                     array('intersections' =>
-                                                explode(',', $intersects)));
-
-        // Have to make sure we check that it is boolean and and not null
+        
+        $intersects = explode(',', $intersects);
+        
+        $data['intersections'] = $intersects;
+        $intersects = xarModAPIFunc('navigator', 'user', 'check_current_intersections',
+                                     array('intersections' => $intersects));
+        
+        // Have to make sure we check that
+        // it is boolean and and not null
         if ($intersects === FALSE) {
-            return '';
+            $has_intersect = FALSE;
+        } elseif ($intersects === TRUE) {
+            $has_intersect = TRUE;
         }
     }
 
@@ -77,15 +88,22 @@ function navigator_userapi_process_menu_attributes( $args )
 
     $data['emptygroups'] = $emptygroups;
 
-    $tree = @unserialize(xarModGetVar('navigator', 'categories.list.'.$base));
-    $current_cids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
-
     if (xarModGetVar('navigator', 'style.matrix')) {
         $matrix = TRUE;
     } else {
         $matrix = FALSE;
     }
 
+    $tree = @unserialize(xarModGetVar('navigator', 'categories.list.'.$base));
+    $current_cids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
+
+    if (isset($current_cids['article_root']) && count($current_cids) == 1) {
+        $current_cids['primary'] = 0;
+        if ($matrix) {
+            $current_cids['secondary'] = 0;
+        }
+    }
+    
     // if we don't have a valid list of cids or a valid tree
     // then return don't display anything....
     if (empty($current_cids) || empty($tree)) {
@@ -134,16 +152,18 @@ function navigator_userapi_process_menu_attributes( $args )
         $data['current_secondary_id'] = 0;
     }
 
+    $curcids[0] = $primary;
+    $curcids[1] = isset($secondary) ? $secondary : NULL;
+
+
     if (!empty($exclude)) {
         // Remove any nodes that need removing
         xarModAPIFunc('navigator', 'user', 'nested_tree_remove_node',
                        array('tree' => &$tree,
                              'cids' => $exclude,
-                             'type' => $base));
+                             'type' => $base,
+                             'curcids' => $curcids));
     }
-
-    $curcids[0] = $primary;
-    $curcids[1] = isset($secondary) ? $secondary : NULL;
 
     if (!empty($rename)) {
         xarModAPIFunc('navigator', 'user', 'set_names',

@@ -24,66 +24,61 @@ function navigator_user_menutype_branch( $args )
     }
     
     extract($args);
+    $args['base'] = $base = 'secondary';
+    $data = xarModAPIFunc('navigator', 'user', 'process_menu_attributes', $args);
 
-    if (!isset($exclude) || empty($exclude)) {
-        $exclude = array();
+    if (!isset($data) || empty($data)) {
+        return;
     } else {
-        $exclude = explode(',', $exclude);
+        extract($data);
     }
 
-    if (isset($maxdepth) && is_numeric($maxdepth)) {
-        $data['maxdepth'] = $maxdepth;
+    if (isset($id) && trim($id)) {
+        $search = '[^A-Za-z0-9._-]';
+        $replace = '_';
+        $templateName = strtolower(preg_replace($search, $replace, $id));
     }
+    $priTree = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
+    $secTree = @unserialize(xarModGetVar('navigator', 'categories.list.secondary'));
+    if (isset($tree)) $tree =array();
+    
+    if ($matrix) {
+        if (isset($intersections)) {
+            $isPrimarySet = FALSE;
+            foreach ($intersections as $catId) {
+                foreach ($priTree as $key => $node) {
+                    if ($catId == $node['cid']) {
+                        if (count($intersections) == 1 && !$isPrimarySet) {
+                            $isPrimarySet = TRUE;
+                            $primary['id']   = $node['cid'];
+                            $primary['name'] = $node['name'];
+                            $data['current_primary_id'] = $primary['id'];
+                        }
+                        $tree[$key] = $priTree[$key];
+                        break;
+                    }
+                }
+                $clone = $secTree;
+                xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$clone);
+                foreach ($clone as $k => $v) {
+                    $clone[$k]['primary'] = $catId;
+                }
+                xarModAPIFunc('navigator', 'user', 'nested_tree_create', array('tree' => &$clone));
 
-    if (isset($rename)) {
-        $renameList = xarModAPIFunc('navigator', 'user', 'parse_name_changes',
-                                     array('base' => $base, 'names' => $rename));
-        $rename = $renameList;
-        unset($renameList);
-    } else {
-        $rename = array();
-    }
-
-    if (!isset($emptygroups) || empty($emptygroups)) {
-        $emptygroups = 'show';
-    }
-
-    $data['emptygroups'] = $emptygroups;
-
-    $tree = @unserialize(xarModGetVar('navigator', 'categories.list.'.$base));
-    $current_cids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
-
-    // if we don't have a valid list of cids or a valid tree
-    // then return don't display anything....
-    if (empty($current_cids) || empty($tree)) {
-        if (!empty($current_cids) && empty($tree)) {
-            if (!isset($current_cids[$base])) {
-                echo "<br />Tag's base attribute does ";
-                echo "not match configuration base.<br />";
-                echo "<br />Configuration base: " . key($current_cids);
-                echo "<br />Tag attribute base: $base";
+                $tree[$key]['children'] = $clone;
             }
-        } elseif (!empty($tree) && empty($current_cids)) {
-            // Otherwise,
-            $primary['id'] = 0;
-            $primary['name'] = '';
-            $cids = explode(';',$primary['id']);
-            xarVarSetCached('Blocks.articles', 'cids', $cids);
-        } else {
-            return;
         }
-    } else {
-        extract($current_cids);
     }
-
     $curcids[0] = $primary;
     $curcids[1] = NULL;
-
-    if (!empty($rename)) {
-        xarModAPIFunc('navigator', 'user', 'set_names',
-                       array('curcids' => $curcids,
-                             'tree'    => &$tree,
-                             'names'   => $rename));
+    if (!empty($exclude)) {
+        $_cids = array('primary' => &$primary);
+        // Remove any nodes that need removing
+        xarModAPIFunc('navigator', 'user', 'nested_tree_remove_node',
+                       array('tree' => &$tree,
+                             'cids' => $exclude,
+                             'type' => 'secondary',
+                             'curcids' => $_cids));
     }
 
     /*
@@ -91,16 +86,17 @@ function navigator_user_menutype_branch( $args )
        mark each parent category (top most) for exclusion
        leaving only the parent that contains it for display.
     */
-
+    
     $found = FALSE;
-    $search = $primary['id'];
+    $search = (isset($secondary['id']) ? $secondary['id'] : $current_secondary_id);
     foreach ($tree as $key => $node) {
-        if ($node['cid'] != $search) {
+        if ($node['cid'] != $search && $search != 0) {
             if (count($node['children']) && !$found) {
                 if (xarModAPIFUnc('navigator', 'user', 'nested_tree_find_node',
                                     array('tree' => &$tree[$key]['children'],
                                           'search' => $search))) {
                     $found = TRUE;
+                    $tree[$key]['trail'] = TRUE;
                     continue;
                 }
             }
@@ -123,37 +119,38 @@ function navigator_user_menutype_branch( $args )
         }
     }
 
-    if (!empty($exclude)) {
-        // Remove any nodes that need removing
-        xarModAPIFunc('navigator', 'user', 'nested_tree_remove_node',
-                       array('tree' => &$tree,
-                             'cids' => $exclude));
-    }
-
-    // Now remove the parent :-)
-    reset($tree);
-    $list = current($tree);
-    $tree = $list['children'];
-
-    if (isset($data['current_primary_id']) && !$data['current_primary_id']) {
-         return;
-    }
-
     $navigator_styleSheets = @unserialize(xarModGetVar('navigator', 'style.list.files'));
 
     if (!is_array($navigator_styleSheets)) {
         $navigator_styleSheets = array();
     }
-    
+
     $navigator_styleName = "navigator-branchmenu";
+    if (isset($templateName) && !empty($templateName)) {
+        $templateFile = xarTplGetThemeDir() . '/modules/navigator/xarstyles/navigator-branchmenu_' . $templateName . '.css';
+        if (file_exists($templateFile)) {
+            $navigator_styleName .= '_' . $templateName;
+        }
+    }
+            
     if (is_array($navigator_styleSheets) && !in_array($navigator_styleName, $navigator_styleSheets)) {
         $navigator_styleSheets[] = $navigator_styleName;
         xarModSetVar('navigator', 'style.list.files', serialize($navigator_styleSheets));
     }
 
-
+    if (isset($parents) && strtolower($parents) == 'hide') {
+        reset($tree);
+        $tree = current($tree);
+        $tree = $tree['children'];
+        $data['parents'] = 'hide';
+    } else {
+        $data['parents'] = 'show';
+    }
+    
+    unset($data['tree']);
     $data['primary']  = $primary;
     $data['tree']     = $tree;
+    
     return $data;
 }
 

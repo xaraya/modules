@@ -20,7 +20,7 @@ function navigator_userapi_check_current_intersections( $args )
 
     // if we don't have a valid list of cids or a valid tree
     // then return don't display anything....
-    if (empty($current_cids) || !count($current_cids)) {
+    if (empty($current_cids) || !count($current_cids) || (count($current_cids) == 1 && isset($current_cids['article_root']))) {
         if (in_array((int) -1, $intersections)) {
             return TRUE;
         } else {
