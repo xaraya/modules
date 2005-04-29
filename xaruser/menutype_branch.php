@@ -95,9 +95,13 @@ function navigator_user_menutype_branch( $args )
                 if (xarModAPIFUnc('navigator', 'user', 'nested_tree_find_node',
                                     array('tree' => &$tree[$key]['children'],
                                           'search' => $search))) {
-                    $found = TRUE;
-                    $tree[$key]['trail'] = TRUE;
-                    continue;
+                    if ($current_primary_id != $node['cid']) {
+                        continue;
+                    } else {
+                        $found = TRUE;
+                        $tree[$key]['trail'] = TRUE;
+                        continue;
+                    }
                 }
             }
             $exclude[] = $node['cid'];
