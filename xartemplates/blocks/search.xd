@@ -16,7 +16,10 @@
   </tr>
   <tr>
                 <td align="left" class="boxText"> 
+<xar:comment>
                     <FORM method="GET" name="quick_find" id="post" action="#xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH_RESULT, '', 'NONSSL', false)#">
+</xar:comment>
+                    <FORM method="GET" name="quick_find" id="post" action="#xarModURL('commerce','user','FILENAME_ADVANCED_SEARCH_RESULT')#">
                  {$INPUT_SEARCH}{$BUTTON_SUBMIT}<br>
                   <a href="{$LINK_ADVANCED}">{#text_advanced_search#}</a></FORM>
                   </td>

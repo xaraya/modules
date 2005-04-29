@@ -13,8 +13,7 @@
 function commerce_adminapi_call_function($args)
 {
     extract($args);
-    if(!isset($function)
-        || !isset($parameter)) {
+    if(!isset($function) || !isset($parameter)) {
         $msg = xarML('Wrong arguments to commerce_userapi_get_products_price');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,
                     'BAD_PARAM',
@@ -29,6 +28,5 @@ function commerce_adminapi_call_function($args)
     } else {
         return call_user_func(array($object, $function), $parameter);
     }
-  }
 }
 ?>

@@ -82,10 +82,16 @@ function commerce_order_historyblock_display($blockinfo)
       $q = new xenQuery();
       if(!$q->run()) return;
       while ($products = $q->output()) {
-        $customer_orders_string .= '  <tr>' .
-                                   '    <td class="infoBoxContents"><a href="' . xarModURL('commerce','user','product_info',array('products_id' => $products['products_id'])) . '">' . $products['products_name'] . '</a></td>' .
-                                   '    <td class="infoBoxContents" align="right" valign="top"><a href="' . xarModURL('commerce','user',(basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=cust_order&pid=' . $products['products_id']) . '">' . xtc_image(xarTplGetImage('icons/cart.gif'), ICON_CART) . '</a></td>' .
-                                   '  </tr>';
+        $customer_orders_string .= 
+            '  <tr>' .
+            '    <td class="infoBoxContents"><a href="' . 
+            xarModURL('commerce','user','product_info',array('products_id' => $products['products_id'])) . 
+            '">' . $products['products_name'] . '</a></td>' .
+            '    <td class="infoBoxContents" align="right" valign="top"><a href="' . 
+            xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=cust_order&pid=' . $products['products_id']) . 
+            '">' . xtc_image(xarTplGetImage('icons/cart.gif'), ICON_CART) . 
+            '</a></td>' .
+            '  </tr>';
       }
       $customer_orders_string .= '</table>';
 

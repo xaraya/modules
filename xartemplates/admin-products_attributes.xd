@@ -104,7 +104,7 @@
 														&nbsp;&nbsp;&nbsp;
 														<a href="#xarModURL('commerce','admin','products_attributes', array('order_by' => 'order_by', 'page' =>$option_page))#">									
 															<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
-														</a>&nbsp
+														</a>&nbsp;
 													</td>
 												</tr>
 											</xar:if>
@@ -226,9 +226,9 @@
 							&nbsp;#$next_id#&nbsp;
 						</td>
 						<td class="smallText">
-							<xar:loop id="2" name="$languages">
-								#$loop:2:item['code']#:&nbsp;
-								<input type="text" name="option_name[#$loop:2:item['id']#]" size="20">&nbsp;<br>
+							<xar:loop id="id2" name="$languages">
+								#$loop:id2:item['code']#:&nbsp;
+								<input type="text" name="option_name[#$loop:id2:item['id']#]" size="20">&nbsp;<br>
 							</xar:loop>
 						</td>
 						<td align="center" class="smallText">

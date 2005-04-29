@@ -39,8 +39,7 @@ function commerce_admin_configuration()
 
     $q = new xenQuery('SELECT',
                       $table['commerce_configuration_group'],
-                      'configuration_group_title'
-    );
+                      'configuration_group_title');
     $q->eq('configuration_group_id',$gID);
     $cfg_group = $q->run();
     if (!$cfg_group) return;
@@ -59,39 +58,39 @@ function commerce_admin_configuration()
     if (!$q->run()) return;
 
     $configuration = $q->row();
-    if(!xarVarFetch('cID',      'int',  $cID,    $configuration['configuration_id'])) {return;}
+    if (!xarVarFetch('cID', 'int', $cID, $configuration['configuration_id'])) {return;}
 
     $configurations = $q->output();
     foreach ($configurations as $configuration) {
         if ($gID == 6) {
-          switch ($configuration['configuration_key']) {
+            switch ($configuration['configuration_key']) {
             case 'MODULE_PAYMENT_INSTALLED':
-              if ($configuration['configuration_value'] != '') {
-                $payment_installed = explode(';', $configuration['configuration_value']);
-//                for ($i = 0, $n = sizeof($payment_installed); $i < $n; $i++) {
-//                  include(DIR_FS_CATALOG_LANGUAGES . $language . '/modules/payment/' . $payment_installed[$i]);
-//                }
-              }
-              break;
+                if ($configuration['configuration_value'] != '') {
+                    $payment_installed = explode(';', $configuration['configuration_value']);
+//                  for ($i = 0, $n = sizeof($payment_installed); $i < $n; $i++) {
+//                      include(DIR_FS_CATALOG_LANGUAGES . $language . '/modules/payment/' . $payment_installed[$i]);
+//                  }
+                }
+                break;
 
             case 'MODULE_SHIPPING_INSTALLED':
-              if ($configuration['configuration_value'] != '') {
-                $shipping_installed = explode(';', $configuration['configuration_value']);
-//                for ($i = 0, $n = sizeof($shipping_installed); $i < $n; $i++) {
-//                  include(DIR_FS_CATALOG_LANGUAGES . $language . '/modules/shipping/' . $shipping_installed[$i]);
-//                }
-              }
-              break;
+                if ($configuration['configuration_value'] != '') {
+                    $shipping_installed = explode(';', $configuration['configuration_value']);
+//                  for ($i = 0, $n = sizeof($shipping_installed); $i < $n; $i++) {
+//                      include(DIR_FS_CATALOG_LANGUAGES . $language . '/modules/shipping/' . $shipping_installed[$i]);
+//                  }
+                }
+                break;
 
             case 'MODULE_ORDER_TOTAL_INSTALLED':
-              if ($configuration['configuration_value'] != '') {
-                $ot_installed = explode(';', $configuration['configuration_value']);
-//                for ($i = 0, $n = sizeof($ot_installed); $i < $n; $i++) {
-//                  include(DIR_FS_CATALOG_LANGUAGES . $language . '/modules/order_total/' . $ot_installed[$i]);
-//                }
-              }
-              break;
-          }
+                if ($configuration['configuration_value'] != '') {
+                    $ot_installed = explode(';', $configuration['configuration_value']);
+//                  for ($i = 0, $n = sizeof($ot_installed); $i < $n; $i++) {
+//                      include(DIR_FS_CATALOG_LANGUAGES . $language . '/modules/order_total/' . $ot_installed[$i]);
+//                  }
+                }
+                break;
+            }
         }
         if (!empty($configuration['use_function'])) {
             $use_function = $configuration['use_function'];
@@ -99,18 +98,18 @@ function commerce_admin_configuration()
             if (ereg('->', $use_function)) {
                 $class_method = explode('->', $use_function);
                 if (!is_object(${$class_method[0]})) {
-                  include('modules/commerce/xarclasses/' . $class_method[0] . '.php');
-                  ${$class_method[0]} = new $class_method[0]();
+                    include('modules/commerce/xarclasses/' . $class_method[0] . '.php');
+                    ${$class_method[0]} = new $class_method[0]();
                 }
                 $cfgValue = xarModAPIFunc('commerce','admin','call_function',array(
-                                            'function' => $class_method[1],
-                                            'parameter' => $configuration['configuration_value'],
-                                            'object' => ${$class_method[0]})
+                                          'function' => $class_method[1],
+                                          'parameter' => $configuration['configuration_value'],
+                                          'object' => ${$class_method[0]})
                                         );
             } else {
                $cfgValue = xarModAPIFunc('commerce','admin','call_function',array(
-                                            'function' => $use_function,
-                                            'parameter' => $configuration['configuration_value'])
+                                         'function' => $use_function,
+                                         'parameter' => $configuration['configuration_value'])
                                         );
             }
         } else {
@@ -138,7 +137,7 @@ function commerce_admin_configuration()
         }
 
         $data['configurations'][] = $configuration;
-      }
+    }
 
     $data['messageStack'] = array();
     $data['gID'] = $gID;
@@ -146,5 +145,6 @@ function commerce_admin_configuration()
     $data['thisurl'] = xarModURL('commerce','admin','configuration',array('gID'=>$gID));
     xarTplSetPageTitle('Configuration Administration');
     return $data;
-  }
+}
+
 ?>

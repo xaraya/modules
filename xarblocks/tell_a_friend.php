@@ -57,34 +57,35 @@ function commerce_tell_a_friendblock_display($blockinfo)
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
 
-$box_content='';
-  // include needed functions
-  require_once(DIR_FS_INC . 'xtc_draw_input_field.inc.php');
+    $box_content='';
+    // include needed functions
+    require_once(DIR_FS_INC . 'xtc_draw_input_field.inc.php');
 
-
-
-$box_content=xtc_draw_form('tell_a_friend', xarModURL('commerce','user','tell_a_friend', '', 'NONSSL', false), 'get').xtc_draw_input_field('send_to', '', 'size="10"') . '&nbsp;' .
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_tell_a_friend.gif')#" border="0" alt=BOX_HEADING_TELL_A_FRIEND>
-xtc_draw_hidden_field('products_id', $_GET['products_id']) .
-xtc_hide_session_id() . '<br>' . BOX_TELL_A_FRIEND_TEXT.'</form>';
-
-
+    $box_content = 
+        xtc_draw_form('tell_a_friend', xarModURL('commerce','user','tell_a_friend', '', 'NONSSL', false), 'get') . 
+        xtc_draw_input_field('send_to', '', 'size="10"') . '&nbsp;' .
+        '<input type="image" src="#xarTplGetImage(\'buttons/\' . xarSessionGetVar(\'language\') . \'/\'.\'button_tell_a_friend.gif\')#" border="0" alt=BOX_HEADING_TELL_A_FRIEND>' .
+        xtc_draw_hidden_field('products_id', $_GET['products_id']) .
+        xtc_hide_session_id() . '<br>' . BOX_TELL_A_FRIEND_TEXT.'</form>';
 
     $box_smarty->assign('BOX_CONTENT', $box_content);
     $box_smarty->assign('language', $_SESSION['language']);
-/*          // set cache ID
-  if (USE_CACHE=='false') {
-  $box_smarty->caching = 0;
-  $box_tell_a_friend= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_tell_friend.html');
-  } else {
-  $box_smarty->caching = 1;
-  $box_smarty->cache_lifetime=CACHE_LIFETIME;
-  $box_smarty->cache_modified_check=CACHE_CHECK;
-  $cache_id = $_SESSION['language'].$_GET['products_id'];
-  $box_tell_a_friend= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_tell_friend.html',$cache_id);
-  }
-*/
+
+    /*          // set cache ID
+    if (USE_CACHE=='false') {
+        $box_smarty->caching = 0;
+        $box_tell_a_friend= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_tell_friend.html');
+    } else {
+        $box_smarty->caching = 1;
+        $box_smarty->cache_lifetime=CACHE_LIFETIME;
+        $box_smarty->cache_modified_check=CACHE_CHECK;
+        $cache_id = $_SESSION['language'].$_GET['products_id'];
+        $box_tell_a_friend= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_tell_friend.html',$cache_id);
+    }
+    */
+
     $blockinfo['content'] = $data;
     return $blockinfo;
 }
-    ?>
+
+?>

@@ -24,7 +24,7 @@ function commerce_admin_languages()
     if (isset($action)) {
         switch ($action) {
             case 'insert':
-                if(!xarVarFetch('nanme','str',$name)) {return;}
+                if(!xarVarFetch('name','str',$name)) {return;}
                 if(!xarVarFetch('code','str',$code)) {return;}
                 if(!xarVarFetch('image','str',$image)) {return;}
                 if(!xarVarFetch('directory','str',  $directory)) {return;}
@@ -36,15 +36,16 @@ function commerce_admin_languages()
                 $q->addfield('image',$image);
                 $q->addfield('directory',$directory);
                 $q->addfield('sort_order',$sort_order);
-                $q->addfield('charset',$charset);
+                $q->addfield('language_charset',$charset);
                 if(!$q->run()) return;
 
-      // create additional categories_description records
+                // create additional categories_description records
                 $q = new xenQuery('SELECT',$xartables['commerce_categories'],'c');
                 $q->addtable($xartables['commerce_categories_description'],'cd');
                 $q->addfields('c.categories_id', 'cd.categories_name');
                 $q->join('c.categories_id','cd.categories_id');
-                $q->eq('cd.language_id',$_SESSION['languages_id']);
+                //$q->eq('cd.language_id',$_SESSION['languages_id']);
+                $q->eq('cd.language_id',$insert_id);
                 if(!$q->run()) return;
                 foreach ($q->output() as $category) {
                     $q = new xenQuery('INSERT', $xartables['commerce_categories_description']);
@@ -54,7 +55,7 @@ function commerce_admin_languages()
                     if(!$q->run()) return;
                 }
 
-      // create additional products_description records
+                // create additional products_description records
                 $q = new xenQuery('SELECT',$xartables['commerce_products'],'p');
                 $q->addtable($xartables['commerce_products_description'],'pd');
                 $q->addfields('p.products_id', 'pd.products_name', 'pd.products_description', 'pd.products_url');
@@ -71,7 +72,7 @@ function commerce_admin_languages()
                     if(!$q->run()) return;
                 }
 
-      // create additional products_options records
+                // create additional products_options records
                 $q = new xenQuery('SELECT',$xartables['commerce_products_options']);
                 $q->addfields('products_options_id', 'products_options_name');
                 $q->eq('language_id',$_SESSION['languages_id']);
@@ -84,7 +85,7 @@ function commerce_admin_languages()
                     if(!$q->run()) return;
                 }
 
-      // create additional products_options_values records
+                // create additional products_options_values records
                 $q = new xenQuery('SELECT',$xartables['commerce_products_options_values']);
                 $q->addfields('products_options_values_id', 'products_options_values_name');
                 $q->eq('language_id',$_SESSION['languages_id']);
@@ -97,7 +98,7 @@ function commerce_admin_languages()
                     if(!$q->run()) return;
                 }
 
-      // create additional manufacturers_info records
+                // create additional manufacturers_info records
                 $q = new xenQuery('SELECT',$xartables['commerce_manufacturers'],'m');
                 $q->addtable($xartables['commerce_manufacturers_info'],'mi');
                 $q->addfields('m.manufacturers_id', 'mi.manufacturers_url');
@@ -112,7 +113,7 @@ function commerce_admin_languages()
                     if(!$q->run()) return;
                 }
 
-      // create additional orders_status records
+                // create additional orders_status records
                 $q = new xenQuery('SELECT',$xartables['commerce_orders_status']);
                 $q->addfields('orders_status_id', 'orders_status_name');
                 $q->eq('language_id',$_SESSION['languages_id']);
@@ -125,7 +126,7 @@ function commerce_admin_languages()
                     if(!$q->run()) return;
                 }
 
-      // create additional customers status
+                // create additional customers status
                 $q = new xenQuery('SELECT',$xartables['commerce_customers_status']);
                 $q->addfields('DISTINCT customers_status_id');
                 if(!$q->run()) return;
@@ -151,7 +152,7 @@ function commerce_admin_languages()
                     $q->addfield('customers_status_shipping_unallowed',$group_data['customers_status_shipping_unallowed']);
                     $q->addfield('customers_status_discount_attributes',$group_data['customers_status_discount_attributes']);
 
-    xtc_db_perform(TABLE_CUSTOMERS_STATUS, $c_data);
+                    xtc_db_perform(TABLE_CUSTOMERS_STATUS, $c_data);
 
                 }
 
@@ -166,7 +167,7 @@ function commerce_admin_languages()
                 xarResponseRedirect(xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $insert_id)));
                 break;
             case 'save':
-                if(!xarVarFetch('nanme','str',$name)) {return;}
+                if(!xarVarFetch('name','str',$name)) {return;}
                 if(!xarVarFetch('code','str',$code)) {return;}
                 if(!xarVarFetch('image','str',$image)) {return;}
                 if(!xarVarFetch('directory','str',  $directory)) {return;}
@@ -178,7 +179,7 @@ function commerce_admin_languages()
                 $q->addfield('image',$image);
                 $q->addfield('directory',$directory);
                 $q->addfield('sort_order',$sort_order);
-                $q->addfield('charset',$charset);
+                $q->addfield('language_charset',$charset);
                 $q->eq('languages_id',$cID);
                 if(!$q->run()) return;
 
@@ -237,7 +238,7 @@ function commerce_admin_languages()
                 $lng = $q->row();
                 if ($lng['code'] == $localeinfo['lang']) {
                     $remove_language = false;
-//                    $messageStack->add(ERROR_REMOVE_DEFAULT_LANGUAGE, 'error');
+                    // $messageStack->add(ERROR_REMOVE_DEFAULT_LANGUAGE, 'error');
                 }
                 break;
         }
@@ -281,4 +282,5 @@ function commerce_admin_languages()
     return $data;
 
 }
+
 ?>

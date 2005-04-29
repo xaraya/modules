@@ -74,7 +74,8 @@ function commerce_reviewsblock_display($blockinfo)
 
     if(!xarVarFetch('products_id', 'int', $productid, NULL, XARVAR_DONT_SET)) {return;}
     if (isset($productid)) {
-        $q->eq('p.products_id',$productid); .= " and  = '" . (int)$_GET['products_id'] . "'";
+        $q->eq('p.products_id',$productid);
+        // .= " and  = '" . (int)$_GET['products_id'] . "'";
     }
     $q->storder('r.reviews_id','desc');
     //FIXME  $q->setrowstodo(MAX_RANDOM_SELECT_REVIEWS);
@@ -88,14 +89,27 @@ function commerce_reviewsblock_display($blockinfo)
     $review = $q->output();
 
     $review = htmlspecialchars($review['reviews_text']);
-    $review = xarModAPIFunc('commerce','user','break_string,array('string' => $review,'length' => 15, 'break' => '-<br>');
+    $review = xarModAPIFunc('commerce','user','break_string',array('string' => $review,'length' => 15, 'break' => '-<br>'));
 
-    $box_content = '<div align="center"><a href="' . xarModURL('commerce','user','product_reviews_info',array('products_id' => $random_product['products_id'], 'reviews_id' => $random_product['reviews_id'])) . '">' . xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $random_product['products_image']), $random_product['products_name'], PRODUCT_IMAGE_THUMBNAIL_WIDTH, PRODUCT_IMAGE_THUMBNAIL_HEIGHT) . '</a></div><a href="' . xarModURL('commerce','user','product_reviews_info',array('products_id' => . $random_product['products_id'],'reviews_id' => $random_product['reviews_id'])) . '">' . $review . ' ..</a><br><div align="center">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'stars_' . $random_product['reviews_rating'] . '.gif' , sprintf(BOX_REVIEWS_TEXT_OF_5_STARS, $random_product['reviews_rating'])) . '</div>';
+    $box_content = '<div align="center"><a href="' . 
+        xarModURL('commerce','user','product_reviews_info',array('products_id' => $random_product['products_id'], 'reviews_id' => $random_product['reviews_id'])) . 
+        '">' . 
+        xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $random_product['products_image']), $random_product['products_name'], PRODUCT_IMAGE_THUMBNAIL_WIDTH, PRODUCT_IMAGE_THUMBNAIL_HEIGHT) . 
+        '</a></div><a href="' . 
+        xarModURL('commerce','user','product_reviews_info',array('products_id' => $random_product['products_id'],'reviews_id' => $random_product['reviews_id'])) . 
+        '">' . $review . ' ..</a><br><div align="center">' . 
+        xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'stars_' . $random_product['reviews_rating'] . '.gif' , sprintf(BOX_REVIEWS_TEXT_OF_5_STARS, $random_product['reviews_rating']))) . 
+        '</div>';
 
 
   } elseif (isset($_GET['products_id'])) {
     // display 'write a review' box
-    $box_content = '<table border="0" cellspacing="0" cellpadding="2"><tr><td class="infoBoxContents"><a href="' . xarModURL('commerce','user',(product_reviews_write,array('products_id' => $_GET['products_id'])) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'box_write_review.gif'), IMAGE_BUTTON_WRITE_REVIEW) . '</a></td><td class="infoBoxContents"><a href="' . xarModURL('commerce','user',(product_reviews_info,array('products_id' => $_GET['products_id'])) . '">' . BOX_REVIEWS_WRITE_REVIEW .'</a></td></tr></table>';
+    $box_content = '<table border="0" cellspacing="0" cellpadding="2"><tr><td class="infoBoxContents"><a href="' . 
+        xarModURL('commerce','user','product_reviews_write',array('products_id' => $_GET['products_id'])) . '">' . 
+        xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'box_write_review.gif'), IMAGE_BUTTON_WRITE_REVIEW) . 
+        '</a></td><td class="infoBoxContents"><a href="' . 
+        xarModURL('commerce','user','product_reviews_info',array('products_id' => $_GET['products_id'])) . '">' . 
+        BOX_REVIEWS_WRITE_REVIEW .'</a></td></tr></table>';
    }
 
   if ($box_content=='') return;

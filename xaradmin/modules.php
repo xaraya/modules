@@ -16,7 +16,7 @@ function commerce_admin_modules($args)
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
 
-    if(!xarVarFetch('set',   'str',  $set, "", XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('set', 'str', $set, "", XARVAR_NOT_REQUIRED)) {return;}
     switch ($set) {
         case 'shipping':
             $module_type = 'shipping';
@@ -68,22 +68,21 @@ function commerce_admin_modules($args)
             xarRedirectResponse(xarModURL('commerce','admin','modules',array('set=' => $set,'module' => $class)));
             break;
     }
-  $directory_array = array();
-  if ($dir = @dir($module_directory)) {
-    while ($file = $dir->read()) {
-      if (!is_dir($module_directory . $file)) {
-        if (substr($file, strrpos($file, '.')) == '.php') {
-          $directory_array[] = $file;
+    $directory_array = array();
+    if ($dir = @dir($module_directory)) {
+        while ($file = $dir->read()) {
+            if (!is_dir($module_directory . $file)) {
+                if (substr($file, strrpos($file, '.')) == '.php') {
+                     $directory_array[] = $file;
+                }
+            }
         }
-      }
+        sort($directory_array);
+        $dir->close();
     }
-    sort($directory_array);
-    $dir->close();
-  }
 
-  $installed_modules = array();
+    $installed_modules = array();
     for ($i = 0, $n = sizeof($directory_array); $i < $n; $i++) {
-
         $class = substr($file, 0, strrpos($file, '.'));
         if (class_exists($class)) {
             $module = new $class;
@@ -95,48 +94,47 @@ function commerce_admin_modules($args)
                 }
             }
 
-        if(!xarVarFetch('module',   'str',  $module, '', XARVAR_NOT_REQUIRED)) {return;}
-    echo "ss".var_dump($module);exit;
-        if (((!$module) || ($module == $class)) && (!$mInfo)) {
-            $module_info = array('code' => $module->code,
-            'title' => $module->title,
-            'description' => $module->description,
-            'status' => $module->check());
-            $module_keys = $module->keys();
+            if(!xarVarFetch('module',   'str',  $module, '', XARVAR_NOT_REQUIRED)) {return;}
+            echo "ss".var_dump($module);exit;
+            if (((!$module) || ($module == $class)) && (!$mInfo)) {
+                $module_info = array('code' => $module->code,
+                                     'title' => $module->title,
+                                     'description' => $module->description,
+                                     'status' => $module->check());
+                $module_keys = $module->keys();
 
-            $keys_extra = array();
-            for ($j = 0, $k = sizeof($module_keys); $j < $k; $j++) {
-                $q = new xenQuery('SELECT',$xartable['commerce_configuration']);
-                $q->addfields('configuration_key','configuration_value', 'use_function', 'set_function');
-                $q->eq('configuration_key',$module_keys[$j]);
-                if(!$q->run()) return;
-                $key_value = $q->row();
-                if ($key_value['configuration_key'] !='')
-                    $keys_extra[$module_keys[$j]]['title'] = constant(strtoupper($key_value['configuration_key'] .'_TITLE'));
-                $keys_extra[$module_keys[$j]]['value'] = $key_value['configuration_value'];
-                if ($key_value['configuration_key'] !='')
-                    $keys_extra[$module_keys[$j]]['description'] = constant(strtoupper($key_value['configuration_key'] .'_DESC'));
-                $keys_extra[$module_keys[$j]]['use_function'] = $key_value['use_function'];
-                $keys_extra[$module_keys[$j]]['set_function'] = $key_value['set_function'];
+                $keys_extra = array();
+                for ($j = 0, $k = sizeof($module_keys); $j < $k; $j++) {
+                    $q = new xenQuery('SELECT',$xartable['commerce_configuration']);
+                    $q->addfields('configuration_key','configuration_value', 'use_function', 'set_function');
+                    $q->eq('configuration_key',$module_keys[$j]);
+                    if(!$q->run()) return;
+                    $key_value = $q->row();
+                    if ($key_value['configuration_key'] !='')
+                        $keys_extra[$module_keys[$j]]['title'] = constant(strtoupper($key_value['configuration_key'] .'_TITLE'));
+                    $keys_extra[$module_keys[$j]]['value'] = $key_value['configuration_value'];
+                    if ($key_value['configuration_key'] !='')
+                        $keys_extra[$module_keys[$j]]['description'] = constant(strtoupper($key_value['configuration_key'] .'_DESC'));
+                    $keys_extra[$module_keys[$j]]['use_function'] = $key_value['use_function'];
+                    $keys_extra[$module_keys[$j]]['set_function'] = $key_value['set_function'];
+                }
+                $module_info['keys'] = $keys_extra;
+                $mInfo = new objectInfo($module_info);
             }
-            $module_info['keys'] = $keys_extra;
-            $mInfo = new objectInfo($module_info);
-        }
 
-        if ( (is_object($mInfo)) && ($class == $mInfo->code) ) {
+            if ( (is_object($mInfo)) && ($class == $mInfo->code) ) {
 
-            if ($module->check() > 0) {
-                $data['urlrow'] = '<tr class="dataTableRowSelected" onmouseover="this.style.cursor=\'hand\'" onclick="document.location.href=\'' . xarModURL('commerce','admin','modules',array('set=' => $set,'module' => $class,'action' => 'edit'))
-                 . '\'">';
+                if ($module->check() > 0) {
+                    $data['urlrow'] = '<tr class="dataTableRowSelected" onmouseover="this.style.cursor=\'hand\'" onclick="document.location.href=\'' . xarModURL('commerce','admin','modules',array('set=' => $set,'module' => $class,'action' => 'edit'))
+                                      . '\'">';
+                } else {
+                    $data['urlrow'] = '<tr class="dataTableRowSelected">';
+                }
             } else {
-                $data['urlrow'] = '<tr class="dataTableRowSelected">';
+                $data['urlrow'] = '<tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\';this.style.cursor=\'hand\'" onmouseout="this.className=\'dataTableRow\'" onclick="document.location.href=\'' .
+                xarModURL('commerce','admin','modules',array('set=' => $set,'module' => $class))
+                . '\'">';
             }
-        } else {
-            $data['urlrow'] = '<tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\';this.style.cursor=\'hand\'" onmouseout="this.className=\'dataTableRow\'" onclick="document.location.href=\'' .
-            xarModURL('commerce','admin','modules',array('set=' => $set,'module' => $class))
-            . '\'">';
-        }
-
         }
     }
 
@@ -154,13 +152,13 @@ function commerce_admin_modules($args)
             if(!$q->run()) return;
         }
     } else {
-            $q = new xenQuery('INSERT',$xartables['commerce_configuration']);
-            $q->addfield('configuration_key',implode(';', $installed_modules));
-            $q->addfield('configuration_value',implode(';', $installed_modules));
-            $q->addfield('configuration_group_id',6);
-            $q->addfield('sort_order',0);
-            $q->addfield('date_added',now());
-            if(!$q->run()) return;
+        $q = new xenQuery('INSERT',$xartables['commerce_configuration']);
+        $q->addfield('configuration_key',implode(';', $installed_modules));
+        $q->addfield('configuration_value',implode(';', $installed_modules));
+        $q->addfield('configuration_group_id',6);
+        $q->addfield('sort_order',0);
+        $q->addfield('date_added',now());
+        if(!$q->run()) return;
     }
 /*
 ?>

@@ -58,37 +58,31 @@ function commerce_loginboxblock_display($blockinfo)
     // Security Check
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
+    //$box_content='';
 
-
-//$box_content='';
-
-  if (xtc_session_is_registered('customer_id')) return;
+    if (xtc_session_is_registered('customer_id')) return;
 
     $loginboxcontent = '
-<table border="0" width="100%" cellspacing="0" cellpadding="0"><form name="login" method="post" action="' . xarModURL('commerce','user','login', 'action=process', 'SSL') . '">
-              <tr>
-                <td align="left" class="main">' . BOX_LOGINBOX_EMAIL . '</td>
-              </tr>
-              <tr>
-                <td align="left" class="main"><input type="text" name="email_address" maxlength="96" size="20" value=""></td>
-              </tr>
-              <tr>
-                <td align="left" class="main">' . BOX_LOGINBOX_PASSWORD . '</td>
-              </tr>
-              <tr>
-                <td align="left" class="main"><input type="password" name="password" maxlength="40" size="20" value=""></td>
-              </tr>
-              <tr>
-                <td class="main" align="center">' .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_login.gif')#" border="0" alt=IMAGE_BUTTON_LOGIN>
-                </td>
-              </tr>
-            </form></table>
-';
-
-
-
-
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <form name="login" method="post" action="' . xarModURL('commerce','user','login', 'action=process', 'SSL') . '">
+      <tr>
+        <td align="left" class="main">' . BOX_LOGINBOX_EMAIL . '</td>
+      </tr>
+      <tr>
+        <td align="left" class="main"><input type="text" name="email_address" maxlength="96" size="20" value=""></td>
+      </tr>
+      <tr>
+        <td align="left" class="main">' . BOX_LOGINBOX_PASSWORD . '</td>
+      </tr>
+      <tr>
+        <td align="left" class="main"><input type="password" name="password" maxlength="40" size="20" value=""></td>
+      </tr>
+      <tr>
+        <td class="main" align="center">
+        <input type="image" src="'. xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/' . 'button_login.gif') . '" border="0" alt=IMAGE_BUTTON_LOGIN>
+        </td>
+      </tr>
+    </form></table>';
 
     $box_smarty->assign('BOX_TITLE', BOX_LOGINBOX_HEADING);
     $box_smarty->assign('BOX_CONTENT', $loginboxcontent);
@@ -98,4 +92,5 @@ function commerce_loginboxblock_display($blockinfo)
     $blockinfo['content'] = $data;
     return $blockinfo;
 }
- ?>
+
+?>

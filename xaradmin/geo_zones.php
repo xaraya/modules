@@ -91,10 +91,10 @@ function commerce_admin_geo_zones()
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['commerce_zones_to_geo_zones'],'a');
     $q->addtable($xartables['commerce_countries'],'c');
-    $q->addtable($xartables['commerce_geo_zones'],'r');
-    $q->addfields(array('a.association_id', 'a.zone_country_id', 'c.countries_name', 'a.zone_id', 'a.geo_zone_id', 'a.last_modified', 'a.date_added', 'z.zone_name');
+    $q->addtable($xartables['commerce_geo_zones'],'z');
+    $q->addfields(array('a.association_id', 'a.zone_country_id', 'c.countries_name', 'a.zone_id', 'a.geo_zone_id', 'a.last_modified', 'a.date_added', 'z.geo_zone_name'));
     $q->join('a.zone_country_id','c.countries_id');
-    $q->join('a.zone_id','z.zone_id');
+    $q->join('a.zone_id','z.geo_zone_id');
     $q->eq('a.geo_zone_id',$cID );
     $q->setorder('association_id');
     $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));

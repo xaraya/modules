@@ -592,7 +592,7 @@
 		</div>	
 	<xar:else />
 		<div>
-			<a href="#xarModURL('commerce','admin','module_newsletter')#">	
+			<a href="#xarModURL('commerce','admin','module_newsletter')#">
 				<xar:mlstring>Newsletter</xar:mlstring>
 			</a>
 		</div>	
@@ -605,8 +605,21 @@
 		</div>	
 	<xar:else />
 		<div>
-			<a href="#xarModURL('commerce','admin','content_manager')#">	
+			<a href="#xarModURL('commerce','admin','content_manager')#">
 				<xar:mlstring>Content Manager</xar:mlstring>
+			</a>
+		</div>	
+	</xar:if>
+	<xar:if condition="$tab eq 'display'">
+		<div>
+			<a href="#xarModURL('commerce','admin','backup')#" class="active">
+				<xar:mlstring>Database Manager</xar:mlstring>
+			</a>
+		</div>	
+	<xar:else />
+		<div>
+			<a href="#xarModURL('commerce','admin','backup')#">
+				<xar:mlstring>Database Manager</xar:mlstring>
 			</a>
 		</div>	
 	</xar:if>
@@ -618,8 +631,21 @@
 		</div>	
 	<xar:else />
 		<div>
-			<a href="#xarModURL('commerce','admin','server_info')#">	
+			<a href="#xarModURL('commerce','admin','server_info')#">
 				<xar:mlstring>Server Info</xar:mlstring>
+			</a>
+		</div>	
+	</xar:if>
+	<xar:if condition="$tab eq 'display'">
+		<div>
+			<a href="#xarModURL('commerce','admin','whos_online')#" class="active">
+				<xar:mlstring>Who os Online</xar:mlstring>
+			</a>
+		</div>	
+	<xar:else />
+		<div>
+			<a href="#xarModURL('commerce','admin','whos_online')#">
+				<xar:mlstring>Who is Online</xar:mlstring>
 			</a>
 		</div>	
 	</xar:if>

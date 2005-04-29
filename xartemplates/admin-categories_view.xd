@@ -79,7 +79,7 @@
             		<img src="#xarTplGetImage('icons/folder.gif')#" alt="#xarML('Icon folder')#">
             	<a>
             	&nbsp;
-            	<b><a href="#.xarModURL('commerce','admin','categories', array('cPath' => $cPath, '&cID' => $loop:item['categories_id']))#"> 
+            	<b><a href="#.xarModURL('commerce','admin','categories', array('cPath' => $cPath, 'cID' => $loop:item['categories_id']))#"> 
             		#$loop:item['categories_name']#
             	</a></b>
             </td>
@@ -317,7 +317,7 @@
 		<tr>
 			<td class="infoBoxContent">
 
-				$contents = array('form' => xtc_draw_form('categories', FILENAME_CATEGORIES, 'action=delete_category_confirm&cPath=' . $cPath) .
+				$contents = array('form' => xtc_draw_form('categories', FILENAME_CATEGORIES, 'action=delete_category_confirm&amp;cPath=' . $cPath) .
 				<input type="hidden" name="categories_id" value="#$cInfo.categories_id#">
 				<xar:mlstring>Are you sure you want to permanently delete this category?</xar:mlstring>:
 				<br />
@@ -384,7 +384,7 @@
 		<tr>
 			<td class="infoBoxContent">
 
-				$contents = array('form' => xtc_draw_form('products', FILENAME_CATEGORIES, 'action=delete_product_confirm&cPath=' . $cPath) .
+				$contents = array('form' => xtc_draw_form('products', FILENAME_CATEGORIES, 'action=delete_product_confirm&amp;cPath=' . $cPath) .
 				<input type="hidden" name="products_id" value="#$pInfo.products_id#">
 				<xar:mlstring>Are you sure you want to permanently delete this product?</xar:mlstring>:
 				<br />
