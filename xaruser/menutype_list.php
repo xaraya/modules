@@ -27,20 +27,20 @@ function navigator_user_menutype_list( $args )
 
     $data = xarModAPIFunc('navigator', 'user', 'process_menu_attributes', $args);
 
-    if (isset($args['noheaders']) && stristr($args['noheaders'], 'true')) {
-        $data['noheaders'] = TRUE;
-    } else {
-        $data['noheaders'] = FALSE;
-    }
-
-    if (!isset($data) || empty($data) || !is_array($data)) {
-         return;
-    }
-
     if (!isset($data) || empty($data)) {
         return;
     } else {
         extract($data);
+    }
+
+    if (isset($has_intersect)  && !$has_intersect) {
+        return;
+    }
+
+    if (isset($args['noheaders']) && stristr($args['noheaders'], 'true')) {
+        $data['noheaders'] = TRUE;
+    } else {
+        $data['noheaders'] = FALSE;
     }
 
     foreach ($tree as $key => $item) {

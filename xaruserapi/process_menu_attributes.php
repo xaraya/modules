@@ -71,6 +71,8 @@ function navigator_userapi_process_menu_attributes( $args )
         } elseif ($intersects === TRUE) {
             $has_intersect = TRUE;
         }
+
+        $data['has_intersect'] = $has_intersect;
     }
 
     if (isset($rename)) {
