@@ -142,6 +142,17 @@ function navigator_userapi_process_menu_attributes( $args )
         extract($current_cids);
     }
 
+    // The 'noshow' parameter will remove the navigation block if one of the
+    // current categories is present.
+    if (!empty($noshow)) {
+        $noshow_cids = explode(',', $noshow);
+        foreach ($noshow_cids as $noshow_cid) {
+            if (($primary['id'] == $noshow_cid) || ($secondary['id'] == $noshow_cid)) {
+                return;
+            }
+        }
+    }
+
     if ($matrix) {
         $secDef = xarModGetVar('navigator', 'categories.secondary.default');
         xarModAPIFunc('navigator', 'user', 'set_startpoint',

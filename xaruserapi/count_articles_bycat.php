@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Check to see if the current primary ID (or it's parents)
+ * are listed in the interesections list
+ *
+ * @author Carl P. Corliss
+ * @copyright 2004 (c) The Charles and Helen Schwab Foundation
+ */
+
 function navigator_userapi_count_articles_bycat($args)
 {
     extract ($args);

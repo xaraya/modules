@@ -48,16 +48,12 @@ function navigator_userapi_handle_menu_tag( $args )
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Attribute'), new DefaultUserException($msg));
         return '';
     } else {
-        if (!eregi('^(list|images|branch)$', $type)) {
+        if (!eregi('^(list|images|branch|secondarylist)$', $type)) {
             $msg =  xarML('Incorrect \'#(1)\' attribute value [\'#(2)\'] for tag <xar:navigation-menu>.', 'type', $type);
-            $msg .= xarML('Attribute must be either "list" or "images" - ');
+            $msg .= xarML('Attribute must be either "list", "images", "branch" or "secondarylist" - ');
             $msg .= $errorAddendum;
             xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Attribute'), new DefaultUserException($msg));
             return '';
-        } else {
-            // we don't need to pass this to the actual function, so we can
-            // get rid of it here.
-            unset($args['type']);
         }
     }
 
