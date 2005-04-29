@@ -460,7 +460,7 @@
             </p>
             <p class="xar:norm;" style="margin-bottom:10px;">
                     <xar:mlstring><strong>Available plugins:</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
-                     advimage, advlink, flash, advhr, searchreplace, print, table, contextmenu, xarpagebreak, lorem, dictionary</xar:mlstring>
+                     advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, lorem, dictionary</xar:mlstring>
              </p>
 
         <xar:if condition="$dateplug eq '1'">
