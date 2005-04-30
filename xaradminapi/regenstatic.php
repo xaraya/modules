@@ -44,7 +44,7 @@ function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
     foreach ($urls as $url) {
         // Make sure the url isn't empty before calling getfile()
         if (strlen(trim($url))) {
-            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
+            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url, 'superrors' => true));
         }
         if (!$nolimit && time() > $timelimit) break;
     }
