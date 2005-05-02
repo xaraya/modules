@@ -1,9 +1,20 @@
 <p>
-    <xar:mlstring>Hello</xar:mlstring> #$friendname#,
+<xar:ml>
+	<xar:mlstring>
+		Hello #(1),
+	</xar:mlstring>
+	<xar:mlvar>#$friendname#</xar:mlvar>
+</xar:ml>
+    <xar:mlstring></xar:mlstring> #$friendname#,
 </p>
 
 <p>
-    <xar:mlstring>Your friend </xar:mlstring> #$username# <xar:mlstring>considered an article at our site interesting and wanted to send it to you.</xar:mlstring>
+<xar:ml>
+	<xar:mlstring>
+		Your friend #(1)considered an article at our site interesting and wanted to send it to you.
+	</xar:mlstring>
+	<xar:mlvar>#$username#</xar:mlvar>
+</xar:ml>
 </p>
 
 <p>
