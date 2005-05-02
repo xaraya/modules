@@ -9,8 +9,14 @@
     <input type="hidden" name="extid" value="#$extid#">
     <select name="defaultcontext" id="defaultcontext" size="1">
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
+        <xar:if condition="($entrydata[$i]['numEmptyEntries'] + $entrydata[$i]['numEmptyKeyEntries']) eq 0">
+          <xar:set name="optcolor">'STYLE="color: black;"'</xar:set>
+        <xar:else />
+          <xar:set name="optcolor">'STYLE="color: red;"'</xar:set>
+        </xar:if>
         <xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
-            <option value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
+            <xar:set name="optcolor">'STYLE="color: blue;"'</xar:set>
+            <option #$optcolor# value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
             <xar:ml>
             <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
             <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
@@ -22,7 +28,7 @@
             </xar:ml>
             </option>
         <xar:else />
-            <option value="#$subtypes[$i]#:#$subnames[$i]#">
+            <option #$optcolor# value="#$subtypes[$i]#:#$subnames[$i]#">
             <xar:ml>
             <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
             <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
