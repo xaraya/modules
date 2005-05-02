@@ -104,10 +104,10 @@
             </xar:for>
             <p class="param">
                 <xar:if condition="$func eq 'modify'">
-                    <input type="submit" value="#$modifylabel#" />
+                    <input type="submit" value="#xarML('Update')#" />
                     <input type="hidden" name="creating" id="creating" value="false"/>
                 <xar:else />
-                    <input type="submit" value="#$addlabel#"  />
+                    <input type="submit" value="#xarML('Add')#"  />
                     <input type="hidden" name="creating" id="creating" value="true"/>
                 </xar:if>
                 <input type="reset" value="#xarML('Reset')#" />
@@ -132,7 +132,7 @@
                 <input type="text" name="repeat" id="repeat" value="#$repeat#" />
             </p>
             <p class="param">
-                <input type="submit" name="reassign" id="reassign" size="3" value="#$reassignlabel#" />
+                <input type="submit" name="reassign" id="reassign" size="3" value="#xarML(''Reassign)#" />
                 <input type="reset" value="#xarML('Reset')#" />
             </p>
         </fieldset>

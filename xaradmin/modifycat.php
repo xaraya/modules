@@ -7,7 +7,7 @@ function categories_admin_modifycat()
 {
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
 
-    if(!xarVarFetch('cid','int::', $cid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('cid','int::', $cid, NULL, XARVAR_DONT_SET)) {return;}
     if (empty($cid)) {
         if(!xarVarFetch('repeat','int:1:', $repeat, 1, XARVAR_NOT_REQUIRED)) {return;}
     } else {
@@ -26,9 +26,10 @@ function categories_admin_modifycat()
     }
 
     $data['repeat'] = $repeat;
-    $data['addlabel'] = xarML('Add');
-    $data['modifylabel'] = xarML('Modify');
-    $data['reassignlabel'] = xarML('Reassign');
+// delete after testing, but imho button value don't use in code
+//    $data['addlabel'] = xarML('Add');
+//    $data['modifylabel'] = xarML('Modify');
+//    $data['reassignlabel'] = xarML('Reassign');
 
     if (!empty($cid)) {
         //Editing an existing category
