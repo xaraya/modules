@@ -28,8 +28,6 @@ function netquery_netquickblock_display($blockinfo)
     }
     $browserinfo =& new nqSniff();
     $geoip = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $browserinfo->property('ip')));
-    $geoflag = "modules/netquery/xarimages/geoflags/".$geoip['cc'].".gif";
-    if (!file_exists($geoflag)) $geoflag = "";
     $topcountries_limit = xarModGetVar('netquery', 'topcountries_limit');
     $countries = xarModAPIFunc('netquery', 'user', 'getcountries', array('numitems' => $topcountries_limit));
     $whois_default = xarModGetVar('netquery', 'whois_default');
@@ -38,7 +36,6 @@ function netquery_netquickblock_display($blockinfo)
     $httpurl = 'http://'.$_SERVER['SERVER_NAME'];
     $blockinfo['content'] = array('browserinfo'   => $browserinfo,
                                   'geoip'         => $geoip,
-                                  'geoflag'       => $geoflag,
                                   'countries'     => $countries,
                                   'whois_default' => $whois_default,
                                   'links'         => $links,

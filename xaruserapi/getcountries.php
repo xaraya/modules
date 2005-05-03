@@ -21,7 +21,7 @@ function netquery_userapi_getcountries($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($ci, $cc, $cn, $lat, $lon, $users) = $result->fields;
         $geoflag = "modules/netquery/xarimages/geoflags/".$cc.".gif";
-        if (!file_exists($geoflag)) $geoflag = "";
+        if (!file_exists($geoflag)) $geoflag = "modules/netquery/xarimages/geoflags/blank.gif";
         $countries[] = array('ci'      => $ci,
                              'cc'      => $cc,
                              'cn'      => $cn,

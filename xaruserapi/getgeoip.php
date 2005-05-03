@@ -24,12 +24,15 @@ function netquery_userapi_getgeoip($args)
     }
     if (!$result) return;
     list($cc, $cn, $lat, $lon) = $result->fields;
+    $geoflag = "modules/netquery/xarimages/geoflags/".$cc.".gif";
+    if (!file_exists($geoflag)) $geoflag = "";
     if (!xarSecurityCheck('OverviewNetquery')) return;
-    $geoip = array('ip'  => $ip,
-                   'cc'  => $cc,
-                   'cn'  => $cn,
-                   'lat' => $lat,
-                   'lon' => $lon);
+    $geoip = array('ip'      => $ip,
+                   'cc'      => $cc,
+                   'cn'      => $cn,
+                   'lat'     => $lat,
+                   'lon'     => $lon,
+                   'geoflag' => $geoflag);
     $result->Close();
     return $geoip;
 }

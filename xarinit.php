@@ -3,9 +3,11 @@ include_once ("modules/netquery/xarinitdata.php");
 function netquery_init()
 {
     if (DIRECTORY_SEPARATOR == '\\') {
+      $digexec = 'nslookup.exe';
       $traceexec = 'tracert.exe';
-    }else{
-      $traceexec = 'traceroute.exe';
+    } else {
+      $digexec = 'dig';
+      $traceexec = 'traceroute';
     }
     xarModSetVar('netquery', 'querytype_default', 'whois');
     xarModSetVar('netquery', 'exec_timer_enabled', 1);
@@ -21,7 +23,7 @@ function netquery_init()
     xarModSetVar('netquery', 'whoisip_enabled', 1);
     xarModSetVar('netquery', 'dns_lookup_enabled', 1);
     xarModSetVar('netquery', 'dns_dig_enabled', 1);
-    xarModSetVar('netquery', 'use_win_nslookup', 0);
+    xarModSetVar('netquery', 'digexec_local', $digexec);
     xarModSetVar('netquery', 'email_check_enabled', 1);
     xarModSetVar('netquery', 'query_email_server', 0);
     xarModSetVar('netquery', 'port_check_enabled', 1);
@@ -57,9 +59,11 @@ function netquery_init()
 function netquery_upgrade($oldversion)
 {
     if (DIRECTORY_SEPARATOR == '\\') {
+      $digexec = 'nslookup.exe';
       $traceexec = 'tracert.exe';
-    }else{
-      $traceexec = 'traceroute.exe';
+    } else {
+      $digexec = 'dig';
+      $traceexec = 'traceroute';
     }
     switch ($oldversion) {
         case '1.0.0':
@@ -72,7 +76,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'whois_default', '.com');
-            xarModSetVar('netquery', 'use_win_nslookup', 0);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             xarModSetVar('netquery', 'email_check_enabled', 1);
             xarModSetVar('netquery', 'query_email_server', 0);
             xarModSetVar('netquery', 'user_submissions', 1);
@@ -103,7 +107,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'whois_default', '.com');
-            xarModSetVar('netquery', 'use_win_nslookup', 0);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             xarModSetVar('netquery', 'email_check_enabled', 1);
             xarModSetVar('netquery', 'query_email_server', 0);
             xarModSetVar('netquery', 'user_submissions', 1);
@@ -133,7 +137,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'whois_default', '.com');
-            xarModSetVar('netquery', 'use_win_nslookup', 0);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             xarModSetVar('netquery', 'email_check_enabled', 1);
             xarModSetVar('netquery', 'query_email_server', 0);
             xarModSetVar('netquery', 'user_submissions', 1);
@@ -162,7 +166,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_default', '.com');
-            xarModSetVar('netquery', 'use_win_nslookup', 0);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             xarModSetVar('netquery', 'email_check_enabled', 1);
             xarModSetVar('netquery', 'query_email_server', 0);
             xarModSetVar('netquery', 'user_submissions', 1);
@@ -191,7 +195,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_default', '.com');
-            xarModSetVar('netquery', 'use_win_nslookup', 0);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             xarModSetVar('netquery', 'email_check_enabled', 1);
             xarModSetVar('netquery', 'query_email_server', 0);
             xarModSetVar('netquery', 'pingexec_local', 'ping.exe');
@@ -216,6 +220,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             xarModSetVar('netquery', 'whois_default', '.com');
             xarModSetVar('netquery', 'pingexec_local', 'ping.exe');
             xarModSetVar('netquery', 'pingexec_remote', 'http://noc.thunderworx.net/cgi-bin/public/ping.pl');
@@ -232,6 +237,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'exec_timer_enabled', 1);
             xarModSetVar('netquery', 'capture_log_allowuser', 0);
             xarModSetVar('netquery', 'topcountries_limit', 10);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             create_geocctable();
             create_geoiptable();
             break;
@@ -240,6 +246,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'exec_timer_enabled', 1);
             xarModSetVar('netquery', 'capture_log_allowuser', 0);
             xarModSetVar('netquery', 'topcountries_limit', 10);
+            xarModSetVar('netquery', 'digexec_local', $digexec);
             break;
     }
     return true;
@@ -262,7 +269,7 @@ function netquery_delete()
     xarModDelVar('netquery', 'port_check_enabled');
     xarModDelVar('netquery', 'query_email_server');
     xarModDelVar('netquery', 'email_check_enabled');
-    xarModDelVar('netquery', 'use_win_nslookup');
+    xarModDelVar('netquery', 'digexec_local');
     xarModDelVar('netquery', 'dns_dig_enabled');
     xarModDelVar('netquery', 'dns_lookup_enabled');
     xarModDelVar('netquery', 'whoisip_enabled');

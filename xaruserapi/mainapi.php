@@ -42,7 +42,7 @@ function netquery_userapi_mainapi()
     $data['whoisip_enabled'] = xarModGetVar('netquery', 'whoisip_enabled');
     $data['dns_lookup_enabled'] = xarModGetVar('netquery', 'dns_lookup_enabled');
     $data['dns_dig_enabled'] = xarModGetVar('netquery', 'dns_dig_enabled');
-    $data['use_win_nslookup'] = xarModGetVar('netquery', 'use_win_nslookup');
+    $data['digexec_local'] = xarModGetVar('netquery', 'digexec_local');
     $data['email_check_enabled'] = xarModGetVar('netquery', 'email_check_enabled');
     $data['query_email_server'] = xarModGetVar('netquery', 'query_email_server');
     $data['port_check_enabled'] = xarModGetVar('netquery', 'port_check_enabled');
@@ -61,9 +61,6 @@ function netquery_userapi_mainapi()
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
     $data['browserinfo'] =& new nqSniff();
     $data['geoip'] = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $data['browserinfo']->property('ip')));
-    $geoip = $data['geoip'];
-    $data['geoflag'] = "modules/netquery/xarimages/geoflags/".$geoip['cc'].".gif";
-    if (!file_exists($data['geoflag'])) $data['geoflag'] = "";
     $data['countries'] = xarModAPIFunc('netquery', 'user', 'getcountries', array('numitems' => $data['topcountries_limit']));
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['lgrouters'] = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => '2'));
@@ -170,12 +167,13 @@ if (!function_exists('checkdnsrr'))
 {
   function checkdnsrr($host, $type = '')
   {
+    $digexec_local = xarModGetVar('netquery', 'digexec_local');
     if(!empty($host)) {
       if($type == '') $type = "MX";
       $output = '';
       $k = '';
       $line = '';
-      @exec("nslookup -type=$type $host", $output);
+      @exec("$digexec_local -type=$type $host", $output);
       while(list($k, $line) = each($output)) {
         if(eregi("^$host", $line)) {
           return true;
@@ -189,13 +187,14 @@ if (!function_exists('getmxrr'))
 {
   function getmxrr($hostname, &$mxhosts)
   {
+    $digexec_local = xarModGetVar('netquery', 'digexec_local');
     if (!is_array($mxhosts)) $mxhosts = array();
     if (!empty($hostname )) {
       $output = '';
       $ret = '';
       $k = '';
       $line = '';
-      @exec("nslookup -type=MX $hostname", $output, $ret);
+      @exec("$digexec_local -type=MX $hostname", $output, $ret);
       while (list($k, $line) = each($output)) {
         if (ereg("^$hostname\tMX preference = ([0-9]+), mail exchanger = (.*)$", $line, $parts)) {
           $mxhosts[$parts[1]]=$parts[2];

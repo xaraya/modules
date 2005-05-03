@@ -325,6 +325,7 @@ function netquery_user_main()
         $lgdefault  = $data['lgdefault'];
         $lgrequests = $data['lgrequests'];
         $lgreq      = $data['request'];
+        $lgparam    = $data['lgparam'];
         $lgrequest  = $lgrequests[$lgreq];
         $lgrouter   = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => $data['router']));
         $readbuf = '';
