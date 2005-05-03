@@ -1,14 +1,16 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('headlines', 'forms')"></xar:if>
-<xar:base-include-javascript module="base" filename="formcheck.js" />
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
-    var base_fieldRequired = Array("url");
+    var fieldRequired = Array("url");
     // Enter field description to appear in the dialog box
-    var base_fieldDescription = Array("URL");
+    var fieldDescription = Array("URL");
 //-->
 </script>
+
+<xar:if condition="xarTplAddStyleLink('headlines', 'forms')"></xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -29,7 +31,7 @@
             </xar:mlstring>
         </a>
     </p>
-    <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset class="formelements xar-norm">
             <legend>
                 <strong>
