@@ -1,9 +1,9 @@
 <?php
 /*******************************************************************************
-	nqTimer: A simple script to time script execution
-	Copyright (C) 2001 Roger Raymond ~ epsilon7@users.sourceforge.net
+    nqTimer: A simple script to time script execution
+    Copyright (C) 2001 Roger Raymond ~ epsilon7@users.sourceforge.net
 
-	This library is free software; you can redistribute it and/or
+    This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
     version 2.1 of the License, or (at your option) any later version.
@@ -19,35 +19,36 @@
 *******************************************************************************/
 
 if(!defined('_PHP_TIMER_INCLUDED')) define('_PHP_TIMER_INCLUDED',1);
-class nqTimer {
+class nqTimer 
+{
 
-function nqTimer () 
-{	$this->_version = '0.1';
+function nqTimer ()
+{    $this->_version = '0.1';
     $this->_enabled = true;
 }
 
 function start ($name = 'default') 
-{	if($this->_enabled) 
-	{	$this->_timing_start_times[$name] = explode(' ', microtime());
+{    if($this->_enabled) 
+    {    $this->_timing_start_times[$name] = explode(' ', microtime());
     }
 }
 
 function stop ($name = 'default') 
-{	if($this->_enabled) 
-	{	$this->_timing_stop_times[$name] = explode(' ', microtime());
+{    if($this->_enabled)
+    {    $this->_timing_stop_times[$name] = explode(' ', microtime());
     }
 }
 
 function get_current ($name = 'default') 
-{	if($this->_enabled) 
-	{	if (!isset($this->_timing_start_times[$name])) 
-		{	return 0;
+{    if($this->_enabled) 
+    {    if (!isset($this->_timing_start_times[$name])) 
+        {    return 0;
         }
         if (!isset($this->_timing_stop_times[$name])) 
-		{	$stop_time = explode(' ', microtime());
+        {    $stop_time = explode(' ', microtime());
         }
         else 
-		{	$stop_time = $this->_timing_stop_times[$name];
+        {    $stop_time = $this->_timing_stop_times[$name];
         }
         // do the big numbers first so the small ones aren't lost
         $current = $stop_time[1] - $this->_timing_start_times[$name][1];
@@ -55,7 +56,7 @@ function get_current ($name = 'default')
         return sprintf("%.10f",$current);
     }
     else 
-	{	return 0;
+    {    return 0;
     }
 }
 
