@@ -36,14 +36,13 @@
                        <li><xar:mlstring> Click on the &quot;install&quot; link of the tinymce module</xar:mlstring></li>
                     </ul>
                 </li>
-                <listyle="margin-top:20px;"> <xar:mlstring>The XarTinyMCE editor is not turned on by default.
+                <li style="margin-top:20px;"> <xar:mlstring>The XarTinyMCE editor is not turned on by default.
                       Once the tinymce module is installed it needs to be turned on. You can now do this in the XarTinyMCE
                       Module Configuration area <strong>or</strong>:</xar:mlstring>
                      <ul>
-                         <li><xar:mlstring>go to the Adminpanels menu -&gt; Base -&gt; Modify Config </xar:mlstring>         </li>
+                         <li><xar:mlstring>go to the Adminpanels menu -&gt; Base -&gt; Modify Config </xar:mlstring></li>
                          <li><xar:mlstring>choose the tab &quot;Other&quot;</xar:mlstring></li>
-                         <li><xar:mlstring>on the wysiwyg editor dropdown choose &quot;tinymce&quot; as the default editor </xar:mlstring>
-                        </li>
+                         <li><xar:mlstring>on the wysiwyg editor dropdown choose &quot;tinymce&quot; as the default editor </xar:mlstring></li>
                     </ul>
                 </li>
                 <li style="margin-top:20px;"><xar:mlstring>Once installed and set as the default editor, XarTinyMCE module is automatically enabled for WYSIWYG. However, you have two basic ways (with variations on these) to customize which templates are used for WYSIWYG areas:</xar:mlstring>
@@ -60,7 +59,9 @@
                             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring><a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
                         </li>
                      </ol>
-               <li style="margin-top:20px;"><xar:mlstring>You also have two basic ways to activate xartinymce - automatically or by using manual configuration in the templates.</xar:mlstring>
+                </li>
+               <li style="margin-top:20px;">
+               <xar:mlstring>You also have two basic ways to activate xartinymce - automatically or by using manual configuration in the templates.</xar:mlstring>
 
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
@@ -73,6 +74,7 @@
                          Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring></li>
                     </ol>
                 </li>
+
                 </ol>
                 <pre>
         &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
@@ -80,7 +82,7 @@
         &lt;/xar:if&gt;
                 </pre>
 
-                <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring></p>
+                <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
 
     </div>
     <br />
@@ -125,13 +127,37 @@
                <li><xar:mlstring>Print - displays a Print function button. Add <strong>print</strong> to Plugins, and <strong>print</strong> to Additional Tags configuration.</xar:mlstring></li>
                <li><xar:mlstring>Search and Replace - Search, Search Next and Replace function. Add <strong>searchreplace</strong> to Plugins, and <strong>search</strong> and/or <strong>replace</strong> to Additional Tags configuration.</xar:mlstring></li>
                <li><xar:mlstring>Table - plug in to add table controls. Add <strong>table</strong> to Plugins, and either <strong>tablecontrols</strong> for all table controls, or the specific controls such as <strong>table, rowprops</strong> and so on, as per plugin documentation, to Additional Tags configuration.</xar:mlstring></li>
-               <!--<li><xar:mlstring>Contextmenu - plug in to add context menu for tables, images and flash.</xar:mlstring></li>-->
+               <li><xar:mlstring>Contextmenu - plug in to add context menu for tables, images and flash.</xar:mlstring></li>
                <li><xar:mlstring>Lorem - adds text for fill in documents.</xar:mlstring></li>
                <li><xar:mlstring>Dictionary - lookup word in Merriam-Webster Online dictionary.</xar:mlstring></li>
                <li><xar:mlstring>Xaraya Page Break - icon click to add a Xaraya new page break to any of your publication type articles. Add <strong>xarpagebreak</strong> to Plugins, and <strong>xarpagebreak</strong> to Additional Tags configuration. Make sure you also allow images and appropriate attributes to view the pagebreak icon in your articles.</xar:mlstring></li>
             </ol>
 
         </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Custom and Multiple Configurations</xar:mlstring>
+        </div>
+
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>Starting with Version 5.0 there is an additional Advanced Options tab in the configuration screen. This screen allows you to adjust two features:</xar:mlstring></p>
+            <ol style="list-style-type:lower-alpha; ">
+                <li><xar:mlstring><strong>Multiple Configurations</strong> can now be setup allowing you to use more than one configuration on a a page.
+                Please make sure you add each new configuration with a <strong>unique</strong> text area trigger name, and specify the mode. Each configuration should be in the form:</xar:mlstring>
+                <pre>
+tinyMCE.init({
+    mode : "specific_textareas",
+    textarea_trigger : "mce_editable2",
+    theme : "default"
+    });
+                </pre>
+                <xar:mlstring>To activate your custom configuration, add the textarea trigger attribute and value to a textarea eg </xar:mlstring><code> mce_editable2="true"</code><br />
+                <xar:mlstring><strong>DO NOT</strong> use <strong>mce_editable</strong> as a tringger as it is reserved.</xar:mlstring><br /></li>
+
+                <li><xar:mlstring><strong>Custom Configuration</strong> now allows you to add your own custom configuration values to the <strong>existing</strong> default tinymce configuration. Make sure you check your resulting tinymce code in the displayed final configuration code on this page before using.</xar:mlstring></li>
+            </ol>
+        </div>
+
         <br />
 
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
@@ -158,15 +184,15 @@
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
         <ul>
-              <li><xar:mlstring>xarTinyMCE Extension page at</xar:mlstring> <a title="xarTinyMCE Xaraya Extension 63" href="http://www.xaraya.com/index.php/release/63.html">http://www.xaraya.com/index.php/release/63.html</a>.
+              <li><xar:mlstring>xarTinyMCE Extension page at</xar:mlstring> <a title="#xarML('xarTinyMCE Xaraya Extension 63')#" href="http://www.xaraya.com/index.php/release/63.html">http://www.xaraya.com/index.php/release/63.html</a>.
               <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
               </li>
-              <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xartinymce/" title="Related documentation on XarTinyMCE"><xar:mlstring>HERE</xar:mlstring></a>
+              <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xartinymce/" title="#xarML('Related documentation on XarTinyMCE')#"><xar:mlstring>HERE</xar:mlstring></a>
               </li>
          </ul>
          </div>
         <div style="float:right;margin-left: 1em; margin-right: 1em; text-align:left;" class="xar-sub">
-         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.4&nbsp; 2005-04-28 jojodee
+         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.5&nbsp; 2005-05-5 jojodee
          </p>
          </div>
          <div style="clear:both;"><!-- --></div>

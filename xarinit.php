@@ -56,6 +56,8 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinyeditorcss','');
     xarModSetVar('tinymce', 'tinynowrap','false');
     xarModSetVar('tinymce', 'tinyloadmode','auto');    
+    xarModSetVar('tinymce', 'multiconfig','');
+    xarModSetVar('tinymce', 'usemulticonfig',0);
 //Set masks
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -180,7 +182,10 @@ function tinymce_upgrade($oldversion)
     break;
 
     case '0.5.0':
+    xarModSetVar('tinymce', 'multiconfig','');
+    xarModSetVar('tinymce', 'usemulticonfig',0);
 
+    return tinymce_upgrade('0.5.5');
     break;
     }
     return true;

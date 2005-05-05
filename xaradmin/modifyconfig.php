@@ -25,7 +25,7 @@ function tinymce_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
     $data['tinytheme'] = xarModGetVar('tinymce', 'tinytheme');
-    $data['tinylang'] = xarModGetVar('tinymce', 'tinylang');    
+    $data['tinylang'] = xarModGetVar('tinymce', 'tinylang');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['tinymode'] = xarModGetVar('tinymce', 'tinymode');
     $data['tinyinstances'] = xarModGetVar('tinymce', 'tinyinstances');
@@ -39,7 +39,7 @@ function tinymce_admin_modifyconfig()
     $data['tinybuild1'] = xarModGetVar('tinymce', 'tinybuild1');
     $data['tinybuild2'] = xarModGetVar('tinymce', 'tinybuild2');
     $data['tinybuild3'] = xarModGetVar('tinymce', 'tinybuild3');
-    $data['tinybuttonsremove'] = xarModGetVar('tinymce', 'tinybuttonsremove');                    
+    $data['tinybuttonsremove'] = xarModGetVar('tinymce', 'tinybuttonsremove');
     $data['tinytoolbar'] = xarModGetVar('tinymce', 'tinytoolbar');
     $data['tinywidth'] = xarModGetVar('tinymce', 'tinywidth');
     $data['tinyheight'] = xarModGetVar('tinymce', 'tinyheight');
@@ -54,18 +54,40 @@ function tinymce_admin_modifyconfig()
     $data['tinytime']=xarModGetVar('tinymce', 'tinytime');
     $data['tinybr']=xarModGetVar('tinymce', 'tinybr');
     $data['tinypara'] = xarModGetVar('tinymce','tinypara');
-    $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');    
-    $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');     
-    $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser'); 
-    $data['editorcss']=xarModGetVar('tinymce', 'tinyeditorcss');   
-    $data['tinynowrap']=xarModGetVar('tinymce', 'tinynowrap');   
-    $data['tinyloadmode']=xarModGetVar('tinymce', 'tinyloadmode'); 
+    $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');
+    $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');
+    $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser');
+    $data['editorcss']=xarModGetVar('tinymce', 'tinyeditorcss');
+    $data['tinynowrap']=xarModGetVar('tinymce', 'tinynowrap');
+    $data['tinyloadmode']=xarModGetVar('tinymce', 'tinyloadmode');
     $data['tinycustom']=xarModGetVar('tinymce', 'tinycustom');
     $data['jstext']=xarModGetVar('tinymce','jstext');
+    $data['multiconfig'] = xarModGetVar('tinymce', 'multiconfig');
+    $data['dousemulticonfig'] = xarModGetVar('tinymce', 'usemulticonfig');
+
+    $examplestring='tinyMCE.init({
+        mode : "specific_textareas",
+        textarea_trigger : "mce_editable2",
+        height: "100px",
+        theme : "default"
+    });';
+    //prepare multiconfig for display
+    $data['multiconfig']=trim($data['multiconfig']);
+    if ($data['dousemulticonfig']){
+     $multiconfig=$data['multiconfig'];
+
+    } else  {
+      $data['multiconfig']=$examplestring;
+      $multiconfig='';
+    }
+
+    //Prepare the display of current configuration
+    $stringstart='tinyMCE.init({';
+    $stringend=' });';
 
     $data['jsstrings']="";
     $jsstrings=explode('",',$data['jstext']);
-
+    $data['jsstrings']=$stringstart;
      foreach ($jsstrings as $key => $value) {
        if (strlen($value) > 70){
         $data['jsstrings'].="\n".wordwrap($value, 75,"\n",1 ).'",';
@@ -74,7 +96,17 @@ function tinymce_admin_modifyconfig()
        }else{
           $data['jsstrings'] .="\n ".$value.'",';
        }
-       }
+     }
+     $data['jsstrings'] .="\n".$stringend;
+
+     $data['jsmultiple'] ="\n";
+     //Add the multiconfig to the end of the jstext string if not empty
+     if ($data['dousemulticonfig']) {
+              $data['jsmultiple'] ="\n".$data['multiconfig'];
+     }
+
+   $data['jsstrings'] .=$data['jsmultiple'];
+
     if (strpos($data['tinyplugins'], 'insertdatetime')) {
         $data['dateplug']=1;
     } else {

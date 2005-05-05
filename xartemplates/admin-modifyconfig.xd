@@ -89,12 +89,12 @@
             <legend>
             <strong><xar:mlstring>1. Set tags in HTML Module</xar:mlstring></strong>
             </legend>
-        <p class="xar-norm">
-            <ol style="list-style-type:lower-alpha;">
+
+            <ol  class="xar-norm" style="list-style-type:lower-alpha;">
                 <li><xar:mlstring>Go to the HTML module</xar:mlstring></li>
-                <li><a href="index.php?module=html&amp;type=admin&amp;func=set" rel="ext"><xar:mlstring>Set HTML tags allowed</xar:mlstring></a><xar:mlstring> eg code, span, image, h1 and so on so they are rendered.</xar:mlstring>
+                <li><a href="index.php?module=html&amp;type=admin&amp;func=set" rel="ext"><xar:mlstring>Set HTML tags allowed</xar:mlstring></a><xar:mlstring> eg code, span, image, h1 and so on so they are rendered.</xar:mlstring></li>
             </ol>
-        </p>
+
         </fieldset>
         <fieldset class="formelements xar-norm">
             <legend>
@@ -102,7 +102,7 @@
             </legend>
 
             <p class="param">
-                <label for="defaultpubtype">
+                <label for="defaulteditor">
                         <span class="help" title="#xarML('Set xartinymce as default so it activates automatically')#">
                         <xar:mlstring>Set XarTinyMCE as default WYSIWYG editor: </xar:mlstring>
                         </span>
@@ -193,7 +193,7 @@
 &lt;/xar:if&gt;
      </pre>
       </fieldset>
-        <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring></p>
+        <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
 
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
             <input type="submit" value="#$updatebutton#" />
@@ -460,7 +460,7 @@
             </p>
             <p class="xar:norm;" style="margin-bottom:10px;">
                     <xar:mlstring><strong>Available plugins:</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
-                     advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, lorem, dictionary</xar:mlstring>
+                     advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, contextmenu, lorem, dictionary</xar:mlstring>
              </p>
 
         <xar:if condition="$dateplug eq '1'">
@@ -695,16 +695,53 @@
         <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
+      <fieldset class="formelements xar-norm">
+            <legend>
+                <strong><xar:mlstring>Multiple Configuration Instances</xar:mlstring></strong>
+            </legend>
+               <p class="param">
+                    <label for="usemulticonfig">
+                        <span class="help" title="#xarML('Would you like to use multiple configuration settings?')#">
+                            <xar:mlstring>
+                                Use multiple configurations?
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                    <xar:if condition="xarModGetVar('tinymce', 'usemulticonfig')">
+                        <input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" value="1" />
+                    </xar:if>
+          </p>
+
+            <p>
+                <xar:mlstring>Enter code for multiple configuration instances of tinymce.
+                In each configuration you must have at least</xar:mlstring>
+                <br /><code>mode : "specific_textareas",
+                   textarea_trigger : "yourtriggername",</code><br />
+                   <xar:mlstring>The text_area trigger can be any name but <strong>do not</strong> use the default <strong>mce_editable</strong>. You can set multiple instances, but code will only take effect when the checkbox above is checked. To use a specific configuration add the trigger attribute name and value to your textarea eg</xar:mlstring> <code>mce_editable2="true"</code>
+                   <xar:mlstring>Please <strong>check the final tinymce config code</strong> in the code display at the end of this screen before use!</xar:mlstring>
+            </p>
+            <p class="param">
+                <label for="multiconfig">
+                    <span class="help" title="#xarML('Enter additional individual custom config options here')#">
+                        <xar:mlstring>Custom Config options:</xar:mlstring>
+                    </span>
+                </label>
+                <textarea mce_editable="false" name="multiconfig" id="multiconfig" cols="50" rows="10" mce_editable="false" >#$multiconfig#</textarea>
+           </p>
+
+          </fieldset>
         <fieldset class="formelements xar-norm">
             <legend>
                 <strong><xar:mlstring>Custom Configuration Code</xar:mlstring></strong>
             </legend>
             <p>
                 <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
-                <xar:mlstring>You can add additional custom configuration options here that are added to the existing configuration string displayed below.
+                <xar:mlstring>You can add additional custom configuration options here that are added to the existing DEFAULT tinymce configuration string.
             </xar:mlstring>
             </p>
-            <p><xar:mlstring>If you do not know what this configuration page is for, then leave the text box BLANK. It's important that you enter options correctly else you may inactivate the editor. Each option should be on a separate line, ending in a comma, in the format</xar:mlstring>: <code>option : "value",</code>
+            <p><xar:mlstring>Each option should be on a separate line, ending in a comma, in the format</xar:mlstring>: <code>option : "value",</code>
 
             </p>
             <p class="param">

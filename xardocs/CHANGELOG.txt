@@ -1,5 +1,11 @@
+* Version 0.5.5 05 April 05
+- New context menu with right click on images, tables
+- Customize the default configuration for tinymce from the GUI in the Advance Tab in config area
+- NEW! Multiple configurations on a single page. Setup your multiple configs in the new Advance Tab.
+- Many bug fixes!
+
 * Version 0.5.0 22 April 05
-- New mce_editable="false" added to textarea prevents wysiwyg 
+- New mce_editable="false" added to textarea prevents wysiwyg
   editor when All Text Area mode is active
 - New multiple configuration support - with manual mode can be set
   multiple times on page with different config settings

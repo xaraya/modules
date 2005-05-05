@@ -105,11 +105,16 @@ function tinymce_admin_updateconfig()
            break;
     case 'customconfig':
            if (!xarVarFetch('tinycustom','str:1:',$tinycustom,'',XARVAR_NOT_REQUIRED)) return;
-                
+           if (!xarVarFetch('dousemulticonfig','checkbox',$dousemulticonfig,'',XARVAR_NOT_REQUIRED)) return;
+           if (!xarVarFetch('multiconfig','str:1:',$multiconfig,'',XARVAR_NOT_REQUIRED)) return;
                 xarModSetVar('tinymce', 'tinycustom', $tinycustom);
+                xarModSetVar('tinymce', 'multiconfig', $multiconfig);
+                xarModSetVar('tinymce', 'usemulticonfig', $dousemulticonfig);
     break;
 
     }
+    
+
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
    
@@ -172,8 +177,9 @@ function tinymce_admin_updateconfig()
     }
 
     //Turn our settings into javascript for insert into template
-    //Let's call the variable jstext
-    $jstext='';
+    //Let's call the variable jstext 
+
+
     //start the string
     $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
@@ -272,14 +278,23 @@ function tinymce_admin_updateconfig()
     if (strlen(trim(xarModGetVar('tinymce','tinycustom')))>0) {
        $jstext .=xarModGetVar('tinymce','tinycustom');
     }
+
    // $jstext .='force_br_newlines : "",';    //works only for IE at the moment
     $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
     //add known requirement last to ensure proper syntax with no trailing comma
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'" ';
 
+    //now add the other configurations
+    if (xarModGetVar('tinymce','usemulticonfig')){
+        if (strlen(trim(xarModGetVar('tinymce','multiconfig')))>0) {
+          $multiconfig =xarModGetVar('tinymce','multiconfig');
+        }
+    }else{
+          $multiconfig='';
+    }
     //let's set the var to hold the js text
     xarModSetVar('tinymce','jstext',$jstext);
-
+    xarModSetVar('tinymce','multiconfig',$multiconfig);
     xarModCallHooks('module','updateconfig','tinymce',
               array('module' => 'tinymce'));
 
