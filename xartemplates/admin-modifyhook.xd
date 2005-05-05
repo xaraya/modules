@@ -5,8 +5,8 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <xar:if condition="$restricted eq 0">
-            <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
-            <br/><xar:mlstring>Allowed delimiters</xar:mlstring>: #$delimiters#
+            <p><input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" /></p>
+            <p><xar:mlstring>Allowed delimiters</xar:mlstring>: #$delimiters#</p>
         <xar:else />
             <xar:base-include-javascript filename="selectbox.js"/>
             
