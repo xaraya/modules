@@ -132,7 +132,7 @@
                 <input type="text" name="repeat" id="repeat" value="#$repeat#" />
             </p>
             <p class="param">
-                <input type="submit" name="reassign" id="reassign" size="3" value="#xarML(''Reassign)#" />
+                <input type="submit" name="reassign" id="reassign" size="3" value="#xarML('Reassign')#" />
                 <input type="reset" value="#xarML('Reset')#" />
             </p>
         </fieldset>
