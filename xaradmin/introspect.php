@@ -78,6 +78,7 @@ function xmlrpcsystemapi_admin_introspect()
             ob_end_clean();
         }
 
+        $methodSignatures = array();
         $methodSignatures = $response->xv->me['array'];
         $data['methodtoshow'] = $method;
 
