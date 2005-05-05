@@ -22,15 +22,12 @@
                     </xar:mlstring>
                 </strong>
             </legend>        
-            <span style="float: left; width: 20%; text-align: center;">
+            <p class="param">
                 <label for="polls">
                     <xar:mlstring>
                         Status
                     </xar:mlstring>
                 </label>
-                :
-            </span>
-            <span style="float: left; width: 20%; text-align: left;">
                 <select name="status" id="status" onchange="this.form.submit()">
                 <xar:if condition="$status eq 2">
                     <option value = 1 selected = selected>
@@ -72,66 +69,59 @@
                     </option>
                 </xar:if>
                 </select>
-            </span>
-        </form>
-    </div>
-
+            </p>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Avaiable polls
+                    </xar:mlstring>
+                </strong>
+            </legend>
         <xar:if condition="!isset($polls)">
-            <div style="text-align: center; margin: auto; clear: both; padding-top: 10px;">
+                <p class="param">
                 <xar:mlstring>
                     There are no polls available
                 </xar:mlstring>
-            </div>
+                </p>
         <xar:else/>
-        <div class="xar-fullwidth xar-noborder" style="padding-top: 20px;">
-            <table cellpadding="1" cellspacing="1" width="100%">
+            <table class="fullwidth">
                 <tr>
-                    <th style="text-align: center;">
-                        <label class="xar-mod-title">
+                    <th class="caption">
                             <xar:mlstring>
                                 Title
                             </xar:mlstring>
-                        </label>
                     </th>
-                    <th style="text-align: center;">
-                        <label class="xar-mod-title">
+                    <th class="caption">
                             <xar:mlstring>
                                 Type
                             </xar:mlstring>
-                        </label>
                     </th>
-                    <th style="text-align: center;">
-                        <label class="xar-mod-title">
+                    <th class="caption">
                             <xar:mlstring>
                                 Hooked
                             </xar:mlstring>
-                        </label>
                     </th>
-                    <th style="text-align: center;">
-                        <label class="xar-mod-title">
+                    <th class="caption">
                             <xar:mlstring>
                                 Status
                             </xar:mlstring>
-                        </label>
                     </th>
-                    <th style="text-align: center;">
-                        <label class="xar-mod-title">
+                    <th class="caption">
                             <xar:mlstring>
                                 Votes
                             </xar:mlstring>
-                        </label>
                     </th>
-                    <th style="text-align: center;">
-                        <label class="xar-mod-title">
+                    <th class="caption">
                             <xar:mlstring>
                                 Actions
                             </xar:mlstring>
-                        </label>
                     </th>
                 </tr>
                 <xar:loop name="$polls">
                 <tr>
-                    <td style="text-align: left;">
+                    <td>
                         #$loop:item['title']#
                         <xar:if condition="$loop:item['private']">
                             [
@@ -139,22 +129,24 @@
                                 <xar:mlstring>
                                     Private
                                 </xar:mlstring>
-                            </span> ]
+                            </span>
+                            ]
                         </xar:if>
                     </td>
-                    <td style="text-align: center;">
+                    <td>
                         #$loop:item['type']#
                     </td>
-                    <td style="text-align: center;">
+                    <td>
                         #$loop:item['hook']#
                     </td>
-                    <td style="text-align: center;">
+                    <td>
                         #$loop:item['open']#
                     </td>
-                    <td style="text-align: center;">
+                    <td>
                         #$loop:item['votes']#
                     </td>
-                    <td style="text-align: center;" class="xar-norm"> [
+                    <td>
+                        [
                         <a href="#$loop:item['action_display']#">
                             <xar:mlstring>
                                 Options
@@ -195,7 +187,7 @@
                 </tr>
             </xar:loop>
             </table>
-        </div>
     </xar:if>
-</div>
 </fieldset>
+    </form>
+</div>
