@@ -1,5 +1,10 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Hooked Modules and/or Categories for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
+<div class="xar-mod-body">
+<xar:if condition="$extcomponent eq 'Link'">
+    <h2><xar:ml><xar:mlstring>Select Hooked Modules and/or Categories for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
+<xar:else/>
+    <h2><xar:ml><xar:mlstring>Select Category for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
+</xar:if>
 <div style="margin: auto;">
 
 <form method="post" action="&xar-modurl-categories-admin-privileges;">
@@ -10,6 +15,8 @@
     <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
 
 <table border="1" cellpadding="8" cellspacing="0">
+
+<xar:if condition="$extcomponent eq 'Link'">
 <tr><th valign="top" align="right">
 <xar:mlstring>Hooked Module</xar:mlstring>
 </th><td>
@@ -47,6 +54,8 @@
     <!-- TODO: show dropdown box for all relevant item ids (if not too many) -->
 </td></tr>
 
+</xar:if>
+
 <tr><th valign="top" align="right">
 <xar:mlstring>Category</xar:mlstring>
 </th><td>
@@ -54,6 +63,11 @@
         #$cats[$catid]#<br /><br />
     </xar:foreach>
 </td></tr>
+
+<xar:comment>
+    // TODO: add option to apply this privilege for all child categories too
+    //       (once privileges supports this)
+</xar:comment>
 
 <tr><th valign="top" align="right">
 <xar:mlstring>Access Level</xar:mlstring>
@@ -92,8 +106,11 @@
 </td></tr>
 </table>
 
+<xar:if condition="$extcomponent eq 'Link'">
 <br />
 <xar:ml><xar:mlstring>There are #(1) category links matching these selection criteria at the moment</xar:mlstring><xar:mlvar>#$numitems#</xar:mlvar></xar:ml>
+</xar:if>
+
 <br /><hr /><br />
 (Instance Definition #$extinstance#)
 <br /><br />

@@ -209,6 +209,7 @@ function categories_init()
     *********************************************************************/
     $xartable =& xarDBGetTables();
     $categorytable =$xartable['categories'];
+/*
     $query1 = "SELECT DISTINCT xar_name FROM ".$categorytable;
     $query2 = "SELECT DISTINCT xar_cid FROM ".$categorytable;
     $instances = array(
@@ -223,7 +224,7 @@ function categories_init()
                     );
     xarDefineInstance('categories','Category',$instances,1,$categorytable,'xar_cid',
     'xar_parent','Instances of the categories module, including multilevel nesting');
-
+*/
     $query = "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_module = 'categories'";
     $instances = array(
                         array('header' => 'Category Block Title:',
@@ -233,6 +234,7 @@ function categories_init()
                     );
     xarDefineInstance('categories','Block',$instances);
 
+    // use external privilege wizard for 'Category' and 'Link' instances
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarModURL('categories', 'admin', 'privileges'),
@@ -240,6 +242,10 @@ function categories_init()
                             )
                     );
     xarDefineInstance('categories', 'Link', $instances);
+// TODO: get this parent/child stuff to work someday, or implement some other way ?
+    //xarDefineInstance('categories', 'Category', $instances);
+    xarDefineInstance('categories', 'Category', $instances,1,$categorytable,'xar_cid',
+    'xar_parent','Instances of the categories module, including multilevel nesting');
 
 
     /*********************************************************************
@@ -278,6 +284,10 @@ function categories_init()
 */
 function categories_upgrade($oldversion)
 {
+    // Get database information
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0':
@@ -288,10 +298,6 @@ function categories_upgrade($oldversion)
             // Code to upgrade from version 2.0 goes here
 
         // TODO: remove this for release
-            // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-
             $query = "ALTER TABLE $xartable[categories]
                       ADD COLUMN xar_image varchar(255) NOT NULL";
             $result =& $dbconn->Execute($query);
@@ -354,9 +360,6 @@ function categories_upgrade($oldversion)
                 if (!xarModAPILoad('articles','user')) return;
             }
 
-            // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
             $linkagetable = $xartable['categories_linkage'];
 
             xarDBLoadTableMaintenanceAPI();
@@ -407,8 +410,35 @@ function categories_upgrade($oldversion)
             if (!$result) return;
 
             // fall through to the next upgrade
-    case '2.3':
-            // compatability upgrade
+
+        case '2.3':
+        case '2.3.0':
+            // remove old instance definitions for 'Category'
+            $instancetable = $xartable['security_instances'];
+            $query = "DELETE FROM $instancetable
+                      WHERE xar_module='categories' AND xar_component='Category'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            $categorytable =$xartable['categories'];
+            // use external privilege wizard for 'Category' instance
+            $instances = array(
+                               array('header' => 'external', // this keyword indicates an external "wizard"
+                                     'query'  => xarModURL('categories', 'admin', 'privileges'),
+                                     'limit'  => 0
+                                    )
+                              );
+        // TODO: get this parent/child stuff to work someday, or implement some other way ?
+            //xarDefineInstance('categories', 'Category', $instances);
+            xarDefineInstance('categories', 'Category', $instances,1,$categorytable,'xar_cid',
+            'xar_parent','Instances of the categories module, including multilevel nesting');
+
+            // fall through to the next upgrade
+
+        case '2.3.1':
+
+            // fall through to the next upgrade
+
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;

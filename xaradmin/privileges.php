@@ -8,34 +8,111 @@ function categories_admin_privileges($args)
     // Security Check
     if (!xarSecurityCheck('AdminCategories')) return;
 
-    // fixed params
-    list($cid,
-         $cids,
-         $moduleid,
-         $itemtype,
-         $itemid,
-         $apply,
-         $extpid,
-         $extname,
-         $extrealm,
-         $extmodule,
-         $extcomponent,
-         $extinstance,
-         $extlevel) = xarVarCleanFromInput('cid',
-                                           'cids',
-                                           'moduleid',
-                                           'itemtype',
-                                           'itemid',
-                                           'apply',
-                                           'extpid',
-                                           'extname',
-                                           'extrealm',
-                                           'extmodule',
-                                           'extcomponent',
-                                           'extinstance',
-                                           'extlevel');
     extract($args);
 
+    // fixed params
+    if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('moduleid',     'isset', $moduleid,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemtype',     'isset', $itemtype,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid',       'isset', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extrealm',     'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extmodule',    'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+
+    // 'Category' component = All:cid (catname is unused)
+    if (!empty($extcomponent) && $extcomponent == 'Category') {
+
+        // check the current instance
+        if (!empty($extinstance)) {
+            $parts = explode(':',$extinstance);
+            if (count($parts) > 0 && !empty($parts[0])) $catname = $parts[0];
+            if (count($parts) > 1 && !empty($parts[1])) $cid = $parts[1];
+        }
+
+        // check the selected category
+// TODO: figure out how to handle more than 1 category in instances
+        if (empty($cid) || $cid == 'All' || !is_numeric($cid)) {
+            $cid = 0;
+        }
+        if (empty($cid) && isset($cids) && is_array($cids)) {
+            foreach ($cids as $catid) {
+                if (!empty($catid) && is_numeric($catid)) {
+                    $cid = $catid;
+                    // bail out for now
+                    break;
+                }
+            }
+        }
+
+        // define the new instance
+        $newinstance = array();
+        if (empty($cid)) {
+            $newinstance[] = 'All';
+            $newinstance[] = 'All';
+        } else {
+            $catinfo = xarModAPIFunc('categories','user','getcatinfo',
+                                     array('cid' => $cid));
+            if (empty($catinfo)) {
+                $cid = 0;
+                $newinstance[] = 'All';
+                $newinstance[] = 'All';
+            } else {
+                $newinstance[] = 'All';
+                $newinstance[] = $cid;
+            }
+        }
+
+    // TODO: add option to apply this privilege for all child categories too
+    //       (once privileges supports this)
+
+        if (!empty($apply)) {
+            // create/update the privilege
+            $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+            if (empty($pid)) {
+                return; // throw back
+            }
+
+            // redirect to the privilege
+            xarResponseRedirect(xarModURL('privileges', 'admin', 'modifyprivilege',
+                                          array('pid' => $pid)));
+            return true;
+        }
+
+        $data = array(
+                      'cid'          => $cid,
+                      'extpid'       => $extpid,
+                      'extname'      => $extname,
+                      'extrealm'     => $extrealm,
+                      'extmodule'    => $extmodule,
+                      'extcomponent' => $extcomponent,
+                      'extlevel'     => $extlevel,
+                      'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+                     );
+
+        $seencid = array();
+        if (!empty($cid)) {
+            $seencid[$cid] = 1;
+        }
+        $data['cats'] = array();
+        $data['cats'][] = xarModAPIFunc('categories',
+                                        'visual',
+                                        'makeselect',
+                                        array('values' => &$seencid,
+                                              'multiple' => 0));
+
+        $data['refreshlabel'] = xarML('Refresh');
+        $data['applylabel'] = xarML('Finish and Apply to Privilege');
+
+        return $data;
+    }
+
+    // 'Link' component = moduleid:itemtype:itemid:cid
     if (!empty($extinstance)) {
         $parts = explode(':',$extinstance);
         if (count($parts) > 0 && !empty($parts[0])) $moduleid = $parts[0];
@@ -98,7 +175,7 @@ function categories_admin_privileges($args)
     }
     if (empty($cid) && isset($cids) && is_array($cids)) {
         foreach ($cids as $catid) {
-            if (!empty($catid)) {
+            if (!empty($catid) && is_numeric($catid)) {
                 $cid = $catid;
                 // bail out for now
                 break;
