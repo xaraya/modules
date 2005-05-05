@@ -30,15 +30,14 @@
             <xar:comment> Prepare table headings in the first iteration of the loop </xar:comment>
             <caption>
                 <xar:comment> Caption indicates scope: all, module or itemtype </xar:comment>
-                <xar:mlstring>Category bases</xar:mlstring>
-                <xar:if condition="!empty($modid)">
-                    <xar:mlstring> for module</xar:mlstring> "#$loop:item['module']#"
-                    <xar:if condition="isset($itemtype)">
-                        <xar:mlstring> and item type</xar:mlstring> "#$loop:item['itemtype']#"
-                        <xar:if condition="!empty($loop:item['itemtypename'])">
-                            (#$loop:item['itemtypename']#)
-                        </xar:if>
-                    </xar:if>
+                <xar:if condition="empty($modid)">
+                    <xar:mlstring>Category bases</xar:mlstring>
+                <xar:elseif condition="!isset($itemtype)"/>
+                    <xar:ml><xar:mlstring>Category bases for module "#(1)"</xar:mlstring><xar:mlvar>#$loop:item['module']#</xar:mlvar></xar:ml>
+                <xar:elseif condition="empty($loop:item['itemtypename'])"/>
+                    <xar:ml><xar:mlstring>Category bases for module "#(1)" and item type "#(2)"</xar:mlstring><xar:mlvar>#$loop:item['module']#</xar:mlvar><xar:mlvar>#$loop:item['itemtype']#</xar:mlvar></xar:ml>
+                <xar:else/>
+                    <xar:ml><xar:mlstring>Category bases for module "#(1)" and item type "#(2)" (#(3))</xar:mlstring><xar:mlvar>#$loop:item['module']#</xar:mlvar><xar:mlvar>#$loop:item['itemtype']#</xar:mlvar><xar:mlvar>#$loop:item['itemtypename']#</xar:mlvar></xar:ml>
                 </xar:if>
             </caption>
 
