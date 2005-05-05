@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr');
+tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl');
 
 /**
  * Insert image template function.
@@ -22,7 +22,7 @@ function TinyMCE_advimage_getInsertImageTemplate() {
  * Setup content function.
  */
 function TinyMCE_advimage_handleEvent(editor_id, body, doc) {
-    // Convert all links to absolute
+	// Convert all links to absolute
 
-    alert(editor_id + "," + body.innerHTML);
+	alert(editor_id + "," + body.innerHTML);
 }

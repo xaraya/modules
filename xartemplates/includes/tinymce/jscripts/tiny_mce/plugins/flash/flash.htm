@@ -5,7 +5,7 @@
 <script language="javascript">
 var url = tinyMCE.getParam("flash_external_list_url");
 if (url != null)
-    document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
+	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
 </script>
 <script language="javascript" type="text/javascript">
 <!--
@@ -33,30 +33,30 @@ if (url != null)
         formObj.file.value = swffile;
         formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true);
 
-        // Handle file browser
-        if (tinyMCE.getParam("file_browser_callback") != null) {
-            document.getElementById('file').style.width = '230px';
+		// Handle file browser
+		if (tinyMCE.getParam("file_browser_callback") != null) {
+			document.getElementById('file').style.width = '230px';
 
-            var html = '';
+			var html = '';
 
-            html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
-            html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-            html += ' onmouseout="tinyMCE.restoreClass(this);"';
-            html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-            html += ' onclick="javascript:tinyMCE.openFileBrowser(\'file\',document.forms[0].file.value,\'flash\',window);"';
-            html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-            html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+			html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
+			html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
+			html += ' onmouseout="tinyMCE.restoreClass(this);"';
+			html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
+			html += ' onclick="javascript:tinyMCE.openFileBrowser(\'file\',document.forms[0].file.value,\'flash\',window);"';
+			html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
+			html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
 
-            document.getElementById('browser').innerHTML = html;
-        }
+			document.getElementById('browser').innerHTML = html;
+		}
 
-        // Auto select flash in list
-        if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
-            for (var i=0; i<formObj.link_list.length; i++) {
-                if (formObj.link_list.options[i].value == tinyMCE.getWindowArg('swffile'))
-                    formObj.link_list.options[i].selected = true;
-            }
-        }
+		// Auto select flash in list
+		if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
+			for (var i=0; i<formObj.link_list.length; i++) {
+				if (formObj.link_list.options[i].value == tinyMCE.getWindowArg('swffile'))
+					formObj.link_list.options[i].selected = true;
+			}
+		}
 
         window.focus();
     }
@@ -75,11 +75,11 @@ if (url != null)
                 height = height + '%';
             }
 
-            if (width == "")
-                width = 100;
+			if (width == "")
+				width = 100;
 
-            if (height == "")
-                height = 100;
+			if (height == "")
+				height = 100;
 
             html += ''
                 + '<img src="' + (tinyMCE.getParam("theme_href") + "/images/spacer.gif") + '" '
@@ -128,24 +128,24 @@ if (url != null)
                             </table>
                         </td>
                     </tr>
-                  <!-- Link list -->
-                  <script language="javascript">
-                    if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
-                        var html = "";
+				  <!-- Link list -->
+				  <script language="javascript">
+					if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
+						var html = "";
 
-                        html += '<tr><td  align="right">{$lang_insert_flash_list}:</td>';
-                        html += '<td><select name="link_list" style="width: 250px" onchange="this.form.file.value=this.options[this.selectedIndex].value;">';
-                        html += '<option value="">---</option>';
+						html += '<tr><td  align="right">{$lang_insert_flash_list}:</td>';
+						html += '<td><select name="link_list" style="width: 250px" onchange="this.form.file.value=this.options[this.selectedIndex].value;">';
+						html += '<option value="">---</option>';
 
-                        for (var i=0; i<tinyMCEFlashList.length; i++)
-                            html += '<option value="' + tinyMCEFlashList[i][1] + '">' + tinyMCEFlashList[i][0] + '</option>';
+						for (var i=0; i<tinyMCEFlashList.length; i++)
+							html += '<option value="' + tinyMCEFlashList[i][1] + '">' + tinyMCEFlashList[i][0] + '</option>';
 
-                        html += '</select></td></tr>';
+						html += '</select></td></tr>';
 
-                        document.write(html);
-                    }
-                  </script>
-                  <!-- /Link list -->
+						document.write(html);
+					}
+				  </script>
+				  <!-- /Link list -->
                     <tr>
                         <td align="right">{$lang_insert_flash_size}:</td>
                         <td nowrap="nowrap">

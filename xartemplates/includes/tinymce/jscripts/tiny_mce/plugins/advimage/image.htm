@@ -5,10 +5,13 @@
 <script language="javascript">
 var url = tinyMCE.getParam("external_image_list_url");
 if (url != null)
-    document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
+	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
 </script>
 <script language="javascript" type="text/javascript">
 <!--
+	// Disable auto resize
+	tinyMCE.getWindowArg('mce_windowresize', false);
+
     function myRegexpReplace(in_str, reg_exp, replace_str, opts) {
         if (typeof opts == "undefined")
             opts = 'g';
@@ -64,7 +67,7 @@ if (url != null)
         formObj.height.value = tinyMCE.getWindowArg('height');
         formObj.height.value = tinyMCE.getWindowArg('height');
 
-        formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
+		formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
 
     // added 2004-11-10 by Michael Keck (me@michaelkeck.de)
     // supporting onmouse over / out for image swap ...
@@ -104,28 +107,28 @@ if (url != null)
             formObj.onmouseout.value    = '';
         }
 
-        // Handle file browser
-        if (tinyMCE.getParam("file_browser_callback") != null) {
-            document.getElementById('src').style.width = '260px';
-            document.getElementById('onmouseover').style.width = '260px';
-            document.getElementById('onmouseout').style.width = '260px';
+		// Handle file browser
+		if (tinyMCE.getParam("file_browser_callback") != null) {
+			document.getElementById('src').style.width = '260px';
+			document.getElementById('onmouseover').style.width = '260px';
+			document.getElementById('onmouseout').style.width = '260px';
 
-            document.getElementById('browser1').innerHTML = getBrowserHTML('src');
-            document.getElementById('browser2').innerHTML = getBrowserHTML('onmouseover');
-            document.getElementById('browser3').innerHTML = getBrowserHTML('onmouseout');
-        }
+			document.getElementById('browser1').innerHTML = getBrowserHTML('src');
+			document.getElementById('browser2').innerHTML = getBrowserHTML('onmouseover');
+			document.getElementById('browser3').innerHTML = getBrowserHTML('onmouseout');
+		}
 
-        // Auto select image in list
-        selectByValue(formObj, "image_list", tinyMCE.getWindowArg('src'));
-        selectByValue(formObj, "image_list2", strOnOver);
-        selectByValue(formObj, "image_list3", strOnOut);
+		// Auto select image in list
+		selectByValue(formObj, "image_list", tinyMCE.getWindowArg('src'));
+		selectByValue(formObj, "image_list2", strOnOver);
+		selectByValue(formObj, "image_list3", strOnOut);
 
-        // Handle preview
+		// Handle preview
         var htmlprev = ''; 
 
-        var src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
-        if (src == "")
-            src = "about:blank";
+		var src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
+		if (src == "")
+			src = "about:blank";
 
         htmlprev += ' <iframe id="preview" name="preview" scrolling="auto" ' 
         htmlprev += ' marginwidth="0" marginheight="0" frameborder="0" src="' + src + '"' 
@@ -133,33 +136,35 @@ if (url != null)
 
         document.getElementById('prev').innerHTML = htmlprev; 
 
+		// Autoresize and focus
+		TinyMCEPopup_autoResize();
         window.focus();
     }
 
-    function selectByValue(form_obj, field_name, value) {
-        if (!form_obj || !form_obj.elements[field_name])
-            return;
+	function selectByValue(form_obj, field_name, value) {
+		if (!form_obj || !form_obj.elements[field_name])
+			return;
 
-        for (var i=0; i<form_obj.elements[field_name].options.length; i++) {
-            var option = form_obj.elements[field_name].options[i];
-            if (option.value == value)
-                option.selected = true;
-        }
-    }
+		for (var i=0; i<form_obj.elements[field_name].options.length; i++) {
+			var option = form_obj.elements[field_name].options[i];
+			if (option.value == value)
+				option.selected = true;
+		}
+	}
 
-    function getBrowserHTML(name) {
-        var html = "";
+	function getBrowserHTML(name) {
+		var html = "";
 
-        html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
-        html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-        html += ' onmouseout="tinyMCE.restoreClass(this);"';
-        html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-        html += ' onclick="javascript:tinyMCE.openFileBrowser(\'' + name + '\',document.forms[0].' + name + '.value,\'image\',window);"';
-        html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-        html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+		html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
+		html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
+		html += ' onmouseout="tinyMCE.restoreClass(this);"';
+		html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
+		html += ' onclick="javascript:tinyMCE.openFileBrowser(\'' + name + '\',document.forms[0].' + name + '.value,\'image\',window);"';
+		html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
+		html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
 
-        return html;
-    }
+		return html;
+	}
 
 // added 2004-11-10 by Michael Keck (me@michaelkeck.de)
 // supporting onmouse over / out for image swap ...
@@ -188,43 +193,43 @@ if (url != null)
         top.close();
     }
 
-    var preloadImg = new Image();
+	var preloadImg = new Image();
 
-    function resetImageData() {
-        var formObj = document.forms[0];
-        formObj.width.value = formObj.height.value = "";    
-    }
+	function resetImageData() {
+		var formObj = document.forms[0];
+		formObj.width.value = formObj.height.value = "";	
+	}
 
-    function updateImageData() {
-        var formObj = document.forms[0];
+	function updateImageData() {
+		var formObj = document.forms[0];
 
-        if (formObj.width.value == "")
-            formObj.width.value = preloadImg.width;
+		if (formObj.width.value == "")
+			formObj.width.value = preloadImg.width;
 
-        if (formObj.height.value == "")
-            formObj.height.value = preloadImg.height;
-    }
+		if (formObj.height.value == "")
+			formObj.height.value = preloadImg.height;
+	}
 
-    function getImageData() {
-        preloadImg = new Image();
+	function getImageData() {
+		preloadImg = new Image();
 
-        tinyMCE.addEvent(preloadImg, "load", updateImageData);
-        tinyMCE.addEvent(preloadImg, "error", function () {var formObj = document.forms[0];formObj.width.value = formObj.height.value = "";});
+		tinyMCE.addEvent(preloadImg, "load", updateImageData);
+		tinyMCE.addEvent(preloadImg, "error", function () {var formObj = document.forms[0];formObj.width.value = formObj.height.value = "";});
 
-        preloadImg.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
+		preloadImg.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
 
-        var src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
-        if (src == "")
-            src = "about:blank";
+		var src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], document.forms[0].src.value);
+		if (src == "")
+			src = "about:blank";
 
-        self.preview.location = src; 
-    }
+		self.preview.location = src; 
+	}
 //-->
 </script>
 </head>
 <body onload="window.focus();init();"> 
     <form onsubmit="insertImage();return false;"> 
-        <table border="0" cellpadding="0" cellspacing="0" width="100%"> 
+        <table border="0" cellpadding="0" cellspacing="0" width="300"> 
             <tr> 
                 <td align="center" valign="middle"><table border="0" cellpadding="4" cellspacing="0"> 
                     <tr> 
@@ -271,7 +276,7 @@ if (url != null)
                             <input name="width" type="text" id="width" value="" size="5" maxlength="5" style="vertical-align: middle; width: 50px; text-align: center;" /> x 
                             <input name="height" type="text" id="height" value="" size="5" maxlength="5" style="vertical-align: middle; width: 50px; text-align: center;" /> px 
                         </td>
-                        <td rowspan="6" valign="top"><div id="prev" name="prev" style="margin:0px;border:none;width:135px;height:135px"></div></td> 
+						<td rowspan="6" valign="top"><div id="prev" name="prev" style="margin:0px;border:none;width:135px;height:135px"></div></td> 
                     </tr> 
                     <tr> 
                         <td align="right" nowrap="nowrap">{$lang_insert_image_border}:</td> 
@@ -279,7 +284,7 @@ if (url != null)
                     </tr> 
                     <tr> 
                         <td align="right" nowrap="nowrap">{$lang_insert_image_align}:</td> 
-                        <td><select name="align"> 
+                        <td><select name="align" style="width: 100px"> 
                                 <option value="">{$lang_insert_image_align_default}</option> 
                                 <option value="baseline">{$lang_insert_image_align_baseline}</option> 
                                 <option value="top">{$lang_insert_image_align_top}</option> 

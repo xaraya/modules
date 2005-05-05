@@ -3,29 +3,29 @@
 <title>{$lang_insert_image_title}</title>
 <script language="javascript" src="../../tiny_mce_popup.js"></script>
 <script language="javascript">
-    function insertImage() {
-        if (window.opener) {
-            var src = document.forms[0].src.value;
-            var alt = document.forms[0].alt.value;
+	function insertImage() {
+		if (window.opener) {
+			var src = document.forms[0].src.value;
+			var alt = document.forms[0].alt.value;
 
-            window.opener.tinyMCE.insertImage(src, alt);
-            top.close();
-        }
-    }
+			window.opener.tinyMCE.insertImage(src, alt);
+			top.close();
+		}
+	}
 
-    function init() {
-        var formObj = document.forms[0];
+	function init() {
+		var formObj = document.forms[0];
 
-        formObj.src.value = tinyMCE.getWindowArg('src');
-        formObj.alt.value = tinyMCE.getWindowArg('alt');
-        formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
+		formObj.src.value = tinyMCE.getWindowArg('src');
+		formObj.alt.value = tinyMCE.getWindowArg('alt');
+		formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
 
-        window.focus();
-    }
+		window.focus();
+	}
 
-    function cancelAction() {
-        top.close();
-    }
+	function cancelAction() {
+		top.close();
+	}
 </script>
 </head>
 <body onload="window.focus();init();">

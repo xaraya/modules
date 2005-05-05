@@ -7,7 +7,8 @@
     <xar:set name="tinyloaded">xarTplGetJavaScript('head', 'tinymce')</xar:set>
     <xar:if condition="empty($tinyloaded)">
         <xar:set name="jsstring">xarModGetVar('tinymce','jstext')</xar:set>
-        <xar:set name="dynajs">xarTplAddJavaScript('head', 'code', 'tinyMCE.init({'.$jsstring.'});', 'tinymce')</xar:set>
+        <xar:set name="jsconfigstring">xarModGetVar('tinymce','multiconfig')</xar:set>
+        <xar:set name="dynajs">xarTplAddJavaScript('head', 'code', 'tinyMCE.init({'.$jsstring.'});'.$jsconfigstring, 'tinymce')</xar:set>
     </xar:if>
 
 

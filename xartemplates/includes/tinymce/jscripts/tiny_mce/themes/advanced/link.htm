@@ -5,77 +5,82 @@
 <script language="javascript">
 var url = tinyMCE.getParam("external_link_list_url");
 if (url != null)
-    document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
+	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
 </script>
 <script language="javascript">
-    function init() {
-        for (var i=0; i<document.forms[0].target.options.length; i++) {
-            var option = document.forms[0].target.options[i];
+	// Disable auto resize
+	tinyMCE.getWindowArg('mce_windowresize', false);
 
-            if (option.value == tinyMCE.getWindowArg('target'))
-                option.selected = true;
-        }
+	function init() {
+		for (var i=0; i<document.forms[0].target.options.length; i++) {
+			var option = document.forms[0].target.options[i];
 
-        document.forms[0].href.value = tinyMCE.getWindowArg('href');
-        document.forms[0].linktitle.value = tinyMCE.getWindowArg('title');
-        document.forms[0].insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
+			if (option.value == tinyMCE.getWindowArg('target'))
+				option.selected = true;
+		}
 
-        // Handle file browser
-        if (tinyMCE.getParam("file_browser_callback") != null) {
-            document.getElementById('href').style.width = '180px';
+		document.forms[0].href.value = tinyMCE.getWindowArg('href');
+		document.forms[0].linktitle.value = tinyMCE.getWindowArg('title');
+		document.forms[0].insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
 
-            var html = '';
+		// Handle file browser
+		if (tinyMCE.getParam("file_browser_callback") != null) {
+			document.getElementById('href').style.width = '180px';
 
-            html += '<img id="browserBtn" src="images/browse.gif"';
-            html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-            html += ' onmouseout="tinyMCE.restoreClass(this);"';
-            html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-            html += ' onclick="javascript:tinyMCE.openFileBrowser(\'href\',document.forms[0].href.value,\'file\',window);"';
-            html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-            html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+			var html = '';
 
-            document.getElementById('browser').innerHTML = html;
-        }
+			html += '<img id="browserBtn" src="images/browse.gif"';
+			html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
+			html += ' onmouseout="tinyMCE.restoreClass(this);"';
+			html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
+			html += ' onclick="javascript:tinyMCE.openFileBrowser(\'href\',document.forms[0].href.value,\'file\',window);"';
+			html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
+			html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
 
-        // Auto select link in list
-        if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
-            var formObj = document.forms[0];
+			document.getElementById('browser').innerHTML = html;
+		}
 
-            for (var i=0; i<formObj.link_list.length; i++) {
-                if (formObj.link_list.options[i].value == tinyMCE.getWindowArg('href'))
-                    formObj.link_list.options[i].selected = true;
-            }
-        }
+		// Auto select link in list
+		if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
+			var formObj = document.forms[0];
 
-        window.focus();
-    }
+			for (var i=0; i<formObj.link_list.length; i++) {
+				if (formObj.link_list.options[i].value == tinyMCE.getWindowArg('href'))
+					formObj.link_list.options[i].selected = true;
+			}
+		}
 
-    function insertLink() {
-        if (window.opener) {
-            var href = document.forms[0].href.value;
-            var target = document.forms[0].target.options[document.forms[0].target.selectedIndex].value;
-            var title = document.forms[0].linktitle.value;
+		// Autoresize and focus
+		TinyMCEPopup_autoResize();
+		window.focus();
+	}
 
-            window.opener.tinyMCE.insertLink(href, target, title);
-            top.close();
-        }
-    }
+	function insertLink() {
+		if (window.opener) {
+			var href = document.forms[0].href.value;
+			var target = document.forms[0].target.options[document.forms[0].target.selectedIndex].value;
+			var title = document.forms[0].linktitle.value;
 
-    function cancelAction() {
-        top.close();
-    }
+			window.opener.tinyMCE.insertLink(href, target, title);
+			top.close();
+		}
+	}
+
+	function cancelAction() {
+		top.close();
+	}
 </script>
 </head>
 <body onload="init();">
 <form onsubmit="insertLink();return false;">
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <table border="0" cellpadding="0" cellspacing="0" width="100">
     <tr>
       <td align="center" valign="middle"><table border="0" cellpadding="4" cellspacing="0">
           <tr>
-            <td colspan="2" class="title">{$lang_insert_link_title}</td>
+            <td colspan="2" class="title" nowrap="nowrap">{$lang_insert_link_title}</td>
           </tr>
           <tr>
-            <td>{$lang_insert_link_url}:</td>
+            <td nowrap="nowrap">{$lang_insert_link_url}:</td>
             <td>              <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td><input name="href" type="text" id="href" value="" style="width: 200px"></td>
@@ -83,33 +88,33 @@ if (url != null)
                 </tr>
               </table></td>
           </tr>
-          <!-- Link list -->
-          <script language="javascript">
-            if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
-                var html = "";
+		  <!-- Link list -->
+		  <script language="javascript">
+			if (typeof(tinyMCELinkList) != "undefined" && tinyMCELinkList.length > 0) {
+				var html = "";
 
-                html += '<tr><td>{$lang_link_list}:</td>';
-                html += '<td><select name="link_list" style="width: 200px" onchange="this.form.href.value=this.options[this.selectedIndex].value;">';
-                html += '<option value="">---</option>';
+				html += '<tr><td>{$lang_link_list}:</td>';
+				html += '<td><select name="link_list" style="width: 200px" onchange="this.form.href.value=this.options[this.selectedIndex].value;">';
+				html += '<option value="">---</option>';
 
-                for (var i=0; i<tinyMCELinkList.length; i++)
-                    html += '<option value="' + tinyMCELinkList[i][1] + '">' + tinyMCELinkList[i][0] + '</option>';
+				for (var i=0; i<tinyMCELinkList.length; i++)
+					html += '<option value="' + tinyMCELinkList[i][1] + '">' + tinyMCELinkList[i][0] + '</option>';
 
-                html += '</select></td></tr>';
+				html += '</select></td></tr>';
 
-                document.write(html);
-            }
-          </script>
-          <!-- /Link list -->
+				document.write(html);
+			}
+		  </script>
+		  <!-- /Link list -->
           <tr>
-            <td>{$lang_insert_link_target}:</td>
+            <td nowrap="nowrap">{$lang_insert_link_target}:</td>
             <td><select name="target" style="width: 200px">
                 <option value="_self">{$lang_insert_link_target_same}</option>
                 <option value="_blank">{$lang_insert_link_target_blank}</option>
             </select></td>
           </tr>
           <tr>
-            <td>{$lang_theme_insert_link_titlefield}:</td>
+            <td nowrap="nowrap">{$lang_theme_insert_link_titlefield}:</td>
             <td><input name="linktitle" type="text" id="linktitle" value="" style="width: 200px"></td>
           </tr>
           <tr>
