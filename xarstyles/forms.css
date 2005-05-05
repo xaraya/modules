@@ -10,7 +10,7 @@ form.xar-formwidget fieldset.formelements:after {
     content: ".";
     display: block;
     height: 5px;
-	 clear: both;
+     clear: both;
     visibility: hidden;
 }
 
