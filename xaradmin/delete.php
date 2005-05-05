@@ -43,7 +43,6 @@ function polls_admin_delete()
         $data['pid'] = $pid;
         $data['confirm'] = 1;
         $data['authid'] = xarSecGenAuthKey();
-        $data['buttonlabel'] = 'Delete Poll';
 
         return $data;
     }

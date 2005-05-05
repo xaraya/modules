@@ -1,6 +1,4 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -28,14 +26,8 @@
                 </xar:mlstring>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <input type="submit" value="#$buttonlabel#">
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <a href="&xar-modurl-polls-admin-list;">
-                    <xar:mlstring>
-                        Cancel Delete
-                    </xar:mlstring>
-                </a>
+                <input type="submit" value="#xarML('Delete Poll')#"> &nbsp; &nbsp;
+                <input type="button" value="#xarML('Cancel')#" onclick="location.href='&xar-modurl-polls-admin-list;'">
             </div>
         </form>
     </div>

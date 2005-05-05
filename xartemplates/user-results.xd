@@ -30,7 +30,11 @@
                             <b>
                                 #$loop:item['name']#
                             </b>
-                            [ #$loop:item['percentage']#%&nbsp;(#$loop:item['votes']#) ]<br />
+                            [ #$loop:item['percentage']#%
+                            <xar:if condition="$showtotalvotes eq 1">
+                                &nbsp;(#$loop:item['votes']#)
+                            </xar:if>    
+                                 ]<br />
                             <xar:if condition="$imggraph eq 1">
                                 <xar:if condition="$loop:item['barwidth'] le 1">
                                     <img src="#xarTplGetImage('bar.png')#" style="width: 1px;height: 10px;" alt="vote bar" />

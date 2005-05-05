@@ -50,9 +50,6 @@ function polls_admin_modifyopt()
     // Name
     $data['option'] = xarVarPrepHTMLDisplay($poll['options'][$opt]['name']);
 
-    // End form
-
-    $data['buttonlabel'] = xarML('Modify Option');
     $data['cancelurl'] = xarModURL('polls',
                             'admin',
                             'display',

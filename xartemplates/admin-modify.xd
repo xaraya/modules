@@ -1,6 +1,5 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -14,29 +13,35 @@
             Modify Poll
         </xar:mlstring>
     </h2>
-    <div style="margin: auto;">
-        <form method="post" name="post" id="post" action="&xar-modurl-polls-admin-update;">
+    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-polls-admin-update;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Modify main poll settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
             <input type="hidden" name="authid" value="#$authid#">
             <input type="hidden" name="pid" value="#$pid#">
-            <div style="clear: both; padding-top: 1opx;">
-                <span style="float: left; width: 20%; text-align: right;">
+            <p class="param">
                     <label for="title">
+                    <span class="help" title="#xarML('The name of the new poll')#">
                         <xar:mlstring>
                             Poll title
                         </xar:mlstring>
-                    </label>:
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                </label>
                     <input type="text" name="title" id="title" size="50" maxlength="100" value="#$polltitle#">
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+            </p>
+            <p class="param">
+                <label for="type">
+                    <span class="help" title="#xarML('The type of the new poll')#">
                     <xar:mlstring>
                         Poll type
                     </xar:mlstring>:
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                </label>
                     <xar:if condition="$polltype eq 'single'">
                         <input type="radio" name="polltype" value="single" checked="checked" />
                     <xar:else />
@@ -55,43 +60,52 @@
                     <xar:mlstring>
                         Multiple Choice
                     </xar:mlstring>
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+            </p>
+            <p class="param">
                     <label for="private">
+                    <span class="help" title="#xarML('who can view the new poll')#">
                         <xar:mlstring>
                             Private
                         </xar:mlstring>
-                    </label>:
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                </label>
                     <xar:if condition="$private">
                         <input type="checkbox" name="private" id="private" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="private" id="private" value="1" />
                     </xar:if>
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 98%; text-align: center;">
-                    #$hooks#
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 98%; text-align: center;">
-                    <a href="&xar-modurl-polls-admin-display;&amp;pid=#$pid#">
+            </p>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
                         <xar:mlstring>
                             Edit options
                         </xar:mlstring>
+                </strong>
+            </legend>
+            <a href="&xar-modurl-polls-admin-display;&amp;pid=#$pid#">
+                <xar:mlstring>
+                    Edit
+                </xar:mlstring>
                     </a>
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 98%; text-align: center;">
-                    <input type="submit" value="#$buttonlabel#">
-                </span>
-            </div>
+        </fieldset>
+        <xar:if condition="!empty($hooks)">
+            <fieldset class="formelements xar-norm">
+                <legend>
+                    <strong>
+                        <xar:mlstring>
+                            Configure hooks
+                        </xar:mlstring>
+                    </strong>
+                </legend>
+                <p class="param">
+                    #$hooks#
+                </p>
+            </fieldset>
+        </xar:if>
+        <p class="param">
+            <input type="submit" value="#xarML('Modify Poll')#" />
+        </p>
         </form>
     </div>
-</div>

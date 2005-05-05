@@ -1,6 +1,5 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -14,12 +13,19 @@
             Existing Poll List
         </xar:mlstring>
     </h2>
-    <div class="xar-fullwidth xar-noborder" style="padding-top: 10px;">
-        <form method="post" action="#xarModUrl('polls', 'admin', 'list')#">
+    <form class="xar-formwidget" action="&xar-modurl-polls-admin-list;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Choose polls status
+                    </xar:mlstring>
+                </strong>
+            </legend>        
             <span style="float: left; width: 20%; text-align: center;">
                 <label for="polls">
                     <xar:mlstring>
-                        Show polls
+                        Status
                     </xar:mlstring>
                 </label>
                 :
@@ -192,3 +198,4 @@
         </div>
     </xar:if>
 </div>
+</fieldset>

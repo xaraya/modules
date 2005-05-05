@@ -23,11 +23,6 @@ function polls_admin_new()
     }
 
     $data = array();
-
-    // Title
-    $data['buttonlabel'] = xarML('Create Poll');
-
-    // Start form
     $data['authid'] = xarSecGenAuthKey();
     $data['optcount'] = xarModGetVar('polls', 'defaultopts');
 

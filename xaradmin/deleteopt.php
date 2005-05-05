@@ -62,7 +62,6 @@ function polls_admin_deleteopt()
             $data['warning'] = xarML('This option has votes.  Delete anyway?');
         }
 
-        $data['buttonlabel'] = 'Delete Option';
         $data['cancelurl'] = xarModURL('polls', 'admin', 'display', array('pid' => $pid));
 
         return $data;

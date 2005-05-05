@@ -1,6 +1,5 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -14,45 +13,44 @@
             Configure Polls
         </xar:mlstring>
     </h2>
-    <div style="margin: auto;">
-        <form method="post" action="&xar-modurl-polls-admin-updateconfig;">
+    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-polls-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Modify Configuration
+                    </xar:mlstring>
+                </strong>
+            </legend>
             <input type="hidden" name="authid" value="#$authid#">
-                <div style="clear: both; padding-top: 10px;">
-                    <span style="float: left; width: 35%; text-align: right;">
+            <p class="param">
                         <label for="barscale">
+                    <span class="help" title="#xarML('Scale of result bar')#">
                             <xar:mlstring>
                                 Scale of result bar
                             </xar:mlstring>
-                            :
-                        </label>
                     </span>
-                    <span style="float: right; width: 63%; text-align: left;">
+                </label>
                         <input type="text" name="barscale" id="barscale" value="#$barscale#" size="4" maxlength="3">
-                    </span>
-                </div>
-                <div style="clear: both; padding-top: 10px;">
-                    <span style="float: left; width: 35%; text-align: right;">
+            </p>
+            <p class="param">
                         <label for="defaultopts">
+                    <span class="help" title="#xarML('Default number of options for poll')#">
                             <xar:mlstring>
-                                Number of options for new polls
+                            Options for new polls
                             </xar:mlstring>
-                            :
-                        </label>
                     </span>
-                    <span style="float: right; width: 63%; text-align: left;">
+                </label>
                         <input type="text" name="defaultopts" id="defaultopts" value="#$defaultopts#">
-                    </span>
-                </div>
-                <div style="clear: both; padding-top: 10px;">
-                    <span style="float: left; width: 35%; text-align: right;">
+            </p>
+            <p class="param">
                         <label for="imggraph">
+                    <span class="help" title="#xarML('Use an image for displayng poll result')#">
                             <xar:mlstring>
                                 Use images for graph display
                             </xar:mlstring>
-                            :
-                        </label>
                     </span>
-                    <span style="float: right; width: 63%; text-align: left;">
+                </label>
                         <select name="imggraph" id="imggraph">
                             <xar:foreach in="$imggraphs" value="$v" key="$k">
                                 <xar:if condition="$imggraph eq $k">
@@ -66,18 +64,15 @@
                                 </xar:if>
                             </xar:foreach>
                         </select>
-                    </span>
-                </div>
-                <div style="clear: both; padding-top: 10px;">
-                    <span style="float: left; width: 35%; text-align: right;">
+            </p>
+            <p class="param">
                         <label for="voteinterval">
+                    <span class="help" title="#xarML('How many time every user can vote')#">
                             <xar:mlstring>
                                 Allow users to vote (per poll)
                             </xar:mlstring>
-                            :
-                        </label>
                     </span>
-                    <span style="float: right; width: 63%; text-align: left;">
+                </label>
                         <select name="voteinterval" id="voteinterval">
                             <xar:foreach in="$voteintervals" value="$v" key="$k">
                                 <xar:if condition="$voteinterval eq $k">
@@ -91,67 +86,57 @@
                                 </xar:if>
                             </xar:foreach>
                         </select>
-                    </span>
-                </div>
-                <div style="clear: both; padding-top: 10px;">
-                    <span style="float: left; width: 35%; text-align: right;">
+            </p>
+            <p class="param">
                         <label for="previewresults">
+                    <span class="help" title="#xarML('Users can view results before voting')#">
                             <xar:mlstring>
                                 Allow users to see results before voting?
                             </xar:mlstring>
-                            :
-                        </label>
                     </span>
-                    <span style="float: right; width: 63%; text-align: left;">
+                </label>
                         <xar:if condition="$previewresults == 1">
                             <input type="checkbox" name="previewresults" id="previewresults" value="1" checked="checked">
                         <xar:else />
                             <input type="checkbox" name="previewresults" id="previewresults" value="1">
                         </xar:if>
-                    </span>
-                </div>
-                <div style="clear: both; padding-top: 10px;">
-                    <span style="float: left; width: 35%; text-align: right;">
+            </p>
+            <p class="param">
                         <label for="showtotalvotes">
+                    <span class="help" title="#xarML('Users can view total number of votes')#">
                             <xar:mlstring>
                                 Allow users to see total votes?
                             </xar:mlstring>
-                            :
-                        </label>
                     </span>
-                    <span style="float: right; width: 63%; text-align: left;">
+                </label>
                         <xar:if condition="$showtotalvotes == 1">
                             <input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1" checked="checked">
                         <xar:else />
                             <input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1">
                         </xar:if>
-                    </span>
-                </div>
-                <div style="clear: both; padding-top: 10px;">
-                    <span style="float: left; width: 35%; text-align: right;">
+            </p>
+            <p class="param">
                         <label for="shorturl">
+                    <span class="help" title="#xarML('Use short urls for the polls')#">
                             <xar:mlstring>
                                 Enable Short URLs?
                             </xar:mlstring>
-                            :
-                        </label>
                     </span>
-                    <span style="float: right; width: 63%; text-align: left;">
+                </label>
                         <xar:if condition="$shorturl == 1">
                             <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked">
                         <xar:else />
                             <input type="checkbox" name="shorturl" id="shorturl" value="1">
                         </xar:if>
-                    </span>
-                </div>
+            </p>
+        </fieldset>
                 <xar:if condition="!empty($hooks)">
-                <div style="clear: both; padding-top: 10px;">
+            <p class="param">
                     #$hooks#
-                </div>
+            </p>
                 </xar:if>
-                <div style="clear: both; padding-top: 10px; text-align: center; margin: auto;">
-                        <input type="submit" value="Submit" />
-                </div>
+        <p class="param">
+            <input type="submit" value="#xarML('Save config')#" />
+        </p>
         </form>
     </div>
-</div>
