@@ -23,7 +23,7 @@
                             <xar:mlstring>
                                 E
                             </xar:mlstring>
-                        </a>|<a href="#$loop:item['deleteurl']#" onClick="#$loop:item['javascript']#">
+                        </a>|<a href="#$loop:item['deleteurl']#">
                             <xar:mlstring>
                                 R
                             </xar:mlstring>
