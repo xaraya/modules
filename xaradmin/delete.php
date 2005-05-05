@@ -41,7 +41,6 @@ function censor_admin_delete($args)
     
     // Check for confirmation.
     if (empty($confirm)) {
-        $censor['submitlabel'] = xarML('Submit');
         $censor['authid'] = xarSecGenAuthKey();
 
         return $censor;

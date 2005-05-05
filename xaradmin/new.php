@@ -21,7 +21,6 @@ function censor_admin_new()
     foreach($allowedlocales as $locale) {
        $data['locales'][] = array('name' => $locale, 'value' => $locale);
     }
-    $data['createlabel'] = xarML('Submit');
     $data['authid'] = xarSecGenAuthKey(); 
 
     return $data;

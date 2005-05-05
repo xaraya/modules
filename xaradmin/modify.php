@@ -38,7 +38,6 @@ function censor_admin_modify($args)
     if (!xarSecurityCheck('EditCensor')) return;
     $data['locale'] = unserialize($data['locale']);
     $data['authid'] = xarSecGenAuthKey();
-    $data['createlabel'] = xarML('Submit');
     $allowedlocales = xarConfigGetVar('Site.MLS.AllowedLocales');
 
      foreach($allowedlocales as $loc) {

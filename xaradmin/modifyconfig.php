@@ -18,7 +18,6 @@ function censor_admin_modifyconfig()
     // Security Check
     if (!xarSecurityCheck('AdminCensor')) return;
     $data['authid'] = xarSecGenAuthKey();
-    $data['submitlabel'] = xarML('Submit');
     $data['itemsperpage'] = xarModGetVar('censor', 'itemsperpage');
     $data['replace'] = xarModGetVar('censor', 'replace');
     return $data;

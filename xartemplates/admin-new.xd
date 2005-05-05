@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -8,55 +8,82 @@
     var fieldDescription = Array("Keyword");
 //-->
 </script>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Censor Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Add Censored Word</xar:mlstring></h2>
-    <div style="margin: auto;">
-        <form action="#xarModURL('censor', 'admin', 'create')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
-        <div style="clear: both; padding-top: 10px;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('This is the keyword, that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Keyword</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="keyword" id="keyword" value="" size="32" maxlength="255" />
-        </span>
-        </div>
-        <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('Case Sensitive substitution.')#"><label for="case"><xar:mlstring>Case sensitive</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <input type="checkbox" name="case" id="case" value="1" />
+<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Censor Administration
+        </xar:mlstring>
         </span>
         </div>
-        <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('Match Case substitution.')#"><label for="matchcase"><xar:mlstring>Match Case</xar:mlstring></label>:</span>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Add
+        </xar:mlstring>
+    </h2>
+    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-censor-admin-create;" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Add censored word
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <p class="param">
+                <label for="Keyword">
+                    <span class="help" title="#xarML('This is the keyword, that when matched will be replaced.')#">
+                        <xar:mlstring>
+                            Keyword
+                        </xar:mlstring>
         </span>
-        <span style="float: right; width: 78%; text-align: left;">
-                <input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring><br />
-                <input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...<br />
-                        <input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...<br />
+                </label>
+                <input type="text" name="keyword" id="keyword" value="" size="32" maxlength="255" />
+            </p>
+            <p class="param">
+                <label for="case">
+                    <span class="help" title="#xarML('Case Sensitive substitution.')#">
+                        <xar:mlstring>
+                            Case sensitive
+                        </xar:mlstring>
+        </span>
+                </label>
+                <input type="checkbox" name="case" id="case" value="1" />
+            </p>
+            <p class="param">
+                <label for="matchcase">
+                    <span class="help" title="#xarML('Match Case substitution.')#">
+                        <xar:mlstring>
+                            Match Case
+                        </xar:mlstring>
+        </span>
+                </label>
+                <input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring>&nbsp;|&nbsp;
+                <input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...&nbsp;|&nbsp;
+                <input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...&nbsp;|&nbsp;
                         <input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring>
+            </p>
+            <p class="param">
+                <label for="locale">
+                    <span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#">
+                        <xar:mlstring>
+                            Locale
+                        </xar:mlstring>
                 </span>
-        </div>
-        <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Locale</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
+                </label>
     <select multiple="multiple" size="5" name="locale[]" id="locale">
     <xar:loop name="$locales">
     <option value="#$loop:item['value']#">#$loop:item['name']#</option>
     </xar:loop>
                 </select>
-                </span>
-                </div>
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span>
-  </div>
+            </p>
+        </fieldset>
+        <p class="param">
+            <input type="submit" value="#xarML('Add')#" />
+        </p>
     </form>
     </div>
-</div>
