@@ -598,20 +598,6 @@
                     <input type="checkbox" name="titletransform" id="titletransform" value="1" />
                 </xar:if>
             </p>
-            <p class="param">
-                <label for="titletransform">
-                    <span class="help" title="#xarML('Call transform hooks in titles.')#">
-                        <xar:mlstring>
-                            Call transform hooks in titles
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <xar:if condition="$titletransform">
-                    <input type="checkbox" name="titletransform" id="titletransform" value="1" checked="checked" />
-                <xar:else/>
-                    <input type="checkbox" name="titletransform" id="titletransform" value="1" />
-                </xar:if>
-            </p>
         </fieldset>
         <fieldset class="formelements xar-norm">
             <legend>
