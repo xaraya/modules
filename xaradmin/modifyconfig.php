@@ -37,7 +37,7 @@ function articles_admin_modifyconfig()
     if (isset($settings) && is_array($settings)) {
         $data['itemsperpage']           = empty($settings['itemsperpage']) ? 20 : $settings['itemsperpage'];
         $data['adminitemsperpage']      = empty($settings['adminitemsperpage']) ? 20 : $settings['adminitemsperpage'];
-        $data['numcols']                = $settings['number_of_columns'];
+        $data['numcols']                = empty($settings['number_of_columns']) ? 1 : $settings['number_of_columns'];
         $data['defaultview']            = $settings['defaultview'];
         // Note: the current template uses the variables both for testing and the value attribute for the tag, dont use true/false to be sure
         $data['showcategories']         = !empty($settings['showcategories']) ? 1 : 0;
