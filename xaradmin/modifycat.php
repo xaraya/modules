@@ -60,8 +60,8 @@ function categories_admin_modifycat()
         $hooks = xarModCallHooks('item','modify',$cid,$catinfo);
         if (empty($hooks)) {
             $data['hooks'] = '';
-        } elseif (is_array($hooks)) {
-            $data['hooks'] = join('',$hooks);
+        } else {
+            $data['hooks'] = $hooks;
         }
 
     } else {
@@ -83,8 +83,8 @@ function categories_admin_modifycat()
         $hooks = xarModCallHooks('item','new','',$catinfo);
         if (empty($hooks)) {
             $data['hooks'] = '';
-        } elseif (is_array($hooks)) {
-            $data['hooks'] = join('',$hooks);
+        } else {
+            $data['hooks'] = $hooks;
         }
 
         $data['category'] = Array('left'=>0,'right'=>0,'name'=>'','description'=>'');
