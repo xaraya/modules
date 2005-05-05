@@ -205,10 +205,13 @@
 
                     <p class="param">
                         <label for="alias"><xar:mlstring>Use page as module alias</xar:mlstring></label>
-                        <xar:if condition="xarModGetAlias($page.name) eq 'xarpages'">
+                        <xar:set name="modalias">xarModGetAlias($page['name'])</xar:set>
+                        <xar:if condition="empty($modalias) or $modalias eq $page.name">
+                            <input type="checkbox" name="alias" id="alias" value="1" />
+                        <xar:elseif condition="$modalias eq 'xarpages'"/>
                             <input type="checkbox" name="alias" id="alias" value="1" checked="checked" />
                         <xar:else />
-                            <input type="checkbox" name="alias" id="alias" value="1" />
+                            <input type="hidden" name="alias" value="0" />
                         </xar:if>        
                     </p>
                 </fieldset>
