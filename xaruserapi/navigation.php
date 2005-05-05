@@ -4,7 +4,23 @@
  * show some categories navigation in a template
 // TODO: clean up all those ways to get parameters + better templating
  *
- * @param $args array containing the definition of the layout, optional categories, ...
+ * @param $args['module'] string module that you want to navigate in (default current module)
+ * @param $args['itemtype'] integer item type of the module items (default none)
+ * @param $args['itemid'] integer item id of the current module item (default none)
+ * @param $args['catid'] string current category/categories we're navigating in, or
+ * @param $args['cids'] array current category/categories we're navigating in
+ * @param $args['showcatcount'] integer show a count per category (0 = no, 1 = local count, 2 = deep count)
+ * @param $args['showchildren'] integer show children of the current category (0 = no, 1 = immediate children, 2 = all descendants)
+ * @param $args['showempty'] integer show empty categories (0 = no, 1 = yes)
+ * @param $args['urlmodule'] string module name to use in URLs (default $module)
+ * @param $args['type'] string type to use in URLs (default 'user')
+ * @param $args['func'] string function to use in URLs (default 'view')
+ * @param $args['urlparam'] string extra parameter name to use in URLs (default 'itemtype')
+ * @param $args['urlvalue'] string extra parameter value to use in URLs (default $itemtype)
+ * @param $args['urlextra'] array extra arguments to use in URLs (default none)
+ * @param $args['layout'] string layout to use for the navigation (prevnext, trails or tree - default trails)
+ * @param $args['template'] string override the template that corresponds to this layout (prevnext, rootcats/trails or tree)
+ * @param $args['tplmodule'] string override the module where this template is located (default 'categories')
  * @returns string
  * @return string containing the HTML (or other) text to output in the BL template
  */
@@ -205,7 +221,15 @@ function categories_userapi_navigation($args)
     if (empty($urlvalue)) {
         $urlvalue = $itemtype;
     }
-
+    // Specify additional arguments for xarModURL()
+    if (empty($urlextra)) {
+        $urlextra = array();
+        $urlargs = array();
+    } else {
+        $urlargs = $urlextra;
+    }
+    // By default, include itemtype=N in URLs (if not NULL)
+    $urlargs[$urlparam] = $urlvalue;
 
     // Get current categories
     if (xarVarIsCached('Blocks.categories','catid')) {
@@ -292,6 +316,8 @@ function categories_userapi_navigation($args)
     $data['func'] = $func;
     $data['urlparam'] = $urlparam;
     $data['urlvalue'] = $urlvalue;
+    $data['urlextra'] = $urlextra;
+    $data['urlargs'] = $urlargs;
 
     switch ($layout) {
 
@@ -324,22 +350,22 @@ function categories_userapi_navigation($args)
 //                    if ($neighbour['link'] == 'parent') {
 //                        $data['uplabel'] = $neighbour['name'];
 //                        $data['upcid'] = $neighbour['cid'];
+//                        $urlargs['catid'] = $neighbour['cid'];
 //                        $data['uplink'] = xarModURL($urlmodule,$type,$func,
-//                                                   array($urlparam => $urlvalue,
-//                                                         'catid' => $neighbour['cid']));
+//                                                    $urlargs);
 //                    } elseif ($neighbour['link'] == 'previous') {
                     if ($neighbour['link'] == 'previous') {
                         $data['prevlabel'] = $neighbour['name'];
                         $data['prevcid'] = $neighbour['cid'];
+                        $urlargs['catid'] = $neighbour['cid'];
                         $data['prevlink'] = xarModURL($urlmodule,$type,$func,
-                                                     array($urlparam => $urlvalue,
-                                                           'catid' => $neighbour['cid']));
+                                                      $urlargs);
                     } elseif ($neighbour['link'] == 'next') {
                         $data['nextlabel'] = $neighbour['name'];
                         $data['nextcid'] = $neighbour['cid'];
+                        $urlargs['catid'] = $neighbour['cid'];
                         $data['nextlink'] = xarModURL($urlmodule,$type,$func,
-                                                     array($urlparam => $urlvalue,
-                                                           'catid' => $neighbour['cid']));
+                                                      $urlargs);
                     }
                 }
                 if (!isset($data['nextlabel']) &&
@@ -372,9 +398,10 @@ function categories_userapi_navigation($args)
                     if (!isset($catlist[$cid])) continue;
                     $cat = $catlist[$cid];
                     // TODO: now this is a tricky part...
+                    $urlargs['catid'] = $cat['cid'];
                     $link = xarModURL(
                         $urlmodule,$type,$func,
-                        array($urlparam => $urlvalue, 'catid' => $cat['cid'])
+                        $urlargs
                     );
                     $label = xarVarPrepForDisplay($cat['name']);
                     $data['catitems'][] = array(
@@ -440,9 +467,10 @@ function categories_userapi_navigation($args)
 
                     // Initialise variables for a single trail.
                     $label = xarML('All');
+                    unset($urlargs['catid']);
                     $link = xarModURL(
                         $urlmodule,$type,$func,
-                        array($urlparam => $urlvalue)
+                        $urlargs
                     );
                     $join = '';
                     $baseflag = 0;
@@ -494,12 +522,10 @@ function categories_userapi_navigation($args)
                             // The end of the trail is flagged as level 4.
                             $baseflag = 4;
                         } else {
+                            $urlargs['catid'] = $cat['cid'];
                             $link = xarModURL(
                                 $urlmodule, $type, $func,
-                                array(
-                                    $urlparam => $urlvalue,
-                                    'catid' => $cat['cid']
-                                )
+                                $urlargs
                             );
                         }
 
@@ -538,9 +564,10 @@ function categories_userapi_navigation($args)
                     if (!empty($istree)) {
                         $viewall = '';
                     } else {
+                        $urlargs['catid'] = '_' . $cid;
                         $viewall = xarModURL(
                             $urlmodule, $type, $func,
-                            array($urlparam => $urlvalue, 'catid' => '_' . $cid)
+                            $urlargs
                         );
                     }
                     $data['cattrails'][] = array(
@@ -570,9 +597,10 @@ function categories_userapi_navigation($args)
                     $catitems = array();
                     if (!empty($itemid) || !empty($andcids)) {
                         $label = xarML('Any of these categories');
+                        $urlargs['catid'] = join('-', $sortcids);
                         $link = xarModURL(
                             $urlmodule,$type,$func,
-                            array($urlparam => $urlvalue, 'catid' => join('-', $sortcids))
+                            $urlargs
                         );
                         $join = '';
                         $catitems[] = array(
@@ -585,12 +613,10 @@ function categories_userapi_navigation($args)
                     }
                     if (empty($andcids)) {
                         $label = xarML('All of these categories');
+                        $urlargs['catid'] = join('+', $sortcids);
                         $link = xarModURL(
                             $urlmodule, $type, $func,
-                            array(
-                                $urlparam => $urlvalue,
-                                'catid' => join('+',$sortcids)
-                            )
+                            $urlargs
                         );
                         if (!empty($itemid)) {
                             $join = '-';
@@ -644,12 +670,10 @@ function categories_userapi_navigation($args)
                     $curcat['module'] = 'categories';
                     $curcat['itemtype'] = 0;
                     $curcat['itemid'] = $cids[0];
+                    $urlargs['catid'] = $cids[0];
                     $curcat['returnurl'] = xarModURL(
                         $urlmodule, $type, $func,
-                        array(
-                            $urlparam => $urlvalue,
-                            'catid' => $cids[0]
-                        )
+                        $urlargs
                     );
                     // pass along the current module & itemtype for pubsub (urgh)
                     $curcat['current_module'] = $modname;
@@ -700,12 +724,10 @@ function categories_userapi_navigation($args)
                             continue;
                         }
                         $label = xarVarPrepForDisplay($info['name']);
+                        $urlargs['catid'] = $info['id'];
                         $link = xarModURL(
                             $urlmodule, $type, $func,
-                            array(
-                                $urlparam => $urlvalue,
-                                'catid' => $info['id']
-                            )
+                            $urlargs
                         );
                         if (!empty($catcount[$info['id']])) {
                             $count = $catcount[$info['id']];
@@ -755,12 +777,10 @@ function categories_userapi_navigation($args)
                         }
                         
                         $label = xarVarPrepForDisplay($cat['name']);
+                        $urlargs['catid'] = $cat['cid'];
                         $link = xarModURL(
                             $urlmodule, $type, $func,
-                            array(
-                                $urlparam => $urlvalue,
-                                'catid' => $cat['cid']
-                            )
+                            $urlargs
                         );
                         if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
                                 $descr = xarVarPrepHTMLDisplay($cat['description']);
@@ -852,9 +872,9 @@ function categories_userapi_navigation($args)
 
                         $label = xarVarPrepForDisplay($cat['name']);
                     // TODO: now this is a tricky part...
+                        $urlargs['catid'] = $cat['cid'];
                         $link = xarModURL($urlmodule,$type,$func,
-                                         array($urlparam => $urlvalue,
-                                               'catid' => $cat['cid']));
+                                          $urlargs);
 
                         if ($cat['cid'] == $cid) {
                             $catparents[] = array('catlabel' => $label,
@@ -900,9 +920,9 @@ function categories_userapi_navigation($args)
 
                         $label = xarVarPrepForDisplay($cat['name']);
                     // TODO: now this is a tricky part...
+                        $urlargs['catid'] = $cat['cid'];
                         $link = xarModURL($urlmodule,$type,$func,
-                                         array($urlparam => $urlvalue,
-                                               'catid' => $cat['cid']));
+                                          $urlargs);
                         if ($cat['cid'] == $cid) {
                             $catparents[] = array('catlabel' => $label,
                                                   'catid' => $cat['cid'],
@@ -947,9 +967,9 @@ function categories_userapi_navigation($args)
                     if (!empty($parents[$parentid])) {
                         $cat = $parents[$parentid];
                         $label = xarVarPrepForDisplay($cat['name']);
+                        $urlargs['catid'] = $cat['cid'];
                         $link = xarModURL($urlmodule,$type,$func,
-                                         array($urlparam => $urlvalue,
-                                               'catid' => $cat['cid']));
+                                          $urlargs);
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -973,9 +993,9 @@ function categories_userapi_navigation($args)
                     // Generate list of sibling categories
                     foreach ($siblings as $cat) {
                         $label = xarVarPrepForDisplay($cat['name']);
+                        $urlargs['catid'] = $cat['cid'];
                         $link = xarModURL($urlmodule,$type,$func,
-                                         array($urlparam => $urlvalue,
-                                               'catid' => $cat['cid']));
+                                          $urlargs);
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -992,9 +1012,9 @@ function categories_userapi_navigation($args)
                                 foreach ($children as $cat) {
                                     $clabel = xarVarPrepForDisplay($cat['name']);
                                 // TODO: now this is a tricky part...
+                                    $urlargs['catid'] = $cat['cid'];
                                     $clink = xarModURL($urlmodule,$type,$func,
-                                                      array($urlparam => $urlvalue,
-                                                            'catid' => $cat['cid']));
+                                                       $urlargs);
                                     if (!empty($catcount[$cat['cid']])) {
                                         $ccount = $catcount[$cat['cid']];
                                     } else {

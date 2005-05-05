@@ -13,6 +13,7 @@ function categories_admin_stats()
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('startnum', 'isset', $startnum,     1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('catid',    'isset', $catid,     NULL, XARVAR_DONT_SET)) {return;}
 
     $data = array();
 
@@ -59,13 +60,16 @@ function categories_admin_stats()
         $data['delete'] = xarModURL('categories','admin','unlink');
     } else {
         $modinfo = xarModGetInfo($modid);
+        $data['module'] = $modinfo['name'];
         if (empty($itemtype)) {
+            $data['itemtype'] = 0;
             $data['modname'] = ucwords($modinfo['displayname']);
             $itemtype = null;
             if (isset($modlist[$modid][0])) {
                 $stats = $modlist[$modid][0];
             }
         } else {
+            $data['itemtype'] = $itemtype;
             // Get the list of all item types for this module (if any)
             $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
@@ -92,12 +96,19 @@ function categories_admin_stats()
         if (empty($numstats)) {
             $numstats = 100;
         }
+        if (!empty($catid)) {
+            $data['numlinks'] = xarModAPIFunc('categories','user','countitems',
+                                              array('modid' => $modid,
+                                                    'itemtype' => $itemtype,
+                                                    'catid' => $catid));
+        }
         if ($numstats < $data['numlinks']) {
             $data['pager'] = xarTplGetPager($startnum,
                                             $data['numlinks'],
                                             xarModURL('categories','admin','stats',
                                                       array('modid' => $modid,
                                                             'itemtype' => $itemtype,
+                                                            'catid' => $catid,
                                                             'sort' => $sort,
                                                             'startnum' => '%%')),
                                             $numstats);
@@ -111,7 +122,8 @@ function categories_admin_stats()
                                         'reverse' => 1,
                                         'numitems' => $numstats,
                                         'startnum' => $startnum,
-                                        'sort' => $sort));
+                                        'sort' => $sort,
+                                        'catid' => $catid));
         $showtitle = xarModGetVar('categories','showtitle');
         if (!empty($showtitle)) {
            $itemids = array_keys($getitems);
@@ -142,8 +154,12 @@ function categories_admin_stats()
         }
         unset($getitems);
         unset($itemlinks);
-        $data['catinfo'] = xarModAPIFunc('categories','user','getcatinfo',
-                                         array('cids' => array_keys($seencid)));
+        if (!empty($seencid)) {
+            $data['catinfo'] = xarModAPIFunc('categories','user','getcatinfo',
+                                             array('cids' => array_keys($seencid)));
+        } else {
+            $data['catinfo'] = array();
+        }
         $data['delete'] = xarModURL('categories','admin','unlink',
                                     array('modid' => $modid,
                                           'itemtype' => $itemtype));
@@ -163,6 +179,7 @@ function categories_admin_stats()
                                                             'itemtype' => $itemtype,
                                                             'sort' => 'numlinks'));
         }
+        $data['catid'] = $catid;
     }
 
     return $data;
