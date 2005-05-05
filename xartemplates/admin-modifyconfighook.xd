@@ -28,7 +28,7 @@
     <xar:loop name="$items">
         <p class="param">
             <label for="number_of_categories" class="required">
-                <span class="help" title="#xarML('')#">
+                <span class="help" title="#xarML('Base category')#">
                     <xar:mlstring>
                         Base category for
                     </xar:mlstring>
