@@ -400,6 +400,10 @@ class xarldap
         // what to do with more than one entry for user info?
         //$num_entries = ldap_count_entries($this->connection,$entry);
 
+        if (!isset($entry[0][$attribute])) {
+            return;
+        }
+
         // get attribute value
         $value = $entry[0][$attribute][0];
         return $value;
