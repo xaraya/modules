@@ -102,7 +102,7 @@ function transform($text)
     
     $matchnum = count($matches[1]);
     for ($i = 0; $i <$matchnum; $i++) {
-        $text = preg_replace('/' . preg_quote($matches[1][$i], '/') . '/', "ALPLACEHOLDER{$i}PH", $text, 1);
+        $text = preg_replace('/' . preg_quote($matches[1][$i], '/') . '/', "&nbsp;ALPLACEHOLDER{$i}PH&nbsp;", $text, 1);
     }
 
     $text = preg_replace($alsearch, $alreplace, $text);
@@ -112,7 +112,7 @@ function transform($text)
 
     // Step 4 - replace the HTML tags that we removed in step 1
     for ($i = 0; $i <$matchnum; $i++) {
-        $text = preg_replace("/ALPLACEHOLDER{$i}PH/", $matches[1][$i], $text, 1);
+        $text = preg_replace("/&nbsp;ALPLACEHOLDER{$i}PH&nbsp;/", $matches[1][$i], $text, 1);
    
  }
 
