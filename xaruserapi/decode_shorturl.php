@@ -209,10 +209,27 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
     if( isset($ptid) && !empty($ptid) ) 
     {
         $searchArgs['pubtypeid'] = $ptid;
-        $decodedTitle = urldecode($params[2]);
+        $paramidx = 2;
     } else {
-        $decodedTitle = urldecode($params[1]);
+        $paramidx = 1;
     }
+    $decodedTitle = urldecode($params[$paramidx]);
+
+    // see if we need to append anything else to the title (= when it contains a /)
+    if (count($params) > $paramidx + 1) {
+        for ($i = $paramidx + 1; $i < count($params); $i++) {
+            if ($dupeResolutionMethod == 'Append AID' && preg_match('/^\d+$/',$params[$i])) {
+                break;
+            } elseif ($dupeResolutionMethod == 'Append Date' && preg_match('/^\d+-\d+-\d+ \d+:\d+$/',$params[$i])) {
+                break;
+            } elseif ($dupeResolutionMethod == 'ALL' && preg_match('/^\d+(|-\d+-\d+ \d+:\d+)$/',$params[$i])) {
+                break;
+            }
+            $decodedTitle .= '/' . urldecode($params[$i]);
+            $paramidx = $i;
+        }
+    }
+    $paramidx++;
     
     $decodedTitle = str_replace("\\'","'", $decodedTitle);
     $searchArgs['search'] = $decodedTitle;
@@ -240,11 +257,11 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
         {
             case 'Append AID':
                 // Look for AID appended after title
-                if( !empty($params[3]) )
+                if( !empty($params[$paramidx]) )
                 {
                     foreach ($articles as $article)
                     {
-                        if( $article['aid'] == $params[3] )
+                        if( $article['aid'] == $params[$paramidx] )
                         {
                             $theArticle = $article;
                             break;
@@ -255,11 +272,11 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
                 
             case 'Append Date':
                 // Look for date appended after title
-                if( !empty($params[3]) )
+                if( !empty($params[$paramidx]) )
                 {
                     foreach ($articles as $article)
                     {
-                        if( date('Y-m-d H:i',$article['pubdate']) == $params[3] )
+                        if( date('Y-m-d H:i',$article['pubdate']) == $params[$paramidx] )
                         {
                             $theArticle = $article;
                             break;
@@ -269,15 +286,15 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
                 break;
 
             case 'ALL':
-                if( !empty($params[3]) )
+                if( !empty($params[$paramidx]) )
                 {
                     foreach ($articles as $article)
                     {
-                        if( date('Y-m-d H:i',$article['pubdate']) == $params[3] )
+                        if( date('Y-m-d H:i',$article['pubdate']) == $params[$paramidx] )
                         {
                             $theArticle = $article;
                             break;
-                        } else if( $article['aid'] == $params[3] )
+                        } else if( $article['aid'] == $params[$paramidx] )
                         {
                             $theArticle = $article;
                             break;

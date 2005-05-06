@@ -328,11 +328,15 @@ function articles_encodeUsingTitle( $aid )
         $article['title'] = str_replace(' ','_',$article['title']);
     }
 
+    $encodedTitle = rawurlencode($article['title']);
+    // the URL encoded / (%2F) is not accepted by Apache in PATH_INFO
+    $encodedTitle = str_replace('%2F','/',$encodedTitle);
+
     // Check to find out how many articles come back from the search.
     if( count($articles) == 1 )
     {
         // Only finding one article through search, we're good to go.
-        $path = rawurlencode($article['title']);
+        $path = $encodedTitle;
     } elseif (count($articles) == 0) {
         // Can't find article through search, won't be able to find it on decode
         // default to just the article ID
@@ -343,13 +347,13 @@ function articles_encodeUsingTitle( $aid )
         {
             case 'Append AID':
                 // User Title and AID
-                $path = rawurlencode($article['title']).'/'.$aid;
+                $path = $encodedTitle .'/'.$aid;
                 break;
 
             case 'Append Date':
                 // User Title and Date
 
-                $path = rawurlencode( $article['title'] ) .'/'.date('Y-m-d H:i',$article['pubdate']) ;
+                $path = $encodedTitle .'/'.date('Y-m-d H:i',$article['pubdate']) ;
                 break;
 
             default:
