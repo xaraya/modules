@@ -55,19 +55,21 @@ function authsql_userapi_authenticate_user($args)
 
     // Create new connection, ensure it exists and show debug info
     $dbconn = ADONewConnection($sqlconfig['sqldbtype']);
-    $dbconn->debug = true;
+    $dbconn->debug = false;
 
     // only connect using port if a port is given
     if (!isset($sqlconfig['sqldbport']) || $sqlconfig['sqldbport'] == "") {
         $dbconn->Connect($sqlconfig['sqldbhost'], 
                       $sqlconfig['sqldbuser'], 
                       $sqlconfig['sqldbpass'], 
-                      $sqlconfig['sqldbname']);
+                      $sqlconfig['sqldbname'],
+                      true);
     } else {
         $dbconn->Connect($sqlconfig['sqldbhost'].':'.$sqlconfig['sqldbport'], 
                       $sqlconfig['sqldbuser'], 
                       $sqlconfig['sqldbpass'], 
-                      $sqlconfig['sqldbname']);
+                      $sqlconfig['sqldbname'],
+                      true);
     }
 
     if ($dbconn === false) {
@@ -143,7 +145,7 @@ function authsql_userapi_authenticate_user($args)
                 $sqlconfig['sqldbpass'], 
                 $sqlconfig['sqldbname'],
                 $sqlQuery, 
-                $pass, 
+                '*', // $pass - don't log the password
                 $encryptedpassword, 
                 $rs);
             xarLogMessage($msg, XARLOG_LEVEL_DEBUG);
@@ -192,7 +194,7 @@ function authsql_userapi_authenticate_user($args)
                     'uname='.$uname.' '.
                     'realname='.$realname.' '. 
                     'email='.$email.' '. 
-                    'pass='.$password.' '.
+                    'pass='.'*'.' '. // $password - don't log the password
                     'date='.$now.' '.
                     'valcode=createdbysql '.
                     'state=3 '.
@@ -225,8 +227,7 @@ function authsql_userapi_authenticate_user($args)
                 return XARUSER_AUTH_FAILED; 
             }
         } else {
-            /* use anonymous role */
-            $rid = 2;
+            $rid = XARUSER_AUTH_FAILED;
         }
     } else {
         $rid = $userRole['uid'];
@@ -258,6 +259,7 @@ function authsql_userapi_authenticate_user($args)
             }
         }
     }
+
     return $rid;
 }
 ?>
