@@ -12,7 +12,7 @@ function subitems_user_hook_item_new($args)
     }
 
     // a object should be linked to this hook
-    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return;
+    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return '';
     // nothing to see here
     if (empty($ddobjectlink['objectid'])) return '';
     $objectid = $ddobjectlink['objectid'];

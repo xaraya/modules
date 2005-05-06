@@ -19,7 +19,7 @@ function subitems_user_hook_item_display($args)
     $param['itemid'] = $objectid;
 
     // a object should be linked to this hook, get the links for the subitems of $objectid
-    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$param)) return;
+    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$param)) return '';
     // nothing to see here
     if (empty($ddobjectlink)) return '';
         
@@ -30,12 +30,12 @@ function subitems_user_hook_item_display($args)
         // get the Dynamic Object defined for this module (and itemtype, if relevant)
         $subobject =& xarModAPIFunc('dynamicdata','user','getobject',
                                 array('objectid' => $subobjectid, 'status' => 1));
-        if (!isset($subobject)) return;
+        if (!isset($subobject)) return '';
 
         // get existing subitems for this subobject
         $ids = xarModAPIFunc('subitems','user','dditems_getids',array(
             'objectid' => $subobjectid, 'itemid' => $param['itemid']));
-        if(!isset($ids)) return;
+        if(!isset($ids)) return '';
 
         if (!empty($subobjectlink['sort'])) {
             $sort = array();
