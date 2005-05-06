@@ -1,19 +1,15 @@
 <?php
 
 /**
- * View statistics about category links
+ * Check category links for orphans
  */
-function categories_admin_stats()
+function categories_admin_checklinks()
 {
     // Security Check
     if (!xarSecurityCheck('AdminCategories')) return;
 
-    if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('startnum', 'isset', $startnum,     1, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('catid',    'isset', $catid,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('modid',    'isset',  $modid,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemtype', 'isset',  $itemtype, NULL, XARVAR_DONT_SET)) {return;}
 
     $data = array();
 
@@ -46,18 +42,14 @@ function categories_admin_stats()
                     //    $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                     }
                 }
-                $moditem['link'] = xarModURL('categories','admin','stats',
+                $moditem['link'] = xarModURL('categories','admin','checklinks',
                                              array('modid' => $modid,
                                                    'itemtype' => empty($itemtype) ? null : $itemtype));
-                $moditem['delete'] = xarModURL('categories','admin','unlink',
-                                               array('modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype));
                 $data['moditems'][] = $moditem;
                 $data['numitems'] += $moditem['numitems'];
                 $data['numlinks'] += $moditem['numlinks'];
             }
         }
-        $data['delete'] = xarModURL('categories','admin','unlink');
     } else {
         $modinfo = xarModGetInfo($modid);
         $data['module'] = $modinfo['name'];
@@ -96,34 +88,12 @@ function categories_admin_stats()
         if (empty($numstats)) {
             $numstats = 100;
         }
-        if (!empty($catid)) {
-            $data['numlinks'] = xarModAPIFunc('categories','user','countitems',
-                                              array('modid' => $modid,
-                                                    'itemtype' => $itemtype,
-                                                    'catid' => $catid));
-        }
-        if ($numstats < $data['numlinks']) {
-            $data['pager'] = xarTplGetPager($startnum,
-                                            $data['numlinks'],
-                                            xarModURL('categories','admin','stats',
-                                                      array('modid' => $modid,
-                                                            'itemtype' => $itemtype,
-                                                            'catid' => $catid,
-                                                            'sort' => $sort,
-                                                            'startnum' => '%%')),
-                                            $numstats);
-        } else {
-            $data['pager'] = '';
-        }
+        $data['pager'] = '';
         $data['modid'] = $modid;
-        $getitems = xarModAPIFunc('categories','user','getlinks',
+        $getitems = xarModAPIFunc('categories','user','getorphanlinks',
                                   array('modid' => $modid,
-                                        'itemtype' => $itemtype,
-                                        'reverse' => 1,
-                                        'numitems' => $numstats,
-                                        'startnum' => $startnum,
-                                        'sort' => $sort,
-                                        'catid' => $catid));
+                                        'itemtype' => $itemtype));
+        $data['numorphans'] = count($getitems);
         $showtitle = xarModGetVar('categories','showtitle');
         if (!empty($getitems) && !empty($showtitle)) {
            $itemids = array_keys($getitems);
@@ -143,10 +113,6 @@ function categories_admin_stats()
             foreach ($cids as $cid) {
                 $seencid[$cid] = 1;
             }
-            $data['moditems'][$itemid]['delete'] = xarModURL('categories','admin','unlink',
-                                                             array('modid' => $modid,
-                                                                   'itemtype' => $itemtype,
-                                                                   'itemid' => $itemid));
             if (isset($itemlinks[$itemid])) {
                 $data['moditems'][$itemid]['link'] = $itemlinks[$itemid]['url'];
                 $data['moditems'][$itemid]['title'] = $itemlinks[$itemid]['label'];
@@ -160,26 +126,22 @@ function categories_admin_stats()
         } else {
             $data['catinfo'] = array();
         }
-        $data['delete'] = xarModURL('categories','admin','unlink',
-                                    array('modid' => $modid,
-                                          'itemtype' => $itemtype));
-        $data['sortlink'] = array();
-        if (empty($sort) || $sort == 'itemid') {
-             $data['sortlink']['itemid'] = '';
-        } else {
-             $data['sortlink']['itemid'] = xarModURL('categories','admin','stats',
-                                                     array('modid' => $modid,
-                                                           'itemtype' => $itemtype));
+
+        if(!xarVarFetch('confirm',  'str:1:', $confirm,    '', XARVAR_NOT_REQUIRED)) return; 
+        if (!empty($seencid) && !empty($confirm)) {
+            if (!xarSecConfirmAuthKey()) return;
+            if (!xarModAPIFunc('categories','admin','unlinkcids',
+                               array('modid' => $modid,
+                                     'itemtype' => $itemtype,
+                                     'cids' => array_keys($seencid)))) {
+                return;
+            }
+            xarResponseRedirect(xarModURL('categories', 'admin', 'checklinks'));
+            return true;
         }
-        if (!empty($sort) && $sort == 'numlinks') {
-             $data['sortlink']['numlinks'] = '';
-        } else {
-             $data['sortlink']['numlinks'] = xarModURL('categories','admin','stats',
-                                                      array('modid' => $modid,
-                                                            'itemtype' => $itemtype,
-                                                            'sort' => 'numlinks'));
-        }
-        $data['catid'] = $catid;
+
+        // Generate a one-time authorisation code for this operation
+        $data['authid'] = xarSecGenAuthKey(); 
     }
 
     return $data;

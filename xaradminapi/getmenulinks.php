@@ -38,6 +38,12 @@ function categories_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('categories',
                                                    'admin',
+                                                   'checklinks'),
+                              'title' => xarML('Check for orphaned category assignments'),
+                              'label' => xarML('Check Links'));
+
+        $menulinks[] = Array('url'   => xarModURL('categories',
+                                                   'admin',
                                                    'modifyconfig'),
                               'title' => xarML('Config the Categories module'),
                               'label' => xarML('Modify Config'));
