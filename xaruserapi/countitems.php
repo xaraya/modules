@@ -31,8 +31,8 @@ function categories_userapi_countitems($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
     if($dbconn->databaseType == 'sqlite') {
-        $sql = 'SELECT COUNT(*) 
-                FROM (SELECT DISTINCT '. $categoriesdef['iid']; // WATCH OUT, STILL UNBALANCED
+        $sql = 'SELECT COUNT(' . $categoriesdef['iid'] . ')
+                FROM (SELECT DISTINCT ' . $categoriesdef['iid'];
     } else {
         $sql = 'SELECT COUNT(DISTINCT ' . $categoriesdef['iid'] . ')';
     }
@@ -41,10 +41,11 @@ function categories_userapi_countitems($args)
     if (!empty($categoriesdef['where'])) {
         $sql .= ' WHERE ' . $categoriesdef['where'];
     }
+    if($dbconn->databaseType == 'sqlite') {
+        $sql .= ')';
+    }
 
-    // Balance parentheses
-    if($dbconn->databaseType == 'sqlite') $sql .= ')';
-    $result =& $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql);
     if (!$result) return;
 
     $num = $result->fields[0];
