@@ -31,7 +31,7 @@ function categories_userapi_countitems($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
     if($dbconn->databaseType == 'sqlite') {
-        $sql = 'SELECT COUNT(' . $categoriesdef['iid'] . ')
+        $sql = 'SELECT COUNT(*)
                 FROM (SELECT DISTINCT ' . $categoriesdef['iid'];
     } else {
         $sql = 'SELECT COUNT(DISTINCT ' . $categoriesdef['iid'] . ')';
