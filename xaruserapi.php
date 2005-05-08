@@ -140,8 +140,16 @@ function wiki_userapi_transform($args)
         $XARAllowedProtocols = xarModGetVar('wiki', 'AllowedProtocols');
     } 
     // Argument check
-    if ((!isset($objectid)) || (!isset($extrainfo))) {
-        xarSessionSetVar('errormsg', _MODARGSERROR);
+    if (!isset($objectid)) {
+        $msg = xarML('Invalid parameter for #(2) function #(3)() in module #(4)',
+                     'objectid', 'userapi', 'transform', 'wiki');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    } 
+    if (!isset($extrainfo)) {
+        $msg = xarML('Invalid parameter for #(2) function #(3)() in module #(4)',
+                     'extrainfo', 'userapi', 'transform', 'wiki');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } 
 
