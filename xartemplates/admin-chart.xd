@@ -12,7 +12,7 @@
             <input type="radio" value="agnam" name="snifftype" id="agnam" />
             &nbsp;&nbsp;<xar:mlstring>Browser Name</xar:mlstring>
             <br /><br />
-            <input type="submit" value="Generate Pie Chart"/>
+            <input type="submit" value="#xarML('Generate Pie Chart')#"/>
         </form>
     </div>
 </div>
