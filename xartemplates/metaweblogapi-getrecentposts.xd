@@ -32,10 +32,10 @@
                     <name>description</name>
                     <value><string>#$loop:item.content#</string></value>
                   </member>
-                  <xar:if condition="isset($body)">
+                  <xar:if condition="isset($loop:item.body)">
                     <member>
                       <name>mt_text_more</name>
-                      <value><string>#$body#</string></value>
+                      <value><string>#$loop:item.body#</string></value>
                     </member>
                   </xar:if>
                   <member>
