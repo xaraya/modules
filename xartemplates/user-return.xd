@@ -34,25 +34,25 @@
                 <xar:if condition="!empty($replyreturn)">
                     <p>
                         <a href="#$replyreturn#">
-                            <xar:mlstring>Click here</xar:mlstring>
-                        </a> <xar:mlstring>to view your message.</xar:mlstring>
+                            <xar:mlstring>Click here to view your message.</xar:mlstring>
+                        </a>
                     </p>
                     <p>
                         <a href="#$topicreturn#">
-                            <xar:mlstring>Click here</xar:mlstring>
-                        </a> <xar:mlstring>to return to the topic.</xar:mlstring>
+                            <xar:mlstring>Click here to return to the topic.</xar:mlstring>
+                        </a>
                     </p>
                 <xar:else />
                     <p>
                         <a href="#$topicreturn#">
-                            <xar:mlstring>Click here</xar:mlstring>
-                        </a> <xar:mlstring>to view your message.</xar:mlstring>
+                            <xar:mlstring>Click here to view your message.</xar:mlstring>
+                        </a>
                     </p>
                 </xar:if>
                 <p>
                     <a href="#$forumreturn#">
-                        <xar:mlstring>Click here</xar:mlstring>
-                    </a> <xar:mlstring>to return to the forum.</xar:mlstring>
+                        <xar:mlstring>Click here to return to the forum.</xar:mlstring>
+                    </a>
                 </p>
             </td>
         </tr>
