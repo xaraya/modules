@@ -21,19 +21,21 @@ var is_win = ((clientPC.indexOf("win")!=-1) || (clientPC.indexOf("16bit") != -1)
 var is_mac = (clientPC.indexOf("mac")!=-1);
 
 // Helpline messages
+// Moved to user-fordisplay.xd
 b_help = "Bold text: [b]text[/b]  (alt+b)";
 z_help = "Paragraph: [p]text[/p]  (alt+z)";
 i_help = "Italic text: [i]text[/i]  (alt+i)";
 u_help = "Underline text: [u]text[/u]  (alt+u)";
 q_help = "Quote text: [quote]text[/quote]  (alt+q)";
 c_help = "Code display: [code]code[/code]  (alt+c)";
-l_help = "List: [list]text[/list] (alt+l)";
-o_help = "Ordered list: [list=]text[/list]  (alt+o)";
 p_help = "Insert image: [img]http://image_url[/img]  (alt+p)";
 w_help = "Insert URL: [url]http://url[/url] or [url=http://url]URL text[/url]  (alt+w)";
 a_help = "Close all open bbCode tags";
 s_help = "Font color: [color=red]text[/color]  Tip: you can also use color=#FF0000";
 f_help = "Font size: [size=x-small]small text[/size]";
+// Unmoved yet
+l_help = "List: [list]text[/list] (alt+l)";
+o_help = "Ordered list: [list=]text[/list]  (alt+o)";
 
 // Define the bbCode tags
 bbcode = new Array();
