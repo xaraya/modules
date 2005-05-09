@@ -35,7 +35,8 @@ function moveabletype_userapi_setpostcategories($args)
         if(!empty($categories)) {
             // Match the names we got from the client to ids, we only have to consider the subcats of blogid
             foreach($categories as $catStruct) {
-                $cids[] = $catStruct['categoryId']->scalarval();
+                // w.bloggar apparently sends -1 for no changes, so lets check this
+                if($catStruct['categoryId'] > 0)  $cids[] = $catStruct['categoryId']->scalarval();
                 $isPrimary = $catStruct['isPrimary']->scalarval(); // TODO: Where do we put this in Xaraya?
             }
         }
