@@ -13,7 +13,7 @@ function moveabletype_userapi_getpostcategories($args)
     // Try to login 
     $err='';
     $elements = array();
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid username or password for (#(1)) while getting recent posts",$username);
     } else {
         $pubtype=xarModGetVar('bloggerapi','bloggerpubtype');
