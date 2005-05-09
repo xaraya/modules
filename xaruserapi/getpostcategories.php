@@ -29,8 +29,12 @@ function moveabletype_userapi_getpostcategories($args)
         $rootCats = xarModGetVar('articles','mastercids.'.$pubtype);
         if (!empty($rootCats)) $rootCats = explode(';',$rootCats);
 
+        // This takes the intersecting values of both the item cats and the 
+        // root cats. The one which is in both is our blog.
         $blog = array_intersect($rootCats, $itemCatKeys);
-        $blog = $blog[0];
+        // array_intersect preserves keys
+        // we dont care what it is, we just want the first
+        $blog = array_shift($blog);
         
         if(!empty($itemCats)) {
             // Construct an array of structs to return
