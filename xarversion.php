@@ -1,5 +1,4 @@
 <?php
-// $Id$
 $modversion['name'] = 'Blogger API';
 $modversion['id'] = '745';
 $modversion['version'] = '1.0.0';
@@ -12,5 +11,5 @@ $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['class'] = 'admin';
 $modversion['category'] = 'Miscellaneous';
-$modversion['dependency'] = array(743,744);
+$modversion['dependency'] = array(744,151,147);
 ?>
