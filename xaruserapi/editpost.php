@@ -27,7 +27,7 @@ function metaweblogapi_userapi_editpost($args)
     $sn4=$msg->getParam(4);  $publish  = $sn4->scalarval();
     
     // Before we do anything, see if we should
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or password while editing post",$username);
         return xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
     }

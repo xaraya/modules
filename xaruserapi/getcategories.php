@@ -28,7 +28,7 @@ function metaweblogapi_userapi_getcategories($args)
     // Try to login 
     $err='';
     $elements = array();
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid username or password for (#(1)) while getting recent posts",$username);
     } else {
         // Based on the $blog id, which is the category id of this blog, get its

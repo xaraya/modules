@@ -61,7 +61,7 @@ function metaweblogapi_userapi_newpost($args)
     }
        
     // We now have gathered all our stuff, use this to post to xaraya through the API
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
     } else {
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');

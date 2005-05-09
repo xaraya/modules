@@ -71,7 +71,7 @@ function metaweblogapi_userapi_newmediaobject($args)
     $sn3=$msg->getParam(3); $struct = $sn3->getval();
     
     // Check requirements
-    if (!xarUserLogin($username,$password))
+    if (empty($password) || !xarUserLogin($username,$password))
         $err = xarML("Invalid user (#(1)) or wrong password while uploading media object",$username);
     if(!isset($struct['type']) || !isset($struct['name']) || !isset($struct['bits'])) 
         $err = xarML('Your blog client did not supply the required attributes (name, type and bits) for the media object');
