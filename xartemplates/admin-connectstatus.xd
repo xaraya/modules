@@ -22,8 +22,9 @@
                 <br />
                 #$server#
                 <br />
-                <xar:mlstring>The LDAP configuration is not set correctly.  You can modify your configuration in the </xar:mlstring>
-                        <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#">here</a>.
+                <xar:mlstring>The LDAP configuration is not set correctly.</xar:mlstring>
+                <br />
+                <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#"><xar:mlstring>Modify your configuration.</xar:mlstring></a>
                 <br /><br />
 
             </xar:if>

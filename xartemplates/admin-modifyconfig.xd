@@ -105,11 +105,8 @@
                     </td>
                 </tr>
                 <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="submit" value="Submit"  />
+                    <td colspan="2">
+                        <input type="submit" value="#xarML('Save configuration')#" />
                     </td>
                 </tr>
             </table>
