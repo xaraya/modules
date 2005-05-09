@@ -36,7 +36,7 @@ function bloggerapi_userapi_editpost($args)
     $sn4=$msg->getParam(4);  $content   = $sn4->scalarval();
     $sn5=$msg->getParam(5);  $publish   = $sn5->scalarval();
 
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or password while editing post",$username);
      } else {
         // FIXME: test for exceptions

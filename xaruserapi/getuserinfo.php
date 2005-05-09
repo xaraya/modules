@@ -33,7 +33,7 @@ function bloggerapi_userapi_getuserinfo($args)
     $sn2=$msg->getParam(2); $password= $sn2->scalarval();
     
     $err='';
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid user #(1) while getting user info",$username);
     } else {
         // Get the user info

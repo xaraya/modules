@@ -37,7 +37,7 @@ function bloggerapi_userapi_getrecentposts($args)
     $sn4=$msg->getParam(4);  $numberOfPosts = $sn4->scalarval();
     
     // Try to login 
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid username or password for (#(1)) while getting recent posts",$username);
     } else {
         $uid = xarUserGetVar('uid');

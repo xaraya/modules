@@ -37,7 +37,7 @@ function bloggerapi_userapi_newpost($args)
     $sn5=$msg->getParam(5);  $publish   = $sn5->scalarval();
     //xarLogVariable('publish', $publish);
 
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
       $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
     } else {
         // Fix for w.bloggar via marsel@phatcom.net (David Taylor)

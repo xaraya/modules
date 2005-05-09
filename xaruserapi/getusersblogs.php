@@ -34,7 +34,7 @@ function bloggerapi_userapi_getusersblogs($args)
     $sn2=$msg->getParam(2);  $password = $sn2->scalarval();
     
     // Try to login
-    if (!xarUserLogin($username, $password)) {
+    if (empty($password) || !xarUserLogin($username, $password)) {
         $err = xarML('Invalid user (#(1)) while getting users blogs',$username);
     } else {
         if (xarModIsHooked('categories','articles')) {

@@ -34,7 +34,7 @@ function bloggerapi_userapi_getpost($args)
     $sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
     $sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
     
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or wrong password while getting post",$username);
     } else {
         // FIXME: test for exceptions

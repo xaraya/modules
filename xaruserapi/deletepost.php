@@ -33,7 +33,7 @@ function bloggerapi_userapi_deletepost($args)
     $sn2=$msg->getParam(2); $username = $sn2->scalarval();
     $sn3=$msg->getParam(3); $password = $sn3->scalarval();
     
-    if (!xarUserLogin($username,$password)) {
+    if (empty($password) || !xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) while trying to delete post",$username);
     } else {
         // Apparently we have to pass in the itemtype to get the hooks to run properly, bleh
