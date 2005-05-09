@@ -16,7 +16,7 @@
     </xar:mlstring>
     :
 </label>
-<select name="addbbcode20" onchange="bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover="document.post.helpbox.value='#xarML("Font color: [color=red]text[/color]  Tip: you can also use color=#FF0000")#'; return true">
+<select name="addbbcode20" onchange="bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover="document.post.helpbox.value='#xarML("Font color: [color=red]text[/color]  Tip: you can also use")# color=#FF0000'; return true">
     <option style="color:black; background-color: #FAFAFA" value="#444444" class="xar-bbcode-genmed">
         <xar:mlstring>
             Default 
@@ -128,5 +128,5 @@
 </select>
 <a href="javascript:bbstyle(-1)" class="xar-bbcode-genmed" onmouseover="document.post.helpbox.value='#xarML("Close all open bbCode tags")#'; return true"><xar:mlstring>Close Tags</xar:mlstring></a>
 <span class="gensmall">
-    <input type="text" name="helpbox" maxlength="100" class="helpline" value="#xarML('Tip: Styles can be applied quickly to selected text.')#" />
+    <input type="text" name="helpbox" size="50" maxlength="100" class="helpline" value="#xarML('Tip: Styles can be applied quickly to selected text.')#" />
 </span>
