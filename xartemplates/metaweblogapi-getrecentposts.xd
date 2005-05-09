@@ -66,6 +66,12 @@
                       <string>#$loop:item.link#</string>
                     </value>
                   </member>
+                  <xar:if condition="isset($loop:item.keywords)">
+                    <member>
+                      <name>mt_keywords</name>
+                      <value><string>#$loop:item.keywords#</string></value>
+                   </member>
+                 </xar:if>
                 </struct>
               </value>
             </xar:loop>  

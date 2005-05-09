@@ -72,6 +72,11 @@ function metaweblogapi_userapi_getrecentposts($args)
                 }
             }
             $article_list[$i]['categories'] = $catnames;
+            // See if we can have keywords
+            if(xarModIsAvailable('keywords')) {
+                $keywords = xarModAPIFunc('keywords','user','getwords',array('modid' => 151, 'itemtype' => $article['pubtypeid'], 'itemid' => $article['aid']));
+                if(!empty($keywords)) $article_list[$i]['keywords'] = xarVarPrepForDisplay(join(',',$keywords));
+            }
             $i++;
         }
                 
