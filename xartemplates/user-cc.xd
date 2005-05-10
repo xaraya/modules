@@ -71,7 +71,7 @@
         </td>
     </tr>
     <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
-    <tr><td nowrap="nowrap"><xar:mlstring><strong>UV Index:</xar:mlstring></strong></td><td nowrap="nowrap">#$wData.uv#&nbsp;#$wData.uvDesc#</td></tr>
+    <tr><td nowrap="nowrap"><strong><xar:mlstring>UV Index:</xar:mlstring></strong></td><td nowrap="nowrap">#$wData.uv#&nbsp;#$wData.uvDesc#</td></tr>
     <tr><td nowrap="nowrap"><strong><xar:mlstring>Visibility:</xar:mlstring></strong></td><td nowrap="nowrap">#$wData.visibility#</td></tr>
     <tr><td nowrap="nowrap"><strong><xar:mlstring>Dew Point:</xar:mlstring></strong></td><td nowrap="nowrap">#$wData.dewPoint#&deg;#$wData.unitsTemp#</td></tr>
     <tr><td nowrap="nowrap"><strong><xar:mlstring>Humidity:</xar:mlstring></strong></td><td nowrap="nowrap">#$wData.humidity#%</td></tr>
