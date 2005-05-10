@@ -21,6 +21,10 @@ function keywords_userapi_getlist($args)
     
     extract($args); 
 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $keywordstable = $xartable['keywords'];
+
     if (!isset($tab)){
         $tab='0';
     }
@@ -28,20 +32,27 @@ function keywords_userapi_getlist($args)
     if ($tab == '0'){ 
         $where = null;
     } elseif ($tab == '1'){
-        $where = " WHERE xar_keyword REGEXP '^[A-F]'";
+        $where = " WHERE ("
+        ."'A' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'F')";
     } elseif ($tab == '2'){    
-        $where = " WHERE xar_keyword REGEXP '^[G-L]'";
+           $where = " WHERE ("
+        ."'G' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'L')";
     } elseif ($tab == '3'){    
-        $where = " WHERE xar_keyword REGEXP '^[M-R]'";
+           $where = " WHERE ("
+        ."'M' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'R')";
     } elseif ($tab == '4'){    
-        $where = " WHERE xar_keyword REGEXP '^[S-Z]'";
+           $where = " WHERE ("
+        ."'S' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'Z')";
     } elseif ($tab == '5'){    
-        $where = " WHERE xar_keyword REGEXP '^[^A-Z]'"; 
+          $where = " WHERE ("
+        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) < 'A' OR "
+        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) > 'Z')";
     }                
      
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $keywordstable = $xartable['keywords'];
 
     // Get count per keyword from the database
     if (!empty($args['count'])) {
