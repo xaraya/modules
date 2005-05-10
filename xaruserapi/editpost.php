@@ -49,17 +49,20 @@ function metaweblogapi_userapi_editpost($args)
     } 
     
     // See if we got MT stuff
-    $usingMT = isset($mt_allow_comments);
+    $usingMT = isset($mt_allow_comments); // use this as assumption
+    
     // Extended entry
     if(!isset($mt_text_more)) {
         $body = $article['body'];
     } else {
         $body = $mt_text_more;
+        $usingMT = true;
     }
     // Keywords
     $keywords = '';
     if(isset($mt_keywords)) {
         $keywords = $mt_keywords;
+        $usingMT = true;
     } else {
         // Use the keywords already registered
         if(xarModIsAvailable('keywords')) {
@@ -113,4 +116,4 @@ function metaweblogapi_userapi_editpost($args)
     }
     return $output;
 }
-    ?>
+?>
