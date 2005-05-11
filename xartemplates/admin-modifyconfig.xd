@@ -11,8 +11,10 @@
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
                     <td colspan="2">
-                        <xar:mlstring>If you are configuring Xaraya to use LDAP for user authentication, you should configure the LDAP server within the</xar:mlstring>
-                        <a href="#xarModURL('authldap', 'admin', 'modifyconfig')#">authldap module</a>.
+                        <xar:ml>
+                            <xar:mlstring>If you are configuring Xaraya to use LDAP for user authentication, you should configure the LDAP server within the <a href="#(1)">authldap module</a>.</xar:mlstring>
+                            <xar:mlvar>#xarModURL('authldap', 'admin', 'modifyconfig')#</xar:mlvar>
+                        </xar:ml>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
