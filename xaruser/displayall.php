@@ -167,7 +167,7 @@ function comments_user_displayall($args)
                 $daylabel=xarML('Two days ago');
             }
             elseif ($hoursdiff>=$hoursnow+48 && $hoursdiff<$hoursnow+144 && $msgdate!=$dateprev) {
-                $daylabel=xarML("$msgday");
+                $daylabel=$msgday;
             }
             elseif ($hoursdiff>=$hoursnow+144 && $msgdate!=$dateprev) {
                 $daylabel=$msgdate;
