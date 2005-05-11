@@ -21,20 +21,9 @@ function opentracker_user_main($args)
     extract($args); 
     
     $data['period'] = $period;
-    $monthNames = array(
-      xarML('January'),
-      xarML('February'),
-      xarML('March'),
-      xarML('April'),
-      xarML('May'),
-      xarML('June'),
-      xarML('July'),
-      xarML('August'),
-      xarML('September'),
-      xarML('October'),
-      xarML('November'),
-      xarML('December')
-    );
+
+    // load the locale data
+    $localeData =& xarMLSLoadLocaleData();
     
     $limit = 10;
     $clientID = 1;
@@ -132,7 +121,7 @@ switch ($period)
                                                                           'period' => 'month'
                                                                       )
                                   ),
-          'displayname' => $monthNames[($month-1)]
+          'displayname' => $localeData['/dateSymbols/months/'.$month.'/full']
       );
       
       if ($month == $lastMonth && $year == $lastYear) {
@@ -147,8 +136,10 @@ switch ($period)
       }
     }
     //
-    $data['first'] = date('d-M-Y', isset($firstAccess) ? $firstAccess : $time);
-    $data['last'] = date('d-M-Y', isset($lastAccess)  ? $lastAccess  : $time);
+    //$data['first'] = date('d-M-Y', isset($firstAccess) ? $firstAccess : $time);
+    //$data['last'] = date('d-M-Y', isset($lastAccess)  ? $lastAccess  : $time);
+    $data['first'] = xarLocaleGetFormattedDate('medium', isset($firstAccess) ? $firstAccess : $time);
+    $data['last'] = xarLocaleGetFormattedDate('medium', isset($lastAccess)  ? $lastAccess  : $time);
     $data['graphurl'] = xarModUrl('opentracker', 'user', 'graph',
         array(
             'start' => mktime(0, 0, 0, $lastMonth, 1, $lastYear -1),
@@ -198,7 +189,7 @@ switch ($period)
             'height' => 260
         ));
     $data['item_statistics_title'] = xarML('Daily Statistics');
-    $data['maintitle'] = xarML("Monthly Statistics for #(1) #(2)", $monthNames[$month], $year);
+    $data['maintitle'] = xarML("Monthly Statistics for #(1) #(2)", $localeData['/dateSymbols/months/'.$month.'/full'], $year);
     break;
     
   case 'day':
@@ -230,7 +221,7 @@ switch ($period)
             'height' => 260
         ));
     $data['item_statistics_title'] = xarML('Hourly Statistics');
-    $data['maintitle'] = xarML("Daily Statistics for #(1). #(2) #(3)", $day, $monthNames[$month], $year);
+    $data['maintitle'] = xarML("Daily Statistics for #(1). #(2) #(3)", $day, $localeData['/dateSymbols/months/'.$month.'/full'], $year);
   break;
     
 }
