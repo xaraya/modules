@@ -33,6 +33,13 @@ Various stuff to do:
   or even the full path of the page.
 - Add copyright notices to all scripts and templates.
 - Apply privileges to individual pages in the menu block.
+- Provide an SSL yes/no/default option to each page
+- Allow the admin to decide which DD fields are fetched by default for menus.
+  For example, a menu may require the 'menu_title' field, but fetching the 
+  content of every page at the same time is probably overkill. This would go
+  hand-in-hand with some versatile cache so that pages, DD fields etc could
+  be cached a layer or item at a time, as they are fetched within the
+  generation of a single page.
 
 - Creation of sample blocks - a crumb-trail, a CSS menu etc. - DONE
 - Privileges (registered, but not yet actually used) - DONE
