@@ -16,9 +16,17 @@ function xarpages_userapi_getitemtypes($args)
     $pagetypes = xarModAPIFunc('xarpages', 'user', 'gettypes');
 
     foreach ($pagetypes as $pagetype) {
+        // The description is multi-line, so only take the first line as the title.
+        $desc_line1 = preg_replace('/[\n\r].*/', '', $pagetype['desc']);
+
+        // The description is optional, so use the name as a fallback.
+        if (empty($desc_line1)) {
+            $desc_line1 = $pagetype['name'];
+        }
+
         $itemtypes[$pagetype['ptid']] = array(
-            'label' => xarVarPrepForDisplay($pagetype['desc']),
-            'title' => xarVarPrepForDisplay(xarML('Display #(1)', $pagetype['desc'])),
+            'label' => xarVarPrepForDisplay($desc_line1),
+            'title' => xarVarPrepForDisplay(xarML('Display #(1)', $desc_line1)),
             'url'   => xarModURL('xarpages', 'user', 'display', array('ptid' => $pagetype['ptid']))
         );
     }
