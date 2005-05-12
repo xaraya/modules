@@ -7,7 +7,7 @@
  * @param $args['pid'] the ID of the page
  * @param $args['name'] the modified name of the page
  * @param $args['desc'] the modified description of the page
- * @param $args['moving'] = 1 means the page can move around
+ * @param $args['moving'] = 1 means the page can move to a new position
  *
  * If $args['moving'] != 1 then these shouldn´t be set:
  * @param $args['insertpoint'] the ID of the reference page
@@ -17,8 +17,7 @@
  *
  * @return true on success, false on failure
  *
- * @todo Allow the status of a page to be propagated to all child pages.
- * @TODO: changing itemtype is not supported by xarpages updatepage yet ! (cfr. DD migrate)
+ * @todo: changing itemtype is not supported by xarpages updatepage yet! (cfr. DD migrate)
  */
 
 function xarpages_adminapi_updatepage($args)
@@ -60,9 +59,10 @@ function xarpages_adminapi_updatepage($args)
     }
 
     // Set the module alias if necessary.
-    // If the name has changed, then remove any existing alias.
+    // If the name has changed, then remove any alias to the old page name.
     if (isset($name)) {
-        if ($page['name'] != $name || empty($alias)) {
+        // Only delete the alias if it belongs to this module.
+        if (($page['name'] != $name || empty($alias)) && xarModGetAlias($page['name']) == 'xarpages') {
             xarModDelAlias($page['name'], 'xarpages');
         }
     }
@@ -70,7 +70,10 @@ function xarpages_adminapi_updatepage($args)
     // If the alias flag is set, then set the alias.
     if (!empty($alias)) {
         // Use the current name if passed in, else use the existing name.
-        xarModSetAlias((isset($name) ? $name : $page['name']), 'xarpages');
+        // Only set if the alias is not currently being used by this or any other module.
+        if (xarModGetAlias(isset($name) ? $name : $page['name']) != '') {
+            xarModSetAlias((isset($name) ? $name : $page['name']), 'xarpages');
+        }
     }
 
     // Get database setup
@@ -79,7 +82,7 @@ function xarpages_adminapi_updatepage($args)
     $tablename = $xartable['xarpages_pages'];
 
     // Move the item in the hierarchy/tree, if required.
-    if ($moving == 1) {
+    if (!empty($moving) && $moving == 1) {
         if (!xarModAPIfunc(
             'xarpages', 'tree', 'moveitem',
             array(

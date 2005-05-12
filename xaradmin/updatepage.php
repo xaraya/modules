@@ -51,15 +51,18 @@ function xarpages_admin_updatepage()
     if (!xarVarFetch('alias', 'int:0:1', $alias, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Validate the status against the list available.
-    // TODO: allow the admin to propagate the status to all child pages (when ACIVE or INACTIVE).
     $statuses = xarModAPIfunc('xarpages', 'user', 'getstatuses');
     if (!xarVarFetch('status', 'pre:upper:enum:' . implode(':', array_keys($statuses)), $status, NULL, XARVAR_NOT_REQUIRED)) return;
+
+    // Allow the admin to propagate the status to all child pages (when ACIVE or INACTIVE).
     if (!xarVarFetch('status_recurse', 'bool', $status_recurse, NULL, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('moving', 'bool', $moving)) return;
+    // Bug 4495: ensure sensible defaults here, since these items may be suppressed in
+    // the update form for some users.
+    if (!xarVarFetch('moving', 'bool', $moving, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('movepage', 'bool', $movepage, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('refpid', 'int:0', $refpid)) return;
-    if (!xarVarFetch('position', 'enum:before:after:firstchild:lastchild', $position)) return;
+    if (!xarVarFetch('refpid', 'pre:field:refpid:int:0', $refpid, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('position', 'enum:before:after:firstchild:lastchild', $position, 'before', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;

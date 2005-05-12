@@ -1,5 +1,6 @@
 <?php
-/*
+
+/**
  * Create a page.
  * It is added to the group hierarchy.
  * Mandatory columns:
@@ -7,9 +8,10 @@
  *  desc: group description
  *  insertpoint: ID of group inserting relative to
  *  offset: relationship to insertpoint ('after', 'before', 'firstchild', 'lastchild')
- * TODO: check the page type is valid
- * TODO: default most values and raise an error in missing mandatory values
- * @TODO: specifying pid is not supported by xarpages createpage yet ! (cfr. DD migrate)
+ * @TODO: check the page type is valid
+ * @TODO: default most values and raise an error in missing mandatory values
+ * @TODO: specifying pid is not supported by xarpages createpage yet! (cfr. DD migrate)
+ * @TODO: I would like to keep the DD fields separate from the standard fields (in a 'dd' element)
  */
 
 function xarpages_adminapi_createpage($args)
@@ -109,7 +111,7 @@ function xarpages_adminapi_createpage($args)
         $pid = $dbconn->PO_Insert_ID($tablename, $idname);
     }
 
-    // Create hooks - by passing the original $args list, any DD fields will also be passed
+    // Create hooks - by passing the original $args list, any DD fields will also be passed.
     $args['module'] = 'xarpages';
     $args['itemtype'] = $itemtype;
     $args['itemid'] = $pid;
