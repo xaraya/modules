@@ -185,18 +185,17 @@ function xarpages_admin_modifypage()
     // whether it is available before using its API.
     $custom_apis = array();
     foreach(array('encode', 'decode', 'func') as $api) {
-        $custom_apis[$api] = xarModAPIfunc(
-            'dynamicdata', 'admin', 'browse',
+        $data['custom_apis'][$api] = xarModAPIfunc(
+            'xarpages', 'user', 'browse_files',
             array(
-                'basedir' => 'modules/' . $modinfo['directory'] . '/xar' . $api . 'api',
-                'filetype' => 'php'
+                'module'=>'xarpages',
+                'basedir'=>'xar'.$api.'api',
+                'levels' => 1,
+                'match_glob' => '*.php',
+                'strip_re'=>'/.php$/'
             )
         );
-        foreach($custom_apis[$api] as $key => $value) {
-            $custom_apis[$api][$key] = preg_replace('/.php$/', '', $value);
-        }
     }
-    $data['custom_apis'] = $custom_apis;
 
     // Get the list of available page templates.
     // TODO: create a property for doing this, as it can get a bit complex, and
@@ -208,33 +207,39 @@ function xarpages_admin_modifypage()
     $template_prefix = 'page-' . $data['page']['pagetype']['name'] . '-';
 
     $templates = xarModAPIfunc(
-        'dynamicdata', 'admin', 'browse',
+        'xarpages', 'user', 'browse_files',
         array(
-            'basedir' => 'modules/' . $modinfo['directory'] . '/xartemplates',
-            'filetype' => 'xd'
+            'module'=>'xarpages',
+            'basedir'=>'xartemplates',
+            'levels' => 1,
+            'match_glob' => $template_prefix . '*.xd',
+            'strip_re'=>'/^'.$template_prefix.'|.xd$/'
         )
     );
-    foreach($templates as $template) {
-        if (preg_match('/^' . $template_prefix . '/', $template)) {
-            $root = preg_replace(array('/^' . $template_prefix . '/', '/[.]xd$/'), '', $template);
-            $template_list[$root] = 'xarpages: ' . $root;
+    if (!empty($templates)) {
+        foreach($templates as $template) {
+            $template_list[$template] = 'xarpages: ' . $template;
         }
     }
+
     // Loop through the themes, and fetch any templates there.
     $themes = xarModAPIfunc('themes', 'admin', 'getlist', array('state' => XARTHEME_STATE_ACTIVE));
     foreach($themes as $theme) {
         // Check for templates for this module in the theme.
         $templates = xarModAPIfunc(
-            'dynamicdata', 'admin', 'browse',
+            'xarpages', 'user', 'browse_files',
             array(
+                // TODO: find a way to avoid messing around with directory assumptions here.
+                // Idealy this module should not need to know anything about this file structure.
                 'basedir' => 'themes/' . $theme['osdirectory'] . '/modules/' . $modinfo['directory'],
-                'filetype' => 'xt'
+                'levels' => 1,
+                'match_glob' => $template_prefix . '*.xt',
+                'strip_re'=>'/^'.$template_prefix.'|.xt$/'
             )
         );
-        foreach($templates as $template) {
-            if (preg_match('/^' . $template_prefix . '/', $template)) {
-                $root = preg_replace(array('/^' . $template_prefix . '/', '/[.]xt$/'), '', $template);
-                $template_list[$root] = $theme['name'] . ': ' . $root;
+        if (!empty($templates)) {
+            foreach($templates as $template) {
+                    $template_list[$template] = $theme['name'] . ': ' . $template;
             }
         }
     }
