@@ -1,49 +1,127 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Censor Module</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Censor Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/censor/xarimages/admin.gif')" >
-                <img src="modules/censor/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/modules/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if></div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+    <h3>
             <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>The Censor Module is a utility module</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Censoring words and phrases that you do not find appropriate for your website</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    </h3>
+    <p>
+        <em>
+            <xar:mlstring>Censor is a Xaraya Utility Module.</xar:mlstring>
+        </em>
+        <xar:mlstring>It is currently responsible for removing words and phrases deemed inappropriate from content displayed on your website.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>You have the ability to add, delete, modify and view the censor words that you find offensive. In addition, in the modify config portion of your module, you can decide what to replace the words with, and the number of censor items to view at once.</xar:mlstring>
+    </p>
+    <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>You have the ability to add, delete, modify and view the censor words that you find offensive on your website.  In addition, in the modify config portion of your module, you can decide what to replace the words with, and the number of censor items to view at once.</xar:mlstring>
-
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    </h3>
+    <p>
+        <xar:mlstring>The administrative menu choices for this module are:</xar:mlstring>
+    </p>
+    <p>
+    <strong>
+        <xar:mlstring>
+            View
+        </xar:mlstring>
+        </strong>
+        -
+        <xar:mlstring>
+            view words that are currently being censored
+        </xar:mlstring>
+    </p>
+    <p>
+    <strong>
+        <xar:mlstring>
+            Add
+        </xar:mlstring>
+        </strong>
+        -
+        <xar:mlstring>
+            this option is for adding words to be censored. The 'Add' page contains the following fields:
+        </xar:mlstring>
+    </p>
+        <ol>
+            <li>
+                <xar:mlstring>
+                    Keyword - the word to be censored
+                </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>
+                    Case sensitive - this option declares whether or not upper of lower case letters are taken into consideration in the censoring process
+                </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>
+                    Match Case - this provides the following options:
+                </xar:mlstring>
+            </li>
+                <ul>
+                    <li>
+                        <xar:mlstring>
+                            Exact - replace ONLY the exact word
+                        </xar:mlstring>
+                    </li>
+                    <li>
+                        <xar:mlstring>
+                            Start with - replace only words STARTING with the censored word
+                        </xar:mlstring>
+                    </li>
+                    <li>
+                        <xar:mlstring>
+                            End with - replace only words ENDING with the censored word
+                        </xar:mlstring>
+                    </li>
+                    <li>
+                        <xar:mlstring>
+                            Everywhere - replace the censored word regardless of where it occurs (beginning, ending, middle, or by its self
+                        </xar:mlstring>
+                    </li>
+                </ol>
+    <p>
+    <strong>
+        <xar:mlstring>
+            Modify Config
+        </xar:mlstring>
+    </strong>
+        <xar:mlstring>
+            - this page currently has two fields:
+        </xar:mlstring>
+        <ol>
+            <li>
+                <xar:mlstring>
+                    Replace String - what you will replace the censored word with
+                </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>
+                    Items Per Page
+                </xar:mlstring>
+            </li>
+        </ol>
+    </p>
+    <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    </h3>
+    <p>
             <xar:mlstring>There are no included blocks.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    </p>
+    <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    </h3>
+    <p>
             <xar:mlstring>Transform hook allows you to choose which modules you want to censor and which you do not.</xar:mlstring>
+    </p>
         </div>
-    </div>
+<div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <p>
+        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+    </p>
 </div>

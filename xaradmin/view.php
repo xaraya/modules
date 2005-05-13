@@ -17,15 +17,9 @@ function censor_admin_view()
 { 
     // Get parameters
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-// -> janez $authid = xarSecGenAuthKey();
-   
     
     // Specify some labels for display
-    $data['keywordlabel'] = xarVarPrepForDisplay(xarML('Key Word'));
-    $data['caselabel'] = xarVarPrepForDisplay(xarML('Case Sensitive'));
-    $data['matchcaselabel'] = xarVarPrepForDisplay(xarML('Match case'));
-    $data['localelabel'] = xarVarPrepForDisplay(xarML('Locale'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
+    
     $data['authid'] = xarSecGenAuthKey();
     
     // ftb -> where we can set this?
@@ -82,7 +76,6 @@ function censor_admin_view()
             $censors[$i]['deleteurl'] = '';
         } 
 
-        $censors[$i]['deletetitle'] = xarML('Delete');
         $censors[$i]['locale'] = implode(", ", $censor['locale']);
        
     } 

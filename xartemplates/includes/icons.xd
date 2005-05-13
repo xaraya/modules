@@ -34,28 +34,28 @@
             </td>
             <td>
             <xar:if condition="$loop:item['case_sensitive'] eq '1'">
-            <img src="modules/censor/xarimages/yes.gif" alt="#xarML('Yes')#" />
+            <img src="#xarTplGetImage('yes.gif','censor')#" alt="#xarML('Yes')#" />
             <xar:else/>
-            <img src="modules/censor/xarimages/no.gif" alt="#xarML('No')#" />
+            <img src="#xarTplGetImage('no.gif','censor')#" alt="#xarML('No')#" />
             </xar:if>
             </td>
             <td>
             <xar:if condition="$loop:item['match_case'] eq '0'">
-            <img src="modules/censor/xarimages/no.gif" alt="#xarML('Exact')#" />
+            <img src="#xarTplGetImage('no.gif','censor')#" alt="#xarML('Exact')#" />
             <xar:elseif condition="$loop:item['match_case'] eq '1'" />
-            <img src="modules/censor/xarimages/start.gif" alt="#xarML('Start with ...')#" />
+            <img src="#xarTplGetImage('start.gif','censor')#" alt="#xarML('Start with ...')#" />
             <xar:elseif condition="$loop:item['match_case'] eq '2'" />
-            <img src="modules/censor/xarimages/end.gif" alt="#xarML('End with ...')#"  />
+            <img src="#xarTplGetImage('end.gif','censor')#" alt="#xarML('End with ...')#"  />
             <xar:else />
-            <img src="modules/censor/xarimages/ever.gif" alt="#xarML('Everywhere')#"  />
+            <img src="#xarTplGetImage('ever.gif','censor')#" alt="#xarML('Everywhere')#"  />
             </xar:if>
             </td>
             <td>
             #$loop:item['locale']#
             </td>
             <td>
-                <a href="#$loop:item['editurl']#"><img src="modules/censor/xarimages/edit.gif" alt="#$loop:item['edittitle']#" /></a>
-                <a href="#$loop:item['deleteurl']#"><img src="modules/censor/xarimages/delete.gif" alt="#$loop:item['deletetitle']#" /></a>
+                <a href="#$loop:item['editurl']#"><img src="#xarTplGetImage('edit.gif','censor')#" alt="#xarML('Edit')#" /></a>
+                <a href="#$loop:item['deleteurl']#"><img src="#xarTplGetImage('delete.gif','censor')#" alt="#xarML('Delete')#" /></a>
             </td>
         </tr>
         </xar:loop>
