@@ -1,28 +1,18 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Administration - Polls
-        </xar:mlstring>
-    </span>
+    <span class="xar-mod-title"><xar:mlstring>Polls Administration </xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
     <h2>
         <xar:mlstring>
             Overview
         </xar:mlstring>
     </h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>
-                What is it?
-            </xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    <h3>
+        <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
+    <p>
             <em>
                 <xar:mlstring>
                     Polls is a Xaraya Content Module.
@@ -38,15 +28,11 @@
                     </xar:mlstring>
                 </li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>
-                How to use it?
-            </xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    <p>
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+    <p>
             <xar:mlstring>
                 From the menu, you have four choices.
             </xar:mlstring>
@@ -88,27 +74,19 @@
                     </xar:mlstring>
                 </li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>
-                Included Blocks
-            </xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    </p>
+    <h3>
+        <xar:mlstring>Included Blocks</xar:mlstring>
+    </h3>
+    <p>
             <xar:mlstring>
                 Poll blocks will display the current poll in block format.
             </xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>
-                Included Hooks
-            </xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    </p>
+    <h3>
+        <xar:mlstring>Included Hooks</xar:mlstring>
+    </h3>
+    <p>
             <ul>
                 <li>
                     <xar:mlstring>
@@ -121,13 +99,10 @@
                     </xar:mlstring>
                 </li>
             </ul>
+    </p>
         </div>
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+<div class="xar-mod-foot xar-align-center xar-padding-thick">
             <p>
-                <xar:mlstring>
-                    Extended information about this module can be found here. [modules module]
-                </xar:mlstring>
+        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
             </p>
         </div>
-    </div>
-</div>

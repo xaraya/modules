@@ -24,6 +24,10 @@ function polls_user_results($args)
 
     extract($args);
 
+    if(!xarSecurityCheck('ViewResultsPolls')){
+        return;
+    }
+
     if (!isset($pid)) {
         $msg = xarML('Missing poll ID');
         xarErrorSet(XAR_USER_EXCEPTION,
