@@ -41,6 +41,7 @@ function xarbb_user_subscribe()
                        'user',
                        'updatetopic',
                        array('tid'      => $tid,
+                             'fid'      => $data['fid'],
                              'ttime'    => $data['ttime'],
                              'toptions' => $mergedarray))) return;
     // And then go back to the topic.
