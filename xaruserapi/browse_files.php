@@ -33,7 +33,8 @@
  * @todo allow wildcards for modules and even for basedir, so the function will scan multiple modules or trees
  */
 
-function xarpages_userapi_browse_files($args) {
+function xarpages_userapi_browse_files($args)
+{
     extract($args);
 
     // Maximum possible directory levels the function will follow
