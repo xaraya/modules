@@ -1,32 +1,79 @@
-
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td> <table border="0" width="100%" cellspacing="0" cellpadding="0">
-  <tr>
-    <td height="14" class="infoBoxHeading"><img src="#xarTplGetImage('corner_right_left.gif','commerce')#" border="0" alt="" width="11" height="14"></td>
-    <td width="100%" height="14" class="infoBoxHeading"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#heading_admin#}</font></td>
-    <td height="14" class="infoBoxHeading" nowrap><img src="#xarTplGetImage('pixel_trans.gif','commerce')#" border="0" alt="" width="11" height="14"></td>
-  </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="1" class="infoBox">
-  <tr>
-    <td><table border="0" width="100%" cellspacing="0" cellpadding="3" class="infoBoxContents">
-  <tr>
-    <td><img src="#xarTplGetImage('pixel_trans.gif','commerce')#" border="0" alt="" width="100%" height="1"></td>
-  </tr>
-  <tr>
-    <td align="left" class="boxText"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-    <FORM method="POST" name="post" id="post" action="formaction">
-    </FORM>
-    </font></td>
-  </tr>
-  <tr>
-    <td><img src="#xarTplGetImage('pixel_trans.gif','commerce')#" border="0" alt="" width="100%" height="1"></td>
-  </tr>
-</table>
-</td>
-  </tr>
-</table></td>
-  </tr>
+<table class="xar-fullwidth xar-noborder" cellpadding="0" cellspacing="0">
+	<tr>
+		<td> 
+			<table class="xar-fullwidth xar-noborder" cellspacing="0" cellpadding="0">
+				<tr>
+					<td height="14" class="infoBoxHeading">
+						<img src="#xarTplGetImage('corner_right_left.gif','commerce')#" border="0" alt="" width="11" height="14">
+					</td>
+					<td width="100%" height="14" class="infoBoxHeading">
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+							<xar:mlstring>
+								Admin Info
+							</xar:mlstring>
+						</font>
+					</td>
+					<td height="14" class="infoBoxHeading" nowrap>
+						<img src="#xarTplGetImage('pixel_trans.gif','commerce')#" border="0" alt="" width="11" height="14">
+					</td>
+				</tr>
+			</table>
+			<table class="xar-fullwidth xar-noborder" cellspacing="0" cellpadding="1" class="infoBox">
+				<tr>
+					<td>
+						<table class="xar-fullwidth xar-noborder" cellspacing="0" cellpadding="3" class="infoBoxContents">
+							<tr>
+								<td align="left" class="boxText">
+									<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+										<FORM method="POST" name="post" id="post" action="formaction">
+										</FORM>
+									</font>
+									<b><xar:mlstring>
+										Statistics
+									</xar:mlstring></b>
+									<br />
+									<xar:loop name="$order_status">
+										<a href="#xarModURL('commerce','user','orders', array('selected_box' => 'customers', 'status' => $loop:item['id']))#">
+											#$loop:item['name']#
+										</a>: #$loop:item['count']#
+										<br>
+									</xar:loop>
+									<xar:if condition="isset($customers)">
+										<xar:mlstring>
+											Customers
+										</xar:mlstring>
+										#$customers['count']#
+										<br />
+									</xar:if>
+									<xar:if condition="isset($products)">
+										<xar:mlstring>
+											Products
+										</xar:mlstring>
+										#$products['count']#
+										<br />
+									</xar:if>
+									<xar:if condition="isset($reviews)">
+										<xar:mlstring>
+											Reviews
+										</xar:mlstring>
+										#$reviews['count']#
+										<br />
+									</xar:if>
+									<a href="#xarModURL('commerce','admin','start')#">
+										<img src="#xarTplGetImage($language .'/admin/buttons/admin_button.gif','commerce')#" border="0" alt="#xarML('Admin')#">
+									</a>
+									<xar:if condition="($cPath ne 0) and (isset($product_info['products_id']))">									
+										<a href="#xarModURL('commerce','user','product_screen', array('cPath' => $cPath, 'pID' => $product_info['products_id'], 'action' => 'new_product'))#" target="_blank">
+											<img src="#xarTplGetImage($language .'/admin/icons/edit_product.gif')#">
+										</a>
+									</xar:if>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 </table>
 

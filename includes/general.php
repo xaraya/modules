@@ -1611,7 +1611,7 @@ $language_id = 1;
     return $uploaded_file;
   }
 
-  function get_group_price($group_id, $product_id) {
+/*  function get_group_price($group_id, $product_id) {
     // well, first try to get group price from database
     $group_price_query = new xenQuery("SELECT personal_offer FROM personal_offers_by_customers_status_" . $group_id . " WHERE products_id = '" . $product_id . "'");
       $q = new xenQuery();
@@ -1627,7 +1627,7 @@ $language_id = 1;
     }
     return $group_price_data['personal_offer'];
   }
-
+*/
   function format_price($price_string, $price_special, $currency, $allow_tax, $tax_rate) {
     // calculate currencies
     $currencies_query = new xenQuery("SELECT

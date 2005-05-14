@@ -9,7 +9,7 @@
         <td>
 			<table border="0" width="100%" cellspacing="0" cellpadding="0">
 			  <tr>
-				<td class="pageHeading"><ml:string>Currencies</ml:string></td>
+				<td class="pageHeading"><xar:mlstring>Currencies</xar:mlstring></td>
 				<td class="pageHeading" align="right">
 					#xarModAPIFunc('commerce','user','draw_separator',array('image' => 'pixel_trans.gif'))#
 				</td>
@@ -24,10 +24,10 @@
 				<td valign="top">
 				<table border="0" width="100%" cellspacing="0" cellpadding="2">
 				  <tr class="dataTableHeadingRow">
-					<td class="dataTableHeadingContent"><ml:string>Currency</ml:string></td>
-					<td class="dataTableHeadingContent"><ml:string>Code</ml:string></td>
-					<td class="dataTableHeadingContent" align="center">Value<ml:string></ml:string></td>
-					<td class="dataTableHeadingContent" align="right"><ml:string>Action</ml:string>&nbsp;</td>
+					<td class="dataTableHeadingContent"><xar:mlstring>Currency</xar:mlstring></td>
+					<td class="dataTableHeadingContent"><xar:mlstring>Code</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="center"><xar:mlstring>Value</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="right"><xar:mlstring>Action</xar:mlstring>&nbsp;</td>
 				  </tr>
 
 <xar:comment>  BEGIN LOOP ROWS  </xar:comment>

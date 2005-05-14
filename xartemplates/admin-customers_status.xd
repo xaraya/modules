@@ -10,10 +10,10 @@
 			<table border="0" width="100%" cellspacing="0" cellpadding="0">
 			  <tr>
 				<td width="80" rowspan="2"><img src="#xarTplGetImage('adminicons/heading_customers.gif')#"></td>
-				<td class="pageHeading"><ml:string>Customer Groups</ml:string></td>
+				<td class="pageHeading"><xar:mlstring>Customer Groups</xar:mlstring></td>
 			  </tr>
 			  <tr>
-				<td class="main" valign="top"><ml:string>XT Customers</ml:string></td>
+				<td class="main" valign="top"><xar:mlstring>XT Customers</xar:mlstring></td>
 			  </tr>
 			</table>
         </td>
@@ -24,15 +24,15 @@
 			  <tr>
 				<td valign="top">
 				<table border="0" width="100%" cellspacing="0" cellpadding="2">
-					<td class="dataTableHeadingContent" align="left" width=""><ml:string>Icon</ml:string></td>
-					<td class="dataTableHeadingContent" align="left" width=""><ml:string>User</ml:string></td>
-					<td class="dataTableHeadingContent" align="left" width=""><ml:string>Group</ml:string></td>
-					<td class="dataTableHeadingContent" align="center" width=""><ml:string> Price/Tax</ml:string></td>
-					<td class="dataTableHeadingContent" align="center" colspan="2"><ml:string>Discount</ml:string></td>
-					<td class="dataTableHeadingContent" width=""><ml:string>Graduated Price</ml:string></td>
-					<td class="dataTableHeadingContent" width=""><ml:string>Payment N/A</ml:string></td>
-					<td class="dataTableHeadingContent" width=""><ml:string>Shipping N/A</ml:string></td>
-					<td class="dataTableHeadingContent" align="right"><ml:string>Action</ml:string>&nbsp;</td>
+					<td class="dataTableHeadingContent" align="left" width=""><xar:mlstring>Icon</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="left" width=""><xar:mlstring>User</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="left" width=""><xar:mlstring>Group</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="center" width=""><xar:mlstring> Price/Tax</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="center" colspan="2"><xar:mlstring>Discount</xar:mlstring></td>
+					<td class="dataTableHeadingContent" width=""><xar:mlstring>Graduated Price</xar:mlstring></td>
+					<td class="dataTableHeadingContent" width=""><xar:mlstring>Payment N/A</xar:mlstring></td>
+					<td class="dataTableHeadingContent" width=""><xar:mlstring>Shipping N/A</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="right"><xar:mlstring>Action</xar:mlstring>&nbsp;</td>
 				  </tr>
 
 <xar:comment>  BEGIN LOOP ROWS  </xar:comment>
@@ -46,7 +46,7 @@
 
             <td class="dataTableContent" align="left">
 				<xar:if condition="isset($loop:item['customers_status_image']) and $loop:item['customers_status_image'] ne ''">
-					<img src="#xarTplGetImage($loop:item['customers_status_image'])#" alt="xarML('Group icon')">
+					<img src="#xarTplGetImage($loop:item['customers_status_image'])#" alt="#xarML('Group icon')#">
 				<xar:else />
 					&nbsp;
 				</xar:if>
@@ -56,25 +56,25 @@
 			<td class="dataTableContent" align="left">
 				<xar:if condition = "$loop:item['customers_status_id'] eq $configuration.default_customers_status_id">
 					<b>#$loop:item['customers_status_name']#
-					(<ml:string>default</ml:string>)
+					(<xar:mlstring>default</xar:mlstring>)
 					<xar:if condition = "$loop:item['customers_status_public'] eq 1">
-						&nbsp;<ml:string>public</ml:string>
+						&nbsp;<xar:mlstring>public</xar:mlstring>
 	                </xar:if>
 	                </b>
                 <xar:else />
 					#$loop:item['customers_status_name']#
-					(<ml:string>default</ml:string>)
+					(<xar:mlstring>default</xar:mlstring>)
 					<xar:if condition = "$loop:item['customers_status_public'] eq 1">
-						&nbsp;<ml:string>public</ml:string>
+						&nbsp;<xar:mlstring>public</xar:mlstring>
 	                </xar:if>
                 </xar:if>
             </td>
 			<xar:if condition = "$loop:item['customers_status_show_price'] eq 1">
 				<td nowrap class="smallText" align="center">
 					<xar:if condition = "$loop:item['customers_status_show_price_tax'] eq 1">
-						<ml:string>incl.</ml:string>
+						<xar:mlstring>incl.</xar:mlstring>
 					<xar:else />
-						<ml:string>excl.</ml:string>
+						<xar:mlstring>excl.</xar:mlstring>
 	                </xar:if>
 	            </td>
             <xar:else />
@@ -96,9 +96,9 @@
             </td>
 			<td class="dataTableContent" align="center">
 				<xar:if condition = "$loop:item['customers_status_graduated_prices'] eq 0">
-						<ml:string>no</ml:string>
+						<xar:mlstring>no</xar:mlstring>
 				<xar:else />
-						<ml:string>yes</ml:string>
+						<xar:mlstring>yes</xar:mlstring>
 				</xar:if>
 			</td>
 			<td nowrap class="smallText" align="center">

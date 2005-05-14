@@ -14,7 +14,7 @@
 					<xar:mlstring>Your Account</xar:mlstring>
 				</a> |
 			</xar:if>
-			<a href="#xarModURL('commerce','user','cart')#">
+			<a href="#xarModURL('commerce','user','shopping_cart')#">
 				<xar:mlstring>Shopping Cart</xar:mlstring>
 			</a> |
 			<a href="#xarModURL('commerce','user','checkout')#">

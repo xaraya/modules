@@ -16,27 +16,46 @@
 
 
 <xar:loop name="$group_data">
-	<xar:if condition="$loop:item[$configuration['status_name']] ne ''">
-<tr>
-	<td style="border-top: 1px solid; border-color: #cccccc;" valign="top" class="main">
-		$loop:item[$configuration['status_name']]
-	</td>
+	<xar:if condition="$loop:item['status_name'] ne ''">
+		<tr>
+			<td style="border-top: 1px solid; border-color: #cccccc;" valign="top" class="main">
+				#$loop:item['status_name']#
+			</td>
 
-	<xar:if condition="$configuration['price_is_brutto']">
-$products_price = round(get_group_price($loop:item[$configuration['status_id']], $pInfo->products_id)*((100+xtc_get_tax_rate($pInfo->products_tax_class_id))/100),$configuration['price_precision']);
+<xar:comment> ------------------------------------ Assemble some vars ----------- </xar:comment>
 
-	<xar:else />
-$products_price = round(get_group_price($loop:item['status_id'], $pInfo->products_id),$configuration['price_precision']);
-	</xar:if>
+			<xar:set name="$group_id">
+				#$loop:item['status_id']#
+			</xar:set>				 
+			<xar:set name="$product_id">
+				$pInfo->products_id
+			</xar:set>				 
+			<xar:set name="$group_price">
+				xarModAPIFunc('commerce','admin','get_group_price', array('group_id' => $group_id, 'product_id' => $product_id));
+			</xar:set>
+			
+<xar:comment> ------------------------------------ Display price ---------------- </xar:comment>
 
+			<xar:if condition="$configuration['price_is_brutto']">
+				<xar:set name="$tax_rate">
+					xarModAPIFunc('commerce','user','get_tax_rate', array('class_id' => $pInfo->products_tax_class_id));
+				</xar:set>				 
+				<xar:set name="$products_price">
+					 round($group_price * ((100 + $tax_rate)/100),$configuration['price_precision']);
+				</xar:set>				 
+			<xar:else />
+				<xar:set name="$products_price">
+					round($group_price ,$configuration['price_precision']);
+				</xar:set>				 
+			</xar:if>
 
-		<td style="border-top: 1px solid; border-color: #cccccc;" class="main">
-			<input type="text" name="products_price_#$loop:item['status_id']#" value="#$products_price#">
+			<td style="border-top: 1px solid; border-color: #cccccc;" class="main">
+				<input type="text" name="products_price_#$loop:item['status_id']#" value="#$products_price#">
 
-	<xar:if condition="$configuration['price_is_brutto'] and get_group_price($loop:item['status_id'], $pInfo['products_id']) ne '0'">
-<xar:mlstring>Net</xar:mlstring>:
-<b>#xarLocaleFormatCurrency(round(get_group_price($loop:item['status_id'], $pInfo['products_id']),$configuration['price_precision']))#</b>
-	</xar:if>
+			<xar:if condition="$configuration['price_is_brutto'] and $group_price ne 0">
+				<xar:mlstring>Net</xar:mlstring>:
+				<b>#xarLocaleFormatCurrency(round($group_price,$configuration['price_precision']))#</b>
+			</xar:if>
 
 
 <xar:if condition="$pID ne 0">

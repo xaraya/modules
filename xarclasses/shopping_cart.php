@@ -1,19 +1,16 @@
 <?php
-/* --------------------------------------------------------------
-   $Id: shopping_cart.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $
-
-   XT-Commerce - community made shopping
-   http://www.xt-commerce.com
-
-   Copyright (c) 2003 XT-Commerce
-   --------------------------------------------------------------
-   based on:
-   (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(shopping_cart.php,v 1.7 2002/05/16); www.oscommerce.com
-   (c) 2003  nextcommerce (shopping_cart.php,v 1.6 2003/08/18); www.nextcommerce.org
-
-   Released under the GNU General Public License
-   --------------------------------------------------------------*/
+// ----------------------------------------------------------------------
+// Copyright (C) 2004: Marc Lutolf (marcinmilan@xaraya.com)
+// Purpose of file:  Configuration functions for commerce
+// ----------------------------------------------------------------------
+//  based on:
+//  (c) 2003 XT-Commerce
+//  (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
+//  (c) 2002-2003 osCommerce(shopping_cart.php,v 1.32 2003/02/11); www.oscommerce.com
+//  (c) 2003  nextcommerce (shopping_cart.php,v 1.21 2003/08/17); www.nextcommerce.org
+//   Third Party contributions:
+//   Customers Status v3.x  (c) 2002-2003 Copyright Elari elari@free.fr | www.unlockgsm.com/dload-osc/ | CVS : http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/elari/?sortby=date#dirlist
+// ----------------------------------------------------------------------
 
     class shoppingCart
     {

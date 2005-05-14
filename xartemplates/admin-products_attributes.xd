@@ -226,9 +226,9 @@
 							&nbsp;#$next_id#&nbsp;
 						</td>
 						<td class="smallText">
-							<xar:loop id="id2" name="$languages">
-								#$loop:id2:item['code']#:&nbsp;
-								<input type="text" name="option_name[#$loop:id2:item['id']#]" size="20">&nbsp;<br>
+							<xar:loop id="B" name="$languages">
+								#$loop:B:item['code']#:&nbsp;
+								<input type="text" name="option_name[#$loop:B:item['id']#]" size="20">&nbsp;<br>
 							</xar:loop>
 						</td>
 						<td align="center" class="smallText">

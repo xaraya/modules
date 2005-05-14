@@ -1,4 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+<xar:if condition="xarTplAddStyleLink('commerce', 'tabs')">
 </xar:if>
 <xar:set name="$tab">"dick"</xar:set>
 <div id="tabnav">

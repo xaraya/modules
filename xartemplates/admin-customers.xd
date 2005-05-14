@@ -10,10 +10,10 @@
 			<table border="0" width="100%" cellspacing="0" cellpadding="0">
 			  <tr>
 				<td width="80" rowspan="2"><img src="#xarTplGetImage('adminicons/heading_customers.gif')#"></td>
-				<td class="pageHeading"><ml:string>Customers</ml:string></td>
+				<td class="pageHeading"><xar:mlstring>Customers</xar:mlstring></td>
 			  </tr>
 			  <tr>
-				<td class="main" valign="top"><ml:string>XT Customers</ml:string></td>
+				<td class="main" valign="top"><xar:mlstring>XT Customers</xar:mlstring></td>
 			  </tr>
 			</table>
 			<table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -27,7 +27,7 @@
 						<td class="pageHeading" align="right">
 							<img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="1">
 						</td>
-						<td class="smallText" align="right"><ml:string>Search</ml:string>
+						<td class="smallText" align="right"><xar:mlstring>Search</xar:mlstring>
 							<input type="text" name="search">
 						</td>
 					</form>
@@ -35,7 +35,7 @@
 	          <tr>
 	          		<form name="status" action="#xarModURL('commerce','admin','customers')#" method="get">
             		<td class="smallText" align="right">
-            			<ml:string>Customer Group</ml:string>
+            			<xar:mlstring>Customer Group</xar:mlstring>
             				#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'status', 'values' => $select_data, 'default' => 99, 'parameters' => 'onChange="this.form.submit()"'))#
             		</td>
 
@@ -50,13 +50,13 @@
 			  <tr>
 				<td valign="top">
 					<table border="0" width="100%" cellspacing="0" cellpadding="2">
-					<td class="dataTableHeadingContent" width="1"><ml:string>Icon</ml:string></td>
-					<td class="dataTableHeadingContent" width="1"><ml:string>Account</ml:string></td>
-					<td class="dataTableHeadingContent"><ml:string>Last Name</ml:string></td>
-					<td class="dataTableHeadingContent"><ml:string>First Name</ml:string></td>
-					<td class="dataTableHeadingContent" align="left"><ml:string>Customer Group</ml:string></td>
-					<td class="dataTableHeadingContent" align="right"><ml:string>Account Created</ml:string></td>
-					<td class="dataTableHeadingContent" align="right"><ml:string>Action</ml:string>&nbsp;</td>
+					<td class="dataTableHeadingContent" width="1"><xar:mlstring>Icon</xar:mlstring></td>
+					<td class="dataTableHeadingContent" width="1"><xar:mlstring>Account</xar:mlstring></td>
+					<td class="dataTableHeadingContent"><xar:mlstring>Last Name</xar:mlstring></td>
+					<td class="dataTableHeadingContent"><xar:mlstring>First Name</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="left"><xar:mlstring>Customer Group</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="right"><xar:mlstring>Account Created</xar:mlstring></td>
+					<td class="dataTableHeadingContent" align="right"><xar:mlstring>Action</xar:mlstring>&nbsp;</td>
 				  </tr>
 
 <xar:comment>  BEGIN LOOP ROWS  </xar:comment>

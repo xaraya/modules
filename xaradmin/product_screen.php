@@ -196,7 +196,7 @@ function commerce_admin_product_screen()
                             $q->settype('UPDATE');
                             $q->addfield('products_id', $products_id);
                             $q->addfield('language_id', $language_id);
-    $q->qecho();exit;
+//    $q->qecho();exit;
                             if(!$q->run()) return;
                         }
                     }

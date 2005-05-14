@@ -636,6 +636,39 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_customers_status_0";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_commerce_personal_offers_by_customers_status_0 (
+      price_id int NOT NULL auto_increment,
+      products_id int NOT NULL,
+      quantity int NOT NULL,
+      personal_offer decimal(15,4),
+      PRIMARY KEY (price_id)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_customers_status_1";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_commerce_personal_offers_by_customers_status_1 (
+      price_id int NOT NULL auto_increment,
+      products_id int NOT NULL,
+      quantity int NOT NULL,
+      personal_offer decimal(15,4),
+      PRIMARY KEY (price_id)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_customers_status_2";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_commerce_personal_offers_by_customers_status_2 (
+      price_id int NOT NULL auto_increment,
+      products_id int NOT NULL,
+      quantity int NOT NULL,
+      personal_offer decimal(15,4),
+      PRIMARY KEY (price_id)
+    )";
+    if (!$q->run($query)) return;
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_products (

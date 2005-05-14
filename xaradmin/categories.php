@@ -62,7 +62,7 @@ if (isset($action)) {
                 if ($configuration['allow_category_descriptions'] == true)
                     $action =$action . '_ACD';
                 break;
-           case 'delete_category_confirm':
+            case 'delete_category_confirm':
                 if (isset($cID)) {
                     $categories = xarModAPIFunc('commerce','user','get_category_tree', array(
                                     'parent_id' =>$cID,

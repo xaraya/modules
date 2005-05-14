@@ -1,75 +1,116 @@
 <xar:template file="application_top" type="module"/>
-<p>
-  <br>
-  {$error_message} </strong></font></p>
-  {if $order_content}
-<strong>{#title_main#} </strong><a href="{$LINK_ALL}">{#text_all#}</a>
+<div class="xar-mod-head">
+	<span class="xar-mod-title">
+		<xar:mlstring>Commerce</xar:mlstring>
+	</span>
+</div>
+<xar:template file="user-header" type="module"/>
+<xar:if condition="$order_content ne ''">
+	<strong>Your Personal Data </strong>
+	<a href="#xarModURL('commerce','user','account_history')#">
+		<xar:mlstring>(show all orders)</xar:mlstring>
+	</a>
+	<table width="100%" border="0" cellspacing="0" cellpadding="4">
+		<tr>
+			<td style="border-top: 1px solid; border-color: #cccccc;" width="1">
+				<img src="#xarTplGetImage('arrow_south_east.gif')#">
+			</td>
+			<td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="3">
+					{foreach name=aussen item=order_data from=$order_content#
+						<tr>
+							<td width="1" valign="top" class="main">
+								<img src="#xarTplGetImage('arrow_green.gif')#">
+							</td>
+							<td class="main">
+								<a href="#$order_data.order_link#">
+									#$order_data.order_date#
+								</a>
+								&nbsp;&nbsp;#order_nr#$order_data.order_id#<br>
+								#order_total##$order_data.order_total#&nbsp;&nbsp;#order_status##$order_data.order_status#
+								#$order_data.order_button#
+								<a href="#xarModURL('commerce','user','account_history_info', array('order_id' => $orders['orders_id']))#">
+									<img src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'small_view.gif')#" alt="#xarML('View')#">
+								</a>
+                        	</td>
+						</tr>
+					{/foreach}
+				</table>
+			</td>
+		</tr>
+	</table>
+	<br>
+</xar:if>
+<strong><xar:mlstring>Your Account</xar:mlstring></strong>
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
-  <tr>
-    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/arrow_south_east.gif"></td>
-    <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
-      <table width="100%" border="0" cellspacing="0" cellpadding="3">
-
-        {foreach name=aussen item=order_data from=$order_content}
-        <tr>
-          <td width="1" valign="top" class="main"><img src="{$tpl_path}img/arrow_green.gif"></td>
-          <td class="main"><a href="{$order_data.ORDER_LINK}">{$order_data.ORDER_DATE}</a>&nbsp;&nbsp;{#order_nr#}{$order_data.ORDER_ID}<br>
-            {#order_total#}{$order_data.ORDER_TOTAL}&nbsp;&nbsp;{#order_status#}{$order_data.ORDER_STATUS}
-            {$order_data.ORDER_BUTTON}</td>
-        </tr>
-        {/foreach}
-		 </table></td>
-  </tr>
+	<tr>
+		<td style="border-top: 1px solid; border-color: #cccccc;" width="1">
+			<img src="#xarTplGetImage('account_personal.gif')#">
+		</td>
+		<td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="3">
+				<tr>
+					<td class="main">
+						<img src="#xarTplGetImage('arrow_green.gif')#">
+						<a href="#xarModURL('commerce','user', 'account_edit')#">
+							<xar:mlstring>Show or change my account Information</xar:mlstring>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="main"><img src="#xarTplGetImage('arrow_green.gif')#">
+						<a href="#xarModURL('commerce','user', 'address_book')#">
+							<xar:mlstring>Show or change my address book information</xar:mlstring>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="main"><img src="#xarTplGetImage('arrow_green.gif')#">
+						<a href="#xarModURL('commerce','user', 'account_password')#">
+							<xar:mlstring>Change My Password</xar:mlstring>
+						</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 </table>
+<xar:if condition="$order_content ne ''">
+	<br>
+	<strong><xar:mlstring>Your Orders</xar:mlstring></strong><br>
+	<table width="100%" border="0" cellspacing="0" cellpadding="4">
+		<tr>
+			<td style="border-top: 1px solid; border-color: #cccccc;" width="1">
+				<img src="#xarTplGetImage('account_orders.gif')#">
+			</td>
+			<td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="3">
+					<tr>
+						<td class="main"><img src="#xarTplGetImage('arrow_green.gif')#">
+							<a href="#xarModURL('commerce','user', 'account_orders')#">#text_orders#</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</xar:if>
 <br>
-{/if}
-<strong>{#title_account#} </strong>
+<strong><xar:mlstring>Email Notification</xar:mlstring></strong><br>
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
   <tr>
-    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/account_personal.gif"></td>
+    <td style="border-top: 1px solid; border-color: #cccccc;" width="1">
+	    <img src="#xarTplGetImage('account_notifications.gif')#">
+    </td>
     <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
       <table width="100%" border="0" cellspacing="0" cellpadding="3">
+		<xar:if condition="xarModIsAvailable('newsletter')">      	
+			<tr>
+			  <td class="main"><img src="#xarTplGetImage('arrow_green.gif')#"><a href="#xarModURL('newsletter','user', 'main')#"><xar:mlstring>Subscribing to newsletter or cancelling newsletter</xar:mlstring></a></td>
+			</tr>
+		</xar:if>
         <tr>
-          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_EDIT}">{#text_edit#}</a></td>
-        </tr>
-        <tr>
-          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_ADDRESS}">{#text_address#}</a></td>
-        </tr>
-        <tr>
-          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_PASSWORD}">{#text_password#}</a></td>
-        </tr>
-      </table>
-
-      </td>
-  </tr>
-</table>
-{if $order_content}
-<br>
-<strong>{#title_orders#} </strong><br>
-<table width="100%" border="0" cellspacing="0" cellpadding="4">
-  <tr>
-    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/account_orders.gif"></td>
-    <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
-      <table width="100%" border="0" cellspacing="0" cellpadding="3">
-        <tr>
-          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_ORDERS}">{#text_orders#}</a></td>
-        </tr>
-      </table></td>
-  </tr>
-</table>
-{/if}
-<strong><br>
-{#title_notification#} </strong><br>
-<table width="100%" border="0" cellspacing="0" cellpadding="4">
-  <tr>
-    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/account_notifications.gif"></td>
-    <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
-      <table width="100%" border="0" cellspacing="0" cellpadding="3">
-        <tr>
-          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_NEWSLETTER}">{#text_newsletter#}</a></td>
-        </tr>
-        <tr>
-          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_NOTIFICATIONS}">{#text_notifications#}</a></td>
+          <td class="main"><img src="#xarTplGetImage('arrow_green.gif')#"><a href="#xarModURL('commerce','user', 'account_notifications')#"><xar:mlstring>Show or edit my product notification</xar:mlstring></a></td>
         </tr>
       </table></td>
   </tr>

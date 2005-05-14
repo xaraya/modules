@@ -1,5 +1,5 @@
 <xar:template file="application_top" type="module"/>
-<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+<xar:if condition="xarTplAddStyleLink('commerce', 'tabs')">
 </xar:if>
 
 <style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>

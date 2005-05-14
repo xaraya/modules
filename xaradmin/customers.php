@@ -359,8 +359,7 @@ function commerce_admin_customers()
         $q->like('c.customers_email_address','%" . $search . "%');
     }
 
-//    $q->setstatement();
-//    echo $q->getstatement();exit;
+//    $q->qecho();exit;
     if(!$q->run()) return;
 
 

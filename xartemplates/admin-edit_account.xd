@@ -13,7 +13,7 @@
 				<td class="pageHeading">#$customers_lastname#&nbsp;#$customers_firstname#</td>
 			  </tr>
 			  <tr>
-				<td class="main" valign="top"><ml:string>XT Customers</ml:string></td>
+				<td class="main" valign="top"><xar:mlstring>XT Customers</xar:mlstring></td>
 			  </tr>
 			</table>
 		</td>

@@ -124,13 +124,15 @@ function commerce_configmenublock_display($blockinfo)
      );
 
     $content[7]['heading'] = "Tools";
-    $content[7]['lines'] = array(
-        array(1,xarModURL('commerce','admin','module_newsletter'), 'Newsletter',''),
-        array(1,xarModURL('commerce','admin','content_manager'), 'Content Manager',''),
-        array(1,xarModURL('commerce','admin','backup'), 'Database Manager',''),
-        array(1,xarModURL('commerce','admin','server_info'), 'Server Info',''),
-        array(1,xarModURL('commerce','admin','whos_online'), 'Who is Online','')
-     );
+        if (xarModIsAvailable('newsletter')) {
+            $content[7]['lines'][] = array(1,xarModURL('newsletter','admin','main'), 'Newsletter','');
+        }
+        $content[7]['lines'][] = array(1,xarModURL('commerce','admin','content_manager'), 'Content Manager','');
+        if (xarModIsAvailable('sitetools')) {
+            $content[7]['lines'][] = array(1,xarModURL('sitetools','admin','main'), 'Database Manager','');
+        }
+        $content[7]['lines'][] = array(1,xarModURL('base','admin','main'), 'Server Info','');
+//        $content[7]['lines'][] = array(1,xarModURL('commerce','admin','whos_online'), 'Who is Online','');
 
 
     // this is how we are marking the currently loaded module
