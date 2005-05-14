@@ -28,7 +28,7 @@
 		<div>
 			<span align="left" class="boxText"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
 				#$tree#
-				<FORM method="POST" name="post" id="post" action="$formaction">
+				<FORM method="POST" name="categories" id="post" action="$formaction">
 				</FORM>
 				</font>
 			</span>
