@@ -73,16 +73,61 @@ function xarbb_userapi_updatetopic($args)
     }
     $update = array();
     $bindvars = array();
+    /* I give up on this...  There is a weird php bug in 503 that is not obeying the set rule...
     foreach($params as $vvar => $field)    {
         if(!isset($$vvar)) {
             $$vvar = $topic[$vvar];
         }
         $update[] = $field ."=?";
+        //$dump=var_export($update, 1); echo "<pre>$dump</pre>";
         $bindvars[] = $$vvar;
-        $dump=var_export($bindvars, 1); echo "<pre>$dump</pre>";
+
     }
+    */
     // Update item
-    $query = "UPDATE $xbbtopicstable SET ".join(",",$update)." WHERE xar_tid = ?";
+    $query = "UPDATE $xbbtopicstable SET ";
+    if (isset($fid)){
+        $update[] = "xar_fid =? ";
+        $bindvars[] = $fid;
+    }
+    if (isset($ttitle)){
+        $update[] = "xar_ttitle =? ";
+        $bindvars[] = $ttitle;
+    }
+    if (isset($tpost)){
+        $update[] = "xar_tpost =? ";
+        $bindvars[] = $tpost;
+    }
+    if (isset($tposter)){
+        $update[] = "xar_tposter =? ";
+        $bindvars[] = $tposter;
+    }
+    if (isset($time)){
+        $update[] = "xar_ttime =? ";
+        $bindvars[] = $time;
+    }
+    if (isset($treplies)){
+        $update[] = "xar_treplies =? ";
+        $bindvars[] = $treplies;
+    }
+    if (isset($treplier)){
+        $update[] = "xar_treplier =? ";
+        $bindvars[] = $treplier;
+    }
+    if (isset($tftime)){
+        $update[] = "xar_tftime =? ";
+        $bindvars[] = $tftime;
+    }
+    if (isset($tstatus)){
+        $update[] = "xar_tstatus =? ";
+        $bindvars[] = $tstatus;
+    }
+    if (isset($toptions)){
+        $update[] = "xar_toptions =? ";
+        $bindvars[] = $toptions;
+    }
+    $query .= join(",",$update);
+    $query .= "WHERE xar_tid = ? ";
     $bindvars[] = $tid;
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
