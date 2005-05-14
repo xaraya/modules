@@ -76,7 +76,8 @@ function xarbb_userapi_updatetopic($args)
     foreach($params as $vvar => $field)    {
         if(isset($$vvar)) {
             $update[] = $field ."=?";
-            $bindvars[] = $$vvar;
+            $bindvars[] = isset($$vvar);
+            //$dump=var_export($$vvar, 1); echo "<pre>$dump</pre>";
         }
     }
     // Update item
