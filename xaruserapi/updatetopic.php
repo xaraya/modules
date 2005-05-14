@@ -33,7 +33,9 @@ function xarbb_userapi_updatetopic($args)
     if(!isset($ttitle)){
         $ttitle = '';
     }
-
+    if(!isset($tpost)){
+        $tpost = '';
+    }
     // params in arg
     $params = array("fid"       => "xar_fid",
                     "ttitle"    => "xar_ttitle",
