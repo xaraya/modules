@@ -77,11 +77,9 @@ function xarbb_userapi_updatetopic($args)
         if(!isset($$vvar)) {
             $$vvar = $topic[$vvar];
         }
-        if(isset($$vvar)) {
-            $update[] = $field ."=?";
-            $bindvars[] = $$vvar;
-            //$dump=var_export($bindvars, 1); echo "<pre>$dump</pre>";
-        }
+        $update[] = $field ."=?";
+        $bindvars[] = $$vvar;
+        $dump=var_export($bindvars, 1); echo "<pre>$dump</pre>";
     }
     // Update item
     $query = "UPDATE $xbbtopicstable SET ".join(",",$update)." WHERE xar_tid = ?";
