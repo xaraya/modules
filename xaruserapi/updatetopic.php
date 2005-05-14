@@ -59,11 +59,6 @@ function xarbb_userapi_updatetopic($args)
 
     // for sec check
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
-    foreach($params as $vvar => $field)    {
-        if(!isset($$vvar)) {
-            $$vvar = $topic[$vvar];
-        }
-    }
 
     // Security Check
     // it would have to be ModxarBB, but because posting results in an update, it has to be Post Permission
@@ -79,6 +74,9 @@ function xarbb_userapi_updatetopic($args)
     $update = array();
     $bindvars = array();
     foreach($params as $vvar => $field)    {
+        if(!isset($$vvar)) {
+            $$vvar = $topic[$vvar];
+        }
         if(isset($$vvar)) {
             $update[] = $field ."=?";
             $bindvars[] = $$vvar;
