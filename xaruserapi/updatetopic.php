@@ -39,6 +39,15 @@ function xarbb_userapi_updatetopic($args)
     if(!isset($tposter)){
         $tposter = '';
     }
+    if(!isset($tftime)){
+        $tftime = '';
+    }
+    if(!isset($tstatus)){
+        $tstatus = '';
+    }
+    if(!isset($toptions)){
+        $toptions = '';
+    }
     // params in arg
     $params = array("fid"       => "xar_fid",
                     "ttitle"    => "xar_ttitle",
