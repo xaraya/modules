@@ -27,6 +27,9 @@ function xarbb_userapi_updatetopic($args)
 
     if(!isset($tid))
         $invalid[] = "tid";
+    if(!isset($fid)){
+        $fid = '';
+    }
 
     // params in arg
     $params = array("fid"       => "xar_fid",
