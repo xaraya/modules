@@ -530,6 +530,9 @@ function xarbb_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
             // fall through to next upgrade
+        case '1.1.5':
+            $modversion['name'] = 'xarbb';
+            // fall through to next upgrade
         default:
             break;
     }

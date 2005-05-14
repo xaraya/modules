@@ -12,9 +12,9 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
-$modversion['name'] = 'xarBB';
+$modversion['name'] = 'xarbb';
 $modversion['id'] = '300';
-$modversion['version'] = '1.1.5';
+$modversion['version'] = '1.1.6';
 $modversion['displayname']    = xarML('xarBB');
 $modversion['description'] = 'A lightweight BB for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
