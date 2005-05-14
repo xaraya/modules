@@ -16,7 +16,7 @@
   </tr>
   <tr>
     <td align="left" class="boxText"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-    <FORM method="POST" name="post" id="post" action="#$formaction#">
+    <FORM method="POST" name="content" id="post" action="#$formaction#">
     </FORM>
     </font></td>
   </tr>
