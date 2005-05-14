@@ -27,27 +27,7 @@ function xarbb_userapi_updatetopic($args)
 
     if(!isset($tid))
         $invalid[] = "tid";
-    if(!isset($fid)){
-        $fid = '';
-    }
-    if(!isset($ttitle)){
-        $ttitle = '';
-    }
-    if(!isset($tpost)){
-        $tpost = '';
-    }
-    if(!isset($tposter)){
-        $tposter = '';
-    }
-    if(!isset($tftime)){
-        $tftime = '';
-    }
-    if(!isset($tstatus)){
-        $tstatus = '';
-    }
-    if(!isset($toptions)){
-        $toptions = '';
-    }
+
     // params in arg
     $params = array("fid"       => "xar_fid",
                     "ttitle"    => "xar_ttitle",
