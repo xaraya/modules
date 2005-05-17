@@ -37,7 +37,8 @@
  * @todo support case sensitive/insensitive flag
  */
 
-function xarpages_userapi_browse_files($args) {
+function xarpages_userapi_browse_files($args)
+{
     extract($args);
 
     // Maximum possible directory levels the function will follow
