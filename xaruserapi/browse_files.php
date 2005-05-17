@@ -2,7 +2,7 @@
 
 /**
  * Browse for files.
- * I'm keeping this generic, so it can be reused.
+ * I'm keeping this generic, so it can be reused in many places.
  *
  * Identifying the base directory:
  * @param basedir string the absolute or relative base directory
@@ -12,29 +12,32 @@
  * @param match_glob string file glob expression
  * @param match_re string regular expression
  * @param match_exact string expression
+ * @param is_writeable return only writable files and directories
+ * @param is_readable return only readable files and directories
+ * @param skipdirs array list of directories to skip; '.' and '..' will always be added
+ * @param skipdirscc boolean skip common configuration control directories
  *
  * Transform functions (modifying the filename to be returned):
  * @param strip_re string regular expression matching details to strip out of the filename
  *
- * Flags:
+ * Other flags:
  * @param levels integer number of levels to recurse (default=max_levels)
  * @param retpath string 'abs' will return the absolute OS path, 'rel' the relative path to the basedir, 'file' just the filename
- * @param retdirs boolean flag that indicates all directories should be returned (default false)
- * @param retfiles boolean flag that indicates all files should be returned (default true)
+ * @param retdirs boolean flag that indicates directories should be returned (default false)
+ * @param retfiles boolean flag that indicates files should be returned (default true)
  *
  * @todo move this to some central location; file browsing should be a kernel/core function
  * @todo support sorting of the files (by name, by date, asc/desc, etc)
- * @todo support timestamp matching
+ * @todo support timestamp matching (older, younger, range)
  * @todo support other areas than the module 'home', e.g. module theme area
  * @todo support retpath value 'rel2' for path relative to the site entry point
  * @todo allow the returning of more detailed file information than just names - full inode info
- * @todo support file type selection (e.g. just files, just directories)
- * @todo provide a simple transform function for the filename, probably a callback function
+ * @todo provide a simple transform function for the filename, probably a callback function, e.g. 'my_logo.gif' => 'My Logo'
  * @todo allow wildcards for modules and even for basedir, so the function will scan multiple modules or trees
+ * @todo support case sensitive/insensitive flag
  */
 
-function xarpages_userapi_browse_files($args)
-{
+function xarpages_userapi_browse_files($args) {
     extract($args);
 
     // Maximum possible directory levels the function will follow
@@ -47,9 +50,20 @@ function xarpages_userapi_browse_files($args)
     // The path return format is an unumerated type.
     if (!xarVarValidate('enum:abs:rel:file', $retpath, true)) {$retpath = 'file';}
 
+    // An array of directories to skip.
+    if (!xarVarValidate('list:string:1', $skipdirs, true)) {$skipdirs = array();}
+
+    // Always skip current and parent directory.
+    $skipdirs += array('.', '..');
+
+    // Skip common configuration control directories
+    if (!empty($skipdirscc)) {$skipdirs += array('SCCS', 'sccs', 'CVS', 'cvs');}
+
     // Other flags.
     if (!isset($retdirs)) {$retdirs = false;}
     if (!isset($retfiles)) {$retfiles = true;}
+    if (!isset($is_writeable)) {$is_writeable = false;}
+    if (!isset($is_readable)) {$is_readable = false;}
 
     // Get the root directory.
     $rootdir = '.';
@@ -96,23 +110,31 @@ function xarpages_userapi_browse_files($args)
         if ($dh = @opendir($basedir . $thisdir)) {
             while(($filename = @readdir($dh)) !== false) {
                 // Got a file or directory.
+                $thisfile = $basedir . $thisdir . '/' . $filename;
 
-                if (is_file($basedir . $thisdir . '/' . $filename)) {
+                // Skip if we only want readable files.
+                if ($is_readable && !is_readable($thisfile)) {continue;}
+
+                if (is_file($thisfile)) {
                     // Go to the next file if we don't want to return files.
                     if (!$retfiles) {continue;}
+
+                    // Skip this file if we only want writeable files and directories.
+                    if ($is_writeable && !is_writeable($thisfile)) {continue;}
 
                     // Check the filtering rules.
                     if (!empty($match_glob) && @fnmatch($match_glob, $filename) !== true) {continue;}
                     if (!empty($match_re) && @preg_match($match_preg, $filename) !== true) {continue;}
                     if (!empty($match_exact) && $match_exact !== $filename) {continue;}
-                }
+                } elseif (is_dir($thisfile)) {
+                    // Skip specified directories.
+                    if (in_array($filename, $skipdirs)) {continue;}
 
-                if (is_dir($basedir . $thisdir . '/' . $filename)) {
-                    // Skip the current and parent directories.
-                    if ($filename == '.' || $filename == '..') {continue;}
+                    // Skip this directory if we only want writeable files and directories.
+                    if ($is_writeable && !is_writeable($thisfile)) {continue;}
 
-                    if ($thislevel < $levels) {
-                        // We have not maxed out on the levels yet, so go deeper.
+                    if ($thislevel < $levels && is_readable($thisfile)) {
+                        // We have not maxed out on the levels yet, so go deeper (only if dir is readable).
                         array_push($scandir, array($thislevel + 1, $thisdir . '/' . $filename));
                     }
 
@@ -121,6 +143,9 @@ function xarpages_userapi_browse_files($args)
 
                     // Suffix to indicate this is a directory.
                     $filename .= '/';
+                } else {
+                    // Neither a file nor directory.
+                    continue;
                 }
 
                 // Strip out parts of the filename if necessary
@@ -131,7 +156,7 @@ function xarpages_userapi_browse_files($args)
                 // If we have got this far, then we have a file or directory to return.
                 switch (strtolower($retpath)) {
                     case 'abs':
-                        $filelist[] = $basedir . $thisdir . '/' . $filename;
+                        $filelist[] = $thisfile;
                         break;
                     case 'rel':
                         $filelist[] = ltrim($thisdir . '/' . $filename, '/');
