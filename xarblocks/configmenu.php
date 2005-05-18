@@ -71,7 +71,6 @@ function commerce_configmenublock_display($blockinfo)
         array(1,xarModURL('commerce','admin','configuration',array('gID'=>8)), 'Prod Listing Options',''),
         array(1,xarModURL('commerce','admin','configuration',array('gID'=>9)), 'Stock Options',''),
         array(1,xarModURL('commerce','admin','configuration',array('gID'=>10)), 'Logging Options',''),
-        array(1,xarModURL('commerce','admin','configuration',array('gID'=>11)), 'Cache Options',''),
         array(1,xarModURL('commerce','admin','configuration',array('gID'=>12)), 'Email Options',''),
         array(1,xarModURL('commerce','admin','configuration',array('gID'=>13)), 'Download Options',''),
         array(1,xarModURL('commerce','admin','configuration',array('gID'=>14)), 'Gzip Compression',''),
