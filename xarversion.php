@@ -16,6 +16,7 @@ $modversion['user'] = 1;
 $modversion['securityschema'] = array('Commerce::' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
+// this module depends on the categories module
 // this module depends on the xen module
-$modversion['dependency'] = array(3005);
+$modversion['dependency'] = array(147,3005);
 ?>
