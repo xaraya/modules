@@ -13,7 +13,7 @@
       <label>Id</label>
       <type>itemid</type>
       <default></default>
-      <source>xar_commerce_countries.countries_id</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>1</order>
       <validation>int (11)</validation>
@@ -23,7 +23,7 @@
       <label>Name</label>
       <type>textbox</type>
       <default></default>
-      <source>xar_commerce_countries.countries_name</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>2</order>
       <validation>0:64</validation>
@@ -33,7 +33,7 @@
       <label>Iso Code 2</label>
       <type>textbox</type>
       <default></default>
-      <source>xar_commerce_countries.countries_iso_code_2</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>3</order>
       <validation>0:2</validation>
@@ -43,7 +43,7 @@
       <label>Iso Code 3</label>
       <type>textbox</type>
       <default></default>
-      <source>xar_commerce_countries.countries_iso_code_3</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>4</order>
       <validation>0:3</validation>
@@ -53,7 +53,7 @@
       <label>Format Id</label>
       <type>integerbox</type>
       <default></default>
-      <source>xar_commerce_countries.address_format_id</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>5</order>
       <validation>int (11)</validation>
