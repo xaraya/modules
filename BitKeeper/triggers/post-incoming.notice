@@ -1,0 +1,97 @@
+#!/bin/sh
+
+# PROBLEMS with this trigger:
+#  - on bk push -a (merge changesets) the message is really meaningless
+#    and it seems there are other changesets listed in the message
+#    msgs given by bk:
+#    BitKeeper/triggers/post-incoming.notice: $BK_CSETLIST: ambiguous redirect
+#    BitKeeper/triggers/post-incoming.notice: [: -gt: unary operator expected
+
+
+# Only run this script on the server
+if [ $BK_SIDE != server ]
+then exit 0
+fi
+
+# Only run this script on *this* server (the xaraya one)
+THISHOST=`bk gethost`
+if [ $THISHOST != newton.xaraya.com ]
+then exit 0
+fi
+
+# If we don't want to do anything set DRYRUN of NOTHING
+# NOTHING is also set automatically when there is nothing to do
+# DRYRUN is set when it was a test run (e.g. pull -n)
+# CONFLICTS is set when there is a RESYNC directory, also usefull for freeze mode
+if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING -o X$BK_STATUS = XCONFLICTS ]
+then exit 0
+fi
+
+# Some config vars
+# When using mail
+#POSTPROGRAM="mail"
+#SUBJECTSWITCH="-s"
+#DESTINATION="xaraya_bk-notices@lists.xaraya.com"
+
+# Using nntp
+POSTPROGRAM="/usr/lib/news/bin/inews"
+SUBJECTSWITCH="-t"
+DESTINATION="-n xaraya.bk-notices"
+
+# url to web interface
+# repositories are at /var/bk/xaraya/core/stable
+# we want the last two, i.e. core/stable in $VIRGIN/$REPO
+VIRGIN=$(basename $(dirname ${BKD_ROOT}))
+REPO=$(basename ${BKD_ROOT})
+BKURL=http://xaraya.com:15000/$VIRGIN/$REPO
+
+# if we're in the patches repository, do not send mail
+# this is handled by another trigger
+# FIXME: use repository id instead of directory name.
+if [ $REPO == patches ]
+then exit 0
+fi
+
+# post-incoming event, send out notices, changes have
+# already been applied so we don't need to test for
+# CONFLICT variable. (see other trigger)
+
+# How many changesets are pushed? BK_CSETLIST maybe empty, but no harm done if it is.
+NUMSETS=`wc -l < $BK_CSETLIST`
+if [ $NUMSETS -gt 1 ]
+then
+CHANGETEXT="csets were"
+else
+CHANGETEXT="cset was"
+fi
+# Get the first changeset comment
+CSCOMMENT=`bk changes -r+ -d':C:'`
+
+echo "Sending notifications..."
+(
+echo Changes were applied by ${BKD_USER} to ${VIRGIN}/${REPO} level ${BKD_LEVEL}.
+
+# What is the list of changesets which were incoming?
+if [ X$BK_CSETLIST != X ]
+then (
+        echo "The following $CHANGETEXT applied:"
+        echo
+        bk changes -v - < $BK_CSETLIST
+     ) | sed 's/^/    /'
+     CSLINKS=`bk changes -d"$BKURL/patch@:REV: " - < $BK_CSETLIST`
+     echo Links for the differences:
+     for link in `echo $CSLINKS`; do
+        echo $link
+     done
+fi
+) | $POSTPROGRAM $SUBJECTSWITCH"${NUMSETS} ${CHANGETEXT} pushed to ${VIRGIN}/${REPO}: ${CSCOMMENT:0:40}..." $DESTINATION
+
+
+# Send logs to CIA (no, not that one, this one: http://cia.navi.cx)
+echo "Sending notification to project aggregator..."
+(
+    for n in `cat $BK_CSETLIST`; do
+        $BKD_ROOT/BitKeeper/triggers/cia-bk2xml.sh $n
+    done
+) &
+exit 0
