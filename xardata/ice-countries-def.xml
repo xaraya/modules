@@ -1,0 +1,62 @@
+<object name="ice_countries">
+  <objectid>6</objectid>
+  <label>ice_countries</label>
+  <moduleid>182</moduleid>
+  <itemtype>4</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>37</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_commerce_countries.countries_id</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="name">
+      <id>38</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_countries.countries_name</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:64</validation>
+    </property>
+    <property name="iso_code_2">
+      <id>39</id>
+      <label>Iso Code 2</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_countries.countries_iso_code_2</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:2</validation>
+    </property>
+    <property name="iso_code_3">
+      <id>40</id>
+      <label>Iso Code 3</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_countries.countries_iso_code_3</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:3</validation>
+    </property>
+    <property name="format_id">
+      <id>41</id>
+      <label>Format Id</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_commerce_countries.address_format_id</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>int (11)</validation>
+    </property>
+  </properties>
+</object>

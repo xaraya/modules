@@ -1,0 +1,1675 @@
+<items>
+  <ice_countries itemid="1">
+    <id>1</id>
+    <name>Afghanistan</name>
+    <iso_code_2>AF</iso_code_2>
+    <iso_code_3>AFG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="2">
+    <id>2</id>
+    <name>Albania</name>
+    <iso_code_2>AL</iso_code_2>
+    <iso_code_3>ALB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="3">
+    <id>3</id>
+    <name>Algeria</name>
+    <iso_code_2>DZ</iso_code_2>
+    <iso_code_3>DZA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="4">
+    <id>4</id>
+    <name>American Samoa</name>
+    <iso_code_2>AS</iso_code_2>
+    <iso_code_3>ASM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="5">
+    <id>5</id>
+    <name>Andorra</name>
+    <iso_code_2>AD</iso_code_2>
+    <iso_code_3>AND</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="6">
+    <id>6</id>
+    <name>Angola</name>
+    <iso_code_2>AO</iso_code_2>
+    <iso_code_3>AGO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="7">
+    <id>7</id>
+    <name>Anguilla</name>
+    <iso_code_2>AI</iso_code_2>
+    <iso_code_3>AIA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="8">
+    <id>8</id>
+    <name>Antarctica</name>
+    <iso_code_2>AQ</iso_code_2>
+    <iso_code_3>ATA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="9">
+    <id>9</id>
+    <name>Antigua and Barbuda</name>
+    <iso_code_2>AG</iso_code_2>
+    <iso_code_3>ATG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="10">
+    <id>10</id>
+    <name>Argentina</name>
+    <iso_code_2>AR</iso_code_2>
+    <iso_code_3>ARG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="11">
+    <id>11</id>
+    <name>Armenia</name>
+    <iso_code_2>AM</iso_code_2>
+    <iso_code_3>ARM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="12">
+    <id>12</id>
+    <name>Aruba</name>
+    <iso_code_2>AW</iso_code_2>
+    <iso_code_3>ABW</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="13">
+    <id>13</id>
+    <name>Australia</name>
+    <iso_code_2>AU</iso_code_2>
+    <iso_code_3>AUS</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="14">
+    <id>14</id>
+    <name>Austria</name>
+    <iso_code_2>AT</iso_code_2>
+    <iso_code_3>AUT</iso_code_3>
+    <format_id>5</format_id>
+  </ice_countries>
+  <ice_countries itemid="15">
+    <id>15</id>
+    <name>Azerbaijan</name>
+    <iso_code_2>AZ</iso_code_2>
+    <iso_code_3>AZE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="16">
+    <id>16</id>
+    <name>Bahamas</name>
+    <iso_code_2>BS</iso_code_2>
+    <iso_code_3>BHS</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="17">
+    <id>17</id>
+    <name>Bahrain</name>
+    <iso_code_2>BH</iso_code_2>
+    <iso_code_3>BHR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="18">
+    <id>18</id>
+    <name>Bangladesh</name>
+    <iso_code_2>BD</iso_code_2>
+    <iso_code_3>BGD</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="19">
+    <id>19</id>
+    <name>Barbados</name>
+    <iso_code_2>BB</iso_code_2>
+    <iso_code_3>BRB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="20">
+    <id>20</id>
+    <name>Belarus</name>
+    <iso_code_2>BY</iso_code_2>
+    <iso_code_3>BLR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="21">
+    <id>21</id>
+    <name>Belgium</name>
+    <iso_code_2>BE</iso_code_2>
+    <iso_code_3>BEL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="22">
+    <id>22</id>
+    <name>Belize</name>
+    <iso_code_2>BZ</iso_code_2>
+    <iso_code_3>BLZ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="23">
+    <id>23</id>
+    <name>Benin</name>
+    <iso_code_2>BJ</iso_code_2>
+    <iso_code_3>BEN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="24">
+    <id>24</id>
+    <name>Bermuda</name>
+    <iso_code_2>BM</iso_code_2>
+    <iso_code_3>BMU</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="25">
+    <id>25</id>
+    <name>Bhutan</name>
+    <iso_code_2>BT</iso_code_2>
+    <iso_code_3>BTN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="26">
+    <id>26</id>
+    <name>Bolivia</name>
+    <iso_code_2>BO</iso_code_2>
+    <iso_code_3>BOL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="27">
+    <id>27</id>
+    <name>Bosnia and Herzegowina</name>
+    <iso_code_2>BA</iso_code_2>
+    <iso_code_3>BIH</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="28">
+    <id>28</id>
+    <name>Botswana</name>
+    <iso_code_2>BW</iso_code_2>
+    <iso_code_3>BWA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="29">
+    <id>29</id>
+    <name>Bouvet Island</name>
+    <iso_code_2>BV</iso_code_2>
+    <iso_code_3>BVT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="30">
+    <id>30</id>
+    <name>Brazil</name>
+    <iso_code_2>BR</iso_code_2>
+    <iso_code_3>BRA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="31">
+    <id>31</id>
+    <name>British Indian Ocean Territory</name>
+    <iso_code_2>IO</iso_code_2>
+    <iso_code_3>IOT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="32">
+    <id>32</id>
+    <name>Brunei Darussalam</name>
+    <iso_code_2>BN</iso_code_2>
+    <iso_code_3>BRN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="33">
+    <id>33</id>
+    <name>Bulgaria</name>
+    <iso_code_2>BG</iso_code_2>
+    <iso_code_3>BGR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="34">
+    <id>34</id>
+    <name>Burkina Faso</name>
+    <iso_code_2>BF</iso_code_2>
+    <iso_code_3>BFA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="35">
+    <id>35</id>
+    <name>Burundi</name>
+    <iso_code_2>BI</iso_code_2>
+    <iso_code_3>BDI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="36">
+    <id>36</id>
+    <name>Cambodia</name>
+    <iso_code_2>KH</iso_code_2>
+    <iso_code_3>KHM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="37">
+    <id>37</id>
+    <name>Cameroon</name>
+    <iso_code_2>CM</iso_code_2>
+    <iso_code_3>CMR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="38">
+    <id>38</id>
+    <name>Canada</name>
+    <iso_code_2>CA</iso_code_2>
+    <iso_code_3>CAN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="39">
+    <id>39</id>
+    <name>Cape Verde</name>
+    <iso_code_2>CV</iso_code_2>
+    <iso_code_3>CPV</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="40">
+    <id>40</id>
+    <name>Cayman Islands</name>
+    <iso_code_2>KY</iso_code_2>
+    <iso_code_3>CYM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="41">
+    <id>41</id>
+    <name>Central African Republic</name>
+    <iso_code_2>CF</iso_code_2>
+    <iso_code_3>CAF</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="42">
+    <id>42</id>
+    <name>Chad</name>
+    <iso_code_2>TD</iso_code_2>
+    <iso_code_3>TCD</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="43">
+    <id>43</id>
+    <name>Chile</name>
+    <iso_code_2>CL</iso_code_2>
+    <iso_code_3>CHL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="44">
+    <id>44</id>
+    <name>China</name>
+    <iso_code_2>CN</iso_code_2>
+    <iso_code_3>CHN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="45">
+    <id>45</id>
+    <name>Christmas Island</name>
+    <iso_code_2>CX</iso_code_2>
+    <iso_code_3>CXR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="46">
+    <id>46</id>
+    <name>Cocos (Keeling) Islands</name>
+    <iso_code_2>CC</iso_code_2>
+    <iso_code_3>CCK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="47">
+    <id>47</id>
+    <name>Colombia</name>
+    <iso_code_2>CO</iso_code_2>
+    <iso_code_3>COL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="48">
+    <id>48</id>
+    <name>Comoros</name>
+    <iso_code_2>KM</iso_code_2>
+    <iso_code_3>COM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="49">
+    <id>49</id>
+    <name>Congo</name>
+    <iso_code_2>CG</iso_code_2>
+    <iso_code_3>COG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="50">
+    <id>50</id>
+    <name>Cook Islands</name>
+    <iso_code_2>CK</iso_code_2>
+    <iso_code_3>COK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="51">
+    <id>51</id>
+    <name>Costa Rica</name>
+    <iso_code_2>CR</iso_code_2>
+    <iso_code_3>CRI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="52">
+    <id>52</id>
+    <name>Cote D'Ivoire</name>
+    <iso_code_2>CI</iso_code_2>
+    <iso_code_3>CIV</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="53">
+    <id>53</id>
+    <name>Croatia</name>
+    <iso_code_2>HR</iso_code_2>
+    <iso_code_3>HRV</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="54">
+    <id>54</id>
+    <name>Cuba</name>
+    <iso_code_2>CU</iso_code_2>
+    <iso_code_3>CUB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="55">
+    <id>55</id>
+    <name>Cyprus</name>
+    <iso_code_2>CY</iso_code_2>
+    <iso_code_3>CYP</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="56">
+    <id>56</id>
+    <name>Czech Republic</name>
+    <iso_code_2>CZ</iso_code_2>
+    <iso_code_3>CZE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="57">
+    <id>57</id>
+    <name>Denmark</name>
+    <iso_code_2>DK</iso_code_2>
+    <iso_code_3>DNK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="58">
+    <id>58</id>
+    <name>Djibouti</name>
+    <iso_code_2>DJ</iso_code_2>
+    <iso_code_3>DJI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="59">
+    <id>59</id>
+    <name>Dominica</name>
+    <iso_code_2>DM</iso_code_2>
+    <iso_code_3>DMA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="60">
+    <id>60</id>
+    <name>Dominican Republic</name>
+    <iso_code_2>DO</iso_code_2>
+    <iso_code_3>DOM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="61">
+    <id>61</id>
+    <name>East Timor</name>
+    <iso_code_2>TP</iso_code_2>
+    <iso_code_3>TMP</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="62">
+    <id>62</id>
+    <name>Ecuador</name>
+    <iso_code_2>EC</iso_code_2>
+    <iso_code_3>ECU</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="63">
+    <id>63</id>
+    <name>Egypt</name>
+    <iso_code_2>EG</iso_code_2>
+    <iso_code_3>EGY</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="64">
+    <id>64</id>
+    <name>El Salvador</name>
+    <iso_code_2>SV</iso_code_2>
+    <iso_code_3>SLV</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="65">
+    <id>65</id>
+    <name>Equatorial Guinea</name>
+    <iso_code_2>GQ</iso_code_2>
+    <iso_code_3>GNQ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="66">
+    <id>66</id>
+    <name>Eritrea</name>
+    <iso_code_2>ER</iso_code_2>
+    <iso_code_3>ERI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="67">
+    <id>67</id>
+    <name>Estonia</name>
+    <iso_code_2>EE</iso_code_2>
+    <iso_code_3>EST</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="68">
+    <id>68</id>
+    <name>Ethiopia</name>
+    <iso_code_2>ET</iso_code_2>
+    <iso_code_3>ETH</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="69">
+    <id>69</id>
+    <name>Falkland Islands (Malvinas)</name>
+    <iso_code_2>FK</iso_code_2>
+    <iso_code_3>FLK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="70">
+    <id>70</id>
+    <name>Faroe Islands</name>
+    <iso_code_2>FO</iso_code_2>
+    <iso_code_3>FRO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="71">
+    <id>71</id>
+    <name>Fiji</name>
+    <iso_code_2>FJ</iso_code_2>
+    <iso_code_3>FJI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="72">
+    <id>72</id>
+    <name>Finland</name>
+    <iso_code_2>FI</iso_code_2>
+    <iso_code_3>FIN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="73">
+    <id>73</id>
+    <name>France</name>
+    <iso_code_2>FR</iso_code_2>
+    <iso_code_3>FRA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="74">
+    <id>74</id>
+    <name>France, Metropolitan</name>
+    <iso_code_2>FX</iso_code_2>
+    <iso_code_3>FXX</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="75">
+    <id>75</id>
+    <name>French Guiana</name>
+    <iso_code_2>GF</iso_code_2>
+    <iso_code_3>GUF</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="76">
+    <id>76</id>
+    <name>French Polynesia</name>
+    <iso_code_2>PF</iso_code_2>
+    <iso_code_3>PYF</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="77">
+    <id>77</id>
+    <name>French Southern Territories</name>
+    <iso_code_2>TF</iso_code_2>
+    <iso_code_3>ATF</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="78">
+    <id>78</id>
+    <name>Gabon</name>
+    <iso_code_2>GA</iso_code_2>
+    <iso_code_3>GAB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="79">
+    <id>79</id>
+    <name>Gambia</name>
+    <iso_code_2>GM</iso_code_2>
+    <iso_code_3>GMB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="80">
+    <id>80</id>
+    <name>Georgia</name>
+    <iso_code_2>GE</iso_code_2>
+    <iso_code_3>GEO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="81">
+    <id>81</id>
+    <name>Germany</name>
+    <iso_code_2>DE</iso_code_2>
+    <iso_code_3>DEU</iso_code_3>
+    <format_id>5</format_id>
+  </ice_countries>
+  <ice_countries itemid="82">
+    <id>82</id>
+    <name>Ghana</name>
+    <iso_code_2>GH</iso_code_2>
+    <iso_code_3>GHA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="83">
+    <id>83</id>
+    <name>Gibraltar</name>
+    <iso_code_2>GI</iso_code_2>
+    <iso_code_3>GIB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="84">
+    <id>84</id>
+    <name>Greece</name>
+    <iso_code_2>GR</iso_code_2>
+    <iso_code_3>GRC</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="85">
+    <id>85</id>
+    <name>Greenland</name>
+    <iso_code_2>GL</iso_code_2>
+    <iso_code_3>GRL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="86">
+    <id>86</id>
+    <name>Grenada</name>
+    <iso_code_2>GD</iso_code_2>
+    <iso_code_3>GRD</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="87">
+    <id>87</id>
+    <name>Guadeloupe</name>
+    <iso_code_2>GP</iso_code_2>
+    <iso_code_3>GLP</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="88">
+    <id>88</id>
+    <name>Guam</name>
+    <iso_code_2>GU</iso_code_2>
+    <iso_code_3>GUM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="89">
+    <id>89</id>
+    <name>Guatemala</name>
+    <iso_code_2>GT</iso_code_2>
+    <iso_code_3>GTM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="90">
+    <id>90</id>
+    <name>Guinea</name>
+    <iso_code_2>GN</iso_code_2>
+    <iso_code_3>GIN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="91">
+    <id>91</id>
+    <name>Guinea-bissau</name>
+    <iso_code_2>GW</iso_code_2>
+    <iso_code_3>GNB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="92">
+    <id>92</id>
+    <name>Guyana</name>
+    <iso_code_2>GY</iso_code_2>
+    <iso_code_3>GUY</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="93">
+    <id>93</id>
+    <name>Haiti</name>
+    <iso_code_2>HT</iso_code_2>
+    <iso_code_3>HTI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="94">
+    <id>94</id>
+    <name>Heard and Mc Donald Islands</name>
+    <iso_code_2>HM</iso_code_2>
+    <iso_code_3>HMD</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="95">
+    <id>95</id>
+    <name>Honduras</name>
+    <iso_code_2>HN</iso_code_2>
+    <iso_code_3>HND</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="96">
+    <id>96</id>
+    <name>Hong Kong</name>
+    <iso_code_2>HK</iso_code_2>
+    <iso_code_3>HKG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="97">
+    <id>97</id>
+    <name>Hungary</name>
+    <iso_code_2>HU</iso_code_2>
+    <iso_code_3>HUN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="98">
+    <id>98</id>
+    <name>Iceland</name>
+    <iso_code_2>IS</iso_code_2>
+    <iso_code_3>ISL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="99">
+    <id>99</id>
+    <name>India</name>
+    <iso_code_2>IN</iso_code_2>
+    <iso_code_3>IND</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="100">
+    <id>100</id>
+    <name>Indonesia</name>
+    <iso_code_2>ID</iso_code_2>
+    <iso_code_3>IDN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="101">
+    <id>101</id>
+    <name>Iran (Islamic Republic of)</name>
+    <iso_code_2>IR</iso_code_2>
+    <iso_code_3>IRN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="102">
+    <id>102</id>
+    <name>Iraq</name>
+    <iso_code_2>IQ</iso_code_2>
+    <iso_code_3>IRQ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="103">
+    <id>103</id>
+    <name>Ireland</name>
+    <iso_code_2>IE</iso_code_2>
+    <iso_code_3>IRL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="104">
+    <id>104</id>
+    <name>Israel</name>
+    <iso_code_2>IL</iso_code_2>
+    <iso_code_3>ISR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="105">
+    <id>105</id>
+    <name>Italy</name>
+    <iso_code_2>IT</iso_code_2>
+    <iso_code_3>ITA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="106">
+    <id>106</id>
+    <name>Jamaica</name>
+    <iso_code_2>JM</iso_code_2>
+    <iso_code_3>JAM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="107">
+    <id>107</id>
+    <name>Japan</name>
+    <iso_code_2>JP</iso_code_2>
+    <iso_code_3>JPN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="108">
+    <id>108</id>
+    <name>Jordan</name>
+    <iso_code_2>JO</iso_code_2>
+    <iso_code_3>JOR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="109">
+    <id>109</id>
+    <name>Kazakhstan</name>
+    <iso_code_2>KZ</iso_code_2>
+    <iso_code_3>KAZ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="110">
+    <id>110</id>
+    <name>Kenya</name>
+    <iso_code_2>KE</iso_code_2>
+    <iso_code_3>KEN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="111">
+    <id>111</id>
+    <name>Kiribati</name>
+    <iso_code_2>KI</iso_code_2>
+    <iso_code_3>KIR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="112">
+    <id>112</id>
+    <name>Korea, Democratic People's Republic of</name>
+    <iso_code_2>KP</iso_code_2>
+    <iso_code_3>PRK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="113">
+    <id>113</id>
+    <name>Korea, Republic of</name>
+    <iso_code_2>KR</iso_code_2>
+    <iso_code_3>KOR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="114">
+    <id>114</id>
+    <name>Kuwait</name>
+    <iso_code_2>KW</iso_code_2>
+    <iso_code_3>KWT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="115">
+    <id>115</id>
+    <name>Kyrgyzstan</name>
+    <iso_code_2>KG</iso_code_2>
+    <iso_code_3>KGZ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="116">
+    <id>116</id>
+    <name>Lao People's Democratic Republic</name>
+    <iso_code_2>LA</iso_code_2>
+    <iso_code_3>LAO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="117">
+    <id>117</id>
+    <name>Latvia</name>
+    <iso_code_2>LV</iso_code_2>
+    <iso_code_3>LVA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="118">
+    <id>118</id>
+    <name>Lebanon</name>
+    <iso_code_2>LB</iso_code_2>
+    <iso_code_3>LBN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="119">
+    <id>119</id>
+    <name>Lesotho</name>
+    <iso_code_2>LS</iso_code_2>
+    <iso_code_3>LSO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="120">
+    <id>120</id>
+    <name>Liberia</name>
+    <iso_code_2>LR</iso_code_2>
+    <iso_code_3>LBR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="121">
+    <id>121</id>
+    <name>Libyan Arab Jamahiriya</name>
+    <iso_code_2>LY</iso_code_2>
+    <iso_code_3>LBY</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="122">
+    <id>122</id>
+    <name>Liechtenstein</name>
+    <iso_code_2>LI</iso_code_2>
+    <iso_code_3>LIE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="123">
+    <id>123</id>
+    <name>Lithuania</name>
+    <iso_code_2>LT</iso_code_2>
+    <iso_code_3>LTU</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="124">
+    <id>124</id>
+    <name>Luxembourg</name>
+    <iso_code_2>LU</iso_code_2>
+    <iso_code_3>LUX</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="125">
+    <id>125</id>
+    <name>Macau</name>
+    <iso_code_2>MO</iso_code_2>
+    <iso_code_3>MAC</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="126">
+    <id>126</id>
+    <name>Macedonia, The Former Yugoslav Republic of</name>
+    <iso_code_2>MK</iso_code_2>
+    <iso_code_3>MKD</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="127">
+    <id>127</id>
+    <name>Madagascar</name>
+    <iso_code_2>MG</iso_code_2>
+    <iso_code_3>MDG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="128">
+    <id>128</id>
+    <name>Malawi</name>
+    <iso_code_2>MW</iso_code_2>
+    <iso_code_3>MWI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="129">
+    <id>129</id>
+    <name>Malaysia</name>
+    <iso_code_2>MY</iso_code_2>
+    <iso_code_3>MYS</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="130">
+    <id>130</id>
+    <name>Maldives</name>
+    <iso_code_2>MV</iso_code_2>
+    <iso_code_3>MDV</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="131">
+    <id>131</id>
+    <name>Mali</name>
+    <iso_code_2>ML</iso_code_2>
+    <iso_code_3>MLI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="132">
+    <id>132</id>
+    <name>Malta</name>
+    <iso_code_2>MT</iso_code_2>
+    <iso_code_3>MLT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="133">
+    <id>133</id>
+    <name>Marshall Islands</name>
+    <iso_code_2>MH</iso_code_2>
+    <iso_code_3>MHL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="134">
+    <id>134</id>
+    <name>Martinique</name>
+    <iso_code_2>MQ</iso_code_2>
+    <iso_code_3>MTQ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="135">
+    <id>135</id>
+    <name>Mauritania</name>
+    <iso_code_2>MR</iso_code_2>
+    <iso_code_3>MRT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="136">
+    <id>136</id>
+    <name>Mauritius</name>
+    <iso_code_2>MU</iso_code_2>
+    <iso_code_3>MUS</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="137">
+    <id>137</id>
+    <name>Mayotte</name>
+    <iso_code_2>YT</iso_code_2>
+    <iso_code_3>MYT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="138">
+    <id>138</id>
+    <name>Mexico</name>
+    <iso_code_2>MX</iso_code_2>
+    <iso_code_3>MEX</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="139">
+    <id>139</id>
+    <name>Micronesia, Federated States of</name>
+    <iso_code_2>FM</iso_code_2>
+    <iso_code_3>FSM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="140">
+    <id>140</id>
+    <name>Moldova, Republic of</name>
+    <iso_code_2>MD</iso_code_2>
+    <iso_code_3>MDA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="141">
+    <id>141</id>
+    <name>Monaco</name>
+    <iso_code_2>MC</iso_code_2>
+    <iso_code_3>MCO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="142">
+    <id>142</id>
+    <name>Mongolia</name>
+    <iso_code_2>MN</iso_code_2>
+    <iso_code_3>MNG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="143">
+    <id>143</id>
+    <name>Montserrat</name>
+    <iso_code_2>MS</iso_code_2>
+    <iso_code_3>MSR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="144">
+    <id>144</id>
+    <name>Morocco</name>
+    <iso_code_2>MA</iso_code_2>
+    <iso_code_3>MAR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="145">
+    <id>145</id>
+    <name>Mozambique</name>
+    <iso_code_2>MZ</iso_code_2>
+    <iso_code_3>MOZ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="146">
+    <id>146</id>
+    <name>Myanmar</name>
+    <iso_code_2>MM</iso_code_2>
+    <iso_code_3>MMR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="147">
+    <id>147</id>
+    <name>Namibia</name>
+    <iso_code_2>NA</iso_code_2>
+    <iso_code_3>NAM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="148">
+    <id>148</id>
+    <name>Nauru</name>
+    <iso_code_2>NR</iso_code_2>
+    <iso_code_3>NRU</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="149">
+    <id>149</id>
+    <name>Nepal</name>
+    <iso_code_2>NP</iso_code_2>
+    <iso_code_3>NPL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="150">
+    <id>150</id>
+    <name>Netherlands</name>
+    <iso_code_2>NL</iso_code_2>
+    <iso_code_3>NLD</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="151">
+    <id>151</id>
+    <name>Netherlands Antilles</name>
+    <iso_code_2>AN</iso_code_2>
+    <iso_code_3>ANT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="152">
+    <id>152</id>
+    <name>New Caledonia</name>
+    <iso_code_2>NC</iso_code_2>
+    <iso_code_3>NCL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="153">
+    <id>153</id>
+    <name>New Zealand</name>
+    <iso_code_2>NZ</iso_code_2>
+    <iso_code_3>NZL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="154">
+    <id>154</id>
+    <name>Nicaragua</name>
+    <iso_code_2>NI</iso_code_2>
+    <iso_code_3>NIC</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="155">
+    <id>155</id>
+    <name>Niger</name>
+    <iso_code_2>NE</iso_code_2>
+    <iso_code_3>NER</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="156">
+    <id>156</id>
+    <name>Nigeria</name>
+    <iso_code_2>NG</iso_code_2>
+    <iso_code_3>NGA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="157">
+    <id>157</id>
+    <name>Niue</name>
+    <iso_code_2>NU</iso_code_2>
+    <iso_code_3>NIU</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="158">
+    <id>158</id>
+    <name>Norfolk Island</name>
+    <iso_code_2>NF</iso_code_2>
+    <iso_code_3>NFK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="159">
+    <id>159</id>
+    <name>Northern Mariana Islands</name>
+    <iso_code_2>MP</iso_code_2>
+    <iso_code_3>MNP</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="160">
+    <id>160</id>
+    <name>Norway</name>
+    <iso_code_2>NO</iso_code_2>
+    <iso_code_3>NOR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="161">
+    <id>161</id>
+    <name>Oman</name>
+    <iso_code_2>OM</iso_code_2>
+    <iso_code_3>OMN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="162">
+    <id>162</id>
+    <name>Pakistan</name>
+    <iso_code_2>PK</iso_code_2>
+    <iso_code_3>PAK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="163">
+    <id>163</id>
+    <name>Palau</name>
+    <iso_code_2>PW</iso_code_2>
+    <iso_code_3>PLW</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="164">
+    <id>164</id>
+    <name>Panama</name>
+    <iso_code_2>PA</iso_code_2>
+    <iso_code_3>PAN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="165">
+    <id>165</id>
+    <name>Papua New Guinea</name>
+    <iso_code_2>PG</iso_code_2>
+    <iso_code_3>PNG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="166">
+    <id>166</id>
+    <name>Paraguay</name>
+    <iso_code_2>PY</iso_code_2>
+    <iso_code_3>PRY</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="167">
+    <id>167</id>
+    <name>Peru</name>
+    <iso_code_2>PE</iso_code_2>
+    <iso_code_3>PER</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="168">
+    <id>168</id>
+    <name>Philippines</name>
+    <iso_code_2>PH</iso_code_2>
+    <iso_code_3>PHL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="169">
+    <id>169</id>
+    <name>Pitcairn</name>
+    <iso_code_2>PN</iso_code_2>
+    <iso_code_3>PCN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="170">
+    <id>170</id>
+    <name>Poland</name>
+    <iso_code_2>PL</iso_code_2>
+    <iso_code_3>POL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="171">
+    <id>171</id>
+    <name>Portugal</name>
+    <iso_code_2>PT</iso_code_2>
+    <iso_code_3>PRT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="172">
+    <id>172</id>
+    <name>Puerto Rico</name>
+    <iso_code_2>PR</iso_code_2>
+    <iso_code_3>PRI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="173">
+    <id>173</id>
+    <name>Qatar</name>
+    <iso_code_2>QA</iso_code_2>
+    <iso_code_3>QAT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="174">
+    <id>174</id>
+    <name>Reunion</name>
+    <iso_code_2>RE</iso_code_2>
+    <iso_code_3>REU</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="175">
+    <id>175</id>
+    <name>Romania</name>
+    <iso_code_2>RO</iso_code_2>
+    <iso_code_3>ROM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="176">
+    <id>176</id>
+    <name>Russian Federation</name>
+    <iso_code_2>RU</iso_code_2>
+    <iso_code_3>RUS</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="177">
+    <id>177</id>
+    <name>Rwanda</name>
+    <iso_code_2>RW</iso_code_2>
+    <iso_code_3>RWA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="178">
+    <id>178</id>
+    <name>Saint Kitts and Nevis</name>
+    <iso_code_2>KN</iso_code_2>
+    <iso_code_3>KNA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="179">
+    <id>179</id>
+    <name>Saint Lucia</name>
+    <iso_code_2>LC</iso_code_2>
+    <iso_code_3>LCA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="180">
+    <id>180</id>
+    <name>Saint Vincent and the Grenadines</name>
+    <iso_code_2>VC</iso_code_2>
+    <iso_code_3>VCT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="181">
+    <id>181</id>
+    <name>Samoa</name>
+    <iso_code_2>WS</iso_code_2>
+    <iso_code_3>WSM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="182">
+    <id>182</id>
+    <name>San Marino</name>
+    <iso_code_2>SM</iso_code_2>
+    <iso_code_3>SMR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="183">
+    <id>183</id>
+    <name>Sao Tome and Principe</name>
+    <iso_code_2>ST</iso_code_2>
+    <iso_code_3>STP</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="184">
+    <id>184</id>
+    <name>Saudi Arabia</name>
+    <iso_code_2>SA</iso_code_2>
+    <iso_code_3>SAU</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="185">
+    <id>185</id>
+    <name>Senegal</name>
+    <iso_code_2>SN</iso_code_2>
+    <iso_code_3>SEN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="186">
+    <id>186</id>
+    <name>Seychelles</name>
+    <iso_code_2>SC</iso_code_2>
+    <iso_code_3>SYC</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="187">
+    <id>187</id>
+    <name>Sierra Leone</name>
+    <iso_code_2>SL</iso_code_2>
+    <iso_code_3>SLE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="188">
+    <id>188</id>
+    <name>Singapore</name>
+    <iso_code_2>SG</iso_code_2>
+    <iso_code_3>SGP</iso_code_3>
+    <format_id>4</format_id>
+  </ice_countries>
+  <ice_countries itemid="189">
+    <id>189</id>
+    <name>Slovakia (Slovak Republic)</name>
+    <iso_code_2>SK</iso_code_2>
+    <iso_code_3>SVK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="190">
+    <id>190</id>
+    <name>Slovenia</name>
+    <iso_code_2>SI</iso_code_2>
+    <iso_code_3>SVN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="191">
+    <id>191</id>
+    <name>Solomon Islands</name>
+    <iso_code_2>SB</iso_code_2>
+    <iso_code_3>SLB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="192">
+    <id>192</id>
+    <name>Somalia</name>
+    <iso_code_2>SO</iso_code_2>
+    <iso_code_3>SOM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="193">
+    <id>193</id>
+    <name>South Africa</name>
+    <iso_code_2>ZA</iso_code_2>
+    <iso_code_3>ZAF</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="194">
+    <id>194</id>
+    <name>South Georgia and the South Sandwich Islands</name>
+    <iso_code_2>GS</iso_code_2>
+    <iso_code_3>SGS</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="195">
+    <id>195</id>
+    <name>Spain</name>
+    <iso_code_2>ES</iso_code_2>
+    <iso_code_3>ESP</iso_code_3>
+    <format_id>3</format_id>
+  </ice_countries>
+  <ice_countries itemid="196">
+    <id>196</id>
+    <name>Sri Lanka</name>
+    <iso_code_2>LK</iso_code_2>
+    <iso_code_3>LKA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="197">
+    <id>197</id>
+    <name>St. Helena</name>
+    <iso_code_2>SH</iso_code_2>
+    <iso_code_3>SHN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="198">
+    <id>198</id>
+    <name>St. Pierre and Miquelon</name>
+    <iso_code_2>PM</iso_code_2>
+    <iso_code_3>SPM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="199">
+    <id>199</id>
+    <name>Sudan</name>
+    <iso_code_2>SD</iso_code_2>
+    <iso_code_3>SDN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="200">
+    <id>200</id>
+    <name>Suriname</name>
+    <iso_code_2>SR</iso_code_2>
+    <iso_code_3>SUR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="201">
+    <id>201</id>
+    <name>Svalbard and Jan Mayen Islands</name>
+    <iso_code_2>SJ</iso_code_2>
+    <iso_code_3>SJM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="202">
+    <id>202</id>
+    <name>Swaziland</name>
+    <iso_code_2>SZ</iso_code_2>
+    <iso_code_3>SWZ</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="203">
+    <id>203</id>
+    <name>Sweden</name>
+    <iso_code_2>SE</iso_code_2>
+    <iso_code_3>SWE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="204">
+    <id>204</id>
+    <name>Switzerland</name>
+    <iso_code_2>CH</iso_code_2>
+    <iso_code_3>CHE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="205">
+    <id>205</id>
+    <name>Syrian Arab Republic</name>
+    <iso_code_2>SY</iso_code_2>
+    <iso_code_3>SYR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="206">
+    <id>206</id>
+    <name>Taiwan</name>
+    <iso_code_2>TW</iso_code_2>
+    <iso_code_3>TWN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="207">
+    <id>207</id>
+    <name>Tajikistan</name>
+    <iso_code_2>TJ</iso_code_2>
+    <iso_code_3>TJK</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="208">
+    <id>208</id>
+    <name>Tanzania, United Republic of</name>
+    <iso_code_2>TZ</iso_code_2>
+    <iso_code_3>TZA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="209">
+    <id>209</id>
+    <name>Thailand</name>
+    <iso_code_2>TH</iso_code_2>
+    <iso_code_3>THA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="210">
+    <id>210</id>
+    <name>Togo</name>
+    <iso_code_2>TG</iso_code_2>
+    <iso_code_3>TGO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="211">
+    <id>211</id>
+    <name>Tokelau</name>
+    <iso_code_2>TK</iso_code_2>
+    <iso_code_3>TKL</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="212">
+    <id>212</id>
+    <name>Tonga</name>
+    <iso_code_2>TO</iso_code_2>
+    <iso_code_3>TON</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="213">
+    <id>213</id>
+    <name>Trinidad and Tobago</name>
+    <iso_code_2>TT</iso_code_2>
+    <iso_code_3>TTO</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="214">
+    <id>214</id>
+    <name>Tunisia</name>
+    <iso_code_2>TN</iso_code_2>
+    <iso_code_3>TUN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="215">
+    <id>215</id>
+    <name>Turkey</name>
+    <iso_code_2>TR</iso_code_2>
+    <iso_code_3>TUR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="216">
+    <id>216</id>
+    <name>Turkmenistan</name>
+    <iso_code_2>TM</iso_code_2>
+    <iso_code_3>TKM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="217">
+    <id>217</id>
+    <name>Turks and Caicos Islands</name>
+    <iso_code_2>TC</iso_code_2>
+    <iso_code_3>TCA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="218">
+    <id>218</id>
+    <name>Tuvalu</name>
+    <iso_code_2>TV</iso_code_2>
+    <iso_code_3>TUV</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="219">
+    <id>219</id>
+    <name>Uganda</name>
+    <iso_code_2>UG</iso_code_2>
+    <iso_code_3>UGA</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="220">
+    <id>220</id>
+    <name>Ukraine</name>
+    <iso_code_2>UA</iso_code_2>
+    <iso_code_3>UKR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="221">
+    <id>221</id>
+    <name>United Arab Emirates</name>
+    <iso_code_2>AE</iso_code_2>
+    <iso_code_3>ARE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="222">
+    <id>222</id>
+    <name>United Kingdom</name>
+    <iso_code_2>GB</iso_code_2>
+    <iso_code_3>GBR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="223">
+    <id>223</id>
+    <name>United States</name>
+    <iso_code_2>US</iso_code_2>
+    <iso_code_3>USA</iso_code_3>
+    <format_id>2</format_id>
+  </ice_countries>
+  <ice_countries itemid="224">
+    <id>224</id>
+    <name>United States Minor Outlying Islands</name>
+    <iso_code_2>UM</iso_code_2>
+    <iso_code_3>UMI</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="225">
+    <id>225</id>
+    <name>Uruguay</name>
+    <iso_code_2>UY</iso_code_2>
+    <iso_code_3>URY</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="226">
+    <id>226</id>
+    <name>Uzbekistan</name>
+    <iso_code_2>UZ</iso_code_2>
+    <iso_code_3>UZB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="227">
+    <id>227</id>
+    <name>Vanuatu</name>
+    <iso_code_2>VU</iso_code_2>
+    <iso_code_3>VUT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="228">
+    <id>228</id>
+    <name>Vatican City State (Holy See)</name>
+    <iso_code_2>VA</iso_code_2>
+    <iso_code_3>VAT</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="229">
+    <id>229</id>
+    <name>Venezuela</name>
+    <iso_code_2>VE</iso_code_2>
+    <iso_code_3>VEN</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="230">
+    <id>230</id>
+    <name>Viet Nam</name>
+    <iso_code_2>VN</iso_code_2>
+    <iso_code_3>VNM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="231">
+    <id>231</id>
+    <name>Virgin Islands (British)</name>
+    <iso_code_2>VG</iso_code_2>
+    <iso_code_3>VGB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="232">
+    <id>232</id>
+    <name>Virgin Islands (U.S.)</name>
+    <iso_code_2>VI</iso_code_2>
+    <iso_code_3>VIR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="233">
+    <id>233</id>
+    <name>Wallis and Futuna Islands</name>
+    <iso_code_2>WF</iso_code_2>
+    <iso_code_3>WLF</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="234">
+    <id>234</id>
+    <name>Western Sahara</name>
+    <iso_code_2>EH</iso_code_2>
+    <iso_code_3>ESH</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="235">
+    <id>235</id>
+    <name>Yemen</name>
+    <iso_code_2>YE</iso_code_2>
+    <iso_code_3>YEM</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="236">
+    <id>236</id>
+    <name>Yugoslavia</name>
+    <iso_code_2>YU</iso_code_2>
+    <iso_code_3>YUG</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="237">
+    <id>237</id>
+    <name>Zaire</name>
+    <iso_code_2>ZR</iso_code_2>
+    <iso_code_3>ZAR</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="238">
+    <id>238</id>
+    <name>Zambia</name>
+    <iso_code_2>ZM</iso_code_2>
+    <iso_code_3>ZMB</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+  <ice_countries itemid="239">
+    <id>239</id>
+    <name>Zimbabwe</name>
+    <iso_code_2>ZW</iso_code_2>
+    <iso_code_3>ZWE</iso_code_3>
+    <format_id>1</format_id>
+  </ice_countries>
+</items>
