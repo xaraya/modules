@@ -1038,9 +1038,19 @@ function commerce_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (10,0,0,2,'Index','Willkommen','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage für diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geändert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder über das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
-
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (1, 'loginbox.php', 'left', 1, 6)";
+    $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (11,0,0,3,'Shipping & Returns','Shipping & Returns','Put here your Shipping & Returns information.',1,'',1,1,0)";
     if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (12,0,0,3,'Privacy Notice','Privacy Notice','Put here your Privacy Notice information.',1,'',1,2,0)";
+    if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (13,0,0,3,'Conditions of Use','Conditions of Use','Conditions of Use<br />Put here your Conditions of Use information. <br />1. Validity<br />2. Offers<br />3. Price<br />4. Dispatch and passage of the risk<br />5. Delivery<br />6. Terms of payment<br />7. Retention of title<br />8. Notices of defect, guarantee and compensation<br />9. Fair trading cancelling / non-acceptance<br />10. Place of delivery and area of jurisdiction<br />11. Final clauses',1,'',1,3,0)";
+    if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (14,0,0,3,'Contact','Contact','Put here your Contact information.',1,'',1,4,0)";
+    if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (15,0,0,3,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage für diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geändert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder über das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
+    if (!$q->run($query)) return;
+
+//    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (1, 'loginbox.php', 'left', 1, 6)";
+//    if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (2, 'customers_status.php', 'left', 0, 7)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (3, 'categories.php', 'left', 1, 2)";
@@ -2076,19 +2086,27 @@ function commerce_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_languages VALUES (2,'Deutsch','de','icon.gif','de_DE',2,'iso-8859-15')";
     if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_languages VALUES (3,'Russian','ru','icon.gif','ru_RU',2,'utf-8')";
+    if (!$q->run($query)) return;
 
 
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '1', 'Pending')";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '2', 'Offen')";
     if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '3', 'Ozhidanie')";
+    if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '2', '1', 'Processing')";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '2', '2', 'In Bearbeitung')";
     if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '2', '3', 'Obrabotka')";
+    if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '3', '1', 'Delivered')";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '3', '2', 'Versendet')";
+    if (!$q->run($query)) return;
+    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '3', '3', 'Dostavlen')";
     if (!$q->run($query)) return;
 
 
@@ -2497,6 +2515,9 @@ function commerce_init()
     $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES ('0', '2', 'Admin', 1, 'admin_status.gif', '0.00', '1', '0.00', '1', '1', '1')";
     if (!$q->run($query)) return;
 
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES ('0', '3', 'Admin', 1, 'admin_status.gif', '0.00', '1', '0.00', '1', '1', '1')";
+    if (!$q->run($query)) return;
+
     // status Guest
     $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (1, 1, 'Guest', 1, 'guest_status.gif', '".$status_discount."', '".$status_ot_discount_flag."', '".$status_ot_discount."', '".$graduated_price."', '".$show_price."', '".$show_tax."')";
     if (!$q->run($query)) return;
@@ -2504,11 +2525,17 @@ function commerce_init()
     $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (1, 2, 'Gast', 1, 'guest_status.gif', '".$status_discount."', '".$status_ot_discount_flag."', '".$status_ot_discount."', '".$graduated_price."', '".$show_price."', '".$show_tax."')";
     if (!$q->run($query)) return;
 
-// status New customer
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (1, 3, 'Guest', 1, 'guest_status.gif', '".$status_discount."', '".$status_ot_discount_flag."', '".$status_ot_discount."', '".$graduated_price."', '".$show_price."', '".$show_tax."')";
+    if (!$q->run($query)) return;
+
+    // status New customer
     $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (2, 1, 'New customer', 1, 'customer_status.gif', '".$status_discount2."', '".$status_ot_discount_flag2."', '".$status_ot_discount2."', '".$graduated_price2."', '".$show_price2."', '".$show_tax2."')";
     if (!$q->run($query)) return;
 
     $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (2, 2, 'Neuer Kunde', 1, 'customer_status.gif', '".$status_discount2."', '".$status_ot_discount_flag2."', '".$status_ot_discount2."', '".$graduated_price2."', '".$show_price2."', '".$show_tax2."')";
+    if (!$q->run($query)) return;
+
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (2, 3, 'New customer', 1, 'customer_status.gif', '".$status_discount2."', '".$status_ot_discount_flag2."', '".$status_ot_discount2."', '".$graduated_price2."', '".$show_price2."', '".$show_tax2."')";
     if (!$q->run($query)) return;
 
     // Register masks
@@ -2588,11 +2615,13 @@ function commerce_init()
             array('modName' => 'commerce',
                 'blockType' => 'languages'))) return;
 
+/*
     if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'commerce',
                 'blockType' => 'loginbox'))) return;
+*/
 
     if (!xarModAPIFunc('blocks',
             'admin',
