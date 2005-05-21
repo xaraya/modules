@@ -235,12 +235,22 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
+    // Treat destructive right now
+    $ice_objects = array('ice_countries');
+    $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
+    foreach($existing_objects as $objectid => $objectinfo) {
+        if(in_array($objectinfo['name'], $ice_objects)) {
+            // KILL
+            if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
+        } 
+    }
+    
     // The countries are managed through a DD object. 
     // the xardata/ directory provides the definition and the initialisation
     // data in XML files ice-countries-def.xml an ice-countries-data.xml
     $def_file = 'modules/commerce/xardata/ice-countries-def.xml';
     $dat_file = 'modules/commerce/xardata/ice-countries-data.xml';
-    
+
     // TODO: This will bomb out if the object already exists
     if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
     if(!xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file))) return;
@@ -862,8 +872,8 @@ function commerce_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (7, 'information.php', 'left', 1, 3)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (8, 'shopping_cart.php', 'right', 1, 1)";
-    if (!$q->run($query)) return;
+//    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (8, 'shopping_cart.php', 'right', 1, 1)";
+//    if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (9, 'manufacturer_info.php', 'right', 1, 6)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (10, 'order_history.php', 'right', 1, 5)";
@@ -1936,11 +1946,11 @@ function commerce_init()
             array('modName' => 'commerce',
                 'blockType' => 'reviews'))) return;
 
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
-                'blockType' => 'shopping_cart'))) return;
+    //if (!xarModAPIFunc('blocks',
+    //        'admin',
+    //        'register_block_type',
+    //        array('modName' => 'commerce',
+    //            'blockType' => 'shopping_cart'))) return;
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -2002,12 +2012,12 @@ function commerce_init()
                                                                   'state' => 0,
                                                                   'groups' => array($rightgroup)));
 // Put a shopping cart block in the 'right' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'shopping_cart'));
-    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commercecart',
-                                                                  'state' => 0,
-                                                                  'groups' => array($rightgroup)));
+//    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'shopping_cart'));
+//    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+//    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+ //                                                                 'name' => 'commercecart',
+//                                                                  'state' => 0,
+//                                                                  'groups' => array($rightgroup)));
 
 // Put a admin info block in the 'right' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'admin'));
