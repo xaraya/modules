@@ -46,6 +46,7 @@
                     #xarSessionGetVar('translations_working_locale')#
                 </a>
             </span>
+<xar:comment>
             <br/>
             <span><xar:mlstring>Translation Backend</xar:mlstring>:</span>
             <span class="xar-title">
@@ -53,6 +54,7 @@
                     #xarConfigGetVar('Site.MLS.TranslationsBackend')#
                 </a>
             </span>
+</xar:comment>
             <br/>
             <span><xar:mlstring>Release Backend</xar:mlstring>:</span>
             <span class="xar-title">
