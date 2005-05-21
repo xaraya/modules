@@ -19,13 +19,13 @@
 /**
  * the main administration function
  */
-function commerce_user_main()
+function carts_user_main()
 {
    // Security Check
 //    if(!xarSecurityCheck('EditCommerce')) return;
 
-    xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main User Menu',
-                    'commerce'));
+    xarSessionSetVar('carts_statusmsg', xarML('Carts Main User Menu',
+                    'carts'));
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
 
@@ -35,7 +35,7 @@ function commerce_user_main()
     else {
         switch(strtolower($branch)) {
             case 'start':
-                xarResponseRedirect(xarModURL('commerce', 'user', 'start'));
+                xarResponseRedirect(xarModURL('carts', 'user', 'start'));
                 break;
         }
    }

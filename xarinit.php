@@ -116,12 +116,6 @@ function carts_init()
 
 // Register some block types
     if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'carts',
-                             'blockType'=> 'configmenu'))) return;
-
-    if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'carts',
