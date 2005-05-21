@@ -1,6 +1,6 @@
 <?php
 $modversion['name'] = 'products';
-$modversion['id'] = '40001';
+$modversion['id'] = '40002';
 $modversion['version'] = '0.5.0';
 $modversion['displayname'] = xarML('Products');
 $modversion['description'] = 'Product and Catalog Module';
