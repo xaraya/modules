@@ -91,10 +91,7 @@ $box_content='';
     $data['customers'] = $q->row();
 
     if (xarModIsAvailable('products')) {
-        $q = new xenQuery('SELECT',$xartables['products_products'],'count(*) AS count');
-        $q->eq('products_status',1);
-        if(!$q->run()) return;
-        $data['products'] = $q->row();
+        $data['products'] = xarModAPIFunc('products','user','count_products_in_category');
     }
 
     $q = new xenQuery('SELECT',$xartables['commerce_reviews'],'count(*) AS count');
