@@ -20,9 +20,9 @@
   {
 
     // Hide the shopping cart block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecart'));
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'cartscart'));
     if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
-    xarResponseRedirect(xarModURL('commerce', 'admin', 'configuration',array('gID' => 1)));
+    xarResponseRedirect(xarModURL('carts', 'admin', 'configuration',array('gID' => 1)));
 }
 ?>
