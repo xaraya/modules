@@ -1,6 +1,6 @@
 <object name="ice_countries">
-  <objectid>6</objectid>
-  <label>ice_countries</label>
+  <objectid>7</objectid>
+  <label>Countries</label>
   <moduleid>182</moduleid>
   <itemtype>4</itemtype>
   <urlparam>itemid</urlparam>
@@ -9,7 +9,7 @@
   <isalias>0</isalias>
   <properties>
     <property name="id">
-      <id>37</id>
+      <id>43</id>
       <label>Id</label>
       <type>itemid</type>
       <default></default>
@@ -19,18 +19,18 @@
       <validation>int (11)</validation>
     </property>
     <property name="name">
-      <id>38</id>
-      <label>Name</label>
+      <id>44</id>
+      <label>Country</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>2</order>
-      <validation>0:64</validation>
+      <validation>1:38</validation>
     </property>
     <property name="iso_code_2">
-      <id>39</id>
-      <label>Iso Code 2</label>
+      <id>45</id>
+      <label>ISO Code (2)</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
@@ -39,8 +39,8 @@
       <validation>0:2</validation>
     </property>
     <property name="iso_code_3">
-      <id>40</id>
-      <label>Iso Code 3</label>
+      <id>46</id>
+      <label>ISO Code (3)</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
@@ -49,12 +49,12 @@
       <validation>0:3</validation>
     </property>
     <property name="format_id">
-      <id>41</id>
-      <label>Format Id</label>
+      <id>47</id>
+      <label>Address format</label>
       <type>integerbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>2</status>
       <order>5</order>
       <validation>int (11)</validation>
     </property>
