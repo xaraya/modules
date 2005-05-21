@@ -190,42 +190,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_categories";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_categories (
-      categories_id int NOT NULL auto_increment,
-      categories_image varchar(64),
-      parent_id int DEFAULT '0' NOT NULL,
-      categories_status TINYint (1)  UNSIGNED DEFAULT '1' NOT NULL,
-      categories_template varchar(64),
-      group_ids TEXT,
-      listing_template varchar(64),
-      sort_order int(3),
-      products_sorting varchar(32),
-      products_sorting2 varchar(32),
-      date_added datetime,
-      last_modified datetime,
-      PRIMARY KEY (categories_id),
-      KEY idx_categories_parent_id (parent_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_categories_description";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_categories_description (
-      categories_id int DEFAULT '0' NOT NULL,
-      language_id int DEFAULT '1' NOT NULL,
-      categories_name varchar(32) NOT NULL,
-      categories_heading_title varchar(255) NOT NULL,
-      categories_description varchar(255) NOT NULL,
-      categories_meta_title varchar(100) NOT NULL,
-      categories_meta_description varchar(255) NOT NULL,
-      categories_meta_keywords varchar(255) NOT NULL,
-      PRIMARY KEY (categories_id, language_id),
-      KEY idx_categories_name (categories_name)
-    )";
-    if (!$q->run($query)) return;
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_configuration";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_configuration (
@@ -425,34 +389,6 @@ function commerce_init()
       language_charset text NOT NULL,
       PRIMARY KEY (languages_id),
       KEY IDX_LANGUAGES_NAME (name)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_manufacturers";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_manufacturers (
-      manufacturers_id int NOT NULL auto_increment,
-      manufacturers_name varchar(32) NOT NULL,
-      manufacturers_image varchar(64),
-      date_added datetime NULL,
-      last_modified datetime NULL,
-      PRIMARY KEY (manufacturers_id),
-      KEY IDX_MANUFACTURERS_NAME (manufacturers_name)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_manufacturers_info";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_manufacturers_info (
-      manufacturers_id int NOT NULL,
-      languages_id int NOT NULL,
-      manufacturers_meta_title varchar(100) NOT NULL,
-      manufacturers_meta_description varchar(255) NOT NULL,
-      manufacturers_meta_keywords varchar(255) NOT NULL,
-      manufacturers_url varchar(255) NOT NULL,
-      url_clicked int(5) NOT NULL default '0',
-      date_last_click datetime NULL,
-      PRIMARY KEY (manufacturers_id, languages_id)
     )";
     if (!$q->run($query)) return;
 
@@ -666,139 +602,6 @@ function commerce_init()
       quantity int NOT NULL,
       personal_offer decimal(15,4),
       PRIMARY KEY (price_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products (
-      products_id int NOT NULL auto_increment,
-      products_quantity int(4) NOT NULL,
-      products_shippingtime int(4) NOT NULL,
-      products_model varchar(12),
-      group_ids TEXT,
-      products_sort int(4),
-      products_image varchar(64),
-      products_price decimal(15,4) NOT NULL,
-      products_discount_allowed decimal(3,2) DEFAULT '0' NOT NULL,
-      products_date_added datetime NOT NULL,
-      products_last_modified datetime,
-      products_date_available datetime,
-      products_weight decimal(5,2) NOT NULL,
-      products_status tinyint(1) NOT NULL,
-      products_tax_class_id int NOT NULL,
-      product_template varchar (64),
-      options_template varchar (64),
-      manufacturers_id int NULL,
-      products_ordered int NOT NULL default '0',
-      products_fsk18 int(1) NOT NULL DEFAULT '0',
-      PRIMARY KEY (products_id),
-      KEY idx_products_date_added (products_date_added)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_attributes";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_attributes (
-      products_attributes_id int NOT NULL auto_increment,
-      products_id int NOT NULL,
-      options_id int NOT NULL,
-      options_values_id int NOT NULL,
-      options_values_price decimal(15,4) NOT NULL,
-      price_prefix char(1) NOT NULL,
-      attributes_model varchar(12) NULL,
-      attributes_stock int(4) NULL,
-      options_values_weight decimal(15,4) NOT NULL,
-      weight_prefix char(1) NOT NULL,
-      PRIMARY KEY (products_attributes_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_attributes_download";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_attributes_download (
-      products_attributes_id int NOT NULL,
-      products_attributes_filename varchar(255) NOT NULL default '',
-      products_attributes_maxdays int(2) default '0',
-      products_attributes_maxcount int(2) default '0',
-      PRIMARY KEY  (products_attributes_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_description";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_description (
-      products_id int NOT NULL auto_increment,
-      language_id int NOT NULL default '1',
-      products_name varchar(64) NOT NULL default '',
-      products_description text,
-      products_short_description text,
-      products_meta_title text NOT NULL,
-      products_meta_description text NOT NULL,
-      products_meta_keywords text NOT NULL,
-      products_url varchar(255) default NULL,
-      products_viewed int(5) default '0',
-      PRIMARY KEY  (products_id,language_id),
-      KEY products_name (products_name)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_notifications";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_notifications (
-      products_id int NOT NULL,
-      customers_id int NOT NULL,
-      date_added datetime NOT NULL,
-      PRIMARY KEY (products_id, customers_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_options";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_options (
-      products_options_id int NOT NULL default '0',
-      language_id int NOT NULL default '1',
-      products_options_name varchar(32) NOT NULL default '',
-      PRIMARY KEY  (products_options_id,language_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_options_values";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_options_values (
-      products_options_values_id int NOT NULL default '0',
-      language_id int NOT NULL default '1',
-      products_options_values_name varchar(64) NOT NULL default '',
-      PRIMARY KEY  (products_options_values_id,language_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_options_values_to_products_options";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_options_values_to_products_options (
-      products_options_values_to_products_options_id int NOT NULL auto_increment,
-      products_options_id int NOT NULL,
-      products_options_values_id int NOT NULL,
-      PRIMARY KEY (products_options_values_to_products_options_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_graduated_prices";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_graduated_prices (
-      products_id int(11) NOT NULL default '0',
-      quantity int(11) NOT NULL default '0',
-      unitprice decimal(15,4) NOT NULL default '0.0000',
-      KEY products_id (products_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_to_categories";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_products_to_categories (
-      products_id int NOT NULL,
-      categories_id int NOT NULL,
-      PRIMARY KEY (products_id,categories_id)
     )";
     if (!$q->run($query)) return;
 
@@ -2575,18 +2378,6 @@ function commerce_init()
             'admin',
             'register_block_type',
             array('modName' => 'commerce',
-                'blockType' => 'categories'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
-                'blockType' => 'best_sellers'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
                 'blockType' => 'currencies'))) return;
 
     if (!xarModAPIFunc('blocks',
@@ -2617,25 +2408,7 @@ function commerce_init()
             'admin',
             'register_block_type',
             array('modName' => 'commerce',
-                'blockType' => 'manufacturer_info'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
-                'blockType' => 'manufacturers'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
                 'blockType' => 'order_history'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
-                'blockType' => 'product_notifications'))) return;
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -2647,19 +2420,7 @@ function commerce_init()
             'admin',
             'register_block_type',
             array('modName' => 'commerce',
-                'blockType' => 'search'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
                 'blockType' => 'shopping_cart'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
-                'blockType' => 'specials'))) return;
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -2698,20 +2459,6 @@ function commerce_init()
                                                                   'content' => 'a:6:{s:14:"displaymodules";b:0;s:10:"showlogout";b:1;s:10:"displayrss";b:0;s:12:"displayprint";b:0;s:6:"marker";s:3:"[x]";s:7:"content";s:52:"index.php?module=commerce&type=user&func=exit|Exit||";}',
                                                                   'state' => 0,
                                                                   'groups' => array($leftgroup)));
-// Put a search block in the 'left' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'search'));
-    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commercesearch',
-                                                                  'state' => 0,
-                                                                  'groups' => array($leftgroup)));
-// Put a categories block in the 'left' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'categories'));
-    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commercecategories',
-                                                                  'state' => 0,
-                                                                  'groups' => array($leftgroup)));
 // Put a information block in the 'left' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'information'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
@@ -2725,13 +2472,6 @@ function commerce_init()
     $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
                                                                   'name' => 'commercelanguage',
                                                                   'title' => xarML('Language'),
-                                                                  'state' => 0,
-                                                                  'groups' => array($rightgroup)));
-// Put a manufacturers block in the 'right' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'manufacturers'));
-    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commercemanufacturers',
                                                                   'state' => 0,
                                                                   'groups' => array($rightgroup)));
 // Put a currency block in the 'right' blockgroup

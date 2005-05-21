@@ -103,18 +103,6 @@ function commerce_configmenublock_display($blockinfo)
         array(1,xarModURL('commerce','admin','orders'), 'Orders','')
      );
 
-    $content[5]['heading'] = "Products";
-    $content[5]['lines'] = array(
-        array(1,xarModURL('commerce','admin','categories'), 'Categories/Products',''),
-        array(1,xarModURL('commerce','admin','xsell_products'), 'XSell Products',''),
-        array(1,xarModURL('commerce','admin','new_attributes'), 'Attribute Manager',''),
-        array(1,xarModURL('commerce','admin','products_attributes'), 'Product Options',''),
-        array(1,xarModURL('commerce','admin','manufacturers'), 'Manufacturers',''),
-        array(1,xarModURL('commerce','admin','reviews'), 'Product Reviews',''),
-        array(1,xarModURL('commerce','admin','specials'), 'Special Pricing',''),
-        array(1,xarModURL('commerce','admin','products_expected'), 'Products Expected','')
-     );
-
     $content[6]['heading'] = "Statistics";
     $content[6]['lines'] = array(
         array(1,xarModURL('commerce','admin','stats_products_viewed'), 'Viewed Products',''),

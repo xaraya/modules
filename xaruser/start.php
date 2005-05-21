@@ -22,16 +22,8 @@
     include ('modules/commerce/xarincludes/modules/default.php');
 
 
-    // Show the categories block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecategories'));
-    if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
-
     // Show the admin info block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceadmininfo'));
-    if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
-
-    // Show the search block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercesearch'));
     if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
 
     // Show the information block
@@ -40,10 +32,6 @@
 
     // Show the language block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
-    if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
-
-    // Show the manufacturers block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercemanufacturers'));
     if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
 
     // Show the currencies block

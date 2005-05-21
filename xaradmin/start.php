@@ -69,24 +69,12 @@ xarSessionSetVar('inactivated', serialize($blockarray));
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceadmininfo'));
     if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
-    // Hide the categories block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecategories'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
-
-    // Hide the search block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercesearch'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
-
     // Hide the information block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceinformation'));
     if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
     // Hide the language block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
-
-    // Hide the manufacturers block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercemanufacturers'));
     if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
     // Hide the currencies block

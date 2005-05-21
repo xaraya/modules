@@ -90,10 +90,12 @@ $box_content='';
     if(!$q->run()) return;
     $data['customers'] = $q->row();
 
-    $q = new xenQuery('SELECT',$xartables['commerce_products'],'count(*) AS count');
-    $q->eq('products_status',1);
-    if(!$q->run()) return;
-    $data['products'] = $q->row();
+    if (xarModIsAvailable('products')) {
+        $q = new xenQuery('SELECT',$xartables['products_products'],'count(*) AS count');
+        $q->eq('products_status',1);
+        if(!$q->run()) return;
+        $data['products'] = $q->row();
+    }
 
     $q = new xenQuery('SELECT',$xartables['commerce_reviews'],'count(*) AS count');
     if(!$q->run()) return;
