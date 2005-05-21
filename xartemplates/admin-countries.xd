@@ -1,12 +1,6 @@
 <xar:template file="application_top" type="module"/>
 <xar:template file="adminheader" type="module"/>
 
-<!-- Specific for countries, pass in as variables? -->
-<xar:set name="itemtype">4</xar:set>
-<xar:set name="itemid">$cInfo['countries_id']</xar:set>
-<xar:set name="fieldlist">'name,iso_code_2,iso_code_3'</xar:set>
-<xar:set name="objectlabel"><xar:mlstring>Countries</xar:mlstring></xar:set>
-
 <!-- Everything below is pretty much generically applicable to any object -->
 <fieldset>
     <legend>
@@ -15,7 +9,7 @@
 
     <!-- The left side contains a list of items -->
     <div style="width: 50%; float: left;">
-        <xar:data-view module="dynamicdata" fieldlist="$fieldlist" itemtype="$itemtype" numitems="$numitems" count="yes"/>
+        <xar:data-view module="dynamicdata" fieldlist="$fieldlist" itemtype="$itemtype" numitems="$itemsperpage" count="yes"/>
     </div>
     
     <!-- The right side contains detail on the current item -->
