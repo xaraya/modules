@@ -256,7 +256,7 @@ function commerce_init()
     // TODO: This will bomb out if the object already exists
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
-        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data'; 
+        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml'; 
         
         if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
         if(!xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file))) return;
@@ -1397,11 +1397,6 @@ function commerce_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('16', 'Meta-Tags/Search engines', 'Meta-tags/Search engines', '16', '1')";
     if (!$q->run($query)) return;
-
-    
-    $query = "INSERT INTO " . $prefix . "_commerce_currencies VALUES (1,'Euro','EUR','','EUR','.',',','2','1.0000', now())";
-    if (!$q->run($query)) return;
-
 
     $query = "INSERT INTO " . $prefix . "_commerce_languages VALUES (1,'English','en','icon.gif','en_US',1,'iso-8859-15')";
     if (!$q->run($query)) return;
