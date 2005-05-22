@@ -1,0 +1,112 @@
+<object name="ice_currencies">
+  <objectid>20</objectid>
+  <label>Currencies</label>
+  <moduleid>182</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>108</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="title">
+      <id>109</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:32</validation>
+    </property>
+    <property name="code">
+      <id>110</id>
+      <label>Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:3</validation>
+    </property>
+    <property name="left">
+      <id>111</id>
+      <label>Left</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:12</validation>
+    </property>
+    <property name="right">
+      <id>112</id>
+      <label>Right</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>0:12</validation>
+    </property>
+    <property name="point">
+      <id>113</id>
+      <label>Point</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>0:1</validation>
+    </property>
+    <property name="point_1">
+      <id>114</id>
+      <label>Point_1</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>0:1</validation>
+    </property>
+    <property name="places">
+      <id>115</id>
+      <label>Places</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation>0:1</validation>
+    </property>
+    <property name="value">
+      <id>116</id>
+      <label>Value</label>
+      <type>floatbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>float (13)</validation>
+    </property>
+    <property name="updated">
+      <id>117</id>
+      <label>Updated</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation>datetime</validation>
+    </property>
+  </properties>
+</object>

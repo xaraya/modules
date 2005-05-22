@@ -1,0 +1,18 @@
+<fieldset>
+    <legend>
+        #$objectlabel#
+    </legend>
+
+    <!-- The left side contains a list of items -->
+    <div style="width: 50%; float: left;">
+        <xar:data-view module="dynamicdata" fieldlist="$fieldlist" itemtype="$itemtype" numitems="$itemsperpage" count="yes" template="ice" />
+    </div>
+    
+    <!-- The right side contains detail on the current item -->
+    <div style="width: 50%; float: right;">
+        <xar:data-display module="dynamicdata" itemtype="$itemtype" itemid="$itemid" template="ice"/>
+    </div>
+    
+    <!-- Make sure the fieldset encloses both, regardless of floating or other css trickery -->
+    <div style="clear: both;">&nbsp;</div>
+</fieldset>

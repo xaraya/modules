@@ -235,8 +235,12 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
+    /*
+      Our list of objects
+    */
+    $ice_objects = array('ice_countries', 'ice_currencies');
+    
     // Treat destructive right now
-    $ice_objects = array('ice_countries');
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
     foreach($existing_objects as $objectid => $objectinfo) {
         if(in_array($objectinfo['name'], $ice_objects)) {
@@ -248,30 +252,16 @@ function commerce_init()
     // The countries are managed through a DD object. 
     // the xardata/ directory provides the definition and the initialisation
     // data in XML files ice-countries-def.xml an ice-countries-data.xml
-    $def_file = 'modules/commerce/xardata/ice-countries-def.xml';
-    $dat_file = 'modules/commerce/xardata/ice-countries-data.xml';
 
     // TODO: This will bomb out if the object already exists
-    if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
-    if(!xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file))) return;
-    
+    foreach($ice_objects as $ice_object) {
+        $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
+        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data'; 
+        
+        if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
+        if(!xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file))) return;
+    }
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_currencies";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_currencies (
-      currencies_id int NOT NULL auto_increment,
-      title varchar(32) NOT NULL,
-      code char(3) NOT NULL,
-      symbol_left varchar(12),
-      symbol_right varchar(12),
-      decimal_point char(1),
-      thousands_point char(1),
-      decimal_places char(1),
-      value float(13,8),
-      last_updated datetime NULL,
-      PRIMARY KEY (currencies_id)
-    )";
-    if (!$q->run($query)) return;
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers";
     if (!$q->run($query)) return;
