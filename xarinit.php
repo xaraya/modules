@@ -238,7 +238,7 @@ function commerce_init()
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies');
+    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses');
     
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
@@ -650,18 +650,6 @@ function commerce_init()
       date_status_change datetime,
       status int(1) NOT NULL DEFAULT '1',
       PRIMARY KEY (specials_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_tax_class";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_tax_class (
-      tax_class_id int NOT NULL auto_increment,
-      tax_class_title varchar(32) NOT NULL,
-      tax_class_description varchar(255) NOT NULL,
-      last_modified datetime NULL,
-      date_added datetime NOT NULL,
-      PRIMARY KEY (tax_class_id)
     )";
     if (!$q->run($query)) return;
 

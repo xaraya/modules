@@ -26,10 +26,22 @@ function commerce_admin_countries()
 
     $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
     // TODO: get these from the object config in DD
-    $data['fieldlist'] = 'name,iso_code_2,iso_code_3';
+    $data['fieldlist'] = '';
     $data['objectlabel'] = xarML('Countries');
     $data['itemid'] = isset($cId) ? $cId : 1;
-    $data['itemtype'] = 4;
+    
+    // Get the itemtype for the ice object
+    // TODO: Move this to a commerce api function with the objectname as param or have
+    // 1 function as portal to the object mgmt
+    $objects  = xarModApiFunc('dynamicdata','user','getobjects');
+    $data['itemtype'] = '';
+    foreach($objects as $objectinfo) {
+        if($objectinfo['name'] == 'ice_countries') $data['itemtype'] = $objectinfo['itemtype'];
+    }
+    if($data['itemtype'] =='') {
+        // NOT FOUND
+        die('ICE object not found!!!');
+    }
     return $data;
 }
 ?>

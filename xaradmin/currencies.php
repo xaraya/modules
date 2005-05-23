@@ -28,7 +28,19 @@ function commerce_admin_currencies()
     $data['fieldlist'] = '';
     $data['objectlabel'] = xarML('Currencies');
     $data['itemid'] = isset($cId) ? $cId : 1;
-    $data['itemtype'] = 5;
+    
+    // Get the itemtype for the ice object
+    // TODO: Move this to a commerce api function with the objectname as param or have
+    // 1 function as portal to the object mgmt
+    $objects  = xarModApiFunc('dynamicdata','user','getobjects');
+    $data['itemtype'] = '';
+    foreach($objects as $objectinfo) {
+        if($objectinfo['name'] == 'ice_currencies') $data['itemtype'] = $objectinfo['itemtype'];
+    }
+    if($data['itemtype'] =='') {
+        // NOT FOUND
+        die('ICE object not found!!!');
+    }
     return $data;
 }
 ?>
