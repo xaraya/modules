@@ -238,7 +238,9 @@ function commerce_init()
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 'ice_taxrates', 'ice_languages', 'ice_zones');
+    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 
+                         'ice_taxrates', 'ice_languages', 'ice_zones',
+                         'ice_taxzones', 'ice_taxzonemapping');
     
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
@@ -640,17 +642,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_geo_zones";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_geo_zones (
-      geo_zone_id int NOT NULL auto_increment,
-      geo_zone_name varchar(32) NOT NULL,
-      geo_zone_description varchar(255) NOT NULL,
-      last_modified datetime NULL,
-      date_added datetime NOT NULL,
-      PRIMARY KEY (geo_zone_id)
-    )";
-    if (!$q->run($query)) return;
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_whos_online";
     if (!$q->run($query)) return;
@@ -662,19 +653,6 @@ function commerce_init()
       time_entry varchar(14) NOT NULL,
       time_last_click varchar(14) NOT NULL,
       last_page_url varchar(64) NOT NULL
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_zones_to_geo_zones";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_zones_to_geo_zones (
-       association_id int NOT NULL auto_increment,
-       zone_country_id int NOT NULL,
-       zone_id int NULL,
-       geo_zone_id int NULL,
-       last_modified datetime NULL,
-       date_added datetime NOT NULL,
-       PRIMARY KEY (association_id)
     )";
     if (!$q->run($query)) return;
 
