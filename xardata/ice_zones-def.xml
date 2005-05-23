@@ -1,0 +1,52 @@
+<object name="ice_zones">
+  <objectid>64</objectid>
+  <label>Zones</label>
+  <moduleid>182</moduleid>
+  <itemtype>8</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>412</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="country_id">
+      <id>413</id>
+      <label>Country Id</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="code">
+      <id>414</id>
+      <label>Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:32</validation>
+    </property>
+    <property name="name">
+      <id>415</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:32</validation>
+    </property>
+  </properties>
+</object>
