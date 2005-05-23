@@ -238,7 +238,7 @@ function commerce_init()
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses');
+    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 'ice_taxrates');
     
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
@@ -259,7 +259,8 @@ function commerce_init()
         $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml'; 
         
         if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
-        if(!xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file))) return;
+        // Let data import be allowed to fail
+        xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file));
     }
 
 
