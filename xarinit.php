@@ -74,16 +74,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_address_format";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_address_format (
-      address_format_id int NOT NULL auto_increment,
-      address_format varchar(128) NOT NULL,
-      address_summary varchar(48) NOT NULL,
-      PRIMARY KEY (address_format_id)
-    )";
-    if (!$q->run($query)) return;
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_admin_access";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_admin_access (
@@ -240,7 +230,7 @@ function commerce_init()
     */
     $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 
                          'ice_taxrates', 'ice_languages', 'ice_zones',
-                         'ice_taxzones', 'ice_taxzonemapping');
+                         'ice_taxzones', 'ice_taxzonemapping, ice_addressformats');
     
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
@@ -811,17 +801,6 @@ function commerce_init()
     if (!$q->run($query)) return;
 
 
-    # 1 - Default, 2 - USA, 3 - Spain, 4 - Singapore, 5 - Germany
-    $query = "INSERT INTO " . $prefix . "_commerce_address_format VALUES (1, '\$firstname \$lastname\$cr\$streets\$cr\$city, \$postcode\$cr\$statecomma\$country','\$city / \$country')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_address_format VALUES (2, '\$firstname \$lastname\$cr\$streets\$cr\$city, \$state    \$postcode\$cr\$country','\$city, \$state / \$country')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_address_format VALUES (3, '\$firstname \$lastname\$cr\$streets\$cr\$city\$cr\$postcode - \$statecomma\$country','\$state / \$country')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_address_format VALUES (4, '\$firstname \$lastname\$cr\$streets\$cr\$city (\$postcode)\$cr\$country', '\$postcode / \$country')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_address_format VALUES (5, '\$firstname \$lastname\$cr\$streets\$cr\$postcode \$city\$cr\$country','\$city / \$country')";
-    if (!$q->run($query)) return;
 
     $query = "INSERT INTO " . $prefix . "_commerce_admin_access VALUES (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)";
     if (!$q->run($query)) return;
