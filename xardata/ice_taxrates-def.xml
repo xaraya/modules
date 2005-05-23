@@ -13,7 +13,7 @@
       <label>Rates Id</label>
       <type>itemid</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>1</order>
       <validation>int (11)</validation>
@@ -23,7 +23,7 @@
       <label>Zone Id</label>
       <type>integerbox</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>2</order>
       <validation>int (11)</validation>
@@ -33,7 +33,7 @@
       <label>Class Id</label>
       <type>integerbox</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>3</order>
       <validation>int (11)</validation>
@@ -43,7 +43,7 @@
       <label>Priority</label>
       <type>integerbox</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>4</order>
       <validation>int (5)</validation>
@@ -53,7 +53,7 @@
       <label>Rate</label>
       <type>floatbox</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>5</order>
       <validation>decimal (7)</validation>
@@ -63,7 +63,7 @@
       <label>Description</label>
       <type>textbox</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>6</order>
       <validation>0:255</validation>
@@ -73,7 +73,7 @@
       <label>Modified</label>
       <type>calendar</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>7</order>
       <validation>datetime</validation>
@@ -83,7 +83,7 @@
       <label>Added</label>
       <type>calendar</type>
       <default></default>
-      <source>dynamicdata</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>8</order>
       <validation>datetime</validation>

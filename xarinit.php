@@ -238,7 +238,7 @@ function commerce_init()
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 'ice_taxrates');
+    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 'ice_taxrates', 'ice_languages');
     
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
@@ -376,20 +376,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_languages";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_languages (
-      languages_id int NOT NULL auto_increment,
-      name varchar(32)  NOT NULL,
-      code char(2) NOT NULL,
-      image varchar(64),
-      directory varchar(32),
-      sort_order int(3),
-      language_charset text NOT NULL,
-      PRIMARY KEY (languages_id),
-      KEY IDX_LANGUAGES_NAME (name)
-    )";
-    if (!$q->run($query)) return;
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_newsletters";
     if (!$q->run($query)) return;
@@ -1385,13 +1371,6 @@ function commerce_init()
     $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('15', 'Sessions', 'Session options', '15', '1')";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('16', 'Meta-Tags/Search engines', 'Meta-tags/Search engines', '16', '1')";
-    if (!$q->run($query)) return;
-
-    $query = "INSERT INTO " . $prefix . "_commerce_languages VALUES (1,'English','en','icon.gif','en_US',1,'iso-8859-15')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_languages VALUES (2,'Deutsch','de','icon.gif','de_DE',2,'iso-8859-15')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_languages VALUES (3,'Russian','ru','icon.gif','ru_RU',2,'utf-8')";
     if (!$q->run($query)) return;
 
 

@@ -1,0 +1,29 @@
+<items>
+  <ice_languages itemid="1">
+    <id>1</id>
+    <name>English</name>
+    <code>en</code>
+    <image>icon.gif</image>
+    <directory>en_US</directory>
+    <sort_order>1</sort_order>
+    <charset>iso-8859-15</charset>
+  </ice_languages>
+  <ice_languages itemid="2">
+    <id>2</id>
+    <name>Deutsch</name>
+    <code>de</code>
+    <image>icon.gif</image>
+    <directory>de_DE</directory>
+    <sort_order>2</sort_order>
+    <charset>iso-8859-15</charset>
+  </ice_languages>
+  <ice_languages itemid="3">
+    <id>3</id>
+    <name>Russian</name>
+    <code>ru</code>
+    <image>icon.gif</image>
+    <directory>ru_RU</directory>
+    <sort_order>2</sort_order>
+    <charset>utf-8</charset>
+  </ice_languages>
+</items>

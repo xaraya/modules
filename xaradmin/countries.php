@@ -19,7 +19,6 @@ function commerce_admin_countries()
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
 
-
     $data['cInfo'] = isset($cInfo) ? get_object_vars($cInfo) : '';
     $data['page'] = $page;
     $data['action'] = $action;
@@ -27,16 +26,18 @@ function commerce_admin_countries()
     $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
     // TODO: get these from the object config in DD
     $data['fieldlist'] = '';
-    $data['objectlabel'] = xarML('Countries');
     $data['itemid'] = isset($cId) ? $cId : 1;
     
     // Get the itemtype for the ice object
     // TODO: Move this to a commerce api function with the objectname as param or have
     // 1 function as portal to the object mgmt
     $objects  = xarModApiFunc('dynamicdata','user','getobjects');
-    $data['itemtype'] = '';
+    $data['itemtype'] = ''; $data['objectlabel'] = xarML('Unlabelled objects');
     foreach($objects as $objectinfo) {
-        if($objectinfo['name'] == 'ice_countries') $data['itemtype'] = $objectinfo['itemtype'];
+        if($objectinfo['name'] == 'ice_countries') {
+            $data['itemtype'] = $objectinfo['itemtype'];
+            $data['objectlabel'] = xarML($objectinfo['label']); // What sort of effect does this have?
+        }
     }
     if($data['itemtype'] =='') {
         // NOT FOUND

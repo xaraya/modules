@@ -1,0 +1,82 @@
+<object name="ice_languages">
+  <objectid>53</objectid>
+  <label>Languages</label>
+  <moduleid>182</moduleid>
+  <itemtype>7</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>335</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="name">
+      <id>336</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:32</validation>
+    </property>
+    <property name="code">
+      <id>337</id>
+      <label>Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:2</validation>
+    </property>
+    <property name="image">
+      <id>338</id>
+      <label>Image</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:64</validation>
+    </property>
+    <property name="directory">
+      <id>339</id>
+      <label>Directory</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>0:32</validation>
+    </property>
+    <property name="sort_order">
+      <id>340</id>
+      <label>Order</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>int (3)</validation>
+    </property>
+    <property name="charset">
+      <id>341</id>
+      <label>Charset</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>7</order>
+      <validation>text</validation>
+    </property>
+  </properties>
+</object>

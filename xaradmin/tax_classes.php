@@ -26,16 +26,18 @@ function commerce_admin_tax_classes()
     $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
     // TODO: get these from the object config in DD
     $data['fieldlist'] = '';
-    $data['objectlabel'] = xarML('Tax classes');
     $data['itemid'] = isset($cId) ? $cId : 1;
     
     // Get the itemtype for the ice object
     // TODO: Move this to a commerce api function with the objectname as param or have
     // 1 function as portal to the object mgmt
     $objects  = xarModApiFunc('dynamicdata','user','getobjects');
-    $data['itemtype'] = '';
+    $data['itemtype'] = ''; $data['objectlabel'] = xarML('Unlabelled objects');
     foreach($objects as $objectinfo) {
-        if($objectinfo['name'] == 'ice_taxclasses') $data['itemtype'] = $objectinfo['itemtype'];
+        if($objectinfo['name'] == 'ice_taxclasses') {
+            $data['itemtype'] = $objectinfo['itemtype'];
+            $data['objectlabel'] = $objectinfo['label'];
+        }
     }
     if($data['itemtype'] =='') {
         // NOT FOUND
