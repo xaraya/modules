@@ -21,6 +21,9 @@
     function searchNext() {
         var formObj = document.forms[0];
 
+		if (formObj.searchstring.value == "")
+			return;
+
 		// Do search
 		tinyMCE.execInstanceCommand(tinyMCE.getWindowArg("editor_id"), 'mceSearch', false, { 
 			string : formObj.searchstring.value,

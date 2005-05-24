@@ -23,7 +23,7 @@
         var formObj = document.forms[0];
 
 		// Whats the point?
-		if (formObj.searchstring.value == formObj.replacestring.value)
+		if (formObj.searchstring.value == "" || formObj.searchstring.value == formObj.replacestring.value)
 			return;
 
 		// Do search

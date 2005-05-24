@@ -33,17 +33,6 @@ if (url != null)
             var onmouseover = document.forms[0].onmouseover.value;
             var onmouseout  = document.forms[0].onmouseout.value;
 
-        // added 2004-11-10 by Michael Keck (me@michaelkeck.de)
-        // supporting onmouse over / out for image swap ...
-            // only support the onmouse over/out if both values are given
-            if (onmouseover!='' && onmouseout!='' && document.forms[0].onmousemove.checked==true) {
-                onmouseover="this.src='" + onmouseover + "';";
-                onmouseout ="this.src='" + onmouseout + "';";
-            } else {
-                onmouseover="";
-                onmouseout ="";
-            }
-
             window.opener.tinyMCE.insertImage(src, alt, border, hspace, vspace, width, height, align, title, onmouseover, onmouseout);
             top.close();
         }
@@ -51,12 +40,13 @@ if (url != null)
 
     function init() {
         var formObj = document.forms[0];
-        var arrOnOver = new Array(), arrOnOut  = new Array();
         var strOnOver = "", strOnOut  = "";
+
         for (var i=0; i<document.forms[0].align.options.length; i++) {
             if (document.forms[0].align.options[i].value == tinyMCE.getWindowArg('align'))
                 document.forms[0].align.options.selectedIndex = i;
         }
+
         formObj.src.value    = tinyMCE.getWindowArg('src');
         formObj.alt.value    = tinyMCE.getWindowArg('alt');
         formObj.title.value  = tinyMCE.getWindowArg('title');
@@ -65,37 +55,15 @@ if (url != null)
         formObj.hspace.value = tinyMCE.getWindowArg('hspace');
         formObj.width.value  = tinyMCE.getWindowArg('width');
         formObj.height.value = tinyMCE.getWindowArg('height');
-        formObj.height.value = tinyMCE.getWindowArg('height');
 
 		formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
 
     // added 2004-11-10 by Michael Keck (me@michaelkeck.de)
     // supporting onmouse over / out for image swap ...
-        arrOnOver            = tinyMCE.getWindowArg('onmouseover').split(';');
-        arrOnOut             = tinyMCE.getWindowArg('onmouseout').split(';');
-        for (var i=0; i<arrOnOver.length; i++) {
-            if (arrOnOver[i].indexOf('this.src=\'')!=-1) {
-                strOnOver = arrOnOver[i];
-                break;
-             }
-        }
-        for (var i=0; i<arrOnOut.length; i++) {
-            if (arrOnOut[i].indexOf('this.src=\'')!=-1) {
-                strOnOut = arrOnOut[i];
-                break;
-             }
-        }
-        if (strOnOver!='') {
-                strOnOver = myRegexpReplace(strOnOver,"this.src='","","gi");
-                strOnOver = myRegexpReplace(strOnOver,"'","","gi");
-                strOnOver = myRegexpReplace(strOnOver,";","","gi");
-        }
-        if (strOnOut!='') {
-                strOnOut = myRegexpReplace(strOnOut,"this.src='","","gi");
-                strOnOut = myRegexpReplace(strOnOut,"'","","gi");
-                strOnOut = myRegexpReplace(strOnOut,";","","gi");
-        }
-        if (strOnOver!='' && strOnOut!='') {
+        strOnOver            = tinyMCE.getWindowArg('onmouseover');
+        strOnOut             = tinyMCE.getWindowArg('onmouseout');
+
+        if (strOnOver != '' && strOnOut != '') {
             setOnMouseInput('enabled');
             formObj.onmousemove.checked = true;
             formObj.onmouseover.value   = strOnOver;

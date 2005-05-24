@@ -38,7 +38,8 @@ var TinyMCE_advanced_buttons = [
 		['backcolor', 'backcolor.gif', '{$lang_theme_backcolor_desc}', 'mceBackColor', true],
 		['charmap', 'charmap.gif', '{$lang_theme_charmap_desc}', 'mceCharMap'],
 		['visualaid', 'visualaid.gif', '{$lang_theme_visualaid_desc}', 'mceToggleVisualAid'],
-		['anchor', 'anchor.gif', '{$lang_theme_anchor_desc}', 'mceInsertAnchor']
+		['anchor', 'anchor.gif', '{$lang_theme_anchor_desc}', 'mceInsertAnchor'],
+		['newdocument', 'newdocument.gif', '{$lang_newdocument_desc}', 'mceSetContent', false, '']
 	];
 
 
@@ -56,12 +57,12 @@ function TinyMCE_advanced_getControlHTML(button_name) {
 			if (tinyMCE.settings['button_tile_map']) {
 				for (var x=0; !tinyMCE.isMSIE && x<buttonTileMap.length; x++) {
 					if (buttonTileMap[x] == but[1])
-						return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/spacer.gif" style="background-image:url({$themeurl}/images/buttons.gif); background-position: ' + (0-(x*20)) + 'px 0px" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
+						return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/spacer.gif" style="background-image:url({$themeurl}/images/buttons.gif); background-position: ' + (0-(x*20)) + 'px 0px" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
 				}
 			}
 
 			// Old style
-			return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/' + but[1] + '" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
+			return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/' + but[1] + '" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
 		}
 	}
 
@@ -520,7 +521,7 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 					nodeName += "." + getAttrib(path[i], "class");
 			}
 
-			if (tinyMCE.isMSIE)
+			if (tinyMCE.isMSIE || tinyMCE.isSafari)
 				html += '<a title="' + nodeData + '" href="javascript:void(0);" onmousedown="tinyMCE.execInstanceCommand(\'' + editor_id + '\',\'mceSelectNodeDepth\',false,\'' + i + '\');return false;" class="mcePathItem">' + nodeName + '</a>';
 			else
 				html += '<a title="' + nodeData + '" href="javascript:tinyMCE.execInstanceCommand(\'' + editor_id + '\',\'mceSelectNodeDepth\',false,\'' + i + '\');" class="mcePathItem">' + nodeName + '</a>';

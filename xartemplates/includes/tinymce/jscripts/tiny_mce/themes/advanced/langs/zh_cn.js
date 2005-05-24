@@ -56,3 +56,4 @@ tinyMCELang['lang_link_list'] = '链接列表';
 tinyMCELang['lang_image_list'] = '图像列表';
 tinyMCELang['lang_browse'] = '浏览';
 tinyMCELang['lang_image_props_desc'] = 'Image properties';
+tinyMCELang['lang_newdocument_desc'] = 'New document';

@@ -58,3 +58,4 @@ tinyMCELang['lang_link_list'] = 'L&auml;nkar';
 tinyMCELang['lang_image_list'] = 'Bilder';
 tinyMCELang['lang_browse'] = 'Bl&auml;ddra';
 tinyMCELang['lang_image_props_desc'] = 'Bild egenskaper';
+tinyMCELang['lang_newdocument_desc'] = 'Nytt dokument';

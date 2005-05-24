@@ -58,3 +58,4 @@ tinyMCELang['lang_cut_desc'] = 'Cut';
 tinyMCELang['lang_copy_desc'] = 'Copy';
 tinyMCELang['lang_paste_desc'] = 'Paste';
 tinyMCELang['lang_image_props_desc'] = 'Image properties';
+tinyMCELang['lang_newdocument_desc'] = 'New document';
