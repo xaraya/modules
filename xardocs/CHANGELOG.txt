@@ -1,3 +1,12 @@
+* Version 0.5.5b 024 May 05
+- new full screen editing plugin
+- experimental Safari support
+- insert raw HTML
+- plain text paste plugin
+- table functionality improvment - split/merge
+- New plugin directionality for better lanugage support
+- Bug fixes - context menu, images, mouseover, links,etc
+
 * Version 0.5.5 05 April 05
 - New context menu with right click on images, tables
 - Customize the default configuration for tinymce from the GUI in the Advance Tab in config area

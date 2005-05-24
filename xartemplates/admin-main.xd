@@ -130,7 +130,11 @@
                <li><xar:mlstring>Contextmenu - plug in to add context menu for tables, images and flash.</xar:mlstring></li>
                <li><xar:mlstring>Lorem - adds text for fill in documents.</xar:mlstring></li>
                <li><xar:mlstring>Dictionary - lookup word in Merriam-Webster Online dictionary.</xar:mlstring></li>
+               <li><xar:mlstring>Fullscreen - toggle to edit in full screen.</xar:mlstring></li>
+               <li><xar:mlstring>Paste - test only paste plugin.</xar:mlstring></li>
+               <li><xar:mlstring>Directionality - plug in for better support of right to left languages.</xar:mlstring></li>
                <li><xar:mlstring>Xaraya Page Break - icon click to add a Xaraya new page break to any of your publication type articles. Add <strong>xarpagebreak</strong> to Plugins, and <strong>xarpagebreak</strong> to Additional Tags configuration. Make sure you also allow images and appropriate attributes to view the pagebreak icon in your articles.</xar:mlstring></li>
+
             </ol>
 
         </div>

@@ -1,12 +1,9 @@
 INSTALLATION AND USE - XarTinyMCE Version 0.5.1
 
-UPGRADES to 0.5.5:
+UPGRADES to 0.5.5b:
 PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
-In addition to being very configurable it has some nice features not
-available in other wysiwyg editors.
-
 See the documentation included in the docs directory of the module for
 browse compatibility, and further options for customization.
 
