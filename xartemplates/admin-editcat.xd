@@ -85,6 +85,7 @@
                         </xar:loop>
                     </select>
                 </p>
+                </fieldset>
                 <xar:if condition="!empty($hooks)">
                     <fieldset class="formelements xar-norm">
                         <legend>
