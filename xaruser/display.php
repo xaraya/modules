@@ -271,15 +271,6 @@ function articles_user_display($args)
 
     // Display article
 
-    if (!empty($article['title'])) {
-        // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
-        $title = strip_tags($article['title']);
-        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
-
-        // Save some variables to (temporary) cache for use in blocks etc.
-        xarVarSetCached('Comments.title','title',$article['title']);
-    }
-
     // Fill in the fields based on the pubtype configuration
     foreach ($pubtypes[$pubtypeid]['config'] as $field => $value) {
         if (empty($value['label'])) {
@@ -417,6 +408,15 @@ function articles_user_display($args)
         }
     }
     $data = xarModCallHooks('item', 'transform', $aid, $data, 'articles');
+
+    if (!empty($data['title'])) {
+        // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
+        $title = strip_tags($data['title']);
+        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
+
+        // Save some variables to (temporary) cache for use in blocks etc.
+        xarVarSetCached('Comments.title','title',$data['title']);
+    }
 
 /*
     if (!empty($q)) {
