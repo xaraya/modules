@@ -16,7 +16,6 @@ function hitcount_admin_modifyconfig()
             
             // Quick Data Array
             $data['authid'] = xarSecGenAuthKey();
-            $data['updatelabel'] = xarML('Update Hitcount Configuration');
             $data['numitems'] = xarModGetVar('hitcount','numitems');
             if (empty($data['numitems'])) {
                 $data['numitems'] = 10;

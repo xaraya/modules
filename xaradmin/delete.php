@@ -37,7 +37,6 @@ function hitcount_admin_delete()
                 }
             }
         }
-        $data['confirmbutton'] = xarML('Confirm'); 
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey(); 
         // Return the template variables defined in this function
