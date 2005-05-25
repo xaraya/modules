@@ -1,8 +1,11 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ratings Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete Ratings</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<div align="center">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Ratings Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete Ratings</xar:mlstring></h2>
 <xar:if condition="empty($modname)">
     <xar:mlstring>Are you sure you want to delete all ratings ?</xar:mlstring>
 <xar:elseif condition="empty($itemid)"/>
@@ -10,14 +13,13 @@
 <xar:else/>
     <xar:ml><xar:mlstring>Are you sure you want to delete all ratings for module <b>#(1)</b> item <b>#(2)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
 </xar:if>
-<br /><br />
-<form method="post" action="&xar-modurl-ratings-admin-delete;">
+    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-ratings-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="modid" id="modid" value="#$modid#" />
     <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-
-    <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
-</form></div>
+        <div class="xar-clear-both xar-align-center">
+            <input type="submit" value="#xarML('Confirm')#" />
 </div>
+    </form>
 </div>

@@ -1,17 +1,26 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ratings Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<form method="post" action="#xarModURL('ratings', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded" >
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Ratings Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-ratings-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+                <legend>
+                    <xar:mlstring>Modify Configuration</xar:mlstring>
+                </legend>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
-    <table border="0" cellpadding="8" cellspacing="0">
     <xar:foreach in="$settings" key="$modname" value="$config">
-        <tr>
-            <td colspan="2"><b>#$config['label']#</b></td>
-        </tr>
-        <tr>
-            <td><xar:mlstring>Rating Style</xar:mlstring></td>
-            <td>
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <p>
+                    <b>#$config['label']#</b>
+                </p>
+                <label for="ratstyle" class="xar-form-label">
+                    <xar:mlstring>Rating Style</xar:mlstring>:
+                </label>
                 <select name="style[#$modname#]" id="style[#$modname#]">
                 <xar:foreach in="$styleoptions" value="$option">
                     <xar:if condition="$option['id'] eq $config['style']">
@@ -21,11 +30,11 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td><xar:mlstring>Security Level</xar:mlstring></td>
-            <td>
+            </div>
+            <div class="xar-form-input-wrapper xar-clear-both">
+              <label for="seclev" class="xar-form-label">
+                    <xar:mlstring>Security Level</xar:mlstring>:
+                </label>
                 <select name="seclevel[#$modname#]" id="seclevel[#$modname#]">
                 <xar:foreach in="$secleveloptions" value="$option">
                     <xar:if condition="$option['id'] eq $config['seclevel']">
@@ -35,12 +44,11 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
-            </td>
-        </tr>
+            </div>
     </xar:foreach>
-    </table>
-    <br /><br />
-    <input type="submit" value="Update Ratings Configuration" />
-</form>
+        </fieldset>
+        <div class="xar-clear-both xar-align-center">
+            <input type="submit" value="#xarML('Save config')#" />
 </div>
+    </form>
 </div>
