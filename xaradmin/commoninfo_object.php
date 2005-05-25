@@ -8,38 +8,40 @@
  */
 function commerce_admin_commoninfo_object($args = array() )
 {
+    /* 
+        These three are from the older pages, we probably want to change these
+    
+        For the common info pages, we probably want to be able to inject the following
+        for better access:
+        - itemid   : which itemid should be selected/active/visible etc.
+        - startnum : where should the listing start? [DONE]
+    */
     if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('page',   'int',  $page, 1, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('cID',    'int',  $cID, NULL, XARVAR_DONT_SET)) {return;}
     extract($args);
     
+    // Do we still need this here?
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
-    
     $data['cInfo'] = isset($cInfo) ? get_object_vars($cInfo) : '';
     $data['page'] = $page;
     $data['action'] = $action;
     
-    $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
-    // TODO: get these from the object config in DD
-    $data['fieldlist'] = '';
-    $data['itemid'] = isset($cId) ? $cId : 1;
-    
-    // Get the itemtype for the ice object
-    // TODO: Move this to a commerce api function with the objectname as param or have
-    // 1 function as portal to the object mgmt
-    $objects  = xarModApiFunc('dynamicdata','user','getobjects');
-    $data['itemtype'] = ''; $data['objectlabel'] = xarML('Unlabelled objects');
-    foreach($objects as $objectinfo) {
-        if($objectinfo['name'] == $objectname) {
-            $data['itemtype'] = $objectinfo['itemtype'];
-            $data['objectlabel'] = xarML($objectinfo['label']); // What sort of effect does this have?
-        }
-    }
-    if($data['itemtype'] =='') {
-        // NOT FOUND
+    // Retrieve the object info from DD
+    $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo', array('name' => $objectname));
+    if(!$objectInfo) {
+        // NOT FOUND, (obviously this must be less dramatic than this eventually)
         die('ICE object not found!!!');
     }
+    // We let the DD config determine the fieldlist
+    $data['fieldlist'] = '';
+    $data['itemtype'] = $objectInfo['itemtype'];
+    $data['objectlabel'] = xarML($objectInfo['label']); // What sort of effect does this have?
+    // TODO: get the first item, not itemid 1, that might not even exist.
+    $data['itemid'] = isset($cId) ? $cId : 1;
+
+    $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
     return $data;
 }
 ?>
