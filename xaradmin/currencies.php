@@ -12,37 +12,6 @@
 
 function commerce_admin_currencies()
 {
-    if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('page',   'int',  $page, 1, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('cID',    'int',  $cID, NULL, XARVAR_DONT_SET)) {return;}
-    
-    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
-    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
-    
-    $data['cInfo'] = isset($cInfo) ? get_object_vars($cInfo) : '';
-    $data['page'] = $page;
-    $data['action'] = $action;
-    
-    $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
-    // TODO: get these from the object config in DD
-    $data['fieldlist'] = '';
-    $data['itemid'] = isset($cId) ? $cId : 1;
-    
-    // Get the itemtype for the ice object
-    // TODO: Move this to a commerce api function with the objectname as param or have
-    // 1 function as portal to the object mgmt
-    $objects  = xarModApiFunc('dynamicdata','user','getobjects');
-    $data['itemtype'] = ''; $data['objectlabel'] = xarML('Unlabelled objects');
-    foreach($objects as $objectinfo) {
-        if($objectinfo['name'] == 'ice_currencies') {
-            $data['itemtype'] = $objectinfo['itemtype'];
-            $data['objectlabel'] = $objectinfo['label'];
-        }
-    }
-    if($data['itemtype'] =='') {
-        // NOT FOUND
-        die('ICE object not found!!!');
-    }
-    return $data;
+    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_currencies'));
 }
 ?>
