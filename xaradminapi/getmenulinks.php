@@ -22,7 +22,7 @@ function commerce_adminapi_getmenulinks()
 {
     $menuLinks[] = array('url'   => xarModURL('commerce','admin','configuration',array('gID' => 1)),
                          'title' => xarML('Administer the shop'),
-                         'label' => xarML('Shop'));
+                         'label' => xarML('Modify config'));
 
     if (empty($menulinks)){
         $menulinks = '';

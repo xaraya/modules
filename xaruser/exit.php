@@ -13,36 +13,36 @@
 function commerce_user_exit()
 {
     // Show the config menu block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceconfig'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceconfig'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
     // Show the adminpanels block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'adminpanel'));
-    if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'adminpanel'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
 
     // Show the main menu block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'mainmenu'));
-    if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'mainmenu'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
 
     // Hide the categories block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceadmininfo'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceadmininfo'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
     // Hide the information block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceinformation'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceinformation'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
     // Hide the language block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
     // Hide the currencies block
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecurrencies'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecurrencies'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
     // Hide  the exit menu
-    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceexit'));
-    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+    //$blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceexit'));
+    //if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
 /*    $blockarray = unserialize(xarSessionGetVar('inactivated'));
     foreach ($blockarray as $block) {

@@ -12,15 +12,36 @@
 
 function commerce_userapi_get_countries($args)
 {
+    extract($args);
+    
     //FIXME: create an API function for this stuff
     include_once 'modules/xen/xarclasses/xenquery.php';
-    xarModAPILoad('commerce');
+    //xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
-
-    extract($args);
-    if(!isset($value)) $value = '';
-    $countries_id = $value;
+    
+    // Get the object info
+    $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo',array('name' => 'ice_countries'));
+    
+    $condition = ''; $fieldlist = array('id', 'name');
+    if(!isset($value)) {
+        $condition .= "id = '$value'";
+    }
+    
+    // Isocodes requested?
     if(!isset($with_iso_codes)) $with_iso_codes = false;
+    if($with_iso_codes) {
+        $field_list[]='iso_code_2';
+        $field_list[]='iso_code_3';
+    }
+    
+    $items = xarModApiFunc('dynamicdata','user','getitems', array (
+                                'modid'     => $objectInfo['moduleid'],
+                                'itemtype'  => $objectInfo['itemtype'],
+                                'fieldlist' => $fieldlist,
+                                'where'     => $condition 
+                            ));
+    return $items;
+    
     $countries_array = array();
     if (xarModAPIFunc('commerce','user','not_null',array('arg' => $countries_id))) {
         $q = new xenQuery('SELECT',
@@ -37,14 +58,12 @@ function commerce_userapi_get_countries($args)
             $countries_array = array('countries_name' => $countries_values['countries_name'],
                                      'countries_iso_code_2' => $countries_values['countries_iso_code_2'],
                                      'countries_iso_code_3' => $countries_values['countries_iso_code_3']);
-        }
-        else {
+        } else {
             if(!$q->run()) return;
             $countries_array = $q->row();
 //            $countries_array = array('countries_name' => $countries_values['countries_name']);
         }
-    }
-    else {
+    } else {
         $q = new xenQuery('SELECT',
                           $xartables['commerce_countries'],
                           array('countries_id AS id','countries_name AS text')

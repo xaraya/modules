@@ -10,18 +10,25 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_language($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
-    xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
-
+function commerce_userapi_get_language($args) 
+{
     extract($args);
-    $q = new xenQuery('SELECT',
-                      $xartables['commerce_languages'],
-                      array('languages_id as id','name','code','image','directory')
-                     );
-    $q->eq('directory',$locale);
-    if(!$q->run()) return;
-    return $q->row();
+    
+    // Get the language which matches the locale? strange, but alas.
+    // Object = ice_languages
+    $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo',array('name' => 'ice_languages'));
+    $fieldlist = array('id,name,code,image,directory');
+    if(!isset($locale)) $locale="en_US";
+    // TODO: what are we going to do with the bind vars here?
+    $condition ="directory = '$locale'";
+    // Retrieve the items
+    $items = xarModApiFunc('dynamicdata','user','getitems', array (
+                                'modid'     => $objectInfo['moduleid'],
+                                'itemtype'  => $objectInfo['itemtype'],
+                                'fieldlist' => $fieldlist,
+                                'where'     => $condition // Get rid of this, no more dir=whatever things!!
+                            ));
+    $items = array_shift($items);
+    return $items;
 }
 ?>

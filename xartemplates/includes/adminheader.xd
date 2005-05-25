@@ -47,3 +47,5 @@
 <xar:comment>
 <xar:template file="admin-navigation" type="module"/>
 </xar:comment>
+
+<xar:block type="configmenu" module="commerce" template="ice-menu"/>

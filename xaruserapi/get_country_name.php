@@ -20,6 +20,6 @@ function commerce_userapi_get_country_name($args) {
     return false;
     }
     $country_array = xarModAPIFunc('commerce','user','get_countries',array('value' => $value));
-    return $country_array['countries_name'];
+    return $country_array[$value]['name'];
 }
  ?>
