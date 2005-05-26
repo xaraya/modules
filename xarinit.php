@@ -101,18 +101,18 @@ function carts_init()
     # data
 
     // Register masks
-    xarRegisterMask('ViewCommerceBlocks','All','carts','Block','All:All:All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCommerceBlock','All','carts','Block','All:All:All','ACCESS_READ');
-    xarRegisterMask('EditCommerceBlock','All','carts','Block','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('AddCommerceBlock','All','carts','Block','All:All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteCommerceBlock','All','carts','Block','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminCommerceBlock','All','carts','Block','All:All:All','ACCESS_ADMIN');
-    xarRegisterMask('ViewCommerce','All','carts','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCommerce','All','carts','All','All','ACCESS_READ');
-    xarRegisterMask('EditCommerceBlock','All','carts','Block','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('AddCommerceBlock','All','carts','Block','All:All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteCommerceBlock','All','carts','Block','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminCommerce','All','carts','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewCartsBlocks','All','carts','Block','All:All:All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadCartsBlock','All','carts','Block','All:All:All','ACCESS_READ');
+    xarRegisterMask('EditCartsBlock','All','carts','Block','All:All:All','ACCESS_EDIT');
+    xarRegisterMask('AddCartsBlock','All','carts','Block','All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteCartsBlock','All','carts','Block','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminCartsBlock','All','carts','Block','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ViewCarts','All','carts','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadCarts','All','carts','All','All','ACCESS_READ');
+    xarRegisterMask('EditCartsBlock','All','carts','Block','All:All:All','ACCESS_EDIT');
+    xarRegisterMask('AddCartsBlock','All','carts','Block','All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteCartsBlock','All','carts','Block','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminCarts','All','carts','All','All','ACCESS_ADMIN');
 
 // Register some block types
     if (!xarModAPIFunc('blocks',
