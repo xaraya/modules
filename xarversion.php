@@ -11,12 +11,11 @@
  *
  * @subpackage sitecontact
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
- * Module idea based on the Postnuke Contact Us module by Memphis at http://www.memphisweb.net/
  */
 $modversion['name']           = 'sitecontact';
 $modversion['displayname']    = xarML('Site Contact');
 $modversion['id']             = '890';
-$modversion['version']        = '0.0.2';
+$modversion['version']        = '0.0.2d';
 $modversion['displayname']    = xarML('SiteContact');
 $modversion['description']    = xarML('Contact site admin by email');
 $modversion['credits']        = 'xardocs/credits.txt';
