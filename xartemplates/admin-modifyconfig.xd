@@ -65,7 +65,7 @@
                 <br />
             </p>
             <p>
-                <input type="submit" name="update" value="#xarMl('Update Configuration')#"/>
+                <input type="submit" name="update" value="#xarML('Update Configuration')#"/>
             </p>
         </form>
     </div>
