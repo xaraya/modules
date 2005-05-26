@@ -31,6 +31,8 @@ function products_xartables()
     $products_categories_description = xarDBGetSiteTablePrefix() . '_products_categories_description';
     $products_configuration = xarDBGetSiteTablePrefix() . '_products_configuration';
     $products_configuration_group = xarDBGetSiteTablePrefix() . '_products_configuration_group';
+    $products_manufacturers = xarDBGetSiteTablePrefix() . '_products_manufacturers';
+    $products_manufacturers_info = xarDBGetSiteTablePrefix() . '_products_manufacturers_info';
     $products_products = xarDBGetSiteTablePrefix() . '_products_products';
     $products_products_attributes = xarDBGetSiteTablePrefix() . '_products_products_attributes';
     $products_products_attributes_download = xarDBGetSiteTablePrefix() . '_products_products_attributes_download';
@@ -48,6 +50,8 @@ function products_xartables()
     $xartable['products_categories_description'] = $products_categories_description;
     $xartable['products_configuration'] = $products_configuration;
     $xartable['products_configuration_group'] = $products_configuration_group;
+    $xartable['products_manufacturers'] = $products_manufacturers;
+    $xartable['products_manufacturers_info'] = $products_manufacturers_info;
     $xartable['products_products'] = $products_products;
     $xartable['products_products_attributes'] = $products_products_attributes;
     $xartable['products_products_attributes_download'] = $products_products_attributes_download;

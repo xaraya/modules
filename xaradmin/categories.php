@@ -15,7 +15,7 @@
 //   Customers Status v3.x  (c) 2002-2003 Copyright Elari elari@free.fr | www.unlockgsm.com/dload-osc/ | CVS : http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/elari/?sortby=date#dirlist
 // ----------------------------------------------------------------------
 
-function commerce_admin_categories()
+function products_admin_categories()
 {
     include_once 'modules/xen/xarclasses/xenquery.php';
     include_once 'modules/commerce/xarclasses/object_info.php';
@@ -43,20 +43,20 @@ if (isset($action)) {
                 if(!xarVarFetch('flag',    'int',  $flag, NULL, XARVAR_DONT_SET)) {return;}
                 if ( ($flag == 0) || ($flag == 1) ) {
                     if (isset($pID)) {
-                        xarModAPIFunc('commerce','user','set_product_status', array('pID' => $pID,
+                        xarModAPIFunc('products','user','set_product_status', array('pID' => $pID,
                                                                                     'status' => $flag));
                     }
                     if (isset($cID)) {
-                        xarModAPIFunc('commerce','user','set_categories_status', array('cID' => $cID,
+                        xarModAPIFunc('products','user','set_categories_status', array('cID' => $cID,
                                                                                     'status' => $flag));
                     }
                 }
 
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $cPath)));
                 break;
             case 'new_category':
                 if ($configuration['allow_category_descriptions'] == true)
-                    xarResponseRedirect(xarModURL('commerce','admin','categories_screen', array('cPath' => $cPath)));
+                    xarResponseRedirect(xarModURL('products','admin','categories_screen', array('cPath' => $cPath)));
                 break;
             case 'edit_category':
                 if ($configuration['allow_category_descriptions'] == true)
@@ -64,7 +64,7 @@ if (isset($action)) {
                 break;
             case 'delete_category_confirm':
                 if (isset($cID)) {
-                    $categories = xarModAPIFunc('commerce','user','get_category_tree', array(
+                    $categories = xarModAPIFunc('products','user','get_category_tree', array(
                                     'parent_id' =>$cID,
                                     'exclude' => 0,
                                     'include_itself' => true));
@@ -72,7 +72,7 @@ if (isset($action)) {
                     $products_delete = array();
 
                     for ($i = 0, $n = sizeof($categories); $i < $n; $i++) {
-                        $q = new xenQuery('SELECT',$xartables['commerce_products_to_categories'],'products_id');
+                        $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'products_id');
                         $q->eq('categories_id',$categories[$i]['id']);
                         if(!$q->run()) return;
                         foreach ($q->output() as $product_ids) {
@@ -86,7 +86,7 @@ if (isset($action)) {
                         for ($i = 0, $n = sizeof($value['categories']); $i < $n; $i++) {
                             $category_ids[] = $value['categories'][$i];
                         }
-                        $q = new xenQuery('SELECT',$xartables['commerce_products_to_categories'],'count(*) AS total');
+                        $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
                         $q->eq('products_id',$key);
                         $q->notin('categories_id',$category_ids);
                         if(!$q->run()) return;
@@ -99,7 +99,7 @@ if (isset($action)) {
                     // Removing categories can be a lengthy process
                     if (!get_cfg_var('safe_mode')) @set_time_limit(0);
                     for ($i = 0, $n = sizeof($categories); $i < $n; $i++) {
-                        xarModAPIFUnc('commerce','admin','remove_category', array('category_id' => $categories[$i]['id']));
+                        xarModAPIFUnc('products','admin','remove_category', array('category_id' => $categories[$i]['id']));
                     }
 
                     reset($products_delete);
@@ -108,16 +108,16 @@ if (isset($action)) {
                     }
                 }
 
-               xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath)));
+               xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $cPath)));
                 break;
             case 'new_product':
-                xarResponseRedirect(xarModURL('commerce','admin','product_screen', array('cPath' => $cPath)));
+                xarResponseRedirect(xarModURL('products','admin','product_screen', array('cPath' => $cPath)));
                 break;
             case 'edit_product':
-                xarResponseRedirect(xarModURL('commerce','admin','product_screen', array('cPath' => $cPath, 'pID' => $pID)));
+                xarResponseRedirect(xarModURL('products','admin','product_screen', array('cPath' => $cPath, 'pID' => $pID)));
                 break;
             case 'delete_product':
-                $data['product_categories'] = xarModAPIFunc('commerce','user','generate_category_path', array(
+                $data['product_categories'] = xarModAPIFunc('products','user','generate_category_path', array(
                                             'id' => $pID,
                                             'from' => 'product'));
                 break;
@@ -125,21 +125,21 @@ if (isset($action)) {
                 if(!xarVarFetch('product_categories', 'array',  $product_categories, NULL, XARVAR_DONT_SET)) {return;}
                 if (isset($pID)) {
                     for ($i = 0, $n = sizeof($product_categories); $i < $n; $i++) {
-                        $q = new xenQuery('DELETE',$xartables['commerce_products_to_categories']);
+                        $q = new xenQuery('DELETE',$xartables['products_products_to_categories']);
                         $q->eq('products_id',$pID);
                         $q->eq('categories_id',$product_categories[$i]);
                         $q->qecho();
                         if(!$q->run()) return;
                     }
-                    $q = new xenQuery('SELECT',$xartables['commerce_products_to_categories'],'count(*) AS total');
+                    $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
                     $q->eq('products_id',$pID);
                     if(!$q->run()) return;
                     $product_categories = $q->row();
                     if ($product_categories['total'] == 0) {
-                        xarModAPIFunc('commerce','user','remove_product', array('pID' => $pID));
+                        xarModAPIFunc('products','user','remove_product', array('pID' => $pID));
                     }
                 }
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $cPath)));
                 break;
             case 'move_category_confirm':
                 if ( ($cID) && ($cID != $move_to_category_id) ) {
@@ -149,23 +149,23 @@ if (isset($action)) {
                     if(!$q->run()) return;
                 }
 
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $move_to_category_id, 'cID' => $cID)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $move_to_category_id, 'cID' => $cID)));
                 break;
             case 'move_product_confirm':
-                $q = new xenQuery('SELECT',$xartables['commerce_products_to_categories'],'count(*) AS total');
+                $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
                 $q->eq('products_id',$pID);
                 $q->eq('categories_id',$move_to_category_id);
                 if(!$q->run()) return;
                 $duplicate_check = $q->row();
                 if ($duplicate_check['total'] < 1) {
-                    $q = new xenQuery('UPDATE',$xartables['commerce_products_to_categories']);
+                    $q = new xenQuery('UPDATE',$xartables['products_products_to_categories']);
                     $q->addfield('categories_id',$move_to_category_id);
                     $q->eq('products_id',$pID);
                     $q->eq('categories_id',$cPath);
                     if(!$q->run()) return;
                 }
 
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $move_to_category_id, 'pID' => $pID)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $move_to_category_id, 'pID' => $pID)));
                 break;
 /*            case 'insert_product':
             case 'update_product':
@@ -327,7 +327,7 @@ if (isset($action)) {
                     }
                 }
 
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath, 'pID' => $products_id)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $cPath, 'pID' => $products_id)));
                 }
                 break;
 */             case 'copy_to_confirm':
@@ -336,13 +336,13 @@ if (isset($action)) {
                 if (isset($pID) && isset($categories_id)) {
                     if ($copy_as == 'link') {
                         if ($categories_id != $cPath) {
-                            $q = new xenQuery('SELECT',$xartables['commerce_products_to_categories'],'count(*) AS total');
+                            $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
                             $q->eq('products_id',$pID);
                             $q->eq('categories_id',$categories_id);
                             if(!$q->run()) return;
                             $check = $q->row();
                             if ($check['total'] < 1) {
-                                $q = new xenQuery('INSERT',$xartables['commerce_products_to_categories']);
+                                $q = new xenQuery('INSERT',$xartables['products_products_to_categories']);
                                 $q->addfield('categories_id',$categories_id);
                                 $q->addfield('products_id',$pID);
                                 if(!$q->run()) return;
@@ -353,7 +353,7 @@ if (isset($action)) {
                         }
                     }
                     elseif ($copy_as == 'duplicate') {
-                        $q = new xenQuery('SELECT',$xartables['commerce_products']);
+                        $q = new xenQuery('SELECT',$xartables['products_products']);
                         $q->addfields(array('products_quantity',
                                             'products_model',
                                             'products_image',
@@ -369,7 +369,7 @@ if (isset($action)) {
                         if(!$q->run()) return;
                         $product = $q->row();
 
-                        $q = new xenQuery('INSERT',$xartables['commerce_products']);
+                        $q = new xenQuery('INSERT',$xartables['products_products']);
                         $q->addfield('products_quantity',$product['products_quantity']);
                         $q->addfield('products_model',$product['products_model']);
                         $q->addfield('products_image',$product['products_image']);
@@ -383,9 +383,9 @@ if (isset($action)) {
                         $q->addfield('manufacturers_id',$product['manufacturers_id']);
                         if(!$q->run()) return;
 
-                        $dup_products_id = $q->lastid($xartables['commerce_products'],'products_id');
+                        $dup_products_id = $q->lastid($xartables['products_products'],'products_id');
 
-                        $q = new xenQuery('SELECT',$xartables['commerce_products_description']);
+                        $q = new xenQuery('SELECT',$xartables['products_products_description']);
                         $q->addfields(array('language_id',
                                             'products_name',
                                             'products_description',
@@ -397,7 +397,7 @@ if (isset($action)) {
                         $q->eq('products_id',$pID);
                         if(!$q->run()) return;
                         foreach ($q->output() as $description) {
-                            $q = new xenQuery('INSERT',$xartables['commerce_products_description']);
+                            $q = new xenQuery('INSERT',$xartables['products_products_description']);
                             $q->addfield('products_id',$dup_products_id);
                             $q->addfield('language_id',$description['language_id']);
                             $q->addfield('products_name',$description['products_name']);
@@ -410,13 +410,13 @@ if (isset($action)) {
                             $q->addfield('products_viewed',0);
                             if(!$q->run()) return;
                         }
-                        $q = new xenQuery('INSERT',$xartables['commerce_products_to_categories']);
+                        $q = new xenQuery('INSERT',$xartables['products_products_to_categories']);
                         $q->addfield('products_id',$dup_products_id);
                         $q->addfield('categories_id',$categories_id);
                         if(!$q->run()) return;
                     }
                 }
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $categories_id, 'pID' => $dup_products_id)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $categories_id, 'pID' => $dup_products_id)));
                 break;
         }
     }
@@ -431,8 +431,8 @@ if (isset($action)) {
     $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
 
     $q = new xenQuery('SELECT');
-    $q->addtable($xartables['commerce_categories_description'],'cd');
-    $q->addtable($xartables['commerce_categories'],'c');
+    $q->addtable($xartables['products_categories_description'],'cd');
+    $q->addtable($xartables['products_categories'],'c');
     $q->addtable($xartables['categories'],'xc');
     $q->addfields(array('xc.xar_cid AS categories_id',
                         'cd.categories_name',
@@ -471,22 +471,22 @@ if (isset($action)) {
         $categories_count++;
         $rows++;
         if ((!isset($cID) && !isset($pID)|| $cID == $items[$i]['categories_id']) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
-            $category_childs = array('childs_count' => xarModAPIFunc('commerce', 'user', 'childs_in_category_count', array('categories_id' => $items[$i]['categories_id'])));
-            $category_products = array('products_count' => xarModAPIFunc('commerce', 'user', 'products_in_category_count', array('categories_id' => $items[$i]['categories_id'])));
+            $category_childs = array('childs_count' => xarModAPIFunc('products', 'user', 'childs_in_category_count', array('categories_id' => $items[$i]['categories_id'])));
+            $category_products = array('products_count' => xarModAPIFunc('products', 'user', 'products_in_category_count', array('categories_id' => $items[$i]['categories_id'])));
             $cInfo_array = array_merge($items[$i], $category_childs, $category_products);
             $cInfo = new objectInfo($cInfo_array);
-            $items[$i]['url'] = xarModURL('commerce','admin','categories',array('page' => $page,'cID' => $cInfo->categories_id, 'action' => 'edit'));
+            $items[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page,'cID' => $cInfo->categories_id, 'action' => 'edit'));
         }
         else {
-            $items[$i]['url'] = xarModURL('commerce','admin','categories',array('page' => $page, 'cID' => $items[$i]['categories_id']));
+            $items[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page, 'cID' => $items[$i]['categories_id']));
         }
     }
     $data['categories_count'] = $limit;
 
     $q = new xenQuery('SELECT');
-    $q->addtable($xartables['commerce_products_description'],'pd');
-    $q->addtable($xartables['commerce_products'],'p');
-    $q->addtable($xartables['commerce_products_to_categories'],'p2c');
+    $q->addtable($xartables['products_products_description'],'pd');
+    $q->addtable($xartables['products_products'],'p');
+    $q->addtable($xartables['products_products_to_categories'],'p2c');
     $q->addfields(array('p.products_tax_class_id',
                         'p.products_id',
                         'pd.products_name',
@@ -529,12 +529,12 @@ if (isset($action)) {
             $items1[$i]['average_rating'] = $row['average_rating'];
             $pInfo = new objectInfo($items1[$i]);
 
-            $items1[$i]['url'] = xarModURL('commerce','admin','categories',array('page' => $page,'pID' => $pInfo->products_id, 'action' => 'edit'));
+            $items1[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page,'pID' => $pInfo->products_id, 'action' => 'edit'));
         }
         else {
-            $items1[$i]['url'] = xarModURL('commerce','admin','categories',array('page' => $page, 'pID' => $items1[$i]['products_id']));
+            $items1[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page, 'pID' => $items1[$i]['products_id']));
         }
-        $items1[$i]['check_stock'] = xarModAPIFunc('commerce','user','get_products_stock', array('products_id' => $items1[$i]['products_id'])) - $items1[$i]['quantity'];
+        $items1[$i]['check_stock'] = xarModAPIFunc('products','user','get_products_stock', array('products_id' => $items1[$i]['products_id'])) - $items1[$i]['quantity'];
     }
     $data['products_count'] = $limit;
 
@@ -554,7 +554,7 @@ if (isset($action)) {
 
     $data['dropdown'] = xarModAPIFunc('commerce','user','draw_pull_down_menu',array(
                                         'name' =>'cPath',
-                                        'values' => xarModAPIFunc('commerce','user','get_category_tree'),
+                                        'values' => xarModAPIFunc('products','user','get_category_tree'),
                                         'default' => $current_category_id,
                                         'parameters' => 'onChange="this.form.submit();"')
                             );
@@ -572,7 +572,7 @@ if (isset($action)) {
 
     //----- new_category / edit_category (when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
     if ($action == 'edit_category_ACD') {
-        xarResponseRedirect(xarModURL('commerce','admin','categories_screen', array(
+        xarResponseRedirect(xarModURL('products','admin','categories_screen', array(
             'cPath' => $cPath,
             'cID' => $cID)));
     //----- new_category_preview (active when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
@@ -581,13 +581,13 @@ if (isset($action)) {
     // removed
     }
     elseif ($action == 'new_product') {
-        xarResponseRedirect(xarModURL('commerce','admin','product_screen', array('cPath' => $data['cPath'])));
+        xarResponseRedirect(xarModURL('products','admin','product_screen', array('cPath' => $data['cPath'])));
     }
     elseif ($action == 'new_product_preview') {
     // preview removed
     }
     else {
-        return xarTplModule('commerce','admin', 'categories_view',$data);
+        return xarTplModule('products','admin', 'categories_view',$data);
     }
 }
 /*    }

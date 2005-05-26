@@ -51,7 +51,7 @@ function products_adminapi_getmenulinks()
     if (xarSecurityCheck('EditProducts',0)) {
         $menulinks[] = Array('url'   => xarModURL('products',
                                                   'admin',
-                                                  'mmanufacturers'),
+                                                  'manufacturers'),
                               'title' => xarML('Manage manufacturers'),
                               'label' => xarML('Manufacturers'));
     }
@@ -80,6 +80,6 @@ function products_adminapi_getmenulinks()
         $menulinks = '';
     }
 
-    return $menuLinks;
+    return $menulinks;
 }
 ?>

@@ -93,6 +93,34 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_manufacturers";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_products_manufacturers (
+      manufacturers_id int NOT NULL auto_increment,
+      manufacturers_name varchar(32) NOT NULL,
+      manufacturers_image varchar(64),
+      date_added datetime NULL,
+      last_modified datetime NULL,
+      PRIMARY KEY (manufacturers_id),
+      KEY IDX_MANUFACTURERS_NAME (manufacturers_name)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_manufacturers_info";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_products_manufacturers_info (
+      manufacturers_id int NOT NULL,
+      languages_id int NOT NULL,
+      manufacturers_meta_title varchar(100) NOT NULL,
+      manufacturers_meta_description varchar(255) NOT NULL,
+      manufacturers_meta_keywords varchar(255) NOT NULL,
+      manufacturers_url varchar(255) NOT NULL,
+      url_clicked int(5) NOT NULL default '0',
+      date_last_click datetime NULL,
+      PRIMARY KEY (manufacturers_id, languages_id)
+    )";
+    if (!$q->run($query)) return;
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_products (
@@ -226,9 +254,9 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_specials";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_specials";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_specials (
+    $query = "CREATE TABLE " . $prefix . "_products_specials (
       specials_id int NOT NULL auto_increment,
       products_id int NOT NULL,
       specials_new_products_price decimal(15,4) NOT NULL,
@@ -790,18 +818,18 @@ function products_init()
     if (!$q->run($query)) return;
 
     // Register masks
-    xarRegisterMask('ViewCommerceBlocks','All','products','Block','All:All:All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCommerceBlock','All','products','Block','All:All:All','ACCESS_READ');
-    xarRegisterMask('EditCommerceBlock','All','products','Block','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('AddCommerceBlock','All','products','Block','All:All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteCommerceBlock','All','products','Block','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminCommerceBlock','All','products','Block','All:All:All','ACCESS_ADMIN');
-    xarRegisterMask('ViewCommerce','All','products','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCommerce','All','products','All','All','ACCESS_READ');
-    xarRegisterMask('EditCommerce','All','products','All','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('AddCommerce','All','products','All','All:All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteCommerce','All','products','All','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminCommerce','All','products','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewProductsBlocks','All','products','Block','All:All:All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadProductsBlock','All','products','Block','All:All:All','ACCESS_READ');
+    xarRegisterMask('EditProductsBlock','All','products','Block','All:All:All','ACCESS_EDIT');
+    xarRegisterMask('AddProductsBlock','All','products','Block','All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteProductsBlock','All','products','Block','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminProductsBlock','All','products','Block','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ViewProducts','All','products','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadProducts','All','products','All','All','ACCESS_READ');
+    xarRegisterMask('EditProducts','All','products','All','All:All:All','ACCESS_EDIT');
+    xarRegisterMask('AddProducts','All','products','All','All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteProducts','All','products','All','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminProducts','All','products','All','All','ACCESS_ADMIN');
 
 // Register some block types
     if (!xarModAPIFunc('blocks',
