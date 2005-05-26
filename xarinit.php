@@ -228,28 +228,28 @@ function commerce_init()
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 
+    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses',
                          'ice_taxrates', 'ice_languages', 'ice_zones',
                          'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats');
-    
+
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
     foreach($existing_objects as $objectid => $objectinfo) {
         if(in_array($objectinfo['name'], $ice_objects)) {
             // KILL
             if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
-        } 
+        }
     }
-    
-    // The countries are managed through a DD object. 
+
+    // The countries are managed through a DD object.
     // the xardata/ directory provides the definition and the initialisation
     // data in XML files ice-countries-def.xml an ice-countries-data.xml
 
     // TODO: This will bomb out if the object already exists
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
-        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml'; 
-        
+        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml';
+
         if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
         // Let data import be allowed to fail
         xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file));
@@ -705,6 +705,7 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
+/*
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_module_newsletter";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_module_newsletter (
@@ -718,7 +719,7 @@ function commerce_init()
       PRIMARY KEY  (newsletter_id)
     )";
     if (!$q->run($query)) return;
-
+*/
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_cm_file_flags";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_cm_file_flags (

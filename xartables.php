@@ -51,8 +51,6 @@ function commerce_xartables()
     $commerce_customers_status = xarDBGetSiteTablePrefix() . '_commerce_customers_status';
     $commerce_customers_status_history = xarDBGetSiteTablePrefix() . '_commerce_customers_status_history';
     $commerce_languages = xarDBGetSiteTablePrefix() . '_commerce_languages';
-    $commerce_manufacturers = xarDBGetSiteTablePrefix() . '_commerce_manufacturers';
-    $commerce_manufacturers_info = xarDBGetSiteTablePrefix() . '_commerce_manufacturers_info';
     $commerce_newsletters = xarDBGetSiteTablePrefix() . '_commerce_newsletters';
     $commerce_newsletters_history = xarDBGetSiteTablePrefix() . '_commerce_newsletters_history';
     $commerce_orders = xarDBGetSiteTablePrefix() . '_commerce_orders';
@@ -114,8 +112,6 @@ function commerce_xartables()
     $xartable['commerce_customers_status'] = $commerce_customers_status;
     $xartable['commerce_customers_status_history'] = $commerce_customers_status_history;
     $xartable['commerce_languages'] = $commerce_languages;
-    $xartable['commerce_manufacturers'] = $commerce_manufacturers;
-    $xartable['commerce_manufacturers_info'] = $commerce_manufacturers_info;
     $xartable['commerce_newsletters'] = $commerce_newsletters;
     $xartable['commerce_newsletters_history'] = $commerce_newsletters_history;
     $xartable['commerce_orders'] = $commerce_orders;

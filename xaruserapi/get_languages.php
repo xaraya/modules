@@ -11,15 +11,11 @@
 // ----------------------------------------------------------------------
 
 function commerce_userapi_get_languages() {
-    include_once 'modules/xen/xarclasses/xenquery.php';
-    $xartables = xarDBGetTables();
-
-    $q = new xenQuery('SELECT',
-                      $xartables['commerce_languages'],
-                      array('languages_id as id','name','code','image','directory')
-                     );
-    $q->setorder('sort_order');
-    if(!$q->run()) return;
-    return $q->output();
+    $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo', array('name' => 'ice_languages'));
+    return xarModApiFunc('dynamicdata','user','getitems', array (
+                                'modid'     => $objectInfo['moduleid'],
+                                'itemtype'  => $objectInfo['itemtype'],
+                                'fieldlist' => 'id,name,code,image,directory',
+                            ));
 }
 ?>
