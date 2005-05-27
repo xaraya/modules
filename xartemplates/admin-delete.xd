@@ -1,42 +1,40 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<div style="margin: auto;">
-
-<!-- the specific template for the current admin function comes here -->
-
-
-<div align="center">#$confirmtext#</div><br />
-<form method="post" action="&xar-modurl-example-admin-delete;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" id="confirm" value="true" />
-    <input type="hidden" name="exid" id="exid" value="#$exid#" />
-
-    <table border="0" width="300">
-        <tr>
-            <td>
-                #$itemid#:
-            </td>
-            <td>
-                #$exid#
-            </td>
-        </tr>
-        <tr>
-            <td>
-                #$namelabel#:
-            </td>
-            <td>
-                #$namevalue#
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><br />
-                    <input type="submit" value="#$confirmbutton#"  />
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete</xar:mlstring></h2>
+
+    <!-- the specific template for the current admin function comes here -->
+    
+    
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
+    <form method="post" action="#xarModUrl('example', 'admin', 'delete')#">
+        <!--
+            // This layout is crude.  Adapt it for your modules's data
+         -->
+        <p>
+             <xar:mlstring>Item ID:</xar:mlstring>
+             #$exid#
+        </p>
+        <p>
+            <xar:mlstring>Example Name:</xar:mlstring>
+            #$namevalue#
+        </p>
+
+        <div class="xar-clear-both xar-align-center">
+        <!--
+            // Add an authorisation ID - this adds a hidden field in the form that
+            // contains an authorisation ID.  The authorisation ID is very important in
+            // preventing certain attacks on the website
+        -->
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="hidden" name="exid" id="exid" value="#$exid#" />
+            <input type="submit" value="#xarML('Confirm')#" />
+        </div>
+
+    </form>
 </div>

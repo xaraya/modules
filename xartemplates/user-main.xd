@@ -1,30 +1,22 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common user menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Example</xar:mlstring></h2>
 
-<table border="0" width="100%">
+    <!-- the variables used in this menu templte  come from example_user_menu() -->
+    <xar:template type="module" file="user-menu" />
 
-    <!-- the variables used in this menu come from example_user_menu() -->
+    <!-- the specific template for the current function comes here -->
+    
+    <!-- some variable filled in by the function using this template -->
 
-    <tr><th align="center">#$menutitle#</th></tr>
-    <tr><td>
-        <table border="0" width="100%"><tr align="center" valign="middle">
-
-        <!-- a link to a particular menu item -->
-
-        <td><a href="#$menulink_view#">#$menulabel_view#</a></td>
-
-        <!-- more menu items come here... -->
-
-        <!-- Note : you can also specify simple links directly with blocklayout
-             template tags : e.g. &xar-modurl-example-user-view; -->
-        </tr></table>
-    </td></tr>
-</table>
-<br />
-
-<!-- the specific template for the current function comes here -->
-
-<!-- some variable filled in by the function using this template -->
-
-<div align="center"> #$welcome#</div>
+</div>
+<div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <p>
+         <xar:mlstring>Welcome to this Example module.</xar:mlstring>
+    </p>
+</div>
 
