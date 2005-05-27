@@ -1,4 +1,5 @@
 * Version 0.6.0 0 27 May 05
+- integrating v1.45 rc1 tinymce
 - new full screen editing plugin
 - experimental Safari support
 - insert raw HTML
