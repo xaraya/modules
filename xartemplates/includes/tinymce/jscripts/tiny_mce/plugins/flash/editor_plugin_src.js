@@ -86,7 +86,7 @@ function TinyMCE_flash_execCommand(editor_id, element, command, user_interface, 
 
 				// Get rest of Flash items
 				swffile = getAttrib(focusElm, 'alt');
-				swffile = eval(tinyMCE.settings['urlconvertor_callback'] + "(swffile, null, true);");
+				swffile = eval(tinyMCE.settings['urlconverter_callback'] + "(swffile, null, true);");
 				swfwidth = getAttrib(focusElm, 'width');
 				swfheight = getAttrib(focusElm, 'height');
 				action = "update";
@@ -121,7 +121,7 @@ function TinyMCE_flash_cleanup(type, content) {
 				if (tinyMCE.getAttrib(imgs[i], "name") == "mce_plugin_flash") {
 					var src = tinyMCE.getAttrib(imgs[i], "alt");
 
-					src = eval(tinyMCE.settings['urlconvertor_callback'] + "(src, null, true);");
+					src = eval(tinyMCE.settings['urlconverter_callback'] + "(src, null, true);");
 
 					imgs[i].setAttribute('alt', src);
 				}

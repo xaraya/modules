@@ -185,7 +185,10 @@ function tinymce_upgrade($oldversion)
     xarModSetVar('tinymce', 'multiconfig','');
     xarModSetVar('tinymce', 'usemulticonfig',0);
 
-    return tinymce_upgrade('0.5.5');
+    return tinymce_upgrade('0.6.0');
+    break;
+
+    case '0.6.0':
     break;
     }
     return true;

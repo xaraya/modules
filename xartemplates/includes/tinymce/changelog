@@ -1,4 +1,4 @@
-Version 1.45 (2005-xx-xx)
+Version 1.45 RC1 (2005-05-27)
 	Fixed bug where character map inserted &amp; and &lt;/&gt; when using & < >.
 	Fixed so paragraphs containing &nbsp; is converted to numeric or raw if entity_encoding is set.
 	Fixed bug in searchreplace plugin when user tried to search on a empty string or the editor contents was empty.
@@ -8,8 +8,14 @@ Version 1.45 (2005-xx-xx)
 	Fixed URL convertion problems with onmouseover, onmouseout image urls in advimage plugin.
 	Fixed URL convertion problems with Flash plugin.
 	Fixed the experimental Safari support, some features work some doesn't.
+	Fixed bug where multiple a elements where created when updating links on images in FF/Mozilla.
+	Fixed bug in importCSS function, was having a meaning less if statement.
+	Fixed so the contextmenu plugin uses images from the configurated theme instead of the advanced theme.
+	Fixed so the external_link_list_url/external_image_list_url options can use relative or absolute path.
+	Fixed so the external_link_list_url/external_image_list_url has a random query parameter to prevent it from cache.
 	Added new mceInsertRawHTML command, this inserts raw as it is HTML code in the the selected position.
 	Added paste plain text plugin contributed by Ryan Demmer, converted it into a paste plugin.
+	Added updated paste plugin contributed by speednet, includes paste directly feature for MSIE.
 	Added split/merge table cells support, to table plugin and context menus.
 	Added cut/copy/paste table rows functionality to context menu and table plugin.
 	Added new mceSetContent command, this does the same as the setContent function.
@@ -17,6 +23,9 @@ Version 1.45 (2005-xx-xx)
 	Added new remove formatting and select text color icons.
 	Added new directionality plugin to better support languages that write from right to left.
 	Added new fullscreen plugin, enables users to toggle fullscreen editing mode.
+	Added a new template/tutorial plugin to aid people in the development of own plugins.
+	Removed visual_table_style and replaced it with visual_table_class. [BREAKS COMPATIBLITY].
+	Renamed urlconvertor_callback option to urlconverter_callback.
 Version 1.44 (2005-05-03)
 	Fixed bug with contextmenu not showing at the correct location in MSIE.
 	Fixed bug where a error was produced by the Flash plugin if the user reloaded the page in MSIE.

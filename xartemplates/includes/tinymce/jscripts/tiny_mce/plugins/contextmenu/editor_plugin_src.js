@@ -65,16 +65,19 @@ function TinyMCE_contextmenu_showContextMenu(e, inst) {
 	y = tinyMCE.isMSIE ? e.screenY : pos.absTop + (e.pageY - inst.getBody().scrollTop);
 	elm = tinyMCE.isMSIE ? e.srcElement : e.target;
 	contextMenu = TinyMCE_contextmenu_contextMenu;
+	contextMenu.inst = inst;
 
 	// Mozilla needs some time
 	window.setTimeout(function () {
+		var theme = tinyMCE.getParam("theme");
+
 		contextMenu.clearAll();
 		var sel = inst.getSelectedText().length != 0 || elm.nodeName == "IMG";
 
 		// Default items
-		contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/cut.gif", "$lang_cut_desc", "Cut", "", !sel);
-		contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/copy.gif", "$lang_copy_desc", "Copy", "", !sel);
-		contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/paste.gif", "$lang_paste_desc", "Paste", "", false);
+		contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/cut.gif", "$lang_cut_desc", "Cut", "", !sel);
+		contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/copy.gif", "$lang_copy_desc", "Copy", "", !sel);
+		contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/paste.gif", "$lang_paste_desc", "Paste", "", false);
 
 		// Get element
 		elm = tinyMCE.getParentElement(elm, "img,table,td");
@@ -87,7 +90,7 @@ function TinyMCE_contextmenu_showContextMenu(e, inst) {
 					if (tinyMCE.getAttrib(elm, 'name', '').indexOf('mce_plugin_flash') == 0)
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/flash/images/flash.gif", "$lang_flash_props", "mceFlash");
 					else
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/image.gif", "$lang_image_props_desc", "mceImage");
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/image.gif", "$lang_image_props_desc", "mceImage");
 					break;
 
 				case "TABLE":
@@ -101,15 +104,15 @@ function TinyMCE_contextmenu_showContextMenu(e, inst) {
 						rowspan = rowspan == "" ? "1" : rowspan;
 
 						contextMenu.addSeparator();
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/cut.gif", "$lang_table_cut_row_desc", "mceTableCutRow");
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/copy.gif", "$lang_table_copy_row_desc", "mceTableCopyRow");
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/paste.gif", "$lang_table_paste_row_before_desc", "mceTablePasteRowBefore", "", inst.tableRowClipboard == null);
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/paste.gif", "$lang_table_paste_row_after_desc", "mceTablePasteRowAfter", "", inst.tableRowClipboard == null);
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/cut.gif", "$lang_table_cut_row_desc", "mceTableCutRow");
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/copy.gif", "$lang_table_copy_row_desc", "mceTableCopyRow");
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/paste.gif", "$lang_table_paste_row_before_desc", "mceTablePasteRowBefore", "", inst.tableRowClipboard == null);
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/paste.gif", "$lang_table_paste_row_after_desc", "mceTablePasteRowAfter", "", inst.tableRowClipboard == null);
 
-/*						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/left.gif", "$lang_justifyleft_desc", "JustifyLeft", "", false);
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/center.gif", "$lang_justifycenter_desc", "JustifyCenter", "", false);
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/right.gif", "$lang_justifyright_desc", "JustifyRight", "", false);
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/advanced/images/full.gif", "$lang_justifyfull_desc", "JustifyFull", "", false);*/
+/*						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/left.gif", "$lang_justifyleft_desc", "JustifyLeft", "", false);
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/center.gif", "$lang_justifycenter_desc", "JustifyCenter", "", false);
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/right.gif", "$lang_justifyright_desc", "JustifyRight", "", false);
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/full.gif", "$lang_justifyfull_desc", "JustifyFull", "", false);*/
 						contextMenu.addSeparator();
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table.gif", "$lang_table_props_desc", "mceInsertTable");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_cell_props.gif", "$lang_table_cell_desc", "mceTableCellProps");

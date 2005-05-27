@@ -38,3 +38,7 @@ td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
+
+.mceVisualAid {
+	border: 1px dashed #BBBBBB;
+}

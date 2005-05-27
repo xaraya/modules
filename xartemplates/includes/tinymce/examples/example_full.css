@@ -69,6 +69,6 @@ pre {
 	font-size: 12px;
 }
 
-a:-moz-any-link {
-	color: #666666;	
+.mceVisualAid {
+	border: 1px dashed #BBBBBB;
 }

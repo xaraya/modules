@@ -45,12 +45,12 @@ function TinyMCE_advimage_cleanup(type, content) {
 				var onmouseout = tinyMCE.cleanupEventStr(tinyMCE.getAttrib(imgs[i], 'onmouseout'));
 
 				if ((src = tinyMCE.getImageSrc(onmouseover)) != "") {
-					src = eval(tinyMCE.settings['urlconvertor_callback'] + "(src, null, true);");
+					src = eval(tinyMCE.settings['urlconverter_callback'] + "(src, null, true);");
 					imgs[i].setAttribute('onmouseover', "this.src='" + src + "';");
 				}
 
 				if ((src = tinyMCE.getImageSrc(onmouseout)) != "") {
-					src = eval(tinyMCE.settings['urlconvertor_callback'] + "(src, null, true);");
+					src = eval(tinyMCE.settings['urlconverter_callback'] + "(src, null, true);");
 					imgs[i].setAttribute('onmouseout', "this.src='" + src + "';");
 				}
 			}

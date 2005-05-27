@@ -4,8 +4,13 @@
 <script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 <script language="javascript">
 var url = tinyMCE.getParam("external_image_list_url");
-if (url != null)
-	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.documentBasePath + "/" + url + '"></sc'+'ript>');
+if (url != null) {
+	// Fix relative
+	if (url.charAt(0) != '/')
+		url = tinyMCE.documentBasePath + "/" + url;
+
+	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + url + '?rnd=' + new Date().getTime() + '"></sc'+'ript>');
+}
 </script>
 <script language="javascript" type="text/javascript">
 <!--
@@ -20,18 +25,23 @@ if (url != null)
     }
 
     function insertImage() {
+		var formObj = document.forms[0];
+
         if (window.opener) {
-            var src         = document.forms[0].src.value;
-            var alt         = document.forms[0].alt.value;
-            var title       = document.forms[0].title.value;
-            var border      = document.forms[0].border.value;
-            var vspace      = document.forms[0].vspace.value;
-            var hspace      = document.forms[0].hspace.value;
-            var width       = document.forms[0].width.value;
-            var height      = document.forms[0].height.value;
-            var align       = document.forms[0].align.options[document.forms[0].align.selectedIndex].value;
-            var onmouseover = document.forms[0].onmouseover.value;
-            var onmouseout  = document.forms[0].onmouseout.value;
+            var src         = formObj.src.value;
+            var alt         = formObj.alt.value;
+            var title       = formObj.title.value;
+            var border      = formObj.border.value;
+            var vspace      = formObj.vspace.value;
+            var hspace      = formObj.hspace.value;
+            var width       = formObj.width.value;
+            var height      = formObj.height.value;
+            var align       = formObj.align.options[formObj.align.selectedIndex].value;
+            var onmouseover = formObj.onmouseover.value;
+            var onmouseout  = formObj.onmouseout.value;
+
+			if (!formObj.onmousemove.checked)
+				onmouseover = onmouseout = "";
 
             window.opener.tinyMCE.insertImage(src, alt, border, hspace, vspace, width, height, align, title, onmouseover, onmouseout);
             top.close();
