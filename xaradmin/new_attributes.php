@@ -13,7 +13,7 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_admin_new_attributes()
+function products_admin_new_attributes()
 {
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
@@ -21,7 +21,7 @@ function commerce_admin_new_attributes()
     if(!xarVarFetch('copy_product_id',  'int',  $copy_product_id, 0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('pID',    'int',  $pID, NULL, XARVAR_DONT_SET)) {return;}
 
-    require('modules/commerce/xarincludes/new_attributes_config.php');
+    require('modules/products/xarincludes/new_attributes_config.php');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
     $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
@@ -32,7 +32,7 @@ function commerce_admin_new_attributes()
     $backLink = "<a href=\"javascript:history.back()\">";
 
   if ( isset($pID) && $action == 'change') {
-    include('modules/commerce/xarincludes/new_attributes_change.php');
+    include('modules/products/xarincludes/new_attributes_change.php');
 
 //    xtc_redirect( './' . FILENAME_CATEGORIES . '?cPath=' . $cPathID . '&pID=' . $_POST['current_product_id'] );
   }
@@ -41,12 +41,12 @@ function commerce_admin_new_attributes()
     switch($action) {
         case 'edit':
             if ($copy_product_id != 0) {
-                $q = new xenQuery('SELECT',$xartables['commerce_product_attributes']);
+                $q = new xenQuery('SELECT',$xartables['products_product_attributes']);
                 $q->addfields('products_id', 'options_id', 'options_values_id', 'options_values_price', 'price_prefix', 'attributes_model', 'attributes_stock', 'options_values_weight', 'weight_prefix');
                 $q->eq('copy_product_id', $copy_product_id);
                 if(!$q->run()) return;
                 foreach ($q->output() as $attrib_res) {
-                    $q = new xenQuery('INSERT',$xartables['commerce_product_attributes']);
+                    $q = new xenQuery('INSERT',$xartables['products_product_attributes']);
                     $q->addfield('products_id', $pID);
                     $q->addfield('options_id', $attrib_res['options_id']);
                     $q->addfield('options_values_id', $attrib_res['options_values_id']);
@@ -59,19 +59,19 @@ function commerce_admin_new_attributes()
                     if(!$q->run()) return;
                 }
             }
-            $pageTitle = 'Edit Attributes -> ' . xarModAPIFunc('commerce','user','findtitle', array('pID' => $pID, 'language_id' => $language_id));
-            include('modules/commerce/xarincludes/new_attributes_include.php');
+            $pageTitle = 'Edit Attributes -> ' . xarModAPIFunc('products','user','findtitle', array('pID' => $pID, 'language_id' => $language_id));
+            include('modules/products/xarincludes/new_attributes_include.php');
             break;
 
         case 'change':
             $pageTitle = 'Product Attributes Updated.';
-            include('modules/commerce/xarincludes/new_attributes_change.php');
-            include('modules/commerce/xarincludes/new_attributes_select.php');
+            include('modules/products/xarincludes/new_attributes_change.php');
+            include('modules/products/xarincludes/new_attributes_select.php');
             break;
 
         default:
             $pageTitle = 'Edit Attributes';
-            include('modules/commerce/xarincludes/new_attributes_select.php');
+            include('modules/products/xarincludes/new_attributes_select.php');
             break;
     }
 }

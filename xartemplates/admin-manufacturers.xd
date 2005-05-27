@@ -95,16 +95,16 @@
 					<br />
 					<xar:loop name="$languages">
 						<br />
-						<input type="image" src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
+						<input type="image" src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'],'commerce')#" border="0" alt="#xarML($loop:item['name'])#">
 						&nbsp;
 						<input type="text" name="manufacturers_url[#$loop:item['id']#]">					
 					</xar:loop>
 					<br /><br />
 					&nbsp;
-					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif')#" border="0" alt="#xarML('Insert')#">
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif','commerce')#" border="0" alt="#xarML('Insert')#">
 					&nbsp;
 					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page))#">
-						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 					</a>
 				</td>
 			</FORM>
@@ -131,10 +131,10 @@
 					</xar:loop>
 					<br /><br />
 					&nbsp;
-					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" border="0" alt="#xarML('Edit')#">
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif','commerce')#" border="0" alt="#xarML('Edit')#">
 					<br />&nbsp;
 					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page))#">
-						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 					</a>
 				</td>
 			</FORM>
@@ -150,10 +150,10 @@
 					<br /><b>#$cInfo.manufacturers_name#</b>
 					<br /><br />
 					&nbsp;
-					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" border="0" alt="#xarML('Delete')#">
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" border="0" alt="#xarML('Delete')#">
 					&nbsp;
 					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id))#">
-						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 					</a>
 				</td>
 			</FORM>
@@ -167,12 +167,12 @@
 				<td class="infoBoxContent" align="center">
 					&nbsp;
 					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'edit'))#">
-						<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif')#" alt="#xarML('Edit')#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif','commerce')#" alt="#xarML('Edit')#">
 					</a>
 					<br />
 					&nbsp;
 					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'delete'))#">
-						<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
 					</a>
 				</td>
 			</tr>

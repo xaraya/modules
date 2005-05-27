@@ -115,11 +115,11 @@
 			<div>
 				<xar:if condition="$loop:item['id'] eq $langid">
 					<a href="#xarModURL('commerce', 'admin', 'categories_screen', array('langid' => $loop:item['id'], 'cID' => $cID))#" class="active">#$loop:item['name']#
-						<img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
+						<img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'],'commerce')#" border="0" alt="#xarML($loop:item['name'])#">
 					</a>
 				<xar:else />
 					<a href="#xarModURL('commerce', 'admin', 'categories_screen', array('langid' => $loop:item['id'], 'cID' => $cID))#">#$loop:item['name']#
-						<img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
+						<img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'],'commerce')#" border="0" alt="#xarML($loop:item['name'])#">
 					</a>
 				</xar:if>
 			</div>	
@@ -264,10 +264,10 @@
 								<input type="hidden" name="categories_date_added" value="#$cInfo.date_added#">
 							</xar:if>
 							<input type="hidden" name="parent_id" value="$cInfo.parent_id">
-							<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_save.gif')#" border="0" alt="#xarML('Save')#" style="cursor:hand" onClick="return confirm('#xarML("Save this Entry?")#')">.
+							<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_save.gif','commerce')#" border="0" alt="#xarML('Save')#" style="cursor:hand" onClick="return confirm('#xarML("Save this Entry?")#')">.
 							&nbsp;&nbsp;
 							<a href="#xarModURL('commerce','admin','categories', array('cPath' => $cPath, 'cID' => $cID))#">
-								<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+								<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 							</a>
 						</td>
 					</tr>
