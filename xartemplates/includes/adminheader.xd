@@ -6,41 +6,41 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
     <tr>
         <td valign="bottom" align="right">
-            <img src="#xarTplGetImage('logo.gif')#" alt="nextcommerce" width="185" height="95" style="align: right" />
+            <img src="#xarTplGetImage('logo.gif','commerce')#" alt="nextcommerce" width="185" height="95" style="align: right" />
         </td>
-        <td valign="bottom" align="right" background="#xarTplGetImage('bg_top.jpg')#">
+        <td valign="bottom" align="right" background="#xarTplGetImage('bg_top.jpg','commerce')#">
 
-            <img src="#xarTplGetImage('adminimages/img_spacer.jpg')#" />
+            <img src="#xarTplGetImage('adminimages/img_spacer.jpg','commerce')#" />
 
             <a href="#xarModURL('commerce','admin','start')#"  class="headerLink">
-                <img src="#xarTplGetImage('adminimages/top_index.gif')#" />
+                <img src="#xarTplGetImage('adminimages/top_index.gif','commerce')#" />
             </a>
 
-            <img src="#xarTplGetImage('adminimages/img_spacer.jpg')#" />
+            <img src="#xarTplGetImage('adminimages/img_spacer.jpg','commerce')#" />
 
             <a href="http://www.xt-commerce.com" target="_new" class="headerLink">
-                <img src="#xarTplGetImage('adminimages/top_support.gif')#" />
+                <img src="#xarTplGetImage('adminimages/top_support.gif','commerce')#" />
             </a>
 
-            <img src="#xarTplGetImage('adminimages/img_spacer.jpg')#" />
+            <img src="#xarTplGetImage('adminimages/img_spacer.jpg','commerce')#" />
 
             <a href="#xarModURL('commerce','user','main')#" class="headerLink">
-                <img src="#xarTplGetImage('adminimages/top_shop.gif')#" />
+                <img src="#xarTplGetImage('adminimages/top_shop.gif','commerce')#" />
             </a>
 
-            <img src="#xarTplGetImage('adminimages/img_spacer.jpg')#" />
+            <img src="#xarTplGetImage('adminimages/img_spacer.jpg','commerce')#" />
 
             <a href="#xarModURL('commerce','admin','FILENAME_LOGOUTNONSSL')#" class="headerLink">
-                <img src="#xarTplGetImage('adminimages/top_logout.gif')#" />
+                <img src="#xarTplGetImage('adminimages/top_logout.gif','commerce')#" />
             </a>    
 
-            <img src="#xarTplGetImage('adminimages/img_spacer.jpg')#" />
+            <img src="#xarTplGetImage('adminimages/img_spacer.jpg','commerce')#" />
 
             <a href="#xarModURL('commerce','admin', 'FILENAME_CREDITSNONSSL')#" class="headerLink"> 
-                <img src="#xarTplGetImage('adminimages/top_credits.gif')#" />
+                <img src="#xarTplGetImage('adminimages/top_credits.gif','commerce')#" />
             </a>    
 
-            <img src="#xarTplGetImage('adminimages/img_line.jpg')#" />
+            <img src="#xarTplGetImage('adminimages/img_line.jpg','commerce')#" />
         </td>
     </tr>
 </table>
