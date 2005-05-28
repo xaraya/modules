@@ -1,6 +1,8 @@
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html 
 </xar:comment>
+<xar:if condition="xarTplAddStyleLink('sitetools', 'forms')"></xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -15,137 +17,104 @@
         </xar:mlstring>
     </h2>
     <xar:set name="$confirmbutton">
-        <xar:mlstring>
-            Backup 
-        </xar:mlstring>
+        <xar:mlstring>Backup</xar:mlstring>
     </xar:set>
     <xar:set name="$backuptitle">
-        <xar:mlstring>
-            Backing Up Database: 
-        </xar:mlstring>
+        <xar:mlstring>Backing Up Database:</xar:mlstring>
     </xar:set>
     <xar:set name="$goback">
-        <xar:mlstring>
-            Go Back 
-        </xar:mlstring>
+        <xar:mlstring>Go Back</xar:mlstring>
     </xar:set>
     <xar:set name="$checktrue">
-        <xar:mlstring>
-            Select All 
-        </xar:mlstring>
+        <xar:mlstring>Select All</xar:mlstring>
     </xar:set>
     <xar:set name="$checkfalse">
-        <xar:mlstring>
-            Deselect All 
-        </xar:mlstring>
+        <xar:mlstring>Deselect All</xar:mlstring>
     </xar:set>
     <xar:set name="$screenlabel">
-        <xar:mlstring>
-            Running status display: 
-        </xar:mlstring>
+        <xar:mlstring>Running status display:</xar:mlstring>
     </xar:set>
     <xar:set name="$screenhelp">
-        <xar:mlstring>
-            If checked, a running status of backup progress is displayed. 
-        </xar:mlstring>
+        <xar:mlstring>If checked, a running status of backup progress is displayed.</xar:mlstring>
     </xar:set>
     <xar:set name="$usegzlabel">
-        <xar:mlstring>
-            Create GZ backup file(if gz available)? 
-        </xar:mlstring>
+        <xar:mlstring>Create GZ backup file(if gz available)?</xar:mlstring>
     </xar:set>
     <xar:set name="$usegzhelp">
-        <xar:mlstring>
-            If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created. 
-        </xar:mlstring>
+        <xar:mlstring>If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.</xar:mlstring>
     </xar:set>
     <xar:set name="$securitymessage">
-        <xar:mlstring>
-            <b>
-                SECURITY WARNING:
-            </b>
-            <br />
-            Do not leave your backup file in a web browsable directory.
-            <br />
-            Remember to delete it, or move it to a secure directory. 
+        <xar:mlstring><strong>SECURITY WARNING:</strong><br />
+            Do not leave your backup file in a web browsable directory.<br />
+            Remember to delete it, or move it to a secure directory.
         </xar:mlstring>
     </xar:set>
-</div>
+
 <!-- First get choice of backup type -->
 <xar:if condition="$warning eq 1">
     <div>
         #$warningmessage#
     </div>
 <xar:elseif condition="$startbackup eq ''" />
-    <form method="post" action="#xarModURL('sitetools', 'admin', 'backup')#" enctype="application/x-www-form-urlencoded">
+    <form class="xar-formwidget" class="xar-formwidget" method="post" action="#xarModURL('sitetools', 'admin', 'backup')#" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <div>
-                <span style="float: left; width: 40%; text-align: right;">
-                    <xar:mlstring>
-                        Backup Type:
-                    </xar:mlstring>
-                </span>
-                <span style="float: right; width: 58%; text-align: left;">
-                    <select name="startbackup" id="startbackup">
-                        <option value="0">
-                            <xar:mlstring>
-                                Select backup type
-                            </xar:mlstring>
-                        </option>
-                        <xar:foreach in="$backupops" value="$v" key="$k">
-                            <xar:if condition="$k eq $startbackup">
-                                <option value="#$k#" selected="selected">
-                                    #$v#
-                                </option>
-                                <xar:else />
-                                <option value="#$k#">
-                                    #$v#
-                                </option>
-                            </xar:if>
-                        </xar:foreach>
-                    </select>
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 40%; text-align: right;">
-                    <label for="usegz" class="help" title="#$usegzhelp#">
+        <fieldset class="formelements xar-norm">
+            <legend><xar:mlstring>Backup Options</xar:mlstring></legend>
+            <p class="param">
+                <label for="startbackup" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the type of backup you require.')#">
+                        <xar:mlstring>Backup Type:</xar:mlstring>
+                    </span>
+                </label>
+                <select name="startbackup" id="startbackup">
+                    <option value="0">
+                         <xar:mlstring>Select backup type</xar:mlstring>
+                    </option>
+                    <xar:foreach in="$backupops" value="$v" key="$k">
+                        <xar:if condition="$k eq $startbackup">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </p>
+            <p class="param">
+                <label for="usegz" class="xar-form-label">
+                    <span class="help" title="#xarML('If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.')#">
                         #$usegzlabel#
-                    </label>
-                </span>
-                <span style="float: right; width: 58%; text-align: left;">
-                    <xar:if condition="$usegz eq true">
-                        <input type="checkbox" name="usegz" id="usegz" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="usegz" id="usegz" value="1" />
-                    </xar:if>
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 40%; text-align: right;">
-                    <label for="screenlabel" class="help" title="#$screenhelp#">
+                    </span>
+                </label>
+                <xar:if condition="$usegz eq true">
+                    <input type="checkbox" name="usegz" id="usegz" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="usegz" id="usegz" value="1" />
+                </xar:if>
+            </p>
+            <p class="param">
+                <label for="screenlabel" class="xar-form-label">
+                    <span class="help" title="#xarML('If checked, a running status of backup progress is displayed.')#">
                         #$screenlabel#
-                    </label>
-                </span>
-                <span style="float: right; width: 58%; text-align: left;">
-                    <xar:if condition="$screen eq true">
-                        <input type="checkbox" name="screen" id="screen" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="screen" id="screen" value="1" />
-                    </xar:if>
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="text-align:center; width:98%; margin-top:20px;">
-                    <input type="submit" name="confirm" value="#$confirmbutton#" />
-                </span>
-            </div>
+                    </span>
+                </label>
+                <xar:if condition="$screen eq true">
+                    <input type="checkbox" name="screen" id="screen" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="screen" id="screen" value="1" />
+                </xar:if>
+            </p>
+        </fieldset>
+        <div style="clear: both; text-align:center; width:98%; margin-top:20px;">
+            <p>
+                <input type="submit" name="confirm" value="#$confirmbutton#" />
+            </p>
+            <p>
+                <a href="javascript:history.back(-1)">#$goback#</a>
+            </p>
+        </div>
+
         </form>
-        <p>
-            <a href="javascript:history.back(-1)">
-                #$goback#
-            </a>
-        </p>
-<!-- Start partial database table selection display -->
+ <!-- Start partial database table selection display -->
 <xar:elseif condition="$startbackup eq 'partial'" />
             <form action="#xarModURL('sitetools', 'admin', 'backup')#" method="post" name="SelectedTablesForm" id="SelectedTablesForm" enctype="application/x-www-form-urlencoded">
 
@@ -269,4 +238,4 @@
         </table>
     </div>
 </xar:if>
-
+</div>

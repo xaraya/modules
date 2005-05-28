@@ -11,7 +11,7 @@
     </p>
     <div style="margin: auto;">
         <form method="post" action="&xar-modurl-sitetools-admin-terminal;">
-           <textarea name="term_input" id="term_input" cols="80" rows="10">#$term_input#</textarea>
+           <textarea mce_editable="false" name="term_input" id="term_input" cols="80" rows="10">#$term_input#</textarea>
            <input type="submit"/>
         </form>
     </div>

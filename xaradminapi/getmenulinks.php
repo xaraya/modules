@@ -42,8 +42,8 @@ function sitetools_adminapi_getmenulinks()
         $menulinks[] = Array('url' => xarModURL('sitetools',
                              'admin',
                              'terminal'),
-            'title' => xarML('Access MySQL via simple web terminal'),
-            'label' => xarML('MySQL Terminal'));
+            'title' => xarML('Access Database SQL via a simple web terminal'),
+            'label' => xarML('SQL Terminal'));
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'cacheview'),

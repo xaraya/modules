@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:set name="optibutton"><xar:mlstring>Optimize Now!</xar:mlstring></xar:set>
-<xar:set name="optinote"><xar:mlstring>This option will optimize your MySQL database tables.</xar:mlstring></xar:set>
+<xar:set name="optinote"><xar:mlstring>Click to optimize your MySQL database tables.</xar:mlstring></xar:set>
 <xar:set name="optititle"><xar:mlstring>Optimizing Database:</xar:mlstring></xar:set>
 <xar:set name="alreadyopt"><xar:mlstring>Already optimized!</xar:mlstring></xar:set>
 <xar:set name="nowopt"><xar:mlstring>Optimized</xar:mlstring></xar:set>
@@ -9,6 +9,7 @@
 <xar:set name="savedtext"><xar:mlstring>This optimization run has saved</xar:mlstring></xar:set>
 <xar:set name="totaltext"><xar:mlstring>The database is currently a total size of </xar:mlstring></xar:set>
 <xar:set name="totgaintd"><xar:mlstring>Since installing this script you have saved </xar:mlstring></xar:set>
+<xar:if condition="xarTplAddStyleLink('sitetools', 'forms')"></xar:if>
 
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -19,25 +20,29 @@
     <h2>
         <xar:mlstring>Optimize Database Tables</xar:mlstring>
     </h2>
-    <div style="margin: auto;">
     <xar:if condition="$optimized eq false">
-    <form id="post" action="#xarModURL('sitetools', 'admin', 'optimize')#" method="post" enctype="application/x-www-form-urlencoded">
+    <form class="xar-formwidget" id="post" action="#xarModURL('sitetools', 'admin', 'optimize')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="confirm" id="confirm" value="true" />
-        <p style="float: left; padding-bottom: 20px; padding-top: 30px; width: 98%; text-align: center;">
-            #$optinote#
+        <fieldset class="formelements xar-norm">
+        <legend><xar:mlstring>MySQL Database</xar:mlstring></legend>
+         <p class="param">
+            <label for="optibutton" class="xar-form-label">
+                <span class="help" title="#xarML('Clicking optimize will optimize all tables in your MySQL database')#">
+                    #$optinote#
+                </span>
+            </label>
+          <input id="optibutton" type="submit" value="#$optibutton#"  />
         </p>
-        <p style="float: left; padding-top: 30px; width: 98%; text-align: center;">
-            <input type="submit" value="#$optibutton#"  />
-        </p>
+        </fieldset>
     </form>
 
     <xar:elseif condition="$optimized eq true" />
-    <div style="width:98%; clear: both; ">
+    <p style="width:98%; clear: both; ">
          <span class="xar-mod-title" style="float: left; padding-bottom: 10px; padding-top: 0px; width: 98%; text-align: center;">
             #$optititle#&nbsp;#$dbname#
          </span>
-    </div>
+    </p>
     <div style="clear: both; padding-top: 10px;">
         <table style="width:100%; border:0; cellspacing:1; cellpadding:1;">
             <tr>
@@ -85,26 +90,20 @@
                 </xar:foreach>
             </table>
         </div>
-        <div style="clear: both; padding-top: 5px;">
-            <span class="xar-txttitle" style="float: left; padding-bottom: 0px; padding-top: 5px; width: 98%; text-align: center; font:bold;">
+        <p class="xar-txttitle" style="clear: both; float: left; padding-bottom: 5x; padding-top: 5px; width: 98%; text-align: center;">
                  #$runtext# #$totalruns#
-            </span>
-        </div>
-        <div style="clear: both; padding-top: 5px;">
-            <span class="xar-txttitle" style="float: left; padding-bottom: 0px; padding-top: 5px; width: 98%; text-align: center;">
-                #$totaltext# <span class="xar-accent">#$totalkbs#</span> #$kbs#
-            </span>
-        </div>
-        <div style="clear: both; padding-top: 5px;">
-            <span class="xar-txttitle" style="float: left; padding-bottom: 0px; padding-top: 5px; width: 98%; text-align: center;">
-                #$savedtext# <span class="xar-accent">#$totalgain#</span> #$kbs#
-            </span>
-        </div>
-        <div style="clear: both; padding-top: 5px;">
-            <span class="xar-txttitle" style="float: left; padding-bottom: 20px; padding-top: 5px; width: 98%; text-align: center;">
+
+        </p>
+        <p class="xar-txttitle" style="clear: both; float: left; padding-bottom: 5px; padding-top: 5px; width: 98%; text-align: center;">
+               #$totaltext# <span class="xar-accent">#$totalkbs#</span> #$kbs#
+
+        </p>
+         <p class="xar-txttitle" style="clear: both; float: left; padding-bottom: 5Px; padding-top: 5px; width: 98%; text-align: center;">
+               #$savedtext# <span class="xar-accent">#$totalgain#</span> #$kbs#
+
+        </p>
+        <p class="xar-txttitle" style="clear: both; float: left; padding-bottom: 5px; padding-top: 5px; width: 98%; text-align: center;">
                 #$totgaintd# <span class="xar-accent">#$gaintd#</span> #$kbs#
-            </span>
-        </div>
+        </p>
     </xar:if>
-    </div>
 </div>

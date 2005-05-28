@@ -1,4 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('sitetools', 'forms')"></xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>SiteTools Administration</xar:mlstring>
@@ -8,7 +10,6 @@
     <h2>
         <xar:mlstring>Clear Cache Files</xar:mlstring>
     </h2>
-    <div style="margin: auto;">
     <xar:if condition="$delfin eq false">
         <xar:set name="confirmbutton"><xar:mlstring>Confirm deletion</xar:mlstring></xar:set>
         <xar:set name="adocache"><xar:mlstring>ADOdb Cache?</xar:mlstring></xar:set>
@@ -20,78 +21,75 @@
         <xar:set name="$templpathc">$templpath</xar:set>
         <xar:set name="allfiles"><xar:mlstring>All files and subdirs in </xar:mlstring></xar:set>
         <xar:set name="configpage"><xar:mlstring>CLICK to set cache paths in SiteTools Configuration</xar:mlstring></xar:set>
-        <xar:set name="response"><xar:mlstring>Warning! Check your selection before continuing.</xar:mlstring></xar:set>
+        <xar:set name="response"><xar:mlstring>Check your selection before continuing.</xar:mlstring></xar:set>
 
-        <form action="#xarModURL('sitetools', 'admin', 'deletecache')#" method="post" enctype="application/x-www-form-urlencoded">
-        <div style="clear: both; padding-top: 10px;">
+     <form class="xar-formwidget" action="#xarModURL('sitetools', 'admin', 'deletecache')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="confirm" id="confirm" value="true" />
-            <span style="float: right; width: 98%; text-align: center;">
+      <fieldset class="formelements xar-norm">
+        <legend><xar:mlstring>Available Caches</xar:mlstring></legend>
+        <p style="float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
                 #$confirmtxt#
-            </span>
-        </div>
-        <div style="clear: both; padding-top: 10px;">
-            <p style="float: left; width: 20%; text-align: right;">
+        </p>
+        <p class="param">
+            <label for="delado" class="xar-form-label">
                 <span class="help" title="#xarML('Check to delete your ADOdb cache files in path ')# #$adopathc#">
-                    <label for="delado">#$adocache#</label>
+                    #$adocache#
                 </span>
-            </p>
-            <p style="float: right; width: 78%; text-align: left;">
+            </label>
             <xar:if condition="!empty($delado)">
                 <input type="checkbox" value="1" name="delado" checked="checked" />
             <xar:else />
                 <input type="checkbox" value="1" name="delado" />
             </xar:if>
             #$allfiles# <span style="font:bold;">#$adopathc#</span>
-            </p>
-        </div>
-        <div style="clear: both; padding-top: 10px;">
-            <p style="float: left; width: 20%; text-align: right;">
+        </p>
+
+        <p class="param">
+            <label for="delrss" class="xar-form-label">
                 <span class="help" title="#xarML('Check to delete your RSS cache files in path ')# #$rsspathc#">
-                    <label for="delrss">#$rsscache#</label>
+                    #$rsscache#
                 </span>
-            </p>
-            <p style="float: right; width: 78%; text-align: left;">
+            </label>
             <xar:if condition="!empty($delrss)">
                 <input type="checkbox" value="1" name="delrss" checked="checked" />
             <xar:else />
                 <input type="checkbox" value="1" name="delrss" />
             </xar:if>
-            #$allfiles# <strong>#$rsspathc#</strong>
-            </p>
-        </div>
-        <div style="clear: both; padding-top: 10px;">
-            <p style="float: left; width: 20%; text-align: right;">
+             #$allfiles# <strong>#$rsspathc#</strong>
+        </p>
+
+        <p class="param">
+            <label for="deltempl" class="xar-form-label">
                 <span class="help" title="#xarML('Check to delete your Template cache files in path ')# #$templpathc#">
-                    <label for="deltempl">#$templcache#</label>
+                    #$templcache#
                 </span>
-            </p>
-            <p style="float: right; width: 78%; text-align: left;">
-                <xar:if condition="!empty($deltempl)">
-                    <input type="checkbox" value="1" name="deltempl" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" value="1" name="deltempl" />
-                </xar:if>
-                #$allfiles# <strong>#$templpathc#</strong>
-            </p>
-        </div>
-        <p style="float: left; padding-top: 30px; width: 98%; text-align: center;">
+            </label>
+            <xar:if condition="!empty($deltempl)">
+                <input type="checkbox" value="1" name="deltempl" checked="checked" />
+            <xar:else />
+                <input type="checkbox" value="1" name="deltempl" />
+            </xar:if>
+            #$allfiles# <strong>#$templpathc#</strong>
+        </p>
+    </fieldset>
+    <div class="xar-clear-both xar-align-center">
+        <p>
             <input type="submit" value="#$confirmbutton#"  />
         </p>
-        </form>
-        <p class="xar-mod-title" style="float: left; padding-top: 30px; width: 98%; text-align: center;">
+        <p>
             #$response#
         </p>
-        <p style="float: left; padding-top: 30px; width: 98%; text-align: center;">
+        <p >
            <a href="#xarModURL('sitetools','admin','modifyconfig')#">#$configpage#</a>
-       </p>
-    <xar:elseif condition="$delfin eq true" />
+        </p>
+    </div>
+</form>
+
+ <xar:elseif condition="$delfin eq true" />
         <xar:set name="response"><xar:mlstring>Cache files successfully deleted!</xar:mlstring></xar:set>
-        <div>
-            <p class="xar-mod-title" style="float: left; padding-top: 30px; width: 98%; text-align: center;">
+             <p class="xar-mod-title" style="float: left; padding-top: 30px; width: 98%; text-align: center;">
                 #$response#
             </p>
-         </div>
     </xar:if>
-    </div>
 </div>
