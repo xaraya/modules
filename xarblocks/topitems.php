@@ -252,7 +252,8 @@ function articles_topitemsblock_display($blockinfo)
             } else {
                 // TODO: make user-dependent
                 if (!empty($article['pubdate'])) {
-                    $article['value'] = strftime("%Y-%m-%d", $article['pubdate']);
+                    //$article['value'] = strftime("%Y-%m-%d", $article['pubdate']);
+                      $article['value'] = xarLocaleGetFormattedDate('short',$article['pubdate']);
                 } else {
                     $article['value'] = 0;
                 }
