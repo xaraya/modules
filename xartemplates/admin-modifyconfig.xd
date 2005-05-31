@@ -1,29 +1,44 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recommend Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-<div style="margin: auto;">
-<form action="#xarModURL('recommend', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Recommend Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-recommend-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <xar:mlstring>
+                    Statistic
+                </xar:mlstring>
+            </legend>
+            <p><xar:mlstring>Number of emails the Recommend module has sent:</xar:mlstring>&nbsp;&nbsp; #$numbersent# </p>
+            <p><xar:mlstring>Last Email sent to:</xar:mlstring>&nbsp;&nbsp; <a href="mailto:#$lastemailaddy#">#$lastemailname#</a></p>
+            <p><xar:mlstring>Last Email sent From:</xar:mlstring>&nbsp;&nbsp; #$username#</p>
+            <p><xar:mlstring>Date last sent:</xar:mlstring>&nbsp;&nbsp;#xarLocaleGetFormattedDate('long',$date)#</p>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <xar:mlstring>
+                    Modify Configuration
+                </xar:mlstring>
+            </legend>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="phase" id="phase" value="update" />
-   <p>
-       <label for="shorturls">
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="shorturls" class="xar-form-label">
            <xar:mlstring>Support Short URLs</xar:mlstring>
-       </label>:
+                </label>
        <xar:if condition="xarModGetVar('recommend', 'SupportShortURLs')">
            <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
        <xar:else />
             <input type="checkbox" name="shorturls" id="shorturls" value="1" />
        </xar:if>
-    </p>
-<h4><xar:mlstring>Statistics</xar:mlstring></h4>
-<p>
-        <xar:mlstring>Number of emails the Recommend module has sent:</xar:mlstring>&nbsp;&nbsp; #$numbersent# <br />
-        <xar:mlstring>Last Email sent to:</xar:mlstring>&nbsp;&nbsp; <a href="mailto:#$lastemailaddy#">#$lastemailname#</a><br />
-        <xar:mlstring>Last Email sent From:</xar:mlstring>&nbsp;&nbsp; #$username#<br />
-        <xar:mlstring>Date last sent:</xar:mlstring>&nbsp;&nbsp; #$date#<br />
-</p>
-<h4><xar:mlstring>User Options</xar:mlstring></h4>
-<p>
-    <label for="usernote">
+            </div>
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="usernote" class="xar-form-label">
         <xar:mlstring>Allow Users to Send Notes?</xar:mlstring>
     </label>
     <xar:if condition="xarModGetVar('recommend', 'usernote')">
@@ -31,16 +46,28 @@
     <xar:else />
         <input type="checkbox" name="usernote" id="usernote" value="1" />
     </xar:if>
-</p>
-<h4><xar:mlstring>Mail Template</xar:mlstring></h4>
-    <p><xar:mlstring>This is the template for the mail to be sent.  If you have HTML mail enabled in your Mail Module, then HTML tags are usable.</xar:mlstring></p>
-        <label for="title"><xar:mlstring>Email Subject</xar:mlstring></label>:
+            </div>
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="title" class="xar-form-label">
+                    <xar:mlstring>Email Subject</xar:mlstring>
+                </label>
         <input type="text" name="title" id="title" value="#$title#" size="35" maxlength="100" />
-        <br /><br />
-        <label for="template"><xar:mlstring>Email Template</xar:mlstring></label>:<br />
-        <textarea name="template" id="template" rows="20" cols="80" tabindex="1">#$template#</textarea>
-        <br /><br />
-        <input type="submit" value="#$submitlabel#"  tabindex="2" />
-    </form>
 </div>
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="template" class="xar-form-label">
+                    <xar:mlstring>Email Template</xar:mlstring>
+                </label>
+                <textarea rows="20" cols="40" name="template" id="template" tabindex="1">#$template#</textarea>
+            </div>
+            <div class="xar-accent xar-norm-outline xar-padding-thick">
+            <xar:mlstring>This is the template for the mail to be sent.  If you have HTML mail enabled in your Mail Module, then HTML tags are usable.</xar:mlstring>
+            </div>
+        </fieldset>
+        <div class="xar-clear-both xar-align-center">
+            <input type="submit" value="#xarML('Save config')#" />
+        </div>
+
+
+
+    </form>
 </div>

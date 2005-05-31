@@ -1,70 +1,77 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recommend Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Recommend Administration</xar:mlstring></span>
+        </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/mail/xarimages/admin.gif')" >
-                <img src="modules/mail/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/mail/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+   <img src="#xarTplGetImage('admin_generic.gif', 'base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+    <h3>
             <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The Recommend module allows visitors to your website a chance to send out recommendations to their friends. 
-            The module provides a form to allow visitors to recommend your site to others via email. In addition there is a custom 'send to friend' tag that you can use in your article templates allowing visitors to send a recommendation for a specific article.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    </h3>
+    <p>
+        <xar:mlstring>
+        The Recommend module allows visitors to your website a chance to send out
+        recommendations to their friends. The module provides a form to allow visitors to
+        recommend your site to others via email. In addition there is a custom 'send to friend'
+        tag that you can use in your article templates allowing visitors to send a recommendation
+         for a specific article.
+         </xar:mlstring>
+       </p>
+    <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    </h3>
+    <p>
             <xar:mlstring>From the menu, you have one choice. </xar:mlstring>
-            <xar:mlstring>"Modify Configuration".  From this menu option, you can set the template that will be used for the email that is sent out, as well as override that choice and allow users to send their own message.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <xar:mlstring>"Modify Configuration".  From this menu option, you can set the template
+        that will be used for the email that is sent out, as well as override that choice and
+        allow users to send their own message.</xar:mlstring>
+        </p>
+    <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    </h3>
+    <p>
             <xar:mlstring>There are no included blocks with this module.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+    <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    </h3>
+    <p>
             <xar:mlstring>There are no included hooks with this module.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    </p>
+    <h3>
             <xar:mlstring>Included Custom Tags</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>There is a custom 'send to friend' tag included. The tag is placed in your article summary or
-            display templates where you would like the 'send to a friend' icon or text to appear. The syntax is:</xar:mlstring></p>
+    </h3>
+    <p>
+        <xar:mlstring>There is a custom 'send to friend' tag included. The tag is placed in
+        your article summary or display templates where you would like the 'send to a friend'
+        icon or text to appear. The syntax is:</xar:mlstring>
+    </p>
             <ul>
-            <li><code>&lt;xar:recommend-sendtofriend type="icon" /&gt;</code> <xar:mlstring>will add a small email icon in your template
+        <li>
+            <code>
+                &lt;xar:recommend-sendtofriend type="icon" /&gt;
+            </code>
+            <xar:mlstring>will add a small email icon in your template
             whereever the tag is placed. Clicking on the icon will display the Recommend email form with a link to the
-            specific article.</xar:mlstring></li>
-            <li><code>&lt;xar:recommend-sendtofriend type="txt" /&gt;</code><xar:mlstring>will add a 'send to friend' text
+            specific article.</xar:mlstring>
+        </li>
+        <li>
+            <code>
+                &lt;xar:recommend-sendtofriend type="txt" /&gt;
+            </code>
+            <xar:mlstring>will add a 'send to friend' text
             link in your template whereever the tag is placed. Clicking on the link will display the Recommend email form with a link to the
-            specific article.</xar:mlstring></li>
+            specific article.</xar:mlstring>
+        </li>
             </ul>
             <p>
                 <xar:mlstring>The email used in 'send to a friend' is customizable by overriding the user-usersendtofriend-text.xd and user-usersendtofriend-html.xd templates</xar:mlstring>
             </p>
         </div>
-        <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+<div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <p>
             <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
-    </div>
+    </p>
 </div>

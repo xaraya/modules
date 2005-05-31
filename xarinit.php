@@ -26,7 +26,8 @@ function recommend_init()
 Site Name: %%sitename%% :: %%siteslogan%%
 Site URL: %%siteurl%%';
 
-    $date = date('Y-m-d G:i:s');
+    //$date = date('Y-m-d G:i:s');
+    $date = time();
     xarModSetVar('recommend', 'numbersent', 0);
     xarModSetVar('recommend', 'date', $date);
     xarModSetVar('recommend', 'username', 'Admin');
@@ -52,7 +53,7 @@ function recommend_upgrade($oldversion)
 {
         // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 0.01:
+        case '0.01':
             // Remove Masks and Instances
             xarRemoveMasks('recommend');
             xarRemoveInstances('recommend');
@@ -80,6 +81,13 @@ function recommend_upgrade($oldversion)
             // Register Masks
             xarRegisterMask('OverviewRecommend','All','recommend','All','All','ACCESS_OVERVIEW');
             xarRegisterMask('EditRecommend','All','recommend','All','All','ACCESS_EDIT');
+            
+            case '1.0.0':
+            
+            $olddate = xarModGetVar('recommend', 'date');
+            $newdate = strtotime($olddate);
+            xarModSetVar('recommend', 'date', $newdate);
+            
             break;
     }
 

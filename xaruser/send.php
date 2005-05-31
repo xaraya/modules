@@ -27,7 +27,8 @@ function recommend_user_send($args)
     // Security Check
     if(!xarSecurityCheck('OverviewRecommend')) return;
     // Statistics
-    $date = date('Y-m-d G:i:s');
+    //$date = date('Y-m-d G:i:s');
+    $date = time();
     $numbersentprev = xarModGetVar('recommend', 'numbersent');
     $numbersent = $numbersentprev + 1;
     xarModSetVar('recommend', 'numbersent', $numbersent);

@@ -14,7 +14,7 @@
 */
 $modversion['name'] = 'Recommend Us';
 $modversion['id'] = '772';
-$modversion['version'] = '1.0.0';
+$modversion['version'] = '1.0.1';
 $modversion['displayname']    = xarML('Recommend');
 $modversion['description'] = 'Send a link of this site to a friend';
 $modversion['credits'] = 'xardocs/credits.txt';
