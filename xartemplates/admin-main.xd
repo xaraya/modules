@@ -1,10 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Translations Administration</xar:mlstring>
-  </span>
+    <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
 </div>
-
-<h4><xar:mlstring>Overview</xar:mlstring></h4>
+<div class="xar-mod-body">
+   <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+    <h3>
+        <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
 <p>
   <xar:mlstring>The Xaraya MLS is a tool to automate the translation process for Xaraya.
   The process roughly consists of two parts:</xar:mlstring>
@@ -37,3 +42,9 @@
 <p>
 <a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Start translating</xar:mlstring></a>
 </p>
+ </div>
+        <div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <p>
+        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+    </p>
+</div>
