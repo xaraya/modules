@@ -15,10 +15,10 @@
 /**
  * initialise block
  */
-function mybookmarks_bookmarksblock_init() 
+function mybookmarks_bookmarksblock_init()
 {
     return true;
-} 
+}
 
 /**
  * get information on block
@@ -30,7 +30,7 @@ function mybookmarks_bookmarksblock_init()
  * @throws  no exceptions
  * @todo    nothing
 */
-function mybookmarks_bookmarksblock_info() 
+function mybookmarks_bookmarksblock_info()
 {
     // Values
     return array('text_type' => 'mybookmarks',
@@ -54,7 +54,7 @@ function mybookmarks_bookmarksblock_info()
 function mybookmarks_bookmarksblock_display($blockinfo)
 {
     // Security Check
-    if (!xarSecurityCheck('Viewmybookmarks')) return; 
+    if (!xarSecurityCheck('Viewmybookmarks',0)) return;
 
     // Get current content
     if (!empty($blockinfo['content'])) {
@@ -62,7 +62,7 @@ function mybookmarks_bookmarksblock_display($blockinfo)
     } else {
         $vars = array();
     }
-    
+
     if (!xarUserIsLoggedIn()) {
         return;
     }
