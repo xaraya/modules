@@ -29,8 +29,6 @@ function categories_admin_modifyconfig()
 
             if (empty($hooks)) {
                 $hooks = '';
-            } elseif (is_array($hooks)) {
-                $hooks = join('',$hooks);
             }
 
             $data = array ('catsperpage'   => $catsperpage,
