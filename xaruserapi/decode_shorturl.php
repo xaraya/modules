@@ -41,7 +41,7 @@ function articles_userapi_decode_shorturl($params)
     }
     
     // check if we want to decode URLs using their titles rather then their ID
-    $decodeUsingTitle = (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
+    $decodeUsingTitle = empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
 
     if (empty($params[1])) {
         return array('view', $args);
@@ -159,12 +159,12 @@ function articles_userapi_decode_shorturl($params)
                         $settings = unserialize(xarModGetVar('articles', 'settings.'.$args['ptid']));
         
                         // check if we want to decode URLs using their titles rather then their ID
-                        $decodeUsingTitle = (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
+                        $decodeUsingTitle = empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
 
                         // Decode using title
                         if( $decodeUsingTitle )
                         {
-                            $args['aid'] = articles_decodeAIDUsingTitle( $params, $args['ptid'] );
+                            $args['aid'] = articles_decodeAIDUsingTitle( $params, $args['ptid'], $decodeUsingTitle );
                             return array('display', $args);
                         }
 
@@ -179,7 +179,7 @@ function articles_userapi_decode_shorturl($params)
         // Decode using title
         if( $decodeUsingTitle )
         {
-            $args['aid'] = articles_decodeAIDUsingTitle( $params );
+            $args['aid'] = articles_decodeAIDUsingTitle( $params, '', $decodeUsingTitle );
             return array('display', $args);
         }
     }
@@ -188,10 +188,24 @@ function articles_userapi_decode_shorturl($params)
     // (e.g. for multiple category selections)
 }
 
-function articles_decodeAIDUsingTitle( $params, $ptid = '' )
+function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1 )
 {
-    $dupeResolutionMethod = 'ALL';
-
+    switch ($decodeUsingTitle)
+    {
+        case 1:
+            $dupeResolutionMethod = 'Append Date';
+            break;
+        case 2:
+            $dupeResolutionMethod = 'Append AID';
+            break;
+        case 3:
+            $dupeResolutionMethod = 'Use AID';
+            break;
+        case 4:
+        default:
+            $dupeResolutionMethod = 'Ignore';
+            break;
+    }
 
     // The $params passed in does not match on all legal URL characters and
     // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"
@@ -303,9 +317,9 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
                 }
                 break;
                 
+            case 'Ignore':
             default:
                 // Just use the first one that came back
-                $path = $aid;
                 $theArticle = $articles[0];
         }
     }

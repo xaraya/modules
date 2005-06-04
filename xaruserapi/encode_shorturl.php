@@ -30,7 +30,7 @@ function articles_userapi_encode_shorturl($args)
     }
 
     // check if we want to encode URLs using their titles rather then their ID
-    $encodeUsingTitle= (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
+    $encodeUsingTitle= empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
 
 
     // Coming from categories etc.
@@ -156,7 +156,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($aid);
+                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle);
             } else {
                 $path .= $aid;
             }
@@ -167,7 +167,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($aid);
+                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle);
             } else {
                 $path .= "$aid";
             }
@@ -308,22 +308,44 @@ function articles_userapi_encode_shorturl($args)
     return $path;
 }
 
-function articles_encodeUsingTitle( $aid )
+function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1 )
 {
     $searchArgs['aid'] = $aid;
     $article = xarModAPIFunc('articles','user','get', $searchArgs);
 
-    // TODO: Make the dupe resolution method configurable
-    $dupeResolutionMethod = 'Append Date';
+    if (empty($article)) {
+        // default to just the article ID
+        $path = $aid;
+        return $path;
+    }
 
-    $searchArgs = array();
-    $searchArgs['search'] = $article['title'];
-    $searchArgs['searchfields'] = array('title');
-    $searchArgs['searchtype'] = 'equal whole string';
-    
-    $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+    switch ($encodeUsingTitle)
+    {
+        case 1:
+            $dupeResolutionMethod = 'Append Date';
+            break;
+        case 2:
+            $dupeResolutionMethod = 'Append AID';
+            break;
+        case 3:
+            $dupeResolutionMethod = 'Use AID';
+            break;
+        case 4:
+        default:
+            $dupeResolutionMethod = 'Ignore';
+            break;
+    }
 
-    if( strpos($article['title'],'_') === FALSE )
+    if ($dupeResolutionMethod != 'Ignore') {
+        $searchArgs = array();
+        $searchArgs['search'] = $article['title'];
+        $searchArgs['searchfields'] = array('title');
+        $searchArgs['searchtype'] = 'equal whole string';
+
+        $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+    }
+
+    if ( strpos($article['title'],'_') === FALSE )
     {
         $article['title'] = str_replace(' ','_',$article['title']);
     }
@@ -332,15 +354,20 @@ function articles_encodeUsingTitle( $aid )
     // the URL encoded / (%2F) is not accepted by Apache in PATH_INFO
     $encodedTitle = str_replace('%2F','/',$encodedTitle);
 
+    if ($dupeResolutionMethod == 'Ignore') {
+        // Ignore duplicates
+        $path = $encodedTitle;
+
     // Check to find out how many articles come back from the search.
-    if( count($articles) == 1 )
-    {
+    } elseif ( count($articles) == 1 ) {
         // Only finding one article through search, we're good to go.
         $path = $encodedTitle;
+
     } elseif (count($articles) == 0) {
         // Can't find article through search, won't be able to find it on decode
         // default to just the article ID
         $path = $aid;
+
     } else {
         // Finding multiple articles through search, add a duplication resolution flag
         switch( $dupeResolutionMethod )
@@ -356,6 +383,7 @@ function articles_encodeUsingTitle( $aid )
                 $path = $encodedTitle .'/'.date('Y-m-d H:i',$article['pubdate']) ;
                 break;
 
+            case 'Use AID':
             default:
                 // Just use ID instead of title
                 $path = $aid;

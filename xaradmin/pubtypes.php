@@ -93,6 +93,7 @@ function articles_admin_pubtypes()
                                   'prevnextart'          => 0,
                                   'usealias'             => 0,
                                   'page_template'        => '',
+                                  'usetitleforurl'       => 0,
                                   'defaultstatus'        => $status,
                                   'defaultsort'          => 'date');
                 xarModSetVar('articles', 'settings.'.$ptid,serialize($settings));

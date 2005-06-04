@@ -159,11 +159,46 @@
                     </xar:mlstring>
                     </span>
                 </label>
-                <xar:if condition="$usetitleforurl">
-                    <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" checked="checked" />
-                <xar:else/>
-                    <input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" />
-                </xar:if>
+                <xar:comment>You can add your own formats here and in encode/decode_shorturl</xar:comment>
+                <select name="usetitleforurl" id="usetitleforurl">
+                    <xar:if condition="empty($usetitleforurl)">
+                        <option value="0" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>Yes, and append date for duplicates</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>Yes, and append article id for duplicates</xar:mlstring></option>
+                        <option value="3"><xar:mlstring>Yes, but use article ids for duplicates</xar:mlstring></option>
+                        <option value="4"><xar:mlstring>Yes, and ignore duplicates (faster)</xar:mlstring></option>
+                    <xar:elseif condition="is_numeric($usetitleforurl) and $usetitleforurl eq 1"/>
+                        <option value="0"><xar:mlstring>No</xar:mlstring></option>
+                        <option value="1" selected="selected"><xar:mlstring>Yes, and append date for duplicates</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>Yes, and append article id for duplicates</xar:mlstring></option>
+                        <option value="3"><xar:mlstring>Yes, but use article ids for duplicates</xar:mlstring></option>
+                        <option value="4"><xar:mlstring>Yes, and ignore duplicates (faster)</xar:mlstring></option>
+                    <xar:elseif condition="is_numeric($usetitleforurl) and $usetitleforurl eq 2"/>
+                        <option value="0"><xar:mlstring>No</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>Yes, and append date for duplicates</xar:mlstring></option>
+                        <option value="2" selected="selected"><xar:mlstring>Yes, and append article id for duplicates</xar:mlstring></option>
+                        <option value="3"><xar:mlstring>Yes, but use article ids for duplicates</xar:mlstring></option>
+                        <option value="4"><xar:mlstring>Yes, and ignore duplicates (faster)</xar:mlstring></option>
+                    <xar:elseif condition="is_numeric($usetitleforurl) and $usetitleforurl eq 3"/>
+                        <option value="0"><xar:mlstring>No</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>Yes, and append date for duplicates</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>Yes, and append article id for duplicates</xar:mlstring></option>
+                        <option value="3" selected="selected"><xar:mlstring>Yes, but use article ids for duplicates</xar:mlstring></option>
+                        <option value="4"><xar:mlstring>Yes, and ignore duplicates (faster)</xar:mlstring></option>
+                    <xar:elseif condition="is_numeric($usetitleforurl) and $usetitleforurl eq 4"/>
+                        <option value="0"><xar:mlstring>No</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>Yes, and append date for duplicates</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>Yes, and append article id for duplicates</xar:mlstring></option>
+                        <option value="3"><xar:mlstring>Yes, but use article ids for duplicates</xar:mlstring></option>
+                        <option value="4" selected="selected"><xar:mlstring>Yes, and ignore duplicates (faster)</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="0"><xar:mlstring>No</xar:mlstring></option>
+                        <option value="1" selected="selected"><xar:mlstring>Yes, and append date for duplicates</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>Yes, and append article id for duplicates</xar:mlstring></option>
+                        <option value="3"><xar:mlstring>Yes, but use article ids for duplicates</xar:mlstring></option>
+                        <option value="4"><xar:mlstring>Yes, and ignore duplicates (faster)</xar:mlstring></option>
+                    </xar:if>
+                </select>
             </p>
         </fieldset>
         <fieldset class="formelements xar-norm">
