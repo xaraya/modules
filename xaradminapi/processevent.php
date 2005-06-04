@@ -19,7 +19,7 @@
  * @param $args['modid'] the module id for the event
  * @param $args['itemtype'] the itemtype for the event
  * @param $args['cid'] the category id for the event
- * @param $args['extra'] some extra group criteria // TODO: for later, and
+ * @param $args['extra'] some extra group criteria, and
  * @param $args['objectid'] the specific object in the module
  * @param $args['templateid'] the template id for the jobs
  * @returns bool
@@ -71,7 +71,10 @@ function pubsub_adminapi_processevent($args)
     $includechildren = xarModGetVar('pubsub','includechildren');
     if ( $includechildren == 1 )
     {
-            
+        $ancestors = xarModAPIFunc('categories','user','getancestors'
+                                   , array('cid'=>$cid,'order'=>'self') );
+        $ancestors = array_keys($ancestors);
+
         $query = "SELECT xar_pubsubid, xar_cid
                     FROM $pubsubeventstable, $pubsubregtable
                    WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
@@ -79,31 +82,24 @@ function pubsub_adminapi_processevent($args)
                      AND $pubsubeventstable.xar_itemtype = ?";
 //                      . "
 //                     AND $pubsubeventstable. = " . ($cid);
-    
-        $result =& $dbconn->Execute($query,array((int)$modid, $itemtype));
+        $bindvars = array((int)$modid, (int)$itemtype);
+        if (isset($extra)) {
+            $query .= " AND $pubsubeventstable.xar_extra = ?";
+            array_push($bindvars, $extra);
+        }
+        $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
         for (; !$result->EOF; $result->MoveNext()) 
         {
             list($pubsubid, $xar_cid) = $result->fields;
             
-            if( $xar_cid == $cid )
+            if( $xar_cid == $cid || in_array($xar_cid, $ancestors))
             {
                 $markSubscriptions[] = $pubsubid;
-            } else {
-                
-                $ancestors = xarModAPIFunc('categories','user','getancestors'
-                                           , array('cid'=>$cid,'order'=>'self') );
-                                        
-                $ancestors = array_keys($ancestors);
-                
-                if( in_array($cid, $ancestors) )
-                {
-                    $markSubscriptions[] = $pubsubid;
-                }
             }
         }
-        
+
 
     } else {
         $query = "SELECT xar_pubsubid
@@ -112,10 +108,13 @@ function pubsub_adminapi_processevent($args)
                      AND $pubsubeventstable.xar_modid = ?
                      AND $pubsubeventstable.xar_itemtype = ?
                      AND $pubsubeventstable.xar_cid = ?";
-        $bindvars = array((int)$modid, $itemtype, $cid);
+        $bindvars = array((int)$modid, (int)$itemtype, (int)$cid);
+        if (isset($extra)) {
+            $query .= " AND $pubsubeventstable.xar_extra = ?";
+            array_push($bindvars, $extra);
+        }
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
-    
 
         for (; !$result->EOF; $result->MoveNext()) 
         {
