@@ -238,7 +238,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
 
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     
-    if( (count($articles) == 0) && (strpos($decodedTitle,'_') != false) )
+    if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) )
     {
         $searchArgs['search'] = str_replace('_',' ',$decodedTitle);
         $searchArgs['searchfields'] = array('title');
