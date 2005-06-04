@@ -42,11 +42,11 @@ function articles_userapi_getrandom($args)
         $numitems = $args['numitems'];
     }
     
+    $aidlist = array();
     if (empty($args['unique'])) {
         $args['unique'] = false;
     } else {
         $args['unique'] = true;
-        $aidlist = array();
     }
     
     $articles = array();
@@ -70,7 +70,7 @@ function articles_userapi_getrandom($args)
         for ($i = 0; $i < $numitems; $i++) { 
             $args['startnum'] = mt_rand(1, $count);
             
-            if (in_array($args['startnum'], $aidlist) && $args['unique']) {
+            if ($args['unique'] && in_array($args['startnum'], $aidlist)) {
                 $i--;
             } else {           
                 $aidlist[] = $args['startnum'];
