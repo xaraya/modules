@@ -146,6 +146,13 @@ function articles_admin_update()
     // Success
     xarSessionSetVar('statusmsg', xarML('Article Updated'));
 
+    // Save and continue editing via feature request.
+    if (isset($save) && xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
+        xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
+                                      array('aid' => $aid)));
+        return true;
+    }
+
     // Return to the original admin view
     $lastview = xarSessionGetVar('Articles.LastView');
     if (isset($lastview)) {
@@ -158,17 +165,6 @@ function articles_admin_update()
                                                 'status' => $status,
                                                 'startnum' => $startnum)));
             return true;
-        }
-    }
-
-    // Save and continue editing via feature request.
-    if (isset($save)){
-        if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
-            xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
-                                          array('aid' => $aid)));
-        } else {
-            xarResponseRedirect(xarModURL('articles', 'user', 'view',
-                                          array('ptid' => $ptid)));
         }
     }
 
