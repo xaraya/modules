@@ -17,8 +17,9 @@
 /**
  * unsubscribe user from a pubsub element
  * @param $args['modid'] module ID of event
- * @param $args['cid'] cid of event
  * @param $args['itemtype'] itemtype of event
+ * @param $args['cid'] cid of event
+ * @param $args['extra'] some extra group criteria
  * @param $args['userid'] the subscriber
  * @returns output
  * @return output with pubsub information
@@ -55,7 +56,11 @@ function pubsub_userapi_unsubscribe($args)
                  AND $pubsubregtable.xar_userid = ?
                  AND $pubsubeventstable.xar_cid = ?";
 
-    $bindvars = array((int)$modid, (int)$userid, $cid);
+    $bindvars = array((int)$modid, (int)$userid, (int)$cid);
+    if (isset($extra)) {
+        $query .= " AND $pubsubeventstable.xar_extra = ?";
+        array_push($bindvars, $extra);
+    }
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result || $result->EOF) return;
 

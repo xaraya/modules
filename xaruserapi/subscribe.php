@@ -17,8 +17,9 @@
 /**
  * subscribe user to a pubsub element
  * @param $args['modid'] module ID of event
- * @param $args['cid'] cid of event
  * @param $args['itemtype'] itemtype of event
+ * @param $args['cid'] cid of event
+ * @param $args['extra'] some extra group criteria
  *
  * @param $args['userid'] the subscriber OR
  * @param $args['email'] EMail address of anonymous user
@@ -53,7 +54,9 @@ function pubsub_userapi_subscribe($args)
         $email = '';
     }
 
-    // What is groupdescr???
+    if (!isset($extra))
+        $extra = '';
+
     if (!isset($groupdescr))
         $groupdescr = 'Subscribe';
 
@@ -62,6 +65,7 @@ function pubsub_userapi_subscribe($args)
                              array('modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'cid' => $cid,
+                                   'extra' => $extra,
                                    'groupdescr' => $groupdescr));
     if (empty($eventid)) return; // throw back
 

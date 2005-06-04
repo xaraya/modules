@@ -20,8 +20,8 @@
  * @param $args['modid'] the module id for the event
  * @param $args['itemtype'] the itemtype for the event
  * @param $args['cid'] the category id for the event
- * @param $args['extra'] some extra group criteria for later
- * @param $args['groupdescr'] the group description for the event (whatever that is)
+ * @param $args['extra'] some extra group criteria
+ * @param $args['groupdescr'] the group description for the event (currently unused)
  * @returns int
  * @return event ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -60,7 +60,11 @@ function pubsub_adminapi_checkevent($args)
               WHERE xar_modid = ?
               AND   xar_itemtype = ?
               AND   xar_cid = ?";
-    $bindvars = array((int)$modid, $itemtype, $cid);
+    $bindvars = array((int)$modid, (int)$itemtype, (int)$cid);
+    if (isset($extra)) {
+        $query .= ' AND xar_extra = ?';
+        array_push($bindvars, $extra);
+    }
     $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
@@ -68,6 +72,10 @@ function pubsub_adminapi_checkevent($args)
     if (!$result->EOF) {
         list($eventid) = $result->fields;
         return $eventid;
+    }
+
+    if (!isset($extra)) {
+        $extra = '';
     }
 
     if (empty($groupdescr) || !is_string($groupdescr)) {
@@ -83,10 +91,11 @@ function pubsub_adminapi_checkevent($args)
               xar_modid,
               xar_itemtype,
               xar_cid,
+              xar_extra,
               xar_groupdescr)
-            VALUES (?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?)";
 
-    $bindvars = array((int)$eventid, (int)$modid, $itemtype, $cid, $groupdescr);
+    $bindvars = array((int)$eventid, (int)$modid, (int)$itemtype, (int)$cid, $extra, $groupdescr);
     $result = $dbconn->Execute($query, $bindvars);
 
     if (!$result) return;

@@ -26,32 +26,41 @@
  */
 function pubsub_user_modifysubscription()
 {
-    if (!xarVarFetch('modid',      'int::',$modid,FALSE)) return;
-    if (!xarVarFetch('cid',         'int::',$cid,FALSE)) return;
-    if (!xarVarFetch('itemtype', 'int::',$itemtype,FALSE)) return;
-    if (!xarVarFetch('returnurl','str::',$returnurl,FALSE)) return;
-    if (!xarVarFetch('subaction','int::',$subaction,FALSE)) return;
-    if (!xarVarFetch('userid',   'int::',$userid,FALSE)) return;
-    // What is groupdescr???
-    if (!xarVarFetch('groupdescr',   'str::',$groupdescr,'Subscribe')) return;
+    if (!xarVarFetch('modid',     'int',$modid,FALSE)) return;
+    if (!xarVarFetch('cid',       'int',$cid,FALSE)) return;
+    if (!xarVarFetch('itemtype',  'int',$itemtype,FALSE)) return;
+    if (!xarVarFetch('returnurl', 'str',$returnurl,FALSE)) return;
+    if (!xarVarFetch('subaction', 'int',$subaction,FALSE)) return;
+    if (!xarVarFetch('extra',     'str',$extra,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('groupdescr','str',$groupdescr,'Subscribe',XARVAR_NOT_REQUIRED)) return;
 
     $returnurl = rawurldecode($returnurl);
+
+    // the currently logged in user
+    if (xarUserIsLoggedIn()) {
+        $userid = xarUserGetVar('uid');
+    } else {
+        xarResponseRedirect($returnurl);
+        return true;
+    }
 
     switch ($subaction) {
         case 0:
             xarModAPIFunc('pubsub','user','unsubscribe',
                           array('modid'   =>$modid
-                               ,'cid'     =>$cid
                                ,'itemtype'=>$itemtype
+                               ,'cid'     =>$cid
+                               ,'extra'   =>$extra
                                ,'userid'  =>$userid
                                ));
             break; 
         case 1:
             xarModAPIFunc('pubsub','user','subscribe',
                           array('modid'   =>$modid
-                               ,'cid'     =>$cid
-                               ,'groupdescr'=>$groupdescr
                                ,'itemtype'=>$itemtype
+                               ,'cid'     =>$cid
+                               ,'extra'   =>$extra
+                               ,'groupdescr'=>$groupdescr
                                ,'userid'  =>$userid
                                ));
             break; 

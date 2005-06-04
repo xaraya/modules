@@ -114,23 +114,27 @@ function pubsub_user_displayicon($args)
                  AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
                  AND $pubsubregtable.xar_userid = ?";
 
-        $bindvars = array((int)$modid, $itemtype, $cid, $userid);
+        $bindvars = array((int)$modid, (int)$itemtype, (int)$cid, (int)$userid);
+        if (isset($extra)) {
+            $query .= " AND $pubsubeventstable.xar_extra = ?";
+            array_push($bindvars, $extra);
+        }
         $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     if ($result->EOF) {
         /**
          * If we get a hit on pubsub_reg, that mean we are already subscribed
          */
-        $data['subscribe'] = TRUE;
+        $data['subscribe'] = 1;
     } else { 
-        $data['subscribe'] = FALSE;
+        $data['subscribe'] = 0;
     }
 
-    $data['subdata'] = array ('modname' => xarVarPrepForDisplay($modname)
-                             ,'modid'   => xarVarPrepForDisplay($modid)
-                             ,'cid'     => xarVarPrepForDisplay($cid)
-                             ,'userid'  => xarVarPrepForDisplay($userid)
-                             ,'itemtype' => xarVarPrepForDisplay($itemtype)
+    $data['subdata'] = array ('modname' => $modname
+                             ,'modid'   => $modid
+                             ,'itemtype' => $itemtype
+                             ,'cid'     => $cid
+                             ,'extra'   => isset($extra) ? $extra : null
                              ,'returnurl' => $returnurl
                              ,'subaction' => $data['subscribe']
                              );
