@@ -125,6 +125,10 @@
     <xar:mlstring>The #(1) articles of this publication type will also be deleted.</xar:mlstring>
     <xar:mlvar>#$numitems#</xar:mlvar>
 </xar:ml></p>
+<xar:if condition="$ptid eq xarModGetVar('articles','defaultpubtype')">
+    <p><strong><xar:mlstring>Warning: this is the current default publication type !</xar:mlstring>
+    <br/><xar:mlstring>Make sure you modify the configuration after deleting this.</xar:mlstring></strong></p>
+</xar:if>
 <br /><input type="submit" value="#$buttonlabel#" /><br /><br />
 <a href="&xar-modurl-articles-admin-pubtypes;"><xar:mlstring>Cancel Delete</xar:mlstring></a>
 </div>
