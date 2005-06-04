@@ -13,9 +13,9 @@
   @author Garrett Hunter <garrett@blacktower.com>
 </xar:comment>
 <xar:if condition="!isset($donotdisplay)">
-    <xar:if condition="$subscribe == TRUE">
-    &nbsp;<a href="#$subURL#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#$subTEXT#" /></a>
+    <xar:if condition="!empty($subscribe)">
+    &nbsp;<a href="#$subURL#"><img src="#xarTplGetImage('subscribe.gif', 'pubsub')#" alt="#$subTEXT#" /></a>
     <xar:else />
-    &nbsp;<a href="#$unsubURL#"><img src="modules/pubsub/xarimages/unsubscribe.gif" alt="#$unsubTEXT#" /></a>
+    &nbsp;<a href="#$unsubURL#"><img src="#xarTplGetImage('unsubscribe.gif', 'pubsub')#" alt="#$unsubTEXT#" /></a>
     </xar:if>
 </xar:if>
