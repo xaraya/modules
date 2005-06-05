@@ -23,6 +23,10 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('xar_order', 'str:1:', $xar_order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_authorize', 'checkbox', $xar_authorize, false, XARVAR_NOT_REQUIRED)) return;
 
+    if ($xar_useblacklist == true){
+        if (!xarModAPIFunc('comments', 'admin', 'import_blacklist')) return;
+    }
+
     xarModSetVar('comments', 'AllowPostAsAnon', $xar_postanon);
     xarModSetVar('comments', 'AuthorizeComments', $xar_authorize);
     xarModSetVar('comments', 'depth', $xar_depth);

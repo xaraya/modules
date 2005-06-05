@@ -1,0 +1,20 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Comments Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Imported Latest Blacklist
+        </xar:mlstring>
+    </h2>
+        <p>
+        <xar:mlstring>
+            The Blacklist has been updated, and is cached for the next week.
+        </xar:mlstring>
+        </p>
+</div>
