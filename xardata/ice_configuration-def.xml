@@ -1,0 +1,102 @@
+<object name="ice_configuration">
+  <objectid>107</objectid>
+  <label>Configuration settings</label>
+  <moduleid>182</moduleid>
+  <itemtype>21</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>670</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_commerce_configuration.configuration_id</source>
+      <status>2</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="key">
+      <id>671</id>
+      <label>Key</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_configuration.configuration_key</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:64</validation>
+    </property>
+    <property name="value">
+      <id>672</id>
+      <label>Value</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_configuration.configuration_value</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="group_id">
+      <id>673</id>
+      <label>Group Id</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_commerce_configuration.configuration_group_id</source>
+      <status>2</status>
+      <order>4</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="order">
+      <id>674</id>
+      <label>Order</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_commerce_configuration.sort_order</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>int (5)</validation>
+    </property>
+    <property name="modified">
+      <id>675</id>
+      <label>Modified</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_commerce_configuration.last_modified</source>
+      <status>2</status>
+      <order>6</order>
+      <validation>datetime</validation>
+    </property>
+    <property name="added">
+      <id>676</id>
+      <label>Added</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_commerce_configuration.date_added</source>
+      <status>2</status>
+      <order>7</order>
+      <validation>datetime</validation>
+    </property>
+    <property name="function">
+      <id>677</id>
+      <label>Function</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_configuration.use_function</source>
+      <status>2</status>
+      <order>8</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="function_1">
+      <id>678</id>
+      <label>Function_1</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_configuration.set_function</source>
+      <status>2</status>
+      <order>9</order>
+      <validation>0:255</validation>
+    </property>
+  </properties>
+</object>
