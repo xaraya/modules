@@ -225,36 +225,40 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
+    /** START ICE MODEL **/
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses',
+    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses', 
                          'ice_taxrates', 'ice_languages', 'ice_zones',
-                         'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats');
-
+                         'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats',
+                         'ice_configuration');
+    
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
     foreach($existing_objects as $objectid => $objectinfo) {
         if(in_array($objectinfo['name'], $ice_objects)) {
             // KILL
             if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
-        }
+        } 
     }
-
-    // The countries are managed through a DD object.
-    // the xardata/ directory provides the definition and the initialisation
-    // data in XML files ice-countries-def.xml an ice-countries-data.xml
+    
+    // Most information will have a DD object presentation, some will be 
+    // dynamic, others defined with a static datasource.
+    // These definitions and data are in the xardata directory in this module.
+    // and provide the definition and optionally  the initialisation
+    // data in XML files [ice-objectname]-def.xml an [ice-objectname]-data.xml
 
     // TODO: This will bomb out if the object already exists
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
-        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml';
-
+        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml'; 
+        
         if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
         // Let data import be allowed to fail
         xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file));
     }
-
+    /** END ICE MODEL **/
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers";
     if (!$q->run($query)) return;
