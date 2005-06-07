@@ -33,6 +33,11 @@ function pubsub_adminapi_getmenulinks()
                              'label' => xarML('View Subscriptions'));
         $menulinks[] = Array('url'   => xarModURL('pubsub',
                                                   'admin',
+                                                  'viewq'),
+                             'title' => xarML('View all events waiting to be processed'),
+                             'label' => xarML('View Event Queue'));
+        $menulinks[] = Array('url'   => xarModURL('pubsub',
+                                                  'admin',
                                                   'modifytemplates'),
                               'title' => xarML('Modify the Pubsub Templates'),
                               'label' => xarML('Modify Templates'));

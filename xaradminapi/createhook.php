@@ -62,7 +62,10 @@ function pubsub_adminapi_createhook($args)
     }
 
     $templateid = xarModGetVar('pubsub',"$modname.$itemtype.create");
-    // if there's no 'create' template defined for this module+itemtype, we're done here
+    if (!isset($templateid)) {
+        $templateid = xarModGetVar('pubsub',"$modname.create");
+    }
+    // if there's no 'create' template defined for this module(+itemtype), we're done here
     if (empty($templateid)) {
         return $extrainfo;
     }
@@ -85,11 +88,29 @@ function pubsub_adminapi_createhook($args)
         return $extrainfo;
     }
 
+    $extra = null;
+/* */
+// FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
+    if ($modname == 'comments') {
+        $extra = '';
+        if (isset($extrainfo['current_module']) && is_string($extrainfo['current_module'])) {
+            $extra = xarModGetIDFromName($extrainfo['current_module']);
+        }
+        if(isset($extrainfo['current_itemtype']) && is_numeric($extrainfo['current_itemtype'])) {
+            $extra .= '-' . $extrainfo['current_itemtype'];
+        }
+        if(isset($extrainfo['current_itemid']) && is_numeric($extrainfo['current_itemid'])) {
+            $extra .= '-' . $extrainfo['current_itemid'];
+        }
+    }
+/* */
+
     // process the event (i.e. create a job for each subscriber)
     if (!xarModAPIFunc('pubsub','admin','processevent',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'cid' => $cid,
+                             'extra' => $extra,
                              'objectid' => $objectid,
                              'templateid' => $templateid))) {
         // oops - but life goes on in hook functions :)

@@ -20,7 +20,8 @@
  *  - Nothing is displayed for an unregisted user
  *  - An unsubscribe option is displayed to users currently subscribed
  * 
- * @param $args['extrainfo'] URL to return
+ * @param $args['extrainfo'] category, module, itemtype and URL to return
+ * @param $args['layout'] layout to use (icon or text) - not when using hooks
  * @returns output
  * @return output with pubsub information
  */
@@ -52,7 +53,7 @@ function pubsub_user_displayicon($args)
         if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
             $cid = $extrainfo['cid'];
         }
-// FIXME: handle this in a cleaner way - cfr. categories navigation
+// FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
         if (isset($extrainfo['current_module']) && is_string($extrainfo['current_module'])) {
             $modname = $extrainfo['current_module'];
         } elseif (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
@@ -65,6 +66,10 @@ function pubsub_user_displayicon($args)
         }
         if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
             $returnurl = $extrainfo['returnurl'];
+        }
+        // this contains extra information, e.g. moduleid-itemtype-itemid of the original item for comments
+        if (isset($extrainfo['extra']) && is_string($extrainfo['extra'])) {
+            $extra = $extrainfo['extra'];
         }
     } else {
         // May only subscribe to categories, no category, pubsub does nothing.        
@@ -90,6 +95,9 @@ function pubsub_user_displayicon($args)
 
     if (empty($itemtype)) {
         $itemtype = 0;
+    }
+    if (empty($returnurl)) {
+        $returnurl = rawurlencode(xarServerGetCurrentURL());
     }
 
     // if pubsub isn't hooked to this module & itemtype, don't show subscription either
@@ -145,6 +153,11 @@ function pubsub_user_displayicon($args)
     $data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);                             
     $data['unsubTEXT'] = xarML ('Unsubscribe');                             
 
+    if (!empty($layout)) {
+        $data['layout'] = $layout;
+    } else {
+        $data['layout'] = 'icon';
+    }
     return $data;
 
 } // END displayicon

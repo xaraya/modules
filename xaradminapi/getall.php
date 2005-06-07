@@ -49,12 +49,12 @@ function pubsub_adminapi_getall($args)
                     ,$categoriestable.xar_cid
                     ,COUNT($pubsubregtable.xar_userid) AS numsubscribers
                 FROM $pubsubeventstable
-                    ,$modulestable
-                    ,$categoriestable
-                    ,$pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
-                 AND $pubsubeventstable.xar_cid = $categoriestable.xar_cid
-                 AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
+           LEFT JOIN $modulestable
+                  ON $pubsubeventstable.xar_modid = $modulestable.xar_regid
+           LEFT JOIN $categoriestable
+                  ON $pubsubeventstable.xar_cid = $categoriestable.xar_cid
+           LEFT JOIN $pubsubregtable
+                  ON $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
             GROUP BY $pubsubeventstable.xar_eventid
                     ,$modulestable.xar_name
                     ,$pubsubeventstable.xar_itemtype

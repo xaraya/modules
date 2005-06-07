@@ -69,7 +69,7 @@ function pubsub_adminapi_processevent($args)
     $markSubscriptions = array();
 
     $includechildren = xarModGetVar('pubsub','includechildren');
-    if ( $includechildren == 1 )
+    if ( !empty($cid) && $includechildren == 1 )
     {
         $ancestors = xarModAPIFunc('categories','user','getancestors'
                                    , array('cid'=>$cid,'order'=>'self') );
@@ -123,7 +123,7 @@ function pubsub_adminapi_processevent($args)
             $markSubscriptions[] = $pubsubid;
         }
     }
-    
+
     foreach( $markSubscriptions as $pubsubid )
     {
         // Get next ID in table

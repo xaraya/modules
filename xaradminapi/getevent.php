@@ -51,10 +51,12 @@ function pubsub_adminapi_getevent($args)
                      xar_extra,
                      xar_groupdescr,
                      $categoriestable.xar_name
-              FROM  $pubsubeventstable, $modulestable, $categoriestable
-              WHERE xar_eventid = ?
-              AND   $pubsubeventstable.xar_cid = $categoriestable.xar_cid
-              AND   $pubsubeventstable.xar_modid = $modulestable.xar_regid";
+                FROM $pubsubeventstable
+           LEFT JOIN $modulestable
+                  ON $pubsubeventstable.xar_modid = $modulestable.xar_regid
+           LEFT JOIN $categoriestable
+                  ON $pubsubeventstable.xar_cid = $categoriestable.xar_cid
+               WHERE xar_eventid = ?";
     $result = $dbconn->Execute($query, array((int)$eventid));
     if (!$result) return;
 
