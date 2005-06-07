@@ -1,3 +1,14 @@
+Version 1.45 RC2 (2005-xx-xx)
+	Fixed bug where paste_use_dialog option for the paste plugin wasn't working correctly.
+	Fixed bug issue with setContent not calling custom cleanups correctly. Inflicts the Flash plugin.
+	Fixed bug where external_link_list_url/external_image_list_url in fullscreen mode.
+	Fixed so TinyMCE doesn't use modal dialogs on MSIE, these where giving some problems with for example lost sessions.
+	Fixed the auto resize function for popups to use new logic.
+	Added new pastetext icon contributed by speednet.
+	Added new browsers option that enables you to specify what browsers is to be WYSIWYG enabled or not.
+	Added partial Catalan translation contributed by Marc Bria Ramírez.
+	Added portuguese Brazil translation contributed by João Borges.
+	Added beforeunload handler for fullscreen plugin so contents gets updated when the window is closed.
 Version 1.45 RC1 (2005-05-27)
 	Fixed bug where character map inserted &amp; and &lt;/&gt; when using & < >.
 	Fixed so paragraphs containing &nbsp; is converted to numeric or raw if entity_encoding is set.

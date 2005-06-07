@@ -22,7 +22,7 @@ function TinyMCE_paste_getControlHTML(control_name) {
 function TinyMCE_paste_execCommand(editor_id, element, command, user_interface, value) { 
 	switch (command) { 
 		case "mcePasteText": 
-			if (tinyMCE.isMSIE && tinyMCE.getParam('paste_use_dialog', false))
+			if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false))
 				TinyMCE_paste__insertText(clipboardData.getData("Text"), true); 
 			else { 
 				var template = new Array(); 
@@ -36,7 +36,7 @@ function TinyMCE_paste_execCommand(editor_id, element, command, user_interface, 
 			return true;
 
 		case "mcePasteWord": 
-			if (tinyMCE.isMSIE && tinyMCE.getParam('paste_use_dialog', false)) {
+			if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false)) {
 				var html = TinyMCE_paste__clipboardHTML();
 
 				if (html && html.length > 0)

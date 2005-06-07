@@ -14,9 +14,6 @@ if (url != null) {
 </script>
 <script language="javascript" type="text/javascript">
 <!--
-	// Disable auto resize
-	tinyMCE.getWindowArg('mce_windowresize', false);
-
     function myRegexpReplace(in_str, reg_exp, replace_str, opts) {
         if (typeof opts == "undefined")
             opts = 'g';
@@ -112,10 +109,7 @@ if (url != null) {
         htmlprev += ' marginwidth="0" marginheight="0" frameborder="0" src="' + src + '"' 
         htmlprev += ' style="margin:0px;border: 1px solid black;width:135px;height:135px"></iframe>'; 
 
-        document.getElementById('prev').innerHTML = htmlprev; 
-
-		// Autoresize and focus
-		TinyMCEPopup_autoResize();
+        document.getElementById('prev').innerHTML = htmlprev;
         window.focus();
     }
 

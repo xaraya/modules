@@ -13,9 +13,6 @@ if (url != null) {
 }
 </script>
 <script language="javascript">
-	// Disable auto resize
-	tinyMCE.getWindowArg('mce_windowresize', false);
-
 	function init() {
 		for (var i=0; i<document.forms[0].target.options.length; i++) {
 			var option = document.forms[0].target.options[i];
@@ -55,8 +52,6 @@ if (url != null) {
 			}
 		}
 
-		// Autoresize and focus
-		TinyMCEPopup_autoResize();
 		window.focus();
 	}
 

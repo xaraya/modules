@@ -35,18 +35,8 @@ function TinyMCEPlugin_onLoad() {
 		document.body.innerHTML = tinyMCE.applyTemplate(document.body.innerHTML, tinyMCE.windowArgs);
 
 	// Auto resize window
-	if (tinyMCE.getWindowArg('mce_windowresize', true)) {
-		var width = tinyMCE.isMSIE ? document.body.offsetWidth : window.innerWidth;
-		var height = tinyMCE.isMSIE ? document.body.offsetHeight : window.innerHeight;
-		var dx = document.body.scrollWidth - width;
-		var dy = document.body.scrollHeight - height;
-
-		if (tinyMCE.isMSIE) {
-			window.dialogWidth = (parseInt(window.dialogWidth) + dx) + "px";
-			window.dialogHeight = (parseInt(window.dialogHeight) + dy + 3) + "px";
-		} else
-			window.resizeBy(dx + 15, dy + 15);
-	}
+	if (tinyMCE.getWindowArg('mce_windowresize', true))
+		TinyMCEPopup_autoResize();
 }
 
 function TinyMCEPopup_autoResize() {

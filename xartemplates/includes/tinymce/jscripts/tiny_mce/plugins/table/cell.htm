@@ -3,8 +3,6 @@
 <title>{$lang_table_cell_title}</title>
 <script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 <script language="javascript" type="text/javascript">
-// Disable auto resize
-tinyMCE.getWindowArg('mce_windowresize', false);
 
 function insertTable() {
 	if (window.opener) {
@@ -71,8 +69,6 @@ function init() {
 	formObj.width.value = tinyMCE.getWindowArg('width');
 	formObj.height.value = tinyMCE.getWindowArg('height');
 
-	// Autoresize and focus
-	TinyMCEPopup_autoResize();
 	window.focus();
 }
 

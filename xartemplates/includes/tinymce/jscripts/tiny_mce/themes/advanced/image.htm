@@ -13,9 +13,6 @@ if (url != null) {
 }
 </script>
 <script language="javascript">
-	// Disable auto resize
-	tinyMCE.getWindowArg('mce_windowresize', false);
-
 	function insertImage() {
 		if (window.opener) {
 			var src = document.forms[0].src.value;
@@ -74,8 +71,6 @@ if (url != null) {
 			}
 		}
 
-		// Autoresize and focus
-		TinyMCEPopup_autoResize();
 		window.focus();
 	}
 

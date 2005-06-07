@@ -24,5 +24,5 @@ Initialization example:
 Options:
  [paste_create_paragraphs] - If enabled double linefeeds are converted to paragraph
                              elements when using the plain text dialog. This is enabled by default.
- [paste_use_dialog]        - MSIE specific option, if you set this to false both Mozilla and MSIE will present a paste dialog.
-                             if you set it to true pasting in MSIE will be done directly. This option is set to false by default.
+ [paste_use_dialog]        - MSIE specific option, if you set this to true both Mozilla and MSIE will present a paste dialog.
+                             if you set it to false pasting in MSIE will be done directly. This option is set to false by default.

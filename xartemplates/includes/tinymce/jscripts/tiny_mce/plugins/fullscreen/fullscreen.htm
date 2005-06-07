@@ -20,6 +20,7 @@
 
 	// Init
 	tinyMCE.init(settings);
+	tinyMCE.documentBasePath = window.opener.tinyMCE.documentBasePath;
 
 	function setupContent(editor_id, body, doc) {
 		var inst = tinyMCE.getInstanceById(editor_id);
@@ -33,6 +34,13 @@
 		// Get content
 		inst.getBody().innerHTML = backInst.getBody().innerHTML;
 	}
+
+	function unloadHandler(e) {
+		window.opener.tinyMCE.execInstanceCommand(tinyMCE.getParam('fullscreen_editor_id'), 'mceSetContent', false, tinyMCE.getContent("mce_editor_0"));
+	}
+
+	// Add onunload
+	tinyMCE.addEvent(window, "beforeunload", unloadHandler);
 </script>
 </head>
 <body style="margin: 0px; overflow: hidden;" scrolling="no" scroll="no" onload="window.focus();">

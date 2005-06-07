@@ -3,17 +3,12 @@
 <title>{$lang_table_merge_cells_title}</title>
 <script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 <script language="javascript" type="text/javascript">
-// Disable auto resize
-tinyMCE.getWindowArg('mce_windowresize', false);
-
 function init() {
 	var formObj = document.forms[0];
 
 	formObj.numcols.value = tinyMCE.getWindowArg('numcols', 1);
 	formObj.numrows.value = tinyMCE.getWindowArg('numrows', 1);
 
-	// Autoresize and focus
-	TinyMCEPopup_autoResize();
 	window.focus();
 }
 

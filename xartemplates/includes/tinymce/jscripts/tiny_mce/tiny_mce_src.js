@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.204 $
- * $Date: 2005/05/27 09:35:59 $
+ * $Revision: 1.207 $
+ * $Date: 2005/06/03 14:57:08 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -22,9 +22,6 @@ function TinyMCE() {
 	this.isMSIE5_0 = this.isMSIE && (navigator.userAgent.indexOf('MSIE 5.0') != -1);
 	this.isGecko = navigator.userAgent.indexOf('Gecko') != -1;
 	this.isSafari = navigator.userAgent.indexOf('Safari') != -1;
-
-	if (this.isSafari)
-		alert("Safari support is very limited and should be considered experimental.\nSo there is no need to even submit bugreports on this early version.");
 
 	// TinyMCE editor id instance counter
 	this.idCounter = 0;
@@ -124,6 +121,19 @@ TinyMCE.prototype.init = function(settings) {
 	this.defParam("remove_linebreaks", true);
 	this.defParam("button_tile_map", false);
 	this.defParam("submit_patch", true);
+	this.defParam("browsers", "msie,safari,gecko");
+
+	// Browser check IE
+	if (this.isMSIE && this.settings['browsers'].indexOf('msie') == -1)
+		return;
+
+	// Browser check Gecko
+	if (this.isGecko && this.settings['browsers'].indexOf('gecko') == -1)
+		return;
+
+	// Browser check Safari
+	if (this.isSafari && this.settings['browsers'].indexOf('safari') == -1)
+		return;
 
 	// Setup baseHREF
 	var baseHREF = tinyMCE.settings['document_base_url'];
@@ -191,6 +201,10 @@ TinyMCE.prototype.init = function(settings) {
 
 	// Only do this once
 	if (this.configs.length == 0) {
+		// Is Safari enabled
+		if (this.isSafari)
+			alert("Safari support is very limited and should be considered experimental.\nSo there is no need to even submit bugreports on this early version.");
+
 		tinyMCE.addEvent(window, "load", TinyMCE.prototype.onLoad);
 
 		if (tinyMCE.isMSIE) {
@@ -266,22 +280,6 @@ TinyMCE.prototype.confirmAdd = function(e, settings) {
 		tinyMCE.addMCEControl(elm, elementId);
 
 	elm.setAttribute('mce_noask', 'true');
-};
-
-TinyMCE.prototype.queryInstanceCommandValue = function(editor_id, command) {
-	var inst = tinyMCE.getInstanceById(editor_id);
-	if (inst)
-		return inst.getDoc().queryCommandValue(command);
-
-	return null;
-};
-
-TinyMCE.prototype.queryInstanceCommandState = function(editor_id, command) {
-	var inst = tinyMCE.getInstanceById(editor_id);
-	if (inst)
-		return inst.getDoc().queryCommandState(command);
-
-	return null;
 };
 
 TinyMCE.prototype.updateContent = function(form_element_name) {
@@ -1722,6 +1720,10 @@ TinyMCE.prototype.cleanupNode = function(node) {
 						if (attribValue == "{$uid}")
 							attribValue = "uid_" + (tinyMCE.cleanup_idCount++);
 
+						// Add visual aid class
+						if (attribName == "class")
+							attribValue = tinyMCE.getVisualAidClass(attribValue, tinyMCE.cleanup_on_save);
+
 						node.setAttribute(attribName, attribValue);
 						//alert(attribName + "=" + attribValue);
 					}
@@ -2702,6 +2704,10 @@ TinyMCE.prototype.applyTemplate = function(html, args) {
 	return html;
 };
 
+TinyMCE.prototype.openWindowX = function(template, args) {
+	window.setTimeout(function () {tinyMCE.openWindowX(template, args)}, 10);
+};
+
 TinyMCE.prototype.openWindow = function(template, args) {
 	var html, width, height, x, y, resizable, scrollbars, url;
 
@@ -2740,20 +2746,20 @@ TinyMCE.prototype.openWindow = function(template, args) {
 		win.resizeTo(width, height);
 		win.focus();
 	} else {
-		if (tinyMCE.isMSIE && resizable != 'yes') {
+/*		if (tinyMCE.isMSIE && resizable != 'yes') {
             var features = "resizable:" + resizable 
                 + ";scroll:"
                 + scrollbars + ";status:yes;center:yes;help:no;dialogWidth:"
                 + width + "px;dialogHeight:" + height + "px;";
 
 			window.showModalDialog(url, window, features);
-		} else {
+		} else {*/
 			var modal = (resizable == "yes") ? "no" : "yes";
 
 			var win = window.open(url, "mcePopup", "top=" + y + ",left=" + x + ",scrollbars=" + scrollbars + ",dialog=" + modal + ",minimizable=" + resizable + ",modal=" + modal + ",width=" + width + ",height=" + height + ",resizable=" + resizable);
 			eval('try { win.resizeTo(width, height); } catch(e) { }');
 			win.focus();
-		}
+		/*}*/
 	}
 };
 
@@ -4000,7 +4006,7 @@ TinyMCEControl.prototype.execCommand = function(command, user_interface, value) 
 				value = "";
 
 			// Call custom cleanup code
-			html_content = tinyMCE._customCleanup("insert_to_editor", value);
+			value = tinyMCE._customCleanup("insert_to_editor", value);
 			tinyMCE._setHTML(doc, value);
 			doc.body.innerHTML = tinyMCE._cleanupHTML(doc, tinyMCE.settings, doc.body);
 			tinyMCE.handleVisualAid(doc.body, true, this.visualAid);
