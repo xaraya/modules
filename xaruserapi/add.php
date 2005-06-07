@@ -189,6 +189,13 @@ function comments_userapi_add($args)
         $args['module'] = 'comments';
         $args['itemtype'] = 0;
         $args['itemid'] = $id;
+        // pass along the current module & itemtype for pubsub (urgh)
+// FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
+        $args['cid'] = 0; // dummy category
+        $modinfo = xarModGetInfo($modid);
+        $args['current_module'] = $modinfo['name'];
+        $args['current_itemtype'] = $itemtype;
+        $args['current_itemid'] = $objectid;
         xarModCallHooks('item', 'create', $id, $args);
         return $id;
     }
