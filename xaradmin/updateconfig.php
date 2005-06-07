@@ -320,13 +320,13 @@ function tinymce_admin_updateconfig()
     $buttonon=xarML('Turn On');
     $buttonoff=xarML('Turn Off');
     if (xarModGetVar('tinymce','usebutton') == 'true' && xarModGetVar('tinymce','tinymode') =='specific_textareas') {
-       $buttonswitch  = 'function mce_button_toggle(form_element_id, button_o) {';
-       $buttonswitch .= 'if(editor_id = tinyMCE.getEditorId(form_element_id)) {';
-	   $buttonswitch .= 'tinyMCE.removeMCEControl(editor_id);';
+       $buttonswitch  = 'function mce_button_toggle(form_element_id, button_o)';
+       $buttonswitch .= ' { if(editor_id = tinyMCE.getEditorId(form_element_id)) {';
+       $buttonswitch .= 'tinyMCE.removeMCEControl(editor_id);';
        $buttonswitch .= 'button_o.value = "'.$buttonon.'";';
        $buttonswitch .= '    } else {';
        $buttonswitch .= ' tinyMCE.addMCEControl(document.getElementById(form_element_id), form_element_id);';
-	   $buttonswitch .= ' button_o.value = "'.$buttonoff.'";';
+       $buttonswitch .= ' button_o.value = "'.$buttonoff.'";';
        $buttonswitch .= '    }';
        $buttonswitch .= 'return false;';
        $buttonswitch .= '}';
