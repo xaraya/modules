@@ -64,6 +64,13 @@ function tinymce_admin_modifyconfig()
     $data['jstext']=xarModGetVar('tinymce','jstext');
     $data['multiconfig'] = xarModGetVar('tinymce', 'multiconfig');
     $data['dousemulticonfig'] = xarModGetVar('tinymce', 'usemulticonfig');
+    $data['usebutton'] = xarModGetVar('tinymce', 'usebutton');
+    $data['tinybrowsers'] = xarModGetVar('tinymce', 'tinybrowsers');
+    
+    if (!isset($data['tinybrowsers'])){
+        $data['tinybrowsers']='msie,gecko,safari';
+    }
+
 
     $examplestring='tinyMCE.init({
         mode : "specific_textareas",
@@ -80,7 +87,9 @@ function tinymce_admin_modifyconfig()
       $data['multiconfig']=$examplestring;
       $multiconfig='';
     }
-
+    if (!isset($data['usebutton'])) {
+      $data['usebutton']=false;
+    }
     //Prepare the display of current configuration
     $stringstart='tinyMCE.init({';
     $stringend=' });';

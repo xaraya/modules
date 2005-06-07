@@ -179,7 +179,7 @@
         </p>
        <ol style="list-style-type:lower-alpha;">
          <li class="xar-norm" >
-             <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated without the need to add any template snippets.</xar:mlstring>
+             <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated when mode is set to All TextAreas without the need to add any template snippets. </xar:mlstring>
          </li>
          <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation. You can then manually override the loading of the WYSIWYG by adding your specific template snippet code, as below, to your page or other specific templates.
            All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
@@ -193,7 +193,7 @@
 &lt;/xar:if&gt;
      </pre>
       </fieldset>
-        <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
+        <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/index.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
 
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
             <input type="submit" value="#$updatebutton#" />
@@ -209,7 +209,15 @@
             <legend>
                 <strong><xar:mlstring>Basic Configurations options</xar:mlstring></strong>
             </legend>
-
+            <p class="param">
+                <label for="tinybrowsers">
+                    <span class="help" title="#xarML('Select which browsers to use WYSIWYG - msie,gecko,safari')#">
+                       <label for="tinybrowsers"><xar:mlstring>Use for browsers:</xar:mlstring></label>
+                    </span>
+                </label>
+                <input type="text" name="tinybrowsers" id="tinybrowsers" value="#$tinybrowsers#" size="20" maxlength="20" />
+                No spaces eg msie,gecko,safari. Defaults to all.
+            </p>
             <p class="param">
                 <label for="tinylang">
                     <span class="help" title="#xarML('Select default language for TinyMCE')#">
@@ -279,7 +287,7 @@
                     <label for="tinyask"><xar:mlstring>Prompt to use WYSIWYG?</xar:mlstring></label>
                 </span>
                 </label>
-                <select name="tinyask" id="tinyask" size="1">
+                <select name="tinyask" id="tinyask" size="1" onchange=submit();>
                 <xar:if condition="$tinyask eq 'false'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
@@ -289,7 +297,28 @@
                 </xar:if>
                 </select>
             </p>
+            <xar:if condition="xarModGetVar('tinymce','tinyask') eq 'true' and xarModGetVar('tinymce','tinymode') eq 'specific_textareas'">
+             <p class="param">
+                <label for="usebutton">
+                <span class="help" title="#xarML('Use a button to prompt for WYSIWYG or default to popup')#">
+                    <label for="usebutton"><xar:mlstring>Button instead of popup?</xar:mlstring></label>
+                </span>
+                </label>
+                <select name="usebutton" id="usebutton" size="1" >
+                <xar:if condition="$usebutton eq 'false'">
+                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
+                <xar:elseif condition="$usebutton eq 'true'" />
+                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                </xar:if>
+                </select>
+                <xar:mlstring>(xartinymce DD property only)</xar:mlstring>
 
+            </p>
+            <xar:else />
+                <xar:set name="usebutton">0</xar:set>
+            </xar:if>
             <p class="param">
                 <label for="tinywidth">
                 <span class="help" title="#xarML('Defaults to width of individual textareas if left blank')#">

@@ -1,5 +1,10 @@
-* Version 0.6.0 0 27 May 05
-- integrating v1.45 rc1 tinymce
+* Version 0.6.1 8 June 05
+- Added button switch to DD property as popup alternative when 'ask' is set to on
+- Allow loading of DD propery automatically without loading tinymce js on every page
+- browser option to specify which browsers should use the WYSYWIG
+
+
+* Version 0.6.0  27 May 05
 - new full screen editing plugin
 - experimental Safari support
 - insert raw HTML

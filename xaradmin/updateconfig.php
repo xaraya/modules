@@ -33,6 +33,8 @@ function tinymce_admin_updateconfig()
         case 'general':
             if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'default',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyask','str:1:',$tinyask,'true',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinybrowsers','str:1:',$tinybrowsers,'msie,gecko,safari',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('usebutton','str:1:',$usebutton,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinstances', 'str:1:', $tinyinstances, '', XARVAR_NOT_REQUIRED)) return;
@@ -53,6 +55,20 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinybr', $tinybr);
                xarModSetVar('tinymce', 'tinypara', $tinypara);
                xarModSetVar('tinymce', 'tinynowrap', $tinynowrap);
+               xarModSetVar('tinymce', 'usebutton', $usebutton);
+               $browserstring=strtolower(trim($tinybrowsers));
+               $browserarray=array('msie','gecko','safari');
+               $allbrowsers=0;
+               foreach ($browserarray as $browsername) {
+                if (eregi($browsername,$tinybrowsers)) {
+                  $allbrowsers=$allbrowsers + 1;
+                }
+               }
+               if ($browserstring=='' or $allbrowsers>=3) {
+                   xarModSetVar('tinymce', 'tinybrowsers', 'msie,gecko,safari');
+               }else{
+                   xarModSetVar('tinymce', 'tinybrowsers', $browserstring);
+               }
 
             break;
         case 'cssplug':
@@ -198,10 +214,17 @@ function tinymce_admin_updateconfig()
         $jstext .='height : "'.xarModGetVar('tinymce','tinyheight').'", ';
     }
 
+    $browserstring=xarModGetVar('tinymce','tinybrowsers');
+
+    if ($browserstring=='msie,gecko,safari' || $browserstring=='') {
+    /* do not include anything */
+    }else{
+       $jstext .='browsers : "'.xarModGetVar('tinymce','tinybrowsers').'", ';
+    }
     if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
         $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
     }
- 
+
     if (xarModGetVar('tinymce','tinyask')=='true'){
         $jstext .='ask : "true",';
     }
@@ -292,9 +315,29 @@ function tinymce_admin_updateconfig()
     }else{
           $multiconfig='';
     }
+    
+    //let's set button or popup
+    $buttonon=xarML('Turn On');
+    $buttonoff=xarML('Turn Off');
+    if (xarModGetVar('tinymce','usebutton') == 'true' && xarModGetVar('tinymce','tinymode') =='specific_textareas') {
+       $buttonswitch  = 'function mce_button_toggle(form_element_id, button_o) {';
+       $buttonswitch .= 'if(editor_id = tinyMCE.getEditorId(form_element_id)) {';
+	   $buttonswitch .= 'tinyMCE.removeMCEControl(editor_id);';
+       $buttonswitch .= 'button_o.value = "'.$buttonon.'";';
+       $buttonswitch .= '    } else {';
+       $buttonswitch .= ' tinyMCE.addMCEControl(document.getElementById(form_element_id), form_element_id);';
+	   $buttonswitch .= ' button_o.value = "'.$buttonoff.'";';
+       $buttonswitch .= '    }';
+       $buttonswitch .= 'return false;';
+       $buttonswitch .= '}';
+    }else{
+       $buttonswitch='';
+    }
     //let's set the var to hold the js text
     xarModSetVar('tinymce','jstext',$jstext);
     xarModSetVar('tinymce','multiconfig',$multiconfig);
+    xarModSetVar('tinymce','buttonstring',$buttonswitch);
+
     xarModCallHooks('module','updateconfig','tinymce',
               array('module' => 'tinymce'));
 

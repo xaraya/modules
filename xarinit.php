@@ -187,8 +187,14 @@ function tinymce_upgrade($oldversion)
 
     return tinymce_upgrade('0.6.0');
     break;
+     xarModSetVar('tinymce', 'usebutton','true');
+     xarModSetVar('tinymce', 'buttonstring','');
+     xarModSetVar('tinymce', 'tinybrowsers','msie,gecko,safari');
 
     case '0.6.0':
+    
+
+    return tinymce_upgrade('0.6.1');
     break;
     }
     return true;

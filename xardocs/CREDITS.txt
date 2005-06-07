@@ -5,8 +5,5 @@ It has a number of nice features over othe similar editors,
 and  has multiple browser support, currently Mozilla, MSIE and FireFox.
 For futher details see http://tinymce.moxiecode.com/
 
-The Xaraya TinyMCE module is currenly not much more than a wrapper for TinyMCE.
-This module brings the beginnings of configuration options via a user interface
-in the Xaraya Administration area for TinyMCE, once it is installed.
-
+Button javascript snippet thanks to Dan Wells
 

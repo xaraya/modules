@@ -65,7 +65,7 @@
 
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
-                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated. You do not have to add any template snippets.</xar:mlstring></li>
+                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated when mode is set to "All Textareas". You do not have to add any template snippets.</xar:mlstring></li>
 
                          <li style="margin-top:20px;">
                          <xar:mlstring>Choose <strong>Manual Override</strong> if you wish to turn off automatic activation.
@@ -82,7 +82,7 @@
         &lt;/xar:if&gt;
                 </pre>
 
-                <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
+                <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/index.htm"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
 
     </div>
     <br />
@@ -196,7 +196,7 @@ tinyMCE.init({
          </ul>
          </div>
         <div style="float:right;margin-left: 1em; margin-right: 1em; text-align:left;" class="xar-sub">
-         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.5&nbsp; 2005-05-5 jojodee
+         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.6&nbsp; 2005-06-08 jojodee
          </p>
          </div>
          <div style="clear:both;"><!-- --></div>
