@@ -81,8 +81,8 @@
 												<tr>
 													<td align="right" colspan="3" class="main">
 														<br>
-														<a href="#xarModURL('commerce','admin','products_attributes', array('value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
-															<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+														<a href="#xarModURL('products','admin','products_attributes', array('value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
+															<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 														</a>&nbsp;
 													</td>
 												</tr>
@@ -98,12 +98,12 @@
 												<tr>
 													<td class="main" align="right" colspan="3">
 														<br>
-														<a href="#xarModURL('commerce','admin','products_attributes', array('action' => 'delete_option', 'option_id' =>$option_id))#">
-															<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+														<a href="#xarModURL('products','admin','products_attributes', array('action' => 'delete_option', 'option_id' =>$option_id))#">
+															<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
 														</a>
 														&nbsp;&nbsp;&nbsp;
-														<a href="#xarModURL('commerce','admin','products_attributes', array('order_by' => 'order_by', 'page' =>$option_page))#">									
-															<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+														<a href="#xarModURL('products','admin','products_attributes', array('order_by' => 'order_by', 'page' =>$option_page))#">									
+															<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 														</a>&nbsp;
 													</td>
 												</tr>
@@ -118,7 +118,7 @@
 										&nbsp;<xar:mlstring>Product Options</xar:mlstring>&nbsp;
 									</td>
 									<td align="right">
-										<br><form name="option_order_by" action="#xarModURL('commerce','admin','products_attributes')#">
+										<br><form name="option_order_by" action="#xarModURL('products','admin','products_attributes')#">
 										<select name="selected" onChange="go_option()">
 											<xar:if condition="$option_order_by eq 'products_options_id'">
 												<option value="products_options_id" SELECTED>
@@ -173,7 +173,7 @@
 
 								<xar:if condition="$action eq 'update_option' and $option_id eq $loop:item['products_options_id']">
 
-								<form name="option" action="#xarModURL('commerce','admin','products_attributes', array('action' => 'update_option_name'))#" method="POST">
+								<form name="option" action="#xarModURL('products','admin','products_attributes', array('action' => 'update_option_name'))#" method="POST">
 									<td align="center" class="smallText">
 										&nbsp;#$loop:item['products_options_id']#
 										<input type="hidden" name="option_id" value="#$loop:item['products_options_id']#">&nbsp;
@@ -185,10 +185,10 @@
 										</xar:loop>
 									</td>
 									<td align="center" class="smallText">&nbsp;
-										<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" alt="#xarML('Update')#">
+										<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif','commerce')#" alt="#xarML('Update')#">
 										&nbsp;
-										<a href="#xarModURL('commerce','admin','products_attributes')#">
-											<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+										<a href="#xarModURL('products','admin','products_attributes')#">
+											<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 										</a>
 										&nbsp;
 									</td>
@@ -202,12 +202,12 @@
 								</td>
 								<td align="center" class="smallText">
 									&nbsp;
-									<a href="#xarModURL('commerce','admin','products_attributes',array('action' => 'update_option', 'option_id' => $loop:item['products_options_id'], 'option_order_by' => $option_order_by, 'option_page' => $option_page))#">
-										<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif')#" alt="#xarML('Update')#">
+									<a href="#xarModURL('products','admin','products_attributes',array('action' => 'update_option', 'option_id' => $loop:item['products_options_id'], 'option_order_by' => $option_order_by, 'option_page' => $option_page))#">
+										<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif','commerce')#" alt="#xarML('Update')#">
 									</a>
 									&nbsp;&nbsp;
-									<a href="#xarModURL('commerce','admin','products_attributes', array('action' => 'delete_product_option', 'option_id' =>$loop:item['products_options_id']))#">
-										<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+									<a href="#xarModURL('products','admin','products_attributes', array('action' => 'delete_product_option', 'option_id' =>$loop:item['products_options_id']))#">
+										<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
 									</a>
 									&nbsp;
 								</td>
@@ -220,7 +220,7 @@
 						</td>
 					</tr>
 				<xar:if condition = "$action ne 'update_option'">
-					<form name="options" action=" #xarModURL('commerce','admin','products_attributes', array('action' => 'add_product_options', 'option_page' => $option_page))#"  method="POST">
+					<form name="options" action=" #xarModURL('products','admin','products_attributes', array('action' => 'add_product_options', 'option_page' => $option_page))#"  method="POST">
 						<input type="hidden" name="products_options_id" value="#$next_id#">
 						<td align="center" class="smallText">
 							&nbsp;#$next_id#&nbsp;
@@ -233,7 +233,7 @@
 						</td>
 						<td align="center" class="smallText">
 							&nbsp;
-							<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif')#" alt="#xarML('Insert')#">
+							<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif','commerce')#" alt="#xarML('Insert')#">
 							&nbsp;
 						</td>
 					</form>
@@ -321,8 +321,8 @@
 							  <tr>
 								<td class="main" align="right" colspan="3">
 									<br>                   
-									<a href="#xarModURL('commerce','admin','products_attributes', array('value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
-										<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+									<a href="#xarModURL('products','admin','products_attributes', array('value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
+										<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 									</a>
 									&nbsp;
 								</td>
@@ -335,12 +335,12 @@
 							  </tr>
 							  <tr>
 								<td class="main" align="right" colspan="3"><br>
-									<a href="#xarModURL('commerce','admin','products_attributes', array('action' => 'delete_value', 'value_id' =>$value_id))#">
-										<img src="#xarTplGetImage($language . '/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+									<a href="#xarModURL('products','admin','products_attributes', array('action' => 'delete_value', 'value_id' =>$value_id))#">
+										<img src="#xarTplGetImage($language . '/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
 									</a>
 									&nbsp;&nbsp;&nbsp;
-									<a href="#xarModURL('commerce','admin','products_attributes', array('option_page'=> $option_page,'value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
-										<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+									<a href="#xarModURL('products','admin','products_attributes', array('option_page'=> $option_page,'value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
+										<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 									</a>
 									&nbsp;
 								</td>
@@ -397,7 +397,7 @@
 								</xar:if>
 								<xar:if condition = "$action eq 'update_option_value' and $value_id eq $loop:item['products_options_values_id']">
 
-									<form name="values" action="#xarModURL('commerce','admin','products_attributes', array('action' => 'update_value'))#" method="POST">
+									<form name="values" action="#xarModURL('products','admin','products_attributes', array('action' => 'update_value'))#" method="POST">
 <xar:comment>
 
 </xar:comment>
@@ -426,10 +426,10 @@
 											</xar:loop>
 										</td>
 										<td align="center" class="smallText">&nbsp;
-											<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" border="0" alt="#xarML('Edit')#">
+											<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif','commerce')#" border="0" alt="#xarML('Edit')#">
 											&nbsp;
-											<a href="#xarModURL('commerce','admin','products_attributes')#">
-												<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+											<a href="#xarModURL('products','admin','products_attributes')#">
+												<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 											</a>
 											&nbsp;
 										</td>
@@ -446,12 +446,12 @@
 									</td>
 									<td align="center" class="smallText">
 										&nbsp;
-										<a href="#xarModURL('commerce','admin','products_attributes',array('action' => 'update_option_value', 'value_id' => $loop:item['products_options_values_id'], 'value_page' => $value_page))#">
-											<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif')#" alt="#xarML('Update')#">
+										<a href="#xarModURL('products','admin','products_attributes',array('action' => 'update_option_value', 'value_id' => $loop:item['products_options_values_id'], 'value_page' => $value_page))#">
+											<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif','commerce')#" alt="#xarML('Update')#">
 										</a>
 										&nbsp;&nbsp;
-										<a href="#xarModURL('commerce','admin','products_attributes', array('action' => 'delete_option_value', 'value_id' =>$loop:item['products_options_values_id']))#">
-											<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+										<a href="#xarModURL('products','admin','products_attributes', array('action' => 'delete_option_value', 'value_id' =>$loop:item['products_options_values_id']))#">
+											<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
 										</a>
 									</td>
 								</xar:if>
@@ -463,7 +463,7 @@
 							</td>
 						</tr>
 						<xar:if condition = "$action ne 'update_option_value'">
-							<form name="values" action="#xarModURL('commerce','admin','products_attributes', array('action' => 'add_product_option_values', 'value_page' => $value_page))#" method="POST">
+							<form name="values" action="#xarModURL('products','admin','products_attributes', array('action' => 'add_product_option_values', 'value_page' => $value_page))#" method="POST">
 								<td align="center" class="smallText">
 									&nbsp;#$next_value_id#&nbsp;
 								</td>
@@ -488,7 +488,7 @@
 									</xar:loop>
 								</td>
 								<td align="center" class="smallText">&nbsp; 
-									<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif')#" alt="#xarML('Insert')#">
+									<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif','commerce')#" alt="#xarML('Insert')#">
 									&nbsp;
 								</td>
 							</form>

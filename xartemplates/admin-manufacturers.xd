@@ -39,10 +39,10 @@
             <td class="dataTableContent">#$loop:item['manufacturers_name']#</td>
             <td class="dataTableContent" align="right">
                 <xar:if condition = "is_array($cInfo) and($loop:item['manufacturers_id'] eq $cInfo.manufacturers_id)">
-                    <img src="#xarTplGetImage('adminimages/icon_arrow_right.gif')#">
+                    <img src="#xarTplGetImage('adminimages/icon_arrow_right.gif','commerce')#">
                 <xar:else />
-                    <a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page, 'cID' =>  $loop:item['manufacturers_id']))#">
-                        <img src="#xarTplGetImage('adminimages/icon_info.gif')#" alt="#xarML('Info')#">
+                    <a href="#xarModURL('products','admin','manufacturers',array('page' => $page, 'cID' =>  $loop:item['manufacturers_id']))#">
+                        <img src="#xarTplGetImage('adminimages/icon_info.gif','commerce')#" alt="#xarML('Info')#">
                     </a>
                 </xar:if>
             &nbsp;
@@ -65,8 +65,8 @@
                     <xar:if condition = "!isset($action)">
                         <tr>
                             <td colspan="2" align="right">
-                                <a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page, 'action' => 'new'))#">
-                                    <img src="#xarTplGetImage($language .'/admin/buttons/' . 'button_insert.gif')#" alt ="#xarML('New manufacturer')#">                                  
+                                <a href="#xarModURL('products','admin','manufacturers',array('page' => $page, 'action' => 'new'))#">
+                                    <img src="#xarTplGetImage($language .'/admin/buttons/' . 'button_insert.gif','commerce')#" alt ="#xarML('New manufacturer')#">                                  
                                 </a>
                             </td>
                         </tr>
@@ -85,7 +85,7 @@
 			</td>
 			</tr>
 			<tr>
-			<FORM name="manufacturers" action="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'action' => 'insert'))#" method="POST">
+			<FORM name="manufacturers" action="#xarModURL('products','admin','manufacturers',array('page' => $page,'action' => 'insert'))#" method="POST">
 				<td class="infoBoxContent">
 					<xar:mlstring>Please enter the new manufacturer with its related data</xar:mlstring>		
 					<br /><xar:mlstring>Name</xar:mlstring><br />
@@ -103,7 +103,7 @@
 					&nbsp;
 					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif','commerce')#" border="0" alt="#xarML('Insert')#">
 					&nbsp;
-					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page))#">
+					<a href="#xarModURL('products','admin','manufacturers',array('page' => $page))#">
 						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 					</a>
 				</td>
@@ -114,7 +114,7 @@
 			</td>
 			</tr>
 			<tr>
-			<FORM name="manufacturers" action="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'save'))#" method="POST">
+			<FORM name="manufacturers" action="#xarModURL('products','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'save'))#" method="POST">
 				<td class="infoBoxContent">
 					<xar:mlstring>Please make any necessary changes</xar:mlstring>
 					<br /><xar:mlstring>Name</xar:mlstring><br />
@@ -124,16 +124,16 @@
 					<br />
 					<xar:loop name="$languages">
 						<br />
-						<input type="image" src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
+						<input type="image" src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'],'commerce')#" border="0" alt="#xarML($loop:item['name'])#">
 						&nbsp;
-						<input type="text" name="manufacturers_url[#$loop:item['id']#]" value="#xarModAPIFunc('commerce','user','get_manufacturer_url', array('manufacturers_id' => $cInfo.manufacturers_id, 'language_id' => $loop:item['id']))#">					
+						<input type="text" name="manufacturers_url[#$loop:item['id']#]" value="#xarModAPIFunc('products','user','get_manufacturer_url', array('manufacturers_id' => $cInfo.manufacturers_id, 'language_id' => $loop:item['id']))#">					
 
 					</xar:loop>
 					<br /><br />
 					&nbsp;
 					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif','commerce')#" border="0" alt="#xarML('Edit')#">
 					<br />&nbsp;
-					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page))#">
+					<a href="#xarModURL('products','admin','manufacturers',array('page' => $page))#">
 						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 					</a>
 				</td>
@@ -144,7 +144,7 @@
 			</td>
 			</tr>
 			<tr>
-			<FORM name="manufacturers" action="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'deleteconfirm'))#" method="POST">
+			<FORM name="manufacturers" action="#xarModURL('products','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'deleteconfirm'))#" method="POST">
 				<td class="infoBoxContent">
 					<xar:mlstring>Are you sure you want to delete this manufacturer?</xar:mlstring>
 					<br /><b>#$cInfo.manufacturers_name#</b>
@@ -152,7 +152,7 @@
 					&nbsp;
 					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" border="0" alt="#xarML('Delete')#">
 					&nbsp;
-					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id))#">
+					<a href="#xarModURL('products','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id))#">
 						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
 					</a>
 				</td>
@@ -166,12 +166,12 @@
 			<tr>
 				<td class="infoBoxContent" align="center">
 					&nbsp;
-					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'edit'))#">
+					<a href="#xarModURL('products','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'edit'))#">
 						<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif','commerce')#" alt="#xarML('Edit')#">
 					</a>
 					<br />
 					&nbsp;
-					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'delete'))#">
+					<a href="#xarModURL('products','admin','manufacturers',array('page' => $page,'cID' => $cInfo.manufacturers_id,'action' => 'delete'))#">
 						<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
 					</a>
 				</td>
