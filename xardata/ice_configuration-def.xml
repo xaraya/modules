@@ -1,5 +1,5 @@
 <object name="ice_configuration">
-  <objectid>107</objectid>
+  <objectid>136</objectid>
   <label>Configuration settings</label>
   <moduleid>182</moduleid>
   <itemtype>21</itemtype>
@@ -9,7 +9,7 @@
   <isalias>0</isalias>
   <properties>
     <property name="id">
-      <id>670</id>
+      <id>857</id>
       <label>Id</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation>int (11)</validation>
     </property>
     <property name="key">
-      <id>671</id>
+      <id>858</id>
       <label>Key</label>
       <type>textbox</type>
       <default></default>
@@ -29,7 +29,7 @@
       <validation>0:64</validation>
     </property>
     <property name="value">
-      <id>672</id>
+      <id>859</id>
       <label>Value</label>
       <type>textbox</type>
       <default></default>
@@ -39,17 +39,17 @@
       <validation>0:255</validation>
     </property>
     <property name="group_id">
-      <id>673</id>
+      <id>860</id>
       <label>Group Id</label>
-      <type>integerbox</type>
+      <type>objectref</type>
       <default></default>
       <source>xar_commerce_configuration.configuration_group_id</source>
       <status>2</status>
       <order>4</order>
-      <validation>int (11)</validation>
+      <validation>ice_config_groups:group_title:group_id</validation>
     </property>
     <property name="order">
-      <id>674</id>
+      <id>861</id>
       <label>Order</label>
       <type>integerbox</type>
       <default></default>
@@ -59,7 +59,7 @@
       <validation>int (5)</validation>
     </property>
     <property name="modified">
-      <id>675</id>
+      <id>862</id>
       <label>Modified</label>
       <type>calendar</type>
       <default></default>
@@ -69,7 +69,7 @@
       <validation>datetime</validation>
     </property>
     <property name="added">
-      <id>676</id>
+      <id>863</id>
       <label>Added</label>
       <type>calendar</type>
       <default></default>
@@ -79,7 +79,7 @@
       <validation>datetime</validation>
     </property>
     <property name="function">
-      <id>677</id>
+      <id>864</id>
       <label>Function</label>
       <type>textbox</type>
       <default></default>
@@ -89,7 +89,7 @@
       <validation>0:255</validation>
     </property>
     <property name="function_1">
-      <id>678</id>
+      <id>865</id>
       <label>Function_1</label>
       <type>textbox</type>
       <default></default>
