@@ -32,6 +32,17 @@ function scheduler_admin_modifyconfig()
     } else {
         $data['jobs'] = unserialize($jobs);
     }
+    if (!xarVarFetch('addjob','str',$addjob,'',XARVAR_NOT_REQUIRED)) return;
+    if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/',$addjob,$matches)) {
+        $data['jobs'][] = array(
+                                'module' => $matches[1],
+                                'type' => $matches[2],
+                                'func' => $matches[3],
+                                'interval' => '',
+                                'lastrun' => '',
+                                'result' => ''
+                               );
+    }
     $data['jobs'][] = array(
                             'module' => '',
                             'type' => '',

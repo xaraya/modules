@@ -9,7 +9,8 @@
 <xar:if condition="!empty($found) and count($found) gt 0">
     <ul>
     <xar:foreach in="$found" value="$api">
-        <li>#$api['module']# - #$api['type']# - #$api['func']#</li>
+        <xar:set name="args">array('addjob' => "$api[module];$api[type];$api[func]")</xar:set>
+        <li>[<a href="#xarModURL('scheduler','admin','modifyconfig',$args)#"><xar:mlstring>add job</xar:mlstring></a>] #$api['module']# - #$api['type']# - #$api['func']#</li>
     </xar:foreach>
     </ul>
 <xar:else/>
