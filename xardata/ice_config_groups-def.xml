@@ -1,0 +1,62 @@
+<object name="ice_config_groups">
+  <objectid>137</objectid>
+  <label>Configuration groups</label>
+  <moduleid>182</moduleid>
+  <itemtype>22</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="group_id">
+      <id>866</id>
+      <label>Group Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_commerce_configuration_group.configuration_group_id</source>
+      <status>2</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="group_title">
+      <id>867</id>
+      <label>Group Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_configuration_group.configuration_group_title</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:64</validation>
+    </property>
+    <property name="group_description">
+      <id>868</id>
+      <label>Group Description</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_commerce_configuration_group.configuration_group_description</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="order">
+      <id>869</id>
+      <label>Order</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_commerce_configuration_group.sort_order</source>
+      <status>2</status>
+      <order>4</order>
+      <validation>int (5)</validation>
+    </property>
+    <property name="visible">
+      <id>870</id>
+      <label>Visible</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_commerce_configuration_group.visible</source>
+      <status>2</status>
+      <order>5</order>
+      <validation>int (1)</validation>
+    </property>
+  </properties>
+</object>
