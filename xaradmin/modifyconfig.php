@@ -16,5 +16,14 @@
 
 function commerce_admin_modifyconfig($args)
 {
-    return xarModFunc('commerce','admin','commoninfo_object', array('objectname' => 'ice_configuration'));
+    if(!xarVarFetch('group_value','id:',$group_value,1)) return;
+    extract($args);
+    
+    return xarModFunc('commerce','admin','commoninfo_object', array(
+                            'objectname'   => 'ice_configuration', 
+                            'use_grouping' => true,
+                            'group_field'  => 'group_id',
+                            'group_value'  => $group_value));
 }
+
+?>
