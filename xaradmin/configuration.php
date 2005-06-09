@@ -37,13 +37,17 @@ function commerce_admin_configuration()
         }
     }
 
-    $q = new xenQuery('SELECT',
-                      $table['commerce_configuration_group'],
-                      'configuration_group_title');
-    $q->eq('configuration_group_id',$gID);
-    $cfg_group = $q->run();
-    if (!$cfg_group) return;
-    $data['cfg_group'] = $q->row();
+    // Get the configuration group title
+    $objInfo = xarModApiFunc('dynamicdata','user','getobjectinfo',array('name' => 'ice_config_groups'));
+    $condition = "group_id = $gID";
+    $fieldlist= 'group_title';
+    $items = xarModApiFunc('dynamicdata','user','getitems', array (
+                                'modid'     => $objInfo['moduleid'],
+                                'itemtype'  => $objInfo['itemtype'],
+                                'fieldlist' => $fieldlist,
+                                'where'     => $condition 
+                            ));
+    $data['cfg_group'] = $items[$gID]['group_title'];
 
     $q = new xenQuery('SELECT', $table['commerce_configuration']);
     $tablefields = array(
