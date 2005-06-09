@@ -255,8 +255,10 @@ function commerce_init()
         $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml'; 
         
         if(!xarModApiFunc('dynamicdata','util','import', array('file' => $def_file))) return;
-        // Let data import be allowed to fail
-        xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file));
+        // Let data import be allowed to be empty
+        if(file_exists($dat_file)) {
+            if(!xarModApiFunc('dynamicdata','util','import', array('file' => $dat_file))) return;
+        }
     }
     /** END ICE MODEL **/
 
