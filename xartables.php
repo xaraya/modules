@@ -26,11 +26,9 @@ function commerce_xartables()
     $xartable = array();
 
     $xartable['commerce_address_book'] = xarDBGetSiteTablePrefix() . '_commerce_address_book';
-    $xartable['commerce_admin_access'] = xarDBGetSiteTablePrefix() . '_commerce_admin_access';
     $xartable['commerce_banktransfer'] = xarDBGetSiteTablePrefix() . '_commerce_banktransfer';
     $xartable['commerce_banners'] = xarDBGetSiteTablePrefix() . '_commerce_banners';
     $xartable['commerce_banners_history'] = xarDBGetSiteTablePrefix() . '_commerce_banners_history';
-    $xartable['commerce_box_align'] = xarDBGetSiteTablePrefix() . '_commerce_box_align';
     $xartable['commerce_cm_file_flags'] = xarDBGetSiteTablePrefix() . '_commerce_cm_file_flags';
     $xartable['commerce_configuration'] = xarDBGetSiteTablePrefix() . '_commerce_configuration';
     $xartable['commerce_content_manager'] = xarDBGetSiteTablePrefix() . '_commerce_content_manager';

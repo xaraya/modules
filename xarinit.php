@@ -588,19 +588,6 @@ function commerce_init()
     if (!$q->run($query)) return;
 
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_box_align";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_box_align (
-      box_id int(2) NOT NULL auto_increment,
-      box_name text NOT NULL,
-      box_align text NOT NULL,
-      box_visible int(2) NOT NULL default '0',
-      box_order int(2) NOT NULL default '0',
-      PRIMARY KEY  (box_id)
-    )";
-    if (!$q->run($query)) return;
-
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_content_manager";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_content_manager (
@@ -694,38 +681,6 @@ function commerce_init()
     $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (15,0,0,3,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage f¸r diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge‰ndert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ¸ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
 
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (2, 'customers_status.php', 'left', 0, 7)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (3, 'categories.php', 'left', 1, 2)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (4, 'manufacturers.php', 'left', 0, 1)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (5, 'add_a_quickie.php', 'left', 1, 4)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (6, 'search.php', 'left', 1, 8)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (7, 'information.php', 'left', 1, 3)";
-    if (!$q->run($query)) return;
-//    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (8, 'shopping_cart.php', 'right', 1, 1)";
-//    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (9, 'manufacturer_info.php', 'right', 1, 6)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (10, 'order_history.php', 'right', 1, 5)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (11, 'best_sellers.php', 'right', 1, 3)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (12, 'product_notifications.php', 'right', 1, 2)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (15, 'tell_a_friend.php', 'right', 0, 4)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (16, 'specials.php', 'right', 1, 7)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (17, 'reviews.php', 'right', 1, 9)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (18, 'languages.php', 'left', 1, 5)";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (19, 'currencies.php', 'right', 1, 8)";
-    if (!$q->run($query)) return;
 
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '1', 'Pending')";
     if (!$q->run($query)) return;
