@@ -23,9 +23,12 @@ function commerce_adminapi_getmenulinks()
     $menuLinks[] = array('url'   => xarModURL('commerce','admin','configgroups'),
                          'title' => xarML('Manage configuration groupings'),
                          'label' => xarML('Config groups'));
+    $menuLinks[] = array('url'   => xarModURL('commerce','admin','modifyconfig'),
+                         'title' => xarML('New modify config'),
+                         'label' => xarML('New modify config'));
     $menuLinks[] = array('url'   => xarModURL('commerce','admin','configuration',array('gID' => 1)),
                          'title' => xarML('Administer the shop'),
-                         'label' => xarML('Modify config'));
+                         'label' => xarML('Old Modify config'));
 
     if (empty($menulinks)){
         $menulinks = '';

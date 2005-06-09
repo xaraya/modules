@@ -197,18 +197,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_configuration_group";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_configuration_group (
-      configuration_group_id int NOT NULL auto_increment,
-      configuration_group_title varchar(64) NOT NULL,
-      configuration_group_description varchar(255) NOT NULL,
-      sort_order int(5) NULL,
-      visible int(1) DEFAULT '1' NULL,
-      PRIMARY KEY (configuration_group_id)
-    )";
-    if (!$q->run($query)) return;
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_counter";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_counter (
@@ -1278,40 +1266,6 @@ function commerce_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'GROUP_CHECK', 'false',  17, 9, NULL, '', NULL, 'commerce_adminapi_select_option(array(\'true\', \'false\'))')";
     if (!$q->run($query)) return;
-
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('1', 'My Store', 'General information about my store', '1', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('2', 'Minimum Values', 'The minimum values for functions / data', '2', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('3', 'Maximum Values', 'The maximum values for functions / data', '3', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('4', 'Images', 'Image parameters', '4', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('5', 'Customer Details', 'Customer account configuration', '5', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('6', 'Module Options', 'Hidden from configuration', '6', '0')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('7', 'Shipping/Packaging', 'Shipping options available at my store', '7', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('8', 'Product Listing', 'Product Listing    configuration options', '8', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('9', 'Stock', 'Stock configuration options', '9', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('10', 'Logging', 'Logging configuration options', '10', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('11', 'Cache', 'Caching configuration options', '11', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('12', 'E-Mail Options', 'General setting for E-Mail transport and HTML E-Mails', '12', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('13', 'Download', 'Downloadable products options', '13', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('14', 'GZip Compression', 'GZip compression options', '14', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('15', 'Sessions', 'Session options', '15', '1')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_configuration_group VALUES ('16', 'Meta-Tags/Search engines', 'Meta-tags/Search engines', '16', '1')";
-    if (!$q->run($query)) return;
-
 
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '1', 'Pending')";
     if (!$q->run($query)) return;

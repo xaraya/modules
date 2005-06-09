@@ -13,7 +13,7 @@
       <label>Group Id</label>
       <type>itemid</type>
       <default></default>
-      <source>xar_commerce_configuration_group.configuration_group_id</source>
+      <source>dynamic_data</source>
       <status>2</status>
       <order>1</order>
       <validation>int (11)</validation>
@@ -23,7 +23,7 @@
       <label>Group Title</label>
       <type>textbox</type>
       <default></default>
-      <source>xar_commerce_configuration_group.configuration_group_title</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>2</order>
       <validation>0:64</validation>
@@ -33,7 +33,7 @@
       <label>Group Description</label>
       <type>textbox</type>
       <default></default>
-      <source>xar_commerce_configuration_group.configuration_group_description</source>
+      <source>dynamic_data</source>
       <status>1</status>
       <order>3</order>
       <validation>0:255</validation>
@@ -43,7 +43,7 @@
       <label>Order</label>
       <type>integerbox</type>
       <default></default>
-      <source>xar_commerce_configuration_group.sort_order</source>
+      <source>dynamic_data</source>
       <status>2</status>
       <order>4</order>
       <validation>int (5)</validation>
@@ -53,7 +53,7 @@
       <label>Visible</label>
       <type>checkbox</type>
       <default></default>
-      <source>xar_commerce_configuration_group.visible</source>
+      <source>dynamic_data</source>
       <status>2</status>
       <order>5</order>
       <validation>int (1)</validation>
