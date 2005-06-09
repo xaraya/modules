@@ -1,15 +1,15 @@
 <object name="ice_addressformats">
-  <objectid>89</objectid>
+  <objectid>179</objectid>
   <label>Adress formats</label>
   <moduleid>182</moduleid>
-  <itemtype>12</itemtype>
+  <itemtype>20</itemtype>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
+  <maxid>5</maxid>
   <config></config>
   <isalias>0</isalias>
   <properties>
     <property name="format_id">
-      <id>565</id>
+      <id>1127</id>
       <label>Format Id</label>
       <type>itemid</type>
       <default></default>
@@ -18,8 +18,18 @@
       <order>1</order>
       <validation>int (11)</validation>
     </property>
+    <property name="name">
+      <id>1144</id>
+      <label>name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
     <property name="format">
-      <id>566</id>
+      <id>1128</id>
       <label>Format</label>
       <type>textbox</type>
       <default></default>
@@ -29,7 +39,7 @@
       <validation>0:128</validation>
     </property>
     <property name="summary">
-      <id>567</id>
+      <id>1129</id>
       <label>Summary</label>
       <type>textbox</type>
       <default></default>
