@@ -1,16 +1,19 @@
 <xar:comment>Template for xartinymce wysiwyg editor</xar:comment>
+    <xar:set name="checkit">xarModGetVar('tinymce','tinybrowsers')</xar:set>
+    <xar:if condition="!isset($checkit)">
+        <xar:set name="setbrowsers">xarModSetVar('tinymce','tinybrowsers','msie,gecko')</xar:set>
+    </xar:if>
+
 <xar:set name="tinybrowsers">explode(',',xarModGetVar('tinymce','tinybrowsers'))</xar:set>
 <xar:set name="usewysiwyg">0</xar:set>
 
 <xar:set name="useragent">getenv('HTTP_USER_AGENT');</xar:set>
-<xar:if condition="isset($tinybrowsers)">
     <xar:foreach in="$tinybrowsers" value="$browsername">
 
     <xar:if condition="eregi($browsername,$useragent)">
         <xar:set name="usewysiwyg">1</xar:set>
     </xar:if>
     </xar:foreach>
-</xar:if>
     <xar:comment>Include the dynamic JavaScript, if not already included.</xar:comment>
     <xar:set name="tinyloaded">xarTplGetJavaScript('head', 'tinymce')</xar:set>
  
@@ -26,5 +29,4 @@
         <xar:set name="dynajs">xarTplAddJavaScript('head', 'code', 'tinyMCE.init({'.$jsstring.'});'.$jsconfigstring.$buttonjs, 'tinymce')</xar:set>
 
     </xar:if>
-
 
