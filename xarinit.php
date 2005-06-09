@@ -74,60 +74,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_admin_access";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_admin_access (
-      customers_id int(11) NOT NULL default '0',
-      configuration int(1) NOT NULL default '0',
-      modules int(1) NOT NULL default '0',
-      countries int(1) NOT NULL default '0',
-      currencies int(1) NOT NULL default '0',
-      zones int(1) NOT NULL default '0',
-      geo_zones int(1) NOT NULL default '0',
-      tax_classes int(1) NOT NULL default '0',
-      tax_rates int(1) NOT NULL default '0',
-      customers int(1) NOT NULL default '0',
-      create_account int(1) NOT NULL default '0',
-      accounting int(1) NOT NULL default '0',
-      customers_status int(1) NOT NULL default '0',
-      orders int(1) NOT NULL default '0',
-      categories int(1) NOT NULL default '0',
-      new_attributes int(1) NOT NULL default '0',
-      products_attributes int(1) NOT NULL default '0',
-      manufacturers int(1) NOT NULL default '0',
-      reviews int(1) NOT NULL default '0',
-      xsell_products int(1) NOT NULL default '0',
-      specials int(1) NOT NULL default '0',
-      stats_products_expected int(1) NOT NULL default '0',
-      stats_products_viewed int(1) NOT NULL default '0',
-      stats_products_purchased int(1) NOT NULL default '0',
-      stats_customers int(1) NOT NULL default '0',
-      backup int(1) NOT NULL default '0',
-      banner_manager int(1) NOT NULL default '0',
-      cache int(1) NOT NULL default '0',
-      define_language int(1) NOT NULL default '0',
-      file_manager int(1) NOT NULL default '0',
-      mail int(1) NOT NULL default '0',
-      newsletters int(1) NOT NULL default '0',
-      server_info int(1) NOT NULL default '0',
-      whos_online int(1) NOT NULL default '0',
-      templates_boxes int(1) NOT NULL default '0',
-      invoice int(1) NOT NULL default '0',
-      packingslip int(1) NOT NULL default '0',
-      languages int(1) NOT NULL default '0',
-      start int(1) NOT NULL default '1',
-      print_order int(1) NOT NULL default '1',
-      content_manager int(1) NOT NULL default '0',
-      content_preview int(1) NOT NULL default '1',
-      credits int(1) NOT NULL default '1',
-      print_packingslip int(1) NOT NULL default '1',
-      popup_image int(1) NOT NULL default '1',
-      banner_statistics int(1) NOT NULL default '1',
-      module_newsletter int(1) NOT NULL default '1',
-      PRIMARY KEY  (customers_id)
-    )";
-    if (!$q->run($query)) return;
-
     # only for bugfix with non installed banktransfer
     # if calling orders.php at the admin-tool
     # ---------- should be deleted asap
@@ -700,21 +646,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-/*
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_module_newsletter";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_module_newsletter (
-      newsletter_id int(11) NOT NULL auto_increment,
-      title text NOT NULL,
-      bc text NOT NULL,
-      cc text NOT NULL,
-      date datetime default NULL,
-      status int(1) NOT NULL default '0',
-      body text NOT NULL,
-      PRIMARY KEY  (newsletter_id)
-    )";
-    if (!$q->run($query)) return;
-*/
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_cm_file_flags";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_cm_file_flags (
@@ -795,12 +726,6 @@ function commerce_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_commerce_box_align VALUES (19, 'currencies.php', 'right', 1, 8)";
     if (!$q->run($query)) return;
-
-
-
-    $query = "INSERT INTO " . $prefix . "_commerce_admin_access VALUES (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)";
-    if (!$q->run($query)) return;
-
 
     $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '1', 'Pending')";
     if (!$q->run($query)) return;
