@@ -13,15 +13,24 @@ function comments_userapi_getitemlinks($args)
     $itemlinks = array();
     if (!xarSecurityCheck('Comments-Read', 0)) {
         return $itemlinks;
-    } 
-    foreach ($args['itemids'] as $itemid) {
-        $item = xarModAPIFunc('comments', 'user', 'get_multipleall', array('objectid' => $itemid));
+    }
+    if (empty($itemids)) {
+        $itemids = array();
+    }
+// FIXME: support retrieving several comments at once
+    foreach ($itemids as $itemid) {
+        $item = xarModAPIFunc('comments', 'user', 'get_one', array('cid' => $itemid));
         if (!isset($item)) return;
-        $itemlinks[$itemid] = array('url' => xarModURL('comments', 'user', 'display', array('cid' => $itemid)),
-            'title' => xarML('Display Comment'),
-                // TODO: replace itemid with title
-            'label' => xarVarPrepForDisplay($itemid));
+        if (!empty($item) && !empty($item[0]['xar_title'])) {
+            $title = $item[0]['xar_title'];
+        } else {
+            $title = xarML('Comment #(1)',$itemid);
+        }
+        $itemlinks[$itemid] = array('url'   => xarModURL('comments', 'user', 'display',
+                                                         array('cid' => $itemid)),
+                                    'title' => xarML('Display Comment'),
+                                    'label' => xarVarPrepForDisplay($title));
     } 
     return $itemlinks;
-} 
+}
 ?>
