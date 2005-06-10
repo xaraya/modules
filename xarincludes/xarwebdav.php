@@ -118,15 +118,22 @@ class xarwebdav extends HTTP_WebDAV_Server
                 if(xarModIsAvailable($module)) {
                     // See if we can get the itemtypes
                     // FIXME: as this is using the lable it might contain spaces, not sure if that is a problem
-                    if($itemtypes = xarModAPIFunc($module,'user','getitemtypes')) {
+                    if($itemtypes = xarModAPIFunc($module,'user','getitemtypes',array(),0)) {
                         // Add them as collections
                         foreach($itemtypes as $itemtype) {
+                            //xarLogMessage('WEBDAV: ' . $itemtype['label']);
                             $files['files'][] = $this->fileinfo($options['path'] . $itemtype['label'] . '/');
                         }
                     }
                 }
                 break;
             case 3: // '/modulename/itemtype/' - get a list of items for this itemtype
+                // Problem is that every module does this differently
+                // Options:
+                // 1. Add each module one by one
+                // 2. Deliver XML based on every module going through DD interface
+                // 3. Try to call a specific function in the modules which delivers a standard thingie back.
+                // 4. Hook each module into webdav server (1 x view? n x display? n x transform?
                 
                 break;
             default:

@@ -618,10 +618,11 @@ class HTTP_WebDAV_Server
 
             echo " <D:response $ns_defs>\n";
         
-            $href = (@$_SERVER["HTTPS"] === "on" ? "https:" : "http:");
+            $href = (isset($_SERVER['HTTPS']) && $_SERVER["HTTPS"] === "on" ? "https:" : "http:");
             // FIXME: why insert scriptname here and not the actual path requested?
             $href.= "//".$_SERVER['HTTP_HOST'].'/webdav';//$_SERVER['REQUEST_URI'];
             $href.= $path;
+            $href= $this->_urlencode($href);
             //TODO make sure collection resource pathes end in a trailing slash
         
             echo "  <D:href>$href</D:href>\n";
@@ -1488,9 +1489,9 @@ class HTTP_WebDAV_Server
                                      @$_SERVER["PHP_AUTH_PW"]);
         } else if (method_exists($this, "check_auth")) {
             // old (pre 1.0) method name
-            return $this->check_auth(@$_SERVER["AUTH_TYPE"],
-                                     @$_SERVER["PHP_AUTH_USER"],
-                                     @$_SERVER["PHP_AUTH_PW"]);
+            return $this->check_auth(isset($_SERVER["AUTH_TYPE"])     ? $_SERVER["AUTH_TYPE"]     : NULL,
+                                     isset($_SERVER["PHP_AUTH_USER"]) ? $_SERVER["PHP_AUTH_USER"] : NULL,
+                                     isset($_SERVER["PHP_AUTH_PW"])   ? $_SERVER["PHP_AUTH_PW"]   : NULL);
         } else {
             // no method found -> no authentication required
             return true;
