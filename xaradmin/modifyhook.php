@@ -40,9 +40,6 @@ function keywords_admin_modifyhook($args)
         return $msg;
     }
 
-    //retrieve the list of allowed delimiters.  use the first one as the default.
-    $delimiters = xarModGetVar('keywords','delimiters');
-    $delimiter = substr($delimiters,0,1);
     
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -73,6 +70,11 @@ function keywords_admin_modifyhook($args)
         $itemid = $objectid;
     }
 
+    if (!xarSecurityCheck('AdminKeywords',0,'Item', "$modid:$itemtype:All")) return;
+      
+//retrieve the list of allowed delimiters.  use the first one as the default.
+    $delimiters = xarModGetVar('keywords','delimiters');
+    $delimiter = substr($delimiters,0,1);    
 
         $restricted = xarModGetVar('keywords','restricted');
         if ($restricted == '0') {

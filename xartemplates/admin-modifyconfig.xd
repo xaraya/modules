@@ -153,10 +153,10 @@
                     </xar:foreach>
                 </xar:if>
             </xar:if>
-            <p class="param">
+        </fieldset>
+        <div class="xar-clear-both xar-align-center">
                 <input type="submit" value="#xarML('Submit')#" />
                 <input type="reset" value="#xarML('Reset')#" />
-            </p>
-        </fieldset>
+        </div>     
     </form>
 </div>

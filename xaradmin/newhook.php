@@ -82,6 +82,8 @@ function keywords_admin_newhook($args)
         $keywords = '';
     }
 
+    if (!xarSecurityCheck('AdminKeywords',0,'Item', "$modid:$itemtype:All")) return;
+
     //retrieve the list of allowed delimiters
     $delimiters = xarModGetVar('keywords','delimiters');
     
