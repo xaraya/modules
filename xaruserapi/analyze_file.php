@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Mime Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage mime
+ * @author Carl P. Corliss
+ */
 
 /**
  * Uses variants of the UNIX "file" command to attempt to determine the
@@ -37,6 +49,16 @@ function mime_userapi_analyze_file( $args )
             return $ftype;
         }
     }
+
+            //try to use if disponible pecl fileinfo extension
+    if(extension_loaded('fileinfo')) {
+        $res = finfo_open(FILEINFO_MIME);
+        $mime_type = finfo_file($res, $fileName);
+        finfo_close($res);
+        if (isset($mime_type) && strlen($mime_type)) {
+            return $mime_type;
+        }
+     }
 
     // if that didn't work, try getimagesize to see if the file is an image
     $fileInfo = @getimagesize($fileName);

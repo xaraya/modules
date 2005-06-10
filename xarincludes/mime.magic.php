@@ -965,5 +965,6 @@ $mime_list['x/x-photo-cd-overfiew-file']['needles']['UENEX09QQQ==']['length'] = 
 $mime_list['x/x-photo-cd-overfiew-file']['needles']['UENEX09QQQ==']['offset'] = 0;
 $mime_list['x/x-photo-cd-pack-file']['needles']['UENEX0lQSQ==']['length'] = 7;
 $mime_list['x/x-photo-cd-pack-file']['needles']['UENEX0lQSQ==']['offset'] = 2048;
+$mime_list['application/x-rar']['extensions'][0] = 'rar';
 
 ?>

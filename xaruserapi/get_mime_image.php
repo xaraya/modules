@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Mime Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage mime
+ * @author Carl P. Corliss
+ */
 
 /**
  * Retrieves the name of the image file to use for a given mimetype.
