@@ -1484,9 +1484,9 @@ class HTTP_WebDAV_Server
     {
         if (method_exists($this, "checkAuth")) {
             // PEAR style method name
-            return $this->checkAuth(@$_SERVER["AUTH_TYPE"],
-                                     @$_SERVER["PHP_AUTH_USER"],
-                                     @$_SERVER["PHP_AUTH_PW"]);
+            return $this->checkAuth (isset($_SERVER["AUTH_TYPE"])     ? $_SERVER["AUTH_TYPE"]     : NULL,
+                                     isset($_SERVER["PHP_AUTH_USER"]) ? $_SERVER["PHP_AUTH_USER"] : NULL,
+                                     isset($_SERVER["PHP_AUTH_PW"])   ? $_SERVER["PHP_AUTH_PW"]   : NULL);
         } else if (method_exists($this, "check_auth")) {
             // old (pre 1.0) method name
             return $this->check_auth(isset($_SERVER["AUTH_TYPE"])     ? $_SERVER["AUTH_TYPE"]     : NULL,
