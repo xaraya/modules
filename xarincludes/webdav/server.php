@@ -722,7 +722,7 @@ class HTTP_WebDAV_Server
         //$out = ob_get_contents();
         //xarLogMessage($out);
         ob_flush();
-        xarLogMessage('WebDAV: End of base http_PROPFIND handler');
+        xarLogMessage('WebDAV: End of base http_PROPFIND handler',XARLOG_LEVEL_NOTICE);
     }
 
     
@@ -738,7 +738,7 @@ class HTTP_WebDAV_Server
      */
     function http_PROPPATCH() 
     {
-        xarLogMessage('WebDAV: base http_PROPPATCH handler');
+        xarLogMessage('WebDAV: base http_PROPPATCH handler',XARLOG_LEVEL_NOTICE);
         if($this->_check_lock_status($this->path)) {
             $options = Array();
             $options["path"] = $this->path;
@@ -796,7 +796,7 @@ class HTTP_WebDAV_Server
      */
     function http_MKCOL() 
     {
-        xarLogMessage('WebDAV: base http_MKCOL handler');
+        xarLogMessage('WebDAV: base http_MKCOL handler',XARLOG_LEVEL_NOTICE);
         $options = Array();
         $options["path"] = $this->path;
 
@@ -818,7 +818,7 @@ class HTTP_WebDAV_Server
      */
     function http_GET() 
     {
-        xarLogMessage("WebDAV: base http_GET handler with " .$this->path);
+        xarLogMessage("WebDAV: base http_GET handler with " .$this->path,XARLOG_LEVEL_NOTICE);
         // TODO check for invalid stream
         $options = Array();
         $options["path"] = $this->path;
@@ -1011,7 +1011,7 @@ class HTTP_WebDAV_Server
      */
     function http_HEAD() 
     {
-        xarLogMessage('WebDAV: base http_HEAD handler');
+        xarLogMessage('WebDAV: base http_HEAD handler',XARLOG_LEVEL_NOTICE);
         $status = false;
         $options = Array();
         $options["path"] = $this->path;
@@ -1042,7 +1042,7 @@ class HTTP_WebDAV_Server
      */
     function http_PUT() 
     {
-        xarLogMessage('WebDAV: base http_PUT handler');
+        xarLogMessage('WebDAV: base http_PUT handler',XARLOG_LEVEL_NOTICE);
         if ($this->_check_lock_status($this->path)) {
             $options = Array();
             $options["path"] = $this->path;
@@ -1163,7 +1163,7 @@ class HTTP_WebDAV_Server
      */
     function http_DELETE() 
     {
-        xarLogMessage('WebDAV: base http_DELETE handler');
+        xarLogMessage('WebDAV: base http_DELETE handler',XARLOG_LEVEL_NOTICE);
         // check RFC 2518 Section 9.2, last paragraph
         if (isset($_SERVER["HTTP_DEPTH"])) {
             if ($_SERVER["HTTP_DEPTH"] != "infinity") {
@@ -1199,7 +1199,7 @@ class HTTP_WebDAV_Server
      */
     function http_COPY() 
     {
-        xarLogMessage('WebDAV: base http_COPY handler');
+        xarLogMessage('WebDAV: base http_COPY handler',XARLOG_LEVEL_NOTICE);
         // no need to check source lock status here 
         // destination lock status is always checked by the helper method
         $this->_copymove("copy");
@@ -1217,7 +1217,7 @@ class HTTP_WebDAV_Server
      */
     function http_MOVE() 
     {
-        xarLogMessage('WebDAV: base http_MOVE handler');
+        xarLogMessage('WebDAV: base http_MOVE handler',XARLOG_LEVEL_NOTICE);
         if ($this->_check_lock_status($this->path)) {
             // destination lock status is always checked by the helper method
             $this->_copymove("move");
@@ -1239,7 +1239,7 @@ class HTTP_WebDAV_Server
      */
     function http_LOCK() 
     {
-        xarLogMessage('WebDAV: base http_LOCK handler');
+        xarLogMessage('WebDAV: base http_LOCK handler',XARLOG_LEVEL_NOTICE);
         $options = Array();
         $options["path"] = $this->path;
         
@@ -1338,7 +1338,7 @@ class HTTP_WebDAV_Server
      */
     function http_UNLOCK() 
     {
-        xarLogMessage('WebDAV: base http_UNLOCK handler');
+        xarLogMessage('WebDAV: base http_UNLOCK handler',XARLOG_LEVEL_NOTICE);
         $options = Array();
         $options["path"] = $this->path;
 
