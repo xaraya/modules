@@ -38,40 +38,6 @@
                     <input type="checkbox" name="dolinebreak" id="dolinebreak" value="1" />
                 </xar:if>
             </p>
-            <xar:if condition="xarModGetVar('bbcode', 'dolinebreak')">
-            <p class="param">
-                <label for="transformtype">
-                    <span class="help" title="#xarML('Transform linebreaks as either paragraphs or linebreaks.')#">
-                        <xar:mlstring>
-                            Type of linebreak transform
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <select name="transformtype" id="transformtype" size="1">
-                    <xar:if condition="xarModGetVar('bbcode', 'transformtype') eq '1'">
-                        <option label="Linebreaks" value="1" selected="selected">Linebreaks</option>
-                        <option label="Paragraphs" value="2">Paragraphs</option>
-                    <xar:elseif condition="xarModGetVar('bbcode', 'transformtype') eq '2'" />
-                        <option label="Linebreaks" value="1">Linebreaks</option>
-                        <option label="Paragraphs" value="2" selected="selected">Paragraphs</option>
-                    </xar:if>                                    
-                </select>
-            </p>
-            </xar:if>
-            <p class="param">
-                <label for="advancedbbcode">
-                    <span class="help" title="#xarML('Admin defined bbcode for advanced users.')#">
-                        <xar:mlstring>
-                            Use Advanced BBCode
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <xar:if condition="xarModGetVar('bbcode', 'useadvanced')">
-                  <input type="checkbox" name="advancedbbcode" id="advancedbbcode" value="1" checked="checked" />
-                <xar:else />
-                  <input type="checkbox" name="advancedbbcode" id="advancedbbcode" value="1" />
-                </xar:if>
-            </p>
         <xar:if condition="!empty($hooks)">
         </fieldset>
         <fieldset class="formelements xar-norm">

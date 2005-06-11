@@ -1,0 +1,1 @@
+dp.SyntaxHighlighter.HighlightAll('code', true, true);

@@ -51,358 +51,234 @@ function bbcode_userapi_transform($args)
 //
 function bbcode_transform($text) 
 {
-    $message = bbcode_encode($text, $is_html_disabled=false);
-    return $message;
-}
-
-
-/**
- * bbdecode/bbencode functions:
- * Rewritten - Nathan Codding - Aug 24, 2000
- * quote, code, and list rewritten again in Jan. 2001.
- * All BBCode tags now implemented. Nesting and multiple occurances should be
- * handled fine for all of them. Using str_replace() instead of regexps often
- * for efficiency. quote, list, and code are not regular, so they are 
- * implemented as PDAs - probably not all that efficient, but that's the way it is. 
- *
- * Note: all BBCode tags are case-insensitive.
- *
- * some changes for PostNuke: larsneo - Jan, 12, 2003
- * different [img] tag conversion against XSS
- */
-
-function bbcode_encode($message, $is_html_disabled) 
-{
-    
-    // pad it with a space so we can distinguish between FALSE and matching the 1st char (index 0).
-    // This is important; bbencode_quote(), bbencode_list(), and bbencode_code() all depend on it.
-    $message = " " . $message;
-
-    // Change newlines to <br />'s
-    $dotransform = xarModGetVar('bbcode', 'dolinebreak');
-    if ($dotransform == 1){
-        $transformtype = xarModGetVar('bbcode', 'transformtype');
-        if ($transformtype == 1){
-            $message = str_replace("\n", "<br />", $message);
-        } elseif ($transformtype == 2){
-            $message = nl2p($message);
-            $message = br2p($message);
-        }
-    }
 
     // BBClick functionality
-
     // matches an "xxxx://yyyy" URL at the start of a line, or after a space. 
     // xxxx can only be alpha characters. 
     // yyyy is anything up to the first space, newline, comma, double quote or < 
-    $message = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $message); 
+    $text = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $text); 
 
     // matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing 
     // Must contain at least 2 dots. xxxx contains either alphanum, or "-" 
     // zzzz is optional.. will contain everything up to the first space, newline, 
     // comma, double quote or <. 
-    $message = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r<]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $message); 
+    $text = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r<]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $text); 
 
     // matches an email@domain type address at the start of a line, or after a space.
     // Note: Only the followed chars are valid; alphanums, "-", "_" and or ".".
-    $message = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $message);
+    $text = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $text);
 
-    // BBCode functionality
+    include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
+    $bbcode = new StringParser_BBCode();
 
-    if (strpos($message, "[") && strpos($message, "]")){
+    $bbcode->addCode ('b', 'callback_replace', 'do_bbcode_bold', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+    $bbcode->addCode ('i', 'callback_replace', 'do_bbcode_italics', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+    $bbcode->addCode ('dictionary', 'callback_replace', 'do_bbcode_dictionary', array (),
+                      'inline', array ('listitem', 'block', 'inline'), array());
+    $bbcode->addCode ('email', 'callback_replace', 'do_bbcode_email', array (),
+                      'inline', array ('listitem', 'block', 'inline'), array());
+    $bbcode->addCode ('google', 'callback_replace', 'do_bbcode_google', array (),
+                      'inline', array ('listitem', 'block', 'inline'), array());
+    $bbcode->addCode ('msn', 'callback_replace', 'do_bbcode_msn', array (),
+                      'inline', array ('listitem', 'block', 'inline'), array());
+    $bbcode->addCode ('yahoo', 'callback_replace', 'do_bbcode_yahoo', array (),
+                      'inline', array ('listitem', 'block', 'inline'), array());
+    $bbcode->addCode ('wiki', 'callback_replace', 'do_bbcode_wiki', array (),
+                      'inline', array ('listitem', 'block', 'inline'), array());
+    $bbcode->addCode ('thesaurus', 'callback_replace', 'do_bbcode_thesaurus', array (),
+                      'inline', array ('listitem', 'block', 'inline'), array());
+    $bbcode->addCode ('linethrough', 'callback_replace', 'do_bbcode_linethrough', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+    $bbcode->addCode ('overline', 'callback_replace', 'do_bbcode_overline', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+    $bbcode->addCode ('underline', 'callback_replace', 'do_bbcode_underline', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+    $bbcode->addCode ('smallcaps', 'callback_replace', 'do_bbcode_smallcaps', array (),
+                      'inline', array ('block', 'inline'), array());
+    $bbcode->addCode ('sup', 'callback_replace', 'do_bbcode_sup', array (),
+                      'inline', array ('block', 'inline'), array());
+    $bbcode->addCode ('sub', 'callback_replace', 'do_bbcode_sub', array (),
+                      'inline', array ('block', 'inline'), array());
+    $bbcode->addCode ('url', 'usecontent?', 'do_bbcode_url', array ('usecontent_param' => 'default'),
+                      'link', array ('block', 'inline'), array ('link'));
+    $bbcode->addCode ('link', 'usecontent?', 'do_bbcode_url', array ('usecontent_param' => 'default'),
+                      'link', array ('block', 'inline'), array ('link'));
+    $bbcode->addCode ('you', 'callback_replace_single', 'do_bbcode_you', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
 
-        $advancedbbcode = xarModGetVar('bbcode', 'useadvanced');
-        if ($advancedbbcode) {
+    $bbcode->addCode ('code', 'usecontent?', 'do_bbcode_code', array ('usecontent_param' => 'default'), 'link', array ('block', 'inline'), array ('link'));
 
-            $codes = xarModAPIFunc('bbcode',
-                                   'user',
-                                   'getall');
+    $bbcode->addCode ('quote', 'usecontent?', 'do_bbcode_quote', array ('usecontent_param' => 'default'), 'link', array ('block', 'inline'), array ('link'));
 
-            foreach ($codes as $code) {
-                if ((strpos(strtolower($message), $code['tag'])) or (preg_match($code['tag'], $message))) {
-                    $message = xarModAPIFunc('bbcode',
-                                             'user',
-                                             $code['name'],
-                                             array('message' => $message));
-                }
-            }
+    $bbcode->addCode ('color', 'usecontent?', 'do_bbcode_color', array ('usecontent_param' => 'default'),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array ('link'));
+    $bbcode->addCode ('img', 'usecontent', 'do_bbcode_img', array (),
+                      'image', array ('listitem', 'block', 'inline', 'link'), array ());
+    $bbcode->addCode ('bild', 'usecontent', 'do_bbcode_img', array (),
+                      'image', array ('listitem', 'block', 'inline', 'link'), array ());
+    $bbcode->addCode ('size', 'usecontent', 'do_bbcode_size', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array ());
 
-        } else {
+    $bbcode->setOccurrenceType ('img', 'image');
+    $bbcode->setOccurrenceType ('bild', 'image');
+    $bbcode->setMaxOccurrences ('image', 2);
 
-            // [quote]text[/quote] code..
-            $patterns[0] = "#\[quote\](.*?)\[/quote\]#si";
-            $replacements[0] = "<p>" . xarML('Quote') . " :</p> <div style=\"width: 90%; overflow: auto;\"><blockquote>\\1</blockquote></div>";
-            
-            // [quote=name]text[/quote] code..
-            $patterns[1] = "#\[quote=(.*?)\](.*?)\[/quote\]#si";
-            $replacements[1] = "<p>" . xarML('Quote') . " \\1:</p> <div style=\"width: 90%; overflow: auto;\"><blockquote>\\2</blockquote></div>";
-
-            $message = preg_replace($patterns, $replacements, $message);
-
-            // [code] and [/code] for code stuff.
-            $message = preg_replace("/\[code\](.*?)\[\/code\]/si", "<p>" . xarML('Code') . ": </p><div class='bbcode_code' style=' padding: 5px; white-space: normal'>\\1</div>", $message);
-
-            // [p] and [/p] for paragraphs.  Bug 3994
-            $message = preg_replace("/\[p\](.*?)\[\/p\]/si", "<p>\\1</p>", $message);
-
-            // [u] and [/u] for underline text.
-            $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
-
-            // [b] and [/b] for bolding text.
-            $message = preg_replace("/\[b\](.*?)\[\/b\]/si", "<span style='font-weight: bold;'>\\1</span>", $message);
-
-            // [i] and [/i] for italicizing text.
-            $message = preg_replace("/\[i\](.*?)\[\/i\]/si", "<span style='font-style: italic;'>\\1</span>", $message);
-
-            // [color=xxx] [/color] for text color
-            $message = preg_replace("/\[color\=([a-zA-Z0-9_-]+)\](.*?)\[\/color\]/si", "<span style='color: \\1;'>\\2</span>", $message);
-
-            // [size=xxx] [/size] for text size
-            $message = preg_replace("/\[size\=([a-zA-Z0-9.-]+)\](.*?)\[\/size\]/si", "<span style='font-size: \\1;'>\\2</span>", $message);
-
-            // [img]image_url_here[/img] code..
-            $message = preg_replace("#\[img\](http://)?(.*?)\[/img\]#si", "<img src=\"http://\\2\" />", $message);
-            //$message = preg_replace("/\[img\](.*?)\[\/img\]/si", "<img src=\"\\1\" border=\"0\" />", $message);
-
-            // Patterns and replacements for URL and email tags..
-            $patterns = array();
-            $replacements = array();
-
-            // [url]xxxx://www.phpbb.com[/url] code..
-            $patterns[0] = "#\[url\]([a-z]+?://){1}(.*?)\[/url\]#si";
-            $replacements[0] = '<a href="\1\2">\1\2</a>';
-
-            // [url]www.phpbb.com[/url] code.. (no xxxx:// prefix).
-            $patterns[1] = "#\[url\](.*?)\[/url\]#si";
-            $replacements[1] = '<a href="http://\1">\1</a>';
-
-            // [url=xxxx://www.phpbb.com]phpBB[/url] code..
-            $patterns[2] = "#\[url=([a-z]+?://){1}(.*?)\](.*?)\[/url\]#si";
-            $replacements[2] = '<a href="\1\2">\3</a>';
-
-            // [url=www.phpbb.com]phpBB[/url] code.. (no xxxx:// prefix).
-            $patterns[3] = "#\[url=(.*?)\](.*?)\[/url\]#si";
-            $replacements[3] = '<a href="http://\1">\2</a>';
-
-            $message = preg_replace($patterns, $replacements, $message);
-
-        }
-
+    $bbcode->addCode ('list', 'simple_replace', null, array ('start_tag' => '<ul>', 'end_tag' => '</ul>'),
+                      'list', array ('block', 'listitem'), array ());
+    $bbcode->addCode ('*', 'simple_replace', null, array ('start_tag' => '<li>', 'end_tag' => '</li>'),
+                      'listitem', array ('list'), array ());
+    $bbcode->setCodeFlag ('*', 'closetag', BBCODE_CLOSETAG_OPTIONAL);
+    $bbcode->setCodeFlag ('*', 'paragraphs', true);
+    $bbcode->setCodeFlag ('list', 'paragraph_type', BBCODE_PARAGRAPH_BLOCK_ELEMENT);
+    $bbcode->setCodeFlag ('list', 'opentag.before.newline', BBCODE_NEWLINE_DROP);
+    $bbcode->setCodeFlag ('list', 'closetag.before.newline', BBCODE_NEWLINE_DROP);
+    $bbcode->addFilter(STRINGPARSER_FILTER_PRE, 'convertlinebreaks');
+    $bbcode->addParser(array ('block', 'inline', 'link', 'listitem'), 'htmlspecialchars');
+    $bbcode->addParser ('list', 'bbcode_stripcontents');
+    $dotransform = xarModGetVar('bbcode', 'dolinebreak');
+    if ($dotransform == 1){
+        $bbcode->addParser(array ('block', 'inline', 'link', 'listitem'), 'nl2br');
+        $bbcode->setRootParagraphHandling(true);
     }
-
-    $message = preg_replace_callback(
-       '#\[notransform\](.*?)\[/notransform\]#si',
-       create_function(
-           // single quotes are essential here,
-           // or alternative escape all $ as \$
-           '$code',
-           'return $code[0] = str_replace(\'<br />\', \'\', $code[0]);'
-       ),
-       $message
-    );
-
-    $message = preg_replace("#\[notransform\](.*?)\[/notransform\]#si", '\\1', $message);
-
-
-    // Remove our padding from the string..
-    $message = substr($message, 1);
-    //$test = var_export($message); return "<pre>$test</pre>";
-    return $message;
-} 
-
-/**
- * Nathan Codding - Jan. 12, 2001.
- * Performs [list][/list] and [list=?][/list] bbencoding on the given string, and returns the results.
- * Any unmatched "[list]" or "[/list]" token will just be left alone. 
- * This works fine with both having more than one list in a message, and with nested lists.
- * Since that is not a regular language, this is actually a PDA and uses a stack. Great fun.
- *
- * Note: This function assumes the first character of $message is a space, which is added by 
- * bbencode().
- */
-function bbcode_encode_list($message)
-{        
-    $start_length = Array();
-    $start_length['ordered'] = 8;
-    $start_length['unordered'] = 6;
-    
-    // First things first: If there aren't any "[list" strings in the message, we don't
-    // need to process it at all.
-    
-    if (!strpos(strtolower($message), "[list"))
-    {
-        return $message;    
-    }
-    
-    $stack = Array();
-    $curr_pos = 1;
-    while ($curr_pos && ($curr_pos < strlen($message)))
-    {    
-        $curr_pos = strpos($message, "[", $curr_pos);
-    
-        // If not found, $curr_pos will be 0, and the loop will end.
-        if ($curr_pos)
-        {
-            // We found a [. It starts at $curr_pos.
-            // check if it's a starting or ending list tag.
-            $possible_ordered_start = substr($message, $curr_pos, $start_length['ordered']);
-            $possible_unordered_start = substr($message, $curr_pos, $start_length['unordered']);
-            $possible_end = substr($message, $curr_pos, 7);
-            if (strcasecmp("[list]", $possible_unordered_start) == 0)
-            {
-                // We have a starting unordered list tag.
-                // Push its position on to the stack, and then keep going to the right.
-                array_push($stack, array($curr_pos, ""));
-                ++$curr_pos;
-            }
-            else if (preg_match("/\[list=([a1])\]/si", $possible_ordered_start, $matches))
-            {
-                // We have a starting ordered list tag.
-                // Push its position on to the stack, and the starting char onto the start
-                // char stack, the keep going to the right.
-                array_push($stack, array($curr_pos, $matches[1]));
-                ++$curr_pos;
-            }
-            else if (strcasecmp("[/list]", $possible_end) == 0)
-            {
-                // We have an ending list tag.
-                // Check if we've already found a matching starting tag.
-                if (sizeof($stack) > 0)
-                {
-                    // There exists a starting tag. 
-                    // We need to do 2 replacements now.
-                    $start = array_pop($stack);
-                    $start_index = $start[0];
-                    $start_char = $start[1];
-                    $is_ordered = ($start_char != "");
-                    $start_tag_length = ($is_ordered) ? $start_length['ordered'] : $start_length['unordered'];
-                    
-                    // everything before the [list] tag.
-                    $before_start_tag = substr($message, 0, $start_index);
-
-                    // everything after the [list] tag, but before the [/list] tag.
-                    $between_tags = substr($message, $start_index + $start_tag_length, $curr_pos - $start_index - $start_tag_length);
-                    
-                    //$between_tags = str_replace("[*]", "<li>", $between_tags);
-
-                    // Need to replace [*] with <li> inside the list.
-                    $between_tags = preg_replace("/\[li\](.*?)\[\/li\]/si", "<li>\\1</li>", $between_tags);
-                   
-                    // everything after the [/list] tag.
-                    $after_end_tag = substr($message, $curr_pos + 7);
-
-                    if ($is_ordered)
-                    {
-                        $message = $before_start_tag . "<ol type=" . $start_char . ">";
-                        $message .= $between_tags . "</ol>";
-                    }
-                    else
-                    {
-                        $message = $before_start_tag . "<ul>";
-                        $message .= $between_tags . "</ul>";
-                    }
-                    
-                    $message .= $after_end_tag;
-                    
-                    // Now.. we've screwed up the indices by changing the length of the string. 
-                    // So, if there's anything in the stack, we want to resume searching just after it.
-                    // otherwise, we go back to the start.
-                    if (sizeof($stack) > 0)
-                    {
-                        $a = array_pop($stack);
-                        $curr_pos = $a[0];
-                        array_push($stack, $a);
-                        ++$curr_pos;
-                    }
-                    else
-                    {
-                        $curr_pos = 1;
-                    }
-                }
-                else
-                {
-                    // No matching start tag found. Increment pos, keep going.
-                    ++$curr_pos;    
-                }
-            }
-            else
-            {
-                // No starting tag or ending tag.. Increment pos, keep looping.,
-                ++$curr_pos;    
-            }
-        }
-    } // while
-    
-    return $message;
-    
-} // bbcode_encode_list()
-
-/**
-* replacement for php's nl2br tag that produces more designer friendly html
-*
-* Modified from: http://www.php-editors.com/contest/1/51-read.html
-*
-* @param string $text
-* @param string $cssClass
-* @return string
-*/
-function nl2p($text, $cssClass='')
-{
-
- // Return if there are no line breaks.
- if (!strstr($text, "\n")) {
-     return $text;
- }
-
- // Add Optional css class
- if (!empty($cssClass)) {
-     $cssClass = ' class="' . $cssClass . '" ';
- }
-
- // put all text into <p> tags
- $text = '<p' . $cssClass . '>' . $text . '</p>';
-
- // replace all newline characters with paragraph
- // ending and starting tags
- $text = str_replace("\n", "</p>\n<p" . $cssClass . '>', $text);
-
- // remove empty paragraph tags & any cariage return characters
- $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "\r"), '', $text);
-
- return $text;
-
-} // end nl2p
-
-  /**
-   * expanding on the nl2p tag above to convert user contributed
-   * <br />'s to <p>'s so it displays more nicely.
-   *
-   * @param string $text
-   * @param string $cssClass
-   * @return string
-   */
-function br2p($text, $cssClass='')
-{
-
-    if (!eregi('<br', $text)) {
-     return $text;
-    }
-
-    if (!empty($cssClass)) {
-     $cssClass = ' class="' . $cssClass . '" ';
-    }
-
-    // put all text into <p> tags
-    $text = '<p' . $cssClass . '>' . $text . '</p>';
-
-    // replace all break tags with paragraph
-    // ending and starting tags
-    $text = str_replace(array('<br>', '<br />', '<BR>', '<BR />'), "</p>\n<p" . $cssClass . '>', $text);
-
-    // remove empty paragraph tags
-    $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "<p>\n</p>"), '', $text);
-
+    $text = $bbcode->parse($text);
     return $text;
 }
 
+// Unify line breaks of different operating systems
+function convertlinebreaks ($text) {
+    return preg_replace ("/\015\012|\015|\012/", "\n", $text);
+}
+// Remove everything but the newline charachter
+function bbcode_stripcontents ($text) {
+    return preg_replace ("/[^\n]/", '', $text);
+}
+
+// Function to include images
+function do_bbcode_img ($action, $attributes, $content, $params, $node_object) {
+    if ($action == 'validate') {
+        return true;
+    }
+    return '<img src="'.htmlspecialchars($content).'" alt="">';
+}
+
+function do_bbcode_bold ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'bold', array('replace' => $content));
+}
+function do_bbcode_italics ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'italics', array('replace' => $content));
+}
+function do_bbcode_dictionary ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'dictionary', array('replace' => $content));
+}
+function do_bbcode_email ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'email', array('replace' => $content));
+}
+function do_bbcode_google ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'google', array('replace' => $content));
+}
+function do_bbcode_msn ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'msn', array('replace' => $content));
+}
+function do_bbcode_wiki ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'wiki', array('replace' => $content));
+}
+function do_bbcode_yahoo ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'yahoo', array('replace' => $content));
+}
+function do_bbcode_thesaurus ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'thesaurus', array('replace' => $content));
+}
+function do_bbcode_linethrough ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'linethrough', array('replace' => $content));
+}
+function do_bbcode_overline ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'overline', array('replace' => $content));
+}
+function do_bbcode_underline ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'underline', array('replace' => $content));
+}
+function do_bbcode_smallcaps ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'smallcaps', array('replace' => $content));
+}
+function do_bbcode_sup ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'sup', array('replace' => $content));
+}
+function do_bbcode_sub ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'sub', array('replace' => $content));
+}
+function do_bbcode_you ($action, $attributes, $content, $params, &$node_object) {
+    return xarTplModule('bbcode','user', 'you', array('replace' => $content));
+}
+function do_bbcode_url ($action, $attributes, $content, $params, &$node_object) {
+    // 1) the code is being valided
+    if ($action == 'validate') {
+        // the code is specified as follows: [url]http://.../[/url]
+        if (!isset ($attributes['default'])) {
+            // is this a valid URL?
+            return is_valid_url($content);
+        }
+        // the code is specified as follows: [url=http://.../]Text[/url]
+        // is this a valid URL?
+        return is_valid_url($attributes['default']);
+    } else {
+        // the code was specified as follows: [url]http://.../[/url]
+        if (!isset ($attributes['default'])) {
+            return xarTplModule('bbcode','user', 'url', array('url' => htmlspecialchars($content)));
+        } else {
+            return xarTplModule('bbcode','user', 'url', array('url' => htmlspecialchars($attributes['default']), 'name' => $content ));
+        }
+    }
+}
+
+function is_valid_url($url)
+{
+    $parsed_url = parse_url($url);
+    if (!isset($parsed_url['scheme'])){
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function do_bbcode_color ($action, $attributes, $content, $params, &$node_object) 
+{
+    return xarTplModule('bbcode','user', 'color', array('color' => $attributes['default'], 'content' => $content ));
+}
+function do_bbcode_size ($action, $attributes, $content, $params, &$node_object) 
+{
+    return xarTplModule('bbcode','user', 'size', array('size' => $attributes['default'], 'content' => $content ));
+}
+function do_bbcode_quote ($action, $attributes, $content, $params, &$node_object) 
+{
+    if (!isset ($attributes['default'])) {
+        return xarTplModule('bbcode','user', 'quote', array('quote' => $content));
+    } else {
+        return xarTplModule('bbcode','user', 'quote', array('who' => $attributes['default'], 'quote' => $content ));
+    }
+}
+
+function do_bbcode_code ($action, $attributes, $content, $params, &$node_object) 
+{
+    if (!isset ($attributes['default'])) {
+        return xarTplModule('bbcode','user', 'code', array('replace' => $content));
+    } elseif ($attributes['default'] == 'php') {
+        return xarTplModule('bbcode','user', 'phpcode', array('replace' => $content));
+    } elseif ($attributes['default'] == 'jscript') {
+        return xarTplModule('bbcode','user', 'jscriptcode', array('replace' => $content));
+    } elseif ($attributes['default'] == 'sql') {
+        return xarTplModule('bbcode','user', 'sqlcode', array('replace' => $content));
+    } elseif ($attributes['default'] == 'xml') {
+        return xarTplModule('bbcode','user', 'xmlcode', array('replace' => $content));
+    } elseif ($attributes['default'] == 'csharp') {
+        return xarTplModule('bbcode','user', 'csharpcode', array('replace' => $content));
+    } elseif ($attributes['default'] == 'delphi') {
+        return xarTplModule('bbcode','user', 'delphicode', array('replace' => $content));
+    } elseif ($attributes['default'] == 'vb') {
+        return xarTplModule('bbcode','user', 'vbcode', array('replace' => $content));
+    } elseif ($attributes['default'] == 'python') {
+        return xarTplModule('bbcode','user', 'pythoncode', array('replace' => $content));
+    }
+}
 ?>

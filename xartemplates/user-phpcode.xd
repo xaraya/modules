@@ -1,10 +1,3 @@
-[notransform]
-    <xar:set name="replace">str_replace('<br />', '', $replace)</xar:set>
-    <xar:if condition="xarTplAddStyleLink('bbcode', 'SyntaxHighlighter')"></xar:if>
-    <script type="text/javascript" src="modules/bbcode/xartemplates/includes/shCore.js"></script>
-    <script type="text/javascript" src="modules/bbcode/xartemplates/includes/shBrushPhp.js"></script>
-    <textarea name="code" language="php">#$replace#</textarea>
-    <script language="javascript">
-        dp.SyntaxHighlighter.HighlightAll('code', true, true);
-    </script>
-[/notransform]
+<xar:set name="dummy">include_once('modules/bbcode/xarincludes/code.php')</xar:set>
+<xar:set name="replace">str_replace('<br />', '', $replace)</xar:set>
+<textarea name="code" class="php">#$replace#</textarea>

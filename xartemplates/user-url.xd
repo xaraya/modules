@@ -1,11 +1,5 @@
-[notransform]
-    <xar:if condition="!empty($replace3)">
-        <a href="#$replace1##$replace2#">#$replace3#</a>
-    <xar:elseif condition="!empty($replace2)" />
-        <a href="#$replace1##$replace2#">#$replace1##$replace2#</a>
-    <xar:elseif condition="!empty($replace4)" />
-        <a href="http://#$replace1#">#$replace4#</a>
-    <xar:else />
-        <a href="http://#$replace1#">#$replace1#</a>
-    </xar:if>
-[/notransform]
+<xar:if condition="!empty($name)">
+    <a href="#$url#">#$name#</a>
+<xar:else />
+    <a href="#$url#">#$url#</a>
+</xar:if>

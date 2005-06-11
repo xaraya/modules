@@ -1,1 +1,1 @@
-<span style='font-size: #$replace1#;'>#$replace2#</span>
+<span style='font-size: #$size#px;'>#$content#</span>
