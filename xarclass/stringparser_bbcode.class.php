@@ -52,7 +52,8 @@ define ('BBCODE_PARAGRAPH_BLOCK_ELEMENT', 2);
 /**
 * BB code string parser class
 */
-class StringParser_BBCode extends StringParser {
+class StringParser_BBCode extends StringParser 
+{
     /**
      * String parser mode
      *

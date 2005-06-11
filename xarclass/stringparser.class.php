@@ -63,7 +63,8 @@ define ('STRINGPARSER_FILTER_POST', 2);
  *
  * This is an abstract class for any type of string parser.
  */
-class StringParser {
+class StringParser 
+{
     /**
      * String parser mode
      *
