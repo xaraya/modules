@@ -147,71 +147,91 @@ function bbcode_transform($text)
 }
 
 // Unify line breaks of different operating systems
-function convertlinebreaks ($text) {
+function convertlinebreaks ($text) 
+{
     return preg_replace ("/\015\012|\015|\012/", "\n", $text);
 }
 // Remove everything but the newline charachter
-function bbcode_stripcontents ($text) {
+function bbcode_stripcontents ($text) 
+{
     return preg_replace ("/[^\n]/", '', $text);
 }
 
 // Function to include images
-function do_bbcode_img ($action, $attributes, $content, $params, $node_object) {
+function do_bbcode_img ($action, $attributes, $content, $params, $node_object) 
+{
     if ($action == 'validate') {
         return true;
     }
     return '<img src="'.htmlspecialchars($content).'" alt="">';
 }
 
-function do_bbcode_bold ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_bold ($action, $attributes, $content, $params, &$node_object)
+{
     return xarTplModule('bbcode','user', 'bold', array('replace' => $content));
 }
-function do_bbcode_italics ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_italics ($action, $attributes, $content, $params, &$node_object)
+{
     return xarTplModule('bbcode','user', 'italics', array('replace' => $content));
 }
-function do_bbcode_dictionary ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_dictionary ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'dictionary', array('replace' => $content));
 }
-function do_bbcode_email ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_email ($action, $attributes, $content, $params, &$node_object)
+{
     return xarTplModule('bbcode','user', 'email', array('replace' => $content));
 }
-function do_bbcode_google ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_google ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'google', array('replace' => $content));
 }
-function do_bbcode_msn ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_msn ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'msn', array('replace' => $content));
 }
-function do_bbcode_wiki ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_wiki ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'wiki', array('replace' => $content));
 }
-function do_bbcode_yahoo ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_yahoo ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'yahoo', array('replace' => $content));
 }
-function do_bbcode_thesaurus ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_thesaurus ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'thesaurus', array('replace' => $content));
 }
-function do_bbcode_linethrough ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_linethrough ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'linethrough', array('replace' => $content));
 }
-function do_bbcode_overline ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_overline ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'overline', array('replace' => $content));
 }
-function do_bbcode_underline ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_underline ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'underline', array('replace' => $content));
 }
-function do_bbcode_smallcaps ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_smallcaps ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'smallcaps', array('replace' => $content));
 }
-function do_bbcode_sup ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_sup ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'sup', array('replace' => $content));
 }
-function do_bbcode_sub ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_sub ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'sub', array('replace' => $content));
 }
-function do_bbcode_you ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_you ($action, $attributes, $content, $params, &$node_object) 
+{
     return xarTplModule('bbcode','user', 'you', array('replace' => $content));
 }
-function do_bbcode_url ($action, $attributes, $content, $params, &$node_object) {
+function do_bbcode_url ($action, $attributes, $content, $params, &$node_object)
+{
     // 1) the code is being valided
     if ($action == 'validate') {
         // the code is specified as follows: [url]http://.../[/url]
