@@ -135,7 +135,7 @@ function bbcode_transform($text)
     $bbcode->setCodeFlag ('list', 'opentag.before.newline', BBCODE_NEWLINE_DROP);
     $bbcode->setCodeFlag ('list', 'closetag.before.newline', BBCODE_NEWLINE_DROP);
     $bbcode->addFilter(STRINGPARSER_FILTER_PRE, 'convertlinebreaks');
-    $bbcode->addParser(array ('block', 'inline', 'link', 'listitem'), 'htmlspecialchars');
+    //$bbcode->addParser(array ('block', 'inline', 'link', 'listitem'), 'htmlspecialchars');
     $bbcode->addParser ('list', 'bbcode_stripcontents');
     $dotransform = xarModGetVar('bbcode', 'dolinebreak');
     if ($dotransform == 1){
