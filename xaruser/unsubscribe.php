@@ -2,7 +2,7 @@
 /**
  * File: $Id$
  * 
- * Subscribe to a topic
+ * Unsubscribe from a topic
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -13,7 +13,7 @@
  * @author John Cox
  * @todo merge with pubsub ?
 */
-function xarbb_user_subscribe()
+function xarbb_user_unsubscribe()
 {
     // No anons please
     if (!xarUserIsLoggedIn()) return;
@@ -29,21 +29,23 @@ function xarbb_user_subscribe()
                           'gettopic',
                           array('tid' => $tid));
     // If there are subscribers already, we need to update that array
-    // else we start a new array.
     if (!empty($data['toptions'])){
         $topicoptions = unserialize($data['toptions']);
-        if (!isset($topicoptions['subscribers'])) {
-            $topicoptions['subscribers'] = array();
-        } elseif (in_array($uid,$topicoptions['subscribers'])) {
-            // We're already subscribed
+        if (empty($topicoptions['subscribers']) ||
+            !in_array($uid,$topicoptions['subscribers'])) {
+            // We're already unsubscribed
             xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
             return true;
         }
-        array_push($topicoptions['subscribers'], $uid);
+        // Remove $uid from the list
+        $flipped = array_flip($topicoptions['subscribers']);
+        unset($flipped[$uid]);
+        $topicoptions['subscribers'] = array_keys($flipped);
         $mergedarray = serialize($topicoptions);
     } else {
-        $topicoptions['subscribers'] = array($uid);
-        $mergedarray = serialize($topicoptions);
+        // We're already unsubscribed
+        xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
+        return true;
     }
     // Then we just need to push the update through.
     if (!xarModAPIFunc('xarbb',

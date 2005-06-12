@@ -353,6 +353,13 @@ function xarbb_user_viewtopic($args)
         if (!empty($topicoptions['lock'])){
             $data['tstatus'] = 3;
         }
+        // Check if we subscribed already
+        if (xarUserIsLoggedIn()) {
+            $uid = (int) xarUserGetVar('uid');
+            if (!empty($topicoptions['subscribers']) && in_array($uid,$topicoptions['subscribers'])) {
+                $data['tsubscribed'] = 1;
+            }
+        }
     }
 
     return $data;

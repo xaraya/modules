@@ -73,11 +73,19 @@
                         </xar:mlstring>
                     </a>
                     :: 
-                    <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid, 'uid' => xarUserGetVar('uid')))#">
-                        <xar:mlstring>
-                            Subscribe to topic 
-                        </xar:mlstring>
-                    </a>
+                    <xar:if condition="!empty($tsubscribed)">
+                        <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' => $tid))#">
+                            <xar:mlstring>
+                                Unsubscribe from topic 
+                            </xar:mlstring>
+                        </a>
+                    <xar:else/>
+                        <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid))#">
+                            <xar:mlstring>
+                                Subscribe to topic 
+                            </xar:mlstring>
+                        </a>
+                    </xar:if>
                 </div>
             </xar:if>
         </div>
