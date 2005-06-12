@@ -59,7 +59,7 @@ function articles_admin_importpictures()
             // myfile
             $basename = $fileparts['basename'];
             $basename = preg_replace("/\.$extension/",'',$basename);
-            if (!empty($dirname)) {
+            if (!empty($dirname) && $dirname != '.') {
                 $thumb = $dirname . '/' . $data['thumbnail'] . $basename;
             } else {
                 $thumb = $data['thumbnail'] . $basename;
