@@ -58,8 +58,18 @@ switch ($period) {
   break;
   
   default: 
-    $start = false;
-    $end   = false;
+    if (!xarVarFetch('start', 'str', $start, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end', 'str', $end, false, XARVAR_NOT_REQUIRED)) return;
+    if (!empty($start) && !empty($end)) {
+        $start .= ' GMT';
+        $start = strtotime($start);
+        // adjust for the user's timezone offset
+        $start -= xarMLS_userOffset() * 3600;
+        $end .= ' GMT';
+        $end = strtotime($end);
+        // adjust for the user's timezone offset
+        $end -= xarMLS_userOffset() * 3600;
+    }
     break;
 }
     
@@ -224,6 +234,46 @@ switch ($period)
     $data['maintitle'] = xarML("Daily Statistics for #(1). #(2) #(3)", $day, $localeData['/dateSymbols/months/'.$month.'/full'], $year);
   break;
     
+    case 'range':
+    // Query Page Impressions for this client and each day of this range
+    $pi = xarModAPIFunc('opentracker', 'user', 'get_page_impressions',
+            array ('start' => $start, 'end' => $end, 'interval' => 86400));
+
+    // Query visitors for this client and each day of this month
+    $visitors = xarModAPIFunc('opentracker', 'user', 'get_visitors',
+            array ('start' => $start, 'end' => $end, 'interval' => 86400));
+
+    $data['statisticitems'] = array();
+    // Loop through days
+    for ($i = 0; $i < sizeof($pi); $i++) {
+      // Get daily_statistics template
+      $info = getdate($pi[$i]['timestamp']);
+      $data['statisticitems'][] = array(
+          'pi_number' => $pi[$i]['value'],
+          'pi_percent' => $data['totalPageImpressions'] ? number_format(((100 * $pi[$i]['value']) / $data['totalPageImpressions']), 2) : '0',
+          'visitors_number' => $visitors[$i]['value'],
+          'visitors_percent' => $data['totalVisitors'] ? number_format(((100 * $visitors[$i]['value']) / $data['totalVisitors']), 2) : '0',
+          'href' => xarModURL('opentracker', 'user', 'main', array(
+                                                                          'year' => $info['year'],
+                                                                          'month' => $info['mon'],
+                                                                          'day' => $info['mday'],
+                                                                          'period' => 'day'
+                                                                      )
+                                  ),
+          'displayname' => xarLocaleGetFormattedDate('medium',$pi[$i]['timestamp'])
+      );
+    }
+    $data['graphurl'] = xarModUrl('opentracker', 'user', 'graph',
+        array(
+            'start' => $start,
+            'end' => $end,
+            'interval' => 'day',
+            'width' => 700,
+            'height' => 260
+        ));
+    $data['item_statistics_title'] = xarML('Daily Statistics');
+    $data['maintitle'] = xarML("Statistics from #(1) to #(2)", xarLocaleGetFormattedDate('long',$start),xarLocaleGetFormattedDate('long',$end));
+    break;
 }
     $data['top']['pages']['title'] = xarML('Top #(1) of #(2) Total Pages', $limit, $data['top']['pages']['unique_items']);
     $data['top']['pages']['subtitle1'] = xarML('Page impressions');

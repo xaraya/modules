@@ -128,3 +128,10 @@
 </table>
 <br />
 </xar:loop>
+<form method="GET" action="#xarServerGetBaseURL()#">
+    <input type="hidden" name="module" value="opentracker" />
+    <input type="hidden" name="period" value="range" />
+    <xar:mlstring>Start:</xar:mlstring> <xar:data-input type="calendar" name="start" validation="date" />
+    <xar:mlstring>End:</xar:mlstring> <xar:data-input type="calendar" name="end" validation="date" />
+    <input type="submit" value="#xarML('Date Range')#" />
+</form>
