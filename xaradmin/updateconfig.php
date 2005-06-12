@@ -9,14 +9,12 @@ function dyn_example_admin_updateconfig()
 /* we'll let our dynamic module settings be handled by DD here (optional)
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarCleanFromInput(), getting them
+    // function should be obtained from xarVarFetch(), getting them
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
-    list($bold,
-         $itemsperpage,
-         $shorturls) = xarVarCleanFromInput('bold',
-                                           'itemsperpage',
-                                           'shorturls');
+    if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.  This checks that the form had a valid
     // authorisation code attached to it.  If it did not then the function will

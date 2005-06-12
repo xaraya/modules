@@ -5,12 +5,9 @@
  */
 function dyn_example_admin_update($args)
 {
-    list($itemid,
-         $objectid,
-         $preview) = xarVarCleanFromInput('itemid',
-                                          'objectid',
-                                          'preview');
-
+    if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
     extract($args);
 
     if (!empty($objectid)) {

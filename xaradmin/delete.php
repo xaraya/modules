@@ -8,14 +8,13 @@
 function dyn_example_admin_delete($args)
 {
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarCleanFromInput(), getting them
+    // function should be obtained from xarVarFetch(), getting them
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
-    list($itemid,
-         $objectid,
-         $confirm) = xarVarCleanFromInput('itemid',
-                                         'objectid',
-                                         'confirm');
+    if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('confirm', 'str', $confirm,  NULL, XARVAR_DONT_SET)) {return;}
+
     extract($args);
 
     if (!empty($objectid)) {

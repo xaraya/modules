@@ -11,9 +11,9 @@
  */
 function dyn_example_user_display($args)
 {
-    list($itemid,
-         $objectid) = xarVarCleanFromInput('itemid',
-                                          'objectid');
+    if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
+
     extract($args);
 
     if (!empty($objectid)) {

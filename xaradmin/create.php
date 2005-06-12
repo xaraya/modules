@@ -6,7 +6,7 @@
 function dyn_example_admin_create($args)
 {
     // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-    $preview = xarVarCleanFromInput('preview');
+    if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
 
     extract($args);
 
