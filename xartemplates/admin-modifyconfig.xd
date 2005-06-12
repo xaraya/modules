@@ -1,54 +1,61 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('html', 'forms')"></xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            HTML Administration
+        </xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
-<h2><xar:mlstring>Modify HTML Configuration</xar:mlstring></h2>
-<form action="#xarModURL('html', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
-  <div>
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="phase" id="phase" value="update" />
-        <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('Transform linebreaks as either paragraphs or linebreaks.')#"><label for="priority"><xar:mlstring>Type of linebreak transform</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <select name="transformtype" id="transformtype" size="1">
-                <xar:if condition="xarModGetVar('html', 'transformtype') eq '1'">
-                    <option label="Linebreaks" value="1" selected="selected"><xar:mlstring>Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="4"><xar:mlstring>Smart Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="2"><xar:mlstring>Paragraphs</xar:mlstring></option>
-                    <option label="Paragraphs" value="3"><xar:mlstring>None</xar:mlstring></option>
-                <xar:elseif condition="xarModGetVar('html', 'transformtype') eq '2'" />
-                    <option label="Linebreaks" value="1"><xar:mlstring>Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="4"><xar:mlstring>Smart Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="2" selected="selected"><xar:mlstring>Paragraphs</xar:mlstring></option>
-                    <option label="Paragraphs" value="3"><xar:mlstring>None</xar:mlstring></option>
-                <xar:elseif condition="xarModGetVar('html', 'transformtype') eq '3'" />
-                    <option label="Linebreaks" value="1"><xar:mlstring>Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="4"><xar:mlstring>Smart Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="2"><xar:mlstring>Paragraphs</xar:mlstring></option>
-                    <option label="Paragraphs" value="3" selected="selected"><xar:mlstring>None</xar:mlstring></option>
-                <xar:elseif condition="xarModGetVar('html', 'transformtype') eq '4'" />
-                    <option label="Linebreaks" value="1"><xar:mlstring>Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="4" selected="selected"><xar:mlstring>Smart Linebreaks</xar:mlstring></option>
-                    <option label="Paragraphs" value="2"><xar:mlstring>Paragraphs</xar:mlstring></option>
-                    <option label="Paragraphs" value="3"><xar:mlstring>None</xar:mlstring></option>
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <form class="xar-formwidget" method="post" action="#xarModURL('html', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <p class="param">
+                <label for="dolinebreak">
+                    <span class="help" title="#xarML('Check this if you would like the BBCode module to provide linebreaks on content.')#">
+                        <xar:mlstring>
+                            Transform Linebreaks
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="xarModGetVar('html', 'dolinebreak')">
+                    <input type="checkbox" name="dolinebreak" id="dolinebreak" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="dolinebreak" id="dolinebreak" value="1" />
                 </xar:if>
-            </select>
-        </span>
-        </div>
-        <div style="clear: both; padding-top: 10px;">
-            <xar:if condition="!empty($hooks)">
-                <h4><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h4>
-                <p><xar:mlstring>Default hooks for user roles.</xar:mlstring></p>
-                <xar:foreach in="$hooks" key="$hookmodule">
-                    #$hooks[$hookmodule]#
-                </xar:foreach>
-            </xar:if>
-        </div>
-
-        <div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
-            <input type="submit" value="#$submitlabel#" />
-        </div>
-    </div>
-</form>
+            </p>
+        <xar:if condition="!empty($hooks)">
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Hooked Module Configuration
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+            </xar:foreach>
+        </xar:if>
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
+    </form>
 </div>
