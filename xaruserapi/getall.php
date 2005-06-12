@@ -16,7 +16,7 @@ function referer_userapi_getall($args)
     // Get arguments
     extract($args); 
     // Optional arguments.
-    if ($startnum == "") {
+    if (!isset($startnum)) {
         $startnum = 1;
     } 
     if (!isset($numitems)) {

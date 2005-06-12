@@ -48,4 +48,13 @@
             </xar:mlstring>
         </a>
     </dd>
+    <xar:if condition="(xarModIsAvailable('comments')) and (xarModGetVar('comments', 'useblacklist') eq true)">
+        <dd>
+            <a href="#$filterurl#" onClick="#$filterjavascript#">
+                <xar:mlstring>
+                    Filter Spam
+                </xar:mlstring>
+            </a>
+        </dd>
+    </xar:if>
 </dl>

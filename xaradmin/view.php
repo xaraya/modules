@@ -66,6 +66,8 @@ function referer_admin_view()
     $authid = xarSecGenAuthKey();
     $data['javascript'] = "return xar_base_confirmLink(this, '" . xarML('Delete all referer data') . " ?')";
     $data['deleteurl'] = xarModUrl('referer', 'admin', 'delete', array('authid' => $authid));
+    $data['filterjavascript'] = "return xar_base_confirmLink(this, '" . xarML('Filter referer data') . " ?')";
+    $data['filterurl'] = xarModUrl('referer', 'admin', 'filter', array('authid' => $authid));
     return $data;
 }
 ?>
