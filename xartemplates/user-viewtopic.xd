@@ -265,6 +265,21 @@
                             </p>
                         </xar:if>
                     </div>
+                    <xar:comment>
+                        If you extend the xarbb topics with dynamic data fields, you can
+                        retrieve and show them as follows in this template...
+                    </xar:comment>
+                    <xar:if condition="xarModIsHooked('dynamicdata','xarbb',$fid)">
+                        <xar:data-getitem name="$topicprops" module="xarbb" itemtype="$fid" itemid="$tid" />
+                        <xar:if condition="!empty($topicprops)">
+                            <div>
+                            <xar:foreach in="$topicprops" key="$propname">
+                                <p><xar:data-label property="$topicprops[$propname]" /> :
+                                <xar:data-output property="$topicprops[$propname]" /> </p>
+                            </xar:foreach>
+                            </div>
+                         </xar:if>
+                    </xar:if>
                 </td>
             </tr>
             <tr>

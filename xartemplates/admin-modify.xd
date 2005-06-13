@@ -107,6 +107,23 @@
             </legend>
             #$hooks#
         </fieldset>
+        <xar:comment>
+            Since there is no separate configuration screen for forums, we include
+            the dynamic data configuration (if any) here...
+        </xar:comment>
+        <xar:if condition="xarModIsHooked('dynamicdata','xarbb',$fid)">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Dynamic Data
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <xar:set name="extrainfo">array('module' => 'xarbb', 'itemtype' => $fid)</xar:set>
+            <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
+        </fieldset>
+        </xar:if>
         <fieldset class="formelements xar-norm">
             <legend>
                 <strong>
