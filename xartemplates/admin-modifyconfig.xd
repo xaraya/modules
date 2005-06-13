@@ -32,6 +32,25 @@
 <br />
 <em><xar:mlstring>Note : your users will only be able to override those settings that you make available as user settings</xar:mlstring></em>
 <br /><br />
-// TODO: insert dynamic properties config here <br />
-<a href="#xarModURL('dynamicdata','admin','modifyprop',array('modid' => 66))#"><xar:mlstring>Modify the Dynamic Example object</xar:mlstring></a> 
+
+<h2><xar:mlstring>Dynamic Data Configuration</xar:mlstring></h2>
+
+<h3><xar:mlstring>Dynamic Example</xar:mlstring></h3>
+<xar:set name="extrainfo">array('module' => 'dyn_example', 'itemtype' => 0)</xar:set>
+<xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
+
+<xar:comment>
+    The following are only useful if you also make your module variables
+    and user settings dynamic (optional)
+</xar:comment>
+
+<xar:set name="modid">xarModGetIDFromName('dyn_example')</xar:set>
+
+<h3><xar:mlstring>Module Variables (optional)</xar:mlstring></h3>
+<xar:set name="extrainfo">array('module' => 'modules', 'itemtype' => $modid)</xar:set>
+<xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
+
+<h3><xar:mlstring>User Settings (optional)</xar:mlstring></h3>
+<xar:set name="extrainfo">array('module' => 'roles', 'itemtype' => $modid)</xar:set>
+<xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
 
