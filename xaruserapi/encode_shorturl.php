@@ -77,51 +77,18 @@ function xarpages_userapi_encode_shorturl($args)
             if (!empty($extra['path'])) {
                 $path = array_merge($path, $extra['path']);
             }
+
             // Assume it has consumed some GET parameters too.
             // Take what is left (i.e. unconsumed).
-            // Note the custom encoder cannot add further GET parameters without
-            // supplying further path components. (see below for further notes)
-            // NOTE: this is a flaw that should be fixed if this is going to
-            // be a core feature: a URL encoder should be able to add further
-            // GET parameters or alter existing GET parameters without having
-            // to add to the path.
-            // TODO: try this for now: so long as the 'get' value is an array,
-            // then assume it is the new set of GET parameters. A NULL or non-
-            // array can indicate that the current GET parameters should not
-            // change. Note the use of is_array(), since the value could be an
-            // empty array, indicating that all GET parameters have been consumed.
             if (isset($extra['get']) && is_array($extra['get'])) {
                 $get = $extra['get'];
             }
         }
     }
 
-
-    // Create the URL.
-    // TODO: Eventually we should be able to return the array and let
-    // xarModURL() do this bit.
-    // TODO: this rawurlencode() stuff goes too far by encoding characters
-    // it does not really need to encode. The sooner this is centralised,
-    // the better.
-
-    // Generate the path parts.
-    $url = '';
-    foreach ($path as $path_part) {
-        $url .= '/' . rawurlencode($path_part);
-    }
-
-    // The function name was passed in with the arguments - we don't need that
-    // in the get paramaters.
-    unset($get['func']);
-
-    // Generate the get parts.
-    $sep = '?';
-    foreach ($get as $get_name => $get_value) {
-        $url .= $sep . rawurlencode($get_name) . '=' . rawurlencode($get_value);
-        $sep = '&';
-    }
-
-    return $url;
+    // Return the path and unconsumed parameters separately.
+    // Requires xarMod.php from Xaraya 1.0 RC1 or higher to work.
+    return array('path' => $path, 'get' => $get);
 }
 
 ?>
