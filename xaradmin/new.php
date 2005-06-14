@@ -130,6 +130,21 @@ function xarbb_admin_new()
                                    'getforum',
                                    array('fid' => $newfid));
 
+            // Recovery procedure in case the forum is no longer assigned to any category
+            if (empty($forum['fid'])) {
+                $forums = xarModAPIFunc('xarbb','user','getallforums');
+                foreach ($forums as $info) {
+                    if ($info['fid'] == $newfid) {
+                        $forum = $info;
+                        break;
+                    }
+                }
+                if (empty($forum['fid'])) {
+                    $msg = xarML('Invalid Parameter Count');
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                    return;
+                }
+            }
 
                 // Need to create a topic so we don't get the nasty empty error when viewing the forum.
             $ttitle = xarML('Welcome to ').$forum['fname'];
