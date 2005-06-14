@@ -57,6 +57,7 @@ function xarbb_user_main()
         $cats = xarModAPIfunc('categories', 'user', 'getcat', $args);
 
         // Security check: remove categories the user should not see
+        $items = array();
         $catcount = count($cats);
         foreach($cats as $cat)
             if(xarSecurityCheck('ViewxarBB',0,'Forum','$cat[id]:All'))
@@ -90,8 +91,12 @@ function xarbb_user_main()
         // Base Categories
         // Get an array of assigned category details for a specific item
         $cats = xarModAPIfunc('categories', 'user', 'getallcatbases', $args);
+        if (empty($cats)) {
+            $cats = array();
+        }
 
         // Security check: remove categories the user should not see
+        $items = array();
         $catcount = count($cats);
         foreach($cats as $cat)
             if(xarSecurityCheck('ViewxarBB',0,'Forum','$cat[id]:All'))
