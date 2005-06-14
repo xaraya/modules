@@ -19,7 +19,7 @@
     <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
         <div class="xar-clear-both xar-align-center">
-            <input type="submit" value="#xarML('Confirm')#" />
+            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
 </div>
     </form>
 </div>

@@ -34,6 +34,7 @@ function ratings_adminapi_delete($args)
         $ratingstable = $xartable['ratings'];
 
         $query = "DELETE FROM $ratingstable ";
+        $bindvars = array();
         if (!empty($modid)) {
             if (!is_numeric($modid)) {
                 $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
