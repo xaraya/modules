@@ -49,6 +49,7 @@ function ratings_user_display($args)
         }
     }
     $data['style'] = $style;
+    $data['modname'] = $modname;
     $data['itemtype'] = $itemtype;
 
     // Run API function
