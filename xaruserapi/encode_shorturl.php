@@ -44,6 +44,9 @@ function xarpages_userapi_encode_shorturl($args)
     // Consume the pid from the get parameters.
     unset($get['pid']);
 
+    // 'Consume' the function now we know we have enough information.
+    unset($get['func']);
+
     // Follow the tree up to the root.
     $pid_follow = $pid;
     while ($pages[$pid_follow]['parent_key'] <> 0) {
