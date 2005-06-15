@@ -9,6 +9,7 @@
  * @access public
  * @param  integer  file_id     (Optional) grab file with the specified file id
  * @param  string   fileName    (Optional) grab file(s) with the specified file name
+ * @param  string   fileHash    (Optional) grab file(s) with the specified file hash
  * @param  integer  status      (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
  * @param  integer  user_id     (Optional) grab files uploaded by a particular user
  * @param  integer  store_type  (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
@@ -23,7 +24,7 @@ function uploads_userapi_db_get_file( $args )
     extract($args);
 
     if (!isset($fileId) && !isset($fileName) && !isset($fileStatus) && !isset($fileLocation) &&
-        !isset($userId)  && !isset($fileType) && !isset($store_type)) {
+        !isset($userId)  && !isset($fileType) && !isset($store_type) && !isset($fileHash)) {
         $msg = xarML('Missing parameters for function [#(1)] in module [#(2)]', 'db_get_file', 'uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
@@ -45,6 +46,13 @@ function uploads_userapi_db_get_file( $args )
             return array();
         }
     }
+
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+        // table and column definitions
+    $fileEntry_table = $xartable['file_entry'];
 
     if (isset($fileName) && !empty($fileName)) {
         $where[] = "(xar_filename LIKE '$fileName')";
@@ -70,6 +78,11 @@ function uploads_userapi_db_get_file( $args )
         $where[] = "(xar_location LIKE '$fileLocation')";
     }
 
+    // Note: the fileHash is the last part of the location
+    if (isset($fileHash) && !empty($fileHash)) {
+        $where[] = '(xar_location LIKE ' . $dbconn->qstr("%/$fileHash") . ')';
+    }
+
     if (count($where) > 1) {
         if ($inverse)  {
             $where = implode(' OR ', $where);
@@ -83,13 +96,6 @@ function uploads_userapi_db_get_file( $args )
     if ($inverse) {
         $where = "NOT ($where)";
     }
-
-    // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-        // table and column definitions
-    $fileEntry_table = $xartable['file_entry'];
 
     $sql = "SELECT xar_fileEntry_id,
                    xar_user_id,
