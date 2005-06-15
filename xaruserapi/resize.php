@@ -96,7 +96,7 @@ function images_userapi_resize($args)
     $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $src));
 
     if (!is_object($image)) {
-        return sprintf('<img src="" alt="%s" %s />', xarML('File not found.'), $attribs) . '" />';
+        return sprintf('<img src="" alt="%s" %s />', xarML('File not found.'), $attribs);
     }
 
     if (isset($width)) {
@@ -147,12 +147,12 @@ function images_userapi_resize($args)
     if (!$image->getDerivative()) {
         if ($image->resize()) {
             if (!$image->saveDerivative()) {
-                return FALSE;
+                $msg = xarML('Unable to save resized image !');
+                $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
             }
         } else {
             $msg = xarML('Unable to resize image \'#(1)\'!', $image->fileLocation);
-            $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs) . '" />';
-            return FALSE;
+            $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
         }
     }
 
