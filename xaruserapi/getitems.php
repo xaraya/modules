@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Keywords Module
@@ -31,18 +32,14 @@ function keywords_userapi_getitems($args)
 
     if (!empty($id)) {
         if (!is_numeric($id) && !is_array($id)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                         'keywords id', 'user', 'getitem', 'keywords');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                           new SystemException($msg));
+            $msg = xarML('Invalid #(1)', 'keywords id');
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
     } else {
         if (!isset($keyword)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                        'keyword', 'user', 'getitem', 'keywords');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                           new SystemException($msg));
+            $msg = xarML('Invalid #(1)', 'keyword');
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
     }
@@ -61,7 +58,7 @@ function keywords_userapi_getitems($args)
               FROM $keywordstable";
     if (!empty($id)) {
         if (is_array($id)) {
-            $query .= " WHERE xar_id IN (" . join(', ',$id) . ")";
+            $query .= " WHERE xar_id IN (" . join(', ', $id) . ")";
         } else {
             $query .= " WHERE xar_id = ?";
             $bindvars[] = $id;
@@ -74,9 +71,14 @@ function keywords_userapi_getitems($args)
         $query .= " AND xar_itemid = ?";
         $bindvars[] = $itemid;
     }
-     if (!empty($itemtype) && is_numeric($itemtype) ) {
-        $query .= " AND xar_itemtype = ?";
-        $bindvars[] = $itemtype;
+    if (!empty($itemtype)) {
+        if (is_array($itemtype)) {
+            $query .= ' AND xar_itemtype IN (?' . str_repeat(',?', count($itemtype)-1) . ')';
+            $bindvars = array_merge($bindvars, $itemtype);
+        } else {
+            $query .= ' AND xar_itemtype = ?';
+            $bindvars[] = (int)$itemtype;
+        }
     }
     if (!empty($modid) && is_numeric($modid) ) {
         $query .= " AND xar_moduleid = ?";

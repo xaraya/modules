@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * Keywords Module
@@ -21,7 +22,9 @@
  * @returns array
  * @return array of keywords
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @todo This is so similar to getitems, that they could be merged. It is only the format of the results that differs.
  */
+
 function keywords_userapi_getwords($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
@@ -29,17 +32,13 @@ function keywords_userapi_getwords($args)
     extract($args);
 
     if (!isset($modid) || !is_numeric($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module id', 'user', 'getwords', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid #(1)', 'module id');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     if (!isset($itemid) || !is_numeric($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'user', 'getwords', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid #(1)', 'item id');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -50,14 +49,18 @@ function keywords_userapi_getwords($args)
     $bindvars[] = $modid;
 
     // Get words for this module item
-    $query = "SELECT xar_id,
-                     xar_keyword
+    $query = "SELECT xar_id, xar_keyword
               FROM $keywordstable
               WHERE xar_moduleid = ?";
 
-    if (!empty($itemtype) && is_numeric($itemtype) ) {
-        $query .= " AND xar_itemtype = ?";
-        $bindvars[] = $itemtype;
+    if (!empty($itemtype)) {
+        if (is_array($itemtype)) {
+            $query .= ' AND xar_itemtype IN (?' . str_repeat(',?', count($itemtype)-1) . ')';
+            $bindvars = array_merge($bindvars, $itemtype);
+        } else {
+            $query .= ' AND xar_itemtype = ?';
+            $bindvars[] = (int)$itemtype;
+        }
     }
     $query .= " AND xar_itemid = ?";
     $bindvars[] = $itemid;
@@ -76,8 +79,7 @@ function keywords_userapi_getwords($args)
 
     $words = array();
     while (!$result->EOF) {
-        list($id,
-             $word) = $result->fields;
+        list($id, $word) = $result->fields;
         $words[$id] = $word;
         $result->MoveNext();
     }
@@ -85,6 +87,5 @@ function keywords_userapi_getwords($args)
 
     return $words;
 }
-
 
 ?>
