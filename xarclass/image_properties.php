@@ -257,7 +257,7 @@ class Image_Properties
             }
 
             $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
-            if (copy($this->_tmpFile, $derivName)) {
+            if (@copy($this->_tmpFile, $derivName)) {
                 return $derivName;
             } else {
                 return NULL;
