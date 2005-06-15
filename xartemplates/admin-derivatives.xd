@@ -1,0 +1,61 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Images Administration</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>View Derivative Images</xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+
+        <p><strong><xar:mlstring>Derivatives Storage Directory</xar:mlstring>:</strong> #$thumbsdir#</p>
+
+        <table class="xar-accent">
+            <tr>
+                <th>
+                    <xar:mlstring>Original</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Filename</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Width</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Height</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Action</xar:mlstring>
+                </th>
+            </tr>
+            <xar:foreach in="$images" value="$image">
+            <tr>
+                <td>
+                    <xar:if condition="!empty($image['original'])">
+                        <a href="#xarModURL('images', 'user', 'display', array('fileId' => $image['original']['fileId']))#">#$image['original']['fileName']#</a>
+                    <xar:else/>
+                        -
+                    </xar:if>
+                </td>
+                <td>
+                    #$image['fileName']#
+                </td>
+                <td>
+                    #$image['width']#
+                </td>
+                <td>
+                    #$image['height']#
+                </td>
+                <td>
+                    <a href="#$image['fileLocation']#"><xar:mlstring>View</xar:mlstring></a>
+                    |
+                    <xar:mlstring>Delete</xar:mlstring>
+                </td>
+            </tr>
+            </xar:foreach>
+        </table>
+
+    </div>
+</div>
