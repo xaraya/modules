@@ -24,8 +24,8 @@ function courses_user_viewcourses()
         return $data['error'] = xarML('You must be a registered user to view courses...');
     }
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
+    // function should be obtained from xarVarFetch().
+    // xarVarFetch allows the checking of the input
     // variables as well as setting default values if needed.  Getting vars
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya

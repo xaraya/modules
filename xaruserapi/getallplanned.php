@@ -106,7 +106,7 @@ function courses_userapi_getallplanned($args)
             $items[] = array(
             'planningid' => $planningid,
             'courseid'   => $courseid,
-            'credits'    => $credits,'
+            'credits'    => $credits,
             'creditsmin' => $creditsmin,
             'creditsmax' => $creditsmax,
             'courseyear' => $courseyear,
