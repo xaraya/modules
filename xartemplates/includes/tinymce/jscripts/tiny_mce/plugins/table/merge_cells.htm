@@ -8,8 +8,6 @@ function init() {
 
 	formObj.numcols.value = tinyMCE.getWindowArg('numcols', 1);
 	formObj.numrows.value = tinyMCE.getWindowArg('numrows', 1);
-
-	window.focus();
 }
 
 function mergeCells() {
@@ -21,16 +19,19 @@ function mergeCells() {
 		args["numrows"] = formObj.numrows.value;
 
 		window.opener.tinyMCE.execCommand("mceTableMergeCells", false, args);
-		top.close();
+
+		// Close the dialog
+		tinyMCE.closeDialog();
 	}
 }
 
 function cancelAction() {
-	top.close();
+	// Close the dialog
+	tinyMCE.closeDialog();
 }
 </script>
 </head>
-<body onload="window.focus();init();" style="margin: 8px">
+<body onload="init();" style="margin: 8px">
 <form onsubmit="insertTable();return false;">
 <fieldset>
 <legend>{$lang_table_merge_cells_title}</legend>

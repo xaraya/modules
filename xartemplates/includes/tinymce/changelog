@@ -1,14 +1,29 @@
-Version 1.45 RC2 (2005-xx-xx)
+Version 1.45 RC2 (2005-06-15)
 	Fixed bug where paste_use_dialog option for the paste plugin wasn't working correctly.
 	Fixed bug issue with setContent not calling custom cleanups correctly. Inflicts the Flash plugin.
 	Fixed bug where external_link_list_url/external_image_list_url in fullscreen mode.
 	Fixed so TinyMCE doesn't use modal dialogs on MSIE, these where giving some problems with for example lost sessions.
 	Fixed the auto resize function for popups to use new logic.
+	Fixed so callback functions gets called correctly from fullscreen mode.
+	Fixed misspelled language pack for canadian french in the advimage plugin.
+	Fixed so openWindow can open use absolute URL:s.
+	Fixed bug issue where auto_cleanup_word sometimes didn't work in MSIE.
+	Fixed bug issue where the close button in dialogs wasn't available on Firefox on MacOSX.
 	Added new pastetext icon contributed by speednet.
 	Added new browsers option that enables you to specify what browsers is to be WYSIWYG enabled or not.
 	Added partial Catalan translation contributed by Marc Bria Ramírez.
 	Added portuguese Brazil translation contributed by João Borges.
+	Added updated Simplified Chinese language pack contributed by yang huixiong/cube316.
 	Added beforeunload handler for fullscreen plugin so contents gets updated when the window is closed.
+	Added a new fullscreen_settings option for the fullscreen plugin contributed by David Glick.
+	Added new insert table command to context menu when user clicks within a table.
+	Added new advimage_constrain_proportions option to advimage plugin, contributed by Knut B. Jacobsen.
+	Added updated advanced theme with a new external toolbar location option, contributed by Man-Chicken (http://www.zoomshare.com/).
+	Added new tiny_mce_gzip.php file, this PHP script merges and compressed the requested .js files to improve loading times.
+	Added updated czech language pack, contributed by Stanislav Lacko.
+	Added new mceRemoveNode command, this command removes a node and inserts the node contents instead.
+	Added new behavior to format select box, you can now remove a paragraph by selecting -- Format --.
+	Removed ?rnd from external_link_list_url/external_image_list_url since it doesn't work well with serverside scripts.
 Version 1.45 RC1 (2005-05-27)
 	Fixed bug where character map inserted &amp; and &lt;/&gt; when using & < >.
 	Fixed so paragraphs containing &nbsp; is converted to numeric or raw if entity_encoding is set.

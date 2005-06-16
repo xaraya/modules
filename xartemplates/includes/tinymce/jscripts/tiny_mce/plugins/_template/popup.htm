@@ -12,13 +12,13 @@
 		// Execute the mceTemplate command without UI this time
 		tinyMCE.execInstanceCommand(tinyMCE.getWindowArg('editor_id'), 'mceTemplate');
 
-		// Close the popup
-		top.close();
+		// Close the dialog
+		tinyMCE.closeDialog();
 	}
 //-->
 </script>
 </head>
-<body onload="window.focus();init();"> 
+<body onload="init();"> 
 	<h3>{$lang_template_title}</h3>
 
 	<form onsubmit="insert();return false;">

@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('fullscreen', 'en,sv');
+tinyMCE.importPluginLanguagePack('fullscreen', 'en,sv,cs');
 
 function TinyMCE_fullscreen_getControlHTML(control_name) {
 	switch (control_name) {

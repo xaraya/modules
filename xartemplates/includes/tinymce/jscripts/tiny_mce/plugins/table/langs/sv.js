@@ -38,3 +38,4 @@ tinyMCELang['lang_table_cut_row_desc'] = 'Klipput tabell rad';
 tinyMCELang['lang_table_copy_row_desc'] = 'Kopiera tabell rad';
 tinyMCELang['lang_table_paste_row_before_desc'] = 'Klistra in tabell rad f&ouml;re';
 tinyMCELang['lang_table_paste_row_after_desc'] = 'Klistra in tabell rad efter';
+tinyMCELang['lang_table_insert_desc'] = 'Insert a new table';
