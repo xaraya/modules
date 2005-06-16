@@ -4,6 +4,7 @@
  *
  * @returns array
  * @return array containing the list of derivatives
+ * @todo add startnum and numitems support + cache for large # of images
  */
 function images_adminapi_getderivatives($args)
 {
@@ -26,9 +27,13 @@ function images_adminapi_getderivatives($args)
     foreach ($files as $file) {
         // Note: resized images are named [filename]-[width]x[height].jpg - see resize() method
         if (preg_match('/^(.+?)-(\d+)x(\d+)\.jpg$/',$file,$matches)) {
+            $info = stat($thumbsdir . '/' . $file);
             $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
                                  'fileName'     => $matches[1],
                                  'fileType'     => 'image/jpeg',
+                                 'fileSize'     => $info['size'],
+                                 'fileId'       => md5($thumbsdir . '/' . $file),
+                                 'fileModified' => $info['mtime'],
                                  'width'        => $matches[2],
                                  'height'       => $matches[3]);
             $filenames[$matches[1]] = 1;

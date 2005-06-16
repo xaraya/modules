@@ -8,6 +8,37 @@
     <h2>
         <xar:mlstring>View Derivative Images</xar:mlstring>
     </h2>
+    <xar:if condition="!empty($selimage)">
+    <div style="margin: auto;">
+
+        <xar:if condition="!empty($action) and $action eq 'delete'">
+        <form method="post" action="&xar-modurl-images-admin-derivatives;">
+            <p><strong><xar:mlstring>Are you sure you want to delete this image ?</xar:mlstring></strong></p>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="action" value="delete" />
+            <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
+            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+            <input type="submit" name="action" value="#xarML('Cancel')#" />
+        </form>
+        </xar:if>
+
+        <p><img src="#$selimage['fileLocation']#" border="0" /></p>
+        <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
+        <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>
+        <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
+        <xar:mlstring>Size</xar:mlstring> : #$selimage['fileSize']#<br/>
+        <xar:mlstring>Modified</xar:mlstring> : #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#<br/>
+        <xar:if condition="!empty($selimage['original'])">
+            <xar:mlstring>Original</xar:mlstring> : <a href="#xarModURL('images', 'user', 'display', array('fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
+        </xar:if>
+
+    </div>
+    </xar:if>
+
+    <xar:comment>
+        Note: we always show the list here
+    </xar:comment>
+
     <div style="margin: auto;">
 
         <p><strong><xar:mlstring>Derivatives Storage Directory</xar:mlstring>:</strong> #$thumbsdir#</p>
@@ -18,13 +49,29 @@
                     <xar:mlstring>Original</xar:mlstring>
                 </th>
                 <th>
+                    <a href="#xarModURL('images','admin','derivatives')#">
                     <xar:mlstring>Filename</xar:mlstring>
+                    </a>
                 </th>
                 <th>
+                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'width'))#">
                     <xar:mlstring>Width</xar:mlstring>
+                    </a>
                 </th>
                 <th>
+                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'width'))#">
                     <xar:mlstring>Height</xar:mlstring>
+                    </a>
+                </th>
+                <th>
+                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'height'))#">
+                    <xar:mlstring>Size</xar:mlstring>
+                    </a>
+                </th>
+                <th>
+                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'time'))#">
+                    <xar:mlstring>Modified</xar:mlstring>
+                    </a>
                 </th>
                 <th>
                     <xar:mlstring>Action</xar:mlstring>
@@ -49,9 +96,19 @@
                     #$image['height']#
                 </td>
                 <td>
-                    <a href="#$image['fileLocation']#"><xar:mlstring>View</xar:mlstring></a>
+                    #$image['fileSize']#
+                </td>
+                <td>
+                    #xarLocaleGetFormattedDate('short',$image['fileModified'])#
+                </td>
+                <td>
+                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $image['fileId']))#">
+                        <xar:mlstring>View</xar:mlstring>
+                    </a>
                     |
-                    <xar:mlstring>Delete</xar:mlstring>
+                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'delete', 'fileId' => $image['fileId']))#">
+                        <xar:mlstring>Delete</xar:mlstring>
+                    </a>
                 </td>
             </tr>
             </xar:foreach>
