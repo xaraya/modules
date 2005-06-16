@@ -21,22 +21,13 @@
  */
 function courses_adminapi_getmenulinks()
 {
-    // First we need to do a security check to ensure that we only return menu items
-    // that we are suppose to see.  It will be important to add for each menu item that
-    // you want to filter.  No sense in someone seeing a menu link that they have no access
-    // to edit.  Notice that we are checking to see that the user has permissions, and
-    // not that he/she doesn't.
-    // Security Check
     if (xarSecurityCheck('EditCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
                 'viewcourses'),
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
             'title' => xarML('View all courses that have been added.'),
             'label' => xarML('View Courses'));
     }
-    // Security Check
     if (xarSecurityCheck('AddCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
@@ -44,37 +35,24 @@ function courses_adminapi_getmenulinks()
             'title' => xarML('Adds a new course to system.'),
             'label' => xarML('Add Course'));
     }
-    // Security Check
-    /*
-    if (xarSecurityCheck('AddPlanning', 0)) {
+    if (xarSecurityCheck('ViewPlanning', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
-                'plancourse'),
-            'title' => xarML('Plan a course.'),
-            'label' => xarML('Plan Course'));
+                'viewallplanned'),
+            'title' => xarML('View all planned courses.'),
+            'label' => xarML('Planning'));
     }
-    */
-
-    // Security Check
     if (xarSecurityCheck('AdminCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
                 'view'),
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
             'title' => xarML('Modify the courses parameters'),
             'label' => xarML('Course parameters'));
     }
-
-
-
-    // Security Check
     if (xarSecurityCheck('AdminCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
                 'modifyconfig'),
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
             'title' => xarML('Modify the configuration for the module'),
             'label' => xarML('Modify Config'));
     }
@@ -83,8 +61,6 @@ function courses_adminapi_getmenulinks()
     if (empty($menulinks)) {
         $menulinks = '';
     }
-    // The final thing that we need to do in this function is return the values back
-    // to the main menu for display.
     return $menulinks;
 }
 

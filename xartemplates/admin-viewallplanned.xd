@@ -1,0 +1,56 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+<div style="margin: auto;">
+
+<div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
+
+
+<!-- the specific template for the current admin function comes here -->
+
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <th>#$namelabel#</th>
+        <th>#$startdatelabel#</th>
+        <th>#$enddatelabel#</th>
+        <th>#$minmaxparticipantslabel#</th>
+        <th>#$participantslabel#</th>
+        <th>#$optionslabel#</th>
+    </tr>
+    <xar:foreach in="$items" value="$item">
+    <tr>
+        <td>#$item['name']#</td>
+        <td>#$item['startdate']#</td>
+        <td>#$item['enddate']#</td>
+        <td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
+        <td>
+           <xar:if condition="empty($item['participantsurl'])">
+               #$item['participants']#
+           <xar:else />
+               <a href="#$item['participantsurl']#">#$item['participants']#</a>
+           </xar:if>
+        </td>   
+        <td>
+           <xar:if condition="empty($item['editurl'])">
+               #$item['edittitle']#
+           <xar:else />
+               <a href="#$item['editurl']#">#$item['edittitle']#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($item['teachersurl'])">
+               #$item['teacherstitle']#
+           <xar:else />
+               <a href="#$item['teachersurl']#">#$item['teacherstitle']#</a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+<br />
+
+<!-- add the pager here -->
+#$pager#
+</div>
+</div>

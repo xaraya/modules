@@ -67,7 +67,10 @@ function courses_init()
         'xar_material'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_info'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_program'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_hideplanning' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0')
+        'xar_hideplanning' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
+        'xar_minparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_maxparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_closedate'=>array('type'=>'date')
         );
 
      $query = xarDBCreateTable($courses_planning, $fields);
@@ -436,8 +439,29 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.0.4');
 
         case '0.0.4':
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
     
-            break;
+    // xarDBLoadTableMaintenanceAPI();
+    $courses_planning = $xartable['courses_planning'];
+        $fields = "xar_minparticipants SMALLINT NOTNULL default 0,
+        xar_maxparticipants SMALLINT NOTNULL default 0,
+        xar_closedate DATE"
+        ;
+        xarDBLoadTableMaintenanceAPI();
+        $result = $datadict->addColumn($courses_planning, $fields);
+
+        if (!$result) return;
+    
+        // Apply changes
+        xarDBLoadTableMaintenanceAPI();
+        if (!$result) return;
+            
+            return courses_upgrade('0.0.5');
+            
+       case '0.0.5':
+       break;
     }
     // Update successful
     return true;

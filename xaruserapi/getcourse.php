@@ -13,7 +13,7 @@
  * @author Courses module development team 
  */
 /**
- * get a specific item
+ * get a specific course
  * 
  * @author the Courses module development team 
  * @param  $args ['courseid'] id of course item to get
@@ -23,11 +23,8 @@
  */
 function courses_userapi_getcourse($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other places
-    // such as the environment is not allowed, as that makes assumptions that
-    // will not hold in future versions of Xaraya
     extract($args);
+    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
     // Argument check - make sure that all required arguments are present and
     // in the right format, if not then set an appropriate error message
     // and return
@@ -38,22 +35,10 @@ function courses_userapi_getcourse($args)
             new SystemException($msg));
         return;
     }
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table and column definitions you are
-    // getting - $table and $column don't cut it in more complex modules
     $coursestable = $xartable['courses'];
-    
-    
-    // Get item - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the Execute() command allows for simpler debug operation
-    // if it is ever needed
+
     $query = "SELECT xar_name,
                    xar_number,
                    xar_type,

@@ -22,11 +22,6 @@
  */
 function courses_admin_createplanning($args)
 {
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch().
     extract($args);
 
     // Get parameters from whatever input we need.
@@ -50,11 +45,11 @@ function courses_admin_createplanning($args)
     if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program', 'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning', 'str::', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
-    // Argument check - make sure that all required arguments are present
-    // and in the right format, if not then return to the add form with the
-    // values that are there and a message with a session var. If you perform
-    // this check now, you could do away with the check in the API along with
-    // the exception that comes with it.
+    if (!xarVarFetch('minparticipants', 'str::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxparticipants', 'str::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('closedate', 'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
+
+    // Argument check
     /*
     $item = array();
     $item = xarModAPIFunc('courses',
@@ -108,14 +103,8 @@ function courses_admin_createplanning($args)
     // proceed no further as it is possible that this is an attempt at sending
     // in false data to the system
     if (!xarSecConfirmAuthKey()) return;
-    // Notable by its absence there is no security check here.  This is because
-    // the security check is carried out within the API function and as such we
-    // do not duplicate the work here
-    // The API function is called. Note that the name of the API function and
-    // the name of this function are identical, this helps a lot when
-    // programming more complex modules. The arguments to the function are
-    // passed in as their own arguments array
-    $courseid = xarModAPIFunc('courses',
+    // Create planning and get planningid
+    $planningid = xarModAPIFunc('courses',
                           'admin',
                           'createplanning',
                           array('courseid' => $courseid,
@@ -137,7 +126,10 @@ function courses_admin_createplanning($args)
                                 'material' => $material,
                                 'info' => $info,
                                 'program' => $program,
-                                'hideplanning' => $hideplanning));
+                                'hideplanning' => $hideplanning,
+                                'minparticipants'=> $minparticipants,
+                                'maxparticipants'=> $maxparticipants,
+                                'closedate'=> $closedate));
     //Check returnvalue
     if (!isset($planningid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect

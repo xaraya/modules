@@ -92,6 +92,16 @@
                     </label>
                     <xar:data-input name="enddate" type="8" value="$enddate" />
                 </p>
+                <p class="param">
+                    <label for="closedate" class="required">
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <span class="help" title="#xarML('The date registration for this course will end.')#">
+                        #$closedatelabel#
+                        </span>
+                    </label>
+                    <xar:data-input name="closedate" type="8" value="$closedate" />
+                </p>
+                
            </fieldset>
            <fieldset class="formelements xar-norm">
                 <legend>
@@ -239,6 +249,34 @@
                     </span>
                     <xar:if condition="!empty($invalid['costs'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid cost</xar:mlstring></span>
+                    </xar:if>
+                </p>
+                <p class="param">
+                    <label for="minpart">
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <span class="help" title="#xarML('The minimum amount of students that should enroll in this course.')#">
+                        #$minpartlabel#
+                        </span>
+                    </label>
+                    <span class="fullright">
+                      <xar:data-input name="minpart" type="15" value="$minpart" />
+                    </span>
+                    <xar:if condition="!empty($invalid['minpart'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid minpart</xar:mlstring></span>
+                    </xar:if>
+                </p>
+                <p class="param">
+                    <label for="maxpart">
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <span class="help" title="#xarML('The maximum amount of students that can enroll in this course.')#">
+                        #$maxpartlabel#
+                        </span>
+                    </label>
+                    <span class="fullright">
+                      <xar:data-input name="maxpart" type="15" value="$maxpart" />
+                    </span>
+                    <xar:if condition="!empty($invalid['maxpart'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid maxpart</xar:mlstring></span>
                     </xar:if>
                 </p>
                 <p class="param">

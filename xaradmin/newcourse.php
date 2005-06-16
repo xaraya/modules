@@ -31,28 +31,25 @@ function courses_admin_newcourse($args)
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemtype', 'int', $itemtype, 3, XARVAR_NOT_REQUIRED)) return;
     
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
     $data = xarModAPIFunc('courses', 'admin', 'menu');
+
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AddCourses')) return;
+
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
     // Specify some labels for display
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
-    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
+    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Code Number'));
     $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
-    $data['levellabel'] = xarVarPrepForDisplay(xarML('Course Level'));
+    $data['levellabel'] = xarVarPrepForDisplay(xarML('Level'));
     $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description'));
-    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
-    $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
-    $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
+    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Language'));
+    $data['freqlabel'] = xarVarPrepForDisplay(xarML('Frequency'));
+    $data['contactlabel'] = xarVarPrepForDisplay(xarML('Contact details'));
     $data['hidecourselabel'] = xarVarPrepForDisplay(xarML('Hide Course'));
     $data['addcoursebutton'] = xarVarPrepForDisplay(xarML('Add Course'));
     $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));
@@ -60,29 +57,12 @@ function courses_admin_newcourse($args)
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 3));
 
-/*
-    $item = array();
-    $item['module']   = 'helpdesk';
-    $item['itemtype'] = $itemtype;
-    $item['multiple'] = false;
-    $item['returnurl'] = xarModURL('helpdesk', 'user', 'main');
-    $hooks = xarModCallHooks('item', 'new', $itemtype, $item, 'helpdesk');
-    if (empty($hooks)) {
-        $data['hooks'] = array();
-    } else {
-        $data['hooks'] = $hooks;
-    }
-
-    return xarTplModule('helpdesk', 'user', 'new', $data);
-
-*/
-    //Call hooks
+    // Call hooks 
     $item = array();
     $item['module'] = 'courses';
-    $item['itemtype'] = $itemtype;
     $item['multiple'] = false;
     $item['returnurl'] = xarModURL('courses', 'admin', 'newcourse');
-    $hooks = xarModCallHooks('item', 'new', $itemtype, $item);
+    $hooks = xarModCallHooks('item', 'new', '', $item);
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {

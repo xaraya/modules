@@ -13,9 +13,10 @@
  * @author Courses module development team 
  */
 /**
- * view a list of items
- * This is a standard function to provide an overview of all of the items
- * available from the module.
+ * 
+ * view a list of courses that the current user is attached to
+ *
+ * @author Michel V.
  */
 function courses_user_viewmycourses()
 {
@@ -36,8 +37,8 @@ function courses_user_viewmycourses()
     $data['number_label'] = xarVarPrepForDisplay(xarML('Course Number'));
     $data['hours_label'] = xarVarPrepForDisplay(xarML('Course Hours'));
     $data['ceu_label'] = xarVarPrepForDisplay(xarML('Course Credit Hours'));
-    $data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date'));
-    $data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date'));
+    $data['startdate_label'] = xarVarPrepForDisplay(xarML('Start Date'));
+    $data['enddate_label'] = xarVarPrepForDisplay(xarML('End Date'));
     $data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description'));
     $data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
     $data['pager'] = '';

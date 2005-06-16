@@ -9,20 +9,20 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
- * get all courses names that a student is enrolled to
+ * get all course and names that a teacher is linked to
  * 
- * @author the Courses module development team 
+ * @author Michel V. 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function courses_userapi_getall_enrolled($args)
+function courses_userapi_getall_teaching($args)
 {
     // Get arguments from argument array - all arguments to this function
     // should be obtained from the $args array, getting them from other places
@@ -75,18 +75,18 @@ function courses_userapi_getall_enrolled($args)
     // using - $table doesn't cut it in more complex modules
     $planningtable = $xartable['courses_planning'];
     $coursestable = $xartable['courses'];
-    $studentstable = $xartable['courses_students'];
+    $teacherstable = $xartable['courses_teachers'];
     // TODO: how to select by cat ids (automatically) when needed ???
     // How to get the planningid?
     $query = "SELECT $coursestable.xar_name,
             $coursestable.xar_courseid,
             $planningtable.xar_planningid,
             $planningtable.xar_startdate,
-            $studentstable.xar_status
-            FROM $studentstable, $coursestable
+            $teacherstable.xar_type
+            FROM $teacherstable, $coursestable
             JOIN $planningtable
-            ON $planningtable.xar_planningid = $studentstable.xar_planningid
-            WHERE $studentstable.xar_userid = $uid
+            ON $planningtable.xar_planningid = $teacherstable.xar_planningid
+            WHERE $teacherstable.xar_userid = $uid
             AND $coursestable.xar_courseid = $planningtable.xar_courseid";
             //AND $planningtable.xar_planningid = $studentstable.xar_planningid
      $result = &$dbconn->Execute($query);
@@ -95,13 +95,13 @@ function courses_userapi_getall_enrolled($args)
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($name, $courseid, $planningid, $startdate, $studstatus) = $result->fields;
+        list($name, $courseid, $planningid, $startdate, $type) = $result->fields;
         if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$name:All:All")) {
-            $items[] = array('name' => $name,
-                             'courseid'=> $courseid,
+            $items[] = array('name'       => $name,
+                             'courseid'   => $courseid,
                              'planningid' => $planningid,
-                             'startdate'=> $startdate,
-                             'studstatus'=> $studstatus);
+                             'startdate'  => $startdate,
+                             'type'       => $type);
         }
     }
     // All successful database queries produce a result set, and that result

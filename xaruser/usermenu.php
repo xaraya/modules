@@ -48,7 +48,6 @@ function courses_user_usermenu($args)
             // need to get some information about the user.
             $uname = xarUserGetVar('name');
             $uid = xarUserGetVar('uid');
-            $uid = xarUserGetVar('uid');
             $data1 = '';
         //    $data['items'] = array();
         //    $data['pager'] = '';
@@ -84,7 +83,39 @@ function courses_user_usermenu($args)
                 // Add this item to the list of items to be displayed
                 $data1['items'][] = $item;
             }
+            // Get all teaching activities
+            $titems = xarModAPIFunc('courses',
+                 'user',
+                 'getall_teaching',
+                 array('startnum' => $startnum,
+                    'numitems' => xarModGetUserVar('courses',
+                    'itemsperpage', $uid)));
+                   if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                   
+         //Transform display
+         //TODO define SecCheck
+             foreach ($titems as $item) {
+                if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "All:All:All")) { 
+                    $item['tlink'] = xarModURL('courses',
+                        'user',
+                        'displayplanned',
+                        array('planningid' => $item['planningid']));
+                    // Security check 2 - else only display the item name (or whatever is
+                    // appropriate for your module)
+                } else {
+                    $item['tlink'] = '';
+                }
+                // Clean up the item text before display
+                $item['tname'] = xarVarPrepForDisplay($item['name']);
+                $item['tcourseid'] = $item['courseid'];
+                $item['tplanningid'] = $item['planningid'];
+                $item['tstartdate'] = xarVarPrepForDisplay($item['startdate']);
+                //$item['tstatusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
+                //                      array('status' => $item['studstatus']));
 
+                // Add this item to the list of items to be displayed
+                $data1['titems'][] = $item;
+            }
             // We also need to set the SecAuthKey, in order to stop hackers from setting user
             // vars off site.
             $authid = xarSecGenAuthKey('courses');

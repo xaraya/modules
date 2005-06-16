@@ -21,11 +21,6 @@
  */
 function courses_admin_plancourse($args)
 {
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch().
     extract($args);
 
     // Get parameters from whatever input we need.
@@ -50,11 +45,11 @@ function courses_admin_plancourse($args)
     if (!xarVarFetch('hideplanning', 'str:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
-        
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
+    if (!xarVarFetch('minparticipants', 'str::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxparticipants', 'str::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('closedate', 'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
+
+    // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -99,6 +94,9 @@ function courses_admin_plancourse($args)
     $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
     $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
+    $data['minpartlabel'] = xarVarPrepForDisplay(xarML('Minimum Participants'));
+    $data['maxpartlabel'] = xarVarPrepForDisplay(xarML('Maximum Participants'));
+    $data['closedatelabel'] = xarVarPrepForDisplay(xarML('Registration closing date'));
     $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
     $data['infolabel'] = xarVarPrepForDisplay(xarML('Other Course info'));
     $data['addplanningbutton'] = xarVarPrepForDisplay(xarML('Add planning'));
@@ -211,6 +209,23 @@ function courses_admin_plancourse($args)
     } else {
         $data['hideplanning'] = $hideplanning;
     }
+    if (empty($maxpart)) {
+        $data['maxpart'] = '';
+    } else {
+        $data['maxpart'] = $maxpart;
+    }
+    if (empty($minpart)) {
+        $data['minpart'] = '';
+    } else {
+        $data['minpart'] = $minpart;
+    }
+    if (empty($closedate)) {
+        $data['closedate'] = '';
+    } else {
+        $data['closedate'] = $closedate;
+    }
+    
+    
     // Return the template variables defined in this function
     return $data;
 }

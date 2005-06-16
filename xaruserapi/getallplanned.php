@@ -62,7 +62,7 @@ function courses_userapi_getallplanned($args)
     // TODO: how to select by cat ids (automatically) when needed ???
 
     // Set to be able to see all courses or only non-hidden ones
-    if (xarSecurityCheck('AdminPlanning', 0)) {
+    if (xarSecurityCheck('EditPlanning', 0)) {
     $where = "0, 1";
     } else {
     $where = "0";
@@ -89,7 +89,10 @@ function courses_userapi_getallplanned($args)
                    xar_material,
                    xar_info,
                    xar_program,
-                   xar_hideplanning
+                   xar_hideplanning,
+                   xar_minparticipants,
+                   xar_maxparticipants,
+                   xar_closedate
             FROM $planningtable
             WHERE xar_hideplanning in ($where)            
             ORDER BY xar_courseid";
@@ -101,8 +104,8 @@ function courses_userapi_getallplanned($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$planningid:$courseyear:$courseid")) {
+          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate) = $result->fields;
+        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$planningid:All:$courseid")) {
             $items[] = array(
             'planningid' => $planningid,
             'courseid'   => $courseid,
@@ -123,7 +126,10 @@ function courses_userapi_getallplanned($args)
             'material'   => $material,
             'info'       => $info,
             'program'    => $program,
-            'hideplanning' => $hideplanning);
+            'hideplanning' => $hideplanning,
+            'minparticipants' => $minparticipants,
+            'maxparticipants' => $maxparticipants,
+            'closedate' => $closedate);
         }
     }
     // All successful database queries produce a result set, and that result
