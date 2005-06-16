@@ -34,6 +34,21 @@
             <xar:foreach in="$selimage['derivatives']" value="$derivimage">
                 <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['width']# x #$derivimage['height']#</a>
             </xar:foreach>
+            <br/>
+        </xar:if>
+        <xar:if condition="!empty($selimage['associations'])">
+            <xar:mlstring>Associations</xar:mlstring> : 
+            <xar:foreach in="$selimage['moditems']" value="$moditem">
+                [#$moditem['modname']#]
+                <xar:foreach in="$moditem['items']" key="$itemid" value="$item">
+                    <xar:if condition="!empty($item['link'])">
+                        <a href="#$item['link']#" title="#$item['title']#">#$itemid#</a>
+                    <xar:else/>
+                        #$itemid#
+                    </xar:if>
+                </xar:foreach>
+            </xar:foreach>
+            <br/>
         </xar:if>
 
     </div>

@@ -28,9 +28,80 @@ function images_admin_uploads()
         $found = '';
         if (!empty($data['images'][$fileId])) {
             $found = $data['images'][$fileId];
+            // Get derivative images for this image
             if (!empty($found['fileHash'])) {
                 $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
                                                       array('fileName' => $found['fileHash']));
+            }
+            // Get known associations for this image (currently unused)
+            $found['associations'] = xarModAPIFunc('uploads','user','db_get_associations',
+                                                   array('fileId' => $found['fileId']));
+            $found['moditems'] = array();
+            if (!empty($found['associations'])) {
+                $modlist = array();
+                foreach ($found['associations'] as $assoc) {
+                    // uploads 0.9.8 format
+                    if (isset($assoc['objectId'])) {
+                        if (!isset($modlist[$assoc['modId']])) {
+                            $modlist[$assoc['modId']] = array();
+                        }
+                        if (!isset($modlist[$assoc['modId']][$assoc['itemType']])) {
+                            $modlist[$assoc['modId']][$assoc['itemType']] = array();
+                        }
+                        $modlist[$assoc['modId']][$assoc['itemType']][$assoc['objectId']] = 1;
+
+                    // uploads_guimods 0.9.9+ format
+                    } elseif (isset($assoc['itemid'])) {
+                        if (!isset($modlist[$assoc['modid']])) {
+                            $modlist[$assoc['modid']] = array();
+                        }
+                        if (!isset($modlist[$assoc['modid']][$assoc['itemtype']])) {
+                            $modlist[$assoc['modid']][$assoc['itemtype']] = array();
+                        }
+                        $modlist[$assoc['modid']][$assoc['itemtype']][$assoc['itemid']] = 1;
+                    }
+                }
+                foreach ($modlist as $modid => $itemtypes) {
+                    $modinfo = xarModGetInfo($modid);
+                    // Get the list of all item types for this module (if any)
+                    $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+                                             // don't throw an exception if this function doesn't exist
+                                             array(), 0);
+                    foreach ($itemtypes as $itemtype => $items) {
+                        $moditem = array();
+                        $moditem['module'] = $modinfo['name'];
+                        $moditem['modid'] = $modid;
+                        $moditem['itemtype'] = $itemtype;
+                        if ($itemtype == 0) {
+                            $moditem['modname'] = ucwords($modinfo['displayname']);
+                        //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','main');
+                        } else {
+                            if (isset($mytypes) && !empty($mytypes[$itemtype])) {
+                                $moditem['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
+                            //    $moditem['modlink'] = $mytypes[$itemtype]['url'];
+                            } else {
+                                $moditem['modname'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
+                            //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                            }
+                        }
+                        $itemids = array_keys($items);
+                        $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                                                   array('itemtype' => $itemtype,
+                                                         'itemids' => $itemids),
+                                                   0); // don't throw an exception here
+                        $moditem['items'] = array();
+                        foreach ($itemids as $itemid) {
+                            if (isset($itemlinks[$itemid])) {
+                                $moditem['items'][$itemid]['link'] = $itemlinks[$itemid]['url'];
+                                $moditem['items'][$itemid]['title'] = $itemlinks[$itemid]['label'];
+                            } else {
+                                $moditem['items'][$itemid]['link'] = '';
+                                $moditem['items'][$itemid]['title'] = $itemid;
+                            }
+                        }
+                        $found['moditems'][] = $moditem;
+                    }
+                }
             }
         }
     }
