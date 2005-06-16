@@ -13,9 +13,9 @@
  * @author Example module development team
  */
 /**
- * create a new example item
+ * create a new course item
  *
- * @author the Example module development team
+ * @author the course module development team
  * @param  $args ['name'] name of the item
  * @param  $args ['number'] number of the item
  * @returns int

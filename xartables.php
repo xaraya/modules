@@ -9,17 +9,12 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 
 /**
- * Upgraded to the new security schema by Vassilis Stratigakis
- * http://www.tequilastarrise.net
- */
-
-/**
- * Return example table names to xaraya
+ * Return courses table names to xaraya
  * 
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
@@ -31,15 +26,36 @@ function courses_xartables()
 { 
     // Initialise table array
     $xarTables = array();
-    // Get the name for the example item table.  This is not necessary
+    // Get the name for the course table.  This is not necessary
     // but helps in the following statements and keeps them readable
-    $coursesTable = xarDBGetSiteTablePrefix() . '_courses';
+	
+    $courses = xarDBGetSiteTablePrefix() . '_courses';
     // Set the table name
-    $xarTables['courses'] = $coursesTable;
-
-    $courses_studentsTable = xarDBGetSiteTablePrefix() . '_courses_students';
-    // Set the second table name
-    $xarTables['courses_students'] = $courses_studentsTable;
+    $xarTables['courses'] = $courses;
+	
+    $courses_planning = xarDBGetSiteTablePrefix() . '_courses_planning';
+    // Set the table name
+    $xarTables['courses_planning'] = $courses_planning;
+	
+    $courses_students = xarDBGetSiteTablePrefix() . '_courses_students';
+    // Set the table name
+    $xarTables['courses_students'] = $courses_students;
+    
+    $courses_teachers = xarDBGetSiteTablePrefix() . '_courses_teachers';
+    // Set the table name
+    $xarTables['courses_teachers'] = $courses_teachers;
+	
+	$courses_levels = xarDBGetSiteTablePrefix() . '_courses_levels';
+	    // Set the table name
+    $xarTables['courses_levels'] = $courses_levels;
+    
+	$courses_studstatus = xarDBGetSiteTablePrefix() . '_courses_studstatus';
+    // Set the table name
+    $xarTables['courses_studstatus'] = $courses_studstatus;
+	
+	$courses_years = xarDBGetSiteTablePrefix() . '_courses_years';
+	    // Set the table name
+    $xarTables['courses_years'] = $courses_years;
     // Return the table information
     return $xarTables;
 } 

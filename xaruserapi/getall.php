@@ -9,13 +9,13 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
- * get all example items
+ * get all courses
  * 
- * @author the Example module development team 
+ * @author the Courses module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -24,10 +24,6 @@
  */
 function courses_userapi_getall($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other places
-    // such as the environment is not allowed, as that makes assumptions that
-    // will not hold in future versions of Xaraya
     extract($args);
     // Optional arguments.
     // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
@@ -39,11 +35,8 @@ function courses_userapi_getall($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    // Argument check - make sure that all required arguments are present and
-    // in the right format, if not then set an appropriate error message
-    // and return
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
+    // Argument check
+    
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
@@ -64,32 +57,34 @@ function courses_userapi_getall($args)
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!xarSecurityCheck('ViewCourses')) return;
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you are
     // using - $table doesn't cut it in more complex modules
     $coursestable = $xartable['courses'];
     // TODO: how to select by cat ids (automatically) when needed ???
-    // Get items - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the SelectLimit() command allows for simpler debug
-    // operation if it is ever needed
+    
+    // Set to be able to see all courses or only non-hidden ones
+    if (xarSecurityCheck('AdminCourses', 0)) {
+    $where = "0, 1";
+    } else {
+    $where = "0";
+    }
+    // Get items
     $query = "SELECT xar_courseid,
                    xar_name,
                    xar_number,
-                   xar_hours,
-                   xar_ceu,
-                   xar_startdate,
-                   xar_enddate,
+                   xar_type,
+                   xar_level,
                    xar_shortdesc,
-                   xar_longdesc
+                   xar_language,
+                   xar_freq,
+                   xar_contact,
+                   xar_hidecourse
             FROM $coursestable
-            ORDER BY xar_name";
+            WHERE xar_hidecourse in ($where)
+            ORDER BY xar_number";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -100,17 +95,18 @@ function courses_userapi_getall($args)
     // If more severe restrictions apply, e.g. for READ access to display
     // the details of the item, this *must* be verified by your function.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($courseid, $name, $number, $hours, $ceu, $startdate, $enddate, $shortdesc, $longdesc) = $result->fields;
+        list($courseid, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse) = $result->fields;
         if (xarSecurityCheck('ViewCourses', 0, 'Item', "$name:All:$courseid")) {
             $items[] = array('courseid' => $courseid,
                 'name' => $name,
                 'number' => $number,
-                'hours' => $hours,
-                'ceu' => $ceu,
-                'startdate' => $startdate,
-                'enddate' => $enddate,
+                'coursetype' => $coursetype,
+                'level' => $level,
                 'shortdesc' => $shortdesc,
-                'longdesc' => $longdesc);
+                'language' => $language,
+                'freq' => $freq,
+                'contact' => $contact,
+                'hidecourse' => $hidecourse);
         }
     }
     // All successful database queries produce a result set, and that result

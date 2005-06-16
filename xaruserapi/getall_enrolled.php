@@ -13,9 +13,9 @@
  * @author Example module development team 
  */
 /**
- * get all example items
+ * get all courses names that a student is enrolled to
  * 
- * @author the Example module development team 
+ * @author the Courses module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -73,31 +73,37 @@ function courses_userapi_getall_enrolled($args)
     $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you are
     // using - $table doesn't cut it in more complex modules
+	$planningtable = $xartable['courses_planning'];
     $coursestable = $xartable['courses'];
-    $courses_studentstable = $xartable['courses_students'];
+    $studentstable = $xartable['courses_students'];
     // TODO: how to select by cat ids (automatically) when needed ???
     // Get items - the formatting here is not mandatory, but it does make the
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the SelectLimit() command allows for simpler debug
     // operation if it is ever needed
-    $query = "SELECT $coursestable.xar_name, $coursestable.xar_courseid
-            FROM $coursestable, $courses_studentstable
-            WHERE $courses_studentstable.xar_uid = $uid
-            AND $coursestable.xar_courseid = $courses_studentstable.xar_course";
+	// How to get the planningid?
+    $query = "SELECT $coursestable.xar_name,
+	        $coursestable.xar_courseid,
+			$planningtable.xar_planningid,
+			$planningtable.xar_startdate,
+			$studentstable.xar_status
+            FROM $coursestable, $planningtable, $studentstable
+            WHERE $studentstable.xar_userid = $uid
+            AND $planningtable.xar_planningid = $studentstable.xar_planningid";
 
      $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Put items into result array.  Note that each item is checked
-    // individually to ensure that the user is allowed *at least* OVERVIEW
-    // access to it before it is added to the results array.
-    // If more severe restrictions apply, e.g. for READ access to display
-    // the details of the item, this *must* be verified by your function.
+    // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($name, $courseid) = $result->fields;
-        if (xarSecurityCheck('ViewCourses', 0, 'Item', "$name:All:$courseid")) {
-            $items[] = array('name' => $name, 'courseid' => $courseid);
+        list($name, $courseid, $planningid, $startdate, $studstatus) = $result->fields;
+        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$name:All:All")) {
+            $items[] = array('name' => $name,
+			                 'courseid'=> $courseid,
+							 'planningid' => $planningid,
+							 'startdate'=> $startdate,
+							 'studstatus'=> $studstatus);
         }
     }
     // All successful database queries produce a result set, and that result

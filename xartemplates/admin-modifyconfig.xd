@@ -1,44 +1,106 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<div style="margin: auto;">
+<xar:if condition="xarTplAddStyleLink('courses', 'xarform')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('courses', 'courses')"></xar:if>
+<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 
-<!-- the specific template for the current admin function comes here -->
-
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<script type="text/javascript">
 <!--
-    // Start form - note the use of xarModURL() to create the recipient URL of
-    // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of Xaraya
--->
-<form method="post" action="&xar-modurl-courses-admin-updateconfig;">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    // Enter name of mandatory fields
+    var fieldRequired = Array("hidecoursemsg", "hideplanningmsg");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Hide Course Msg", "Hide Planning msg");
+//-->
+</script>
 
-<tr><td><label for="bold">#$boldlabel#</label></td>
-<td><input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# /></td></tr>
-
-<tr><td><label for="itemsperpage">#$itemslabel#</label></td>
-<td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
-
-<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
-
-<tr><td colspan="2">
-#$hooks#
-</td></tr>
-
-<tr><td colspan="2" align="center">
-    <input type="submit" value="#$updatebutton#" /></td></tr>
-</form>
-
-</table>
-<br />
+<div class="xar-mod-head">
+	<span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
+
+<div class="xar-mod-body">
+	<h2>#$menutitle#</h2>
+
+	<div class="xar-courses xar-courses-modifyconfig">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+	
+	<form method="post" class="xar-form"
+		  action="#xarModUrl('courses', 'admin', 'updateconfig')#"
+		  onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+		  
+		  <fieldset class="xar-norm">
+			   <fieldset class="formelements xar-norm">
+					<legend>
+						<strong><xar:mlstring>Course conditions</xar:mlstring></strong>
+					</legend>
+					<p class="param">
+						<label for="material">
+							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+							<span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
+							#$hideplanningmsg_label#
+							</span>
+						</label>
+						<span class="fullright">
+							<textarea class="fullright" name="hideplanningmsg" id="hideplanningmsg" wrap="virtual" rows="10" cols="40">#$hideplanningmsg#</textarea>
+						</span>
+						<xar:if condition="!empty($invalid['hideplanningmsg'])">
+							<span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
+						</xar:if>
+					</p>
+					<p class="param">
+						<label for="hidecoursemsg">
+							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+							<span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
+							#$hidecoursemsg_label#
+							</span>
+						</label>
+						<span class="fullright">
+							<textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#$hidecoursemsg#</textarea>
+						</span>
+						<xar:if condition="!empty($invalid['hidecoursemsg'])">
+							<span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecoursemsg</xar:mlstring></span>
+						</xar:if>
+					</p>
+					<p class="param">
+						<label for="bold">
+							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+							<span class="help" title="#xarML('Show items in bold??.')#">
+							#$boldlabel#
+							</span>
+						</label>
+						<span class="fullright">
+							<input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# />
+						</span>
+						<xar:if condition="!empty($invalid['bold'])">
+							<span style="color: red"><xar:mlstring>ERROR! This is not a valid bold</xar:mlstring></span>
+						</xar:if>
+					</p>
+					<p class="param">
+						<label for="itemsperpage" class="required">
+							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+							<span class="help" title="#xarML('Number of items per page.')#">
+							#$itemslabel#
+							</span>
+						</label>
+						<xar:data-input name="itemsperpage" type="15" value="$itemsvalue" />
+						<xar:if condition="!empty($invalid['credits'])">
+							<span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring></span>
+						</xar:if>
+					</p>
+					<p class="param">
+						<label for="bold">
+							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+							<span class="help" title="#xarML('Support short URLs.')#">
+							#$shorturlslabel#
+							</span>
+						</label>
+						<span class="fullright">
+							<input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
+						</span>
+					</p>
+					
+			   </fieldset>
+		  </fieldset>
+		  #$hooks#
+		  <input type="submit" value="#$updatebutton#" />
+	</form>
+	</div>
 </div>

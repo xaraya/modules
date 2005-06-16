@@ -1,0 +1,18 @@
+<items>
+  <courses_studstatus itemid="1">
+    <statusid></statusid>
+    <studstatus>Enrolled</studstatus>
+  </courses_studstatus>
+  <courses_studstatus itemid="2">
+    <statusid></statusid>
+    <studstatus>Cancelled</studstatus>
+  </courses_studstatus>
+  <courses_studstatus itemid="3">
+    <statusid></statusid>
+    <studstatus>Passed</studstatus>
+  </courses_studstatus>
+  <courses_studstatus itemid="4">
+    <statusid></statusid>
+    <studstatus>Failed</studstatus>
+  </courses_studstatus>
+</items>

@@ -10,77 +10,40 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author XarayaGeek 
+ * @author XarayaGeek , Michel V.
  */
 
 /**
- * display an item
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ * display a course
+ * This is the function to provide detailed information on a single course
+ * and show the details of all planned occurences
  * 
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['exid'] the item id used for this example module
+ * @param  $args ['courseid'] the ID of the course
  */
 function courses_user_display($args)
 {
-    // User functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch(), so that parameters passed by the modules can also be
-    // checked by a certain validation.
     extract($args);
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('enrolled', 'str:1:', $enrolled, '', XARVAR_NOT_REQUIRED)) return;
 
-    // At this stage we check to see if we have been passed $objectid, the
-    // generic item identifier.  This could have been passed in by a hook or
-    // through some other function calling this as part of a larger module, but
-    // if it exists it overrides $exid
-
-    // Note that this module could just use $objectid everywhere to avoid all
-    // of this munging of variables, but then the resultant code is less
-    // descriptive, especially where multiple objects are being used.  The
-    // decision of which of these ways to go is up to the module developer
     if (!empty($objectid)) {
         $courseid = $objectid;
     }
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
+    // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     $data['status'] = '';
     // The API function is called.  The arguments to the function are passed in
     // as their own arguments array.
-    // Security check 1 - the get() function will fail if the user does not
-    // have at least READ access to this item (also see below).
     $item = xarModAPIFunc('courses',
         'user',
         'get',
         array('courseid' => $courseid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    // If your module deals with different types of items, you should specify the item type
-    // here, before calling any hooks
-    // $item['itemtype'] = 0;
-    // Security check 2 - if your API function does *not* check for the
-    // appropriate access rights, or if for some reason you require higher
-    // access than READ for this function, you *must* check this here !
-    // if (!xarSecurityCheck('CommentExample',0,'Item',"$item[name]:All:$item[exid]")) {
-    // // Fill in the status variable with the status to be shown
-    // $data['status'] = _EXAMPLENOAUTH;
-    // // Return the template variables defined in this function
-    // return $data;
-    // }
     // Let any transformation hooks know that we want to transform some text.
     // You'll need to specify the item id, and an array containing the names of all
     // the pieces of text that you want to transform (e.g. for autolinks, wiki,
@@ -93,31 +56,42 @@ function courses_user_display($args)
     // Fill in the details of the item.  Note that a module variable is used here to determine
     // whether or not parts of the item information should be displayed in
     // bold type or not
-    $data['name_label'] = xarVarPrepForDisplay(xarML('Course Name:'));
-    $data['number_label'] = xarVarPrepForDisplay(xarML('Course Number:'));
-    $data['hours_label'] = xarVarPrepForDisplay(xarML('Course Hours:'));
-    $data['ceu_label'] = xarVarPrepForDisplay(xarML('Course Credit Hours:'));
-    $data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date:'));
-    $data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date:'));
-    $data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description:'));
-    $data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
-    $data['name_value'] = $item['name'];
-    $data['number_value'] = $item['number'];
-    $data['hours_value'] = $item['hours'];
-    $data['ceu_value'] = $item['ceu'];
-    $data['startdate_value'] = $item['startdate'];
-    $data['enddate_value'] = $item['enddate'];
-    $data['shortdesc_value'] = xarVarPrepHTMLDisplay($item['shortdesc']);
-    $data['longdesc_value'] = xarVarPrepHTMLDisplay($item['longdesc']);
+    $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
+    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
+    $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
+    $data['levellabel'] = xarVarPrepForDisplay(xarML('Course Level'));
+    $data['creditslabel'] = xarVarPrepForDisplay(xarML('Course Credits'));
+    $data['startdatelabel'] = xarVarPrepForDisplay(xarML('Start date'));
+    $data['enddatelabel'] = xarVarPrepForDisplay(xarML('End date'));
+    $data['costslabel'] = xarVarPrepForDisplay(xarML('Course Fee'));
+    $data['materiallabel'] = xarVarPrepForDisplay(xarML('Course materials'));
+    $data['creditsminlabel'] = xarVarPrepForDisplay(xarML('Course Minimum Credits'));
+    $data['creditsmaxlabel'] = xarVarPrepForDisplay(xarML('Course Maximum Credits'));
+    $data['prereqlabel'] = xarVarPrepForDisplay(xarML('Course Prerequisites'));
+    $data['aimlabel'] = xarVarPrepForDisplay(xarML('Course Aim'));
+    $data['coordinatorslabel'] = xarVarPrepForDisplay(xarML('Course coordinators'));
+    $data['committeelabel'] = xarVarPrepForDisplay(xarML('Course committee'));
+    $data['lecturerslabel'] = xarVarPrepForDisplay(xarML('Course lecturers'));
+    $data['locationlabel'] = xarVarPrepForDisplay(xarML('Course location'));
+    $data['programlabel'] = xarVarPrepForDisplay(xarML('Course Programme'));
+    $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Course Description'));
+    $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
+    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
+    $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
+    $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
+    $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
+    $data['infolabel'] = xarVarPrepForDisplay(xarML('Other Course info'));
+    $data['enrollbutton'] = xarVarPrepForDisplay(xarML('Enroll'));
+    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     //$data['enrolled'] = xarVarPrepForDisplay(xarML('You are currently enrolled in this course'));
     $data['courseid'] = $courseid;
-
+    $data['item'] = $item;
     $data['is_bold'] = xarModGetVar('courses', 'bold');
 
      // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
     //Check to see if this user is already enrolled in this course
-   $courses = xarModAPIFunc('courses',
+/*   $courses = xarModAPIFunc('courses',
                           'user',
                           'check_enrolled',
                           array('uid' => $uid,
@@ -130,7 +104,67 @@ function courses_user_display($args)
         $data['enrolled'] = xarVarPrepForDisplay(xarML('You are currently enrolled in '. $courses[$courseid] ));
     }
 
+*/
+    $data['levelname'] = xarModAPIFunc('courses', 'user', 'getlevel',
+                                      array('level' => $item['level']));
+    $items = xarModAPIFunc('courses',
+        'user',
+        'getplandates',
+        array('courseid' => $courseid));
+    //TODO: howto check for correctness here?
+    //if (!isset($plandates) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
+    // Check individual permissions for Enroll/Edit/Viewstatus
+    // Note : we could use a foreach ($items as $item) here as well, as
+    // shown in xaruser.php, but as an example, we'll adapt the $items array
+    // 'in place', and *then* pass the complete items array to $data
+
+    for ($i = 0; $i < count($items); $i++) {
+        $planitem = $items[$i];
+        if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:$courseid")) {
+            $items[$i]['participantsurl'] = xarModURL('courses',
+                'admin',
+                'participants',
+                array('planningid' => $planitem['planningid']));
+        } else {
+            $items[$i]['participantsurl'] = '';
+        }
+        $items[$i]['participantstitle'] = xarML('Participants');
+		
+        if (xarSecurityCheck('ReadCourses', 0, 'Item', "All:All:$courseid")) {
+            $items[$i]['enrollurl'] = xarModURL('courses',
+                'user',
+                'enroll',
+                array('planningid' => $planitem['planningid']));
+        } else {
+            $items[$i]['enrollurl'] = '';
+        }
+        $items[$i]['enrolltitle'] = xarML('Enroll');
+		
+        if (xarSecurityCheck('ReadPlanning', 0, 'Item', "$planitem[planningid]:All:$courseid")) {
+            $items[$i]['detailsurl'] = xarModURL('courses',
+                'user',
+                'displayplanned',
+                array('planningid' => $planitem['planningid'], 'courseid'=> $courseid));
+        } else {
+            $items[$i]['detailsurl'] = '';
+        }
+        $items[$i]['detailstitle'] = xarML('Details');
+		
+        if (xarSecurityCheck('DeleteCourses', 0, 'Item', "$planitem[planningid]:All:$courseid")) {
+            $items[$i]['statusurl'] = xarModURL('courses',
+                'user',
+                'status',
+                array('planningid' => $planitem['planningid']));
+        } else {
+            $items[$i]['statusurl'] = '';
+        }
+        $items[$i]['statustitle'] = xarML('Status');
+    }
+	
+    // Add the array of items to the template variables
+    $data['items'] = $items;	
+	
     // Note : module variables can also be specified directly in the
     // blocklayout template by using &xar-mod-<modname>-<varname>;
     // Note that you could also pass on the $item variable, and specify
@@ -161,18 +195,12 @@ function courses_user_display($args)
         // $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.
         $data['hookoutput'] = $hooks;
     }
+    $data['authid'] = xarSecGenAuthKey();
     // Once again, we are changing the name of the title for better
     // Search engine capability.
     xarTplSetPageTitle(xarVarPrepForDisplay($item['name']));
     // Return the template variables defined in this function
     return $data;
-    // Note : instead of using the $data variable, you could also specify
-    // the different template variables directly in your return statement :
-
-    // return array('menu' => ...,
-    // 'item' => ...,
-    // 'hookoutput' => ...,
-    // ... => ...);
 }
 
 ?>

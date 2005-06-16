@@ -13,13 +13,8 @@
  * @author XarayaGeek
  */
 /**
- * get all example items
+ * see if there is already a link between the current user and a planned course
  *
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
- * @returns array
- * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_check_enrolled($args)
 {
@@ -28,7 +23,10 @@ function courses_userapi_check_enrolled($args)
     // such as the environment is not allowed, as that makes assumptions that
     // will not hold in future versions of Xaraya
     extract($args);
-    if (!isset($courseid) || !is_numeric($courseid)) {
+    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('uid', 'int:1:', $uid)) return;
+	
+    if (!isset($planningid) || !is_numeric($planningid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'check_enrolled', 'courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -36,11 +34,10 @@ function courses_userapi_check_enrolled($args)
         return;
     }
 
-    $uid = xarUserGetVar('uid');
     $items = array();
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('ViewCourses')) return;
+    if (!xarSecurityCheck('ViewPlanning')) return;
     // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
     // return arrays but we handle them differently.  For xarDBGetConn() we
     // currently just want the first item, which is the official database
@@ -50,42 +47,31 @@ function courses_userapi_check_enrolled($args)
     $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you are
     // using - $table doesn't cut it in more complex modules
-    $coursestable = $xartable['courses'];
     $courses_studentstable = $xartable['courses_students'];
 
-    $sql = "SELECT $coursestable.xar_name AS name,
-    $coursestable.xar_courseid AS courseid
-    FROM $coursestable,
-    $courses_studentstable
-    WHERE $courses_studentstable.xar_uid = $uid
-    AND $coursestable.xar_courseid = $courses_studentstable.xar_course";
+    $sql = "SELECT xar_userid, xar_planningid
+    FROM $courses_studentstable
+    WHERE xar_userid = $uid
+    AND xar_planningid = $planningid";
     $result = $dbconn->Execute($sql);
-
-    if (!$result) {
-    return;
+    // Nothing found: return empty
+    $items=array();
+	
+	if (!$result) {return;
+	}
+	else {
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($userid, $planningid) = $result->fields;
+        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "All:All:$planningid")) {
+            $items[] = array('userid' => $userid,
+                            'planningid' => $planningid);
+        }
+    
+	}
+    $result->Close();
+    return $items;
     }
-    // if no record found, return an empty array
-    if ($result->EOF) {
-    return array();
-    }
-
-   while(!$result->EOF) {
-    $row = $result->GetRowAssoc(false);
-
-    $courses[$row['courseid']] = $row['name'];
-    $result->MoveNext();
-    }
-
-    // return the items
-    return $courses;
-    // TODO: how to select by cat ids (automatically) when needed ???
-    // Get items - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the SelectLimit() command allows for simpler debug
-    // operation if it is ever needed
-
-    // All successful database queries produce a result set, and that result
-    // set should be closed when it has been finished with
+	// TODO: how to select by cat ids (automatically) when needed ???
 
 }
 ?>

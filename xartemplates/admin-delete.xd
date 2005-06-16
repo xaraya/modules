@@ -1,42 +1,31 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<div style="margin: auto;">
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br />
 
-<!-- the specific template for the current admin function comes here -->
+<xar:if condition="!empty($menu)">
+#$menu#
+</xar:if>
+<div class="tborder">
 
+<h2><xar:mlstring>Delete Item</xar:mlstring></h2>
 
-<div align="center">#$confirmtext#</div><br />
-<form method="post" action="&xar-modurl-courses-admin-delete;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" id="confirm" value="true" />
-    <input type="hidden" name="courseid" id="exid" value="#$courseid#" />
+<div align="center"><b><xar:mlstring>Confirm deleting this item ?</xar:mlstring></b></div><br />
 
-    <table border="0" width="300">
-        <tr>
-            <td>
-                #$itemid#:
-            </td>
-            <td>
-                #$courseid#
-            </td>
-        </tr>
-        <tr>
-            <td>
-                #$namelabel#:
-            </td>
-            <td>
-                #$namevalue#
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><br />
-                    <input type="submit" value="#$confirmbutton#"  />
-            </td>
-        </tr>
-    </table>
+<xar:data-display object="$object" />
+
+<div align="center">
+<form method="post" action="#xarModURL('courses', 'admin', 'delete')#">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+
+    <input type="submit" name="confirm" value=" #xarML('Yes')# " />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
 </form>
 </div>
+
 </div>

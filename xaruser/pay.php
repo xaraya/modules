@@ -24,18 +24,8 @@
  */
 function courses_user_pay($args)
 {
-    // User functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch(), so that parameters passed by the modules can also be
-    // checked by a certain validation.
     extract($args);
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+
     if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
 

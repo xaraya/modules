@@ -1,0 +1,33 @@
+<object name="courses_levels">
+  <objectid>41</objectid>
+  <label>Course Levels</label>
+  <moduleid>179</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>3</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="lid">
+      <id>112</id>
+      <label>Lid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_courses_levels.xar_lid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="level">
+      <id>113</id>
+      <label>Level</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_courses_levels.xar_level</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:50</validation>
+    </property>
+  </properties>
+</object>
+        

@@ -1,0 +1,48 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('courses', 'xarform')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('courses', 'courses')"></xar:if>
+
+<div class="xar-mod-head">
+   <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+<form method="post" class="xar-form" action="&xar-modurl-courses-admin-deleteparticipant;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" id="confirm" value="true" />
+    <input type="hidden" name="sid" id="sid" value="#$sid#" />
+    <input type="hidden" name="planningid" id="planningid" value="#$item['planningid']#" />
+
+      <fieldset class="xar-norm">
+           <fieldset class="formelements xar-norm">
+                <legend>
+                    <strong>#$confirmtext#</strong>
+                </legend>
+                <p class="param">
+                    <label for="uname">
+                        <span class="help" title="#xarML('The name of the participant.')#">
+                        #$namelabel#
+                        </span>
+                    </label>
+                    <xar:data-input name="name" type="1" value="$namevalue" />
+                </p>
+                <p class="param">
+                    <label for="sid">
+                        <span class="help" title="#xarML('The ID of the participant.')#">
+                        #$itemid#
+                        </span>
+                    </label>
+                    <xar:data-input name="sid" type="1" value="$sid" />
+                </p>
+                <p class="param">
+                    <label for="planningid">
+                        <span class="help" title="#xarML('The ID of this occurence of the course.')#">
+                        #$planningidlabel#
+                        </span>
+                    </label>
+                    <xar:data-input name="planningid" type="1" value="$item['planningid']" />
+                </p>
+           </fieldset>
+      </fieldset>
+<input type="submit" value="#$confirmbutton#"  />
+</form>
+</div>

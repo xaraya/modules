@@ -9,8 +9,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
  * generate the common admin menu configuration
@@ -26,7 +26,7 @@ function courses_adminapi_menu()
     $menu['status'] = '';
     // Note : you could also specify the menu links here, and pass them
     // on to the template as variables
-    // $menu['menulink_view'] = xarModURL('example','admin','view');
+     $menu['menulink_view'] = xarModURL('courses','admin','viewcourses');
     // Note : you could also put all menu items in a $menu['menuitems'] array
 
     // Initialise the array that will hold the different menu items
@@ -34,8 +34,8 @@ function courses_adminapi_menu()
 
     // Define a menu item
     // $item = array();
-    // $item['menulabel'] = _EXAMPLEVIEW;
-    // $item['menulink'] = xarModURL('example','user','view');
+    // $item['menulabel'] = xarML('Courses');
+    // $item['menulink'] = xarModURL('example','admin','viewcourses');
 
     // Add it to the array of menu items
     // $menu['menuitems'][] = $item;

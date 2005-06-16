@@ -1,0 +1,33 @@
+<object name="courses_studstatus">
+  <objectid>42</objectid>
+  <label>Student Status</label>
+  <moduleid>179</moduleid>
+  <itemtype>4</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>4</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="statusid">
+      <id>114</id>
+      <label>Statusid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_courses_studstatus.xar_statusid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="studstatus">
+      <id>115</id>
+      <label>Studstatus</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_courses_studstatus.xar_studstatus</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:50</validation>
+    </property>
+  </properties>
+</object>
+           

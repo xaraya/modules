@@ -24,7 +24,6 @@
 
 <!-- the specific template for the current function comes here -->
 
-<xar:blockgroup name="topnav" id="topnav" />
 
 <!-- some status given by the function using this template -->
 
@@ -34,11 +33,11 @@
 
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
-        <th> #$name_label# </th>
+        <th> #$namelabel# </th>
 
-        <th> #$shortdesc_label# </th>
+        <th> #$shortdesclabel# </th>
 
-        <th> #$hours_label# </th>
+        <th> #$numberlabel# </th>
     </tr>
 
     <!-- Loop over all the items given by the function. Since $data['items']
@@ -57,7 +56,7 @@
         </xar:if>
          </td>
          <td>#$item['shortdesc']#</td>
-          <td>#$item['hours']#</td>
+          <td>#$item['number']#</td>
    </tr>
     </xar:foreach>
 

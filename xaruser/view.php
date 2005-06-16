@@ -9,8 +9,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
  * view a list of items
@@ -21,14 +21,8 @@ function courses_user_view()
 {
     // Security check
     if (!xarSecurityCheck('ViewCourses', 0)) {
-        return $data['error'] = xarML('You must be a rgisters user to view courses..');
+        return $data['error'] = xarML('You must be a registered user to view courses...');
     }
-    // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
@@ -40,10 +34,19 @@ function courses_user_view()
     // Prepare the array variable that will hold all items for display
     $data['items'] = array();
     // Specify some other variables for use in the function template
-    $data['name_label'] = xarVarPrepForDisplay(xarML('Course Name'));
-    $data['number_label'] = xarVarPrepForDisplay(xarML('Course Number'));
-    $data['hours_label'] = xarVarPrepForDisplay(xarML('Course Hours'));
-    $data['ceu_label'] = xarVarPrepForDisplay(xarML('Course Credit Hours'));
+    $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
+    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
+    $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
+    $data['levellabel'] = xarVarPrepForDisplay(xarML('Course Level'));
+    $data['creditslabel'] = xarVarPrepForDisplay(xarML('Course Credits'));
+    $data['creditsminlabel'] = xarVarPrepForDisplay(xarML('Course Minimum Credits'));
+    $data['creditsmaxlabel'] = xarVarPrepForDisplay(xarML('Course Maximum Credits'));
+    $data['prereqlabel'] = xarVarPrepForDisplay(xarML('Course Prerequisites'));
+    $data['aimlabel'] = xarVarPrepForDisplay(xarML('Course Aim'));
+    $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description'));
+    $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
+    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
+    $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
     $data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date'));
     $data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date'));
     $data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description'));
@@ -99,7 +102,6 @@ function courses_user_view()
         // Add this item to the list of items to be displayed
         $data['items'][] = $item;
     }
-    // TODO: how to integrate cat ids in pager (automatically) when needed ???
     // Get the UID so we can see if there are any overridden defaults.
     $uid = xarUserGetVar('uid');
     // Call the xarTPL helper function to produce a pager in case of there

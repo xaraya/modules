@@ -1,0 +1,22 @@
+1. Create checks for input: when is a student already enrolled, when has he enrolled in the course. (done?)
+2. Make tables for other course items eg Courseyear, Courselevel, Intended audience (?), method (?), ...; check import into Dyn Data
+3. Admin functions to adjust those dyn data values via module interface (Done)
+4. Create user interface
+	-Choose a course (done)
+	-Overview of courses that are planned (needs improvement)
+	-Enroll (done)
+	-Check enrolled (done)
+	-Historic view (Done via usermenu)
+	-Search function in course descriptions (Jojodee)
+5. Think about payment options (We at SENSE don't need them)
+6. Finish course planning interface
+7. Link to calendar
+8. Deadlines for enrolling
+9. Block for upcoming courses and their deadlines
+10. Minimum/max participants
+11. Improve the admin functions
+12. Link teachers to the planned courses, besides showing their addresses
+13. Link course coordinators to courses
+14. Check all security functions
+15. Short URLs.
+16. Integration with categories(?)

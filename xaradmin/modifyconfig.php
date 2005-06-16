@@ -31,6 +31,10 @@ function courses_admin_modifyconfig()
     // Specify some labels and values for display
     $data['boldlabel'] = xarVarPrepForDisplay(xarML('Display Course Items In Bold?'));
     $data['boldchecked'] = xarModGetVar('courses', 'bold') ? 'checked="checked"' : '';
+	$data['hideplanningmsg'] = xarModGetVar('courses', 'hideplanningmsg');
+	$data['hideplanningmsg_label'] = xarVarPrepForDisplay(xarML('Message to show when a planned course is selected for hiding'));
+	$data['hidecoursemsg'] = xarModGetVar('courses', 'hidecoursemsg');
+	$data['hidecoursemsg_label'] = xarVarPrepForDisplay(xarML('Message to show when a complete course is selected for hiding'));
     $data['itemslabel'] = xarVarPrepForDisplay(xarML('Courses Items Per Page?'));
     $data['itemsvalue'] = xarModGetVar('courses', 'itemsperpage');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));

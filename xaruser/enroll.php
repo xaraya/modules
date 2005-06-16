@@ -10,7 +10,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author XarayaGeek
+ * @author XarayaGeek/Michel V.
  */
 
 /**
@@ -18,61 +18,58 @@
  *
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['courseid'] the item id used for this course module
+ * @param  $args ['planningid'] the planned course ID that the user will enroll to
  */
 function courses_user_enroll($args)
 {
 
- if (!xarSecurityCheck('EditCourses', 0)) {
-        return $data['error'] = xarML('You must be a registerd user to enroll in courses.');
+ if (!xarSecurityCheck('ReadCourses', 0)) {
+        return $data['error'] = xarML('You must be a registered user to enroll in courses.');
     }
 
  extract($args);
- // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
 
-  if (!xarVarFetch('courseid', 'isset:', $courseid, NULL, XARVAR_DONT_SET)) return;
+  if (!xarVarFetch('planningid', 'int::', $planningid, NULL, XARVAR_DONT_SET)) return;
+  if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
   if (!xarVarFetch('message', 'str:1:', $message, '', XARVAR_NOT_REQUIRED)) return;
 
-    // At this stage we check to see if we have been passed $objectid, the
-    // generic item identifier.  This could have been passed in by a hook or
-    // through some other function calling this as part of a larger module, but
-    // if it exists it overrides $exid
     $courses['transform'] = array('name');
     $item = xarModCallHooks('item',
         'transform',
-        $courseid,
+        $planningid,
         $courses);
-
-    // Note that this module couuld just use $objectid everywhere to avoid all
-    // of this munging of variables, but then the resultant code is less
-    // descriptive, especially where multiple objects are being used.  The
-    // decision of which of these ways to go is up to the module developer
+	//check for override by objectid
     if (!empty($objectid)) {
-        $courseid = $objectid;
+        $planningid = $objectid;
     }
     // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
     //Check to see if this user is already enrolled in this course
-    $courses = xarModAPIFunc('courses',
+    $enrolled = xarModAPIFunc('courses',
                           'user',
                           'check_enrolled',
                           array('uid' => $uid,
-                                'courseid' => $courseid));
+                                'planningid' => $planningid));
 
-    if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    //if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!isset($courses[$courseid])) {
+    if (count($enrolled)!=0) {
+    $msg = xarML('You are already enrolled in this course');
+        xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_ENROLLED',
+            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+        return;
+    }
+
         $item = xarModAPIFunc('courses',
         'user',
-        'get',
-        array('courseid' => $courseid));
+        'getplanned',
+        array('planningid' => $planningid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-       $name = $item['name'];
+	
+/* //Check this mailing function later on.
+	 
+	 //Rewrite the name to get
+     $name = $item['name'];
 //       echo "<br /><pre>items => "; print_r($item); echo "</pre>";
      $message = xarVarPrepForDisplay(xarML('A new user has enrolled in '. $name ));
      $uid = xarUserGetVar('uid');
@@ -104,24 +101,20 @@ function courses_user_enroll($args)
                              'from'     => $femail,
                              'fromname' => $fname))) return;
 
-
+    
     xarSessionSetVar('courses_statusmsg', xarML('Message Sent',
                     'courses'));
-   }
+*/
 
-    if (isset($courses[$courseid])) {
-    $msg = xarML('You are already enrolled in this course');
-        xarErrorSet(XAR_USER_EXCEPTION, 'ALLREADY_ENROLLED',
-            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
-        return;
-    }
-
-    // If user is not enroilled already go ahead and create the enrollment
+    // If user is not enrolled already go ahead and create the enrollment
+	// Get status of student
+	$studstatus = 1;
     $enrollid = xarModAPIFunc('courses',
                           'user',
                           'create_enroll',
-                          array('uid' => $uid,
-                                'courseid' => $courseid));
+                          array('uid'        => $uid,
+                                'planningid' => $planningid,
+								'studstatus' => $studstatus));
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -129,7 +122,7 @@ function courses_user_enroll($args)
     if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
-    xarResponseRedirect(xarModURL('courses', 'user', 'pay', array('courseid' => $courseid)));
+    xarResponseRedirect(xarModURL('courses', 'user', 'displayplanned', array('planningid' => $planningid, 'courseid' => $item['courseid'])));
     // Return
     return true;
 

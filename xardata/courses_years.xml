@@ -1,0 +1,32 @@
+<object name="courses_years">
+  <objectid>43</objectid>
+  <label>Courses Years</label>
+  <moduleid>179</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>5</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="yearid">
+      <id>116</id>
+      <label>Yearid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_courses_years.xar_yearid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="year">
+      <id>117</id>
+      <label>Year</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_courses_years.xar_year</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:25</validation>
+    </property>
+  </properties>
+</object>

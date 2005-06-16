@@ -1,0 +1,143 @@
+<?php
+/**
+ * File: $Id:
+ * 
+ * Standard function to create a new module item
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage courses
+ * @author Courses module development team 
+ */
+/**
+ * add new course
+ * This is a standard function that is called whenever an administrator
+ * wishes to create a new course
+ */
+function courses_admin_newcourse($args)
+{
+    extract($args);
+
+    // Get parameters from whatever input we need.
+    if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'str::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'int', $itemtype, 3, XARVAR_NOT_REQUIRED)) return;
+	
+    // Initialise the $data variable that will hold the data to be used in
+    // the blocklayout template, and get the common menu configuration - it
+    // helps if all of the module pages have a standard menu at the top to
+    // support easy navigation
+    $data = xarModAPIFunc('courses', 'admin', 'menu');
+    // Security check - important to do this as early as possible to avoid
+    // potential security holes or just too much wasted processing
+    if (!xarSecurityCheck('AddCourses')) return;
+    // Generate a one-time authorisation code for this operation
+    $data['authid'] = xarSecGenAuthKey();
+    $data['invalid'] = $invalid;
+    // Specify some labels for display
+    $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
+    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
+    $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
+    $data['levellabel'] = xarVarPrepForDisplay(xarML('Course Level'));
+    $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description'));
+    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
+    $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
+    $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
+    $data['hidecourselabel'] = xarVarPrepForDisplay(xarML('Hide Course'));
+    $data['addcoursebutton'] = xarVarPrepForDisplay(xarML('Add Course'));
+    $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));
+
+    $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
+                                      array('itemtype' => 3));
+
+/*
+    $item = array();
+    $item['module']   = 'helpdesk';
+    $item['itemtype'] = $itemtype;
+    $item['multiple'] = false;
+    $item['returnurl'] = xarModURL('helpdesk', 'user', 'main');
+    $hooks = xarModCallHooks('item', 'new', $itemtype, $item, 'helpdesk');
+    if (empty($hooks)) {
+        $data['hooks'] = array();
+    } else {
+        $data['hooks'] = $hooks;
+    }
+
+    return xarTplModule('helpdesk', 'user', 'new', $data);
+
+*/
+    //Call hooks
+    $item = array();
+    $item['module'] = 'courses';
+    $item['itemtype'] = $itemtype;
+    $item['multiple'] = false;
+    $item['returnurl'] = xarModURL('courses', 'admin', 'newcourse');
+    $hooks = xarModCallHooks('item', 'new', $itemtype, $item);
+    if (empty($hooks)) {
+        $data['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hooks'] = join('', $hooks);
+    } else {
+        $data['hooks'] = $hooks;
+    }
+    // For E_ALL purposes, we need to check to make sure the vars are set.
+    // If they are not set, then we need to set them empty to surpress errors
+    if (empty($name)) {
+        $data['name'] = '';
+    } else {
+        $data['name'] = $name;
+    }
+
+    if (empty($number)) {
+        $data['number'] = '';
+    } else {
+        $data['number'] = $number;
+    }
+
+     if (empty($coursetype)) {
+        $data['coursetype'] = '';
+    } else {
+        $data['coursetype'] = $coursetype;
+    }
+
+     if (empty($shortdesc)) {
+        $data['shortdesc'] = '';
+    } else {
+        $data['shortdesc'] = $shortdesc;
+    }
+
+    if (empty($language)) {
+        $data['language'] = '';
+    } else {
+        $data['language'] = $language;
+    }
+    if (empty($freq)) {
+        $data['freq'] = '';
+    } else {
+        $data['freq'] = $freq;
+    }
+    if (empty($contact)) {
+        $data['contact'] = '';
+    } else {
+        $data['contact'] = $contact;
+    }
+    if (empty($hidecourse)) {
+        $data['hidecourse'] = '';
+    } else {
+        $data['hidecourse'] = $hidecourse;
+    }
+    // Return the template variables defined in this function
+    return $data;
+}
+
+?>
