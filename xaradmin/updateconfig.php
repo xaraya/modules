@@ -121,7 +121,12 @@ function tinymce_admin_updateconfig()
     break;
 
     }
-    
+
+    $tinymode=xarModGetVar('tinymce','tinymode');
+
+    if ($tinymode=='textareas'){
+          xarModSetVar('tinymce','usebutton',0);
+    }
 
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";

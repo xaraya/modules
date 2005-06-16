@@ -1,7 +1,7 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.6.0
+INSTALLATION AND USE - XarTinyMCE Version 0.6.2
 
-UPGRADES to 0.6.0:
-PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
+UPGRADES to 0.6.2:
+IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
 See the documentation included in the docs directory of the module for
@@ -62,7 +62,7 @@ To INSTALL and get started:
      turn off automatic activation. 
      
      You can then manually override the loading of the WYSIWYG by adding your specific template 
-     snippet code below to your page or other specific templates. All textareas contained or 
+     snippet code below to your page or other specific templates. All textareas contained or
      included in the template where you have the XarTinymce tags are converted to WYSIWYG 
      according to the "All Text Area" or "Special Labelled Only" setting above.
      Alternatively, replace the variable "jstring" in an override template for the tinymce_insert.xd 
@@ -97,18 +97,24 @@ Alternatively - cut and paste the image to your WYSIWYG editor from word or a su
 
 ******************************
 
-To UPGRADE:
+To UPGRADE to Version 0.6.2
+This version moves the Dynamic Data property to the module so follow the instructions carefully:
+
 1. Remove all files in the tinymce module directory and all files in it and
    replace with the upgrade module and files
-2. Go to your Administration -> Modules ->View All
+2. Make sure you have removed the file in includes/properties/Dynamic_TinyMCE_Property.php
+   It should now be located in modules/tinymce/xarproperties
+3. Go to your Administration -> Modules ->View All
    Click Upgrade
    Click Activate
-3. Go to Administration -> XarTinyMCE -> Modify Config
-   Check any new or upgraded options are filled in.
-   
-4. If you are upgrading to Version 0.4.0 please make sure you note the new
+4. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
+
+5. Go to Administration -> XarTinyMCE -> Modify Config
+   Check any new or upgraded options are filled in. Click Submit button on EACH screen to confirm.
+
+6. If you are upgrading from Versions less than 0.4.0 please make sure you note the new
    activation methods. If you have added the snippet at the top of your templates you
-   MUST set the Mode to Manual - the new 3rd option.
+   MUST set the Mode to Manual.
 
    That's it!
 ******************************

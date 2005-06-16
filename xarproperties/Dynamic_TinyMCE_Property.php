@@ -1,0 +1,121 @@
+<?php
+/**
+ * Dynamic TinyMCE Property
+ *
+ * Utilizes JavaScript based WYSIWYG Editor, TinyMCE
+ *
+ * @package dynamicdata
+ * @subpackage properties
+ */
+
+/**
+ * handle tinymce wysiwyg textarea property
+ * @author jojodee
+ * @package dynamicdata
+ */
+include_once "modules/dynamicdata/class/properties.php";
+class Dynamic_TinyMCE_Property extends Dynamic_Property
+{
+    var $rows = 10;
+    var $cols = 50;
+    var $wrap = 'soft';
+  function Dynamic_TinyMCE_Property($args)
+  {
+         $this->Dynamic_Property($args);
+        // check validation for allowed rows/cols (or values)
+        if (!empty($this->validation) && strchr($this->validation,':')) {
+            list($rows,$cols) = explode(':',$this->validation);
+            if ($rows !== '' && is_numeric($rows)) {
+                $this->rows = $rows;
+            }
+            if ($cols !== '' && is_numeric($cols)) {
+                $this->cols = $cols;
+            }
+        }
+    }
+
+
+     function validateValue($value = null) 
+     {
+        if (!isset($value)) {
+            $value = $this->value;
+        }
+    // TODO: allowable HTML ?
+        $this->value = $value;
+        return true;
+    }
+
+   function showInput($args = array())
+    {
+        extract($args);
+
+        if (empty($name)) {
+            $name = 'dd_' . $this->id;
+        }
+        if (empty($id)) {
+            $id = $name;
+        }
+        $data = array();
+
+        static $loadedjavascript;
+               $xarbaseurl=xarServerGetBaseURL();
+              $editorpath = "'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce";
+ 
+        $data['name']     = $name;
+        $data['id']       = $id;
+        $data['value']    = isset($value) ? xarVarPrepForDisplay($value) : xarVarPrepForDisplay($this->value);
+        $data['tabindex'] = !empty($tabindex) ? $tabindex : 0;
+        $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
+        $data['rows']     = !empty($rows) ? $rows : $this->rows;
+        $data['cols']     = !empty($cols) ? $cols : $this->cols;
+
+
+        $template="tinymce";
+
+      return xarTplModule('tinymce', 'admin', 'showinput', $data , $template);
+    }
+
+    function showOutput($args = array())
+    {
+         extract($args);
+         $data=array();
+
+            if (isset($value)) {
+                $data['value'] = xarVarPrepHTMLDisplay($value);
+         } else {
+                $data['value'] = xarVarPrepHTMLDisplay($this->value);
+         }
+         $template="tinymce";
+         return xarTplModule('tinymce', 'user', 'showoutput', $data ,$template);
+    }
+
+
+    /**
+     * Get the base information for this property.
+     *
+     * @returns array
+     * @return base information for this property
+     **/
+     function getBasePropertyInfo()
+     {
+        $args = array();
+           $baseInfo = array(
+                            'id'         => 205,
+                            'name'       => 'xartinymce',
+                            'label'      => 'TinyMCE GUI Editor',
+                            'format'     => '5',
+                            'validation' => '',
+                            'source'     => '',
+                            'dependancies' => '',
+                            'requiresmodule' => 'tinymce',
+                            'aliases'        => '',
+                            'args' => serialize( $args ),
+                            // ...
+                           );
+
+        return $baseInfo;
+     }
+}
+
+
+?>

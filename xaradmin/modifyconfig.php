@@ -71,7 +71,10 @@ function tinymce_admin_modifyconfig()
         $data['tinybrowsers']='msie,gecko,safari';
     }
 
-
+    if (!isset($data['usebutton']) || $data['tinymode']=='textareas'){
+        $data['usebutton']=0;
+    }
+    
     $examplestring='tinyMCE.init({
         mode : "specific_textareas",
         textarea_trigger : "mce_editable2",

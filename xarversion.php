@@ -1,7 +1,7 @@
 <?php
 $modversion['name'] = 'tinymce';
 $modversion['id'] = '63';
-$modversion['version'] = '0.6.1';
+$modversion['version'] = '0.6.2';
 $modversion['displayname']    = xarML('XarTinyMCE');
 $modversion['description'] = 'Integration of TinyMCE, a fast and configurable wysiwyg editor for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
@@ -16,6 +16,6 @@ $modversion['user'] = 0;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Miscellaneous';
 // this module depends on the html module
-$modversion['dependency'] = array(779);
+$modversion['dependency'] = array(779); //html module
 
 ?>
