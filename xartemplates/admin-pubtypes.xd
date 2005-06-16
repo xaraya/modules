@@ -56,7 +56,7 @@
     </tr>
     <tr>
         <td style="text-align: left;"><label for="descr"><xar:mlstring>Description</xar:mlstring></label></td>
-        <td style="text-align: left;"><input type="text" name="descr" id="descr" value="#$item['descr']#" size="50" maxlength="250" /></td>
+        <td style="text-align: left;"><input type="text" name="descr" id="descr" value="#xarVarPrepForDisplay($item['descr'])#" size="50" maxlength="250" /></td>
     </tr>
 </table>
 <p style="text-align: left;"><xar:mlstring>Configuration</xar:mlstring>:<br />
@@ -118,7 +118,7 @@
     </tr>
     <tr>
         <td style="text-align: right;"><xar:mlstring>Description</xar:mlstring>:</td>
-        <td style="text-align: left;">#$item['descr']#</td>
+        <td style="text-align: left;">#xarVarPrepForDisplay($item['descr'])#</td>
     </tr>
 </table>
 <p><xar:ml>
@@ -146,7 +146,7 @@
     <xar:foreach in="$pubtypes" value="$pubtype">
     <tr>
         <td class="xar-norm">#$pubtype['name']#</td>
-        <td class="xar-norm">#$pubtype['descr']#</td>
+        <td class="xar-norm">#xarVarPrepForDisplay($pubtype['descr'])#</td>
         <td style="text-align: center;" class="xar-norm">
             <xar:if condition="!empty($pubtype['editurl'])">
                 <a href="#$pubtype['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
