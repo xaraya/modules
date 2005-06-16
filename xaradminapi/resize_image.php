@@ -105,7 +105,7 @@ function images_adminapi_resize_image($args)
     }
 
     $image = xarModAPIFunc('images', 'user', 'load_image', array('fileLocation' => $location,
-                                                                 'thumbsdir => $thumbsdir));
+                                                                 'thumbsdir' => $thumbsdir));
 
     if (!is_object($image)) {
         $msg = xarML('File not found.');
