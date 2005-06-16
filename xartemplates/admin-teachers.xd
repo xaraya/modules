@@ -7,54 +7,54 @@ These are the teachers in the planned course #$planningid#<br>
     <form method="post" name="teachers" id="teachers" action="#xarModURL('courses','admin','updateteachers')#">
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
     <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
-		<table width="100%" border="1" cellspacing="0" cellpadding="4">
-			<tr>
-				<th>#$namelabel#</th>
-				<th>#$emaillabel#</th>
-				<th colspan="2">#$statuslabel#</th>
-				<th>#$optionslabel#</th>
-			</tr>
-			<xar:foreach in="$items" value="$item">
-			<tr>
-				<td>#xarUserGetVar('name',$item['userid'])#</td>
-				<td>#xarUserGetVar('email',$item['userid'])#</td>
-				<td> - </td>
-				<td class="xar-norm">
-					<xar:if condition="!empty($item['changestatusurl'])">
-						<input type="checkbox" name="tids[#$item['tid']#]" id="tids[#$item['tid']#]" value="1" #$item['selected']# />
-					</xar:if>
-				</td>
-				<td>
-				<xar:comment>
-				   <xar:if condition="empty($item['changeurl'])">
-					   #$item['changetitle']#
-				   <xar:else />
-					   <a href="#$item['changeurl']#">#$item['changetitle']#</a>
-				   </xar:if>
-				   |</xar:comment>
-				   <xar:if condition="empty($item['deleteurl'])">
-					   #$item['deletetitle']#
-				   <xar:else />
-					   <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
-				   </xar:if>
-				</td>
-			</tr>
-			</xar:foreach>
-		</table>
+        <table width="100%" border="1" cellspacing="0" cellpadding="4">
+            <tr>
+                <th>#$namelabel#</th>
+                <th>#$emaillabel#</th>
+                <th colspan="2">#$statuslabel#</th>
+                <th>#$optionslabel#</th>
+            </tr>
+            <xar:foreach in="$items" value="$item">
+            <tr>
+                <td>#xarUserGetVar('name',$item['userid'])#</td>
+                <td>#xarUserGetVar('email',$item['userid'])#</td>
+                <td> - </td>
+                <td class="xar-norm">
+                    <xar:if condition="!empty($item['changestatusurl'])">
+                        <input type="checkbox" name="tids[#$item['tid']#]" id="tids[#$item['tid']#]" value="1" #$item['selected']# />
+                    </xar:if>
+                </td>
+                <td>
+                <xar:comment>
+                   <xar:if condition="empty($item['changeurl'])">
+                       #$item['changetitle']#
+                   <xar:else />
+                       <a href="#$item['changeurl']#">#$item['changetitle']#</a>
+                   </xar:if>
+                   |</xar:comment>
+                   <xar:if condition="empty($item['deleteurl'])">
+                       #$item['deletetitle']#
+                   <xar:else />
+                       <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
+                   </xar:if>
+                </td>
+            </tr>
+            </xar:foreach>
+        </table>
         <p>
-		<xar:mlstring>
-		Change the status of selected teachers
-		</xar:mlstring>
+        <xar:mlstring>
+        Change the status of selected teachers
+        </xar:mlstring>
         :</label>&nbsp;
-		<xar:comment>
+        <xar:comment>
             <select name="statusid">
             <xar:loop name="$status">
                 <option value="#$loop:item['statusid']#">#$loop:item['studstatus']#</option>
             </xar:loop>
             </select>
-		</xar:comment>
+        </xar:comment>
             <input type="submit" value="#$changelabel#" />
-		</p>
+        </p>
     </form>
     <form method="post" name="addteacher" id="addteacher" action="#xarModURL('courses','admin','newteacher')#">
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />

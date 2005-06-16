@@ -55,17 +55,17 @@ function courses_admin_createplanning($args)
     // values that are there and a message with a session var. If you perform
     // this check now, you could do away with the check in the API along with
     // the exception that comes with it.
-	/*
-	$item = array();
+    /*
+    $item = array();
     $item = xarModAPIFunc('courses',
                           'admin',
                           'validatecourse',
                           array('name' => $name,
-	                            'number' => $number));
+                                'number' => $number));
     
     // Argument check
-	
-	
+    
+    
     $invalid = array();
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
@@ -85,7 +85,7 @@ function courses_admin_createplanning($args)
     if (count($invalid) > 0) {
         // call the admin_newcourse function and return the template vars
         // (move from admin-new.xd to admin-create.xd here)
-		return xarModFunc('courses', 'admin', 'newcourse',
+        return xarModFunc('courses', 'admin', 'newcourse',
                           array('name' => $name,
                                 'number' => $number,
                                 'coursetype' => $coursetype,
@@ -121,22 +121,22 @@ function courses_admin_createplanning($args)
                           array('courseid' => $courseid,
                                 'year' => $year,
                                 'credits' => $credits,
-								'creditsmin' => $creditsmin,
-								'creditsmax' => $creditsmax,
+                                'creditsmin' => $creditsmin,
+                                'creditsmax' => $creditsmax,
                                 'startdate' => $startdate,
-								'enddate' => $enddate,
-								'prerequisites' => $prerequisites,
+                                'enddate' => $enddate,
+                                'prerequisites' => $prerequisites,
                                 'aim' => $aim,
                                 'method' => $method,
                                 'longdesc' => $longdesc,
-								'costs' => $costs,
+                                'costs' => $costs,
                                 'committee' => $committee,
                                 'coordinators' => $coordinators,
                                 'lecturers' => $lecturers,
-								'location' => $location,
-								'material' => $material,
+                                'location' => $location,
+                                'material' => $material,
                                 'info' => $info,
-								'program' => $program,
+                                'program' => $program,
                                 'hideplanning' => $hideplanning));
     //Check returnvalue
     if (!isset($planningid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back

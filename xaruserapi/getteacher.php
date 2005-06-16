@@ -54,10 +54,10 @@ function courses_userapi_getteacher($args)
     $query = "SELECT xar_tid,
                    xar_userid,
                    xar_planningid,
-				   xar_type
+                   xar_type
             FROM $teacherstable
-			WHERE xar_tid = ?";
-			
+            WHERE xar_tid = ?";
+            
     $result = $dbconn->Execute($query, array((int)$tid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -75,7 +75,7 @@ function courses_userapi_getteacher($args)
             $item = array('tid' => $tid,
                 'userid'        => $userid,
                 'planningid'    => $planningid,
-				'type'          => $type);
+                'type'          => $type);
         }
     }
     // All successful database queries produce a result set, and that result

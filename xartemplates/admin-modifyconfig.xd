@@ -13,94 +13,94 @@
 </script>
 
 <div class="xar-mod-head">
-	<span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
 
 <div class="xar-mod-body">
-	<h2>#$menutitle#</h2>
+    <h2>#$menutitle#</h2>
 
-	<div class="xar-courses xar-courses-modifyconfig">
-	<input type="hidden" name="authid" id="authid" value="#$authid#" />
-	
-	<form method="post" class="xar-form"
-		  action="#xarModUrl('courses', 'admin', 'updateconfig')#"
-		  onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-		  
-		  <fieldset class="xar-norm">
-			   <fieldset class="formelements xar-norm">
-					<legend>
-						<strong><xar:mlstring>Course conditions</xar:mlstring></strong>
-					</legend>
-					<p class="param">
-						<label for="material">
-							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-							<span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
-							#$hideplanningmsg_label#
-							</span>
-						</label>
-						<span class="fullright">
-							<textarea class="fullright" name="hideplanningmsg" id="hideplanningmsg" wrap="virtual" rows="10" cols="40">#$hideplanningmsg#</textarea>
-						</span>
-						<xar:if condition="!empty($invalid['hideplanningmsg'])">
-							<span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
-						</xar:if>
-					</p>
-					<p class="param">
-						<label for="hidecoursemsg">
-							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-							<span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
-							#$hidecoursemsg_label#
-							</span>
-						</label>
-						<span class="fullright">
-							<textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#$hidecoursemsg#</textarea>
-						</span>
-						<xar:if condition="!empty($invalid['hidecoursemsg'])">
-							<span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecoursemsg</xar:mlstring></span>
-						</xar:if>
-					</p>
-					<p class="param">
-						<label for="bold">
-							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-							<span class="help" title="#xarML('Show items in bold??.')#">
-							#$boldlabel#
-							</span>
-						</label>
-						<span class="fullright">
-							<input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# />
-						</span>
-						<xar:if condition="!empty($invalid['bold'])">
-							<span style="color: red"><xar:mlstring>ERROR! This is not a valid bold</xar:mlstring></span>
-						</xar:if>
-					</p>
-					<p class="param">
-						<label for="itemsperpage" class="required">
-							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-							<span class="help" title="#xarML('Number of items per page.')#">
-							#$itemslabel#
-							</span>
-						</label>
-						<xar:data-input name="itemsperpage" type="15" value="$itemsvalue" />
-						<xar:if condition="!empty($invalid['credits'])">
-							<span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring></span>
-						</xar:if>
-					</p>
-					<p class="param">
-						<label for="bold">
-							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-							<span class="help" title="#xarML('Support short URLs.')#">
-							#$shorturlslabel#
-							</span>
-						</label>
-						<span class="fullright">
-							<input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
-						</span>
-					</p>
-					
-			   </fieldset>
-		  </fieldset>
-		  #$hooks#
-		  <input type="submit" value="#$updatebutton#" />
-	</form>
-	</div>
+    <div class="xar-courses xar-courses-modifyconfig">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    
+    <form method="post" class="xar-form"
+          action="#xarModUrl('courses', 'admin', 'updateconfig')#"
+          onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+          
+          <fieldset class="xar-norm">
+               <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong><xar:mlstring>Course conditions</xar:mlstring></strong>
+                    </legend>
+                    <p class="param">
+                        <label for="material">
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
+                            #$hideplanningmsg_label#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            <textarea class="fullright" name="hideplanningmsg" id="hideplanningmsg" wrap="virtual" rows="10" cols="40">#$hideplanningmsg#</textarea>
+                        </span>
+                        <xar:if condition="!empty($invalid['hideplanningmsg'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
+                        </xar:if>
+                    </p>
+                    <p class="param">
+                        <label for="hidecoursemsg">
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
+                            #$hidecoursemsg_label#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            <textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#$hidecoursemsg#</textarea>
+                        </span>
+                        <xar:if condition="!empty($invalid['hidecoursemsg'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecoursemsg</xar:mlstring></span>
+                        </xar:if>
+                    </p>
+                    <p class="param">
+                        <label for="bold">
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <span class="help" title="#xarML('Show items in bold??.')#">
+                            #$boldlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            <input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# />
+                        </span>
+                        <xar:if condition="!empty($invalid['bold'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid bold</xar:mlstring></span>
+                        </xar:if>
+                    </p>
+                    <p class="param">
+                        <label for="itemsperpage" class="required">
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <span class="help" title="#xarML('Number of items per page.')#">
+                            #$itemslabel#
+                            </span>
+                        </label>
+                        <xar:data-input name="itemsperpage" type="15" value="$itemsvalue" />
+                        <xar:if condition="!empty($invalid['credits'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring></span>
+                        </xar:if>
+                    </p>
+                    <p class="param">
+                        <label for="bold">
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <span class="help" title="#xarML('Support short URLs.')#">
+                            #$shorturlslabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
+                        </span>
+                    </p>
+                    
+               </fieldset>
+          </fieldset>
+          #$hooks#
+          <input type="submit" value="#$updatebutton#" />
+    </form>
+    </div>
 </div>

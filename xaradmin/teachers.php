@@ -34,7 +34,7 @@ function courses_admin_teachers()
         xarModURL('courses', 'admin', 'teachers', array('startnum' => '%%')),
         xarModGetVar('courses', 'itemsperpage'));
     
-	// Security check
+    // Security check
     if (!xarSecurityCheck('EditPlanning')) return;
 
     $items = xarModAPIFunc('courses',
@@ -42,8 +42,8 @@ function courses_admin_teachers()
         'getallteachers',
         array('startnum' => $startnum,
               'numitems' => xarModGetVar('courses','itemsperpage'),
-			  'planningid' => $planningid
-			  ));
+              'planningid' => $planningid
+              ));
     // Check for exceptions
 //    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
@@ -52,7 +52,7 @@ function courses_admin_teachers()
         $item = $items[$i];
 //What here?
 
-		if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:All")) {
+        if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:All")) {
             $items[$i]['changeurl'] = xarModURL('courses',
                 'admin',
                 'changeteacher',
@@ -64,30 +64,30 @@ function courses_admin_teachers()
         $items[$i]['changetitle'] = xarML('Change');
  //       $items[$i]['statusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
  //                                    array('status' => $item['status']));
-		$items[$i]['selected']='';
-		
+        $items[$i]['selected']='';
+        
         if (xarSecurityCheck('AdminPlanning', 0, 'Item', "$planningid:All:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deleteteacher',
                 array('tid' => $item['tid'],
-				'planningid' => $planningid));
+                'planningid' => $planningid));
         } else {
             $items[$i]['deleteurl'] = '';
         }
         $items[$i]['deletetitle'] = xarML('Remove teacher');
     }
-	
+    
     // Add the array of items to the template variables
     $data['items'] = $items;
-	$data['planningid'] = $planningid;
+    $data['planningid'] = $planningid;
     // Specify some labels for display
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Teacher Name'));
     $data['emaillabel'] = xarVarPrepForDisplay(xarML('E-mail address'));
     $data['statuslabel'] = xarVarPrepForDisplay(xarML('Status'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
-	$data['changelabel'] = xarVarPrepForDisplay(xarML('Change status'));
-	$data['addbutton'] = xarVarPrepForDisplay(xarML('Add teacher'));
+    $data['changelabel'] = xarVarPrepForDisplay(xarML('Change status'));
+    $data['addbutton'] = xarVarPrepForDisplay(xarML('Add teacher'));
     // Return the template variables defined in this function
     return $data;
 }

@@ -72,16 +72,16 @@ function courses_admin_modifycourse($args)
     } elseif (is_array($hooks)) {
         $hooks = join('', $hooks);
     }
-	$levels = array();
+    $levels = array();
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
-	
+    
     // Return the template variables defined in this function
     //$dateformat = '%Y-%m-%d %H:%M:%S';
     //$startdate = xarLocaleFormatDate($dateformat, $startdate);
     //$enddate = xarLocaleFormatDate($dateformat, $enddate);
     return array('authid'       => xarSecGenAuthKey(),
-	             'menutitle'    => xarVarPrepForDisplay(xarML('Edit a course')),
-				 'courseid'     => $courseid,
+                 'menutitle'    => xarVarPrepForDisplay(xarML('Edit a course')),
+                 'courseid'     => $courseid,
                  'namelabel'    => xarVarPrepForDisplay(xarML('Course Name')),
               //   'name'         => $coursedata['name'],
                  'numberlabel'  => xarVarPrepForDisplay(xarML('Course Number')),
@@ -100,13 +100,13 @@ function courses_admin_modifycourse($args)
               //   'contact'      => $item['contact'],
                  'invalid'      => $invalid,
                  'hidecourselabel' => xarVarPrepForDisplay(xarML('Hide Course')),
-				// 'hidecourse'   => $item['hidecourse'],
+                // 'hidecourse'   => $item['hidecourse'],
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update Course')),
-				 'cancelbutton' => xarVarPrepForDisplay(xarML('Cancel')),
+                 'cancelbutton' => xarVarPrepForDisplay(xarML('Cancel')),
                  'hooks'        => $hooks,
-				 'coursedata'   => $coursedata,
+                 'coursedata'   => $coursedata,
                  //'item'         => $item,
-				 'levels'       => $levels);
+                 'levels'       => $levels);
 }
 
 ?>

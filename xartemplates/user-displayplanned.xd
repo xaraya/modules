@@ -13,304 +13,304 @@
 
 
 
-	<form method="post" class="xar-form"
-		  action="#xarModUrl('courses', 'user', 'enroll')#">
-		  <fieldset class="xar-norm">
-			   <fieldset class="formelements xar-norm">
-					<legend>
-						<strong><xar:mlstring>Course general details</xar:mlstring></strong>
-					</legend>
-					<p class="param">
-						<label for="name">
-							<span class="help" title="#xarML('The name of this course.')#">
-							#$namelabel#
-							</span>
-						</label>
-						#$course['name']#
-					</p>
-					<p class="param">
-						<label for="number">
-							<span class="help" title="#xarML('The code/number of this course.')#">
-							#$numberlabel#
-							</span>
-						</label>
-						#$course['number']#
-					</p>
-					<p class="param">
-						<label for="freq">
-							<span class="help" title="#xarML('The Frequency of this course.')#">
-							#$freqlabel#
-							</span>
-						</label>
-						#$course['freq']#
-					</p>
-			   </fieldset>
-			   <fieldset class="formelements xar-norm">
-					<legend>
-						<strong><xar:mlstring>Course contents</xar:mlstring></strong>
-					</legend>
-					<p class="param">
-						<label for="startdate">
-							<span class="help" title="#xarML('The date this course starts.')#">
-							#$startdatelabel#
-							</span>
-						</label>
-						#$item['startdate']#
-					</p>
-					<p class="param">
-						<label for="enddate">
-							<span class="help" title="#xarML('The date this course ends.')#">
-							#$enddatelabel#
-							</span>
-						</label>
-						#$item['enddate']#
-					</p>
-				<xar:if condition="!empty($course['shortdesc'])">
-					<p class="param">
-						<label for="shortdesc">
-							<span class="help" title="#xarML('The short description for this course.')#">
-							#$shortdesclabel#
-							</span>
-						</label>
-						#$course['shortdesc']#
-					</p>
-				</xar:if>
-				<xar:if condition="!empty($item['longdesc'])">
-					<p class="param">
-						<label for="longdesc">
-							<span class="help" title="#xarML('The long description for this course.')#">
-							#$longdesclabel#
-							</span>
-						</label>
-						#$item['longdesc']#
-					</p>
-				</xar:if>
-					<p class="param">
-						<label for="level">
-							<span class="help" title="#xarML('The level of this course')#">
-							#$levellabel#
-							</span>
-						</label>
-						<span class="fullright">
-						#$levelname#
-						</span>
-					</p>
-					<p class="param">
-						<label for="language">
-							<span class="help" title="#xarML('The language that will be used in this course.')#">
-							#$languagelabel#
-							</span>
-						</label>
-						#$course['language']#
-					</p>
-				<xar:if condition="!empty($item['credits'])">
-					<p class="param">
-						<label for="credits">
-							<span class="help" title="#xarML('The credits for this course.')#">
-							#$creditslabel#
-							</span>
-						</label>
-						#$item['credits']#
-					</p>
-				</xar:if>
-				<xar:if condition="!empty($item['creditsmin'])">
-					<p class="param">
-						<label for="creditsmin">
-							<span class="help" title="#xarML('The minimumcredits for this course.')#">
-							#$mincreditslabel#
-							</span>
-						</label>
-						#$item['mincredits']#
-					</p>
-				</xar:if>
-				<xar:if condition="!empty($item['maxcredits'])">
-					<p class="param">
-						<label for="maxcredits">
-							<span class="help" title="#xarML('The maximum credits for this course.')#">
-							#$maxcreditslabel#
-							</span>
-						</label>
-						#$item['maxcredits']#
-					</p>
-				</xar:if>
-					<p class="param">
-						<label for="prerequisites">
-							<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-							<span class="help" title="#xarML('The prerequisites (Like another course to fulfill before a student can enroll into this one) for this course.')#">
-							#$prereqlabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['prerequisites']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="aim">
-							<span class="help" title="#xarML('The aim of this course.')#">
-							#$aimlabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['aim']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="program">
-							<span class="help" title="#xarML('The programme of this course.')#">
-							#$programlabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['program']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="method">
-							<span class="help" title="#xarML('Describes the methods used in this course.')#">
-							#$methodlabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['method']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="lecturers">
-							<span class="help" title="#xarML('The lecturers for this course.')#">
-							#$lecturerslabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['lecturers']#
-						</span>
-					</p>
-			   </fieldset>
-			   <fieldset class="formelements xar-norm">
-					<legend>
-						<strong><xar:mlstring>Course conditions</xar:mlstring></strong>
-					</legend>
-					<p class="param">
-						<label for="costs">
-							<span class="help" title="#xarML('The costs to enroll into this course.')#">
-							#$costslabel#
-							</span>
-						</label>
-						<span class="fullright">
-						  #$item['costs']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="material">
-							<span class="help" title="#xarML('The material used in this course.')#">
-							#$materiallabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['material']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="location">
-							<span class="help" title="#xarML('The location of this course.')#">
-							#$locationlabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['location']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="coordinators">
-							<span class="help" title="#xarML('The coordinators for this course.')#">
-							#$coordinatorslabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['coordinators']#
-						</span>
-					</p>
-					<p class="param">
-						<label for="committee">
-							<span class="help" title="#xarML('The organising committee for this course.')#">
-							#$committeelabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['committee']#
-						</span>
-					</p>
-			   </fieldset>
-			   <fieldset class="formelements xar-norm">
-					<legend>
-						<strong><xar:mlstring>Others</xar:mlstring></strong>
-					</legend>
-					<p class="param">
-						<label for="info">
-							<span class="help" title="#xarML('Other info on this course.')#">
-							#$infolabel#
-							</span>
-						</label>
-						<span class="fullright">
-							#$item['info']#
-						</span>
-					</p>
-			   </fieldset>
-	    <xar:if condition="$enrolled == 0">
+    <form method="post" class="xar-form"
+          action="#xarModUrl('courses', 'user', 'enroll')#">
+          <fieldset class="xar-norm">
+               <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong><xar:mlstring>Course general details</xar:mlstring></strong>
+                    </legend>
+                    <p class="param">
+                        <label for="name">
+                            <span class="help" title="#xarML('The name of this course.')#">
+                            #$namelabel#
+                            </span>
+                        </label>
+                        #$course['name']#
+                    </p>
+                    <p class="param">
+                        <label for="number">
+                            <span class="help" title="#xarML('The code/number of this course.')#">
+                            #$numberlabel#
+                            </span>
+                        </label>
+                        #$course['number']#
+                    </p>
+                    <p class="param">
+                        <label for="freq">
+                            <span class="help" title="#xarML('The Frequency of this course.')#">
+                            #$freqlabel#
+                            </span>
+                        </label>
+                        #$course['freq']#
+                    </p>
+               </fieldset>
+               <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong><xar:mlstring>Course contents</xar:mlstring></strong>
+                    </legend>
+                    <p class="param">
+                        <label for="startdate">
+                            <span class="help" title="#xarML('The date this course starts.')#">
+                            #$startdatelabel#
+                            </span>
+                        </label>
+                        #$item['startdate']#
+                    </p>
+                    <p class="param">
+                        <label for="enddate">
+                            <span class="help" title="#xarML('The date this course ends.')#">
+                            #$enddatelabel#
+                            </span>
+                        </label>
+                        #$item['enddate']#
+                    </p>
+                <xar:if condition="!empty($course['shortdesc'])">
+                    <p class="param">
+                        <label for="shortdesc">
+                            <span class="help" title="#xarML('The short description for this course.')#">
+                            #$shortdesclabel#
+                            </span>
+                        </label>
+                        #$course['shortdesc']#
+                    </p>
+                </xar:if>
+                <xar:if condition="!empty($item['longdesc'])">
+                    <p class="param">
+                        <label for="longdesc">
+                            <span class="help" title="#xarML('The long description for this course.')#">
+                            #$longdesclabel#
+                            </span>
+                        </label>
+                        #$item['longdesc']#
+                    </p>
+                </xar:if>
+                    <p class="param">
+                        <label for="level">
+                            <span class="help" title="#xarML('The level of this course')#">
+                            #$levellabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                        #$levelname#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="language">
+                            <span class="help" title="#xarML('The language that will be used in this course.')#">
+                            #$languagelabel#
+                            </span>
+                        </label>
+                        #$course['language']#
+                    </p>
+                <xar:if condition="!empty($item['credits'])">
+                    <p class="param">
+                        <label for="credits">
+                            <span class="help" title="#xarML('The credits for this course.')#">
+                            #$creditslabel#
+                            </span>
+                        </label>
+                        #$item['credits']#
+                    </p>
+                </xar:if>
+                <xar:if condition="!empty($item['creditsmin'])">
+                    <p class="param">
+                        <label for="creditsmin">
+                            <span class="help" title="#xarML('The minimumcredits for this course.')#">
+                            #$mincreditslabel#
+                            </span>
+                        </label>
+                        #$item['mincredits']#
+                    </p>
+                </xar:if>
+                <xar:if condition="!empty($item['maxcredits'])">
+                    <p class="param">
+                        <label for="maxcredits">
+                            <span class="help" title="#xarML('The maximum credits for this course.')#">
+                            #$maxcreditslabel#
+                            </span>
+                        </label>
+                        #$item['maxcredits']#
+                    </p>
+                </xar:if>
+                    <p class="param">
+                        <label for="prerequisites">
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <span class="help" title="#xarML('The prerequisites (Like another course to fulfill before a student can enroll into this one) for this course.')#">
+                            #$prereqlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['prerequisites']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="aim">
+                            <span class="help" title="#xarML('The aim of this course.')#">
+                            #$aimlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['aim']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="program">
+                            <span class="help" title="#xarML('The programme of this course.')#">
+                            #$programlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['program']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="method">
+                            <span class="help" title="#xarML('Describes the methods used in this course.')#">
+                            #$methodlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['method']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="lecturers">
+                            <span class="help" title="#xarML('The lecturers for this course.')#">
+                            #$lecturerslabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['lecturers']#
+                        </span>
+                    </p>
+               </fieldset>
+               <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong><xar:mlstring>Course conditions</xar:mlstring></strong>
+                    </legend>
+                    <p class="param">
+                        <label for="costs">
+                            <span class="help" title="#xarML('The costs to enroll into this course.')#">
+                            #$costslabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                          #$item['costs']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="material">
+                            <span class="help" title="#xarML('The material used in this course.')#">
+                            #$materiallabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['material']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="location">
+                            <span class="help" title="#xarML('The location of this course.')#">
+                            #$locationlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['location']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="coordinators">
+                            <span class="help" title="#xarML('The coordinators for this course.')#">
+                            #$coordinatorslabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['coordinators']#
+                        </span>
+                    </p>
+                    <p class="param">
+                        <label for="committee">
+                            <span class="help" title="#xarML('The organising committee for this course.')#">
+                            #$committeelabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['committee']#
+                        </span>
+                    </p>
+               </fieldset>
+               <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong><xar:mlstring>Others</xar:mlstring></strong>
+                    </legend>
+                    <p class="param">
+                        <label for="info">
+                            <span class="help" title="#xarML('Other info on this course.')#">
+                            #$infolabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['info']#
+                        </span>
+                    </p>
+               </fieldset>
+        <xar:if condition="$enrolled == 0">
         <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$enrollbutton#" /></span>
         <xar:else />
-		<h3>#$enrollbutton#</h3>
-		</xar:if>
-	  </fieldset>
+        <h3>#$enrollbutton#</h3>
+        </xar:if>
+      </fieldset>
 
-	<H2>#xarML('Other occurences of this course')#</H2>
-	<table width="100%" border="1" cellspacing="0" cellpadding="4">
-		<tr>
-			<th>#$startdatelabel#</th>
-			<th>#$locationlabel#</th>
-			<th>#$creditslabel#</th>
-			<th>#$optionslabel#</th>
-		</tr>
-		<xar:foreach in="$items" value="$item">
-		<tr>
-			<td>#$item['startdate']#</td>
-			<td>#$item['location']#</td>
-			<td>#$item['credits']#</td>
-			<td>
-			   <xar:if condition="!empty($item['enrollurl'])">
-				   <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>
-			   </xar:if>
-			   <xar:if condition="!empty($item['detailsurl'])">
-			   |
-				   <a href="#$item['detailsurl']#">#$item['detailstitle']#</a>
-			   </xar:if>
-			   <xar:if condition="!empty($item['editurl'])">
-			   |
-				   <a href="#$item['editurl']#">#$item['edittitle']#</a>
-			   </xar:if>
-			   <xar:if condition="!empty($item['statusurl'])">
-			   |
-				   <a href="#$item['statusurl']#">#$item['statustitle']#</a>
-			   </xar:if>
-			   <xar:if condition="!empty($item['participantsurl'])">
-			   |
-				   <a href="#$item['participantsurl']#">#$item['participantstitle']#</a>
-			   </xar:if>
-			</td>
-		</tr>
-		</xar:foreach>
-	</table>
-	
-	</form>
-	<br />
-	
-	<!-- add the output from the different display hooks here -->
-	<xar:if condition="!empty($hookoutput)">
-	<xar:foreach in="$hookoutput" key="$hookmodule">
-		#$hookoutput[$hookmodule]#
-	</xar:foreach>
-	</xar:if>
-	  
+    <H2>#xarML('Other occurences of this course')#</H2>
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+        <tr>
+            <th>#$startdatelabel#</th>
+            <th>#$locationlabel#</th>
+            <th>#$creditslabel#</th>
+            <th>#$optionslabel#</th>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>#$item['startdate']#</td>
+            <td>#$item['location']#</td>
+            <td>#$item['credits']#</td>
+            <td>
+               <xar:if condition="!empty($item['enrollurl'])">
+                   <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>
+               </xar:if>
+               <xar:if condition="!empty($item['detailsurl'])">
+               |
+                   <a href="#$item['detailsurl']#">#$item['detailstitle']#</a>
+               </xar:if>
+               <xar:if condition="!empty($item['editurl'])">
+               |
+                   <a href="#$item['editurl']#">#$item['edittitle']#</a>
+               </xar:if>
+               <xar:if condition="!empty($item['statusurl'])">
+               |
+                   <a href="#$item['statusurl']#">#$item['statustitle']#</a>
+               </xar:if>
+               <xar:if condition="!empty($item['participantsurl'])">
+               |
+                   <a href="#$item['participantsurl']#">#$item['participantstitle']#</a>
+               </xar:if>
+            </td>
+        </tr>
+        </xar:foreach>
+    </table>
+    
+    </form>
+    <br />
+    
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+    <xar:foreach in="$hookoutput" key="$hookmodule">
+        #$hookoutput[$hookmodule]#
+    </xar:foreach>
+    </xar:if>
+      
 </xar:if>
 

@@ -34,10 +34,10 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" />
-		  <xar:if condition="!empty($invalid['name'])">
+          <xar:if condition="!empty($invalid['name'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
           </xar:if>
-		  <xar:if condition="!empty($invalid['duplicatename'])">
+          <xar:if condition="!empty($invalid['duplicatename'])">
             <span style="color: red"><xar:mlstring>ERROR! This name already exists</xar:mlstring></span>
           </xar:if>
     </span>
@@ -55,7 +55,7 @@
         <xar:if condition="!empty($invalid['name'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid course name</xar:mlstring></span>
         </xar:if>
-		  <xar:if condition="!empty($invalid['duplicatename'])">
+          <xar:if condition="!empty($invalid['duplicatename'])">
             <span style="color: red"><xar:mlstring>ERROR! This name already exists</xar:mlstring></span>
           </xar:if>
     </span>
@@ -72,10 +72,10 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="number" id="number" size="5" maxlength="5" value="#$number#" />
-		  <xar:if condition="!empty($invalid['number'])">
+          <xar:if condition="!empty($invalid['number'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid course number</xar:mlstring></span>
           </xar:if>
-		  <xar:if condition="!empty($invalid['duplicatenumber'])">
+          <xar:if condition="!empty($invalid['duplicatenumber'])">
             <span style="color: red"><xar:mlstring>ERROR! This course number already exists</xar:mlstring></span>
           </xar:if>
     </span>
@@ -90,10 +90,10 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="number" id="number" size="5" maxlength="5" value="#$item['number']#" />
-		  <xar:if condition="!empty($invalid['number'])">
+          <xar:if condition="!empty($invalid['number'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid course number</xar:mlstring></span>
           </xar:if>
-		  <xar:if condition="!empty($invalid['duplicatenumber'])">
+          <xar:if condition="!empty($invalid['duplicatenumber'])">
             <span style="color: red"><xar:mlstring>ERROR! This course number already exists</xar:mlstring></span>
           </xar:if>
     </span>
@@ -110,7 +110,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="coursetype" id="coursetype" size="5" maxlength="5" value="#$coursetype#" />
-		  <xar:if condition="!empty($invalid['coursetype'])">
+          <xar:if condition="!empty($invalid['coursetype'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
           </xar:if>
     </span>
@@ -125,7 +125,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="coursetype" id="coursetype" size="5" maxlength="5" value="#$item['coursetype']#" />
-		<xar:if condition="!empty($invalid['coursetype'])">
+        <xar:if condition="!empty($invalid['coursetype'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
         </xar:if>
     </span>

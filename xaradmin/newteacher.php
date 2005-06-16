@@ -36,7 +36,7 @@ function courses_admin_newteacher($args)
   if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
   if (!xarVarFetch('message', 'str:1:', $message, '', XARVAR_NOT_REQUIRED)) return;
 
-	//check for override by objectid
+    //check for override by objectid
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
@@ -50,8 +50,8 @@ function courses_admin_newteacher($args)
 
     //if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
-	// Check if this teacher is already a teacher
-	if (count($check)!=0) {
+    // Check if this teacher is already a teacher
+    if (count($check)!=0) {
     $msg = xarML('You are already a teacher in this course');
         xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_TEACHER',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
@@ -63,16 +63,16 @@ function courses_admin_newteacher($args)
         'getplanned',
         array('planningid' => $planningid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-	
+    
     // If user is not enrolled already go ahead and create the enrollment
-	// Get status of student
-	$type = 1;
+    // Get status of student
+    $type = 1;
     $tid = xarModAPIFunc('courses',
                           'admin',
                           'create_teacher',
                           array('userid'     => $userid,
                                 'planningid' => $planningid,
-								'type' => $type));
+                                'type' => $type));
 
     if (!isset($tid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect

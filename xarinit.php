@@ -108,8 +108,8 @@ function courses_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-	
-	
+    
+    
     //Table for Course levels
     //This will be taken to dyn data.
     $courses_levels = $xartable['courses_levels'];
@@ -122,8 +122,8 @@ function courses_init()
 
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-	
-	//Table for Student status
+    
+    //Table for Student status
     //This will be taken to dyn data.
     $courses_studstatus = $xartable['courses_studstatus'];
     $fields = array('xar_statusid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
@@ -136,7 +136,7 @@ function courses_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
     
-	//Table for Course years
+    //Table for Course years
     //This will be taken to dyn data.
     $courses_years = $xartable['courses_years'];
     $fields = array('xar_yearid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
@@ -148,7 +148,7 @@ function courses_init()
 
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-	
+    
     // If Categories API loaded and available, generate proprietary
     // module master category cid and child subcids
     if (xarModIsAvailable('categories')) {
@@ -250,11 +250,11 @@ function courses_init()
             ,'callerModName'    => 'courses'));
 
     /* FIXME: does generate errors
-	 *
+     *
      * REGISTER THE TABLES AT DYNAMICDATA
      
-	$path = "modules/courses/xardata/";
-	 
+    $path = "modules/courses/xardata/";
+     
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_levels.xml'));
 
     if (empty($objectid)) return;
@@ -337,7 +337,7 @@ function courses_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
     // The block will be maybe be used
-	// The courses themselves need to be adminable
+    // The courses themselves need to be adminable
     xarRegisterMask('ReadCoursesBlock', 'All', 'courses', 'Block', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_READ');
@@ -367,12 +367,12 @@ function courses_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case '0.0.1':
-		
+        
     // Get database setup and make tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
-	//Table for Course years
+    //Table for Course years
     //This will be taken to dyn data.
     $courses_years = $xartable['courses_years'];
     $fields = array('xar_yearid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
@@ -385,8 +385,8 @@ function courses_upgrade($oldversion)
     $result = &$dbconn->Execute($query);
     if (!$result) return;
             return courses_upgrade('0.0.2');
-			
-		case '0.0.2':
+            
+        case '0.0.2':
     // Create table for teachers
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -404,16 +404,16 @@ function courses_upgrade($oldversion)
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-	
+    
             return courses_upgrade('0.0.3');
-		
+        
         case '0.0.3':
-		// Upgrade instances
+        // Upgrade instances
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $courses_teachers = $xartable['courses_teachers'];
     $courses_planning = $xartable['courses_planning'];
-		
+        
     //For the planning of courses
     $query1 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning;
     $query2 = "SELECT DISTINCT xar_userid FROM " . $courses_teachers;
@@ -436,7 +436,7 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.0.4');
 
         case '0.0.4':
-	
+    
             break;
     }
     // Update successful

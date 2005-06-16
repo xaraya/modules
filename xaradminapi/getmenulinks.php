@@ -45,7 +45,7 @@ function courses_adminapi_getmenulinks()
             'label' => xarML('Add Course'));
     }
     // Security Check
-	/*
+    /*
     if (xarSecurityCheck('AddPlanning', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
@@ -53,7 +53,7 @@ function courses_adminapi_getmenulinks()
             'title' => xarML('Plan a course.'),
             'label' => xarML('Plan Course'));
     }
-	*/
+    */
 
     // Security Check
     if (xarSecurityCheck('AdminCourses', 0)) {

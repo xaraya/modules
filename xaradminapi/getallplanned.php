@@ -82,19 +82,19 @@ function courses_adminapi_getallplanned($args)
     $query = "SELECT xar_courseid,
                    xar_name,
                    xar_number,
-				   xar_type,
+                   xar_type,
                    xar_level,
                    xar_credits,
                    xar_creditsmin,
                    xar_creditsmax,
                    xar_shortdesc,
                    xar_prerequisites,
-				   xar_aim,
-				   xar_method,
-				   xar_language,
-				   xar_freq,
-				   xar_contact,
-				   xar_hidecourse
+                   xar_aim,
+                   xar_method,
+                   xar_language,
+                   xar_freq,
+                   xar_contact,
+                   xar_hidecourse
             FROM $coursestable
             ORDER BY xar_number";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
@@ -112,19 +112,19 @@ function courses_adminapi_getallplanned($args)
             $items[] = array('courseid' => $courseid,
                 'name' => $name,
                 'number' => $number,
-				'type' => $type,
+                'type' => $type,
                 'level' => $level,
                 'credits' => $credits,
-				'creditsmin' => $creditsmin,
-				'creditsmax' => $creditsmax,
+                'creditsmin' => $creditsmin,
+                'creditsmax' => $creditsmax,
                 'shortdesc' => $shortdesc,
                 'prerequisites' => $prerequisites,
-				'aim' => $aim,
-				'method' => $method,
-				'language' => $language,
-				'freq' => $freq,
-				'contact' => $contact,
-				'hidecourse' => $hidecourse);
+                'aim' => $aim,
+                'method' => $method,
+                'language' => $language,
+                'freq' => $freq,
+                'contact' => $contact,
+                'hidecourse' => $hidecourse);
         }
     }
     // All successful database queries produce a result set, and that result

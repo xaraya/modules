@@ -95,7 +95,7 @@ function courses_userapi_getplanned($args)
             'longdesc'   => $longdesc,
             'costs'      => $costs,
             'committee'  => $committee,
-			'coordinators' => $coordinators,
+            'coordinators' => $coordinators,
             'lecturers'  => $lecturers,
             'location'   => $location,
             'material'   => $material,

@@ -29,8 +29,8 @@ function courses_admin_updateconfig()
     xarModSetVar('courses', 'bold', $bold);
     xarModSetVar('courses', 'itemsperpage', $itemsperpage);
     xarModSetVar('courses', 'SupportShortURLs', $shorturls);
-	xarModSetVar('courses', 'hidecoursemsg', $hidecoursemsg);
-	xarModSetVar('courses', 'hideplanningmsg', $hideplanningmsg);
+    xarModSetVar('courses', 'hidecoursemsg', $hidecoursemsg);
+    xarModSetVar('courses', 'hideplanningmsg', $hideplanningmsg);
     xarModCallHooks('module','updateconfig','courses',
                    array('module' => 'courses'));
 

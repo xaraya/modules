@@ -24,7 +24,7 @@
 function courses_adminapi_deleteparticipant($args)
 {
     extract($args);
-	if (!xarVarFetch('sid', 'int:1:', $sid)) return;
+    if (!xarVarFetch('sid', 'int:1:', $sid)) return;
 
     // Argument check - make sure that all required arguments are present and
     // in the right format, if not then set an appropriate error message

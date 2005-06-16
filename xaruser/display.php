@@ -130,7 +130,7 @@ function courses_user_display($args)
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participantstitle'] = xarML('Participants');
-		
+        
         if (xarSecurityCheck('ReadCourses', 0, 'Item', "All:All:$courseid")) {
             $items[$i]['enrollurl'] = xarModURL('courses',
                 'user',
@@ -140,7 +140,7 @@ function courses_user_display($args)
             $items[$i]['enrollurl'] = '';
         }
         $items[$i]['enrolltitle'] = xarML('Enroll');
-		
+        
         if (xarSecurityCheck('ReadPlanning', 0, 'Item', "$planitem[planningid]:All:$courseid")) {
             $items[$i]['detailsurl'] = xarModURL('courses',
                 'user',
@@ -150,7 +150,7 @@ function courses_user_display($args)
             $items[$i]['detailsurl'] = '';
         }
         $items[$i]['detailstitle'] = xarML('Details');
-		
+        
         if (xarSecurityCheck('DeleteCourses', 0, 'Item', "$planitem[planningid]:All:$courseid")) {
             $items[$i]['statusurl'] = xarModURL('courses',
                 'user',
@@ -161,10 +161,10 @@ function courses_user_display($args)
         }
         $items[$i]['statustitle'] = xarML('Status');
     }
-	
+    
     // Add the array of items to the template variables
-    $data['items'] = $items;	
-	
+    $data['items'] = $items;    
+    
     // Note : module variables can also be specified directly in the
     // blocklayout template by using &xar-mod-<modname>-<varname>;
     // Note that you could also pass on the $item variable, and specify

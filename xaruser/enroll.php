@@ -38,7 +38,7 @@ function courses_user_enroll($args)
         'transform',
         $planningid,
         $courses);
-	//check for override by objectid
+    //check for override by objectid
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
@@ -65,10 +65,10 @@ function courses_user_enroll($args)
         'getplanned',
         array('planningid' => $planningid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-	
+    
 /* //Check this mailing function later on.
-	 
-	 //Rewrite the name to get
+     
+     //Rewrite the name to get
      $name = $item['name'];
 //       echo "<br /><pre>items => "; print_r($item); echo "</pre>";
      $message = xarVarPrepForDisplay(xarML('A new user has enrolled in '. $name ));
@@ -107,14 +107,14 @@ function courses_user_enroll($args)
 */
 
     // If user is not enrolled already go ahead and create the enrollment
-	// Get status of student
-	$studstatus = 1;
+    // Get status of student
+    $studstatus = 1;
     $enrollid = xarModAPIFunc('courses',
                           'user',
                           'create_enroll',
                           array('uid'        => $uid,
                                 'planningid' => $planningid,
-								'studstatus' => $studstatus));
+                                'studstatus' => $studstatus));
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already

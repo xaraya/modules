@@ -66,7 +66,7 @@ function courses_admin_updatecourse($args)
     // do not duplicate the work here
 
     $invalid = array();
-	
+    
     if (empty($name)) {
         $data['name'] = '';
     } else {
@@ -124,7 +124,7 @@ function courses_admin_updatecourse($args)
         // (you need to copy admin-new.xd to admin-create.xd here)
         return xarModFunc('courses', 'admin', 'modifycourse',
                           array('courseid' => $courseid,
-						        'name' => $name,
+                                'name' => $name,
                                 'number' => $number,
                                 'coursetype' => $coursetype,
                                 'level' => $level,
@@ -133,7 +133,7 @@ function courses_admin_updatecourse($args)
                                 'freq' => $freq,
                                 'contact' => $contact,
                                 'hidecourse' => $hidecourse,
-								'invalid' => $invalid));
+                                'invalid' => $invalid));
     }
 
     // The API function is called.  Note that the name of the API function and

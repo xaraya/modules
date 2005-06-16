@@ -39,14 +39,14 @@ function courses_user_displayplanned($args)
     $data['status'] = '';
     // The API function is called.  The arguments to the function are passed in
     // as their own arguments array.
-	
+    
     $item = xarModAPIFunc('courses',
         'user',
         'getplanned',
         array('planningid' => $planningid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-	
-	$course = xarModAPIFunc('courses',
+    
+    $course = xarModAPIFunc('courses',
         'user',
         'get',
         array('courseid' => $item['courseid']));
@@ -83,7 +83,7 @@ function courses_user_displayplanned($args)
     $data['locationlabel'] = xarVarPrepForDisplay(xarML('Course location'));
     $data['programlabel'] = xarVarPrepForDisplay(xarML('Course Programme'));
     $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description'));
-	$data['longdesclabel'] = xarVarPrepForDisplay(xarML('Long Course Description'));
+    $data['longdesclabel'] = xarVarPrepForDisplay(xarML('Long Course Description'));
     $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
     $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
@@ -98,23 +98,23 @@ function courses_user_displayplanned($args)
     $data['course'] = $course;
      // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
-	// See if student is already enrolled 
+    // See if student is already enrolled 
     $enrolled = xarModAPIFunc('courses',
                           'user',
                           'check_enrolled',
                           array('uid' => $uid,
                                 'planningid' => $planningid));
-								
+                                
     if (count($enrolled)!=0) {
-		$data['enrolled'] = 1;
+        $data['enrolled'] = 1;
         $data['enrollbutton'] = xarVarPrepForDisplay(xarML('You are enrolled'));
-		$data['action'] = "xarModUrl('courses', 'user', 'viewstatus')";
-	}
-	else {
-	    $data['enrolled'] = 0;
+        $data['action'] = "xarModUrl('courses', 'user', 'viewstatus')";
+    }
+    else {
+        $data['enrolled'] = 0;
         $data['enrollbutton'] = xarVarPrepForDisplay(xarML('Enroll'));
-		$data['action'] = "xarModUrl('courses', 'user', 'enroll')";
-		
+        $data['action'] = "xarModUrl('courses', 'user', 'enroll')";
+        
     }
 /*
     if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
@@ -150,7 +150,7 @@ function courses_user_displayplanned($args)
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participantstitle'] = xarML('Participants');
-		
+        
         if (xarSecurityCheck('ReadCourses', 0, 'Item', "$planitem[planningid]:All:$courseid")) {
             $items[$i]['enrollurl'] = xarModURL('courses',
                 'user',
@@ -160,7 +160,7 @@ function courses_user_displayplanned($args)
             $items[$i]['enrollurl'] = '';
         }
         $items[$i]['enrolltitle'] = xarML('Enroll');
-		
+        
         if (xarSecurityCheck('DeletePlanning', 0, 'Planning', "$planitem[planningid]:All:$courseid")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
@@ -171,10 +171,10 @@ function courses_user_displayplanned($args)
         }
         $items[$i]['statustitle'] = xarML('Status');
     }
-	
+    
     // Add the array of items to the template variables
-    $data['items'] = $items;	
-	
+    $data['items'] = $items;    
+    
     // Note : module variables can also be specified directly in the
     // blocklayout template by using &xar-mod-<modname>-<varname>;
     // Note that you could also pass on the $item variable, and specify

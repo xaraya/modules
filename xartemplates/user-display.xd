@@ -70,7 +70,7 @@
                     </label>
                     #$item['shortdesc']#
                 </p>
-				
+                
                 <p class="param">
                     <label for="level">
                         <span class="help" title="#xarML('The level of this course')#">
@@ -78,7 +78,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					#$levelname#
+                    #$levelname#
                     </span>
                 </p>
                 <p class="param">
@@ -89,7 +89,7 @@
                     </label>
                     #$item['language']#
                 </p>
-				
+                
            </fieldset>
       </fieldset>
 
@@ -109,7 +109,7 @@
            <xar:if condition="!empty($item['enrollurl'])">
                <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>
            </xar:if>
-		   <xar:if condition="!empty($item['detailsurl'])">
+           <xar:if condition="!empty($item['detailsurl'])">
            |
                <a href="#$item['detailsurl']#">#$item['detailstitle']#</a>
            </xar:if>
@@ -139,6 +139,6 @@
     #$hookoutput[$hookmodule]#
 </xar:foreach>
 </xar:if>
-	  
+      
 </xar:if>
 

@@ -36,7 +36,7 @@ function courses_adminapi_validatecourse($args)
     $query = "SELECT xar_name, xar_number
             FROM $coursestable
             WHERE xar_name = ? OR xar_number = ? 
-			";
+            ";
     $result = &$dbconn->Execute($query, array($name, $number));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -56,7 +56,7 @@ function courses_adminapi_validatecourse($args)
     //}
     // Create the item array
     $item = array('name' => $name,
-	              'number' => $number);
+                  'number' => $number);
     // Return the item array
     return $item;
 }

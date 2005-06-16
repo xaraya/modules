@@ -48,8 +48,8 @@ function courses_userapi_getcourse($args)
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $coursestable = $xartable['courses'];
-	
-	
+    
+    
     // Get item - the formatting here is not mandatory, but it does make the
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the Execute() command allows for simpler debug operation
@@ -59,10 +59,10 @@ function courses_userapi_getcourse($args)
                    xar_type,
                    xar_level,
                    xar_shortdesc,
-				   xar_language,
-				   xar_freq,
-				   xar_contact,
-				   xar_hidecourse
+                   xar_language,
+                   xar_freq,
+                   xar_contact,
+                   xar_hidecourse
             FROM $coursestable
             WHERE xar_courseid = ?";
     $result = &$dbconn->Execute($query, array((int)$courseid));
@@ -77,20 +77,20 @@ function courses_userapi_getcourse($args)
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }
-	
+    
     // Obtain the item information from the result set
     list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse) = $result->fields;
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
     // Security checks 
-	
-	// Check that person has admin right to see hidden course
+    
+    // Check that person has admin right to see hidden course
     if (!xarSecurityCheck('AdminCourses')) {
-		if ($hidecourse == 1){
-		return;
-		}
-	}
+        if ($hidecourse == 1){
+        return;
+        }
+    }
     // For this function, the user must *at least* have READ access to this item
     if (!xarSecurityCheck('ReadCourses', 1, 'Item', "$name:All:$courseid")) {
         return;
@@ -106,9 +106,9 @@ function courses_userapi_getcourse($args)
         'level' => $level,
         'shortdesc' => $shortdesc,
         'language' => $language,
-		'freq' => $freq,
-		'contact' => $contact,
-		'hidecourse' => $hidecourse);
+        'freq' => $freq,
+        'contact' => $contact,
+        'hidecourse' => $hidecourse);
     // Return the item array
     return $item;
 }

@@ -68,7 +68,7 @@ function courses_userapi_create_enroll($args)
               xar_sid,
               xar_userid,
               xar_planningid,
-			  xar_status)
+              xar_status)
             VALUES (?,?,?,?)";
     $bindvars = array((int)$nextId, (int)$uid, (int)$planningid, $studstatus);
     $result = &$dbconn->Execute($query, $bindvars);

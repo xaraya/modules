@@ -44,17 +44,17 @@ function courses_admin_createcourse($args)
     // values that are there and a message with a session var. If you perform
     // this check now, you could do away with the check in the API along with
     // the exception that comes with it.
-	/*
-	$item = array();
+    /*
+    $item = array();
     $item = xarModAPIFunc('courses',
                           'admin',
                           'validatecourse',
                           array('name' => $name,
-	                            'number' => $number));
+                                'number' => $number));
     
     // Argument check
-	
-	
+    
+    
     $invalid = array();
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
@@ -74,7 +74,7 @@ function courses_admin_createcourse($args)
     if (count($invalid) > 0) {
         // call the admin_newcourse function and return the template vars
         // (move from admin-new.xd to admin-create.xd here)
-		return xarModFunc('courses', 'admin', 'newcourse',
+        return xarModFunc('courses', 'admin', 'newcourse',
                           array('name' => $name,
                                 'number' => $number,
                                 'coursetype' => $coursetype,

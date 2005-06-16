@@ -34,7 +34,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" />
-		  <xar:if condition="!empty($invalid['name'])">
+          <xar:if condition="!empty($invalid['name'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
           </xar:if>
     </span>
@@ -125,7 +125,7 @@
         <span class="help" title="#xarML('Enter the number of credits for this course.')#"><label for="credits">#$creditslabel#</label>:</span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-	  <xar:data-input name="credits" type="15" value="$credits" />
+      <xar:data-input name="credits" type="15" value="$credits" />
         <xar:if condition="!empty($invalid['credits'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid credit</xar:mlstring></span>
         </xar:if>
@@ -141,7 +141,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <xar:data-input name="credits" type="15" value="$item['credits']" />
-		   <xar:if condition="!empty($invalid['credits'])">
+           <xar:if condition="!empty($invalid['credits'])">
               <span style="color: red"><xar:mlstring>ERROR! This is not a valid credit</xar:mlstring></span>
            </xar:if>
     </span>

@@ -31,22 +31,22 @@
     <tr>
         <th colspan="4"><xar:mlstring>Enrolled Courses</xar:mlstring></th>
     </tr>
-	<xar:if condition="!empty($data1['items'])">
-		<xar:foreach in="$data1['items']" value="$item">
-		<tr align="center">
-			<td>
-				<xar:if condition="empty($item['link'])">
-					#$item['name']#
-				<xar:else />
-					<a href="#$item['link']#">#$item['name']#</a>
-				</xar:if>
-			 </td>
-			<td>#$item['startdate']#</td>
-			<td>#$item['statusname']#</td>
-			<td>#$item['planningid']#</td>
-		</tr>
-		</xar:foreach>
-	</xar:if>
+    <xar:if condition="!empty($data1['items'])">
+        <xar:foreach in="$data1['items']" value="$item">
+        <tr align="center">
+            <td>
+                <xar:if condition="empty($item['link'])">
+                    #$item['name']#
+                <xar:else />
+                    <a href="#$item['link']#">#$item['name']#</a>
+                </xar:if>
+             </td>
+            <td>#$item['startdate']#</td>
+            <td>#$item['statusname']#</td>
+            <td>#$item['planningid']#</td>
+        </tr>
+        </xar:foreach>
+    </xar:if>
 </table>
 <br />
 <h3><xar:mlstring>You are a teacher in the following courses:</xar:mlstring></h3>
@@ -54,22 +54,22 @@
     <tr>
         <th colspan="4"><xar:mlstring>Enrolled Courses</xar:mlstring></th>
     </tr>
-	<xar:if condition="!empty($data1['items'])">
-		<xar:foreach in="$data1['items']" value="$item">
-		<tr align="center">
-			<td>
-				<xar:if condition="empty($item['link'])">
-					#$item['name']#
-				<xar:else />
-					<a href="#$item['link']#">#$item['name']#</a>
-				</xar:if>
-			 </td>
-			<td>#$item['startdate']#</td>
-			<td>#$item['statusname']#</td>
-			<td>#$item['planningid']#</td>
-		</tr>
-		</xar:foreach>
-	</xar:if>
+    <xar:if condition="!empty($data1['items'])">
+        <xar:foreach in="$data1['items']" value="$item">
+        <tr align="center">
+            <td>
+                <xar:if condition="empty($item['link'])">
+                    #$item['name']#
+                <xar:else />
+                    <a href="#$item['link']#">#$item['name']#</a>
+                </xar:if>
+             </td>
+            <td>#$item['startdate']#</td>
+            <td>#$item['statusname']#</td>
+            <td>#$item['planningid']#</td>
+        </tr>
+        </xar:foreach>
+    </xar:if>
 </table>
 
 

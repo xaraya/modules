@@ -73,7 +73,7 @@ function courses_userapi_getall_enrolled($args)
     $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you are
     // using - $table doesn't cut it in more complex modules
-	$planningtable = $xartable['courses_planning'];
+    $planningtable = $xartable['courses_planning'];
     $coursestable = $xartable['courses'];
     $studentstable = $xartable['courses_students'];
     // TODO: how to select by cat ids (automatically) when needed ???
@@ -81,12 +81,12 @@ function courses_userapi_getall_enrolled($args)
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the SelectLimit() command allows for simpler debug
     // operation if it is ever needed
-	// How to get the planningid?
+    // How to get the planningid?
     $query = "SELECT $coursestable.xar_name,
-	        $coursestable.xar_courseid,
-			$planningtable.xar_planningid,
-			$planningtable.xar_startdate,
-			$studentstable.xar_status
+            $coursestable.xar_courseid,
+            $planningtable.xar_planningid,
+            $planningtable.xar_startdate,
+            $studentstable.xar_status
             FROM $coursestable, $planningtable, $studentstable
             WHERE $studentstable.xar_userid = $uid
             AND $planningtable.xar_planningid = $studentstable.xar_planningid";
@@ -100,10 +100,10 @@ function courses_userapi_getall_enrolled($args)
         list($name, $courseid, $planningid, $startdate, $studstatus) = $result->fields;
         if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$name:All:All")) {
             $items[] = array('name' => $name,
-			                 'courseid'=> $courseid,
-							 'planningid' => $planningid,
-							 'startdate'=> $startdate,
-							 'studstatus'=> $studstatus);
+                             'courseid'=> $courseid,
+                             'planningid' => $planningid,
+                             'startdate'=> $startdate,
+                             'studstatus'=> $studstatus);
         }
     }
     // All successful database queries produce a result set, and that result
