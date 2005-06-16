@@ -2,6 +2,9 @@
 /**
  * get the list of derivative images (thumbnails and resized)
  *
+ * @param   string  $fileName  (optional) The name of the image we're getting derivatives for
+ * @param   string  $thumbsdir (optional) The directory where derivative images are stored
+ * @param   string  $filematch (optional) Specific file match for derivative images
  * @returns array
  * @return array containing the list of derivatives
  * @todo add startnum and numitems support + cache for large # of images
@@ -15,11 +18,19 @@ function images_adminapi_getderivatives($args)
     if (empty($thumbsdir)) {
         return array();
     }
+    if (empty($filematch)) {
+        $filematch = '';
+        if (!empty($fileName)) {
+            // Note: resized images are named [filename]-[width]x[height].jpg - see resize() method
+            $filematch = '^' . $fileName . '-\d+x\d+';
+        }
+    }
 
     // Note: resized images are JPEG files - see resize() method
     $files = xarModAPIFunc('dynamicdata','admin','browse',
-                           array('basedir'  => $thumbsdir,
-                                 'filetype' => 'jpg'));
+                           array('basedir'   => $thumbsdir,
+                                 'filematch' => $filematch,
+                                 'filetype'  => 'jpg'));
     if (!isset($files)) return;
 
     $imagelist = array();
@@ -42,7 +53,7 @@ function images_adminapi_getderivatives($args)
 
 // TODO: find original file info in uploads module if obfuscated
 
-    if (xarModIsAvailable('uploads') && 
+    if (empty($fileName) && xarModIsAvailable('uploads') && 
         (xarModGetVar('uploads', 'file.obfuscate-on-import') ||
          xarModGetVar('uploads', 'file.obfuscate-on-upload'))) {
 

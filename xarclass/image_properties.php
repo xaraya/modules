@@ -240,23 +240,27 @@ class Image_Properties
         return TRUE;
     }
     
-    function saveDerivative() 
+    function saveDerivative($fileName = '') 
     {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
-            // remove any file name extension from the file name 
-            $fileParts = explode('.', $this->fileName);
-            if (count($fileParts) > 1) {
-                array_pop($fileParts);
+            if (empty($fileName)) {
+                // remove any file name extension from the file name 
+                $fileParts = explode('.', $this->fileName);
                 if (count($fileParts) > 1) {
-                    $fileName = implode('.', $fileParts);
-                } else {
-                    $fileName = $fileParts[0];
+                    array_pop($fileParts);
+                    if (count($fileParts) > 1) {
+                        $fileName = implode('.', $fileParts);
+                    } else {
+                        $fileName = $fileParts[0];
+                    }
+                }  else {
+                    $fileName = $this->fileName;
                 }
-            }  else {
-                $fileName = $this->fileName;
+                $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
+            } else {
+                $derivName = $this->_thumbsdir . '/' . $fileName;
             }
 
-            $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
             if (@copy($this->_tmpFile, $derivName)) {
                 return $derivName;
             } else {
@@ -267,25 +271,28 @@ class Image_Properties
         }
     }
     
-    function getDerivative() 
+    function getDerivative($fileName = '') 
     {
-        
-        // remove any file name extension from the file name 
-        $fileParts = explode('.', $this->fileName);
-        if (count($fileParts) > 1) {
-            array_pop($fileParts);
+        if (empty($fileName)) {
+            // remove any file name extension from the file name 
+            $fileParts = explode('.', $this->fileName);
             if (count($fileParts) > 1) {
-                $fileName = implode('.', $fileParts);
+                array_pop($fileParts);
+                if (count($fileParts) > 1) {
+                    $fileName = implode('.', $fileParts);
+                } else {
+                    $fileName = $fileParts[0];
+                }
             } else {
-                $fileName = $fileParts[0];
+                $fileName = $this->fileName;
+            }
+            if ($this->width == $this->_owidth && $this->height == $this->_oheight) {
+                $derivName = $this->fileLocation;
+            } else {
+                $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
             }
         } else {
-            $fileName = $this->fileName;
-        }
-        if ($this->width == $this->_owidth && $this->height == $this->_oheight) {
-            $derivName = $this->fileLocation;
-        } else {
-            $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
+            $derivName = $this->_thumbsdir . '/' . $fileName;
         }
 
         if (file_exists($derivName)) {

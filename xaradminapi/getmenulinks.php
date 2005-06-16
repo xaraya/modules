@@ -13,6 +13,13 @@ function images_adminapi_getmenulinks()
                                                   'main'),
                              'title' => xarML('Images Module Overview'),
                              'label' => xarML('Overview'));
+        if (xarModIsAvailable('uploads') && xarSecurityCheck('AdminUploads',0)) {
+            $menulinks[] = Array('url'   => xarModURL('images',
+                                                      'admin',
+                                                      'uploads'),
+                                 'title' => xarML('View Uploaded Images'),
+                                 'label' => xarML('View Uploaded Images'));
+        }
         $menulinks[] = Array('url'   => xarModURL('images',
                                                   'admin',
                                                   'derivatives'),

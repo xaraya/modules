@@ -9,6 +9,8 @@
  * @param   string  $width      The new width (in pixels or percent)  ([0-9]+)(px|%)
  * @param   boolean $constrain  if height XOR width, then constrain the missing value to the given one
  * @param   string  $thumbsdir     (optional) The directory where derivative images are stored
+ * @param   string  $derivName     (optional) The name of the derivative image to be saved
+ * @param   boolean $forceResize   (optional) Force resizing the image even if it already exists
  * @returns string
  * @return the location of the newly resized image
  */
@@ -149,10 +151,18 @@ function images_adminapi_resize_image($args)
         }
     }
 
-    $location = $image->getDerivative();
+    if (empty($derivName)) {
+        $derivName = '';
+    }
+
+    if (empty($forceResize)) {
+        $location = $image->getDerivative($derivName);
+    } else {
+        $location = '';
+    }
     if (!$location) {
         if ($image->resize()) {
-            $location = $image->saveDerivative();
+            $location = $image->saveDerivative($derivName);
             if (!$location) {
                 $msg = xarML('Unable to save resized image !');
                 xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
