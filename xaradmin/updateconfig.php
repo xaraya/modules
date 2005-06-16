@@ -33,7 +33,10 @@ function tinymce_admin_updateconfig()
         case 'general':
             if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'default',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyask','str:1:',$tinyask,'true',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinybrowsers','str:1:',$tinybrowsers,'msie,gecko,safari',XARVAR_NOT_REQUIRED)) return;
+            // We have fancy validation rules to avoid writing the same code over and over
+            // This one: treats the string as a comma-separeted list of tokens. Each token
+            // is lower-cased, trimmed and compared to a list of allowed browsers.
+            if (!xarVarFetch('tinybrowsers', 'strlist:,:pre:lower:trim:passthru:enum:msie:gecko:safari', $tinybrowsers, 'msie,gecko,safari', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('usebutton','str:1:',$usebutton,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;
@@ -44,6 +47,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinypara','str:1:',$tinypara,'false',XARVAR_NOT_REQUIRED)) return;
+
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', $tinyask);
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
@@ -56,19 +60,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinypara', $tinypara);
                xarModSetVar('tinymce', 'tinynowrap', $tinynowrap);
                xarModSetVar('tinymce', 'usebutton', $usebutton);
-               $browserstring=strtolower(trim($tinybrowsers));
-               $browserarray=array('msie','gecko','safari');
-               $allbrowsers=0;
-               foreach ($browserarray as $browsername) {
-                if (eregi($browsername,$tinybrowsers)) {
-                  $allbrowsers=$allbrowsers + 1;
-                }
-               }
-               if ($browserstring=='' or $allbrowsers>=3) {
-                   xarModSetVar('tinymce', 'tinybrowsers', 'msie,gecko,safari');
-               }else{
-                   xarModSetVar('tinymce', 'tinybrowsers', $browserstring);
-               }
+               xarModSetVar('tinymce', 'tinybrowsers', $tinybrowsers);
 
             break;
         case 'cssplug':
