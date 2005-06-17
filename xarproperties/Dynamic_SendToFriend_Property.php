@@ -44,7 +44,7 @@ class Dynamic_SendToFriend_Property extends Dynamic_Property
         $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
 
         $template='sendtofriend';
-        return xarTplModule('recommend', 'admin', 'showinput', $data , $template);
+        return xarTplProperty('recommend', 'admin', 'showinput', $data , $template);
 
         /*
         return '<input type="checkbox"'.
@@ -77,7 +77,7 @@ class Dynamic_SendToFriend_Property extends Dynamic_Property
             return $out;
           */
         $template='sendtofriend';
-        return xarTplModule('recommend', 'user', 'showoutput', $data ,$template);
+        return xarTplProperty('recommend', 'user', 'showoutput', $data ,$template);
 
        } else {
        //value is not set - we don't want to show the link
