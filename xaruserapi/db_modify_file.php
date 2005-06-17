@@ -10,7 +10,8 @@
  *  @param   string  filename   (optional) The name of the file (minus any path information)
  *  @param   string  fileLocation   (optional) The complete path to the file including the filename (obfuscated if so chosen)
  *  @param   integer status     (optional) The status of the file (APPROVED, SUBMITTED, READABLE, REJECTED)
- *  @param   string  mime_type  (optional) The mime content-type of the file
+ *  @param   string  fileType  (optional) The mime content-type of the file
+ *  @param   string  fileSize  (optional) The size of the file
  *  @param   integer store_type (optional) The manner in which the file is to be stored (filesystem, database)
  *
  *  @returns integer The number of affected rows on success, or FALSE on error
@@ -58,6 +59,11 @@ function uploads_userapi_db_modify_file( $args )
     if (isset($fileType)) {
         $update_fields[] = "xar_mime_type = ?";
         $update_args[] = $fileType;
+    }
+
+    if (isset($fileSize)) {
+        $update_fields[] = "xar_filesize = ?";
+        $update_args[] = $fileSize;
     }
 
     if (!count($update_fields)) {
