@@ -72,7 +72,7 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
 
         $template="tinymce";
 
-      return xarTplModule('tinymce', 'admin', 'showinput', $data , $template);
+      return xarTplProperty('tinymce', 'admin', 'showinput', $data , $template);
     }
 
     function showOutput($args = array())
@@ -86,7 +86,7 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
                 $data['value'] = xarVarPrepHTMLDisplay($this->value);
          }
          $template="tinymce";
-         return xarTplModule('tinymce', 'user', 'showoutput', $data ,$template);
+         return xarTplProperty('tinymce', 'user', 'showoutput', $data ,$template);
     }
 
 
