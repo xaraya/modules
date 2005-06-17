@@ -1,7 +1,5 @@
 <!-- temporarily include module level styling until we're done -->
-<style type="text/css">
-   @import url(modules/bkview/bkweb.css);
-</style>
+<xar:style scope="module" file="bkweb" method="import"/>
 
 <!-- include the module header on all admin pages -->
 <div class="xar-mod-head">
