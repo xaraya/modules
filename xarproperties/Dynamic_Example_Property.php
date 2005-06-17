@@ -84,7 +84,7 @@ class Dynamic_Example_Property extends Dynamic_Property
         $data['maxlength']= !empty($maxlength) ? $maxlength : $this->maxlength;
         $data['size']     = !empty($size) ? $size : $this->size;
 
-      // Take the example-showinput.xd template from the example module and render it
+      // Take the showinput-example.xd template from the example module and render it
       return xarTplProperty('example', 'example','showinput', $data);
     }
 
@@ -101,7 +101,7 @@ class Dynamic_Example_Property extends Dynamic_Property
 
         $data['value'] = $value;
         
-        // Take the example-showoutput.xd template from the example module and render it
+        // Take the showoutput-example.xd template from the example module and render it
         return xarTplProperty('example', 'example', 'showoutput', $data);
 
     }
