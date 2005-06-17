@@ -20,9 +20,26 @@
             <input type="submit" name="confirm" value="#xarML('Confirm')#" />
             <input type="submit" name="action" value="#xarML('Cancel')#" />
         </form>
+        <xar:elseif condition="!empty($action) and $action eq 'resize'"/>
+        <form method="post" action="&xar-modurl-images-admin-uploads;">
+            <p><strong><xar:mlstring>Specify the width and/or height you want :</xar:mlstring></strong></p>
+            <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="#$width#" />
+            <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="#$height#" />
+            <label for="replace"><xar:mlstring>Replace</xar:mlstring></label> <input type="checkbox" name="replace" id="replace" #$replace# />
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="action" value="resize" />
+            <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
+            <input type="submit" name="preview" value="#xarML('Preview')#" />
+            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+            <input type="submit" name="action" value="#xarML('Cancel')#" />
+        </form>
         </xar:if>
 
-        <p><img src="#$selimage['fileDownload']#" border="0" /></p>
+        <xar:if condition="!empty($width) or !empty($height)">
+            <p><img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" /></p>
+        <xar:else/>
+            <p><img src="#$selimage['fileDownload']#" border="0" /></p>
+        </xar:if>
         <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
         <xar:mlstring>Filetype</xar:mlstring> : #$selimage['fileType']#<br/>
         <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>
@@ -62,6 +79,9 @@
 
         <p><a href="&xar-modurl-uploads-admin-get_files;"><xar:mlstring>Add Image</xar:mlstring></a></p>
 
+        <xar:base-include-javascript module="base" filename="checkall.js" />
+
+        <form name="viewuploads" id="viewuploads" method="post" action="&xar-modurl-images-admin-uploads;">
         <table class="xar-accent">
             <tr>
                 <th>
@@ -101,7 +121,14 @@
             <xar:foreach in="$images" value="$image">
             <tr>
                 <td>
-                    #$image['fileName']#
+                    <xar:if condition="!empty($selected) and in_array($image['fileId'],$selected)">
+                        <input type="checkbox" name="fileId[#$image['fileId']#]" id="fileId_#$image['fileId']#" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="fileId[#$image['fileId']#]" id="fileId_#$image['fileId']#" value="1" />
+                    </xar:if>
+                    <label for="fileId_#$image['fileId']#">
+                        #$image['fileName']#
+                    </label>
                 </td>
                 <td>
                     #$image['fileType']#
@@ -123,13 +150,46 @@
                         <xar:mlstring>View</xar:mlstring>
                     </a>
                     |
+                    <a href="#xarModURL('images','admin','uploads',array('action' => 'resize', 'fileId' => $image['fileId']))#">
+                        <xar:mlstring>Resize</xar:mlstring>
+                    </a>
+                    |
                     <a href="#xarModURL('images','admin','uploads',array('action' => 'delete', 'fileId' => $image['fileId']))#">
                         <xar:mlstring>Delete</xar:mlstring>
                     </a>
                 </td>
             </tr>
             </xar:foreach>
+            <xar:if condition="empty($action)">
+            <tr>
+                <td colspan="7">
+                    <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="" />
+                    <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="" />
+                    <label for="replace"><xar:mlstring>Replace</xar:mlstring></label> <input type="checkbox" name="replace" id="replace" value="1" />
+                    <input type="hidden" name="action" value="resize" />
+                    <input type="submit" name="resizelist" value="#xarML('Resize')#" />
+<script language="JavaScript" type="text/javascript">
+    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewuploads'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewuploads'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+</script>
+                </td>
+            </tr>
+            <xar:elseif condition="$action eq 'resizelist'"/>
+            <tr>
+                <td colspan="7">
+                    <xar:ml><xar:mlstring>Are you sure you want to resize the selected images to [#(1) x #(2)] ?</xar:mlstring><xar:mlvar>#$width#</xar:mlvar><xar:mlvar>#$height#</xar:mlvar></xar:ml>
+                    <input type="hidden" name="authid" value="#$authid#" />
+                    <input type="hidden" name="width" value="#$width#" />
+                    <input type="hidden" name="height" value="#$height#" />
+                    <input type="hidden" name="replace" value="#$replace#" />
+                    <input type="hidden" name="action" value="resize" />
+                    <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+                    <input type="submit" name="action" value="#xarML('Cancel')#" />
+                </td>
+            </tr>
+            </xar:if>
         </table>
+        </form>
 
     </div>
 </div>

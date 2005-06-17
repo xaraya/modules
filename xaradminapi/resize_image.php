@@ -157,11 +157,13 @@ function images_adminapi_resize_image($args)
 
     if (empty($forceResize)) {
         $location = $image->getDerivative($derivName);
+        $forceResize = false;
     } else {
         $location = '';
+        $forceResize = true;
     }
     if (!$location) {
-        if ($image->resize()) {
+        if ($image->resize($forceResize)) {
             $location = $image->saveDerivative($derivName);
             if (!$location) {
                 $msg = xarML('Unable to save resized image !');

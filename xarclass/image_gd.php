@@ -22,7 +22,7 @@ class Image_GD extends Image_Properties
      *    Jeff Knight of New York PHP
      **
      */
-    function resize() 
+    function resize($forceResize = false) 
     {
         
         // If the original height and widht are the same
@@ -32,7 +32,7 @@ class Image_GD extends Image_Properties
                 return TRUE;
         } 
         
-        if ($this->getDerivative()) {
+        if (empty($forceResize) && $this->getDerivative()) {
             return TRUE;
         }
         

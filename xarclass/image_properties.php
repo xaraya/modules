@@ -258,7 +258,7 @@ class Image_Properties
                 }
                 $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
             } else {
-                $derivName = $this->_thumbsdir . '/' . $fileName;
+                $derivName = $fileName;
             }
 
             if (@copy($this->_tmpFile, $derivName)) {
@@ -292,7 +292,7 @@ class Image_Properties
                 $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
             }
         } else {
-            $derivName = $this->_thumbsdir . '/' . $fileName;
+            $derivName = $fileName;
         }
 
         if (file_exists($derivName)) {
