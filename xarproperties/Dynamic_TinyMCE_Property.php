@@ -70,9 +70,9 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
         $data['cols']     = !empty($cols) ? $cols : $this->cols;
 
 
-        $template="tinymce";
+        $template="";
 
-      return xarTplProperty('tinymce', 'admin', 'showinput', $data , $template);
+      return xarTplProperty('tinymce', 'tinymce', 'showinput', $data);
     }
 
     function showOutput($args = array())
@@ -85,8 +85,8 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
          } else {
                 $data['value'] = xarVarPrepHTMLDisplay($this->value);
          }
-         $template="tinymce";
-         return xarTplProperty('tinymce', 'user', 'showoutput', $data ,$template);
+         $template="";
+         return xarTplProperty('tinymce', 'tinymce', 'showoutput', $data );
     }
 
 
