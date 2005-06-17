@@ -25,8 +25,8 @@ function courses_admin_menu()
         }
     }
 
-    xarTplAddStyleLink('roles',    'tabs',  $fileExt = 'css');
-    xarTplAddStyleLink('helpdesk', 'style', $fileExt = 'css');
+    xarTplAddStyleLink('courses',    'xartabs',  $fileExt = 'css');
+    xarTplAddStyleLink('courses', 'courses', $fileExt = 'css');
 
     return xarTplModule('courses', 'admin', 'menu', $data);
 }
