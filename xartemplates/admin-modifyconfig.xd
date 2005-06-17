@@ -181,7 +181,7 @@
          <li class="xar-norm" >
              <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated when mode is set to All TextAreas without the need to add any template snippets. </xar:mlstring>
          </li>
-         <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation. You can then manually override the loading of the WYSIWYG by adding your specific template snippet code, as below, to your page or other specific templates.
+         <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation (xarTinyMCE DD properties are still active). You can then manually override the loading of the WYSIWYG by adding your specific template snippet code, as below, to your page or other specific templates.
            All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
            Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring>
          </li>
