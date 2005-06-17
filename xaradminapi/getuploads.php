@@ -34,6 +34,21 @@ function images_adminapi_getuploads($args)
             if (!empty($imageInfo)) {
                 $imagelist[$id]['width']  = $imageInfo[0];
                 $imagelist[$id]['height'] = $imageInfo[1];
+
+            // FIXME: don't do this for every image !?
+            } elseif (defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA) && extension_loaded('gd')) {
+                // get the image data from the database
+                $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
+                if (!empty($data)) {
+                    $string = implode('', $data);
+                    $src = @imagecreatefromstring($string);
+                    $imagelist[$id]['width']  = @imagesx($src);
+                    $imagelist[$id]['height'] = @imagesy($src);
+                } else {
+                    $imagelist[$id]['width']  = '';
+                    $imagelist[$id]['height'] = '';
+                }
+
             } else {
                 $imagelist[$id]['width']  = '';
                 $imagelist[$id]['height'] = '';
