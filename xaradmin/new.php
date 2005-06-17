@@ -36,14 +36,9 @@ function bkview_admin_new($args)
     $data['repopath'] = $repopath;
     $item = array();
     $item['module'] = 'bkview';
+    $hooks = array();
     $hooks = xarModCallHooks('item','new','',$item);
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
-    } else {
-        $data['hooks'] = $hooks;
-    }
+    $data['hooks'] = $hooks;
     $data['pageinfo']=xarML('Register a new repository');
     return $data;
 }

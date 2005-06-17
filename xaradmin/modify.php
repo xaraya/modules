@@ -34,12 +34,8 @@ function bkview_admin_modify($args)
 
     
     $item['module'] = 'bkview';
+    $hooks = array();
     $hooks = xarModCallHooks('item','modify',$repoid,$item);
-    if (empty($hooks)) {
-            $hooks = '';
-        } elseif (is_array($hooks)) {
-            $hooks = join('',$hooks);
-    }
     
     // Return the template variables defined in this function
     $data['authid']= xarSecGenAuthKey();
