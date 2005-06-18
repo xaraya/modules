@@ -68,8 +68,8 @@ function images_userapi_resize($args)
 
     $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $src)));
     // TODO: refactor to support other libraries (ImageMagick/NetPBM)
-    if (isset($fileInfo['fileLocation']) && file_exists($fileInfo['fileLocation'])) {
-        $imageInfo = @getimagesize($fileInfo['fileLocation']);
+    if (!empty($fileInfo['fileLocation'])) {
+        $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
         $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
         if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
             $notSupported = TRUE;
