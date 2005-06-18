@@ -86,7 +86,8 @@ function uploads_init()
         'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE,  'default'=>'0'),
         'xar_filesize'     => array('type'=>'integer', 'size'=>'big',    'null'=>FALSE),
         'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny',     'null'=>FALSE),
-        'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
+        'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream'),
+        'xar_extrainfo'    => array('type'=>'text')
     );
 
 
@@ -505,7 +506,19 @@ function uploads_upgrade($oldversion)
         case '0.7.5':
             xarModAPILoad('uploads', 'user');
             xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
-            break;
+
+        case '0.9.8':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $file_entry_table = $xartable['file_entry'];
+            xarDBLoadTableMaintenanceAPI();
+            $query = xarDBAlterTable($file_entry_table,
+                                     array('command' => 'add',
+                                           'field' => 'xar_extrainfo',
+                                           'type' => 'text'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
 
         default:
             return true;

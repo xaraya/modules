@@ -12,6 +12,7 @@
  *  @param   string  fileType       The mime content-type of the file
  *  @param   integer fileStatus     The status of the file (APPROVED, SUBMITTED, READABLE, REJECTED)
  *  @param   integer store_type     The manner in which the file is to be stored (filesystem, database)
+ *  @param   array   extrainfo      Extra information to be stored for this file (e.g. modified, width, height, ...)
  *
  *  @returns integer The id of the fileEntry that was added, or FALSE on error
  */
@@ -75,6 +76,12 @@ function uploads_userapi_db_add_file( $args )
         }
     }
 
+    if (empty($extrainfo)) {
+        $extrainfo = '';
+    } elseif (is_array($extrainfo)) {
+        $extrainfo = serialize($extrainfo);
+    }
+
     //add to uploads table
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -95,9 +102,10 @@ function uploads_userapi_db_add_file( $args )
                         xar_status,
                         xar_filesize,
                         xar_store_type,
-                        xar_mime_type
+                        xar_mime_type,
+                        xar_extrainfo
                       )
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $bindvars = array((int) $file_id,
                       (int) $userId,
@@ -106,7 +114,8 @@ function uploads_userapi_db_add_file( $args )
                       (int) $fileStatus,
                       (int) $fileSize,
                       (int) $store_type,
-                      (string) $fileType);
+                      (string) $fileType,
+                      (string) $extrainfo);
 
     $result = &$dbconn->Execute($sql, $bindvars);
 

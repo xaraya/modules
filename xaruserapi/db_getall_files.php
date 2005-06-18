@@ -27,7 +27,8 @@ function uploads_userapi_db_getall_files( /* VOID */ )
                    xar_filesize,
                    xar_status, 
                    xar_store_type, 
-                   xar_mime_type
+                   xar_mime_type,
+                   xar_extrainfo
               FROM $fileEntry_table";
     
     $result = $dbconn->Execute($sql);
@@ -102,7 +103,11 @@ function uploads_userapi_db_getall_files( /* VOID */ )
                 $fileInfo['fileStatusName'] = xarML('Unknown!');
                 break;
         }
-        
+
+        if (!empty($row['xar_extrainfo'])) {
+            $fileInfo['extrainfo'] = @unserialize($row['xar_extrainfo']);
+        }
+
         $fileList[$fileInfo['fileId']] = $fileInfo;
         $result->MoveNext();
     }

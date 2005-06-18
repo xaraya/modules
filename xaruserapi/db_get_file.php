@@ -104,7 +104,8 @@ function uploads_userapi_db_get_file( $args )
                    xar_filesize,
                    xar_status,
                    xar_store_type,
-                   xar_mime_type
+                   xar_mime_type,
+                   xar_extrainfo
               FROM $fileEntry_table
              WHERE $where";
 
@@ -179,6 +180,10 @@ function uploads_userapi_db_get_file( $args )
             default:
                 $fileInfo['fileStatusName'] = xarML('Unknown!');
                 break;
+        }
+
+        if (!empty($row['xar_extrainfo'])) {
+            $fileInfo['extrainfo'] = @unserialize($row['xar_extrainfo']);
         }
 
         $fileList[$fileInfo['fileId']] = $fileInfo;

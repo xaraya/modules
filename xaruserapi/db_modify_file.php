@@ -13,6 +13,7 @@
  *  @param   string  fileType  (optional) The mime content-type of the file
  *  @param   string  fileSize  (optional) The size of the file
  *  @param   integer store_type (optional) The manner in which the file is to be stored (filesystem, database)
+ *  @param   array   extrainfo  (optional) Extra information to be stored for this file (e.g. modified, width, height, ...)
  *
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
@@ -64,6 +65,17 @@ function uploads_userapi_db_modify_file( $args )
     if (isset($fileSize)) {
         $update_fields[] = "xar_filesize = ?";
         $update_args[] = $fileSize;
+    }
+
+    if (isset($extrainfo)) {
+        $update_fields[] = "xar_extrainfo = ?";
+        if (empty($extrainfo)) {
+            $update_args[] = '';
+        } elseif (is_array($extrainfo)) {
+            $update_args[] = serialize($extrainfo);
+        } else {
+            $update_args[] = $extrainfo;
+        }
     }
 
     if (!count($update_fields)) {

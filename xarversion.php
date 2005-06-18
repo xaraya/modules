@@ -22,7 +22,7 @@
 
 $modversion['name'] = 'uploads';
 $modversion['id'] = '666';
-$modversion['version'] = '0.9.8';
+$modversion['version'] = '0.9.9';
 $modversion['displayname']    = xarML('Uploads');
 $modversion['description'] = 'Upload/Download File Handler';
 $modversion['credits'] = 'docs/credits.txt';
