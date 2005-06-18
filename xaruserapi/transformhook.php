@@ -30,13 +30,14 @@ function & uploads_userapi_transformhook ( $args )
 
 function & uploads_userapi_transform ( $body )
 {
-    while(eregi('#(ulid|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#', $body, $matches)) {
+    while(eregi('#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#', $body, $matches)) {
         $replacement=NULL;
         array_shift($matches);
         list($type, $id) = $matches;
         switch ( $type )  {
             case 'ulid':
                 // DEPRECATED
+            case 'file':
                 //$replacement = "index.php?module=uploads&func=download&fileId=$id";
                 $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
                 $replacement = xarTplModule('uploads', 'user', 'attachment-list',
