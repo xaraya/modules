@@ -22,7 +22,7 @@
 
 $modversion['name'] = 'uploads';
 $modversion['id'] = '666';
-$modversion['version'] = '0.9.9';
+$modversion['version'] = '1.0.0'; // long jump to current uploads_guimods version
 $modversion['displayname']    = xarML('Uploads');
 $modversion['description'] = 'Upload/Download File Handler';
 $modversion['credits'] = 'docs/credits.txt';
