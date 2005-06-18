@@ -133,18 +133,7 @@ function uploads_userapi_file_push( $args )
     }
 
     if ($finished) {
-        // Let any hooked modules know that we've just pushed a file
-        // the hitcount module in particular needs to know to save the fact
-        // that we just pushed a file and not display the count
-        xarVarSetCached('Hooks.hitcount','save', 1);
-
-// FIXME: this should actually be in download
-        xarModCallHooks('item', 'display', $fileId,
-                         array('module'    => 'uploads',
-                               'itemtype'  => 1, // Files
-                               'returnurl' => xarModURL('uploads', 'user', 'download', array('fileId' => $fileId))));
-        // File has been pushed to the client, now shut down.
-        exit();
+        return TRUE;
     }
 
     // rebuffer the old page data
