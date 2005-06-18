@@ -110,12 +110,18 @@ function uploads_userapi_db_add_file( $args )
 
     $result = &$dbconn->Execute($sql, $bindvars);
 
-
     if (!$result) {
         return FALSE;
-    } else {
-        return $dbconn->PO_Insert_ID($xartable['file_entry'], 'xar_fileEntry_id');
     }
+
+    $fileId = $dbconn->PO_Insert_ID($xartable['file_entry'], 'xar_fileEntry_id');
+
+    // Pass the arguments to the hook modules too
+    $args['module'] = 'uploads';
+    $args['itemtype'] = 1; // Files
+    xarModCallHooks('item', 'create', $fileId, $args);
+
+    return $fileId;
 }
 
 ?>
