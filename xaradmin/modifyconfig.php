@@ -37,12 +37,12 @@ function uploads_admin_modifyconfig()
             $data['file']['auto-approve'] = _UPLOADS_APPROVE_NOONE;
     }
     
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'uploads', array('uploads' => 'example'));
-    
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'uploads',
+                             array('module'   => 'uploads',
+                                   'itemtype' => 1)); // Files
+
     if (empty($hooks)) {
         $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
     } else {
         $data['hooks'] = $hooks;
     }

@@ -75,7 +75,10 @@ function uploads_admin_updateconfig()
     // xarModDelVar('uploads', 'path.imports-cwd');
     xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
 
-    xarModCallHooks('module', 'updateconfig', 'uploads', array('module' => 'uploads'));
+    xarModCallHooks('module', 'updateconfig', 'uploads',
+                    array('module'   => 'uploads',
+                          'itemtype' => 1)); // Files
+
     xarResponseRedirect(xarModURL('uploads', 'admin', 'modifyconfig'));
 
     // Return

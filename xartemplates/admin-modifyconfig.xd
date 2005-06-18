@@ -228,6 +228,15 @@
                 </span>
             </div>
 
+            <xar:if condition="!empty($hooks)">
+                <h2>
+                    <xar:mlstring>Hook configuration for uploaded files</xar:mlstring>
+                </h2>
+                <xar:foreach in="$hooks" key="$hookmodule">
+                    #$hooks[$hookmodule]#
+                </xar:foreach>
+            </xar:if>
+
             <input type="submit" name="update" value="#xarMl('Update Configuration')#"/>
         </form>
     </div>

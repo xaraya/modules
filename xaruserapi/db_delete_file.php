@@ -41,10 +41,14 @@ function uploads_userapi_db_delete_file( $args )
     
     if (!$result) {
         return FALSE;
-    } else {
-        return $dbconn->Affected_Rows();
     }
 
+    // Pass the arguments to the hook modules too
+    $args['module'] = 'uploads';
+    $args['itemtype'] = 1; // Files
+    xarModCallHooks('item', 'delete', $fileId, $args);
+
+    return TRUE;
 }
 
 ?>

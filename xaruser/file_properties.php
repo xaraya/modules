@@ -24,7 +24,7 @@ function uploads_user_file_properties( $args )
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
     if (empty($fileInfo) || !count($fileInfo)) {
         $data['fileInfo']   = array();
-        $dtaa['error']      = xarML('File not found!');
+        $data['error']      = xarML('File not found!');
     } else {
         // the file should be the first indice in the array
         $fileInfo = end($fileInfo);
@@ -35,10 +35,18 @@ function uploads_user_file_properties( $args )
         $instance[3] = $fileId;
 
         $instance = implode(':', $instance);
+        if (xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+            $data['allowedit'] = 1;
+            $data['hooks'] = xarModCallHooks('item', 'modify', $fileId,
+                                             array('module'    => 'uploads',
+                                                   'itemtype'  => 1));
+        } else {
+            $data['allowedit'] = 0;
+        }
 
         if (isset($fileName) && !empty($fileName)) {
             
-            if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurityCheck('EditUploads', 1, 'File', $instance)) {
+            if ($data['allowedit']) {
                 $args['fileId'] = $fileId;
                 $args['fileName'] = trim($fileName);
                 
