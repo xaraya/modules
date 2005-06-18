@@ -30,7 +30,7 @@ function images_adminapi_getuploads($args)
 
     foreach ($imagelist as $id => $image) {
         if (!empty($image['fileLocation'])) {
-            $imageInfo = @getimagesize($image['fileLocation']);
+            $imageInfo = xarModAPIFunc('images','user','getimagesize', $image);
             if (!empty($imageInfo)) {
                 $imagelist[$id]['width']  = $imageInfo[0];
                 $imagelist[$id]['height'] = $imageInfo[1];

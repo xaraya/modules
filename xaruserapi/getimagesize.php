@@ -34,6 +34,25 @@ function images_userapi_getimagesize( $args )
     if (!empty($fileLocation) && file_exists($fileLocation)) {
         return @getimagesize($fileLocation);
 
+    } elseif (!empty($extrainfo['width']) && !empty($extrainfo['height'])) {
+        // Simulate the type returned by getimagesize()
+        switch ($fileType) {
+            case 'image/gif':
+                $type = 1;
+                break;
+            case 'image/jpeg':
+                $type = 2;
+                break;
+            case 'image/png':
+                $type = 3;
+                break;
+            default:
+                $type = 0;
+                break;
+        }
+        $string = 'width="' . $extrainfo['width'] . '" height="' . $extrainfo['height'] . '"';
+        return array($extrainfo['width'],$extrainfo['height'],$type,$string);
+
     } elseif (extension_loaded('gd') && xarModAPILoad('uploads','user') &&
               defined('_UPLOADS_STORE_DB_DATA') && ($storeType & _UPLOADS_STORE_DB_DATA)) {
         // get the image data from the database
@@ -46,6 +65,15 @@ function images_userapi_getimagesize( $args )
                 $width  = @imagesx($img);
                 $height = @imagesy($img);
                 @imagedestroy($img);
+                // update the file entry in the uploads module
+                if (empty($extrainfo)) {
+                    $extrainfo = array();
+                }
+                $extrainfo['width'] = $width;
+                $extrainfo['height'] = $height;
+                xarModAPIFunc('uploads', 'user', 'db_modify_file',
+                              array('fileId' => $fileId,
+                                    'extrainfo' => $extrainfo));
                 // Simulate the type returned by getimagesize()
                 switch ($fileType) {
                     case 'image/gif':

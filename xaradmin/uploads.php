@@ -46,15 +46,6 @@ function images_admin_uploads($args)
         // if we're dealing with an individual fileId, get some additional information
         } elseif (is_numeric($fileId) && !empty($data['images'][$fileId])) {
             $found = $data['images'][$fileId];
-            // Get the width and height for this image if necessary
-            if (empty($found['width']) || empty($found['height'])) {
-                // pass the whole image array to this API
-                $info = xarModAPIFunc('images','user','getimagesize',$found);
-                if (!empty($info)) {
-                    $found['width']  = $info[0];
-                    $found['height'] = $info[1];
-                }
-            }
             // Get derivative images for this image
             if (!empty($found['fileHash'])) {
                 $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
