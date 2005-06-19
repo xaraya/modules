@@ -69,19 +69,17 @@
                             <input type="checkbox" name="fileList[]" id="file_#$loop:index#" value="#$loop:item['fileName']#" />
                         </td>
                         <td width="65%" class="#$rowclass#" align="left">&nbsp;
-                            <xar:if condition="(($loop:index + 1) % 2)">
-                                <xar:if condition="$loop:item['inodeType'] eq $inodeType['DIRECTORY']">
-                                    <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
-                                       alt="#xarML('Open Folder')#"
-                                       title="#xarML('Open Folder')#">
-                                        <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">
-                                        <strong>#$loop:item['fileName']#</strong>
-                                    </a>
-                                <xar:else />
-                                    <img src="#xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $loop:item['fileType']))#"
-                                         width="16" height="18" />&nbsp;
-                                    #$loop:item['fileName']#
-                                </xar:if>
+                            <xar:if condition="$loop:item['inodeType'] eq $inodeType['DIRECTORY']">
+                                <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
+                                   alt="#xarML('Open Folder')#"
+                                   title="#xarML('Open Folder')#">
+                                    <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">
+                                    <strong>#$loop:item['fileName']#</strong>
+                                </a>
+                            <xar:else />
+                                <img src="#xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $loop:item['fileType']))#"
+                                     width="16" height="18" />&nbsp;
+                                #$loop:item['fileName']#
                             </xar:if>
                         </td>
                         <xar:if condition="is_array($loop:item['fileSize'])">
