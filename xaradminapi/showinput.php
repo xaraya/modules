@@ -78,8 +78,14 @@ function uploads_adminapi_showinput($args)
     $data['id']                       = $id;
     $data['file_maxsize'] = xarModGetVar('uploads', 'file.maxsize');
     if ($data['methods']['trusted']) {
+        $cacheExpire = xarModGetVar('uploads','file.cache-expire');
         $data['fileList']     = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
-                                              array('descend' => $descend, 'fileLocation' => $trusted_dir));
+                                              array('fileLocation' => $trusted_dir,
+                                                    'descend'      => $descend,
+                                                    // no need to analyze the mime type here
+                                                    'analyze'      => FALSE,
+                                                    // cache the results if configured
+                                                    'cacheExpire'  => $cacheExpire));
     } else {
         $data['fileList']     = array();
     }

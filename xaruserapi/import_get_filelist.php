@@ -1,19 +1,37 @@
 <?php
 
 /**
- *  Rename a file. (alias for file_move)
+ *  Get a list of files with metadata from some import directory or link
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   <type>
- *  @returns <type>
+ *  @param   string   fileLocation   The starting directory
+ *  @param   boolean  descend        Go through all sub-directories too
+ *  @param   boolean  onlyNew        Only return files that aren't imported yet
+ *  @param   string   search         Search for a particular filename pattern
+ *  @param   string   exclude        Exclude a particular filename pattern
+ *  @param   integer  cacheExpire    Cache the result for a number of seconds (e.g. for DD Upload)
+ *  @param   boolean  analyze        Analyze each file for mime type (default TRUE)
+ *
+ *  @returns array
+ *  @return array of file information
  */
 
 function uploads_userapi_import_get_filelist( $args )
 {
 
-
     extract($args);
+
+    if (!empty($cacheExpire) && is_numeric($cacheExpire)) {
+        $cachekey = md5(serialize($args));
+        $cacheinfo = xarModGetVar('uploads','file.cachelist.'.$cachekey);
+        if (!empty($cacheinfo)) {
+            $cacheinfo = @unserialize($cacheinfo);
+            if (!empty($cacheinfo['time']) && $cacheinfo['time'] > time() - $cacheExpire) {
+                return $cacheinfo['list'];
+            }
+        }
+    }
 
     // Whether or not to descend into any directory
     // that is found while creating the list of files
@@ -37,6 +55,11 @@ function uploads_userapi_import_get_filelist( $args )
 
     if (!isset($exclude)) {
         $exclude = NULL;
+    }
+
+    // Whether or not to analyze each file for mime type
+    if (!isset($analyze)) {
+        $analyze = TRUE;
     }
 
     // if search and exclude are the same, we would get no results
@@ -97,7 +120,8 @@ function uploads_userapi_import_get_filelist( $args )
                 (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
                     $fileList["$type:$fileName"] =
                         xarModAPIFunc('uploads', 'user', 'file_get_metadata',
-                                       array('fileLocation' => $fileLocation));
+                                       array('fileLocation' => $fileLocation,
+                                             'analyze'      => $analyze));
             }
             break;
         case _INODE_TYPE_DIRECTORY:
@@ -138,13 +162,12 @@ function uploads_userapi_import_get_filelist( $args )
                                     continue;
                                 }
                             }
-                            $file = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
-                                                array('fileLocation' => $fileName));
 
                             if ((!isset($search) || preg_match("/$search/", $fileName)) &&
                                 (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
                                     $file = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
-                                                        array('fileLocation' => $fileName));
+                                                        array('fileLocation' => $fileName,
+                                                              'analyze'      => $analyze));
                                     $fileList["$file[inodeType]:$fileName"] = $file;
                             }
                             break;
@@ -154,6 +177,7 @@ function uploads_userapi_import_get_filelist( $args )
                                 $files = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                                         array('fileLocation' => $dirName,
                                                           'descend' => TRUE,
+                                                          'analyze' => $analyze,
                                                           'exclude' => $exclude,
                                                           'search' => $search));
                                 $fileList += $files;
@@ -162,7 +186,8 @@ function uploads_userapi_import_get_filelist( $args )
                                 if ((!isset($search) || preg_match("/$search/", $dirName)) &&
                                     (!isset($exclude) || !preg_match("/$exclude/", $dirName))) {
                                         $files = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
-                                                            array('fileLocation' => $dirName));
+                                                            array('fileLocation' => $dirName,
+                                                                  'analyze'      => $analyze));
                                         $fileList["$files[inodeType]:$inode"] = $files;
                                 }
                             }
@@ -185,6 +210,14 @@ function uploads_userapi_import_get_filelist( $args )
 
     if (is_array($fileList)) {
         ksort($fileList);
+    }
+
+    if (!empty($cacheExpire) && is_numeric($cacheExpire)) {
+        // get the cache list again, in case someone else filled it by now
+        $cacheinfo = array('time' => time(),
+                           'list' => $fileList);
+        $cacheinfo = serialize($cacheinfo);
+        xarModSetVar('uploads','file.cachelist.'.$cachekey,$cacheinfo);
     }
 
     return $fileList;

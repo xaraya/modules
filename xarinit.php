@@ -68,6 +68,7 @@ function uploads_init()
     unset($mimetypes);
 
     xarModSetVar('uploads', 'view.itemsperpage', 200);
+    xarModSetVar('uploads', 'file.cache-expire', 0);
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
@@ -523,6 +524,7 @@ function uploads_upgrade($oldversion)
             if (!$result) return;
 
             xarModSetVar('uploads', 'view.itemsperpage', 200);
+            xarModSetVar('uploads', 'file.cache-expire', 0);
 
         default:
             return true;
@@ -551,6 +553,7 @@ function uploads_delete()
     xarModDelVar('uploads', 'file.auto-approve');
     xarModDelVar('uploads', 'view.filter');
     xarModDelVar('uploads', 'view.itemsperpage');
+    xarModDelVar('uploads', 'file.cache-expire');
 
     xarUnregisterMask('ViewUploads');
     xarUnregisterMask('AddUploads');

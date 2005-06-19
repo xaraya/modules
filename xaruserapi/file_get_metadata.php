@@ -7,6 +7,7 @@
  *  @access  public
  *  @param   string   fileLocation  The location of the file on in the filesystem
  *  @param   boolean  normalize     Whether or not to 
+ *  @param   boolean  analyze       Whether or not to 
  *  @returns array                  array containing the inodeType, fileSize, fileType, fileLocation, fileName
  *
  */
@@ -20,6 +21,10 @@ function uploads_userapi_file_get_metadata( $args )
         $normalize = FALSE;
     }
         
+    if (!isset($analyze)) {
+        $analyze = TRUE;
+    }
+
     if (isset($fileLocation) && !empty($fileLocation) && file_exists($fileLocation)) {
         
         $file =& $fileLocation;
@@ -30,7 +35,11 @@ function uploads_userapi_file_get_metadata( $args )
         } elseif (is_file($file)) {
             $type = _INODE_TYPE_FILE;
             $size = filesize($file);
-            $mime = xarModAPIFunc('mime', 'user', 'analyze_file', array('fileName' => $file));
+            if ($analyze) {
+                $mime = xarModAPIFunc('mime', 'user', 'analyze_file', array('fileName' => $file));
+            } else {
+                $mime = 'application/octet';
+            }
         } else {
             $type = _INODE_TYPE_UNKNOWN;
             $size = 0;

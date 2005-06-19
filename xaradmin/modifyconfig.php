@@ -21,6 +21,10 @@ function uploads_admin_modifyconfig()
     $data['file']['auto-approve']           = xarModGetVar('uploads', 'file.auto-approve');
     $data['file']['obfuscate-on-import']    = xarModGetVar('uploads', 'file.obfuscate-on-import');
     $data['file']['obfuscate-on-upload']    = xarModGetVar('uploads', 'file.obfuscate-on-upload');
+    $data['file']['cache-expire']           = xarModGetVar('uploads', 'file.cache-expire');
+    if (!isset($data['file']['cache-expire'])) {
+        xarModSetVar('uploads', 'file.cache-expire', 0);
+    }
     $data['ddprop']['trusted']              = xarModGetVar('uploads', 'dd.fileupload.trusted');
     $data['ddprop']['external']             = xarModGetVar('uploads', 'dd.fileupload.external');
     $data['ddprop']['stored']               = xarModGetVar('uploads', 'dd.fileupload.stored');

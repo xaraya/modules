@@ -161,6 +161,15 @@
             <p>
                 <strong>
                     <xar:mlstring>
+                        Cache trusted file information:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+                <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('uploads','file.cache-expire')#" /> 
+                <xar:mlstring>seconds</xar:mlstring>
+            </p>
+            <p>
+                <strong>
+                    <xar:mlstring>
                         Items per page in admin view:
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;

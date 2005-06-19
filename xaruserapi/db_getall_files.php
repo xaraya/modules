@@ -107,6 +107,9 @@ function uploads_userapi_db_getall_files( $args )
     } else {
         $base_directory = './';
     }
+
+    $revcache = array();
+    $imgcache = array();
         
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
@@ -119,9 +122,15 @@ function uploads_userapi_db_getall_files( $args )
         $fileInfo['fileSize']      = $row['xar_filesize'];
         $fileInfo['fileStatus']    = $row['xar_status'];
         $fileInfo['fileType']      = $row['xar_mime_type'];
-        $fileInfo['fileTypeInfo']  = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
+        if (!isset($revcache[$fileInfo['fileType']])) {
+            $revcache[$fileInfo['fileType']] = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
+        }
+        $fileInfo['fileTypeInfo']  = $revcache[$fileInfo['fileType']];
         $fileInfo['storeType']     = $row['xar_store_type'];
-        $fileInfo['mimeImage']     = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
+        if (!isset($imgcache[$fileInfo['fileType']])) {
+            $imgcache[$fileInfo['fileType']] = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
+        }
+        $fileInfo['mimeImage']     = $imgcache[$fileInfo['fileType']];
         $fileInfo['fileDownload']  = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
         $fileInfo['fileURL']       = $fileInfo['fileDownload'];
         $fileInfo['DownloadLabel'] = xarML('Download file: #(1)', $fileInfo['fileName']);
