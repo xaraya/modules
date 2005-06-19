@@ -64,6 +64,33 @@
             </xar:comment>
         </td>
     </tr>
+    <xar:if condition="xarModIsHooked('dynamicdata','helpdesk',1)">
+        <xar:data-getitem name="$ddprops" module="helpdesk" itemtype="1" itemid="$tid" />
+        <xar:if condition="!empty($ddprops)">
+            <xar:foreach in="$ddprops" key="$ddname">
+            <tr class="xar-accent">
+                <td style="font-weight: bold;">
+                    <xar:data-label property="$ddprops[$ddname]" />
+                </td>
+                <td colspan="3">
+                    <xar:comment>
+                        Note: we want to show DD Upload values in a customised way here...
+                    </xar:comment>
+                    <xar:set name="isupload">!empty($ddprops[$ddname]->upload)</xar:set>
+                    <xar:set name="value">$ddprops[$ddname]->value</xar:set>
+                    <xar:if condition="$isupload and xarModIsAvailable('uploads') and substr($value,0,1) eq ';'">
+                        <xar:set name="filelist">xarModAPIFunc('uploads','user','showoutput',array('value' => $value, 'multiple' => true))</xar:set>
+                        <xar:foreach in="$filelist" key="$fileid" value="$fileinfo">
+                            <a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a>
+                        </xar:foreach>
+                    <xar:else/>
+                        <xar:data-output property="$ddprops[$ddname]" />
+                    </xar:if>
+                </td>
+            </tr>
+            </xar:foreach>
+        </xar:if>
+    </xar:if>
 
     <xar:foreach in="$hookoutput" value="$hook">
         <tr><td colspan="4" style="padding: 5px;"><br />#$hook#</td></tr>

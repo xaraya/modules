@@ -11,6 +11,11 @@
     <xar:var name="menu" />
     <div class="tborder">
 
+<xar:comment>
+    If you want to upload files here, you need to add enctype="multipart/form-data"
+    to the form tag below...
+</xar:comment>
+
     <table border="1" width="100%" cellspacing="0">
         <tr>
             <th><xar:mlstring>Modify Ticket</xar:mlstring></th>

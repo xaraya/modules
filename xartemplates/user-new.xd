@@ -43,6 +43,11 @@
     //-->
     </script>
 
+<xar:comment>
+    If you want to upload files here, you need to add enctype="multipart/form-data"
+    to the form tag below...
+</xar:comment>
+
 <form action="#$action#" method="POST" name="newticket">
 
 <xar:if condition="$enforceauthkey">
