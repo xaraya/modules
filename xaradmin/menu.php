@@ -20,12 +20,11 @@ function helpdesk_admin_menu()
     $objects = xarModAPIFunc('dynamicdata', 'user', 'getObjects');
     $data['menulinks'] = array();
     foreach($objects as $object){
-        if($object['moduleid'] == $modid){
+        if($object['moduleid'] == $modid && $object['itemtype'] != 1){
             $data['menulinks'][] = $object;
         }
     }
 
-    xarTplAddStyleLink('roles',    'tabs',  $fileExt = 'css');
     xarTplAddStyleLink('helpdesk', 'style', $fileExt = 'css');
 
     return xarTplModule('helpdesk', 'admin', 'menu', $data);

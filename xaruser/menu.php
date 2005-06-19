@@ -17,7 +17,6 @@ function helpdesk_user_menu()
 
     $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
 
-    xarTplAddStyleLink('roles', 'tabs', $fileExt = 'css');
     xarTplAddStyleLink('helpdesk', 'style', $fileExt = 'css');
 
     return xarTplModule('helpdesk', 'user', 'menu', $data);
