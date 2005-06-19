@@ -74,6 +74,10 @@
                 </xar:if>
 
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
+                <option value="MYCLOSED"><xar:mlstring>My Closed Tickets</xar:mlstring></option>
+                </xar:if>
+
+                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="ALL"><xar:mlstring>All Tickets</xar:mlstring></option>
                 </xar:if>
 

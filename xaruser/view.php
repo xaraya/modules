@@ -78,11 +78,12 @@ function helpdesk_user_view($args)
                                     xarModURL('helpdesk', 'user', 'view', $args),
                                     xarModGetVar('helpdesk', 'Default rows per page'));
 
-    $data['selections'] = array('MYALL'         => 'My Tickets',
-                                'MYOPEN'        => 'My Open Tickets',
-                                'ALL'           => 'All Tickets',
-                                'MYASSIGNEDALL' => 'My Assigned Tickets',
-                                'UNASSIGNED'    => 'Unassigned Tickets');
+    $data['selections'] = array('MYALL'         => xarML('My Tickets'),
+                                'MYOPEN'        => xarML('My Open Tickets'),
+                                'MYCLOSED'      => xarML('My Closed Tickets'),
+                                'ALL'           => xarML('All Tickets'),
+                                'MYASSIGNEDALL' => xarML('My Assigned Tickets'),
+                                'UNASSIGNED'    => xarML('Unassigned Tickets'));
 
     // Sending state vars back into the form
     $data['catid'] = $catid;
