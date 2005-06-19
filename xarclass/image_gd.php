@@ -73,8 +73,10 @@ class Image_GD extends Image_Properties
 
         switch ($this->mime['text']) {
             case 'image/gif':
-                if (imagetypes() & IMG_GIF)  { 
-                    $origImage = imageCreateFromGIF($this->fileLocation) ;
+                // this will fail for GIF Read Support !
+                //if (imagetypes() & IMG_GIF)  {
+                if (function_exists('imageCreateFromGIF')) {
+                    $origImage = @imageCreateFromGIF($this->fileLocation) ;
                 } 
                 break;
             case 'image/jpeg':
@@ -94,7 +96,7 @@ class Image_GD extends Image_Properties
                 } 
                 break;
         }
-        
+
         return $origImage;
     
     }

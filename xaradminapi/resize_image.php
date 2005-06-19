@@ -84,11 +84,18 @@ function images_adminapi_resize_image($args)
         }
     } else {
         $location = $fileLocation;
+        $fileId = null;
     }
 
     // TODO: refactor to support other libraries (ImageMagick/NetPBM)
-    if (file_exists($location)) {
-        $imageInfo = @getimagesize($location);
+    if (!empty($fileInfo['fileLocation'])) {
+        $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
+        $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
+        if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
+            $notSupported = TRUE;
+        }
+    } elseif (!empty($fileLocation) && file_exists($fileLocation)) {
+        $imageInfo = @getimagesize($fileLocation);
         $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
         if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
             $notSupported = TRUE;
@@ -106,7 +113,8 @@ function images_adminapi_resize_image($args)
         $thumbsdir = xarModGetVar('images', 'path.derivative-store');
     }
 
-    $image = xarModAPIFunc('images', 'user', 'load_image', array('fileLocation' => $location,
+    $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId,
+                                                                 'fileLocation' => $location,
                                                                  'thumbsdir' => $thumbsdir));
 
     if (!is_object($image)) {

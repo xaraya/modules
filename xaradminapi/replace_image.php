@@ -38,6 +38,8 @@ function images_adminapi_replace_image($args)
         return;
     }
 
+// TODO: replace files stored in xar_file_data too
+
     $location = xarModAPIFunc('images','admin','resize_image',
                               array('fileLocation' => $fileLocation,
                                     'width'  => (!empty($width) ? $width : NULL),
