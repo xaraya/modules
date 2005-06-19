@@ -13,20 +13,26 @@ class Image_Properties
     var $_percent;
     var $mime = null;
     var $_tmpFile;
+    var $_fileId;
     
-    function __constructor($fileLocation, $thumbsdir = NULL) 
+    function __constructor($fileInfo, $thumbsdir = NULL) 
     {
-        $this->fileLocation = $fileLocation;
-        $this->fileName = basename($fileLocation);
-        
-        if (NULL == $thumbsdir || empty($thumbsdir)) {
+        if (empty($thumbsdir)) {
             $this->_thumbsdir = './'; 
         } else {
             $this->_thumbsdir = $thumbsdir;
         }
-        
-        $imageInfo = getimagesize($this->fileLocation);
-        
+
+        if (is_array($fileInfo)) {
+            $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
+            $this->fileLocation = $fileInfo['fileLocation'];
+            $this->fileName = $fileInfo['fileName'];
+            $this->_fileId = $fileInfo['fileId'];
+        } else {
+            $imageInfo = @getimagesize($fileInfo);
+            $this->fileLocation = $fileInfo;
+            $this->fileName = basename($fileInfo);
+        }
         if (is_array($imageInfo)) {
             $this->_owidth  = $this->width  = $imageInfo[0];
             $this->_oheight = $this->height = $imageInfo[1];
@@ -34,7 +40,7 @@ class Image_Properties
             $this->setMime($this->_getMimeType($imageInfo[2]));
             return $this;
         } else {
-            trigger_error("File [$fileLocation] is not an image.");
+            trigger_error("File [$this->fileLocation] is not an image.");
             return NULL;
         }
 
@@ -63,8 +69,8 @@ class Image_Properties
                 case 12: return array('text' => 'application/octet-stream', 'id' => 12);
                 case 13: return array('text' => 'application/x-shockwave-flash', 'id' => 13);
                 case 14: return array('text' => 'image/iff', 'id' => 14);
-                case 15: return array('text' => 'image/vnd.wap.wbmp', 'id' => 15);;
-                case 16: return array('text' => 'image/xbm', 'id' => 16);
+                case 15: return array('text' => 'image/vnd.wap.wbmp', 'id' => 15);
+                case 16: return array('text' => 'image/x-xbitmap', 'id' => 16);
                 default: return 'application/octet-stream';
             }
         } else {
@@ -287,7 +293,8 @@ class Image_Properties
                 $fileName = $this->fileName;
             }
             if ($this->width == $this->_owidth && $this->height == $this->_oheight) {
-                $derivName = $this->fileLocation;
+                // return the file location "as is" - could be in the database
+                return $this->fileLocation;
             } else {
                 $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
             }

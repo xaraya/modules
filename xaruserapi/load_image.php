@@ -31,12 +31,21 @@ function & images_userapi_load_image( $args )
     }
 
     // if both arguments are specified, give priority to fileId
-    if (!empty($fileId)) {    
-        $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
-        if (empty($fileInfo)) {
-            return NULL;
+    if (!empty($fileId)) {
+        if (empty($fileLocation) || !isset($storeType)) {
+            $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+            if (empty($fileInfo)) {
+                return NULL;
+            }
+            if (!empty($fileInfo['fileLocation']) && file_exists($fileInfo['fileLocation'])) {
+                // pass the file location to Image_Properties
+                $location = $fileInfo['fileLocation'];
+            } elseif (defined('_UPLOADS_STORE_DB_DATA') && ($fileInfo['storeType'] & _UPLOADS_STORE_DB_DATA)) {
+                // pass the file info array to Image_Properties
+                $location = $fileInfo;
+            }
         } else {
-            $location = $fileInfo['fileLocation'];
+            $location = $fileLocation;
         }
     } else {
         $location = $fileLocation;

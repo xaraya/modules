@@ -80,24 +80,40 @@ function images_user_display( $args )
 
     ob_start();
 
-    $fileSize = @filesize($fileLocation);
-    if (empty($fileSize)) {
+    if (file_exists($fileLocation)) {
+        $fileSize = @filesize($fileLocation);
+        if (empty($fileSize)) {
+            $fileSize = 0;
+        }
+
+        $fp = @fopen($fileLocation, 'rb');
+        if(is_resource($fp))   {
+
+            do {
+                $data = fread($fp, 65536);
+                if (strlen($data) == 0) {
+                    break;
+                } else {
+                    echo "$data";
+                }
+            } while (TRUE);
+
+            fclose($fp);
+        }
+
+// FIXME: make sure the file is indeed supposed to be stored in the database :-)
+    } else {
         $fileSize = 0;
-    }
 
-    $fp = @fopen($fileLocation, 'rb');
-    if(is_resource($fp))   {
-
-        do {
-            $data = fread($fp, 65536);
-            if (strlen($data) == 0) {
-                break;
-            } else {
-                echo "$data";
+        // get the image data from the database
+        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        if (!empty($data)) {
+            foreach ($data as $chunk) {
+                $fileSize += strlen($chunk);
+                echo $chunk;
             }
-        } while (TRUE);
-
-        fclose($fp);
+            unset($data);
+        }
     }
 
     // Headers -can- be sent after the actual data
@@ -110,7 +126,7 @@ function images_user_display( $args )
     $osName      = xarSessionGetVar('osname');
     $browserName = xarSessionGetVar('browsername');
 
-    if ($osName != 'mac' || ($osName == 'mac' && !stristr($browserName, 'internet explorer'))) {
+    if (empty($osName) || $osName != 'mac' || ($osName == 'mac' && !stristr($browserName, 'internet explorer'))) {
         header("Pragma: ");
         header("Cache-Control: ");
         header("Content-type: $fileType[text]");

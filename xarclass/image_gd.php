@@ -59,7 +59,18 @@ class Image_GD extends Image_Properties
     { 
         
         $origImage = NULL;
-        
+
+        if (!file_exists($this->fileLocation) && !empty($this->_fileId)) {
+            // get the image data from the database
+            $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $this->_fileId));
+            if (!empty($data)) {
+                $src = implode('', $data);
+                unset($data);
+                $origImage = imagecreatefromstring($src);
+            }
+            return $origImage;
+        }
+
         switch ($this->mime['text']) {
             case 'image/gif':
                 if (imagetypes() & IMG_GIF)  { 
