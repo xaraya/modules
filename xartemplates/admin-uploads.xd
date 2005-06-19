@@ -160,6 +160,13 @@
                 </td>
             </tr>
             </xar:foreach>
+            <xar:if condition="!empty($pager)">
+            <tr>
+                <td colspan="7" align="center">
+                    #$pager#
+                </td>
+            </tr>
+            </xar:if>
             <xar:if condition="empty($action)">
             <tr>
                 <td colspan="7">

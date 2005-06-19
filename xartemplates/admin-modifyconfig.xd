@@ -64,6 +64,25 @@
                 </xar:mlstring>
                 <br />
             </p>
+<xar:comment>
+            <p>
+                <strong>
+                    <xar:mlstring>
+                        Cache trusted file information:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+                <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('images','file.cache-expire')#" /> 
+                <xar:mlstring>seconds</xar:mlstring>
+            </p>
+</xar:comment>
+            <p>
+                <strong>
+                    <xar:mlstring>
+                        Items per page in admin view:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+                <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('images','view.itemsperpage')#" /> 
+            </p>
             <p>
                 <input type="submit" name="update" value="#xarML('Update Configuration')#"/>
             </p>

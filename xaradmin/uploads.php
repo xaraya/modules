@@ -15,15 +15,51 @@ function images_admin_uploads($args)
     // Security check for uploads
     if (!xarModIsAvailable('uploads') || !xarSecurityCheck('AdminUploads')) return;
 
-    $data = array();
+    // Note: fileId is the uploads fileId here, or an array of uploads fileId's
+    if (!xarVarFetch('fileId','isset',$fileId,'',XARVAR_NOT_REQUIRED)) return;
+    if (!empty($fileId) && is_array($fileId)) {
+        $fileId = array_keys($fileId);
+    }
 
-    $data['images'] = xarModAPIFunc('images','admin','getuploads');
+    if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sort','enum:name:type:width:height:size:time',$sort,'name',XARVAR_NOT_REQUIRED)) return;
+
+    $data = array();
+    $data['startnum'] = $startnum;
+    $data['numitems'] = $numitems;
+    $data['sort'] = ($sort != 'name') ? $sort : null;
+
+    if (!isset($numitems)) {
+        $numitems = xarModGetVar('images','view.itemsperpage');
+    }
+
+    $data['pager'] = '';
+    if (!empty($fileId)) {
+        $data['images'] = xarModAPIFunc('images','admin','getuploads',
+                                        array('fileId'   => $fileId));
+    } else {
+        $data['images'] = xarModAPIFunc('images','admin','getuploads',
+                                        array('startnum' => $startnum,
+                                              'numitems' => $numitems,
+                                              'sort'     => $sort));
+        $countitems = xarModAPIFunc('images','admin','countuploads');
+
+        // Add pager
+        if (!empty($numitems) && $countitems > $numitems) {
+            $data['pager'] = xarTplGetPager($startnum,
+                                            $countitems,
+                                            xarModURL('images', 'admin', 'uploads',
+                                                      array('startnum' => '%%',
+                                                            'numitems' => $data['numitems'],
+                                                            'sort'     => $data['sort'])),
+                                            $numitems);
+        }
+    }
+
 
     // Check if we need to do anything special here
     if (!xarVarFetch('action','str:1:',$action,'',XARVAR_NOT_REQUIRED)) return;
-
-    // Note: fileId is the uploads fileId here, or an array of uploads fileId's
-    if (!xarVarFetch('fileId','isset',$fileId,'',XARVAR_NOT_REQUIRED)) return;
 
     // Find the right uploaded image
     if (!empty($action) && !empty($fileId)) {
@@ -32,7 +68,7 @@ function images_admin_uploads($args)
         // if we're dealing with a list of fileId's, make sure they exist
         if (is_array($fileId) && $action == 'resize') {
             $found = array();
-            foreach ($fileId as $id => $val) {
+            foreach ($fileId as $id) {
                 if (!empty($data['images'][$id])) {
                     $found[] = $id;
                 }
@@ -246,35 +282,6 @@ function images_admin_uploads($args)
             default:
                 break;
         }
-    }
-
-    if (!xarVarFetch('sort','enum:name:type:width:height:size:time',$sort,'name',XARVAR_NOT_REQUIRED)) return;
-    switch ($sort) {
-        case 'name':
-            $strsort = 'fileName';
-            break;
-        case 'type':
-            $strsort = 'fileType';
-            break;
-        case 'width':
-        case 'height':
-            $numsort = $sort;
-            break;
-        case 'size':
-            $numsort = 'fileSize';
-            break;
-        case 'time':
-            $numsort = 'fileModified';
-            break;
-        default:
-            break;
-    }
-    if (!empty($numsort)) {
-        $sortfunc = create_function('$a,$b','if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
-        usort($data['images'], $sortfunc);
-    } elseif (!empty($strsort)) {
-        $sortfunc = create_function('$a,$b','return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
-        usort($data['images'], $sortfunc);
     }
 
     // Return the template variables defined in this function

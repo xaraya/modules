@@ -9,22 +9,38 @@
 function images_adminapi_getuploads($args)
 {
     extract($args);
-    if (empty($typeName)) {
-        $typeName = 'image';
+
+    if (!empty($fileId)) {
+        $filter = array('fileId' => $fileId);
+
+    } else {
+        if (empty($typeName)) {
+            $typeName = 'image';
+        }
+        // Get all uploaded files of mimetype 'image' (cfr. uploads admin view)
+        $typeinfo = xarModAPIFunc('mime','user','get_type', array('typeName' => $typeName));
+        if (empty($typeinfo)) return;
+
+        $filters = array();
+        $filters['mimetype'] = $typeinfo['typeId'];
+        $filters['subtype']  = NULL;
+        $filters['status']   = NULL;
+        $filters['inverse']  = NULL;
+
+        $options  = xarModAPIFunc('uploads','user','process_filters', $filters);
+        $filter   = $options['filter'];
+
+        // Pass sort, startnum and numitems to db_get_file where possible (i.e. for id, name and type)
+        if (!empty($numitems) && is_numeric($numitems) &&
+            (empty($sort) || $sort == 'name' || $sort == 'type')) {
+            if (empty($startnum) || !is_numeric($startnum)) {
+                $startnum = 1;
+            }
+            $filter['startnum'] = $startnum;
+            $filter['numitems'] = $numitems;
+            $filter['sort'] = empty($sort) ? null : $sort;
+        }
     }
-
-    // Get all uploaded files of mimetype 'image' (cfr. uploads admin view)
-    $typeinfo = xarModAPIFunc('mime','user','get_type', array('typeName' => $typeName));
-    if (empty($typeinfo)) return;
-
-    $filters = array();
-    $filters['mimetype'] = $typeinfo['typeId'];
-    $filters['subtype']  = NULL;
-    $filters['status']   = NULL;
-    $filters['inverse']  = NULL;
-
-    $options  = xarModAPIFunc('uploads','user','process_filters', $filters);
-    $filter   = $options['filter'];
 
     $imagelist = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
 
@@ -43,6 +59,60 @@ function images_adminapi_getuploads($args)
             $imagelist[$id]['width']  = '';
             $imagelist[$id]['height'] = '';
             $imagelist[$id]['fileModified'] = '';
+        }
+    }
+
+    // we're done here
+    if (!empty($fileId)) {
+        return $imagelist;
+    }
+
+    if (empty($sort)) {
+        $sort = '';
+    }
+    switch ($sort) {
+        case 'name':
+            // handled by db_get_file above
+            //$strsort = 'fileName';
+            break;
+        case 'type':
+            // handled by db_get_file above
+            //$strsort = 'fileType';
+            break;
+        case 'width':
+        case 'height':
+            $numsort = $sort;
+            break;
+        case 'size':
+            $numsort = 'fileSize';
+            break;
+        case 'time':
+            $numsort = 'fileModified';
+            break;
+        default:
+            break;
+    }
+    if (!empty($numsort)) {
+        $sortfunc = create_function('$a,$b','if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
+        usort($imagelist, $sortfunc);
+    } elseif (!empty($strsort)) {
+        $sortfunc = create_function('$a,$b','return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
+        usort($imagelist, $sortfunc);
+    }
+
+    if (!empty($numitems) && is_numeric($numitems)) {
+        if (empty($startnum) || !is_numeric($startnum)) {
+            $startnum = 1;
+        }
+        if (count($imagelist) > $numitems) {
+            // use array slice on the keys here (at least until PHP 5.0.2)
+            $idlist = array_slice(array_keys($imagelist),$startnum-1,$numitems);
+            $newlist = array();
+            foreach ($idlist as $id) {
+                $newlist[$id] = $imagelist[$id];
+            }
+            $imagelist = $newlist;
+            unset($newlist);
         }
     }
 

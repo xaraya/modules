@@ -36,6 +36,8 @@ function images_init()
     // Set up module variables
     xarModSetVar('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
     xarModSetVar('images', 'path.derivative-store', 'Put a real directory in here...!');
+    xarModSetVar('images', 'view.itemsperpage', 200);
+    xarModSetVar('images', 'file.cache-expire', 0);
 
 /*
     xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
@@ -91,6 +93,8 @@ function images_delete()
     // Delete module variables
     xarModDelVar('images', 'type.graphics-library');
     xarModDelVar('images', 'path.derivative-store');
+    xarModDelVar('images', 'view.itemsperpage');
+    xarModDelVar('images', 'file.cache-expire');
 
     xarTplUnregisterTag('image-resize');
     xarUnregisterMask('AdminImages');
