@@ -33,6 +33,13 @@ function images_adminapi_getderivatives($args)
                                  'filetype'  => 'jpg'));
     if (!isset($files)) return;
 
+    if (xarModGetVar('uploads', 'file.obfuscate-on-import') ||
+        xarModGetVar('uploads', 'file.obfuscate-on-upload')) {
+        $obfuscated = true;
+    } else {
+        $obfuscated = false;
+    }
+
     $imagelist = array();
     $filenames = array();
     foreach ($files as $file) {
@@ -51,21 +58,23 @@ function images_adminapi_getderivatives($args)
         }
     }
 
-// TODO: find original file info in uploads module if obfuscated
-
-    if (empty($fileName) && xarModIsAvailable('uploads') && 
-        (xarModGetVar('uploads', 'file.obfuscate-on-import') ||
-         xarModGetVar('uploads', 'file.obfuscate-on-upload'))) {
+    if (empty($fileName) && xarModIsAvailable('uploads')) {
 
         $fileinfo = array();
         foreach (array_keys($filenames) as $file) {
-            // this is probably an obfuscated hash for some uploaded/imported file
         // CHECKME: verify this once derivatives can be created in sub-directories of thumbsdir
-            if (preg_match('/^(.*\/)?[0-9a-f]{8}\d+$/i',$file)) {
+            // this is probably an obfuscated hash for some uploaded/imported file
+            if ($obfuscated && preg_match('/^(.*\/)?[0-9a-f]{8}\d+$/i',$file)) {
 
                 $fileinfo[$file] = xarModAPIFunc('uploads','user','db_get_file',
                                                  array('fileHash' => $file));
 
+            // this is probably the filename without extension for some uploaded/imported file
+            } elseif (preg_match('/^(.*\/)?\w+$/i',$file)) {
+
+            // CHECKME: watch out for duplicates here too
+                $fileinfo[$file] = xarModAPIFunc('uploads','user','db_get_file',
+                                                 array('fileName' => $file . '.%'));
             }
         }
         if (count($fileinfo) > 0) {
