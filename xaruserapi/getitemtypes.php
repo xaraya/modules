@@ -12,7 +12,7 @@ function helpdesk_userapi_getitemtypes($args)
     
     // Get objects to build tabs    
     $modid = xarModGetIDFromName('helpdesk');
-    $objects = xarModAPIFunc('dynamicdata', 'user', 'getObjects');        
+    $objects = xarModAPIFunc('dynamicdata', 'user', 'getObjects');   
     $data['objects'] = array();
     foreach($objects as $object){
         if($object['moduleid'] == $modid){           
@@ -24,7 +24,16 @@ function helpdesk_userapi_getitemtypes($args)
                      );
         }
     }
-    
+
+    if (empty($itemtypes[1])) {
+        $itemtypes[1]   = 
+                array('label' => xarVarPrepForDisplay(xarML('Tickets')),
+                      'title' => xarVarPrepForDisplay(xarML('View Tickets')),
+                      'url'   => xarModURL('helpdesk','user','view')
+                     );
+        ksort($itemtypes, SORT_NUMERIC);
+    }
+
     return $itemtypes;
 }
 ?>
