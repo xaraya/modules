@@ -7,12 +7,17 @@
  * @author Micheal Cortez
  * @access public
  *
- * @returns array   All of the metadata stored for the particular file
+ * @param  integer  numitems     (Optional) number of files to get
+ * @param  integer  startnum     (Optional) starting file number
+ * @param  string   sort         (Optional) sort order ('id','name','type','size','user','status','location',...)
+ *
+ * @returns array   All of the metadata stored for all files
  */
  
-function uploads_userapi_db_getall_files( /* VOID */ ) 
+function uploads_userapi_db_getall_files( $args ) 
 {
-    
+    extract($args);
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -31,7 +36,53 @@ function uploads_userapi_db_getall_files( /* VOID */ )
                    xar_extrainfo
               FROM $fileEntry_table";
     
-    $result = $dbconn->Execute($sql);
+// FIXME: we need some indexes on xar_file_entry to make this more efficient
+    if (empty($sort)) {
+        $sort = '';
+    }
+    switch ($sort) {
+        case 'name':
+            $sql .= ' ORDER BY xar_filename';
+            break;
+
+        case 'size':
+            $sql .= ' ORDER BY xar_filesize';
+            break;
+
+        case 'type':
+            $sql .= ' ORDER BY xar_mime_type';
+            break;
+
+        case 'status':
+            $sql .= ' ORDER BY xar_status';
+            break;
+
+        case 'location':
+            $sql .= ' ORDER BY xar_location';
+            break;
+
+        case 'user':
+            $sql .= ' ORDER BY xar_user_id';
+            break;
+
+        case 'store':
+            $sql .= ' ORDER BY xar_store_type';
+            break;
+
+        case 'id':
+        default:
+            $sql .= ' ORDER BY xar_fileEntry_id';
+            break;
+    }
+
+    if (!empty($numitems) && is_numeric($numitems)) {
+        if (empty($startnum) || !is_numeric($startnum)) {
+            $startnum = 1;
+        }
+        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+    } else {
+        $result =& $dbconn->Execute($sql);
+    }
 
     if (!$result)  {
         return;

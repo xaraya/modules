@@ -7,15 +7,20 @@
  * @author Carl P. Corliss
  * @author Micheal Cortez
  * @access public
- * @param  integer  file_id     (Optional) grab file with the specified file id
- * @param  string   fileName    (Optional) grab file(s) with the specified file name
- * @param  string   fileHash    (Optional) grab file(s) with the specified file hash
- * @param  integer  status      (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
- * @param  integer  user_id     (Optional) grab files uploaded by a particular user
- * @param  integer  store_type  (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
- * @param  integer  mime_type   (Optional) grab files with the specified mime type
+ * @param  mixed    fileId       (Optional) grab file(s) with the specified file id(s)
+ * @param  string   fileName     (Optional) grab file(s) with the specified file name
+ * @param  integer  fileType     (Optional) grab files with the specified mime type
+ * @param  integer  fileStatus   (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
+ * @param  string   fileLocation (Optional) grab file(s) with the specified file location
+ * @param  string   fileHash     (Optional) grab file(s) with the specified file hash
+ * @param  integer  userId       (Optional) grab files uploaded by a particular user
+ * @param  integer  store_type   (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
+ * @param  boolean  inverse      (Optional) inverse the selection
+ * @param  integer  numitems     (Optional) number of files to get
+ * @param  integer  startnum     (Optional) starting file number
+ * @param  string   sort         (Optional) sort order ('id','name','type','size','user','status','location',...)
  *
- * @returns array   All of the metadata stored for the particular file
+ * @returns array   All of the metadata stored for the particular file(s)
  */
 
 function uploads_userapi_db_get_file( $args )
@@ -109,7 +114,53 @@ function uploads_userapi_db_get_file( $args )
               FROM $fileEntry_table
              WHERE $where";
 
-    $result = $dbconn->Execute($sql);
+// FIXME: we need some indexes on xar_file_entry to make this more efficient
+    if (empty($sort)) {
+        $sort = '';
+    }
+    switch ($sort) {
+        case 'name':
+            $sql .= ' ORDER BY xar_filename';
+            break;
+
+        case 'size':
+            $sql .= ' ORDER BY xar_filesize';
+            break;
+
+        case 'type':
+            $sql .= ' ORDER BY xar_mime_type';
+            break;
+
+        case 'status':
+            $sql .= ' ORDER BY xar_status';
+            break;
+
+        case 'location':
+            $sql .= ' ORDER BY xar_location';
+            break;
+
+        case 'user':
+            $sql .= ' ORDER BY xar_user_id';
+            break;
+
+        case 'store':
+            $sql .= ' ORDER BY xar_store_type';
+            break;
+
+        case 'id':
+        default:
+            $sql .= ' ORDER BY xar_fileEntry_id';
+            break;
+    }
+
+    if (!empty($numitems) && is_numeric($numitems)) {
+        if (empty($startnum) || !is_numeric($startnum)) {
+            $startnum = 1;
+        }
+        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+    } else {
+        $result =& $dbconn->Execute($sql);
+    }
 
     if (!$result)  {
         return;

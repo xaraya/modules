@@ -37,15 +37,16 @@
         <xar:template file="filter_bar" type="module" />
         
         <xar:base-include-javascript filename="openDialog.js" />
-        
-        <form action="#xarModUrl('uploads','admin','view')#" method="post">
+        <xar:base-include-javascript module="base" filename="checkall.js" />
+
+        <form name="viewfiles" id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
         
         <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
             <tr>
-                <th><xar:mlstring>Select</xar:mlstring></th>
-                <th><xar:mlstring>File Name</xar:mlstring></th>
-                <th><xar:mlstring>Uploaded By</xar:mlstring></th>
-                <th><xar:mlstring>Status</xar:mlstring></th>
+                <th><a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>Select</xar:mlstring></a></th>
+                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#"><xar:mlstring>File Name</xar:mlstring></a></th>
+                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
+                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
             </tr>   
             <xar:if condition="count($items)">
                 <xar:loop name="$items">
@@ -77,6 +78,15 @@
                         </tr>  
                     </xar:if>
                 </xar:loop>
+                <tr>
+                    <td colspan="4" class="xar-norm" align="center">
+<script language="JavaScript" type="text/javascript">
+    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+</script>
+                        #$pager#
+                    </td>
+                </tr>
                 <tr>
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
                         <xar:set name="colspan">3</xar:set>

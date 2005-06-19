@@ -158,6 +158,14 @@
                     of the implications behind turning it off.
                 </xar:mlstring>
             </p>
+            <p>
+                <strong>
+                    <xar:mlstring>
+                        Items per page in admin view:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+                <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('uploads','view.itemsperpage')#" /> 
+            </p>
             
             <h2>
                 <xar:mlstring>Dynamic File Upload Property Configuration</xar:mlstring>

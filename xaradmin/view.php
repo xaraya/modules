@@ -18,6 +18,9 @@ function uploads_admin_view( )
     if (!xarVarFetch('fileId',      'list:int:1', $fileId,           NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('fileDo',      'str:5:',     $fileDo,           NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('action',      'int:0:',     $action,           NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sort', 'enum:id:name:user:status', $sort,      NULL, XARVAR_DONT_SET)) return;
     
     /**
      *  Determine the filter settings to use for this view
@@ -92,12 +95,25 @@ function uploads_admin_view( )
      * Grab a list of files based on the defined filter 
      */
      
+    if (!isset($numitems)) {
+        $numitems = xarModGetVar('uploads','view.itemsperpage');
+        $skipnum = 1;
+    }
+
     if (!isset($filter) || count($filter) <= 0) {
-        $items = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+        $filter = array();
+        $filter['startnum'] = $startnum;
+        $filter['numitems'] = $numitems;
+        $filter['sort']     = $sort;
+        $items = xarModAPIFunc('uploads', 'user', 'db_getall_files', $filter);
     } else {
+        $filter['startnum'] = $startnum;
+        $filter['numitems'] = $numitems;
+        $filter['sort']     = $sort;
         $items = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
     }
-    
+    $countitems = xarModAPIfunc('uploads', 'user', 'db_count', $filter);
+
     if (xarSecurityCheck('EditUploads', 0)) {
     
         $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('uploads', 'user', 'db_diskusage', $filter);
@@ -112,7 +128,7 @@ function uploads_admin_view( )
             $data['diskUsage'][$key] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $value);
         }
 
-        $data['diskUsage']['numfiles_filtered']   = xarModAPIfunc('uploads', 'user', 'db_count', $filter);
+        $data['diskUsage']['numfiles_filtered']   = $countitems;
         $data['diskUsage']['numfiles_total']      = xarModAPIFunc('uploads', 'user', 'db_count');
     }
     // now we check to see if the user has enough access to view 
@@ -141,6 +157,19 @@ function uploads_admin_view( )
 
     $data['items'] = $items;
     $data['authid'] = xarSecGenAuthKey();
+
+    // Add pager
+    if (!empty($numitems) && $countitems > $numitems) {
+        $data['pager'] = xarTplGetPager($startnum,
+                                        $countitems,
+                                        xarModURL('uploads', 'admin', 'view',
+                                                  array('startnum' => '%%',
+                                                        'numitems' => (empty($skipnum) ? $numitems : null),
+                                                        'sort'     => $sort)),
+                                        $numitems);
+    } else {
+        $data['pager'] = '';
+    }
     
     return $data;   
 }

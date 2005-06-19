@@ -67,6 +67,8 @@ function uploads_init()
     xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
     unset($mimetypes);
 
+    xarModSetVar('uploads', 'view.itemsperpage', 200);
+
     // Get datbase setup
     $dbconn =& xarDBGetConn();
 
@@ -520,6 +522,8 @@ function uploads_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
 
+            xarModSetVar('uploads', 'view.itemsperpage', 200);
+
         default:
             return true;
     }
@@ -546,6 +550,7 @@ function uploads_delete()
     xarModDelVar('uploads', 'dd.fileupload.trusted');
     xarModDelVar('uploads', 'file.auto-approve');
     xarModDelVar('uploads', 'view.filter');
+    xarModDelVar('uploads', 'view.itemsperpage');
 
     xarUnregisterMask('ViewUploads');
     xarUnregisterMask('AddUploads');

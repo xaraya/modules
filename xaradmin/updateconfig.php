@@ -5,6 +5,7 @@ function uploads_admin_updateconfig()
     // Get parameters
     if (!xarVarFetch('file',   'list:str:1:', $file,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('path',   'list:str:1:', $path,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('view',   'list:str:1:', $view,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ddprop', 'array:1:',    $ddprop, '', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.  
@@ -41,6 +42,15 @@ function uploads_admin_updateconfig()
                     xarModSetVar('uploads', 'path.' . $varname, $value);
                 }
             }
+        }
+    }
+    if (isset($view) && is_array($view)) {
+        foreach ($view as $varname => $value) {
+            // check to make sure that the value passed in is 
+            // a real uploads module variable
+// TODO: add other view.* variables later ?
+            if ($varname != 'itemsperpage') continue;
+            xarModSetVar('uploads', 'view.' . $varname, $value);
         }
     }
 

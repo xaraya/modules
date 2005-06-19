@@ -6,12 +6,15 @@
  * @author Carl P. Corliss
  * @author Micheal Cortez
  * @access public
- * @param  integer  file_id     (Optional) grab file with the specified file id
- * @param  string   fileName    (Optional) grab file(s) with the specified file name
- * @param  integer  status      (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
- * @param  integer  user_id     (Optional) grab files uploaded by a particular user
- * @param  integer  store_type  (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
- * @param  integer  mime_type   (Optional) grab files with the specified mime type 
+ * @param  mixed    fileId       (Optional) grab file(s) with the specified file id(s)
+ * @param  string   fileName     (Optional) grab file(s) with the specified file name
+ * @param  integer  fileType     (Optional) grab files with the specified mime type
+ * @param  integer  fileStatus   (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
+ * @param  string   fileLocation (Optional) grab file(s) with the specified file location
+ * @param  string   fileHash     (Optional) grab file(s) with the specified file hash
+ * @param  integer  userId       (Optional) grab files uploaded by a particular user
+ * @param  integer  store_type   (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
+ * @param  boolean  inverse      (Optional) inverse the selection
  *
  * @returns array   All of the metadata stored for the particular file
  */
@@ -53,6 +56,15 @@ function uploads_userapi_db_count( $args )
     
     if (isseT($fileType) && !empty($fileType)) {
         $where[] = "(xar_mime_type LIKE '$fileType')";
+    }
+
+    if (isset($fileLocation) && !empty($fileLocation)) {
+        $where[] = "(xar_location LIKE '$fileLocation')";
+    }
+
+    // Note: the fileHash is the last part of the location
+    if (isset($fileHash) && !empty($fileHash)) {
+        $where[] = '(xar_location LIKE ' . $dbconn->qstr("%/$fileHash") . ')';
     }
 
     if (count($where) > 1) {
