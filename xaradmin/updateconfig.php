@@ -66,6 +66,23 @@ function images_admin_updateconfig()
         }
     }
 
+    if (!xarVarFetch('basedirs', 'isset', $basedirs, '', XARVAR_NOT_REQUIRED)) return;
+    if (!empty($basedirs) && is_array($basedirs)) {
+        $newdirs = array();
+        $idx = 0;
+        foreach ($basedirs as $id => $info) {
+            if (empty($info['basedir']) && empty($info['baseurl']) && empty($info['filetypes'])) {
+                continue;
+            }
+            $newdirs[$idx] = array('basedir' => $info['basedir'],
+                                   'baseurl' => $info['baseurl'],
+                                   'filetypes' => $info['filetypes'],
+                                   'recursive' => (!empty($info['recursive']) ? true : false));
+            $idx++;
+        }
+        xarModSetVar('images','basedirs',serialize($newdirs));
+    }
+
     xarModCallHooks('module', 'updateconfig', 'images', array('module' => 'images'));
     xarResponseRedirect(xarModURL('images', 'admin', 'modifyconfig'));
 

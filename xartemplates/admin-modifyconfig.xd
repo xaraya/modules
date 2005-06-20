@@ -83,6 +83,51 @@
                 </strong>&nbsp;&nbsp;
                 <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('images','view.itemsperpage')#" /> 
             </p>
+
+            <p>
+                <strong>
+                    <xar:mlstring>
+                        Base directories for browsing server images:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+        <table class="xar-accent">
+            <tr>
+                <th>
+                    <xar:mlstring>Base Directory</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Base URL</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Recursive</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>File Extensions</xar:mlstring>
+                </th>
+            </tr>
+            <xar:foreach in="$basedirs" key="$id" value="$info">
+            <tr>
+                <td>
+                    <input type="text" name="basedirs[#$id#][basedir]" id="basedirs_#$id#_basedir" value="#$info['basedir']#" size="30" />
+                </td>
+                <td>
+                    <input type="text" name="basedirs[#$id#][baseurl]" id="basedirs_#$id#_baseurl" value="#$info['baseurl']#" size="30" />
+                </td>
+                <td>
+                    <xar:if condition="!empty($info['recursive'])">
+                        <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" />
+                    </xar:if>
+                </td>
+                <td>
+                    <input type="text" name="basedirs[#$id#][filetypes]" id="basedirs_#$id#_filetypes" value="#$info['filetypes']#" size="10" />
+                </td>
+            </tr>
+            </xar:foreach>
+        </table>
+            </p>
+
             <p>
                 <input type="submit" name="update" value="#xarML('Update Configuration')#"/>
             </p>

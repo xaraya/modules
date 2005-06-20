@@ -27,6 +27,11 @@ function images_adminapi_getmenulinks()
                              'label' => xarML('View Derivative Images'));
         $menulinks[] = Array('url'   => xarModURL('images',
                                                   'admin',
+                                                  'browse'),
+                             'title' => xarML('Browse Server Images'),
+                             'label' => xarML('Browse Server Images'));
+        $menulinks[] = Array('url'   => xarModURL('images',
+                                                  'admin',
                                                   'modifyconfig'),
                              'title' => xarML('Edit the Images Configuration'),
                              'label' => xarML('Modify Config'));

@@ -23,6 +23,12 @@ function images_admin_modifyconfig()
 
     $data['shortURLs'] = empty($shortURLs) ? 0 : 1;
 
+    $data['basedirs'] = xarModAPIFunc('images','user','getbasedirs');
+    $data['basedirs'][] = array('basedir' => '',
+                                'baseurl' => '',
+                                'filetypes' => '',
+                                'recursive' => false);
+
     $hooks = xarModCallHooks('module', 'modifyconfig', 'images', array());
 
     if (empty($hooks)) {

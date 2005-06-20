@@ -1,0 +1,171 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Images Administration</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>View Server Images</xar:mlstring>
+    </h2>
+    <xar:if condition="!empty($selimage)">
+    <div style="margin: auto;">
+
+        <xar:if condition="!empty($action) and $action eq 'delete'">
+        <form method="post" action="&xar-modurl-images-admin-browse;">
+            <p><strong><xar:mlstring>Are you sure you want to delete this image ?</xar:mlstring></strong></p>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="action" value="delete" />
+            <input type="hidden" name="bid" value="#$baseId#" />
+            <input type="hidden" name="fid" value="#$selimage['fileId']#" />
+            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+            <input type="submit" name="action" value="#xarML('Cancel')#" />
+        </form>
+        <xar:elseif condition="!empty($action) and $action eq 'resize'"/>
+        <form method="post" action="&xar-modurl-images-admin-browse;">
+            <p><strong><xar:mlstring>Specify the width and/or height you want :</xar:mlstring></strong></p>
+            <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="#$width#" />
+            <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="#$height#" />
+            <label for="replace"><xar:mlstring>Replace</xar:mlstring></label> <input type="checkbox" name="replace" id="replace" #$replace# />
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="action" value="resize" />
+            <input type="hidden" name="bid" value="#$baseId#" />
+            <input type="hidden" name="fid" value="#$selimage['fileId']#" />
+            <input type="submit" name="preview" value="#xarML('Preview')#" />
+            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+            <input type="submit" name="action" value="#xarML('Cancel')#" />
+        </form>
+        </xar:if>
+
+        <xar:if condition="!empty($width) or !empty($height)">
+            <p><img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" /></p>
+        <xar:else/>
+            <p><img src="#$selimage['fileDownload']#" border="0" /></p>
+        </xar:if>
+        <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
+        <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>
+        <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
+        <xar:mlstring>Size</xar:mlstring> : #$selimage['fileSize']#<br/>
+        <xar:mlstring>Modified</xar:mlstring> : #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#<br/>
+
+    </div>
+    </xar:if>
+
+    <xar:comment>
+        Note: we always show the list here
+    </xar:comment>
+
+    <div style="margin: auto;">
+
+        <table class="xar-accent">
+            <tr>
+                <th>
+                    <xar:mlstring>Base Directory</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Base URL</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Recursive</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>File Extensions</xar:mlstring>
+                </th>
+            </tr>
+            <xar:foreach in="$basedirs" key="$id" value="$info">
+            <tr>
+                <td>
+                    <xar:if condition="$baseId eq $id">
+                        #$info['basedir']#
+                    <xar:else/>
+                        <a href="#xarModURL('images','admin','browse',array('bid' => $id))#">
+                            #$info['basedir']#
+                        </a>
+                    </xar:if>
+                </td>
+                <td>
+                    #$info['baseurl']#
+                </td>
+                <td>
+                    <xar:if condition="!empty($info['recursive'])">
+                        <xar:mlstring>Yes</xar:mlstring>
+                    <xar:else/>
+                        <xar:mlstring>No</xar:mlstring>
+                    </xar:if>
+                </td>
+                <td>
+                    #$info['filetypes']#
+                </td>
+            </tr>
+            </xar:foreach>
+        </table>
+
+        <table class="xar-accent">
+            <tr>
+                <th>
+                    <a href="#xarModURL('images','admin','browse',array('bid' => $baseId))#">
+                    <xar:mlstring>Filename</xar:mlstring>
+                    </a>
+                </th>
+                <th>
+                    <a href="#xarModURL('images','admin','browse',array('bid' => $baseId,'sort' => 'width'))#">
+                    <xar:mlstring>Width</xar:mlstring>
+                    </a>
+                </th>
+                <th>
+                    <a href="#xarModURL('images','admin','browse',array('bid' => $baseId,'sort' => 'height'))#">
+                    <xar:mlstring>Height</xar:mlstring>
+                    </a>
+                </th>
+                <th>
+                    <a href="#xarModURL('images','admin','browse',array('bid' => $baseId,'sort' => 'size'))#">
+                    <xar:mlstring>Size</xar:mlstring>
+                    </a>
+                </th>
+                <th>
+                    <a href="#xarModURL('images','admin','browse',array('bid' => $baseId,'sort' => 'time'))#">
+                    <xar:mlstring>Modified</xar:mlstring>
+                    </a>
+                </th>
+                <th>
+                    <xar:mlstring>Action</xar:mlstring>
+                </th>
+            </tr>
+            <xar:foreach in="$images" value="$image">
+            <tr>
+                <td>
+                    #$image['fileName']#
+                </td>
+                <td>
+                    #$image['width']#
+                </td>
+                <td>
+                    #$image['height']#
+                </td>
+                <td>
+                    #$image['fileSize']#
+                </td>
+                <td>
+                    #xarLocaleGetFormattedDate('short',$image['fileModified'])#
+                </td>
+                <td>
+                    <a href="#xarModURL('images','admin','browse',array('action' => 'view', 'bid' => $baseId, 'fid' => $image['fileId']))#">
+                        <xar:mlstring>View</xar:mlstring>
+                    </a>
+                    <xar:if condition="is_writable($image['fileLocation'])">
+                    |
+                    <a href="#xarModURL('images','admin','browse',array('action' => 'resize', 'bid' => $baseId, 'fid' => $image['fileId']))#">
+                        <xar:mlstring>Resize</xar:mlstring>
+                    </a>
+                    |
+                    <a href="#xarModURL('images','admin','browse',array('action' => 'delete', 'bid' => $baseId, 'fid' => $image['fileId']))#">
+                        <xar:mlstring>Delete</xar:mlstring>
+                    </a>
+                    </xar:if>
+                </td>
+            </tr>
+            </xar:foreach>
+        </table>
+
+    </div>
+</div>
