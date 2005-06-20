@@ -64,7 +64,7 @@ function html_userapi_transformoutput($args)
  */
 function html_userapitransformoutput($text)
 {
-    include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
+    include_once 'modules/html/xarclass/stringparser_bbcode.class.php';
     $bbcode = new StringParser_BBCode();
     $dotransform = xarModGetVar('html', 'dolinebreak');
     if ($dotransform == 1){
