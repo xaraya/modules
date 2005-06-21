@@ -156,6 +156,7 @@
                 </td>
                 <td>
                     <input type="text" name="ra" id="ra" value="#$ra#" size="3" />
+                    -360 - 360
                 </td>
                 <td class="xar-accent">
                     <label for="ar">
@@ -216,6 +217,31 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Color Correction</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_gam_0">
+                    <xar:mlstring>Gamma</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[gam][0]" id="filter_gam_0" value="#$filter['gam'][0]#" size="3" />
+                    0 - 10
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_ds_0">
+                    <xar:mlstring>De-saturate</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[ds][0]" id="filter_ds_0" value="#$filter['ds'][0]#" size="3" />
+                    0 - 100
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
                     <xar:mlstring>Watermark Image</xar:mlstring>
                 </th>
             </tr>
@@ -235,6 +261,7 @@
                 </td>
                 <td>
                     <input type="text" name="filter[wmi][2]" id="filter_wmi_2" value="#$filter['wmi'][2]#" size="3" />
+                    0 - 100
                 </td>
             </tr>
             <tr>
@@ -275,6 +302,110 @@
                 </td>
                 <td>
                     <input type="text" name="filter[wmi][3]" id="filter_wmi_3" value="#$filter['wmi'][3]#" size="3" />
+                    %
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Watermark Text</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_0">
+                    <xar:mlstring>Text</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][0]" id="filter_wmt_0" value="#xarVarPrepForDisplay($filter['wmt'][0])#" />
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_5">
+                    <xar:mlstring>Opacity</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][5]" id="filter_wmt_5" value="#$filter['wmt'][5]#" size="3" />
+                    0 - 100
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_2">
+                    <xar:mlstring>Alignment</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:set name="options">
+                    array('BR' => xarML('Bottom Right'),
+                          'BL' => xarML('Bottom Left'),
+                          'TR' => xarML('Top Right'),
+                          'TL' => xarML('Top Left'),
+                          'C'  => xarML('Center'),
+                          'R'  => xarML('Right'),
+                          'L'  => xarML('Left'),
+                          'T'  => xarML('Top'),
+                          'B'  => xarML('Bottom'),
+                          '*'  => xarML('Tile'),
+                    )
+                    </xar:set>
+                    <select name="filter[wmt][2]" id="filter_wmt_2">
+                        <option value=""> </option>
+                        <xar:foreach in="$options" key="$id" value="$val">
+                            <xar:if condition="!empty($filter['wmt'][2]) and $filter['wmt'][2] eq $id">
+                                <option value="#$id#" selected="selected">#$val#</option>
+                            <xar:else/>
+                                <option value="#$id#">#$val#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_6">
+                    <xar:mlstring>Margin</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][6]" id="filter_wmt_6" value="#$filter['wmt'][6]#" size="3" />
+                    %
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_1">
+                    <xar:mlstring>Font Size</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][1]" id="filter_wmt_1" value="#$filter['wmt'][1]#" size="3" />
+                    1 - 5
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_4">
+                    <xar:mlstring>TTF File</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][4]" id="filter_wmt_4" value="#$filter['wmt'][4]#" />
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_3">
+                    <xar:mlstring>Hex Color</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:data-input type="tcolorpicker" name="filter[wmt][3]" id="filter_wmt_3" value="$filter['wmt'][3]" />
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_7">
+                    <xar:mlstring>Angle</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][7]" id="filter_wmt_7" value="#$filter['wmt'][7]#" size="3" />
+                    -360 - 360
                 </td>
             </tr>
 <xar:comment>
@@ -295,7 +426,7 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" name="fltr[0]" id="fltr_0" value="#$fltr[0]#" />
+                    <input type="text" name="fltr[0]" id="fltr_0" value="#xarVarPrepForDisplay($fltr[0])#" />
                 </td>
                 <td class="xar-accent">
                     <label for="fltr_1">
@@ -303,7 +434,7 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" name="fltr[1]" id="fltr_1" value="#$fltr[1]#" />
+                    <input type="text" name="fltr[1]" id="fltr_1" value="#xarVarPrepForDisplay($fltr[1])#" />
                 </td>
             </tr>
             <tr>
@@ -313,7 +444,7 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" name="fltr[2]" id="fltr_2" value="#$fltr[2]#" />
+                    <input type="text" name="fltr[2]" id="fltr_2" value="#xarVarPrepForDisplay($fltr[2])#" />
                 </td>
                 <td class="xar-accent">
                     <label for="fltr_3">
@@ -321,7 +452,7 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" name="fltr[3]" id="fltr_3" value="#$fltr[3]#" />
+                    <input type="text" name="fltr[3]" id="fltr_3" value="#xarVarPrepForDisplay($fltr[3])#" />
                 </td>
             </tr>
             <tr>
@@ -394,6 +525,7 @@
 
     <xar:if condition="!empty($selimage['filePreview'])">
         <a name="preview"></a>
+
         <hr/>
         <p>
             <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
@@ -404,6 +536,7 @@
             </xar:if>
             <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
         </p>
+        <p><xar:ml><xar:mlstring><strong>URL Parameters :</strong> #(1)</xar:mlstring><xar:mlvar>#$params#</xar:mlvar></xar:ml></p>
         <p><img src="#$selimage['filePreview']#" border="0" /></p>
     </xar:if>
 

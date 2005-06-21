@@ -37,9 +37,31 @@ function images_admin_phpthumb($args)
     $data['baseId'] = $baseId;
     $data['fileId'] = $fileId;
 
+    // we're dealing with an uploads file here
     if (is_numeric($fileId)) {
         $data['images'] = xarModAPIFunc('images','admin','getuploads',
                                         array('fileId'   => $fileId));
+        if (!empty($data['images'][$fileId])) {
+            $data['selimage'] = $data['images'][$fileId];
+        }
+
+    // we're dealing with a derivative image here
+    } elseif (preg_match('/^[0-9a-f]{32}$/i',$fileId)) {
+        $data['thumbsdir'] = xarModGetVar('images', 'path.derivative-store');
+        $data['images'] = xarModAPIFunc('images','admin','getderivatives',
+                                        array('thumbsdir' => $data['thumbsdir'],
+                                              'fileId'    => $fileId));
+        foreach ($data['images'] as $image) {
+            if ($image['fileId'] == $fileId) {
+                $data['selimage'] = $image;
+                break;
+            }
+        }
+
+    // we're dealing with a server image here
+    } else {
+        $data['images'] = xarModAPIFunc('images','admin','getimages',
+                                        $data);
         if (!empty($data['images'][$fileId])) {
             $data['selimage'] = $data['images'][$fileId];
         }
@@ -94,27 +116,20 @@ function images_admin_phpthumb($args)
 
     // Process filters via input form
     if (!xarVarFetch('filter', 'isset',    $filter,    NULL, XARVAR_DONT_SET)) return;
-    if (empty($fltr) && !empty($filter)) {
-         $fltr = array();
-         foreach ($filter as $name => $values) {
-             // skip invalid filter entries
-             if (!isset($filterlist[$name]) || !is_array($values) || count($values) < $filterlist[$name]) continue;
-             ksort($values,SORT_NUMERIC);
-             // skip empty filter entries
-             if ($filterlist[$name] > 0 && $values[0] === '') continue;
-             if ($filterlist[$name] > 0) {
-                 $fltr[] = $name . '|' . join('|', $values);
-             } else {
-                 $fltr[] = $name;
-             }
-         }
+
+// FIXME: make this configurable in TColorPicker !?
+    // Get rid of # in front of hex colors
+    if (!empty($filter['wmt']) && !empty($filter['wmt'][3]) &&  substr($filter['wmt'][3],0,1) == '#') {
+       $filter['wmt'][3] = substr($filter['wmt'][3],1);
     }
 
     if (!xarVarFetch('save', 'str:1:',     $save,      NULL, XARVAR_DONT_SET)) return;
     if (empty($save)) {
         $save = $data['selimage']['fileLocation'];
-        $save = preg_replace('/\.(\w+)$/','_new.$1',$save);
         $save = realpath($save);
+        if ($save) {
+            $save = preg_replace('/\.(\w+)$/','_new.$1',$save);
+        }
     }
     $data['save'] = $save;
 
@@ -125,6 +140,23 @@ function images_admin_phpthumb($args)
             if (!xarSecConfirmAuthKey()) return;
         }
 
+        // Process filters via input form
+        if (empty($fltr) && !empty($filter)) {
+            $fltr = array();
+            foreach ($filter as $name => $values) {
+                // skip invalid filter entries
+                if (!isset($filterlist[$name]) || !is_array($values) || count($values) < $filterlist[$name]) continue;
+                ksort($values,SORT_NUMERIC);
+                // skip empty filter entries
+                if ($filterlist[$name] > 0 && $values[0] === '') continue;
+                if ($filterlist[$name] > 0) {
+                    $fltr[] = $name . '|' . join('|', $values);
+                } else {
+                    $fltr[] = $name;
+                }
+            }
+        }
+
         include_once('modules/images/xarclass/phpthumb.class.php');
         $phpThumb = new phpThumb();
 
@@ -132,8 +164,30 @@ function images_admin_phpthumb($args)
 
         if (file_exists($data['selimage']['fileLocation'])) {
             $phpThumb->setSourceFilename($data['selimage']['fileLocation']);
+
+        } elseif (is_numeric($fileId) && defined('_UPLOADS_STORE_DB_DATA') && ($data['selimage']['storeType'] & _UPLOADS_STORE_DB_DATA)) {
+            // get the image data from the database
+            $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+            if (!empty($data)) {
+                $src = implode('', $data);
+                unset($data);
+                $phpThumb->setSourceData($src);
+
+                if (empty($save)) {
+                    $tmpdir = xarModGetVar('uploads', 'path.uploads-directory');
+                    if (is_dir($tmpdir) && is_writable($tmpdir)) {
+                        $save = tempnam($tmpdir, 'xarimage-');
+                    } else {
+                        $save = tempnam(NULL, 'xarimage-');
+                    }
+                    $dbfile = 1;
+                }
+            }
+
+        } else {
+
         }
-// or $phpThumb->setSourceData($binary_image_data);
+
 // or $phpThumb->setSourceImageResource($gd_image_resource);
 
         foreach ($paramlist as $param) {
@@ -144,7 +198,6 @@ function images_admin_phpthumb($args)
 
         if ($phpThumb->GenerateThumbnail()) {
             if (!empty($confirm) && !empty($save)) {
-            // TODO: update files stored in the database too
                 if (!$phpThumb->RenderToFile($save)) {
                     // do something with debug/error messages
                     $msg = implode("\n\n", $phpThumb->debugmessages);
@@ -153,25 +206,50 @@ function images_admin_phpthumb($args)
                     // Throw back the error
                     return;
                 } else {
-                    // update the uploads file entry if we overwrite a file !
-                    if (is_numeric($fileId) && realpath($save) == realpath($data['selimage']['fileLocation'])) {
-                        if (empty($f)) {
-                            $fileType = 'image/jpeg';
+                    if (!empty($dbfile) || realpath($save) == realpath($data['selimage']['fileLocation'])) {
+                        // update the uploads file entry if we overwrite a file !
+                        if (is_numeric($fileId)) {
+                            if (empty($f)) {
+                                $fileType = 'image/jpeg';
+                            } else {
+                                $fileType = 'image/' . $f;
+                            }
+                            if (!xarModAPIFunc('uploads','user','db_modify_file',
+                                               array('fileId'    => $fileId,
+                                                     'fileType'  => $fileType,
+                                                     'fileSize'  => filesize($save),
+                                                     // reset the extrainfo
+                                                     'extrainfo' => ''))) {
+                                return;
+                            }
+                            if (!empty($dbfile)) {
+                                if (!xarModAPIFunc('uploads','user','file_dump',
+                                                   array('fileSrc' => $save,
+                                                         'fileId' => $fileId))) {
+                                    return;
+                                }
+                            }
+                            // Redirect to viewing the updated image here (for now)
+                            xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                                                          array('action' => 'view',
+                                                                'fileId' => $fileId)));
+                            return true;
+
+                        } elseif (preg_match('/^[0-9a-f]{32}$/i',$fileId)) {
+                            // Redirect to viewing the updated image here (for now)
+                            xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                                                          array('action' => 'view',
+                                                                'fileId' => $fileId)));
+                            return true;
+
                         } else {
-                            $fileType = 'image/' . $f;
+                            // Redirect to viewing the updated image here (for now)
+                            xarResponseRedirect(xarModURL('images', 'admin', 'browse',
+                                                          array('action' => 'view',
+                                                                'bid'    => $baseId,
+                                                                'fid'    => $fileId)));
+                            return true;
                         }
-                    // TODO: update extrainfo too for file stored in the database
-                        if (!xarModAPIFunc('uploads','user','db_modify_file',
-                                           array('fileId'   => $fileId,
-                                                 'fileType' => $fileType,
-                                                 'fileSize' => filesize($save)))) {
-                            return;
-                        }
-                        // Redirect to viewing the updated image here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
-                                                      array('action' => 'view',
-                                                            'fileId' => $fileId)));
-                        return true;
                     }
                     $data['message'] = xarML('The image has been saved as "#(1)"',$save);
                 }
@@ -205,12 +283,47 @@ function images_admin_phpthumb($args)
             $data[$param] = '';
         }
     }
+    // Process filters via input form
+    if (empty($previewargs['fltr']) && !empty($filter)) {
+        $previewargs['fltr'] = array();
+        foreach ($filter as $name => $values) {
+            // skip invalid filter entries
+            if (!isset($filterlist[$name]) || !is_array($values) || count($values) < $filterlist[$name]) continue;
+            ksort($values,SORT_NUMERIC);
+            // skip empty filter entries
+            if ($filterlist[$name] > 0 && $values[0] === '') continue;
+            if ($filterlist[$name] > 0) {
+                $previewargs['fltr'][] = $name . '|' . join('|', $values);
+            } else {
+                $previewargs['fltr'][] = $name;
+            }
+        }
+    }
     if (count($previewargs) > 1) {
         $previewargs['preview'] = 1;
         $data['selimage']['filePreview'] = xarModURL('images','admin','phpthumb',
                                                      $previewargs);
         // restore | characters in fltr
         $data['selimage']['filePreview'] = strtr($data['selimage']['filePreview'], array('%7C' => '|'));
+        // show parameters
+        $data['params'] = preg_replace('/^.*fid=[^&]+&amp;/','',$data['selimage']['filePreview']);
+        $data['params'] = preg_replace('/&amp;preview=1$/','',$data['params']);
+    }
+
+    // preset the format based on the current file type
+    if (empty($data['f'])) {
+        switch ($data['selimage']['fileType']) {
+            case 'image/png':
+                $data['f'] = 'png';
+                break;
+            case 'image/jpeg':
+                $data['f'] = 'jpeg';
+                break;
+            case 'image/gif':
+                $data['f'] = 'gif';
+                break;
+            default:
+        }
     }
 
 // CHECKME: check combination of $fltr and $filter
@@ -218,13 +331,15 @@ function images_admin_phpthumb($args)
     // preset the different filter attributes for the input form
     if (!empty($fltr) && empty($filter)) {
          $filter = array();
-         foreach ($fltr as $info) {
+         foreach ($fltr as $id => $info) {
              if (empty($info)) continue;
-             $values = split('|',$info);
+             $values = split('\|',$info);
              $name = array_shift($values);
              // skip invalid filter entries
-             if (!isset($filterlist[$name]) || count($values) != $filterlist[$name]) continue;
+             if (!isset($filterlist[$name]) || count($values) < $filterlist[$name]) continue;
              $filter[$name] = $values;
+             // remove from the fltr fields
+             $data['fltr'][$id] = '';
          }
     }
     if (empty($filter)) {

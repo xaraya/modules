@@ -10,16 +10,17 @@ function images_admin_derivatives()
     // Security check
     if (!xarSecurityCheck('AdminImages')) return;
 
+    // Note: fileId is an MD5 hash of the derivative image location here
+    if (!xarVarFetch('fileId','str:1:',$fileId,'',XARVAR_NOT_REQUIRED)) return;
+
     $data = array();
     $data['thumbsdir'] = xarModGetVar('images', 'path.derivative-store');
     $data['images'] = xarModAPIFunc('images','admin','getderivatives',
-                                    array('thumbsdir' => $data['thumbsdir']));
+                                    array('thumbsdir' => $data['thumbsdir'],
+                                          'fileId'    => $fileId));
 
     // Check if we need to do anything special here
     if (!xarVarFetch('action','str:1:',$action,'',XARVAR_NOT_REQUIRED)) return;
-
-    // Note: fileId is an MD5 hash of the derivative image location here
-    if (!xarVarFetch('fileId','str:1:',$fileId,'',XARVAR_NOT_REQUIRED)) return;
 
     // Find the right derivative image
     if (!empty($action) && !empty($fileId)) {

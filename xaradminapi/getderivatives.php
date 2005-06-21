@@ -2,6 +2,7 @@
 /**
  * get the list of derivative images (thumbnails and resized)
  *
+ * @param   mixed   $fileId    (optional) The file id(s) of the image(s) we're looking for
  * @param   string  $fileName  (optional) The name of the image we're getting derivatives for
  * @param   string  $thumbsdir (optional) The directory where derivative images are stored
  * @param   string  $filematch (optional) Specific file match for derivative images
@@ -40,17 +41,28 @@ function images_adminapi_getderivatives($args)
         $obfuscated = false;
     }
 
+    if (!empty($fileId)) {
+        if (!is_array($fileId)) {
+            $fileId = array($fileId);
+        }
+    }
+
     $imagelist = array();
     $filenames = array();
     foreach ($files as $file) {
         // Note: resized images are named [filename]-[width]x[height].jpg - see resize() method
         if (preg_match('/^(.+?)-(\d+)x(\d+)\.jpg$/',$file,$matches)) {
+            $id = md5($thumbsdir . '/' . $file);
+            if (!empty($fileId)) {
+                if (!in_array($id,$fileId)) continue;
+            }
             $info = stat($thumbsdir . '/' . $file);
             $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
+                                 'fileDownload' => $thumbsdir . '/' . $file,
                                  'fileName'     => $matches[1],
                                  'fileType'     => 'image/jpeg',
                                  'fileSize'     => $info['size'],
-                                 'fileId'       => md5($thumbsdir . '/' . $file),
+                                 'fileId'       => $id,
                                  'fileModified' => $info['mtime'],
                                  'width'        => $matches[2],
                                  'height'       => $matches[3]);

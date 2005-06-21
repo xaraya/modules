@@ -184,6 +184,10 @@
                         <xar:mlstring>Resize</xar:mlstring>
                     </a>
                     |
+                    <a href="#xarModURL('images','admin','phpthumb',array('bid' => $baseId, 'fid' => $image['fileId']))#">
+                        <xar:mlstring>Process</xar:mlstring>
+                    </a>
+                    |
                     <a href="#xarModURL('images','admin','browse',array('action' => 'delete', 'bid' => $baseId, 'fid' => $image['fileId']))#">
                         <xar:mlstring>Delete</xar:mlstring>
                     </a>
