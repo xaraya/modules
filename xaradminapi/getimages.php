@@ -9,9 +9,10 @@
  * @param   mixed   $fileId    (optional) The file id(s) of the image(s) we're looking for
  * @param   string  $fileName  (optional) The name of the image we're looking for
  * @param   string  $filematch (optional) Specific file match for images
+ * @param   integer $cacheExpire (optional) Cache the result for a number of seconds
+ * @param   boolean $cacheRefresh (optional) Force refresh of the cache
  * @returns array
  * @return array containing the list of images
- * @todo add startnum and numitems support + cache for large # of images
  */
 function images_adminapi_getimages($args)
 {
@@ -54,30 +55,113 @@ function images_adminapi_getimages($args)
             $recursive = true;
         }
 
-        $files = xarModAPIFunc('dynamicdata','admin','browse',
-                               array('basedir'   => $basedir,
-                                     'filematch' => $filematch,
-                                     'filetype'  => $filetype,
-                                     'recursive' => $recursive));
-        if (!isset($files)) return;
+        $params = array('basedir'   => $basedir,
+                        'filematch' => $filematch,
+                        'filetype'  => $filetype,
+                        'recursive' => $recursive);
+        
+        $cachekey = md5(serialize($params));
+        if (!empty($cacheExpire) && is_numeric($cacheExpire) && empty($cacheRefresh)) {
+            $cacheinfo = xarModGetVar('images','file.cachelist.'.$cachekey);
+            if (!empty($cacheinfo)) {
+                $cacheinfo = @unserialize($cacheinfo);
+                if (!empty($cacheinfo['time']) && $cacheinfo['time'] > time() - $cacheExpire) {
+                    $imagelist = $cacheinfo['list'];
+                }
+                unset($cacheinfo);
+            }
+        }
+
+        if (!isset($imagelist)) {
+            $files = xarModAPIFunc('dynamicdata','admin','browse',
+                                   $params);
+            if (!isset($files)) return;
+        }
     }
 
-    $imagelist = array();
-    foreach ($files as $file) {
-        $statinfo = @stat($basedir . '/' . $file);
-        $sizeinfo = @getimagesize($basedir . '/' . $file);
-        if (empty($statinfo) || empty($sizeinfo)) continue;
-        // Note: we're using base 64 encoded fileId's here
-        $id = base64_encode($file);
-        $imagelist[$id] = array('fileLocation' => $basedir . '/' . $file,
-                                'fileDownload' => $baseurl . '/' . $file,
-                                'fileName'     => $file,
-                                'fileType'     => $sizeinfo['mime'],
-                                'fileSize'     => $statinfo['size'],
-                                'fileId'       => $id,
-                                'fileModified' => $statinfo['mtime'],
-                                'width'        => $sizeinfo[0],
-                                'height'       => $sizeinfo[1]);
+    if (!isset($imagelist)) {
+        $imagelist = array();
+        foreach ($files as $file) {
+            $statinfo = @stat($basedir . '/' . $file);
+            $sizeinfo = @getimagesize($basedir . '/' . $file);
+            if (empty($statinfo) || empty($sizeinfo)) continue;
+            // Note: we're using base 64 encoded fileId's here
+            $id = base64_encode($file);
+            $imagelist[$id] = array('fileLocation' => $basedir . '/' . $file,
+                                    'fileDownload' => $baseurl . '/' . $file,
+                                    'fileName'     => $file,
+                                    'fileType'     => $sizeinfo['mime'],
+                                    'fileSize'     => $statinfo['size'],
+                                    'fileId'       => $id,
+                                    'fileModified' => $statinfo['mtime'],
+                                    'isWritable'   => @is_writable($basedir . '/' . $file),
+                                    'width'        => $sizeinfo[0],
+                                    'height'       => $sizeinfo[1]);
+        }
+
+        // we're done here
+        if (!empty($fileId)) {
+            return $imagelist;
+        }
+
+        if (!empty($cacheExpire) && is_numeric($cacheExpire)) {
+            $cacheinfo = array('time' => time(),
+                               'list' => $imagelist);
+            $cacheinfo = serialize($cacheinfo);
+            xarModSetVar('images','file.cachelist.'.$cachekey,$cacheinfo);
+            unset($cacheinfo);
+        }
+    }
+
+    // save the number of images in temporary cache for countimages()
+    xarVarSetCached('Modules.Images','countimages.'.$cachekey, count($imagelist));
+
+    if (empty($sort)) {
+        $sort = '';
+    }
+    switch ($sort) {
+        case 'name':
+            // handled by browse above
+            //$strsort = 'fileName';
+            break;
+        case 'type':
+            $strsort = 'fileType';
+            break;
+        case 'width':
+        case 'height':
+            $numsort = $sort;
+            break;
+        case 'size':
+            $numsort = 'fileSize';
+            break;
+        case 'time':
+            $numsort = 'fileModified';
+            break;
+        default:
+            break;
+    }
+    if (!empty($numsort)) {
+        $sortfunc = create_function('$a,$b','if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
+        usort($imagelist, $sortfunc);
+    } elseif (!empty($strsort)) {
+        $sortfunc = create_function('$a,$b','return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
+        usort($imagelist, $sortfunc);
+    }
+
+    if (!empty($numitems) && is_numeric($numitems)) {
+        if (empty($startnum) || !is_numeric($startnum)) {
+            $startnum = 1;
+        }
+        if (count($imagelist) > $numitems) {
+            // use array slice on the keys here (at least until PHP 5.0.2)
+            $idlist = array_slice(array_keys($imagelist),$startnum-1,$numitems);
+            $newlist = array();
+            foreach ($idlist as $id) {
+                $newlist[$id] = $imagelist[$id];
+            }
+            $imagelist = $newlist;
+            unset($newlist);
+        }
     }
 
     return $imagelist;

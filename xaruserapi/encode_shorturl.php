@@ -18,8 +18,8 @@ function images_userapi_encode_shorturl($args)
         return;
     }
 
-    // if we don't have a fileId, can't do too much
-    if (!isset($fileId) || empty($fileId)) {
+    // if we don't have a numeric fileId, can't do too much
+    if (empty($fileId) || !is_numeric($fileId)) {
         return;
     } else {
         $image = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));

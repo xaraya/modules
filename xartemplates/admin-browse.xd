@@ -71,6 +71,11 @@
                 <th>
                     <xar:mlstring>File Extensions</xar:mlstring>
                 </th>
+                <xar:if condition="!empty($cacheExpire)">
+                <th>
+                    &nbsp;
+                </th>
+                </xar:if>
             </tr>
             <xar:foreach in="$basedirs" key="$id" value="$info">
             <tr>
@@ -96,10 +101,20 @@
                 <td>
                     #$info['filetypes']#
                 </td>
+                <xar:if condition="!empty($cacheExpire)">
+                <td>
+                    <a href="#xarModURL('images','admin','browse',array('bid' => $id, 'refresh' => 1))#">
+                        <xar:mlstring>Refresh</xar:mlstring>
+                    </a>
+                </td>
+                </xar:if>
             </tr>
             </xar:foreach>
         </table>
 
+        <xar:base-include-javascript module="base" filename="checkall.js" />
+
+        <form name="viewimages" id="viewimages" method="post" action="&xar-modurl-images-admin-browse;">
         <table class="xar-accent">
             <tr>
                 <th>
@@ -134,7 +149,18 @@
             <xar:foreach in="$images" value="$image">
             <tr>
                 <td>
-                    #$image['fileName']#
+                    <xar:if condition="!empty($image['isWritable'])">
+                        <xar:if condition="!empty($selected) and in_array($image['fileId'],$selected)">
+                            <input type="checkbox" name="fid[#$image['fileId']#]" id="fid_#$image['fileId']#" value="1" checked="checked" />
+                        <xar:else/>
+                            <input type="checkbox" name="fid[#$image['fileId']#]" id="fid_#$image['fileId']#" value="1" />
+                        </xar:if>
+                        <label for="fid_#$image['fileId']#">
+                            #$image['fileName']#
+                        </label>
+                    <xar:else/>
+                        #$image['fileName']#
+                    </xar:if>
                 </td>
                 <td>
                     #$image['width']#
@@ -152,7 +178,7 @@
                     <a href="#xarModURL('images','admin','browse',array('action' => 'view', 'bid' => $baseId, 'fid' => $image['fileId']))#">
                         <xar:mlstring>View</xar:mlstring>
                     </a>
-                    <xar:if condition="is_writable($image['fileLocation'])">
+                    <xar:if condition="!empty($image['isWritable'])">
                     |
                     <a href="#xarModURL('images','admin','browse',array('action' => 'resize', 'bid' => $baseId, 'fid' => $image['fileId']))#">
                         <xar:mlstring>Resize</xar:mlstring>
@@ -165,7 +191,53 @@
                 </td>
             </tr>
             </xar:foreach>
+            <xar:if condition="!empty($pager)">
+            <tr>
+                <td colspan="6" align="center">
+                    #$pager#
+                </td>
+            </tr>
+            </xar:if>
+            <xar:if condition="empty($action)">
+            <tr>
+                <td colspan="6">
+                    <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="" />
+                    <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="" />
+                    <label for="replace"><xar:mlstring>Replace</xar:mlstring></label> <input type="checkbox" name="replace" id="replace" value="1" />
+                    <input type="hidden" name="action" value="resize" />
+                    <input type="hidden" name="bid" value="#$baseId#" />
+                    <input type="submit" name="resizelist" value="#xarML('Resize')#" />
+<script language="JavaScript" type="text/javascript">
+    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewimages'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewimages'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+</script>
+                </td>
+            </tr>
+            <xar:elseif condition="$action eq 'resizelist'"/>
+            <tr>
+                <td colspan="6">
+                    <xar:if condition="!empty($replace)">
+                        <xar:ml><xar:mlstring>Are you sure you want to replace the selected images to [#(1) x #(2)] ?</xar:mlstring><xar:mlvar>#$width#</xar:mlvar><xar:mlvar>#$height#</xar:mlvar></xar:ml>
+                    <xar:else/>
+                        <xar:ml><xar:mlstring>Are you sure you want to resize the selected images to [#(1) x #(2)] ?</xar:mlstring><xar:mlvar>#$width#</xar:mlvar><xar:mlvar>#$height#</xar:mlvar></xar:ml>
+                    </xar:if>
+                    <input type="hidden" name="authid" value="#$authid#" />
+                    <input type="hidden" name="width" value="#$width#" />
+                    <input type="hidden" name="height" value="#$height#" />
+                    <input type="hidden" name="replace" value="#$replace#" />
+                    <input type="hidden" name="action" value="resize" />
+                    <input type="hidden" name="bid" value="#$baseId#" />
+                    <xar:if condition="!empty($replace)">
+                        <input type="submit" name="confirm" value="#xarML('Replace')#" />
+                    <xar:else/>
+                        <input type="submit" name="confirm" value="#xarML('Resize')#" />
+                    </xar:if>
+                    <input type="submit" name="action" value="#xarML('Cancel')#" />
+                </td>
+            </tr>
+            </xar:if>
         </table>
+        </form>
 
     </div>
 </div>

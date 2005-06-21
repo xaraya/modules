@@ -184,13 +184,21 @@
             <xar:elseif condition="$action eq 'resizelist'"/>
             <tr>
                 <td colspan="7">
-                    <xar:ml><xar:mlstring>Are you sure you want to resize the selected images to [#(1) x #(2)] ?</xar:mlstring><xar:mlvar>#$width#</xar:mlvar><xar:mlvar>#$height#</xar:mlvar></xar:ml>
+                    <xar:if condition="!empty($replace)">
+                        <xar:ml><xar:mlstring>Are you sure you want to replace the selected images to [#(1) x #(2)] ?</xar:mlstring><xar:mlvar>#$width#</xar:mlvar><xar:mlvar>#$height#</xar:mlvar></xar:ml>
+                    <xar:else/>
+                        <xar:ml><xar:mlstring>Are you sure you want to resize the selected images to [#(1) x #(2)] ?</xar:mlstring><xar:mlvar>#$width#</xar:mlvar><xar:mlvar>#$height#</xar:mlvar></xar:ml>
+                    </xar:if>
                     <input type="hidden" name="authid" value="#$authid#" />
                     <input type="hidden" name="width" value="#$width#" />
                     <input type="hidden" name="height" value="#$height#" />
                     <input type="hidden" name="replace" value="#$replace#" />
                     <input type="hidden" name="action" value="resize" />
-                    <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+                    <xar:if condition="!empty($replace)">
+                        <input type="submit" name="confirm" value="#xarML('Replace')#" />
+                    <xar:else/>
+                        <input type="submit" name="confirm" value="#xarML('Resize')#" />
+                    </xar:if>
                     <input type="submit" name="action" value="#xarML('Cancel')#" />
                 </td>
             </tr>

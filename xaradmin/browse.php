@@ -32,8 +32,50 @@ function images_admin_browse()
     $data['baseId'] = $baseId;
     $data['fileId'] = $fileId;
 
-    $data['images'] = xarModAPIFunc('images','admin','getimages',
-                                    $data);
+    if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sort','enum:name:type:width:height:size:time',$sort,'name',XARVAR_NOT_REQUIRED)) return;
+
+    $data['startnum'] = $startnum;
+    $data['numitems'] = $numitems;
+    $data['sort'] = ($sort != 'name') ? $sort : null;
+
+    // Check if we can cache the image list
+    $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
+
+    $data['pager'] = '';
+    if (!empty($fileId)) {
+        $data['images'] = xarModAPIFunc('images','admin','getimages',
+                                        $data);
+
+    } else {
+        $params = $data;
+        if (!isset($numitems)) {
+            $params['numitems'] = xarModGetVar('images','view.itemsperpage');
+        }
+        // Check if we need to refresh the cache anyway
+        if (!xarVarFetch('refresh',     'int:0:',     $refresh,          NULL, XARVAR_DONT_SET)) return;
+        $params['cacheRefresh'] = $refresh;
+
+        $data['images'] = xarModAPIFunc('images','admin','getimages',
+                                        $params);
+
+        // Note: this must be called *after* getimages() to benefit from caching
+        $countitems = xarModAPIFunc('images','admin','countimages',
+                                    $params);
+
+        // Add pager
+        if (!empty($params['numitems']) && $countitems > $params['numitems']) {
+            $data['pager'] = xarTplGetPager($startnum,
+                                            $countitems,
+                                            xarModURL('images', 'admin', 'browse',
+                                                      array('bid'      => $baseId,
+                                                            'startnum' => '%%',
+                                                            'numitems' => $data['numitems'],
+                                                            'sort'     => $data['sort'])),
+                                            $params['numitems']);
+        }
+    }
 
     $data['basedirs'] = $basedirs;
 
@@ -49,7 +91,7 @@ function images_admin_browse()
             $found = array();
             foreach ($fileId as $id) {
                 if (!empty($data['images'][$id])) {
-                    $found[] = $id;
+                    $found[$id] = $data['images'][$id];
                 }
             }
             if (count($found) > 0) {
@@ -133,35 +175,64 @@ function images_admin_browse()
                 $data['authid'] = xarSecGenAuthKey();
                 return $data;
 
+            case 'resizelist':
+                if (!xarVarFetch('width', 'int:1:',$width, NULL, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('height','int:1:',$height,NULL,XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('replace','checkbox',$replace,'',XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+                if (!empty($confirm) && (!empty($width) || !empty($height))) {
+                    if (!xarSecConfirmAuthKey()) return;
+                    if (!empty($replace)) {
+                        foreach ($found as $id => $info) {
+                            if (empty($info['fileLocation'])) continue;
+                            $location = xarModAPIFunc('images','admin','replace_image',
+                                                      array('fileLocation' => $info['fileLocation'],
+                                                            'width'  => (!empty($width) ? $width . 'px' : NULL),
+                                                            'height' => (!empty($height) ? $height . 'px' : NULL)));
+                            if (!$location) return;
+                        }
+                        // Redirect to viewing the server images here (for now)
+                        xarResponseRedirect(xarModURL('images', 'admin', 'browse',
+                                                      array('bid'     => $baseId,
+                                                            'sort'    => 'time',
+                                                            // we need to refresh the cache here
+                                                            'refresh' => 1)));
+                    } else {
+                        foreach ($found as $id => $info) {
+                            if (empty($info['fileLocation'])) continue;
+                            $location = xarModAPIFunc('images','admin','resize_image',
+                                                      array('fileLocation' => $info['fileLocation'],
+                                                            'width'  => (!empty($width) ? $width . 'px' : NULL),
+                                                            'height' => (!empty($height) ? $height . 'px' : NULL)));
+                            if (!$location) return;
+                        }
+                        // Redirect to viewing the derivative images here (for now)
+                        xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                                                      array('sort' => 'time')));
+                    }
+                    return true;
+                }
+                $data['selected'] = array_keys($found);
+                if (empty($width) && empty($height)) {
+                    $data['width'] = '';
+                    $data['height'] = '';
+                    $data['action'] = '';
+                } else {
+                    $data['width'] = $width;
+                    $data['height'] = $height;
+                    $data['action'] = 'resizelist';
+                }
+                if (empty($replace)) {
+                    $data['replace'] = '';
+                } else {
+                    $data['replace'] = '1';
+                }
+                $data['authid'] = xarSecGenAuthKey();
+                return $data;
+
             default:
                 break;
         }
-    }
-
-    if (!xarVarFetch('sort','enum:name:width:height:size:time',$sort,'',XARVAR_NOT_REQUIRED)) return;
-    switch ($sort) {
-        case 'name':
-            //$strsort = 'fileName';
-            break;
-        case 'width':
-        case 'height':
-            $numsort = $sort;
-            break;
-        case 'size':
-            $numsort = 'fileSize';
-            break;
-        case 'time':
-            $numsort = 'fileModified';
-            break;
-        default:
-            break;
-    }
-    if (!empty($numsort)) {
-        $sortfunc = create_function('$a,$b','if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
-        usort($data['images'], $sortfunc);
-    } elseif (!empty($strsort)) {
-        $sortfunc = create_function('$a,$b','return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
-        usort($data['images'], $sortfunc);
     }
 
     // Return the template variables defined in this function

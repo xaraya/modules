@@ -37,7 +37,7 @@ function images_init()
     xarModSetVar('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
     xarModSetVar('images', 'path.derivative-store', 'Put a real directory in here...!');
     xarModSetVar('images', 'view.itemsperpage', 200);
-    xarModSetVar('images', 'file.cache-expire', 0);
+    xarModSetVar('images', 'file.cache-expire', 60);
 
 /*
     xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');

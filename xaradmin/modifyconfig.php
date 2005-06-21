@@ -14,6 +14,10 @@ function images_admin_modifyconfig()
     // Global
     $data['libtype']['graphics-library']    = xarModGetVar('images', 'type.graphics-library');
     $data['path']['derivative-store']       = xarModGetVar('images', 'path.derivative-store');
+    $data['file']['cache-expire']           = xarModGetVar('images', 'file.cache-expire');
+    if (!isset($data['file']['cache-expire'])) {
+        xarModSetVar('images', 'file.cache-expire', 60);
+    }
     $data['authid']                         = xarSecGenAuthKey();
     $data['library']   = array('GD'          => _IMAGES_LIBRARY_GD,
                                'ImageMagick' => _IMAGES_LIBRARY_IMAGEMAGICK,

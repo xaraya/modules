@@ -18,7 +18,7 @@
                 <br />
                 <xar:mlstring>
                     This is the full path to the directory where Derivative images will be stored.
-                    It is stronly recommended that this directory be located outside of your web directory.
+                    It is strongly recommended that this directory be located outside of your web directory.
                     <br />NOTE: This directory MUST be writable by the webserver.
                 </xar:mlstring>
             </p>
@@ -33,7 +33,7 @@
                     <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked" /> GD
                     <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
                     <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
-<!--
+<xar:comment>
                 <xar:elseif condition="$libtype['graphics-library'] eq $library['ImageMagick']" />
                     <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
                     <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" checked="checked" /> Image Magick
@@ -42,7 +42,7 @@
                     <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
                     <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" /> Image Magick
                     <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked" /> NetPBM
--->
+</xar:comment>
                 </xar:if>
                 <br />
                 <xar:mlstring>
@@ -64,17 +64,15 @@
                 </xar:mlstring>
                 <br />
             </p>
-<xar:comment>
             <p>
                 <strong>
                     <xar:mlstring>
-                        Cache trusted file information:
+                        Cache server file information:
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;
                 <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('images','file.cache-expire')#" /> 
                 <xar:mlstring>seconds</xar:mlstring>
             </p>
-</xar:comment>
             <p>
                 <strong>
                     <xar:mlstring>
