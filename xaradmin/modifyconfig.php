@@ -18,6 +18,10 @@ function images_admin_modifyconfig()
     if (!isset($data['file']['cache-expire'])) {
         xarModSetVar('images', 'file.cache-expire', 60);
     }
+    $data['file']['imagemagick']            = xarModGetVar('images', 'file.imagemagick');
+    if (!isset($data['file']['imagemagick'])) {
+        xarModSetVar('images', 'file.imagemagick', '');
+    }
     $data['authid']                         = xarSecGenAuthKey();
     $data['library']   = array('GD'          => _IMAGES_LIBRARY_GD,
                                'ImageMagick' => _IMAGES_LIBRARY_IMAGEMAGICK,

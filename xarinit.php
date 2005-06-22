@@ -38,6 +38,7 @@ function images_init()
     xarModSetVar('images', 'path.derivative-store', 'Put a real directory in here...!');
     xarModSetVar('images', 'view.itemsperpage', 200);
     xarModSetVar('images', 'file.cache-expire', 60);
+    xarModSetVar('images', 'file.imagemagick', '');
 
 /*
     xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
@@ -95,6 +96,7 @@ function images_delete()
     xarModDelVar('images', 'path.derivative-store');
     xarModDelVar('images', 'view.itemsperpage');
     xarModDelVar('images', 'file.cache-expire');
+    xarModDelVar('images', 'file.imagemagick');
 
     xarTplUnregisterTag('image-resize');
     xarUnregisterMask('AdminImages');

@@ -52,6 +52,20 @@
                 </xar:mlstring>
             </p>
             <p>
+                <strong>
+                    <xar:mlstring>
+                        ImageMagick 'convert' program:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+                <input type="text" name="file[imagemagick]" id="file_imagemagick" size="60" value="#xarModGetVar('images','file.imagemagick')#" /> 
+                <br />
+                <xar:mlstring>
+                    <em>
+                        <strong>Example:</strong> /usr/local/bin/convert (Unix) or C:\Program Files\ImageMagick-6.0.6-Q16\convert.exe (Windows)
+                    </em>
+                </xar:mlstring>
+            </p>
+            <p>
                 <strong><xar:mlstring>Support Short URLs</xar:mlstring>:</strong>&nbsp;&nbsp;
                 <xar:if condition="$shortURLs eq TRUE">
                     <input type="checkbox" name="shortURLs" value="true" checked="checked"/>

@@ -160,10 +160,16 @@ function images_admin_phpthumb($args)
         include_once('modules/images/xarclass/phpthumb.class.php');
         $phpThumb = new phpThumb();
 
+        $imagemagick = xarModGetVar('images', 'file.imagemagick');
+        if (!empty($imagemagick) && file_exists($imagemagick)) {
+            $phpThumb->config_imagemagick_path = realpath($imagemagick);
+        }
+
 // CHECKME: document root may be incorrect in some cases
 
         if (file_exists($data['selimage']['fileLocation'])) {
-            $phpThumb->setSourceFilename($data['selimage']['fileLocation']);
+            $file = realpath($data['selimage']['fileLocation']);
+            $phpThumb->setSourceFilename($file);
 
         } elseif (is_numeric($fileId) && defined('_UPLOADS_STORE_DB_DATA') && ($data['selimage']['storeType'] & _UPLOADS_STORE_DB_DATA)) {
             // get the image data from the database
