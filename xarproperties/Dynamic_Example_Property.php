@@ -137,7 +137,7 @@ class Dynamic_Example_Property extends Dynamic_Property
                               'validation' => '',
                               'source'     => '',
                               'dependancies' => '',
-                              'requiresmodule' => '',
+                              'requiresmodule' => 'example',
                               'aliases' => '',
                               'args'       => serialize( $args ),
                             // ...
