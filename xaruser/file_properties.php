@@ -95,10 +95,13 @@ function uploads_user_file_properties( $args )
             $fileInfo['size'] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
 
             if (ereg('^image', $fileInfo['fileType'])) {
+                // let the images module handle it
                 if (xarModIsAvailable('images')) {
                     $fileInfo['image'] = TRUE;
-                } else {
-                    $imageInfo = getimagesize($fileInfo['fileLocation']);
+
+                // try to get the image size
+                } elseif (file_exists($fileInfo['fileLocation'])) {
+                    $imageInfo = @getimagesize($fileInfo['fileLocation']);
                     if (is_array($imageInfo)) {
                         if ($imageInfo['0'] > 100 || $imageInfo[1] > 400) {
                             $oWidth  = $imageInfo[0];
@@ -117,6 +120,16 @@ function uploads_user_file_properties( $args )
                             $fileInfo['image']['width']  = $imageInfo[0];
                         }
                     }
+
+                // check if someone else already stored this information
+                } elseif (!empty($fileInfo['extrainfo']) && !empty($fileInfo['extrainfo']['width'])) {
+                    $fileInfo['image']['height'] = $fileInfo['extrainfo']['height'];
+                    $fileInfo['image']['width']  = $fileInfo['extrainfo']['width'];
+                }
+
+                if (empty($fileInfo['image'])) {
+                    $fileInfo['image']['height'] = '';
+                    $fileInfo['image']['width']  = '';
                 }
             }
 
