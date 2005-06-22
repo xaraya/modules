@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br');
+tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl');
 
 /**
  * Insert image template function.

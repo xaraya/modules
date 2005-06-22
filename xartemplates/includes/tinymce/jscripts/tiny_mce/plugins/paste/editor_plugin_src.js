@@ -1,8 +1,7 @@
 // Tiny MCE Paste Plugin
-// Updated by speednet 25 May 2005  - IE converts and pastes without opening popup window
 
 /* Import plugin specific language pack */ 
-tinyMCE.importPluginLanguagePack('paste', 'en,sv,cs'); 
+tinyMCE.importPluginLanguagePack('paste', 'en,sv,cs,zh_cn,fr_ca'); 
 
 function TinyMCE_paste_getControlHTML(control_name) { 
 	switch (control_name) { 

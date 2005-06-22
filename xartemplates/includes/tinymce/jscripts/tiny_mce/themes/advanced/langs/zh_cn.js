@@ -60,3 +60,4 @@ tinyMCELang['lang_browse'] = '浏览';
 tinyMCELang['lang_image_props_desc'] = '图像属性';
 tinyMCELang['lang_newdocument_desc'] = '新建文档';
 tinyMCELang['lang_class'] = '类';
+tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';

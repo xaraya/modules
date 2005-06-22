@@ -60,3 +60,4 @@ tinyMCELang['lang_browse'] = 'Bl&auml;ddra';
 tinyMCELang['lang_image_props_desc'] = 'Bild egenskaper';
 tinyMCELang['lang_newdocument_desc'] = 'Nytt dokument';
 tinyMCELang['lang_class'] = 'Stil';
+tinyMCELang['lang_newdocument'] = 'Är du säker på att du vill tömma hela redigerings ytan?';

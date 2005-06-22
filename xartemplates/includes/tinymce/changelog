@@ -1,3 +1,16 @@
+Version 1.45 (2005-06-xx)
+	Fixed so the newdocument button shows again, was removed by accident in RC2.
+	Fixed so styles drop down in link dialog gets hidden if no classes are defined.
+	Fixed bug where Paste command in context menu wasn't working.
+	Fixed bug issue with not having a base href element in preview plugin.
+	Fixed bug where input elements produced double type/value attributes in MSIE.
+	Fixed so the check for empty contents in cleanup handled uppercase elements.
+	Added a alert box is a popup is blocked by a popup blocker.
+	Added updated dutch language pack, contributed by Fred Stuurman.
+	Added a confirm dialog for the newdocument action.
+	Updated Canadian French table language pack contributed by Virtuelcom.
+	Fixed some minor issues with Simplified Chinese language pack.
+	Re-added Tahoma font to font drop list, was removed in previous version.
 Version 1.45 RC2 (2005-06-15)
 	Fixed bug where paste_use_dialog option for the paste plugin wasn't working correctly.
 	Fixed bug issue with setContent not calling custom cleanups correctly. Inflicts the Flash plugin.

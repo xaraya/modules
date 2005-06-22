@@ -1,4 +1,4 @@
-// Canadian French lang variables by Virtuelcom
+// Canadian French lang variables by Virtuelcom   last modification: 2005-06-15
 
 tinyMCELang['lang_table_desc'] = 'Insérer un nouveau tableau';
 tinyMCELang['lang_table_insert_row_before_desc'] = 'Insérer une ligne avant';

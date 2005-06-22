@@ -38,7 +38,8 @@ var TinyMCE_advanced_buttons = [
 	['backcolor', 'backcolor.gif', '{$lang_theme_backcolor_desc}', 'mceBackColor', true],
 	['charmap', 'charmap.gif', '{$lang_theme_charmap_desc}', 'mceCharMap'],
 	['visualaid', 'visualaid.gif', '{$lang_theme_visualaid_desc}', 'mceToggleVisualAid'],
-	['anchor', 'anchor.gif', '{$lang_theme_anchor_desc}', 'mceInsertAnchor']
+	['anchor', 'anchor.gif', '{$lang_theme_anchor_desc}', 'mceInsertAnchor'],
+	['newdocument', 'newdocument.gif', '{$lang_newdocument_desc}', 'mceNewDocument']
 ];
 
 /**
@@ -123,7 +124,7 @@ function TinyMCE_advanced_getControlHTML(button_name)
 		return '<select id="{$editor_id}_fontNameSelect" name="{$editor_id}_fontNameSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontName\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
 		<option value="">{$lang_theme_fontdefault}</option>\
 		<option value="andale mono,times">Andale Mono</option>\
-		<option value="arial,helvetica">Arial</option>\
+		<option value="arial,helvetica,sans-serif">Arial</option>\
 		<option value="arial black,avant garde">Arial Black</option>\
 		<option value="book antiqua,palatino">Book Antiqua</option>\
 		<option value="comic sans ms,sand">Comic Sans MS</option>\
@@ -132,6 +133,7 @@ function TinyMCE_advanced_getControlHTML(button_name)
 		<option value="helvetica">Helvetica</option>\
 		<option value="impact,chicago">Impact</option>\
 		<option value="symbol">Symbol</option>\
+		<option value="tahoma,arial,helvetica,sans-serif">Tahoma</option>\
 		<option value="terminal,monaco">Terminal</option>\
 		<option value="times new roman,times">Times New Roman</option>\
 		<option value="trebuchet ms,geneva">Trebuchet MS</option>\
@@ -240,6 +242,12 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 			tinyMCE.openWindow(template, {editor_id : editor_id, name : TinyMCE_advanced_anchorName, action : (TinyMCE_advanced_anchorName == "" ? "insert" : "update")});
 			//mceInsertAnchor
 		return true;
+
+		case "mceNewDocument":
+			if (confirm(tinyMCE.getLang('lang_newdocument')))
+				tinyMCE.execInstanceCommand(editor_id, 'mceSetContent', false, '');
+
+			return true;
 	}
 
 	// Default behavior

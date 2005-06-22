@@ -60,3 +60,4 @@ tinyMCELang['lang_copy_desc'] = 'Copy';
 tinyMCELang['lang_paste_desc'] = 'Paste';
 tinyMCELang['lang_image_props_desc'] = 'Image properties';
 tinyMCELang['lang_newdocument_desc'] = 'New document';
+tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';

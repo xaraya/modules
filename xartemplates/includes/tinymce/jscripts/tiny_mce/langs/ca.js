@@ -36,3 +36,4 @@ tinyMCELang['lang_bold_img'] = "bold.gif";
 tinyMCELang['lang_italic_img'] = "italic.gif";
 tinyMCELang['lang_underline_img'] = "underline.gif";
 tinyMCELang['lang_clipboard_msg'] = 'Copiar/Tallar/Enganxar no és possible amb Mozilla i Firefox.\nVols més informació sobre aquest problema de seguretat?';
+tinyMCELang['lang_popup_blocked'] = 'Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.';

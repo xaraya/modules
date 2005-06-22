@@ -58,3 +58,4 @@ tinyMCELang['lang_image_list'] = 'Seznam';
 tinyMCELang['lang_browse'] = 'Browse';
 tinyMCELang['lang_image_props_desc'] = 'Vlastnosti obrázku';
 tinyMCELang['lang_newdocument_desc'] = 'Nový dokument';
+tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';

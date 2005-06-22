@@ -50,6 +50,13 @@ if (url != null) {
 			}
 		}
 
+		// Hide it if there is no styles
+		if (styleSelectElm.options.length == 1) {
+			document.getElementById('styleSelectRow').style.display = "none";
+			document.getElementById('styleSelectRow').style.overflow = "hidden";
+			document.getElementById('styleSelectRow').style.height = "0px";
+		}
+
 		// Handle file browser
 		if (tinyMCE.getParam("file_browser_callback") != null) {
 			document.getElementById('href').style.width = '180px';
@@ -159,11 +166,11 @@ if (url != null) {
             <td nowrap="nowrap">{$lang_theme_insert_link_titlefield}:</td>
             <td><input name="linktitle" type="text" id="linktitle" value="" style="width: 200px"></td>
           </tr>
-          <tr>
+          <tr id="styleSelectRow">
             <td>{$lang_class}:</td>
             <td>
 			 <select name="styleSelect">
-                <option value="" selected>-- {$lang_theme_style_select} --</option>
+                <option value="" selected>{$lang_theme_style_select}</option>
              </select></td>
             <td align="right">&nbsp;</td>
             <td align="right">&nbsp;</td>

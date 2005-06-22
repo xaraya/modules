@@ -156,6 +156,9 @@ function TinyMCE_contextmenu_commandHandler(command, value) {
 	if (command == "mceInsertTable" || command == "mceTableCellProps" || command == "mceTableRowProps" || command == "mceTableMergeCells")
 		ui = true;
 
+	if (command == "Paste")
+		value = null;
+
 	TinyMCE_contextmenu_contextMenu.inst.execCommand(command, ui, value);
 }
 

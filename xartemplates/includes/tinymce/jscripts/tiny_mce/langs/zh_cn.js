@@ -37,3 +37,4 @@ tinyMCELang['lang_bold_img'] = "bold.gif";
 tinyMCELang['lang_italic_img'] = "italic.gif";
 tinyMCELang['lang_underline_img'] = "underline.gif";
 tinyMCELang['lang_clipboard_msg'] = '剪切/复制/粘贴功能在Mozilla和Firefox上尚不可用。\n你想了解关于这个问题的更多信息吗？';
+tinyMCELang['lang_popup_blocked'] = 'Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.';

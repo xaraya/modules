@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('emotions', 'en,sv,zh_cn,cs,fa,fr_ca,fr,de,pl,pt_br');
+tinyMCE.importPluginLanguagePack('emotions', 'en,sv,zh_cn,cs,fa,fr_ca,fr,de,pl,pt_br,nl');
 
 /**
  * Returns the HTML contents of the emotions control.

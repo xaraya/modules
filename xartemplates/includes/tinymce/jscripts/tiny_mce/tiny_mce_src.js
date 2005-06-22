@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.210 $
- * $Date: 2005/06/15 09:05:32 $
+ * $Revision: 1.211 $
+ * $Date: 2005/06/19 11:30:36 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -1365,8 +1365,17 @@ TinyMCE.prototype._cleanupElementName = function(element_name, element) {
  * Converts some element attributes to inline styles.
  */
 TinyMCE.prototype._fixInlineStyles = function(elm) {
-	// Handle non table elements
-	if (elm.nodeName.toLowerCase() != "table") {
+	var eName = elm.nodeName;
+
+	if (elm.nodeName == "FONT") {
+		// Move out color
+		if ((c = tinyMCE.getAttrib(elm, "color")) != "") {
+			elm.style.color = c;
+		}
+	}
+
+	// Handle table, td and img elements
+	if (eName == "TABLE" || eName == "TD" || eName == "IMG") {
 		var value;
 
 		// Setup width
@@ -1389,8 +1398,9 @@ TinyMCE.prototype._fixInlineStyles = function(elm) {
 
 		// Setup border
 		value = tinyMCE.isMSIE ? elm.border : elm.getAttribute("border");
-		if (value && value != "")
+		if (value && value != "" && (value != "0" && eName != "TABLE")) {
 			elm.style.borderWidth = value + "px";
+		}
 	}
 
 	// Setup align
@@ -1427,7 +1437,7 @@ TinyMCE.prototype._cleanupAttribute = function(valid_attributes, element_name, a
 	var verified = false;
 
 	// Inline styling, skip them
-	if (tinyMCE.cleanup_inline_styles && element_name != "table" && element_name != "td") {
+	if (tinyMCE.cleanup_inline_styles && (element_name == "table" || element_name == "td" || element_name == "img")) {
 		if (attribName == "width" || attribName == "height" || attribName == "border" || attribName == "align" || attribName == "valign" || attribName == "hspace" || attribName == "vspace")
 			return null;
 	}
@@ -1817,11 +1827,15 @@ TinyMCE.prototype.cleanupNode = function(node) {
 
 			// MSIE form element issue
 			if (tinyMCE.isMSIE && elementName == "input") {
-				if (node.type)
-					elementAttribs += " type=" + '"' + node.type + '"';
+				if (node.type) {
+					if (!elementAttribs.match(/ type=/g))
+						elementAttribs += " type=" + '"' + node.type + '"';
+				}
 
-				if (node.value)
-					elementAttribs += " value=" + '"' + node.value + '"';
+				if (node.value) {
+					if (!elementAttribs.match(/ value=/g))
+						elementAttribs += " value=" + '"' + node.value + '"';
+				}
 			}
 
 			// Add nbsp to some elements
@@ -2078,7 +2092,7 @@ TinyMCE.prototype._cleanupHTML = function(doc, config, element, visual, on_save)
 	html = tinyMCE._customCleanup(on_save ? "get_from_editor" : "insert_to_editor", html);
 
 	// Emtpy node, return empty
-	var chk = tinyMCE.regexpReplace(html, "[ \t\r\n]", "");
+	var chk = tinyMCE.regexpReplace(html, "[ \t\r\n]", "").toLowerCase();
 	if (chk == "<br/>" || chk == "<br>" || chk == "<p>&nbsp;</p>" || chk == "<p>&#160;</p>" || chk == "<p></p>")
 		html = "";
 
@@ -2754,6 +2768,11 @@ TinyMCE.prototype.openWindow = function(template, args) {
 		html = tinyMCE.applyTemplate(html, args);
 
 		var win = window.open("", "mcePopup", "top=" + y + ",left=" + x + ",scrollbars=" + scrollbars + ",dialog=yes,minimizable=" + resizable + ",modal=yes,width=" + width + ",height=" + height + ",resizable=" + resizable);
+		if (win == null) {
+			alert(tinyMCELang['lang_popup_blocked']);
+			return;
+		}
+
 		win.document.write(html);
 		win.document.close();
 		win.resizeTo(width, height);
@@ -2774,6 +2793,11 @@ TinyMCE.prototype.openWindow = function(template, args) {
 					modal = "no";
 
 				var win = window.open(url, "mcePopup", "top=" + y + ",left=" + x + ",scrollbars=" + scrollbars + ",dialog=" + modal + ",minimizable=" + resizable + ",modal=" + modal + ",width=" + width + ",height=" + height + ",resizable=" + resizable);
+				if (win == null) {
+					alert(tinyMCELang['lang_popup_blocked']);
+					return;
+				}
+
 				eval('try { win.resizeTo(width, height); } catch(e) { }');
 				win.focus();
 			} else {

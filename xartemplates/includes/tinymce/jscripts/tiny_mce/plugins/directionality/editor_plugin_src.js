@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('directionality', 'en,sv');
+tinyMCE.importPluginLanguagePack('directionality', 'en,sv,fr_ca,zh_cn');
 
 function TinyMCE_directionality_getControlHTML(control_name) {
 	var safariPatch = '" onclick="';

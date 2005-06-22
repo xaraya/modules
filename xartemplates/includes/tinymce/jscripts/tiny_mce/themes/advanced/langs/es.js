@@ -59,3 +59,4 @@ tinyMCELang['lang_image_list'] = 'Image list';
 tinyMCELang['lang_browse'] = 'Browse';
 tinyMCELang['lang_image_props_desc'] = 'Image properties';
 tinyMCELang['lang_newdocument_desc'] = 'New document';
+tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';
