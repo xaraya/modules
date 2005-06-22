@@ -121,6 +121,11 @@ function bbcode_transform($text)
     $bbcode->addCode ('size', 'usecontent', 'do_bbcode_size', array (),
                       'inline', array ('listitem', 'block', 'inline', 'link'), array ());
 
+    $bbcode->addCode ('arabic', 'callback_replace', 'do_bbcode_rtl', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+    $bbcode->addCode ('hebrew', 'callback_replace', 'do_bbcode_rtl', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+
     $bbcode->setOccurrenceType ('img', 'image');
     $bbcode->setOccurrenceType ('bild', 'image');
     $bbcode->setMaxOccurrences ('image', 2);
@@ -300,5 +305,9 @@ function do_bbcode_code ($action, $attributes, $content, $params, &$node_object)
     } elseif ($attributes['default'] == 'python') {
         return xarTplModule('bbcode','user', 'pythoncode', array('replace' => $content));
     }
+}
+function do_bbcode_rtl ($action, $attributes, $content, $params, &$node_object)
+{
+    return xarTplModule('bbcode','user', 'rtl', array('replace' => $content));
 }
 ?>
