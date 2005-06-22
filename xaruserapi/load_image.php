@@ -18,7 +18,7 @@ function & images_userapi_load_image( $args )
                       '', 'load_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
-    } elseif (!empty($fileId) && !is_numeric($fileId)) {
+    } elseif (!empty($fileId) && !is_string($fileId)) {
         $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
                       'fileId', 'load_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
@@ -31,7 +31,8 @@ function & images_userapi_load_image( $args )
     }
 
     // if both arguments are specified, give priority to fileId
-    if (!empty($fileId)) {
+    if (!empty($fileId) && is_numeric($fileId)) {
+        // if we only get the fileId
         if (empty($fileLocation) || !isset($storeType)) {
             $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
             if (empty($fileInfo)) {
@@ -44,9 +45,22 @@ function & images_userapi_load_image( $args )
                 // pass the file info array to Image_Properties
                 $location = $fileInfo;
             }
-        } else {
+
+        // if we get the whole file info
+        } elseif (file_exists($fileLocation)) {
             $location = $fileLocation;
+
+        } elseif (defined('_UPLOADS_STORE_DB_DATA') && ($storeType & _UPLOADS_STORE_DB_DATA)) {
+            // pass the whole array to Image_Properties
+            $location = $args;
+
+        } else {
+            $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+                          'fileLocation', 'load_image', 'images');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
+            return;
         }
+
     } else {
         $location = $fileLocation;
     }

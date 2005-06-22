@@ -82,7 +82,7 @@ function images_admin_browse()
     // Check if we need to do anything special here
     if (!xarVarFetch('action','str:1:',$action,'',XARVAR_NOT_REQUIRED)) return;
 
-    // Find the right uploaded image
+    // Find the right server image
     if (!empty($action) && !empty($fileId)) {
         $found = '';
 

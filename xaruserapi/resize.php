@@ -3,7 +3,8 @@
 /**
  * Resizes an image to the given dimensions and returns an img tag for the image
  *
- * @param   integer $src        The (uploads) id of the image to resiae
+ * @param   mixed   $src        The (uploads) id or filename of the image to resize
+ * @param   string  $basedir    (optional) Base directory for the given filename
  * @param   string  $height     The new height (in pixels or percent) ([0-9]+)(px|%)
  * @param   string  $width      The new width (in pixels or percent)  ([0-9]+)(px|%)
  * @param   boolean $constrain  if height XOR width, then constrain the missing value to the given one
@@ -16,8 +17,8 @@ function images_userapi_resize($args)
 {
     extract($args);
 
-    if (!isset($src) || empty($src) || !is_numeric($src)) {
-        $msg = xarML('Required parameter \'#(1)\' is missing or not numeric.', 'src');
+    if (!isset($src) || empty($src)) {
+        $msg = xarML('Required parameter \'#(1)\' is missing or empty.', 'src');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
@@ -66,21 +67,27 @@ function images_userapi_resize($args)
 
     $notSupported = FALSE;
 
-    $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $src)));
-    // TODO: refactor to support other libraries (ImageMagick/NetPBM)
-    if (!empty($fileInfo['fileLocation'])) {
-        $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
+    if (is_numeric($src)) {
+        $imageInfo = xarModAPIFunc('images', 'user', 'getimageinfo', array('fileId' => $src));
+    } else {
+        if (isset($basedir)) {
+            $src = $basedir . '/' . $src;
+        }
+        $imageInfo = xarModAPIFunc('images', 'user', 'getimageinfo',
+                                   array('fileLocation' => $src));
+    }
+    if (!empty($imageInfo)) {
+        // TODO: refactor to support other libraries (ImageMagick/NetPBM)
         $gd_info = xarModAPIFunc('images', 'user', 'gd_info');
-        if (empty($imageInfo) || (!$imageInfo[2] & $gd_info['typesBitmask'])) {
+        if (empty($imageInfo['imageType']) || (!$imageInfo['imageType'] & $gd_info['typesBitmask'])) {
             $notSupported = TRUE;
         }
     } else {
         $notSupported = TRUE;
     }
     if ($notSupported) {
-        $errorMsg = xarML('Image type for file: #(1) is not supported for resizing', $fileInfo['fileLocation']);
+        $errorMsg = xarML('Image type for file: #(1) is not supported for resizing', $src);
         return '<img src="" alt="' . $errorMsg . '" />';
-
     }
 
     $attribs = '';
@@ -93,7 +100,8 @@ function images_userapi_resize($args)
         }
     }
 
-    $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $src));
+    // Load Image Properties based on $imageInfo
+    $image = xarModAPIFunc('images', 'user', 'load_image', $imageInfo);
 
     if (!is_object($image)) {
         return sprintf('<img src="" alt="%s" %s />', xarML('File not found.'), $attribs);
@@ -138,7 +146,7 @@ function images_userapi_resize($args)
     $attribs .= sprintf(' width="%s" height="%s"', $image->getWidth(), $image->getHeight());
 
     $url = xarModURL('images', 'user', 'display',
-                      array('fileId' => $src,
+                      array('fileId' => is_numeric($src) ? $src : base64_encode($src),
                             'height' => $image->getHeight(),
                             'width'  => $image->getWidth()));
 

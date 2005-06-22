@@ -15,7 +15,8 @@
     $modversion['contact'] = 'http://www.xaraya.com/';
     $modversion['admin'] = 1;
     $modversion['securityschema'] = array();
-    $modversion['dependency'] = array(666);
+// images can work without uploads (and vice-versa)
+//    $modversion['dependency'] = array(666);
     $modversion['class'] = 'Utility';
     $modversion['category'] = 'Global';
     // this module requires the gd extension (for now)

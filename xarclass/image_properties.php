@@ -24,16 +24,29 @@ class Image_Properties
         }
 
         if (is_array($fileInfo)) {
-            $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
             $this->fileLocation = $fileInfo['fileLocation'];
             $this->fileName = $fileInfo['fileName'];
             $this->_fileId = $fileInfo['fileId'];
-        } else {
-            $imageInfo = @getimagesize($fileInfo);
+            if (!empty($fileInfo['imageType'])) {
+                $this->_owidth  = $this->width  = $fileInfo['imageWidth'];
+                $this->_oheight = $this->height = $fileInfo['imageHeight'];
+                $this->setPercent(100);
+                $this->setMime($this->_getMimeType($fileInfo['imageType']));
+                return $this;
+            }
+            $imageInfo = xarModAPIFunc('images','user','getimagesize',$fileInfo);
+
+        } elseif (file_exists($fileInfo)) {
             $this->fileLocation = $fileInfo;
             $this->fileName = basename($fileInfo);
+            $imageInfo = @getimagesize($fileInfo);
+
+        } else {
+            trigger_error("File [$this->fileLocation] does not exist.");
+            return NULL;
         }
-        if (is_array($imageInfo)) {
+
+        if (!empty($imageInfo) && is_array($imageInfo)) {
             $this->_owidth  = $this->width  = $imageInfo[0];
             $this->_oheight = $this->height = $imageInfo[1];
             $this->setPercent(100);

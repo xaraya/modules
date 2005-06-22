@@ -34,13 +34,6 @@ function images_adminapi_getderivatives($args)
                                  'filetype'  => 'jpg'));
     if (!isset($files)) return;
 
-    if (xarModGetVar('uploads', 'file.obfuscate-on-import') ||
-        xarModGetVar('uploads', 'file.obfuscate-on-upload')) {
-        $obfuscated = true;
-    } else {
-        $obfuscated = false;
-    }
-
     if (!empty($fileId)) {
         if (!is_array($fileId)) {
             $fileId = array($fileId);
@@ -70,7 +63,16 @@ function images_adminapi_getderivatives($args)
         }
     }
 
+// CHECKME: keep track of originals for server images too ?
+
     if (empty($fileName) && xarModIsAvailable('uploads')) {
+
+        if (xarModGetVar('uploads', 'file.obfuscate-on-import') ||
+            xarModGetVar('uploads', 'file.obfuscate-on-upload')) {
+            $obfuscated = true;
+        } else {
+            $obfuscated = false;
+        }
 
         $fileinfo = array();
         foreach (array_keys($filenames) as $file) {

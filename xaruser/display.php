@@ -15,11 +15,20 @@ function images_user_display( $args )
 
     extract ($args);
 
-    if (!xarVarFetch('fileId', 'int:1:', $fileId)) return;
+    if (!xarVarFetch('fileId', 'str:1:', $fileId)) return;
     if (!xarVarFetch('width',  'str:1:', $width,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) return;
 
-    $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId));
+    if (is_numeric($fileId)) {
+        $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId));
+
+    } else {
+        $fileLocation = base64_decode($fileId);
+        if (empty($fileLocation) || substr($fileLocation,0,1) == '/' || !file_exists($fileLocation)) {
+            return FALSE;
+        }
+        $image = xarModAPIFunc('images', 'user', 'load_image', array('fileLocation' => $fileLocation));
+    }
 
     if (!is_object($image)) {
         return FALSE;
