@@ -133,7 +133,7 @@ class Dynamic_Example_Property extends Dynamic_Property
                               'id'         => 1116,
                               'name'       => 'example',
                               'label'      => 'Example property',
-                              'format'     => '2',
+                              'format'     => '1116',
                               'validation' => '',
                               'source'     => '',
                               'dependancies' => '',
