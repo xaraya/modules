@@ -18,15 +18,16 @@
  */
 function courses_admin_updateconfig()
 {
-    if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('HideEmptyFields', 'checkbox', $HideEmptyFields, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'str:1:', $itemsperpage, '10', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecoursemsg', 'str::', $hidecoursemsg, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanningmsg', 'str::', $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
+	
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Update module variables.
-    xarModSetVar('courses', 'bold', $bold);
+    xarModSetVar('courses', 'HideEmptyFields', $HideEmptyFields);
     xarModSetVar('courses', 'itemsperpage', $itemsperpage);
     xarModSetVar('courses', 'SupportShortURLs', $shorturls);
     xarModSetVar('courses', 'hidecoursemsg', $hidecoursemsg);

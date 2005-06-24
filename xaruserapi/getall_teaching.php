@@ -24,10 +24,6 @@
  */
 function courses_userapi_getall_teaching($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other places
-    // such as the environment is not allowed, as that makes assumptions that
-    // will not hold in future versions of Xaraya
     extract($args);
     // Optional arguments.
     // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
@@ -54,7 +50,7 @@ function courses_userapi_getall_teaching($args)
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'courses');
+            join(', ', $invalid), 'user', 'getall_teaching', 'courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -64,11 +60,7 @@ function courses_userapi_getall_teaching($args)
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!xarSecurityCheck('ViewCourses')) return;
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you are

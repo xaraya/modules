@@ -45,12 +45,12 @@ function courses_admin_teachers()
               'planningid' => $planningid
               ));
     // Check for exceptions
-//    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-//What here?
+//What is needed here?
 
         if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:All")) {
             $items[$i]['changeurl'] = xarModURL('courses',
@@ -62,6 +62,7 @@ function courses_admin_teachers()
         }
 
         $items[$i]['changetitle'] = xarML('Change');
+		// Change for type of teacher
  //       $items[$i]['statusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
  //                                    array('status' => $item['status']));
         $items[$i]['selected']='';
@@ -84,7 +85,7 @@ function courses_admin_teachers()
     // Specify some labels for display
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Teacher Name'));
     $data['emaillabel'] = xarVarPrepForDisplay(xarML('E-mail address'));
-    $data['statuslabel'] = xarVarPrepForDisplay(xarML('Status'));
+    $data['typelabel'] = xarVarPrepForDisplay(xarML('Type'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     $data['changelabel'] = xarVarPrepForDisplay(xarML('Change status'));
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add teacher'));

@@ -2,7 +2,7 @@
 /**
  * File: $Id:
  * 
- * Get all module items
+ * Check to see if user is already attached to a planned course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -10,18 +10,18 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author XarayaGeek
+ * @author XarayaGeek, Michel V.
  */
 /**
  * see if there is already a link between the current user and a planned course
  *
+ * @author Michel V.
+ * @param planningid The ID of the planned course
+ *
  */
 function courses_userapi_check_enrolled($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other places
-    // such as the environment is not allowed, as that makes assumptions that
-    // will not hold in future versions of Xaraya
+    // Get arguments from argument array
     extract($args);
     if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
     if (!xarVarFetch('uid', 'int:1:', $uid)) return;
@@ -35,20 +35,12 @@ function courses_userapi_check_enrolled($args)
     }
 
     $items = array();
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
+    // Security check
     if (!xarSecurityCheck('ViewPlanning')) return;
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table definitions you are
-    // using - $table doesn't cut it in more complex modules
     $courses_studentstable = $xartable['courses_students'];
-
     $sql = "SELECT xar_userid, xar_planningid
     FROM $courses_studentstable
     WHERE xar_userid = $uid
@@ -62,16 +54,14 @@ function courses_userapi_check_enrolled($args)
     else {
     for (; !$result->EOF; $result->MoveNext()) {
         list($userid, $planningid) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "All:All:$planningid")) {
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "All:All:$planningid")) {
             $items[] = array('userid' => $userid,
-                            'planningid' => $planningid);
+                             'planningid' => $planningid);
         }
-    
     }
     $result->Close();
     return $items;
     }
     // TODO: how to select by cat ids (automatically) when needed ???
-
 }
 ?>

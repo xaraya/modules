@@ -48,25 +48,16 @@ function courses_userapi_getplandates($args)
     if (!isset($numitems) || !is_numeric($numitems)) {
         $invalid[] = 'numitems';
     }
-
     
     $items = array();
-    
     // Security check
     if (!xarSecurityCheck('ViewPlanning')) return;
-    
-    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table definitions you are
-    // using - $table doesn't cut it in more complex modules
     $planningtable = $xartable['courses_planning'];
-    
-    //TODO: implement security check when this item is hidden from display
-    
+    // TODO: implement security check when this item is hidden from display
     // TODO: how to select by cat ids (automatically) when needed ???
-    
-    // Get item 
+    // Get items 
         $query = "SELECT xar_planningid,
                    xar_courseid,
                    xar_credits,
@@ -100,7 +91,7 @@ function courses_userapi_getplandates($args)
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$planningid:$courseyear:$courseid")) {
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
             $items[] = array(
             'planningid' => $planningid,
             'courseid'   => $courseid,

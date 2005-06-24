@@ -29,9 +29,10 @@ function courses_userapi_getmenulinks()
                 'view'),
             // In order to display the tool tips and label in any language,
             // we must encapsulate the calls in the xarML in the API.
-            'title' => xarML('Displays all courses for view'),
-            'label' => xarML('Display'));
+            'title' => xarML('Displays all courses'),
+            'label' => xarML('Courses'));
     }
+/*
     if (xarSecurityCheck('Editplanning', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
@@ -41,6 +42,7 @@ function courses_userapi_getmenulinks()
             'title' => xarML('Displays all planned courses for editing'),
             'label' => xarML('Edit planned'));
     }
+*/
     if (xarSecurityCheck('Viewplanning', 0)) {
         $menulinks[] = Array('url' => xarModURL('roles',
                 'user',

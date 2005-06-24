@@ -15,7 +15,7 @@
 /**
  * get a specific planned courses
  * 
- * @author the Courses module development team 
+ * @author Michel V.
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -68,7 +68,10 @@ function courses_userapi_getplanned($args)
                    xar_material,
                    xar_info,
                    xar_program,
-                   xar_hideplanning
+                   xar_hideplanning,
+				   xar_minparticipants,
+				   xar_maxparticipants,
+				   xar_closedate
             FROM $planningtable
             WHERE xar_planningid = ?";
     $result = $dbconn->Execute($query, array((int)$planningid));
@@ -78,8 +81,8 @@ function courses_userapi_getplanned($args)
     // Put items into result array.
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$planningid:$courseyear:$courseid")) {
+          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate) = $result->fields;
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
             $item = array(
             'planningid' => $planningid,
             'courseid'   => $courseid,
@@ -101,7 +104,10 @@ function courses_userapi_getplanned($args)
             'material'   => $material,
             'info'       => $info,
             'program'    => $program,
-            'hideplanning' => $hideplanning);
+            'hideplanning' => $hideplanning,
+			'minparticipants' => $minparticipants,
+			'maxparticipants' => $maxparticipants,
+			'closedate' => $closedate);
         }
     //}
     // All successful database queries produce a result set, and that result

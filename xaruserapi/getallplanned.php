@@ -127,9 +127,9 @@ function courses_userapi_getallplanned($args)
             'info'       => $info,
             'program'    => $program,
             'hideplanning' => $hideplanning,
-            'minparticipants' => $minparticipants,
-            'maxparticipants' => $maxparticipants,
-            'closedate' => $closedate);
+			'minparticipants' => $minparticipants,
+			'maxparticipants' => $maxparticipants,
+			'closedate' => $closedate);
         }
     }
     // All successful database queries produce a result set, and that result

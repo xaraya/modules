@@ -34,7 +34,7 @@ function courses_adminapi_createplanning($args)
     // message and return
     // Note : since we have several arguments we want to check here, we'll
     // report all those that are invalid at the same time...
-    /*
+	/*
     $invalid = array();
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
@@ -50,7 +50,7 @@ function courses_adminapi_createplanning($args)
             new SystemException($msg));
         return;
     } 
-    */
+	*/
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AddCourses', 1, 'Item', "All:All:All")) {
@@ -71,31 +71,31 @@ function courses_adminapi_createplanning($args)
     // the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "INSERT INTO $planningtable (
-                           xar_planningid,
-                           xar_courseid,
+	                       xar_planningid,
+	                       xar_courseid,
                            xar_courseyear,
                            xar_credits,
                            xar_creditsmin,
-                           xar_creditsmax,
-                           xar_startdate,
-                           xar_enddate,
-                           xar_prerequisites,
-                           xar_aim,
-                           xar_method,
-                           xar_longdesc,
-                           xar_costs,
-                           xar_committee,
-                           xar_coordinators,
-                           xar_lecturers,
-                           xar_location,
-                           xar_material,
-                           xar_info,
-                           xar_program,
+						   xar_creditsmax,
+						   xar_startdate,
+						   xar_enddate,
+						   xar_prerequisites,
+						   xar_aim,
+						   xar_method,
+						   xar_longdesc,
+						   xar_costs,
+						   xar_committee,
+						   xar_coordinators,
+						   xar_lecturers,
+						   xar_location,
+						   xar_material,
+						   xar_info,
+						   xar_program,
                            xar_hideplanning)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            
+			  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			
     $bindvars = array((int)$nextId, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
-     $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $hideplanning);
+	 $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $hideplanning);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

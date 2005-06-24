@@ -53,12 +53,12 @@ function courses_admin_deleteteacher($args)
         $data = xarModAPIFunc('courses', 'admin', 'menu');
         // Specify for which item you want confirmation
         $data['tid'] = $tid;
-        $data['item'] = $item;
-        $data['planningid'] = $item['planningid'];
+		$data['item'] = $item;
+		$data['planningid'] = $item['planningid'];
         // Add some other data you'll want to display in the template
         $data['confirmtext'] = xarML('Confirm removing this person as a teacher from the course?');
         $data['itemid'] = xarML('Item ID');
-        $data['planningidlabel'] = xarML('ID of course occurence');
+		$data['planningidlabel'] = xarML('ID of course occurence');
         $data['namelabel'] = xarML('Name of teacher');
         $data['namevalue'] = xarVarPrepForDisplay(xarUserGetVar('name', $item['userid']));
         $data['confirmbutton'] = xarML('Confirm');

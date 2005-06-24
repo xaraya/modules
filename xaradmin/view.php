@@ -40,10 +40,10 @@ function courses_admin_view()
 
     $data['itemsperpage'] = xarModGetVar('courses','itemsperpage');
     $data['itemtype'] = $itemtype;
-    $data['startnum'] = $startnum;
-    // The Generic Menu
+	$data['startnum'] = $startnum;
+	// The Generic Menu
     $data['menu']      = xarModFunc('courses','admin','menu');
-    $data['menutitle'] = xarVarPrepForDisplay(xarML('View the hooked dynamic data options'));
+	$data['menutitle'] = xarVarPrepForDisplay(xarML('View the hooked dynamic data options'));
 
     if (empty($data['itemtype'])){
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

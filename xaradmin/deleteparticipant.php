@@ -53,12 +53,12 @@ function courses_admin_deleteparticipant($args)
         $data = xarModAPIFunc('courses', 'admin', 'menu');
         // Specify for which item you want confirmation
         $data['sid'] = $sid;
-        $data['item'] = $item;
-        $data['planningid'] = $item['planningid'];
+		$data['item'] = $item;
+		$data['planningid'] = $item['planningid'];
         // Add some other data you'll want to display in the template
         $data['confirmtext'] = xarML('Confirm removing this participant from the course?');
         $data['itemid'] = xarML('Item ID');
-        $data['planningidlabel'] = xarML('ID of course occurence');
+		$data['planningidlabel'] = xarML('ID of course occurence');
         $data['namelabel'] = xarML('Name of Participant');
         $data['namevalue'] = xarVarPrepForDisplay(xarUserGetVar('uname', $item['userid']));
         $data['confirmbutton'] = xarML('Confirm');

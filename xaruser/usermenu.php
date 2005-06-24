@@ -25,9 +25,7 @@ function courses_user_usermenu($args)
     extract($args);
 
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('uid', 'isset:', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('coursename', 'str:1:', $coursename, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
 
     // Now we need to get the course information that the user is enrolled in so we can
     // pass the information to the template
@@ -58,9 +56,13 @@ function courses_user_usermenu($args)
                     'numitems' => xarModGetUserVar('courses',
                     'itemsperpage', $uid)));
                    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+				   
+			// Count teaching activities: TODO Where is the error?
+			//$numteaching = xarModAPIFunc('courses', 'userapi', 'countteaching',
+            //                          array('uid' => xarUserGetVar('uid')));
                    
-         //Transform display
-         //TODO define SecCheck
+         // Transform display
+         // TODO define SecCheck
              foreach ($items as $item) {
                 if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "All:All:All")) { 
                     $item['link'] = xarModURL('courses',
@@ -83,39 +85,39 @@ function courses_user_usermenu($args)
                 // Add this item to the list of items to be displayed
                 $data1['items'][] = $item;
             }
-            // Get all teaching activities
-            $titems = xarModAPIFunc('courses',
-                 'user',
-                 'getall_teaching',
-                 array('startnum' => $startnum,
-                    'numitems' => xarModGetUserVar('courses',
-                    'itemsperpage', $uid)));
-                   if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-                   
-         //Transform display
-         //TODO define SecCheck
-             foreach ($titems as $item) {
-                if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "All:All:All")) { 
-                    $item['tlink'] = xarModURL('courses',
-                        'user',
-                        'displayplanned',
-                        array('planningid' => $item['planningid']));
-                    // Security check 2 - else only display the item name (or whatever is
-                    // appropriate for your module)
-                } else {
-                    $item['tlink'] = '';
-                }
-                // Clean up the item text before display
-                $item['tname'] = xarVarPrepForDisplay($item['name']);
-                $item['tcourseid'] = $item['courseid'];
-                $item['tplanningid'] = $item['planningid'];
-                $item['tstartdate'] = xarVarPrepForDisplay($item['startdate']);
-                //$item['tstatusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
-                //                      array('status' => $item['studstatus']));
+			// Get all teaching activities
+			$titems = xarModAPIFunc('courses',
+				 'user',
+				 'getall_teaching',
+				 array('startnum' => $startnum,
+					   'numitems' => xarModGetUserVar('courses',
+					   'itemsperpage', $uid)));
+				   if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+				   
+			 // Transform display
+			 // TODO define SecCheck
+			 foreach ($titems as $item) {
+				if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "All:All:All")) { 
+					$item['tlink'] = xarModURL('courses',
+						'user',
+						'displayplanned',
+						array('planningid' => $item['planningid']));
+					// Security check 2 - else only display the item name (or whatever is
+					// appropriate for your module)
+				} else {
+					$item['tlink'] = '';
+				}
+				// Clean up the item text before display
+				$item['tname'] = xarVarPrepForDisplay($item['name']);
+				$item['tcourseid'] = $item['courseid'];
+				$item['tplanningid'] = $item['planningid'];
+				$item['tstartdate'] = xarVarPrepForDisplay($item['startdate']);
+				//$item['tstatusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
+				//                      array('status' => $item['studstatus']));
 
-                // Add this item to the list of items to be displayed
-                $data1['titems'][] = $item;
-            }
+				// Add this item to the list of items to be displayed
+				$data1['titems'][] = $item;
+			 }
             // We also need to set the SecAuthKey, in order to stop hackers from setting user
             // vars off site.
             $authid = xarSecGenAuthKey('courses');
@@ -146,8 +148,6 @@ function courses_user_usermenu($args)
 
             break;
     }
-    // Finally, we need to send our variables to block layout for processing.  Since we are
-    // using the data var for processing above, we need to do the same with the return.
     return $data;
 }
 

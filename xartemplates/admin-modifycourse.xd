@@ -34,7 +34,7 @@
         <xar:if condition="!empty($invalid['name'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid course name</xar:mlstring></span>
         </xar:if>
-          <xar:if condition="!empty($invalid['duplicatename'])">
+		  <xar:if condition="!empty($invalid['duplicatename'])">
             <span style="color: red"><xar:mlstring>ERROR! This name already exists</xar:mlstring></span>
           </xar:if>
     </span>
@@ -47,10 +47,10 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="number" id="number" size="5" maxlength="5" value="#$coursedata['number']#" />
-          <xar:if condition="!empty($invalid['number'])">
+		  <xar:if condition="!empty($invalid['number'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid course number</xar:mlstring></span>
           </xar:if>
-          <xar:if condition="!empty($invalid['duplicatenumber'])">
+		  <xar:if condition="!empty($invalid['duplicatenumber'])">
             <span style="color: red"><xar:mlstring>ERROR! This course number already exists</xar:mlstring></span>
           </xar:if>
     </span>
@@ -64,7 +64,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="coursetype" id="coursetype" size="5" maxlength="5" value="#$coursedata['coursetype']#" />
-        <xar:if condition="!empty($invalid['coursetype'])">
+		<xar:if condition="!empty($invalid['coursetype'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
         </xar:if>
     </span>
@@ -76,18 +76,18 @@
     <span style="float: left; width: 20%; text-align: right;">
         <span class="help" title="#xarML('Enter the level for this course.')#"><label for="level">#$levellabel#</label>:</span>
     </span>
-    
+	
     <span style="float: right; width: 78%; text-align: left;">
-      <select name="level">
-        <xar:loop name="$levels">
-            <xar:if condition="$coursedata['level'] == $loop:item['lid']">
-                <option value="#$loop:item['lid']#" selected="selected">#$loop:item['level']#</option>
-            <xar:else />
-                <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
-            </xar:if>
-        </xar:loop>
-      </select>
-        <xar:if condition="!empty($invalid['level'])">
+	  <select name="level">
+		<xar:loop name="$levels">
+			<xar:if condition="$coursedata['level'] == $loop:item['lid']">
+				<option value="#$loop:item['lid']#" selected="selected">#$loop:item['level']#</option>
+			<xar:else />
+				<option value="#$loop:item['lid']#">#$loop:item['level']#</option>
+			</xar:if>
+		</xar:loop>
+	  </select>
+		<xar:if condition="!empty($invalid['level'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid level</xar:mlstring></span>
         </xar:if>
     </span>

@@ -24,7 +24,7 @@
 function courses_adminapi_deleteteacher($args)
 {
     extract($args);
-    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
+	if (!xarVarFetch('tid', 'int:1:', $tid)) return;
 
     // Argument check - make sure that all required arguments are present and
     // in the right format, if not then set an appropriate error message

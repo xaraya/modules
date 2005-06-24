@@ -13,25 +13,25 @@
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <th>#$namelabel#</th>
-        <th>#$startdatelabel#</th>
+		<th>#$startdatelabel#</th>
         <th>#$enddatelabel#</th>
-        <th>#$minmaxparticipantslabel#</th>
-        <th>#$participantslabel#</th>
+		<th>#$minmaxparticipantslabel#</th>
+		<th>#$participantslabel#</th>
         <th>#$optionslabel#</th>
     </tr>
     <xar:foreach in="$items" value="$item">
     <tr>
         <td>#$item['name']#</td>
-        <td>#$item['startdate']#</td>
+		<td>#$item['startdate']#</td>
         <td>#$item['enddate']#</td>
-        <td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
-        <td>
-           <xar:if condition="empty($item['participantsurl'])">
+		<td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
+		<td>
+		   <xar:if condition="empty($item['participantsurl'])">
                #$item['participants']#
            <xar:else />
                <a href="#$item['participantsurl']#">#$item['participants']#</a>
            </xar:if>
-        </td>   
+		</td>   
         <td>
            <xar:if condition="empty($item['editurl'])">
                #$item['edittitle']#

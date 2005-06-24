@@ -11,7 +11,7 @@ These are the teachers in the planned course #$planningid#<br>
             <tr>
                 <th>#$namelabel#</th>
                 <th>#$emaillabel#</th>
-                <th colspan="2">#$statuslabel#</th>
+                <th colspan="2">#$typelabel#</th>
                 <th>#$optionslabel#</th>
             </tr>
             <xar:foreach in="$items" value="$item">

@@ -181,12 +181,8 @@ function courses_init()
                     'parent_id' => $coursescid));
         }
     }
-    // Set up an initial value for a module variable.  Note that all module
-    // variables should be initialised with some value in this way rather
-    // than just left blank, this helps the user-side code and means that
-    // there doesn't need to be a check to see if the variable is set in
-    // the rest of the code as it always will be
-    xarModSetVar('courses', 'bold', 0);
+    // Set up an initial value for a module variable.
+    xarModSetVar('courses', 'HideEmptyFields', 0);
     xarModSetVar('courses', 'itemsperpage', 10);
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
@@ -461,6 +457,10 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.0.5');
             
        case '0.0.5':
+         xarModSetVar('courses', 'HideEmptyFields', 0);
+	   
+            return courses_upgrade('0.0.6');
+	   case '0.0.6':
        break;
     }
     // Update successful

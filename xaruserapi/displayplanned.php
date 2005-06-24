@@ -155,8 +155,8 @@ function courses_user_displayplanned($args)
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participantstitle'] = xarML('Participants');
-        $planningid = $planitem['planningid'];
-        if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
+        
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$planningid:All:$courseid")) {
             $items[$i]['enrollurl'] = xarModURL('courses',
                 'user',
                 'enroll',

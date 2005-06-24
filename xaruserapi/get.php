@@ -35,10 +35,7 @@ function courses_userapi_get($args)
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table and column definitions you are
-    // getting - $table and $column don't cut it in more complex modules
     $coursestable = $xartable['courses'];
-
     $query = "SELECT xar_name,
                    xar_number,
                    xar_type,
@@ -51,8 +48,6 @@ function courses_userapi_get($args)
             FROM $coursestable
             WHERE xar_courseid = ?";
     $result = &$dbconn->Execute($query, array((int)$courseid));
-    // Check for an error with the database code, adodb has already raised
-    // the exception so we just return
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
     if ($result->EOF) {
@@ -62,28 +57,21 @@ function courses_userapi_get($args)
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }
-    
-    // Obtain the item information from the result set
+    // Extract fields
     list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse) = $result->fields;
-    // All successful database queries produce a result set, and that result
-    // set should be closed when it has been finished with
     $result->Close();
+
     // Security checks 
-    
     // Check that person has admin right to see hidden course
-    if (!xarSecurityCheck('AdminCourses')) {
-        if ($hidecourse == 1){
-        return;
-        }
+    if ($hidecourse == 1){
+	    if(!xarSecurityCheck('AdminCourses')) {
+        return; // TODO: include the message here as an errormessage
+	    }
     }
     // For this function, the user must *at least* have READ access to this item
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$name:All:$courseid")) {
         return;
-    }
-    // Create the item array
-    //$dateformat = '%Y-%m-%d %H:%M:%S';
-    //$startdate = xarLocaleFormatDate($dateformat, $startdate);
-    //$enddate = xarLocaleFormatDate($dateformat, $enddate);
+		}
     $item = array('courseid' => $courseid,
         'name' => $name,
         'number' => $number,

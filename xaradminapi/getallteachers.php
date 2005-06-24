@@ -69,9 +69,9 @@ function courses_adminapi_getallteachers($args)
     $query = "SELECT xar_tid,
                    xar_userid,
                    xar_planningid,
-                   xar_type
+				   xar_type
             FROM $teacherstable
-            WHERE xar_planningid = $planningid
+			WHERE xar_planningid = $planningid
             ORDER BY xar_tid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
@@ -84,7 +84,7 @@ function courses_adminapi_getallteachers($args)
             $items[] = array('tid' => $tid,
                 'userid'           => $userid,
                 'planningid'       => $planningid,
-                'type'             => $type);
+				'type'             => $type);
         }
     }
     // All successful database queries produce a result set, and that result

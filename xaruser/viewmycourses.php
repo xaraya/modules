@@ -73,7 +73,7 @@ function courses_user_viewmycourses()
         }
         // Clean up the item text before display
         $item['name'] = xarVarPrepForDisplay($item['name']);
-        $item['startdate'] = xarVarPrepForDisplay($item['startdate']);
+		$item['startdate'] = xarVarPrepForDisplay($item['startdate']);
         //$item['shortdesc'] = xarVarPrepHTMLDisplay($item['shortdesc']);
         // Add this item to the list of items to be displayed
         $data['items'][] = $item;

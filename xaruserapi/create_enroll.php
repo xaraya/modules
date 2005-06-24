@@ -25,14 +25,10 @@
  */
 function courses_userapi_create_enroll($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other
-    // places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
     extract($args);
-  if (!xarVarFetch('planningid', 'int:1:', $planningid, NULL, XARVAR_DONT_SET)) return;
-  if (!xarVarFetch('uid', 'int:1:', $uid)) return;
-  if (!xarVarFetch('studstatus', 'int:1:', $studstatus, '1', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('planningid', 'int:1:', $planningid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('uid', 'int:1:', $uid)) return;
+    if (!xarVarFetch('studstatus', 'int:1:', $studstatus, '1', XARVAR_DONT_SET)) return;
 
     $invalid = array();
      if (!isset($uid) || !is_numeric($uid)) {
@@ -68,23 +64,16 @@ function courses_userapi_create_enroll($args)
               xar_sid,
               xar_userid,
               xar_planningid,
-              xar_status)
+			  xar_status)
             VALUES (?,?,?,?)";
     $bindvars = array((int)$nextId, (int)$uid, (int)$planningid, $studstatus);
     $result = &$dbconn->Execute($query, $bindvars);
-    // Check for an error with the database code, adodb has already raised
-    // the exception so we just return
     if (!$result) return;
-    // Get the ID of the item that we inserted.  It is possible, depending
-    // on your database, that this is different from $nextId as obtained
-    // above, so it is better to be safe than sorry in this situation
+    // Get the ID of the item that we inserted.
     $enrollid = $dbconn->PO_Insert_ID($studentstable, 'xar_sid');
-    // Let any hooks know that we have created a new item.  As this is a
-    // create hook we're passing 'exid' as the extra info, which is the
-    // argument that all of the other functions use to reference this
-    // item
+    // Let any hooks know that we have created a new item.
+	
     // TODO: evaluate
-    // xarModCallHooks('item', 'create', $exid, 'exid');
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $enrollid;

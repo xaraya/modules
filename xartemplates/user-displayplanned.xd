@@ -11,8 +11,6 @@
     #xarModGetVar('courses','hideplanningmsg')#
 <xar:else />
 
-
-
     <form method="post" class="xar-form"
           action="#xarModUrl('courses', 'user', 'enroll')#">
           <fieldset class="xar-norm">
@@ -65,7 +63,7 @@
                         </label>
                         #$item['enddate']#
                     </p>
-                <xar:if condition="!empty($course['shortdesc'])">
+                <xar:if condition="!empty($course['shortdesc']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="shortdesc">
                             <span class="help" title="#xarML('The short description for this course.')#">
@@ -75,7 +73,7 @@
                         #$course['shortdesc']#
                     </p>
                 </xar:if>
-                <xar:if condition="!empty($item['longdesc'])">
+                <xar:if condition="!empty($item['longdesc']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="longdesc">
                             <span class="help" title="#xarML('The long description for this course.')#">
@@ -95,6 +93,7 @@
                         #$levelname#
                         </span>
                     </p>
+                <xar:if condition="!empty($course['language']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="language">
                             <span class="help" title="#xarML('The language that will be used in this course.')#">
@@ -103,7 +102,8 @@
                         </label>
                         #$course['language']#
                     </p>
-                <xar:if condition="!empty($item['credits'])">
+				</xar:if>
+                <xar:if condition="!empty($item['credits']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="credits">
                             <span class="help" title="#xarML('The credits for this course.')#">
@@ -113,29 +113,29 @@
                         #$item['credits']#
                     </p>
                 </xar:if>
-                <xar:if condition="!empty($item['creditsmin'])">
+                <xar:if condition="!empty($item['creditsmin']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="creditsmin">
                             <span class="help" title="#xarML('The minimumcredits for this course.')#">
-                            #$mincreditslabel#
+                            #$creditsminlabel#
                             </span>
                         </label>
-                        #$item['mincredits']#
+                        #$item['creditsmin']#
                     </p>
                 </xar:if>
-                <xar:if condition="!empty($item['maxcredits'])">
+                <xar:if condition="!empty($item['maxcredits']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="maxcredits">
                             <span class="help" title="#xarML('The maximum credits for this course.')#">
-                            #$maxcreditslabel#
+                            #$creditsmaxlabel#
                             </span>
                         </label>
-                        #$item['maxcredits']#
+                        #$item['creditsmax']#
                     </p>
                 </xar:if>
+                <xar:if condition="!empty($item['prerequisites']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="prerequisites">
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                             <span class="help" title="#xarML('The prerequisites (Like another course to fulfill before a student can enroll into this one) for this course.')#">
                             #$prereqlabel#
                             </span>
@@ -144,6 +144,8 @@
                             #$item['prerequisites']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['aim']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="aim">
                             <span class="help" title="#xarML('The aim of this course.')#">
@@ -154,6 +156,8 @@
                             #$item['aim']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['program']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="program">
                             <span class="help" title="#xarML('The programme of this course.')#">
@@ -164,6 +168,8 @@
                             #$item['program']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['method']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="method">
                             <span class="help" title="#xarML('Describes the methods used in this course.')#">
@@ -174,6 +180,8 @@
                             #$item['method']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['lecturers']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="lecturers">
                             <span class="help" title="#xarML('The lecturers for this course.')#">
@@ -184,11 +192,49 @@
                             #$item['lecturers']#
                         </span>
                     </p>
+				</xar:if>
                </fieldset>
                <fieldset class="formelements xar-norm">
                     <legend>
                         <strong><xar:mlstring>Course conditions</xar:mlstring></strong>
                     </legend>
+                <xar:if condition="!empty($item['minparticipants']) OR $HideEmptyFields == '0'">
+                    <p class="param">
+                        <label for="minpart">
+                            <span class="help" title="#xarML('The minimum of registered participants needed.')#">
+                            #$minpartlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                          #$item['minparticipants']#
+                        </span>
+                    </p>
+				</xar:if>
+                <xar:if condition="!empty($item['maxparticipants']) OR $HideEmptyFields == '0'">
+                    <p class="param">
+                        <label for="maxpart">
+                            <span class="help" title="#xarML('The maximum of registered participants possible.')#">
+                            #$maxpartlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                          #$item['maxparticipants']#
+                        </span>
+                    </p>
+				</xar:if>
+                <xar:if condition="!empty($item['closedate']) OR $HideEmptyFields == '0'">
+                    <p class="param">
+                        <label for="closedate">
+                            <span class="help" title="#xarML('The last date you can register for this course.')#">
+                            #$closedatelabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                          #$item['closedate']#
+                        </span>
+                    </p>
+                 </xar:if>
+                <xar:if condition="!empty($item['costs']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="costs">
                             <span class="help" title="#xarML('The costs to enroll into this course.')#">
@@ -199,6 +245,8 @@
                           #$item['costs']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['material']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="material">
                             <span class="help" title="#xarML('The material used in this course.')#">
@@ -209,6 +257,8 @@
                             #$item['material']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['location']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="location">
                             <span class="help" title="#xarML('The location of this course.')#">
@@ -219,6 +269,8 @@
                             #$item['location']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['coordinators']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="coordinators">
                             <span class="help" title="#xarML('The coordinators for this course.')#">
@@ -229,6 +281,8 @@
                             #$item['coordinators']#
                         </span>
                     </p>
+				</xar:if>
+                <xar:if condition="!empty($item['committee']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="committee">
                             <span class="help" title="#xarML('The organising committee for this course.')#">
@@ -239,6 +293,7 @@
                             #$item['committee']#
                         </span>
                     </p>
+				</xar:if>
                </fieldset>
                <fieldset class="formelements xar-norm">
                     <legend>

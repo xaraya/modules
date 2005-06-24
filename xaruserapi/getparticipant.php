@@ -54,10 +54,10 @@ function courses_userapi_getparticipant($args)
     $query = "SELECT xar_sid,
                    xar_userid,
                    xar_planningid,
-                   xar_status
+				   xar_status
             FROM $studentstable
-            WHERE xar_sid = ?";
-            
+			WHERE xar_sid = ?";
+			
     $result = $dbconn->Execute($query, array((int)$sid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -75,7 +75,7 @@ function courses_userapi_getparticipant($args)
             $item = array('sid' => $sid,
                 'userid'           => $userid,
                 'planningid'       => $planningid,
-                'status'           => $status);
+				'status'           => $status);
         }
     }
     // All successful database queries produce a result set, and that result

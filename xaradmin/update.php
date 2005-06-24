@@ -85,7 +85,7 @@ function courses_admin_update($args)
     $item['module']   = 'courses';
     $item['itemid']   = $itemid;
     $item['itemtype'] = $itemtype;
-    $item['returnurl'] = xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype));
+	$item['returnurl'] = xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype));
     $hooks = xarModCallHooks('item','update',$itemid,$item);
     if (empty($hooks)) {
     $data['hooks'] = array();
@@ -94,7 +94,7 @@ function courses_admin_update($args)
     }
     
     // let's go back to the admin view
-    // Why does this one not work correct?
+	// Why does this one not work correct?
     // xarResponseRedirect(xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype)));
 
     // Return

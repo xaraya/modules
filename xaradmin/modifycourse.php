@@ -25,28 +25,16 @@ function courses_admin_modifycourse($args)
     // Get parameters from whatever input we need.
     if (!xarVarFetch('courseid', 'isset:', $courseid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'int', $itemtype, 3, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;
+	
     // At this stage we check to see if we have been passed $objectid, the
-    // generic item identifier.  This could have been passed in by a hook or
-    // through some other function calling this as part of a larger module, but
-    // if it exists it overrides $courseid
-
+    // generic item identifier.
+	
     if (!empty($objectid)) {
         $courseid = $objectid;
     }
-    // The user API function is called.  This takes the item ID which we
-    // obtained from the input and gets us the information on the appropriate
-    // item.  If the item does not exist we post an appropriate message and
-    // return
+    // Get the course
     $coursedata = xarModAPIFunc('courses',
                           'user',
                           'getcourse',
@@ -54,17 +42,11 @@ function courses_admin_modifycourse($args)
     // Check for exceptions
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing.  However,
-    // in this case we had to wait until we could obtain the item name to
-    // complete the instance information so this is the first chance we get to
-    // do the check
+    // Security check
     if (!xarSecurityCheck('EditCourses', 1, 'Item', "$coursedata[name]:All:$courseid")) {
         return;
     }
-    // Get menu variables - it helps if all of the module pages have a standard
-    // menu at their head to aid in navigation
-    // $menu = xarModAPIFunc('example','admin','menu','modify');
+    // Get menu variables
     $coursedata['module'] = 'courses';
     $hooks = xarModCallHooks('item', 'modify', $courseid, $coursedata);
     if (empty($hooks)) {
@@ -76,9 +58,6 @@ function courses_admin_modifycourse($args)
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
     
     // Return the template variables defined in this function
-    //$dateformat = '%Y-%m-%d %H:%M:%S';
-    //$startdate = xarLocaleFormatDate($dateformat, $startdate);
-    //$enddate = xarLocaleFormatDate($dateformat, $enddate);
     return array('authid'       => xarSecGenAuthKey(),
                  'menutitle'    => xarVarPrepForDisplay(xarML('Edit a course')),
                  'courseid'     => $courseid,

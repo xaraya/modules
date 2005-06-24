@@ -89,14 +89,10 @@ function courses_userapi_getall($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Put items into result array.  Note that each item is checked
-    // individually to ensure that the user is allowed *at least* OVERVIEW
-    // access to it before it is added to the results array.
-    // If more severe restrictions apply, e.g. for READ access to display
-    // the details of the item, this *must* be verified by your function.
+    // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($courseid, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse) = $result->fields;
-        if (xarSecurityCheck('ViewCourses', 0, 'Item', "$name:All:$courseid")) {
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$name:All:$courseid")) {
             $items[] = array('courseid' => $courseid,
                 'name' => $name,
                 'number' => $number,

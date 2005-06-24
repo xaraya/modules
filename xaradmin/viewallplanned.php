@@ -59,7 +59,7 @@ function courses_admin_viewallplanned()
         if (xarSecurityCheck('EditPlanning', 0, 'Planning',"All:All:All")) { //Why did the appointment of $item['courseid'] not work here?
             $items[$i]['editurl'] = xarModURL('courses',
                 'admin',
-                'editplanned',
+                'modifyplanned',
                 array('planningid' => $item['planningid']));
         } else {
             $items[$i]['editurl'] = '';

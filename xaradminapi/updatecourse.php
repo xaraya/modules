@@ -120,7 +120,7 @@ function courses_adminapi_updatecourse($args)
                 xar_language = ?,
                 xar_freq = ?,
                 xar_contact = ?,
-                xar_hidecourse = ?
+				xar_hidecourse = ?
               WHERE xar_courseid = ?";
 
     $bindvars = array($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse, $courseid);

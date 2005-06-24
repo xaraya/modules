@@ -15,7 +15,7 @@
 
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-courses xar-courses-addplanning">
+<div class="xar-courses xar-courses-updateplanning">
 <div class="xar-courses-head">
     <span class="xar-mod-title">#$menutitle#</span>
 </div>
@@ -26,13 +26,13 @@
 <!-- the specific template for the current admin function comes here -->
 
 <form method="post" class="xar-form"
-      action="#xarModUrl('courses', 'admin', 'createplanning')#"
+      action="#xarModUrl('courses', 'admin', 'updateplanned')#"
       onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
       
       <fieldset class="xar-norm">
            <fieldset class="formelements xar-norm">
                 <legend>
-                    <strong><xar:mlstring>Plan an occurence</xar:mlstring></strong>
+                    <strong><xar:mlstring>The occurence</xar:mlstring></strong>
                 </legend>
                 <p class="param">
                     <label for="name" class="required">
@@ -68,11 +68,11 @@
                         #$yearlabel#
                         </span>
                     </label>
-						<select name="year">
-						<xar:loop name="$year">
-							<option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
-						</xar:loop>
-						</select>
+                        <select name="year">
+                        <xar:loop name="$year">
+                            <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
+                        </xar:loop>
+                        </select>
                 </p>
                 <p class="param">
                     <label for="startdate" class="required">
@@ -81,7 +81,7 @@
                         #$startdatelabel#
                         </span>
                     </label>
-                    <xar:data-input name="startdate" type="8" value="$startdate" />
+                    <xar:data-input name="startdate" type="8" value="$planneddata['startdate']" />
                 </p>
                 <p class="param">
                     <label for="enddate" class="required">
@@ -90,7 +90,7 @@
                         #$enddatelabel#
                         </span>
                     </label>
-                    <xar:data-input name="enddate" type="8" value="$enddate" />
+                    <xar:data-input name="enddate" type="8" value="$planneddata['enddate']" />
                 </p>
                 <p class="param">
                     <label for="closedate" class="required">
@@ -99,9 +99,9 @@
                         #$closedatelabel#
                         </span>
                     </label>
-                    <xar:data-input name="closedate" type="8" value="$closedate" />
+                    <xar:data-input name="closedate" type="8" value="$planneddata['closedate']" />
                 </p>
-				
+                
            </fieldset>
            <fieldset class="formelements xar-norm">
                 <legend>
@@ -114,7 +114,7 @@
                         #$creditslabel#
                         </span>
                     </label>
-                    <xar:data-input name="credits" type="15" value="$credits" />
+                    <xar:data-input name="credits" type="15" value="$planneddata['credits']" />
                     <xar:if condition="!empty($invalid['credits'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring></span>
                     </xar:if>
@@ -126,7 +126,7 @@
                         #$creditsminlabel#
                         </span>
                     </label>
-                    <xar:data-input name="creditsmin" type="15" value="$creditsmin" />
+                    <xar:data-input name="creditsmin" type="15" value="$planneddata['creditsmin']" />
                     <xar:if condition="!empty($invalid['creditsmin'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of minimum credits</xar:mlstring></span>
                     </xar:if>
@@ -138,7 +138,7 @@
                         #$creditsmaxlabel#
                         </span>
                     </label>
-                    <xar:data-input name="creditsmax" type="15" value="$creditsmax" />
+                    <xar:data-input name="creditsmax" type="15" value="$planneddata['creditsmax']" />
                     <xar:if condition="!empty($invalid['creditsmax'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of maximum credits</xar:mlstring></span>
                     </xar:if>
@@ -156,7 +156,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                            <textarea class="fullright" name="prerequisites" id="prerequisites" wrap="virtual" rows="10" cols="40"></textarea>
+                            <textarea class="fullright" name="prerequisites" id="prerequisites" wrap="virtual" rows="10" cols="40">#$planneddata['prerequisites']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['prerequisites'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a prerequisites type</xar:mlstring></span>
@@ -170,7 +170,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="aim" id="aim" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="aim" id="aim" wrap="virtual" rows="10" cols="40">#$planneddata['aim']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['aim'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid aim type</xar:mlstring></span>
@@ -184,7 +184,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="longdesc" id="longdesc" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="longdesc" id="longdesc" wrap="virtual" rows="10" cols="40">#$planneddata['longdesc']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['shortdesc'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid long decription</xar:mlstring></span>
@@ -198,7 +198,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40">#$planneddata['program']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['method'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid programme description</xar:mlstring></span>
@@ -212,7 +212,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="method" id="method" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="method" id="method" wrap="virtual" rows="10" cols="40">#$planneddata['method']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['method'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid method description</xar:mlstring></span>
@@ -226,7 +226,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="lecturers" id="lecturers" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="lecturers" id="lecturers" wrap="virtual" rows="10" cols="40">#$planneddata['lecturers']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['lecturers'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid lecturers description</xar:mlstring></span>
@@ -245,7 +245,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="costs" type="2" value="$costs" />
+                      <xar:data-input name="costs" type="2" value="$planneddata['costs']" />
                     </span>
                     <xar:if condition="!empty($invalid['costs'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid cost</xar:mlstring></span>
@@ -259,7 +259,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="minpart" type="15" value="$minpart" />
+                      <xar:data-input name="minpart" type="15" value="$planneddata['minparticipants']" />
                     </span>
                     <xar:if condition="!empty($invalid['minpart'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid minpart</xar:mlstring></span>
@@ -273,7 +273,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="maxpart" type="15" value="$maxpart" />
+                      <xar:data-input name="maxpart" type="15" value="$planneddata['maxparticipants']" />
                     </span>
                     <xar:if condition="!empty($invalid['maxpart'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid maxpart</xar:mlstring></span>
@@ -287,7 +287,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="material" id="material" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="material" id="material" wrap="virtual" rows="10" cols="40">#$planneddata['material']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['costs'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
@@ -301,7 +301,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="location" id="location" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="location" id="location" wrap="virtual" rows="10" cols="40">#$planneddata['location']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['costs'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid location</xar:mlstring></span>
@@ -315,7 +315,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="coordinators" id="coordinators" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="coordinators" id="coordinators" wrap="virtual" rows="10" cols="40">#$planneddata['coordinators']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['coordinators'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid coordinators description</xar:mlstring></span>
@@ -329,7 +329,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="committee" id="committee" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="committee" id="committee" wrap="virtual" rows="10" cols="40">#$planneddata['committee']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['committee'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid committee description</xar:mlstring></span>
@@ -348,7 +348,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="info" id="info" wrap="virtual" rows="10" cols="40"></textarea>
+                        <textarea class="fullright" name="info" id="info" wrap="virtual" rows="10" cols="40">#$planneddata['info']#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['info'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid info description</xar:mlstring></span>
@@ -362,7 +362,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="hideplanning" type="14" value="$hideplanning" />
+                      <xar:data-input name="hideplanning" type="14" value="$planneddata['hideplanning']" />
                     </span>
                     <xar:if condition="!empty($invalid['hideplanning'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid hide planning</xar:mlstring></span>
@@ -370,7 +370,7 @@
                 </p>
            </fieldset>
       </fieldset>
-	  
+      
 <xar:comment>
 
 <xar:if condition="!isset($contact)">
@@ -380,7 +380,7 @@
         <span class="help" title="#xarML('Enter detailed contact information for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-     <xar:data-input name="contact" type="3" value="$contact" />
+     <xar:data-input name="contact" type="3" value="$planneddata['contact']" />
 
     <xar:if condition="!empty($invalid['contact'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact</xar:mlstring></span>
@@ -415,9 +415,9 @@
         // contains an authorisation ID.  The authorisation ID is very important in
         // preventing certain attacks on the website
     -->
-        <input type="hidden" name="courseid" id="courseid" value="#$coursedata['courseid']#" />
+        <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$addplanningbutton#" /></span>
+        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
     </div>
 
 </form>

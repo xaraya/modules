@@ -9,28 +9,23 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
  * This is a standard function to modify the configuration parameters of the
- * module
+ * module courses
  */
 function courses_admin_modifyconfig()
 {
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
     $data = xarModAPIFunc('courses', 'admin', 'menu');
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
+    // Security check
     if (!xarSecurityCheck('AdminCourses')) return;
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
-    $data['boldlabel'] = xarVarPrepForDisplay(xarML('Display Course Items In Bold?'));
-    $data['boldchecked'] = xarModGetVar('courses', 'bold') ? 'checked="checked"' : '';
+    $data['hideemptyfieldslabel'] = xarVarPrepForDisplay(xarML('Hide Empty Fields for User?'));
+    $data['hideemptyfieldschecked'] = xarModGetVar('courses', 'HideEmptyFields') ? 'checked="checked"' : '';
     $data['hideplanningmsg'] = xarModGetVar('courses', 'hideplanningmsg');
     $data['hideplanningmsg_label'] = xarVarPrepForDisplay(xarML('Message to show when a planned course is selected for hiding'));
     $data['hidecoursemsg'] = xarModGetVar('courses', 'hidecoursemsg');

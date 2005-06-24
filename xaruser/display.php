@@ -2,7 +2,7 @@
  /**
  * File: $Id: 
  * 
- * Display an item
+ * Display an course item
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -17,7 +17,8 @@
  * display a course
  * This is the function to provide detailed information on a single course
  * and show the details of all planned occurences
- * 
+ *
+ * @author MichelV. 
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['courseid'] the ID of the course
@@ -27,7 +28,7 @@ function courses_user_display($args)
     extract($args);
     if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enrolled', 'str:1:', $enrolled, '', XARVAR_NOT_REQUIRED)) return;
+    //if (!xarVarFetch('enrolled', 'str:1:', $enrolled, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $courseid = $objectid;
@@ -45,17 +46,12 @@ function courses_user_display($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Let any transformation hooks know that we want to transform some text.
-    // You'll need to specify the item id, and an array containing the names of all
-    // the pieces of text that you want to transform (e.g. for autolinks, wiki,
-    // smilies, bbcode, ...).
     $item['transform'] = array('name');
     $item = xarModCallHooks('item',
         'transform',
         $courseid,
         $item);
-    // Fill in the details of the item.  Note that a module variable is used here to determine
-    // whether or not parts of the item information should be displayed in
-    // bold type or not
+    // Fill in the details of the item.
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
     $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
     $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
@@ -86,7 +82,7 @@ function courses_user_display($args)
     //$data['enrolled'] = xarVarPrepForDisplay(xarML('You are currently enrolled in this course'));
     $data['courseid'] = $courseid;
     $data['item'] = $item;
-    $data['is_bold'] = xarModGetVar('courses', 'bold');
+    $data['HideEmptyFields'] = xarModGetVar('courses', 'HideEmptyFields');
 
      // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
@@ -111,17 +107,13 @@ function courses_user_display($args)
         'user',
         'getplandates',
         array('courseid' => $courseid));
-    //TODO: howto check for correctness here?
-    //if (!isset($plandates) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    // TODO: howto check for correctness here?
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Check individual permissions for Enroll/Edit/Viewstatus
-    // Note : we could use a foreach ($items as $item) here as well, as
-    // shown in xaruser.php, but as an example, we'll adapt the $items array
-    // 'in place', and *then* pass the complete items array to $data
-
     for ($i = 0; $i < count($items); $i++) {
         $planitem = $items[$i];
-        if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:$courseid")) {
+        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "All:All:$courseid")) {
             $items[$i]['participantsurl'] = xarModURL('courses',
                 'admin',
                 'participants',
@@ -131,7 +123,7 @@ function courses_user_display($args)
         }
         $items[$i]['participantstitle'] = xarML('Participants');
         
-        if (xarSecurityCheck('ReadCourses', 0, 'Item', "All:All:$courseid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:$courseid")) {
             $items[$i]['enrollurl'] = xarModURL('courses',
                 'user',
                 'enroll',
@@ -141,17 +133,17 @@ function courses_user_display($args)
         }
         $items[$i]['enrolltitle'] = xarML('Enroll');
         
-        if (xarSecurityCheck('ReadPlanning', 0, 'Item', "$planitem[planningid]:All:$courseid")) {
+        if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "$planitem[planningid]:All:$courseid")) {
             $items[$i]['detailsurl'] = xarModURL('courses',
                 'user',
                 'displayplanned',
-                array('planningid' => $planitem['planningid'], 'courseid'=> $courseid));
+                array('planningid' => $planitem['planningid']));
         } else {
             $items[$i]['detailsurl'] = '';
         }
         $items[$i]['detailstitle'] = xarML('Details');
         
-        if (xarSecurityCheck('DeleteCourses', 0, 'Item', "$planitem[planningid]:All:$courseid")) {
+        if (xarSecurityCheck('DeleteCourses', 0, 'Course', "$planitem[planningid]:All:$courseid")) {
             $items[$i]['statusurl'] = xarModURL('courses',
                 'user',
                 'status',
@@ -165,21 +157,10 @@ function courses_user_display($args)
     // Add the array of items to the template variables
     $data['items'] = $items;    
     
-    // Note : module variables can also be specified directly in the
-    // blocklayout template by using &xar-mod-<modname>-<varname>;
-    // Note that you could also pass on the $item variable, and specify
-    // the labels directly in the blocklayout template. But make sure you
-    // use the <xar:ml>, <xar:mlstring> or <xar:mlkey> tags then, so that
-    // labels can be translated for other languages...
     // Save the currently displayed item ID in a temporary variable cache
     // for any blocks that might be interested (e.g. the Others block)
-    // You should use this -instead of globals- if you want to make
-    // information available elsewhere in the processing of this page request
     xarVarSetCached('Blocks.courses', 'courseid', $courseid);
-    // Let any hooks know that we are displaying an item.  As this is a display
-    // hook we're passing a return URL in the item info, which is the URL that any
-    // hooks will show after they have finished their own work.  It is normal
-    // for that URL to bring the user back to this function
+    // Let any hooks know that we are displaying an item.
     $item['returnurl'] = xarModURL('courses',
         'user',
         'display',

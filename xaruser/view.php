@@ -24,10 +24,7 @@ function courses_user_view()
         return $data['error'] = xarML('You must be a registered user to view courses...');
     }
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
+
     $data = xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     $data['status'] = '';
@@ -57,10 +54,7 @@ function courses_user_view()
     if (!xarSecurityCheck('ViewCourses')) return;
     // Lets get the UID of the current user to check for overridden defaults
     $uid = xarUserGetVar('uid');
-    // The API function is called.  The arguments to the function are passed in
-    // as their own arguments array.
-    // Security check 1 - the getall() function only returns items for which the
-    // the user has at least OVERVIEW access.
+    // The API function is called.
     $items = xarModAPIFunc('courses',
         'user',
         'getall',
@@ -73,20 +67,8 @@ function courses_user_view()
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
     foreach ($items as $item) {
-        // Let any transformation hooks know that we want to transform some text
-        // You'll need to specify the item id, and an array containing all the
-        // pieces of text that you want to transform (e.g. for autolinks, wiki,
-        // smilies, bbcode, ...).
-        // Note : for your module, you might not want to call transformation
-        // hooks in this overview list, but only in the display of the details
-        // in the display() function.
-        // list($item['name']) = xarModCallHooks('item',
-        // 'transform',
-        // $item['exid'],
-        // array($item['name']));
-        // Security check 2 - if the user has read access to the item, show a
-        // link to display the details of the item
-        if (xarSecurityCheck('ReadCourses', 0, 'Item', "$item[name]:All:$item[courseid]")) {
+
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$item[name]:All:$item[courseid]")) {
             $item['link'] = xarModURL('courses',
                 'user',
                 'display',
@@ -107,26 +89,15 @@ function courses_user_view()
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
 
-    // Note that this function includes another user API function.  The
-    // function returns a simple count of the total number of items in the item
-    // table so that the pager function can do its job properly
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('courses', 'user', 'countitems'),
         xarModURL('courses', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('courses', 'itemsperpage', $uid));
-    // Specify some other variables for use in the function template
+
     // Same as above.  We are changing the name of the page to raise
     // better search engine compatibility.
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Courses')));
-    // Return the template variables defined in this function
     return $data;
-    // Note : instead of using the $data variable, you could also specify
-    // the different template variables directly in your return statement :
-
-    // return array('menu' => ...,
-    // 'items' => ...,
-    // 'pager' => ...,
-    // ... => ...);
 }
 
 ?>

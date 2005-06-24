@@ -9,13 +9,13 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
  * get all courses names that a student is enrolled to
  * 
- * @author the Courses module development team 
+ * @author Michel V. 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -24,11 +24,12 @@
  */
 function courses_userapi_getall_enrolled($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other places
-    // such as the environment is not allowed, as that makes assumptions that
-    // will not hold in future versions of Xaraya
     extract($args);
+	
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
+/*
+ * This will be obsolete
     // Optional arguments.
     // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
     // replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
@@ -42,8 +43,6 @@ function courses_userapi_getall_enrolled($args)
     // Argument check - make sure that all required arguments are present and
     // in the right format, if not then set an appropriate error message
     // and return
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
@@ -54,40 +53,34 @@ function courses_userapi_getall_enrolled($args)
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'courses');
+            join(', ', $invalid), 'user', 'getall_enrolled', 'courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
+*/
+
     $uid = xarUserGetVar('uid');
     $items = array();
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('ViewCourses')) return;
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
+    // Security check
+    if (!xarSecurityCheck('ViewPlanning')) return;
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table definitions you are
-    // using - $table doesn't cut it in more complex modules
-    $planningtable = $xartable['courses_planning'];
+	$planningtable = $xartable['courses_planning'];
     $coursestable = $xartable['courses'];
     $studentstable = $xartable['courses_students'];
     // TODO: how to select by cat ids (automatically) when needed ???
-    // How to get the planningid?
     $query = "SELECT $coursestable.xar_name,
-            $coursestable.xar_courseid,
-            $planningtable.xar_planningid,
-            $planningtable.xar_startdate,
-            $studentstable.xar_status
+	        $coursestable.xar_courseid,
+			$planningtable.xar_planningid,
+			$planningtable.xar_startdate,
+			$studentstable.xar_status
             FROM $studentstable, $coursestable
-            JOIN $planningtable
-            ON $planningtable.xar_planningid = $studentstable.xar_planningid
-            WHERE $studentstable.xar_userid = $uid
-            AND $coursestable.xar_courseid = $planningtable.xar_courseid";
+			JOIN $planningtable
+			ON $planningtable.xar_planningid = $studentstable.xar_planningid
+			WHERE $studentstable.xar_userid = $uid
+			AND $coursestable.xar_courseid = $planningtable.xar_courseid";
             //AND $planningtable.xar_planningid = $studentstable.xar_planningid
      $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
@@ -96,18 +89,17 @@ function courses_userapi_getall_enrolled($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($name, $courseid, $planningid, $startdate, $studstatus) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$name:All:All")) {
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
             $items[] = array('name' => $name,
-                             'courseid'=> $courseid,
-                             'planningid' => $planningid,
-                             'startdate'=> $startdate,
-                             'studstatus'=> $studstatus);
+			                 'courseid'=> $courseid,
+							 'planningid' => $planningid,
+							 'startdate'=> $startdate,
+							 'studstatus'=> $studstatus);
         }
     }
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
-
     // Return the items
     return $items;
 }

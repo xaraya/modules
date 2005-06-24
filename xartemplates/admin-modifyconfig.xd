@@ -60,18 +60,15 @@
                         </xar:if>
                     </p>
                     <p class="param">
-                        <label for="bold">
+                        <label for="HideEmptyField">
                             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                            <span class="help" title="#xarML('Show items in bold??.')#">
-                            #$boldlabel#
+                            <span class="help" title="#xarML('Hide fields in display templates that are empty?')#">
+                            #$hideemptyfieldslabel#
                             </span>
                         </label>
                         <span class="fullright">
-                            <input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# />
+                            <input type="checkbox" name="HideEmptyFields" id="HideEmptyFields" value="1" #$hideemptyfieldschecked# />
                         </span>
-                        <xar:if condition="!empty($invalid['bold'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid bold</xar:mlstring></span>
-                        </xar:if>
                     </p>
                     <p class="param">
                         <label for="itemsperpage" class="required">

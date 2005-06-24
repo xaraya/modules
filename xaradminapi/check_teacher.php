@@ -22,7 +22,7 @@ function courses_adminapi_check_teacher($args)
     extract($args);
     if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
     if (!xarVarFetch('userid', 'int:1:', $userid)) return;
-    
+	
     if (!isset($planningid) || !is_numeric($planningid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'check_enrolled', 'courses');
@@ -47,10 +47,10 @@ function courses_adminapi_check_teacher($args)
     $result = $dbconn->Execute($sql);
     // Nothing found: return empty
     $items=array();
-    
-    if (!$result) {return;
-    }
-    else {
+	
+	if (!$result) {return;
+	}
+	else {
     for (; !$result->EOF; $result->MoveNext()) {
         list($userid, $planningid) = $result->fields;
         if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:$planningid")) {
@@ -58,11 +58,11 @@ function courses_adminapi_check_teacher($args)
                             'planningid' => $planningid);
         }
     
-    }
+	}
     $result->Close();
     return $items;
     }
-    // TODO: how to select by cat ids (automatically) when needed ???
+	// TODO: how to select by cat ids (automatically) when needed ???
 
 }
 ?>

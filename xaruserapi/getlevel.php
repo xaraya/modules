@@ -14,7 +14,7 @@ function courses_userapi_getlevel($args)
     $info = array();
     $info['modid'] = $modid;
     $info['itemtype'] = 3;
-    $info['itemid'] = $level;
+	$info['itemid'] = $level;
     $info['name'] = 'level';
     $item = xarModAPIFunc('dynamicdata', 'user', 'getfield', $info);
     

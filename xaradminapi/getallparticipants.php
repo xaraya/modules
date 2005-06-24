@@ -69,9 +69,9 @@ function courses_adminapi_getallparticipants($args)
     $query = "SELECT xar_sid,
                    xar_userid,
                    xar_planningid,
-                   xar_status
+				   xar_status
             FROM $studentstable
-            WHERE xar_planningid = $planningid
+			WHERE xar_planningid = $planningid
             ORDER BY xar_sid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
@@ -84,7 +84,7 @@ function courses_adminapi_getallparticipants($args)
             $items[] = array('sid' => $sid,
                 'userid'           => $userid,
                 'planningid'       => $planningid,
-                'status'           => $status);
+				'status'           => $status);
         }
     }
     // All successful database queries produce a result set, and that result

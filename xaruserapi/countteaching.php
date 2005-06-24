@@ -9,7 +9,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
+ * @subpackage courses
  * @author Courses module development team 
  */
 /**
@@ -17,23 +17,23 @@
  * 
  * @author Michel V.
  *
- * @param planningid ID for the course
+ * @param uid UserID for the user that is a teacher
  * @returns integer
- * @return number of participants
+ * @return number of courses
  * @raise DATABASE_ERROR
  */
-function courses_userapi_countparticipants($args)
+function courses_userapi_countteaching($args)
 {
     extract ($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('uid', 'int:1:', $uid)) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
-    $studentstable = $xartable['courses_students'];
-    $query = "SELECT COUNT(*)
-            FROM $studentstable
-            WHERE xar_planningid = $planningid";
+    $teacherstable = $xartable['courses_teachers'];
+    $query = "SELECT COUNT(1)
+            FROM $teacherstable
+            WHERE xar_userid = $uid";
     $result = &$dbconn->Execute($query);
     if (!$result) return;
     // Obtain the number of items

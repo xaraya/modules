@@ -75,13 +75,13 @@ function courses_adminapi_getall($args)
     // using - $table doesn't cut it in more complex modules
     $coursestable = $xartable['courses'];
     // TODO: how to select by cat ids (automatically) when needed ???
-    
-    // Set to be able to see all courses or online non-hidden ones
+	
+	// Set to be able to see all courses or online non-hidden ones
     if (xarSecurityCheck('AdminCourses', 0)) {
-    $where = "0, 1";
-    } else {
-    $where = "0";
-    }
+	$where = "0, 1";
+	} else {
+	$where = "0";
+	}
     // Get items - the formatting here is not mandatory, but it does make the
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the SelectLimit() command allows for simpler debug
@@ -89,15 +89,15 @@ function courses_adminapi_getall($args)
     $query = "SELECT xar_courseid,
                    xar_name,
                    xar_number,
-                   xar_type,
+				   xar_type,
                    xar_level,
                    xar_shortdesc,
-                   xar_language,
-                   xar_freq,
-                   xar_contact,
-                   xar_hidecourse
+				   xar_language,
+				   xar_freq,
+				   xar_contact,
+				   xar_hidecourse
             FROM $coursestable
-            WHERE xar_hidecourse in ($where)
+			WHERE xar_hidecourse in ($where)
             ORDER BY xar_number";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
@@ -114,13 +114,13 @@ function courses_adminapi_getall($args)
             $items[] = array('courseid' => $courseid,
                 'name' => $name,
                 'number' => $number,
-                'type' => $type,
+				'type' => $type,
                 'level' => $level,
                 'shortdesc' => $shortdesc,
-                'language' => $language,
-                'freq' => $freq,
-                'contact' => $contact,
-                'hidecourse' => $hidecourse);
+				'language' => $language,
+				'freq' => $freq,
+				'contact' => $contact,
+				'hidecourse' => $hidecourse);
         }
     }
     // All successful database queries produce a result set, and that result
