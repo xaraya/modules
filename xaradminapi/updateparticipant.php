@@ -60,8 +60,8 @@ function courses_adminapi_updateparticipant($args)
     // Add item
     $query = "UPDATE $studentstable 
               SET xar_planningid = ?,
-			      xar_status = ?
-			  WHERE xar_sid = ?
+                  xar_status = ?
+              WHERE xar_sid = ?
               ";
     $bindvars = array((int)$planningid, $statusid, $sid);
     $result = &$dbconn->Execute($query, $bindvars);

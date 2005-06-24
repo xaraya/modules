@@ -458,9 +458,9 @@ function courses_upgrade($oldversion)
             
        case '0.0.5':
          xarModSetVar('courses', 'HideEmptyFields', 0);
-	   
+       
             return courses_upgrade('0.0.6');
-	   case '0.0.6':
+       case '0.0.6':
        break;
     }
     // Update successful

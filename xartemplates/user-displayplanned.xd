@@ -102,7 +102,7 @@
                         </label>
                         #$course['language']#
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['credits']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="credits">
@@ -144,7 +144,7 @@
                             #$item['prerequisites']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['aim']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="aim">
@@ -156,7 +156,7 @@
                             #$item['aim']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['program']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="program">
@@ -168,7 +168,7 @@
                             #$item['program']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['method']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="method">
@@ -180,7 +180,7 @@
                             #$item['method']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['lecturers']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="lecturers">
@@ -192,7 +192,7 @@
                             #$item['lecturers']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                </fieldset>
                <fieldset class="formelements xar-norm">
                     <legend>
@@ -209,7 +209,7 @@
                           #$item['minparticipants']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['maxparticipants']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="maxpart">
@@ -221,7 +221,7 @@
                           #$item['maxparticipants']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['closedate']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="closedate">
@@ -245,7 +245,7 @@
                           #$item['costs']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['material']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="material">
@@ -257,7 +257,7 @@
                             #$item['material']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['location']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="location">
@@ -269,7 +269,7 @@
                             #$item['location']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['coordinators']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="coordinators">
@@ -281,7 +281,7 @@
                             #$item['coordinators']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                 <xar:if condition="!empty($item['committee']) OR $HideEmptyFields == '0'">
                     <p class="param">
                         <label for="committee">
@@ -293,7 +293,7 @@
                             #$item['committee']#
                         </span>
                     </p>
-				</xar:if>
+                </xar:if>
                </fieldset>
                <fieldset class="formelements xar-norm">
                     <legend>

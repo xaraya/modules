@@ -49,7 +49,7 @@ function courses_admin_updatestatus()
                                  'user',
                                  'getparticipant',
                                  array('sid' => $sid));
-								 
+                                 
         if (!isset($participant) || !is_array($participant)) {
             $msg = xarML('Unable to find #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($sid));
@@ -57,10 +57,10 @@ function courses_admin_updatestatus()
                            new SystemException($msg));
             return;
         }
-		
+        
         // $article['ptid'] = $article['pubtypeid'];// Need equivalent?
         // Security check
-		
+        
 /* Needs rewrite
         $input = array();
         $input['article'] = $article;
@@ -87,8 +87,8 @@ function courses_admin_updatestatus()
 */
             // Update the status now
             $participant['statusid'] = $statusid;
-			$participant['sid'] = $sid;
-			$participant['planningid'] = $planningid;
+            $participant['sid'] = $sid;
+            $participant['planningid'] = $planningid;
 
             // Pass to API
             if (!xarModAPIFunc('courses', 'admin', 'updateparticipant', $participant)) {

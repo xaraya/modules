@@ -26,10 +26,10 @@ function courses_admin_modifyplanned($args)
     if (!xarVarFetch('planningid', 'isset:', $planningid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;
-	
+    
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
-	
+    
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
@@ -45,14 +45,14 @@ function courses_admin_modifyplanned($args)
     if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:$planneddata[courseid]")) {
         return;
     }
-	// Coursedata
+    // Coursedata
     $coursedata = xarModAPIFunc('courses',
                           'user',
                           'getcourse',
                           array('courseid' => $planneddata['courseid']));
     // Check for exceptions
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-	
+    
     // Get menu variables
     $planneddata['module'] = 'courses';
     $hooks = xarModCallHooks('item', 'modify', $planningid, $planneddata); //Correct?

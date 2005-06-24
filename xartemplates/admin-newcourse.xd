@@ -22,7 +22,7 @@
 
 <form method="post" class="xar-form"
       action="#xarModUrl('courses', 'admin', 'createcourse')#" 
-	  onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+      onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
 
       <fieldset class="xar-norm">
            <fieldset class="formelements xar-norm">
@@ -39,12 +39,12 @@
                     <span class="fullright">
                     <xar:data-input name="name" type="2" value="$name" />
 
-					<xar:if condition="!empty($invalid['name'])">
+                    <xar:if condition="!empty($invalid['name'])">
                       <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
                     </xar:if>
-					<xar:if condition="!empty($invalid['duplicatename'])">
-					  <span style="color: red"><xar:mlstring>ERROR! This name already exists</xar:mlstring></span>
-					</xar:if>
+                    <xar:if condition="!empty($invalid['duplicatename'])">
+                      <span style="color: red"><xar:mlstring>ERROR! This name already exists</xar:mlstring></span>
+                    </xar:if>
                     </span>
                 </p>
                 <p class="param">
@@ -55,12 +55,12 @@
                         </span>
                     </label>
                     <xar:data-input name="number" type="2" value="$number" />
-				  <xar:if condition="!empty($invalid['number'])">
-					<span style="color: red"><xar:mlstring>ERROR! This is not a valid course number</xar:mlstring></span>
-				  </xar:if>
-				  <xar:if condition="!empty($invalid['duplicatenumber'])">
-					<span style="color: red"><xar:mlstring>ERROR! This course number already exists</xar:mlstring></span>
-				  </xar:if>
+                  <xar:if condition="!empty($invalid['number'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid course number</xar:mlstring></span>
+                  </xar:if>
+                  <xar:if condition="!empty($invalid['duplicatenumber'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This course number already exists</xar:mlstring></span>
+                  </xar:if>
                 </p>
                 <p class="param">
                     <label for="number">
@@ -70,21 +70,21 @@
                     </label>
 
                     <xar:data-input name="coursetype" type="2" value="$coursetype" />
-				  <xar:if condition="!empty($invalid['coursetype'])">
-					<span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
-				  </xar:if>
+                  <xar:if condition="!empty($invalid['coursetype'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
+                  </xar:if>
                 </p>
                 <p class="param">
                     <label for="level">
-      				   <span class="help" title="#xarML('Enter the level of this course.')#">
-					   #$levellabel#
-					   </span>
-					</label>
-					<select name="level">
-					<xar:loop name="$level">
-						<option value="#$loop:item['lid']#">#$loop:item['level']#</option>
-					</xar:loop>
-					</select>
+                         <span class="help" title="#xarML('Enter the level of this course.')#">
+                       #$levellabel#
+                       </span>
+                    </label>
+                    <select name="level">
+                    <xar:loop name="$level">
+                        <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
+                    </xar:loop>
+                    </select>
                 </p>
            </fieldset>
            <fieldset class="formelements xar-norm">
@@ -98,9 +98,9 @@
                         </span>
                     </label>
                     <xar:data-input name="shortdesc" type="4" value="$shortdesc" />
-				  <xar:if condition="!empty($invalid['shortdesc'])">
-					<span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
-				  </xar:if>
+                  <xar:if condition="!empty($invalid['shortdesc'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
+                  </xar:if>
                 </p>
                 <p class="param">
                     <label for="language">
@@ -109,9 +109,9 @@
                         </span>
                     </label>
                     <xar:data-input name="language" type="2" value="$language" />
-				  <xar:if condition="!empty($invalid['language'])">
-					<span style="color: red"><xar:mlstring>ERROR! This is not a valid language</xar:mlstring></span>
-				  </xar:if>
+                  <xar:if condition="!empty($invalid['language'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid language</xar:mlstring></span>
+                  </xar:if>
                 </p>
                 <p class="param">
                     <label for="freq">
@@ -120,9 +120,9 @@
                         </span>
                     </label>
                     <xar:data-input name="freq" type="2" value="$freq" />
-				  <xar:if condition="!empty($invalid['freq'])">
-					<span style="color: red"><xar:mlstring>ERROR! This is not a valid frequency</xar:mlstring></span>
-				  </xar:if>
+                  <xar:if condition="!empty($invalid['freq'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid frequency</xar:mlstring></span>
+                  </xar:if>
                 </p>
                 <p class="param">
                     <label for="contact">
@@ -131,9 +131,9 @@
                         </span>
                     </label>
                     <xar:data-input name="contact" type="4" value="$contact" />
-				  <xar:if condition="!empty($invalid['contact'])">
-					<span style="color: red"><xar:mlstring>ERROR! This is not a valid contact for this course</xar:mlstring></span>
-				  </xar:if>
+                  <xar:if condition="!empty($invalid['contact'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact for this course</xar:mlstring></span>
+                  </xar:if>
                 </p>
                 <p class="param">
                     <label for="hidecourse">
@@ -143,7 +143,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="hidecourse" type="14" value="$hidecourse" />
+                      <xar:data-input name="hidecourse" type="14" value="$hidecourse" />
                     </span>
                     <xar:if condition="!empty($invalid['hidecourse'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not possible</xar:mlstring></span>
@@ -152,7 +152,7 @@
            </fieldset>
       </fieldset>
 
-	  
+      
 </div>
 </div>
 <xar:comment>How do we place the categories hook in this template? #$hooks['categories']# </xar:comment>
@@ -164,8 +164,8 @@
     -->
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <span style="float: left; width: 30%; text-align: right;">
-		<input type="submit" value="#$addcoursebutton#" />
-		</span>
+        <input type="submit" value="#$addcoursebutton#" />
+        </span>
 
 </form>
 

@@ -151,7 +151,7 @@ function courses_admin_plancourse($args)
     } else {
         $data['creditsmax'] = $creditsmax;
     }
-	
+    
      if (empty($shortdesc)) {
         $data['shortdesc'] = '';
     } else {
@@ -203,7 +203,7 @@ function courses_admin_plancourse($args)
     } else {
         $data['location'] = $location;
     }
-	
+    
     if (empty($hideplanning)) {
         $data['hideplanning'] = '';
     } else {
@@ -224,8 +224,8 @@ function courses_admin_plancourse($args)
     } else {
         $data['closedate'] = $closedate;
     }
-	
-	
+    
+    
     // Return the template variables defined in this function
     return $data;
 }

@@ -64,7 +64,7 @@ function courses_adminapi_create_teacher($args)
               xar_tid,
               xar_userid,
               xar_planningid,
-			  xar_type)
+              xar_type)
             VALUES (?,?,?,?)";
     $bindvars = array((int)$nextId, (int)$userid, (int)$planningid, $type);
     $result = &$dbconn->Execute($query, $bindvars);

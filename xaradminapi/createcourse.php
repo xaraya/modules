@@ -80,12 +80,12 @@ function courses_adminapi_createcourse($args)
               xar_type,
               xar_level,
               xar_shortdesc,
-			  xar_language,
-			  xar_freq,
-			  xar_contact,
-			  xar_hidecourse)
-			  VALUES (?,?,?,?,?,?,?,?,?,?)";
-			
+              xar_language,
+              xar_freq,
+              xar_contact,
+              xar_hidecourse)
+              VALUES (?,?,?,?,?,?,?,?,?,?)";
+            
     $bindvars = array((int)$nextId, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised

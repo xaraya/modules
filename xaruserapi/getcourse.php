@@ -44,10 +44,10 @@ function courses_userapi_getcourse($args)
                    xar_type,
                    xar_level,
                    xar_shortdesc,
-				   xar_language,
-				   xar_freq,
-				   xar_contact,
-				   xar_hidecourse
+                   xar_language,
+                   xar_freq,
+                   xar_contact,
+                   xar_hidecourse
             FROM $coursestable
             WHERE xar_courseid = ?";
     $result = &$dbconn->Execute($query, array((int)$courseid));
@@ -62,20 +62,20 @@ function courses_userapi_getcourse($args)
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }
-	
+    
     // Obtain the item information from the result set
     list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse) = $result->fields;
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
     // Security checks 
-	
-	// Check that person has admin right to see hidden course
+    
+    // Check that person has admin right to see hidden course
     if (!xarSecurityCheck('AdminCourses')) {
-		if ($hidecourse == 1){
-		return;
-		}
-	}
+        if ($hidecourse == 1){
+        return;
+        }
+    }
     // For this function, the user must *at least* have READ access to this item
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$name:All:$courseid")) {
         return;
@@ -91,9 +91,9 @@ function courses_userapi_getcourse($args)
         'level' => $level,
         'shortdesc' => $shortdesc,
         'language' => $language,
-		'freq' => $freq,
-		'contact' => $contact,
-		'hidecourse' => $hidecourse);
+        'freq' => $freq,
+        'contact' => $contact,
+        'hidecourse' => $hidecourse);
     // Return the item array
     return $item;
 }

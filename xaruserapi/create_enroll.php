@@ -64,7 +64,7 @@ function courses_userapi_create_enroll($args)
               xar_sid,
               xar_userid,
               xar_planningid,
-			  xar_status)
+              xar_status)
             VALUES (?,?,?,?)";
     $bindvars = array((int)$nextId, (int)$uid, (int)$planningid, $studstatus);
     $result = &$dbconn->Execute($query, $bindvars);
@@ -72,7 +72,7 @@ function courses_userapi_create_enroll($args)
     // Get the ID of the item that we inserted.
     $enrollid = $dbconn->PO_Insert_ID($studentstable, 'xar_sid');
     // Let any hooks know that we have created a new item.
-	
+    
     // TODO: evaluate
     $item = $args;
     $item['module'] = 'courses';

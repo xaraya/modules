@@ -31,7 +31,7 @@ function courses_admin_newcourse($args)
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
-	
+    
     $data = xarModAPIFunc('courses', 'admin', 'menu');
 
     // Security check - important to do this as early as possible to avoid

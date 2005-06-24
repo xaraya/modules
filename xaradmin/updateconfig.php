@@ -23,7 +23,7 @@ function courses_admin_updateconfig()
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecoursemsg', 'str::', $hidecoursemsg, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanningmsg', 'str::', $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
-	
+    
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Update module variables.

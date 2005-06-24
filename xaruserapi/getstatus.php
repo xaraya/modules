@@ -14,7 +14,7 @@ function courses_userapi_getstatus($args)
     $info = array();
     $info['modid'] = $modid;
     $info['itemtype'] = 4;
-	$info['itemid'] = $status;
+    $info['itemid'] = $status;
     $info['name'] = 'studstatus';
     $item = xarModAPIFunc('dynamicdata', 'user', 'getfield', $info);
     

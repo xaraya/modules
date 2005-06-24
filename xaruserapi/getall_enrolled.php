@@ -25,7 +25,7 @@
 function courses_userapi_getall_enrolled($args)
 {
     extract($args);
-	
+    
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
 /*
@@ -67,20 +67,20 @@ function courses_userapi_getall_enrolled($args)
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-	$planningtable = $xartable['courses_planning'];
+    $planningtable = $xartable['courses_planning'];
     $coursestable = $xartable['courses'];
     $studentstable = $xartable['courses_students'];
     // TODO: how to select by cat ids (automatically) when needed ???
     $query = "SELECT $coursestable.xar_name,
-	        $coursestable.xar_courseid,
-			$planningtable.xar_planningid,
-			$planningtable.xar_startdate,
-			$studentstable.xar_status
+            $coursestable.xar_courseid,
+            $planningtable.xar_planningid,
+            $planningtable.xar_startdate,
+            $studentstable.xar_status
             FROM $studentstable, $coursestable
-			JOIN $planningtable
-			ON $planningtable.xar_planningid = $studentstable.xar_planningid
-			WHERE $studentstable.xar_userid = $uid
-			AND $coursestable.xar_courseid = $planningtable.xar_courseid";
+            JOIN $planningtable
+            ON $planningtable.xar_planningid = $studentstable.xar_planningid
+            WHERE $studentstable.xar_userid = $uid
+            AND $coursestable.xar_courseid = $planningtable.xar_courseid";
             //AND $planningtable.xar_planningid = $studentstable.xar_planningid
      $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
@@ -91,10 +91,10 @@ function courses_userapi_getall_enrolled($args)
         list($name, $courseid, $planningid, $startdate, $studstatus) = $result->fields;
         if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
             $items[] = array('name' => $name,
-			                 'courseid'=> $courseid,
-							 'planningid' => $planningid,
-							 'startdate'=> $startdate,
-							 'studstatus'=> $studstatus);
+                             'courseid'=> $courseid,
+                             'planningid' => $planningid,
+                             'startdate'=> $startdate,
+                             'studstatus'=> $studstatus);
         }
     }
     // All successful database queries produce a result set, and that result

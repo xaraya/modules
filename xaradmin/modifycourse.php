@@ -27,10 +27,10 @@ function courses_admin_modifycourse($args)
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'int', $itemtype, 3, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;
-	
+    
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
-	
+    
     if (!empty($objectid)) {
         $courseid = $objectid;
     }

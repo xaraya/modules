@@ -64,14 +64,14 @@ function courses_userapi_get($args)
     // Security checks 
     // Check that person has admin right to see hidden course
     if ($hidecourse == 1){
-	    if(!xarSecurityCheck('AdminCourses')) {
+        if(!xarSecurityCheck('AdminCourses')) {
         return; // TODO: include the message here as an errormessage
-	    }
+        }
     }
     // For this function, the user must *at least* have READ access to this item
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$name:All:$courseid")) {
         return;
-		}
+        }
     $item = array('courseid' => $courseid,
         'name' => $name,
         'number' => $number,

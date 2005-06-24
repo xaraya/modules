@@ -62,7 +62,7 @@ function courses_admin_teachers()
         }
 
         $items[$i]['changetitle'] = xarML('Change');
-		// Change for type of teacher
+        // Change for type of teacher
  //       $items[$i]['statusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
  //                                    array('status' => $item['status']));
         $items[$i]['selected']='';

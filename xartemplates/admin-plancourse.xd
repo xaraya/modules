@@ -68,11 +68,11 @@
                         #$yearlabel#
                         </span>
                     </label>
-						<select name="year">
-						<xar:loop name="$year">
-							<option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
-						</xar:loop>
-						</select>
+                        <select name="year">
+                        <xar:loop name="$year">
+                            <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
+                        </xar:loop>
+                        </select>
                 </p>
                 <p class="param">
                     <label for="startdate" class="required">
@@ -101,7 +101,7 @@
                     </label>
                     <xar:data-input name="closedate" type="8" value="$closedate" />
                 </p>
-				
+                
            </fieldset>
            <fieldset class="formelements xar-norm">
                 <legend>
@@ -245,7 +245,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="costs" type="2" value="$costs" />
+                      <xar:data-input name="costs" type="2" value="$costs" />
                     </span>
                     <xar:if condition="!empty($invalid['costs'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid cost</xar:mlstring></span>
@@ -259,7 +259,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="minpart" type="15" value="$minpart" />
+                      <xar:data-input name="minpart" type="15" value="$minpart" />
                     </span>
                     <xar:if condition="!empty($invalid['minpart'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid minpart</xar:mlstring></span>
@@ -273,7 +273,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="maxpart" type="15" value="$maxpart" />
+                      <xar:data-input name="maxpart" type="15" value="$maxpart" />
                     </span>
                     <xar:if condition="!empty($invalid['maxpart'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid maxpart</xar:mlstring></span>
@@ -362,7 +362,7 @@
                         </span>
                     </label>
                     <span class="fullright">
-					  <xar:data-input name="hideplanning" type="14" value="$hideplanning" />
+                      <xar:data-input name="hideplanning" type="14" value="$hideplanning" />
                     </span>
                     <xar:if condition="!empty($invalid['hideplanning'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid hide planning</xar:mlstring></span>
@@ -370,7 +370,7 @@
                 </p>
            </fieldset>
       </fieldset>
-	  
+      
 <xar:comment>
 
 <xar:if condition="!isset($contact)">

@@ -14,7 +14,7 @@ function courses_userapi_gettype($args)
     $info = array();
     $info['modid'] = $modid;
     $info['itemtype'] = 3;
-	$info['itemid'] = $type;
+    $info['itemid'] = $type;
     $info['name'] = 'type';
     $item = xarModAPIFunc('dynamicdata', 'user', 'getfield', $info);
     

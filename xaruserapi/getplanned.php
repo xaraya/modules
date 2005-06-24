@@ -69,9 +69,9 @@ function courses_userapi_getplanned($args)
                    xar_info,
                    xar_program,
                    xar_hideplanning,
-				   xar_minparticipants,
-				   xar_maxparticipants,
-				   xar_closedate
+                   xar_minparticipants,
+                   xar_maxparticipants,
+                   xar_closedate
             FROM $planningtable
             WHERE xar_planningid = ?";
     $result = $dbconn->Execute($query, array((int)$planningid));
@@ -105,9 +105,9 @@ function courses_userapi_getplanned($args)
             'info'       => $info,
             'program'    => $program,
             'hideplanning' => $hideplanning,
-			'minparticipants' => $minparticipants,
-			'maxparticipants' => $maxparticipants,
-			'closedate' => $closedate);
+            'minparticipants' => $minparticipants,
+            'maxparticipants' => $maxparticipants,
+            'closedate' => $closedate);
         }
     //}
     // All successful database queries produce a result set, and that result

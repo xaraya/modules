@@ -36,8 +36,8 @@ function courses_admin_new($args)
                        new SystemException($msg));
         return $msg;
     }
-	
-	
+    
+    
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
     // helps if all of the module pages have a standard menu at the top to
@@ -46,7 +46,7 @@ function courses_admin_new($args)
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminCourses')) return;
-	
+    
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
@@ -66,11 +66,11 @@ function courses_admin_new($args)
     } else {
         $data['hooks'] = $hooks;
     }
-	// The Generic Menu
+    // The Generic Menu
     $data['menu']      = xarModFunc('courses','admin','menu');
-	$data['menutitle'] = xarVarPrepForDisplay(xarML('Make a new hooked dynamic data object'));
+    $data['menutitle'] = xarVarPrepForDisplay(xarML('Make a new hooked dynamic data object'));
     $data['itemtype'] = $itemtype;
-	$data['preview'] = $preview;
+    $data['preview'] = $preview;
     // Return the template variables defined in this function
     return $data;
 }

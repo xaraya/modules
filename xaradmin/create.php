@@ -40,7 +40,7 @@ function courses_admin_create($args)
     if (!isset($object)) return;  // throw back
 
     // check the input values for this object
-	//TODO: is the a correct way of dealing with a check?
+    //TODO: is the a correct way of dealing with a check?
     $isvalid = $object->checkInput();
 
     // if we're in preview mode, or if there is some invalid input, show the form again
