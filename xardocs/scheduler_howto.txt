@@ -1,0 +1,23 @@
+Scheduler How-to
+
+To use calendar alerts, you must setup the scheduler module to execute
+email_alerts.
+
+Once you have Scheduler installed, go to the modify config page and set the
+module to "julian", the type to "user", the API Function to
+"email_alerts", and the interval to "every day".
+
+The Trigger will depend on your server configuration. There are basically
+two choices.  Use the Cron scheduler or use webcron.(http://webcron.org)
+
+Using Cron:
+Set trigger type to "External Scheduler", Source to "IP Address(direct
+connection)", and type in the ip address of the machine with the cron job on
+it. Then you will need to add a cron entry into your cronntab file that will
+hit the webpage listed above the Source on the configuration page. (I used 
+wget to hit my webpage)
+
+Troubleshooting:
+If you get "Wrong trigger" when you click on the web page link, something
+isn't configured right with the Source. (bad ip address or can't resolve
+hostname)

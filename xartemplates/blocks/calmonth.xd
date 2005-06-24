@@ -1,0 +1,70 @@
+#xarModAPIFunc('overlib','user','init')#
+
+<!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
+<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>-->
+<link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css">
+<script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>
+
+<div class="xar-julian xar-julian-block-calmonth">
+
+    <div class="xar-julian-calendar">
+        <div class="xar-julian-calendar-tables">
+            <table class="xar-julian-calendar-month">
+                <tr>
+                    <th colspan="8" class="xar-julian-calendar-title">#xarLocaleFormatDate('%B %Y',$todays_timestamp)#</th>
+                </tr>
+                <tr class="xar-julian-calendar-daynames">
+                    <xar:foreach in="$shortDayNames" value="$dayName">
+                    <th>#$dayName#</th>
+                    </xar:foreach>
+                </tr>
+                <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
+                <xar:foreach in="$month2" value="$week">
+                <tr class="xar-julian-calendar-week">
+                    <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
+                    <xar:foreach in="$week" value="$date">
+                    <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
+                    <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d')">
+                        <xar:set name="$daycolor">"currentday"</xar:set>
+                    <xar:elseif condition="$calendar:isWeekend($date)" />
+                        <xar:set name="$daycolor">"weekend"</xar:set>
+                    <xar:else />
+                        <xar:set name="$daycolor">"weekday"</xar:set>
+                    </xar:if>
+                    <xar:if condition="substr($date,4,2) eq $todays_month">
+                        <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
+                            <xar:set name="dateconverted">date("Y-m-d",strtotime($date))</xar:set>
+                            <xar:comment>If overlib is loaded, add pop-over with event information</xar:comment>
+                            <xar:if condition="isset($event_array[$dateconverted])">
+                                <xar:set name="$text">'<ul class=xar-julian-eventlist>'</xar:set>
+                                <xar:foreach in="$event_array[$dateconverted]" key="$index">
+                                    <xar:set name="$text">$text.'<li style=color:'.$event_array[$dateconverted][$index]['color'].';><div class=xar-julian-list-contents>'.$event_array[$dateconverted][$index]['multipopover'].'</div></li>'</xar:set>
+                                </xar:foreach>
+                                <xar:set name="$text">$text.'</ul>'</xar:set>
+                                <xar:overlib-popup-close name="$olclose" />
+                                <xar:set name="$event">'
+                                 onmouseover="return overlib(\''.$text.'\',CAPTION,\''.xarLocaleFormatDate('%m/%d/%Y',strtotime($date)).'\')" 
+                                 onmouseout="'.$olclose.'"
+                                 class="xar-julian-event"'</xar:set>
+                            <xar:else />
+                                <xar:set name="$event">''</xar:set>
+                            </xar:if>
+                            <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#" #$event#>
+                                <xar:set name="$displayDay">substr($date,-2)</xar:set>
+                                #$displayDay# 
+                            </a>
+                        </td>
+                    <xar:else />
+                        <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">&nbsp;
+                             
+                        </td>
+                    </xar:if>
+                    </xar:foreach>
+                    <xar:comment>END :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
+                </tr>
+                </xar:foreach>
+                <xar:comment>END :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
+            </table>
+        </div>
+    </div>
+</div>

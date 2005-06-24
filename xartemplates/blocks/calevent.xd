@@ -1,0 +1,63 @@
+<!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
+<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>-->
+<link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css">
+
+<div class="xar-julian xar-julian-block-calevent">
+    <div class="xar-julian-calevent-today">
+        <strong><xar:mlstring>Today's Events</xar:mlstring></strong>
+        <xar:set name="$hasevent">0</xar:set>
+        <ul class="xar-julian-eventlist">
+        <xar:foreach in="$todaysevents" key="$key" value="$val">
+            <xar:foreach in="$todaysevents[$key]" key="$key2" value="$val2">
+                        <xar:comment>Show a bullet with the color of the event category.</xar:comment>
+                           <font size="3" color="#$event_array[$dbdate][$index]['color']#">#$Bullet#</font>
+                <li style="color: #$val2['color']#;">
+                    <div class="xar-julian-list-contents">
+                        <span class="xar-sub">#$val2['time']#</span>
+                        <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
+                            #$val2['summary']#
+                        </a>
+                    </div>
+                </li>
+                <xar:set name="$hasevent">1</xar:set>
+            </xar:foreach>
+        </xar:foreach>
+        <xar:if condition="!$hasevent">
+             <li><div class="xar-julian-list-contents"><xar:mlstring>None</xar:mlstring></div></li>
+        </xar:if>
+        </ul>
+    </div>
+    
+    <xar:if condition="$EventBlockDays gt 0">
+        <div class="xar-julian-calevent-upcoming">
+            <strong>
+               <xar:mlstring>Upcoming Events </xar:mlstring>
+               <xar:ml>
+               <xar:mlstring>for the next #(1) days</xar:mlstring>
+               <xar:mlvar>#$EventBlockDays#</xar:mlvar>
+               </xar:ml>
+            </strong>
+            <xar:set name="$hasevent2">0</xar:set>
+            <ul class="xar-julian-eventlist">
+            <xar:foreach in="$upcomingevents" key="$key" value="$val">
+                <xar:foreach in="$upcomingevents[$key]" key="$key2" value="$val2">
+                    <li style="color: #$val2['color']#;">               
+                        <div class="xar-julian-list-contents">
+                              <xar:comment>Show a bullet with the color of the event category.</xar:comment>
+                              <font size="3" color="#$val2['color']#">#$Bullet#</font>
+                            <span class="xar-sub">#$val2['startdate']# #$val2['time']#</span>
+                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
+                                #$val2['summary']#
+                            </a>
+                        </div>
+                    </li>
+                    <xar:set name="$hasevent2">1</xar:set>
+                </xar:foreach>
+            </xar:foreach>
+            <xar:if condition="!$hasevent2">
+                 <li><div class="xar-julian-list-contents"><xar:mlstring>None</xar:mlstring></div></li>
+            </xar:if>
+            </ul>
+        </div>
+    </xar:if>
+</div>

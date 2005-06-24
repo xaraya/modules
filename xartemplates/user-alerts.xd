@@ -1,0 +1,45 @@
+#xarModAPIFunc('overlib','user','init')#
+<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
+
+<div class="xar-julian xar-julian-user-alerts">
+    <xar:template file="header" />
+
+    <div class="xar-julian-contents">
+        <form class="xar-form" action="#xarModURL('julian','user','alerts')#" method="post" enctype="application/x-www-form-urlencoded">
+            <fieldset class="xar-norm">
+                <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong>
+                            <xar:mlstring>
+                                Alerts
+                            </xar:mlstring>
+                        </strong>
+                    </legend>
+                    <p class="param">
+                        <xar:mlstring>
+                            Select the categories you wish to receive email alerts for.
+                        </xar:mlstring>
+                    </p>
+                    <xar:foreach in="$categories" key="$cat_id" value="$info">
+                        <p class="param">
+                            <label for="xar-julian-cat-#$cat_id#">
+                                <span class="help" title="#xarML('Select the categories you wish to receive email alerts for.')#">
+                                    #$info['name']#
+                                </span>
+                            </label>
+                            <xar:if condition="$info['checked']">
+                                <input type="checkbox" name="cats[]" id="xar-julian-cat-#$cat_id#" value="#$cat_id#" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="cats[]" id="xar-julian-cat-#$cat_id#" value="#$cat_id#" />
+                            </xar:if>
+                        </p>
+                    </xar:foreach>
+                </fieldset>
+                
+                <input type="hidden" name="action" value="update" />
+                <input type="submit" value="#xarML('Submit')#" />
+            </fieldset>
+        </form>
+    </div>
+</div>

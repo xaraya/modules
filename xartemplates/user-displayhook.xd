@@ -1,0 +1,48 @@
+    <div style="clear: both; padding-top: 10px;">
+         Start: #$event_startdate#.<br>
+         
+         Duration: 
+         <xar:if condition="$event_allday">
+             all day.
+         <xar:else />
+             starts at #$event_starttime#, duration of #$event_dur_hours# hours, #$event_dur_minutes# minutes.
+         </xar:if>
+         <br>
+         
+         <xar:if condition="$event_repeat==1">
+         Event recurs every #$event_repeat_every_freq#
+         <xar:if condition="$event_repeat_every_type==1">day(s),</xar:if>
+         <xar:if condition="$event_repeat_every_type==2">week(s),</xar:if>
+         <xar:if condition="$event_repeat_every_type==3">month(s),</xar:if>
+         <xar:if condition="$event_repeat_every_type==4">year(s),</xar:if>
+         <xar:else />
+             <xar:if condition="$event_repeat==2">
+             Event recurs every
+             
+             <xar:if condition="$event_repeat_on_num==1">first</xar:if>
+             <xar:if condition="$event_repeat_on_num==2">second</xar:if>
+             <xar:if condition="$event_repeat_on_num==3">third</xar:if>
+             <xar:if condition="$event_repeat_on_num==4">fourth</xar:if>
+             <xar:if condition="$event_repeat_on_num==5">last</xar:if>
+             
+             <xar:if condition="$event_repeat_on_day==1">Sunday</xar:if>
+             <xar:if condition="$event_repeat_on_day==2">Monday</xar:if>
+             <xar:if condition="$event_repeat_on_day==3">Tuesday</xar:if>
+             <xar:if condition="$event_repeat_on_day==4">Wednesday</xar:if>
+             <xar:if condition="$event_repeat_on_day==5">Thursday</xar:if>
+             <xar:if condition="$event_repeat_on_day==6">Friday</xar:if>
+             <xar:if condition="$event_repeat_on_day==7">Saturday</xar:if>
+
+             every #$event_repeat_on_freq# month(s),
+             </xar:if>
+         </xar:if>
+
+         <xar:if condition="$event_repeat!=0">
+             <xar:if condition="strcmp($event_enddate,'')!=0">
+                 until #$event_enddate#.
+             <xar:else/>
+                 indefinitely.
+             </xar:if>
+         </xar:if>
+         <br>
+    </div>

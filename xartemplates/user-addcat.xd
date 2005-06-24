@@ -1,0 +1,74 @@
+<script language="JavaScript" src="modules/julian/xarjavascript/picker.js"></script>
+<!--<script language="JavaScript" src="modules/julian/xarjavascript/validatecat.js"></script>-->
+<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
+<xar:set name="$modifylabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
+<xar:set name="$addlabel"><xar:mlstring>Add</xar:mlstring></xar:set>
+<div class="xar-julian xar-julian-user-alerts">
+    <xar:template file="header" />
+
+    <div class="xar-julian-contents">
+
+        <h2><xar:mlstring>Category proporties</xar:mlstring></h2>
+        <span class="help">
+            <xar:mlstring>Existing category colors</xar:mlstring>
+        </span>
+        
+      <table width="100%" cellspacing="0" cellpadding="2" border="0" bgcolor="#eeeeee">
+        <xar:foreach in="$categories" key="$cat_id">
+          <tr>
+            <td width="85%"><font size="3" color="#$categories[$cat_id]['color']#">&bull;</font>&nbsp;#$categories[$cat_id]['name']#</td>
+            <td align="right">
+                  <xar:set name="$deletecat">addslashes($categories[$cat_id]['name'])</xar:set>
+                        
+                  <a href="#xarModURL('julian','user','addcat',array('cid'=>$cat_id,'action' => 'Delete'))#" onclick="answer = confirm('Are you sure you want to delete: #$deletecat# ?');if(!answer) return false;">Delete</a>&nbsp;&nbsp;
+               <a href="#xarModURL('julian','user','addcat',array('cid'=>$cat_id,'action' => 'Edit'))#"><xar:mlstring>Edit</xar:mlstring></a>
+            </td>
+            <xar:if condition="$edit_cond == $cat_id">
+               </tr>
+                  <form name="cat_modify" method="post" action="#xarModURL('julian','user','addcat')#" onSubmit="if(!isCancel){return validate2(this)}">
+                     <tr bgcolor="#dbdad2">
+                        <td colspan="2">
+                           <input type="hidden" name="cid" value="#$cat_id#">
+                           <xar:mlstring>Category Name</xar:mlstring>:&nbsp;#$categories[$cat_id]['name']#&nbsp;&nbsp;<xar:mlstring>Color</xar:mlstring>:&nbsp;<input type="text" name="color" value="#$categories[$cat_id]['color']#" defaultValue="#$categories[$cat_id]['color']#" readonly="readonly" />
+                           <a href="javascript:TCP.popup(document.forms['cat_modify'].elements['color'])"><img width="15" height="13" border="0" title="Click Here to pick a color" src="modules/julian/xarjavascript/img/sel.gif"></a>
+                        </td>
+                     </tr>
+                     <tr bgcolor="#dbdad2">
+                        <td align="left" colspan="2">
+                           <input name="editaction" type="submit" value="Modify" />&nbsp;&nbsp;<input name="editaction" type="submit" value="Cancel" onclick="isCancel=true" />
+                        </td>
+                  </form>
+            </xar:if>
+          </tr>
+        </xar:foreach>
+      </table>
+
+        <form name="cat_add" class="xar-form" action="#xarModURL('julian','user','addcat')#" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
+            <fieldset class="formelements xar-norm">
+                <legend>
+                    <strong><xar:mlstring>Add Category Color</xar:mlstring></strong>
+                </legend>
+                <p class="param">
+                    <label for="cat_name" class="required">
+                        <span class="help" title="#xarML('Each category requires a unique name.')#">
+                            <xar:mlstring>Category Name:</xar:mlstring>
+                        </span>
+                    </label>
+                    #$category_select#<!--<input type="text" name="cat_name" id="cat_name" maxlength="30" />!-->
+                </p>
+                <p class="param">
+                    <label for="color" class="required">
+                        <span class="help" title="#xarML('Each category has a color which refers to it.')#">
+                            <xar:mlstring>Color:</xar:mlstring>
+                        </span>
+                    </label>
+                    <input type="text" name="color" id="color" maxlength="7" readonly="readonly" />
+                    <a href="javascript:TCP.popup(document.forms['cat_add'].elements['color'])"><img src="modules/julian/xarjavascript/img/sel.gif" alt="#xarML('Palette')#" title="#xarML('Click here to select a color')#" /></a>
+                </p>
+                <input name="addaction" type="submit" value="Add" />
+                <input name="addaction" type="submit" value="Cancel" onclick="isCancel=true" />
+            </fieldset>
+        </form>
+    </div>
+</div>

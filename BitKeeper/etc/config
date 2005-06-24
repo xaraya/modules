@@ -1,5 +1,5 @@
-repository: xaraya example module
-description: Xaraya example module repository
+repository: xaraya Julian module
+description: Xaraya Julian module repository
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
@@ -9,8 +9,8 @@ compression: gzip
 autofix: yes
 checkout:edit
 [marcel]checkout: get
-contact: Marcel van der Boom 
-email: marcel@xaraya.com
+contact: Jo Dalle Nogare
+email: jojodee@xaraya.com
 street: 
 city: 
 state: 

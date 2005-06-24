@@ -1,0 +1,134 @@
+#xarModAPIFunc('overlib','user','init')#
+<xar:if condition="xarTplAddStyleLink('julian', 'xartabs')"></xar:if>
+
+<script type="text/javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
+<script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>
+<script type="text/javascript" src="modules/julian/xarjavascript/validateheader.js"></script>
+<xar:comment>
+This makes sure we have a valid month and day.    If not, we use today's month and day
+There was a problem where if you selected only a year in the "jump_to" the date
+would look something like this: 200400 instead of 20040618. The 00 is from the day
+being set to blank.
+</xar:comment>
+<xar:if condition="strlen($cal_date) < 8">
+    <xar:set name="$cal_date">date("Ymd")</xar:set>    
+</xar:if>
+<xar:set name="$navDayUrl">#xarModURL('julian','user','day',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navWeekUrl">#xarModURL('julian','user','week',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navMonthUrl">#xarModURL('julian','user','month',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navYearUrl">#xarModURL('julian','user','year',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navEventsUrl">#xarModURL('julian','user','viewevents',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navAlertsUrl">#xarModURL('julian','user','alerts',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navCategoriesUrl">#xarModURL('julian','admin','modifycategories',array('cal_date'=>$cal_date))#</xar:set>
+
+<div class="xar-julian-header">
+    <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc)#</xar:set>
+    <dl class="xar-tabs">
+        <dt class="help"><xar:mlstring>View types</xar:mlstring>:</dt>
+        <xar:if condition="$whatFunc eq 'day'">
+            <dd class="active"><a href="#$navDayUrl#"><xar:mlstring>Day</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navDayUrl#"><xar:mlstring>Day</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'week'">
+            <dd class="active"><a href="#$navWeekUrl#"><xar:mlstring>Week</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navWeekUrl#"><xar:mlstring>Week</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'month'">
+            <dd class="active"><a href="#$navMonthUrl#"><xar:mlstring>Month</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navMonthUrl#"><xar:mlstring>Month</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'year'">
+            <dd class="active"><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'viewevents'">
+            <dd class="active"><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
+        <xar:else />
+          <dd><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
+        </xar:if>
+   
+        <xar:if condition="xarUserIsLoggedIn()">
+            <xar:if condition="$whatFunc eq 'alerts'">
+                <dd class="active"><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
+            <xar:else />
+                <dd><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
+            </xar:if>
+        </xar:if>
+    </dl>
+    
+    <form name="jump_to_page" method="post" action="#xarModURL('julian','user','jump')#" onsubmit="return validate(this)">
+        <div>
+            <input type="submit" name="submit" value="Jump to" />
+            <select name="jump_month" onchange="populateSelect(this, this.form.jump_day, this.form.jump_year)">
+                <option value=""></option>
+                <xar:for start="$i = 1" test="$i le 12" iter="$i++">
+                    <xar:if condition="$i lt 10">
+                        <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>                                    
+                    <xar:else />
+                        <xar:set name="$currMonth">#$i#</xar:set>
+                    </xar:if>
+                    <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
+                    <xar:set name="$monthSelected">""</xar:set>
+                    <xar:set name="$todays_month">date("m");</xar:set>
+                    <xar:if condition="$todays_month eq $currMonth">
+                        <xar:set name="$monthSelected">'selected="selected"'</xar:set>
+                    </xar:if>
+                    <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
+                </xar:for>
+            </select>
+            <select name="jump_day">
+                <option value=""></option>
+                <xar:for start="$i = 1" test="$i le 31" iter="$i++">
+                    <xar:if condition="$i lt 10">
+                        <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
+                    <xar:else />
+                        <xar:set name="$currDay">#$i#</xar:set>
+                    </xar:if>
+                    <xar:set name="$daySelected">""</xar:set>
+                    <xar:set name="$todays_day">date("d");</xar:set>
+                    <xar:if condition="$todays_day eq $currDay">
+                        <xar:set name="$daySelected">'selected="selected"'</xar:set>
+                    </xar:if>
+                    <option value="#$currDay#" #$daySelected#>#$currDay#</option>
+                </xar:for>
+            </select>
+            <select name="jump_year" onchange="populateSelect(this.form.jump_month, this.form.jump_day, this)">
+                <option value=""></option>
+                <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
+                    <xar:set name="$yearSelected">""</xar:set>
+                    <xar:set name="$todays_year">date("Y");</xar:set>
+                    <xar:if condition="$todays_year eq $i">
+                        <xar:set name="$yearSelected">'selected="selected"'</xar:set>
+                    </xar:if>
+                    <option value="#$i#" #$yearSelected#>#$i#</option>
+                </xar:for>
+            </select>
+            <select name="jump_to">
+                <option value="day"><xar:mlstring>Day</xar:mlstring></option>
+                <option value="week"><xar:mlstring>Week</xar:mlstring></option>
+                <option value="month"><xar:mlstring>Month</xar:mlstring></option>
+                <option value="year"><xar:mlstring>Year</xar:mlstring></option>
+            </select>
+
+            <xar:set name="$cats">xarModAPIFunc('julian','user','getcategories')</xar:set>
+            <xar:set name="$key">''</xar:set>
+            <xar:foreach in="$cats" key="$cid" value="$info">
+               <xar:set name="$key">$key."<font color=" .$info['color']. ">&bull;</font>&nbsp;&nbsp;" . addslashes($info['name']) . "<br />"</xar:set>
+            </xar:foreach>
+            <xar:set name="$caption">'<center>'.xarML('LEGEND').'</center>'</xar:set>
+ 
+            <a href="javascript:void(0)"
+               onmouseover="return overlib('#$key#',CAPTION,'#$caption#',WIDTH,195)"
+               onmouseout="return nd()">
+              <img src="#xarTplGetImage('key.gif')#" alt="#xarML('Legend')#" align="middle" />
+            </a>
+
+        </div>
+    </form>
+
+</div>
+

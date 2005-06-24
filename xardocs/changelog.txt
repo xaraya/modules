@@ -1,0 +1,10 @@
+0.2.0 
+-Replaced own categories with a hook to Xaraya categories. An upgrade function is included
+-Allow the admin to choose a date format
+-Completely rewrite of templates to be more Xaraya compliant
+0.2.1
+-Replaced the alerts with variables in user space (xarModSetUserVar)
+-Moved the option for amount of days in event block to the block administration
+-Moved page user_addcat to admin_modifycategories
+-Renamed user_view to user_viewevent
+-Renamed user_delete to user_deleteevent

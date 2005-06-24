@@ -1,0 +1,111 @@
+<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+
+<div class="xar-julian xar-julian-user-viewevent">
+    <xar:template file="header" />
+
+    <div class="xar-julian-contents">
+        
+        <div class="xar-julian-contents-icons">
+        <xar:sec id="unique1" mask="Editjulian" catch="false">
+            <a href="#xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $id))#">
+                <xar:mlstring>Edit</xar:mlstring>
+            </a>
+            <a href="#xarModURL('julian','user','deleteevent',array('cal_date'=>$cal_date,'id'=> $id))#"
+               onclick="answer=confirm('#$deletesummary#\n#xarML('Are you sure you want to delete this event?')#');if(!answer) return false;">
+                <xar:mlstring>Delete</xar:mlstring>
+            </a>
+        </xar:sec> 
+        </div>
+
+        <h2>#$summary#</h2>
+
+        <ul class="xar-julian-eventlist">
+            <li style="color:#$color#;">
+                <div class="xar-julian-list-contents">
+                    <div class="xar-julian-list-icons">
+                        <xar:if condition="xarModGetVar('julian','ical_links')">
+                            <a href="#xarModURL('julian','user','export',array('event_id'=>$id))#">
+                                <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
+                            </a>
+                        </xar:if>
+                    </div>
+                    <xar:if condition="!$isallday">
+                         #$time# 
+                    <xar:else />
+                        #$time# <xar:mlstring>All Day Event</xar:mlstring>
+                    </xar:if>
+                </div>
+            </li>
+        </ul>
+
+                     <xar:comment>Can be done better I think</xar:comment>
+                     <table width="100%" border="0" cellspacing="0" cellpadding="1">
+                            <tr>
+                                 <td width="60%" valign="top">
+                                        <font style="font-size: 11pt"><b><xar:mlstring>Description:</xar:mlstring></b></font><br>#$description#
+                                 </td>
+                                 <td valign="top"> 
+                                        <font style="font-size: 11pt"><b><xar:mlstring>Location:</xar:mlstring></b></font><br />
+                                        <xar:set name="$hasLocation">0</xar:set>
+                                        <xar:if condition="strcmp($location,'')">
+                                            #$location#<br />
+                                            <xar:set name="$hasLocation">1</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="strcmp($street1,'')">
+                                            #$street1#<br />
+                                            <xar:set name="$hasLocation">1</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="strcmp($street2,'')">
+                                            #$street2#<br />
+                                            <xar:set name="$hasLocation">1</xar:set>
+                                        </xar:if>
+                                        #$city#
+                                        <xar:if condition="strcmp($state,'')&&strcmp($city,'')">                                        
+                                             ,&nbsp;
+                                        </xar:if>
+                                        <xar:if condition="strcmp($state,'')">
+                                            #$state#
+                                        </xar:if>
+                                        <xar:if condition="strcmp($zip,'')">
+                                             &nbsp;&nbsp;#$zip#
+                                        </xar:if>
+                                        <xar:if condition="strcmp($city,'') || strcmp($state,'') || strcmp($zip,'')">
+                                             <xar:set name="$hasLocation">1</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="!$hasLocation">
+                                             <xar:mlstring>Unknown</xar:mlstring>
+                                        </xar:if>
+                                        <br />
+                                        <font style="font-size: 11pt"><b><xar:mlstring>Contact Information:</xar:mlstring></b></font><br />
+                                        <xar:set name="$hasContact">0</xar:set>
+                                        <xar:if condition="strcmp($contact,'')">
+                                             #$contact#<br />
+                                             <xar:set name="$hasContact">1</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="strcmp($phone,'')">
+                                            #$phone#<br />
+                                            <xar:set name="$hasContact">1</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="strcmp($email,'')">
+                                            <a href="mailto:#$email#">#$email#</a><br />
+                                            <xar:set name="$hasContact">1</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="strcmp($URL,'')">
+                                            <a href="#$URL#">#$URL#</a><br />
+                                            <xar:set name="$hasContact">1</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="!$hasContact">
+                                             <xar:mlstring>None</xar:mlstring><br />
+                                        </xar:if>
+                                        <font style="font-size: 11pt"><b><xar:mlstring>Fee:</xar:mlstring></b></font><br />#$fee#
+                                 </td>
+                            </tr>
+                            <tr>
+                                 <td valign="top" colspan="2">
+                                        <font style="font-size: 11pt"><b><xar:mlstring>Posted By:</xar:mlstring></b></font>&nbsp;&nbsp;#$organizer# <xar:mlstring>on</xar:mlstring> #$datecreated#
+                                 </td>
+                            </tr>
+                     </table>
+
+    </div>
+</div>

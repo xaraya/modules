@@ -1,0 +1,128 @@
+#xarModAPIFunc('overlib','user','init')#
+<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+
+<div class="xar-julian xar-julian-user-year">
+    <xar:template file="header" />
+    
+    <div class="xar-julian-calendar">
+        <div class="xar-julian-calendar-nav">
+            <div class="xar-julian-calendar-nav-prev">
+                <a href="#xarModAPIFunc('julian','user','prev',array('cal_type'=>'year','cal_date'=>$cal_date))#"
+                   title="#xarML('Previous Year')#" class="xar-julian-arrow">&lt;&lt;</a>
+            </div>
+            <div class="xar-julian-calendar-nav-next">
+                <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'year','cal_date'=>$cal_date))#"
+                   title="#xarML('Next Year')#" class="xar-julian-arrow">&gt;&gt;</a>
+            </div>
+            <div class="xar-julian-calendar-nav-current">
+                <xar:set name="$theyear">xarLocaleFormatDate('%Y',$selected_timestamp)</xar:set>
+                #$theyear#
+            </div>
+        </div>
+        
+        <div class="xar-julian-calendar-tables">
+            <xar:comment>Number of columns calendars are displayed in.</xar:comment>
+            <xar:set name="$xc_maxcols">3</xar:set>
+            <xar:set name="$cols">1</xar:set>
+            
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <xar:comment>START :: LOOP THROUGH EACH MONTH OF THE YEAR</xar:comment>
+            <xar:foreach in="$year" key="$month" value="$weeks">
+            
+            <xar:comment>start new row</xar:comment>
+            <xar:if condition="$cols eq 1">
+                <tr>
+            </xar:if>
+                    <td valign="top" align="left">
+                    
+                        <table class="xar-julian-calendar-month">
+                            <tr>
+                                <th colspan="8" class="xar-julian-calendar-title">
+                                    <xar:if condition="$month lt 10">
+                                        <xar:set name="$month_2digit">"0".$month</xar:set>
+                                    <xar:else />
+                                        <xar:set name="$month_2digit">$month</xar:set>
+                                    </xar:if>
+                                    <xar:set name="$monthviewlink">$theyear.$month_2digit."01"</xar:set>
+                                    <a href="#xarModURL('julian','user','month',array('cal_date'=>$monthviewlink))#">
+                                        #xarModAPIFunc('julian','user','getMonthNameLong',array('month'=>$month))#
+                                    </a>
+                                </th>
+                            </tr>
+                            <tr class="xar-julian-calendar-daynames">
+                                <th>&nbsp;</th>
+                                <xar:foreach in="$shortDayNames" value="$dayName">
+                                <th>#$dayName#</th>
+                                </xar:foreach>
+                            </tr>
+                            <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
+                            <xar:foreach in="$weeks" key="$index" value="$week">
+                            <tr class="xar-julian-calendar-week">
+                                <xar:set name="$WeekDate">$week[0]</xar:set>
+                                <xar:set name="$WeekUrl">xarModURL('julian','user','week',array('cal_date'=>$WeekDate))</xar:set>
+                                <td class="xar-julian-calendar-weeknumber">
+                                    <a href="#$WeekUrl#" title="#xarML('Go to week')#" class="xar-julian-arrow">&gt;</a>
+                                </td>
+                                <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
+                                <xar:foreach in="$week" value="$date">
+                                <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
+                                <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d') && substr($date,4,2) eq $month">
+                                    <xar:set name="$daycolor">"currentday"</xar:set>
+                                <xar:elseif condition="$calendar:isWeekend($date)" />
+                                    <xar:set name="$daycolor">"weekend"</xar:set>
+                                <xar:else />
+                                    <xar:set name="$daycolor">"weekday"</xar:set>
+                                </xar:if>
+                                <xar:if condition="substr($date,4,2) eq $month">
+                                    <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
+                                        <xar:set name="dateconverted">date("Y-m-d",strtotime($date))</xar:set>
+                                        <xar:comment>If overlib is loaded, add pop-over for event time and title</xar:comment>
+                                        <xar:if condition="isset($event_array[$dateconverted])">
+                                            <xar:set name="$text">'<ul class=xar-julian-eventlist>'</xar:set>
+                                            <xar:foreach in="$event_array[$dateconverted]" key="$index">
+                                                <xar:set name="$text">$text.'<li style=color:'.$event_array[$dateconverted][$index]['color'].';><div class=xar-julian-list-contents>'.$event_array[$dateconverted][$index]['multipopover'].'</div></li>'</xar:set>
+                                            </xar:foreach>
+                                            <xar:set name="$text">$text.'</ul>'</xar:set>
+                                            <xar:overlib-popup-close name="$olclose" />
+                                            <xar:set name="$event">'
+                                             onmouseover="return overlib(\''.$text.'\',CAPTION,\''.xarLocaleFormatDate('%m/%d/%Y',strtotime($date)).'\')" 
+                                             onmouseout="'.$olclose.'"
+                                             class="xar-julian-event"'</xar:set>
+                                        <xar:else />
+                                            <xar:set name="$event">''</xar:set>
+                                        </xar:if>
+                                        <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#" #$event#>
+                                            <xar:set name="$displayDay">substr($date,-2)</xar:set>
+                                            #$displayDay# 
+                                        </a>
+                                    </td>
+                                <xar:else />
+                                    <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">
+                                        &nbsp;
+                                    </td>
+                                </xar:if>
+                                </xar:foreach>
+                                <xar:comment>END :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
+                            </tr>
+                            </xar:foreach>
+                            <xar:comment>END :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
+                        </table>
+                    </td>
+                    
+            <xar:comment>close out row</xar:comment>
+            <xar:if condition="$cols eq $xc_maxcols">
+                </tr>
+                <xar:set name="$cols">1</xar:set>
+            <xar:else />
+                <xar:set name="$cols">#$cols+1#</xar:set>
+            </xar:if>
+            </xar:foreach>
+            <xar:comment>END :: LOOP THROUGH EACH MONTH OF THE YEAR</xar:comment>
+
+            </table>
+        </div>
+    </div>
+    
+    <xar:comment>include the calendar footer</xar:comment>
+    <xar:template file="footer" />
+</div>

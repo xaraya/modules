@@ -1,0 +1,110 @@
+<?php
+// $Id: decode_shorturl.php,v 1.3 2005/06/24 11:26:01 michelv01 Exp $
+
+function julian_userapi_decode_shorturl($params) 
+{    
+    $args = array();
+    if(empty($params[1])) {
+        return array('main', $args);
+    } elseif($params[1] == 'day') {
+        // if we have a 2nd parameter see if it's a date or username
+        if(!empty($params[2])) {
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                // this is a date of some sort (YYYYMMDD)
+                $args['cal_date'] = $matches[1];
+            } elseif(preg_match('/([0-9a-z])/i',$params[2],$matches)) {
+                // this should be a username
+                $args['cal_user'] = $matches[1];
+            }
+        }
+        // if we have a 3rd parameter it should be a username
+        if(!empty($params[3])) {
+            $args['cal_user'] = $params[3];
+        }
+        return array('day', $args);
+    } elseif($params[1] == 'week') {
+        // if we have a 2nd parameter see if it's a date or username
+        if(!empty($params[2])) {
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                // this is a date of some sort (YYYYMMDD)
+                $args['cal_date'] = $matches[1];
+            } elseif(preg_match('/([0-9a-z])/i',$params[2],$matches)) {
+                // this should be a username
+                $args['cal_user'] = $matches[1];
+            }
+        }
+        // if we have a 3rd parameter it should be a username
+        if(!empty($params[3])) {
+            $args['cal_user'] = $params[3];
+        }
+        return array('week', $args);
+    } elseif($params[1] == 'month') {
+        // if we have a 2nd parameter see if it's a date or username
+        if(!empty($params[2])) {
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                // this is a date of some sort (YYYYMMDD)
+                $args['cal_date'] = $matches[1];
+            } elseif(preg_match('/([0-9a-z])/i',$params[2],$matches)) {
+                // this should be a username
+                $args['cal_user'] = $matches[1];
+            }
+        }
+        // if we have a 3rd parameter it should be a username
+        if(!empty($params[3])) {
+            $args['cal_user'] = $params[3];
+        }
+        return array('month', $args);
+    } elseif($params[1] == 'year') {
+        // if we have a 2nd parameter see if it's a date or username
+        if(!empty($params[2])) {
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                // this is a date of some sort (YYYYMMDD)
+                $args['cal_date'] = $matches[1];
+            } elseif(preg_match('/([0-9a-z])/i',$params[2],$matches)) {
+                // this should be a username
+                $args['cal_user'] = $matches[1];
+            }
+        }
+        // if we have a 3rd parameter it should be a username
+        if(!empty($params[3])) {
+            $args['cal_user'] = $params[3];
+        }
+        return array('year', $args);
+    } elseif($params[1] == 'add') {
+        // if we have a 2nd parameter it should be a date
+        if(!empty($params[2])) {
+            // just make sure it's a valid date
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                $args['cal_date'] = $matches[1];
+            }
+        }
+        return array('add', $args);
+    } elseif($params[1] == 'edit') {
+        // if we have a 2nd parameter it should be an event id
+        if(!empty($params[2])) {
+            // just make sure it's a valid eid
+            if(preg_match('/^(\d+)\.html$/',$params[1],$matches)) {
+                $args['cal_eid'] = $matches[1];
+            }
+        }
+        return array('edit', $args);
+    } elseif($params[1] == 'view') {
+        // if we have a 2nd parameter it should be an view event id
+        if(!empty($params[2])) {
+            // just make sure it's a valid vid
+            if(preg_match('/^(\d+)\.html$/',$params[1],$matches)) {
+                $args['cal_vid'] = $matches[1];
+            }
+        }
+        return array('view', $args);
+    } else {
+        die('bogus');
+        return array('main', $args);
+    }
+    
+    // default : return nothing -> no short URL
+    // (e.g. for multiple category selections)
+
+}
+
+?>

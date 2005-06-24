@@ -1,0 +1,151 @@
+<?php
+/**
+ * 
+ * Metrostat Calendar of Events
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * @subpackage julian
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ */
+
+/**
+ * initialise block
+ * 
+ * @author David St.Clair 
+ * @access public 
+ * @param none $ 
+ * @return nothing 
+ * @throws no exceptions
+ * @todo nothing
+ */
+function julian_caleventblock_init()
+{
+    return true;
+} 
+
+/**
+ * get information on block
+ * 
+ * @author David St.Clair 
+ * @access public 
+ * @param none $ 
+ * @return data array
+ * @throws no exceptions
+ * @todo nothing
+ */
+function julian_caleventblock_info()
+{ 
+    // Values
+    return array('text_type'        => 'Calendar',
+        'module'                    => 'julian',
+        'text_type_long'            => 'Metrostat Calendar',
+        'allow_multiple'            => false,
+        'form_content'              => false,
+        'form_refresh'              => false,
+        'show_preview'              => true);
+} 
+
+/**
+ * display calevent block
+ * 
+ * @author David St.Clair 
+ * @access public 
+ * @param none $ 
+ * @return data array on success or void on failure
+ * @throws no exceptions
+ * @todo implement centre menu position
+ */
+function julian_caleventblock_display($blockinfo)
+{ 
+   // Security Check
+   if (!xarSecurityCheck('Viewjulian', 0)) return;
+   
+    // Break out options from our content field
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
+
+   //set the selected date parts, timestamp, and cal_date in the data array
+   $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
+   //load calendar class
+   $c =& xarModAPIFunc('julian','user','factory','calendar');
+   //determine the current user
+   $args['name'] = xarUserGetVar('name');
+   $args['blockid'] = $blockinfo['bid'];
+   //set dates for determining which events to show for the upcoming events
+   //$EventBlockDays=xarModGetVar('julian','EventBlockDays');
+   $EventBlockDays = $vars['EventBlockDays'];
+   $args['EventBlockDays'] = $EventBlockDays;
+   $today=date('Y-m-d');
+   $tomorrow=date("Y-m-d",strtotime("tomorrow"));
+   $endweek=date("Y-m-d",strtotime("+$EventBlockDays days"));
+   //get today's events
+   $args['todaysevents']=$c->getEvents($today);
+   //get the events for the next $EventBlockDays days
+   $args['upcomingevents'] =$c->getEvents($tomorrow,$endweek);
+      
+   //set the required block data
+   if (empty($blockinfo['title'])) {
+       $blockinfo['title'] = xarML('Events');
+   } 
+   if (empty($blockinfo['template'])) {
+        $template = 'calevent';
+   } else {
+        $template = $blockinfo['template'];
+   }
+   $args['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
+   $blockinfo['content'] = xarTplBlock('julian', $template, $args);
+
+   return $blockinfo;
+}
+
+/**
+ * modify block settings
+ *
+ * @access  public
+ * @param   $blockinfo
+ * @return  $blockinfo data array
+*/
+function julian_caleventblock_modify($blockinfo)
+{
+    // Break out options from our content field
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
+
+    // Defaults
+    if (!isset($vars['EventBlockDays'])) {
+        $vars['EventBlockDays'] = 7;
+    }
+
+    return $vars;
+}
+
+/**
+ * Updates the Block settings
+ */
+function julian_caleventblock_update($blockinfo)
+{
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
+
+    if (!xarVarFetch('EventBlockDays', 'int', $EventBlockDays, 0, XARVAR_NOT_REQUIRED)) {return;}
+    $vars['EventBlockDays'] = $EventBlockDays;
+
+    $blockinfo['content'] = $vars;
+
+    return $blockinfo;
+}
+?>

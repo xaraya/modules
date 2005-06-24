@@ -1,0 +1,7 @@
+<xar:comment>Show the date (i.e. Today is June 21, 2004)</xar:comment>
+
+<div class="xar-julian-footer">
+    <a href="#xarModURL('julian','user','month',array('cal_date'=>xarLocaleFormatDate('%Y%m%d')))#">
+        <xar:mlstring>Today is </xar:mlstring> #xarLocaleGetFormattedDate('long')# 
+    </a>
+</div>
