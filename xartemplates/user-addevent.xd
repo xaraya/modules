@@ -117,7 +117,7 @@
     <div class="xar-julian-contents">
 
         <form name="cal_submit" class="xar-form"
-              action=#xarModUrl('julian','user','updateevent')#
+              action="#xarModUrl('julian','user','updateevent')#" 
               onsubmit="if (!isCancel){return validate2(this)}"
               method="post"
               enctype="application/x-www-form-urlencoded">
