@@ -74,6 +74,7 @@ function xarbb_adminapi_create($args)
 
     // Get next ID in table
     $nextId = $dbconn->GenId($xbbforumstable);
+    $forder = $nextId;
 
     // Get Time
     if ((!isset($fpostid)) || (empty($fpostid))){
@@ -88,9 +89,9 @@ function xarbb_adminapi_create($args)
               xar_fposts,
               xar_fposter,
               xar_fpostid,
-              xar_fstatus   )
+              xar_fstatus)
             VALUES (
-              ?, 
+              ?,
               ?,
               ?,
               ?,
@@ -103,6 +104,16 @@ function xarbb_adminapi_create($args)
 
     // Get the ID of the item that we inserted
     $fid = $dbconn->PO_Insert_ID($xbbforumstable, 'xar_fid');
+    
+    $forder=$fid;
+    //Now update the forder field .. can't do this in the create ...
+       $query = 'UPDATE ' . $xbbforumstable
+               . ' SET xar_forder = ?'
+               . ' WHERE xar_fid = ?';
+
+        $result = $dbconn->execute($query, array($forder, $fid));
+        if (!$result) return;
+   $result->close();
 
     if (empty($cids)) {
         //Set them to the master categories

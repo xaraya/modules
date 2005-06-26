@@ -46,7 +46,8 @@ function xarbb_userapi_getallforums($args)
                    xar_fposter,
                    xar_fpostid,
                    xar_fstatus,
-                   xar_foptions
+                   xar_foptions,
+                   xar_forder
             FROM $xbbforumstable";
     if (!empty($catid) && xarModIsHooked('categories','xarbb',1)) {
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
@@ -64,14 +65,14 @@ function xarbb_userapi_getallforums($args)
            
         }
     }
-    $query .= " ORDER BY xar_fname";
+    $query .= " ORDER BY xar_forder"; // Set her3 to ensure display of forum ordering by this column 
 
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 
     $forums = array();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions) = $result->fields;
+        list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions, $forder) = $result->fields;
         if (xarSecurityCheck('ViewxarBB', 0,'Forum',"$fid:All")) {
             $forums[] = array('fid'     => $fid,
                               'fname'   => $fname,
@@ -81,10 +82,12 @@ function xarbb_userapi_getallforums($args)
                               'fposter' => $fposter,
                               'fpostid' => $fpostid,
                               'fstatus' => $fstatus,
-                              'foptions'=> $foptions);
+                              'foptions'=> $foptions,
+                              'forder'  => $forder);
         }
     }
     $result->Close();
+
     return $forums;
 }
 ?>

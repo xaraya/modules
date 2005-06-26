@@ -39,7 +39,14 @@ function xarbb_adminapi_getmenulinks()
                               'title' => xarML('View and Edit Forums'),
                               'label' => xarML('View'));
     }
+    if (xarSecurityCheck('EditxarBB', 0,'Forum')) {
 
+        $menulinks[] = Array('url'   => xarModURL('xarbb',
+                                                  'admin',
+                                                  'reorder'),
+                              'title' => xarML('Reorder Forums'),
+                              'label' => xarML('Reorder Forums'));
+    }
     if (xarSecurityCheck('AdminxarBB', 0)) {
         $menulinks[] = Array('url'   => xarModURL('xarbb',
                                                   'admin',

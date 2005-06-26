@@ -45,7 +45,8 @@ function xarbb_init()
     'xar_fposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment' => false, 'primary_key' => false),
     'xar_fpostid'      => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
     'xar_fstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny'),
-    'xar_foptions'      => array('type'=>'text')
+    'xar_foptions'      => array('type'=>'text'),
+    'xar_forder'        => array('type'=>'integer','null'=>false, 'default'=>'0','increment'=>false,'primary_key'=>false)
     //'xar_fpostid'      => array('type'=>'datetime','null'=>false,'default'=>'1970-01-01 00:00')
     );
 
@@ -532,6 +533,34 @@ function xarbb_upgrade($oldversion)
             // fall through to next upgrade
         case '1.1.5':
             $modversion['name'] = 'xarbb';
+            // fall through to next upgrade
+        case '1.1.6':
+            // Set up database tables
+           $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $xbbforumstable = $xartable['xbbforums'];
+            xarDBLoadTableMaintenanceAPI();
+            $query = xarDBAlterTable($xbbforumstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_forder',
+                                    'type'    => 'integer'));
+            $result = &$dbconn->Execute($query);
+            $result->Close();
+
+            $query2= "SELECT COUNT(1)
+                    FROM $xbbforumstable";
+            $result2 =& $dbconn->Execute($query2);
+            if (!$result2) return;
+
+            for (; !$result2->EOF; $result2->MoveNext()) {
+                $fquery = "UPDATE $xbbforumstable
+                           SET xar_forder    = xar_fid";
+
+                 $result3 =& $dbconn->Execute($fquery);
+                 if (!$result3) return;
+            }
+             $result2->Close();
+             $result3->Close();
             // fall through to next upgrade
         default:
             break;

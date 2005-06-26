@@ -49,6 +49,7 @@ function xarbb_userapi_getforum($args)
                    xar_fpostid,
                    xar_fstatus,
                    xar_foptions,
+                   xar_forder,
                    {$categoriesdef['cid']}
             FROM $xbbforumstable
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = xar_fid
@@ -57,6 +58,9 @@ function xarbb_userapi_getforum($args)
     if (!empty($fid) && is_numeric($fid)) {
         $query .= " AND xar_fid = ?";
         $bindvars[] = $fid;
+    }elseif (!empty($forder) && is_numeric($forder)) {
+        $query .= " AND xar_forder = ?";
+        $bindvars[] = $forder;
     } else {
         $query .= " AND xar_fname = ?";
         $bindvars[] = $fname;
@@ -66,7 +70,7 @@ function xarbb_userapi_getforum($args)
     if (!$result) return;
 
 // FIXME: if forums are assigned to more than 1 category, this will only return the first one
-    list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions, $catid) = $result->fields;
+    list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions, $forder, $catid) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('ViewxarBB', 0, 'Forum',"$catid:$fid")) {
@@ -81,6 +85,7 @@ function xarbb_userapi_getforum($args)
                    'fpostid' => $fpostid,
                    'fstatus' => $fstatus,
                    'foptions'=> $foptions,
+                   'forder'  => $forder,
                    'catid'   => $catid);
 
    return $forum;
