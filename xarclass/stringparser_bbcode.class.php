@@ -33,6 +33,8 @@
  *  MA 02111-1307, USA.
  */
  
+if (!defined('BBCODE_CLOSETAG_FORBIDDEN')) {
+
 require_once dirname(__FILE__).'/stringparser.class.php';
 
 define ('BBCODE_CLOSETAG_FORBIDDEN', -1);
@@ -1758,6 +1760,8 @@ class StringParser_BBCode_Node_Element extends StringParser_Node {
         }
         return $str;
     }
+}
+
 }
 
 ?>

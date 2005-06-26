@@ -37,6 +37,8 @@
  *  MA 02111-1307, USA.
  */
 
+if (!defined('STRINGPARSER_MODE_SEARCH')) {
+
 /**
  * String parser mode: Search for the next character
  * @see StringParser::_parserMode
@@ -1500,6 +1502,8 @@ class StringParser_Node_Text extends StringParser_Node {
     function _dumpToString () {
         return "text \"".substr (preg_replace ('/\s+/', ' ', $this->content), 0, 40)."\" [f:".preg_replace ('/\s+/', ' ', join(':', array_keys ($this->_flags)))."]";
     }
+}
+
 }
 
 ?>
