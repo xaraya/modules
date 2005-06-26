@@ -45,14 +45,19 @@ function reports_userapi_push_output($args)
     }
 
     // Push the contents of the output to the users client
-    $hOut = fopen($output, "rb");
+    $hOut = fopen($output, "rb"); $disposition="inline"; $bytesSent=0; $bufSize="2048";
     if($hOut) {
         header("Pragma: ");
         header("Cache-Control: ");
         header("Content-Type: $contenttype");
         header("Content-disposition: $disposition; filename=\"$filename\"");
         header("Content-Length: " . filesize($output));
-        fpassthru($hOut);
+        while(!feof($hOut)) {
+            $buf = fread($hOut, $bufSize);
+            echo $buf;
+            $bytesSent+=strlen($buf);    /* We know how many bytes were sent to the user */
+        }
+        //fpassthru($hOut);
         fclose($hOut);
     } else {
         // TODO: raise exception?

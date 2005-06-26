@@ -1,0 +1,28 @@
+Using this module in a production environment can be a bit of a challenge. Producing
+PDF files in itself is in its early days (dynamically on the web, that is) and
+using this module on different platforms without changes to the code can be daunting.
+
+This file documents some of the experiences during customer implementations, but let 
+me start by explaining something about the module, so you can determine whether
+it is for you or not.
+
+The basic design is very simple:
+
+1. Take a XSL:FO + XAR template
+2. run that through fop
+3. deliver the output.
+
+
+
+* the setting to compress output by the zlib handler in php.ini can dramatically
+slow down the delivery of the PDF. Especially since this application is more often
+used on an intranet than on a public server, I found turning that setting off gave
+me better results.
+
+* there is lots of confusion on what type of headers to use when pushing the
+PDF to the client, especially if your audience uses internet explorer. I havent
+been able to find a pattern which worked for me in all types of situations. I plan
+to add some sort of configuration section to the module so the user has more control
+over the delivery.
+
+* 
