@@ -11,6 +11,8 @@
  * @param   string  $label      Text to be used in the ALT attribute for the <img> tag
  * @param   string  $setting    The predefined settings to apply for processing
  * @param   string  $params     The array of parameters to apply for processing
+ * @param   boolean $static     Use static link instead of dynamic one where possible (default FALSE)
+ * @param   string  $baseurl    (optional) Base URL for the static links
  * @returns string
  * @return an <img> tag for the newly resized image
  */
@@ -109,9 +111,26 @@ function images_userapi_resize($args)
                 $attribs .= sprintf(' width="%s" height="%s"', $sizeinfo[0], $sizeinfo[1]);
             }
 
-            // use the location of the processed image here
-            $url = xarModURL('images', 'user', 'display',
-                             array('fileId' => base64_encode($location)));
+            if (!empty($static)) {
+                // if we have a base URL, use that together with the basename
+                if (!empty($baseurl)) {
+                    $url = $baseurl . '/' . basename($location);
+
+                // or if it's an absolute URL, try to get rid of it
+                } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
+                    $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                    $url = $thumbsdir . '/' . basename($location);
+                }
+                // if it's an absolute URL, try to get rid of it
+                if (empty($url)) {
+                    $url = $location;
+                }
+
+            } else {
+                // use the location of the processed image here
+                $url = xarModURL('images', 'user', 'display',
+                                 array('fileId' => base64_encode($location)));
+            }
 
             return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
         }
@@ -137,9 +156,25 @@ function images_userapi_resize($args)
             $attribs .= sprintf(' width="%s" height="%s"', $sizeinfo[0], $sizeinfo[1]);
         }
 
-        // use the location of the processed image here
-        $url = xarModURL('images', 'user', 'display',
-                         array('fileId' => base64_encode($location)));
+        if (!empty($static)) {
+            // if we have a base URL, use that together with the basename
+            if (!empty($baseurl)) {
+                $url = $baseurl . '/' . basename($location);
+
+            // or if it's an absolute URL, try to get rid of it
+            } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
+                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $url = $thumbsdir . '/' . basename($location);
+
+            }
+            if (empty($url)) {
+                $url = $location;
+            }
+        } else {
+            // use the location of the processed image here
+            $url = xarModURL('images', 'user', 'display',
+                             array('fileId' => base64_encode($location)));
+        }
 
         return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
     }
@@ -211,24 +246,42 @@ function images_userapi_resize($args)
 
     $attribs .= sprintf(' width="%s" height="%s"', $image->getWidth(), $image->getHeight());
 
-    $url = xarModURL('images', 'user', 'display',
-                      array('fileId' => is_numeric($src) ? $src : base64_encode($src),
-                            'height' => $image->getHeight(),
-                            'width'  => $image->getWidth()));
-
-    $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
-
-    if (!$image->getDerivative()) {
+    $location = $image->getDerivative();
+    if (!$location) {
         if ($image->resize()) {
-            if (!$image->saveDerivative()) {
+            $location = $image->saveDerivative();
+            if (!$location) {
                 $msg = xarML('Unable to save resized image !');
-                $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
+                return sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
             }
         } else {
             $msg = xarML('Unable to resize image \'#(1)\'!', $image->fileLocation);
-            $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
+            return sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
         }
     }
+
+    if (!empty($static)) {
+        // if we have a base URL, use that together with the basename
+        if (!empty($baseurl)) {
+            $url = $baseurl . '/' . basename($location);
+
+        // or if it's an absolute URL, try to get rid of it
+        } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
+            $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+            $url = $thumbsdir . '/' . basename($location);
+
+        }
+        if (empty($url)) {
+            $url = $location;
+        }
+    } else {
+        $url = xarModURL('images', 'user', 'display',
+                         array('fileId' => is_numeric($src) ? $src : base64_encode($src),
+                               'height' => $image->getHeight(),
+                               'width'  => $image->getWidth()));
+    }
+
+    $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
 
     return $imgTag;
 }

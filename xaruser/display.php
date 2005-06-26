@@ -23,7 +23,7 @@ function images_user_display( $args )
         $data = array('fileId' => $fileId);
     } else {
         $fileLocation = base64_decode($fileId);
-        if (empty($fileLocation) || substr($fileLocation,0,1) == '/' || !file_exists($fileLocation)) {
+        if (empty($fileLocation) || !file_exists($fileLocation)) {
             return FALSE;
         }
         $data = array('fileLocation' => $fileLocation);

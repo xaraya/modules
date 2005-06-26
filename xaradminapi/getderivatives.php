@@ -74,7 +74,8 @@ function images_adminapi_getderivatives($args)
                 }
                 $info = stat($thumbsdir . '/' . $file);
                 $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
-                                     'fileDownload' => $thumbsdir . '/' . $file,
+                                     'fileDownload' => xarModURL('images','user','display',
+                                                                 array('fileId' => base64_encode($thumbsdir . '/' . $file))),
                                      'fileName'     => $matches[1],
                                      'fileType'     => 'image/jpeg',
                                      'fileSize'     => $info['size'],
@@ -93,7 +94,8 @@ function images_adminapi_getderivatives($args)
                 $statinfo = stat($thumbsdir . '/' . $file);
                 $sizeinfo = getimagesize($thumbsdir . '/' . $file);
                 $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
-                                     'fileDownload' => $thumbsdir . '/' . $file,
+                                     'fileDownload' => xarModURL('images','user','display',
+                                                                 array('fileId' => base64_encode($thumbsdir . '/' . $file))),
                                      'fileName'     => $matches[1],
                                      'fileType'     => $sizeinfo['mime'],
                                      'fileSize'     => $statinfo['size'],

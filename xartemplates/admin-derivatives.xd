@@ -22,7 +22,7 @@
         </form>
         </xar:if>
 
-        <p><img src="#$selimage['fileLocation']#" border="0" /></p>
+        <p><img src="#$selimage['fileDownload']#" border="0" /></p>
         <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
         <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>
         <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
