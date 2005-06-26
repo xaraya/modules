@@ -20,9 +20,6 @@ function images_admin_phpthumb($args)
     if (!empty($fileId) && is_array($fileId)) {
         $fileId = array_keys($fileId);
     }
-    if (empty($fileId)) {
-        return array();
-    }
 
     // Get the base directories configured for server images
     $basedirs = xarModAPIFunc('images','user','getbasedirs');
@@ -37,8 +34,12 @@ function images_admin_phpthumb($args)
     $data['baseId'] = $baseId;
     $data['fileId'] = $fileId;
 
+    // we're defining a processing filter without image here
+    if (empty($fileId)) {
+        $data['selimage'] = array();
+
     // we're dealing with an uploads file here
-    if (is_numeric($fileId)) {
+    } elseif (is_numeric($fileId)) {
         $data['images'] = xarModAPIFunc('images','admin','getuploads',
                                         array('fileId'   => $fileId));
         if (!empty($data['images'][$fileId])) {
@@ -67,30 +68,53 @@ function images_admin_phpthumb($args)
         }
     }
 
-    if (empty($data['selimage']) || empty($data['selimage']['fileLocation'])) {
-        return array();
+    // Pre-defined settings for phpThumb
+    $data['settings'] = xarModGetVar('images','phpthumb-settings');
+    if (empty($data['settings'])) {
+        $data['settings'] = array();
+        $data['settings']['JPEG 800 x 640'] = array('w' => 800,
+                                                    'h' => 640,
+                                                    'f' => 'jpg');
+        xarModSetVar('images', 'phpthumb-settings', serialize($data['settings']));
+    } else {
+        $data['settings'] = unserialize($data['settings']);
+    }
+    if (!xarVarFetch('setting', 'str:1:', $setting, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('load',    'str:1:', $load,    NULL, XARVAR_DONT_SET)) return;
+    //$data['setting'] = $setting;
+    $data['setting'] = '';
+    if (!empty($load) && !empty($setting)) {
+        if (!empty($data['settings'][$setting])) {
+            // use pre-defined settings and ignore input values here
+            extract($data['settings'][$setting]);
+            $skipinput = 1;
+        }
     }
 
-    // URL parameters for phpThumb() - cfr. xardocs/phpthumb.readme.txt
-    if (!xarVarFetch('w',    'int:1:',     $w,         NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('h',    'int:1:',     $h,         NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('f',    'enum:jpeg:png:gif', $f,  NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('q',    'int:1:',     $q,         NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sx',   'float:0:',   $sx,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sy',   'float:0:',   $sy,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sw',   'float:0:',   $sw,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sh',   'float:0:',   $sh,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('zc',   'checkbox',   $zc,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('bg',   'str:6:6',    $bg,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('bc',   'str:6:6',    $bc,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('fltr', 'isset',      $fltr,      NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('xto',  'checkbox',   $xto,       NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('ra',   'int',        $ra,        NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('ar',   'enum:p:P:L:l:x', $ar,    NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('aoe',  'checkbox',   $aoe,       NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('iar',  'checkbox',   $iar,       NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('far',  'checkbox',   $far,       NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('maxb', 'int:1:',     $maxb,      NULL, XARVAR_DONT_SET)) return;
+    if (empty($skipinput)) {
+        // URL parameters for phpThumb() - cfr. xardocs/phpthumb.readme.txt
+        if (!xarVarFetch('w',    'int:1:',     $w,         NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('h',    'int:1:',     $h,         NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('f',    'enum:jpeg:png:gif', $f,  NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('q',    'int:1:',     $q,         NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('sx',   'float:0:',   $sx,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('sy',   'float:0:',   $sy,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('sw',   'float:0:',   $sw,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('sh',   'float:0:',   $sh,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('zc',   'checkbox',   $zc,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('bg',   'str:6:6',    $bg,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('bc',   'str:6:6',    $bc,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('fltr', 'isset',      $fltr,      NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('xto',  'checkbox',   $xto,       NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('ra',   'int',        $ra,        NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('ar',   'enum:p:P:L:l:x', $ar,    NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('aoe',  'checkbox',   $aoe,       NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('iar',  'checkbox',   $iar,       NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('far',  'checkbox',   $far,       NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('maxb', 'int:1:',     $maxb,      NULL, XARVAR_DONT_SET)) return;
+        // Process filters via input form
+        if (!xarVarFetch('filter', 'isset',    $filter,    NULL, XARVAR_DONT_SET)) return;
+    }
 
     // The following URL parameters are (or will be) supported here
     $paramlist = array('w', 'h', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'zc', 'bc', 'bg', 'fltr', 'xto', 'ra', 'ar', 'aoe', 'far', 'iar', 'maxb');
@@ -114,9 +138,6 @@ function images_admin_phpthumb($args)
     // Available filter names and their number of attributes
     $filterlist = array('gam' => 1, 'ds' => 1, 'gray' => 0, 'clr' => 2, 'sep' => 2, 'usm' => 3, 'blur' => 1, 'lvl' => 3, 'wb' => 1, 'hist' => 7, 'over' => 4, 'wmi' => 4, 'wmt' => 8, 'flip' => 1, 'elip' => 0, 'mask' => 1, 'bvl' => 3, 'bord' => 4, 'fram' => 5, 'drop' => 4);
 
-    // Process filters via input form
-    if (!xarVarFetch('filter', 'isset',    $filter,    NULL, XARVAR_DONT_SET)) return;
-
 // FIXME: make this configurable in TColorPicker !?
     // Get rid of # in front of hex colors
     if (!empty($filter['wmt']) && !empty($filter['wmt'][3]) &&  substr($filter['wmt'][3],0,1) == '#') {
@@ -124,7 +145,7 @@ function images_admin_phpthumb($args)
     }
 
     if (!xarVarFetch('save', 'str:1:',     $save,      NULL, XARVAR_DONT_SET)) return;
-    if (empty($save)) {
+    if (empty($save) && !empty($data['selimage']['fileLocation'])) {
         $save = $data['selimage']['fileLocation'];
         $save = realpath($save);
         if ($save) {
@@ -305,30 +326,54 @@ function images_admin_phpthumb($args)
             }
         }
     }
+
+    if (!xarVarFetch('newset',  'str:1:', $newset,  NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('store',   'str:1:', $store,   NULL, XARVAR_DONT_SET)) return;
+    if (!empty($store)) {
+        if (!empty($newset)) {
+            $setting = $newset;
+            //$data['setting'] = $newset;
+        }
+        if (!empty($setting)) {
+            $data['settings'][$setting] = $previewargs;
+            if (isset($data['settings'][$setting]['fid'])) {
+                unset($data['settings'][$setting]['fid']);
+            }
+            xarModSetVar('images', 'phpthumb-settings', serialize($data['settings']));
+        }
+    }
+
     if (count($previewargs) > 1) {
         $previewargs['preview'] = 1;
-        $data['selimage']['filePreview'] = xarModURL('images','admin','phpthumb',
-                                                     $previewargs);
+        $previewurl = xarModURL('images','admin','phpthumb',
+                                $previewargs);
         // restore | characters in fltr
-        $data['selimage']['filePreview'] = strtr($data['selimage']['filePreview'], array('%7C' => '|'));
+        $previewurl = strtr($previewurl, array('%7C' => '|'));
         // show parameters
-        $data['params'] = preg_replace('/^.*fid=[^&]+&amp;/','',$data['selimage']['filePreview']);
+        $data['params'] = preg_replace('/^.*fid=[^&]*&amp;/','',$previewurl);
         $data['params'] = preg_replace('/&amp;preview=1$/','',$data['params']);
+        if (!empty($data['selimage'])) {
+            $data['selimage']['filePreview'] = $previewurl;
+        }
     }
 
     // preset the format based on the current file type
     if (empty($data['f'])) {
-        switch ($data['selimage']['fileType']) {
-            case 'image/png':
-                $data['f'] = 'png';
-                break;
-            case 'image/jpeg':
-                $data['f'] = 'jpeg';
-                break;
-            case 'image/gif':
-                $data['f'] = 'gif';
-                break;
-            default:
+        if (empty($data['selimage'])) {
+            $data['f'] = 'jpeg';
+        } else {
+            switch ($data['selimage']['fileType']) {
+                case 'image/png':
+                    $data['f'] = 'png';
+                    break;
+                case 'image/gif':
+                    $data['f'] = 'gif';
+                    break;
+                case 'image/jpeg':
+                default:
+                    $data['f'] = 'jpeg';
+                    break;
+            }
         }
     }
 
