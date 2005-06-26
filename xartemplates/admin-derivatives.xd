@@ -28,6 +28,9 @@
         <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
         <xar:mlstring>Size</xar:mlstring> : #$selimage['fileSize']#<br/>
         <xar:mlstring>Modified</xar:mlstring> : #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#<br/>
+        <xar:if condition="!empty($selimage['fileSetting'])">
+            <xar:mlstring>Settings</xar:mlstring> : #$selimage['fileSetting']#</a><br/>
+        </xar:if>
         <xar:if condition="!empty($selimage['original'])">
             <xar:mlstring>Original</xar:mlstring> : <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
         </xar:if>

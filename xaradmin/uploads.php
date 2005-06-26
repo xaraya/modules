@@ -57,25 +57,32 @@ function images_admin_uploads($args)
         }
     }
 
+    // Get the pre-defined settings for phpThumb
+    $data['settings'] = xarModAPIFunc('images','user','getsettings');
 
     // Check if we need to do anything special here
     if (!xarVarFetch('action','str:1:',$action,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('processlist','str:1:',$processlist,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('resizelist', 'str:1:',$resizelist, '',XARVAR_NOT_REQUIRED)) return;
+    if (!empty($processlist)) {
+        $action = 'processlist';
+    } elseif (!empty($resizelist)) {
+        $action = 'resizelist';
+    }
 
     // Find the right uploaded image
     if (!empty($action) && !empty($fileId)) {
         $found = '';
 
         // if we're dealing with a list of fileId's, make sure they exist
-        if (is_array($fileId) && $action == 'resize') {
+        if (is_array($fileId) && ($action == 'resizelist' || $action == 'processlist')) {
             $found = array();
             foreach ($fileId as $id) {
                 if (!empty($data['images'][$id])) {
                     $found[] = $id;
                 }
             }
-            if (count($found) > 0) {
-                $action = 'resizelist';
-            } else {
+            if (count($found) < 1) {
                 $action = '';
             }
 
@@ -180,7 +187,7 @@ function images_admin_uploads($args)
             case 'resize':
                 if (!xarVarFetch('width', 'int:1:',$width, NULL, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('height','int:1:',$height,NULL,XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('replace','checkbox',$replace,'',XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('replace','int:0:1',$replace,0,XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
                 if (!empty($confirm) && (!empty($width) || !empty($height))) {
                     if (!xarSecConfirmAuthKey()) return;
@@ -216,9 +223,9 @@ function images_admin_uploads($args)
                     $data['height'] = $height;
                 }
                 if (empty($replace)) {
-                    $data['replace'] = '';
+                    $data['replace'] = 0;
                 } else {
-                    $data['replace'] = 'checked="checked"';
+                    $data['replace'] = 1;
                 }
                 $data['action'] = 'resize';
                 $data['authid'] = xarSecGenAuthKey();
@@ -243,51 +250,109 @@ function images_admin_uploads($args)
             case 'resizelist':
                 if (!xarVarFetch('width', 'int:1:',$width, NULL, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('height','int:1:',$height,NULL,XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('replace','checkbox',$replace,'',XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('replace','int:0:1',$replace,0,XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
-                if (!empty($confirm) && (!empty($width) || !empty($height))) {
-                    if (!xarSecConfirmAuthKey()) return;
-                    if (!empty($replace)) {
-                        foreach ($found as $id) {
-                            $location = xarModAPIFunc('images','admin','replace_image',
-                                                      array('fileId' => $id,
-                                                            'width'  => (!empty($width) ? $width . 'px' : NULL),
-                                                            'height' => (!empty($height) ? $height . 'px' : NULL)));
-                            if (!$location) return;
-                        }
+                if (empty($confirm) || (empty($width) && empty($height))) {
+                    $data['selected'] = $found;
+                    if (empty($width) && empty($height)) {
+                        $data['width'] = '';
+                        $data['height'] = '';
+                        $data['action'] = '';
+                    } else {
+                        $data['width'] = $width;
+                        $data['height'] = $height;
+                        $data['action'] = 'resizelist';
+                    }
+                    if (empty($replace)) {
+                        $data['replace'] = '';
+                    } else {
+                        $data['replace'] = '1';
+                    }
+                    $data['authid'] = xarSecGenAuthKey();
+                    return $data;
+                }
+
+                if (!xarSecConfirmAuthKey()) return;
+                if (!empty($replace)) {
+                    foreach ($found as $id) {
+                        $location = xarModAPIFunc('images','admin','replace_image',
+                                                  array('fileId' => $id,
+                                                        'width'  => (!empty($width) ? $width . 'px' : NULL),
+                                                        'height' => (!empty($height) ? $height . 'px' : NULL)));
+                        if (!$location) return;
+                    }
+                    // Redirect to viewing the uploaded images here (for now)
+                    xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                                                  array('sort' => 'time')));
+                } else {
+                    foreach ($found as $id) {
+                        $location = xarModAPIFunc('images','admin','resize_image',
+                                                  array('fileId' => $id,
+                                                        'width'  => (!empty($width) ? $width . 'px' : NULL),
+                                                        'height' => (!empty($height) ? $height . 'px' : NULL)));
+                        if (!$location) return;
+                    }
+                    // Redirect to viewing the derivative images here (for now)
+                    xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                                                  array('sort' => 'time')));
+                }
+                return true;
+
+            case 'processlist':
+                if (!xarVarFetch('saveas', 'int:0:2',$saveas, 0, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('setting', 'str:1:',$setting, NULL, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+                if (empty($confirm) || empty($setting) || empty($data['settings'][$setting])) {
+                    $data['selected'] = $found;
+                    if (empty($setting) || empty($data['settings'][$setting])) {
+                        $data['setting'] = '';
+                        $data['action'] = '';
+                    } else {
+                        $data['setting'] = $setting;
+                        $data['action'] = 'processlist';
+                    }
+                    if (empty($saveas)) {
+                        $data['saveas'] = 0;
+                    } else {
+                        $data['saveas'] = $saveas;
+                    }
+                    $data['authid'] = xarSecGenAuthKey();
+                    return $data;
+                }
+
+                if (!xarSecConfirmAuthKey()) return;
+
+                // Process images
+                foreach ($found as $id) {
+                    if (empty($data['images'][$id])) continue;
+                    $location = xarModAPIFunc('images','admin','process_image',
+                                              array('image'   => $data['images'][$id],
+                                                    'saveas'  => $saveas,
+                                                    'setting' => $setting));
+                    if (!$location) return;
+                }
+
+                switch ($saveas) {
+                    case 1: // [image]_new.[ext]
                         // Redirect to viewing the uploaded images here (for now)
                         xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
                                                       array('sort' => 'time')));
-                    } else {
-                        foreach ($found as $id) {
-                            $location = xarModAPIFunc('images','admin','resize_image',
-                                                      array('fileId' => $id,
-                                                            'width'  => (!empty($width) ? $width . 'px' : NULL),
-                                                            'height' => (!empty($height) ? $height . 'px' : NULL)));
-                            if (!$location) return;
-                        }
+                        break;
+
+                    case 2: // replace
+                        // Redirect to viewing the uploaded images here (for now)
+                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                                                      array('sort' => 'time')));
+                        break;
+
+                    case 0: // derivative
+                    default:
                         // Redirect to viewing the derivative images here (for now)
                         xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
                                                       array('sort' => 'time')));
-                    }
-                    return true;
+                        break;
                 }
-                $data['selected'] = $found;
-                if (empty($width) && empty($height)) {
-                    $data['width'] = '';
-                    $data['height'] = '';
-                } else {
-                    $data['width'] = $width;
-                    $data['height'] = $height;
-                }
-                if (empty($replace)) {
-                    $data['replace'] = '';
-                } else {
-                    $data['replace'] = '1';
-                }
-                $data['action'] = 'resizelist';
-                $data['authid'] = xarSecGenAuthKey();
-                return $data;
+                return true;
 
             default:
                 break;

@@ -23,15 +23,22 @@ function images_adminapi_getderivatives($args)
         $filematch = '';
         if (!empty($fileName)) {
             // Note: resized images are named [filename]-[width]x[height].jpg - see resize() method
-            $filematch = '^' . $fileName . '-\d+x\d+';
+            //$filematch = '^' . $fileName . '-\d+x\d+';
+            // Note: processed images are named [filename]-[setting].[ext] - see process_image() function
+            $filematch = '^' . $fileName . '-.+';
         }
     }
+    if (empty($filetype)) {
+        // Note: resized images are JPEG files - see resize() method
+        //$filetype = 'jpg';
+        // Note: processed images can be JPEG, GIF or PNG files - see process_image() function
+        $filetype = '(jpg|png|gif)';
+    }
 
-    // Note: resized images are JPEG files - see resize() method
     $files = xarModAPIFunc('dynamicdata','admin','browse',
                            array('basedir'   => $thumbsdir,
                                  'filematch' => $filematch,
-                                 'filetype'  => 'jpg'));
+                                 'filetype'  => $filetype));
     if (!isset($files)) return;
 
     if (!empty($fileId)) {
@@ -59,6 +66,26 @@ function images_adminapi_getderivatives($args)
                                  'fileModified' => $info['mtime'],
                                  'width'        => $matches[2],
                                  'height'       => $matches[3]);
+            $filenames[$matches[1]] = 1;
+
+        // Note: processed images are named [filename]-[setting].[ext] - see process_image() function
+        } elseif (preg_match('/^(.+?)-(.+?)\.\w+$/',$file,$matches)) {
+            $id = md5($thumbsdir . '/' . $file);
+            if (!empty($fileId)) {
+                if (!in_array($id,$fileId)) continue;
+            }
+            $statinfo = stat($thumbsdir . '/' . $file);
+            $sizeinfo = getimagesize($thumbsdir . '/' . $file);
+            $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
+                                 'fileDownload' => $thumbsdir . '/' . $file,
+                                 'fileName'     => $matches[1],
+                                 'fileType'     => $sizeinfo['mime'],
+                                 'fileSize'     => $statinfo['size'],
+                                 'fileId'       => $id,
+                                 'fileModified' => $statinfo['mtime'],
+                                 'fileSetting'  => $matches[2],
+                                 'width'        => $sizeinfo[0],
+                                 'height'       => $sizeinfo[1]);
             $filenames[$matches[1]] = 1;
         }
     }

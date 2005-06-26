@@ -68,17 +68,9 @@ function images_admin_phpthumb($args)
         }
     }
 
-    // Pre-defined settings for phpThumb
-    $data['settings'] = xarModGetVar('images','phpthumb-settings');
-    if (empty($data['settings'])) {
-        $data['settings'] = array();
-        $data['settings']['JPEG 800 x 640'] = array('w' => 800,
-                                                    'h' => 640,
-                                                    'f' => 'jpg');
-        xarModSetVar('images', 'phpthumb-settings', serialize($data['settings']));
-    } else {
-        $data['settings'] = unserialize($data['settings']);
-    }
+    // Get the pre-defined settings for phpThumb
+    $data['settings'] = xarModAPIFunc('images','user','getsettings');
+
     if (!xarVarFetch('setting', 'str:1:', $setting, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('load',    'str:1:', $load,    NULL, XARVAR_DONT_SET)) return;
     //$data['setting'] = $setting;
@@ -331,6 +323,10 @@ function images_admin_phpthumb($args)
     if (!xarVarFetch('store',   'str:1:', $store,   NULL, XARVAR_DONT_SET)) return;
     if (!empty($store)) {
         if (!empty($newset)) {
+            // if we have both setting and newset, "rename" the old setting to the new one
+            if (!empty($setting) && isset($data['settings'][$setting])) {
+                unset($data['settings'][$setting]);
+            }
             $setting = $newset;
             //$data['setting'] = $newset;
         }
@@ -339,7 +335,8 @@ function images_admin_phpthumb($args)
             if (isset($data['settings'][$setting]['fid'])) {
                 unset($data['settings'][$setting]['fid']);
             }
-            xarModSetVar('images', 'phpthumb-settings', serialize($data['settings']));
+
+            xarModAPIFunc('images','admin','setsettings',$data['settings']);
         }
     }
 

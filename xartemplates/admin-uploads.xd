@@ -25,7 +25,16 @@
             <p><strong><xar:mlstring>Specify the width and/or height you want :</xar:mlstring></strong></p>
             <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="#$width#" />
             <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="#$height#" />
-            <label for="replace"><xar:mlstring>Replace</xar:mlstring></label> <input type="checkbox" name="replace" id="replace" #$replace# />
+            <label for="replace"><xar:mlstring>Replace</xar:mlstring></label>
+            <select name="replace" id="replace">
+                <xar:if condition="empty($replace)">
+                    <option value="0" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+                <xar:else/>
+                    <option value="0"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                </xar:if>
+            </select>
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="action" value="resize" />
             <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
@@ -49,7 +58,11 @@
         <xar:if condition="!empty($selimage['derivatives'])">
             <xar:mlstring>Derivatives</xar:mlstring> : 
             <xar:foreach in="$selimage['derivatives']" value="$derivimage">
-                <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['width']# x #$derivimage['height']#</a>
+                <xar:if condition="!empty($derivimage['fileSetting'])">
+                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['fileSetting']#</a>
+                <xar:else/>
+                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['width']# x #$derivimage['height']#</a>
+                </xar:if>
             </xar:foreach>
             <br/>
         </xar:if>
@@ -164,25 +177,50 @@
                 </td>
             </tr>
             </xar:foreach>
-            <xar:if condition="!empty($pager)">
             <tr>
                 <td colspan="7" align="center">
-                    #$pager#
-                </td>
-            </tr>
-            </xar:if>
-            <xar:if condition="empty($action)">
-            <tr>
-                <td colspan="7">
-                    <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="" />
-                    <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="" />
-                    <label for="replace"><xar:mlstring>Replace</xar:mlstring></label> <input type="checkbox" name="replace" id="replace" value="1" />
-                    <input type="hidden" name="action" value="resize" />
-                    <input type="submit" name="resizelist" value="#xarML('Resize')#" />
+                    <xar:if condition="!empty($pager)">
+                        #$pager#
+                    </xar:if>
 <script language="JavaScript" type="text/javascript">
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewuploads'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewuploads'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
 </script>
+                </td>
+            </tr>
+            <xar:if condition="empty($action)">
+            <tr>
+                <td colspan="7" align="center" class="xar-accent">
+                    <label for="setting"><xar:mlstring>Image Processing</xar:mlstring></label>
+                    <select name="setting" id="setting">
+                        <option value=""> </option>
+                        <xar:foreach in="$settings" key="$name">
+                            <xar:if condition="!empty($setting) and $setting eq $name">
+                                <option value="#xarVarPrepForDisplay($name)#" selected="selected">#$name#</option>
+                            <xar:else/>
+                                <option value="#xarVarPrepForDisplay($name)#">#$name#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <label for="saveas"><xar:mlstring>Save As</xar:mlstring></label>
+                    <select name="saveas" id="saveas">
+                        <option value="0"><xar:mlstring>derivative</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>[image]_new.[ext]</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>replace</xar:mlstring></option>
+                    </select>
+                    <input type="submit" name="processlist" value="#xarML('Process')#" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7" align="center">
+                    <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="" />
+                    <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="" />
+                    <label for="replace"><xar:mlstring>Replace</xar:mlstring></label>
+                    <select name="replace" id="replace">
+                        <option value="0"><xar:mlstring>No</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+                    </select>
+                    <input type="submit" name="resizelist" value="#xarML('Resize')#" />
                 </td>
             </tr>
             <xar:elseif condition="$action eq 'resizelist'"/>
@@ -202,6 +240,26 @@
                         <input type="submit" name="confirm" value="#xarML('Replace')#" />
                     <xar:else/>
                         <input type="submit" name="confirm" value="#xarML('Resize')#" />
+                    </xar:if>
+                    <input type="submit" name="action" value="#xarML('Cancel')#" />
+                </td>
+            </tr>
+            <xar:elseif condition="$action eq 'processlist'"/>
+            <tr>
+                <td colspan="7">
+                    <xar:if condition="empty($saveas) or $saveas lt 2">
+                        <xar:ml><xar:mlstring>Are you sure you want to process the selected images using '#(1)' ?</xar:mlstring><xar:mlvar>#$setting#</xar:mlvar></xar:ml>
+                    <xar:else/>
+                        <xar:ml><xar:mlstring>Are you sure you want to replace the selected images using '#(1)' ?</xar:mlstring><xar:mlvar>#$setting#</xar:mlvar></xar:ml>
+                    </xar:if>
+                    <input type="hidden" name="authid" value="#$authid#" />
+                    <input type="hidden" name="setting" value="#xarVarPrepForDisplay($setting)#" />
+                    <input type="hidden" name="saveas" value="#$saveas#" />
+                    <input type="hidden" name="action" value="processlist" />
+                    <xar:if condition="empty($saveas) or $saveas lt 2">
+                        <input type="submit" name="confirm" value="#xarML('Process')#" />
+                    <xar:else/>
+                        <input type="submit" name="confirm" value="#xarML('Replace')#" />
                     </xar:if>
                     <input type="submit" name="action" value="#xarML('Cancel')#" />
                 </td>
