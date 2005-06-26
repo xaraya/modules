@@ -4,7 +4,7 @@
  *
  * @returns array
  * @return array containing the list of uploads
- * @todo add startnum and numitems support + cache for large # of images
+ * @todo add cache for large # of images ?
  */
 function images_adminapi_getuploads($args)
 {

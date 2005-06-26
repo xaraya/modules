@@ -294,7 +294,9 @@ function images_admin_uploads($args)
                     }
                     // Redirect to viewing the derivative images here (for now)
                     xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
-                                                  array('sort' => 'time')));
+                                                  array('sort'    => 'time',
+                                                        // we need to refresh the cache here
+                                                        'refresh' => 1)));
                 }
                 return true;
 
@@ -349,7 +351,9 @@ function images_admin_uploads($args)
                     default:
                         // Redirect to viewing the derivative images here (for now)
                         xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
-                                                      array('sort' => 'time')));
+                                                      array('sort'    => 'time',
+                                                            // we need to refresh the cache here
+                                                            'refresh' => 1)));
                         break;
                 }
                 return true;

@@ -10,14 +10,57 @@ function images_admin_derivatives()
     // Security check
     if (!xarSecurityCheck('AdminImages')) return;
 
+    $data = array();
+
     // Note: fileId is an MD5 hash of the derivative image location here
     if (!xarVarFetch('fileId','str:1:',$fileId,'',XARVAR_NOT_REQUIRED)) return;
+    $data['fileId'] = $fileId;
 
-    $data = array();
+    if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sort','enum:name:width:height:size:time',$sort,'name',XARVAR_NOT_REQUIRED)) return;
+
+    $data['startnum'] = $startnum;
+    $data['numitems'] = $numitems;
+    $data['sort'] = ($sort != 'name') ? $sort : null;
+
+    // Check if we can cache the image list
+    $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
+
     $data['thumbsdir'] = xarModGetVar('images', 'path.derivative-store');
-    $data['images'] = xarModAPIFunc('images','admin','getderivatives',
-                                    array('thumbsdir' => $data['thumbsdir'],
-                                          'fileId'    => $fileId));
+
+    $data['pager'] = '';
+    if (!empty($fileId)) {
+        $params = $data;
+        $data['images'] = xarModAPIFunc('images','admin','getderivatives',
+                                        $params);
+    } else {
+        $params = $data;
+        if (!isset($numitems)) {
+            $params['numitems'] = xarModGetVar('images','view.itemsperpage');
+        }
+        // Check if we need to refresh the cache anyway
+        if (!xarVarFetch('refresh',     'int:0:',     $refresh,          NULL, XARVAR_DONT_SET)) return;
+        $params['cacheRefresh'] = $refresh;
+
+        $data['images'] = xarModAPIFunc('images','admin','getderivatives',
+                                        $params);
+
+        // Note: this must be called *after* getderivatives() to benefit from caching
+        $countitems = xarModAPIFunc('images','admin','countderivatives',
+                                    $params);
+
+        // Add pager
+        if (!empty($params['numitems']) && $countitems > $params['numitems']) {
+            $data['pager'] = xarTplGetPager($startnum,
+                                            $countitems,
+                                            xarModURL('images', 'admin', 'derivatives',
+                                                      array('startnum' => '%%',
+                                                            'numitems' => $data['numitems'],
+                                                            'sort'     => $data['sort'])),
+                                            $params['numitems']);
+        }
+    }
 
     // Check if we need to do anything special here
     if (!xarVarFetch('action','str:1:',$action,'',XARVAR_NOT_REQUIRED)) return;
@@ -57,32 +100,6 @@ function images_admin_derivatives()
             default:
                 break;
         }
-    }
-
-    if (!xarVarFetch('sort','enum:name:width:height:size:time',$sort,'',XARVAR_NOT_REQUIRED)) return;
-    switch ($sort) {
-        case 'name':
-            //$strsort = 'fileName';
-            break;
-        case 'width':
-        case 'height':
-            $numsort = $sort;
-            break;
-        case 'size':
-            $numsort = 'fileSize';
-            break;
-        case 'time':
-            $numsort = 'fileModified';
-            break;
-        default:
-            break;
-    }
-    if (!empty($numsort)) {
-        $sortfunc = create_function('$a,$b','if ($a["'.$numsort.'"] == $b["'.$numsort.'"]) return 0; return ($a["'.$numsort.'"] > $b["'.$numsort.'"]) ? -1 : 1;');
-        usort($data['images'], $sortfunc);
-    } elseif (!empty($strsort)) {
-        $sortfunc = create_function('$a,$b','return strcmp($a["'.$strsort.'"], $b["'.$strsort.'"]);');
-        usort($data['images'], $sortfunc);
     }
 
     // Return the template variables defined in this function
