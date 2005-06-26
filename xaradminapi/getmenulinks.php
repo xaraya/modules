@@ -32,6 +32,11 @@ function images_adminapi_getmenulinks()
                              'label' => xarML('Browse Server Images'));
         $menulinks[] = Array('url'   => xarModURL('images',
                                                   'admin',
+                                                  'phpthumb'),
+                             'title' => xarML('Define Settings for Image Processing'),
+                             'label' => xarML('Image Processing'));
+        $menulinks[] = Array('url'   => xarModURL('images',
+                                                  'admin',
                                                   'modifyconfig'),
                              'title' => xarML('Edit the Images Configuration'),
                              'label' => xarML('Modify Config'));

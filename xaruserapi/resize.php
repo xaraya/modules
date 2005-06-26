@@ -9,6 +9,8 @@
  * @param   string  $width      The new width (in pixels or percent)  ([0-9]+)(px|%)
  * @param   boolean $constrain  if height XOR width, then constrain the missing value to the given one
  * @param   string  $label      Text to be used in the ALT attribute for the <img> tag
+ * @param   string  $setting    The predefined settings to apply for processing
+ * @param   string  $params     The array of parameters to apply for processing
  * @returns string
  * @return an <img> tag for the newly resized image
  */
@@ -29,43 +31,27 @@ function images_userapi_resize($args)
         return FALSE;
     }
 
-    if (!isset($width) && !isset($height)) {
-        $msg = xarML('Required parameters \'#(1)\' and \'#(2)\' are missing.', 'width', 'height');
+    if (!isset($width) && !isset($height) && !isset($setting) && !isset($params)) {
+        $msg = xarML('Required parameters \'#(1)\', \'#(2)\', \'#(3)\' or \'#(4)\' for tag <xar:image> are missing. See tag documentation.',
+                     'width', 'height', 'setting', 'params');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Parameters'), new DefaultUserException($msg));
         return FALSE;
-    } elseif (!isset($width) && !xarVarFetch('height', 'regexp:/[0-9]+(px|%)/:', $height)) {
+    } elseif (isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
         $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'height');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
-    } elseif (!isset($height) && !xarVarFetch('width', 'regexp:/[0-9]+(px|%)/:', $width)) {
+    } elseif (isset($width) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $width)) {
         $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'width');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
 
-    // just a flag for later
-    $constrain_both = FALSE;
-
-    if (!isset($constrain)) {
-        if (isset($width) XOR isset($height)) {
-            $constrain = TRUE;
-        } elseif (isset($width) && isset($height)) {
-            $constrain = FALSE;
-        }
-    } else {
-        // we still want to constrain here, but we might need to be a little bit smarter about it
-        // if we have both a height and a width, we don't want the image to be any larger than
-        // any pf the supplied values, so we have to provide some logic to handle this
-        if (isset($width) && isset($height)) {
-            //$constrain = FALSE;
-            $constrain_both = TRUE;
-        } //else {
-            $constrain = (bool) $constrain;
-        //}
-
-    }
-
     $notSupported = FALSE;
+
+    // allow passing single DD Uploads values "as is" to xar:image-resize
+    if (substr($src,0,1) == ';') {
+        $src = substr($src,1);
+    }
 
     if (is_numeric($src)) {
         $imageInfo = xarModAPIFunc('images', 'user', 'getimageinfo', array('fileId' => $src));
@@ -98,6 +84,86 @@ function images_userapi_resize($args)
         if (in_array(strtolower($key), $allowedAttribs)) {
             $attribs .= sprintf(' %s="%s"', $key, $value);
         }
+    }
+
+    // use predefined setting for processing
+    if (!empty($setting)) {
+        $settings = xarModAPIFunc('images','user','getsettings');
+        if (!empty($settings[$setting])) {
+            $location = xarModAPIFunc('images','admin','process_image',
+                                      array('image'    => $imageInfo,
+                                            'saveas'   => 0, // derivative
+                                            'setting'  => $setting,
+                                            // don't process the image again if it already exists
+                                            'iscached' => TRUE));
+            if (empty($location)) {
+                $errorstack = xarErrorGet();
+                $errorstack = array_shift($errorstack);
+                $msg = $errorstack['short'];
+                xarErrorHandled();
+                return sprintf('<img src="" alt="%s" %s />', $msg, $attribs);
+            }
+
+            if (file_exists($location)) {
+                $sizeinfo = @getimagesize($location);
+                $attribs .= sprintf(' width="%s" height="%s"', $sizeinfo[0], $sizeinfo[1]);
+            }
+
+            // use the location of the processed image here
+            $url = xarModURL('images', 'user', 'display',
+                             array('fileId' => base64_encode($location)));
+
+            return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
+        }
+
+    // use parameters for processing
+    } elseif (!empty($params)) {
+        $location = xarModAPIFunc('images','admin','process_image',
+                                  array('image'    => $imageInfo,
+                                        'saveas'   => 0, // derivative
+                                        'params'   => $params,
+                                        // don't process the image again if it already exists
+                                        'iscached' => TRUE));
+        if (empty($location)) {
+            $errorstack = xarErrorGet();
+            $errorstack = array_shift($errorstack);
+            $msg = $errorstack['short'];
+            xarErrorHandled();
+            return sprintf('<img src="" alt="%s" %s />', $msg, $attribs);
+        }
+
+        if (file_exists($location)) {
+            $sizeinfo = @getimagesize($location);
+            $attribs .= sprintf(' width="%s" height="%s"', $sizeinfo[0], $sizeinfo[1]);
+        }
+
+        // use the location of the processed image here
+        $url = xarModURL('images', 'user', 'display',
+                         array('fileId' => base64_encode($location)));
+
+        return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
+    }
+
+    // just a flag for later
+    $constrain_both = FALSE;
+
+    if (!isset($constrain)) {
+        if (isset($width) XOR isset($height)) {
+            $constrain = TRUE;
+        } elseif (isset($width) && isset($height)) {
+            $constrain = FALSE;
+        }
+    } else {
+        // we still want to constrain here, but we might need to be a little bit smarter about it
+        // if we have both a height and a width, we don't want the image to be any larger than
+        // any pf the supplied values, so we have to provide some logic to handle this
+        if (isset($width) && isset($height)) {
+            //$constrain = FALSE;
+            $constrain_both = TRUE;
+        } //else {
+            $constrain = (bool) $constrain;
+        //}
+
     }
 
     // Load Image Properties based on $imageInfo

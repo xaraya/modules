@@ -7,6 +7,7 @@
  * @param   integer $saveas   How to save the processed image (0 = derivative, 1 = [image]_new.[ext], 2 = replace, 3 = output)
  * @param   string  $setting  The predefined setting to use, or
  * @param   array   $params   The phpThumb parameters to use
+ * @param   boolean $iscached Check if the processed file already exists (default FALSE)
  * @returns string
  * @return the location of the newly processed image
  */
@@ -14,16 +15,6 @@
 function images_adminapi_process_image($args)
 {
     extract($args);
-
-    include_once('modules/images/xarclass/phpthumb.class.php');
-    $phpThumb = new phpThumb();
-
-    $imagemagick = xarModGetVar('images', 'file.imagemagick');
-    if (!empty($imagemagick) && file_exists($imagemagick)) {
-        $phpThumb->config_imagemagick_path = realpath($imagemagick);
-    }
-
-// CHECKME: document root may be incorrect in some cases
 
     $settings = xarModAPIFunc('images','user','getsettings');
     if (!empty($setting) && !empty($settings[$setting])) {
@@ -43,6 +34,7 @@ function images_adminapi_process_image($args)
         $msg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
                      '', 'process_image', 'images');
         if ($saveas == 3) {
+            $phpThumb =& images_get_thumb();
             // Generate an error image
             $phpThumb->ErrorImage($msg);
             // The calling GUI needs to stop processing here
@@ -71,15 +63,8 @@ function images_adminapi_process_image($args)
             break;
     }
 
-    // Load uploads defines etc.
-    if (xarModIsAvailable('uploads')) {
-        xarModAPILoad('uploads','user');
-    }
-
     // If the image is stored in a real file
     if (file_exists($image['fileLocation'])) {
-        $file = realpath($image['fileLocation']);
-        $phpThumb->setSourceFilename($file);
         switch ($saveas) {
             case 1: // [image]_new.[ext]
                 $save = realpath($image['fileLocation']);
@@ -107,33 +92,20 @@ function images_adminapi_process_image($args)
                 $save = preg_replace('/\.\w+$/',"-$add.$ext",$save);
                 break;
         }
-
-    // If the image is stored in the database (uploads module)
-    } elseif (is_numeric($image['fileId']) && defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA)) {
-        // get the image data from the database
-        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
-        if (empty($data)) {
-            $msg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
-                          'image', 'process_image', 'images');
-            if ($saveas == 3) {
-                // Generate an error image
-                $phpThumb->ErrorImage($msg);
-                // The calling GUI needs to stop processing here
-                return true;
-            } else {
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
-                // Throw back the error
-                return;
-            }
+        // Check if we can use a cached file
+        if (!empty($iscached) && !empty($save) && file_exists($save)) {
+            return $save;
         }
 
-        $src = implode('', $data);
-        unset($data);
-        $phpThumb->setSourceData($src);
+        $file = realpath($image['fileLocation']);
+        $phpThumb =& images_get_thumb();
+        $phpThumb->setSourceFilename($file);
+
+    // If the image is stored in the database (uploads module)
+    } elseif (is_numeric($image['fileId']) && xarModIsAvailable('uploads') && xarModAPILoad('uploads','user',0) &&
+              defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA)) {
 
         $uploadsdir = xarModGetVar('uploads', 'path.uploads-directory');
-
         switch ($saveas) {
             case 1: // [image]_new.[ext] // CHECKME: not in the database ?
                 $save = realpath($uploadsdir) . '/' . $image['fileName'];
@@ -163,11 +135,40 @@ function images_adminapi_process_image($args)
                 $save = preg_replace('/\.\w+$/',"-$add.$ext",$save);
                 break;
         }
+        // Check if we can use a cached file
+        if (!empty($iscached) && !empty($save) && empty($dbfile) && file_exists($save)) {
+            return $save;
+        }
+
+        // get the image data from the database
+        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
+        if (empty($data)) {
+            $msg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+                          'image', 'process_image', 'images');
+            if ($saveas == 3) {
+                $phpThumb =& images_get_thumb();
+                // Generate an error image
+                $phpThumb->ErrorImage($msg);
+                // The calling GUI needs to stop processing here
+                return true;
+            } else {
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                            new SystemException($msg));
+                // Throw back the error
+                return;
+            }
+        }
+
+        $src = implode('', $data);
+        unset($data);
+        $phpThumb =& images_get_thumb();
+        $phpThumb->setSourceData($src);
 
     } else {
         $msg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
                       'image', 'process_image', 'images');
         if ($saveas == 3) {
+            $phpThumb =& images_get_thumb();
             // Generate an error image
             $phpThumb->ErrorImage($msg);
             // The calling GUI needs to stop processing here
@@ -258,6 +259,21 @@ function images_adminapi_process_image($args)
 
     return $save;
 
+}
+
+function &images_get_thumb()
+{
+    include_once('modules/images/xarclass/phpthumb.class.php');
+    $phpThumb = new phpThumb();
+
+    $imagemagick = xarModGetVar('images', 'file.imagemagick');
+    if (!empty($imagemagick) && file_exists($imagemagick)) {
+        $phpThumb->config_imagemagick_path = realpath($imagemagick);
+    }
+
+// CHECKME: document root may be incorrect in some cases
+
+    return $phpThumb;
 }
 
 ?>

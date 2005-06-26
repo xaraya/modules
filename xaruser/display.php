@@ -20,15 +20,16 @@ function images_user_display( $args )
     if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) return;
 
     if (is_numeric($fileId)) {
-        $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId));
-
+        $data = array('fileId' => $fileId);
     } else {
         $fileLocation = base64_decode($fileId);
         if (empty($fileLocation) || substr($fileLocation,0,1) == '/' || !file_exists($fileLocation)) {
             return FALSE;
         }
-        $image = xarModAPIFunc('images', 'user', 'load_image', array('fileLocation' => $fileLocation));
+        $data = array('fileLocation' => $fileLocation);
     }
+
+    $image = xarModAPIFunc('images', 'user', 'load_image', $data);
 
     if (!is_object($image)) {
         return FALSE;
@@ -78,7 +79,7 @@ function images_user_display( $args )
     $fileLocation = $image->getDerivative();
 
     if (is_null($fileLocation)) {
-        $msg = xarML('Unable to find file: [#(1)]', $fileLocation);
+        $msg = xarML('Unable to find file: [#(1)]', $fileId);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
         return FALSE;
     }
