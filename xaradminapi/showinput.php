@@ -7,6 +7,7 @@
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
  * @param  $args ['multiple'] boolean allow multiple uploads or not
  * @param  $args ['methods'] array of allowed methods 'trusted', 'external', 'stored' and/or 'upload'
+ * @param  $args ['invalid'] string invalid error message
  * @returns string
  * @return string containing the input fields
  */
@@ -119,6 +120,9 @@ function uploads_adminapi_showinput($args)
         }
     }
 
+    if (!empty($invalid)) {
+       $data['invalid'] = $invalid;
+    }
 
 // TODO: different formats ?
     return (isset($list) ? $list : '') . xarTplModule('uploads', 'user', 'attach_files', $data, NULL);

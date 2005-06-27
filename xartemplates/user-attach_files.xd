@@ -3,6 +3,9 @@
 
 <div class="xar-uploads-clearer">&nbsp;</div>
 <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
+<xar:if condition="!empty($invalid)">
+    <span class="xar-error">#$invalid#</span>
+</xar:if>
 <p>
     <xar:if condition="$methods['trusted'] eq TRUE">
         <a class="xar-uploads-action" onClick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 

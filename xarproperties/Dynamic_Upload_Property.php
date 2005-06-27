@@ -114,7 +114,8 @@ class Dynamic_Upload_Property extends Dynamic_Property
                                    'value' => $value,
                                    'multiple' => $this->multiple,
                                    'methods' => $this->methods,
-                                   'format' => 'upload'));
+                                   'format' => 'upload',
+                                   'invalid' => $this->invalid));
     }
 
     function showOutput($args = array())
