@@ -14,7 +14,8 @@
 /**
  * Class to model a bitkeeper delta
  */
-class bkDelta 
+include_once "modules/bkview/xarincludes/scmdelta.class.php";
+class bkDelta extends scmDelta
 {
     var $repo;       // which repo are we talking about?
     var $file;       // which file
