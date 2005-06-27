@@ -14,7 +14,6 @@
 */
 
 
-include_once("modules/bkview/xarincludes/bk.class.php");
     
 function bkview_user_statsview($args)
 {

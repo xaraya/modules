@@ -14,7 +14,7 @@
 */
 
 // This should be the only place where we include the class file
-include_once("modules/bkview/xarincludes/bk.class.php");
+include_once("modules/bkview/xarincludes/bk/bk.class.php");
 
 /**
  * get a specific item
