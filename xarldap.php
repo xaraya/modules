@@ -406,10 +406,11 @@ class xarldap
         }
 
         // get attribute value
-	if ($attribute == 'dn')
-	  return $entry[0]['dn'];
-	else
-	  return $entry[0][$attribute][0];
+        if ($attribute == 'dn') {
+            return $entry[0]['dn'];
+        } else {
+            return $entry[0][$attribute][0];
+        }
 
         /*
         for ($i=0; $i<$num_entries; $i++) {  // loop though ldap search result
