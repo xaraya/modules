@@ -67,6 +67,10 @@ function uploads_userapi_db_get_file( $args )
         $where[] = "(xar_status = $fileStatus)";
     }
 
+    if (isset($fileSize) && !empty($fileSize)) {
+        $where[] = "(xar_filesize = $fileSize)";
+    }
+
     if (isset($userId) && !empty($userId)) {
         $where[] = "(xar_user_id = $userId)";
     }
@@ -247,10 +251,11 @@ function uploads_userapi_db_get_file( $args )
             $fileInfo['extrainfo'] = @unserialize($row['xar_extrainfo']);
         }
 
+        $instance = array();
         $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
         $instance[2] = xarSessionGetVar('uid');
-        $instance[3] = $fileId;
+        $instance[3] = $fileInfo['fileId'];
     
         $instance = implode(':', $instance);
 

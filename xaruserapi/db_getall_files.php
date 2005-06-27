@@ -168,7 +168,18 @@ function uploads_userapi_db_getall_files( $args )
             $fileInfo['extrainfo'] = @unserialize($row['xar_extrainfo']);
         }
 
-        $fileList[$fileInfo['fileId']] = $fileInfo;
+        $instance = array();
+        $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
+        $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
+        $instance[2] = xarSessionGetVar('uid');
+        $instance[3] = $fileInfo['fileId'];
+    
+        $instance = implode(':', $instance);
+
+        if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED ||
+            xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+            $fileList[$fileInfo['fileId']] = $fileInfo;
+        }
         $result->MoveNext();
     }
     
