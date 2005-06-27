@@ -262,18 +262,19 @@ class xarldap
      * @access  public
      * @param   'base_dn'  base dn to start search
      * @param   'filter' search filter
+     * @param   'attributes' the attributes to return
      * @return  search result identifier of false on failure
      * @throws  none
      * @todo    expand search parameters
     */
-    function search($base_dn, $filter) 
+    function search($base_dn, $filter, $attributes=Array()) 
     {
         // A resource ID is always returned when using URLs for the 
         // host parameter even if the host does not exist.  This will
         // cause a PHP exception if the host does not exist, so 
         // suppress hard error return as the PHP exception will contain
         // the user's password.
-        $result = @ldap_search($this->connection, $base_dn, $filter);
+        $result = @ldap_search($this->connection, $base_dn, $filter, $attributes);
         if (!$result) {
             $msg = xarML('LDAP Error:  Search LDAP base_dn #(1) filter #(2) failed', $base_dn, $filter);
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -390,8 +391,8 @@ class xarldap
      * @author  Richard Cave <rcave@xaraya.com>
      * @access  public
      * @param   'entry' 
-     * @param   'attrbitue' 
-     * @return  returns array of entries or false on failure
+     * @param   'attribute' 
+     * @return  returns the first attribute value
      * @throws  none
      * @todo    none
     */
@@ -405,8 +406,10 @@ class xarldap
         }
 
         // get attribute value
-        $value = $entry[0][$attribute][0];
-        return $value;
+	if ($attribute == 'dn')
+	  return $entry[0]['dn'];
+	else
+	  return $entry[0][$attribute][0];
 
         /*
         for ($i=0; $i<$num_entries; $i++) {  // loop though ldap search result
@@ -418,6 +421,29 @@ class xarldap
         */
     }
 
+    /**
+     * get_attribute_values:
+     *
+     * 
+     *
+     * @author  Richard Cave <rcave@xaraya.com>
+     * @access  public
+     * @param   'entry' 
+     * @param   'attribute' 
+     * @return  returns array of entries or false on failure
+     * @throws  none
+     * @todo    none
+    */
+    function get_attribute_values($entries, $attribute) 
+      {
+        if (!isset($entries[0][$attribute])) {
+            return;
+        }
+
+        // get attribute value
+        $value = $entries[0][$attribute];
+        return $value;
+    }
 
     /**
      * get_option
