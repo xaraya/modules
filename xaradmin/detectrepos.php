@@ -12,7 +12,7 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.php");
+include_once("modules/bkview/xarincludes/scmrepo.class.php");
 
 /**
  * Detect repositories installed on this server.
@@ -48,7 +48,7 @@ function bkview_admin_detectrepos()
     // Now we have an array with repository roots, construct this in list of some sort.
     $repositories = array();
     foreach($reporoots as $reporoot) {
-        $repo = new bkRepo($reporoot);
+        $repo = scmRepo::construct('bk',$reporoot);
         $repositories[$reporoot]['config'] = $repo->_config;
     }
     

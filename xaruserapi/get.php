@@ -14,7 +14,7 @@
 */
 
 // This should be the only place where we include the class file
-include_once("modules/bkview/xarincludes/bk/bk.class.php");
+include_once("modules/bkview/xarincludes/scmrepo.class.php");
 
 /**
  * get a specific item
@@ -66,7 +66,7 @@ function bkview_userapi_get($args)
     $result->Close();
 
     // Create the item array
-    $repo = new bkRepo($repopath);
+    $repo = scmRepo::construct('bk',$repopath);
     if(!$repo) $repopath = xarML("[INVALID]") . $repopath;
     $item = array('repoid' => $repoid,
                   'reponame' => $reponame,
