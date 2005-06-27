@@ -106,12 +106,24 @@ function uploads_userapi_prepare_uploads( $args )
     unset($fileInfo['type']);
     unset($fileInfo['error']);
 
+// FIXME: do this after the file has been moved
     $fileInfo['fileType']   = xarModAPIFunc('mime','user','analyze_file',
                                             array('fileName' => $fileInfo['fileSrc'], 'altFileName'=>$fileInfo['fileName']));
 
 
+    // If duplicate and we have a file location, overwrite existing file here (cfr. process_files)
+    if (!empty($fileInfo['isDuplicate']) && $fileInfo['isDuplicate'] == 2 &&
+        !empty($fileInfo['fileLocation'])) {
+        // Note: this could be some dummy location for database storage, or the file might be gone
+        $fileInfo['fileDest'] = $fileInfo['fileLocation'];
+    }
+
+    // Check if we have a valid destination (i.e. not removed and not stored in the database)
+    if (!empty($fileInfo['fileDest']) && file_exists($fileInfo['fileDest'])) {
+        // OK then
+
     // Check to see if we need to obfuscate the filename
-    if ($obfuscate_fileName) {
+    } elseif ($obfuscate_fileName) {
         $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name',
                                     array('fileName' => $fileInfo['fileName']));
 
@@ -125,10 +137,17 @@ function uploads_userapi_prepare_uploads( $args )
         } else {
             $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
         }
+
     } else {
         // if we're not obfuscating it,
         // just use the name of the uploaded file
         $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+        // But first make sure we don't already have a file by that name
+        $i = 0;
+        while(file_exists($fileInfo['fileDest'])){
+            $i++;
+            $fileInfo['fileDest'] = $savePath. '/' .$fileInfo['fileName']. '_' . $i;
+        }
     }
 
     if (isset($fileInfo['fileDest'])) {

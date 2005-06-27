@@ -44,13 +44,41 @@ function uploads_userapi_process_files( $args )
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
             }
+
+            $allow_duplicate = xarModGetVar('uploads', 'file.allow-duplicate-upload');
+            if (empty($allow_duplicate)) {
+                $allow_duplicate = 0;
+            }
             
             if (isset($upload['name']) && !empty($upload['name'])) {
-                $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name'], 'fileSize' => $upload['size']));
+                // Note: we don't check on fileSize here (it wasn't taken into account before)
+                $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name']));
                 if (count($fileTest)) {
                     $file = end($fileTest);
-                    $fileList[0] = $file;
-                    break;
+                    // if we don't allow duplicates
+                    if (empty($allow_duplicate)) {
+                        // specify the error message
+                        $file['errors'] = array();
+                        $file['errors'][] = array('errorMesg' => xarML('Filename already exists'),
+                                                  'errorId'   => _UPLOADS_ERROR_BAD_FORMAT);
+                        // set the fileId to null for templates etc.
+                        $file['fileId'] = null;
+                        // add the existing file to the list and break off
+                        $fileList[0] = $file;
+                        break;
+
+                    // if we want to replace duplicate files
+                    } elseif ($allow_duplicate == 2) {
+                        // pass original fileId and fileLocation to $upload,
+                        // and do something special in prepare_uploads / file_store ?
+                        $upload['fileId'] = $file['fileId'];
+                        $upload['fileLocation'] = $file['fileLocation'];
+                        $upload['isDuplicate'] = 2;
+
+                    } else {
+                        // new version for duplicate files - continue as usual
+                        $upload['isDuplicate'] = 1;
+                    }
                 }
             }
             
@@ -146,7 +174,7 @@ function uploads_userapi_process_files( $args )
             return;
             
     }    
-    
+
     foreach ($fileList as $fileInfo) {
         
         // If the file has errors, add the file to the storeList (with it's errors intact),
@@ -160,7 +188,7 @@ function uploads_userapi_process_files( $args )
                                       array('fileInfo'  => $fileInfo,
                                             'storeType' => $storeType));
     }
-    
+
     return $storeList;
 }
 

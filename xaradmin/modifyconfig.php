@@ -25,6 +25,11 @@ function uploads_admin_modifyconfig()
     if (!isset($data['file']['cache-expire'])) {
         xarModSetVar('uploads', 'file.cache-expire', 0);
     }
+    $data['file']['allow-duplicate-upload'] = xarModGetVar('uploads', 'file.allow-duplicate-upload');
+    if (!isset($data['file']['allow-duplicate-upload'])) {
+        xarModSetVar('uploads', 'file.allow-duplicate-upload', 0);
+        $data['file']['allow-duplicate-upload'] = 0;
+    }
     $data['ddprop']['trusted']              = xarModGetVar('uploads', 'dd.fileupload.trusted');
     $data['ddprop']['external']             = xarModGetVar('uploads', 'dd.fileupload.external');
     $data['ddprop']['stored']               = xarModGetVar('uploads', 'dd.fileupload.stored');

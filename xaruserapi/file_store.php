@@ -31,6 +31,7 @@ function uploads_userapi_file_store( $args )
     }
 
     $typeInfo = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
+    $instance = array();
     $instance[0] = $typeInfo['typeId'];
     $instance[1] = $typeInfo['subtypeId'];
     $instance[2] = xarSessionGetVar('uid');
@@ -45,20 +46,23 @@ function uploads_userapi_file_store( $args )
                 $storeType = _UPLOADS_STORE_FSDB;
         }
 
-        // first, make sure the file isn't already stored in the db/filesystem
-        // if it is, then don't add it.
-        // FIXME: need to rethink how this is handled - maybe give the user a choice
-        //        to rename the file ... (rabbitt)
-        $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', 
-                                array('fileLocation' => $fileInfo['fileLocation'],
-                                      'fileSize' => $fileInfo['fileSize']));
+        if (!empty($fileInfo['isDuplicate']) && $fileInfo['isDuplicate'] == 2) {
+            // we *want* to overwrite a duplicate here
 
-        // If we already have the file, then return the info we have on it
-        if (is_array($fInfo) && count($fInfo)) {
-            // Remember, db_get_file returns the files it finds (even if just one)
-            // as an array of files, so - considering we are only expecting one file
-            // return the first one in the list - indice 0
-            return end($fInfo);
+        } else {
+            // first, make sure the file isn't already stored in the db/filesystem
+            // if it is, then don't add it.
+            $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', 
+                                   array('fileLocation' => $fileInfo['fileLocation'],
+                                         'fileSize' => $fileInfo['fileSize']));
+
+            // If we already have the file, then return the info we have on it
+            if (is_array($fInfo) && count($fInfo)) {
+                // Remember, db_get_file returns the files it finds (even if just one)
+                // as an array of files, so - considering we are only expecting one file
+                // return the first one in the list - indice 0
+                return end($fInfo);
+            }
         }
 
         // If this is just a file dump, return the dump
@@ -70,10 +74,20 @@ function uploads_userapi_file_store( $args )
         if ($storeType & _UPLOADS_STORE_DB_ENTRY) {
 
             $fileInfo['store_type'] = $storeType;
-            $fileId = xarModAPIFunc('uploads','user','db_add_file', $fileInfo);
 
-            if ($fileId) {
-                $fileInfo['fileId'] = $fileId;
+            if (!empty($fileInfo['isDuplicate']) && $fileInfo['isDuplicate'] == 2 &&
+                !empty($fileInfo['fileId'])) {
+                // we *want* to overwrite a duplicate here
+                xarModAPIFunc('uploads','user','db_modify_file', $fileInfo);
+
+                $fileId = $fileInfo['fileId'];
+
+            } else {
+                $fileId = xarModAPIFunc('uploads','user','db_add_file', $fileInfo);
+
+                if ($fileId) {
+                    $fileInfo['fileId'] = $fileId;
+                }
             }
         } 
 
