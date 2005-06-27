@@ -41,7 +41,7 @@ function bkview_user_csetview($args)
     }
 
     // Pass data to BL compiler
-    $rangetext = bkRangeToText($range);
+    $rangetext = bkRepo::bkRangeToText($range);
     if($taggedonly) {
         if($user =='') {
             $data['pageinfo'] = xarML("Tagged changesets #(1)",$rangetext);
