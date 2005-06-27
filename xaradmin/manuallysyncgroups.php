@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * File: $Id: manuallysyncgroups.php,v 1.2 2005/06/23 05:58:53 root Exp $
  *

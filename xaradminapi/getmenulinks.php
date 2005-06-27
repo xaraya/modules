@@ -25,15 +25,15 @@ function authldap_adminapi_getmenulinks()
   // Security check 
   if(xarSecurityCheck('AdminAuthLDAP')) {
     $menulinks[] = Array('url'   => xarModURL('authldap',
-					      'admin',
-					      'modifyconfig'),
-			 'title' => xarML('Modify the configuration for the module'),
-			 'label' => xarML('Modify Config'));
+                          'admin',
+                          'modifyconfig'),
+             'title' => xarML('Modify the configuration for the module'),
+             'label' => xarML('Modify Config'));
     $menulinks[] = Array('url'   => xarModURL('authldap',
-					      'admin',
-					      'manuallysyncgroups'),
-			 'title' => xarML('Forces group synchronization with LDAP'),
-			 'label' => xarML('Manually Sync Groups'));
+                          'admin',
+                          'manuallysyncgroups'),
+             'title' => xarML('Forces group synchronization with LDAP'),
+             'label' => xarML('Manually Sync Groups'));
   } else {
     $menulinks = '';
   }

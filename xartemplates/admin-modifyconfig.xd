@@ -267,7 +267,7 @@
                 </tr>
             </table>
         </div>
-	<div style="text-align: center">
+        <div style="text-align: center">
           <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring><br />
           <input type="submit" value="#xarML('Submit')#" />
         </div>

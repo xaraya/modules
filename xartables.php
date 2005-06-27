@@ -7,5 +7,6 @@
 function authldap_xartables()
 { 
     return array('authldap_usercache'
-		 => xarDBGetSiteTablePrefix().'_authldap_usercache');
+         => xarDBGetSiteTablePrefix().'_authldap_usercache');
 } 
+?>

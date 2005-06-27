@@ -117,7 +117,8 @@ function authldap_delete()
   return true;
 }
 
-function authldap_createdb() {
+function authldap_createdb() 
+  {
   // Get database setup
   $dbconn =& xarDBGetConn();
   $tables =& xarDBGetTables();
@@ -130,28 +131,29 @@ function authldap_createdb() {
   // prefix_roles
   $query =
     xarDBCreateTable($tables['authldap_usercache'],
-		     array('role_id' => array('type' => 'integer',
-						 'null' => false,
-						 'default' => '0'),
-			   'uid_field' => array('type' => 'varchar',
-						'size' => 255,
-						'null' => false,
-						'default' => ''),
-			   'attr_name' => array('type' => 'varchar',
-						'size' => 255,
-						'null' => false,
-						'default' => ''),
-			   'attr_value' => array('type' => 'varchar',
-						 'size' => 255,
-						 'null' => false,
-						 'default' => ''),
+             array('role_id' => array('type' => 'integer',
+                         'null' => false,
+                         'default' => '0'),
+               'uid_field' => array('type' => 'varchar',
+                        'size' => 255,
+                        'null' => false,
+                        'default' => ''),
+               'attr_name' => array('type' => 'varchar',
+                        'size' => 255,
+                        'null' => false,
+                        'default' => ''),
+               'attr_value' => array('type' => 'varchar',
+                         'size' => 255,
+                         'null' => false,
+                         'default' => ''),
 ));
   if (!$dbconn->Execute($query)) return;
 
 }
 
-function authldap_initgroupsvars() {
-  include_once('modules/authldap/includes/default_variables.php');
+function authldap_initgroupsvars() 
+  {
+  include_once('modules/authldap/xarincludes/default_variables.php');
   foreach($default_groups_variables as $variable => $default_value)
     xarModSetVar('authldap', $variable, $default_value);
 }

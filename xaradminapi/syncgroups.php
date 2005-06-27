@@ -75,13 +75,13 @@ function authldap_adminapi_syncgroups ()
   // Get default group container
   $roles = new xarRoles();
   xarVarSetCached('authldap', 'defaultgroup4groups',
-		  $roles->getRole(xarVarGetCached('authldap','defaultgroup4groups_id')));
+                  $roles->getRole(xarVarGetCached('authldap','defaultgroup4groups_id')));
   $defaultgroup4groups = xarVarGetCached('authldap', 'defaultgroup4groups');
 
   // Get default user container
   $defaultgroup = xarModGetVar('authldap','defaultgroup');
   xarVarSetCached('authldap', 'defaultgroup4users',
-		  authldap_get_active_group_by_name($defaultgroup));
+                  authldap_get_active_group_by_name($defaultgroup));
 
 
   // Loads the users info cache
@@ -98,7 +98,7 @@ function authldap_adminapi_syncgroups ()
   // Import each group
   foreach ($ldap_groups_to_import as $group) {
     $result = authldap_search($ldap, $ldap_base4groups, $group_name_attrname, $group,
-			      array($group_ref_attrtype));
+                 array($group_ref_attrtype));
     $entries = $ldap->get_entries($result);
 
     // Parses all returns group (there can be several matches if using a wildcard '*')
@@ -125,7 +125,8 @@ function authldap_adminapi_syncgroups ()
 /**
  * Recursively create a group's tree
  */
-function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$processed_users, $group, $parent_group) {
+function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$processed_users, $group, $parent_group) 
+  {
   $ldap_base4groups = xarVarGetCached('authldap', 'ldap_base4groups');
   $defaultgroup4groups = xarVarGetCached('authldap', 'defaultgroup4groups');
   $group_name_attrname = xarVarGetCached('authldap', 'group_name_attrname');
@@ -142,9 +143,9 @@ function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$proc
   
   // Grab the group's information
   $result = authldap_search($ldap, $ldap_base4groups, $group_ref_attrtype, $group,
-			    array($group_name_attrname, // attributes to grab
-				  $group_ref_attrname,
-				  $user_ref_attrname));
+                            array($group_name_attrname, // attributes to grab
+                                  $group_ref_attrname,
+                                  $user_ref_attrname));
   if (!authldap_search_succeeded($result)) { // Dead reference?
     xarErrorFree();
     return false;
@@ -181,8 +182,8 @@ function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$proc
     for ($i = 0; $i < $user_ref_list['count']; $i++) {
       $user_roles = authldap_get_user_roles($processed_user, $user_ref_list[$i]);
       if (!empty($user_roles)) {
-	foreach($user_roles as $role)
-	  $group_role->addMember($role);
+      foreach($user_roles as $role)
+           $group_role->addMember($role);
       }
     }
   }
@@ -194,8 +195,8 @@ function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$proc
     for ($i = 0; $i < $group_ref_list['count']; $i++) {
       $success = authldap_build_tree($ldap, $processed_group, $groups_to_empty, $processed_users, $group_ref_list[$i], $group_role);
       if ($success) {
-	$subgroup_role = $processed_group[$group_ref_list[$i]];
-	$children_groups[$subgroup_role->getName()] = 1;
+        $subgroup_role = $processed_group[$group_ref_list[$i]];
+        $children_groups[$subgroup_role->getName()] = 1;
       }
     }
   }
@@ -222,7 +223,8 @@ function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$proc
  * Wrapper to search either a normal attribute, or a distringuished
  * name (dn)
  */
-function authldap_search($ldap, $base, $attr, $value, $attributes_to_grab) {
+function authldap_search($ldap, $base, $attr, $value, $attributes_to_grab) 
+  {
   $filter = '';
   // 'dn' cannot be used as a filter attribute name :/
   if ($attr == 'dn') {
@@ -237,16 +239,18 @@ function authldap_search($ldap, $base, $attr, $value, $attributes_to_grab) {
 /**
  * Tells if the LDAP search occured without error
  */
-function authldap_search_succeeded($result) {
+function authldap_search_succeeded($result) 
+  {
   return (isset($result)
-	  || xarCurrentErrorType() != XAR_SYSTEM_EXCEPTION
-	  || xarCurrentErrorId() != 'NO_PERMISSION');
+          || xarCurrentErrorType() != XAR_SYSTEM_EXCEPTION
+          || xarCurrentErrorId() != 'NO_PERMISSION');
 }
 
 /**
  * Create a new LDAP group
  */
-function authldap_create_group($group_name) {
+function authldap_create_group($group_name) 
+  {
   $defaultgroup = xarVarGetCached('authldap', 'defaultgroup4groups');
   $roles = new xarRoles();
   $roles->makeGroup($group_name);
@@ -260,7 +264,8 @@ function authldap_create_group($group_name) {
 /**
  * Remove a group's members
  */
-function authldap_empty_group($role) {
+function authldap_empty_group($role) 
+  {
   $defaultgroup = xarVarGetCached('authldap', 'defaultgroup4users');
   $member_users = $role->getUsers(ROLES_STATE_CURRENT);
   foreach ($member_users as $member) {
@@ -281,7 +286,8 @@ function authldap_empty_group($role) {
  * *roles. It is ugly to use a variable parameter as a login, but
  * *well... now I have to take that into account.
  */
-function authldap_get_user_roles(&$processed_users, $user_ref) {
+function authldap_get_user_roles(&$processed_users, $user_ref) 
+  {
   $user_ref_attrtype = xarVarGetCached('authldap', 'user_ref_attrtype');
   $uid_attrname = xarModGetVar('authldap', 'uid_field');
   $user_cache = xarVarGetCached('authldap', 'user_cache');
@@ -293,7 +299,7 @@ function authldap_get_user_roles(&$processed_users, $user_ref) {
     if (!empty($user_cache[$user_ref])) {
       $result = array();
       foreach ($user_cache[$user_ref] as $user_id)
-	array_push($result, $roles->getRole($user_id));
+        array_push($result, $roles->getRole($user_id));
       $processed_users[$user_ref] = $result;
     } else {
       // Not in the cache? Then it doesn't match a Xaraya account
@@ -307,12 +313,13 @@ function authldap_get_user_roles(&$processed_users, $user_ref) {
  * xarRoles' lookup function matches deleted roles, so we have to use
  * this workaround.
  */
-function authldap_get_active_group_by_name($role_name) {
+function authldap_get_active_group_by_name($role_name) 
+  {
   $type_group = 1;
   $role_info = xarModAPIFunc('roles', 'user', 'get',
-			      array('state' => ROLES_STATE_CURRENT,
-				    'type' => $type_group,
-				    'name' => $role_name));
+                              array('state' => ROLES_STATE_CURRENT,
+                                    'type' => $type_group,
+                                    'name' => $role_name));
   $roles = new xarRoles();
   $role = $roles->getRole($role_info['uid']);
   if (isset($role))
@@ -326,7 +333,8 @@ function authldap_get_active_group_by_name($role_name) {
  * arrays, for each direction of the association (key->valueS and
  * value->key)
  */
-function authldap_load_user_cache_from_db() {
+function authldap_load_user_cache_from_db() 
+  {
   // Get database setup
   $dbconn =& xarDBGetConn();
   $xartable =& xarDBGetTables();
@@ -366,7 +374,8 @@ function authldap_load_user_cache_from_db() {
 /**
  * Load the user cache and synchronize it before returning it
  */
-function authldap_build_user_cache($ldap) {
+function authldap_build_user_cache($ldap) 
+  {
   // Get the current cache
   list($cache, $reverse_cache) = authldap_load_user_cache_from_db();
   
@@ -375,7 +384,7 @@ function authldap_build_user_cache($ldap) {
   // Get current users
   $roles = new xarRoles();
   $users = xarModAPIFunc('roles', 'user', 'getall',
-			       array('selection' => 'AND xar_auth_module="authldap"'));
+       array('selection' => 'AND xar_auth_module="authldap"'));
 
   $reverse_users = array();
   foreach($users as $user)
@@ -405,7 +414,8 @@ function authldap_build_user_cache($ldap) {
 /**
  * Add a new user in the DB user cache
  */
-function authldap_add_to_user_cache($ldap, $user_id, $uname) {
+function authldap_add_to_user_cache($ldap, $user_id, $uname) 
+  {
   // Module variables
   $user_ref_attrtype = xarVarGetCached('authldap', 'user_ref_attrtype');
   $uid_attrname = xarVarGetCached('authldap', 'uid_field');
@@ -428,12 +438,12 @@ function authldap_add_to_user_cache($ldap, $user_id, $uname) {
 
       // Insert new value
       $query = "INSERT INTO $table (role_id, uid_field, attr_name, attr_value)"
-	. " VALUES (?,?,?,?)";
+        . " VALUES (?,?,?,?)";
       $attr_name = xarVarGetCached('authldap', 'user_ref_attrtype');
       $bindvars = array($user_id, $uid_attrname, $attr_name, $user_ref);
       $result =& $dbconn->Execute($query, $bindvars);
       if ($result)
-	return $user_ref;
+        return $user_ref;
     }
   }
   return;
@@ -442,7 +452,8 @@ function authldap_add_to_user_cache($ldap, $user_id, $uname) {
 /**
  * Remove a cached entry refering to a non-existing Xaraya user
  */
-function authldap_remove_from_user_cache($ldap, $user_id) {
+function authldap_remove_from_user_cache($ldap, $user_id) 
+  {
   // Get database setup
   $dbconn =& xarDBGetConn();
   $xartable =& xarDBGetTables();
@@ -453,3 +464,4 @@ function authldap_remove_from_user_cache($ldap, $user_id) {
   $bindvars = array($user_id);
   $dbconn->Execute($query, $bindvars);
 }
+?>

@@ -96,7 +96,7 @@ function authldap_admin_modifyconfig()
     $group = array();
     foreach ($groupRoles as $group) {
       $groups[] = array('name' => xarVarPrepForDisplay($group['name']),
-			'id' => $group['uid']);
+            'id' => $group['uid']);
     }
     $data['groups'] = $groups;
 
