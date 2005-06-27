@@ -214,18 +214,63 @@
                         </select>
                     </td>
                 </tr>
+            </table>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Group Configuration</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
                     <td>
-                        <br />
-                        <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
+                        <xar:mlstring>Default Group for Groups</xar:mlstring>
                     </td>
                     <td>
-                        <br />
-                        <input type="submit" value="#xarML('Submit')#"  />
+                        <select name="defaultgroup4groups_id">
+                        <xar:loop name="$groups">
+                            <xar:if condition="$loop:item.id eq $defaultgroup4groups_id">
+                                <option value="#$loop:item.id#" selected="selected">#$loop:item.name#</option>
+                            <xar:else/>
+                                <option value="#$loop:item.id#">#$loop:item.name#</option>
+                            </xar:if>
+                        </xar:loop>
+                        </select>
                     </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td><xar:mlstring>LDAP base for group search</xar:mlstring></td>
+                    <td><input type="text" name="ldap_base4groups" size="30" value="#$ldap_base4groups#" /></td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td><xar:mlstring>LDAP groups to import (separated by comma <kdb>','</kdb>)</xar:mlstring></td>
+                    <td><input type="text" name="ldap_groups_to_import" size="30" value="#$ldap_groups_to_import#" /></td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td><xar:mlstring>LDAP attribute name: group name</xar:mlstring></td>
+                    <td><input type="text" name="group_name_attrname" size="30" value="#$group_name_attrname#" /></td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td><xar:mlstring>LDAP attribute name: children group reference</xar:mlstring></td>
+                    <td><input type="text" name="group_ref_attrname" size="30" value="#$group_ref_attrname#" /></td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td><xar:mlstring>LDAP attribute type: children group reference</xar:mlstring></td>
+                    <td><input type="text" name="group_ref_attrtype" size="30" value="#$group_ref_attrtype#" /></td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td><xar:mlstring>LDAP attribute name: user member reference</xar:mlstring></td>
+                    <td><input type="text" name="user_ref_attrname" size="30" value="#$user_ref_attrname#" /></td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td><xar:mlstring>LDAP attribute type: user member reference</xar:mlstring></td>
+                    <td><input type="text" name="user_ref_attrtype" size="30" value="#$user_ref_attrtype#" /></td>
                 </tr>
             </table>
         </div>
+	<div style="text-align: center">
+          <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring><br />
+          <input type="submit" value="#xarML('Submit')#" />
+        </div>
     </form>
-    </div>
+  </div>
 </div>

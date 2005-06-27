@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: updateconfig.php,v 1.1 2005/06/23 05:59:02 root Exp $
  *
  * AuthLDAP Administrative Display Functions
  * 
@@ -10,7 +10,9 @@
  * @link http://www.xaraya.com
  *
  * @subpackage authldap
- * @author Chris Dudley <miko@xaraya.com> | Richard Cave <rcave@xaraya.com>
+ * @author Chris Dudley <miko@xaraya.com>
+ * @author Richard Cave <rcave@xaraya.com>
+ * @author Sylvain Beucler <beuc@beuc.net>
 */
 
 /**
@@ -130,6 +132,13 @@ function authldap_admin_updateconfig()
             $defaultgroup = 'Users';
     } 
     xarModSetVar('authldap', 'defaultgroup', $defaultgroup);
+
+
+    // Groups variables
+    include_once('modules/authldap/includes/default_variables.php');
+    foreach (array_keys($default_groups_variables) as $variable)
+        xarModSetVar('authldap', $variable, xarVarCleanFromInput($variable));
+
 
     $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
     if (empty($activate) && in_array('authldap', $authmodules)) {

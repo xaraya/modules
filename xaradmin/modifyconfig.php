@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: modifyconfig.php,v 1.1 2005/06/23 05:58:58 root Exp $
  *
  * AuthLDAP Administrative Display Functions
  * 
@@ -12,6 +12,7 @@
  * @subpackage authldap
  * @author Chris Dudley <miko@xaraya.com> 
  * @author Richard Cave <rcave@xaraya.com>
+ * @author Sylvain Beucler <beuc@beuc.net>
  */
 
 /**
@@ -92,13 +93,20 @@ function authldap_admin_modifyconfig()
     // Get the list of groups
     if (!$groupRoles = xarGetGroups()) return; // throw back
 
-    $i = 0;
-    while (list($key,$group) = each($groupRoles)) {
-        $groups[$i]['name'] = xarVarPrepForDisplay($group['name']);
-        $i++;
+    $group = array();
+    foreach ($groupRoles as $group) {
+      $groups[] = array('name' => xarVarPrepForDisplay($group['name']),
+			'id' => $group['uid']);
     }
     $data['groups'] = $groups;
-       
+
+
+    /** LDAP Groups parameters **/
+
+    include_once('modules/authldap/includes/default_variables.php');
+    foreach(array_keys($default_groups_variables) as $variable)
+      $data[$variable] = xarVarPrepForDisplay(xarModGetVar('authldap', $variable));
+
     // everything else happens in Template for now
     return $data;
 }

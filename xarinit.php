@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: xarinit.php,v 1.1 2005/06/21 13:25:04 root Exp root $
  *
  * AuthLDAP Initialisation
  *
@@ -32,6 +32,7 @@ function authldap_init()
     xarModSetVar('authldap','add_user_email', 'mail');
     xarModSetVar('authldap','store_user_password', 'true');
     xarModSetVar('authldap','failover', 'true');
+    authldap_initgroupsvars();
 
     // Define mask definitions for security checks
     xarRegisterMask('AdminAuthLDAP','All','authldap','All','All','ACCESS_ADMIN');
@@ -54,6 +55,8 @@ function authldap_init()
     xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
 */
 
+    authldap_createdb();
+    
     // Initialization successful
     return true;
 }
@@ -65,12 +68,13 @@ function authldap_init()
  */
 function authldap_upgrade($oldVersion)
 {
-    switch($oldVersion) {
-    case '1.0':
-        // compatability upgrade
-        break;
-    }
-    return true;
+  switch($oldVersion) {
+  case '1.0':
+    authldap_createdb();
+    authldap_initgroupsvars();
+    break;
+  }
+  return true;
 }
 
 /**
@@ -78,25 +82,77 @@ function authldap_upgrade($oldVersion)
 */
 function authldap_delete()
 {
-    // Remove module variables
-    xarModDelVar('authldap','add_user');
-    xarModDelVar('authldap','add_user_uname');
-    xarModDelVar('authldap','add_user_email');
-    xarModDelVar('authldap','store_user_password');
-    xarModDelVar('authldap','failover');
+  // Get database information
+  $dbconn =& xarDBGetConn();
+  $tables =& xarDBGetTables();
+  
+  //Load Table Maintainance API
+  xarDBLoadTableMaintenanceAPI();
+  
+  // Generate the SQL to drop the table using the API
+  $query = xarDBDropTable($tables['authldap_usercache']);
+  if (empty($query)) return;
+  if (!$dbconn->Execute($query)) return;
+  
+  // Remove module variables
+  // Done automatically
+  //     xarModDelVar('authldap','add_user');
+  //     xarModDelVar('authldap','add_user_uname');
+  //     xarModDelVar('authldap','add_user_email');
+  //     xarModDelVar('authldap','store_user_password');
+  //     xarModDelVar('authldap','failover');
+  
+  // Remove authldap to Site.User.AuthenticationModules in xar_config_vars
+  $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
+  $authModulesUpdate = array();
+  
+  // Loop through current auth modules and remove 'authldap'
+  foreach ($authModules as $authType) {
+    if ($authType != 'authldap')
+      $authModulesUpdate[] = $authType;
+  }
+  xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
+  
+  // Deletion successful
+  return true;
+}
 
-    // Remove authldap to Site.User.AuthenticationModules in xar_config_vars
-    $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
-    $authModulesUpdate = array();
+function authldap_createdb() {
+  // Get database setup
+  $dbconn =& xarDBGetConn();
+  $tables =& xarDBGetTables();
+  
+  //Load Table Maintainance API
+  xarDBLoadTableMaintenanceAPI();
 
-    // Loop through current auth modules and remove 'authldap'
-    foreach ($authModules as $authType) {
-        if ($authType != 'authldap')
-            $authModulesUpdate[] = $authType;
-    }
-    xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
+  $sitePrefix = xarDBGetSiteTablePrefix();
 
-    // Deletion successful
-    return true;
+  // prefix_roles
+  $query =
+    xarDBCreateTable($tables['authldap_usercache'],
+		     array('role_id' => array('type' => 'integer',
+						 'null' => false,
+						 'default' => '0'),
+			   'uid_field' => array('type' => 'varchar',
+						'size' => 255,
+						'null' => false,
+						'default' => ''),
+			   'attr_name' => array('type' => 'varchar',
+						'size' => 255,
+						'null' => false,
+						'default' => ''),
+			   'attr_value' => array('type' => 'varchar',
+						 'size' => 255,
+						 'null' => false,
+						 'default' => ''),
+));
+  if (!$dbconn->Execute($query)) return;
+
+}
+
+function authldap_initgroupsvars() {
+  include_once('modules/authldap/includes/default_variables.php');
+  foreach($default_groups_variables as $variable => $default_value)
+    xarModSetVar('authldap', $variable, $default_value);
 }
 ?>

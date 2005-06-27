@@ -1,0 +1,5 @@
+<xar:if condition="$success">
+Groups successfully synchronized. [<a href="#xarModURL('roles', 'admin', 'showusers')#">See the groups</a>]
+<xar:else />
+Error during group synchronization.
+</xar:if>

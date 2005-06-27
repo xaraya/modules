@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: getmenulinks.php,v 1.1 2005/06/23 05:57:00 root Exp $
  *
  * AuthLDAP Administrative Display Functions
  * 
@@ -22,18 +22,22 @@
  */
 function authldap_adminapi_getmenulinks()
 {
-    // Security check 
-    if(xarSecurityCheck('AdminAuthLDAP')) {
-        $menulinks[] = Array('url'   => xarModURL('authldap',
-                                                   'admin',
-                                                   'modifyconfig'),
-                              'title' => xarML('Modify the configuration for the module'),
-                              'label' => xarML('Modify Config'));
-    } else {
-        $menulinks = '';
-    }
-
-    return $menulinks;
+  // Security check 
+  if(xarSecurityCheck('AdminAuthLDAP')) {
+    $menulinks[] = Array('url'   => xarModURL('authldap',
+					      'admin',
+					      'modifyconfig'),
+			 'title' => xarML('Modify the configuration for the module'),
+			 'label' => xarML('Modify Config'));
+    $menulinks[] = Array('url'   => xarModURL('authldap',
+					      'admin',
+					      'manuallysyncgroups'),
+			 'title' => xarML('Forces group synchronization with LDAP'),
+			 'label' => xarML('Manually Sync Groups'));
+  } else {
+    $menulinks = '';
+  }
+  
+  return $menulinks;
 }
-
 ?>

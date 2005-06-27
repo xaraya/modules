@@ -28,8 +28,10 @@
             From the menu, you have one choice.  "Modify Config". 
             </xar:mlstring>
             <ul>
-                <li><xar:mlstring>Modify Config -- From here, you can allow a user that has account information in LDAP to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
+                <li><xar:mlstring>Modify Config -- From here, you can allow a user that has account information in LDAP to be automatically added to the Xaraya database and allowed to login. You can also setup the synchronization settings for LDAP groups.</xar:mlstring></li>
+                <li><xar:mlstring>Manually Sync Groups -- This will resynchronize the imported LDAP groups. It may be long the first time if you have lots of Xaraya users imported from LDAP, or lots of (sub)groups to import.</xar:mlstring></li>
             </ul>
+            <xar:mlstring>To synchronize the groups, we recommand to setup a job entry in the scheduler module. You need to call the function in (module:authldap, type:admin, function:syncgroups). The module has some caching mecanism for LDAP user profiles, so you can run this job frequently, for example every 30 minutes, without fearing about resource usage.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
