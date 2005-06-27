@@ -189,6 +189,7 @@ function uploads_userapi_db_get_file( $args )
     $revcache = array();
     $imgcache = array();
 
+    $fileList = array();
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
@@ -246,7 +247,17 @@ function uploads_userapi_db_get_file( $args )
             $fileInfo['extrainfo'] = @unserialize($row['xar_extrainfo']);
         }
 
-        $fileList[$fileInfo['fileId']] = $fileInfo;
+        $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
+        $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
+        $instance[2] = xarSessionGetVar('uid');
+        $instance[3] = $fileId;
+    
+        $instance = implode(':', $instance);
+
+        if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED ||
+            xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+            $fileList[$fileInfo['fileId']] = $fileInfo;
+        }
         $result->MoveNext();
     }
 

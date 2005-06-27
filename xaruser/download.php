@@ -1,7 +1,5 @@
 <?php
 
-// FIXME: <rabbitt> only allow download of files that are -approved
-
 function uploads_user_download()
 {
     if (!xarSecurityCheck('ViewUploads')) return;
@@ -27,7 +25,7 @@ function uploads_user_download()
     $instance = implode(':', $instance);
 
     // If you are an administrator OR the file is approved, continue
-    if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('AdminUploads', false, 'File' . $instance)) {
+    if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
         xarErrorHandled();
         $msg = xarML('You do not have the necessary permissions for this object.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new DefaultUserException($msg));
