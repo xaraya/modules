@@ -32,7 +32,11 @@ function images_user_display( $args )
     $image = xarModAPIFunc('images', 'user', 'load_image', $data);
 
     if (!is_object($image)) {
-        return FALSE;
+        xarResponseRedirect('modules/images/xarimages/admin.gif');
+        return TRUE;
+    //    $msg = xarML('Unable to find file: [#(1)]', $fileId);
+    //    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
+    //    return FALSE;
     }
 
     $fileType =& $image->mime;
