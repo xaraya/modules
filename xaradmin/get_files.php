@@ -32,7 +32,7 @@ function uploads_admin_get_files()
     switch ($action) {
         case _UPLOADS_GET_UPLOAD:
             if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) return;
-            if (!xarVarFetch('', 'array:1:', $_FILES['upload'])) return;
+            if (!xarVarValidate('array:1:', $_FILES['upload'])) return;
             $upload = $_FILES['upload'];
             $args['upload'] = $upload;
             break;

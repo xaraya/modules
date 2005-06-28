@@ -84,7 +84,7 @@ function uploads_adminapi_validatevalue($args)
 
             if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) return;
 
-            if (!xarVarFetch('', 'array:1:', $_FILES[$id . '_attach_upload'])) return;
+            if (!xarVarValidate('array:1:', $_FILES[$id . '_attach_upload'])) return;
 
             $upload         =& $_FILES[$id . '_attach_upload'];
             $args['upload'] =& $_FILES[$id . '_attach_upload'];
