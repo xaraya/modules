@@ -57,8 +57,10 @@ function bkview_admin_new($args)
                             'reponame' => $reponame,
                             'repopath' => $repopath,
                             'repobranch' => $repobranch);
-                return xarModFunc('bkview','admin','create', $args);
-                            
+                $repoid = xarModAPIFunc('bkview','admin','create',array('reponame' => $reponame,'repopath' => $repopath, 'repotype' => $repotype, 'repobranch' => $repobranch));
+                if (!isset($repoid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                xarResponseRedirect(xarModURL('bkview', 'admin', 'view'));
+                return true;                            
             }
             break;
     }

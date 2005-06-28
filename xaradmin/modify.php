@@ -44,6 +44,8 @@ function bkview_admin_modify($args)
     $data['repoid'] = $repoid;
     $data['reponame'] = $item['reponame'];
     $data['repopath'] = $item['repopath'];
+    $data['repotype'] = $item['repotype'];
+    $data['repobranch'] = $item['repobranch'];
     $data['pageinfo'] = xarML('Modify repository');
     return $data;
 }

@@ -43,7 +43,9 @@ function bkview_userapi_get($args)
     $bkviewtable = $xartable['bkview'];
     $sql = "SELECT xar_repoid,
                    xar_name,
-                   xar_path
+                   xar_path,
+                   xar_repotype,
+                   xar_lod
             FROM $bkviewtable
             WHERE xar_repoid = ?";
     $result = $dbconn->Execute($sql,array($repoid));
@@ -59,18 +61,17 @@ function bkview_userapi_get($args)
     }
 
     // Obtain the item information from the result set
-    list($repoid, $reponame, $repopath) = $result->fields;
-
-    // All successful database queries produce a result set, and that result
-    // set should be closed when it has been finished with
+    list($repoid, $reponame, $repopath, $repotype, $repobranch) = $result->fields;
     $result->Close();
 
     // Create the item array
-    $repo = scmRepo::construct('bk',$repopath);
+    $repo = scmRepo::construct(scmRepo::map($repotype),$repopath);
     if(!$repo) $repopath = xarML("[INVALID]") . $repopath;
-    $item = array('repoid' => $repoid,
-                  'reponame' => $reponame,
-                  'repopath' => $repopath,
+    $item = array('repoid'     => $repoid,
+                  'reponame'   => $reponame,
+                  'repopath'   => $repopath,
+                  'repotype'   => $repotype,
+                  'repobranch' => $repobranch,
                   'repo' => $repo);
     // Return the item 
     return $item;

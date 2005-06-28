@@ -1,29 +1,22 @@
-<form method="post" action="&xar-modurl-bkview-admin-new;">
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="step" value="3"/>
-    <input type="hidden" name="repotype" value="#$repotype#"/>
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="step" value="3"/>
+<input type="hidden" name="repotype" value="#$repotype#"/>
+
+<fieldset>
+    <legend>#$form_title#</legend>
     
-    <fieldset>
-        <legend><xar:mlstring>Configure bitkeeper repository (step 2 of 2)</xar:mlstring></legend>
-        
-        <div class="xar-form-input-wrapper">
-            <label for="reponame" class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
-            <input type="text" id="reponame" name="reponame" value="#$reponame#" />
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="repopath" class="xar-form-label"><xar:mlstring>Repository root</xar:mlstring></label>
-            <input type="text" name="repopath" id="repopath" value="#$repopath#" size="60"/>
-        </div>
-    </fieldset>
-
-    <div>
-        <xar:foreach in="$hooks" key="$module" value="$output">
-            #$output#
-        </xar:foreach>
+    <div class="xar-form-input-wrapper">
+        <label for="reponame" class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
+        <input type="text" id="reponame" name="reponame" value="#$reponame#" />
     </div>
-
-    <div>
-      <input type="submit" name="stepback" value="#xarML('Previous')#"/>
-      <input type="submit" value="#$submitbutton#" />
+    <div class="xar-form-input-wrapper">
+        <label for="repopath" class="xar-form-label"><xar:mlstring>Repository root</xar:mlstring></label>
+        <input type="text" name="repopath" id="repopath" value="#$repopath#" size="60"/>
     </div>
-</form>
+</fieldset>
+
+<div>
+    <xar:foreach in="$hooks" key="$module" value="$output">
+        #$output#
+    </xar:foreach>
+</div>

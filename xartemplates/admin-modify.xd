@@ -1,7 +1,18 @@
 <xar:template file="admin-menu" type="module"/>
 
-<!-- insert the form contents -->
 <form method="post" action="&xar-modurl-bkview-admin-update;">
-  <input type="hidden" name="repoid" value="#$repoid#" />
-  <xar:template file="repo-form" type="module"/>
+    <input type="hidden" name="repoid" value="#$repoid#" />
+
+    <xar:if condition="$repotype == 1">
+        <xar:set name="form_title">
+            <xar:mlstring>Modify bitkeeper repository</xar:mlstring>
+        </xar:set>
+        <xar:template file="bk-form" type="module"/>
+    <xar:elseif condition="$repotype == 2"/>
+        <xar:set name="form_title">
+            <xar:mlstring>Modify monotone repository</xar:mlstring>
+        </xar:set>
+        <xar:template file="mt-form" type="module"/>
+    </xar:if>
+    <input type="submit" value="#$submitbutton#"/>
 </form>

@@ -1,15 +1,26 @@
 <xar:template file="admin-menu" type="module"/>
 
-<xar:if condition="!isset($step) or $step==1">
-    <!-- Choose the desired type of repository to add -->
-    <xar:template file="repotype-form" type="module"/>
-<xar:elseif condition="$step == 2"/>
-    <!-- Configure the specifics for the chose type -->
-    <xar:if condition="$repotype == 1">
-        <!-- Bitkeeper -->
-        <xar:template file="bk-form" type="module"/>
-    <xar:elseif condition="$repotype == 2"/>
-        <!-- Monotone -->
-        <xar:template file="mt-form" type="module"/>
+<form method="post" action="&xar-modurl-bkview-admin-new;">
+    <xar:if condition="!isset($step) or $step==1">
+        <!-- Choose the desired type of repository to add -->
+        <xar:template file="repotype-form" type="module"/>
+    <xar:elseif condition="$step == 2"/>
+        <!-- Configure the specifics for the chose type -->
+        <xar:if condition="$repotype == 1">
+            <!-- Bitkeeper -->
+            <xar:set name="form_title">
+                <xar:mlstring>Configure bitkeeper repository (step 2 of 2)</xar:mlstring>
+            </xar:set>
+            <xar:template file="bk-form" type="module"/>
+        <xar:elseif condition="$repotype == 2"/>
+            <!-- Monotone -->
+            <xar:set name="form_title">
+                <xar:mlstring>Configure monotone repository (step 2 of 2)</xar:mlstring>
+            </xar:set>
+            <xar:template file="mt-form" type="module"/>
+        </xar:if>
+        <input type="submit" name="stepback" value="#xarML('Previous')#"/>
+        <input type="submit" value="#$submitbutton#"/>
     </xar:if>
-</xar:if>
+    
+</form>

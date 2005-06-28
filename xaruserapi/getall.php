@@ -45,6 +45,8 @@ function bkview_userapi_getall($args)
         $items[] = array('repoid'   => $repo['repoid'],
                          'reponame' => $repo['reponame'],
                          'repopath' => $repo['repopath'],
+                         'repotype' => $repo['repotype'],
+                         'repobranch'=>$repo['repobranch'],
                          'repo'     => $repo['repo']);
         
     }

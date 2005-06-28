@@ -23,10 +23,11 @@
 function bkview_admin_create($args)
 {
     if (!xarSecurityCheck('AdminAllRepositories')) return;
+    extract($args);
     
-    if(!xarVarFetch('reponame','str::',$reponame)) return;
-    if(!xarVarFetch('repopath','str::',$repopath)) return;
-    if(!xarVarFetch('repotype','int:1:2', $repotype)) return;
+    if(!xarVarFetch('reponame','str::',$reponame,'',XARVAR_DONT_SET)) return;
+    if(!xarVarFetch('repopath','str::',$repopath,'',XARVAR_DONT_SET)) return;
+    if(!xarVarFetch('repotype','int:1:2', $repotype,1,XARVAR_DONT_SET)) return;
     if(!xarVarFetch('repobranch','str:',$repobranch, '', XARVAR_NOT_REQUIRED)) return;
     extract($args);
     

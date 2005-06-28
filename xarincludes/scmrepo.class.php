@@ -12,6 +12,16 @@ class scmRepo
         $className =  "$brand"."Repo";
         return new $className($args);
     }
+    
+    function map($id)
+    {
+        if(!isset($id)) return;
+        switch($id) {
+            case 1: return 'bk';
+            case 2: return 'mt';
+            default: return;
+        }
+    }
 }
 
 ?>

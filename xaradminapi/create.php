@@ -22,7 +22,7 @@ function bkview_adminapi_create($args)
     $invalid = array();
     if (!isset($reponame) || !is_string($reponame)) $invalid[] = 'reponame';
     if (!isset($repopath) || !is_string($repopath)) $invalid[] = 'repopath';
-    if (count($invalid) == 0 && !file_exists($repopath)) $invalid[] = "repopath ( $repopath )";
+    //if (count($invalid) == 0 && !file_exists($repopath)) $invalid[] = "repopath ( $repopath )";
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ',$invalid), 'admin', 'create', 'bkview');
@@ -38,11 +38,9 @@ function bkview_adminapi_create($args)
     $nextId = $dbconn->GenId($bkviewtable);
     
     $sql = "INSERT INTO $bkviewtable (
-              xar_repoid,
-              xar_name,
-              xar_path)
-            VALUES (?,?,?)";
-    $bindvars = array($nextId,$reponame,$repopath);
+              xar_repoid, xar_name, xar_path, xar_repotype, xar_lod)
+            VALUES (?,?,?,?,?)";
+    $bindvars = array($nextId,$reponame,$repopath,$repotype,$repobranch);
     if(!$dbconn->Execute($sql,$bindvars)) return;
     
     $repoid = $dbconn->PO_Insert_ID($bkviewtable, 'xar_repoid');
