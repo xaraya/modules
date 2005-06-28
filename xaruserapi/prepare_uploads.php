@@ -141,12 +141,13 @@ function uploads_userapi_prepare_uploads( $args )
     } else {
         // if we're not obfuscating it,
         // just use the name of the uploaded file
-        $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+        $filename = xarVarPrepForOs($fileInfo['fileName']);
+        $fileInfo['fileDest'] = $savePath . '/' . $filename;
         // But first make sure we don't already have a file by that name
         $i = 0;
         while(file_exists($fileInfo['fileDest'])){
             $i++;
-            $fileInfo['fileDest'] = $savePath. '/' .$fileInfo['fileName']. '_' . $i;
+            $fileInfo['fileDest'] = $savePath. '/' .$filename. '_' . $i;
         }
     }
 
