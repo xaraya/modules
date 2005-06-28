@@ -66,7 +66,7 @@ function bkview_user_display($args)
 
     // The total number of csets is easy, just count
     $allsets = array_sum(array_count_values($stats))-1;
-    $mrgsets=$allsets - $repo->bkCountChangeSets('',false,$user);
+    $mrgsets=$allsets - $repo->CountChangeSets('',false,$user);
 
     // Now we need to count the number of entries in the slices defined by the times array
     $rangetext = array();
@@ -83,7 +83,7 @@ function bkview_user_display($args)
         $cutoff = array_search($timestamp,$keys);
         $nrofsets = array_sum(array_count_values(array_slice($stats,0,$cutoff)))-$correctwith;
         if(($nrofsets > 0) && ($nrofsets != $savesets)) {
-            $rangetext[$rangecode] = xarML('#(1) Changesets #(2)',$nrofsets, bkRepo::bkRangeToText("-$rangecode"));
+            $rangetext[$rangecode] = xarML('#(1) Changesets #(2)',$nrofsets, bkRepo::RangeToText("-$rangecode"));
         }
         $savesets = $nrofsets;
     }

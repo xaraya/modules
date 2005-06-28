@@ -28,7 +28,7 @@ class bkFile extends scmFile
         // if / is first char, strip it
         $this->_file = (substr($file,0,1) =='/')?substr($file,1):$file;
         // Store the csets this file is in
-        $this->_csets=$this->bkChangeSets($this->_file);
+        $this->_csets=$this->ChangeSets($this->_file);
         //$tagcsets = array_intersect($this->_repo->_tagcsets,$this->_csets);
         $this->_tagrevs=array();
         
@@ -67,7 +67,7 @@ class bkFile extends scmFile
         return $deltas;
    }
     
-    function &bkChangeSets($user='') 
+    function &ChangeSets($user='') 
    {
         if(!empty($this->_csets)) return $this->_csets;
         
@@ -81,7 +81,7 @@ class bkFile extends scmFile
         $revs=substr($revs,0,strlen($revs)-1);
         
         // Get these revisions from the repo, we are sure it wont be a range, so tell bk that.
-        $csets =& $this->_repo->bkChangeSets('',$revs, BK_FLAG_NORANGEREVS);
+        $csets =& $this->_repo->ChangeSets('',$revs, BK_FLAG_NORANGEREVS);
         return $csets;
    }
     

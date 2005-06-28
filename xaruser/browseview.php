@@ -23,7 +23,7 @@ function bkview_user_browseview($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $repo =& $item['repo'];
     
-    $dirlist=$repo->bkDirList($dir);
+    $dirlist=$repo->DirList($dir);
     asort($dirlist);
    
     $data['dirlist']=array();
@@ -43,7 +43,7 @@ function bkview_user_browseview($args)
         $counter++;
     }
     $data['maxlen'] = 0.8 * $maxlen;
-    $filelist=$repo->bkFileList($dir);
+    $filelist=$repo->FileList($dir);
     $data['files']=array();
     $files=array();
     $counter=1;

@@ -67,7 +67,7 @@ function bkview_userapi_search($args)
 function _bk_search($repo, $terms,$object_id,$itemtype_id) 
 {
     // Get the raw data
-    $matches = $repo->bkSearch($terms,$itemtype_id);
+    $matches = $repo->Search($terms,$itemtype_id);
     $results=array();
     $dots = xarML('...');
     $revision = xarML('revision'); $changeset = xarML('ChangeSet');

@@ -20,7 +20,7 @@ function bkview_user_graphproducer($args)
         
         $repo =& $item['repo'];
         //xarLogMessage("BK: passing start=$start,end=$end,file=$file");
-        $graphdata =& $repo->bkGetGraphData($start, $end, $file);
+        $graphdata =& $repo->GetGraphData($start, $end, $file);
         if($format =='debug') {
             echo "<pre>".var_export($graphdata,true)."</pre>"; 
             die();

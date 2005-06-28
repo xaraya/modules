@@ -90,7 +90,7 @@ class bkRepo extends scmRepo
     
     
     // Operations on a repository
-    function bkGetConfigVar($var='name') 
+    function GetConfigVar($var='name') 
     {
         return $this->_config[$var];
     }
@@ -105,7 +105,7 @@ class bkRepo extends scmRepo
         return $cset[0];
     } 
     
-    function bkGetChangeSets($range='',$merge=false,$user='') 
+    function GetChangeSets($range='',$merge=false,$user='') 
     {
         $params='';
         if ($user!='') {
@@ -124,15 +124,15 @@ class bkRepo extends scmRepo
 
     }
     // Changeset counts
-    function bkCountChangeSets($range='',$merge=false,$user='') 
+    function CountChangeSets($range='',$merge=false,$user='') 
     {
-        $out = $this->bkGetChangeSets($range,$merge,$user);
+        $out = $this->GetChangeSets($range,$merge,$user);
         
         return count($out);
     }
 
     // Count the number of changed lines in a list of changesets
-    function bkCountChangedLines($csets = Array()) 
+    function CountChangedLines($csets = Array()) 
     {
         $lines=0;
         foreach ($csets as $cset) {
@@ -146,7 +146,7 @@ class bkRepo extends scmRepo
     }
 
     // Get changesets
-    function bkChangeSets($user, $range,$flags = 0)
+    function ChangeSets($user, $range,$flags = 0)
     {
         $params='-n '; $dspec = "'";
         
@@ -204,7 +204,7 @@ class bkRepo extends scmRepo
         return $csets;
     }
     
-    function bkGetUsers() 
+    function GetUsers() 
     {
         $cmd="bk users";
 
@@ -233,7 +233,7 @@ class bkRepo extends scmRepo
         return $users;
     }
     
-    function bkDirList($dir='/') 
+    function DirList($dir='/') 
     {
         // First construct the array elements for directories
         $ret=array();
@@ -252,7 +252,7 @@ class bkRepo extends scmRepo
         return $ret;
     }
     
-    function bkFileList($dir='/') 
+    function FileList($dir='/') 
     {
         $cmd="bk prs -hn -r+ -d':TAG:|:GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
         $filelist = $this->_run($cmd);
@@ -260,7 +260,7 @@ class bkRepo extends scmRepo
         return $filelist;
     }
 
-    function bkGetId($type='package') 
+    function GetId($type='package') 
     {
         if($type =='package') {
             $cmd="bk id";
@@ -271,7 +271,7 @@ class bkRepo extends scmRepo
         return $package_id;
     }
 
-    function bkSearch($term,$what_to_search = BK_SEARCH_CSET) 
+    function Search($term,$what_to_search = BK_SEARCH_CSET) 
     {
         $result = array();
         switch($what_to_search) {
@@ -315,7 +315,7 @@ class bkRepo extends scmRepo
         return $results;
     }
     
-    function bkGetGraphData($start = '-3d', $end = '+', $file ='ChangeSet')
+    function GetGraphData($start = '-3d', $end = '+', $file ='ChangeSet')
     {
         if(!trim($end)) $end="+";
         // First, translate the ranges to revisions
@@ -396,7 +396,7 @@ class bkRepo extends scmRepo
      * Currently maintained on ad-hoc basis
      * THIS IS A CLASS METHOD
      */
-    function bkRangeToText($range='') 
+    function RangeToText($range='') 
     {
       // FIXME: this is FAR FROM COMPLETE
       $text='';
@@ -444,7 +444,7 @@ class bkRepo extends scmRepo
      *
      * THIS IS A CLASS METHOD
      */
-    function bkAgeToRangeCode($age) 
+    function AgeToRangeCode($age) 
     {
         // Converts an age as output by :AGE: dspec to range code 
         // useable by bk prs (bit lame that prs doesn't do that itself)
