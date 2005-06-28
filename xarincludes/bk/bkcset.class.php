@@ -25,15 +25,15 @@ class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on
    {
         parent::bkDelta($repo,'ChangeSet', $rev);
  
-        $this->tag = $this->bkGetTag();
-        $this->key = $this->bkGetKey();
+        $this->tag = $this->GetTag();
+        $this->key = $this->GetKey();
         
         // Fill delta array with identification of deltas
-        $this->deltas=$this->bkDeltaList();
+        $this->deltas=$this->DeltaList();
    }
     
     // Private function to initialize delta array
-    function bkDeltaList() 
+    function DeltaList() 
    {
         $cmd="bk changes -vn -r".$this->rev." -d':GFILE:|:REV:'";
         $tmp = $this->repo->_run($cmd);
@@ -47,18 +47,18 @@ class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on
         return $deltas;
    }
     
-    function bkDeltas($formatstring="':GFILE:|:REV:'") 
+    function Deltas($formatstring="':GFILE:|:REV:'") 
    {
         $cmd="bk changes -vn -r".$this->rev." -d$formatstring";
         return $this->repo->_run($cmd);
    }
     
-    function bkGetComments()
+    function GetComments()
    {
         return $this->comments;
    }
     
-    function bkGetKey()
+    function GetKey()
    {
         $cmd = "bk changes -n -r" . $this->rev . " -d':KEY:'";
         $key = $this->repo->_run($cmd);
@@ -69,7 +69,7 @@ class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on
         }
    }
     
-    function bkGetTag()
+    function GetTag()
    {
         $cmd = "bk changes -t -r" . $this->rev . " -d':TAGS:'";
         $tags = $this->repo->_run($cmd);
