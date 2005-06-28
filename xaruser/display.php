@@ -62,7 +62,7 @@ function bkview_user_display($args)
                  );
 
     // Get a time sorted array of all csets
-    $stats = $repo->bkGetStats($user);
+    $stats = $repo->GetStats($user);
 
     // The total number of csets is easy, just count
     $allsets = array_sum(array_count_values($stats))-1;

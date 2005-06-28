@@ -23,7 +23,7 @@ function bkview_userapi_getstats($args)
                         new SystemException($msg));
         return;
     }
-    return $repo->bkgetStats('');
+    return $repo->getStats('');
 }
 
 ?>

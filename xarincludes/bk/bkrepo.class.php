@@ -292,7 +292,7 @@ class bkRepo extends scmRepo
         return $result;
     }
     
-    function bkGetStats($user='') 
+    function GetStats($user='') 
     {
         $params = '';
         if($user!='') {
