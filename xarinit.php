@@ -30,19 +30,15 @@ function bkview_init()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
-    $fields = array(
-        'xar_repoid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_name'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
-        'xar_path'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>'/var/bk/repo')
-    );
-
-    $sql = xarDBCreateTable($bkviewtable,$fields);
-    if (empty($sql)) return; // throw back
-
-    // Pass the Table Create DDL to adodb to create the table
-    if (!$dbconn->Execute($sql)) return;
-
-
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    
+    $fields = "
+        xar_repoid      I       AUTO    PRIMARY,
+        xar_name        C(32)   NotNull DEFAULT '',
+        xar_path        C(254)  NotNull DEFAULT '/var/bk/repo'";
+    $result = $datadict->changeTable($bkviewtable, $fields);    
+    if (!$result) {return;}
+    
     $instancequery="SELECT DISTINCT xar_name FROM ". $xartable['bkview'];
     $instance = array (
                        array('header' => 'Repository name',
@@ -81,7 +77,21 @@ function bkview_upgrade($oldversion)
                            array('modName'  => 'bkview',
                                  'blockType'=> 'committers'))) return;
     case '1.2.0':
+        // add the repository type column
+        $dbconn =& xarDBGetConn();
+        $xartable =& xarDBGetTables();
+        $bkviewtable = $xartable['bkview'];
+        // Get a data dictionary object with item create methods.
+        $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+        
+        $changes ="
+            xar_repotype I      NotNull DEFAULT 1,
+            xar_lod      C(100) NotNull DEFAULT ''";
+        $result = $datadict->ChangeTable($bkviewtable, $changes);
+        // Since we modified the database we're bumping the main revision number
+    case '2.0.0':
         // We end with the current version, but dont do anything
+        
     }
      
     // Update successful
@@ -111,13 +121,11 @@ function bkview_delete()
                       array('modName' => 'bkview',
                             'blockType' => 'committers'))) return;
 
-    // Generate the SQL to drop the table using the API
-    $sql = xarDBDropTable($xartable['bkview']);
-    if (empty($sql)) return; // throw back
-
     // Drop the table
-    if(!$dbconn->Execute($sql)) return;
-
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERDATABASE');
+    $result = $datadict->dropTable($xartable['bkview']);
+    if(!$result) return;
+    
     // Remove the masks
     if(!xarRemoveMasks('bkview')) return;
 

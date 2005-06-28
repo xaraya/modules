@@ -1,0 +1,35 @@
+<xar:comment>
+    Choose the type of repository to add
+</xar:comment>
+
+<form method="post" action="&xar-modurl-bkview-admin-new;">
+    <input type="hidden" name="step" value="2"/>
+    <fieldset>
+        <legend><xar:mlstring>Choose repository type (step 1 of 2)</xar:mlstring></legend>
+        <p>
+            This module operates on the notion of changesets in the repository system and
+            as such will only reasonably support systems which use this notion (CVS does not, for example).
+        </p>
+        <p>
+            Currently we have support for the following systems:
+        </p>
+        <div class="xar-form-input-wrapper">
+            <xar:if condition="!isset($repotype) or $repotype==1">
+                <input type="radio" name="repotype" value="1" checked="checked"/>
+            <xar:else/>
+                <input type="radio" name="repotype" value="1"/>
+            </xar:if>
+
+            <label><a href="http://www.bitkeeper.com"><xar:mlstring>BitKeeper</xar:mlstring></a></label>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:if condition="$repotype == 2">
+                <input type="radio" name="repotype" value="2" checked="checked"/>
+            <xar:else/>
+                <input type="radio" name="repotype" value="2"/>
+            </xar:if>
+            <label><a href="http://venge.net/monotone"><xar:mlstring>Monotone</xar:mlstring></a> <xar:mlstring>(work in progress)</xar:mlstring></label>
+        </div>
+    </fieldset>
+    <input type="submit" value="#xarML('Next')#"/>
+</form>

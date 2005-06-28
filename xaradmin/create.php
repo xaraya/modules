@@ -26,11 +26,13 @@ function bkview_admin_create($args)
     
     if(!xarVarFetch('reponame','str::',$reponame)) return;
     if(!xarVarFetch('repopath','str::',$repopath)) return;
+    if(!xarVarFetch('repotype','int:1:2', $repotype)) return;
+    if(!xarVarFetch('repobranch','str:',$repobranch, '', XARVAR_NOT_REQUIRED)) return;
     extract($args);
     
     if (!xarSecConfirmAuthKey()) return;
     
-    $repoid = xarModAPIFunc('bkview','admin','create',array('reponame' => $reponame,'repopath' => $repopath));
+    $repoid = xarModAPIFunc('bkview','admin','create',array('reponame' => $reponame,'repopath' => $repopath, 'repotype' => $repotype, 'repobranch' => $repobranch));
     if (!isset($repoid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     xarSessionSetVar('statusmsg', xarML('Repository registered'));

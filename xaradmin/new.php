@@ -1,8 +1,6 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Create new repository entry
  *
  * @package modules
@@ -13,8 +11,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-
-
 /**
  * add new item
  * This is a standard function that is called whenever an administrator
@@ -24,22 +20,65 @@ function bkview_admin_new($args)
 {
     // Security check
     if (!xarSecurityCheck('AdminAllRepositories')) return;
- 
-    if(!xarVarFetch('repopath',"str::",$repopath,'/var/bk/repo')) return;
+    
+    // First see in which step we got passed
+    if(!xarVarFetch('step','int:1:3',$step,1)) return;
+    if(!xarVarFetch('stepback','str:',$stepback, null, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('reponame',"str::",$reponame,'<'.xarML('untitled').'>')) return;
+    $data['reponame'] = $reponame;
+    if(!xarVarFetch('repotype','int:1:2',$repotype,1)) return;
+    $data['repotype'] = $repotype;
+    $data['branches'] = xarML('Not retrieved yet');
+    if(!xarVarFetch('repopath',"str::",$repopath,$repotype==1 ? '/var/bk/repo' : '/var/mtn/repo.db')) return;
+    $data['repopath'] = $repopath;
+    switch ($step) {
+        case 1: // Choosing repository type
+            break;
+        case 2: // Configuring the chosen type
+            if(isset($stepback)) $step = 1;
+            break;
+        case 3: // Finishing up and adding the repo, if all goes well
+            if(!xarVarFetch('mtfetch','str:',$mtfetch, null, XARVAR_NOT_REQUIRED)) return;
+            if(isset($mtfetch)) {
+                // Stay in the second phase, but retrieve the branches for the select
+                $step = 2;
+                if(!file_exists($repopath)) {
+                    $data['branches'] = xarML('Database not found');
+                } else {
+                    $data['branches'] = array();
+                }
+            } elseif(isset($stepback)) {
+                $step = 1;
+            } else {
+                // Add the repository with the data provided
+                if(!xarVarFetch('repobranch','str:',$repobranch,'')) return;
+                $args = array(
+                            'repotype' => $repotype,
+                            'reponame' => $reponame,
+                            'repopath' => $repopath,
+                            'repobranch' => $repobranch);
+                return xarModFunc('bkview','admin','create', $args);
+                            
+            }
+            break;
+    }
+    if(!xarVarFetch('repopath',"str::",$repopath,$repotype==1 ? '/var/bk/repo' : '/var/mtn/repo.db')) return;
+    $data['repopath'] = $repopath;
     extract($args);
 
     // Generate the items which need to be in the form
     $data['authid'] = xarSecGenAuthKey();
     $data['submitbutton'] = xarVarPrepForDisplay(xarML('Add repository'));
-    $data['reponame'] = $reponame;
-    $data['repopath'] = $repopath;
+    
+    
     $item = array();
     $item['module'] = 'bkview';
     $hooks = array();
     $hooks = xarModCallHooks('item','new','',$item);
     $data['hooks'] = $hooks;
     $data['pageinfo']=xarML('Register a new repository');
+    $data['step'] = $step;
+    
     return $data;
 }
 

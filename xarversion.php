@@ -2,7 +2,7 @@
 // $Id: xarversion.php,v 1.2 2002/08/09 18:46:29 johnny Exp $
 $modversion['name'] = 'bkview';
 $modversion['id'] = '4702';
-$modversion['version'] = '1.2.0';
+$modversion['version'] = '2.0.0';
 $modversion['displayname']      = xarML('BKView');
 $modversion['description'] = 'BitKeeper repository viewer';
 $modversion['credits'] = 'xardocs/credits.txt';

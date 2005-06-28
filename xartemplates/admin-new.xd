@@ -1,12 +1,15 @@
 <xar:template file="admin-menu" type="module"/>
 
-<!-- form for editting or adding a repository -->
-<form method="post" action="&xar-modurl-bkview-admin-create;">
-  <xar:template file="repo-form" type="module"/>
-</form>
-
-<div>
-    <xar:mlstring>Maybe you want me to try to</xar:mlstring> 
-      <a href="&xar-modurl-bkview-admin-detectrepos;"><xar:mlstring>detect</xar:mlstring></a>
-    <xar:mlstring> the repositories installed on this server?</xar:mlstring>
-</div>  
+<xar:if condition="!isset($step) or $step==1">
+    <!-- Choose the desired type of repository to add -->
+    <xar:template file="repotype-form" type="module"/>
+<xar:elseif condition="$step == 2"/>
+    <!-- Configure the specifics for the chose type -->
+    <xar:if condition="$repotype == 1">
+        <!-- Bitkeeper -->
+        <xar:template file="bk-form" type="module"/>
+    <xar:elseif condition="$repotype == 2"/>
+        <!-- Monotone -->
+        <xar:template file="mt-form" type="module"/>
+    </xar:if>
+</xar:if>
