@@ -26,7 +26,8 @@ function images_userapi_handle_image_tag($args)
 
     $format = 'array(%s)';
     foreach ($args as $key => $value) {
-        if (substr($value,0,1) == '$') {
+        // preserve support for $info[fileId] as before
+        if (substr($value,0,1) == '$' && strpos($value,'[') === FALSE) {
             $items[] = "'$key' => $value";
         } else {
             $items[] = "'$key' => \"$value\"";
