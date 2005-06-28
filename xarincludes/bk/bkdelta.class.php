@@ -49,13 +49,13 @@ class bkDelta extends scmDelta
         $this->comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
    }
     
-    function bkDiffs() 
+    function Diffs() 
    {
         $cmd="bk diffs -hu -R".$this->rev." ".$this->file;
         return $this->repo->_run($cmd);
    }
     
-    function bkAnnotate() 
+    function Annotate() 
    {
         $cmd="bk annotate -aum -r".$this->rev." ".$this->file;
         return $this->repo->_run($cmd);

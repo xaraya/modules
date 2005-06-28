@@ -42,7 +42,7 @@ class bkFile extends scmFile
         return $this;
    }
     
-    function bkHistory($user) 
+    function History($user) 
    {
         $formatstring="'";
         if($user != '') $formatstring .="\$if(:P:=$user){";
@@ -85,7 +85,7 @@ class bkFile extends scmFile
         return $csets;
    }
     
-    function bkChangeSet($rev) 
+    function ChangeSet($rev) 
    {
         // Return the corresponding cset for the specified delta
         if($this->_file == 'ChangeSet') return $rev;
@@ -93,7 +93,7 @@ class bkFile extends scmFile
         $cset = $this->_repo->_run($cmd);
         return $cset[0];
    }
-    function bkTag($rev) 
+    function Tag($rev) 
    {
         // Because the ChangeSet file has all tags, it's kinda silly to include it
         // besides, nobody is interested in the ChangeSet file but me
@@ -113,7 +113,7 @@ class bkFile extends scmFile
         return '';
    }
 
-    function bkAbsoluteName()
+    function AbsoluteName()
     {
         return $this->_repo->_root . '/' . $this->_file;
     }

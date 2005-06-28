@@ -31,7 +31,7 @@ function bkview_user_deltaview($args)
     // If we also got a file, we interpret rev as delta and determine the cset rev
     if ($file != 'ChangeSet') {
         $the_file = new bkFile($repo,$file);
-        $rev = $the_file->bkChangeSet($rev);
+        $rev = $the_file->ChangeSet($rev);
     }
     
     // This creates a property array with the deltas in the cset in the cset object

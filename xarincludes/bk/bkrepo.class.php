@@ -96,7 +96,7 @@ class bkRepo extends scmRepo
     }
     
     // FIXME: this is a method of a delta
-    function bkChangeSet($file,$rev) 
+    function ChangeSet($file,$rev) 
     {
         if($file == 'ChangeSet') return $rev;
         $file = __fileproper($file);

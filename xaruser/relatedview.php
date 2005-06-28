@@ -30,7 +30,7 @@ function bkview_user_relatedview($args)
     $the_file = new bkFile($repo,$file);
 
     // We this here to keep xar API functions out of the bk class.
-    $icon = xarModAPIFunc('bkview','user','geticon',array('file' => $the_file->bkAbsoluteName()));
+    $icon = xarModAPIFunc('bkview','user','geticon',array('file' => $the_file->AbsoluteName()));
     
     $changesets =& $the_file->ChangeSets();
 

@@ -33,7 +33,7 @@ function bkview_user_annotateview($args)
     $delta->repoid = $repoid;
     $data['delta'] = (array) $delta;
     
-    $annotate = $delta->bkAnnotate();
+    $annotate = $delta->Annotate();
     $annolines =array();
     $data['annolines']=array();
     $counter=1;

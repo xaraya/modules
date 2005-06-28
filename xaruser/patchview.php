@@ -27,7 +27,7 @@ function bkview_user_patchview($args)
     if($file != 'ChangeSet') {
         // rev is a delta revision
         $deltarev = $rev;
-        $csetrev = $repo->bkChangeSet($file,$rev);
+        $csetrev = $repo->ChangeSet($file,$rev);
     } else {
         $csetrev = $rev;
     }
@@ -53,7 +53,7 @@ function bkview_user_patchview($args)
             $delta->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/' . $delta->file));
             $deltalist[$counter] = (array) $delta;
             
-            $diff=$delta->bkDiffs();
+            $diff=$delta->Diffs();
             $deltalist[$counter]['difflines']=array();
             $linecounter=1;
             while(list(,$line) = each($diff)) {

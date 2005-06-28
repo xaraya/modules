@@ -34,9 +34,9 @@ function bkview_user_historyview($args)
 
     $the_file=new bkFile($repo,$file);
     
-    $icon = xarModAPIFunc('bkview','user','geticon', array('file' => $the_file->bkAbsoluteName()));
+    $icon = xarModAPIFunc('bkview','user','geticon', array('file' => $the_file->AbsoluteName()));
     // Get an array of delta's
-    $history= $the_file->bkHistory($user);
+    $history= $the_file->History($user);
     foreach($history as $rev => $delta) {
         $delta->repoid = $repoid;
         $delta->icon = $icon;
