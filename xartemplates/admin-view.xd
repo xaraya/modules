@@ -39,8 +39,6 @@
         <xar:base-include-javascript filename="openDialog.js" />
         <xar:base-include-javascript module="base" filename="checkall.js" />
 
-        <form name="viewfiles" id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
-        
         <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
             <tr>
                 <th><a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>Select</xar:mlstring></a></th>
@@ -49,6 +47,7 @@
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
             </tr>   
             <xar:if condition="count($items)">
+                <form name="viewfiles" id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
                 <xar:loop name="$items">
                     <xar:if condition="(($loop:index + 1) % 2)">
                         <tr>
@@ -89,9 +88,9 @@
                 </tr>
                 <tr>
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
-                        <xar:set name="colspan">3</xar:set>
-                    <xar:else />
                         <xar:set name="colspan">4</xar:set>
+                    <xar:else />
+                        <xar:set name="colspan">5</xar:set>
                     </xar:if>
                     <td colspan="#$colspan#" class="xar-accent xar-accent-outline">
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
@@ -114,23 +113,24 @@
                             </tr>
                         </table>
                     </td>
-                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                </tr>                                    
+                </form>
+                <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                    <tr>
                         <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
-                            <td class="xar-accent">
+                            <td colspan="#$colspan#" class="xar-accent">
                                 <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                                     <tr>
-                                        <td width="100%" align="center">
-                                            <center>
+                                        <td width="100%" align="right">
                                             <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
                                             <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
-                                            </center>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </form>
-                    </xar:if>
-                </tr>                                    
+                    </tr>                                    
+                </xar:if>
             <xar:else />
                 <tr>
                     <td class="xar-norm" colspan="4" align="center">
@@ -143,6 +143,5 @@
                 </tr>
             </xar:if>
         </table>
-        </form>
     </div>
 </div>
