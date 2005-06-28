@@ -30,6 +30,10 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
        $tpl_prep = FALSE;
     }
 
+    // Make sure the caching configuration array is initialized 
+    // so we don't run into possible errors later.
+    $cachingConfiguration = array();
+
     switch ($from) {
 
     case 'db':
@@ -70,7 +74,6 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
             $result =& $dbconn->Execute($sql,array($modBaseInfo['systemid']));
             if(!$result) { return; }
             
-            $cachingConfiguration = array();
             while (!$result->EOF) {
                 list($name, $value) = $result->fields;
                 $result->MoveNext();
