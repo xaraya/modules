@@ -32,6 +32,14 @@ function headlines_userapi_process($args)
         return;
     }
 
+    // Check what makes a headline unique
+    $uniqueid = xarModGetVar('headlines','uniqueid');
+    if (!empty($uniqueid)) {
+        $uniqueid = split(';',$uniqueid);
+    } else {
+        $uniqueid = array();
+    }
+
     // Create a need feedParser object
     $p = new feedParser();
 
@@ -58,7 +66,32 @@ function headlines_userapi_process($args)
                             $link = '';
                         }
 
-                        $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description);
+                        if (!empty($uniqueid)) {
+                            $params = array();
+                            foreach ($uniqueid as $part) {
+                                switch ($part) {
+                                    case 'feed':
+                                        $params[$part] = $feedfile;
+                                        break;
+                                    case 'link':
+                                        $params[$part] = $link;
+                                        break;
+                                    case 'title':
+                                        $params[$part] = $title;
+                                        break;
+                                    case 'description':
+                                        $params[$part] = $description;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            $id = md5(serialize($params));
+                            unset($params);
+                        } else {
+                            $id = md5(serialize($newline));
+                        }
+                        $feedcontent[] = array('id' => $id, 'title' => $title, 'link' => $link, 'description' => $description);
                 }
             }
         }

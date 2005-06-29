@@ -67,6 +67,34 @@
                 </xar:foreach>
                 </select>
             </p>
+            <p class="param">
+                <label for="uniqueid">
+                    <span class="help" title="#xarML('Determine what makes a headline unique.')#">
+                        <xar:mlstring>
+                            Unique Identifier for Import
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:set name="options">
+                array('feed;link' => xarML('Feed + Link'),
+                      'feed;title' => xarML('Feed + Title'),
+                      'feed;title;link' => xarML('Feed + Title + Link'),
+                      'feed;title;link;description' => xarML('Feed + Title + Link + Description'),
+                      'link' => xarML('Link across all feeds')
+                     )
+                </xar:set>
+                <xar:set name="uniqueid">xarModGetVar('headlines','uniqueid')</xar:set>
+                <select name="uniqueid" id="uniqueid">
+                    <option value=""></option>
+                <xar:foreach in="$options" key="$id" value="$val">
+                    <xar:if condition="!empty($uniqueid) and $uniqueid eq $id">
+                        <option value="#$id#" selected="selected">#$val#</option>
+                    <xar:else/>
+                        <option value="#$id#">#$val#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </p>
             </xar:if>
             <xar:if condition="xarModIsAvailable('magpie')">
             <p class="param">

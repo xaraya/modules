@@ -21,11 +21,10 @@ function headlines_user_main()
         $link = $links[$i];
 
         // Check and see if a feed has been supplied to us.
-        if(isset($link['url'])) {
-            $feedfile = $link['url'];
-        } else {
-            $feedfile = "";
+        if (empty($link['url'])) {
+            continue;
         }
+        $feedfile = $link['url'];
 
         if (xarModGetVar('headlines', 'magpie')){
             $links[$i] = xarModAPIFunc('magpie',
@@ -39,8 +38,8 @@ function headlines_user_main()
                                   array('feedfile' => $feedfile));
         }
 
-        if (!empty($data['warning'])){
-            $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
+        if (!empty($links[$i]['warning'])){
+            $msg = xarML('There is a problem with this feed : #(1)', $links[$i]['warning']);
             xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }

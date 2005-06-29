@@ -29,6 +29,8 @@ function headlines_init()
     $dbconn =& xarDBGetConn();
     $table =& xarDBGetTables();
 
+    xarDBLoadTableMaintenanceAPI();
+
     // Create tables
     $headlinesTable = xarDBGetSiteTablePrefix() . '_headlines';
 
@@ -89,6 +91,7 @@ function headlines_init()
     xarModSetVar('headlines', 'itemsperpage', 20);
     xarModSetVar('headlines','importpubtype', 0);
     xarModSetVar('headlines','showfeeds', '');
+    xarModSetVar('headlines', 'uniqueid', 'feed;link');
 
     // Register Masks
     xarRegisterMask('OverviewHeadlines','All','headlines','All','All','ACCESS_OVERVIEW');
@@ -112,16 +115,18 @@ function headlines_init()
  */
 function headlines_upgrade($oldVersion)
 {
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $headlinesTable = $xartable['headlines'];
+
+    xarDBLoadTableMaintenanceAPI();
+
     // Upgrade dependent on old version number
     switch($oldVersion) {
-     case '0.1':
+        case '0.1':
             // Version 0.1 didn't have a 'order' field, it was added
             // in version 0.2
-
-            // Get database setup
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $headlinestable = $xartable['headlines'];
 
             // Add a column to the table
             $query = xarDBAlterTable(array('table' => $headlinestable,
@@ -134,26 +139,15 @@ function headlines_upgrade($oldVersion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            return headlines_upgrade('0.2');
-            continue;
+            // fall through to next upgrade
 
         case '0.2':
-            return headlines_upgrade('0.2.0');
-            continue;
         case '0.2.0':
             xarModSetVar('headlines', 'SupportShortURLs', 1);
-            return headlines_upgrade('0.9');
-            continue;
+            // fall through to next upgrade
+
         case '0.9':
-            return headlines_upgrade('0.9.0');
-            continue;
-
         case '0.9.0':
-            // Get database setup
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $headlinesTable = $xartable['headlines'];
-
             // Index the hid field
             $index = array('name'      => 'i_' . $headlinesTable . '_hid',
                            'fields'    => array('xar_hid'),
@@ -189,12 +183,10 @@ function headlines_upgrade($oldVersion)
                                'register_block_type',
                                array('modName'  => 'headlines',
                                      'blockType'=> 'cloud'))) return;
-           return headlines_upgrade('1.0.0');
-           continue;
+            // fall through to next upgrade
 
        case '1.0.0':
-           return headlines_upgrade('1.0.1');
-           continue;
+            // fall through to next upgrade
 
        case '1.0.1': //current version
            break;
@@ -213,6 +205,8 @@ function headlines_delete()
     // Get database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+
+    xarDBLoadTableMaintenanceAPI();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['headlines']);

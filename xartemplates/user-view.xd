@@ -10,6 +10,7 @@
 <xar:else/>
     <xar:set name="showimport">0</xar:set>
 </xar:if>
+<xar:set name="magpie">xarModGetVar('headlines','magpie')</xar:set>
 <xar:if condition="empty($warning)">
     <xar:if condition="!empty($chandesc)">
          <p>#$chandesc#</p>
@@ -26,7 +27,14 @@
                 <p>#$loop:item['description']#</p>
                 <xar:if condition="!empty($showimport)">
                     <p class="xar-sub">
+                    <xar:if condition="!empty($magpie)">
+<xar:comment>
+    Use old-style import link until magpie process() also generates unique ids
+</xar:comment>
                         [ <a href="#xarModUrl('headlines', 'admin', 'importitem', array('theme' => 'print', 'title' => $loop:item['title'], 'description' => $loop:item['description'], 'authid' => $authid, 'hid' => $hid))#"><xar:mlstring>Import to News Queue</xar:mlstring></a> ]
+                    <xar:else/>
+                        [ <a href="#xarModUrl('headlines', 'admin', 'import', array('hid' => $hid, 'iid' => $loop:item['id'], 'authid' => $authid))#"><xar:mlstring>Import to News Queue</xar:mlstring></a> ]
+                    </xar:if>
                     </p>
                 </xar:if>
             </xar:if>
