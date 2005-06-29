@@ -2,6 +2,9 @@
 <xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
     <xar:template file="catnavigation" />
 </xar:if>
+<div class="xar-accent">
+    <xar:mlstring>Note: you can override this template for a particular object by using showview-[objectname].xd</xar:mlstring>
+</div>
 <xar:if condition="!empty($items) and count($items) gt 0">
     <table border="0" cellspacing="0" cellpadding="4">
     <tr>

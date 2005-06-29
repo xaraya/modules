@@ -5,7 +5,33 @@
 <xar:if condition="empty($objectlabel)">
   <h2><xar:mlstring>View Object</xar:mlstring></h2>
 
-  <xar:mlstring>You can specify a default object in xaruser/main.php, or pass it via the URL as object=...</xar:mlstring>
+  <p>
+    <xar:mlstring>
+      This module presents an experimental <b>object-centric approach</b> [object=...&amp;method=...]
+      to complement the normal <b>module-centric approach</b> [module=...&amp;func=...] used by Xaraya 1.0.
+      Also available in Xaraya is a <b>BL-centric approach</b>, where the content of your site is determined
+      entirely via templates, using the appropriate API calls, BL tags and sub-templates to handle the
+      page requests.
+    </xar:mlstring>
+  </p>
+
+  <p>
+    <xar:mlstring>In order to try this out, you can specify a default object in xaruser/main.php, or pass it via the URL as object=...</xar:mlstring>
+  </p>
+
+  <p>
+    <xar:mlstring>Here is a sample list of objects to get you started :</xar:mlstring>
+  </p>
+
+  <xar:set name="objects">xarModAPIFunc('dynamicdata','user','getobjects')</xar:set>
+  <xar:set name="modid">xarModGetIDFromName('dynamicdata')</xar:set>
+  <ul>
+  <xar:foreach in="$objects" key="$itemid" value="$objectinfo">
+    <xar:if condition="$itemid gt 2 and $objectinfo['moduleid'] eq $modid">
+      <li><a href="#xarModURL('object','user','main',array('object' => $objectinfo['name']))#">#$objectinfo['label']#</a> </li>
+    </xar:if>
+  </xar:foreach>
+  </ul>
 
 <xar:else/>
   <h2><xar:ml><xar:mlstring>View #(1)</xar:mlstring><xar:mlvar>#$objectlabel#</xar:mlvar></xar:ml></h2>

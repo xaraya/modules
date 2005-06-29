@@ -1,5 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
+<div class="xar-accent">
+    <xar:mlstring>Note: you can override this template for a particular object by using showform-[objectname].xd</xar:mlstring>
+</div>
 <xar:if condition="!empty($properties)">
     <xar:foreach in="$properties" key="$name" value="$property">
         <tr align="left" valign="middle">

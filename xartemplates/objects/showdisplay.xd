@@ -4,6 +4,9 @@
 <xar:else/>
     <a href="#xarModURL('object','user','main',array('object' => $objectname))#"><xar:mlstring>View All</xar:mlstring></a>
 </xar:if>
+<div class="xar-accent">
+    <xar:mlstring>Note: you can override this template for a particular object by using showdisplay-[objectname].xd</xar:mlstring>
+</div>
 <xar:if condition="!empty($properties)">
     <table border="0" cellspacing="0" cellpadding="4">
     <xar:foreach in="$properties" key="$name" value="$property">
