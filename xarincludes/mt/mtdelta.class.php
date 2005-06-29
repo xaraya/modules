@@ -32,3 +32,4 @@ class mtDelta extends scmDelta
         return $lines;
     }
 }
+?>
