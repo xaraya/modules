@@ -137,6 +137,12 @@ class bkRepo extends scmRepo
         }
     }
 
+    // Instantiate a changeset
+    function getChangeSet($rev)
+    {
+        return new bkChangeSet($this, $rev);
+    }
+    
     // Get changesets
     function ChangeSets($user, $range,$flags = 0)
     {

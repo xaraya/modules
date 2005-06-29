@@ -90,6 +90,11 @@ class mtRepo extends scmRepo
         return $revs;
     }
     
+    function getChangeSet($rev)
+    {
+        return new mtChangeSet($this, $rev);
+    }
+    
     function ChangeSets($user, $range='',$flags = 0)
     {
         // Need to get:

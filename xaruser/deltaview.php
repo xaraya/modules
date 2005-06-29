@@ -35,7 +35,7 @@ function bkview_user_deltaview($args)
     }
     
     // This creates a property array with the deltas in the cset in the cset object
-    $changeset= new bkChangeSet($repo,$rev);
+    $changeset= $repo->getChangeSet($rev);// new bkChangeSet($repo,$rev);
     $changeset->repoid = $repoid;
     $changeset->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
     $dlist = $changeset->deltas;
