@@ -73,6 +73,50 @@ class scmRepo
       return $text;
     }
      
+    /**
+     * Conver a range specification to utc point(s) in time
+     *
+     * @param string $range Range specifier as in bk terms
+     *
+     */
+    function RangeToUtcPoints($range = '')
+    {
+        $utcpoints = array(
+                    'start' => '00000000000000',
+                    'end'   => date('YmdHis'));
+        if($range == '') return $utcpoints;
+        
+        // Get the number specifier
+        // FIXME: this assumes a negative number
+        $number = (-(int) $range);
+               
+        // Converts range specification to text to display
+        $period = $number;
+        switch (strtolower($range[strlen($range)-1])) {
+            case 'y':
+                $period *= 12;         //-> to months;
+            case 'm':
+                // FIXME: make this correct
+                $period *= (13.0/3.0); //-> to weeks
+            case 'w':
+                $period *= 7;          //-> to days
+            case 'd':
+                $period *= 24;         //-> to hours
+            case 'h':
+                $period *= 3600;       //-> to seconds
+                break;
+            default:
+                $period = 0;
+        }
+        // Period now contains the number of seconds specifed in the range specifier
+        $now = date('U');
+        // FIXME: This assumes range is always negative
+        $past = $now - $period; 
+        $utcpoints['start'] = date('YmdHis', $past);
+        return $utcpoints;
+    }
+    
+    
     function CountChangeSets($range='', $merge=false,$user='')
     {
         $out = $this->GetChangeSets($range,$merge,$user);

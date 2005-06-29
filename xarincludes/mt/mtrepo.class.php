@@ -75,6 +75,11 @@ class mtRepo extends scmRepo
     function GetChangeSets($range='', $merge=false, $user='')
     {
         // Only getting revision id's as output
+        // TODO: take $user into account
+        // TODO: take $merge into account
+        // TODO: take $range into account
+        $utcpoints = scmRepo::RangeToUtcPoints($range);
+        
         $sql = "SELECT id FROM revision_certs ";
         $result =& $this->_dbconn->execute($sql);
         while(!$result->EOF) {
@@ -85,12 +90,15 @@ class mtRepo extends scmRepo
         return $revs;
     }
     
-    function ChangeSets($user, $range,$flags = 0)
+    function ChangeSets($user, $range='',$flags = 0)
     {
         // Need to get:
         // tag, age, author, rev id, utc timestamp, comments
-         
-        $sql = "SELECT authors.id, dates.value, comments.value
+        
+        // Get the boundaries of what to get
+        $utcpoints = scmRepo::RangeToUtcPoints($range);
+        // var_dump($utcpoints); die();
+        $sql = "SELECT authors.id, authors.value, dates.value, comments.value
                 FROM revision_certs as authors, 
                      revision_certs as dates,
                      revision_certs as comments
@@ -102,7 +110,38 @@ class mtRepo extends scmRepo
         $bindvars = array('author','date','changelog');
         $result =& $this->_dbconn->execute($sql, $bindvars);
         $csets = array(); $tags = array();
-        // return array of cset objects indexed by revid
+        while(!$result->EOF) {
+            //var_dump($result->fields); die();
+            list($revid, $author, $date, $comment) = $result->fields;
+            
+            $add = false;
+            // No user specified, add it
+            if($user == '') $add=true;
+            // if user has a value and it matches, add it
+            if($user!='' && base64_decode($author) == $user) $add=true;
+            // Check the range
+            $date = $this->iso8601_to_utc(base64_decode($date));
+            if($date > $utcpoints['start'] && $date < $utcpoints['end']) {
+                $add = true;
+            } else {
+                $add = false;
+            }
+            if($add) {
+            //if(count($csets) < 10 ) {
+                $cset = (object) null;
+                $cset->file ='ChangeSet';
+                $cset->tag = 'TBD';
+                $cset->age = 'TBD';
+                $cset->author = base64_decode($author);
+                $cset->rev = $revid;
+                $cset->checkedout = false;
+                $cset->comments = nl2br(base64_decode($comment));
+                // Add it to the collection
+                $csets[$revid] = $cset;
+            }
+            $result->MoveNext();
+        }
+        return $csets;
     }
     
     
