@@ -18,7 +18,6 @@
 include_once "modules/bkview/xarincludes/scmrepo.class.php";
 class bkRepo extends scmRepo
 {
-    var $_root;     // where is the root of the repository
     var $_desc;     // what is the description of the repository
     var $_config;   // array with the configuration parameters
     var $_tagcsets; // array with the csets which have tags

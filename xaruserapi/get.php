@@ -65,7 +65,8 @@ function bkview_userapi_get($args)
     $result->Close();
 
     // Create the item array
-    $repo = scmRepo::construct(scmRepo::map($repotype),$repopath);
+    $args = array('repopath' => $repopath, 'repobranch' => $repobranch);
+    $repo = scmRepo::construct(scmRepo::map($repotype),$args);
     if(!$repo) $repopath = xarML("[INVALID]") . $repopath;
     $item = array('repoid'     => $repoid,
                   'reponame'   => $reponame,

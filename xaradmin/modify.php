@@ -1,9 +1,6 @@
 <?php
 
-
 /**
- * File: $Id$
- *
  * modify repository entry
  *
  * @package modules
@@ -15,9 +12,8 @@
 */
 
 /**
- * modify an item
- * This is a standard function that is called whenever an administrator
- * wishes to modify a current module item
+ * Modify the data for a registered repository
+ *
  * @param 'repoid' the id of the item to be modified
  */
 function bkview_admin_modify($args)
@@ -26,11 +22,10 @@ function bkview_admin_modify($args)
     if (!xarSecurityCheck('AdminAllRepositories')) return;
     
     if(!xarVarFetch('repoid','id',$repoid,NULL)) return;
-       extract($args);
+    extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    
 
     
     $item['module'] = 'bkview';
@@ -38,15 +33,15 @@ function bkview_admin_modify($args)
     $hooks = xarModCallHooks('item','modify',$repoid,$item);
     
     // Return the template variables defined in this function
-    $data['authid']= xarSecGenAuthKey();
+    $data['authid']       = xarSecGenAuthKey();
     $data['submitbutton'] = xarVarPrepForDisplay(xarML('Update repository'));
-    $data['hooks'] = $hooks;
-    $data['repoid'] = $repoid;
-    $data['reponame'] = $item['reponame'];
-    $data['repopath'] = $item['repopath'];
-    $data['repotype'] = $item['repotype'];
-    $data['repobranch'] = $item['repobranch'];
-    $data['pageinfo'] = xarML('Modify repository');
+    $data['hooks']        = $hooks;
+    $data['repoid']       = $repoid;
+    $data['reponame']     = $item['reponame'];
+    $data['repopath']     = $item['repopath'];
+    $data['repotype']     = $item['repotype'];
+    $data['repobranch']   = $item['repobranch'];
+    $data['pageinfo']     = xarML('Modify repository');
     return $data;
 }
 

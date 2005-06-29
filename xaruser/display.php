@@ -83,7 +83,7 @@ function bkview_user_display($args)
         $cutoff = array_search($timestamp,$keys);
         $nrofsets = array_sum(array_count_values(array_slice($stats,0,$cutoff)))-$correctwith;
         if(($nrofsets > 0) && ($nrofsets != $savesets)) {
-            $rangetext[$rangecode] = xarML('#(1) Changesets #(2)',$nrofsets, bkRepo::RangeToText("-$rangecode"));
+            $rangetext[$rangecode] = xarML('#(1) Changesets #(2)',$nrofsets, scmRepo::RangeToText("-$rangecode"));
         }
         $savesets = $nrofsets;
     }
