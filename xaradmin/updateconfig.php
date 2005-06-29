@@ -22,37 +22,22 @@
 function authldap_admin_updateconfig()
 {
     // Get parameters
-    list($ldapserver,
-         $portnumber,
-         $anonymousbind,
-         $binddn,
-         $uidfield,
-         $searchuserdn,
-         $adminid,
-         $adminpasswd,
-         $tls,
-         $adduser,
-         $adduseruname,
-         $adduseremail,
-         $storepassword,
-         $failover,
-         $activate,
-         $defaultgroup ) = xarVarCleanFromInput('ldapserver',
-                                                'portnumber',
-                                                'anonymousbind',
-                                                'binddn',
-                                                'uidfield',
-                                                'searchuserdn',
-                                                'adminid',
-                                                'adminpasswd',
-                                                'tls',
-                                                'adduser', 
-                                                'adduseruname', 
-                                                'adduseremail', 
-                                                'storepassword', 
-                                                'failover', 
-                                                'activate', 
-                                                'defaultgroup');
+    if (!xarVarFetch('ldapserver', 'str:1:', $ldapserver, '')) return;
+    if (!xarVarFetch('portnumber', 'str:1:', $portnumber, '')) return;
+    if (!xarVarFetch('anonymousbind', 'checkbox', $anonymousbind, false)) return;
+    if (!xarVarFetch('binddn', 'str:1:', $binddn, '')) return;
+    if (!xarVarFetch('uidfield', 'str:1:', $uidfield, '')) return;
+    if (!xarVarFetch('searchuserdn', 'checkbox', $searchuserdn, true)) return;
+    if (!xarVarFetch('adminid', 'str:1:', $adminid, '')) return;
+    if (!xarVarFetch('adminpasswd', 'str:1:', $adminpasswd, '')) return;
+    if (!xarVarFetch('tls', 'checkbox', $tls, false)) return;
+    if (!xarVarFetch('activate', 'checkbox', $activate, true)) return;
+    if (!xarVarFetch('failover', 'checkbox', $failover, true)) return;
+    if (!xarVarFetch('adduser', 'checkbox', $adduser, true)) return;
+    if (!xarVarFetch('storepassword', 'checkbox', $storepassword, true)) return;
+    if (!xarVarFetch('adduseruname', 'str:1:', $adduseruname, 'sn')) return;
+    if (!xarVarFetch('adduseremail', 'str:1:', $adduseremail, 'mail')) return;
+    if (!xarVarFetch('defaultgroup', 'str:1:', $defaultgroup, '')) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -126,7 +111,7 @@ function authldap_admin_updateconfig()
 
 
     // Get default users group
-    if (!isset($defaultgroup)) {
+    if (empty($defaultgroup)) {
         // See if Users role exists
         if( xarFindRole("Users"))
             $defaultgroup = 'Users';
@@ -137,7 +122,7 @@ function authldap_admin_updateconfig()
     // Groups variables
     include_once('modules/authldap/xarincludes/default_variables.php');
     foreach (array_keys($default_groups_variables) as $variable)
-        xarModSetVar('authldap', $variable, xarVarCleanFromInput($variable));
+        xarModSetVar('authldap', $variable, $variable);
 
 
     $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
