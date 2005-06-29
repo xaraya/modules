@@ -31,7 +31,7 @@ function bkview_user_patchview($args)
     } else {
         $csetrev = $rev;
     }
-    $changeset= new bkChangeSet($repo,$csetrev);
+    $changeset= $repo->getChangeSet($csetrev);
     $changeset->repoid = $repoid;
     $changeset->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
     
