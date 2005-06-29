@@ -39,23 +39,15 @@
 function xarldap_admin_updateconfig()
 {
     // Get parameters
-    list($ldapserver,
-         $portnumber,
-         $anonymousbind,
-         $binddn,
-         $uidfield,
-         $searchuserdn,
-         $adminid,
-         $adminpasswd,
-         $tls) = xarVarCleanFromInput('ldapserver', 
-                                      'portnumber', 
-                                      'anonymousbind', 
-                                      'binddn', 
-                                      'uidfield', 
-                                      'searchuserdn', 
-                                      'adminid', 
-                                      'adminpasswd',
-                                      'tls');
+    if (!xarVarFetch('ldapserver', 'str:1:', $ldapserver, '')) return;
+    if (!xarVarFetch('portnumber', 'str:1:', $portnumber, '')) return;
+    if (!xarVarFetch('anonymousbind', 'checkbox', $anonymousbind, false)) return;
+    if (!xarVarFetch('binddn', 'str:1:', $binddn, '')) return;
+    if (!xarVarFetch('uidfield', 'str:1:', $uidfield, '')) return;
+    if (!xarVarFetch('searchuserdn', 'checkbox', $searchuserdn, true)) return;
+    if (!xarVarFetch('adminid', 'str:1:', $adminid, '')) return;
+    if (!xarVarFetch('adminpasswd', 'str:1:', $adminpasswd, '')) return;
+    if (!xarVarFetch('tls', 'checkbox', $tls, false)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
