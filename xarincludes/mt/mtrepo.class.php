@@ -95,6 +95,21 @@ class mtRepo extends scmRepo
         return new mtChangeSet($this, $rev);
     }
     
+    function getDelta($file, $rev)
+    {
+        return new mtDelta($this, $file, $rev);
+    }
+    
+    // FIXME: This should be a method of a delta
+    // anyway, it tries to get the revision in which a certain delta appeared
+    function ChangeSet($file, $rev)
+    {
+        // This kinda sucks in monotone. How do you get a revision from a delta?
+        // the db model would force more or less to scan all revisions and look for the
+        // delta id in the data, which is obviously undoable 
+        
+    }
+    
     function ChangeSets($user, $range='',$flags = 0)
     {
         // Need to get:

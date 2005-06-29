@@ -24,16 +24,19 @@ function bkview_user_patchview($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $repo =& $item['repo'];
 
+    $changeset = (object) null;
     if($file != 'ChangeSet') {
         // rev is a delta revision
         $deltarev = $rev;
-        $csetrev = $repo->ChangeSet($file,$rev);
+        //$csetrev = $repo->ChangeSet($file,$rev);
     } else {
         $csetrev = $rev;
+        $changeset= $repo->getChangeSet($csetrev);
+        $changeset->repoid = $repoid;
+        $changeset->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
     }
-    $changeset= $repo->getChangeSet($csetrev);
-    $changeset->repoid = $repoid;
-    $changeset->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
+       
+    
     
     $data=array();
     $deltalist=array();
@@ -41,7 +44,7 @@ function bkview_user_patchview($args)
     $counter=1;
     // First get a list of filenames and revisions in this changeset
     if(isset($deltarev)) {
-        $delta = new bkDelta($repo, $file, $deltarev);
+        $delta = $repo->getDelta($file, $deltarev); //new bkDelta($repo, $file, $deltarev);
         $dlist[$deltarev] = $delta;
     } else {
         $dlist = $changeset->deltas;

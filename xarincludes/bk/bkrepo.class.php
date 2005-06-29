@@ -94,7 +94,7 @@ class bkRepo extends scmRepo
         return $this->_config[$var];
     }
     
-    // FIXME: this is a method of a delta
+    // FIXME: this should be a method of a delta
     function ChangeSet($file,$rev) 
     {
         if($file == 'ChangeSet') return $rev;
@@ -103,6 +103,11 @@ class bkRepo extends scmRepo
         $cset = $this->_run($cmd);
         return $cset[0];
     } 
+    
+    function getDelta($file,$rev)
+    {
+        return new bkDelta($this, $file, $rev);
+    }
     
     function GetChangeSets($range='',$merge=false,$user='') 
     {
