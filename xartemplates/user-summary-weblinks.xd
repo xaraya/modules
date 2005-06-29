@@ -7,6 +7,9 @@
         </xar:if>
         <a class="xar-title" href="#$redirect#">#$title#</a><br />
         <xar:mlstring>Description</xar:mlstring>: #$summary#<br />
+        <xar:if condition="!empty($notes)">
+            <xar:mlstring>Source</xar:mlstring>: #$notes#<br />
+        </xar:if>
         <xar:mlstring>Added on</xar:mlstring>:
         #xarLocaleGetFormattedDate('long',$pubdate)#
         #xarLocaleGetFormattedTime('long',$pubdate)#

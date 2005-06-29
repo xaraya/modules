@@ -14,6 +14,13 @@
 </td><td align="left">
 #$summary#
 </td></tr>
+<xar:if condition="!empty($notes)">
+<tr><td align="right">
+<xar:mlstring>Source</xar:mlstring>:
+</td><td align="left">
+#$notes#
+</td></tr>
+</xar:if>
 <tr><td align="right">
 <xar:mlstring>Added on</xar:mlstring>:
 </td><td align="left">
