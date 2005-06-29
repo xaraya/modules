@@ -22,17 +22,29 @@ function images_userapi_encode_shorturl($args)
     if (empty($fileId) || !is_numeric($fileId)) {
         return;
     } else {
-        $image = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+        // get the mime type from the arguments
+        if (!empty($fileType)) {
+            $type = explode('/', $fileType);
 
-        if (empty($image)) {
-            // fileId is nonexistant...
-            return;
+        // get the mime type from cache for resize()
+        } elseif (xarVarIsCached('Module.Images','imagemime.'.$fileId)) {
+            $fileType = xarVarGetCached('Module.Images','imagemime.'.$fileId);
+            $type = explode('/', $fileType);
+
+        // get the mime type from the database (urgh)
+        } else {
+            $image = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+
+            if (empty($image)) {
+                // fileId is nonexistant...
+                return;
+            }
+
+            $type = explode('/', $image['fileType']);
         }
 
-        $type = explode('/', $image['fileType']);
-
-        if ($type == 'jpeg')
-            $type = 'jpg';
+        if ($type[1] == 'jpeg')
+            $type[1] = 'jpg';
 
         $fileName = $fileId . '.' . $type[1];
     }

@@ -275,6 +275,13 @@ function images_userapi_resize($args)
             $url = $location;
         }
     } else {
+        // put the mime type in cache for encode_shorturl()
+        $mime = $image->getMime();
+        if (is_array($mime) && isset($mime['text'])) {
+            xarVarSetCached('Module.Images','imagemime.'.$src, $mime['text']);
+        } else {
+            xarVarSetCached('Module.Images','imagemime.'.$src, $mime);
+        }
         $url = xarModURL('images', 'user', 'display',
                          array('fileId' => is_numeric($src) ? $src : base64_encode($src),
                                'height' => $image->getHeight(),

@@ -31,37 +31,9 @@ function images_userapi_decode_shorturl($params)
         $fileId = $matches[1];
         $type   = $matches[2];
 
-        // jpg is actually jpeg mime subtype - use jpeg spelling for type check
-        if ($type == 'jpg')  {
-            $type = 'jpeg';
-        }
-
-        $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
-
-        if (!isset($fileInfo[$fileId]) || !count($fileInfo[$fileId])) {
-            $msg = xarML('Unable to display - file \'#(1)\' does not exist!', $params[1] );
-            xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_EXIST', new DefaultUserException($msg));
-            return;
-        } else {
-            $fileInfo = $fileInfo[$fileId];
-            $mimeType = explode('/', $fileInfo['fileType']);
-
-            // ensure that the jpeg mime subtype is 'jpeg'
-            if ($mimeType[1] == 'jpg') {
-                $mimeType[1] = 'jpeg';
-            }
-
-            if ($mimeType[0] != 'image' || $mimeType[1] != $type) {
-
-                $msg = xarML('Unable to display. File \'#(1)\' is either not an image or does not exist.', $params[1]);
-                xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_EXIST', new DefaultUserException($msg));
-                return;
-            } else {
-
-                $args['fileId'] = $fileId;
-                return array('display', $args);
-            }
-        }
+        // let the display function check whether this image exists or not
+        $args['fileId'] = $fileId;
+        return array('display', $args);
     }
 
 }
