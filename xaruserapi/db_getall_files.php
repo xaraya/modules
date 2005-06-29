@@ -110,13 +110,17 @@ function uploads_userapi_db_getall_files( $args )
 
     $revcache = array();
     $imgcache = array();
+    $usercache = array();
         
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         
         $fileInfo['fileId']        = $row['xar_fileentry_id'];
         $fileInfo['userId']        = $row['xar_user_id'];
-        $fileInfo['userName']      = xarUserGetVar('name',$row['xar_user_id']);
+        if (!isset($usercache[$fileInfo['userId']])) {
+            $usercache[$fileInfo['userId']] = xarUserGetVar('name',$fileInfo['userId']);
+        }
+        $fileInfo['userName']      = $usercache[$fileInfo['userId']];
         $fileInfo['fileName']      = $row['xar_filename'];
         $fileInfo['fileLocation']  = $row['xar_location'];
         $fileInfo['fileSize']      = $row['xar_filesize'];
@@ -134,6 +138,9 @@ function uploads_userapi_db_getall_files( $args )
         $fileInfo['fileDownload']  = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
         $fileInfo['fileURL']       = $fileInfo['fileDownload'];
         $fileInfo['DownloadLabel'] = xarML('Download file: #(1)', $fileInfo['fileName']);
+        if (!empty($fileInfo['fileLocation']) && file_exists($fileInfo['fileLocation'])) {
+            $fileInfo['fileModified'] = @filemtime($fileInfo['fileLocation']);
+        }
         
         if (stristr($fileInfo['fileLocation'], $importDir)) {
             $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'imports', $fileInfo['fileLocation']));

@@ -43,6 +43,8 @@
             <tr>
                 <th><a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>Select</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#"><xar:mlstring>File Name</xar:mlstring></a></th>
+                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'size'))#"><xar:mlstring>File Size</xar:mlstring></a></th>
+                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#"><xar:mlstring>File Date</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
             </tr>   
@@ -59,6 +61,8 @@
                                     #$loop:item['fileName']#
                                 </a>
                             </td>
+                            <td class="xar-norm" align="right">&nbsp;#$loop:item['fileSize']#</td>
+                            <td class="xar-norm" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
                             <td class="xar-norm" align="center">&nbsp;#$loop:item['userName']#</td>
                             <td class="xar-norm" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
                         </tr>
@@ -72,13 +76,15 @@
                                     #$loop:item['fileName']#
                                 </a>
                             </td>
+                            <td class="xar-accent" align="right">&nbsp;#$loop:item['fileSize']#</td>
+                            <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
                             <td class="xar-accent" align="center">&nbsp;#$loop:item['userName']#</td>
                             <td class="xar-accent" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
                         </tr>  
                     </xar:if>
                 </xar:loop>
                 <tr>
-                    <td colspan="4" class="xar-norm" align="center">
+                    <td colspan="6" class="xar-norm" align="center">
 <script language="JavaScript" type="text/javascript">
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
@@ -87,12 +93,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
-                        <xar:set name="colspan">4</xar:set>
-                    <xar:else />
-                        <xar:set name="colspan">5</xar:set>
-                    </xar:if>
-                    <td colspan="#$colspan#" class="xar-accent xar-accent-outline">
+                    <td colspan="6" class="xar-accent xar-accent-outline">
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                             <tr>
                                 <td width="100%">
@@ -118,7 +119,7 @@
                 <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
                     <tr>
                         <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
-                            <td colspan="#$colspan#" class="xar-accent">
+                            <td colspan="6" class="xar-accent">
                                 <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                                     <tr>
                                         <td width="100%" align="right">
@@ -133,7 +134,7 @@
                 </xar:if>
             <xar:else />
                 <tr>
-                    <td class="xar-norm" colspan="4" align="center">
+                    <td class="xar-norm" colspan="6" align="center">
                         <br />
                         <xar:mlstring>
                             There are currently no files to view with the filter you have chosen.
