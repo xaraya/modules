@@ -100,6 +100,11 @@ class mtRepo extends scmRepo
         return new mtDelta($this, $file, $rev);
     }
     
+    function getFile($file)
+    {
+        return new mtFile($this, $file);
+    }
+    
     // FIXME: This should be a method of a delta
     // anyway, it tries to get the revision in which a certain delta appeared
     function ChangeSet($file, $rev)
@@ -117,8 +122,24 @@ class mtRepo extends scmRepo
         
         // Get the boundaries of what to get
         $utcpoints = scmRepo::RangeToUtcPoints($range);
-        // var_dump($utcpoints); die();
-        $sql = "SELECT authors.id, authors.value, dates.value, comments.value
+
+        if($flags & SCM_FLAG_TAGGEDONLY) {
+            // Get only revisions which are tagged
+            $sql = "SELECT authors.id, authors.value, dates.value, comments.value, tags.value
+                FROM revision_certs as authors, 
+                     revision_certs as dates,
+                     revision_certs as comments,
+                     revision_certs as tags
+                WHERE authors.id = dates.id AND
+                      dates.id = comments.id AND
+                      comments.id = tags.id AND
+                      authors.name = ? AND
+                      dates.name = ? AND
+                      comments.name = ? AND
+                      tags.name = ?";
+            $bindvars = array('author','date','changelog','tag');
+        } else {
+            $sql = "SELECT authors.id, authors.value, dates.value, comments.value
                 FROM revision_certs as authors, 
                      revision_certs as dates,
                      revision_certs as comments
@@ -127,12 +148,17 @@ class mtRepo extends scmRepo
                       authors.name = ? AND
                       dates.name = ? AND
                       comments.name = ?";
-        $bindvars = array('author','date','changelog');
+            $bindvars = array('author','date','changelog');
+        }
         $result =& $this->_dbconn->execute($sql, $bindvars);
         $csets = array(); $tags = array();
         while(!$result->EOF) {
             //var_dump($result->fields); die();
-            list($revid, $author, $date, $comment) = $result->fields;
+            if($flags & SCM_FLAG_TAGGEDONLY) {
+                list($revid, $author, $date, $comment,$tag) = $result->fields;
+            } else {
+                list($revid, $author, $date, $comment) = $result->fields;
+            }
             
             $add = false;
             // No user specified, add it
@@ -150,7 +176,7 @@ class mtRepo extends scmRepo
             //if(count($csets) < 10 ) {
                 $cset = (object) null;
                 $cset->file ='ChangeSet';
-                $cset->tag = 'TBD';
+                $cset->tag = isset($tag) ? base64_decode($tag) : '';
                 $cset->age = 'TBD';
                 $cset->author = base64_decode($author);
                 $cset->rev = $revid;

@@ -109,6 +109,11 @@ class bkRepo extends scmRepo
         return new bkDelta($this, $file, $rev);
     }
     
+    function getFile($file)
+    {
+        return new bkFile($this,$file);
+    }
+    
     function GetChangeSets($range='',$merge=false,$user='') 
     {
         $params='';

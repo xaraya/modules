@@ -32,7 +32,7 @@ function bkview_user_historyview($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $repo =& $item['repo'];
 
-    $the_file=new bkFile($repo,$file);
+    $the_file= $repo->getFile($file);//new bkFile($repo,$file);
     
     $icon = xarModAPIFunc('bkview','user','geticon', array('file' => $the_file->AbsoluteName()));
     // Get an array of delta's
