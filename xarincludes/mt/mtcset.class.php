@@ -76,7 +76,45 @@ class mtChangeSet // In monotone a changeset is NOT a delta on the changeset fil
     function DeltaList()
     {
         // TODO: Guess!
-        return array();
+        $sql = "SELECT data FROM revisions WHERE id=?";
+        $result =& $this->repo->_dbconn->execute($sql,array($this->rev));
+        if(!$result) return;
+        
+        $deltas = array();
+        if(!$result->EOF) {
+            // data is base64 encoded and gzipped
+            list($data) = $result->fields;
+            $data = base64_decode($data);
+            // We dont want the gzip header here, strip it off, then uncompress
+            $data = gzinflate(substr($data, 10));
+            // At this point we have a larg string describing all the changes in this revision.
+            // Kinda lame, but we need to parse this ourselves to get the information on the deltas
+            // This is the format:
+            // <!-- for a normal delta -->
+            // patch "monotone.texi"
+            //  from [6fb3fe1d81b2cc330e4dc04e54df634721817965]
+            //    to [d5a3fc65738c06b2405df1245da00cf8195fddbc]
+            // <!-- for a 1.0 delta -->
+            // patch "tests/t_db_kill_branch_locally.at"
+            //  from []
+            //    to [dc67769b12aea0c26b6d4e3b2347c56ee99cde4b]
+            // These blocks are separated by blank lines.
+            //
+            // We need to extract from this:
+            // - the file
+            // - the delta revision
+            // and pass these to the delta class and construct a delta from it.
+            // So, let's do some regex matching on the data
+            $matches = array();
+            $pattern = '/patch \"(.*)\"\n from \[(.*)\]\n   to \[(.*)\]/';
+            $flags = PREG_SET_ORDER;
+            if(preg_match_all($pattern, $data, $matches, $flags)) {
+                foreach($matches as $match) {
+                    $deltas[$match[3]] = new mtDelta($this->repo, $match[1], $match[3]);
+                }
+            }
+        }
+        return $deltas;
     }
 }
 ?>
