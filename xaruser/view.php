@@ -38,10 +38,10 @@ function bkview_user_view()
         
         // Clean up the item text before display
         $item['reponame'] = xarVarPrepForDisplay($item['reponame']);
-        $data['items'][] = $item;
+        $data['items'][$item['repotype']][] = $item;
     }
 
-    $data['pageinfo']=xarML('View available bitkeeper repositories');
+    $data['pageinfo']=xarML('View available repositories');
     return $data;
 }
 ?>

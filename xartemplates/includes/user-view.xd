@@ -1,26 +1,39 @@
 <div id="bkview-modbody-id" class="xar-mod-body" >
     <xar:template file="user-menu" type="module" />
     <div style="float:left; margin-top: 1em;">
-        <xar:if condition="count($items) != 0">
-            <table width="100%">
-                <xar:loop name="$items">
-                    <tr>
-                        <td>
-                            <xar:if condition="empty($loop:item['link'])">
-                                #$loop:item['reponame']# 
-                            <xar:else />
-                                <a href="#$loop:item['link']#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
-                                    #$loop:item['reponame']#
-                                </a>
+        <ul>
+            <xar:if condition="count($items) != 0">
+                <xar:foreach in="$items" key="$repotype" value="$repos">
+                    <fieldset>
+                        <legend>
+                            <xar:if condition="$repotype ==1">
+                                <xar:mlstring>BitKeeper</xar:mlstring>
+                            <xar:elseif condition="$repotype == 2"/>
+                                <xar:mlstring>Monotone</xar:mlstring>
+                            <xar:else/>
+                                <xar:mlstring>Unknown</xar:mlstring>
                             </xar:if>
-                        </td>
-                    </tr>
-                </xar:loop>
-            </table>
-        <xar:else />
-            <xar:mlstring>
-                No repositories available
-            </xar:mlstring>
-        </xar:if>
+                        </legend>
+                        <xar:loop name="$repos">
+                            <li>
+                                <xar:if condition="empty($loop:item['link'])">
+                                    #$loop:item['reponame']# 
+                                <xar:else />
+                                    <a href="#$loop:item['link']#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+                                    #$loop:item['reponame']#
+                                    </a>
+                                </xar:if>
+                            </li>
+                        </xar:loop>
+                    </fieldset>
+                </xar:foreach>
+            <xar:else />
+                <li>
+                    <xar:mlstring>
+                        No repositories available
+                    </xar:mlstring>
+                </li>
+            </xar:if>
+        </ul>
     </div>
 </div>

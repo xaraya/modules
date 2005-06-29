@@ -173,7 +173,6 @@ class mtRepo extends scmRepo
                 $add = false;
             }
             if($add) {
-            //if(count($csets) < 10 ) {
                 $cset = (object) null;
                 $cset->file ='ChangeSet';
                 $cset->tag = isset($tag) ? base64_decode($tag) : '';
