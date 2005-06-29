@@ -150,16 +150,16 @@ class bkRepo extends scmRepo
         $params='-n '; $dspec = "'";
         
         // Do we want tagged only csets?
-        if($flags & BK_FLAG_TAGGEDONLY) $dspec .= "\$if(:TAG:){";
+        if($flags & SCM_FLAG_TAGGEDONLY) $dspec .= "\$if(:TAG:){";
         $dspec .= ":TAGS:|:AGE:|:P:|:REV:|:UTC:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
-        if($flags & BK_FLAG_TAGGEDONLY) $dspec .= "}";
+        if($flags & SCM_FLAG_TAGGEDONLY) $dspec .= "}";
         $dspec .= "'";
         
         // Do we want forward sorting?
-        if ($flags & BK_FLAG_FORWARD) $params.='-f ';
+        if ($flags & SCM_FLAG_FORWARD) $params.='-f ';
         
         // Do we want to show merge csets?
-        if (!($flags & BK_FLAG_SHOWMERGE)) {
+        if (!($flags & SCM_FLAG_SHOWMERGE)) {
             $dspec="'\$unless(:MERGE:){".substr($dspec,1,strlen($dspec)-2)."}'";
         } else {
             $params.='-e ';
@@ -395,48 +395,7 @@ class bkRepo extends scmRepo
      * Currently maintained on ad-hoc basis
      * THIS IS A CLASS METHOD
      */
-    function RangeToText($range='') 
-    {
-      // FIXME: this is FAR FROM COMPLETE
-      $text='';
-      if ($range=='') return '';
 
-      // Check before/after range
-      if (substr($range,0,2)=='..') {
-        return 'before '.substr($range,2,strlen($range)-2);
-      }
-      if (substr($range,-2,2)=='..') {
-        return 'after '.substr($range,2,strlen($range)-2);
-      }
-
-      $number = (-(int) $range);
-
-      // past?
-      if (((int) $range) < 0) {
-        $text .='in the last ';
-      }
-      // Converts range specification to text to display
-      switch (strtolower($range[strlen($range)-1])) {
-      case 'h':
-        $text .=((-(int) $range)==1)?"hour":"$number hours";
-        break;
-      case 'd':
-        $text .=((-(int) $range)==1)?'day':"$number days";
-        break;
-      case 'w':
-        $text .=((-(int) $range)==1)?'week':"$number weeks";
-        break;
-      case 'm':
-        $text .=((-(int) $range)==1)?'month':"$number months";
-        break;
-      case 'y':
-        $text .=((-(int) $range)==1)?'year':"$number years";
-        break;
-      default:
-        $text .= "unknown range $range";
-      }
-      return $text;
-    }
     
     /**
      * Convert an age specifier to a rangecode

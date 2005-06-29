@@ -19,4 +19,8 @@ define('BK_ITEMTYPE_DELTA', 2);
 define('BK_ITEMTYPE_FILE',  4);
 define('BK_ITEMTYPE_REPO',  8);
 
+define('SCM_FLAG_FORWARD'   ,  1);
+define('SCM_FLAG_SHOWMERGE' , 2);
+define('SCM_FLAG_TAGGEDONLY', 4);
+define('SCM_FLAG_NORANGEREVS', 8);
 ?>

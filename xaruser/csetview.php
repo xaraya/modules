@@ -28,7 +28,7 @@ function bkview_user_csetview($args)
     
     $repo =& $item['repo'];
 
-    $flags = ($sort * BK_FLAG_FORWARD) + ($showmerge * BK_FLAG_SHOWMERGE) + ($taggedonly * BK_FLAG_TAGGEDONLY);
+    $flags = ($sort * SCM_FLAG_FORWARD) + ($showmerge * SCM_FLAG_SHOWMERGE) + ($taggedonly * SCM_FLAG_TAGGEDONLY);
     $csetlist =& $repo->ChangeSets($user, $range, $flags);
 
     $icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
@@ -41,7 +41,7 @@ function bkview_user_csetview($args)
     }
 
     // Pass data to BL compiler
-    $rangetext = bkRepo::RangeToText($range);
+    $rangetext = scmRepo::RangeToText($range);
     if($taggedonly) {
         if($user =='') {
             $data['pageinfo'] = xarML("Tagged changesets #(1)",$rangetext);

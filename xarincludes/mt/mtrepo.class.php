@@ -54,9 +54,9 @@ class mtRepo extends scmRepo
             // Make a timestamp out of the iso format
             if($user != '') {
                 // Only add if matched
-                if($user == $author) $stats[$timestamp] = $user;
+                if($user == $author) $stats[$timestamp] = $author;
             } else {
-                $stats[$timestamp] = $user;
+                $stats[$timestamp] = $author;
             }
             $result->MoveNext();
         }
@@ -87,6 +87,26 @@ class mtRepo extends scmRepo
             $result->MoveNext();
         }
         return $revs;
+    }
+    
+    function ChangeSets($user, $range,$flags = 0)
+    {
+        // Need to get:
+        // tag, age, author, rev id, utc timestamp, comments
+         
+        $sql = "SELECT authors.id, dates.value, comments.value
+                FROM revision_certs as authors, 
+                     revision_certs as dates,
+                     revision_certs as comments
+                WHERE authors.id = dates.id AND
+                      dates.id = comments.id AND
+                      authors.name = ? AND
+                      dates.name = ? AND
+                      comments.name = ?";
+        $bindvars = array('author','date','changelog');
+        $result =& $this->_dbconn->execute($sql, $bindvars);
+        $csets = array(); $tags = array();
+        // return array of cset objects indexed by revid
     }
     
     
