@@ -55,7 +55,7 @@ function authldap_adminapi_syncgroups ()
   include_once 'modules/roles/xarroles.php';
 
   // Variables
-  include_once('modules/authldap/includes/default_variables.php');
+  include_once('modules/authldap/xarincludes/default_variables.php');
   foreach($default_groups_variables as $variable => $value) {
     xarVarSetCached('authldap', $variable, xarModGetVar('authldap', $variable));
   }

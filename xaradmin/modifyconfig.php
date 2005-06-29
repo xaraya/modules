@@ -103,7 +103,7 @@ function authldap_admin_modifyconfig()
 
     /** LDAP Groups parameters **/
 
-    include_once('modules/authldap/includes/default_variables.php');
+    include_once('modules/authldap/xarincludes/default_variables.php');
     foreach(array_keys($default_groups_variables) as $variable)
       $data[$variable] = xarVarPrepForDisplay(xarModGetVar('authldap', $variable));
 

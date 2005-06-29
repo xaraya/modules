@@ -135,7 +135,7 @@ function authldap_admin_updateconfig()
 
 
     // Groups variables
-    include_once('modules/authldap/includes/default_variables.php');
+    include_once('modules/authldap/xarincludes/default_variables.php');
     foreach (array_keys($default_groups_variables) as $variable)
         xarModSetVar('authldap', $variable, xarVarCleanFromInput($variable));
 
