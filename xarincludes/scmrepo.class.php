@@ -72,6 +72,12 @@ class scmRepo
       }
       return $text;
     }
+     
+    function CountChangeSets($range='', $merge=false,$user='')
+    {
+        $out = $this->GetChangeSets($range,$merge,$user);
+        return count($out);
+    }
 }
 
 ?>

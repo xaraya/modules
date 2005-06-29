@@ -56,6 +56,7 @@ class mtRepo extends scmRepo
                 // Only add if matched
                 if($user == $author) $stats[$timestamp] = $author;
             } else {
+                // No user specified, add always
                 $stats[$timestamp] = $author;
             }
             $result->MoveNext();
@@ -64,18 +65,13 @@ class mtRepo extends scmRepo
         return $stats;
     }
     
+    // This is generic enough to be moved somewhere else
     function iso8601_to_utc($isodate)
     {
+        // 2005-06-29T13:00:21 -> 20050629130021
         return str_replace(array('-','T',':'),'', $isodate);
     }
 
-    // Check: can be in base class
-    function CountChangeSets($range='', $merge=false,$user='')
-    {
-        $out = $this->GetChangeSets($range,$merge,$user);
-        return count($out);
-    }
-    
     function GetChangeSets($range='', $merge=false, $user='')
     {
         // Only getting revision id's as output

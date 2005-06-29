@@ -122,13 +122,6 @@ class bkRepo extends scmRepo
         return $this->_run($cmd);
 
     }
-    // Changeset counts
-    function CountChangeSets($range='',$merge=false,$user='') 
-    {
-        $out = $this->GetChangeSets($range,$merge,$user);
-        
-        return count($out);
-    }
 
     // Count the number of changed lines in a list of changesets
     function CountChangedLines($csets = Array()) 
