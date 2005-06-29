@@ -11,7 +11,7 @@
 <p><b><xar:mlstring>APPROACH # 1a : the &lt;xar:data-view ...&gt; tag</xar:mlstring></b></p>
 
 <p><xar:mlstring>This tag will automatically retrieve the list of items from DynamicData,
-     and present them according to its user-objectview.xd template.</xar:mlstring></p>
+     and present them according to its standard objects/showview.xd template.</xar:mlstring></p>
 
 <xar:data-view module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
 
@@ -47,11 +47,11 @@
 
 <p><b><xar:mlstring>APPROACH # 3 : getting the object list via API</xar:mlstring></b></p>
 
-<p><xar:mlstring>After retrieving the object list via API, you can pass along the whole object list to the template and use &lt;xar:data-view object="..."&gt; (see admin list),</xar:mlstring></p>
+<p><xar:mlstring>After retrieving the object list via API, you can pass along the whole object list to the template and use &lt;xar:data-view object="$mylist" /&gt; to let DynamicData handle the view. Or you can use &lt;xar:data-view object="$mylist" tplmodule="dyn_example" /&gt; if you want to provide your own view template in this module :</xar:mlstring></p>
 
-<!--xar:data-view object="$mylist" /-->
+<xar:data-view object="$mylist" tplmodule="dyn_example" />
 
-<p><xar:mlstring>or pass along the properties and values and work like in APPROACH # 2. We'll use that here...</xar:mlstring></p>
+<p><xar:mlstring>or you can pass along the properties and values and work like in APPROACH # 2.</xar:mlstring></p>
 
     <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <xar:foreach in="$values" key="$itemid" value="$fields">

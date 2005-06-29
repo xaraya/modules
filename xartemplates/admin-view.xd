@@ -12,9 +12,9 @@
 <p><b><xar:mlstring>APPROACH # 1 : the &lt;xar:data-list ...&gt; tag</xar:mlstring></b></p>
 
 <p><xar:mlstring>This tag will automatically retrieve the list of items from DynamicData,
-     and present them according to its admin-objectlist.xd template.</xar:mlstring></p>
+     and present them according to its default objects/showlist.xd template.</xar:mlstring></p>
 
-<xar:data-list module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
+<xar:data-list module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" tplmodule="dyn_example" />
 
 <p><xar:mlstring>If you want to provide your own presentation here, you can specify a
      different layout="..." to use in the default template, or you can specify your
@@ -68,7 +68,7 @@
 
 <p><xar:mlstring>After retrieving the object list via API, you can pass along the whole object list to the template and use &lt;xar:data-list object="$mylist"&gt;,</xar:mlstring></p>
 
-<xar:data-list object="$mylist" />
+<xar:data-list object="$mylist" tplmodule="dyn_example" />
 
 <p><xar:mlstring>or pass along the properties and values and work like in APPROACH # 2 - see the user view for an example of that.</xar:mlstring></p>
 

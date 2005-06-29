@@ -15,7 +15,7 @@
     </tr>
     <tr>
         <td>
-            <xar:data-display object="$object" />
+            <xar:data-display object="$object" tplmodule="dyn_example" />
         </td>
     </tr>
 </table>
@@ -33,7 +33,7 @@
     <table width="100%" border="0" cellspacing="0" cellpadding="4">
 
         <!-- this does most of the hard work :) -->
-        <xar:data-form object="$object" />
+        <xar:data-form object="$object" tplmodule="dyn_example" />
         <tr><td colspan="2">
         #$hooks#
         </td></tr>

@@ -34,7 +34,7 @@ function dyn_example_user_view()
                                    'status'    => 1,      // only get the properties with status 1 = active
                                    'getobject' => 1));    // get back the object list
     // pass along the whole object list to the template (cfr. xaradmin.php)
-    //$data['mylist'] = & $mylist;
+    $data['mylist'] = & $mylist;
 /* here we use a different variation than in xaradmin.php */
     // or pass along the properties and values instead of the object list
     $data['properties'] =& $mylist->getProperties();
