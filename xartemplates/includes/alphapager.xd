@@ -4,21 +4,21 @@
     <xar:if condition="xarTplAddStyleLink('articles', 'alphapager')"></xar:if>
 
     <div class="alphapager-wrapper">
-        <a href="#xarServerGetCurrentURL(array('letter' => null))#"><xar:mlstring>All</xar:mlstring></a>
+        <a href="#xarServerGetCurrentURL(array('letter' => null,'startnum' => null))#"><xar:mlstring>All</xar:mlstring></a>
         <xar:for start="$i = 65" test="$i le 90" iter="$i++">
             <xar:set name="$curletter">chr($i)</xar:set>
     
             <xar:if condition="!empty($letter) and ($letter eq $curletter)">
                 <span>#$curletter#</span>
             <xar:else />
-                <a href="#xarServerGetCurrentURL(array('letter' => $curletter))#">#$curletter#</a>
+                <a href="#xarServerGetCurrentURL(array('letter' => $curletter,'startnum' => null))#">#$curletter#</a>
             </xar:if>
     
         </xar:for>
         <xar:if condition="!empty($letter) and ($letter eq 'other')">
             <span><xar:mlstring>Other</xar:mlstring></span>
         <xar:else />
-            <a href="#xarServerGetCurrentURL(array('letter' => 'other'))#"><xar:mlstring>Other</xar:mlstring></a>
+            <a href="#xarServerGetCurrentURL(array('letter' => 'other','startnum' => null))#"><xar:mlstring>Other</xar:mlstring></a>
         </xar:if>
     </div>
     
