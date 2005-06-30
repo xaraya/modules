@@ -194,6 +194,9 @@ class mtRepo extends scmRepo
         // First get the revisions in the rang
         $revs = $this->ChangeSets('',$start);
         $nodes = array(); $edges = array(); $inEdges = array();
+        $lateMergeNodes = array(); $startRev=0; $endRev=0;$nrOfChanges=0;
+        $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
+        
         foreach($revs as $revid => $revdetail) {
             $sql = "SELECT parent, child FROM revision_ancestry WHERE parent = ? or child = ?";
             $result =& $this->_dbconn->Execute($sql,array($revid,$revid));
@@ -202,22 +205,30 @@ class mtRepo extends scmRepo
                 list($parent, $child) = $result->fields;
                 if($parent == $revid) {
                     $edges[] = array($parent => $child);
-                }
-                if($child == $revid) {
+                    $nodes[] = array('rev' => $parent, 'author' => $revdetail->author, 'tags' => $revdetail->tag);
+                } elseif ($child == $revid) {
                     $inEdges[$child][] = $parent;
+                    $childtag = $revdetail->tag;
+                    $childauthor= $revdetail->author;
+                    $nodes[] = array('rev' => $child, 'author' => $revdetail->author, 'tags' => $revdetail->tag);
+
+                } else {
+                    $nodes[] = array('rev' => $parent, 'author' => 'TBD', 'tags' => $parenttag);
+                    $nodes[] = array('rev' => $child, 'author' => 'TBD', 'tags' => $childtag);
                 }
-                $nodes[] = array('rev' => $parent, 'author' => 'TBD', 'tags' => 'TBD');
-                $nodes[] = array('rev' => $child, 'author' => 'TBD', 'tags' => 'TBD');
-                
                 $result->MoveNext();
             }
         }
-        //var_dump($revs);die();
-        
-        $lateMergeNodes = array(); $startRev=0; $endRev=0;$nrOfChanges=0;
+        // Limit the thing a bit
+        $nrOfChanges = count($nodes);
+        xarLogMessage("BK: trying to graph $nrOfChanges changes");
+        // FIXME: make the 500 configurable
+        if($nrOfChanges > 500 | $nrOfChanges == 0) {
+            $graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '');
+            return $graph;
+        }
+       
         $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
-        //$graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '');
-        //var_dump($graph); die();
         return $graph;
     }
 
