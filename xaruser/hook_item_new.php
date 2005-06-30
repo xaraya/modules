@@ -14,21 +14,19 @@ function subitems_user_hook_item_new($args)
     // a object should be linked to this hook
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return '';
     // nothing to see here
-    if (empty($ddobjectlink['objectid'])) return '';
-    $objectid = $ddobjectlink['objectid'];
+    if (empty($ddobjectlink)) return '';
 
-    // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
-                             array('objectid' => $objectid,
-                                     'status' => 1));
+    $data = array();
+    $data['subitems'] = array();
+    foreach($ddobjectlink as $index => $subobjectlink) {
+        $subobjectid = $subobjectlink['objectid'];
 
-    $template = $object->name;
-    if(!empty($ddobjectlink['template']))
-        $template = $ddobjectlink['template'];
+        // get some object information for this subobject (no need for a DD object here)
+        $data['subitems'][$subobjectid] = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                                        array('objectid' => $subobjectid));
+    }
 
-    $data['object'] = $object;
-
-    return xarTplModule('subitems','user','hook_item_new',$data,$template);
+    return xarTplModule('subitems','user','hook_item_new',$data);
 }
 
 ?>
