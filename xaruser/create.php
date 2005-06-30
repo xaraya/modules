@@ -25,23 +25,23 @@ function helpdesk_user_create($args)
     $itemtype = 1;
     
     // Get parameters from whatever input we need.    
-    xarVarFetch('name',     'str:1:',   $name,      null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('userid',   'int:1:',   $userid,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('phone',    'str:1:',   $phone,     null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('email',    'email:1:', $email,     null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('domain',   'str:1:',   $domain,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('subject',  'str:1:',   $subject,   null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('nontech',  'str:1:',   $nontech,   null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('source',   'int:1:',   $source,    null,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('name',     'str:1:',   $name,      '',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('userid',   'int:1:',   $userid,    0,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('phone',    'str:1:',   $phone,     '',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('email',    'email:1:', $email,     '',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('domain',   'str:1:',   $domain,    '',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('subject',  'str:1:',   $subject,   '',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('nontech',  'str:1:',   $nontech,   '',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('source',   'int:1:',   $source,    0,  XARVAR_NOT_REQUIRED);
     xarVarFetch('status',   'int:1:',   $status,    1,     XARVAR_NOT_REQUIRED); // default = 1 or Open
-    xarVarFetch('priority', 'int:1:',   $priority,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('openedby', 'int:1:',   $openedby,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('assignedto','int:1:',  $assignedto,null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('closedby', 'int:1:',   $closedby,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('issue',    'str:1:',   $issue,     null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('notes',    'str:1:',   $notes,     null,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('priority', 'int:1:',   $priority,  0,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('openedby', 'int:1:',   $openedby,  0,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('assignedto','int:1:',  $assignedto,0,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('closedby', 'int:1:',   $closedby,  0,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('issue',    'str:1:',   $issue,     '',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('notes',    'str:1:',   $notes,     '',  XARVAR_NOT_REQUIRED);
     xarVarFetch('cids',     'array',    $cids,      array(),    XARVAR_NOT_REQUIRED);
-    xarVarFetch('closeonsubmit', 'int', $closeonsubmit,  null,  XARVAR_NOT_REQUIRED);
+    xarVarFetch('closeonsubmit', 'int', $closeonsubmit,  0,  XARVAR_NOT_REQUIRED);
     
     if ($nontech || $openedby == 0){
         // If the NONTECHSUBMIT flag is set, then this means a regular user or anonymous
