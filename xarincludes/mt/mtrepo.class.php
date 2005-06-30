@@ -189,7 +189,37 @@ class mtRepo extends scmRepo
         return $csets;
     }
     
-    
+    function GetGraphData($start='-3d', $end, $file)
+    {
+        // First get the revisions in the rang
+        $revs = $this->ChangeSets('',$start);
+        $nodes = array(); $edges = array(); $inEdges = array();
+        foreach($revs as $revid => $revdetail) {
+            $sql = "SELECT parent, child FROM revision_ancestry WHERE parent = ? or child = ?";
+            $result =& $this->_dbconn->Execute($sql,array($revid,$revid));
+            if(!$result) return;
+            while(!$result->EOF) {
+                list($parent, $child) = $result->fields;
+                if($parent == $revid) {
+                    $edges[] = array($parent => $child);
+                }
+                if($child == $revid) {
+                    $inEdges[$child][] = $parent;
+                }
+                $nodes[] = array('rev' => $parent, 'author' => 'TBD', 'tags' => 'TBD');
+                $nodes[] = array('rev' => $child, 'author' => 'TBD', 'tags' => 'TBD');
+                
+                $result->MoveNext();
+            }
+        }
+        //var_dump($revs);die();
+        
+        $lateMergeNodes = array(); $startRev=0; $endRev=0;$nrOfChanges=0;
+        $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
+        //$graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '');
+        //var_dump($graph); die();
+        return $graph;
+    }
 
 }
 
