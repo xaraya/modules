@@ -23,9 +23,6 @@ function articles_adminapi_createpubtype($args)
     if (!isset($name) || !is_string($name) || empty($name)) {
         $invalid[] = 'name';
     }
-    if (!isset($descr) || !is_string($descr) || empty($descr)) {
-        $invalid[] = 'description';
-    }
     if (!isset($config) || !is_array($config) || count($config) == 0) {
         $invalid[] = 'configuration';
     }
@@ -35,6 +32,10 @@ function articles_adminapi_createpubtype($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
+    }
+
+    if (empty($descr)) {
+        $descr = $name;
     }
 
     // Publication type names *must* be lower-case for now
