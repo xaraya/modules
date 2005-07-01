@@ -488,21 +488,21 @@
                     <xar:mlstring>
                         Number of columns 
                     </xar:mlstring>
-                    <i>($numcols)</i> </label> <input type="text" name="number_of_columns" id="number_of_columns" size="1" maxlength="2" value="#$numcols#" /> 
+                    <em>($numcols)<em> </label> <input type="text" name="number_of_columns" id="number_of_columns" size="1" maxlength="2" value="#$numcols#" /> 
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on user view.')#"> 
                     <xar:mlstring>
                         Items per page on user view 
                     </xar:mlstring>
-                    <i>($number)</i> </label> <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /> 
+                    <em>($number)<em> </label> <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /> 
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="adminitemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#"> 
                     <xar:mlstring>
                         Items per page on admin view 
                     </xar:mlstring>
-                    <i>($number)</i> </label> <input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$adminitemsperpage#" /> 
+                    <em>($number)<em> </label> <input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$adminitemsperpage#" /> 
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$showcategories">
@@ -514,7 +514,7 @@
                     <xar:mlstring>
                         Show category links in article summaries 
                     </xar:mlstring>
-                    <i>($categories)</i></label> 
+                    <em>($categories)<em></label> 
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$showcatcount">
@@ -526,7 +526,7 @@
                     <xar:mlstring>
                         Show number of articles in category navigation 
                     </xar:mlstring>
-                    <i>($showcatcount)</i> </label> 
+                    <em>($showcatcount)<em> </label> 
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$showprevnext">
@@ -538,7 +538,7 @@
                     <xar:mlstring>
                         Show previous/next category 
                     </xar:mlstring>
-                    <i>($showprevnext)</i> </label> 
+                    <em>($showprevnext)<em> </label> 
             </div>
             <xar:if condition="$showcommentsoptions">
                 <div class="xar-form-input-wrapper-after">
@@ -551,7 +551,7 @@
                         <xar:mlstring>
                             Show number of comments 
                         </xar:mlstring>
-                        <i>($comments)</i> </label> 
+                        <em>($comments)<em> </label> 
                 </div>
                 <xar:else />
                 <div class="xar-form-input-wrapper">
@@ -559,7 +559,7 @@
                         <xar:mlstring>
                             Show number of comments 
                         </xar:mlstring>
-                        <i>($comments)</i> </label> <input type="hidden" name="showcomments" id="showcomments" value="#$showcomments#" /> 
+                        <em>($comments)<em> </label> <input type="hidden" name="showcomments" id="showcomments" value="#$showcomments#" /> 
                     <xar:mlstring>
                         N/A 
                     </xar:mlstring>
@@ -576,7 +576,7 @@
                         <xar:mlstring>
                             Show Keywords 
                         </xar:mlstring>
-                        <i>($keywords)</i> </label> 
+                        <em>($keywords)<em> </label> 
                 </div>
                 <xar:else />
                 <div class="xar-form-input-wrapper">
@@ -584,7 +584,7 @@
                         <xar:mlstring>
                             Show Keywords 
                         </xar:mlstring>
-                        <i>($keywords)</i> </label> <input type="hidden" name="showkeywords" id="showkeywords" value="#$showkeywords#" /> 
+                        <em>($keywords)<em> </label> <input type="hidden" name="showkeywords" id="showkeywords" value="#$showkeywords#" /> 
                     <xar:mlstring>
                         N/A 
                     </xar:mlstring>
@@ -601,7 +601,7 @@
                         <xar:mlstring>
                             Show Hit Counts 
                         </xar:mlstring>
-                        <i>($counter)</i> </label> 
+                        <em>($counter)<em> </label> 
                 </div>
                 <xar:else />
                 <div class="xar-form-input-wrapper">
@@ -609,7 +609,7 @@
                         <xar:mlstring>
                             Show Hit Counts 
                         </xar:mlstring>
-                        <i>($counter)</i> </label> <input type="hidden" name="showhitcounts" id="showhitcounts" value="#$showhitcounts#" /> 
+                        <em>($counter)<em> </label> <input type="hidden" name="showhitcounts" id="showhitcounts" value="#$showhitcounts#" /> 
                     <xar:mlstring>
                         N/A 
                     </xar:mlstring>
@@ -626,7 +626,7 @@
                         <xar:mlstring>
                             Show Ratings 
                         </xar:mlstring>
-                        <i>($ratings)</i> </label> 
+                        <em>($ratings)<em> </label> 
                 </div>
                 <xar:else />
                 <div class="xar-form-input-wrapper">
@@ -634,7 +634,7 @@
                         <xar:mlstring>
                             Show Ratings 
                         </xar:mlstring>
-                        <i>($ratings)</i> </label> <input type="hidden" name="showratings" id="showratings" value="#$showratings#" /> 
+                        <em>($ratings)<em> </label> <input type="hidden" name="showratings" id="showratings" value="#$showratings#" /> 
                     <xar:mlstring>
                         N/A 
                     </xar:mlstring>
@@ -650,7 +650,7 @@
                     <xar:mlstring>
                         Show links to publication types 
                     </xar:mlstring>
-                    <i>($showpublinks + includes/publinks.xd)</i> </label> 
+                    <em>($showpublinks + includes/publinks.xd)<em> </label> 
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$showpubcount">
@@ -662,7 +662,7 @@
                     <xar:mlstring>
                         Show number of articles in publication links 
                     </xar:mlstring>
-                    <i>($showpubcount)</i> </label> 
+                    <em>($showpubcount)<em> </label> 
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$showarchives">
@@ -674,7 +674,7 @@
                     <xar:mlstring>
                         Show link to archives 
                     </xar:mlstring>
-                    <i>($showpubcount)</i></label> 
+                    <em>($showpubcount)<em></label> 
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$showmap">
@@ -686,7 +686,7 @@
                     <xar:mlstring>
                         Show link to article map 
                     </xar:mlstring>
-                    <i>($maplink + $maplabel)</i> </label> 
+                    <em>($maplink + $maplabel)<em> </label> 
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$dotransform">
@@ -731,7 +731,7 @@
                     <xar:mlstring>
                         Show link to previous/next article in display 
                     </xar:mlstring>
-                    <i>($prevart + $nextart)</i> </label> 
+                    <em>($prevart + $nextart)<em> </label> 
             </div>
         </fieldset>
         <fieldset class="xar-norm">
