@@ -12,7 +12,7 @@
         </xar:mlstring>
     </p>
 </div>
-<div class="xar-norm" style="padding: 3px;">
+<div class="xar-norm xar-standard-box-padding">
     <h1><strong><xar:mlstring>Title</xar:mlstring>:</strong>&nbsp;#$title#</h1>
     <xar:if condition="isset($author)">
     <p><strong><xar:mlstring>Author</xar:mlstring>:</strong>&nbsp;#$author#</p>
