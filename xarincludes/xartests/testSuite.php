@@ -56,7 +56,8 @@ if(!isset($LOCALPATH))  $LOCALPATH = dirname(__FILE__);
 /** End of preparation start the testcases */
 
 /** Override some functions, easier than loading the whole core **/
-function xarLogMessage() {}
+function xarLogMessage() 
+{}
 
 class LocalhostTests extends xarTestCase
 {
@@ -452,4 +453,3 @@ $tmp->AddTestCase('ParsingBugsTests','Parsing bugs tests');
 $tmp->AddTestCase('InvalidHostTests','Invalid host tests');
 $suites[] = $tmp;
 ?>
-
