@@ -174,7 +174,7 @@ function xmlrpc_se($parser, $name, $attrs) {
         $_xh[$parser]['qt']=0;
         break;
     case "NAME":
-        $_xh[$parser]['st'].="'"; $_xh[$parser]['ac']="";
+        $_xh[$parser]['st'].='"'; $_xh[$parser]['ac']="";
         break;
     case "FAULT":
         $_xh[$parser]['isf']=1;
@@ -246,7 +246,7 @@ function xmlrpc_ee($parser, $name) {
         $_xh[$parser]['cm']--;
         break;
     case "NAME":
-        $_xh[$parser]['st'].= $_xh[$parser]['ac'] . "' => ";
+        $_xh[$parser]['st'].= $_xh[$parser]['ac'] . '" => ';
         break;
     case "BOOLEAN":
         // special case here: we translate boolean 1 or 0 into PHP
@@ -280,7 +280,7 @@ function xmlrpc_ee($parser, $name) {
             if (!ereg("^\-?[0123456789 \t\.]+$", $_xh[$parser]['ac'])) {
                 // TODO: find a better way of throwing an error
                 // than this!
-                error_log("XML-RPC: non numeric value received in INT or DOUBLE");
+                //error_log("XML-RPC: non numeric value received in INT or DOUBLE");
                 $_xh[$parser]['st'].="ERROR_NON_NUMERIC_FOUND";
             } else {
                 // it's ok, add it on
@@ -385,8 +385,9 @@ function xmlrpc_cd($parser, $data)
  */
 function xmlrpc_dh($parser, $data)
 {
-    global $_xh, $xmlrpc_backslash;
 /*
+    global $_xh, $xmlrpc_backslash;
+
     if (substr($data, 0, 1) == "&" && substr($data, -1, 1) == ";") {
         if ($_xh[$parser]['lv']==1) {  
             $_xh[$parser]['qt']=1; 
@@ -795,6 +796,7 @@ class xmlrpcmsg
             $r=new xmlrpcresp(0, $xmlrpcerr["invalid_return"],
                               $xmlrpcstr["invalid_return"]);
         } else {
+            xarLogMessage('XMLRPC: evalling: ' . $_xh[$parser]['st']);
             eval('$v=' . $_xh[$parser]['st'] . '; $allOK=1;');
             if ($_xh[$parser]['isf']) {
                 $f=$v->structmem("faultCode");
@@ -816,20 +818,23 @@ class xmlrpcval
     var $me=array();
     var $mytype=0;
     
-    function xmlrpcval($val=-1, $type="") 
+    function xmlrpcval($val=-1, $type="string") 
     {
         global $xmlrpcTypes;
         $this->me=array();
         $this->mytype=0;
-        if ($val!=-1 || $type!="") {
-            if ($type=="") $type="string";
-            if ($xmlrpcTypes[$type]==1) {
+        switch($xmlrpcTypes[$type]) {
+            case 1: // scalar
                 $this->addScalar($val,$type);
-            }
-            else if ($xmlrpcTypes[$type]==2)
+                break;
+            case 2: // array
                 $this->addArray($val);
-            else if ($xmlrpcTypes[$type]==3)
+                break;
+            case 3: // struct
                 $this->addStruct($val);
+                break;
+            default:
+                // Should not happen, the type tag wrong, issue syntax error?
         }
     }
     
@@ -1068,6 +1073,11 @@ class xmlrpcval
         reset($this->me);
         list($a,$b)=each($this->me);
         return sizeof($b);
+    }
+    function structsize()
+    {
+        //return $this->arraysize();
+        return count($this->me['struct']);
     }
 }
 

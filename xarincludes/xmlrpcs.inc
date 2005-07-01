@@ -153,7 +153,14 @@ class xmlrpc_server {
             for($i=0; $i<sizeof($_xh[$parser]['params']); $i++) {
                 //print "<!-- " . $_xh[$parser]['params'][$i]. "-->\n";
                 $plist.="$i - " .  $_xh[$parser]['params'][$i]. " \n";
-                eval('$m->addParam(' . $_xh[$parser]['params'][$i]. ");");
+                $result=null;
+                $result = @eval('$m->addParam(' . $_xh[$parser]['params'][$i]. ");");
+                if($result === false) {
+                    $r=new xmlrpcresp(0,
+                                    $xmlrpcerr["incorrect_params"],
+                                    $xmlrpcstr["incorrect_params"]);
+                    return $r;
+                }
             }
             // uncomment this to really see what the server's getting!
             //xarLogMessage($plist,XARLOG_LEVEL_WARNING);
