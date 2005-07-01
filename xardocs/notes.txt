@@ -106,3 +106,25 @@ functions can return exactly one item or a list of items.
 An array of items is then returned, but the problem here is that each module returns a 
 different type of array. 
 
+Windows XP and Web Folders
+--------------------------
+
+Windows has had a webdav folder driver built into it, in various forms, since Windows 98SE.
+However, some changes to the XP/IE6 version has introduced a few problems: it does not
+work against Apache mod_dav. This may or may not have an affect on the Windows web folder
+access via the Xaraya module, but it is worth noting the workarounds nonetheless.
+
+Basically, accessing an Apache webdav folder such http://example.com/mydav with a username
+'myuser' will result in a redirect to http://example.com/myuser This is consistently fails
+to log onto the dav folder (i.e. the root webdav 'collection').
+
+The workaround for this is to append a '#' or a '.' to the URL. Which you need to use will
+depend on the service pack level and any versions of MS Office you have installed, but in
+most cases one or the other should work. If it does not work, then it is likely you will
+need to use a third-party tool such as DAVexplorer.
+
+It is noted that up until IE5.5, web folders worked fine. It is only from IE6 that this
+problem was introduced. Strangely, it does not affect IIS webdav shares. The minimum
+version of IE that can be run on XP is IE6, so the problem affects all versions of XP.
+
+
