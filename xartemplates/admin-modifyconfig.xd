@@ -1,0 +1,31 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Opentracker Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+<div style="margin: auto;">
+<form method="post" action="#xarModURL('opentracker', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <input type="hidden" name="phase" id="phase" value="update" />
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td><label for="countadmin"><xar:mlstring>Count Administrator Hits</xar:mlstring>:</label></td>
+            <td>
+        <xar:if condition="xarModGetVar('opentracker', 'countadmin')">
+            <input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="countadmin" id="countadmin" value="1" />
+        </xar:if></td>
+        </tr>
+        <tr>
+            <td><label for="trackoutgoing"><xar:mlstring>Track Outgoing URLs</xar:mlstring>:</label></td>
+            <td>
+        <xar:if condition="xarModGetVar('opentracker', 'trackoutgoing')">
+            <input type="checkbox" name="trackoutgoing" id="trackoutgoing" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="trackoutgoing" id="trackoutgoing" value="1" />
+        </xar:if></td>
+        </tr>
+    </table>
+    <br /><br />
+    <input type="submit" value="#xarML('Update Opentracker Configuration')#"  />
+</form>
+</div>
+</div>
