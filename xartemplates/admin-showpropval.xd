@@ -36,7 +36,7 @@
             <table border="0" cellspacing="0" cellpadding="4">
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <b>Name :</b> 
+                        <strong>Name :<strong> 
                     </td>
                     <td align="left">
                         #$name# 
@@ -44,7 +44,7 @@
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <b>Label :</b> 
+                        <strong>Label :<strong> 
                     </td>
                     <td align="left">
                         #$label# 
@@ -52,7 +52,7 @@
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <b>Property Type :</b> 
+                        <strong>Property Type :<strong> 
                     </td>
                     <td align="left">
                         <xar:data-output type="fieldtype" value="$type" />
@@ -60,7 +60,7 @@
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <b>Validation :</b> 
+                        <strong>Validation :<strong> 
                     </td>
                     <td align="left">
                         #$validation# 
