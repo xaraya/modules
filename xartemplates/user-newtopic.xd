@@ -72,6 +72,13 @@
     </div>
 </xar:if>
 <div class="xarbb-tablewrapper">
+<xar:comment>
+    If you intend to provide an upload field via DD here, you need to change the
+    enctype="application/x-www-form-urlencoded" to enctype="multipart/form-data"
+    in the form tag below.
+    Otherwise, users can also reference uploaded files by using #file:NN# in the body,
+    if you enable the uploads hooks for xarbb (for all forums or a particular forum).
+</xar:comment>
     <form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>

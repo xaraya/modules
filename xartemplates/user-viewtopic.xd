@@ -268,6 +268,9 @@
                     <xar:comment>
                         If you extend the xarbb topics with dynamic data fields, you can
                         retrieve and show them as follows in this template...
+                        For uploaded files or images, you can also customize the output to
+                        display an icon or the image in-line - see articles 'downloads' and
+                        'pictures' templates for examples
                     </xar:comment>
                     <xar:if condition="xarModIsHooked('dynamicdata','xarbb',$fid)">
                         <xar:data-getitem name="$topicprops" module="xarbb" itemtype="$fid" itemid="$tid" />

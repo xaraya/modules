@@ -95,7 +95,7 @@ function xarbb_user_newtopic()
                 $item = $data;
 
                 $item['module'] = 'xarbb';
-                $item['itemtype'] = $fid;// Forum Topics
+                $item['itemtype'] = $data['fid'];// Forum Topics
                 $item['itemid'] = $tid;// Forum Topics
                 //Call hooks here - but need to null out the ones that will cause trouble                
                 $data['hooks'] = xarModCallHooks('item','modify',$tid, $item);
