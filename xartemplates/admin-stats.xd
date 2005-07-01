@@ -1,155 +1,277 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Statistics</xar:mlstring></h2>
-<div style="margin: auto;">
-<form method="post" action="#xarModURL('articles','admin','stats')#">
-    <xar:mlstring>Group by</xar:mlstring>
-    <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
-        <select name="group[#$i#]" id="group_#$i#">
-            <option value=""></option>
-            <xar:foreach in="$fields" key="$name" value="$label">
-                <xar:if condition="!empty($group[$i]) and $group[$i] eq $name">
-                    <option value="#$name#" selected="selected">#$label#</option>
-                <xar:else/>
-                    <option value="#$name#">#$label#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
-    </xar:for>
-    <input type="submit" value="#xarML('Select')#"/>
-</form>
-<ul>
-<xar:set name="pubtypeid">null</xar:set>
-<xar:set name="authorid">null</xar:set>
-<xar:set name="status">null</xar:set>
-<xar:set name="language">null</xar:set>
-<xar:foreach in="$stats" key="$key1" value="$level1">
-  <li>
-    <xar:if condition="$group[0] eq 'pubtypeid'">
-      <xar:set name="value1">#$pubtypes[$key1]['descr']#</xar:set>
-      <xar:set name="pubtypeid">#$key1#</xar:set>
-    <xar:elseif condition="$group[0] eq 'status'"/>
-      <xar:set name="value1">#$statuslist[$key1]#</xar:set>
-      <xar:set name="status">#$key1#</xar:set>
-    <xar:elseif condition="$group[0] eq 'authorid'"/>
-      <xar:set name="value1">#xarUserGetVar('name',$key1)#</xar:set>
-      <xar:set name="authorid">#$key1#</xar:set>
-    <xar:elseif condition="$group[0] eq 'language'"/>
-      <xar:set name="value1">#$key1#</xar:set>
-      <xar:set name="language">#$key1#</xar:set>
-    </xar:if>
-    <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value1# </a>
-    <xar:if condition="!empty($group[1]) and is_array($level1)">
-      <ul>
-      <xar:foreach in="$level1" key="$key2" value="$level2">
-        <li>
-          <xar:if condition="$group[1] eq 'pubtypeid'">
-            <xar:set name="value2">#$pubtypes[$key2]['descr']#</xar:set>
-            <xar:set name="pubtypeid">#$key2#</xar:set>
-          <xar:elseif condition="$group[1] eq 'status'"/>
-            <xar:set name="value2">#$statuslist[$key2]#</xar:set>
-            <xar:set name="status">#$key2#</xar:set>
-          <xar:elseif condition="$group[1] eq 'authorid'"/>
-            <xar:set name="value2">#xarUserGetVar('name',$key2)#</xar:set>
-            <xar:set name="authorid">#$key2#</xar:set>
-          <xar:elseif condition="$group[1] eq 'language'"/>
-            <xar:set name="value2">#$key2#</xar:set>
-            <xar:set name="language">#$key2#</xar:set>
-          </xar:if>
-          <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value2# </a>
-          <xar:if condition="!empty($group[2]) and is_array($level2)">
-            <ul>
-            <xar:foreach in="$level2" key="$key3" value="$level3">
-              <li>
-                <xar:if condition="$group[2] eq 'pubtypeid'">
-                  <xar:set name="value3">#$pubtypes[$key3]['descr']#</xar:set>
-                  <xar:set name="pubtypeid">#$key3#</xar:set>
-                <xar:elseif condition="$group[2] eq 'status'"/>
-                  <xar:set name="value3">#$statuslist[$key3]#</xar:set>
-                  <xar:set name="status">#$key3#</xar:set>
-                <xar:elseif condition="$group[2] eq 'authorid'"/>
-                  <xar:set name="value3">#xarUserGetVar('name',$key3)#</xar:set>
-                  <xar:set name="authorid">#$key3#</xar:set>
-                <xar:elseif condition="$group[2] eq 'language'"/>
-                  <xar:set name="value3">#$key3#</xar:set>
-                  <xar:set name="language">#$key3#</xar:set>
-                </xar:if>
-                <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value3# </a>
-                <xar:if condition="!empty($group[3]) and is_array($level3)">
-                  <ul>
-                  <xar:foreach in="$level3" key="$key4" value="$level4">
-                    <li>
-                      <xar:if condition="$group[3] eq 'pubtypeid'">
-                        <xar:set name="value4">#$pubtypes[$key4]['descr']#</xar:set>
-                        <xar:set name="pubtypeid">#$key4#</xar:set>
-                      <xar:elseif condition="$group[3] eq 'status'"/>
-                        <xar:set name="value4">#$statuslist[$key4]#</xar:set>
-                        <xar:set name="status">#$key4#</xar:set>
-                      <xar:elseif condition="$group[3] eq 'authorid'"/>
-                        <xar:set name="value4">#xarUserGetVar('name',$key4)#</xar:set>
-                        <xar:set name="authorid">#$key4#</xar:set>
-                      <xar:elseif condition="$group[3] eq 'language'"/>
-                        <xar:set name="value4">#$key4#</xar:set>
-                        <xar:set name="language">#$key4#</xar:set>
-                      </xar:if>
-                      <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value4# </a>
-                    <xar:comment>the end</xar:comment>
-                      #$level4#
-                      <xar:if condition="$group[3] eq 'pubtypeid'">
-                        <xar:set name="pubtypeid">null</xar:set>
-                      <xar:elseif condition="$group[3] eq 'status'"/>
-                        <xar:set name="status">null</xar:set>
-                      <xar:elseif condition="$group[3] eq 'authorid'"/>
-                        <xar:set name="authorid">null</xar:set>
-                      <xar:elseif condition="$group[3] eq 'language'"/>
-                        <xar:set name="language">null</xar:set>
-                      </xar:if>
-                    </li>
-                  </xar:foreach>
-                  </ul>
-                <xar:else/>
-                  #$level3#
-                </xar:if>
-                <xar:if condition="$group[2] eq 'pubtypeid'">
-                  <xar:set name="pubtypeid">null</xar:set>
-                <xar:elseif condition="$group[2] eq 'status'"/>
-                  <xar:set name="status">null</xar:set>
-                <xar:elseif condition="$group[2] eq 'authorid'"/>
-                  <xar:set name="authorid">null</xar:set>
-                <xar:elseif condition="$group[2] eq 'language'"/>
-                  <xar:set name="language">null</xar:set>
-                </xar:if>
-              </li>
-            </xar:foreach>
-            </ul>
-          <xar:else/>
-            #$level2#
-          </xar:if>
-          <xar:if condition="$group[1] eq 'pubtypeid'">
-            <xar:set name="pubtypeid">null</xar:set>
-          <xar:elseif condition="$group[1] eq 'status'"/>
-            <xar:set name="status">null</xar:set>
-          <xar:elseif condition="$group[1] eq 'authorid'"/>
-            <xar:set name="authorid">null</xar:set>
-          <xar:elseif condition="$group[1] eq 'language'"/>
-            <xar:set name="language">null</xar:set>
-          </xar:if>
-        </li>
-      </xar:foreach>
-      </ul>
-    <xar:else/>
-      #$level1#
-    </xar:if>
-    <xar:if condition="$group[0] eq 'pubtypeid'">
-      <xar:set name="pubtypeid">null</xar:set>
-    <xar:elseif condition="$group[0] eq 'status'"/>
-      <xar:set name="status">null</xar:set>
-    <xar:elseif condition="$group[0] eq 'authorid'"/>
-      <xar:set name="authorid">null</xar:set>
-    <xar:elseif condition="$group[0] eq 'language'"/>
-      <xar:set name="language">null</xar:set>
-    </xar:if>
-  </li>
-</xar:foreach>
-</ul>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"> 
+        <xar:mlstring>
+            Articles Administration 
+        </xar:mlstring>
+    </span> 
 </div>
+<div class="xar-mod-body">
+    <h2> 
+        <xar:mlstring>
+            View Statistics 
+        </xar:mlstring>
+    </h2> 
+    <form method="post" action="#xarModURL('articles','admin','stats')#">
+        <xar:mlstring>
+            Group by 
+        </xar:mlstring>
+        <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
+            <select name="group[#$i#]" id="group_#$i#"> 
+                <option value="">
+                </option>
+                <xar:foreach in="$fields" key="$name" value="$label">
+                    <xar:if condition="!empty($group[$i]) and $group[$i] eq $name">
+                        <option value="#$name#" selected="selected">
+                            #$label# 
+                        </option>
+                        <xar:else />
+                        <option value="#$name#">
+                            #$label# 
+                        </option>
+                    </xar:if>
+                </xar:foreach>
+            </select> 
+        </xar:for>
+        <input type="submit" value="#xarML('Select')#" /> 
+    </form>
+    <ul>
+        <xar:set name="pubtypeid">
+            null 
+        </xar:set>
+        <xar:set name="authorid">
+            null 
+        </xar:set>
+        <xar:set name="status">
+            null 
+        </xar:set>
+        <xar:set name="language">
+            null 
+        </xar:set>
+        <xar:foreach in="$stats" key="$key1" value="$level1">
+            <li>
+                <xar:if condition="$group[0] eq 'pubtypeid'">
+                    <xar:set name="value1">
+                        #$pubtypes[$key1]['descr']# 
+                    </xar:set>
+                    <xar:set name="pubtypeid">
+                        #$key1# 
+                    </xar:set>
+                    <xar:elseif condition="$group[0] eq 'status'" />
+                    <xar:set name="value1">
+                        #$statuslist[$key1]# 
+                    </xar:set>
+                    <xar:set name="status">
+                        #$key1# 
+                    </xar:set>
+                    <xar:elseif condition="$group[0] eq 'authorid'" />
+                    <xar:set name="value1">
+                        #xarUserGetVar('name',$key1)# 
+                    </xar:set>
+                    <xar:set name="authorid">
+                        #$key1# 
+                    </xar:set>
+                    <xar:elseif condition="$group[0] eq 'language'" />
+                    <xar:set name="value1">
+                        #$key1# 
+                    </xar:set>
+                    <xar:set name="language">
+                        #$key1# 
+                    </xar:set>
+                </xar:if>
+                <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value1# </a> 
+                <xar:if condition="!empty($group[1]) and is_array($level1)">
+                    <ul>
+                        <xar:foreach in="$level1" key="$key2" value="$level2">
+                            <li>
+                                <xar:if condition="$group[1] eq 'pubtypeid'">
+                                    <xar:set name="value2">
+                                        #$pubtypes[$key2]['descr']# 
+                                    </xar:set>
+                                    <xar:set name="pubtypeid">
+                                        #$key2# 
+                                    </xar:set>
+                                    <xar:elseif condition="$group[1] eq 'status'" />
+                                    <xar:set name="value2">
+                                        #$statuslist[$key2]# 
+                                    </xar:set>
+                                    <xar:set name="status">
+                                        #$key2# 
+                                    </xar:set>
+                                    <xar:elseif condition="$group[1] eq 'authorid'" />
+                                    <xar:set name="value2">
+                                        #xarUserGetVar('name',$key2)# 
+                                    </xar:set>
+                                    <xar:set name="authorid">
+                                        #$key2# 
+                                    </xar:set>
+                                    <xar:elseif condition="$group[1] eq 'language'" />
+                                    <xar:set name="value2">
+                                        #$key2# 
+                                    </xar:set>
+                                    <xar:set name="language">
+                                        #$key2# 
+                                    </xar:set>
+                                </xar:if>
+                                <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value2# </a> 
+                                <xar:if condition="!empty($group[2]) and is_array($level2)">
+                                    <ul>
+                                        <xar:foreach in="$level2" key="$key3" value="$level3">
+                                            <li>
+                                                <xar:if condition="$group[2] eq 'pubtypeid'">
+                                                    <xar:set name="value3">
+                                                        #$pubtypes[$key3]['descr']# 
+                                                    </xar:set>
+                                                    <xar:set name="pubtypeid">
+                                                        #$key3# 
+                                                    </xar:set>
+                                                    <xar:elseif condition="$group[2] eq 'status'" />
+                                                    <xar:set name="value3">
+                                                        #$statuslist[$key3]# 
+                                                    </xar:set>
+                                                    <xar:set name="status">
+                                                        #$key3# 
+                                                    </xar:set>
+                                                    <xar:elseif condition="$group[2] eq 'authorid'" />
+                                                    <xar:set name="value3">
+                                                        #xarUserGetVar('name',$key3)# 
+                                                    </xar:set>
+                                                    <xar:set name="authorid">
+                                                        #$key3# 
+                                                    </xar:set>
+                                                    <xar:elseif condition="$group[2] eq 'language'" />
+                                                    <xar:set name="value3">
+                                                        #$key3# 
+                                                    </xar:set>
+                                                    <xar:set name="language">
+                                                        #$key3# 
+                                                    </xar:set>
+                                                </xar:if>
+                                                <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value3# </a> 
+                                                <xar:if condition="!empty($group[3]) and is_array($level3)">
+                                                    <ul>
+                                                        <xar:foreach in="$level3" key="$key4" value="$level4">
+                                                            <li>
+                                                                <xar:if condition="$group[3] eq 'pubtypeid'">
+                                                                    <xar:set name="value4">
+                                                                        #$pubtypes[$key4]['descr']# 
+                                                                    </xar:set>
+                                                                    <xar:set name="pubtypeid">
+                                                                        #$key4# 
+                                                                    </xar:set>
+                                                                    <xar:elseif condition="$group[3] eq 'status'" />
+                                                                    <xar:set name="value4">
+                                                                        #$statuslist[$key4]# 
+                                                                    </xar:set>
+                                                                    <xar:set name="status">
+                                                                        #$key4# 
+                                                                    </xar:set>
+                                                                    <xar:elseif condition="$group[3] eq 'authorid'" />
+                                                                    <xar:set name="value4">
+                                                                        #xarUserGetVar('name',$key4)# 
+                                                                    </xar:set>
+                                                                    <xar:set name="authorid">
+                                                                        #$key4# 
+                                                                    </xar:set>
+                                                                    <xar:elseif condition="$group[3] eq 'language'" />
+                                                                    <xar:set name="value4">
+                                                                        #$key4# 
+                                                                    </xar:set>
+                                                                    <xar:set name="language">
+                                                                        #$key4# 
+                                                                    </xar:set>
+                                                                </xar:if>
+                                                                <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status))#">#$value4# </a> 
+                                                                <xar:comment>
+                                                                    the end 
+                                                                </xar:comment>
+                                                                #$level4# 
+                                                                <xar:if condition="$group[3] eq 'pubtypeid'">
+                                                                    <xar:set name="pubtypeid">
+                                                                        null 
+                                                                    </xar:set>
+                                                                    <xar:elseif condition="$group[3] eq 'status'" />
+                                                                    <xar:set name="status">
+                                                                        null 
+                                                                    </xar:set>
+                                                                    <xar:elseif condition="$group[3] eq 'authorid'" />
+                                                                    <xar:set name="authorid">
+                                                                        null 
+                                                                    </xar:set>
+                                                                    <xar:elseif condition="$group[3] eq 'language'" />
+                                                                    <xar:set name="language">
+                                                                        null 
+                                                                    </xar:set>
+                                                                </xar:if>
+                                                            </li>
+                                                        </xar:foreach>
+                                                    </ul>
+                                                    <xar:else />
+                                                    #$level3# 
+                                                </xar:if>
+                                                <xar:if condition="$group[2] eq 'pubtypeid'">
+                                                    <xar:set name="pubtypeid">
+                                                        null 
+                                                    </xar:set>
+                                                    <xar:elseif condition="$group[2] eq 'status'" />
+                                                    <xar:set name="status">
+                                                        null 
+                                                    </xar:set>
+                                                    <xar:elseif condition="$group[2] eq 'authorid'" />
+                                                    <xar:set name="authorid">
+                                                        null 
+                                                    </xar:set>
+                                                    <xar:elseif condition="$group[2] eq 'language'" />
+                                                    <xar:set name="language">
+                                                        null 
+                                                    </xar:set>
+                                                </xar:if>
+                                            </li>
+                                        </xar:foreach>
+                                    </ul>
+                                    <xar:else />
+                                    #$level2# 
+                                </xar:if>
+                                <xar:if condition="$group[1] eq 'pubtypeid'">
+                                    <xar:set name="pubtypeid">
+                                        null 
+                                    </xar:set>
+                                    <xar:elseif condition="$group[1] eq 'status'" />
+                                    <xar:set name="status">
+                                        null 
+                                    </xar:set>
+                                    <xar:elseif condition="$group[1] eq 'authorid'" />
+                                    <xar:set name="authorid">
+                                        null 
+                                    </xar:set>
+                                    <xar:elseif condition="$group[1] eq 'language'" />
+                                    <xar:set name="language">
+                                        null 
+                                    </xar:set>
+                                </xar:if>
+                            </li>
+                        </xar:foreach>
+                    </ul>
+                    <xar:else />
+                    #$level1# 
+                </xar:if>
+                <xar:if condition="$group[0] eq 'pubtypeid'">
+                    <xar:set name="pubtypeid">
+                        null 
+                    </xar:set>
+                    <xar:elseif condition="$group[0] eq 'status'" />
+                    <xar:set name="status">
+                        null 
+                    </xar:set>
+                    <xar:elseif condition="$group[0] eq 'authorid'" />
+                    <xar:set name="authorid">
+                        null 
+                    </xar:set>
+                    <xar:elseif condition="$group[0] eq 'language'" />
+                    <xar:set name="language">
+                        null 
+                    </xar:set>
+                </xar:if>
+            </li>
+        </xar:foreach>
+    </ul>
 </div>
