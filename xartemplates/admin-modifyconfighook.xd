@@ -1,41 +1,32 @@
 <fieldset class="formelements xar-norm">
     <legend>
-        <strong>
+        <strong> 
             <xar:mlstring>
-                Categories
+                Categories 
             </xar:mlstring>
             <xar:if condition="!empty($newcat)">
-                [ 
-                <a href="&xar-modurl-categories-admin-modifycat;">
+                [ <a href="&xar-modurl-categories-admin-modifycat;"> 
                     <xar:mlstring>
-                        Add
+                        Add 
                     </xar:mlstring>
-                </a> 
-                ]
+                </a> ] 
             </xar:if>
-        </strong>
+        </strong> 
     </legend>
-    <p class="param">
-        <label for="number_of_categories" class="required">
-            <span class="help" title="#xarML('Enter the number of possible categories that this itemtype will use')#">
-                <xar:mlstring>
-                    Number of possible categories
-                </xar:mlstring>
-            </span>
-        </label>
-        <input type="text" name="number_of_categories" id="number_of_categories" size="3" maxlength="2" value="#$numcats#" />
-    </p>
+    <div class="xar-form-input-wrapper">
+        <label for="number_of_categories" class="xar-form-label help" title="#xarML('Enter the number of possible categories that this itemtype will use')#"> 
+            <xar:mlstring>
+                Number of possible categories 
+            </xar:mlstring>
+        </label> <input type="text" name="number_of_categories" id="number_of_categories" size="3" maxlength="2" value="#$numcats#" /> 
+    </div>
     <xar:loop name="$items">
-        <p class="param">
-            <label for="number_of_categories" class="required">
-                <span class="help" title="#xarML('Base category')#">
-                    <xar:mlstring>
-                        Base category for
-                    </xar:mlstring>
-                    #$modname# (#$loop:item['num']#)
-                </span>
-            </label>
-            #$loop:item['select']#
-        </p>
+        <div class="xar-form-input-wrapper">
+            <label for="number_of_categories" class="xar-form-label help" title="#xarML('Base category')#"> 
+                <xar:mlstring>
+                    Base category for 
+                </xar:mlstring>
+                #$modname# (#$loop:item['num']#)</label> #$loop:item['select']# 
+        </div>
     </xar:loop>
 </fieldset>
