@@ -15,7 +15,7 @@
     <form method="post" action="#xarModURL('articles','admin','importpubtype')#">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <xar:mlstring>Filter</xar:mlstring>: 
-        <b>modules/articles/*.xml</b>
+        <strong>modules/articles/*.xml<strong>
         <br />
         <br />
         <xar:mlstring>File</xar:mlstring>: 
