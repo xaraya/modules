@@ -838,70 +838,98 @@ class xmlrpcval
         }
     }
     
-    function addScalar($val, $type="string") 
+    function addScalar($val, $type='string')
     {
         global $xmlrpcTypes, $xmlrpcBoolean;
-        
-        if ($this->mytype==1) {
-            echo "<b>xmlrpcval</b>: scalar can have only one value<br/>";
+
+        $typeof=@$xmlrpcTypes[$type];
+        if ($typeof!=1)
+        {
+            error_log("addScalar: not a scalar type ($typeof)");
             return 0;
         }
-        $typeof=$xmlrpcTypes[$type];
-        if ($typeof!=1) {
-            echo "<b>xmlrpcval</b>: not a scalar type (${typeof})<br/>";
-            return 0;
-        }
-        
-        if ($type==$xmlrpcBoolean) {
-            if (strcasecmp($val,"true")==0 || 
-                $val==1 || ($val==true &&
-                            strcasecmp($val,"false"))) {
-                $val=1;
-            } else {
-                $val=0;
+
+        // coerce booleans into correct values
+        // NB: shall we do it for datetime too?
+        if ($type==$xmlrpcBoolean)
+        {
+            if (strcasecmp($val,'true')==0 || $val==1 || ($val==true && strcasecmp($val,'false')))
+            {
+                $val=true;
+            }
+            else
+            {
+                $val=false;
             }
         }
-        
-        if ($this->mytype==2) {
+
+        switch ($this->mytype)
+        {
+            case 1:
+                error_log('addScalar: scalar xmlrpcval can have only one value');
+                return 0;
+            case 3:
+                error_log('addScalar: cannot add anonymous scalar to struct xmlrpcval');
+                return 0;
+            case 2:
+                // we're adding a scalar value to an array here
+                //$ar=$this->me['array'];
+                //$ar[]=&new xmlrpcval($val, $type);
+                //$this->me['array']=$ar;
+                // Faster (?) avoid all the costly array-copy-by-val done here...
+                $this->me['array'][]=&new xmlrpcval($val, $type);
+                return 1;
+            default:
+                // a scalar, so set the value and remember we're scalar
+                $this->me[$type]=$val;
+                $this->mytype=$typeof;
+                return 1;
+        }
+    }
+    
+    function addArray($vals)
+    {
+        global $xmlrpcTypes;
+        if ($this->mytype==0)
+        {
+            $this->mytype=$xmlrpcTypes['array'];
+            $this->me['array']=$vals;
+            return 1;
+        }
+        elseif ($this->mytype==2)
+        {
             // we're adding to an array here
-            $ar=$this->me["array"];
-            $ar[]=new xmlrpcval($val, $type);
-            $this->me["array"]=$ar;
-        } else {
-            // a scalar, so set the value and remember we're scalar
-            $this->me[$type]=$val;
-            $this->mytype=$typeof;
+            $this->me['array'] = array_merge($this->me['array'], $vals);
         }
-        return 1;
-    }
-    
-    function addArray($vals) 
-    {
-        global $xmlrpcTypes;
-        if ($this->mytype!=0) {
-            echo "<b>xmlrpcval</b>: already initialized as a [" . 
-                $this->kindOf() . "]<br/>";
+        else
+        {
+            error_log('xmlrpcval: already initialized as a [' . $this->kindOf() . ']');
             return 0;
         }
-        
-        $this->mytype=$xmlrpcTypes["array"];
-        $this->me["array"]=$vals;
-        return 1;
     }
     
-    function addStruct($vals) 
+    function addStruct($vals)
     {
         global $xmlrpcTypes;
-        if ($this->mytype!=0) {
-            echo "<b>xmlrpcval</b>: already initialized as a [" . 
-                $this->kindOf() . "]<br/>";
+        if ($this->mytype==0)
+        {
+            $this->mytype=$xmlrpcTypes['struct'];
+            $this->me['struct']=$vals;
+            return 1;
+        }
+        elseif ($this->mytype==3)
+        {
+            // we're adding to a struct here
+            $this->me['struct'] = array_merge($this->me['struct'], $vals);
+        }
+        else
+        {
+            error_log('xmlrpcval: already initialized as a [' . $this->kindOf() . ']');
             return 0;
         }
-        $this->mytype=$xmlrpcTypes["struct"];
-        $this->me["struct"]=$vals;
-        return 1;
     }
-    
+                
+   
     function dump($ar) 
     {
         reset($ar);
