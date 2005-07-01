@@ -108,7 +108,7 @@
                 </table>
                 <p>
                     <xar:mlstring>
-                        <strong>Note:<strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd<em> and <em>user-summary-[publicationtype].xd<em> by default. 
+                        <strong>Note:<strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default. 
                         <br />
                         Don't forget to provide those templates before trying to add new articles... 
                     </xar:mlstring>
