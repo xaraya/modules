@@ -160,6 +160,20 @@ function comments_user_modify()
     }
 
     $hooks = xarModAPIFunc('comments','user','formhooks');
+/*
+    // Call modify hooks for categories, dynamicdata etc.
+    $args['module'] = 'comments';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $header['cid'];
+    // pass along the current module & itemtype for pubsub (urgh)
+// FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
+    $args['cid'] = 0; // dummy category
+    $modinfo = xarModGetInfo($header['modid']);
+    $args['current_module'] = $modinfo['name'];
+    $args['current_itemtype'] = $header['itemtype'];
+    $args['current_itemid'] = $header['objectid'];
+    $hooks['iteminput'] = xarModCallHooks('item', 'modify', $header['cid'], $args);
+*/
 
     $output['hooks']              = $hooks;
     $output['header']             = $header;

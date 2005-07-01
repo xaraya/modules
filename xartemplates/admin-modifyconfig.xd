@@ -258,6 +258,11 @@
                 </xar:if>
             </p>
         </fieldset>
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$module" value="$output">
+                #$output#
+            </xar:foreach>
+        </xar:if>
         <fieldset class="formelements xar-norm">
             <p class="param">
                 <input type="submit" value="#xarML('Submit')#" />

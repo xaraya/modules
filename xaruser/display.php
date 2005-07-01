@@ -130,6 +130,21 @@ function comments_user_display($args)
             $header['modid'] = $package['comments'][0]['xar_modid'];
             $header['itemtype'] = $package['comments'][0]['xar_itemtype'];
             $header['objectid'] = $package['comments'][0]['xar_objectid'];
+/*
+            // Call display hooks for categories, dynamicdata etc. (only when displaying individual comments)
+            $args['module'] = 'comments';
+            $args['itemtype'] = 0;
+            $args['itemid'] = $header['cid'];
+            // pass along the current module & itemtype for pubsub (urgh)
+        // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
+            $args['cid'] = 0; // dummy category
+            $modinfo = xarModGetInfo($header['modid']);
+            $args['current_module'] = $modinfo['name'];
+            $args['current_itemtype'] = $header['itemtype'];
+            $args['current_itemid'] = $header['objectid'];
+            $args['returnurl'] = xarModURL('comments','user','display',array('cid' => $header['cid']));
+            $package['comments'][0]['hooks'] = xarModCallHooks('item', 'display', $header['cid'], $args);
+*/
         }
     }
 

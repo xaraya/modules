@@ -69,6 +69,13 @@
                         <xar:else />
                         <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
                     </xar:if>
+<xar:comment> TODO: show item new/modify hook here somehow
+                    <xar:if condition="!empty($hooks['iteminput'])">
+                    <xar:foreach in="$hooks['iteminput']" key="$hookmodule">
+                        #$hooks.iteminput.$hookmodule#
+                    </xar:foreach>
+                    </xar:if>
+</xar:comment>
                     <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
                     <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 
                     <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#" /> 
@@ -118,7 +125,7 @@
                             <xar:else />
                             #$package['name']# 
                         </xar:if>
-                    </p>
+                     </p>
                     <label for="package-title">
                         <xar:mlstring>
                             Title:
@@ -141,6 +148,13 @@
                         <xar:else />
                         <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
                     </xar:if>
+<xar:comment> TODO: show item new/modify hook here somehow
+                    <xar:if condition="!empty($hooks['iteminput'])">
+                    <xar:foreach in="$hooks['iteminput']" key="$hookmodule">
+                        #$hooks.iteminput.$hookmodule#
+                    </xar:foreach>
+                    </xar:if>
+</xar:comment>
                     <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
                     <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 
                     <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#" /> 

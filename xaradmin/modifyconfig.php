@@ -21,6 +21,8 @@ function comments_admin_modifyconfig()
         xarModSetVar('comments', 'numstats', 100);
     }
     $output['authid'] = xarSecGenAuthKey();
+    $output['hooks'] = xarModCallHooks('module', 'modifyconfig', 'comments',
+                                       array('module' => 'comments'));
     return $output;
 }
 ?>
