@@ -12,7 +12,7 @@
         <xar:foreach in="$months" value="$month">
             <li>
                 <xar:if condition="empty($month['mlink'])">
-                    <b> #$month['month']# (#$month['mcount']#) </b> 
+                    <strong> #$month['month']# (#$month['mcount']#) <strong> 
                     <xar:else />
                     <a href="#$month['mlink']#"> #$month['month']# </a> (#$month['mcount']#) 
                 </xar:if>
