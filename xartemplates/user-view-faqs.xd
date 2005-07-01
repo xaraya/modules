@@ -55,7 +55,7 @@
         </a>
     </xar:if>
 </xar:if>
-<div style="text-align: center;">
+<div class="xar-align-center">
 <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
     <p>#$viewpager#</p> 
     <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
