@@ -32,6 +32,10 @@ function articles_adminapi_getstats($args)
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myyear";
                     break;
+                case 'mssql':
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),4) as myyear";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),4)";
+                    break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
                     continue;
@@ -48,6 +52,10 @@ function articles_adminapi_getstats($args)
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "mymonth";
                     break;
+                case 'mssql':
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),7) as mymonth";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),7)";
+                    break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
                     continue;
@@ -63,6 +71,10 @@ function articles_adminapi_getstats($args)
                     $newfields[] = "TO_CHAR(ABSTIME(xar_pubdate),'YYYY-MM-DD') AS myday";
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myday";
+                    break;
+                case 'mssql':
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),10) as myday";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),10)";
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
@@ -86,7 +98,7 @@ function articles_adminapi_getstats($args)
               FROM ' . $xartables['articles'] . '
               GROUP BY ' . join(', ', $newgroups) . '
               ORDER BY ' . join(', ', $newgroups);
-echo var_dump($query);
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
