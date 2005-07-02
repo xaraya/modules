@@ -63,6 +63,8 @@ class phpOpenTracker_API_search_engines extends phpOpenTracker_API_Plugin {
   * @access public
   */
   function run($parameters) {
+    $this->table = xarDBGetSiteTablePrefix() . '_pot_search_engines'; //added for xaraya
+
     if (!isset($parameters['what'])) {
       return phpOpenTracker::handleError(
         'Required parameter "what" missing.'
