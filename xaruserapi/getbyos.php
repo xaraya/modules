@@ -29,10 +29,10 @@ function stats_userapi_getbyos($args)
 
     // create query
     // Excluded unknown OS
-    $query = "SELECT b.xar_ua_osnam AS name, b.xar_ua_osver AS osver, SUM(a.xar_sta_hits) as sum
+    $query = "SELECT b.xar_ua_osnam, b.xar_ua_osver, SUM(a.xar_sta_hits) as axhitsum
               FROM $statstable AS a, $sniffertable AS b
               WHERE a.xar_ua_id = b.xar_ua_id
-              AND b.xar_ua_agver <> 0
+              AND b.xar_ua_agver <> '0'
               AND b.xar_ua_osnam <> 'Unknown' ";
     $bindvars = array();
     if (!empty($year) && is_numeric($year)) {
@@ -47,8 +47,8 @@ function stats_userapi_getbyos($args)
             }
         }
     }
-    $query .= "GROUP BY name, osver
-               ORDER BY sum DESC";
+    $query .= "GROUP BY b.xar_ua_osnam, b.xar_ua_osver
+               ORDER BY axhitsum DESC";
 
     if ($top10 == true) {
         $result =& $dbconn->SelectLimit($query,10,-1,$bindvars);

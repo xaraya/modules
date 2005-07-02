@@ -30,7 +30,7 @@ function stats_userapi_getbybrowser($args)
     // create query
     // Exclude entries with xar_ua_agnam = '' cause they are bots and rss aggregators / blocks
     if ($top10 == true) {
-        $query = "SELECT b.xar_ua_agnam AS name, 0, SUM(a.xar_sta_hits) as sum
+        $query = "SELECT b.xar_ua_agnam, 0, SUM(a.xar_sta_hits) as axhitsum
                   FROM $statstable AS a, $sniffertable AS b
                   WHERE a.xar_ua_id = b.xar_ua_id
                   AND b.xar_ua_agnam <> '' ";
@@ -47,16 +47,16 @@ function stats_userapi_getbybrowser($args)
                 }
             }
         }
-        $query .= "GROUP BY name
-                   ORDER BY sum DESC";
+        $query .= "GROUP BY b.xar_ua_agnam
+                   ORDER BY axhitsum DESC";
         $result =& $dbconn->SelectLimit($query,10,-1,$bindvars);
     } else {
-        $query = "SELECT b.xar_ua_agnam AS name, b.xar_ua_agver AS version, SUM(a.xar_sta_hits) as sum
+        $query = "SELECT b.xar_ua_agnam, b.xar_ua_agver, SUM(a.xar_sta_hits) as axhitsum
                   FROM $statstable AS a, $sniffertable AS b
                   WHERE a.xar_ua_id = b.xar_ua_id
                   AND b.xar_ua_agnam <> ''
-                  GROUP BY name, version
-                  ORDER BY sum DESC";
+                  GROUP BY b.xar_ua_agnam, b.xar_ua_agver
+                  ORDER BY axhitsum DESC";
         $result =& $dbconn->Execute($query);
     }
 
