@@ -26,8 +26,8 @@ function ratings_init()
         'xar_moduleid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
         'xar_itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
         'xar_itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'xar_rating' => array('type' => 'float', 'size' => 'double', 'width' => 3, 'decimals' => 5, 'null' => false, 'default' => '0'),
-        'xar_numratings' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '1')
+        'xar_rating' => array('type' => 'float', 'size' => 'double', 'width' => 8, 'decimals' => 5, 'null' => false, 'default' => '0'),
+        'xar_numratings' => array('type' => 'integer', 'size' => 'medium', 'null' => false, 'default' => '1')
         );
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
