@@ -1,34 +1,38 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <xar:set name="buttonon"><xar:mlstring>Turn On</xar:mlstring></xar:set>
-    <xar:set name="wysiwygprompt"><xar:mlstring>WYSIWYG</xar:mlstring></xar:set>
-    <xar:set name="checkit">xarModGetVar('tinymce','tinybrowsers')</xar:set>
-    <xar:if condition="!isset($checkit)">
-        <xar:set name="setbrowsers">xarModSetVar('tinymce','tinybrowsers','msie,gecko')</xar:set>
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:set name="buttonon">
+    <xar:mlstring>Turn On</xar:mlstring>
+</xar:set>
+<xar:set name="wysiwygprompt">
+    <xar:mlstring>WYSIWYG</xar:mlstring>
+</xar:set>
+<xar:set name="checkit">xarModGetVar('tinymce','tinybrowsers')</xar:set>
+<xar:if condition="!isset($checkit)">
+    <xar:set name="setbrowsers">xarModSetVar('tinymce','tinybrowsers','msie,gecko')</xar:set>
+</xar:if>
+<xar:set name="tinybrowsers">explode(',',xarModGetVar('tinymce','tinybrowsers'))</xar:set>
+<xar:set name="usewysiwyg">0</xar:set>
+<xar:set name="useragent">getenv('HTTP_USER_AGENT');</xar:set>
+<xar:foreach in="$tinybrowsers" value="$browsername">
+    <xar:if condition="eregi($browsername,$useragent)">
+        <xar:set name="usewysiwyg">1</xar:set>
     </xar:if>
-    <xar:set name="tinybrowsers">explode(',',xarModGetVar('tinymce','tinybrowsers'))</xar:set>
-    <xar:set name="usewysiwyg">0</xar:set>
-
-    <xar:set name="useragent">getenv('HTTP_USER_AGENT');</xar:set>
-        <xar:foreach in="$tinybrowsers" value="$browsername">
-            <xar:if condition="eregi($browsername,$useragent)">
-                <xar:set name="usewysiwyg">1</xar:set>
-            </xar:if>
-       </xar:foreach>
-
+</xar:foreach>
 <xar:if condition="xarModGetVar('base','editor') eq 'tinymce' and xarModIsAvailable('tinymce')">
     <xar:template file="tinymce_insert" module="tinymce" type="module" />
 </xar:if>
-
 <xar:if condition="xarModGetVar('tinymce','usebutton') eq 'true' and ($usewysiwyg eq 1)">
-
-    <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
-    <br />#$wysiwygprompt#: <input type="button" value="#$buttonon#" onclick="mce_button_toggle('#$id#', this);" />
-
-<xar:else />
+<div class="xar-form-container-after">
+    <textarea class="xar-form-textareaxlarge" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">#$wysiwygprompt#</label>
+        <input type="button" value="#$buttonon#" onclick="mce_button_toggle('#$id#', this);" />
+    </div>
+    <xar:else />
+    <div class="xar-form-container-after">
     <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" mce_editable="true" tabindex="#$tabindex#">#$value#</textarea>
-
+    </div>
 </xar:if>
-
 <xar:if condition="!empty($invalid)">
     <span class="xar-error">#$invalid#</span>
 </xar:if>
