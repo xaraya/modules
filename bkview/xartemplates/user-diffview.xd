@@ -1,5 +1,6 @@
 <xar:template file="user-menu" type="module"/>
 
+<div style="float: left; margin-top: 1em;">
 <table class="csets">
 	<tr>
   	<th><xar:mlstring>Age</xar:mlstring></th>
@@ -19,4 +20,5 @@
 	<xar:loop name="$difflines">
 		<div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
 	</xar:loop>
+</div>
 </div>

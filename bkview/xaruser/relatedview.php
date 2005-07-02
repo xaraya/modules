@@ -21,7 +21,7 @@ function bkview_user_relatedview($args)
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    $repov =& $item['repo'];
+    $repo =& $item['repo'];
     $the_file = new bkFile($repo,$file);
 
     $changesets=$the_file->bkChangeSets();

@@ -1,17 +1,18 @@
 <xar:template file="user-menu" type="module"/>
 
-<xar:loop name="$deltalist">
-	<div class="xar-accent bkdiffsep">
-		<xar:ml>
-			<xar:mlstring>Diffs for #(1) introduced in #(2)</xar:mlstring>
-			<xar:mlvar>#$loop:item['file']#</xar:mlvar>
-			<xar:mlvar>#$loop:item['revision']#</xar:mlvar>
-	  </xar:ml>
-  </div>
-	<div class="bkdiff">
-		<xar:loop name="$loop:item['difflines']">
-		  <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
-	  </xar:loop>
-	</div>
-</xar:loop>
+<div style="float: left; margin-top: 1em;">
+  <xar:loop name="$deltalist">
+    <div class="xar-accent bkdiffsep">
+      <xar:ml>
+        <xar:mlstring>Diffs for #(1) introduced in #(2)</xar:mlstring>
+        <xar:mlvar>#$loop:item['file']#</xar:mlvar>
+        <xar:mlvar>#$loop:item['revision']#</xar:mlvar>
+      </xar:ml>
+    </div>
+    <div class="bkdiff">
+      <xar:loop name="$loop:item['difflines']">
+        <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
+      </xar:loop>
+    </div>
+  </xar:loop>
 </div>

@@ -1,5 +1,6 @@
 <xar:template file="user-menu" type="module"/>
 
+<div style="float: left; margin-top: 1em;">
 <table class="csets">
 <xar:loop name="$deltalist">
   <tr>
@@ -28,3 +29,4 @@
   <tr><td class="comments">#$loop:item['comments']#</td></tr>
 </xar:loop>
 </table>
+</div>

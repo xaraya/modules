@@ -1,49 +1,70 @@
-<!-- temporarily include module level styling until we're done -->
-<style type="text/css">
-   @import url(modules/bkview/bkweb.css);
-</style>
-
 <!-- include the module header on all user pages -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>BK-view</xar:mlstring>
-  </span>
-</div>
+  <div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>BK-view</xar:mlstring></span>
+  </div>
 
-<xar:if condition="!empty($repoid)">
-<div class="xar-menu-section">
-  <span class="xar-menu-item">
-    <a href="&xar-modurl-bkview-user-main;">
-      <xar:mlstring>Index</xar:mlstring>
-    </a>
-  </span>
-  <span class="xar-menu-item">
-    <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#">
-      <xar:mlstring>Changeset activity</xar:mlstring>
-    </a>
-  </span>
-  <span class="xar-menu-item">
-    <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1">
-      <xar:mlstring>Tags</xar:mlstring>
-    </a>
-  </span>
-  <span class="xar-menu-item">
-    <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#">
-      <xar:mlstring>Browse source tree</xar:mlstring>
-    </a>
-  </span>
-  <span class="xar-menu-item">
-    <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#">
-      <xar:mlstring>User statistics</xar:mlstring>
-    </a>
-  </span>
-</div>
-</xar:if>
-
-<!-- Show a mini breadcrumb -->
-<div class="xarmod-body">
-  <h2><xar:if condition="!empty($name_value)">#$name_value# : </xar:if>#$pageinfo#</h2>
-</div>
-
-
-
+  <!-- temporarily include module level styling until we're done -->
+  <xar:if condition="xarTplAddStyleLink('bkview','bkweb')">
+    <div class="bktabnav">
+      <div class="bknavhelp help" title="#xarML('Click on a tab to display different repository information')#">
+        <xar:if condition="!empty($name_value)">#$name_value# : </xar:if>
+      </div>
+      <div class="bktabnav-hairline"/>
+      <ul class="navlist">
+          <xar:if condition="$_bl_module_func eq 'view'">
+            <li class="active">
+          <xar:else/>
+            <li>
+          </xar:if>
+          <a href="&xar-modurl-bkview-user-main;">
+            <img border="1" src="#xarTplGetImage('bkindex.gif')#"/>
+            <xar:mlstring>Index</xar:mlstring>
+          </a>
+        </li>
+        <xar:if condition="!empty($repoid)">
+          <xar:if condition="$_bl_module_func eq 'display'">
+            <li class="active">
+          <xar:else/>
+            <li>
+          </xar:if>
+          <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#">
+            <img src="#xarTplGetImage('bkcset.gif')#"/>
+            <xar:mlstring>Changeset activity</xar:mlstring>
+          </a>
+          </li>
+          <xar:if condition="$_bl_module_func eq 'csetview'">
+            <li class="active">
+              <xar:else/>
+              <li>
+          </xar:if>
+            <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1">
+              <img src="#xarTplGetImage('bktags.gif')#"/>
+              <xar:mlstring>Tags</xar:mlstring>
+            </a>
+          </li>
+          <xar:if condition="$_bl_module_func eq 'browseview'">
+            <li class="active">
+              <xar:else/>
+              <li>
+          </xar:if>
+            <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#">
+              <img src="#xarTplGetImage('bktree.gif')#"/>
+              <xar:mlstring>Browse source tree</xar:mlstring>
+            </a>
+          </li>
+          <xar:if condition="$_bl_module_func eq 'statsview'">
+            <li class="active">
+              <xar:else/>
+              <li>
+          </xar:if>
+            <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#">
+              <img src="#xarTplGetImage('bkstats.gif')#"/>
+              <xar:mlstring>User statistics</xar:mlstring>
+            </a>
+          </li>
+          </xar:if>
+        </ul>
+        <div class="bktabnav-hairline"/>
+      </div>
+  </xar:if>
+  <div class="xar-mod-title">#$pageinfo#</div>

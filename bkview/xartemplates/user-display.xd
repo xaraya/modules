@@ -1,13 +1,13 @@
 <!-- include the common user stuff -->
-<xar:template file="user-menu" type="module"/>
-
 <div class="xar-mod-body">
-  <div style="float:left;">
-    <ul>
+  <xar:template file="user-menu" />
+  
+  <div style="float:left; margin-top: 1em;">
+    <dd>
       <xar:while condition="list($range,$text)= each($rangetext)">
-        <li><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#&amp;user=#$user#">#$text#</a></li>
+        <dt><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#&amp;user=#$user#">#$text#</a></dt>
       </xar:while>
-      <li>
+      <dt>
         <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#&amp;user=#$user#">
           <xar:ml>
             <xar:mlstring>All #(1) Changesets ( #(2) empty merges)</xar:mlstring>
@@ -15,10 +15,10 @@
             <xar:mlvar>#$mrgsets#</xar:mlvar>
           </xar:ml>
         </a>
-      </li>    
-    </ul>
+      </dt>    
+    </dd>
   </div>
-
+  
   <div style="float:right;">
     <xar:if condition="!empty($hooks)">
       <xar:foreach in="$hooks" key="$hookmod" value="$hookout">
@@ -27,3 +27,5 @@
     </xar:if>
   </div>
 </div>
+
+

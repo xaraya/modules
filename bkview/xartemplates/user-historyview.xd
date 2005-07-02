@@ -1,5 +1,6 @@
 <xar:template file="user-menu" type="module"/>
 
+<div style="float: left; margin-top: 1em;">
 <table class="csets">
 	<tr>
   	<th><xar:mlstring>Age</xar:mlstring></th>
@@ -26,3 +27,4 @@
     </tr>
 	</xar:loop>
 </table>
+</div>

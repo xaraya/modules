@@ -1,6 +1,6 @@
 <xar:template file="user-menu" type="module"/>
 
-<div style="float:left;">
+<div style="float:left; margin-top: 1em;">
 
   <!-- Header for the folder list -->
   <div class="xar-mod-head">
