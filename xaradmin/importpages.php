@@ -29,7 +29,7 @@ function articles_admin_importpages()
     $data = array();
 
     if (empty($basedir)) {
-        $data['basedir'] = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+        $data['basedir'] = realpath('modules/articles');
     } else {
         $data['basedir'] = realpath($basedir);
     }

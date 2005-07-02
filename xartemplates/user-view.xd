@@ -8,16 +8,28 @@
         and also a separate user-view-frontpage.xd template for the articles frontpage
     </xar:comment>
 
-<xar:if condition="!empty($author)">
+<xar:if condition="!empty($author) or !empty($pubdate)">
     <h2>
-        <xar:ml>
-            <xar:mlstring>
-                By Author : #(1) 
-            </xar:mlstring>
-            <xar:mlvar>
-                #$author# 
-            </xar:mlvar>
-        </xar:ml>
+        <xar:if condition="!empty($pubdate)">
+            <xar:ml>
+                <xar:mlstring>
+                    Publication Date : #(1) 
+                </xar:mlstring>
+                <xar:mlvar>
+                    #$pubdate# 
+                </xar:mlvar>
+            </xar:ml>
+        </xar:if>
+        <xar:if condition="!empty($author)">
+            <xar:ml>
+                <xar:mlstring>
+                    By Author : #(1) 
+                </xar:mlstring>
+                <xar:mlvar>
+                    #$author# 
+                </xar:mlvar>
+            </xar:ml>
+        </xar:if>
     </h2>
 </xar:if>
 

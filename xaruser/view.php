@@ -25,6 +25,7 @@ function articles_user_view($args)
     if(!xarVarFetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('numcols',  'int:0', $numcols,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('authorid', 'id',    $authorid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('pubdate',  'str:1', $pubdate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 // This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
 //    if(!xarVarFetch('startdate','int:0', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
 //    if(!xarVarFetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -359,6 +360,9 @@ function articles_user_view($args)
     if (empty($enddate) || !is_numeric($enddate) || $enddate > $now) {
         $enddate = $now;
     }
+    if (empty($pubdate) || !preg_match('/^\d{4}(-\d+(-\d+|)|)$/',$pubdate)) {
+        $pubdate = null;
+    }
     if (empty($where)) {
         $where = null;
     }
@@ -420,6 +424,7 @@ function articles_user_view($args)
                                    'extra' => $extra,
                                    'where' => $where,
                                    'numitems' => $numitems,
+                                   'pubdate' => $pubdate,
                                    'startdate' => $startdate,
                                    'enddate' => $enddate));
 
@@ -449,6 +454,9 @@ function articles_user_view($args)
             $data['author'] = xarML('Unknown');
         }
     }
+    if (!empty($pubdate)) {
+        $data['pubdate'] = $pubdate;
+    }
 
     // Save some variables to (temporary) cache for use in blocks etc.
     xarVarSetCached('Blocks.articles','ptid',$ptid);
@@ -456,6 +464,9 @@ function articles_user_view($args)
     xarVarSetCached('Blocks.articles','authorid',$authorid);
     if (isset($data['author'])) {
         xarVarSetCached('Blocks.articles','author',$data['author']);
+    }
+    if (isset($data['pubdate'])) {
+        xarVarSetCached('Blocks.articles','pubdate',$data['pubdate']);
     }
 
 // TODO: add this to articles configuration ?
@@ -878,6 +889,7 @@ function articles_user_view($args)
                                                         'authorid' => $authorid,
                                                         'status' => $status,
                                                         'where' => $where,
+                                                        'pubdate' => $pubdate,
                                                         'startdate' => $startdate,
                                                         'enddate' => $enddate)),
                                     xarModURL('articles', 'user', 'view',

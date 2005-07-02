@@ -19,8 +19,18 @@
     <div>
         <xar:template file="navtabs" type="module" />
         <xar:template file="navtabs-status" type="module" />
-        <xar:if condition="!empty($authorid) or !empty($language)">
+        <xar:if condition="!empty($authorid) or !empty($language) or !empty($pubdate)">
             <h3>
+            <xar:if condition="!empty($pubdate)">
+                <xar:ml>
+                    <xar:mlstring>
+                        Publication Date : #(1) 
+                    </xar:mlstring>
+                    <xar:mlvar>
+                        #$pubdate# 
+                    </xar:mlvar>
+                </xar:ml>
+            </xar:if>
             <xar:if condition="!empty($authorid)">
                 <xar:ml>
                     <xar:mlstring>

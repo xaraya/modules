@@ -25,6 +25,7 @@
  * @param $args['search'] search text parameter(s)
  * @param $args['searchfields'] array of fields to search in
  * @param $args['searchtype'] start, end, like, eq, gt, ... (TODO)
+ * @param $args['pubdate'] articles published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
  * @param $args['startdate'] articles published at startdate or later
  *                           (unix timestamp format)
  * @param $args['enddate'] articles published before enddate
@@ -100,6 +101,37 @@ function articles_userapi_leftjoin($args)
         } elseif (count($status) > 1) {
             $allstatus = join(', ',$status);
             $whereclauses[] = $leftjoin['status'] . ' IN (' . $allstatus . ')';
+        }
+    }
+    if (!empty($pubdate)) {
+        // published in a certain year
+        if (preg_match('/^(\d{4})$/',$pubdate,$matches)) {
+            $startdate = gmmktime(0,0,0,1,1,$matches[1],0);
+            $enddate = gmmktime(0,0,0,1,1,$matches[1]+1,0);
+            if ($enddate > time()) {
+                $enddate = time();
+            }
+        // published in a certain month
+        } elseif (preg_match('/^(\d{4})-(\d+)$/',$pubdate,$matches)) {
+            $startdate = gmmktime(0,0,0,$matches[2],1,$matches[1],0);
+            // PHP allows month > 12 :-)
+            $enddate = gmmktime(0,0,0,$matches[2]+1,1,$matches[1],0);
+            if ($enddate > time()) {
+                $enddate = time();
+            }
+        // published in a certain day
+        } elseif (preg_match('/^(\d{4})-(\d+)-(\d+)$/',$pubdate,$matches)) {
+            $startdate = gmmktime(0,0,0,$matches[2],$matches[3],$matches[1],0);
+            // PHP allows day > 3x :-)
+            $enddate = gmmktime(0,0,0,$matches[2],$matches[3]+1,$matches[1],0);
+            if ($enddate > time()) {
+                $enddate = time();
+            }
+        // published at a certain timestamp
+        } elseif (preg_match('/^(\d+)$/',$pubdate,$matches)) {
+            if ($pubdate <= time()) {
+                $whereclauses[] = $leftjoin['pubdate'] . ' = ' . $pubdate;
+            }
         }
     }
     if (!empty($startdate) && is_numeric($startdate)) {

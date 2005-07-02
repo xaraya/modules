@@ -9,6 +9,14 @@ function articles_admin_stats($args = array())
     if (!xarVarFetch('group','isset',$group,array(),XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
+    if (!empty($group)) {
+        $newgroup = array();
+        foreach ($group as $field) {
+            if (empty($field)) continue;
+            $newgroup[] = $field;
+        }
+        $group = $newgroup;
+    }
     if (empty($group)) {
         $group = array('pubtypeid', 'status', 'authorid');
     }
@@ -19,10 +27,13 @@ function articles_admin_stats($args = array())
                                    array('group' => $group));
     $data['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
     $data['statuslist'] = xarModAPIFunc('articles','user','getstates');
-    $data['fields'] = array('pubtypeid' => xarML('Publication Type'),
-                            'status'    => xarML('Status'),
-                            'authorid'  => xarML('Author'),
-                            'language'  => xarML('Language'));
+    $data['fields'] = array('pubtypeid'     => xarML('Publication Type'),
+                            'status'        => xarML('Status'),
+                            'authorid'      => xarML('Author'),
+                            'pubdate_year'  => xarML('Publication Year'),
+                            'pubdate_month' => xarML('Publication Month'),
+                            'pubdate_day'   => xarML('Publication Day'),
+                            'language'      => xarML('Language'));
     return $data;
 }
 

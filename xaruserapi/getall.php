@@ -17,6 +17,7 @@
  * @param $args['cids'] array of category IDs for which to get articles (OR/AND)
  *                      (for all categories don´t set it)
  * @param $args['andcids'] true means AND-ing categories listed in cids
+ * @param $args['pubdate'] articles published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
  * @param $args['startdate'] articles published at startdate or later
  *                           (unix timestamp format)
  * @param $args['enddate'] articles published before enddate

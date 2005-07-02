@@ -19,7 +19,7 @@ function articles_userapi_getmonthcount($args)
     $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
 
     // Bug 1590 - Create custom query supported by each database.
-    $dbtype = xarCore_getSystemVar('DB.Type');
+    $dbtype = xarDBGetType();
     switch ($dbtype) {
         case 'mysql':
                 $query = "SELECT LEFT(FROM_UNIXTIME(xar_pubdate),7) AS mymonth, COUNT(*) FROM " . $articlesdef['table'];

@@ -13,6 +13,7 @@ function articles_admin_view()
     if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
@@ -44,6 +45,7 @@ function articles_admin_view()
     $data['ptid'] = $ptid;
     $data['authorid'] = $authorid;
     $data['language'] = $lang;
+    $data['pubdate'] = $pubdate;
 
     if (!empty($catid)) {
         if (strpos($catid,' ')) {
@@ -106,6 +108,7 @@ function articles_admin_view()
                                    'ptid' => $ptid,
                                    'authorid' => $authorid,
                                    'language' => $lang,
+                                   'pubdate'  => $pubdate,
                                    'cids' => $cids,
                                    'status' => $status));
 
@@ -115,6 +118,7 @@ function articles_admin_view()
                       'language' => $lang,
                       'catid' => $catid,
                       'status' => $status,
+                      'pubdate' => $pubdate,
                       'startnum' => $startnum > 1 ? $startnum : null);
     xarSessionSetVar('Articles.LastView',serialize($lastview));
 
@@ -228,6 +232,7 @@ function articles_admin_view()
                                           array('ptid' => $ptid,
                                                 'authorid' => $authorid,
                                                 'language' => $lang,
+                                                'pubdate' => $pubdate,
                                                 'cids' => $cids,
                                                 'status' => $status)),
                             xarModURL('articles', 'admin', 'view',
@@ -235,6 +240,7 @@ function articles_admin_view()
                                             'ptid' => $ptid,
                                             'authorid' => $authorid,
                                             'language' => $lang,
+                                            'pubdate' => $pubdate,
                                             'catid' => $catid,
                                             'status' => $status)),
                             $numitems);
