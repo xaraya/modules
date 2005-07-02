@@ -36,7 +36,7 @@ function bkview_user_display($args)
     $data['status'] = '';
     
     $item = xarModAPIFunc('bkview', 'user','get', array('repoid' => $repoid));
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     $data['name_value'] = $item['reponame'];
     $data['repoid'] = xarVarPrepForDisplay($repoid);

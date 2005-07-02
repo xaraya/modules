@@ -27,7 +27,7 @@ function bkview_user_view()
     if (!xarSecurityCheck('ViewAllRepositories')) return;
     
     $items = xarModAPIFunc('bkview', 'user','getall', array());
-    if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     foreach ($items as $item) {
         if (xarSecurityCheck('ViewAllRepositories')) {

@@ -23,7 +23,7 @@ function bkview_user_patchview($args)
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $repo= new bkRepo($item['repopath']);
 
     $changeset= new bkChangeSet($repo,$rev);

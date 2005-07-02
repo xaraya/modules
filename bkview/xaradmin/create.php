@@ -29,7 +29,7 @@ function bkview_admin_create($args)
     if (!xarSecConfirmAuthKey()) return;
 	
     $repoid = xarModAPIFunc('bkview','admin','create',array('reponame' => $reponame,'repopath' => $repopath));
-	if (!isset($repoid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+	if (!isset($repoid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 	
 	xarSessionSetVar('statusmsg', xarML('Repository registered'));
 	xarResponseRedirect(xarModURL('bkview', 'admin', 'view'));

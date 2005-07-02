@@ -37,7 +37,7 @@ function bkview_adminapi_delete($args)
 	$item = xarModAPIFunc('bkview',	'user','get',array('repoid' => $repoid));
 	
 	// Check for exceptions
-	if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 	
 	if (!xarSecurityCheck('AdminAllRepositories')) return;
 	

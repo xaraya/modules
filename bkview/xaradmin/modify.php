@@ -26,7 +26,7 @@ function bkview_admin_modify($args)
    	extract($args);
 
 	$item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
-	if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 	
 	// Security check
 	if (!xarSecurityCheck('AdminAllRepositories')) return;

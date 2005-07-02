@@ -25,7 +25,7 @@ function bkview_admin_view()
 	if (!xarSecurityCheck('AdminAllRepositories')) return;
 	
 	$items = xarModAPIFunc('bkview', 'user', 'getall',array());
-	if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 	
 	// TODO: Check individual permissions for Edit / Delete
 	for ($i = 0; $i < count($items); $i++) {
