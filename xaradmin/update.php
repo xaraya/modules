@@ -51,6 +51,7 @@ function articles_admin_update()
     if (xarModIsHooked('uploads', 'articles', $ptid)) {
         xarVarSetCached('Hooks.uploads','ishooked',1);
     }
+    $modid = xarModGetIDFromName('articles');
     $properties = array();
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
         if (!empty($value['label'])) {
@@ -61,7 +62,11 @@ function articles_admin_update()
                                                  array('name' => $field,
                                                        'type' => $value['format'],
                                                        'validation' => $value['validation'],
-                                                       'value' => $article[$field]));
+                                                       'value' => $article[$field],
+                                                       // fake DD property from articles (for now)
+                                                       '_moduleid' => $modid,
+                                                       '_itemtype' => $ptid,
+                                                       '_itemid'   => $aid));
             $check = $properties[$field]->checkInput($field);
             if (!$check) {
                 if ($field == 'authorid') {
