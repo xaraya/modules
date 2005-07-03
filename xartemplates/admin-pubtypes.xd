@@ -209,12 +209,9 @@
                                 #$field['type']# 
                             </td>
                         </tr>
-                        <xar:if condition="$field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'userlist'">
+                        <xar:if condition="$field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
                             <tr>
-                                <td class="xar-norm">
-                                    &nbsp; 
-                                </td>
-                                <td class="xar-align-left" colspan="4">
+                                <td class="xar-accent">
                                     <xar:set name="editvalidation">
                                         xarML('Edit validation for property "#(1)"',$field['name']) 
                                     </xar:set>
@@ -222,7 +219,10 @@
                                         <xar:mlstring>
                                             Validation 
                                         </xar:mlstring>
-                                    </a> <input type="text" name="validation[#$field['name']#]" id="validation_#$field['name']#" value="#$field['validation']#" size="60" /> 
+                                    </a>
+                                </td>
+                                <td class="xar-align-left xar-accent" colspan="4">
+                                    <input type="text" name="validation[#$field['name']#]" id="validation_#$field['name']#" value="#$field['validation']#" size="60" /> 
                                 </td>
                             </tr>
                         </xar:if>
