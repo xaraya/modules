@@ -26,10 +26,9 @@ function mime_userapi_get_rev_mimetype( $args )
 
     extract($args);
     
-    if (!isset($mimeType)) {
-        $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime','userapi','get_subtype');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+    if (empty($mimeType)) {
+        // if not found return 0 for the id of both type / subtype
+        return array('typeId' => 0, 'subtypeId' => 0);
     }
     
     $mimeType = explode('/', $mimeType);
