@@ -12,6 +12,7 @@ function uploads_adminapi_dd_configure($confString = NULL)
             'upload'   => xarModGetVar('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
             'stored'   => xarModGetVar('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
             );
+    $basedir = null;
 
     if (!isset($confString) || empty($confString)) {
         $conf = array();
@@ -26,6 +27,10 @@ function uploads_adminapi_dd_configure($confString = NULL)
 
         if ('single' == $check) {
             $multiple = 0;
+        } elseif ('basedi' == $check) {
+            if (preg_match('/^basedir\((.+)\)$/', $item, $matches)) {
+                $basedir = $matches[1];
+            }
         } elseif ('method' == $check) {
             if (stristr(strtolower($item), 'methods')) {
                 // if it's the methods, then let's set them up
@@ -81,11 +86,15 @@ function uploads_adminapi_dd_configure($confString = NULL)
             }
         }
     }
+
+// FIXME: clean up weird return format
     // return the settings
     $options[0] = $multiple;
     $options[1] = $methods;
+    $options[2] = $basedir;
     $options['multiple'] = $multiple;
     $options['methods']  = $methods;
+    $options['basedir']  = $basedir;
 
     return $options;
 

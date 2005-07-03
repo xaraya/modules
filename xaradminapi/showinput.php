@@ -7,6 +7,7 @@
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
  * @param  $args ['multiple'] boolean allow multiple uploads or not
  * @param  $args ['methods'] array of allowed methods 'trusted', 'external', 'stored' and/or 'upload'
+ * @param  $args ['override'] array optional override values for import/upload path/obfuscate (cfr. process_files)
  * @param  $args ['invalid'] string invalid error message
  * @returns string
  * @return string containing the input fields
@@ -91,7 +92,30 @@ function uploads_adminapi_showinput($args)
         $data['fileList']     = array();
     }
     if ($data['methods']['stored']) {
-        $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+        // if there is an override['upload']['path'], try to use that
+        if (!empty($override['upload']['path'])) {
+            $upload_directory = $override['upload']['path'];
+            if (file_exists($upload_directory)) {
+                $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_get_file',
+                    // find all files located under that upload directory
+                    array('fileLocation' => $upload_directory . '/%'));
+            } else {
+                // Note: the parent directory must already exist
+                $result = @mkdir($upload_directory);
+                if ($result) {
+                    // create dummy index.html in case it's web-accessible
+                    @touch($upload_directory . '/index.html');
+                    // the upload directory is still empty for the moment
+                    $data['storedList']   = array();
+                } else {
+                // CHECKME: fall back to common uploads directory, or fail here ?
+                //  $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+                    return xarML('Unable to create upload directory #(1)', $upload_directory);
+                }
+            }
+        } else {
+            $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+        }
     } else {
         $data['storedList']   = array();
     }
@@ -114,6 +138,10 @@ function uploads_adminapi_showinput($args)
 
             foreach ($aList as $fileId) {
                 if (isset($data['storedList'][$fileId])) {
+                    $data['storedList'][$fileId]['selected'] = TRUE;
+                } else {
+                // add it to the list (e.g. from another user's upload directory - we need this when editing)
+                    $data['storedList'][$fileId] = $data['Attachments'][$fileId];
                     $data['storedList'][$fileId]['selected'] = TRUE;
                 }
             }

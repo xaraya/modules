@@ -36,6 +36,21 @@
   </tr>
   <tr>
     <td>
+      <label for="#$id#_basedir">
+      <xar:mlstring>Upload Directory</xar:mlstring>
+      </label>
+    </td>
+    <td>
+      <input type="text" name="#$name#[basedir]" id="#$id#_basedir" value="#$basedir#" size="#$size#" tabindex="#$tabindex#" />
+      <br/>
+      <xar:mlstring>
+        Note : {user} will be replaced by the current user uploading the file
+        - e.g. var/uploads/{user} -&gt; var/uploads/myusername_123
+      </xar:mlstring>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <xar:mlstring>Other rule</xar:mlstring>
     </td>
     <td>

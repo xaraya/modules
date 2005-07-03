@@ -50,9 +50,35 @@ function uploads_userapi_process_files( $args )
                 $allow_duplicate = 0;
             }
             
+            // if there is an override['upload']['path'], try to use that
+            if (!empty($override['upload']['path'])) {
+                $upload_directory = $override['upload']['path'];
+                if (!file_exists($upload_directory)) {
+                    // Note: the parent directory must already exist
+                    $result = @mkdir($upload_directory);
+                    if ($result) {
+                        // create dummy index.html in case it's web-accessible
+                        @touch($upload_directory . '/index.html');
+                    } else {
+                    // CHECKME: fall back to common uploads directory, or fail ?
+                        $upload_directory = xarModGetVar('uploads','path.uploads-directory');
+                    }
+                }
+            } else {
+                $upload_directory = xarModGetVar('uploads','path.uploads-directory');
+            }
+
             if (isset($upload['name']) && !empty($upload['name'])) {
+                // make sure we look in the right directory :-)
+                if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
+                    $dirfilter = $upload_directory . '/%';
+                } else {
+                    $dirfilter = null;
+                }
                 // Note: we don't check on fileSize here (it wasn't taken into account before)
-                $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name']));
+                $fileTest = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileName' => $upload['name'],
+                                                                                  // make sure we look in the right directory :-)
+                                                                                  'fileLocation' => $dirfilter));
                 if (count($fileTest)) {
                     $file = end($fileTest);
                     // if we don't allow duplicates
@@ -82,13 +108,6 @@ function uploads_userapi_process_files( $args )
                 }
             }
             
-            // if there is an override['upload']['path'], use that
-            if (isset($override['upload']['path']) && file_exists($override['upload']['path'])) {
-                $upload_directory = $override['upload']['path'];
-            } else {
-                $upload_directory = xarModGetVar('uploads','path.uploads-directory');
-            }
-
             // Check for override of upload obfuscation and set accordingly
             if (isset($override['upload']['obfuscate']) && $override['upload']['obfuscate']) {
                 $upload_obfuscate = TRUE;

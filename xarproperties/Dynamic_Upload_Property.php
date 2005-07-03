@@ -21,6 +21,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
                          'external' => false,
                          'upload'   => false,
                          'stored'   => false);
+    var $basedir = null;
 
     // this is used by Dynamic_Property_Master::addProperty() to set the $object->upload flag
     var $upload = true;
@@ -36,6 +37,18 @@ class Dynamic_Upload_Property extends Dynamic_Property
         if (empty($args['skipInit'])) {
             // always parse validation to preset methods here
             $this->parseValidation($this->validation);
+
+            // Note : {user} will be replaced by the current user uploading the file - e.g. var/uploads/{user} -&gt; var/uploads/myusername_123
+            if (!empty($this->basedir) && preg_match('/\{user\}/',$this->basedir)) {
+                $uname = xarUserGetVar('uname');
+                $uname = xarVarPrepForOS($uname);
+                $uid = xarUserGetVar('uid');
+                // Note: we add the userid just to make sure it's unique e.g. when filtering
+                // out unwanted characters through xarVarPrepForOS, or if the database makes
+                // a difference between upper-case and lower-case and the OS doesn't...
+                $udir = $uname . '_' . $uid;
+                $this->basedir = preg_replace('/\{user\}/',$udir,$this->basedir);
+            }
         }
     }
 
@@ -58,12 +71,20 @@ class Dynamic_Upload_Property extends Dynamic_Property
             return true;
         }
 
+        // set override for the upload path if necessary
+        if (!empty($this->basedir)) {
+            $override = array('upload' => array('path' => $this->basedir));
+        } else {
+            $override = null;
+        }
+
         $return = xarModAPIFunc('uploads','admin','validatevalue',
                                 array('id' => $name, // not $this->id
                                       'value' => $value,
                                       'multiple' => $this->multiple,
                                       'format' => 'upload',
                                       'methods' => $this->methods,
+                                      'override' => $override,
                                       'maxsize' => $this->maxsize));
         if (!isset($return) || !is_array($return) || count($return) < 2) {
             $this->value = null;
@@ -109,11 +130,19 @@ class Dynamic_Upload_Property extends Dynamic_Property
         // <form ... enctype="multipart/form-data" ... > in their input form
         xarVarSetCached('Hooks.dynamicdata','withupload',1);
 
+        // set override for the upload path if necessary
+        if (!empty($this->basedir)) {
+            $override = array('upload' => array('path' => $this->basedir));
+        } else {
+            $override = null;
+        }
+
         return xarModAPIFunc('uploads','admin','showinput',
                              array('id' => $name, // not $this->id
                                    'value' => $value,
                                    'multiple' => $this->multiple,
                                    'methods' => $this->methods,
+                                   'override' => $override,
                                    'format' => 'upload',
                                    'invalid' => $this->invalid));
     }
@@ -167,10 +196,11 @@ class Dynamic_Upload_Property extends Dynamic_Property
 
     function parseValidation($validation = '')
     {
-        list($multiple, $methods) = xarModAPIFunc('uploads', 'admin', 'dd_configure', $validation);
+        list($multiple, $methods, $basedir) = xarModAPIFunc('uploads', 'admin', 'dd_configure', $validation);
 
         $this->multiple = $multiple;
         $this->methods = $methods;
+        $this->basedir = $basedir;
     }
 
     /**
@@ -217,6 +247,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
 
         $data['multiple'] = $this->multiple;
         $data['methods'] = $this->methods;
+        $data['basedir'] = $this->basedir;
         $data['other'] = '';
 
         // allow template override by child classes
@@ -262,6 +293,9 @@ class Dynamic_Upload_Property extends Dynamic_Property
                             $this->validation .= join(',',$todo);
                             $this->validation .= ')';
                         }
+                    }
+                    if (!empty($validation['basedir'])) {
+                        $this->validation .= ';basedir(' . $validation['basedir'] . ')';
                     }
                 }
             } else {

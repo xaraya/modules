@@ -8,6 +8,7 @@
  * @param  $args ['multiple'] boolean allow multiple uploads or not
  * @param  $args ['maxsize'] integer maximum size for upload files
  * @param  $args ['methods'] array allowed methods 'trusted', 'external', 'stored' and/or 'upload'
+ * @param  $args ['override'] array optional override values for import/upload path/obfuscate (cfr. process_files)
  * @returns array
  * @return array of (result, value) with result true, false or NULL (= error)
  */
@@ -50,7 +51,6 @@ function uploads_adminapi_validatevalue($args)
             unset($newValue);
         }
     }
-
 
     xarModAPILoad('uploads','user');
 
