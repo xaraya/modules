@@ -84,7 +84,11 @@ function uploads_userapi_db_get_file( $args )
     }
 
     if (isset($fileLocation) && !empty($fileLocation)) {
-        $where[] = "(xar_location LIKE '$fileLocation')";
+        if (strpos($fileLocation,'%') === FALSE) {
+            $where[] = '(xar_location = ' . $dbconn->qstr($fileLocation) . ')';
+        } else {
+            $where[] = '(xar_location LIKE ' . $dbconn->qstr($fileLocation) . ')';
+        }
     }
 
     // Note: the fileHash is the last part of the location

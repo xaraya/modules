@@ -13,6 +13,7 @@ function uploads_adminapi_dd_configure($confString = NULL)
             'stored'   => xarModGetVar('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
             );
     $basedir = null;
+    $importdir = null;
 
     if (!isset($confString) || empty($confString)) {
         $conf = array();
@@ -22,17 +23,22 @@ function uploads_adminapi_dd_configure($confString = NULL)
         $conf = array($confString);
     }
     foreach ($conf as $item) {
-        $item = strtolower(trim($item));
+        $item = trim($item);
         $check = strtolower(substr($item, 0, 6));
 
         if ('single' == $check) {
             $multiple = 0;
         } elseif ('basedi' == $check) {
-            if (preg_match('/^basedir\((.+)\)$/', $item, $matches)) {
+            if (preg_match('/^basedir\((.+)\)$/i', $item, $matches)) {
                 $basedir = $matches[1];
             }
+        } elseif ('import' == $check) {
+            if (preg_match('/^importdir\((.+)\)$/i', $item, $matches)) {
+                $importdir = $matches[1];
+            }
         } elseif ('method' == $check) {
-            if (stristr(strtolower($item), 'methods')) {
+            $item = strtolower($item);
+            if (stristr($item, 'methods')) {
                 // if it's the methods, then let's set them up
                 eregi('^methods\(([^)]*)\)$', $item, $parts);
 
@@ -92,9 +98,11 @@ function uploads_adminapi_dd_configure($confString = NULL)
     $options[0] = $multiple;
     $options[1] = $methods;
     $options[2] = $basedir;
-    $options['multiple'] = $multiple;
-    $options['methods']  = $methods;
-    $options['basedir']  = $basedir;
+    $options[3] = $importdir;
+    $options['multiple']  = $multiple;
+    $options['methods']   = $methods;
+    $options['basedir']   = $basedir;
+    $options['importdir'] = $importdir;
 
     return $options;
 

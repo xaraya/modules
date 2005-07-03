@@ -124,12 +124,15 @@ function uploads_userapi_process_files( $args )
             
             $storeType = _UPLOADS_STORE_DB_ENTRY;
             
-            $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
-            
             if (isset($getAll) && !empty($getAll)) {
+                // current working directory for the user, set by import_chdir() when using the get_files() GUI
+                $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
+
                 $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => TRUE));
+
             } else {
                 $list = array();
+                // file list coming from validatevalue() or the get_files() GUI
                 foreach ($fileList as $location => $fileInfo) {
                     if ($fileInfo['inodeType'] == _INODE_TYPE_DIRECTORY) {
                         $list += xarModAPIFunc('uploads', 'user', 'import_get_filelist',

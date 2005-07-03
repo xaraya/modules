@@ -104,12 +104,16 @@ function uploads_adminapi_validatevalue($args)
 
             if (!xarVarFetch($id . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) return;
 
-            $importDir = xarmodGetVar('uploads', 'path.imports-directory');
+        // CHECKME: use 'imports' name like in db_get_file() ?
+            // replace /trusted coming from showinput() again
+            $importDir = xarModGetVar('uploads', 'path.imports-directory');
             foreach ($fileList as $file) {
                 $file = str_replace('/trusted', $importDir, $file);
                 $args['fileList']["$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
                                                             array('fileLocation' => "$file"));
-                $args['fileList']["$file"]['fileSize'] = $args['fileList']["$file"]['fileSize']['long'];
+                if (isset($args['fileList']["$file"]['fileSize']['long'])) {
+                    $args['fileList']["$file"]['fileSize'] = $args['fileList']["$file"]['fileSize']['long'];
+                }
             }
             break;
         case _UPLOADS_GET_STORED:

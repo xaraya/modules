@@ -69,7 +69,6 @@ function uploads_adminapi_showinput($args)
         );
     }
 
-    $trusted_dir = xarModGetVar('uploads', 'path.imports-directory');
     $descend = TRUE;
 
     $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
@@ -80,7 +79,21 @@ function uploads_adminapi_showinput($args)
     $data['id']                       = $id;
     $data['file_maxsize'] = xarModGetVar('uploads', 'file.maxsize');
     if ($data['methods']['trusted']) {
+        // if there is an override['import']['path'], try to use that
+        if (!empty($override['import']['path'])) {
+            $trusted_dir = $override['import']['path'];
+            if (!file_exists($trusted_dir)) {
+            // CHECKME: fall back to common trusted directory, or fail here ?
+                $trusted_dir = xarModGetVar('uploads', 'path.imports-directory');
+            //  return xarML('Unable to find trusted directory #(1)', $trusted_dir);
+            }
+        } else {
+            $trusted_dir = xarModGetVar('uploads', 'path.imports-directory');
+        }
         $cacheExpire = xarModGetVar('uploads','file.cache-expire');
+
+    // CHECKME: use 'imports' name like in db_get_file() ?
+        // Note: for relativePath, the (main) import directory is replaced by /trusted in file_get_metadata()
         $data['fileList']     = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                               array('fileLocation' => $trusted_dir,
                                                     'descend'      => $descend,

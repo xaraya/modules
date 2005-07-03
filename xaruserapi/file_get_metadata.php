@@ -52,6 +52,7 @@ function uploads_userapi_file_get_metadata( $args )
             $size = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $size);
         }
 
+    // CHECKME: use 'imports' name like in db_get_file() ?
         $relative_path = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '/trusted', $file);
         
         $fileInfo = array('inodeType'    => $type,
