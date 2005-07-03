@@ -76,7 +76,7 @@ function mime_userapi_getall_subtypes($args)
         . ' FROM ' . $subtype_table . ' subtype_tab'
         . ' INNER JOIN ' . $type_table . ' type_tab ON type_tab.xar_mime_type_id = subtype_tab.xar_mime_type_id'
         . (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
-        . ' ORDER BY xar_mime_type_id, xar_mime_subtype_name ASC';
+        . ' ORDER BY subtype_tab.xar_mime_type_id, subtype_tab.xar_mime_subtype_name ASC';
 
     $result = $dbconn->Execute($sql, $bind);
 
