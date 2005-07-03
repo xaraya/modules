@@ -14,10 +14,10 @@
  *  @param   integer itemType  The item type within the defined module 
  *  @param   integer objectId    The id of the item types item
  *
- *  @returns integer The number of affected rows on success, or FALSE on error
+ *  @returns integer The id of the file that was un-associated, FALSE with exception on error
  */
 
-function uploads_userapi_db_delete_assocation( $args ) 
+function uploads_userapi_db_delete_association( $args ) 
 {
     
     extract($args);
@@ -30,17 +30,17 @@ function uploads_userapi_db_delete_assocation( $args )
     } elseif (is_array($fileId)) {
         $where = 'WHERE (xar_fileEntry_id IN (' . implode(',', $fileId) . ')';
     } else {
-        $where = 'WHERE (xar_fileEntry_id = $fileId) ';
+        $where = "WHERE (xar_fileEntry_id = $fileId) ";
     }
     
     if (isset($modId)) {
-        $where .= ' AND (xar_modid = $modId)';
+        $where .= " AND (xar_modid = $modId)";
         
         if (isset($itemType)) {
-            $where .= ' AND (xar_itemtype = $itemType)';
+            $where .= " AND (xar_itemtype = $itemType)";
             
             if (isset($objectId)) {
-                $where .= ' AND (xar_objectid = $objectId)';
+                $where .= " AND (xar_objectid = $objectId)";
             }
         } 
     }
@@ -64,9 +64,8 @@ function uploads_userapi_db_delete_assocation( $args )
     if (!$result) {
         return FALSE;
     } else {
-        return $dbconn->Affected_Rows();
+        return $fileId  ;
     }
-
 }
 
 ?>

@@ -9,6 +9,9 @@
  * @param  $args ['maxsize'] integer maximum size for upload files
  * @param  $args ['methods'] array allowed methods 'trusted', 'external', 'stored' and/or 'upload'
  * @param  $args ['override'] array optional override values for import/upload path/obfuscate (cfr. process_files)
+ * @param  $args ['moduleid'] integer optional module id for keeping file associations
+ * @param  $args ['itemtype'] integer optional item type for keeping file associations
+ * @param  $args ['itemid'] integer optional item id for keeping file associations
  * @returns array
  * @return array of (result, value) with result true, false or NULL (= error)
  */
@@ -34,6 +37,9 @@ function uploads_adminapi_validatevalue($args)
     }
     if (empty($methods)) {
         $methods = null;
+    }
+    if (empty($itemtype)) {
+        $itemtype = 0;
     }
 
     // Check to see if an old value is present. Old values just file names
@@ -95,6 +101,10 @@ function uploads_adminapi_validatevalue($args)
             if (!xarVarFetch($id . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, XARVAR_NOT_REQUIRED)) return;
 
             if (empty($import)) {
+                // synchronize file associations with empty list
+                if (!empty($moduleid) && !empty($itemid)) {
+                    uploads_sync_associations($moduleid, $itemtype, $itemid);
+                }
                 return array(true,NULL);
             }
 
@@ -124,12 +134,22 @@ function uploads_adminapi_validatevalue($args)
             // If we've made it this far, then fileList was empty to start,
             // so don't complain about it being empty now
             if (empty($fileList) || !is_array($fileList)) {
+                // synchronize file associations with empty list
+                if (!empty($moduleid) && !empty($itemid)) {
+                    uploads_sync_associations($moduleid, $itemtype, $itemid);
+                }
                 return array(true,NULL);
             }
+
             // We prepend a semicolon onto the list of fileId's so that
             // we can tell, in the future, that this is a list of fileIds
             // and not just a filename
             $value = ';' . implode(';', $fileList);
+
+            // synchronize file associations with file list
+            if (!empty($moduleid) && !empty($itemid)) {
+                uploads_sync_associations($moduleid, $itemtype, $itemid, $fileList);
+            }
 
             return array(true,$value);
             break;
@@ -174,6 +194,12 @@ function uploads_adminapi_validatevalue($args)
             // we can tell, in the future, that this is a list of fileIds
             // and not just a filename
             $value = ';' . implode(';', $storeList);
+
+            // synchronize file associations with store list
+            if (!empty($moduleid) && !empty($itemid)) {
+                uploads_sync_associations($moduleid, $itemtype, $itemid, $storeList);
+            }
+
         } else {
             return array(false,NULL);
         }
@@ -182,6 +208,52 @@ function uploads_adminapi_validatevalue($args)
     }
 
     return array(true,$value);
+}
+
+/**
+ * Utility function to synchronise file associations on validation
+ * (for create/update of DD extra fields + update of DD objects and articles)
+ */
+function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $filelist = array())
+{
+    // see if we have anything to work with
+    if (empty($moduleid) || empty($itemid)) return;
+
+    // (try to) check if we're previewing or not
+    xarVarFetch('preview', 'isset', $preview, false, XARVAR_NOT_REQUIRED);
+    if (!empty($preview)) return;
+
+    // get the current file associations for this module items
+    $assoc = xarModAPIFunc('uploads','user','db_get_associations',
+                           array('modId'    => $moduleid,
+                                 'itemType' => $itemtype,
+                                 'objectId' => $itemid));
+
+    // see what we need to add or delete
+    if (!empty($assoc) && count($assoc) > 0) {
+        $add = array_diff($filelist, array_keys($assoc));
+        $del = array_diff(array_keys($assoc), $filelist);
+    } else {
+        $add = $filelist;
+        $del = array();
+    }
+
+    foreach ($add as $id) {
+        if (empty($id)) continue;
+        xarModAPIFunc('uploads','user','db_add_association',
+                      array('fileId'   => $id,
+                            'modId'    => $moduleid,
+                            'itemType' => $itemtype,
+                            'objectId' => $itemid));
+    }
+    foreach ($del as $id) {
+        if (empty($id)) continue;
+        xarModAPIFunc('uploads','user','db_delete_association',
+                      array('fileId'   => $id,
+                            'modId'    => $moduleid,
+                            'itemType' => $itemtype,
+                            'objectId' => $itemid));
+    }
 }
 
 ?>
