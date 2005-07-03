@@ -5,7 +5,9 @@
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   array  uri     the array containing the broken down url information
+ *  @param   array  uri         the array containing the broken down url information
+ *  @param   boolean obfuscate  whether or not to obfuscate the filename
+ *  @param   string  savePath   Complete path to directory in which we want to save this file
  *  @returns array          FALSE on error, otherwise an array containing the fileInformation
  */
  
@@ -18,6 +20,19 @@ function uploads_userapi_import_external_http( $args )
         return; // error
     }
     
+    /**
+     *  Initial variable checking / setup
+     */
+    if (isset($obfuscate) && $obfuscate) {
+        $obfuscate_fileName = TRUE;
+    } else {
+        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
+    }
+
+    if (!isset($savePath)) {
+        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
+    }
+
     // if no port, use the default port (21)
     if (!isset($uri['port'])) {
         if ($uri['scheme'] === 'https') {
@@ -52,6 +67,8 @@ function uploads_userapi_import_external_http( $args )
     // the contents of this new file
     $tmpName = tempnam(NULL, 'xarul');
     
+// TODO: handle duplicates - cfr. prepare_uploads()
+
     // Set up the fileInfo array
     $fileInfo['fileName']     = basename($uri['path']);
     if (empty($fileInfo['fileName'])) {
@@ -143,9 +160,6 @@ function uploads_userapi_import_external_http( $args )
     } else {
         $fileInfo['fileSrc'] = $fileInfo['fileLocation'];
 
-        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
-        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
-
         // remoe any trailing slash from the Save Path
         $savePath = preg_replace('/\/$/', '', $savePath);
 
@@ -156,12 +170,12 @@ function uploads_userapi_import_external_http( $args )
         } else {
             // if we're not obfuscating it, 
             // just use the name of the uploaded file
-            $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+            $fileInfo['fileDest'] = $savePath . '/' . xarVarPrepForOS($fileInfo['fileName']);
         }
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];    
 
     }
     return array($fileInfo['fileLocation'] => $fileInfo);
- }
+}
 
- ?>
+?>

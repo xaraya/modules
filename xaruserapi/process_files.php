@@ -35,7 +35,32 @@ function uploads_userapi_process_files( $args )
         // this is the same as _UPLOADS_STORE_DB_ENTRY OR'd with _UPLOADS_STORE_FILESYSTEM
         $storeType = _UPLOADS_STORE_FSDB;
     }
-    
+
+    // If there is an override['upload']['path'], try to use that
+    if (!empty($override['upload']['path'])) {
+        $upload_directory = $override['upload']['path'];
+        if (!file_exists($upload_directory)) {
+            // Note: the parent directory must already exist
+            $result = @mkdir($upload_directory);
+            if ($result) {
+                // create dummy index.html in case it's web-accessible
+                @touch($upload_directory . '/index.html');
+            } else {
+            // CHECKME: fall back to common uploads directory, or fail ?
+                $upload_directory = xarModGetVar('uploads','path.uploads-directory');
+            }
+        }
+    } else {
+        $upload_directory = xarModGetVar('uploads','path.uploads-directory');
+    }
+
+    // Check for override of upload obfuscation and set accordingly
+    if (isset($override['upload']['obfuscate']) && $override['upload']['obfuscate']) {
+        $upload_obfuscate = TRUE;
+    } else {
+        $upload_obfuscate = FALSE;
+    }
+
     switch ($action) {
     
         case _UPLOADS_GET_UPLOAD:
@@ -50,24 +75,6 @@ function uploads_userapi_process_files( $args )
                 $allow_duplicate = 0;
             }
             
-            // if there is an override['upload']['path'], try to use that
-            if (!empty($override['upload']['path'])) {
-                $upload_directory = $override['upload']['path'];
-                if (!file_exists($upload_directory)) {
-                    // Note: the parent directory must already exist
-                    $result = @mkdir($upload_directory);
-                    if ($result) {
-                        // create dummy index.html in case it's web-accessible
-                        @touch($upload_directory . '/index.html');
-                    } else {
-                    // CHECKME: fall back to common uploads directory, or fail ?
-                        $upload_directory = xarModGetVar('uploads','path.uploads-directory');
-                    }
-                }
-            } else {
-                $upload_directory = xarModGetVar('uploads','path.uploads-directory');
-            }
-
             if (isset($upload['name']) && !empty($upload['name'])) {
                 // make sure we look in the right directory :-)
                 if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
@@ -108,12 +115,6 @@ function uploads_userapi_process_files( $args )
                 }
             }
             
-            // Check for override of upload obfuscation and set accordingly
-            if (isset($override['upload']['obfuscate']) && $override['upload']['obfuscate']) {
-                $upload_obfuscate = TRUE;
-            } else {
-                $upload_obfuscate = FALSE;
-            }
             $fileList = xarModAPIFunc('uploads','user','prepare_uploads', 
                                        array('savePath'  => $upload_directory,
                                              'obfuscate' => $upload_obfuscate,
@@ -163,17 +164,24 @@ function uploads_userapi_process_files( $args )
             
             switch ($uri['scheme']) {
                 case 'ftp': 
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_ftp', array('uri' => $uri));
+                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_ftp',
+                                              array('savePath'  => $upload_directory,
+                                                    'obfuscate' => $upload_obfuscate,
+                                                    'uri'       => $uri));
                     break;
                 case 'https':
                 case 'http': 
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_http', array('uri' => $uri));
+                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_http',
+                                              array('savePath'  => $upload_directory,
+                                                    'obfuscate' => $upload_obfuscate,
+                                                    'uri'       => $uri));
                     break;
                 case 'file':
                     // If we'ere using the file scheme then just store a db entry only
                     // as there is really no sense in moving the file around
                     $storeType = _UPLOADS_STORE_DB_ENTRY;
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_file', array('uri' => $uri));
+                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_file',
+                                              array('uri'       => $uri));
                     break;
                 case 'gopher':
                 case 'wais':

@@ -5,7 +5,9 @@
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   array  uri     the array containing the broken down url information
+ *  @param   array  uri         the array containing the broken down url information
+ *  @param   boolean obfuscate  whether or not to obfuscate the filename
+ *  @param   string  savePath   Complete path to directory in which we want to save this file
  *  @returns array          FALSE on error, otherwise an array containing the fileInformation
  */
  
@@ -16,6 +18,19 @@ function uploads_userapi_import_external_ftp( $args )
     
     if (!isset($uri)) {
         return; // error
+    }
+
+    /**
+     *  Initial variable checking / setup
+     */
+    if (isset($obfuscate) && $obfuscate) {
+        $obfuscate_fileName = TRUE;
+    } else {
+        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
+    }
+
+    if (!isset($savePath)) {
+        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
     }
     
     // if no port, use the default port (21)
@@ -38,6 +53,8 @@ function uploads_userapi_import_external_ftp( $args )
             xarUserGetVar('email');
         }
     }
+
+// TODO: handle duplicates - cfr. prepare_uploads()
     
     // Attempt to 'best guess' the mimeType 
     $mimeType = xarModAPIFunc('mime', 'user', 'extension_to_mime', array('fileName' => basename($uri['path'])));
@@ -96,6 +113,12 @@ function uploads_userapi_import_external_ftp( $args )
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
             } else {
 
+                if (!empty($mimeType) && substr($mimeType,0,4) == 'text') {
+                    $ftpMode = FTP_ASCII;
+                } else {
+                    $ftpMode = FTP_BINARY;
+                }
+
                 // Note: this is a -blocking- process - the connection will NOT resume
                 // until the file transfer has finished - hence, the
                 // much needed 'ignore_user_abort()' up above
@@ -104,6 +127,11 @@ function uploads_userapi_import_external_ftp( $args )
                                 $uri['host'], $uri['port'], basename($uri['path']));
                     xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_READ', new SystemException($msg));
                 } else {
+                    if (is_resource($tmpId)) {
+                        @fclose($tmpId);
+                    }
+                    $fileInfo['fileType'] = xarModAPIFunc('mime', 'user', 'analyze_file', 
+                                                           array('fileName' => $fileInfo['fileLocation']));
                     $fileInfo['size'] = filesize($tmpName);
                 }
             }
@@ -139,6 +167,11 @@ function uploads_userapi_import_external_ftp( $args )
                 
                 // if we haven't hit an exception, then go ahead and close everything up
                 if (xarCurrentErrorType() === XAR_NO_EXCEPTION) {
+                    if (is_resource($tmpId)) {
+                        @fclose($tmpId);
+                    }
+                    $fileInfo['fileType'] = xarModAPIFunc('mime', 'user', 'analyze_file', 
+                                                           array('fileName' => $fileInfo['fileLocation']));
                     $fileInfo['fileSize'] = filesize($tmpName);
                 }
             }
@@ -187,9 +220,6 @@ function uploads_userapi_import_external_ftp( $args )
     } else {
         $fileInfo['fileSrc'] = $fileInfo['fileLocation'];
 
-        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
-        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
-
         // remoe any trailing slash from the Save Path
         $savePath = preg_replace('/\/$/', '', $savePath);
 
@@ -200,12 +230,12 @@ function uploads_userapi_import_external_ftp( $args )
         } else {
             // if we're not obfuscating it, 
             // just use the name of the uploaded file
-            $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+            $fileInfo['fileDest'] = $savePath . '/' . xarVarPrepForOS($fileInfo['fileName']);
         }
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];    
 
     }
     return array($fileInfo['fileLocation'] => $fileInfo);
- }
+}
  
- ?>
+?>
