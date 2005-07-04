@@ -30,9 +30,14 @@ function articles_userapi_getitemlinks($args)
         $sort = null;
     }
 
+    if (xarSecurityCheck('AdminArticles',0)) {
+        // get all articles for admins (not editors)
+        $status = null;
+    } else {
 // CHECKME: make sure we don't need other statuses somewhere
-    // get approved and frontpage articles only
-    $status = array(2, 3);
+        // get approved and frontpage articles only
+        $status = array(2, 3);
+    }
     $articles = xarModAPIFunc('articles','user','getall',
                              array('aids' => $itemids,
                                    'ptid' => $itemtype,
