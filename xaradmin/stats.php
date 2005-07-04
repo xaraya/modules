@@ -16,6 +16,12 @@ function xarcachemanager_admin_stats($args)
 
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
     $outputCacheDir = $varCacheDir . '/output';
+    
+    //Make sure xarCache is included so you can view stats even if caching is disabled
+    if (!defined('XARCACHE_IS_ENABLED')) {
+        include_once('includes/xarCache.php');
+        xarCache_init();
+    }
 
     $numitems = xarModGetVar('xarcachemanager','itemsperpage');
     if (empty($numitems)) {
@@ -36,22 +42,20 @@ function xarcachemanager_admin_stats($args)
     $data['ModCachingEnabled'] = 0;
     $data['QueryCachingEnabled'] = 0;
     $data['AutoCachingEnabled'] = 0;
-    if (file_exists($outputCacheDir . '/cache.touch')) {
-        if (file_exists($outputCacheDir . '/cache.pagelevel')) {
-            $data['PageCachingEnabled'] = 1;
-            if (file_exists($outputCacheDir . '/autocache.log')) {
-                $data['AutoCachingEnabled'] = 1;
-            }
+    if (defined('XARCACHE_PAGE_IS_ENABLED')) {
+        $data['PageCachingEnabled'] = 1;
+        if (file_exists($outputCacheDir . '/autocache.log')) {
+            $data['AutoCachingEnabled'] = 1;
         }
-        if (file_exists($outputCacheDir . '/cache.blocklevel')) {
-            $data['BlockCachingEnabled'] = 1;
-        }
-        if (file_exists($outputCacheDir . '/cache.modlevel')) {
-            $data['ModCachingEnabled'] = 1;
-        }
-// TODO: bring in line with other cache systems ?
-        $data['QueryCachingEnabled'] = 1;
     }
+    if (defined('XARCACHE_BLOCK_IS_ENABLED')) {
+        $data['BlockCachingEnabled'] = 1;
+    }
+    if (defined('XARCACHE_MOD_IS_ENABLED')) {
+        $data['ModCachingEnabled'] = 1;
+    }
+    // TODO: bring in line with other cache systems ?
+    $data['QueryCachingEnabled'] = 1;
 
     switch ($tab) {
         case 'page':
@@ -123,6 +127,7 @@ function xarcachemanager_admin_stats($args)
                 }
             } else {
                 $data['items'] = array();
+                $data['withlog'] = null;
             }
             break;
 
