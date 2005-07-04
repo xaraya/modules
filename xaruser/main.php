@@ -71,12 +71,11 @@ function hitcount_user_main()
                     $itemid2hits[$tophit['itemid']] = $tophit['hits'];
                 }
 
-                xarModAPILoad($modinfo['name'], 'user');
-                if (function_exists($modinfo['name'].'_userapi_getitemlinks') ||
-                    file_exists("modules/$modinfo[osdirectory]/xaruserapi/getitemlinks.php")){
-                    $moditem['toplinks'] = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
-                                                         array('itemtype' => $itemtype,
-                                                               'itemids' => $itemids));
+                $moditem['toplinks'] = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                                                     array('itemtype' => $itemtype,
+                                                           'itemids' => $itemids),
+                                                     0); // don't throw an exception here
+                if (!empty($moditem['toplinks'])) {
                     foreach ($moditem['toplinks'] as $itemid => $toplink) {
                         if (!isset($itemid2hits[$itemid])) continue;
                         $moditem['toplinks'][$itemid]['hits'] = $itemid2hits[$itemid];
