@@ -479,62 +479,65 @@ function xarcachemanager_create_cache_data()
     // optional database storage for cached data (instead of filesystem)
     $cachedatatable = $xartable['cache_data'];
 
-    // Load Table Maintenance API (still some issues with xarDataDict)
-    xarDBLoadTableMaintenanceAPI();
+    $xartables = $dbconn->MetaTables();
+    if (!in_array($cachedatatable, $xartables)) {
+        // Load Table Maintenance API (still some issues with xarDataDict)
+        xarDBLoadTableMaintenanceAPI();
 
-    $query = xarDBCreateTable($cachedatatable,
-                              array('xar_id'   => array('type'        => 'integer',
-                                                        'null'        => false,
-                                                        'default'     => '0',
-                                                        'increment'   => true,
-                                                        'primary_key' => true),
-                                    // cache type : page, block, template, module, ...
-                                    'xar_type' => array('type'        => 'varchar',
-                                                        'size'        => 20,
-                                                        'null'        => false,
-                                                        'default'     => ''),
-                                    // cache key
-                                    'xar_key'  => array('type'        => 'varchar',
-                                                        'size'        => 127,
-                                                        'null'        => false,
-                                                        'default'     => ''),
-                                    // cache code
-                                    'xar_code' => array('type'        => 'varchar',
-                                                        'size'        => 32,
-                                                        'null'        => false,
-                                                        'default'     => ''),
-                                    // last modified time
-                                    'xar_time' => array('type'        => 'integer',
-                                                        'null'        => false,
-                                                        'default'     => '0'),
-                                    // size of the cached data (e.g. for clean-up or gzip)
-                                    'xar_size' => array('type'        => 'integer',
-                                                        'null'        => false,
-                                                        'default'     => '0'),
-                                    // check for the cached data (e.g. crc for gzip, or md5 for ...)
-                                    'xar_check' => array('type'        => 'varchar',
-                                                         'size'        => 32,
-                                                         'null'        => false,
-                                                         'default'     => ''),
-                                    // the actual cached data
-                                    'xar_data'  => array('type'        => 'text',
-                                                         'size'        => 'medium', // 16 MB
-                                                         'null'        => false)));
-    if (empty($query)) return; // throw back
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+        $query = xarDBCreateTable($cachedatatable,
+                                  array('xar_id'   => array('type'        => 'integer',
+                                                            'null'        => false,
+                                                            'default'     => '0',
+                                                            'increment'   => true,
+                                                            'primary_key' => true),
+                                        // cache type : page, block, template, module, ...
+                                        'xar_type' => array('type'        => 'varchar',
+                                                            'size'        => 20,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+                                        // cache key
+                                        'xar_key'  => array('type'        => 'varchar',
+                                                            'size'        => 127,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+                                        // cache code
+                                        'xar_code' => array('type'        => 'varchar',
+                                                            'size'        => 32,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+                                        // last modified time
+                                        'xar_time' => array('type'        => 'integer',
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                        // size of the cached data (e.g. for clean-up or gzip)
+                                        'xar_size' => array('type'        => 'integer',
+                                                            'null'        => false,
+                                                            'default'     => '0'),
+                                        // check for the cached data (e.g. crc for gzip, or md5 for ...)
+                                        'xar_check' => array('type'        => 'varchar',
+                                                             'size'        => 32,
+                                                             'null'        => false,
+                                                             'default'     => ''),
+                                        // the actual cached data
+                                        'xar_data'  => array('type'        => 'text',
+                                                             'size'        => 'medium', // 16 MB
+                                                             'null'        => false)));
+        if (empty($query)) return; // throw back
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
 
-// TODO: verify if separate indexes work better here or not (varchar)
-    $query = xarDBCreateIndex($cachedatatable,
-                              array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_cachedata_combo',
-                                    'fields' => array('xar_type',
-                                                      'xar_key',
-                                                      'xar_code')));
-// TODO: verify if we can make this index unique despite concurrent saves
-//                                    'unique' => 'true'));
-    if (empty($query)) return; // throw back
-    $result = $dbconn->Execute($query);
-    if (!isset($result)) return;
+    // TODO: verify if separate indexes work better here or not (varchar)
+        $query = xarDBCreateIndex($cachedatatable,
+                                  array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_cachedata_combo',
+                                        'fields' => array('xar_type',
+                                                          'xar_key',
+                                                          'xar_code')));
+    // TODO: verify if we can make this index unique despite concurrent saves
+    //                                    'unique' => 'true'));
+        if (empty($query)) return; // throw back
+        $result = $dbconn->Execute($query);
+        if (!isset($result)) return;
+    }
 
 }
 
