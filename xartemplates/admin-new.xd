@@ -60,14 +60,16 @@
 
         #$hooks#
 
-        <div class="xar-clear-both xar-align-center">
+        <div class="xar-form-input-wrapper">
         <!--
             // Add an authorisation ID - this adds a hidden field in the form that
             // contains an authorisation ID.  The authorisation ID is very important in
             // preventing certain attacks on the website
         -->
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="submit" value="#xarML('Add Example Item')#" />
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add Example Item')#" />
+            </div>
         </div>
     </form>
 </div>
