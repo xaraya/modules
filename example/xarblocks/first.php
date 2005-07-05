@@ -57,7 +57,7 @@ function example_firstblock_display($blockinfo)
         'user',
         'getall',
         array('numitems' => $vars['numitems']));
-    if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
      
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.

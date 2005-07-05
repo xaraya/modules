@@ -59,7 +59,7 @@ function example_adminapi_update($args)
         'get',
         array('exid' => $exid)); 
     // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
      
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing.
