@@ -24,7 +24,7 @@
                 <!-- Note : you can also specify simple links directly with blocklayout
                      template tags : e.g. &xar-modurl-example-user-view; -->
             </tr>
-            </table>
+            </table> 
         </td>
     </tr>
 </table>
