@@ -1,0 +1,36 @@
+<?php
+
+function security_admin_creategroupsecurity($args)
+{
+    extract($args);
+    
+    xarVarFetch('modid',    'id', $modid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('itemid',   'id', $itemid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('group',    'id', $group, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED);
+    
+    xarModAPILoad('security', 'user');
+    
+    // Set the default
+    $level = SECURITY_READ;
+
+    // Get DB conn ready
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    $table = $xartable['security_group_levels'];
+
+    $query = "INSERT INTO $table (xar_modid, xar_itemtype, xar_itemid, xar_gid, xar_level)
+        VALUES ( ?, ?, ?, ?, ? ) 
+    ";
+    $bindvars = array( $modid, $itemtype, $itemid, $group, $level );
+    
+    $result = $dbconn->Execute($query, $bindvars);
+    if( !$result ) return false;
+    
+    xarResponseRedirect($returnUrl);
+    
+    return true;
+}
+?>

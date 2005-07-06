@@ -1,0 +1,19 @@
+<div class="xar-mod-body" style="padding: 5px;">
+
+    <div>
+        Module :
+        <input type="text" name="mod" />
+    </div>
+    <div>
+        Item Type :
+        <input type="text" name="itemtype" />
+    </div>
+    <div>
+        User Id Field :
+        <input type="text" name="uid" />
+    </div>
+    <div>        
+        <input type="submit" name="submit" value="submit" />
+    </div>
+    
+</div>
