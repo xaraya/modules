@@ -202,7 +202,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
         $value = $this->value;
 
         if (empty($value)) {
-            return NULL;
+            return $value;
         // For current values when DD stored the ULID
         } elseif ( is_numeric($value) ) {
             $ulid = ";$value";

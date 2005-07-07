@@ -4,45 +4,55 @@
  *  Remove an assocation between a particular file and module/itemtype/item.
  *  <br />
  *  If just the fileId is passed in, all assocations for that file will be deleted.
- *  If the fileId and modId are supplied, any assocations for the given file and modId
- *  will be removed. The same holds true for itemType and objectId. 
+ *  If the fileId and modid are supplied, any assocations for the given file and modid
+ *  will be removed. The same holds true for itemtype and itemid. 
  *
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   integer fileId    The id of the file we are going to remove association with
- *  @param   integer modId     The id of module this file is associated with
- *  @param   integer itemType  The item type within the defined module 
- *  @param   integer objectId    The id of the item types item
+ *  @param   integer modid     The id of module this file is associated with
+ *  @param   integer itemtype  The item type within the defined module 
+ *  @param   integer itemid    The id of the item types item
  *
- *  @returns integer The id of the file that was un-associated, FALSE with exception on error
+ *  @returns bool TRUE on success, FALSE with exception on error
  */
 
 function uploads_userapi_db_delete_association( $args ) 
 {
-    
     extract($args);
 
+    $whereList = array();
+    $bindvars = array();
+
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
-                     'fileId','db_delete_assocation','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+
     } elseif (is_array($fileId)) {
-        $where = 'WHERE (xar_fileEntry_id IN (' . implode(',', $fileId) . ')';
+        $whereList[] = ' (xar_fileEntry_id IN (' . implode(',', $fileId) . ') ) ';
+
     } else {
-        $where = "WHERE (xar_fileEntry_id = $fileId) ";
+        $whereList[] = ' (xar_fileEntry_id = ?) ';
+        $bindvars[] = (int) $fileId;
     }
-    
-    if (isset($modId)) {
-        $where .= " AND (xar_modid = $modId)";
+
+    if (isset($modid)) {
+        $whereList[] = ' (xar_modid = ?) ';
+        $bindvars[] = (int) $modid;
         
-        if (isset($itemType)) {
-            $where .= " AND (xar_itemtype = $itemType)";
+        if (isset($itemtype)) {
+            $whereList[] = ' (xar_itemtype = ?) ';
+            $bindvars[] = (int) $itemtype;
             
-            if (isset($objectId)) {
-                $where .= " AND (xar_objectid = $objectId)";
+            if (isset($itemid)) {
+                $whereList[] = ' (xar_objectid = ?) ';
+                $bindvars[] = (int) $itemid;
             }
         } 
+    }
+
+    if (count($whereList)) {
+        $where = 'WHERE ' . implode(' AND ', $whereList);
+    } else {
+        $where = '';
     }
     
     //add to uploads table
@@ -57,14 +67,13 @@ function uploads_userapi_db_delete_association( $args )
     $sql = "DELETE 
               FROM $file_assoc_table
             $where";
-                  
-                      
-    $result = &$dbconn->Execute($sql);
-    
+
+    $result = &$dbconn->Execute($sql, $bindvars);
+
     if (!$result) {
         return FALSE;
     } else {
-        return $fileId  ;
+        return TRUE;
     }
 }
 

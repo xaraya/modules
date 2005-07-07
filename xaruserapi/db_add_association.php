@@ -6,16 +6,15 @@
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   integer fileId    The id of the file we are going to associate with an item
- *  @param   integer modId     The id of module this file is associated with
- *  @param   integer itemType  The item type within the defined module 
- *  @param   integer objectId    The id of the item types item
+ *  @param   integer modid     The id of module this file is associated with
+ *  @param   integer itemtype  The item type within the defined module 
+ *  @param   integer itemid    The id of the item types item
  *
  *  @returns integer The id of the file that was associated, FALSE with exception on error
  */
 
 function uploads_userapi_db_add_association( $args ) 
 {
-    
     extract($args);
 
     if (!isset($fileId)) {
@@ -25,26 +24,25 @@ function uploads_userapi_db_add_association( $args )
         return FALSE;
     }
     
-    if (!isset($modId)) {
+    if (!isset($modid)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
-                     'modId','db_add_assocation','uploads');
+                     'modid','db_add_assocation','uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
     
-    if (!isset($itemType)) {
-        $itemType = 0;
+    if (!isset($itemtype)) {
+        $itemtype = 0;
     }
     
-    if (!isset($objectId)) {
-        $objectId = 0;
+    if (!isset($itemid)) {
+        $itemid = 0;
     }
     
     //add to uploads table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
 
     // table and column definitions
     $file_assoc_table = $xartable['file_associations'];
@@ -58,14 +56,10 @@ function uploads_userapi_db_add_association( $args )
                         xar_objectid
                       ) 
                VALUES 
-                      (
-                        $fileId,
-                        $modId,
-                        $itemType,
-                        $objectId
-                      )";
+                      ( ?, ?, ?, ? )";
 
-    $result = &$dbconn->Execute($sql);
+    $bindvars = array((int)$fileId,(int)$modid,(int)$itemtype,(int)$itemid);
+    $result = &$dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
         return FALSE;

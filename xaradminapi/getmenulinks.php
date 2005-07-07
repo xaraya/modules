@@ -23,6 +23,11 @@ function uploads_adminapi_getmenulinks()
                                                   'get_files'),
                              'title' => xarML('Add a File'),
                              'label' => xarML('Add File'));
+        $menulinks[] = Array('url'   => xarModURL('uploads',
+                                                  'admin',
+                                                  'assoc'),
+                             'title' => xarML('View All Known File Associations'),
+                             'label' => xarML('View Associations'));
     }
     if (xarSecurityCheck('AdminUploads')) {
         $menulinks[] = Array('url'   => xarModURL('uploads',

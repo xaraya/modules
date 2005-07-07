@@ -132,7 +132,7 @@ function uploads_userapi_db_get_file( $args )
             break;
 
         case 'size':
-            $sql .= ' ORDER BY xar_filesize';
+            $sql .= ' ORDER BY xar_filesize DESC';
             break;
 
         case 'type':
@@ -156,6 +156,9 @@ function uploads_userapi_db_get_file( $args )
             break;
 
         case 'id':
+            $sql .= ' ORDER BY xar_fileEntry_id DESC';
+            break;
+
         default:
             $sql .= ' ORDER BY xar_fileEntry_id';
             break;

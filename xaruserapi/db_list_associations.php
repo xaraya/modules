@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Retrieve a list of file assocations for a particular file/module/itemtype/item combination
+ *  Retrieve a list of (item - file) associations for a particular module/itemtype combination
  * 
  * @author Carl P. Corliss
  * @access public
@@ -10,14 +10,17 @@
  * @param   integer itemid    The id of the item types item
  * @param   integer fileId    The id of the file we are going to associate with an item
  *
- * @returns array   A list of associations, including the fileId -> (fileId + modid + itemtype + itemid)
+ * @returns array   A list of associations, including the itemid -> fileId
  */
  
-function uploads_userapi_db_get_associations( $args )  
+function uploads_userapi_db_list_associations( $args )  
 {
-    
     extract($args);
-    
+
+    if (empty($modid)) {
+        return array();
+    }
+
     $whereList = array();
     $bindvars = array();
 
@@ -40,7 +43,7 @@ function uploads_userapi_db_get_associations( $args )
             }
         } 
     }
-
+    
     if (count($whereList)) {
         $where = 'WHERE ' . implode(' AND ', $whereList);
     } else {
@@ -55,14 +58,22 @@ function uploads_userapi_db_get_associations( $args )
     $file_assoc_table = $xartable['file_associations'];
     
     $sql = "SELECT 
-                    xar_fileEntry_id,
                     xar_modid,
                     xar_itemtype,
-                    xar_objectid
-              FROM $file_assoc_table
-            $where";
+                    xar_objectid,
+                    xar_fileEntry_id
+            FROM $file_assoc_table
+            $where
+            ORDER BY xar_objectid ASC";
     
-    $result = $dbconn->Execute($sql, $bindvars);
+    if (!empty($numitems)) {
+        if (empty($startnum)) {
+            $startnum = 1;
+        }
+        $result = $dbconn->SelectLimit($sql, $numitems, $startnum - 1, $bindvars);
+    } else {
+        $result = $dbconn->Execute($sql, $bindvars);
+    }
     
     if (!$result)  {
         return array();
@@ -73,20 +84,17 @@ function uploads_userapi_db_get_associations( $args )
         return array();
     }
 
-    $fileList = array();    
+    $list = array();    
     while (!$result->EOF) {
-        $row = $result->GetRowAssoc(false);
-        
-        $fileAssoc['fileId']   = $row['xar_fileentry_id'];
-        $fileAssoc['modid']    = $row['xar_modid'];
-        $fileAssoc['itemtype'] = $row['xar_itemtype'];
-        $fileAssoc['itemid']   = $row['xar_objectid'];
-
-        // Note: only one association is returned per file here !
-        $fileList[$fileAssoc['fileId']] = $fileAssoc;
+        list($modid,$itemtype,$itemid,$fileId) = $result->fields;
+        // simple item - file array
+        if (!isset($list[$itemid])) {
+            $list[$itemid] = array();
+        }
+        $list[$itemid][] = (int) $fileId;
         $result->MoveNext();
     }
-    return $fileList;
+    return $list;
 }
 
 ?>

@@ -1,7 +1,6 @@
 repository: xaraya uploads module
 description: Xaraya uploads module repository
 category: applications/publishing
-logging: logging@openlogging.org
 license: 
 single_user: 
 single_host: 

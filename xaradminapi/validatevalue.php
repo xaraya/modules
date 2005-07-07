@@ -225,9 +225,9 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
 
     // get the current file associations for this module items
     $assoc = xarModAPIFunc('uploads','user','db_get_associations',
-                           array('modId'    => $moduleid,
-                                 'itemType' => $itemtype,
-                                 'objectId' => $itemid));
+                           array('modid'    => $moduleid,
+                                 'itemtype' => $itemtype,
+                                 'itemid'   => $itemid));
 
     // see what we need to add or delete
     if (!empty($assoc) && count($assoc) > 0) {
@@ -242,17 +242,17 @@ function uploads_sync_associations($moduleid = 0, $itemtype = 0, $itemid = 0, $f
         if (empty($id)) continue;
         xarModAPIFunc('uploads','user','db_add_association',
                       array('fileId'   => $id,
-                            'modId'    => $moduleid,
-                            'itemType' => $itemtype,
-                            'objectId' => $itemid));
+                            'modid'    => $moduleid,
+                            'itemtype' => $itemtype,
+                            'itemid'   => $itemid));
     }
     foreach ($del as $id) {
         if (empty($id)) continue;
         xarModAPIFunc('uploads','user','db_delete_association',
                       array('fileId'   => $id,
-                            'modId'    => $moduleid,
-                            'itemType' => $itemtype,
-                            'objectId' => $itemid));
+                            'modid'    => $moduleid,
+                            'itemtype' => $itemtype,
+                            'itemid'   => $itemid));
     }
 }
 

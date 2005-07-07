@@ -133,6 +133,8 @@ function uploads_user_file_properties( $args )
                 }
             }
 
+            $fileInfo['numassoc'] = xarModAPIFunc('uploads','user','db_count_associations',
+                                                   array('fileId' => $fileId));
 
             $data['fileInfo'] = $fileInfo;
 

@@ -144,7 +144,30 @@ function uploads_init()
          xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
     }
-
+/*
+    if (!xarModRegisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook')) {
+         $msg = xarML('Could not register hook');
+         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+         return;
+    }
+    if (!xarModRegisterHook('item', 'update', 'API', 'uploads', 'admin', 'updatehook')) {
+         $msg = xarML('Could not register hook');
+         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+         return;
+    }
+    if (!xarModRegisterHook('item', 'delete', 'API', 'uploads', 'admin', 'deletehook')) {
+         $msg = xarML('Could not register hook');
+         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+         return;
+    }
+    // when a whole module is removed, e.g. via the modules admin screen
+    // (set object ID to the module name !)
+    if (!xarModRegisterHook('module', 'remove', 'API', 'uploads', 'admin', 'removehook')) {
+         $msg = xarML('Could not register hook');
+         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+         return;
+    }
+*/
 
     if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
         // if there was an error, make sure to remove the tables
@@ -565,6 +588,12 @@ function uploads_delete()
     xarUnregisterMask('AdminUploads');
 
     xarModUnregisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
+/*
+    xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook');
+    xarModUnregisterHook('item', 'update', 'API', 'uploads', 'admin', 'updatehook');
+    xarModUnregisterHook('item', 'delete', 'API', 'uploads', 'admin', 'deletehook');
+    xarModUnregisterHook('module', 'remove', 'API', 'uploads', 'admin', 'removehook');
+*/
 
     // Get database information
 

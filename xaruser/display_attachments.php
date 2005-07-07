@@ -41,10 +41,10 @@ function uploads_user_display_attachments($args)
     }
     
     $args['modName']  = $modname;
-    $args['modId']    = xarModGetIdFromName($modname);
-    $args['itemType'] = isset($itemtype) ? $itemtype : 0;
-    $args['objectId'] = $objectid;
-    
+    $args['modid']    = xarModGetIdFromName($modname);
+    $args['itemtype'] = isset($itemtype) ? $itemtype : 0;
+    $args['itemid']   = $objectid;
+
     // save the current attachment info for use later on if the 
     // user decides to add / remove attachments for this item
     xarModSetUserVar('uploads', 'save.attachment-info', serialize($args));

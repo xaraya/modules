@@ -20,7 +20,7 @@ function uploads_admin_view( )
     if (!xarVarFetch('action',      'int:0:',     $action,           NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sort', 'enum:id:name:user:status', $sort,      NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sort', 'enum:id:name:size:user:status', $sort,      NULL, XARVAR_DONT_SET)) return;
     
     /**
      *  Determine the filter settings to use for this view
@@ -113,6 +113,11 @@ function uploads_admin_view( )
         $items = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
     }
     $countitems = xarModAPIfunc('uploads', 'user', 'db_count', $filter);
+
+    if (!empty($items)) {
+        $data['numassoc'] = xarModAPIFunc('uploads','user','db_count_associations',
+                                          array('fileId' => array_keys($items)));
+    }
 
     if (xarSecurityCheck('EditUploads', 0)) {
     

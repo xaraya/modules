@@ -5,7 +5,7 @@ function uploads_userapi_uploadmagic($args)
 
     if( is_array($fileUpload) )
     {
-        return '#ulid:' . $fileUpload['ulid'] . '#';
+        return '#file:' . $fileUpload['ulid'] . '#';
 
     } else {
         return $fileUpload;

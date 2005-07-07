@@ -43,6 +43,7 @@
             <tr>
                 <th><a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>Select</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#"><xar:mlstring>File Name</xar:mlstring></a></th>
+                <th>&nbsp;</th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'size'))#"><xar:mlstring>File Size</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#"><xar:mlstring>File Date</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
@@ -61,6 +62,7 @@
                                     #$loop:item['fileName']#
                                 </a>
                             </td>
+                            <td class="xar-norm" align="center">&nbsp;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
                             <td class="xar-norm" align="right">&nbsp;#$loop:item['fileSize']#</td>
                             <td class="xar-norm" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
                             <td class="xar-norm" align="center">&nbsp;#$loop:item['userName']#</td>
@@ -76,6 +78,7 @@
                                     #$loop:item['fileName']#
                                 </a>
                             </td>
+                            <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
                             <td class="xar-accent" align="right">&nbsp;#$loop:item['fileSize']#</td>
                             <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
                             <td class="xar-accent" align="center">&nbsp;#$loop:item['userName']#</td>

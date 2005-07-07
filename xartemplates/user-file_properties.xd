@@ -139,6 +139,21 @@
                                 file:#$fileInfo['fileId']# 
                             </td>
                         </tr>
+                        <tr>
+                            <td class="xar-accent" width="20%">
+                                <xar:mlstring>
+                                    Known Associations
+                                </xar:mlstring>
+                            </td>
+                            <td class="xar-accent" width="80%">&nbsp;
+                                #$fileInfo['numassoc']# 
+                                <xar:if condition="!empty($fileInfo['numassoc']) and xarSecurityCheck('AdminUploads',0)">
+                                    [<a target="main" href="#xarModURL('uploads','admin','assoc',array('fileId' => $fileInfo['fileId']))#">
+                                        <xar:mlstring>view</xar:mlstring>
+                                    </a>]
+                                </xar:if>
+                            </td>
+                        </tr>
                         <xar:if condition="xarModIsHooked('dynamicdata','uploads',1)">
                             <xar:data-getitem name="$ddprops" module="uploads" itemtype="1" itemid="$fileInfo['fileId']" />
                             <xar:if condition="!empty($ddprops)">
