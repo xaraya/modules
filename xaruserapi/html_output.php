@@ -64,3 +64,4 @@ class xslt_processor
         return;
     }
 }
+?>

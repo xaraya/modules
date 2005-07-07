@@ -44,3 +44,4 @@ function reports_userapi_produce_output($args)
     }
     return $output;
 }
+?>

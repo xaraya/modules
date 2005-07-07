@@ -67,3 +67,4 @@ function reports_userapi_push_output($args)
     //unlink($input); unlink($output);
     return true;
 }
+?>
