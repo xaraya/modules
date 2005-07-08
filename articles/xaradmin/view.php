@@ -87,8 +87,8 @@ function articles_admin_view()
             $settings = unserialize($string);
         }
     }
-    if (isset($settings['itemsperpage'])) {
-        $numitems = $settings['itemsperpage'];
+    if (isset($settings['adminitemsperpage'])) {
+        $numitems = $settings['adminitemsperpage'];
     } else {
         $numitems = 30;
     }
