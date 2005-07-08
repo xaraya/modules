@@ -36,7 +36,7 @@ function subitems_adminapi_ddobjectlink_delete($args)
         'ddobjectlink_get',
         $args);
     // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing.
