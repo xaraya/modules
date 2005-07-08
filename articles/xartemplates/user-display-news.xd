@@ -44,10 +44,9 @@
             #$topic_icons# 
         </span>
     </div>
-    <br />
+    <p>
     #$summary# 
-    <br />
-    <br />
+    </p>
     #$body# 
     <br />
     <xar:if condition="!empty($notes)">
