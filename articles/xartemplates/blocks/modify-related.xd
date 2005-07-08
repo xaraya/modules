@@ -6,3 +6,16 @@
          <input type="text" name="numitems" id="numitems_#$bid#" value="#$numitems#" size="5" maxlength="5" />
     </span>
 </div>
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Check this box to show the number of articles.')#"><label for="showvalue#$bid#"><xar:mlstring>Show number of articles</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <xar:if condition="empty($showvalue)">
+            <input type="checkbox" name="showvalue" id="showvalue#$bid#" value="1" />
+        <xar:else />
+            <input type="checkbox" name="showvalue" id="showvalue#$bid#" value="1" checked="checked" />
+        </xar:if>
+    </span>
+</div>
+

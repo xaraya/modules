@@ -689,7 +689,6 @@ function articles_user_view($args)
                                         array('ptid' => $curptid,
                                               'aid' => $article['aid']));
 
-    // TODO: put in getall() function to avoid a new query on each article ?
         // number of comments for this article
         if ($showcomments) {
             if (empty($numcomments[$article['aid']])) {
@@ -886,11 +885,13 @@ function articles_user_view($args)
             if ($sname == $defaultsort && !$isdefault) {
                 $sortlink = xarModURL('articles','user','view',
                                      array('ptid' => ($ishome ? null : $ptid),
-                                           'catid' => $catid));
+                                           'catid' => $catid,
+                                           'authorid' => $authorid));
             } else {
                 $sortlink = xarModURL('articles','user','view',
                                      array('ptid' => ($ishome ? null : $ptid),
                                            'catid' => $catid,
+                                           'authorid' => $authorid,
                                            'sort' => $sname));
             }
             $data['pager'] .= '&nbsp;<a href="' . $sortlink . '">' .

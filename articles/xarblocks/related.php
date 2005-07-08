@@ -15,7 +15,8 @@
 function articles_relatedblock_init()
 {
     return array(
-        'numitems' => 5
+        'numitems' => 5,
+        'showvalue' => true,
     );
 }
 
@@ -55,6 +56,9 @@ function articles_relatedblock_display($blockinfo)
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     }
+    if (empty($vars['showvalue'])) {
+        $vars['showvalue'] = false;
+    }
 
     // Trick : work with cached variables here (set by the module function)
 
@@ -88,8 +92,18 @@ function articles_relatedblock_display($blockinfo)
         $author = xarVarGetCached('Blocks.articles','author');
         if (!empty($authorid) && !empty($author)) {
             $vars['authorlink'] = xarModURL('articles','user','view',
-                                            array('authorid' => $authorid));
+                                            array('ptid' => (!empty($ptid) ? $ptid : null),
+                                                  'authorid' => $authorid));
             $vars['authorname'] = $author;
+            $vars['authorid'] = $authorid;
+            if (!empty($vars['showvalue'])) {
+                $vars['authorcount'] = xarModAPIFunc('articles','user','countitems',
+                                                     array('ptid' => (!empty($ptid) ? $ptid : null),
+                                                           'authorid' => $authorid,
+                                                           // limit to approved / frontpage articles
+                                                           'status' => array(2,3),
+                                                           'enddate' => time()));
+            }
             $links++;
         }
     }
@@ -122,6 +136,9 @@ function articles_relatedblock_modify($blockinfo)
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     }
+    if (empty($vars['showvalue'])) {
+        $vars['showvalue'] = false;
+    }
 
     $vars['bid'] = $blockinfo['bid'];
 
@@ -135,9 +152,8 @@ function articles_relatedblock_modify($blockinfo)
 function articles_relatedblock_update($blockinfo)
 {
     $vars = array();
-    if (!xarVarFetch('numitems', 'int:1', $numitems, 5, XARVAR_NOT_REQUIRED)) {return;}
-
-    $vars['numitems'] = $numitems;
+    if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
 
     $blockinfo['content'] = $vars;
 
