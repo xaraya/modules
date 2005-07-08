@@ -1,22 +1,25 @@
-<xar:if condition="isset($sort) && ($sort == 'title')">
+<xar:if condition="isset($sort) and ($sort eq 'title')">
     <xar:comment>Added to automatically display an alpha pager when articles are sorted by title.</xar:comment>
 
     <xar:if condition="xarTplAddStyleLink('articles', 'alphapager')"></xar:if>
 
-    <xar:set name="$baselinkurl">xarModURL('articles','user','view',array('ptid' => !empty($ptid) ? $ptid : null))."&displayletter"</xar:set>
-
     <div class="alphapager-wrapper">
+        <a href="#xarServerGetCurrentURL(array('letter' => null))#"><xar:mlstring>All</xar:mlstring></a>
         <xar:for start="$i = 65" test="$i le 90" iter="$i++">
-            <xar:set name="$letter">chr($i)</xar:set>
+            <xar:set name="$curletter">chr($i)</xar:set>
     
-            <xar:if condition="$displayletter == $letter">
-                <span>#$letter#</span>
+            <xar:if condition="!empty($letter) and ($letter eq $curletter)">
+                <span>#$curletter#</span>
             <xar:else />
-                <a href="#$baselinkurl#=#$letter#">#$letter#</a>
+                <a href="#xarServerGetCurrentURL(array('letter' => $curletter))#">#$curletter#</a>
             </xar:if>
     
         </xar:for>
-        <a href="#$baselinkurl#=other">Other</a>
+        <xar:if condition="!empty($letter) and ($letter eq 'other')">
+            <span><xar:mlstring>Other</xar:mlstring></span>
+        <xar:else />
+            <a href="#xarServerGetCurrentURL(array('letter' => 'other'))#"><xar:mlstring>Other</xar:mlstring></a>
+        </xar:if>
     </div>
     
 </xar:if>

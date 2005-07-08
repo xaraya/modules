@@ -32,7 +32,7 @@ function articles_user_view($args)
 
 
     // Added to impliment an Alpha Pager
-    if(!xarVarFetch('displayletter', 'str', $displayletter,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('letter', 'str', $letter,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
@@ -262,7 +262,7 @@ function articles_user_view($args)
     $data['sort'] = $sort;    
 
     // Add current display letter, so that we can highlight the current filter in the alpha pager
-    $data['displayletter']=$displayletter;
+    $data['letter']=$letter;
 
     // Get the users requested number of stories per page.
     // If user doesn't care, use the site default
@@ -357,12 +357,12 @@ function articles_user_view($args)
 
 
     // Modify the where clause if an Alpha filter has been specified.
-    if (!empty($displayletter))
+    if (!empty($letter))
     {
-        $displayletter = strtoupper($displayletter);
-        if( preg_match("/^[a-z|A-Z]$/",$displayletter) )
+        $letter = strtoupper($letter);
+        if( preg_match("/^[a-z|A-Z]$/",$letter) )
         {
-            $extrawhere = "title LIKE '$displayletter%'";
+            $extrawhere = "title LIKE '$letter%'";
         } else {
             $extrawhere= " title NOT LIKE 'a%'"
                         ." and title NOT LIKE 'b%'"
@@ -851,7 +851,7 @@ function articles_user_view($args)
                                                     'catid' => $catid,
                                                     'authorid' => $authorid,
                                                     'sort' => ($sort == $defaultsort ? null : $sort),
-                                                    'displayletter' => $displayletter,
+                                                    'letter' => $letter,
                                                     'startnum' => '%%')),
                                     $numitems);
 
