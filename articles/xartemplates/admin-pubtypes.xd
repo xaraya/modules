@@ -88,6 +88,12 @@
 <br /><input type="submit" value="#$buttonlabel#" />
 </div>
 </form>
+
+<xar:if condition="xarModIsHooked('dynamicdata','articles',$ptid)">
+    #xarModFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'articles','itemtype' => $ptid)))#
+</xar:if>
+
+
 <h3 style="text-align: left;"><a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#"><xar:mlstring>Export Definition to XML</xar:mlstring></a></h3>
 </xar:if>
 
