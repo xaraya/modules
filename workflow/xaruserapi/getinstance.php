@@ -14,7 +14,8 @@
 function workflow_userapi_getInstance($args) 
 {
 
-    include_once('modules/workflow/tiki-setup.php');
+    //this has to be include, instead of include_once #cls
+    include('modules/workflow/tiki-setup.php');
 
     //make sure this user an access this instance
     if (!xarSecurityCheck('ReadWorkflow')) return;
