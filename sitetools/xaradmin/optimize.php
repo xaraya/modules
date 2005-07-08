@@ -48,7 +48,7 @@ function sitetools_admin_optimize()
 
         if ($tabledata == false) {
             // Throw back any system exceptions (e.g. database failure)
-            if (xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) {
+            if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                 return; // throw back
             }
             // Handle the user exceptions yourself
@@ -74,7 +74,7 @@ function sitetools_admin_optimize()
                               'create',
                               array('totalgain' => $data['totalgain']));
 
-      if (!isset($optid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+      if (!isset($optid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
        //get total number of times this script has run and total kbs
       $items = xarModAPIFunc('sitetools', 'admin', 'getall');

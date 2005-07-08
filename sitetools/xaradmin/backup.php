@@ -80,7 +80,7 @@ function sitetools_admin_backup($args)
            $tabledata=xarModAPIFunc('sitetools','admin','gettabledata');
            if ($tabledata == false) {
                 // Throw back any system exceptions (e.g. database failure)
-                if (xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) {
+                if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                     return; // throw back
                 }
                 // Handle the user exceptions yourself
@@ -120,7 +120,7 @@ function sitetools_admin_backup($args)
 
         if ($bkupdata == false) {
             // Throw back any system exceptions (e.g. database failure)
-            if (xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) {
+            if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                 return; // throw back
             }
             // Handle the user exceptions yourself
