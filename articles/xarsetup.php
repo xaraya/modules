@@ -252,7 +252,7 @@
                           serialize($config['weblinks'])),
                     array(7, 'quotes', 'Random Quotes',
                           serialize($config['quotes'])),
-                    array(8, 'quotes', 'Downloads',
+                    array(8, 'downloads', 'Downloads',
                           serialize($config['downloads'])),
               );
 
