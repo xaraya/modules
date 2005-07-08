@@ -133,7 +133,7 @@ function courses_admin_create($args)
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
     // posted a failure message so no action is required
-    if (!isset($courseid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($courseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('courses', 'admin', 'view'));

@@ -66,7 +66,7 @@ function courses_user_pay($args)
         'user',
         'get',
         array('courseid' => $courseid));
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // If your module deals with different types of items, you should specify the item type
     // here, before calling any hooks

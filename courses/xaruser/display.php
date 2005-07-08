@@ -67,7 +67,7 @@ function courses_user_display($args)
         'user',
         'get',
         array('courseid' => $courseid));
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // If your module deals with different types of items, you should specify the item type
     // here, before calling any hooks
@@ -123,7 +123,7 @@ function courses_user_display($args)
                           array('uid' => $uid,
                                 'courseid' => $courseid));
 
-    if (!isset($courses) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 //       echo "<br /><pre>items => "; print_r($courses); echo "</pre>";
     if (isset($courses[$courseid])) {
 

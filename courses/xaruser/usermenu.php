@@ -42,7 +42,7 @@ function courses_user_usermenu()
          array('startnum' => $startnum,
             'numitems' => xarModGetUserVar('courses',
             'itemsperpage', $uid)));
-           if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+           if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 //var_dump($items);
 //$courseid = $items['0'];
 //$names = xarModAPIFunc('courses',
@@ -51,7 +51,7 @@ function courses_user_usermenu()
 //         array('startnum' => $startnum,
 //            'numitems' => xarModGetUserVar('courses',
 //            'itemsperpage', $courseid)));
-//           if (!isset($names) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+//           if (!isset($names) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
  foreach ($items as $item) {
         // Let any transformation hooks know that we want to transform some text
         // You'll need to specify the item id, and an array containing all the

@@ -64,14 +64,14 @@ function courses_user_enroll($args)
                           array('uid' => $uid,
                                 'courseid' => $courseid));
 
-    if (!isset($courses) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     if (!isset($courses[$courseid])) {
         $item = xarModAPIFunc('courses',
         'user',
         'get',
         array('courseid' => $courseid));
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
        $name = $item['name'];
 //       echo "<br /><pre>items => "; print_r($item); echo "</pre>";
      $message = xarVarPrepForDisplay(xarML('A new user has enrolled in '. $name ));
@@ -126,7 +126,7 @@ function courses_user_enroll($args)
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
     // posted a failure message so no action is required
-    if (!isset($enrollid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('courses', 'user', 'pay', array('courseid' => $courseid)));
