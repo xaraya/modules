@@ -65,6 +65,7 @@ function categories_user_main()
     }
 
 /* test only - requires categories_symlinks table for symbolic links :
+    $xartable = xarDBGetTables();   
     $query = "CREATE TABLE xar_categories_symlinks (
               xar_cid int(11) NOT NULL default 0,
               xar_name varchar(64) NOT NULL,
@@ -74,6 +75,7 @@ function categories_user_main()
 
     // Symbolic links
     list($dbconn) = xarDBGetConn();
+
     $query = "SELECT xar_cid, xar_name FROM xar_categories_symlinks WHERE xar_parent = '$cid'";
     $result = $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
