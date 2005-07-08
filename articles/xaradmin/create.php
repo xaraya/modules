@@ -122,7 +122,7 @@ function articles_admin_create()
 
     if ($aid == false) {
         // Throw back any system exceptions (e.g. database failure)
-        if (xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) {
+        if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
             return; // throw back
         }
         // Handle the user exceptions yourself

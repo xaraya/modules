@@ -325,9 +325,9 @@ function articles_user_view($args)
 
     if (!is_array($articles)) {
         // Error getting articles
-        if (xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) {
+        if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
              return; // throw back
-        } elseif (xarExceptionMajor() == XAR_USER_EXCEPTION) {
+        } elseif (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
             // get back the reason in string format
             $reason = xarExceptionValue();
             if (!empty($reason)) {
