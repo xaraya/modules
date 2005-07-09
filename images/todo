@@ -1,0 +1,26 @@
+1. image manipulation library selection via admin panel -> GD, NetPBM, ImageMagick
+2. abstract base class
+	a. contains following properties:
+		width
+		original width
+		height
+		original height
+		percent
+		mimetype
+		srcFileName
+		srcResource	
+
+$image = new image_base($fileName);
+
+$image->rotate(90);
+$image->percent(90);
+
+// resize should grab the derivative if there is one, otherwise resize and save as a temp file
+$image->resize($useDerivative = TRUE);
+
+saves it as a temp file until save() function is called
+
+$image->save()
+$image->saveDerivative();
+
+
