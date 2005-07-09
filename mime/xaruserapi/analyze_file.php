@@ -16,6 +16,7 @@
 function mime_userapi_analyze_file( $args )
 {
     extract($args);
+
     if (!isset($fileName)) {
         $msg = xarML('Unable to retrieve mime type. No filename supplied!');
         xarExeptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -29,7 +30,7 @@ function mime_userapi_analyze_file( $args )
     
     // if that didn't work, try getimagesize to see if the file is an image
     $fileInfo = @getimagesize($fileName);
-    if (is_array($fileInfo)) {
+    if (is_array($fileInfo) && isset($fileInfo['mime'])) {
         return $fileInfo['mime'];
     }
     
@@ -37,7 +38,17 @@ function mime_userapi_analyze_file( $args )
     // return it as octet-stream
     $fileSize = fileSize($fileName);    
     if (!$fileSize) { 
-        return 'application/octet-stream';
+		$parts = explode('.', $fileName);
+		if (is_array($parts) && count($parts)) {
+			$extension =& basename(end($parts));
+			$typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+			if (is_array($typeInfo) && count($typeInfo)) {
+				$mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+				return $mimeType;
+			} 
+		} else {
+        	return 'application/octet-stream';
+		}
     }
     
     // Otherwise, actually test the contents of the file
@@ -85,11 +96,22 @@ function mime_userapi_analyze_file( $args )
                        $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype',
                                                   array('subtypeId' => $magicInfo['subtypeId']));
                     if (!empty($mimeType)) {
-                           return $mimeType;
-                       } 
+                        return $mimeType;
+                    } 
                 }
             }
         } 
+
+		$parts = explode('.', $fileName);
+		if (is_array($parts) && count($parts)) {
+			$extension =& basename(end($parts));
+			$typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+			if (is_array($typeInfo) && count($typeInfo)) {
+				$mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+				return $mimeType;
+			} 
+		}
+
         if (!rewind($fp)) {
             $msg = xarML('Unable to rewind to beginning of file: [#(1)]', $fileName);
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_REWIND', new SystemException($msg));
