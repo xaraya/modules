@@ -1,4 +1,7 @@
 <?php
+
+// FIXME: <rabbitt> only allow download of files that are -approved
+
 function uploads_user_download()
 {
     if (!xarSecurityCheck('ViewUploads')) return;

@@ -213,7 +213,6 @@ function uploads_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
         case .10: 
-        case .75:
         
             //Not needed anymore with the dependency checks.
             if (!xarModIsAvailable('mime')) {
@@ -489,6 +488,7 @@ function uploads_upgrade($oldversion)
                 return;
                 
             return true;
+        case .75:
             
     }
     return true;
