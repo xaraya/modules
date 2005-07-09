@@ -137,7 +137,7 @@ function uploads_admin_view( )
     /**
      *  Check for exceptions
      */
-    if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     $data['items'] = $items;
     $data['authid'] = xarSecGenAuthKey();
