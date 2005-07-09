@@ -180,14 +180,7 @@ function newsletter_userapi_getstory($args)
                 $story['article']['imagesarray'][]=$_image;
             }
         }
-
-//xarDerefData("story",$_article,0);
     }
-//if (xarModIsAvailable('images')){
-//    $tag = xarModAPIFunc('images', 'user', 'resize', array('src' => "http://ajones01/~ajones/xarChsf/index.php/uploads/374.jpg",'width' => "400",'constrain' => "1",'label' => "test"));
-//    die("tag: ".$tag);
-//}
-//
 
     // Return the story array
     return $story;

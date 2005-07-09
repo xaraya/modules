@@ -183,9 +183,9 @@ function newsletter_init()
         'xar_ownerid'       => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'xar_pid'           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'xar_cid'           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'xar_title'         => array('type'=>'varchar','size'=>255,'null'=>FALSE),
+        'xar_title'         => array('type'=>'varchar','size'=>255,'null'=>TRUE),
         'xar_source'        => array('type'=>'varchar','size'=>255,'null'=>FALSE),
-        'xar_content'       => array('type'=>'text','null'=>FALSE),
+        'xar_content'       => array('type'=>'text','null'=>TRUE),
         'xar_priority'      => array('type'=>'integer','size'=>'tiny','default'=>'0','null'=>FALSE),
         'xar_storydate'     => array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
         'xar_altdate'       => array('type'=>'varchar','size'=>255,'null'=>TRUE),
@@ -360,14 +360,16 @@ function newsletter_upgrade($oldversion)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     
-    // Get the newsletter publication table
-    $nwsltrPublications = $xartable['nwsltrPublications'];
     
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
 
+
+            // Get the newsletter publication table
+            $nwsltrPublications = $xartable['nwsltrPublications'];
+            
             // Add the column 'xar_subject' to the publications table
             $query = xarDBAlterTable($nwsltrPublications,
                                      array('command' => 'add',
@@ -390,7 +392,38 @@ function newsletter_upgrade($oldversion)
             // fall through to the next upgrade
 
         case '1.1.0':
-            // Code to upgrade from version 1.1.0 goes here
+            // we added support for using articles as stories.  this means that
+            // an articles title and content can be used in place of story thus
+            // title and content of a story can be null.  Also, we need to store the
+            // article ID of the choosen article.            
+                        
+            // Add the column 'xar_articleid' to the stories table
+            $query = xarDBAlterTable('xar_nwsltr_stories',
+                                     array('command' => 'add',
+                                           'field' => 'xar_articleid',
+                                           'type' => 'integer'));
+            $result = & $dbconn->Execute($query);
+            if (!$result) return;
+                                           
+            // change the title field to allow for null
+            $query = xarDBAlterTable($xartable['nwsltrStories'],
+                                     array('command' => 'modify',
+                                           'field' => 'xar_title',
+                                           'null' => false));
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+                                           
+            // change the content field to allow for null
+            $query = xarDBAlterTable($xartable['nwsltrStories'],
+                                     array('command' => 'modify',
+                                           'field' => 'xar_content',
+                                           'null' => false));
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            
+        case '1.1.1':
+            // Code to upgrade from version 1.1.1 goes here
             break;
             
         default:

@@ -31,7 +31,17 @@
                     <xar:loop name="$issue['headlines']">
                         <br /><b>#$loop:item['category']#&nbsp;Headlines</b>
                         <xar:loop name="$loop:item['stories']">
-                            <br />#$loop:item['title']#
+
+                            <xar:comment>
+                                this if statement checks to see if there is an article in use.  If there is AND the article
+                                has a title, then it will use it.  If not, it will default to the newsletter story title
+                            </xar:comment>
+                            <xar:if condition="!empty($loop:item['article']['title'])">
+                                #$loop:item['article']['title']#
+                            <xar:else/>
+                               #$loop:item['title']#
+                            </xar:if>
+                            
                         </xar:loop>
                         <br />
                     </xar:loop>
@@ -48,7 +58,17 @@
                     <br />
                     <xar:loop name="$loop:item['stories']">
                         <br />
-                        #$loop:item['title']#
+                        
+                        <xar:comment>
+                            this if statement checks to see if there is an article in use.  If there is AND the article
+                            has a title, then it will use it.  If not, it will default to the newsletter story title
+                        </xar:comment>
+                        <xar:if condition="!empty($loop:item['article']['title'])">
+                            #$loop:item['article']['title']#
+                        <xar:else/>
+                           #$loop:item['title']#
+                        </xar:if>
+                        
                         <br />(
                         #$loop:item['source']#,&nbsp;
                         <xar:if condition="$loop:item['storyDate']['timestamp'] != 0">
@@ -60,7 +80,20 @@
                             #$loop:item['altDate']#
                         </xar:if>
                         )</p>
-                        <p>#$loop:item['content']#</p>
+
+                        <xar:comment>
+                            this if statement checks to see if there is an article in use.  If there is AND the article
+                            has a sumarry and a body, then it will use the summary first.  If not, it will default to the newsletter story title
+                        </xar:comment>
+                        <xar:if condition="!empty($loop:item['article']['summary'])">
+                            <p>#$loop:item['article']['summary']#</p>
+                        <xar:elseif  condition="!empty($loop:item['article']['body'])"/>
+                            <p>#$loop:item['article']['body']#</p>
+                        <xar:else/>
+                            <p>#$loop:item['content']#</p>
+                        </xar:if>
+                        
+                        
                         <xar:if condition="!empty($loop:item['commentarySource']) && !empty($loop:item['commentary'])">
                             #$loop:item['commentarySource']#:
                             <br /><i>#$loop:item['commentary']#</i><br />
