@@ -6,17 +6,17 @@
 
     @author  Brian McGilligan bmcgilligan@abrasiontechnology.com
     @access  public / private / protected
-    @param   
-    @param   
+    @param
+    @param
     @return  template
     @throws  list of exception identifiers which can be thrown
-    @todo    <Brian McGilligan> ;  
-*/ 
+    @todo    <Brian McGilligan> ;
+*/
 function helpdesk_user_search()
 {
     $data['UserLoggedIn'] = xarUserIsLoggedIn();
     $data['menu']         = xarModFunc('helpdesk', 'user', 'menu');
-    
+
     // Don't allow anonymous users to Search ...
     // Need to change this in the future ?
     $AllowUserCheckStatus  = xarModGetVar('helpdesk', 'User can check status');
@@ -28,19 +28,19 @@ function helpdesk_user_search()
     // Security check
     // No need for a security check if Anonymous Adding is enabled:
     // So ONLY check security if AllowAnonAdd is NOT TRUE
-    if (!$AllowAnonSubmitTicket){	
+    if (!$AllowAnonSubmitTicket){
         if (!xarSecurityCheck('readhelpdesk')) {
             return;
         }
     }
 
     $data['enabledimages']   = xarModGetVar('helpdesk', 'Enable Images');
-    
+
     $data['username'] = xarUserGetVar('uname');
     $data['userid'] = xarUserGetVar('uid');
 
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
-    
+
     return xarTplModule('helpdesk', 'user', 'search', $data);
 }
 ?>

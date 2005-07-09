@@ -6,9 +6,9 @@
 <div class="xar-mod-body">
 <br />
 #$menu#
-<div class="contentBorder">
+<div class="tborder">
 
-<table border="0" width="100%" class=" xar-alt-outline">
+<table width="100%">
     <tr>
         <th colspan="4" class="xar-title" style="text-align: left;">###$tid# - #$subject#</th>
     </tr>
@@ -24,7 +24,7 @@
         <td style="font-weight: bold;"><xar:mlstring>Updated:</xar:mlstring></td>
         <td>#$updated#</td>
     </tr>
-    <tr class="xar-accent">        
+    <tr class="xar-accent">
         <td style="font-weight: bold;"><xar:mlstring>Status:</xar:mlstring></td>
         <td>#$status#</td>
         <td style="font-weight: bold;"><xar:mlstring>Source:</xar:mlstring></td>
@@ -41,7 +41,7 @@
         <td>#$assignedtoname#</td>
         <td style="font-weight: bold;"><xar:mlstring>Closed By:</xar:mlstring></td>
         <td>#$closedbyname#</td>
-    </tr> 
+    </tr>
     <tr>
         <td style="font-weight: bold;"><xar:mlstring>Domain:</xar:mlstring></td>
         <td colspan="3">#$domain#</td>
@@ -49,58 +49,23 @@
     <tr class="xar-accent">
         <td style="font-weight: bold;"><xar:mlstring>Categories:</xar:mlstring></td>
         <td colspan="3">
-	<xar:categories-navigation layout="" module="helpdesk" itemtype="1" itemid="$tid" />
+        <xar:categories-navigation layout="" module="helpdesk" itemtype="1" itemid="$tid" />
         </td>
     </tr>
     <tr class="">
         <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
         <td colspan="3">
-            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> | 
+            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> |
             <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
         </td>
-    </tr> 
-      
-    <xar:foreach in="$hookoutput" value="$hook">
-        <tr><td colspan="4"><br />#$hook#</td></tr>
-    </xar:foreach>    
-</table>
+    </tr>
 
-<xar:comment>
-<xar:loop name="$comments">    
-    <xar:set name="$margin">#$loop:item['depth'] * 10#</xar:set>
-    <div class="xar-alt-outline" style="margin-left: #$margin#px; padding: 2px;">
-        <div class="xar-accent" style=" padding: 5px;">
-            <b>Subject:</b> #$loop:item['xar_title']# <br />
-            <b>Author:</b> #$loop:item['xar_author']#<br />
-            <b>Date:</b> #$loop:item['xar_date']# <br />
-            <b>Host Name:</b> #$loop:item['xar_hostname']#
-        </div>
-        <div style="text-indent: 1em; padding: 5px;">#$loop:item['xar_text']#</div>
-    </div>
-    <br/>
-</xar:loop>
-<form action="#xarModURL('helpdesk', 'user', 'createcomment')#" method="POST">
-<table style="margin: auto;">
-    <tr>
-        <td><b>Subject:</b></td>
-        <td><input type="textbox" name="subject" size="50" value="Re: #$subject#" /></td>
-    </tr>
-    <tr>
-        <td><b>Comment:</b></td>
-        <td><textarea name="comment" rows="10" cols="50"></textarea></td>
-    </tr>
-    <tr style="text-align: center;">
-        <td colspan="2">
-            <input type="hidden" name="tid" value="#$tid#" />
-            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-            <input type="submit" name="submit" value="Post" />
-        </td>
-    </tr>
+    <xar:foreach in="$hookoutput" value="$hook">
+        <tr><td colspan="4" style="padding: 5px;"><br />#$hook#</td></tr>
+    </xar:foreach>
 </table>
-</form>
-</xar:comment>
 
 </div>
 <br />
-#$summary#            
+#$summary#
 </div>

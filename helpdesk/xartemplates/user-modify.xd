@@ -6,7 +6,8 @@
 <br />
 <div class="xar-mod-body">
     #$menu#
-    <div class="contentBorder">
+    <div class="tborder">
+
     <table border="1" width="100%" cellspacing="0">
         <tr>
             <th><xar:mlstring>Modify Ticket</xar:mlstring></th>
@@ -33,20 +34,20 @@
                         <td colspan="1"><input type="text" name="name" value="#$ticketdata['name']#" size="30" maxlength="255"></td>
                         <td><xar:mlstring>Updated</xar:mlstring></td>
                         <td>#$ticketdata['updated']#</td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Phone</xar:mlstring>:</td>
                         <td colspan="3"><input type="text" name="phone" value="#$ticketdata['phone']#" size="30" maxlength="255"></td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Subject</xar:mlstring>:</td>
                         <td colspan="3"><input type="text" name="subject" value="#$ticketdata['subject']#" size="45" maxlength="255"></td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Domain</xar:mlstring>:</td>
                         <td colspan="3"><input type="text" name="domain" value="#$ticketdata['domain']#" size="45" maxlength="255"></td>
                     </tr>
-		    <tr> 
+                    <tr>
                         <td><xar:mlstring>Status</xar:mlstring></td>
                         <td colspan="1">
                             <select name="status">
@@ -58,7 +59,7 @@
                                     <option value="#$loop:item['id']#">#$loop:item['status']#</option>
                                 </xar:if>
                             </xar:loop>
-                            </select>                        
+                            </select>
                         </td>
                         <td><xar:mlstring>Priority</xar:mlstring>:</td>
                         <td>
@@ -71,7 +72,7 @@
                                 </xar:if>
                             </xar:loop>
                             </select>
-                        </td>    
+                        </td>
                     </tr>
                     <xar:if condition="$EditAccess">
                     <tr>
@@ -107,7 +108,7 @@
                                 </xar:if>
                             </xar:loop>
                             </select>
-                        </td>    
+                        </td>
                         <td><xar:mlstring>Closed By</xar:mlstring>:</td>
                         <td>
                             <select name="closedby">
@@ -117,7 +118,7 @@
                                 <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
                             </xar:loop>
                             </select>
-                        </td>    
+                        </td>
                     </tr>
                     <xar:else />
                         <input type="hidden" name="openedby" value="#$ticketdata['openedby']#" />
@@ -125,14 +126,14 @@
                         <input type="hidden" name="source" value="#$ticketdata['source']#" />
                         <input type="hidden" name="closedby" value="#$ticketdata['closedby']#" />
                     </xar:if>
-                    
+
                     <tr>
                     </tr>
                     <xar:if condition="is_array($hookoutput)">
                     <xar:foreach in="$hookoutput" value="$hook">
                         <tr><td colspan="4">#$hook#</td></tr>
-                    </xar:foreach>    
-                    </xar:if>                    
+                    </xar:foreach>
+                    </xar:if>
                     <tr>
                         <td colspan="4" align="center">
                         <xar:if condition="$enabledimages">
@@ -147,7 +148,7 @@
                 </form>
             </td>
         </tr>
-    </table>     
-</div>              
+    </table>
+</div>
     #$summary#
 </div>

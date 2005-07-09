@@ -8,10 +8,13 @@
 
 <p>#$menu#</p>
 
+<div class="tborder">
+
 <p>
-   <xar:mlstring>Your new ticket has been submitted!</xar:mlstring>
-   <xar:mlstring>Please reference ticket ## </xar:mlstring> <b>#$return_val#</b>
-   <xar:mlstring>when referencing this issue</xar:mlstring>
+   <xar:ml>
+       <xar:mlstring>Your new ticket has been submitted! Please reference ticket ## #(1) when referencing this issue.</xar:mlstring>
+       <xar:mlvar>#$return_val#</xar:mlvar>
+   </xar:ml>
 </p>
 
 <xar:if condition="xarUserIsLoggedIn()">
@@ -19,20 +22,22 @@
         <xar:if condition="$enforceauthkey">
             <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
         </xar:if>
-        
+
         <input type="hidden" name="activity"  value="sendnewticket" />
         <input type="hidden" name="userid"    value="#$userid#" />
         <input type="hidden" name="ticket_id" value="#$return_val#" />
-            
+
         <xar:if condition="$enabledimages">
             <a href="javascript:document.viewticket.submit();" title="View Ticket">
                 <img src="#xarTplGetImage('viewticket.gif', 'helpdesk')#" border="0"></a>
         <xar:else />
             <a href="javascript:document.viewticket.submit();" title="View Ticket">
                 [<xar:mlstring>View Tickets</xar:mlstring>]</a>
-        </xar:if>    
+        </xar:if>
     </form>
 </xar:if>
+
+</div>
 
 <p>#$summaryfooter#</p>
 

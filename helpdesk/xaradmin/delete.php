@@ -1,7 +1,7 @@
 <?php
 /**
    Delete an item
-   
+
    @param 'itemid' the id of the item to be deleted
    @param 'confirm' confirm that this item can be deleted
    @return true of success
@@ -10,11 +10,20 @@
 function helpdesk_admin_delete($args)
 {
     // Get Vars
-    if (!xarVarFetch('itemid',   'id',    $itemid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemtype', 'id',    $itemtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('objectid', 'id',    $objectid, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('confirm',  'isset', $confirm,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    
+    if (!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemtype',  'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('objectid',  'id',    $objectid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('noconfirm', 'isset', $noconfirm, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('confirm',   'isset', $confirm,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    if( $noconfirm )
+    {
+        xarResponseRedirect(xarModURL('helpdesk', 'admin', 'view',
+                                      array('itemtype' => $itemtype)
+                                     )
+                           );
+    }
+
     extract($args);
 
     if (!empty($objectid)) {
@@ -55,12 +64,13 @@ function helpdesk_admin_delete($args)
     // do the check
     if (!xarSecurityCheck('deletehelpdesk',1,'item',$itemid)) return;
 
+    $data['menu']      = xarModFunc('helpdesk','admin','menu');
+    $data['menutitle'] = xarModAPIFunc('helpdesk','admin','menu');
+
     // Check for confirmation.
     if (empty($confirm)) {
         // No confirmation yet - display a suitable form to obtain confirmation
         // of this action from the user
-
-        $data = xarModAPIFunc('helpdesk','admin','menu');
 
         // Specify for which item you want confirmation
         $data['itemid']   = $itemid;

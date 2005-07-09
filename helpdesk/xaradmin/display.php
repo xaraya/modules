@@ -29,20 +29,16 @@ function helpdesk_admin_display($args)
         return $msg;
     }
 
-/* start APPROACH # 1 and # 2 : retrieve the item directly in the template */
-    // Note: we don't retrieve any item here ourselves - we'll let the
-    //       <xar:data-display ... /> tag do that in the template itself
     $data['itemid'] = $itemid;
     $data['itemtype'] = $itemtype;
-/* end APPROACH # 1 and # 2 : retrieve the item directly in the template */
 
-    if (!xarSecurityCheck('ReadHelpdesk',1,'Item',$itemid)) return;
-
+    if (!xarSecurityCheck('readhelpdesk',1,'Item',$itemid)) return;
 
     // get user settings for 'bold'
     $data['is_bold'] = xarModGetUserVar('helpdesk', 'bold');
 
     xarVarSetCached('Blocks.helpdesk', 'itemid', $itemid);
+    $data['menu'] = xarModFunc('helpdesk','admin','menu');
 
     $item = array();
     $item['module'] = 'helpdesk';

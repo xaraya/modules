@@ -5,9 +5,14 @@
 </table>
 <br />
 
+<xar:if condition="!empty($menu)">
+#$menu#
+</xar:if>
+<div class="tborder">
 <h2><xar:mlstring>Display</xar:mlstring></h2>
 
 <xar:data-display module="helpdesk" itemtype="$itemtype" itemid="$itemid" />
 
 <!-- add the output from display hooks here -->
 #$hookoutput#
+</div>

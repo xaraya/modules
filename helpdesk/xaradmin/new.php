@@ -3,15 +3,15 @@
    Add new item
    This is a standard function that is called whenever an administrator
    wishes to create a new module item
-   
+
    @param itemtype - number specifing the type of the object (required)
    @return template data
 */
 function helpdesk_admin_new($args)
-{ 
+{
     // Security check
     if (!xarSecurityCheck('addhelpdesk')) return;
-    
+
     // Admin functions of this type can be called by other modules.  If this
     // happens then the calling module will be able to pass in arguments to
     // this function through the $args parameter.  Hence we extract these
@@ -28,9 +28,10 @@ function helpdesk_admin_new($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $msg;
-    }    
-        
-    $data = xarModAPIFunc('helpdesk','admin','menu');    
+    }
+
+    $data['menu']      = xarModFunc('helpdesk','admin','menu');
+    $data['menutitle'] = xarModAPIFunc('helpdesk','admin','menu');
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
@@ -51,9 +52,9 @@ function helpdesk_admin_new($args)
     }
 
     $data['itemtype'] = $itemtype;
-    
+
     // Return the template variables defined in this function
     return $data;
-} 
+}
 
 ?>

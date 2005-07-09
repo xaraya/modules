@@ -1,0 +1,13 @@
+<div id="tabnav">
+
+    <xar:foreach in="$menulinks" key="$key" value="$link">
+
+    <xar:if condition="$itemtype eq $link.itemtype">
+    <div><a href="#xarModURL('helpdesk', 'admin', 'view', array('itemtype' => $link.itemtype))#" class="active">#$link.label#</a></div>
+    <xar:else />
+    <div><a href="#xarModURL('helpdesk', 'admin', 'view', array('itemtype' => $link.itemtype))#">#$link.label#</a></div>
+    </xar:if>
+
+    </xar:foreach>
+
+</div>

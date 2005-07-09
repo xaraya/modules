@@ -6,9 +6,10 @@
 <br />
 #$menu#
 <div class="xar-mod-body">
-<div class="contentBorder">
+<div class="tborder">
+
 <xar:set name="$width">'100%'</xar:set>
-    
+
     <script language="javascript">
     <!--
     function submitIt() {
@@ -52,7 +53,7 @@
     <input type="hidden" name="nontech" value="1" />
 </xar:if>
 
-<table class="xar-alt-outline xar-accent"  style="margin-left: auto; margin-right: auto;">
+<table class=""  style="margin-left: auto; margin-right: auto;">
 <input type="hidden" name="username" value="#$username#">
 <input type="hidden" name="userid"   value="#$userid#">
 <!-- If Not Logged in, Place Username, Email, and phone info in form: -->
@@ -61,7 +62,7 @@
         <td><xar:mlstring>Name</xar:mlstring>:</td>
         <td colspan="3"><input name="name" size="25" maxlength="255" value="#$name#">(required)</td>
     </tr>
-    <tr>    
+    <tr>
         <td><xar:mlstring>Phone</xar:mlstring>:</td>
         <td colspan="3"><input name="phone" size="25" maxlength="255" value="#$phone#"></td>
     </tr>
@@ -85,7 +86,7 @@
         <td colspan="1"><xar:mlstring>Category:</xar:mlstring></td>
     </xar:comment>
         <td colspan="4">
-	    #$hooks['categories']#
+            #$hooks['categories']#
         </td>
     </tr>
     <xar:foreach in="$hooks" value="$hook" key="$key">
@@ -96,7 +97,7 @@
             </xar:if>
             </td>
         </tr>
-    </xar:foreach>    
+    </xar:foreach>
     <tr>
         <td><xar:mlstring>Priority</xar:mlstring>:</td>
         <td>
@@ -105,16 +106,16 @@
                 <option value="#$loop:item['id']#">#$loop:item['priority']#</option>
             </xar:loop>
             </select>
-        </td>    
+        </td>
         <td><xar:mlstring>Status</xar:mlstring>:</td>
         <td>
             <select name="status">
-	    <option value=""></option>
+            <option value=""></option>
             <xar:loop name="$status">
                 <option value="#$loop:item['id']#">#$loop:item['status']#</option>
             </xar:loop>
             </select>
-        </td>    
+        </td>
     </tr>
 <xar:if condition="$editaccess">
     <tr>
@@ -144,17 +145,17 @@
                 <option value="#$loop:item['id']#">#$loop:item['source']#</option>
             </xar:loop>
             </select>
-        </td>    
+        </td>
         <td><xar:mlstring>Closed By</xar:mlstring>:</td>
         <td>
             <select name="closedby">
             <option value="">
-	    <option value="#xarUserGetVar('uid')#">#xarUserGetVar('name')#</option>
+            <option value="#xarUserGetVar('uid')#">#xarUserGetVar('name')#</option>
             <xar:loop name="$reps">
                 <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
             </xar:loop>
             </select>
-        </td>    
+        </td>
     </tr>
 </xar:if>
     <tr>
@@ -178,14 +179,14 @@
         <xar:if condition="$enabledimages">
             <a href="javascript:submitIt();"><img src="#xarTplGetImage('submit.gif', 'helpdesk')#" border="0"></a>
         <xar:else />
-            <input type="button" value="Submit" onclick="submitIt();" />        
+            <input type="button" value="Submit" onclick="submitIt();" />
         </xar:if>
         </td>
     </tr>
 </table>
 </form>
 </div>
- 
+
 <br />
 #$summary#
 </div>

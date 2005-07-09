@@ -2,7 +2,7 @@
 /**
    Generate the common admin menu configuration
    TODO: Do something with this func
-   
+
    @return menu options
 */
 function helpdesk_adminapi_menu()
@@ -14,6 +14,6 @@ function helpdesk_adminapi_menu()
     $menu['menutitle'] = xarML('HelpDesk Administration');
 
     // Return the array containing the menu configuration
-    return $menu;
+    return $menu['menutitle'];
 }
 ?>

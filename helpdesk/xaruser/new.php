@@ -1,12 +1,12 @@
 <?php
 /**
   Creates a new ticket
-  
+
   @author Brian McGilligan
   @returns A new ticket form
 */
 function helpdesk_user_new()
-{         
+{
     // Some of these values get used more than once in this procedure.
     // Make the call to get their value here to prevent multiple function calls
     // and/or db queries
@@ -20,52 +20,52 @@ function helpdesk_user_new()
     $data['openedbydefaulttologgedin']   = xarModGetVar('helpdesk', 'OpenedByDefaultToLoggedIn');
     $data['assignedtodefaulttologgedin'] = xarModGetVar('helpdesk', 'AssignedToDefaultToLoggedIn');
     $data['userisloggedin']        = xarUserIsLoggedIn();
-       
+
     $data['menu'] = xarModFunc('helpdesk', 'user', 'menu');
     $data['enabledimages'] = xarModGetVar('helpdesk', 'Enable Images');
-    
+
     // Security check
     // No need for a security check if Anonymous Adding is enabled:
     // So ONLY check security if AllowAnonAdd is NOT TRUE
-    if (!$data['allowanonsubmitticket']){	
+    if (!$data['allowanonsubmitticket']){
         if (!xarSecurityCheck('readhelpdesk')) return;
     }
-    
+
     if (!xarVarFetch('itemtype', 'int', $itemtype, 1, XARVAR_NOT_REQUIRED)) return;
-    
+
     $data['username'] = xarUserGetVar('uname');
     $data['name']     = xarUserGetVar('name');
     $data['userid']   = xarUserGetVar('uid');
-    
+
     if($data['userisloggedin']){
-    $data['email']    = xarUserGetVar('email');        
-    $data['phone']    = ""; //xarUserGetVar('phone');        
+    $data['email']    = xarUserGetVar('email');
+    $data['phone']    = ""; //xarUserGetVar('phone');
     }
     else{
-    $data['email']    = "";        
-    $data['phone']    = ""; //xarUserGetVar('phone');                
+    $data['email']    = "";
+    $data['phone']    = ""; //xarUserGetVar('phone');
     }
-    
+
     /*
     * These funcs should be rethought once we get the rest working
     */
-    $data['priority'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+    $data['priority'] = xarModAPIFunc('helpdesk', 'user', 'gets',
                                       array('itemtype' => 2));
 
-    $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+    $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets',
                                      array('itemtype' => 4));
-    
-    $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+
+    $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets',
                                      array('itemtype' => 3));
-    
-    if($data['editaccess']){                                     
-        $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+
+    if($data['editaccess']){
+        $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets',
                                       array('itemtype' => 10));
         $data['users'] = xarModAPIFunc('roles', 'user', 'getall');
     }
-                                      
+
     $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
-    $data['action']  = xarModURL('helpdesk', 'user', 'create');        
+    $data['action']  = xarModURL('helpdesk', 'user', 'create');
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
 
     $item = array();
@@ -78,8 +78,8 @@ function helpdesk_user_new()
         $data['hooks'] = array();
     } else {
         $data['hooks'] = $hooks;
-    } 
-                 
+    }
+
     return xarTplModule('helpdesk', 'user', 'new', $data);
 }
 ?>

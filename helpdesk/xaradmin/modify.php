@@ -1,12 +1,12 @@
 <?php
 /**
    Modify an item of the itemtype specified
-   
+
    @param $itemtype - type of item that is being created (required)
    @param $itemid - item id  (required)
    @param $objectid - object id is used instead of item id if there is one
    @return template data
-   
+
 */
 function helpdesk_admin_modify($args)
 {
@@ -36,8 +36,8 @@ function helpdesk_admin_modify($args)
         return $msg;
     }
 
-    if (!xarSecurityCheck('edithelpdesk',1,'item',$itemid)) return;    
-    
+    if (!xarSecurityCheck('edithelpdesk',1,'item',$itemid)) return;
+
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object =& xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'helpdesk',
@@ -49,8 +49,9 @@ function helpdesk_admin_modify($args)
     $newid = $object->getItem();
     if (!isset($newid) || $newid != $itemid) return;
 
-    $data = xarModAPIFunc('helpdesk','admin','menu');
-    
+    $data['menu']      = xarModFunc('helpdesk','admin','menu');
+    $data['menutitle'] = xarModAPIFunc('helpdesk','admin','menu');
+
     // Get data ready for the template
     $data['itemid']   = $itemid;
     $data['itemtype'] = $itemtype;

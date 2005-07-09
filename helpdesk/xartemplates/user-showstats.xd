@@ -4,16 +4,20 @@
     </span>
 </div>
 <div class="xar-mod-body">
-<div style="margin: auto;">
+
 #$menu#
-<br /><br />
+
+<div class="tborder">
+
 <xar:if condition="xarUserIsLoggedIn()">
     <p>This feature has not yet been programmed</p>
 <xar:else />
-<p class="xar-mod-title">Not logged in</p>
-<p>Sorry, this feature is not available for anonymous users. Please login and try again.</p>
+    <p class="xar-mod-title">Not logged in</p>
+    <p>Sorry, this feature is not available for anonymous users. Please login and try again.</p>
 </xar:if>
-<br /><br />
-#$summary#
+
 </div>
+
+#$summary#
+
 </div>

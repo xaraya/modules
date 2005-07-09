@@ -4,7 +4,12 @@
     </span>
 </div>
 <br />
-<h2><xar:mlstring>New </xar:mlstring></h2>
+<xar:if condition="!empty($menu)">
+#$menu#
+</xar:if>
+<div class="tborder">
+
+<h2><xar:mlstring>New</xar:mlstring></h2>
 
 <xar:if condition="!empty($preview)">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
@@ -28,7 +33,9 @@
     <xar:data-form object="$object" />
     <tr>
         <td colspan="2">
-         #$hooks#
+         <xar:foreach in="$hooks" key="$key" value="$hook">
+         #$hook#
+         </xar:foreach>
         </td>
     </tr>
     <tr>
@@ -41,4 +48,4 @@
     </tr>
 </table>
 </form>
-
+</div>
