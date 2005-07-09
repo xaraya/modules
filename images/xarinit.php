@@ -33,8 +33,8 @@
 function images_init()
 {
     // Get database information
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     // Create tables
     $imagestable = $pntable['images'];
@@ -86,8 +86,8 @@ function images_upgrade($oldversion)
 function images_delete()
 {
     // Get database information
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     // Delete tables
     $sql = "DROP TABLE $pntable[images]";

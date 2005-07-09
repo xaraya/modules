@@ -44,8 +44,8 @@ function images_userapi_get($args)
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $imagestable = $pntable['images'];
     $imagescolumn = &$pntable['images_column'];
 

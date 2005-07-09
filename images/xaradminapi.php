@@ -57,8 +57,8 @@ function images_adminapi_create($args)
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $imagestable = $pntable['images'];
     $imagescolumn = &$pntable['images_column'];
 
@@ -136,8 +136,8 @@ function images_adminapi_delete($args)
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $imagestable = $pntable['images'];
     $imagescolumn = &$pntable['images_column'];
 
@@ -199,8 +199,8 @@ function images_adminapi_update($args)
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $imagestable = $pntable['images'];
     $imagescolumn = &$pntable['images_column'];
 
