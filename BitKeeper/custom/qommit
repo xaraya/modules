@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# Quick commit in the current directory
-
-RELDIR=`bk pwd -r`
-cd `bk root`
-bk citool $RELDIR
