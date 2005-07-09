@@ -93,7 +93,7 @@
 	</tr>
 	<xar:loop name="$items">
 	<tr class="xar-accent" style="border-bottom: 1px solid #000;">
-		<td colspan="2">
+		<td colspan="5">
 			<h2>
 				<xar:if condition="isset($loop:item['catname'])">
 					<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $loop:item['cid']))#">
@@ -105,9 +105,6 @@
 					</a>
 				</xar:if>
 			</h2>
-		</td>
-		<td colspan="3" align="right">
-			&nbsp;
 		</td>
 	</tr>
 	<xar:foreach in="$loop:item['cbchild']" value="$cats">
