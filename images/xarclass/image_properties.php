@@ -19,7 +19,7 @@ class Image_Properties {
         $this->fileName = basename($fileLocation);
         
         if (NULL == $thumbsdir || empty($thumbsdir)) {
-            $this->_thumbsdir = './'; // xarModGetVar('images', 'path.derivatives');
+            $this->_thumbsdir = './'; 
         } else {
             $this->_thumbsdir = $thumbsdir;
         }

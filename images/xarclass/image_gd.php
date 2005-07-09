@@ -12,15 +12,23 @@ class Image_GD extends Image_Properties {
         return $this->__constructor($fileLocation, $thumbsdir);
     }
     
-    // Grabbed from: http://nyphp.org/content/presentations/GDintro/gd20.php
-    // written by: Jeff Knight of New York PHP
+    /**
+     * Concept borrowed from: 
+     *    http://nyphp.org/content/presentations/GDintro/gd20.php
+     * by: 
+     *    Jeff Knight of New York PHP
+     **
+     */
     function resize() {
-        if ($this->_owidth == $this->width && $this->_oheight == $this->height) {
-            return NULL;
+        
+        // If the original height and widht are the same
+        // as the new height and width, return true
+        if ($this->_owidth == $this->width && 
+            $this->_oheight == $this->height) {
+                return TRUE;
         } 
         
         if ($this->getDerivative()) {
-            echo "\n" . $this->getDerivative() . "\n";
             return TRUE;
         }
         
@@ -35,10 +43,11 @@ class Image_GD extends Image_Properties {
             imageDestroy($newImage);
             imageDestroy($origImage);
             $this->saveDerivative();
-        }
+        } else {
+            return FALSE;
+        } 
         
-        return isset($ermsg) ? $ermsg : NULL;
-        
+        return TRUE;
     }
     
     function &_open() { 
@@ -86,28 +95,5 @@ class Image_GD extends Image_Properties {
     }
 
 }
-
-function Image( $location ) {
-    switch(strtoupper(xarModGetVar('images', 'image.rendering.library'))) {
-        case 'IMAGE_MAGICK':
-            return new Image_ImageMagick($location);
-            break;
-        case 'NETPBM':
-            return new Image_NetPBM($location);
-            break;
-        default:
-        case 'GD':
-            return new Image_GD($location);
-            break;
-    }
-}
-
-$image = new Image_GD('/home/ccorliss/projects/stable/html/modules/base/xarimages/exception.jpg');
-$image->setPercent(150);
-print_r($image);
-
-$image->resize();
-#$image->saveImage($derivative = TRUE);
-#$thumb = $image->getDerivative(height, width)
 
 ?>
