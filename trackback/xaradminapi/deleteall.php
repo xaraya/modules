@@ -38,8 +38,8 @@ function trackback_adminapi_deleteall($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     $trackBackTable = $tables['trackback'];
 
     $query = "DELETE FROM $trackBackTable
