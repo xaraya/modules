@@ -8,7 +8,7 @@
 <!-- module body template -->
 <div align="center">
     <a href="http://coolpick.com/way/cool/syn/babe.html">
-       <img src="&xar-var-piclocation;" border="0">
+       <img src="#$piclocation#">
        <br /><br />
        CoolPick.com</a>
 </div>

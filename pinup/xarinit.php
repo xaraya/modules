@@ -24,7 +24,7 @@ function pinup_init()
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function htmlpages_delete()
+function pinup_delete()
 {
     return true;
 }
