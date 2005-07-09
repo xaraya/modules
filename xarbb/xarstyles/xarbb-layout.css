@@ -134,22 +134,22 @@ div#xarbb-loginwrapper {
 div#xarbb-loginwrapper label { padding: 0 .2em 0 1em; }
 
 /* legend icons */
-div#xarbb-legendwrapper {
+div.xarbb-legendwrapper {
 	width: 100%;
 	float:left;
 	margin-top: .5em;
 	text-align: center;
 }
 
-div#xarbb-legendwrapper span { padding: 0 .2em 0 1em; }
+div.xarbb-legendwrapper span { padding: 0 .2em 0 1em; }
 
-div#xarbb-legendwrapper span.spacedout {
+div.xarbb-legendwrapper span.spacedout {
 	width: 15em;
 	float: left;
 	text-align:left;
 }
 
-div#xarbb-legendwrapper span img,
+div.xarbb-legendwrapper span img,
 div.xarbb-topiccontrols span img {
 	vertical-align: middle;
 	display: inline;
