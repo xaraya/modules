@@ -1,0 +1,32 @@
+<object name="rblacklist">
+  <objectid>25</objectid>
+  <label>Recipients Blacklist</label>
+  <moduleid>911</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>106</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mailbag_rblacklist.xar_rbid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="recipient">
+      <id>107</id>
+      <label>Recipient</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mailbag_rblacklist.xar_to</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

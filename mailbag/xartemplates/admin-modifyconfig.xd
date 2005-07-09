@@ -1,0 +1,98 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        Mailbag Modify Configuration
+    </span>
+</div>
+<br />
+
+<form action="#xarModURL('mailbag', 'admin', 'updateconfig')#" method="post">
+<div align="center">
+    <table border="1" width="75%">
+        <tr>
+            <th colspan="2"><xar:mlstring>Global Settings</xar:mlstring></th>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>Master Switch</xar:mlstring></td>
+            <xar:if condition="xarModGetVar('mailbag', 'bgswitch')">
+                <xar:set name="$checked">'checked="checked"'</xar:set>
+            <xar:else />
+                <xar:set name="$checked">''</xar:set>
+            </xar:if>
+            <td><input type="checkbox" name="bgswitch" value="1" #$checked# /></td>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>Master Password</xar:mlstring></td>
+            <td><input type="textbox" name="exepassword" value="#xarModGetVar('mailbag', 'exepassword')#" /></td>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>POP Server</xar:mlstring></td>
+            <td><input type="textbox" name="popserver" value="#xarModGetVar('mailbag', 'popserver')#" /></td>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>POP User</xar:mlstring></td>
+            <td><input type="textbox" name="popuser" value="#xarModGetVar('mailbag', 'popuser')#" /></td>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>POP Password</xar:mlstring></td>
+            <td><input type="textbox" name="poppass" value="#xarModGetVar('mailbag', 'poppass')#" /></td>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>E-mail Domain:</xar:mlstring></td>
+            <td><input type="textbox" name="emaildomain" value="#xarModGetVar('mailbag', 'emaildomain')#" /></td>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>Postmaster E-mail</xar:mlstring></td>
+            <td><input type="textbox" name="postmaster" value="#xarModGetVar('mailbag', 'postmaster')#" /></td>
+        </tr>
+                
+        <tr>
+            <td><xar:mlstring>Allow HTML</xar:mlstring></td>
+            <xar:if condition="xarModGetVar('mailbag', 'allowhtml')">
+                <xar:set name="$checked">'checked="checked"'</xar:set>
+            <xar:else />
+                <xar:set name="$checked">''</xar:set>
+            </xar:if>
+            <td><input type="checkbox" name="allowhtml" value="1" #$checked# /></td>
+        </tr>
+
+        <tr>
+            <td><xar:mlstring>Max Recipients</xar:mlstring></td>
+            <td><input type="textbox" name="maxrecip" value="#xarModGetVar('mailbag', 'maxrecip')#" /></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Max Size (in bytes)</xar:mlstring></td>
+            <td><input type="textbox" name="maxsize" value="#xarModGetVar('mailbag', 'maxsize')#" /></td>
+        </tr>
+        
+        <tr>
+            <td><xar:mlstring>Notify Users</xar:mlstring></td>
+            <xar:if condition="xarModGetVar('mailbag', 'notifyuser')">
+                <xar:set name="$checked">'checked="checked"'</xar:set>
+            <xar:else />
+                <xar:set name="$checked">''</xar:set>
+            </xar:if>
+            <td><input type="checkbox" name="notifyuser" value="1" #$checked# /></td>
+        </tr>
+        
+
+        <tr>
+            <td colspan="2">
+                #$hooks#
+            </td>
+        </tr>                        
+        <tr>
+            <td colspan="2">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" name="submit" value="#xarML('Update Config')#" />            
+            </td>
+        </tr>
+    </table>        
+</form> 
+</div>

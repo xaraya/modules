@@ -1,0 +1,32 @@
+<object name="ublacklist">
+  <objectid>26</objectid>
+  <label>Users Blacklist</label>
+  <moduleid>911</moduleid>
+  <itemtype>4</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>109</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mailbag_ublacklist.xar_ubid</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="user">
+      <id>110</id>
+      <label>User</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_mailbag_ublacklist.xar_uid</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

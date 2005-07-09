@@ -1,0 +1,102 @@
+<object name="maillist">
+  <objectid>27</objectid>
+  <label>Mail Lists</label>
+  <moduleid>911</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="lid">
+      <id>111</id>
+      <label>lid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_lid</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>112</id>
+      <label>Description</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_desc</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="sent_from">
+      <id>113</id>
+      <label>Sent From</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_from_email</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="sent_to">
+      <id>114</id>
+      <label>Sent To</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_to_email</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="subject_contains">
+      <id>115</id>
+      <label>Subject Contains</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_in_subject</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="user_responsible">
+      <id>116</id>
+      <label>User Responsible</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_admin_uid</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="category">
+      <id>117</id>
+      <label>Category</label>
+      <type>categories</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_cid</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="no_comments_allowed">
+      <id>118</id>
+      <label>No Comments Allowed</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_no_comment</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>119</id>
+      <label>Status</label>
+      <type>status</type>
+      <default></default>
+      <source>xar_mailbag_maillists.xar_no_homepage</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

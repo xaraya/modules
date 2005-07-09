@@ -1,0 +1,112 @@
+<object name="mailbag_errors">
+  <objectid>23</objectid>
+  <label>Errors</label>
+  <moduleid>911</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>94</id>
+      <label>id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_msgid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="subject">
+      <id>95</id>
+      <label>Subject</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_subject</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="from">
+      <id>96</id>
+      <label>From</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_from</source>
+      <status>2</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="from_user">
+      <id>97</id>
+      <label>From User</label>
+      <type>username</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_from_uid</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="to">
+      <id>98</id>
+      <label>To</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_to</source>
+      <status>2</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="to_user">
+      <id>99</id>
+      <label>To User</label>
+      <type>username</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_to_uid</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="message_time">
+      <id>100</id>
+      <label>Message Time</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_msg_time</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="message_text">
+      <id>101</id>
+      <label>Message Text</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_msg_text</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="error_code">
+      <id>102</id>
+      <label>Error Code</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_errorcode</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="error">
+      <id>103</id>
+      <label>Error</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_mailbag_errors.xar_error</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

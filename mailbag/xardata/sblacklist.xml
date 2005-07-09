@@ -1,0 +1,32 @@
+<object name="sblacklist">
+  <objectid>24</objectid>
+  <label>Sender Blacklist</label>
+  <moduleid>911</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>104</id>
+      <label>id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mailbag_sblacklist.xar_sbid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="from_user">
+      <id>105</id>
+      <label>From User</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_mailbag_sblacklist.xar_from</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
