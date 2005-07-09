@@ -19,7 +19,7 @@ function helpdesk_user_display($args)
     xarVarFetch('tid',       'int:1:',  $ticket_id, null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('activity',  'str:1:',  $activity,  null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('userid',    'str:1:',  $userid,    null,  XARVAR_NOT_REQUIRED);
-    if (!xarVarFetch('itemtype', 'int', $itemtype, 1, XARVAR_NOT_REQUIRED)) return;
+    xarVarFetch('itemtype',  'int',     $itemtype,  1,     XARVAR_NOT_REQUIRED);
    
     if (empty($ticket_id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -70,8 +70,6 @@ function helpdesk_user_display($args)
 
     $returnurl = xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id));
 
-    //echo var_dump($data['categories']);
-    
     /* Get the path to the Cats. */
     $cidlist =  xarModGetVar('helpdesk','mastercids.1');
     $mastercids = explode(';',$cidlist);

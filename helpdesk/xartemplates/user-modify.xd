@@ -30,11 +30,13 @@
                     </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Name</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="name" value="#$ticketdata['name']#" size="45" maxlength="255"></td>
+                        <td colspan="1"><input type="text" name="name" value="#$ticketdata['name']#" size="30" maxlength="255"></td>
+                        <td><xar:mlstring>Updated</xar:mlstring></td>
+                        <td>#$ticketdata['updated']#</td>
                     </tr>    
                     <tr>
                         <td colspan="1"><xar:mlstring>Phone</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="phone" value="#$ticketdata['phone']#" size="45" maxlength="255"></td>
+                        <td colspan="3"><input type="text" name="phone" value="#$ticketdata['phone']#" size="30" maxlength="255"></td>
                     </tr>    
                     <tr>
                         <td colspan="1"><xar:mlstring>Subject</xar:mlstring>:</td>
@@ -43,26 +45,21 @@
                     <tr>
                         <td colspan="1"><xar:mlstring>Domain</xar:mlstring>:</td>
                         <td colspan="3"><input type="text" name="domain" value="#$ticketdata['domain']#" size="45" maxlength="255"></td>
-                    </tr> 
-                    <!---   
-                    <xar:if condition="xarModGetVar('helpdesk', 'AllowSoftwareChoice')">
-                    #$swdropdown#
-                    </xar:if>
-                    --->
-                    <tr>
-                    <!---
-                        <td><xar:mlstring>Type</xar:mlstring>:</td>
-                        <td>
-                            <select name="typeid">
-                            <xar:loop name="$types">
-                                <xar:if condition="$ticketdata['type'] eq $loop:item['type']">
-                                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['type']#</option>
+                    </tr>
+		    <tr> 
+                        <td><xar:mlstring>Status</xar:mlstring></td>
+                        <td colspan="1">
+                            <select name="status">
+                            <option value="">
+                            <xar:loop name="$status">
+                                <xar:if condition="$ticketdata['status'] eq $loop:item['status']">
+                                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['status']#</option>
                                 <xar:else />
-                                    <option value="#$loop:item['id']#">#$loop:item['type']#</option>
+                                    <option value="#$loop:item['id']#">#$loop:item['status']#</option>
                                 </xar:if>
                             </xar:loop>
-                            </select>
-                        </td> --->
+                            </select>                        
+                        </td>
                         <td><xar:mlstring>Priority</xar:mlstring>:</td>
                         <td>
                             <select name="priority">
@@ -130,21 +127,6 @@
                     </xar:if>
                     
                     <tr>
-                        <td><xar:mlstring>Status</xar:mlstring></td>
-                        <td colspan="1">
-                            <select name="status">
-                            <option value="">
-                            <xar:loop name="$status">
-                                <xar:if condition="$ticketdata['status'] eq $loop:item['status']">
-                                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['status']#</option>
-                                <xar:else />
-                                    <option value="#$loop:item['id']#">#$loop:item['status']#</option>
-                                </xar:if>
-                            </xar:loop>
-                            </select>                        
-                        </td>
-                        <td><xar:mlstring>Updated</xar:mlstring></td>
-                        <td>#$ticketdata['updated']#</td>
                     </tr>
                     <xar:if condition="is_array($hookoutput)">
                     <xar:foreach in="$hookoutput" value="$hook">

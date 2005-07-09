@@ -1,10 +1,7 @@
 <?php
 /**
   Get an item of an object
-  Dev Note: The idea with this func is to get rid of similar 
-            func doing the same thing.  To my count this func
-            replaces about 7 other funcs. And isn't that complex at all
-  
+
   @author Brian McGilligan
   @param $args['object'] - The type of object to query
   @param $args['itemid'] - The items id
@@ -48,20 +45,6 @@ function helpdesk_userapi_get($args)
         case 'source':
             $itemtype = 4;
             break;
-        
-        case 'type':
-            $itemtype = 5;           
-            break;
-            
-        case 'software':
-            $itemtype = 8;
-            break;
-            
-        case 'swversion':
-            $itemtype = 9;
-            $name = 'version';
-            break;
-            
     }
        
     $item = xarModAPIFunc('dynamicdata', 'user', 'getitem', 

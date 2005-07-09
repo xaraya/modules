@@ -28,7 +28,6 @@ function helpdesk_userapi_create($args)
     $sql = "INSERT INTO $db_table  ($db_column[ticket_id],
                                     xar_domain,
                                     $db_column[ticket_statusid],
-                                    $db_column[ticket_typeid],
                                     $db_column[ticket_priorityid],
                                     $db_column[ticket_sourceid],
                                     $db_column[ticket_openedby],
@@ -37,8 +36,6 @@ function helpdesk_userapi_create($args)
                                     $db_column[ticket_lastupdate],
                                     $db_column[ticket_assignedto],
                                     $db_column[ticket_closedby],
-                                    $db_column[ticket_swversionid],
-                                    $db_column[ticket_softwareid],
                                     xar_name,
                                     xar_phone,
                                     xar_email
@@ -46,7 +43,6 @@ function helpdesk_userapi_create($args)
                            VALUES  (".$newticket_id.",
                                     '".xarVarPrepForStore($domain)."',
                                     '".xarVarPrepForStore($status)."',
-                                    '".xarVarPrepForStore($type)."',
                                     '".xarVarPrepForStore($priority)."',
                                     '".xarVarPrepForStore($source)."',
                                     '".xarVarPrepForStore($whosubmit)."',
@@ -55,8 +51,6 @@ function helpdesk_userapi_create($args)
                                     '".xarVarPrepForStore($time)."',
                                     '".xarVarPrepForStore($assignedto)."',
                                     '".xarVarPrepForStore($closedby)."',
-                                    '".xarVarPrepForStore($swv_id)."',
-                                    '".xarVarPrepForStore($sw_id)."',
                                     '".xarVarPrepForStore($name)."',
                                     '".xarVarPrepForStore($phone)."',
                                     '".xarVarPrepForStore($email)."'                                    

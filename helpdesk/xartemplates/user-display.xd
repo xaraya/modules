@@ -34,7 +34,7 @@
         <td style="font-weight: bold;"><xar:mlstring>Openedby:</xar:mlstring></td>
         <td>#$openedbyname#</td>
         <td style="font-weight: bold;"><xar:mlstring>Priority:</xar:mlstring></td>
-        <td style="background-color: ###$prioritycolor#;">#$priority#</td>
+        <td style="background-color: ###$priority['color']#;">#$priority['priority']#</td>
     </tr>
     <tr class="xar-accent">
         <td style="font-weight: bold;"><xar:mlstring>Assigned To:</xar:mlstring></td>
