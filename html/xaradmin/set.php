@@ -38,7 +38,7 @@ function html_admin_set()
                              'getalltags');
 
     // Check for exceptions
-    if (!isset($allowed) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($allowed) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Add the edit and delete urls
     for ($idx = 0; $idx < count($allowed); $idx++) {

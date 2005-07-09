@@ -38,7 +38,7 @@ function html_admin_edit()
                           array('cid' => $cid));
 
     // Check for exceptions
-    if (!isset($html) && xarExceptionMajor() != XAR_NO_EXCEPTION)
+    if (!isset($html) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check for confirmation.

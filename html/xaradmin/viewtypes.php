@@ -37,7 +37,7 @@ function html_admin_viewtypes()
 			                  'getalltypes');
 
     // Check for exceptions
-    if (!isset($tagtypes) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($tagtypes) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Add the edit and delete urls
     for ($idx = 0; $idx < count($tagtypes); $idx++) {

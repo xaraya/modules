@@ -34,7 +34,7 @@ function html_admin_new()
                            'getalltypes');
 
     // Check for exceptions
-    if (!isset($types) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($types) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     $data['types'] = $types;
 

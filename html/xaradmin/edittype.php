@@ -38,7 +38,7 @@ function html_admin_edittype()
                           array('id' => $id));
 
     // Check for exceptions
-    if (!isset($type) && xarExceptionMajor() != XAR_NO_EXCEPTION)
+    if (!isset($type) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check for confirmation.
