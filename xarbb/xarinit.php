@@ -210,7 +210,7 @@ function xarbb_activate()
 /**
  * upgrade the smiley module from an old version
  */
-function html_upgrade($oldversion)
+function xarbb_upgrade($oldversion)
 {
 
     // Upgrade dependent on old version number
