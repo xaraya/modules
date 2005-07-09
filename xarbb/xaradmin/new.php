@@ -117,7 +117,7 @@ function xarbb_admin_new()
 
             if (!empty($allowbbcode)){
                 xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
-                                                                         'callerItemType'   => $fid,
+                                                                         'callerItemType'   => $forum['fid'],
                                                                          'hookModName'      => 'bbcode'));
             }
 
