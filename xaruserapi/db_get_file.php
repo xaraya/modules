@@ -20,6 +20,8 @@
  * @param  integer  startnum     (Optional) starting file number
  * @param  string   sort         (Optional) sort order ('id','name','type','size','user','status','location',...)
  * @param  string   catid        (Optional) grab file(s) in the specified categories
+ * @param  mixed    getnext      (Optional) grab the next file after this one (file id or file name)
+ * @param  mixed    getprev      (Optional) grab the previous file before this one (file id or file name)
  *
  * @returns array   All of the metadata stored for the particular file(s)
  */
@@ -30,7 +32,8 @@ function uploads_userapi_db_get_file( $args )
     extract($args);
 
     if (!isset($fileId) && !isset($fileName) && !isset($fileStatus) && !isset($fileLocation) &&
-        !isset($userId)  && !isset($fileType) && !isset($store_type) && !isset($fileHash)) {
+        !isset($userId)  && !isset($fileType) && !isset($store_type) && !isset($fileHash) &&
+        empty($getnext) && empty($getprev)) {
         $msg = xarML('Missing parameters for function [#(1)] in module [#(2)]', 'db_get_file', 'uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
@@ -97,6 +100,34 @@ function uploads_userapi_db_get_file( $args )
         $where[] = '(xar_location LIKE ' . $dbconn->qstr("%/$fileHash") . ')';
     }
 
+    if (!empty($getnext)) {
+        $startnum = 1;
+        $numitems = 1;
+        if (is_numeric($getnext)) {
+            // sort by file id
+            $where[] = '(xar_fileEntry_id > ' . $dbconn->qstr($getnext) . ')';
+            $sort = 'id_asc';
+        } else {
+            // sort by file name
+            $where[] = '(xar_filename > ' . $dbconn->qstr($getnext) . ')';
+            $sort = 'name_asc';
+        }
+    }
+
+    if (!empty($getprev)) {
+        $startnum = 1;
+        $numitems = 1;
+        if (is_numeric($getprev)) {
+            // sort by file id
+            $where[] = '(xar_fileEntry_id < ' . $dbconn->qstr($getprev) . ')';
+            $sort = 'id_desc';
+        } else {
+            // sort by file name
+            $where[] = '(xar_filename < ' . $dbconn->qstr($getprev) . ')';
+            $sort = 'name_desc';
+        }
+    }
+
     if (count($where) > 1) {
         if ($inverse)  {
             $where = implode(' OR ', $where);
@@ -150,7 +181,12 @@ function uploads_userapi_db_get_file( $args )
     }
     switch ($sort) {
         case 'name':
+        case 'name_asc':
             $sql .= ' ORDER BY xar_filename';
+            break;
+
+        case 'name_desc':
+            $sql .= ' ORDER BY xar_filename DESC';
             break;
 
         case 'size':
@@ -178,9 +214,11 @@ function uploads_userapi_db_get_file( $args )
             break;
 
         case 'id':
+        case 'id_desc':
             $sql .= ' ORDER BY xar_fileEntry_id DESC';
             break;
 
+        case 'id_asc':
         default:
             $sql .= ' ORDER BY xar_fileEntry_id';
             break;
