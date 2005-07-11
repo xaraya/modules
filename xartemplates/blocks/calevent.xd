@@ -10,7 +10,7 @@
         <xar:foreach in="$todaysevents" key="$key" value="$val">
             <xar:foreach in="$todaysevents[$key]" key="$key2" value="$val2">
                         <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-                           <font size="3" color="#$event_array[$dbdate][$index]['color']#">#$Bullet#</font>
+                           <font size="3" color="#$val2['color']#">#$Bullet#</font>
                 <li style="color: #$val2['color']#;">
                     <div class="xar-julian-list-contents">
                         <span class="xar-sub">#$val2['time']#</span>
