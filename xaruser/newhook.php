@@ -76,7 +76,7 @@ function julian_user_newhook($args)
     $bl_data['event_repeat'] = 0;
     
     // Repeat-every defaults.
-    $bl_data['event_repeat_freq_type'] = 0;    // frequency unit (day=1, week=2, month=3, year=4)
+    $bl_data['event_repeat_every_type'] = 0;    // frequency unit (day=1, week=2, month=3, year=4)
     $bl_data['event_repeat_every_freq'] = '';    // frequency (every x time units)
 
     // Repeat-on defaults
