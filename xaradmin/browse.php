@@ -35,10 +35,15 @@ function images_admin_browse()
     if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('sort','enum:name:type:width:height:size:time',$sort,'name',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('action',      'str:1:',     $action,           '',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('getnext',     'str:1:',     $getnext,          NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('getprev',     'str:1:',     $getprev,          NULL, XARVAR_DONT_SET)) return;
 
     $data['startnum'] = $startnum;
     $data['numitems'] = $numitems;
     $data['sort'] = ($sort != 'name') ? $sort : null;
+    $data['getnext'] = $getnext;
+    $data['getprev'] = $getprev;
 
     // Check if we can cache the image list
     $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
@@ -59,6 +64,16 @@ function images_admin_browse()
 
         $data['images'] = xarModAPIFunc('images','admin','getimages',
                                         $params);
+
+        if ((!empty($getnext) || !empty($getprev)) &&
+            !empty($data['images']) && count($data['images']) == 1) {
+            $image = array_pop($data['images']);
+            xarResponseRedirect(xarModURL('images','admin','browse',
+                                          array('action' => empty($action) ? 'view' : $action,
+                                                'bid' => $baseId,
+                                                'fid' => $image['fileId'])));
+            return true;
+        }
 
         // Note: this must be called *after* getimages() to benefit from caching
         $countitems = xarModAPIFunc('images','admin','countimages',
@@ -83,7 +98,6 @@ function images_admin_browse()
     $data['settings'] = xarModAPIFunc('images','user','getsettings');
 
     // Check if we need to do anything special here
-    if (!xarVarFetch('action','str:1:',$action,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('processlist','str:1:',$processlist,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('resizelist', 'str:1:',$resizelist, '',XARVAR_NOT_REQUIRED)) return;
     if (!empty($processlist)) {

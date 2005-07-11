@@ -148,7 +148,37 @@ function images_adminapi_getimages($args)
         usort($imagelist, $sortfunc);
     }
 
-    if (!empty($numitems) && is_numeric($numitems)) {
+    if (!empty($getnext)) {
+        $found = 0;
+        $newlist = array();
+        foreach (array_keys($imagelist) as $id) {
+            if ($id == $getnext) {
+                $found++;
+                continue;
+            } elseif ($found) {
+                $newlist[$id] = $imagelist[$id];
+                break;
+            }
+        }
+        $imagelist = $newlist;
+        unset($newlist);
+
+    } elseif (!empty($getprev)) {
+        $oldid = '';
+        $newlist = array();
+        foreach (array_keys($imagelist) as $id) {
+            if ($id == $getprev) {
+                if (!empty($oldid)) {
+                    $newlist[$oldid] = $imagelist[$oldid];
+                }
+                break;
+            }
+            $oldid = $id;
+        }
+        $imagelist = $newlist;
+        unset($newlist);
+
+    } elseif (!empty($numitems) && is_numeric($numitems)) {
         if (empty($startnum) || !is_numeric($startnum)) {
             $startnum = 1;
         }

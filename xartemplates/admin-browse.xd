@@ -46,11 +46,15 @@
         </form>
         </xar:if>
 
+        <p>
+        <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>
         <xar:if condition="!empty($width) or !empty($height)">
-            <p><img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" /></p>
+            <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" align="top" />
         <xar:else/>
-            <p><img src="#$selimage['fileDownload']#" border="0" /></p>
+            <img src="#$selimage['fileDownload']#" border="0" align="top" />
         </xar:if>
+        <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
+        </p>
         <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
         <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>
         <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
