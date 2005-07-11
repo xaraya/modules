@@ -342,13 +342,16 @@ function images_admin_phpthumb($args)
 
     if (count($previewargs) > 1) {
         $previewargs['preview'] = 1;
+        if (!empty($baseId)) {
+            $previewargs['bid'] = $baseId;
+        }
         $previewurl = xarModURL('images','admin','phpthumb',
                                 $previewargs);
         // restore | characters in fltr
         $previewurl = strtr($previewurl, array('%7C' => '|'));
         // show parameters
         $data['params'] = preg_replace('/^.*fid=[^&]*&amp;/','',$previewurl);
-        $data['params'] = preg_replace('/&amp;preview=1$/','',$data['params']);
+        $data['params'] = preg_replace('/&amp;preview=1.*$/','',$data['params']);
         if (!empty($data['selimage'])) {
             $data['selimage']['filePreview'] = $previewurl;
         }
