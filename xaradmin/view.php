@@ -21,6 +21,7 @@ function uploads_admin_view( )
     if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('sort', 'enum:id:name:size:user:status', $sort,      NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('catid',       'str:1:',     $catid,            NULL, XARVAR_DONT_SET)) return;
     
     /**
      *  Determine the filter settings to use for this view
@@ -39,11 +40,17 @@ function uploads_admin_view( )
         $filters['subtype']  = $subtype;
         $filters['status']   = $status;
         $filters['inverse']  = $inverse;
+        $filters['catid']    = $catid;
 
         $options  =  xarModAPIFunc('uploads','user','process_filters', $filters);
         $data     = $options['data'];
         $filter   = $options['filter'];
         unset($options);
+    }
+    // Override catid when we're not simply changing the sort order
+    if (!isset($sort)) {
+        $filter['catid'] = $catid;
+        $data['catid']   = $catid;
     }
     
     /**

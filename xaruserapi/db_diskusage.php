@@ -6,12 +6,13 @@
  * @author Carl P. Corliss
  * @author Micheal Cortez
  * @access public
- * @param  integer  file_id     (Optional) grab file with the specified file id
+ * @param  integer  fileId      (Optional) grab file with the specified file id(s)
  * @param  string   fileName    (Optional) grab file(s) with the specified file name
- * @param  integer  status      (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
- * @param  integer  user_id     (Optional) grab files uploaded by a particular user
+ * @param  integer  fileStatus  (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
+ * @param  integer  userId      (Optional) grab files uploaded by a particular user
  * @param  integer  store_type  (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
- * @param  integer  mime_type   (Optional) grab files with the specified mime type 
+ * @param  integer  fileType    (Optional) grab files with the specified mime type 
+ * @param  string   catid       (Optional) grab file(s) in the specified categories
  *
  * @returns integer             The total amount of diskspace used by the current set of selected files
  */
@@ -70,18 +71,43 @@ function uploads_userapi_db_diskusage( $args )
     } else {
         $where = '';
     }
-    
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
         
-        // table and column definitions
+    // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
     
     $sql = "SELECT SUM(xar_filesize) AS disk_usage
-              FROM $fileEntry_table
-            $where";
-    
+              FROM $fileEntry_table ";
+
+    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
+        // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                      array('modid' => xarModGetIDFromName('uploads'),
+                                            'itemtype' => 1,
+                                            'catid' => $catid));
+        if (empty($categoriesdef)) return;
+
+        // Add LEFT JOIN ... ON ... from categories_linkage
+        $sql .= ' LEFT JOIN ' . $categoriesdef['table'];
+        $sql .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_fileEntry_id';
+        if (!empty($categoriesdef['more'])) {
+            // More LEFT JOIN ... ON ... from categories (when selecting by category)
+            $sql .= $categoriesdef['more'];
+        }
+        if (!empty($categoriesdef['where'])) {
+            if (!empty($where) && strpos($where,'WHERE') !== FALSE) {
+                $where .= ' AND ' . $categoriesdef['where'];
+            } else {
+                $where .= ' WHERE ' . $categoriesdef['where'];
+            }
+        }
+    }
+
+    $sql .= " $where";
+
     $result = $dbconn->Execute($sql);
 
     if (!$result)  {

@@ -34,8 +34,28 @@ function uploads_userapi_db_getall_files( $args )
                    xar_store_type, 
                    xar_mime_type,
                    xar_extrainfo
-              FROM $fileEntry_table";
-    
+              FROM $fileEntry_table ";
+
+    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
+        // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                      array('modid' => xarModGetIDFromName('uploads'),
+                                            'itemtype' => 1,
+                                            'catid' => $catid));
+        if (empty($categoriesdef)) return;
+
+        // Add LEFT JOIN ... ON ... from categories_linkage
+        $sql .= ' LEFT JOIN ' . $categoriesdef['table'];
+        $sql .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_fileEntry_id';
+        if (!empty($categoriesdef['more'])) {
+            // More LEFT JOIN ... ON ... from categories (when selecting by category)
+            $sql .= $categoriesdef['more'];
+        }
+        if (!empty($categoriesdef['where'])) {
+            $sql .= ' WHERE ' . $categoriesdef['where'];
+        }
+    }
+
 // FIXME: we need some indexes on xar_file_entry to make this more efficient
     if (empty($sort)) {
         $sort = '';

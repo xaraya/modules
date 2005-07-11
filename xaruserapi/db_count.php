@@ -15,6 +15,7 @@
  * @param  integer  userId       (Optional) grab files uploaded by a particular user
  * @param  integer  store_type   (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
  * @param  boolean  inverse      (Optional) inverse the selection
+ * @param  string   catid        (Optional) grab file(s) in the specified categories
  *
  * @returns array   All of the metadata stored for the particular file
  */
@@ -87,12 +88,37 @@ function uploads_userapi_db_count( $args )
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
         
-        // table and column definitions
+    // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
     
     $sql = "SELECT COUNT(xar_fileEntry_id) AS total
-              FROM $fileEntry_table
-            $where";
+              FROM $fileEntry_table ";
+
+    if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
+        // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                      array('modid' => xarModGetIDFromName('uploads'),
+                                            'itemtype' => 1,
+                                            'catid' => $catid));
+        if (empty($categoriesdef)) return;
+
+        // Add LEFT JOIN ... ON ... from categories_linkage
+        $sql .= ' LEFT JOIN ' . $categoriesdef['table'];
+        $sql .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_fileEntry_id';
+        if (!empty($categoriesdef['more'])) {
+            // More LEFT JOIN ... ON ... from categories (when selecting by category)
+            $sql .= $categoriesdef['more'];
+        }
+        if (!empty($categoriesdef['where'])) {
+            if (!empty($where) && strpos($where,'WHERE') !== FALSE) {
+                $where .= ' AND ' . $categoriesdef['where'];
+            } else {
+                $where .= ' WHERE ' . $categoriesdef['where'];
+            }
+        }
+    }
+
+    $sql .= " $where";
     
     $result = $dbconn->Execute($sql);
 

@@ -109,6 +109,8 @@ function uploads_userapi_process_filters( $args )
             break;
     }        
     unset($statuses);
+    $data['catid'] = isset($catid) ? $catid : null;
+    $filter['catid'] = isset($catid) ? $catid : null;
     $filterInfo = array('data' => $data, 'filter' => $filter);
     
     
