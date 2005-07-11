@@ -44,11 +44,18 @@
         </form>
         </xar:if>
 
+        <xar:comment>
+            use $selimage['fileId'] if you want to navigate by id instead of name for prev/next
+        </xar:comment>
+        <p>
+        <a href="#xarModURL('images','admin','uploads',array('action' => $action,'getprev' => $selimage['fileName']))#">&lt;&lt;</a>
         <xar:if condition="!empty($width) or !empty($height)">
-            <p><img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" /></p>
+            <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" align="top" />
         <xar:else/>
-            <p><img src="#$selimage['fileDownload']#" border="0" /></p>
+            <img src="#$selimage['fileDownload']#" border="0" align="top" />
         </xar:if>
+        <a href="#xarModURL('images','admin','uploads',array('action' => $action,'getnext' => $selimage['fileName']))#">&gt;&gt;</a>
+        </p>
         <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
         <xar:mlstring>Filetype</xar:mlstring> : #$selimage['fileType']#<br/>
         <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>

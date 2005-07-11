@@ -30,6 +30,13 @@ function images_adminapi_getuploads($args)
         $options  = xarModAPIFunc('uploads','user','process_filters', $filters);
         $filter   = $options['filter'];
 
+        if (!empty($getnext)) {
+            $filter['getnext'] = $getnext;
+        }
+        if (!empty($getprev)) {
+            $filter['getprev'] = $getprev;
+        }
+
         // Pass sort, startnum and numitems to db_get_file where possible (i.e. for id, name and type)
         if (!empty($numitems) && is_numeric($numitems) &&
             (empty($sort) || $sort == 'name' || $sort == 'type')) {
@@ -63,7 +70,7 @@ function images_adminapi_getuploads($args)
     }
 
     // we're done here
-    if (!empty($fileId)) {
+    if (!empty($fileId) || !empty($getnext) || !empty($getprev)) {
         return $imagelist;
     }
 

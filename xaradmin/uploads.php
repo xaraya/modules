@@ -24,6 +24,9 @@ function images_admin_uploads($args)
     if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('sort','enum:name:type:width:height:size:time',$sort,'name',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('action',      'str:1:',     $action,           '',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('getnext',     'str:1:',     $getnext,          NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('getprev',     'str:1:',     $getprev,          NULL, XARVAR_DONT_SET)) return;
 
     $data = array();
     $data['startnum'] = $startnum;
@@ -38,6 +41,26 @@ function images_admin_uploads($args)
     if (!empty($fileId)) {
         $data['images'] = xarModAPIFunc('images','admin','getuploads',
                                         array('fileId'   => $fileId));
+    } elseif (!empty($getnext)) {
+        $data['images'] = xarModAPIFunc('images','admin','getuploads',
+                                        array('getnext'  => $getnext));
+        if (!empty($data['images']) && count($data['images']) == 1) {
+            $image = array_pop($data['images']);
+            xarResponseRedirect(xarModURL('images','admin','uploads',
+                                          array('action' => empty($action) ? 'view' : $action,
+                                                'fileId' => $image['fileId'])));
+            return true;
+        }
+    } elseif (!empty($getprev)) {
+        $data['images'] = xarModAPIFunc('images','admin','getuploads',
+                                        array('getprev'  => $getprev));
+        if (!empty($data['images']) && count($data['images']) == 1) {
+            $image = array_pop($data['images']);
+            xarResponseRedirect(xarModURL('images','admin','uploads',
+                                          array('action' => empty($action) ? 'view' : $action,
+                                                'fileId' => $image['fileId'])));
+            return true;
+        }
     } else {
         $data['images'] = xarModAPIFunc('images','admin','getuploads',
                                         array('startnum' => $startnum,
@@ -61,7 +84,6 @@ function images_admin_uploads($args)
     $data['settings'] = xarModAPIFunc('images','user','getsettings');
 
     // Check if we need to do anything special here
-    if (!xarVarFetch('action','str:1:',$action,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('processlist','str:1:',$processlist,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('resizelist', 'str:1:',$resizelist, '',XARVAR_NOT_REQUIRED)) return;
     if (!empty($processlist)) {
