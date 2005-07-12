@@ -1,17 +1,32 @@
 <?php
+/**
+ * Create a page
+ *
+ * @package Xaraya
+ * @copyright (C) 2005 by Jason Judge
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk/
+ * @author Jason Judge
+ * @subpackage xarpages
+ */
 
 /**
  * Create a page.
+ *
  * It is added to the group hierarchy.
+ *
  * Mandatory columns:
- *  name: group name
- *  desc: group description
- *  insertpoint: ID of group inserting relative to
- *  offset: relationship to insertpoint ('after', 'before', 'firstchild', 'lastchild')
- * @TODO: check the page type is valid
- * @TODO: default most values and raise an error in missing mandatory values
- * @TODO: specifying pid is not supported by xarpages createpage yet! (cfr. DD migrate)
- * @TODO: I would like to keep the DD fields separate from the standard fields (in a 'dd' element)
+ * @param string name group name
+ * @param string desc group description
+ * @param int    insertpoint ID of group inserting relative to
+ * @param string offset relationship to insertpoint ('after', 'before', 'firstchild', 'lastchild')
+ * @param int    itemtype
+ * @return int   pid
+ *
+ * @todo <jason>check the page type is valid
+ * @todo <jason>default most values and raise an error in missing mandatory values
+ * @todo <jason>specifying pid is not supported by xarpages createpage yet! (cfr. DD migrate)
+ * @todo <jason>I would like to keep the DD fields separate from the standard fields (in a 'dd' element)
  */
 
 function xarpages_adminapi_createpage($args)
