@@ -25,46 +25,27 @@ function censor_init()
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $censortable = $xartable['censor'];
-
-    // See if there is an old censor table,
-    // probably from an old XAR install where censor
-    // were in the core
-    $query = "SELECT COUNT(1) FROM $censortable";
-    $dbconn->Execute($query);
-
-    if ($dbconn->ErrorNo() != 0) {
-        // There was not, create table
-        /*****************************************************************
-        * $query = "CREATE TABLE $censortable (
-        *       xar_lid INT(11) NOT NULL auto_increment,
-        *       xar_keyword VARCHAR(100) NOT NULL default '',
-        *       xar_title VARCHAR(100) NOT NULL default '',
-        *       xar_url VARCHAR(200) NOT NULL default '',
-        *       xar_comment VARCHAR(200) NOT NULL default '',
-        *       PRIMARY KEY (xar_lid),
-        *       UNIQUE KEY keyword (xar_keyword))";
-        *****************************************************************/
-        $fields = array(
-        'xar_cid'          => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        'xar_keyword'      => array('type'=>'varchar','size'=>100,'null'=>false,'default'=>''),
-        );
-
-        $query = xarDBCreateTable($censortable,$fields);
-        $result =& $dbconn->Execute($query);
-        if (!$result) return;
-
-        $index = array('name'      => 'i_xar_censor_1',
-                       'fields'    => array('xar_keyword'),
-                       'unique'    => TRUE);
-        $query = xarDBCreateIndex($censortable,$index);
-        $result =& $dbconn->Execute($query);
-        if (!$result) return;
-    }
-
     // Set up module variables
     xarModSetVar('censor', 'itemsperpage', 20);
     xarModSetVar('censor', 'replace', '****');
+
+    $censortable = $xartable['censor'];
+
+    $fields = array(
+    'xar_cid'          => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+    'xar_keyword'      => array('type'=>'varchar','size'=>100,'null'=>false,'default'=>''),
+    );
+
+    $query = xarDBCreateTable($censortable,$fields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_xar_censor_1',
+                   'fields'    => array('xar_keyword'),
+                   'unique'    => TRUE);
+    $query = xarDBCreateIndex($censortable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Set up module hooks
     if (!xarModRegisterHook('item',
@@ -104,7 +85,6 @@ function censor_delete()
                              'censor',
                              'user',
                              'transform')) {
-        xarSessionSetVar('errormsg', _censorOULDNOTUNREGISTER);
         return false;
     }
 
@@ -113,7 +93,7 @@ function censor_delete()
     $xartable = xarDBGetTables();
 
     $censortable = $xartable['censor'];
-    $query = xarDBDropTable($censortable );
+    $query = xarDBDropTable($censortable);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
