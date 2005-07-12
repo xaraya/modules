@@ -27,7 +27,7 @@ function addressbook_init()
     include_once ('modules/addressbook/xarglobal.php');
 
     $dbconn =& xarDBGetConn();
-    $xarTables =& xarDBGetTables();
+    $xarTables = xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 
@@ -295,7 +295,7 @@ function addressbook_upgrade($oldversion) {
         case '1.1':
             // Alter the table to for cross DB compatibility and rename a column
             $dbconn =& xarDBGetConn();
-            $xarTables =& xarDBGetTables();
+            $xarTables = xarDBGetTables();
 
             $abAddressTable = $xarTables['addressbook_address'];
 
@@ -309,7 +309,7 @@ function addressbook_upgrade($oldversion) {
         case '1.2':
             // Fix the
             $dbconn =& xarDBGetConn();
-            $xarTables =& xarDBGetTables();
+            $xarTables = xarDBGetTables();
 
             $abAddressTable = $xarTables['addressbook_address'];
 
@@ -342,7 +342,7 @@ function addressbook_delete() {
     include_once ('modules/addressbook/xarglobal.php');
 
     $dbconn =& xarDBGetConn();
-    $xarTables =& xarDBGetTables();
+    $xarTables = xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 

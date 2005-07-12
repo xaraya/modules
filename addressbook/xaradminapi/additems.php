@@ -52,7 +52,7 @@
     } else {
 
         $dbconn =& xarDBGetConn();
-        $xarTables =& xarDBGetTables();
+        $xarTables = xarDBGetTables();
         $tablename = 'addressbook_'.$tablename;
         $table = $xarTables[$tablename];
 

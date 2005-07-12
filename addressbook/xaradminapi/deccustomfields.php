@@ -47,7 +47,7 @@ function addressbook_adminapi_decCustomfields($args) {
     } else {
 
         $dbconn =& xarDBGetConn();
-        $xarTables =& xarDBGetTables();
+        $xarTables = xarDBGetTables();
         $cus_table = $xarTables['addressbook_customfields'];
 
         // Get info on current position of field

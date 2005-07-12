@@ -87,7 +87,7 @@ function addressbook_adminapi_updatecustomfields($args) {
                 }
             }
         }
-        $xarTables =& xarDBGetTables();
+        $xarTables = xarDBGetTables();
         $cus_table = $xarTables['addressbook_customfields'];
         $adr_table = $xarTables['addressbook_address'];
 
