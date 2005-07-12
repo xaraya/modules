@@ -25,8 +25,8 @@ function courses_admin_menu()
         }
     }
 
-    xarTplAddStyleLink('courses', 'xarform',  $fileExt = 'css');
-    xarTplAddStyleLink('courses', 'courses', $fileExt = 'css');
+    xarTplAddStyleLink('base',    'navtabs',  $fileExt = 'css');
+    xarTplAddStyleLink('courses', 'xarform', $fileExt = 'css');
 
     return xarTplModule('courses', 'admin', 'menu', $data);
 }
