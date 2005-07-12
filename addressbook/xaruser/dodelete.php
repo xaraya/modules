@@ -57,9 +57,9 @@ function addressbook_user_dodelete() {
     // This function generated no output
     xarResponseRedirect(xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$output['menuValues']));
 
-    if (xarExceptionMajor() != XAR_NO_EXCEPTION) {
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         // Got an exception
-        if ((xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) && !_AB_DEBUG) {
+        if ((xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) && !_AB_DEBUG) {
             return; // throw back
         } else {
                         // We are going to handle this exception REGARDLESS of the type
