@@ -6,7 +6,7 @@
 	<p><label for="font"><xar:mlstring>Available Fonts</xar:mlstring></label>: 
 	<select name="font" id="font" size="1">
 	<xar:loop name="$fontselect">
-		<option value="#$fontname#">#$fontname#</option>
+		<option value="#$loop:item['fontname']#">#$loop:item['fontname']#</option>
 	</xar:loop>
 	</select></p>
 	<p><label for="text"><xar:mlstring>Text To Transform</xar:mlstring></label>: <input type="text" name="text" id="text" size="20" /></p>
