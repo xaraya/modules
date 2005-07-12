@@ -7,9 +7,6 @@
 
 <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
 
-
-<!-- the specific template for the current admin function comes here -->
-
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <th>#$namelabel#</th>
@@ -21,15 +18,25 @@
     </tr>
     <xar:foreach in="$items" value="$item">
     <tr>
-        <td>#$item['name']#</td>
+        <td>
+           <xar:if condition="empty($item['displayurl'])">
+               #$item['name']#
+           <xar:else />
+               <a href="#$item['displayurl']#">#$item['name']#</a>
+           </xar:if>
+        </td>
         <td>#$item['startdate']#</td>
         <td>#$item['enddate']#</td>
         <td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
         <td>
+           <xar:set name="$minpart">#$item['minparticipants']#</xar:set>
+           <xar:set name="$part">#$item['participants']#</xar:set>
            <xar:if condition="empty($item['participantsurl'])">
                #$item['participants']#
-           <xar:else />
-               <a href="#$item['participantsurl']#">#$item['participants']#</a>
+           <xar:elseif condition="$part gt $minpart" />
+                <a href="#$item['participantsurl']#" style="color:#006600; ">#$item['participants']#</a>
+           <xar:elseif condition="$part lt $minpart" />
+                <a href="#$item['participantsurl']#" style="color:#FF0000; ">#$item['participants']#</a>
            </xar:if>
         </td>   
         <td>

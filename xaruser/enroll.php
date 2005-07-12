@@ -15,16 +15,19 @@
 
 /**
  * Enroll a user into a course and update database
+ * @Author Michel V.
  *
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['planningid'] the planned course ID that the user will enroll to
+ * @Access PUBLIC
+ *
  */
 function courses_user_enroll($args)
 {
-
- if (!xarSecurityCheck('ReadPlanning', 0)) {
-        return $data['error'] = xarML('You must be a registered user to enroll in courses.');
+ // User must be logged in and have privilege
+ if (!xarSecurityCheck('ReadPlanning', 0) ||!xarUserIsLoggedIn()) {
+        return $data['error'] = xarML('You must be a registered user to enroll in this course.');
     }
 
  extract($args);
@@ -51,9 +54,6 @@ function courses_user_enroll($args)
                           'check_enrolled',
                           array('uid' => $uid,
                                 'planningid' => $planningid));
-
-    //if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
     if (count($enrolled)!=0) {
     $msg = xarML('You are already enrolled in this course');
         xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_ENROLLED',
@@ -61,69 +61,40 @@ function courses_user_enroll($args)
         return;
     }
 
-        $item = xarModAPIFunc('courses',
-        'user',
-        'getplanned',
-        array('planningid' => $planningid));
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    
-/* //Check this mailing function later on.
-     
-     //Rewrite the name to get
-     $name = $item['name'];
-//       echo "<br /><pre>items => "; print_r($item); echo "</pre>";
-     $message = xarVarPrepForDisplay(xarML('A new user has enrolled in '. $name ));
-     $uid = xarUserGetVar('uid');
-     $uname = xarUserGetVar('uname');
-     $info = xarModGetVar('mail', 'adminmail', 1);
-     $fname = "Webmaster";
-     $femail =  xarUserGetVar('email');
-     $subject = "New Enrollment";
-
-    // send email to admin notifying them that someone has enrolled
-    $sendmessage =  "Courses:\n";
-    $sendmessage .= "----------------------------------------------------------------------------------\n";
-    $sendmessage .= "Name: $uname\n";
-    $sendmessage .= "Userid: $uid\n";
-    $sendmessage .= "Email: $femail\n";
-    $sendmessage .= "----------------------------------------------------------------------------------\n";
-    $sendmessage .= "$message\n";
-    $sendmessage .= "\n";
-    $sendmessage .= "----------------------------------------------------------------------------------\n";
-    $sendmessage .= "Date and time: ".date("Y-m-d")." ".date("H:i")."\n";
-    $sendmessage .= "\n";
-    if (!xarModAPIFunc('mail',
-                       'admin',
-                       'sendmail',
-                       array('info'     => $info,
-                             'name'     => $uname,
-                             'subject'  => $subject,
-                             'message'  => $sendmessage,
-                             'from'     => $femail,
-                             'fromname' => $fname))) return;
-
-    
-    xarSessionSetVar('courses_statusmsg', xarML('Message Sent',
-                    'courses'));
-*/
+    // Get planned course
+    $planitem = xarModAPIFunc('courses',
+                          'user',
+                          'getplanned',
+                          array('planningid' => $planningid));
+    if (!isset($planitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // If user is not enrolled already go ahead and create the enrollment
     // Get status of student
     $studstatus = 1;
+    $regdate = date("Y-m-d H:i:s");
+
     $enrollid = xarModAPIFunc('courses',
-                          'user',
-                          'create_enroll',
-                          array('uid'        => $uid,
-                                'planningid' => $planningid,
-                                'studstatus' => $studstatus));
-    // The return value of the function is checked here, and if the function
-    // suceeded then an appropriate message is posted.  Note that if the
-    // function did not succeed then the API function should have already
-    // posted a failure message so no action is required
+                              'user',
+                              'create_enroll',
+                              array('uid'        => $uid,
+                                    'planningid' => $planningid,
+                                    'studstatus' => $studstatus,
+                                    'regdate'    => $regdate));
     if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+
+    // Call sendconfirm messages
+    $confirmcoord = xarModFunc('courses',
+                              'user',
+                              'sendconfirmcoordinator',
+                              array('userid'     => xarUserGetVar('uid'),
+                                    'planningid' => $planningid,
+                                    'studstatus' => $studstatus,
+                                    'regdate'    => $regdate,
+                                    'enrollid'   => $enrollid));
+    if(!$confirmcoord) return false;
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
-    xarResponseRedirect(xarModURL('courses', 'user', 'displayplanned', array('planningid' => $planningid, 'courseid' => $item['courseid'])));
+    xarResponseRedirect(xarModURL('courses', 'user', 'displayplanned', array('planningid' => $planningid)));
     // Return
     return true;
 

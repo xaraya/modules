@@ -29,6 +29,7 @@ function courses_admin_plancourse($args)
     if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('year', 'int:1:', $year, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits', 'int::', $credits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('creditsmin', 'int::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('creditsmax', 'int::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
@@ -40,33 +41,31 @@ function courses_admin_plancourse($args)
     if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('costs', 'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('material', 'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startdate', 'str:1:', $startdate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enddate', 'str:1:', $enddate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning', 'str:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate', 'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning', 'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('minparticipants', 'str::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('maxparticipants', 'str::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate', 'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
 
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AddCourses')) return;
+    // Security check
+    if (!xarSecurityCheck('AddPlanning')) return;
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
 
-        //Get info on the course already in main table
-        
+    //Get info on the course already in main table    
     $coursedata = xarModAPIFunc('courses',
                           'user',
-                          'getcourse',
+                          'get',
                           array('courseid' => $courseid));
     // Check for exceptions
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-        //Put in $data
+    // Place in $data
     $data['coursedata'] = $coursedata;
 
     // Specify some labels for display
@@ -209,22 +208,22 @@ function courses_admin_plancourse($args)
     } else {
         $data['hideplanning'] = $hideplanning;
     }
-    if (empty($maxpart)) {
-        $data['maxpart'] = '';
+    if (empty($maxparticipants)) {
+        $data['maxparticipants'] = '';
     } else {
-        $data['maxpart'] = $maxpart;
+        $data['maxparticipants'] = $maxparticipants;
     }
-    if (empty($minpart)) {
-        $data['minpart'] = '';
+    if (empty($minparticipants)) {
+        $data['minparticipants'] = '';
     } else {
-        $data['minpart'] = $minpart;
+        $data['minparticipants'] = $minparticipants;
     }
+    
     if (empty($closedate)) {
         $data['closedate'] = '';
     } else {
         $data['closedate'] = $closedate;
     }
-    
     
     // Return the template variables defined in this function
     return $data;

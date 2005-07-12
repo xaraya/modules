@@ -107,10 +107,6 @@
                |
                    <a href="#$item['editurl']#">#$item['edittitle']#</a>
                </xar:if>
-               <xar:if condition="!empty($item['statusurl'])">
-               |
-                   <a href="#$item['statusurl']#">#$item['statustitle']#</a>
-               </xar:if>
                <xar:if condition="!empty($item['participantsurl'])">
                |
                    <a href="#$item['participantsurl']#">#$item['participantstitle']#</a>

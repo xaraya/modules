@@ -25,33 +25,21 @@
 function courses_userapi_getplandates($args)
 {
     extract($args);
-    if (!isset($courseid) || !is_numeric($courseid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'getplandates', 'courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
-    
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-    // Argument check
-    
-    $invalid = array();
-    if (!isset($startnum) || !is_numeric($startnum)) {
-        $invalid[] = 'startnum';
-    }
-    if (!isset($numitems) || !is_numeric($numitems)) {
-        $invalid[] = 'numitems';
-    }
+    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
     
     $items = array();
     // Security check
     if (!xarSecurityCheck('ViewPlanning')) return;
+    
+    if (xarSecurityCheck('EditPlanning', 0)) {
+    $where = "0, 1";
+    } else {
+    $where = "0";
+    }
+    
+    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
@@ -78,9 +66,10 @@ function courses_userapi_getplandates($args)
                    xar_material,
                    xar_info,
                    xar_program,
-                   xar_hideplanning
+                   xar_hideplanning,
+                   xar_last_modified
             FROM $planningtable
-            WHERE xar_courseid = $courseid
+            WHERE xar_courseid = $courseid AND xar_hideplanning in ($where)
             ORDER BY xar_startdate";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
@@ -90,7 +79,7 @@ function courses_userapi_getplandates($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning) = $result->fields;
+          $location, $material, $info, $program, $hideplanning, $last_modified) = $result->fields;
         if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
             $items[] = array(
             'planningid' => $planningid,
@@ -112,7 +101,8 @@ function courses_userapi_getplandates($args)
             'material'   => $material,
             'info'       => $info,
             'program'    => $program,
-            'hideplanning' => $hideplanning);
+            'hideplanning' => $hideplanning,
+            'last_modified' => $last_modified);
         }
     }
     // All successful database queries produce a result set, and that result

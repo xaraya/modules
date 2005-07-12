@@ -36,7 +36,8 @@ function courses_init()
         'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_freq' =>array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_contact' => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
-        'xar_hidecourse' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0')
+        'xar_hidecourse' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
+        'xar_last_modified'=>array('type'=>'datetime','null'=>FALSE)
         );
 
      $query = xarDBCreateTable($coursestable, $fields);
@@ -70,7 +71,8 @@ function courses_init()
         'xar_hideplanning' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
         'xar_minparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_maxparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_closedate'=>array('type'=>'date')
+        'xar_closedate'=>array('type'=>'date'),
+        'xar_last_modified'=>array('type'=>'datetime','null'=>FALSE,)
         );
 
      $query = xarDBCreateTable($courses_planning, $fields);
@@ -87,7 +89,8 @@ function courses_init()
     $fields = array('xar_sid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'xar_userid' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_planningid' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_status' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0')
+        'xar_status' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_regdate'=>array('type'=>'datetime','null'=>FALSE)
         );
 
     $query = xarDBCreateTable($courses_students, $fields);
@@ -184,6 +187,7 @@ function courses_init()
     // Set up an initial value for a module variable.
     xarModSetVar('courses', 'HideEmptyFields', 0);
     xarModSetVar('courses', 'itemsperpage', 10);
+    xarModSetVar('courses', 'AlwaysNotify', 'webmaster@yoursite.com');
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('courses', 'SupportShortURLs', 0);
@@ -206,6 +210,11 @@ function courses_init()
             'courses', 'user', 'usermenu')) {
         return false;
     }
+    // User interface for Search
+    if (!xarModRegisterHook('item', 'search', 'GUI',
+                                    'courses', 'user', 'search')) {
+        return false;
+    }
 
      xarModAPIFunc(
         'modules'
@@ -223,6 +232,7 @@ function courses_init()
         ,array(
             'hookModName'       => 'search'
             ,'callerModName'    => 'courses'));
+            
     // Hook for module comments
     xarModAPIFunc(
         'modules'
@@ -353,12 +363,12 @@ function courses_init()
     xarRegisterMask('AdminPlanning', 'All', 'courses', 'Planning', 'All:All:All', 'ACCESS_ADMIN');
 
     // Initialisation successful
-     xarRegisterPrivilege('EditCourses','All','courses','item','All','ACCESS_EDIT',xarML('Enroll in Courses'));
+     xarRegisterPrivilege('PlanningForTeacher','All','courses','Planning','All','ACCESS_EDIT',xarML('Teacher access'));
     return true;
 }
 
 /**
- * upgrade the example module from an old version
+ * upgrade the courses module from an old version
  * This function can be called multiple times
  */
 function courses_upgrade($oldversion)
@@ -461,6 +471,49 @@ function courses_upgrade($oldversion)
        
             return courses_upgrade('0.0.6');
        case '0.0.6':
+            if (!xarModRegisterHook('item', 'search', 'GUI',
+                                    'courses', 'user', 'search')) {
+                return false;
+            }
+            return courses_upgrade('0.0.7');
+       case '0.0.7':
+            // Add last modified column to coursestable 
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $coursestable = $xartable['courses'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($coursestable, 'xar_last_modified datetime');
+            if (!$result) return;
+            
+            // Add last modified column to planningtable 
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $planningtable = $xartable['courses_planning'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($planningtable, 'xar_last_modified datetime');
+            if (!$result) return;
+            
+            // Add last modified column to coursestable 
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $studentstable = $xartable['courses_students'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($studentstable, 'xar_regdate datetime');
+            if (!$result) return;
+            
+            // Privilege for teachers
+            xarRegisterPrivilege('PlanningForTeacher','All','courses','Planning','All','ACCESS_EDIT',xarML('Teacher access'));
+            
+            return courses_upgrade('0.0.8');
+       case '0.0.8':
+            // Set the always receive e-mail
+            xarModSetVar('courses', 'AlwaysNotify', 'webmaster@yoursite.com');
        break;
     }
     // Update successful
@@ -535,7 +588,6 @@ function courses_delete()
     }
        // Hook for module roles
     xarModAPIFunc('modules','admin','disablehooks',array('hookModName' => 'roles','callerModName' => 'courses'));
-
        // Hook for module search
     xarModAPIFunc('modules','admin','disablehooks',array('hookModName' => 'search','callerModName' => 'courses'));
         // Hook for module comments

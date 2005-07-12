@@ -31,7 +31,6 @@
                 </legend>
                 <p class="param">
                     <label for="name" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Enter the name for this course.')#">
                         #$namelabel#
                         </span>
@@ -49,7 +48,6 @@
                 </p>
                 <p class="param">
                     <label for="number" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The code/number of this course.')#">
                         #$numberlabel#
                         </span>
@@ -63,15 +61,14 @@
                   </xar:if>
                 </p>
                 <p class="param">
-                    <label for="number">
-                        <span class="help" title="#xarML('Enter the type of course.')#">
+                  <label for="number">
+                     <span class="help" title="#xarML('Enter the type of course.')#">
                         #$coursetypelabel#
-                        </span>
-                    </label>
-
-                    <xar:data-input name="coursetype" type="2" value="$coursetype" />
+                     </span>
+                  </label>
+                     <xar:data-input name="coursetype" type="2" value="$coursetype" />
                   <xar:if condition="!empty($invalid['coursetype'])">
-                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
+                       <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
                   </xar:if>
                 </p>
                 <p class="param">
@@ -137,7 +134,6 @@
                 </p>
                 <p class="param">
                     <label for="hidecourse">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Hide this course from being viewed by site users.')#">
                         #$hidecourselabel#
                         </span>

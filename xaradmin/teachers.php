@@ -18,9 +18,8 @@
  */
 function courses_admin_teachers()
 {
-
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
@@ -52,7 +51,7 @@ function courses_admin_teachers()
         $item = $items[$i];
 //What is needed here?
 
-        if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:All")) {
+        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "All:All:All")) {
             $items[$i]['changeurl'] = xarModURL('courses',
                 'admin',
                 'changeteacher',
@@ -67,7 +66,7 @@ function courses_admin_teachers()
  //                                    array('status' => $item['status']));
         $items[$i]['selected']='';
         
-        if (xarSecurityCheck('AdminPlanning', 0, 'Item', "$planningid:All:All")) {
+        if (xarSecurityCheck('AdminPlanning', 0, 'Planning', "$planningid:All:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deleteteacher',

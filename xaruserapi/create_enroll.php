@@ -26,9 +26,10 @@
 function courses_userapi_create_enroll($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
     if (!xarVarFetch('uid', 'int:1:', $uid)) return;
-    if (!xarVarFetch('studstatus', 'int:1:', $studstatus, '1', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('studstatus', 'int:1:', $studstatus, '1')) return;
+    if (!xarVarFetch('regdate', 'str:1:', $regdate)) return;
 
     $invalid = array();
      if (!isset($uid) || !is_numeric($uid)) {
@@ -64,9 +65,10 @@ function courses_userapi_create_enroll($args)
               xar_sid,
               xar_userid,
               xar_planningid,
-              xar_status)
-            VALUES (?,?,?,?)";
-    $bindvars = array((int)$nextId, (int)$uid, (int)$planningid, $studstatus);
+              xar_status,
+              xar_regdate)
+            VALUES (?,?,?,?,?)";
+    $bindvars = array((int)$nextId, (int)$uid, (int)$planningid, $studstatus, $regdate);
     $result = &$dbconn->Execute($query, $bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted.

@@ -18,7 +18,13 @@
     </tr>
     <xar:foreach in="$items" value="$item">
     <tr>
-        <td>#$item['name']#</td>
+        <td>
+           <xar:if condition="empty($item['displayurl'])">
+              #$item['name']#
+           <xar:else />
+              <a href="#$item['displayurl']#">#$item['name']#</a>
+           </xar:if>
+        </td>
         <td>#$item['number']#</td>
         <td>
            <xar:if condition="empty($item['planurl'])">

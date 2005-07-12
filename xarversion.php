@@ -14,7 +14,7 @@
  */
 $modversion['name']           = 'Courses';
 $modversion['id']             = '179';
-$modversion['version']        = '0.0.5';
+$modversion['version']        = '0.0.8';
 $modversion['displayname']    = xarML('Courses');
 $modversion['description']    = 'Course Offerings and Registration';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -23,11 +23,11 @@ $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 1;
 $modversion['author']         = 'Scot Garder, Michel Vorenhout';
-$modversion['contact']        = 'xarayageek@xarayageek.com, xaraya@sense.nl';
+$modversion['contact']        = 'xaraya@sense.nl';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['securityschema'] = array('courses::' => 'Module Name::');
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency']     = array(147, 182);
+$modversion['dependency']     = array(147, 182, 771);
 ?>

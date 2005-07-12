@@ -32,6 +32,12 @@ function courses_userapi_get($args)
             new SystemException($msg));
         return;
     }
+    if (xarSecurityCheck('AdminCourses', 0)) {
+    $where = "0, 1";
+    } else {
+    $where = "0";
+    }
+    
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -44,9 +50,10 @@ function courses_userapi_get($args)
                    xar_language,
                    xar_freq,
                    xar_contact,
-                   xar_hidecourse
+                   xar_hidecourse,
+                   xar_last_modified
             FROM $coursestable
-            WHERE xar_courseid = ?";
+            WHERE xar_courseid = ? AND xar_hidecourse in ($where)";
     $result = &$dbconn->Execute($query, array((int)$courseid));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
@@ -58,16 +65,10 @@ function courses_userapi_get($args)
         return;
     }
     // Extract fields
-    list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse) = $result->fields;
+    list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse, $last_modified) = $result->fields;
     $result->Close();
 
     // Security checks 
-    // Check that person has admin right to see hidden course
-    if ($hidecourse == 1){
-        if(!xarSecurityCheck('AdminCourses')) {
-        return; // TODO: include the message here as an errormessage
-        }
-    }
     // For this function, the user must *at least* have READ access to this item
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$name:All:$courseid")) {
         return;
@@ -81,7 +82,8 @@ function courses_userapi_get($args)
         'language' => $language,
         'freq' => $freq,
         'contact' => $contact,
-        'hidecourse' => $hidecourse);
+        'hidecourse' => $hidecourse,
+        'last_modified' => $last_modified);
     // Return the item array
     return $item;
 }

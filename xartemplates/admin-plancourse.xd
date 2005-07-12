@@ -36,7 +36,6 @@
                 </legend>
                 <p class="param">
                     <label for="name" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The name of this course.')#">
                         #$namelabel#
                         </span>
@@ -45,7 +44,6 @@
                 </p>
                 <p class="param">
                     <label for="number" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The code/number of this course.')#">
                         #$numberlabel#
                         </span>
@@ -54,7 +52,6 @@
                 </p>
                 <p class="param">
                     <label for="freq" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The Frequency of this course.')#">
                         #$freqlabel#
                         </span>
@@ -63,7 +60,6 @@
                 </p>
                 <p class="param">
                     <label for="year" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Choose the course year or period for this occurence.')#">
                         #$yearlabel#
                         </span>
@@ -76,16 +72,14 @@
                 </p>
                 <p class="param">
                     <label for="startdate" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The date this course will start.')#">
                         #$startdatelabel#
                         </span>
                     </label>
-                    <xar:data-input name="startdate" type="8" value="$startdate" />
+                    <xar:data-input name="startdate" type="8" validation="date" value="$startdate" />
                 </p>
                 <p class="param">
                     <label for="enddate" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The date this course will end.')#">
                         #$enddatelabel#
                         </span>
@@ -94,7 +88,6 @@
                 </p>
                 <p class="param">
                     <label for="closedate" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The date registration for this course will end.')#">
                         #$closedatelabel#
                         </span>
@@ -109,7 +102,6 @@
                 </legend>
                 <p class="param">
                     <label for="credits" class="required">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Enter the number of credits for this course.')#">
                         #$creditslabel#
                         </span>
@@ -121,7 +113,6 @@
                 </p>
                 <p class="param">
                     <label for="creditsmin">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Enter the minimum amount of credits for this course.')#">
                         #$creditsminlabel#
                         </span>
@@ -133,7 +124,6 @@
                 </p>
                 <p class="param">
                     <label for="creditsmax">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Enter the maximum amount of credits for this course.')#">
                         #$creditsmaxlabel#
                         </span>
@@ -150,7 +140,6 @@
                 </legend>
                 <p class="param">
                     <label for="prerequisites">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Enter the prerequisites (Like another course to fulfill before a student can enroll into this one) for this course.')#">
                         #$prereqlabel#
                         </span>
@@ -164,7 +153,6 @@
                 </p>
                 <p class="param">
                     <label for="aim">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Enter the aim of this course.')#">
                         #$aimlabel#
                         </span>
@@ -178,7 +166,6 @@
                 </p>
                 <p class="param">
                     <label for="longdesc">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Enter a complete description for this course, supplementing the short description.')#">
                         #$longdesclabel#
                         </span>
@@ -192,7 +179,6 @@
                 </p>
                 <p class="param">
                     <label for="program">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The programme of this course.')#">
                         #$programlabel#
                         </span>
@@ -200,13 +186,12 @@
                     <span class="fullright">
                         <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40"></textarea>
                     </span>
-                    <xar:if condition="!empty($invalid['method'])">
+                    <xar:if condition="!empty($invalid['program'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid programme description</xar:mlstring></span>
                     </xar:if>
                 </p>
                 <p class="param">
                     <label for="method">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Describe the methods used in this course.')#">
                         #$methodlabel#
                         </span>
@@ -220,7 +205,6 @@
                 </p>
                 <p class="param">
                     <label for="lecturers">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The lecturers for this course.')#">
                         #$lecturerslabel#
                         </span>
@@ -239,7 +223,6 @@
                 </legend>
                 <p class="param">
                     <label for="costs">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The costs to enroll into this course.')#">
                         #$costslabel#
                         </span>
@@ -253,35 +236,32 @@
                 </p>
                 <p class="param">
                     <label for="minpart">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The minimum amount of students that should enroll in this course.')#">
                         #$minpartlabel#
                         </span>
                     </label>
                     <span class="fullright">
-                      <xar:data-input name="minpart" type="15" value="$minpart" />
+                      <xar:data-input name="minparticipants" type="15" value="$minparticipants" />
                     </span>
-                    <xar:if condition="!empty($invalid['minpart'])">
-                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid minpart</xar:mlstring></span>
+                    <xar:if condition="!empty($invalid['minparticipants'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of minimum participants</xar:mlstring></span>
                     </xar:if>
                 </p>
                 <p class="param">
                     <label for="maxpart">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The maximum amount of students that can enroll in this course.')#">
                         #$maxpartlabel#
                         </span>
                     </label>
                     <span class="fullright">
-                      <xar:data-input name="maxpart" type="15" value="$maxpart" />
+                      <xar:data-input name="maxparticipants" type="15" value="$maxparticipants" />
                     </span>
-                    <xar:if condition="!empty($invalid['maxpart'])">
-                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid maxpart</xar:mlstring></span>
+                    <xar:if condition="!empty($invalid['maxparticipants'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of maximum participants</xar:mlstring></span>
                     </xar:if>
                 </p>
                 <p class="param">
                     <label for="material">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The material used in this course.')#">
                         #$materiallabel#
                         </span>
@@ -289,13 +269,12 @@
                     <span class="fullright">
                         <textarea class="fullright" name="material" id="material" wrap="virtual" rows="10" cols="40"></textarea>
                     </span>
-                    <xar:if condition="!empty($invalid['costs'])">
+                    <xar:if condition="!empty($invalid['material'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
                     </xar:if>
                 </p>
                 <p class="param">
                     <label for="location">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The location of this course.')#">
                         #$locationlabel#
                         </span>
@@ -303,13 +282,12 @@
                     <span class="fullright">
                         <textarea class="fullright" name="location" id="location" wrap="virtual" rows="10" cols="40"></textarea>
                     </span>
-                    <xar:if condition="!empty($invalid['costs'])">
+                    <xar:if condition="!empty($invalid['location'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid location</xar:mlstring></span>
                     </xar:if>
                 </p>
                 <p class="param">
                     <label for="coordinators">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The coordinators for this course.')#">
                         #$coordinatorslabel#
                         </span>
@@ -323,7 +301,6 @@
                 </p>
                 <p class="param">
                     <label for="committee">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('The organising committee for this course.')#">
                         #$committeelabel#
                         </span>
@@ -342,7 +319,6 @@
                 </legend>
                 <p class="param">
                     <label for="info">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Other info on this course.')#">
                         #$infolabel#
                         </span>
@@ -356,7 +332,6 @@
                 </p>
                 <p class="param">
                     <label for="hideplanning">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                         <span class="help" title="#xarML('Hide this planning from being viewed by site users.')#">
                         #$hideplanninglabel#
                         </span>
@@ -364,9 +339,6 @@
                     <span class="fullright">
                       <xar:data-input name="hideplanning" type="14" value="$hideplanning" />
                     </span>
-                    <xar:if condition="!empty($invalid['hideplanning'])">
-                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid hide planning</xar:mlstring></span>
-                    </xar:if>
                 </p>
            </fieldset>
       </fieldset>

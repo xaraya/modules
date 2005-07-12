@@ -17,59 +17,28 @@
  *
  * @author the Courses module development team
  * @param  $args ['courseid'] ID of the course
- * @param  $args ['number'] number of the course
+ * @param  $args ['number'] number of the course etc
  * @returns int
  * @return planning ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_createplanning($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other
-    // places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // Get arguments from argument array
     extract($args);
-    // Argument check - make sure that all required arguments are present
-    // and in the right format, if not then set an appropriate error
-    // message and return
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
-    /*
-    $invalid = array();
-    if (!isset($name) || !is_string($name)) {
-        $invalid[] = 'name';
-    }
-    if (!isset($number) || !is_string($number)) {
-        $invalid[] = 'number';
-    }
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'adminapi', 'createplanning', 'Courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    } 
-    */
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AddCourses', 1, 'Item', "All:All:All")) {
+    // Argument check TODO
+    
+    // Security check
+    if (!xarSecurityCheck('AddPlanning', 1, 'Planning', "All:All:All")) {
         return;
     }
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn()
-    // we currently just want the first item, which is the official
-    // database handle.  For xarDBGetTables() we want to keep the entire
-    // tables array together for easy reference later on
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
     // Get next ID in table
     $nextId = $dbconn->GenId($planningtable);
-    // Add item - the formatting here is not mandatory, but it does make
-    // the SQL statement relatively easy to read.  Also, separating out
-    // the sql statement from the Execute() command allows for simpler
-    // debug operation if it is ever needed
+    // Add item
     $query = "INSERT INTO $planningtable (
                            xar_planningid,
                            xar_courseid,
@@ -91,25 +60,23 @@ function courses_adminapi_createplanning($args)
                            xar_material,
                            xar_info,
                            xar_program,
-                           xar_hideplanning)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                           xar_minparticipants,
+                           xar_maxparticipants,
+                           xar_closedate,
+                           xar_hideplanning,
+                           xar_last_modified)
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             
     $bindvars = array((int)$nextId, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
-     $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $hideplanning);
+     $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Get the ID of the item that we inserted.  It is possible, depending
-    // on your database, that this is different from $nextId as obtained
-    // above, so it is better to be safe than sorry in this situation
+    // Get the ID of the item that we inserted.
     $planningid = $dbconn->PO_Insert_ID($planningtable, 'xar_planningid');
-    // Let any hooks know that we have created a new item.  As this is a
-    // create hook we're passing 'courseid' as the extra info, which is the
-    // argument that all of the other functions use to reference this
-    // item
-    // TODO: evaluate
-    // xarModCallHooks('item', 'create', $courseid, 'courseid');
+    // Let any hooks know that we have created a new item.
+    // xarModCallHooks('item', 'create', $planningid, 'planningid');
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $planningid;

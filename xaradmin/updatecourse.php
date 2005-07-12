@@ -14,7 +14,7 @@
  */
 /**
  * This is a standard function that is called with the results of the
- * form supplied by xarModFunc('example','admin','modifycourse') to update a current item
+ * form supplied by xarModFunc('courses','admin','modifycourse') to update a current item
  * 
  * @param  $ 'courseid' the id of the course to be updated
  * @param  $ 'name' the name of the course to be updated
@@ -25,18 +25,18 @@ function courses_admin_updatecourse($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('courseid', 'int:1:', $courseid, $courseid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
     if (!xarVarFetch('objectid', 'int:1:', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number', 'str:1:', $number, $number,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level', 'str:1:', $level, $level, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, $shortdesc, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('language', 'str:1:', $language, $language, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('freq', 'str:1:', $freq, $freq, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contact', 'str:1:', $contact, $contact, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, $hidecourse, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('name', 'str:1:', $name)) return;
+    if (!xarVarFetch('number', 'str:1:', $number)) return;
+    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('last_modified', 'str:1:', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
     if (!empty($objectid)) {
@@ -45,7 +45,7 @@ function courses_admin_updatecourse($args)
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-
+    // We don't make an invalid here... so why need it?
     $invalid = array();
     
     if (empty($name)) {
@@ -98,12 +98,11 @@ function courses_admin_updatecourse($args)
     } else {
         $data['hidecourse'] = $hidecourse;
     }
-
     // check if we have any errors
     if (count($invalid) > 0) {
-        // call the admin_modifycourse function and return the template vars
-        // (you need to copy admin-new.xd to admin-create.xd here)
-        return xarModFunc('courses', 'admin', 'modifycourse',
+       // call the admin_modifycourse function and return the template vars
+       // (you need to copy admin-new.xd to admin-create.xd here)
+       return xarModFunc('courses', 'admin', 'modifycourse',
                           array('courseid' => $courseid,
                                 'name' => $name,
                                 'number' => $number,
@@ -114,9 +113,10 @@ function courses_admin_updatecourse($args)
                                 'freq' => $freq,
                                 'contact' => $contact,
                                 'hidecourse' => $hidecourse,
+                                'last_modified' => $last_modified,
                                 'invalid' => $invalid));
     }
-
+    $last_modified = date("Y-m-d H:i:s");
     // The API function is called.
     if (!xarModAPIFunc('courses',
                        'admin',
@@ -130,7 +130,8 @@ function courses_admin_updatecourse($args)
                              'language' => $language,
                              'freq' => $freq,
                              'contact' => $contact,
-                             'hidecourse' => $hidecourse))) {
+                             'hidecourse' => $hidecourse,
+                             'last_modified' => $last_modified))) {
         return; // throw back
     } 
     xarSessionSetVar('statusmsg', xarML('Course Was Successfully Updated!'));

@@ -13,7 +13,7 @@
  * @author Courses module development team 
  */
 /**
- * view a list of items
+ * view a list of courses
  * This is a standard function to provide an overview of all of the items
  * available from the module.
  */
@@ -49,8 +49,8 @@ function courses_user_view()
     $data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description'));
     $data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
     $data['pager'] = '';
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
+
+    // Security check
     if (!xarSecurityCheck('ViewCourses')) return;
     // Lets get the UID of the current user to check for overridden defaults
     $uid = xarUserGetVar('uid');
@@ -59,16 +59,16 @@ function courses_user_view()
         'user',
         'getall',
         array('startnum' => $startnum,
-            'numitems' => xarModGetUserVar('courses',
-                'itemsperpage',
-                $uid)));
+              'numitems' => xarModGetUserVar('courses',
+              'itemsperpage',
+              $uid)));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
     foreach ($items as $item) {
-
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$item[name]:All:$item[courseid]")) {
+         $name=$item['name'];
+         $courseid = $item['courseid'];
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$name:All:$courseid")) {
             $item['link'] = xarModURL('courses',
                 'user',
                 'display',
@@ -84,18 +84,14 @@ function courses_user_view()
         // Add this item to the list of items to be displayed
         $data['items'][] = $item;
     }
-    // Get the UID so we can see if there are any overridden defaults.
-    $uid = xarUserGetVar('uid');
-    // Call the xarTPL helper function to produce a pager in case of there
-    // being many items to display.
 
+    // Pager
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('courses', 'user', 'countitems'),
         xarModURL('courses', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('courses', 'itemsperpage', $uid));
 
-    // Same as above.  We are changing the name of the page to raise
-    // better search engine compatibility.
+    // Changing the name of the page
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Courses')));
     return $data;
 }

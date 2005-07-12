@@ -47,10 +47,6 @@ function courses_userapi_getteacher($args)
     $xartable =& xarDBGetTables();
     $teacherstable = $xartable['courses_teachers'];
     // TODO: how to select by cat ids (automatically) when needed ???
-    // Get items - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the SelectLimit() command allows for simpler debug
-    // operation if it is ever needed
     $query = "SELECT xar_tid,
                    xar_userid,
                    xar_planningid,

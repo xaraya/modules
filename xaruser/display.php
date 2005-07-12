@@ -27,8 +27,7 @@ function courses_user_display($args)
 {
     extract($args);
     if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('enrolled', 'str:1:', $enrolled, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $courseid = $objectid;
@@ -37,8 +36,7 @@ function courses_user_display($args)
     $data = xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     $data['status'] = '';
-    // The API function is called.  The arguments to the function are passed in
-    // as their own arguments array.
+    // The API function is called to get the course.
     $item = xarModAPIFunc('courses',
         'user',
         'get',
@@ -86,21 +84,6 @@ function courses_user_display($args)
 
      // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
-    //Check to see if this user is already enrolled in this course
-/*   $courses = xarModAPIFunc('courses',
-                          'user',
-                          'check_enrolled',
-                          array('uid' => $uid,
-                                'courseid' => $courseid));
-
-    if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-//       echo "<br /><pre>items => "; print_r($courses); echo "</pre>";
-    if (isset($courses[$courseid])) {
-
-        $data['enrolled'] = xarVarPrepForDisplay(xarML('You are currently enrolled in '. $courses[$courseid] ));
-    }
-
-*/
     $data['levelname'] = xarModAPIFunc('courses', 'user', 'getlevel',
                                       array('level' => $item['level']));
     $items = xarModAPIFunc('courses',
@@ -113,50 +96,63 @@ function courses_user_display($args)
     // Check individual permissions for Enroll/Edit/Viewstatus
     for ($i = 0; $i < count($items); $i++) {
         $planitem = $items[$i];
-        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "All:All:$courseid")) {
+        $planningid = $planitem['planningid'];
+        // Check to see if user is teacher
+        $check = xarModAPIFunc('courses',
+                               'admin',
+                               'check_teacher',
+                                array('userid' => $uid,
+                                      'planningid' => $planningid));
+        // With a result, the teacher can see the menu, or when there is an appropriate priv
+        if (count($check)!=0 || xarSecurityCheck('EditPlanning', 0, 'Planning', "$planningid:$uid:$courseid")) {
             $items[$i]['participantsurl'] = xarModURL('courses',
                 'admin',
                 'participants',
-                array('planningid' => $planitem['planningid']));
+                array('planningid' => $planningid));
         } else {
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participantstitle'] = xarML('Participants');
         
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:$courseid")) {
+
+            // Add check for already enrolled
+            $enrolled = xarModAPIFunc('courses',
+                          'user',
+                          'check_enrolled',
+                          array('uid' => $uid,
+                                'planningid' => $planningid));
+            if (count($enrolled)!=0) {
+            $items[$i]['enrolltitle'] = xarML('Enrolled');
+            // When enrolled, redirect to details page instead
+            $items[$i]['enrollurl'] = xarModURL('courses',
+                                      'user',
+                                      'displayplanned',
+                                       array('planningid' => $planningid));; 
+            } else {
+            $items[$i]['enrolltitle'] = xarML('Enroll');
             $items[$i]['enrollurl'] = xarModURL('courses',
                 'user',
                 'enroll',
-                array('planningid' => $planitem['planningid']));
-        } else {
-            $items[$i]['enrollurl'] = '';
+                array('planningid' => $planningid));
+            }
         }
-        $items[$i]['enrolltitle'] = xarML('Enroll');
-        
-        if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "$planitem[planningid]:All:$courseid")) {
+       
+        if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
             $items[$i]['detailsurl'] = xarModURL('courses',
                 'user',
                 'displayplanned',
-                array('planningid' => $planitem['planningid']));
+                array('planningid' => $planningid));
         } else {
             $items[$i]['detailsurl'] = '';
         }
         $items[$i]['detailstitle'] = xarML('Details');
         
-        if (xarSecurityCheck('DeleteCourses', 0, 'Course', "$planitem[planningid]:All:$courseid")) {
-            $items[$i]['statusurl'] = xarModURL('courses',
-                'user',
-                'status',
-                array('planningid' => $planitem['planningid']));
-        } else {
-            $items[$i]['statusurl'] = '';
-        }
-        $items[$i]['statustitle'] = xarML('Status');
     }
     
     // Add the array of items to the template variables
     $data['items'] = $items;    
-    
+  
     // Save the currently displayed item ID in a temporary variable cache
     // for any blocks that might be interested (e.g. the Others block)
     xarVarSetCached('Blocks.courses', 'courseid', $courseid);
@@ -177,8 +173,7 @@ function courses_user_display($args)
         $data['hookoutput'] = $hooks;
     }
     $data['authid'] = xarSecGenAuthKey();
-    // Once again, we are changing the name of the title for better
-    // Search engine capability.
+    // Set page name
     xarTplSetPageTitle(xarVarPrepForDisplay($item['name']));
     // Return the template variables defined in this function
     return $data;

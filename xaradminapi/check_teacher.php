@@ -18,26 +18,15 @@
  */
 function courses_adminapi_check_teacher($args)
 {
-
     extract($args);
     if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
     if (!xarVarFetch('userid', 'int:1:', $userid)) return;
-    
-    if (!isset($planningid) || !is_numeric($planningid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'check_enrolled', 'courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
 
     $items = array();
-
-    if (!xarSecurityCheck('EditPlanning')) return;
+    // if (!xarSecurityCheck('EditPlanning')) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $teacherstable = $xartable['courses_teachers'];
 
     $sql = "SELECT xar_userid, xar_planningid
@@ -53,11 +42,10 @@ function courses_adminapi_check_teacher($args)
     else {
     for (; !$result->EOF; $result->MoveNext()) {
         list($userid, $planningid) = $result->fields;
-        if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:$planningid")) {
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:All")) {
             $items[] = array('userid' => $userid,
                             'planningid' => $planningid);
         }
-    
     }
     $result->Close();
     return $items;

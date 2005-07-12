@@ -30,24 +30,6 @@ function courses_adminapi_create_teacher($args)
   if (!xarVarFetch('userid', 'int:1:', $userid)) return;
   if (!xarVarFetch('type', 'int:1:', $type, '1', XARVAR_DONT_SET)) return;
 
-    $invalid = array();
-     if (!isset($userid) || !is_numeric($userid)) {
-        $invalid[] = 'userid';
-    }
-     if (!isset($planningid) || !is_numeric($planningid)) {
-        $invalid[] = 'planningid';
-    }
-     if (!isset($type) || !is_numeric($type)) {
-        $invalid[] = 'type';
-    }
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'create_teacher', 'Courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:All")) {

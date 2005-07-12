@@ -71,7 +71,8 @@ function courses_userapi_getplanned($args)
                    xar_hideplanning,
                    xar_minparticipants,
                    xar_maxparticipants,
-                   xar_closedate
+                   xar_closedate,
+                   xar_last_modified
             FROM $planningtable
             WHERE xar_planningid = ?";
     $result = $dbconn->Execute($query, array((int)$planningid));
@@ -81,7 +82,7 @@ function courses_userapi_getplanned($args)
     // Put items into result array.
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate) = $result->fields;
+          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
         if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
             $item = array(
             'planningid' => $planningid,
@@ -107,7 +108,8 @@ function courses_userapi_getplanned($args)
             'hideplanning' => $hideplanning,
             'minparticipants' => $minparticipants,
             'maxparticipants' => $maxparticipants,
-            'closedate' => $closedate);
+            'closedate' => $closedate,
+            'last_modified' => $last_modified);
         }
     //}
     // All successful database queries produce a result set, and that result

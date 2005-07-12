@@ -309,7 +309,18 @@
                             #$item['info']#
                         </span>
                     </p>
+                    <p class="param">
+                        <label for="last_modified">
+                            <span class="help" title="#xarML('Date the information on this course was last modified.')#">
+                            #$lastmodilabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            #$item['last_modified']#
+                        </span>
+                    </p>
                </fieldset>
+
         <xar:if condition="$enrolled == 0">
         <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
         <input type="hidden" name="authid" id="authid" value="#$authid#" />

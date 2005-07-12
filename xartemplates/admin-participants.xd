@@ -11,6 +11,7 @@ These are the participants enrolled in planned course #$planningid#<br>
             <tr>
                 <th>#$namelabel#</th>
                 <th>#$emaillabel#</th>
+                <th>#$regilabel#</th>
                 <th colspan="2">#$statuslabel#</th>
                 <th>#$optionslabel#</th>
             </tr>
@@ -18,6 +19,7 @@ These are the participants enrolled in planned course #$planningid#<br>
             <tr>
                 <td>#xarUserGetVar('uname',$item['userid'])#</td>
                 <td>#xarUserGetVar('email',$item['userid'])#</td>
+                <td>#$item['regdate']#</td>
                 <td>#$item['statusname']#</td>
                 <td class="xar-norm">
                     <xar:if condition="!empty($item['changestatusurl'])">

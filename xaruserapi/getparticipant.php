@@ -13,11 +13,10 @@
  * @author Courses module development team 
  */
 /**
- * get a participant of a planned course
+ * get a single participant of a planned course
  * 
  * @author the Courses module development team 
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
+ * @param sid $ the ID of the student/participant
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -25,36 +24,20 @@
 function courses_userapi_getparticipant($args)
 {
     extract($args);
-    // Optional arguments.
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
-    $invalid = array();
-    if (!isset($sid) || !is_numeric($sid)) {
-        $invalid[] = 'sid';
-    }
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getparticipant', 'courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
+    if (!xarVarFetch('sid', 'int:1:', $sid)) return;
 
     $item = array();
-    if (!xarSecurityCheck('ViewPlanning')) return;
+    if (!xarSecurityCheck('EditPlanning')) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $studentstable = $xartable['courses_students'];
     // TODO: how to select by cat ids (automatically) when needed ???
-    // Get items - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the SelectLimit() command allows for simpler debug
-    // operation if it is ever needed
     $query = "SELECT xar_sid,
-                   xar_userid,
-                   xar_planningid,
-                   xar_status
+                     xar_userid,
+                     xar_planningid,
+                     xar_status,
+                     xar_regdate
             FROM $studentstable
             WHERE xar_sid = ?";
             
@@ -70,12 +53,13 @@ function courses_userapi_getparticipant($args)
     }
     // Put item into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($sid, $userid, $planningid, $status) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "All:All:All")) { //TODO
-            $item = array('sid' => $sid,
-                'userid'           => $userid,
-                'planningid'       => $planningid,
-                'status'           => $status);
+        list($sid, $userid, $planningid, $status, $regdate) = $result->fields;
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:All")) { //TODO
+            $item = array('sid'        => $sid,
+                          'userid'     => $userid,
+                          'planningid' => $planningid,
+                          'status'     => $status,
+                          'regdate'    => $regdate);
         }
     }
     // All successful database queries produce a result set, and that result

@@ -15,6 +15,7 @@
 /**
  * 
  * view a list of courses that the current user is attached to
+ * @param startnum The number of the item to start with
  *
  * @author Michel V.
  */
@@ -25,8 +26,8 @@ function courses_user_viewmycourses()
         return $data['error'] = xarML('You must be a registered user to view courses...');
     }
     // Get startparameter
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('startnum', 'str:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    
     $data = xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     $data['status'] = '';
@@ -45,8 +46,7 @@ function courses_user_viewmycourses()
 
     // Lets get the UID of the current user to check for overridden defaults
     $uid = xarUserGetVar('uid');
-    // The API function is called.  The arguments to the function are passed in
-    // as their own arguments array.
+    // The API function is called.
     // Security check 1 - the getall() function only returns items for which the
     // the user has at least OVERVIEW access.
     $items = xarModAPIFunc('courses',
@@ -89,13 +89,6 @@ function courses_user_viewmycourses()
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('My Courses')));
     // Return the template variables defined in this function
     return $data;
-    // Note : instead of using the $data variable, you could also specify
-    // the different template variables directly in your return statement :
-
-    // return array('menu' => ...,
-    // 'items' => ...,
-    // 'pager' => ...,
-    // ... => ...);
 }
 
 ?>

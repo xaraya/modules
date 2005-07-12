@@ -25,33 +25,8 @@
 function courses_userapi_getall($args)
 {
     extract($args);
-    // Optional arguments.
-    // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
-    // replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
-    // if (!isset($startnum)) {
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-    // Argument check
-    
-    $invalid = array();
-    if (!isset($startnum) || !is_numeric($startnum)) {
-        $invalid[] = 'startnum';
-    }
-    if (!isset($numitems) || !is_numeric($numitems)) {
-        $invalid[] = 'numitems';
-    }
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:', $numitems, '1', XARVAR_NOT_REQUIRED)) return;
 
     $items = array();
     // Security check - important to do this as early on as possible to
@@ -81,7 +56,8 @@ function courses_userapi_getall($args)
                    xar_language,
                    xar_freq,
                    xar_contact,
-                   xar_hidecourse
+                   xar_hidecourse,
+                   xar_last_modified
             FROM $coursestable
             WHERE xar_hidecourse in ($where)
             ORDER BY xar_number";
@@ -91,7 +67,7 @@ function courses_userapi_getall($args)
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($courseid, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse) = $result->fields;
+        list($courseid, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse, $last_modified) = $result->fields;
         if (xarSecurityCheck('ViewCourses', 0, 'Course', "$name:All:$courseid")) {
             $items[] = array('courseid' => $courseid,
                 'name' => $name,
@@ -102,7 +78,8 @@ function courses_userapi_getall($args)
                 'language' => $language,
                 'freq' => $freq,
                 'contact' => $contact,
-                'hidecourse' => $hidecourse);
+                'hidecourse' => $hidecourse,
+                'last_modified' => $last_modified);
         }
     }
     // All successful database queries produce a result set, and that result

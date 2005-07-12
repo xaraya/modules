@@ -29,11 +29,10 @@
           <fieldset class="xar-norm">
                <fieldset class="formelements xar-norm">
                     <legend>
-                        <strong><xar:mlstring>Course conditions</xar:mlstring></strong>
+                        <strong><xar:mlstring>Course configuration</xar:mlstring></strong>
                     </legend>
                     <p class="param">
-                        <label for="material">
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <label for="hideplanningmsg">
                             <span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
                             #$hideplanningmsg_label#
                             </span>
@@ -47,7 +46,6 @@
                     </p>
                     <p class="param">
                         <label for="hidecoursemsg">
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                             <span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
                             #$hidecoursemsg_label#
                             </span>
@@ -59,9 +57,48 @@
                             <span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecoursemsg</xar:mlstring></span>
                         </xar:if>
                     </p>
+                    
+                    <p class="param">
+                        <label for="NotifyCoordMessage">
+                            <span class="help" title="#xarML('This is the message template to send to the coordinator when there is a new student enrolled.')#">
+                            #$NotifyCoordMessage_label#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            <textarea class="fullright" name="NotifyCoordMessage" id="NotifyCoordMessage" wrap="virtual" rows="10" cols="40">#$NotifyCoordMessage#</textarea>
+                        </span>
+                        <xar:if condition="!empty($invalid['NotifyCoordMessage'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid NotifyCoordMessage</xar:mlstring></span>
+                        </xar:if>
+                    </p>
+                    
+                    <p class="param">
+                        <label for="NotifyStudentMessage">
+                            <span class="help" title="#xarML('This is the message template for the confirmation message sent to a new student.')#">
+                            #$NotifyStudentMessage_label#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            <textarea class="fullright" name="NotifyStudentMessage" id="NotifyStudentMessage" wrap="virtual" rows="10" cols="40">#$NotifyStudentMessage#</textarea>
+                        </span>
+                        <xar:if condition="!empty($invalid['NotifyStudentMessage'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid NotifyStudentMessage</xar:mlstring></span>
+                        </xar:if>
+                    </p>
+                    
+                    <p class="param">
+                        <label for="AlwaysNotify">
+                            <span class="help" title="#xarML('The e-mail address that will receive all enrollments from this modules.')#">
+                            #$AlwaysNotify_label#
+                            </span>
+                        </label>
+                        <xar:data-input name="AlwaysNotify" id="AlwaysNotify" type="2" value="$AlwaysNotify" />
+                        <xar:if condition="!empty($invalid['AlwaysNotify'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid email address</xar:mlstring></span>
+                        </xar:if>
+                    </p>
                     <p class="param">
                         <label for="HideEmptyField">
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                             <span class="help" title="#xarML('Hide fields in display templates that are empty?')#">
                             #$hideemptyfieldslabel#
                             </span>
@@ -72,7 +109,6 @@
                     </p>
                     <p class="param">
                         <label for="itemsperpage" class="required">
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                             <span class="help" title="#xarML('Number of items per page.')#">
                             #$itemslabel#
                             </span>
@@ -84,7 +120,6 @@
                     </p>
                     <p class="param">
                         <label for="bold">
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                             <span class="help" title="#xarML('Support short URLs.')#">
                             #$shorturlslabel#
                             </span>
@@ -97,6 +132,7 @@
                </fieldset>
           </fieldset>
           #$hooks#
+          <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
           <input type="submit" value="#$updatebutton#" />
     </form>
     </div>

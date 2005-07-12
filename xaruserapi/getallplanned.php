@@ -25,34 +25,11 @@
 function courses_userapi_getallplanned($args)
 {
     extract($args);
-
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-    
-    // Argument check
-    $invalid = array();
-    if (!isset($startnum) || !is_numeric($startnum)) {
-        $invalid[] = 'startnum';
-    }
-    if (!isset($numitems) || !is_numeric($numitems)) {
-        $invalid[] = 'numitems';
-    }
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'getall', 'courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
 
     $items = array();
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
+    // Security check
     if (!xarSecurityCheck('ViewPlanning')) return;
     
     // Get database setup
@@ -92,7 +69,8 @@ function courses_userapi_getallplanned($args)
                    xar_hideplanning,
                    xar_minparticipants,
                    xar_maxparticipants,
-                   xar_closedate
+                   xar_closedate,
+                   xar_last_modified
             FROM $planningtable
             WHERE xar_hideplanning in ($where)            
             ORDER BY xar_courseid";
@@ -104,8 +82,9 @@ function courses_userapi_getallplanned($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Item', "$planningid:All:$courseid")) {
+          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")){
+
             $items[] = array(
             'planningid' => $planningid,
             'courseid'   => $courseid,
@@ -129,7 +108,8 @@ function courses_userapi_getallplanned($args)
             'hideplanning' => $hideplanning,
             'minparticipants' => $minparticipants,
             'maxparticipants' => $maxparticipants,
-            'closedate' => $closedate);
+            'closedate' => $closedate,
+            'last_modified' => $last_modified);
         }
     }
     // All successful database queries produce a result set, and that result

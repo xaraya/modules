@@ -21,7 +21,7 @@
  */
 function courses_admin_viewallplanned()
 {
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
@@ -80,11 +80,11 @@ function courses_admin_viewallplanned()
                                                     array('planningid' => $item['planningid'])
                                                     );
 
-        if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:All:$item[courseid]")) {
+        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "All:All:All")) {
             $items[$i]['displayurl'] = xarModURL('courses',
                 'user',
-                'display',
-                array('courseid' => $item['courseid']));
+                'displayplanned',
+                array('planningid' => $item['planningid']));
         } else {
             $items[$i]['displayurl'] = '';
         }
@@ -99,7 +99,7 @@ function courses_admin_viewallplanned()
         }
         $items[$i]['teacherstitle'] = xarML('Teachers');
         
-        $course = xarModAPIFunc('courses','user','getcourse',array('courseid' => $item['courseid']));
+        $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
         $items[$i]['name'] = xarVarPrepForDisplay($course['name']);
     // End for()
     }
@@ -107,7 +107,7 @@ function courses_admin_viewallplanned()
     // Add the array of items to the template variables
     $data['items'] = $items;
     }
-    // Specify some labels for display
+    // Labels for display
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
     $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
     $data['startdatelabel'] = xarVarPrepForDisplay(xarML('Startdate'));
@@ -117,12 +117,6 @@ function courses_admin_viewallplanned()
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Course Options'));
     // Return the template variables defined in this function
     return $data;
-    // Note : instead of using the $data variable, you could also specify
-    // the different template variables directly in your return statement :
-
-    // return array('items' => ...,
-    // 'namelabel' => ...,
-    // ... => ...);
 }
 
 ?>
