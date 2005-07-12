@@ -9,13 +9,13 @@
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  * @subpackage Censor Module
- * @author John Cox
+ * @author John Cox, Alberto Cazzaniga
  */
 // Load Table Maintainance API
-xarDBLoadTableMaintenanceAPI();
+    xarDBLoadTableMaintenanceAPI();
 
 /**
- * initialise the autolinks module
+ * initialise the censor module
  */
 function censor_init()
 {
@@ -47,7 +47,7 @@ function censor_init()
         'xar_locale' => array('type' => 'varchar', 
                                'size' => 100, 
                                'null' => false, 
-                               'default' => '')
+                               'default' => 'ALL')
         );
 
     $query = xarDBCreateTable($censortable, $fields);
@@ -82,11 +82,73 @@ function censor_init()
  */
 function censor_upgrade($oldversion)
 {
+    switch ($oldversion) {
+	 	
+        case '1.0.0': 	
+	
+	    xarDBLoadTableMaintenanceAPI();
+	    $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $censortable = $xartable['censor'];
+        
+            $query = xarDBAlterTable($censortable,
+                                  array('command' => 'add',
+                                        'field'   => 'xar_case_sensitive',
+                                        'type'    => 'char',
+                                        'size'    => 1,
+                                        'null'    => false,
+                                        'default' => '0'));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+	
+	    $query = xarDBAlterTable($censortable,
+                                  array('command' => 'add',
+                                        'field'   => 'xar_match_case',
+                                        'type'    => 'char',
+                                        'size'    => 1,
+                                        'null'    => false,
+                                        'default' => '0'));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+        
+            $query = xarDBAlterTable($censortable,
+                                  array('command' => 'add',
+                                        'field'   => 'xar_locale',
+                                        'type'    => 'varchar',
+                                        'size'    => 100,
+                                        'null'    => false,
+                                        'default' => 'ALL'));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+	    //inserire update default
+	    
+	    $query = "UPDATE $censortable SET xar_case_sensitive = 0";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            
+            $query = "UPDATE $censortable SET xar_match_case = 0";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            
+            $query = "UPDATE $censortable SET xar_locale = 'ALL'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+	    
+	    return censor_upgrade('1.1.0');
+            break;
+        
+        case '1.1.0':
+            break;
+        
+        default:
+            break;
+    }
+
     return true;
 }
 
 /**
- * delete the smiley module
+ * delete the censor module
  */
 function censor_delete()
 {
