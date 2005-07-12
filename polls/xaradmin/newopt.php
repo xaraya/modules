@@ -7,7 +7,7 @@ function polls_admin_newopt()
 {
     // Get parameters
     $pid = xarVarCleanFromInput('pid');
-    if (!isset($pid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Start output
     $data = array();

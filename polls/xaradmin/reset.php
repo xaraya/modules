@@ -9,7 +9,7 @@ function polls_admin_reset()
     list($pid,
          $confirm) = xarVarCleanFromInput('pid',
                                          'confirm');
-    if (!isset($pid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     $poll = xarModAPIFunc('polls',
                            'user',

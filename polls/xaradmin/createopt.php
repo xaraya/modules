@@ -9,7 +9,7 @@ function polls_admin_createopt()
     list($pid,
          $option) = xarVarCleanFromInput('pid',
                                          'option');
-    if (!isset($pid) || !isset($option) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pid) || !isset($option) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -18,7 +18,7 @@ function polls_admin_createopt()
                            'user',
                            'get', array('pid' => $pid));
 
-    if (!isset($poll) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($poll) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")) {
         return;
@@ -29,7 +29,7 @@ function polls_admin_createopt()
                            'admin',
                            'createopt', array('pid' => $pid,
                                               'option' => $option));
-    if (!$created && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!$created && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
     xarSessionSetVar('statusmsg', xarML('Created option'));

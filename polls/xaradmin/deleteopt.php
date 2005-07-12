@@ -14,14 +14,14 @@ function polls_admin_deleteopt()
          $confirm) = xarVarCleanFromInput('pid',
                                          'opt',
                                          'confirm');
-    if ((!isset($pid) || !isset($opt)) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if ((!isset($pid) || !isset($opt)) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     $poll = xarModAPIFunc('polls',
                            'user',
                            'get',
                            array('pid' => $pid));
 
-    if (!isset($poll) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($poll) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")) {
         return;
