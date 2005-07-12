@@ -118,7 +118,7 @@ function AddressBook_adminapi_updateconfig($args) {
 //    if (count($invalid) > 0) {
 //        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
 //                     join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
-//        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+//        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
 //            				new SystemException($msg));
 //		return; //???gehDEBUG            				
 //    } else {
@@ -140,14 +140,14 @@ function AddressBook_adminapi_updateconfig($args) {
         if (($guestmode != 0) || ($usermode != 7)) {
             $guestmode = 0;
             $usermode = 7;
-			xarExceptionSet(XAR_USER_EXCEPTION, 
+			xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_WARN, 
 						new abUserException(_AB_GLOBALPROTECTERROR));
         }
     }
     if ($guestmode > $usermode) {
         $usermode = $guestmode;
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_WARN, 
 						new abUserException(_AB_GRANTERROR));
     }
@@ -158,7 +158,7 @@ function AddressBook_adminapi_updateconfig($args) {
     xarModSetVar(__ADDRESSBOOK__, 'abtitle',         $abtitle);
 
     if ($sortdata_1 == $sortdata_2) {
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_WARN, 
 						new abUserException(_AB_SORTERROR_1));
     }
@@ -167,7 +167,7 @@ function AddressBook_adminapi_updateconfig($args) {
         xarModSetVar(__ADDRESSBOOK__, 'sortorder_1', $s_1);
     }
     if ($sortdata_3 == $sortdata_4) {
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_WARN, 
 						new abUserException(_AB_SORTERROR_2));
     }
@@ -179,7 +179,7 @@ function AddressBook_adminapi_updateconfig($args) {
     xarModSetVar(__ADDRESSBOOK__, 'name_order',      $name_order);
 
     if (strlen($special_chars_1) != strlen($special_chars_2)) {
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_WARN, 
 						new abUserException(_AB_SPECIAL_CHARS_ERROR));
     }
@@ -191,7 +191,7 @@ function AddressBook_adminapi_updateconfig($args) {
 	// Admin Message
 	if (!empty($rptErrAdminEmail)) {
 		if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$rptErrAdminEmail))) {
-			xarExceptionSet(XAR_USER_EXCEPTION, 
+			xarErrorSet(XAR_USER_EXCEPTION, 
 							_AB_ERR_WARN, 
 							new abUserException(_AB_BAD_ADMIN_EMAIL));
 		} else {
@@ -222,7 +222,7 @@ function AddressBook_adminapi_updateconfig($args) {
 //      prioritize them as done here? 
 //    $msg = xarVarPrepHTMLDisplay();
 //    if (isset($error)) { $msg .= ' - '.$error; }
-	xarExceptionSet(XAR_USER_EXCEPTION, 
+	xarErrorSet(XAR_USER_EXCEPTION, 
 					_AB_ERR_INFO, 
 					new abUserException(_AB_CONF_AB_SUCCESS));
 // END FIXME

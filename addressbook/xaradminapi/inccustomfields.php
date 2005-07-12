@@ -41,7 +41,7 @@ function AddressBook_adminapi_incCustomfields($args) {
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             				new SystemException($msg));
 		$returnCode = FALSE;
     } else {
@@ -59,7 +59,7 @@ function AddressBook_adminapi_incCustomfields($args) {
 	    if (!$result) {
 	    	$returnCode = FALSE;
 	    } elseif ($result->EOF) {
-	        xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
+	        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
             				new abUserException(xarML("No such field ID $id")));
 	    	$returnCode = FALSE;
 	    } else {
@@ -77,7 +77,7 @@ function AddressBook_adminapi_incCustomfields($args) {
 		    if (!$result) {
 		    	$returnCode = FALSE;
 		    } elseif ($result->EOF) {
-		        xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
+		        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERROR_DEBUG,
 	            				new abUserException(xarML("No field directly above that one")));
 		        return $returnCode;
 		    } else {

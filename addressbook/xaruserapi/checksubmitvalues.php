@@ -24,7 +24,7 @@ function AddressBook_userapi_checksubmitvalues($args) {
     extract($args);
     // check for empty fields
     if ((empty($lname)) && (empty($fname)) && (empty($title)) && (empty($company))) {
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_WARN, 
 						new abUserException(xarML(_AB_ERRMSG_MISFIELDS_NAME_TAB)));
 		$checkResult = FALSE;
@@ -35,7 +35,7 @@ function AddressBook_userapi_checksubmitvalues($args) {
 		        switch ($cus['type']) {
 		                case 'decimal(10,2) default NULL':
 		                    if ((!empty($cus['userData'])) && (!ereg("^[+|-]{0,1}[0-9.,]{0,8}[.|,]{0,1}[0-9]{0,2}$",$cus['userData'],$regs))) {
-								xarExceptionSet(XAR_USER_EXCEPTION, 
+								xarErrorSet(XAR_USER_EXCEPTION, 
 												_AB_ERR_WARN, 
 												new abUserException(xarML(_AB_ERRMSG_FALSENUM_CUST_TAB)));
 								$checkResult = FALSE;
@@ -43,7 +43,7 @@ function AddressBook_userapi_checksubmitvalues($args) {
 		                    break;
 		                case 'int default NULL':
 		                    if ((!empty($cus['userData'])) && (!ereg("^[0-9]{1,9}$",$cus['userData'],$regs))) {
-								xarExceptionSet(XAR_USER_EXCEPTION, 
+								xarErrorSet(XAR_USER_EXCEPTION, 
 												_AB_ERR_WARN, 
 												new abUserException(xarML(_AB_ERRMSG_INVALNUM_CUST_TAB)));
 								$checkResult = FALSE;
@@ -73,7 +73,7 @@ function AddressBook_userapi_checksubmitvalues($args) {
 		                            if ($y < 70) $y = $y + 2000;
 		                        }
 		                        if (!checkdate($m, $d, $y)) {
-									xarExceptionSet(XAR_USER_EXCEPTION, 
+									xarErrorSet(XAR_USER_EXCEPTION, 
 													_AB_ERR_WARN, 
 													new abUserException(xarML(_AB_ERRMSG_INVALDATE_CUST_TAB)));
 									$checkResult = FALSE;

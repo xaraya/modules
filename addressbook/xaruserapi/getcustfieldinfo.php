@@ -39,7 +39,7 @@ function AddressBook_userapi_getCustFieldInfo($args) {
     } else {
         if (empty($id) && ($flag ==_AB_CUST_ALLINFO)) {
             $flag = _AB_CUST_ALLFIELDINFO;
-            xarExceptionSet(XAR_USER_EXCEPTION
+            xarErrorSet(XAR_USER_EXCEPTION
                           ,_AB_ERR_ERROR
                           ,new abUserException("Invalid Flag: userapi - getCustFieldInfo"));
         }

@@ -39,7 +39,7 @@ function AddressBook_adminapi_updatecustomfields($args) {
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      join(', ',$invalid), 'updatelabels', __ADDRESSBOOK__);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return FALSE;
     }
@@ -104,7 +104,7 @@ function AddressBook_adminapi_updatecustomfields($args) {
 		}
 	
 	    if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateItems',array('tablename'=>'customfields','updates'=>$updates))) {
-			xarExceptionSet(XAR_USER_EXCEPTION, 
+			xarErrorSet(XAR_USER_EXCEPTION, 
 							_AB_ERR_INFO, 
 							new abUserException('UPDATE - '._AB_SUCCESS));
 		} else {
@@ -113,7 +113,7 @@ function AddressBook_adminapi_updatecustomfields($args) {
 	
 		if (count($modDel)) {
 	        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteCustomFields',array('modDel'=>$modDel,'modDelType'=>$modDelType))) {
-				xarExceptionSet(XAR_USER_EXCEPTION, 
+				xarErrorSet(XAR_USER_EXCEPTION, 
 								_AB_ERR_INFO, 
 								new abUserException('DELETE - '._AB_SUCCESS));
 				if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequenceCustomfields')) {
@@ -143,7 +143,7 @@ function AddressBook_adminapi_updatecustomfields($args) {
 			}
 	
 	        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addCustomfields',array('inserts'=>$inserts))) {
-				xarExceptionSet(XAR_USER_EXCEPTION, 
+				xarErrorSet(XAR_USER_EXCEPTION, 
 								_AB_ERR_INFO, 
 								new abUserException('INSERT - '._AB_SUCCESS));
 				if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequenceCustomfields')) {

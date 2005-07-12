@@ -40,7 +40,7 @@ function AddressBook_adminapi_updateprefixes($args) {
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      join(', ',$invalid), 'updatelabels', __ADDRESSBOOK__);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return FALSE;
     }
@@ -79,7 +79,7 @@ function AddressBook_adminapi_updateprefixes($args) {
     }
 
     if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateItems',array('tablename'=>'prefixes','updates'=>$updates))) {
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_INFO, 
 						new abUserException('UPDATE - '._AB_SUCCESS));
     }
@@ -87,7 +87,7 @@ function AddressBook_adminapi_updateprefixes($args) {
     if(!empty($dels)) {
         $delete = "DELETE FROM $preTable WHERE nr IN ($dels)";
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteItems',array('tablename'=>'prefixes','delete'=>$delete))) {
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_INFO, 
 						new abUserException('DELETE - '._AB_SUCCESS));
         }
@@ -95,7 +95,7 @@ function AddressBook_adminapi_updateprefixes($args) {
 
     if( (isset($newname)) && ($newname != '') ) {
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addItems',array('tablename'=>'prefixes','name'=>$newname))) {
-		xarExceptionSet(XAR_USER_EXCEPTION, 
+		xarErrorSet(XAR_USER_EXCEPTION, 
 						_AB_ERR_INFO, 
 						new abUserException('INSERT - '._AB_SUCCESS));
         }

@@ -158,14 +158,14 @@ function AddressBook_userapi_getAddressList($args) {
     }
 
     if (!$output['total']) {
-        xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(_AB_NORECORDS)); //gehDEBUG
+        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(_AB_NORECORDS)); //gehDEBUG
     }
 
     $items = xarModGetVar(__ADDRESSBOOK__, 'itemsperpage');
     $result =& $dbconn->PageExecute($output['sql'],$items,$output['page']);
 
     if ($dbconn->ErrorNo() != 0) {
-        xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR, new abUserException("sql = ".$output['sql']));
+        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR, new abUserException("sql = ".$output['sql']));
     }
 
     //Show Result
