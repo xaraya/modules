@@ -22,7 +22,9 @@ function headlines_rssblock_init()
     return array(
         'rssurl' => '',
         'maxitems' => 5,
-        'showdescriptions' => false
+        'showdescriptions' => false,
+        'show_chantitle' => 1,
+        'show_chandesc' => 1
     );
 }
 
@@ -71,7 +73,12 @@ function headlines_rssblock_display($blockinfo)
     if (!isset($vars['maxitems'])) {
         $vars['maxitems'] = 5;
     }
-
+    if (!isset($vars['show_chantitle'])) {
+        $vars['show_chantitle'] = 1;
+    }
+    if (!isset($vars['show_chandesc'])) {
+            $vars['show_chandesc'] = 1;
+    }
     // Sanitize the URL provided to us since
     // some people can be very mean.
     $feedfile = preg_replace("/\.\./", "donthackthis", $feedfile);
@@ -154,7 +161,9 @@ function headlines_rssblock_display($blockinfo)
         'blockid'      => $blockinfo['bid'],
         'chantitle'    => $chantitle,
         'chanlink'     => $chanlink,
-        'chandesc'     => $chandesc
+        'chandesc'     => $chandesc,
+        'show_chantitle' => $vars['show_chantitle'],
+        'show_chandesc' => $vars['show_chandesc']
     );
 
     return $blockinfo;
@@ -194,6 +203,12 @@ function headlines_rssblock_modify($blockinfo)
     if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) {
         $vars['rssurl'] = '';
     }
+    if (!isset($vars['show_chantitle'])) {
+            $vars['show_chantitle'] = 1;
+    }
+    if (!isset($vars['show_chandesc'])) {
+            $vars['show_chandesc'] = 1;
+    }
     if (!isset($vars['showdescriptions'])) {
         $vars['showdescriptions'] = 0;
     }
@@ -217,7 +232,9 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], false, XARVAR_NOT_REQUIRED)) {return;}
-
+    if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], false, XARVAR_NOT_REQUIRED)) {return;}
+        
     $blockinfo['content'] = $vars;
     return $blockinfo;
 }
