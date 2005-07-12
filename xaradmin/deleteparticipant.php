@@ -43,7 +43,7 @@ function courses_admin_deleteparticipant($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('AdminPlanning', 1, 'Item', "$planningid:All:All")) { //Need the planningID here
+    if (!xarSecurityCheck('AdminPlanning', 1, 'Planning', "$planningid:All:All")) { 
         return;
     }
     // Check for confirmation.

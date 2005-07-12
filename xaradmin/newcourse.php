@@ -116,6 +116,7 @@ function courses_admin_newcourse($args)
     } else {
         $data['hidecourse'] = $hidecourse;
     }
+    xarSessionSetVar('statusmsg', '');
     // Return the template variables defined in this function
     return $data;
 }

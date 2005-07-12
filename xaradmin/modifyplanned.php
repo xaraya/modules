@@ -25,32 +25,29 @@ function courses_admin_modifyplanned($args)
     // Get parameters from whatever input we need.
     if (!xarVarFetch('planningid', 'isset:', $planningid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
-    
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
-    // Get the course
+    // Get the planned course
     $planneddata = xarModAPIFunc('courses',
-                          'user',
-                          'getplanned',
-                          array('planningid' => $planningid));
-    // Check for exceptions
+                                 'user',
+                                 'getplanned',
+                                  array('planningid' => $planningid));
     if (!isset($planneddata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:$planneddata[courseid]")) {
+    if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:All")) {
         return;
     }
     // Coursedata
     $coursedata = xarModAPIFunc('courses',
-                          'user',
-                          'getcourse',
-                          array('courseid' => $planneddata['courseid']));
-    // Check for exceptions
+                                'user',
+                                'get',
+                                 array('courseid' => $planneddata['courseid']));
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     // Get menu variables
@@ -62,6 +59,7 @@ function courses_admin_modifyplanned($args)
         $hooks = join('', $hooks);
     }
     $data['levels'] = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
+    $data['invalid'] = $invalid;
     $data['planningid'] = $planningid;
     $data['coursedata'] = $coursedata;
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
@@ -91,6 +89,7 @@ function courses_admin_modifyplanned($args)
     $data['minpartlabel'] = xarVarPrepForDisplay(xarML('Minimum Participants'));
     $data['maxpartlabel'] = xarVarPrepForDisplay(xarML('Maximum Participants'));
     $data['closedatelabel'] = xarVarPrepForDisplay(xarML('Registration closing date'));
+    $data['lastmodilabel'] = xarVarPrepForDisplay(xarML('Date last modified'));
     $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
     $data['infolabel'] = xarVarPrepForDisplay(xarML('Other Course info'));
     $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));

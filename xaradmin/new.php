@@ -19,11 +19,6 @@
  */
 function courses_admin_new($args)
 {
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch().
     extract($args);
 
     // Get parameters for the dyn data objects.
@@ -36,12 +31,7 @@ function courses_admin_new($args)
                        new SystemException($msg));
         return $msg;
     }
-    
-    
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
+
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing

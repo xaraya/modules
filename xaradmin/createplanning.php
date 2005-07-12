@@ -15,7 +15,7 @@
 
 /**
  * This is a standard function that is called with the results of the
- * form supplied by xarModFunc('courses','admin','newcourse') to create a new course
+ * form supplied by xarModFunc('courses','admin','plancourse') to create a new planning
  *
  * @param  $name the name of the item to be created
  * @param  $number the number of the item to be created
@@ -30,8 +30,8 @@ function courses_admin_createplanning($args)
     if (!xarVarFetch('credits', 'int:1:', $credits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('creditsmin', 'int::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('creditsmax', 'int::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startdate', 'str:1:', $startdate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enddate', 'str:1:', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate', 'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('prerequisites', 'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aim', 'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('method', 'str:1:', $method, '', XARVAR_NOT_REQUIRED)) return;
@@ -44,9 +44,9 @@ function courses_admin_createplanning($args)
     if (!xarVarFetch('material', 'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program', 'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning', 'str::', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('minparticipants', 'str::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('maxparticipants', 'str::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning', 'int::', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('minparticipants', 'int:1:', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxparticipants', 'int:1:', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate', 'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
 
     // Argument check
@@ -58,10 +58,6 @@ function courses_admin_createplanning($args)
                           array('name' => $name,
                                 'number' => $number));
     
-    // Argument check
-    
-    
-    $invalid = array();
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
     }
@@ -74,35 +70,50 @@ function courses_admin_createplanning($args)
     if (!empty($number) && strcmp($item['number'], $number)) {
         $invalid[] = 'duplicatenumber';
     }
+    */
 
-
+    // Argument check
+    $invalid = array();
+    
+    if (isset($minparticipants) || isset($maxparticipants)) {
+        if ($minparticipants > $maxparticipants) {
+          $invalid['minparticipants'] = $minparticipants;
+          }
+    }
+    
     // check if we have any errors
     if (count($invalid) > 0) {
         // call the admin_newcourse function and return the template vars
         // (move from admin-new.xd to admin-create.xd here)
-        return xarModFunc('courses', 'admin', 'newcourse',
-                          array('name' => $name,
-                                'number' => $number,
-                                'coursetype' => $coursetype,
-                                'level' => $level,
+        return xarModFunc('courses', 'admin', 'plancourse',
+                          array('courseid' => $courseid,
+                                'year' => $year,
                                 'credits' => $credits,
                                 'creditsmin' => $creditsmin,
                                 'creditsmax' => $creditsmax,
-                                'shortdesc' => $shortdesc,
+                                'startdate' => $startdate,
+                                'enddate' => $enddate,
                                 'prerequisites' => $prerequisites,
                                 'aim' => $aim,
                                 'method' => $method,
-                                'language' => $language,
-                                'freq' => $freq,
-                                'contact' => $contact,
-                                'hidecourse' => $hidecourse,
+                                'longdesc' => $longdesc,
+                                'costs' => $costs,
+                                'committee' => $committee,
+                                'coordinators' => $coordinators,
+                                'lecturers' => $lecturers,
+                                'location' => $location,
+                                'material' => $material,
+                                'info' => $info,
+                                'program' => $program,
+                                'hideplanning' => $hideplanning,
+                                'minparticipants'=> $minparticipants,
+                                'maxparticipants'=> $maxparticipants,
+                                'closedate'=> $closedate,
                                 'invalid' => $invalid));
-    }*/
-    // Confirm authorisation code. This checks that the form had a valid
-    // authorisation code attached to it. If it did not then the function will
-    // proceed no further as it is possible that this is an attempt at sending
-    // in false data to the system
+    }
+    // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
+    $last_modified = date("Y-m-d H:i:s");
     // Create planning and get planningid
     $planningid = xarModAPIFunc('courses',
                           'admin',
@@ -129,12 +140,14 @@ function courses_admin_createplanning($args)
                                 'hideplanning' => $hideplanning,
                                 'minparticipants'=> $minparticipants,
                                 'maxparticipants'=> $maxparticipants,
-                                'closedate'=> $closedate));
+                                'closedate'=> $closedate,
+                                'last_modified' => $last_modified));
     //Check returnvalue
     if (!isset($planningid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
-    xarResponseRedirect(xarModURL('courses', 'admin', 'viewcourses'));
+    xarSessionSetVar('statusmsg', xarML('Successfully Created Planning!'));
+    xarResponseRedirect(xarModURL('courses', 'admin', 'viewallplanned'));
     // Return
     return true;
 }

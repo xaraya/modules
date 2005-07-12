@@ -17,16 +17,11 @@
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('courses','admin','newcourse') to create a new course
  *
- * @param  $name the name of the item to be created
- * @param  $number the number of the item to be created
+ * @param  $name the name of the course to be created
+ * @param  $number the number of the course to be created
  */
 function courses_admin_createcourse($args)
 {
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch().
     extract($args);
 
     // Get parameters from whatever input we need.
@@ -39,11 +34,7 @@ function courses_admin_createcourse($args)
     if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
-    // Argument check - make sure that all required arguments are present
-    // and in the right format, if not then return to the add form with the
-    // values that are there and a message with a session var. If you perform
-    // this check now, you could do away with the check in the API along with
-    // the exception that comes with it.
+    // Argument check
     /*
     $item = array();
     $item = xarModAPIFunc('courses',
@@ -86,18 +77,9 @@ function courses_admin_createcourse($args)
                                 'hidecourse' => $hidecourse,
                                 'invalid' => $invalid));
     }*/
-    // Confirm authorisation code. This checks that the form had a valid
-    // authorisation code attached to it. If it did not then the function will
-    // proceed no further as it is possible that this is an attempt at sending
-    // in false data to the system
+    // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-    // Notable by its absence there is no security check here.  This is because
-    // the security check is carried out within the API function and as such we
-    // do not duplicate the work here
-    // The API function is called. Note that the name of the API function and
-    // the name of this function are identical, this helps a lot when
-    // programming more complex modules. The arguments to the function are
-    // passed in as their own arguments array
+    $last_modified = date("Y-m-d H:i:s");
     $courseid = xarModAPIFunc('courses',
                           'admin',
                           'createcourse',
@@ -109,15 +91,15 @@ function courses_admin_createcourse($args)
                                 'language' => $language,
                                 'freq' => $freq,
                                 'contact' => $contact,
-                                'hidecourse' => $hidecourse));
+                                'hidecourse' => $hidecourse,
+                                'last_modified' => $last_modified));
     // The return value of the function is checked here, and if the function
-    // succeeded then an appropriate message is posted.  Note that if the
-    // function did not succeed then the API function should have already
-    // posted a failure message so no action is required
+    // succeeded then an appropriate message is posted.
     if (!isset($courseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('courses', 'admin', 'viewcourses'));
+    xarSessionSetVar('statusmsg', xarML('Course Was Successfully Created!'));
     // Return
     return true;
 }

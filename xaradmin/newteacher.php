@@ -25,34 +25,23 @@
 function courses_admin_newteacher($args)
 {
 
- if (!xarSecurityCheck('EditPlanning', 0)) {
-        return $data['error'] = xarML('You must be a registered user to enroll in courses.');
-    }
-
  extract($args);
 
   if (!xarVarFetch('planningid', 'int::', $planningid, NULL, XARVAR_DONT_SET)) return;
   if (!xarVarFetch('userid', 'int::', $userid, NULL, XARVAR_DONT_SET)) return;
-  if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-  if (!xarVarFetch('message', 'str:1:', $message, '', XARVAR_NOT_REQUIRED)) return;
-
-    //check for override by objectid
-    if (!empty($objectid)) {
-        $planningid = $objectid;
-    }
-    // Get the username so we can pass it to the enrollment function
-    //Check to see if this user is already enrolled in this course
+  // if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
+    // Check to see if this user is already enrolled in this course
     $check = xarModAPIFunc('courses',
-                          'admin',
-                          'check_teacher',
-                          array('userid' => $userid,
-                                'planningid' => $planningid));
+                           'admin',
+                           'check_teacher',
+                           array('userid' => $userid,
+                                 'planningid' => $planningid));
 
     //if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     // Check if this teacher is already a teacher
     if (count($check)!=0) {
-    $msg = xarML('You are already a teacher in this course');
+    $msg = xarML('This teacher has already been assigned to this course');
         xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_TEACHER',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
@@ -75,6 +64,26 @@ function courses_admin_newteacher($args)
                                 'type' => $type));
 
     if (!isset($tid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+/*
+    // Register an EDIT privilege for the newborn teacher
+    // define the new instance
+    $newinstance = array();
+    $newinstance[] = empty($planningid) ? 'All' : $planningid;
+    $newinstance[] = empty($uid) ? 'All' : $uid;
+    $newinstance[] = empty($courseid) ? 'All' : $courseid;
+    $extname = 'EditPlanning';
+    $extrealm = 'All';
+    $extmodule = 'courses';
+    $extcomponent = 'Planning';
+    $extlevel = '500';
+    if (!empty($planningid)) {
+        // create/update the privilege
+        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        if (empty($pid)) {
+            return;  // throw back
+        }
+    }
+*/
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('courses', 'admin', 'teachers', array('planningid' => $planningid)));

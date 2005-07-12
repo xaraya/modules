@@ -37,13 +37,13 @@ function courses_admin_modifycourse($args)
     // Get the course
     $coursedata = xarModAPIFunc('courses',
                           'user',
-                          'getcourse',
+                          'get',
                           array('courseid' => $courseid));
     // Check for exceptions
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+    $name = $coursedata['name'];
     // Security check
-    if (!xarSecurityCheck('EditCourses', 1, 'Item', "$coursedata[name]:All:$courseid")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$name:All:$courseid")) {
         return;
     }
     // Get menu variables
@@ -62,29 +62,20 @@ function courses_admin_modifycourse($args)
                  'menutitle'    => xarVarPrepForDisplay(xarML('Edit a course')),
                  'courseid'     => $courseid,
                  'namelabel'    => xarVarPrepForDisplay(xarML('Course Name')),
-              //   'name'         => $coursedata['name'],
+                 'lastmodilabel' => xarVarPrepForDisplay(xarML('Last Modified')),
                  'numberlabel'  => xarVarPrepForDisplay(xarML('Course Number')),
-               //  'number'       => $item['number'],
                  'freqlabel'    => xarVarPrepForDisplay(xarML('Course frequency')),
-               //  'freq'         => $item['freq'],
                  'coursetypelabel'  => xarVarPrepForDisplay(xarML('Course Type (Category)')),
-              //   'coursetype'   => $item['coursetype'],
                  'levellabel'   => xarVarPrepForDisplay(xarML('Course Level')),
-              //  'level'        => $item['level'],
                  'languagelabel' => xarVarPrepForDisplay(xarML('Language')),
-              //   'language'     => $item['language'],
                  'shortdesclabel'  => xarVarPrepForDisplay(xarML('Short Description')),
-              //   'shortdesc'    => $item['shortdesc'],
                  'contactlabel' => xarVarPrepForDisplay(xarML('Course Contact details')),
-              //   'contact'      => $item['contact'],
                  'invalid'      => $invalid,
                  'hidecourselabel' => xarVarPrepForDisplay(xarML('Hide Course')),
-                // 'hidecourse'   => $item['hidecourse'],
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update Course')),
                  'cancelbutton' => xarVarPrepForDisplay(xarML('Cancel')),
                  'hooks'        => $hooks,
                  'coursedata'   => $coursedata,
-                 //'item'         => $item,
                  'levels'       => $levels);
 }
 
