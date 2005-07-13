@@ -26,7 +26,7 @@
 <xar:if condition="!empty($status)">
     #$status#
 </xar:if>
-<H3><xar:mlstring>You are enrolled as a student in the following courses:</xar:mlstring></h3>
+<h3><xar:mlstring>You are enrolled as a student in the following courses:</xar:mlstring></h3>
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
         <th colspan="4"><xar:mlstring>Enrolled Courses</xar:mlstring></th>
@@ -79,3 +79,4 @@
 
 <input type="submit" value="#xarML('Modify')#"  tabindex="2" />
 </form>
+</div>
