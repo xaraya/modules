@@ -1,6 +1,6 @@
 <?php // $Id$
 $modversion['name'] = 'Nameday';
-$modversion['id'] = '50';
+$modversion['id'] = '501';
 $modversion['version'] = '1.3';
 $modversion['description'] = "A 'Name day' type module.";
 $modversion['credits'] = '';
