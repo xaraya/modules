@@ -57,35 +57,6 @@
                             <span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecoursemsg</xar:mlstring></span>
                         </xar:if>
                     </p>
-                    
-                    <p class="param">
-                        <label for="NotifyCoordMessage">
-                            <span class="help" title="#xarML('This is the message template to send to the coordinator when there is a new student enrolled.')#">
-                            #$NotifyCoordMessage_label#
-                            </span>
-                        </label>
-                        <span class="fullright">
-                            <textarea class="fullright" name="NotifyCoordMessage" id="NotifyCoordMessage" wrap="virtual" rows="10" cols="40">#$NotifyCoordMessage#</textarea>
-                        </span>
-                        <xar:if condition="!empty($invalid['NotifyCoordMessage'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid NotifyCoordMessage</xar:mlstring></span>
-                        </xar:if>
-                    </p>
-                    
-                    <p class="param">
-                        <label for="NotifyStudentMessage">
-                            <span class="help" title="#xarML('This is the message template for the confirmation message sent to a new student.')#">
-                            #$NotifyStudentMessage_label#
-                            </span>
-                        </label>
-                        <span class="fullright">
-                            <textarea class="fullright" name="NotifyStudentMessage" id="NotifyStudentMessage" wrap="virtual" rows="10" cols="40">#$NotifyStudentMessage#</textarea>
-                        </span>
-                        <xar:if condition="!empty($invalid['NotifyStudentMessage'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid NotifyStudentMessage</xar:mlstring></span>
-                        </xar:if>
-                    </p>
-                    
                     <p class="param">
                         <label for="AlwaysNotify">
                             <span class="help" title="#xarML('The e-mail address that will receive all enrollments from this modules.')#">

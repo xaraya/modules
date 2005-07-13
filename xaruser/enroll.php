@@ -83,15 +83,16 @@ function courses_user_enroll($args)
     if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Call sendconfirm messages
-    $confirmcoord = xarModFunc('courses',
+    $confirm = xarModFunc('courses',
                               'user',
-                              'sendconfirmcoordinator',
+                              'sendconfirms',
                               array('userid'     => xarUserGetVar('uid'),
                                     'planningid' => $planningid,
                                     'studstatus' => $studstatus,
                                     'regdate'    => $regdate,
-                                    'enrollid'   => $enrollid));
-    if(!$confirmcoord) return false;
+                                    'enrollid'   => $enrollid
+                                    ));
+    if(!$confirm) return false;
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('courses', 'user', 'displayplanned', array('planningid' => $planningid)));

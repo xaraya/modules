@@ -35,10 +35,6 @@ function courses_admin_modifyconfig()
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['AlwaysNotify'] = xarModGetVar('courses', 'AlwaysNotify');
     $data['AlwaysNotify_label'] = xarVarPrepForDisplay(xarML('E-mail address that will always be sent a copy of an enrollment'));
-    $data['NotifyCoordMessage'] = xarModGetVar('courses', 'NotifyCoordMessage');
-    $data['NotifyCoordMessage_label'] = xarVarPrepForDisplay(xarML('Message for the coordinator'));
-    $data['NotifyStudentMessage'] = xarModGetVar('courses', 'NotifyStudentMessage');
-    $data['NotifyStudentMessage_label'] = xarVarPrepForDisplay(xarML('Message for the student'));
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !

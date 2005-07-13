@@ -37,7 +37,6 @@
                     </label>
                     <span class="fullright">
                     <xar:data-input name="name" type="2" value="$name" />
-
                     <xar:if condition="!empty($invalid['name'])">
                       <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
                     </xar:if>

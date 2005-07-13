@@ -9,14 +9,14 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
  * 
- * @author the Example module development team 
+ * @author the Courses module development team 
  * @param  $params array containing the different elements of the virtual path
  * @returns array
  * @return array containing func the function to be called and args the query
@@ -47,11 +47,31 @@ function courses_userapi_decode_shorturl($params)
         $courseid = $matches[1];
         $args['courseid'] = $courseid;
         return array('display', $args);
+    // Here we want to search for the courseid when the number is given
+    // after courses/course/[course number]
+    } elseif (preg_match('/^course/i', $params[1])) {
+        // This will bring us to $params[2] analyses
+        preg_match('/^(\w+)/', $params[2], $matches);
+        // something that starts with a number must be for the display function
+        // Note : make sure your encoding/decoding is consistent ! :-)
+        $number = $matches[1];
+        $course = xarModAPIFunc('courses',
+                                'user',
+                                'getcourseid',
+                                array('number' => $number));
+        if (!isset($course['courseid'])) {
+           $msg = xarML('This course does not exists');
+//            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+//               new SystemException($msg));
+            return array('view', $args);
+        }
+        $args['courseid'] = $course['courseid'];
+        return array('display', $args);
     } else {
         // the first part might be something variable like a category name
         // In order to match that, you'll have to retrieve all relevant
         // categories for this module, and compare against them...
-        // $cid = xarModGetVar('example','mastercids');
+        // $cid = xarModGetVar('courses','mastercids');
         // if (xarModAPILoad('categories','user')) {
         // $cats = xarModAPIFunc('categories',
         // 'user',

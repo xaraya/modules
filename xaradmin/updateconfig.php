@@ -24,8 +24,6 @@ function courses_admin_updateconfig()
     if (!xarVarFetch('hidecoursemsg', 'str::', $hidecoursemsg, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('AlwaysNotify', 'str::', $AlwaysNotify, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanningmsg', 'str::', $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('NotifyCoordMessage', 'str::', $NotifyCoordMessage, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('NotifyStudentMessage', 'str::', $NotifyStudentMessage, '', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
@@ -35,8 +33,6 @@ function courses_admin_updateconfig()
     xarModSetVar('courses', 'SupportShortURLs', $shorturls);
     xarModSetVar('courses', 'hidecoursemsg', $hidecoursemsg);
     xarModSetVar('courses', 'hideplanningmsg', $hideplanningmsg);
-    xarModSetVar('courses', 'NotifyCoordMessage', $NotifyCoordMessage);
-    xarModSetVar('courses', 'NotifyStudentMessage', $NotifyStudentMessage);
     xarModSetVar('courses', 'AlwaysNotify', $AlwaysNotify);
     xarModCallHooks('module','updateconfig','courses',
                    array('module' => 'courses'));

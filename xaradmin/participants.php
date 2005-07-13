@@ -51,7 +51,7 @@ function courses_admin_participants()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         
-        if (xarSecurityCheck('EditPlanning', 0, 'Item', "All:All:All")) {
+        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "$planningid:All:All")) {
             $items[$i]['changestatusurl'] = xarModURL('courses',
                 'admin',
                 'changestatus',
@@ -64,7 +64,7 @@ function courses_admin_participants()
                                       array('status' => $item['status']));
         $items[$i]['selected']='';
         
-        if (xarSecurityCheck('AdminPlanning', 0, 'Item', "$planningid:All:All")) {
+        if (xarSecurityCheck('AdminPlanning', 0, 'Planning', "$planningid:All:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deleteparticipant',
@@ -86,6 +86,7 @@ function courses_admin_participants()
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Participants Name'));
     $data['emaillabel'] = xarVarPrepForDisplay(xarML('E-mail address'));
     $data['statuslabel'] = xarVarPrepForDisplay(xarML('Status of student'));
+    $data['regilabel'] = xarVarPrepForDisplay(xarML('Date registration'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     $data['changestatuslabel'] = xarVarPrepForDisplay(xarML('Change status'));
     // Return the template variables defined in this function

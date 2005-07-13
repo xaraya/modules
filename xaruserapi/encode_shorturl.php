@@ -9,8 +9,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /*
  * Support for short URLs (user functions)
@@ -48,7 +48,7 @@
  * or .../<categoryname>/123.html
  *
  * The same kind of encoding/decoding can be done for admin functions as well,
- * except that by default, the URLs will start with index.php/admin/example.
+ * except that by default, the URLs will start with index.php/admin/courses.
  * The encode/decode functions for admin functions are in xaradminapi.php.
  *
  */
@@ -56,7 +56,7 @@
 /**
  * return the path for a short URL to xarModURL for this module
  * 
- * @author the Example module development team 
+ * @author the Courses module development team 
  * @param  $args the function and arguments passed to xarModURL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
@@ -81,7 +81,7 @@ function courses_userapi_encode_shorturl($args)
     if ($func == 'main') {
         $path = '/' . $module . '/';
         // Note : if your main function calls some other function by default,
-        // you should set the path to directly to that other function
+        // you should set the path directly to that other function
     } elseif ($func == 'view') {
         $path = '/' . $module . '/list.html';
         // we'll add the optional $startnum parameter below, as a regular
