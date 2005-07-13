@@ -74,7 +74,7 @@ function ephemerids_admin_view()
                                'admin',
                                'display');
     // Check for exceptions
-    if (!isset($ephemlist) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($ephemlist) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($ephemlist); $i++) {
@@ -142,7 +142,7 @@ function ephemerids_admin_add()
                                'elanguage' => $elanguage));
 
     // The return value of the function is checked here
-    if (!isset($emp) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($emp) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
