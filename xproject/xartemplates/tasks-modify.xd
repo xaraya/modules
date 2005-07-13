@@ -1,0 +1,112 @@
+
+<table border="0" width="100%">
+
+    <!-- the variables used in this menu come from example_user_menu() -->
+
+    <tr><th align="center">&xar-var-menutitle;</th></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <td><a href="&xar-modurl-xproject-admin-new;">&xar-var-menulabel_new;</a></td>
+        <td><a href="&xar-modurl-xproject-user-view;">&xar-var-menulabel_view;</a></td>
+        <td><a href="&xar-modurl-xproject-user-search;">&xar-var-menulabel_search;</a></td>
+        <td><a href="&xar-modurl-xproject-admin-modifyconfig;">&xar-var-menulabel_config;</a></td>
+
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<xar:if condition="!empty($status)">
+    <strong>&xar-var-status;</strong>
+<xar:else />
+
+<xar:blockgroup name="toxarav" id="toxarav" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <td align="right">&xar-var-name_label; : </td>
+        <td>&xar-var-name_value;</td>
+    </tr>
+    <tr>
+        <td align="right">&xar-var-description_label; : </td>
+        <td>&xar-var-description_value;</td>
+    </tr>
+
+        <tr>
+	<xar:if condition="isset($taskparent_name)">
+	        <td align="right">&xar-var-taskparent_label; : </td>
+	        <td><a href="&xar-modurl-xproject-user-display;&projectid=&xar-var-projectid;&taskid=&xar-var-taskparent_id;">&xar-var-taskparent_name;</a></td>
+	<xar:else />
+	  	<td align="center" colspan=2>( &xar-var-roottask; )</td>
+	</xar:if>
+        </tr>
+</table>
+	<br />
+
+<table width="100%" border="0" cellspacing="2" cellpadding="0">
+
+<form method="post" action="&xar-modurl-xproject-tasks-update;">
+
+    <input type="hidden" name="authid" value="&xar-var-authid;" />
+    <input type="hidden" name="projectid" value="&xar-var-projectid;" />
+    <input type="hidden" name="parentid" value="&xar-var-parentid;" />
+    <input type="hidden" name="taskid" value="&xar-var-taskid;" />
+
+<tr><td width="25%">&xar-var-taskname_label;</td>
+<td colspan=2><input type="text" name="name" value="&xar-var-taskname_value;" size=45 maxlength=255></td></tr>
+
+<tr><td>&xar-var-description_label;</td></tr>
+<tr><td colspan=3><textarea name="description" cols="50" rows="6">&xar-var-description_value;</textarea></td></tr>
+
+<tr><td>&xar-var-statuslabel; <select name="status">
+	<xar:loop name="$statusoptions">
+      	<option name="status" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;		</option>
+	</xar:loop>
+	</select>
+  </td>
+  <td width="38%">&xar-var-prioritylabel; <select name="priority">
+	<xar:loop name="$prioritydropdown">
+		<option name="priority" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;</option>
+	</xar:loop>
+	</select>
+  </td>
+  <td width="33%">
+    <input type="submit" value="&xar-var-updatebutton;">
+	
+  </td>
+</tr>
+<tr><td colspan=2>&xar-var-hookoutput;</td>
+    </tr>
+
+</table></form>
+<br />
+
+<table border="0" width="100%" cellpadding="5" cellspacing="0">
+    <tr><th>Num Tasks: &xar-var-numtasks;</th></tr>
+    <xar:loop name="$tasks" prefix="task">
+    <tr><td>
+
+        <a href="&xar-modurl-xproject-user-display;&projectid=&xar-var-task_projectid;&taskid=&xar-var-task_taskid;">&xar-var-task_name;</a>
+        
+    </td>
+    <td>&xar-var-task_description;</td>
+    <td>&xar-var-task_numsubtasks;</td>
+        <td>
+           <xar:if condition="empty($task_editurl)">
+               &xar-var-task_edittitle;
+           <xar:else />
+                   <a href="&xar-var-task_editurl;">&xar-var-task_edittitle;</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($task_deleteurl)">
+               &xar-var-task_deletetitle;
+           <xar:else />
+                   <a href="&xar-var-task_deleteurl;">&xar-var-task_deletetitle;</a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:loop>
+
+</table>
+</xar:if>

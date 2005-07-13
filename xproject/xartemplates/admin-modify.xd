@@ -1,0 +1,72 @@
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+    <tr>
+        <th colspan="3" align="center">xproject Administration</th>
+    </tr>
+    <tr>
+<!-- TODO : waiting for xar:ml* stuff to work again -->
+        <td><a href="&xar-modurl-xproject-admin-new;">&xar-var-menulabel_new;</a></td>
+        <td><a href="&xar-modurl-xproject-user-view;">&xar-var-menulabel_view;</a></td>
+        <td><a href="&xar-modurl-xproject-admin-search;">&xar-var-menulabel_search;</a></td>
+        <td><a href="&xar-modurl-xproject-admin-modifyconfig;">&xar-var-menulabel_config;</a></td>
+    </tr>
+</table>
+<br />
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+
+<form method="post" action="&xar-modurl-xproject-admin-update;">
+
+    <input type="hidden" name="authid" value="&xar-var-authid;" />
+    <input type="hidden" name="projectid" value="&xar-var-project.projectid;" />
+
+<tr><td colspan="2">
+&xar-var-hooks;
+</td></tr>
+
+<tr><td>&xar-var-namelabel;</td>
+<td colspan=3><input type="text" name="name" value="&xar-var-project.name;" size=50 maxlength=255></td></tr>
+
+<tr><td>&xar-var-displaydates;</td>
+<td><input type="checkbox" name="displaydates" value="1" &xar-var-displaydatescheck;></td>
+<td>&xar-var-displayhours;</td>
+<td><input type="checkbox" name="displayhours" value="1" &xar-var-displayhourscheck;></td></tr>
+
+<tr><td>&xar-var-displayfreq;</td>
+<td><input type="checkbox" name="displayfreq" value="1" &xar-var-displayfreqcheck;></td>
+<td>&xar-var-private;</td>
+<td><input type="checkbox" name="private" value="1" &xar-var-privatecheck;></td></tr>
+
+<tr><td>&xar-var-sendmails;</td>
+<td colspan=3><select name="sendmailfreq">
+	<xar:loop name="$sendmailoptions">
+      	<option name="sendmailfreq" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;</option>
+	</xar:loop>
+	</select>
+</td></tr>
+
+<tr><td>&xar-var-importantdays;</td>
+<td><select name="importantdays">
+	<xar:loop name="$importantdaysdropdown">
+      	<option name="importantdays" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;</option>
+	</xar:loop>
+	</select>
+</td>
+<td>&xar-var-criticaldays;</td>
+<td><select name="criticaldays">
+	<xar:loop name="$criticaldaysdropdown">
+      	<option name="criticaldays" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;</option>
+	</xar:loop>
+	</select>
+</td></tr>
+
+<tr><td colspan=2>&xar-var-descriptionlabel;</td><td>&xar-var-billable;</td>
+<td><input type="checkbox" name="billable" value="1" &xar-var-billablecheck;></td></tr>
+<tr><td colspan=4><textarea name="description" cols="60" rows="5">&xar-var-project.description;</textarea></td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="&xar-var-updatebutton;"></td></tr>
+</form>
+
+</table>
+<br />
+

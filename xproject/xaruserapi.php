@@ -1,0 +1,277 @@
+<?php
+// 
+// ----------------------------------------------------------------------
+// POST-NUKE Content Management System
+// Copyright (C) 2002 by the PostNuke Development Team.
+// http://www.postnuke.com/
+// ----------------------------------------------------------------------
+// Based on:
+// PHP-NUKE Web Portal System - http://phxaruke.org/
+// Thatware - http://thatware.org/
+// ----------------------------------------------------------------------
+// LICENSE
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License (GPL)
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WIthOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// To read the license please visit http://www.gnu.org/copyleft/gpl.html
+// ----------------------------------------------------------------------
+// Original Author of file: Chad Kraeft
+// Purpose of file:  task user API
+// ----------------------------------------------------------------------
+
+// ONLY ODD FUNCTION IS GETPROJECTMEMBERS
+
+function xproject_userapi_getall($args)
+{
+    extract($args);
+
+//	if (empty($parentid)) $parentid = 0;
+	
+//	if ($projectid <= 0) $projectid = xarModGetVar('xproject','private');
+	
+//	if (empty($groupid)) $groupid = 0;
+	
+    if ($startnum == "") {
+        $startnum = 1;
+    }
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
+
+    $invalid = array();
+    if (!isset($startnum) || !is_numeric($startnum)) {
+        $invalid[] = 'startnum';
+    }
+    if (!isset($numitems) || !is_numeric($numitems)) {
+        $invalid[] = 'numitems';
+    }
+    if (count($invalid) > 0) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'user', 'getall', 'Example');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+	
+    $tasks = array();
+
+    if (!xarSecAuthAction(0, 'xproject::', '::', ACCESS_OVERVIEW)) {
+        $msg = xarML('Not authorized to access #(1) items',
+                    'xproject');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+
+    $xprojecttable = $xartable['xproject'];
+
+    $sql = "SELECT xar_projectid,
+                   xar_name,
+                   xar_description,
+                   xar_usedatefields,
+				   xar_usehoursfields,
+				   xar_usefreqfields,
+				   xar_allowprivate,
+				   xar_importantdays,
+				   xar_criticaldays,
+				   xar_sendmailfreq,
+				   xar_billable
+            FROM $xprojecttable";
+
+//	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
+//	$sql .= " AND $taskcolumn[projectid] = $projectid";
+//	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
+    $sql .= " ORDER BY xar_name";
+
+/*
+    if ($selected_project != "all") {
+        $sql .= " AND $xproject_todos_column[project_id]=".$selected_project;
+		
+	if (xarSessionGetVar('xproject_my_tasks') == 1 ) {
+        // show only tasks where I'm responsible for
+        $query .= " 
+            AND $xproject_responsible_persons_column[user_id] = ".xarUserGetVar('uid')."
+            AND $xproject_todos_column[todo_id] = $xproject_responsible_persons_column[todo_id]";
+    }
+
+	// WHERE CLAUSE TO NOT PULL IF TASK IS PRIVATE AND USER IS NOT OWNER, CREATOR, ASSIGNER, OR ADMIN
+	// CLAUSE TO FILTER BY STATUS, MIN PRIORITY, OR DATES
+	// CLAUSE WHERE USER IS OWNER
+	// CLAUSE WHERE USER IS CREATOR
+	// CLAUSE WHERE USER IS ASSIGNER
+	// CLAUSE FOR ACTIVE ONLY (ie. started but not yet completed)
+	// CLAUSE BY TEAM/GROUPID (always on?)
+	//
+	// CLAUSE TO PULL PARENT TASK SETS
+	// or
+	// USERAPI_GET FOR EACH PARENT LEVEL
+*/
+
+    $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($projectid,
+			$name, 
+			$description, 
+			$usedatefields, 
+			$usehoursfields, 
+			$usefreqfields, 
+			$allowprivate, 
+			$importantdays, 
+			$criticaldays, 
+			$sendmailfreq, 
+			$billable) = $result->fields;
+        if (xarSecAuthAction(0, 'xproject::', "$name::$projectid", ACCESS_READ)) {
+			if(xarModAPILoad('xproject', 'tasks')) {
+				$numtasks = xarModAPIFunc('xproject', 'tasks', 'countitems', array('projectid' => $projectid));
+			}
+            $tasks[] = array('projectid' => $projectid,
+                             'name' => $name,
+							 'description' => $description,
+                             'usedatefields' => ($usedatefields ? "*" : ""),
+							 'usehoursfields' => ($usehoursfields ? "*" : ""),
+							 'usefreqfields' => ($usefreqfields ? "*" : ""),
+							 'allowprivate' => ($allowprivate ? "*" : ""),
+							 'importantdays' => $importantdays,
+							 'criticaldays' => $criticaldays,
+							 'sendmailfreq' => $sendmailfreq,
+							 'billable' => ($billable ? "*" : ""),
+							 'numtasks' => ($numtasks ? $numtasks : 0));
+        }
+    }
+
+    $result->Close();
+
+    return $tasks;
+}
+
+function xproject_userapi_get($args)
+{
+    extract($args);
+
+    if (!isset($projectid) || !is_numeric($projectid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'item ID', 'user', 'get', 'xproject');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+
+    $xprojecttable = $xartable['xproject'];
+
+    $sql = "SELECT xar_projectid,
+                   xar_name,
+                   xar_description,
+                   xar_usedatefields,
+				   xar_usehoursfields,
+				   xar_usefreqfields,
+				   xar_allowprivate,
+				   xar_importantdays,
+				   xar_criticaldays,
+				   xar_sendmailfreq,
+				   xar_billable
+			FROM $xprojecttable
+            WHERE xar_projectid = " . $projectid;
+    $result = $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    if ($result->EOF) {
+        $result->Close();
+        $msg = xarML('This item does not exist');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+	list($projectid,
+		$name, 
+		$description, 
+		$usedatefields, 
+		$usehoursfields, 
+		$usefreqfields, 
+		$allowprivate, 
+		$importantdays, 
+		$criticaldays, 
+		$sendmailfreq, 
+		$billable) = $result->fields;
+		
+    $result->Close();
+
+    if (!xarSecAuthAction(0, 'xproject::', "$name::$projectid", ACCESS_READ)) {
+        $msg = xarML('Not authorized to access #(1) item #(2)',
+                    'xproject', xarVarPrepForStore($projectid));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    $task = array('projectid' => $projectid,
+				 'name' => $name,
+				 'description' => $description,
+				 'usedatefields' => $usedatefields,
+				 'usehoursfields' => $usehoursfields,
+				 'usefreqfields' => $usefreqfields,
+				 'allowprivate' => $allowprivate,
+				 'importantdays' => $importantdays,
+				 'criticaldays' => $criticaldays,
+				 'sendmailfreq' => $sendmailfreq,
+				 'billable' => $billable);
+
+    return $task;
+}
+
+function xproject_userapi_countitems($args)
+{
+	extract($args);
+	
+	if(empty($parentid)) $parentid = 0;
+	
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+
+    $xprojecttable = $xartable['xproject'];
+    $taskcolumn = &$xartable['xproject_column'];
+
+    $sql = "SELECT COUNT(1)
+            FROM $xprojecttable
+			WHERE $taskcolumn[parentid] = $parentid";
+    $result = $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        return false;
+    }
+
+    list($numtasks) = $result->fields;
+
+    $result->Close();
+
+    return $numtasks;
+}
+?>

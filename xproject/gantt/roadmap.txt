@@ -1,0 +1,36 @@
+*id;label;start;duration;predecessor;progress;type;lead;part_of;
+
+scn1.0;Release 1.0 scenarios;2002-10-01;        ;           ;0       ;0   ;john      ;
+blyout;Blocklayout          ;2002-10-01;49      ;           ;30      ;1   ;dracos    ;scn1.0
+comapi;Comments API         ;2002-11-01;14      ;blyout     ;0       ;1   ;rabbitt   ;scn1.0
+usrsys;User system          ;          ;14      ;blyout     ;0       ;1   ;jan       ;scn1.0
+mlsyst;ML system            ;          ;30      ;blyout     ;70      ;1   ;marco     ;scn1.0
+artmod;Articles module      ;          ;14      ;           ;0       ;1   ;mikespub  ;scn1.0
+admsys;Administration system;2002-11-20;30      ;           ;0       ;1   ;andyv     ;scn1.0
+prmsys;Permission system    ;          ;14      ;           ;0       ;1   ;?         ;scn1.0
+instal;Local installer	    ;	       ;7	;	    ;0	     ;1	  ;johnny    ;scn1.0
+modcon;Module conversion    ;2002-11-15;14	;	    ;0	     ;1	  ;xarayageek;scn1.0
+1.0frz;1.0 Freeze           ;          ;14      ;admsys     ;0       ;1   ;paul      ;scn1.0
+1.0rel;1.0 Release          ;          ;1       ;1.0frz     ;0       ;2   ;john      ;scn1.0
+
+scn1.1;Release 1.1 scenarios;          ;        ;           ;0       ;0   ;john      ;
+blwidg;Blocklayout widget   ;	       ;14	;blyout	    ;0	     ;1	  ;dracos    ;scn1.1
+submod;Subscription modules ;	       ;14	;	    ;0	     ;1	  ;miko      ;scn1.1
+unitst;Integrated testing   ;	       ;21	;blwidg	    ;0	     ;1	  ;marcel    ;scn1.1
+multdb;Multidatabase support;	       ;21	;	    ;0	     ;1	  ;gary	     ;scn1.1
+hlpsys;Help system          ;	       ;21	;	    ;0	     ;1	  ;?	     ;scn1.1
+clntef;Client efforts	    ;	       ;28	;	    ;0	     ;1   ;?	     ;scn1.1
+modgen;Module generator	    ;	       ;14	;	    ;0	     ;1	  ;?	     ;scn1.1
+frmgen;Form generator	    ;	       ;14	;	    ;0	     ;1	  ;?	     ;scn1.1
+1.1frz;1.1 Freeze           ;          ;14      ;1.0rel     ;0       ;1   ;paul      ;scn1.1
+1.1rel;1.1 Release          ;          ;1       ;1.1frz     ;0       ;2   ;john      ;scn1.1
+
+scn1.2;Release 1.2 scenarios;          ;        ;           ;0       ;0   ;john      ;
+pckrpm;Packaging into RPM   ;	       ;28	;	    ;0	     ;1	  ;miko	     ;scn1.2
+pckdeb;Packaging into DEB   ;	       ;21	;pckrpm	    ;0	     ;1	  ;miko	     ;scn1.2
+modupg;Module install/upg.  ;	       ;	;	    ;0	     ;1	  ;?	     ;scn1.2
+webdav;WebDAV support	    ;	       ;28	;	    ;0	     ;1	  ;?	     ;scn1.2
+syncml;SyncML support	    ;	       ;28	;	    ;0	     ;1	  ;?	     ;scn1.2
+workfl;Workflow engine	    ;	       ;49	;	    ;0	     ;1	  ;marcel    ;scn1.2
+1.2frz;1.2 Freeze           ;          ;14      ;1.1rel     ;0       ;1   ;paul      ;scn1.2
+1.2rel;1.2 Release          ;          ;1       ;1.2frz     ;0       ;2   ;john      ;scn1.2
