@@ -46,7 +46,7 @@ function sniffer_admin_delete()
                            array('id' => $id));
 
     // Check for exceptions
-    if (!isset($sniff) && xarExceptionMajor() != XAR_NO_EXCEPTION)
+    if (!isset($sniff) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check for confirmation.
