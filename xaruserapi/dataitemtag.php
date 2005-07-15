@@ -9,12 +9,14 @@ function reports_userapi_dataitemtag($args)
     // those have to be cached and referred to.
     if(!isset($type)) {
         //$code = "htmlentities(".$dataset."->fields['$name'],ENT_COMPAT,'UTF-8')";
-        $code = "utf8_encode(".$dataset."->fields['$name'])";
+        $code = "htmlspecialchars(utf8_encode(".$dataset."->fields['$name']))";
     } else {
         // Type denotes a mime formatted type, generate a cache representation of
         // TODO: test for value of id
         $cacheDir = xarCoreGetVarDirPath() . '/cache/reports/';
         if(!isset($extension)) $extension='bin';// TODO: make this better
+        // Offset allows for example to handle OLE-objects (where a header is added)
+        // The offset for an OLE-object is 78 by the way
         if(!isset($offset)) $offset=0;
 
         $code = ';';
