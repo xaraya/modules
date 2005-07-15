@@ -3,14 +3,16 @@
 // The idea is to keep the overhead low when doing page
 // level caching.
 
-// Cache expiration time in seconds
-$cachingConfiguration['Page.TimeExpiration'] = 1800;
 // Only cache this theme
-$cachingConfiguration['Page.DefaultTheme'] = 'Xaraya_Classic';
+$cachingConfiguration['Output.DefaultTheme'] = 'Xaraya_Classic';
+// Size in bytes to limit the output cache to
+$cachingConfiguration['Output.SizeLimit'] = 2097152;
+// Cached page expiration time in seconds
+$cachingConfiguration['Page.TimeExpiration'] = 1800;
 // Should we cache display view, or not
 $cachingConfiguration['Page.DisplayView'] = 0;
 // Should we show when the cached page was created or not
 $cachingConfiguration['Page.ShowTime'] = 1;
-// Size in bytes to limit the output cache to
-$cachingConfiguration['Output.SizeLimit'] = 2097152;
+// Maximum life time of block cache in seconds
+$cachingConfiguration['Block.TimeExpiration'] = 7200;
 ?>

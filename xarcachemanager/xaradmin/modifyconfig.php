@@ -25,6 +25,12 @@ function xarcachemanager_admin_modifyconfig()
         $data['CachingEnabled'] = 0;
     }
 
+    if (file_exists($varCacheDir . '/output/cache.pagelevel')) {
+        $data['pageCachingEnabled'] = 1;
+    } else {
+        $data['pageCachingEnabled'] = 0;
+    }
+
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
     if (!file_exists($cachingConfigFile)) {
@@ -62,6 +68,9 @@ function xarcachemanager_admin_modifyconfig()
     // reformat seconds as hh:mm:ss
     $data['settings']['PageTimeExpiration'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                              array('starttime' => $data['settings']['PageTimeExpiration'],
+                                                                   'direction' => 'from'));
+    $data['settings']['BlockTimeExpiration'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                                             array('starttime' => $data['settings']['BlockTimeExpiration'],
                                                                    'direction' => 'from'));
 
     $filter['Class'] = 2;
