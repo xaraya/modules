@@ -32,6 +32,7 @@
             <td>
                 <!--<input type="text" name="cachetheme" value="#$settings.PageDefaultTheme#" size="16" maxlength="16" /> -->
                 <select name="cachetheme" id="cachetheme" size="1">
+                    <option value="">All Themes</option>
                     <xar:loop name="$themes">
                         <xar:if condition="$loop:item['name'] eq $settings.PageDefaultTheme">
                             <option value="#$loop:item['name']#" selected="selected">
