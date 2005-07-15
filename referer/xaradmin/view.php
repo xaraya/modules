@@ -40,7 +40,7 @@ function referer_admin_view()
             'numitems' => xarModGetVar('referer',
                 'itemsperpage'))); 
     // Check for exceptions
-    if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
      
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
