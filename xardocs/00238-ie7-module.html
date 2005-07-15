@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <title>ninth ave :: PSP records :: ie7 module</title>
+  <style type="text/css">
+      html { background-color: #993300; }
+      body { 
+        margin: 0px 0px 0px 30px;
+        padding: 0px;
+        border-left: 1px solid #993300;
+        background-color: white;
+        position: relative;
+        bottom: 0px;
+      }
+      #header { 
+        padding: 2px; 
+        border-bottom: 1px solid #993300; 
+      }
+      #logo { 
+        font-family: sans-serif; 
+        position: relative;
+        width: 15em; 
+        text-align: center;
+      }
+      #logo h1 { 
+      }
+      #logo h1 a, #logo h1 a:visited {
+        text-decoration: none;
+        color: #993300; 
+      }
+      #logo h1 a:hover, #logo h1 a:visited:hover {
+        text-decoration: none;
+        color: #aa5429; 
+      } 
+      #logo div { 
+        text-align: center;
+        color: white; 
+        font-weight: bold; 
+        background-color: #993300; 
+      }
+      #contact { 
+        float: right; 
+        color: #993300; 
+        font-size: 80%; 
+        padding: 2px;
+      }
+      #contact a, #contact a:visited {
+        color: #993300; 
+        text-decoration: none;
+      }
+      #contact a:hover, #contact a:visited:hover {
+        text-decoration: none;
+        color: #aa5429; 
+      } 
+      #main { padding: 4px; }
+      #footer { 
+        padding: 2px; 
+        width: 50%; 
+        border-top: 1px solid #b77f40; 
+        color: #b77f40;
+      }
+      h1 { margin: 2px; color: #8c421d; }
+      h2 { color: #99672a; border-bottom: 1px solid #c9ad8d; }
+      h3 { color: #99672a; border-bottom: 1px dashed #c9ad8d; }
+      h4 { color: #99672a; } 
+      pre {
+        position: relative;
+        color: #993300;
+      } 
+  </style>
+  <style type="text/css" media="print">
+
+
+  </style>
+</head>
+<body>
+<div id="header">
+<div id="contact">
+<pre>p: +61 7 3870 8494<br>e: <a href="mailto:info@ninthave.net">info@ninthave.net</a>
+w: <a
+ href="http://www.ninthave.net">http://www.ninthave.net</a></pre>
+</div>
+<div id="logo">
+<h1><a href="http://www.ninthave.net">ninth ave</a></h1>
+<div>software</div>
+</div>
+</div>
+<div id="main">
+<h2>ie7 module </h2>
+<p>PSP #238 Posted by Roger Keays on Fri, 17 September 2004 13:36:27
+for version </p>
+<h3>Planning</h3>
+<h4>Problem Description</h4>
+Microsoft Internet Exporer 5, 5.5 and 6.0 has poor support for many
+CSS2 standards and even completely breaks the standards in some earlier
+versions (e.g. faulty box model). Dean Edwards has written a fantastic
+script called ie7 which uses mostly Javascript to fix these defects. We
+would like to port it to Xaraya to make life easier for us.<br>
+<h4>Requirements</h4>
+<ol>
+  <li>Drop in Xaraya module.</li>
+  <li>Configuration:</li>
+  <ol>
+    <li>enable/disable</li>
+  </ol>
+  <li>All test from ie7 code made available through admin pages.</li>
+  <li>Port some tests to Xaraya:</li>
+  <ol>
+    <li>Pure CSS menus.</li>
+    <li>Complex Spiral demo.<br>
+    </li>
+  </ol>
+</ol>
+<p></p>
+<h3>Detailed Design</h3>
+<ul>
+  <li>Dump ie7 source in xarincudes/ie7.</li>
+  <li>Use eventapi to add javascript links when page is loaded.</li>
+  <li>Only add javascript links if the sniffer reports an IE browser.<br>
+  </li>
+  <li>user-main page - copy targets from http://dean.edwards.name/IE7
+and description from this page.</li>
+  <li>Register module id on Xaraya.com</li>
+  <li>Push to bk and request bugzilla component.</li>
+</ul>
+Code to write:<br>
+<ul>
+  <li>xarinit.php</li>
+  <li>xarversion.php<br>
+  </li>
+  <li>xareventapi.php<br>
+  </li>
+  <li>xaradmin/main.php</li>
+  <li>xartemplates/admin-main.php<br>
+  </li>
+  <li>xaradmin/complexspiral.php</li>
+  <li>xartemplates/admin-complexspiral.php</li>
+  <li>xaradmin/purecssmenus.php</li>
+  <li>xartemplates/admin-purecssmenus.php</li>
+  <li>xaradmin/modifyconfig.php</li>
+  <li>xartemplates/admin-modifyconfig.xd<br>
+  </li>
+  <li>xaradmin/updateconfig.php</li>
+  <li>xaradminapi/getmenulinks.php<br>
+  </li>
+</ul>
+<p></p>
+<h3>Test Report</h3>
+<table border="1" cellspacing="0" cellpadding="2" class="testing">
+  <tbody>
+    <tr>
+      <td style="background-color: rgb(255, 204, 153);"><b>1</b></td>
+      <td style="background-color: rgb(255, 204, 153);"><b>Sanity Tests</b></td>
+      <td style="background-color: rgb(255, 204, 153);"><br>
+      </td>
+    </tr>
+    <tr>
+      <td><br>
+      </td>
+      <td>Module installs.</td>
+      <td>PASS<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">Module removes.<br>
+      </td>
+      <td style="vertical-align: top;">PASS<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">Module reinstalls.<br>
+      </td>
+      <td style="vertical-align: top;">PASS<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: rgb(255, 204, 153);"><b>2</b></td>
+      <td style="background-color: rgb(255, 204, 153);"><b>Test pages<br>
+      </b></td>
+      <td style="background-color: rgb(255, 204, 153);"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">Javascript included on IE browser.<br>
+      </td>
+      <td style="vertical-align: top;">PASS<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">Javascript not included on
+non-IE browser.<br>
+      </td>
+      <td style="vertical-align: top;">PASS<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">ie7 test pages operate as they
+would outside of Xaraya.<br>
+      </td>
+      <td style="vertical-align: top;">PASS<br>
+      </td>
+    </tr>
+    <tr>
+      <td><br>
+      </td>
+      <td>Xaraya test page (cssmenus) display correctly in IE when
+module is installed.<br>
+      </td>
+      <td>FAIL<br>
+      <br>
+Internet Explorer cannot open the Internet site: ... Operation aborted.<br>
+      <br>
+Maybe this: <a
+ href="https://sourceforge.net/forum/message.php?msg_id=2597544">https://sourceforge.net/forum/message.php?msg_id=2597544</a>
+? Setting session_cache_limiter('private'); doesn't fix the problem.<br>
+      <br>
+Probably more like this issue: <a
+ href="https://sourceforge.net/forum/message.php?msg_id=2731453">https://sourceforge.net/forum/message.php?msg_id=2731453</a>.
+Removing the base tag doesn't solve the problem.<br>
+      <br>
+Checking this from an empty template shows that a &lt;base&gt; tag will
+break the script (no loaded message when using ?ie7_debug=true), but
+does not cause the error above. When I add a stylesheet ie7 doesn't
+load either.<br>
+      <br>
+It looks like this error is caused by having the javascript below the
+CSS files. That is exactly the problem. Added a warning to
+admin-main.xd.<br>
+      <hr style="width: 100%; height: 2px;">FIXED<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3>Postmortem</h3>
+<h4>Unmet Requirements</h4>
+<ul>
+  <li>didn't do the complex spiral demo<br>
+  </li>
+</ul>
+<p></p>
+<h4>Known Defects</h4>
+<ul>
+  <li>Most themes have the Javascript after the CSS which will break
+everything.</li>
+</ul>
+<p></p>
+<h4>Product Improvement Proposal</h4>
+<ul>
+  <li>It would be nice to be able to configure which packages to
+include (core/css2/css3 etc).</li>
+  <li>The packed version doesn't seem to import - that means we have a
+30K download :(<br>
+  </li>
+</ul>
+<p></p>
+</div>
+<div id="footer"> &copy; Ninth Avenue Software Pty Ltd 2004 </div>
+</body>
+</html>

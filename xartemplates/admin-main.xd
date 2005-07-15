@@ -1,0 +1,66 @@
+<h3>About</h3>
+Microsoft Internet Exporer 5, 5.5 and 6.0 has poor support for many CSS2
+standards and even completely breaks the standards in some earlier versions
+(e.g. faulty box model). Dean Edwards has written a fantastic script called
+ie7 which uses mostly Javascript to fix these defects, and this is the
+Xaraya-ized version of his work.
+
+Dean's script can be found at <a href="http://dean.edwards.name/IE7">his 
+site</a>
+
+<h3>How to use it?</h3>
+<p>First, check your theme to make sure your head javascript appears before any
+css is loaded, <i>and</i> before the <tt>&lt;base&gt;</tt> tag is declared! 
+This is vital - if you don't do it you will get 'Operation
+Failed' errors in IE and the page will fail to load at all.</p>
+
+<p>Second, enable IE7 in the <a href="#xarModURL('ie7', 'admin', 'modifyconfig')#">
+modify config</a> pages.</p>
+
+<p>Third, add all those CSS features you've been holding back on for
+years!</p>
+
+<h3>Tests</h3>
+ <ul>
+  <li><a href="#xarModURL('ie7', 'admin', 'test')#">Xaraya test suite</a></li>
+  <li>
+   <a href="#xarServerGetBaseURI()#/modules/ie7/xarincludes/ie7/index.html">
+    ie7 test suite
+   </a>
+  </li>
+ </ul>
+
+<h3>Targets</h3>
+ <ul>
+  <li><del>namespace|selector</del></li>
+  <li><del>:root</del></li>
+
+  <li><del>:hover/active/focus</del></li>
+  <li><del>[attr]</del></li>
+  <li><del>[attr="value"]</del></li>
+  <li><del>[attr~="value"]</del></li>
+  <li><del>[attr|="value"]</del></li>
+  <li><del>multiple classes</del></li>
+
+  <li><del>parent &gt; child</del></li>
+  <li><del>adjacent + selector</del></li>
+  <li><del>adjacent ~ selector</del></li>
+  <li><del>:first/last-child</del></li>
+  <li><del>min/max-width/height</del></li>
+
+  <li><del>&lt;abbr/&gt;</del></li>
+  <li><del>position:fixed</del></li>
+  <li><del>box-model</del></li>
+  <li><del>:before/after/content</del></li>
+  <li>:first-line/letter (fix bugs?)</li>
+
+  <li><del>PNG transparency</del></li>
+  <li>text-shadow</li>
+  <li>&lt;q/&gt;</li>
+  <li><del>support for IE5.0</del></li>
+  <li><del>:empty</del></li>
+  <li><del>:lang()</del></li>
+
+  <li>!important</li>
+ </ul>
+

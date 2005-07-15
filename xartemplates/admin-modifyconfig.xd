@@ -1,0 +1,11 @@
+<form method="post" action="&xar-modurl-ie7-admin-updateconfig;">
+Enable ie7? 
+<xar:if condition="!empty($enabled)">
+  <input type="checkbox" name="enabled" value="1" checked="true" />
+<xar:else/>
+  <input type="checkbox" name="enabled" value="1" />
+</xar:if>
+<br/><br/><input type="submit" value="Modify Settings" />
+</form>
+
+

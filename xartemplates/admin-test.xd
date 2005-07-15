@@ -1,0 +1,42 @@
+First, a simple test - this div  should turn red when you hover over it.<br/>
+<div id="ie7div"></div> 
+<br/>
+Now, if you see pull out menus here using IE then you have won!
+
+<div id="ie7test">
+  <ul> 
+    <li>Music
+      <ul>
+        <li>Classical
+          <ul>
+            <li><a href="#">Mozart</a></li>
+            <li><a href="#">Rossini</a></li>
+            <li><a href="#">Pachelbel</a></li>
+          </ul>
+        </li>
+        <li>Popular
+          <ul>
+            <li><a href="#">70s</a></li>
+            <li><a href="#">80s</a></li>
+            <li><a href="#">90s</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li> <!-- music -->
+
+    <li>Dance
+      <ul>
+        <li><a href="#">Salsa</a></li>
+        <li><a href="#">Cha Cha</a></li>
+        <li><a href="#">Waltz</a></li>
+        <li>Swing
+          <ul>
+            <li><a href="#">East Coast Swing</a></li>
+            <li><a href="#">Lindy Hop</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li> <!-- dance -->
+  </ul> <!-- menu -->
+</div>
+<br/>

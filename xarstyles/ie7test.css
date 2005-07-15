@@ -1,0 +1,94 @@
+/**
+ * CSS menus stylesheet.
+ *
+ * @copyright (c) 2004 by Ninth Avenue Software Pty Ltd
+ * @author Roger Keays <r.keays@ninthave.net>
+ */
+
+/* simple test for div hovering */
+#ie7div {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+}
+
+#ie7div:hover {
+    background-color: red;
+}
+
+/* rendering of top level menu container */
+#ie7test ul {
+    list-style: none;    /* no list bullets                        */
+    margin: 0px;         /* don't try to indent lists              */
+    padding: 0px;        /* don't try to indent lists              */
+    padding-right: 4px;  /* compensate for li padding              */
+    z-index: 1;          /* always display on bottom               */
+    height: auto;        /* height of dropdown */
+    background: white;
+}
+
+/* rendering of top level menu items */
+#ie7test li {
+    position: relative;  /* makes this a containing block          */
+    padding: 2px;        /* improve readability                    */
+    width: 5em;          /* using a known width makes life easier  */
+    height: 1.2em;       /* using a known height makes life easier */
+    cursor: pointer;
+}
+
+/* rendering of second level menu container */
+#ie7test ul ul {
+    border: 1px solid black;
+    position: absolute;
+    visibility: hidden;  /* don't show this menu by default        */
+    top: 0px;            /* display directly next to menu bar      */
+    left: 5em;           /* compensate for li padding              */
+    width: 10em;         /* our second level menus are bigger      */
+    z-index: 2;          /* always display above parent ul         */
+    padding-bottom: 1px; /* avoid dropping border                  */
+    height: auto;        /* height of dropdown                     */
+}
+
+/* rendering of second level menu items */
+#ie7test li li {
+    width: 100%;         /* fill the parent list                   */
+}
+
+/* rendering of third level menu container */
+#ie7test ul ul ul {
+    margin-top: 2px;     /* offset slightly                        */
+    top: 0px;            /* move list up to be next to parent li   */
+    left: 10em;          /* align to pop out to the right          */
+    z-index: 3;          /* always display above parent ul         */
+}
+
+/* rendering of third level menu items */
+#ie7test li li li {
+    /* same as second level items */
+}
+
+/* some basic styles to look nice */
+#ie7test li:hover {
+    color: black;
+    background: yellow;
+}
+
+/* make sure links look the same as the rest of the menu */
+#ie7test li a, 
+#ie7test li a:visited, 
+#ie7test li a:hover, 
+#ie7test li a:visited:hover {
+    display: block;         /* we are making the anchor fill             */
+    width: 100%;            /*   the entire li                           */
+    color: inherit;         /* use whatever colours are used in the      */ 
+    background: inherit;    /*   parent li                               */
+    text-decoration: none;
+}
+
+/* 
+ * The magic which shows the menus. The &gt; selector selects only an
+ * immediate child. So * this selector says 'The ul directly below the li
+ * being hovered over'.
+ */
+#ie7test li:hover > ul { visibility: visible; }
+
