@@ -5,6 +5,7 @@ function reports_userapi_push_output($args)
     extract($args);
 
     // Write the xmldata to a temporary inputfile
+    // TODO: make this run properly on all operating systems
     $cacheDir = realpath(xarCoreGetVarDirPath().'/cache/reports');;
     $input = realpath(tempnam($cacheDir,'REP_IN'));
     $hIn = fopen($input, 'w');
@@ -64,7 +65,7 @@ function reports_userapi_push_output($args)
     }
     // When done, remove the xmldata and the produced output file
     // TODO: investigate output cache here, huge potential
-    //unlink($input); unlink($output);
+    unlink($input); unlink($output);
     return true;
 }
 ?>
