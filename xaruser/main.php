@@ -5,7 +5,12 @@
  */
 function reports_user_main() 
 {
-    return xarModFunc('reports','user','view');
+    // TODO: Privileges!
+    if(xarUserIsLoggedIn()) {
+        return xarModFunc('reports','user','view');
+    } else {
+        xarResponseRedirect('/');
+    }
 }
 
 ?>
