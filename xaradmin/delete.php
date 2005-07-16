@@ -56,7 +56,7 @@ function comments_admin_delete( )
         }
     }
 
-    if (!xarVarFetch('submitted', 'str:1:', $submitted)) return;
+    if (!xarVarFetch('submitted', 'str:1:', $submitted,'',XARVAR_NOT_REQUIRED)) return;
     // if we're gathering submitted info form the delete
     // confirmation then we are ok to check delete choice,
     // then delete in the manner specified (or not) and
