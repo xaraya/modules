@@ -252,11 +252,11 @@ function images_userapi_resize($args)
             $location = $image->saveDerivative();
             if (!$location) {
                 $msg = xarML('Unable to save resized image !');
-                return sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
+                return sprintf('<img src="%s" alt="%s" %s />', '', $msg, $attribs);
             }
         } else {
             $msg = xarML('Unable to resize image \'#(1)\'!', $image->fileLocation);
-            return sprintf('<img src="%s" alt="%s" %s />', $url, $msg, $attribs);
+            return sprintf('<img src="%s" alt="%s" %s />', '', $msg, $attribs);
         }
     }
 
