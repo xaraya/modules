@@ -13,7 +13,7 @@
     <xar:if condition="empty($notes)">
         <xar:elseif condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($notes,0,1) eq ';'" />
         <xar:comment>If you hook the uploads module to articles, then file upload fields will contain a comma-separated list of file ids, and you will need to call an API function to retrieve the file information. For dynamic extra fields, you can use [fieldname]_output directly to access the file information.</xar:comment>
-        <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' =&gt; $notes, 'multiple' =&gt; true))</xar:set>
+        <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
         <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
             <p>
                 <a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a>
