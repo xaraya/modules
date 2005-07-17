@@ -20,6 +20,7 @@ function xarbb_admin_modifyconfig()
         case 'modify':
         default:
             $data = array();
+            $settings = array();
             $xarsettings= xarModGetVar('xarbb', 'settings');
             if (!empty($xarsettings)) {
                 $settings = unserialize($xarsettings);
