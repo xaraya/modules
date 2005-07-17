@@ -90,7 +90,7 @@ function images_user_display( $args )
 
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    $pageBuffer = xarModAPIFunc('uploads', 'user', 'flush_page_buffer');
+    $pageBuffer = xarModAPIFunc('base', 'user', 'get_output_buffer');
 
     ob_start();
 
@@ -116,7 +116,7 @@ function images_user_display( $args )
         }
 
 // FIXME: make sure the file is indeed supposed to be stored in the database :-)
-    } else {
+    } elseif (is_numeric($fileId) && xarModIsAvailable('uploads')) {
         $fileSize = 0;
 
         // get the image data from the database
@@ -128,6 +128,10 @@ function images_user_display( $args )
             }
             unset($data);
         }
+
+    } else {
+        xarResponseRedirect('modules/images/xarimages/admin.gif');
+        return TRUE;
     }
 
     // Headers -can- be sent after the actual data

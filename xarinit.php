@@ -24,12 +24,6 @@
  */
 function images_init()
 {
-    if (!xarModIsAvailable('uploads')) {
-        $msg = xarML('The module [#(1)] should be activated first.', 'uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
-        return;
-    }
-    
     // Load any predefined constants
     xarModAPILoad('images', 'user');
     
