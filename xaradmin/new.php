@@ -11,6 +11,7 @@ function articles_admin_new($args)
     if (!xarVarFetch('ptid',  'id', $ptid, NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype', 'id', $itemtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($preview) && isset($article)) {
         $ptid = $article['ptid'];
@@ -185,7 +186,8 @@ function articles_admin_new($args)
 
     $data['previewlabel'] = xarVarPrepForDisplay(xarML('Preview'));
     $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Article'));
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey('articles');
+    $data['return_url'] = $return_url;
     $data['values'] = $values;
 
     if (!empty($ptid)) {

@@ -10,6 +10,7 @@ function articles_admin_create()
     if (!xarVarFetch('new_cids', 'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('preview',  'str',   $preview, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('save',     'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
@@ -103,6 +104,7 @@ function articles_admin_create()
         $data = xarModFunc('articles','admin','new',
                              array('preview' => true,
                                    'article' => $article,
+                                   'return_url' => $return_url,
                                    'invalid' => $invalid));
         unset($article);
         if (is_array($data)) {
@@ -150,6 +152,11 @@ function articles_admin_create()
             xarResponseRedirect(xarModURL('articles', 'user', 'view',
                                           array('ptid' => $ptid)));
         }
+    }
+
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
+        return true;
     }
 
     // if we can edit articles, go to admin view, otherwise go to user view

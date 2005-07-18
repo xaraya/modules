@@ -9,6 +9,7 @@ function articles_admin_modify($args)
 
     // Get parameters
     if(!xarVarFetch('aid','isset', $aid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (isset($aid) && empty($preview)) {
         $preview = 0;
@@ -132,7 +133,8 @@ function articles_admin_modify($args)
 
     $data['previewlabel'] = xarML('Preview');
     $data['updatelabel'] = xarML('Update Article');
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey('articles');
+    $data['return_url'] = $return_url;
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];

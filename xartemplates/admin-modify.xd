@@ -106,7 +106,11 @@
         </div>
         <div class="xar-form-input-wrapper">
             <div class="xar-form-container-after">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" /> <input type="hidden" name="aid" id="aid" value="#$aid#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" /> <input type="submit" name="preview" id="preview" value="#$previewlabel#" /> &nbsp;&nbsp;&nbsp; 
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="aid" id="aid" value="#$aid#" />
+                <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                <input type="hidden" name="return_url" value="#$return_url#" />
+                <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
                 <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')">
                     <input type="submit" name="save" id="save" value="#xarML('Save and Edit')#" /> 
                 </xar:if>

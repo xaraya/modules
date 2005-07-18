@@ -11,6 +11,7 @@ function articles_admin_update()
     if(!xarVarFetch('modify_cids', 'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',  'isset', $preview,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('save',     'isset', $save,   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
@@ -128,6 +129,7 @@ function articles_admin_update()
         $data = xarModFunc('articles','admin','modify',
                              array('preview' => true,
                                    'article' => $article,
+                                   'return_url' => $return_url,
                                    'invalid' => $invalid));
         unset($article);
         if (is_array($data)) {
@@ -155,6 +157,11 @@ function articles_admin_update()
     if (isset($save) && xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
         xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
                                       array('aid' => $aid)));
+        return true;
+    }
+
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
         return true;
     }
 
