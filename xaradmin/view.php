@@ -3,7 +3,7 @@
 /**
  * view items
  */
-function articles_admin_view()
+function articles_admin_view($args)
 {
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
@@ -14,6 +14,8 @@ function articles_admin_view()
     if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    extract($args);
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
