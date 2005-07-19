@@ -52,7 +52,7 @@ function events_admin_view()
                                 'numitems' => xarModGetVar('events',
                                                           'itemsperpage')));
     // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Check individual permissions for Edit / Delete
     // Note : we could use a foreach ($items as $item) here as well, as

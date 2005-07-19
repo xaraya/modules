@@ -48,7 +48,7 @@ function events_user_view()
                                 'numitems' => xarModGetUserVar('events',
                                                                'itemsperpage',
                                                                 $uid)));
-    if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
 // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.

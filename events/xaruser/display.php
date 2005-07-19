@@ -57,7 +57,7 @@ function events_user_display($args)
                           'user',
                           'get',
                           array('exid' => $exid));
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check 2 - if your API function does *not* check for the
     // appropriate access rights, or if for some reason you require higher
