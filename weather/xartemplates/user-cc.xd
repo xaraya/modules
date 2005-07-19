@@ -3,16 +3,26 @@
 <xar:template file="weatherdotcomsearch" />
 
 <div id="currentweather">
-<h1><xar:mlstring>Current Conditions</xar:mlstring></h1>
+<h1 id="weatherCurrentHeader">
+    <xar:ml>
+        <xar:mlstring>Currently in #(1)</xar:mlstring>
+        <xar:mlvar>#$wData.observStation#</xar:mlvar>
+    </xar:ml>
+</h1>
 <table border="0" cellpadding="0" cellspacing="0">
     <tr>
-        <td valign"top" align="center">
-            <xar:comment> TODO::use the tpl image apis here </xar:comment>
-            <img src="modules/weather/xarimages/icons/default/128/#$wData.icon#.png" /><br />
+        <td valign="top" align="center">
+            <img src="modules/weather/xarimages/icons/default/128/#$wData.icon#.png" />
+        </td>
+        <td valign="middle" align="right">
+            <h1>#$wData.temp#&deg;#$wData.unitsTemp#</h1>
+        </td>
+    </tr>
+    <tr>
+        <td valign="top" align="center">
             <strong>#$wData.conditions#</strong>
         </td>
-        <td valign"top" align="right">
-            <h2>#$wData.temp#&deg;#$wData.unitsTemp#</h2>
+        <td valign="top" align="center">
             <strong><xar:mlstring>Feels Like</xar:mlstring><br />
             #$wData.feelsLike#&deg;#$wData.unitsTemp#</strong>
         </td>
@@ -25,12 +35,12 @@
         <th><xar:mlstring>Tonight</xar:mlstring></th>
     </tr>
     <tr>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <xar:comment> TODO::use the tpl image apis here </xar:comment>
             <img src="modules/weather/xarimages/icons/default/32/#$eData[0]['part']['d']['icon']#.png" /><br />
             <strong>#$eData[0]['part']['d']['cond']#</strong><br />
         </td>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <xar:comment> TODO::use the tpl image apis here </xar:comment>
             <img src="modules/weather/xarimages/icons/default/32/#$eData[0]['part']['n']['icon']#.png" /><br />
             <strong>#$eData[0]['part']['n']['cond']#</strong><br />
@@ -41,10 +51,10 @@
         <th><xar:mlstring>Overnight Low</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
     </tr>
     <tr>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong style="color:red;">#$eData[0]['hi']#&deg;</strong>
         </td>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong style="color:blue;">#$eData[0]['lo']#&deg;</strong>
         </td>
     </tr>
@@ -53,10 +63,10 @@
         <th><xar:mlstring>Sunset</xar:mlstring></th>
     </tr>
     <tr>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong>#$eData[0]['sunr']#</strong>
         </td>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong>#$eData[0]['suns']#</strong>
         </td>
     </tr>
