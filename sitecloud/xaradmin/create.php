@@ -8,7 +8,7 @@ function sitecloud_admin_create()
     if (!xarSecConfirmAuthKey()) return;
     if (!ereg("^http://|https://|ftp://", $url)) {
         $msg = xarML('Invalid Address for Cloud to Monitor');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     // The API function is called

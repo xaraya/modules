@@ -27,7 +27,7 @@ function sitecloud_admin_view()
                                                           'itemsperpage')));
     if (empty($links)) {
         $msg = xarML('No urls to spider, please add a site.', 'sitecloud');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
