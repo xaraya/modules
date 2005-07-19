@@ -49,6 +49,20 @@ function hookbridge_privateapi_common( $args )
         $common['type']      = xarML( 'Hook Bridge Administration' );
     }
 
+    // Item Types Array
+    $itemtypes[1] = xarML( 'Create Hook' );
+    $itemtypes[2] = xarML( 'Update Hook' );
+    $itemtypes[3] = xarML( 'Delete Hook' );
+    $itemtypes[4] = xarML( 'Transform Input Hook' );
+    $itemtypes[5] = xarML( 'Transform Output Hook' );
+    $itemtypes[6] = xarML( 'GUI Display Hook' );
+    $itemtypes[7] = xarML( 'GUI Modify Hook' );
+    $itemtypes[8] = xarML( 'GUI New Hook' );
+    $itemtypes[9] = xarML( 'Module Update Config Hook' );
+    $itemtypes[10] = xarML( 'Module Remove Hook' );
+    $itemtypes[11] = xarML( 'Module GUI Modify Config Hook' );
+    $common['itemtype_array'] = $itemtypes;
+
     return array( 'common' => $common );
 }
 
