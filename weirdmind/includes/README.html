@@ -1,0 +1,136 @@
+<HTML>
+
+<HEAD><title>WeirdMind -- Browser embeddable remote X access in Java</title></head>
+<body bgcolor=#ffffe0>
+<h1> WeirdMind -- Browser embeddable remote secure X access in Java</h1>
+<h2> Introduction </h2>
+<p>
+WeirdMind allows you to embed an entire X server and SSH1 client in
+your java-enabled web browser. If an X program is opened, the X server
+will be automatically started, and the window will pop up on top of
+your web browser.  
+</p><p> 
+
+WeirdMind is built from combining the <A
+HREF=http://www.jcraft.com/weirdx/index.html>WeirdX</A> X server with
+the <A HREF=http://www.mindbright.se>MindTerm</a> 1.2.1 (last GPL
+version) SSH client. Hence the name, "WeirdMind." The net result is
+that you can set up a web page on your server, such that you can
+connect from any web browser and run both shell commands and X11
+programs. The connection is secure and encrypted. Both your shell
+commands and X11 connections are tunneled through the secure
+link. WeirdMind works with most major web browsers' internal JVM's. It
+has been tested on various versions of Netscape, Internet Explorer,
+and Mozilla.
+</p>
+<h2>Screenshot</h2>
+<p>
+<A HREF=modules/weirdmind/includes/screenshot.png><IMG SRC=modules/weirdmind/includes/screenshot_sml.png></A>
+</p><p>
+This shows Gimp running on a remote Linux server, displayed under
+Windows 98 using WeirdMind running within MSIE. Click on the image for 
+a larger version.
+
+</p>
+
+<h2>Getting WeirdMind</h2>
+<p>
+WeirdMind can be downloaded from [NOTE: corrected URL]<A HREF=http://www.tam.cornell.edu/Computer.old/remoteaccess/weirdmind-0.7.tar.gz>http://www.tam.cornell.edu/Computer/remoteaccess/weirdmind-0.7.tar.gz</A>. WeirdMind is covered by the <A HREF=COPYING>GNU General Public License</A>
+<br> <b>IMPORTANT:</B> If you're upgrading from weirdmind-0.5, you MUST add <tt> &lt;param name="x11fwd" value="true"&gt;</tt> to your <tt>weirdmind.html</tt> file. 
+
+</p>
+
+<h2>Building WeirdMind</h2>
+<p>
+The downloadable archive is pre-compiled, however if you wish
+to recompile, you will probably need to edit the Makefile. In particular, 
+JAVAC should point to an installation of IBM's "jikes" compiler. 
+JAVA_HOME should point to a JDK installation, preferable 1.3 or above. 
+"<tt>make clean</tt>" will remove backup and .class files, and 
+"<tt>make</tt>" will rebuild the class files and JAR archive. 
+One reason to rebuild is to put your server's SSH1 public key in 
+the "defaults/known_hosts.txt" file in the JAR archive. This will
+make man-in-the-middle attacks against SSH1 far more difficult. 
+(There are published exploits for SSH1 man-in-the-middle attacks). 
+</p>
+
+<h2>Installing WeirdMind</h2>
+
+<p>
+Usually, you will want to install WeirdMind on your web server, so
+that you can run programs remotely. Because WeirdMind includes an SSH
+client, and many countries still have restrictions on the export of
+encryption products, you need to check your local laws before putting
+WeirdMind on your web server. In the US, for example, registration
+with the government and posting of source code is required (see <A
+HREF=http://www.bxa.doc.gov/Encryption/regs.htm>http://www.bxa.doc.gov/Encryption/regs.htm</A> for information). Posting of source code is a good
+idea anyway, because it satisfies the GPL's requirements for the distribution
+of binary code. 
+</p><p>
+You will need to copy the following
+to a directory on your web server: 
+</p>
+<ul>
+  <li> <tt>weirdmind.html</tt>  Your login page -- make a link to this from your web page
+  <li> <tt>weirdmind-<VERSION>.tar.gz</tt> WeirdMind source code -- make a link to this from your web page or the login page. 
+  <li> <tt>props</tt> Properties file for WeirdX
+  <li> <tt>weirdmind.jar</tt> The actual Java code archive
+
+</ul>
+<p>
+Now you need to edit <tt>weirdmind.html</tt> to suit your location. 
+</p>
+<ul>
+ <li>You must change the "server" parameter to the IP address of your web 
+server (because of Java applet security restrictions, the SSH client 
+is only permitted to connect back to the web server from which it came). 
+ <li>Similarly, replace the "allowhostn" parameters with a listing of the 
+fully qualified domain names AND IP ADDRESSES of the hosts which 
+should be allowed to open windows on the Java X server running on your
+client. This is equivalent to 'xhost' access control. An arbitrary number
+of hosts is permitted, but they must be enumerated beginning with n=1 
+without skipping any values of n. This would usually just be the host 
+name and IP address of your web server. 
+ <li> Additional parameters to MindTerm (see mindbright/ssh/SSHPropertyHandler.java) can be placed in weirdmind.html
+ <li>Finally, change "properties_url" to the absolute HTTP URL of 
+the "props" file you put on the web above. 
+ <li> You can reconfigure WeirdX by editing the 'props' file.
+</ul>
+<p>
+Now point your web browser at <tt>weirdmind.html</tt> and give it a try!
+</p>
+<h2>Using WeirdMind</h2>
+<p>
+When you point your browser at <tt>weirdmind.html</tt>, it will show
+the Java MindTerm applet. You can use this to connect to the SSH1 server
+on your web server host. (Most browsers' applet security policies will not
+allow connections elsewhere.) After you log in and authenticate, it works 
+like any other remote SSH terminal, except that the DISPLAY variable is
+set, pointing to an SSH tunnel back to your web browser. If you run 
+a program that opens an X window, it will cause the WeirdMind applet 
+to initialize the WeirdX X server, and use WeirdX to render the window. 
+</p><p>
+Don't expect everything to work perfectly in every web browser. Different
+browsers and JVM versions seem to behave differently, particularly with 
+respect to clicking-and-dragging or menu selections. 
+</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li> Watch your web browser's Java console for error messages
+<li> If you can't open an X window (and get a little error dialog
+instead), probably your host based access control isn't working right. 
+Make sure the host listing in weirdmind.html (allowhostn) starts with
+n=1 and there are no missing values. Make sure you have IP addresses
+as well as host names. You can get the host name/IP address it's trying
+to match from the error messages on the Java console.
+<li> Strangenesses with respect to different mouse buttons and pop up menus
+are to be expected. These are either bugs in the JVM you are using, or 
+WeirdX. If you find these annoying, I suggest fixing them and submitting 
+the fix to your JVM provider or the WeirdX team. 
+</ul>
+<h2>Author</h2>
+<p>
+WeirdMind was integrated from WeirdX and Mindterm by <A HREF=mailto:NOsSPAMdPERMITTEDhHERE4@cornell.edu>Steve Holland</A>
+</p>
+</body>
+</html>
