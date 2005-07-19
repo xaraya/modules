@@ -105,7 +105,7 @@ function contact_admin_createcompanyinfo($args)
             // suceeded then an appropriate message is posted.  Note that if the
             // function did not succeed then the API function should have already
             // posted a failure message so no action is required
-            if (!isset($CompCity) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+            if (!isset($CompCity) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
             // Success
             xarSessionSetVar('statusmsg', xarML('CITY_CREATED'));
 
@@ -144,7 +144,7 @@ function contact_admin_createcompanyinfo($args)
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
     // posted a failure message so no action is required
-    if (!isset($id) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($id) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
     xarSessionSetVar('statusmsg', xarML('contactCREATED'));
@@ -227,7 +227,7 @@ function contact_admin_createcompanyinfo($args)
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
     // posted a failure message so no action is required
-    if (!isset($id) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($id) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
     xarSessionSetVar('statusmsg', xarML('contactCREATED'));

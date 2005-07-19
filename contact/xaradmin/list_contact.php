@@ -55,7 +55,7 @@ function contact_admin_list_contact()
                                                           'itemsperpage')));
 
     // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
 
     // Check individual permissions for Edit / Delete
@@ -73,7 +73,7 @@ function contact_admin_list_contact()
 
 
     // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
         } else {
             $list[$i]['editurl'] = '';

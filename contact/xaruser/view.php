@@ -39,7 +39,7 @@ function contact_user_view()
                           array('startnum' => $startnum,
                                 'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
-    if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
 // TODO: check for conflicts between transformation hook output and
 //       xarVarCensor / xarVarPrepForDisplay

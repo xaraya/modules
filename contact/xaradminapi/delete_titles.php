@@ -26,7 +26,7 @@ function contact_adminapi_delete_titles($args)
            $result = $dbconn->Execute($query);
             if (!$result) return;
        }
-       if (!isset($codel) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+       if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
     xarSessionSetVar('statusmsg', xarMLByKey('TITLEDELETED'));

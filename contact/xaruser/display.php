@@ -111,7 +111,7 @@ function contact_user_display($args)
                                'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
      // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -158,7 +158,7 @@ function contact_user_display($args)
                                'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
      // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -240,7 +240,7 @@ function contact_user_display($args)
                          'get',
                          array('id' => $id));
     // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     $data['edit'] = $edit;
     $data['contact_id'] = $edit['id'];
@@ -310,7 +310,7 @@ function contact_user_display($args)
                                'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
      // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -331,7 +331,7 @@ function contact_user_display($args)
                                'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
      // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -353,7 +353,7 @@ function contact_user_display($args)
                                'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
      // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -375,7 +375,7 @@ function contact_user_display($args)
                                'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
      // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -396,7 +396,7 @@ function contact_user_display($args)
                                'numitems' => xarModGetVar('contact',
                                                           'itemsperpage')));
      // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already

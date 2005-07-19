@@ -30,7 +30,7 @@ function contact_adminapi_delete_department($args)
           }
 
 
-       if (!isset($codel) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+       if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
     xarSessionSetVar('statusmsg', xarMLByKey('DEPARTMENTDELETED'));

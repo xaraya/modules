@@ -136,7 +136,7 @@ function contact_admin_edit_contact()
                          'get',
                          array('id' => $id));
     // Check for exceptions
-    if (!isset($edit) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($edit) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     $data['edit'] = $edit;
     $data['contact_id'] = $edit['id'];
@@ -205,7 +205,7 @@ function contact_admin_edit_contact()
                                                           'itemsperpage')));
 
      // Check for exceptions
-    if (!isset($departments) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($departments) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -227,7 +227,7 @@ function contact_admin_edit_contact()
                                                           'itemsperpage')));
 
      // Check for exceptions
-    if (!isset($titles) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($titles) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -250,7 +250,7 @@ function contact_admin_edit_contact()
                                                           'itemsperpage')));
 
      // Check for exceptions
-    if (!isset($city) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($city) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -273,7 +273,7 @@ function contact_admin_edit_contact()
                                                           'itemsperpage')));
 
      // Check for exceptions
-    if (!isset($country) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($country) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -295,7 +295,7 @@ function contact_admin_edit_contact()
                                                           'itemsperpage')));
 
      // Check for exceptions
-    if (!isset($items) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already

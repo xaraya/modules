@@ -73,7 +73,7 @@ function contact_user_sendmail()
                          'get',
                          array('id' => $id));
     // Check for exceptions
-    if (!isset($edit) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($edit) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
      $data = xarModAPIFunc('contact','user','menu');
     $data['edit'] = $edit;
