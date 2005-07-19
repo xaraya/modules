@@ -1,8 +1,0 @@
-<div align="center">
-<xar:if condition="!empty($noquote)">
-   #$nobookmarks#
-<xar:else/>
-       <br /><a href='#$bm_url#'>#$bm_name#</a><br />
-    <br />
-</xar:if>
-</div>
