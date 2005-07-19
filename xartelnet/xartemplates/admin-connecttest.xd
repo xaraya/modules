@@ -1,0 +1,47 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarTelnet Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <div style="padding: 1px;" class="xar-norm-outline">
+    <form method="post" action="&xar-modurl-xartelnet-admin-connectstatus;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Test Connection<br> It is best to use a website to test a connection.</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Remote Host</xar:mlstring>
+                    </td>
+                    <td>
+                        #$host#
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Port Number</xar:mlstring>
+                    </td>
+                    <td>
+                        #$port#
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Timeout value</xar:mlstring>
+                    </td>
+                    <td>
+                        #$timeout#
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td colspan="2">
+                        <br />
+                        <input type="submit" value="Test Connection"  />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarTelnet Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+        <xar:if condition="file_exists('modules/xartelnet/xarimages/admin.gif')" >
+            <img src="modules/xartelnet/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <xar:else />
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The xarTelnet module allows you to connect to any device/protocol that supports telnet. Provided are a set of API to help module developers come up with creative ways to use.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>You must configure xarTelnet before you can successfully use it.  The configuration sets the default host, port, etc that will be used if none other is specified.  This is a utility module, there are no user controls.  Module writers can use the follow method to provide thier programs with telnet functionality:</xar:mlstring>
+	    <xar:mlstring>
+<pre> 
+if( (dollar sign)socket = xarmodapifunc('xartelnet','user','connect', NULL))
+{
+    (dollar sign)write = "This is an example command, for web browsing use GET / HTTP/1.0\n\n";
+    xarmodapifunc('xartelnet','user','write',array('input' => (dollar sign)write, 
+    						    'socket' => (dollar sign)socket));
+    (dollar sign)results = xarmodapifunc('xartelnet','user','read',array('input' => xarmodgetvar('xartelnet','prompt'), 
+									'socket' => (dollar sign)socket));
+    xarmodapifunc('xartelnet','user','disconnect',(dollar sign)socket);
+} 
+</pre>
+	    xarTelnet expects to recieve an array containing two variables, input and socket.  You must pass the socket to use and input contains, for the read function, the text to stop reading at, or for the write function, what to write.<br><br>
+	    In the future xarTelnet will become scriptable.
+	    </xar:mlstring>
+            <br /><br />
+            <xar:mlstring>
+			You can do the following from the menu: 
+			</xar:mlstring>
+			<ul>
+				<li><xar:mlstring>Modify Config -- From here, you can configure the settings.</xar:mlstring></li>
+				<li><xar:mlstring>Test Connnection -- Test the connection settings.</xar:mlstring></li>
+			</ul>
+		</div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<xar:mlstring>There are no included blocks with the xartelnet Module</xar:mlstring>
+        </div>
+        <br />
+    </div>
+</div>

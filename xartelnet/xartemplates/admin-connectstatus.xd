@@ -1,0 +1,18 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarTelnet Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>xarTelnet Connection Status</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring>Below is the result of the test:</xar:mlstring>
+                <br />
+                #$results#
+                <br /><br />
+                <xar:mlstring>You can modify your configuration </xar:mlstring>
+                        <a href="#xarModURL('xartelnet', 'admin', 'modifyconfig')#">here</a>.
+                <br /><br />
+        </div>
+    </div>
+</div>

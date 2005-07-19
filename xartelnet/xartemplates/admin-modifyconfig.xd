@@ -1,0 +1,72 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarTelnet Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <div style="padding: 1px;" class="xar-norm-outline">
+    <form method="post" action="&xar-modurl-xartelnet-admin-updateconfig;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>xarTelnet API configuration</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Default Remote Host</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="host" value="#$host#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Default Remote Port</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="port" value="#$port#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Turn on debugging</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="debug" value="1" #$debug# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Set the timeout value</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="timeout" value="#$timeout#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Set the prompt to stop reading</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="prompt" value="#$prompt#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Add HTML to Newline</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="add_html_to_newline" value="1" #$add_html_to_newline# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="submit" value="Submit"  />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    </div>
+</div>
