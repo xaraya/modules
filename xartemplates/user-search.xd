@@ -1,0 +1,82 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<h2>
+    <xar:mlstring>
+        Search in Courses
+    </xar:mlstring>
+</h2>
+<xar:if condition="!empty($courses) and count($courses) gt 0">
+    <h4>
+        <xar:mlstring>
+            Courses Found
+        </xar:mlstring>
+        :
+    </h4>
+    <ul>
+        <xar:foreach in="$courses" key="$courseid" value="$course">
+            <li>
+                <a href="#xarModURL('courses', 'user', 'display', array('courseid' => $course['courseid']))#">
+                    #$course['name']#
+                </a>
+            </li>
+        </xar:foreach>
+    </ul>
+<xar:else/>
+    <xar:if condition="!empty($status)">
+        <p>
+            #$status#
+        </p>
+    </xar:if>
+</xar:if>
+<p>
+    <xar:mlstring>
+        Search in
+    </xar:mlstring>
+    :
+</p>
+<p>
+    <xar:mlstring>
+        Course Number
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$number == 1">
+    <input type="checkbox" name="number" id="number" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="number" id="number" value="1" />
+    </xar:if>
+</p>
+
+<p>
+    <xar:mlstring>
+        Course Name
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$name == 1">
+    <input type="checkbox" name="name" id="name" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="name" id="name" value="1" />
+    </xar:if>
+</p>
+<p>
+    <xar:mlstring>
+        Course short Description
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$shortdesc == 1">
+    <input type="checkbox" name="shortdesc" id="shortdesc" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="shortdesc" id="shortdesc" value="1" />
+    </xar:if>
+</p>
+<p>
+    <xar:mlstring>
+        Course full Description
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$longdesc == 1">
+    <input type="checkbox" name="longdesc" id="longdesc" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="longdesc" id="longdesc" value="1" />
+    </xar:if>
+</p>
