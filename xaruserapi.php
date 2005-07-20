@@ -71,6 +71,8 @@ function bbcode_transform($text)
     include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
     $bbcode = new StringParser_BBCode();
 
+    $bbcode->addCode ('p', 'callback_replace', 'do_bbcode_para', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
     $bbcode->addCode ('b', 'callback_replace', 'do_bbcode_bold', array (),
                       'inline', array ('listitem', 'block', 'inline', 'link'), array());
     $bbcode->addCode ('i', 'callback_replace', 'do_bbcode_italics', array (),
@@ -163,14 +165,18 @@ function bbcode_stripcontents ($text)
 }
 
 // Function to include images
-function do_bbcode_img ($action, $attributes, $content, $params, $node_object) 
+function do_bbcode_img ($action, $attributes, $content, $params, $node_object)
 {
     if ($action == 'validate') {
         return true;
     }
     return '<img src="'.htmlspecialchars($content).'" alt="">';
 }
-
+// Bug 4826
+function do_bbcode_para ($action, $attributes, $content, $params, &$node_object)
+{
+    return xarTplModule('bbcode','user', 'para', array('replace' => $content));
+}
 function do_bbcode_bold ($action, $attributes, $content, $params, &$node_object)
 {
     return xarTplModule('bbcode','user', 'bold', array('replace' => $content));
