@@ -1,0 +1,57 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
+<div style="margin: auto;">
+<xar:if condition="$calid ge 1">
+  <h2>#$message#</h2>
+</xar:if>
+<h2><xar:mlstring>Add a calendar to the database</xar:mlstring></h2>
+<form method="post" action="&xar-modurl-calendar-admin-create_calendars;">
+  <input type="hidden" name="authid" id="authid" value="#$authid#" />  
+  <table>
+    <tr> 
+      <td><xar:mlstring>Calendar name</xar:mlstring></td>
+      <td>
+          <input type="text" name="calname" value="Calendar name">
+      </td>
+    </tr>
+    <tr><td colspan="2"><xar:mlstring>Please specify a file or an URI:</xar:mlstring></td></tr>
+    <tr>
+      <td><xar:mlstring>Database calendar</xar:mlstring><input type="radio" name="addtype" value="db" checked /></td>
+      <td>          
+      </td>
+    </tr>
+    <tr>
+      <td>File<input type="radio" name="addtype" value="file" /></td>
+      <td>        
+        <xar:if condition="$thereAreIcs eq 0">
+          <xar:mlstring>No new calendars found in var/calendar</xar:mlstring>
+        <xar:else />  
+          <xar:mlstring>New filenames found in var/config:</xar:mlstring> 
+          <select name="location" id="default_cal">           
+            <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
+              <xar:if condition="in_array($filename,$default_cal)">
+                <option value= "#$filename#" selected="selected">#$filename#</option>
+              <xar:else/>
+                <option value= "#$filename#">#$filename#</option>
+              </xar:if>
+            </xar:foreach>
+          </select>
+        </xar:if>
+      </td>
+    </tr>
+    <tr>
+      <td>Url<input type="radio" name="addtype" value="uri" /></td>
+      <td>          
+          <input type="text" name="uri" size="50" maxlength="255" value="webcal://">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"> 
+        <input type="submit" name="add_calendar" value="#$addbutton#" />
+      </td>
+    </tr>
+  </table>
+</form>
+</div>
+</div>

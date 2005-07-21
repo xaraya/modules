@@ -1,0 +1,7 @@
+<h2>iCal_Parser's benchmarks</h2>
+#$profile#
+
+<h2>Here we have what the resulting ical object looks like</h2>
+<pre>
+#$ical#
+</pre>
