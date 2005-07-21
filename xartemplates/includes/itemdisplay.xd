@@ -1,0 +1,28 @@
+<div style="margin: 5px; border: 1px dashed #000000;">
+    <table border="0" cellspacing="5" width="100%">
+      <tr>
+        <td colspan="2" style="font-size: 12pt;">
+          <a href="#$url#">#$name#</a>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <xar:if condition="$pic ne false">
+            <a href="#$url#"><img src='#$pic#' border='1' style="width: 100px;" alt="Display this item" /></a>
+          <xar:else />
+            <a href="#$url#"><img src="#xarTplGetImage('noimage.gif','shopping')#" border="1" alt="Display this item" /></a>
+          </xar:if>
+        </td>
+        <td valign="top">
+          <b><xar:mlstring>Price:</xar:mlstring> #$price#</b>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <b>#$status#</b><br />
+          <xar:if condition="!isset($nobuy)">
+            <p><a href="#$buyurl#">Add To Cart</a></p>
+          </xar:if>
+          <p>#$summary#</p>
+        </td>
+      </tr>
+    </table>
+</div>
+
+

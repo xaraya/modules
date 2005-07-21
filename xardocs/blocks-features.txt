@@ -1,0 +1,30 @@
+Xaraya Shopping Module
+Blocks Features
+
+I.User Blocks
+a.Shopping Cart Block
+i.shows how many items are in the cart and wishlist
+ii.shows the items in the cart and wishlist
+iii.displays messages about order status
+b.Recommendations Block
+i.shows recommendations for items based on purchases, items currently in the cart and wishlist, and the current item
+ii.shows newly added items
+iii.displays recently viewed items
+
+II.Admin Blocks
+a.Shopping Cart Block
+i.Configuration
+1.set which options are displayed
+2.set how many items are displayed
+ii.Display
+1.see the number of pending orders for approval
+2.see the number orders that have been modified and need to be approved
+b.Recommendations Block
+i.Configuration
+1.set what type or recommendations to display
+2.set how many of each is displayed
+ii.Display
+1.see the number of pending recommendations  and comments awaiting approval
+
+
+

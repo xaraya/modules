@@ -1,0 +1,236 @@
+<xar:if condition="isset($cids)">
+  <xar:categories-navigation layout="trails" showchildren="1" module="shopping" func="showitems" cids="$cids" />
+</xar:if>
+
+<div class="xar-mod-body">
+  <h2>#$name#</h2>
+
+  <table border="0" cellspacing="10" cellpadding="0" width="100%">
+    <tr>
+      <td width="20%" valign="top">
+        <a href="#$phaseurl#&amp;phase=3">
+          <xar:if condition="!$firstpic">
+            <img src="#xarTplGetImage('noimage.gif')#" border="1" alt="Display more pictures" />
+          <xar:else />
+            <img src='#$firstpic#' style="width: 200px;" alt="Display more pictures" />
+          </xar:if>
+        </a>
+      </td>
+      <td width="50%" valign="top">
+
+        <table border="0" cellspacing="5" cellpadding="0">
+          <tr>
+            <td width="50%" align="right"><b><xar:mlstring>Price: </xar:mlstring></b></td>
+            <td align="left">#$price#</td>
+          </tr>
+          <tr>
+            <td width="50%" align="right"><b><xar:mlstring>Item ID: </xar:mlstring></b></td>
+            <td align="left">#$iid#</td>
+          </tr>
+          <tr>
+            <td width="50%" align="right"><b><xar:mlstring>Stock Level: </xar:mlstring></b></td>
+            <td align="left">#$status#</td>
+          </tr>
+          <xar:if condition="isset($hooks.hitcount)">
+            <tr>
+              <td width="50%" align="right"><b><xar:mlstring>Times Viewed: </xar:mlstring></b></td>
+              <td align="left">#$hits#</td>
+            </tr>
+          </xar:if>
+          <tr>
+            <td width="50%" align="right"><b><xar:mlstring>Times Bought: </xar:mlstring></b></td>
+            <td align="left">#$buys#</td>
+          </tr>
+        </table>
+
+        <xar:if condition="isset($displaylowstock) and $displaylowstock == true">
+          <table border="0" cellspacing="5" cellpadding="0">
+            <tr>
+               <td colspan="2"><span style="color: #FF0000; font-weight: bold;">
+               #$lowstockmessage#
+               </span></td>
+            </tr>
+          </table>
+        </xar:if>
+
+      </td>
+
+      <td width="40%" valign="top">
+        <xar:if condition="!isset($nobuy)">
+          <div class="xar-norm-outline" style="padding: 2px;">
+            <span style="font-weight: bold; border-bottom: 1px dotted #000000;"><xar:mlstring>Ready To Buy!</xar:mlstring></span>
+            <ul style="list-style: none;">
+                <li><a href="#$addcarturl#">Add To Cart</a></li>
+                <li><a href="#$addwishurl#">Add To Wishlist</a></li>
+            </ul>
+           </div>
+        </xar:if>
+      </td>
+
+    </tr>
+    <xar:if condition="isset($hooks['ratings'])">
+      <tr>
+        <td align="left" colspan="3">#$hooks['ratings']#</td>
+      </tr>
+    </xar:if>
+  </table>
+
+<!-- Set the classes  based on the phase -->
+<xar:set name="descls">'xar-accent'</xar:set>
+<xar:set name="dessty">'border:solid 1px #000000; padding: 3px;'</xar:set>
+<xar:if condition="$phase==1">
+  <xar:set name="descls">'xar-norm'</xar:set>
+  <xar:set name="dessty">'border-left: solid 1px #00000; border-right: solid 1px #000000; border-top: solid 1px #000000; padding: 3px;'</xar:set>
+</xar:if>
+
+<xar:set name="comcls">'xar-accent'</xar:set>
+<xar:set name="comsty">'border:solid 1px #000000; padding: 3px;'</xar:set>
+<xar:if condition="$phase==2">
+  <xar:set name="comcls">'xar-norm'</xar:set>
+  <xar:set name="comsty">'border-left: solid 1px #00000; border-right: solid 1px #000000; border-top: solid 1px #000000; padding: 3px;'</xar:set>
+</xar:if>
+
+<xar:set name="piccls">'xar-accent'</xar:set>
+<xar:set name="picsty">'border:solid 1px #000000; padding: 3px;'</xar:set>
+<xar:if condition="$phase==3">
+  <xar:set name="piccls">'xar-norm'</xar:set>
+  <xar:set name="picsty">'border-left: solid 1px #00000; border-right: solid 1px #000000; border-top: solid 1px #000000; padding: 3px;'</xar:set>
+</xar:if>
+
+<xar:set name="reccls">'xar-accent'</xar:set>
+<xar:set name="recsty">'border:solid 1px #000000; padding: 3px;'</xar:set>
+<xar:if condition="$phase==4">
+  <xar:set name="reccls">'xar-norm'</xar:set>
+  <xar:set name="recsty">'border-left: solid 1px #00000; border-right: solid 1px #000000; border-top: solid 1px #000000; padding: 3px;'</xar:set>
+</xar:if>
+
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td class='#$descls#' align="center">
+      <div style="#$dessty#">
+        <a href="#$phaseurl#&amp;phase=1">Description</a>
+      </div>
+    </td>
+    <xar:if condition="isset($hooks['comments'])">
+      <td class='#$comcls#' align="center">
+        <div style="#$comsty#">
+          <a href="#$phaseurl#&amp;phase=2">Comments</a>
+        </div>
+      </td>
+    </xar:if>
+    <td class='#$piccls#' align="center">
+      <div style="#$picsty#">
+        <a href="#$phaseurl#&amp;phase=3">Pictures</a>
+      </div>
+    </td>
+    <xar:if condition="$viewrecos">
+      <td class='#$reccls#' align="center">
+        <div style="#$recsty#">
+          <a href="#$phaseurl#&amp;phase=4">Recommendations</a>
+        </div>
+      </td>
+    </xar:if>
+  </tr>
+  <tr>
+    <td class="xar-norm" colspan="4">
+      <div style="border-left: solid 1px #000000; border-right: solid 1px #000000; border-bottom: solid 1px #000000; padding: 5px;">
+        #$body#
+      </div>
+      <div style="border-left: solid 1px #000000; border-right: solid 1px #000000; border-bottom: solid 1px #000000; padding: 5px;">
+        <xar:if condition="$phase == 1">
+            <!-- FIXME: Do this another way -->
+            #xarModFunc('shopping','user','displayitemdetails',$descsubdata)#
+            <xar:if condition="$viewrecos">
+                <p><hr /></p>
+                <h3><xar:mlstring>If you like this item, try these...</xar:mlstring></h3>
+                <table cellspacing="10" cellpadding="0" border="0" width="100%" align="center">
+                <xar:if condition="!empty($recos)">
+                    <xar:foreach in="$recos" value="$reco">
+                      <tr>
+                        <td width="33%">
+                            <xar:template file="recodisplay"  subdata="$reco"/>
+                        </td>
+                      </tr>
+                    </xar:foreach>
+                    <tr>
+                      <td colspan="3" align="right">
+                        <a href="#$moreurl#"><xar:mlstring>More Recommendations</xar:mlstring></a>
+                      </td>
+                    </tr>
+                <xar:else/>
+                  <tr>
+                    <td><xar:mlstring>This item does not have any recommendations.</xar:mlstring></td>
+                  </tr>
+                </xar:if>
+                </table>
+            </xar:if>
+            <xar:if condition="xarModIsHooked('comments','shopping')">
+                <p><hr/></p>
+                <h3><xar:mlstring>Customer Comments</xar:mlstring></h3>
+                #$hooks['comments']#
+            </xar:if>
+        <xar:elseif condition="$phase == 2"/>
+           <table border="0" cellspacing="5" cellpadding="0" width="100%">
+             <tr>
+               <td width="75%" valign="top">
+                 <h3><xar:mlstring>Customer Comments</xar:mlstring></h3>
+               </td>
+               <xar:if condition="$doadmincomments">
+                 <td rowspan="2" width="25%" valign="top">
+                   <div class="xar-norm-outline" style="padding: 3px;">
+                      <span style="font-weight: bold; border-bottom: 1px dotted #000000;">
+                          <xar:mlstring>Other Options</xar:mlstring>
+                      </span>
+                      <ul style="list-style: none;">
+                        <xar:if condition="$edititem">
+                            <li>
+                                <a href="&xar-modurl-shopping-admin-edititem;&amp;iid=#$iid#">
+                                   <xar:mlstring>Edit This Item</xar:mlstring>
+                                </a>
+                            </li>
+                        </xar:if>
+                        <xar:if condition="$addpics">
+                            <li>
+                                <a href="&xar-modurl-shopping-user-displayitem;&amp;iid=#$iid#&amp;phase=3&amp;picphase=2">
+                                   <xar:mlstring>Add New Picture</xar:mlstring>
+                                </a>
+                            </li>
+                        </xar:if>
+                        <xar:if condition="xarSecurityCheck('DeleteShoppingRecos',0) || ($submitrecos and xarModGetVar('shopping','userecommendations'))">
+                            <li>
+                                <a href="&xar-modurl-shopping-user-displayitem;&amp;iid=#$iid#&amp;phase=4&amp;recophase=2">
+                                   <xar:mlstring>Add Recommendation</xar:mlstring>
+                                </a>
+                            </li>
+                        </xar:if>
+                      </ul>
+                    </div>
+                 </td>
+               </xar:if>
+               </tr>
+               <tr></tr>
+               <tr>
+                 <td colspan="2"><br />
+                   #$hooks['comments']#
+                 </td>
+                </tr>
+              </table>
+        <xar:elseif condition="$phase == 3"/>
+            <xar:if condition="$dopics">
+                <!-- FIXME: do this another way -->
+                #xarModFunc('shopping',$picfunctype,$picfunc, $picsubdata)#
+            </xar:if>
+        <xar:elseif condition="$phase == 4"/>
+            <xar:if condition="$dorecos">
+                <!-- FIXME: do this another way -->
+                #xarModFunc('shopping','user',$recosfunc, $recossubdata)#
+            </xar:if>
+        </xar:if>
+      </div>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+

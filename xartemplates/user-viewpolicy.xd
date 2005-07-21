@@ -1,0 +1,10 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Shopping Policies</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Shipping Policy</xar:mlstring></h2>
+    <p>#$spolicy#</p>
+    <br />
+    <h2><xar:mlstring>Return Policy</xar:mlstring></h2>
+    <p>#$rpolicy#</p>
+</div>

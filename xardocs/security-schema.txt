@@ -1,0 +1,36 @@
+Xaraya Shopping Module
+Security Schema
+
+I.Components and Instances
+a.Orders
+i.order id
+ii.user id 
+b.Items
+i.item id
+ii.item name
+c.Recommendations
+i.reco id 
+ii.user id
+d.Blocks
+i.block title
+II.Masks
+a.Orders
+i.ViewOrders
+ii.ReadOrders
+iii.SubmitOrders
+iv.EditOrders
+v.DeleteOrders
+vi.AdminOrders
+b.Items
+i.ViewItems
+ii.ReadItems
+iii.AdminItems
+c.Recommendations
+i.ViewRecos
+ii.SubmitRecos
+iii.EditRecos
+iv.DeleteRecos
+v.AdminRecos
+d.Blocks
+i.ReadBlocks
+ii.AdminBlocks

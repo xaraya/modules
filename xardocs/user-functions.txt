@@ -1,0 +1,125 @@
+Xaraya Shopping Module
+User Functions
+
+I.Global API Function
+a.get - gets one item from any table in the module
+i.$where - a value to tell the function what you want to get
+b.getall - gets all items from any table in the module
+i.$where - a value to tell the function what you want to get
+ii.$fields - an array of values to tell the function what fields to return from the result
+II.Cart
+a.GUI Functions
+i.viewcart - displays the cart
+ii.swapcart - moves an item from the cart to the wishlist or vice versa
+1.$iid - id of the item to swap
+b.API Functions
+i.addtocart - adds an item to the cart
+1.$iid - id of the item to add
+2.$where - if present, add the item to the wishlist
+ii.updatecart - updates the cart
+1.$uid - user of the cart owner
+iii.removefromcart - removes an item from the cart
+1.$iid - id of the item to remove
+III.Items
+a.GUI Functions
+i.showitems - displays items
+1.$catid - if present, id of the category to display
+2.$letter - if present, the first letter of the items to display
+ii.showcaseitem - displays one item
+1.$iid - id of the item to display
+iii.showpics - displays pics for an item
+1.$iid - id of the item to show the pics of
+iv.showcasepic - displays a single large view pic
+1.$iid - id of the item the pic belongs to
+2.$ipic - picture to show case
+
+
+
+
+
+
+
+
+
+
+
+
+IV.Orders
+a.GUI Functions
+i.viewyourorders - displays the users orders
+1.$phase - time period to show orders from
+ii.displayorder - displays details for one order
+1.$oid - id of the order to display details about
+iii.modifyorder - allows the modification of an unpaid order
+1.$oid - id of the order to be modified
+iv.deleteorder - allows the deletion of an unpaid order
+1.$oid - id of the order to be deleted
+b.API Functions
+i.updateorder - updates a modified order
+1.$info - all the items and quantities in the updated order
+ii.removeorder - removes a deleted order
+1.$oid - id of the order to remove
+iii.createorder - adds an order to the database
+1.$uid - id of the user whose order this is
+iv.checkstatus - check the status of an order
+1.$oid - id or the order to check the status of
+V.Policy
+a.GUI Functions
+i.viewpolicy - displays the shipping and return policies to the user
+VI.Profile
+a.GUI Functions
+i.viewprofile - displays a users shopping profile
+1.$uid - id of the user
+ii.modifyprofile - allows the modification of a users shopping profile
+1.$uid - id of the user
+iii.makedefault - asks if the user wishs to make a default profile
+iv.addprofile - adds a shopping profile to a user
+b.API Functions
+i.updateprofile - updates a modified profile
+1.$info - all the info needed to update
+ii.createprofile - creates a shopping profile
+1.$info - all the info needed to create  a profile
+iii.checkforprofile - checks to see if a profile exists
+1.$uid - id of the user you want to check against
+iv.removeprofie - removes a profile from the database
+1.$uid - if of the profile owner
+
+
+
+
+
+
+
+VII.Recommendations
+a.GUI Functions
+i.makereco - allows the submission of a recommendation for an item
+1.$uid - id of user making reco
+2.$iid - id of item being recommended 
+ii.newreco - allows the submission of a recommendation for a new item
+iii.viewyourrecos - displays your recommendations
+iv.modifyreco - allows you to modify a recommendation
+1.$rid - id of the reco to modify
+v.deletereco - allows the deletion of a recommendation
+1.$rid - id of the reco to delete 
+b.API Functions
+i.createreco - create a reco entry in the database
+1.$info - all the necessary info
+ii.updatereco - updates a modified reco
+1.$info - all the necessary info
+iii.removereco - removes a reco from the database
+1.$rid - id of the reco to delete
+
+VIII.Search
+a.GUI Functions
+i.search - allows the browsing and searching of items
+ii.advsearch - allows advanced searching
+IX.Checkout
+a.GUI Functions
+i.logincheckout - forces the user to authenticate themselves before checking out
+1.$uid - id of the user who is trying to checkout
+ii.shipbill - gets the shipping and billing info
+iii.confirm - allows the confirmation of the order before it is sent
+iv.ordercomplete - displays a thank you note
+b.API Functions
+i.Authenticate - forces authentication
+1.$uid - id of the user who is trying to checkout

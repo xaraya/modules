@@ -1,0 +1,77 @@
+Xaraya Shopping Module
+User Features
+
+I.User
+a.Shopping Cart / Wish List
+i.click a link to add an item to the cart or wishlist
+ii.view the cart or wishlist
+iii.move items from the cart to wishlist and vice versa
+iv.change the quantity of items in the cart
+v.delete items from the cart or wish list
+vi.add an item to the cart or wishlist based on item number or name
+b.Items
+i.view items
+ii.comment on items 
+iii.rate items
+iv.view pics of items
+c.Orders
+i.view placed orders based on a timescale
+ii.cancel orders not yet approved for delivery
+iii.change orders not yet approved for delivery
+d.Recommendations
+i.view recommendations for other items based on items purchased, items currently in the cart and wish list, and the current item
+ii.see newly added items
+iii.submit recommendations for items (if you like this, try?)
+iv.submit recommendations for new items
+e.Profile
+i.view and change shipping and billing defaults
+ii.view and change what events will send an email to user
+f.Policy
+i.view shipping and return policies
+g.Checkout
+i.place orders
+ii.choice of using default shipping and billing info, or entering new info
+iii.choice of making newly entered info the default
+iv.must confirm password before buying (same as xaraya password)
+v.ability to have final confirmation before order is placed
+vi.2-click buying
+vii.receive emails when order is placed and when status changes
+h.Search
+i.browse items by category or alphabetically
+ii.search for items by item number, name, or price
+iii.ability to 'and' or 'or' search fields
+
+
+
+Xaraya Shopping Module
+Admin Features
+
+I.Admin
+a.Orders
+i.add, view, modify, and delete orders
+ii.change the status of orders
+b.Items
+i.add, view, delete, and modify items 
+ii.put items into categories
+iii.add, view, delete, and modify comments of items
+iv.submit and reset ratings of items
+v.view, add, and delete pics of items
+c.Recommendations
+i.add, view, delete, and modify item recommendations
+ii.review recommendations for new items
+iii.set what type of recommendations will be displayed
+d.Search
+i.search orders by order id, date, buyer
+ii.search items by item id, name, price, or date
+iii.ability to 'and' or 'or' search fields
+e.Configuration
+i.set shipping and return policies
+ii.allow / disallow users from buying
+iii.set the number of items displayed in the cart and wishlist
+iv.set the payments methods accepted
+v.set which events will send an email to users
+vi.set email text for emails
+vii.select the categories to use
+f.Stats
+i.view stats about orders. Items, and everything else
+ii.view stats by time scale

@@ -1,0 +1,15 @@
+Xaraya Shopping Module
+Available Hooks
+
+Register
+
+Item : Search : GUI : Shopping : User : Search
+
+Enable
+
+Shopping : Search
+Categories : Shopping
+Comments : Shopping
+Ratings : Shopping
+Hitcount : Shopping
+

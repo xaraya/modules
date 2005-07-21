@@ -1,0 +1,57 @@
+<table border="0" cellspacing="5" cellpadding="0" width="100%">
+    <tr>
+        <td width="75%" valign="top">
+            <h3>Add Recommendation</h3>
+        </td>
+        <xar:if condition="$showbox">
+            <xar:if condition="isset($addpicurl) || isset($editurl)">
+                <td rowspan="2" width="25%" valign="top">
+                    <div class="xar-norm-outline" style="padding: 3px;">
+                        <span style="font-weight: bold; border-bottom: 1px dotted #000000;">
+                            <xar:mlstring>Other Options</xar:mlstring>
+                        </span>
+                        <ul style="list-style: none;">
+                            <xar:if condition="isset($editurl)">
+                                <li><a href="#$editurl#"><xar:mlstring>Edit This Item</xar:mlstring></a></li>
+                            </xar:if>
+                            <xar:if condition="isset($addpicurl)">
+                                <li><a href="#$addpicurl#"><xar:mlstring>Add New Picture</xar:mlstring></a></li>
+                            </xar:if>
+                        </ul>
+                    </div>
+                </td>
+            </xar:if>
+        </xar:if>
+    </tr>
+    <tr>
+        <td>
+            <xar:if condition="isset($itemarray)">
+                <table cellspacing="5">
+                    <tr>
+                        <td>
+                            <span style="font-weight: bold; border-bottom: 1px dotted #000000; margin-bottom: 20px;">
+                                <xar:mlstring>Recommend For</xar:mlstring> #$thisitem.0.name#
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <form action="&xar-modurl-shopping-user-makereco;" method="post">
+                            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                            <input type="hidden" name="iid" id="iid" value="#$iid#" />
+                            <td>
+                                <select name="recos[]" id="recos[]" multiple="true" size="7">
+                                    <xar:foreach in="$items" value="$item">
+                                        <option value="#$item['iid']#" />#$item['name']#
+                                    </xar:foreach>
+                                </select>
+                            </td>
+                            <input type="submit" value="#$submitlabel#" />
+                        </form>
+                    </tr>
+                </table>
+            <xar:else />
+                <xar:mlstring>This item already contains all possible recommendations.</xar:mlstring>
+            </xar:if>
+        </td>
+    </tr>
+</table>

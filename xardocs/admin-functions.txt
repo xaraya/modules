@@ -1,0 +1,57 @@
+Xaraya Shopping Module
+Admin Functions
+
+I.Orders
+a.GUI Functions
+i.addorder - allows the addition of an order
+ii.vieworders - displays all orders
+1.$info - array containing fields to filter by
+II.Items
+a.GUI Functions
+i.viewitems - displays all items in the database
+1.$info - array containing fields to filter by
+ii.displayitem - displays one item for details
+1.$iid - id of the item to display
+iii.additem - adds an item
+iv.modifyitem - modifies an item
+1.$iid - id of the item to modify
+v.deleteitem - deletes an item
+1.$iid - id of the item to delete
+vi.addpic - adds a picture to an item
+1.$iid - id of the item to add a pic to
+vii.viewpics - displays the pictures for an item
+1.$iid - id of the item to displays the pics of
+viii.displaypic - displays one picture
+1.$iid - id of the item
+2.$ipic - picture to display
+b.API Functions
+i.createitem - creates an added item
+1.$info - all the necessary info
+ii.updateitem - updates a modified item
+1.$info - all the necessary info
+iii.removeitem - removes a deleted item
+1.$iid - id of the item to remove
+iv.createpic - creates an added pic
+1.$info - all the necessary info
+v.removepic - removes a deleted pic
+1.$iid - id of the item
+2.$ipic - picture to remove
+III.Recommendations
+a.GUI Functions
+i.viewrecos - displays all recommendations
+ii.addreco - adds a recommendation to the database
+
+
+
+
+IV.Configuration
+a.GUI Functions
+i.modifyconfig - allows the modification of the configuration
+1.$phase - misc, email, policy, dyndata
+b.API Functions
+i.updateconfig - updates the modified config
+1.$phase - the phase we are updating
+V.Stats
+a.GUI Functions
+i.viewstats - displays stats about the module
+1.$phase - the stats we wish to display

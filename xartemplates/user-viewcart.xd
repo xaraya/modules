@@ -1,0 +1,112 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Shopping</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Shopping Cart</xar:mlstring></h2>
+    
+    <xar:if condition="isset($notlogged)">
+        <div style="color: #FF0000; font-weight: bold;">
+            <xar:mlstring>You must login to check out!</xar:mlstring><br />
+            <xar:mlstring>When you log in, this cart will be added to your user cart!</xar:mlstring>
+        </div>
+        <br />
+    </xar:if>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td width="75%" valign="top">
+            <form action="#$updateurl#" method="post" id="updatecart">
+            <h3>Items in Your Cart</h3>
+            <div style="margin-left: 2em; margin-right: 2em;">
+                <xar:if condition="!$cartitems">
+                    <xar:mlstring>You have no items in your cart!</xar:mlstring><br/>
+                <xar:else />
+                    <table style="border-top: 1px #000000 solid;" cellspacing="0" cellpadding="0" width="100%">
+                        <tr>
+                            <th style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;">&nbsp;</th>
+                            <th style="border-bottom: 1px #000000 solid;"><xar:mlstring>Item</xar:mlstring></th>
+                            <th style="border-bottom: 1px #000000 solid;"><xar:mlstring>Quantity</xar:mlstring></th>
+                            <th style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;"><xar:mlstring>Price</xar:mlstring></th>
+                        </tr>
+                        <xar:foreach in="$cartitems" value="$citem">
+                            <tr style="text-align: center;">
+                                <td style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid; vertical-align: middle;">
+                                    <a href="#$delurl#&amp;iid=#$citem.iid#">
+                                        <img src="#$delimg#" align="middle" alt="Delete this item from your cart" border="0" />
+                                    </a>
+                                    <a href="#$movewishurl#&amp;iid=#$citem.iid#">
+                                        <img src="#$wishimg#" align="middle" alt="Move this item to your wishlist" border="0" />
+                                    </a>
+                                </td>
+                                <td style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;">
+                                    <a href="&xar-modurl-shopping-user-displayitem;&amp;iid=#$citem.iid#">#$citem.name#</a>
+                                </td>
+                                <td style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;">
+                                    <input type="textbox" name="quantitems[#$citem.iid#]" size="1" value="#$citem.quantity#" />
+                                </td>
+                                <td style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid; border-left: 1px #000000 solid;">
+                                    #$citem['price']#
+                                </td>
+                            </tr>
+                        </xar:foreach>
+                <tr style="text-align: center;">
+                  <td colspan="2"></td>
+                  <td><a href="javascript: document.forms['updatecart'].submit();">Update Cart</a></td>
+                  <td style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid; border-left: 1px #000000 solid;"><b><xar:mlstring>Subtotal:</xar:mlstring></b> #$subtotal#</td>
+                </tr>
+                <tr style="text-align: center;">
+                  <td colspan="3"></td>
+                  <td style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid; border-left: 1px #000000 solid;">
+                    <a href="&xar-modurl-shopping-user-checkout;">Checkout</a>
+                  </td>
+                </tr>
+              </table>
+            </xar:if>
+          <br />
+          <b><xar:mlstring>We accept payments by:</xar:mlstring></b>&nbsp;#$paymethods#
+        </div>
+        </form>
+        <br />
+        <h3>Items in Your Wishlist</h3>
+        <div style="margin-left: 2em; margin-right: 2em;">
+            <xar:if condition="!$wlitems">
+                <xar:mlstring>You have no items in your wishlist!</xar:mlstring><br />
+            <xar:else />
+              <table style="border-top: 1px #000000 solid;" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                  <th style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;">&nbsp;</th>
+                  <th style="border-bottom: 1px #000000 solid;">Item</th>
+                  <th style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;">Price</th>
+                </tr>
+                <xar:foreach in="$wlitems" value="$wlitem">
+                  <tr align="center">
+                    <td style="vertical-align: middle; border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;">
+                      <a href="#$delurl#&amp;iid=#$wlitem['iid']#"><img src="#$delimg#" align="middle" alt="Delete this item from your wishlist" border="0" /></a>
+                      <a href="#$movecarturl#&amp;iid=#$wlitem['iid']#"><img src="#$cartimg#" align="middle" alt="Move this item to your cart" border="0" /></a>
+                    </td>
+                    <td style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;"><a href="&xar-modurl-shopping-user-displayitem;&amp;iid=#$wlitem['iid']#">#$wlitem['name']#</a></td>
+                    <td style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid; border-right: 1px #000000 solid;">#$wlitem['price']#</td>
+                  </tr>
+                </xar:foreach>
+              </table>
+            </xar:if>
+        </div>
+        <p align="center">
+          <a style="font-size: smaller;" href="&xar-modurl-shopping-user-viewpolicy;">
+            <xar:mlstring>Read our shipping and return policies.</xar:mlstring>
+          </a>
+        </p>
+      </td>
+      <td width="25%" valign="top">
+          <div class="xar-norm-outline" style="padding: 3px;">
+            <span style="font-weight: bold; border-bottom: 1px dotted #000000;"><xar:mlstring>May We Recommend</xar:mlstring></span>
+            <xar:foreach in="$recos" value="$reco">
+                <div>
+                    <xar:template file="recodisplay" subdata="$reco"/>
+                </div>
+            </xar:foreach>  
+          </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+

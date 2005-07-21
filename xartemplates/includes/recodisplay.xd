@@ -1,0 +1,42 @@
+<table border="0">
+  <tr>
+    <td colspan="2" align="center">
+      <xar:if condition="!$firstpic">
+        <a href="&xar-modurl-shopping-user-displayitem;&amp;iid=#$iid#">
+          <img src="#xarTplGetImage('noimage.gif','shopping')#" />
+        </a>
+      <xar:else />
+        <a href="&xar-modurl-shopping-user-displayitem;&amp;iid=#$iid#">
+          <img src="#$firstpic#" style="width:100px;"/>
+        </a>
+      </xar:if>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <a href="&xar-modurl-shopping-user-displayitem;&amp;iid=#$iid#">#$name#</a>
+    </td>
+  </tr>
+
+  <xar:if condition="isset($thisitem)">
+  <xar:if condition="xarSecurityCheck('DeleteShoppingRecos', 0)">
+  <tr>
+    <td>
+      <a href="&xar-modurl-shopping-admin-deletereco;&amp;twoiid=true&amp;iid1=#$iid#&amp;iid2=#$thisitem#">
+        <img src="&xar-baseurl;modules/shopping/xarimages/delete.gif" />
+      </a>
+    </td>
+    <td>
+      <a href="&xar-modurl-shopping-admin-deletereco;&amp;twoiid=true&amp;iid1=#$iid#&amp;iid2=#$thisitem#">
+        <xar:mlstring>Delete</xar:mlstring>
+      </a>
+    </td>
+  </tr>
+  </xar:if>
+  </xar:if>
+
+</table>
+
+
+
+

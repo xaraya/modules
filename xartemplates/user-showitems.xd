@@ -1,0 +1,20 @@
+<div class="xar-mod-head">
+    <xar:mlstring>Shopping</xar:mlstring>
+</div>
+
+<xar:if condition="isset($cids)">
+    <xar:categories-navigation layout="trails" showchildren="1" module="shopping" func="showitems" cids="$cids" />
+</xar:if>
+
+<div class="xar-mod-body">
+    <xar:if condition="empty($items)">
+        <xar:mlstring>No items</xar:mlstring><br />
+    <xar:else />
+        <xar:foreach in="$items" key="$itemid" value="$item">
+            <xar:template  file="itemdisplay" subdata="$item"/>
+        </xar:foreach>
+        <span>#$pager#</span>
+    </xar:if>
+</div>
+
+

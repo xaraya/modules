@@ -1,0 +1,105 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Shopping Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Add New Item</xar:mlstring></h2>
+    <table>
+        <xar:if condition="isset($status)">
+            <tr>
+                <td></td>
+                <td><span style="color: #000000;">#$status#</span></td>
+            </tr>
+        </xar:if>
+
+        <xar:if condition="isset($errinfo)">
+            <tr>
+                <td></td>
+                <td><span style="color: #ff0000;">#$errinfo#</span></td>
+            </tr>
+        </xar:if>
+    
+    
+        <form action="&xar-modurl-shopping-admin-validateadditem;" method="post">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        
+        <tr></tr>
+        <tr>
+            <td><label for="iname" style="font-weight: bold; color: #$inamecol#;"><xar:mlstring>Name:</xar:mlstring></label></td>
+            <td><input type="text" maxlength="250" name="iname" id="iname" value="#$iname#" /></td>
+        </tr>
+        <tr>
+            <td><label for="iprice" style="font-weight: bold; color: #$ipricecol#;"><xar:mlstring>Price:</xar:mlstring></label></td>
+            <td><input type="text" maxlength="250" name="iprice" id="iprice" value="#$iprice#" /></td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="isummary" style="font-weight: bold; color: #000000;"><xar:mlstring>Summary:</xar:mlstring></label><br />
+                <label for="htmlnote" style="font-size: 8pt;"><xar:mlstring>(HTML allowed)</xar:mlstring></label>
+            </td>
+            <td><textarea rows="5" cols="50" name="isummary" id="isummary">#$isummary#</textarea></td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <label for="idescription" style="font-weight: bold; color: #$idescriptioncol#;"><xar:mlstring>Description:</xar:mlstring></label><br />
+                <label for="htmlnote" style="font-size: 8pt;"><xar:mlstring>(HTML allowed)</xar:mlstring></label>
+            </td>
+            <td><textarea rows="15" cols="75" name="idescription" id="idescription">#$idescription#</textarea></td>
+        </tr>
+        <tr>
+            <td><label for="istock" style="font-weight: bold;"><xar:mlstring>Stock:</xar:mlstring></label></td>
+            <td><input type="text" maxlength="15" name="istock" id="istock" value="#$istock#" /></td>
+        </tr>
+
+        <tr>
+            <td><label for="gonext" style="font-weight: bold;"><xar:mlstring>Action:</xar:mlstring></label></td>
+            <td>
+                <select name="gonext" id="gonext">
+                <xar:if condition="!empty($gopics)">
+                    <option value="0"  selected="selected">Add Pics To This Item</option>
+                <xar:else />
+                    <option value="0">Add Pics To This Item</option>
+                </xar:if>
+    
+                <xar:if condition="$addrecos == true">
+                    <xar:if condition="!empty($gorecos)">
+                        <option value="1" selected="selected">Add Recos To This Item</option>
+                    <xar:else />
+                        <option value="1">Add Recos To This Item</option>
+                    </xar:if>
+                </xar:if>
+                <xar:if condition="!empty($godisplay)">
+                    <option value="2" selected="selected">Display This Item</option>
+                <xar:else />
+                    <option value="2">Display This Item</option>
+                </xar:if>
+                <xar:if condition="!empty($gonew)">
+                    <option value="3" selected="selected">Add Another Item</option>
+                <xar:else />
+                    <option value="3">Add Another Item</option>
+                </xar:if>
+                <xar:if condition="!empty($goview)">
+                    <option value="4" selected="selected">View All Items</option>
+                <xar:else />
+                    <option value="4">View All Items</option>
+                </xar:if>
+                </select>
+            </td>
+        </tr>
+        
+        <xar:if condition="!empty($hooks)">
+            <tr>
+                <td colspan="2">
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                        #$hooks[$hookmodule]#
+                    </xar:foreach>
+                </td>
+            </tr>
+        </xar:if>
+        <tr>
+            <td colspan="2">
+                <br />
+                <input type="reset" value="#$resetlabel#" />&nbsp;
+                <input type="submit" value="#$submitlabel#" />
+            </td>
+        </tr>
+    </form>
+    </table>
+</div>

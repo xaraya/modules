@@ -1,0 +1,238 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Shopping Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View  Search Items</xar:mlstring></h2>
+
+    <xar:if condition="isset($errmsg)">
+        <div class="xar-norm-outline">
+            <span style="color: #ff0000;">#$errmsg#</span>
+        </div>
+    </xar:if>
+
+    <!-- Category navigation, if applicable -->
+    <xar:if condition="isset($iscats)">
+    <div class="xar-norm-outline" style="float: left; width: 45%; padding: 3px; margin-bottom: 1em;">
+      <span style="font-weight: bold; border-bottom: 1px dotted #000000;"><xar:mlstring>Filter by Category</xar:mlstring></span><br /><br/>
+            <xar:categories-navigation layout="trails" showchildren="1" module="shopping" type="admin" func="viewitems" catid="$catid" />
+        </div>
+    </xar:if>
+    
+    <!-- Quick searches -->
+    <div class="xar-norm-outline" style="float: right; width: 45%; padding: 3px; margin-bottom: 1em;">
+        <span style="font-weight: bold; border-bottom: 1px dotted #000000;"><xar:mlstring>Quick Searches</xar:mlstring></span>
+        <ul style="list-style: none;">
+            <li><a href="#$thismonthQS#"><xar:mlstring>Items Added This Month</xar:mlstring></a></li>
+            <li><a href="#$lowstockQS#"><xar:mlstring>Low Stock Items</xar:mlstring></a></li>
+            <li><a href="#$backordQS#"><xar:mlstring>Backordered Items</xar:mlstring></a></li>
+        </ul>
+    </div>
+    
+    <br style="clear: both;"/>
+    
+    <table style="padding: 3px; margin-bottom: 1em;" border="1" cellspacing="10" cellpadding="0" width="100%">
+        <tr>
+            <td>
+                <span style="font-weight: bold; border-bottom: 1px dotted #000000;"><xar:mlstring>Search by Field</xar:mlstring></span><br /><br/>
+                <xar:foreach in="$searchfields" value="$field">
+                    <xar:if condition="isset($field['url'])">
+                        <a href="#$field['url']#">#$field['label']#</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <xar:else />
+                        #$field['label']#&nbsp;&nbsp;&nbsp;&nbsp;
+                    </xar:if>
+                </xar:foreach>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <xar:if condition="($search eq 1) || ($search eq 4) || ($search eq 6) || ($search eq 7)">
+                    <form action="#$options['url']#" method="post">
+                        #$option1['label']#&nbsp;
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 0">
+                            <input type="radio" name="option1" id="option1" value="0" checked="checked" />&nbsp;<xar:mlstring>Equal To</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="0" />&nbsp;<xar:mlstring>Equal To</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 1">
+                            <input type="radio" name="option1" id="option1" value="1" checked="checked" />&nbsp;<xar:mlstring>Less Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="1" />&nbsp;<xar:mlstring>Less Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 2">
+                            <input type="radio" name="option1" id="option1" value="2" checked="checked" />&nbsp;<xar:mlstring>Greater Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="2" />&nbsp;<xar:mlstring>Greater Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 3">
+                            <input type="radio" name="option1" id="option1" value="3" checked="checked" />&nbsp;<xar:mlstring>Between (separate values with a hyphen)</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="3" />&nbsp;<xar:mlstring>Between (separate values with a hyphen)</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <br /><br />
+                        #$option2['label']#&nbsp; 
+                        <input type="text" name="option2" id="option2" value="#$option2['val']#" />&nbsp;&nbsp;
+                        <input type="submit" value="#$options['submitlabel']#" />
+                    </form>
+                </xar:if>
+
+                <xar:if condition="($search eq 3)">
+                    <form action="#$options['url']#" method="post">
+                        #$option1['label']#&nbsp;
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 0">
+                            <input type="radio" name="option1" id="option1" value="0" checked="checked" />&nbsp;<xar:mlstring>Equal To</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="0" />&nbsp;<xar:mlstring>Equal To</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 1">
+                            <input type="radio" name="option1" id="option1" value="1" checked="checked" />&nbsp;<xar:mlstring>Less Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="1" />&nbsp;<xar:mlstring>Less Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 2">
+                            <input type="radio" name="option1" id="option1" value="2" checked="checked" />&nbsp;<xar:mlstring>Greater Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="2" />&nbsp;<xar:mlstring>Greater Than</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 3">
+                            <input type="radio" name="option1" id="option1" value="3" checked="checked" />&nbsp;<xar:mlstring>Between (separate values with a pipe)</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="3" />&nbsp;<xar:mlstring>Between (separate values with a pipe)</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <br /><br />
+                        #$option2['label']#&nbsp; 
+                        <input type="text" name="option2" id="option2" value="#$option2['val']#" />&nbsp;&nbsp;
+                        <input type="submit" value="#$options['submitlabel']#" />
+                    </form>
+                </xar:if>
+
+                <xar:if condition="$search eq 5">
+                    <form action="#$options['url']#" method="post">
+                        #$option1['label']#&nbsp;
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 0">
+                            <input type="radio" name="option1" id="option1" value="0" checked="checked" />&nbsp;<xar:mlstring>In Stock</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="0" />&nbsp;<xar:mlstring>In Stock</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 1">
+                            <input type="radio" name="option1" id="option1" value="1" checked="checked" />&nbsp;<xar:mlstring>Low Stock</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="1" />&nbsp;<xar:mlstring>Low Stock</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 2">
+                            <input type="radio" name="option1" id="option1" value="2" checked="checked" />&nbsp;<xar:mlstring>Backordered</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="2" />&nbsp;<xar:mlstring>Backordered</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 3">
+                            <input type="radio" name="option1" id="option1" value="3" checked="checked" />&nbsp;<xar:mlstring>Discontinued</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="3" />&nbsp;<xar:mlstring>Discontinued</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <input type="submit" value="#$options['submitlabel']#" />
+                    </form>
+                </xar:if>
+
+                <xar:if condition="($search eq 2)">
+                    <form action="#$options['url']#" method="post">
+                        #$option1['label']#&nbsp;
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 0">
+                            <input type="radio" name="option1" id="option1" value="0" checked="checked" />&nbsp;<xar:mlstring>Is</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="0" />&nbsp;<xar:mlstring>Is</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 1">
+                            <input type="radio" name="option1" id="option1" value="1" checked="checked" />&nbsp;<xar:mlstring>Begins With</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="1" />&nbsp;<xar:mlstring>Begins With</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 2">
+                            <input type="radio" name="option1" id="option1" value="2" checked="checked" />&nbsp;<xar:mlstring>Ends With</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="2" />&nbsp;<xar:mlstring>Ends With</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <xar:if condition="isset($option1['val']) and $option1['val'] eq 3">
+                            <input type="radio" name="option1" id="option1" value="3" checked="checked" />&nbsp;<xar:mlstring>Contains</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <xar:else />
+                            <input type="radio" name="option1" id="option1" value="3" />&nbsp;<xar:mlstring>Contains</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </xar:if>
+                        <br /><br />
+                        #$option2['label']#&nbsp; 
+                        <input type="text" name="option2" id="option2" value="#$option2['val']#" />&nbsp;&nbsp;
+                        <input type="submit" value="#$options['submitlabel']#" />
+                    </form>
+                </xar:if>
+            </td>
+        </tr>
+    </table>
+
+    <xar:if condition="isset($delurl) || isset($editurl)">
+        <xar:comment>FIXME: this was a form without an end or any inputs</xar:comment>
+        <a href="#$delurl#">Delete</a>
+    </xar:if>
+
+    <table border="0" cellspacing="1" cellpadding="0" width="100%" class="xar-accent">
+        <tr>
+            <xar:if condition="isset($dispurl) || isset($editurl) || isset($delurl)">
+                <th><xar:mlstring>Actions</xar:mlstring></th>
+            </xar:if>
+            <xar:foreach in="$headings" value="$heading">
+                <xar:if condition="$heading['sortval'] eq $sort">
+                    <th>
+                        <a href="#$heading['url']#">#$heading['label']#</a>&nbsp;&nbsp;
+                        <xar:if condition="$sortorder eq 'ASC'">
+                            <a href="#$sortorderurl#&amp;sortorder=DESC"><img align="center" src="&xar-baseurl;modules/shopping/xarimages/sortup.gif" border="0" alt="Click to change sort direction" /></a>
+                        <xar:else />
+                            <a href="#$sortorderurl#&amp;sortorder=ASC"><img align="center" src="&xar-baseurl;modules/shopping/xarimages/sortdown.gif" border="0" alt="Click to change sort direction" /></a>
+                        </xar:if>
+                    </th>
+                <xar:else />
+                    <th><a href="#$heading['url']#">#$heading['label']#</a></th>
+                </xar:if>
+            </xar:foreach>
+        </tr>
+        <xar:if condition="!$items">
+            <tr><td colspan="6"><xar:mlstring>No matching items found.</xar:mlstring></td></tr>
+        <xar:else />
+            <xar:foreach in="$items" value="$item">
+                <tr class="xar-norm" align="center">
+                    <xar:if condition="isset($dispurl) || isset($editurl) || isset($delurl)">
+                        <td valign="center">
+                            <xar:if condition="isset($dispurl)">
+                                <a href="#$dispurl#&amp;iid=#$item['iid']#"><img align="center" src="&xar-baseurl;modules/shopping/xarimages/view.gif" border="0" alt="Display Item" /></a>
+                                <a href="#$picsurl#&amp;iid=#$item['iid']#"><img align="center" src="&xar-baseurl;modules/shopping/xarimages/pics.gif" border="0" alt="Display Pics" /></a>
+                            </xar:if>
+                            <xar:if condition="isset($recosurl)">
+                                <a href="#$recosurl#&amp;iid=#$item['iid']#"><img align="center" src="&xar-baseurl;modules/shopping/xarimages/recos.gif" border="0" alt="Display Recommendations" /></a>
+                            </xar:if>
+                            <xar:if condition="isset($editurl)">
+                                <a href="#$editurl#&amp;iid=#$item['iid']#"><img align="center" src="&xar-baseurl;modules/shopping/xarimages/edit.gif" border="0" alt="Edit Item" /></a>
+                            </xar:if>
+                            <xar:if condition="isset($delurl)">
+                                <a href="#$delurl#&amp;iid=#$item['iid']#"><img align="center" src="&xar-baseurl;modules/shopping/xarimages/delete.gif" border="0" alt="Delete Item" /></a>
+                            </xar:if>
+                        </td>
+                    </xar:if>
+                    <td>#$item['iid']#</td>
+                    <td>#$item['name']#</td>
+                    <td>#$item['date']#</td>
+                    <td>#$item['price']#</td>
+                    <td>#$item['status']#</td>
+                    <td>#$item['stock']#</td>
+                    <td>#$item['buys']#</td>
+                    <xar:if condition="xarModIsHooked('ratings', 'shopping')">
+                        <td>#$item['rating']#</td>
+                    </xar:if>
+                    <xar:if condition="xarModIsHooked('hitcount', 'shopping')">
+                        <td>#$item['hits']#</td>
+                    </xar:if>
+                </tr>
+            </xar:foreach>
+        </xar:if>
+    </table>
+    <div>
+        <span>#$pager#</span>
+    </div>
+</div>
+

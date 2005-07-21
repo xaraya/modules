@@ -1,0 +1,45 @@
+<table border="0" cellspacing="5" cellpadding="0" width="100%">
+  <tr>
+    <td width="75%" valign="top">
+      <h3><xar:mlstring>If you like this item, try these...</xar:mlstring></h3>
+    </td>
+
+    <xar:if condition="$showbox">
+    <xar:if condition="isset($addpicurl) || isset($addrecourl) || isset($editurl)">
+      <td rowspan="2" width="25%" valign="top">
+        <div class="xar-norm-outline" style="padding: 3px;">
+            <span style="font-weight: bold; border-bottom: 1px dotted #000000;"><xar:mlstring>Other Options</xar:mlstring></span>
+            <ul style="list-style: none;">
+                <xar:if condition="isset($editurl)">
+                    <li><a href="#$editurl#"><xar:mlstring>Edit This Item</xar:mlstring></a></li>
+                </xar:if>
+                <xar:if condition="isset($addpicurl)">
+                    <li><a href="#$addpicurl#"><xar:mlstring>Add New Picture</xar:mlstring></a></li>
+                </xar:if>
+                <xar:if condition="isset($addrecourl)">
+                    <li><a href="#$addrecourl#"><xar:mlstring>Add Recommendation</xar:mlstring></a></li>
+                </xar:if>
+            </ul>
+        </div>
+      </td>
+    </xar:if>
+    </xar:if>
+
+  </tr>
+  <tr>
+    <td>
+      <xar:if condition="isset($norecos)">
+         No recommendations have been attached to this item.
+      <xar:else />
+         <xar:foreach in="$recos" value="$reco">
+            <xar:template file="recodisplay" subdata="$reco"/>
+        </xar:foreach>
+      </xar:if>
+    </td>
+  </tr>
+  <tr>
+    <td align="right">
+      #$pager#
+    </td>
+  </tr>
+</table>

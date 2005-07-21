@@ -1,0 +1,42 @@
+  <xar:if condition="isset($notlogged)">
+    <div style="color: #FF0000; font-weight: bold;">
+      <xar:mlstring>You must login to check out!</xar:mlstring><br />
+      <xar:mlstring>When you log in, this cart will be added to your user cart!</xar:mlstring>
+    </div>
+    <br />
+  </xar:if>
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="75%" valign="top">
+        <h3>Items in Your Cart</h3>
+        <div style="margin-left: 2em; margin-right: 2em;">
+            <xar:if condition="!$cartitems">
+              <xar:mlstring>You have no items in your cart!</xar:mlstring><br/>
+            <xar:else />
+              <table style="border-top: 1px #000000 solid;" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                  <th style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;"><xar:mlstring>Item</xar:mlstring></th>
+                  <th style="border-bottom: 1px #000000 solid;"><xar:mlstring>Quantity</xar:mlstring></th>
+                  <th style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;"><xar:mlstring>Price</xar:mlstring></th>
+                </tr>
+                <xar:foreach in="$cartitems" value="$citem">
+                  <tr style="text-align: center;">
+                    <td style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;"><a href="#xarModURL('shopping','user','displayitem',array('iid' => $citem['iid']))#">#$citem['name']#</a></td>
+                    <td style="border-bottom: 1px #000000 solid; border-left: 1px #000000 solid;">#$citem['quantity']#</td>
+                    <td style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid; border-left: 1px #000000 solid;">#$citem['price']#</td>
+                  </tr>
+                </xar:foreach>
+                <tr style="text-align: center;">
+                  <td colspan="1"></td>
+                  <td style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid; border-left: 1px #000000 solid;">
+                    <a href="#xarModURL('shopping','user','checkout')#">Checkout</a>
+                  </td>
+                  <td style="border-bottom: 1px #000000 solid; border-right: 1px #000000 solid; border-left: 1px #000000 solid;"><b><xar:mlstring>Subtotal:</xar:mlstring></b> #$subtotal#</td>
+                </tr>
+              </table>
+            </xar:if>
+        </div>
+      </td>
+    </tr>
+  </table>

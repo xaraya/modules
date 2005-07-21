@@ -1,0 +1,483 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Shopping Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Shopping Module Configuration</xar:mlstring></h2>
+
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+            <td>
+                <xar:if condition="$phase eq 1">
+                    <a href="#$genurl#">General Options</a> &nbsp;&nbsp;&nbsp;&nbsp; Mail Options
+                <xar:else />
+                    General Options &nbsp;&nbsp;&nbsp;&nbsp; <a href="#$mailurl#">Mail Options</a>
+                </xar:if>
+            </td>
+        </tr>
+    </table>
+    <br />
+
+    <xar:if condition="$phase eq 0">
+        <form action="&xar-modurl-shopping-admin-updateconfig;" method="post">
+        <input type="hidden" name="phase" id="phase" value="#$phase#" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <table border="0" cellspacing="0" cellpadding="5" width="100%">
+            <tr>
+                <td>
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Shipping Policy</xar:mlstring>
+                    </span>
+                </td>
+                <td>
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Return Policy</xar:mlstring>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><textarea rows="10" cols="50" name="spolicy" id="spolicy">#$spolicy#</textarea></td>
+                <td><textarea rows="10" cols="50" name="rpolicy" id="rpolicy">#$rpolicy#</textarea></td>
+            </tr>
+        </table>
+
+        <table border="0" cellspacing="0" cellpadding="5" width="100%">
+            <tr>
+                <td colspan="3">
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Payments</xar:mlstring>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="acceptpaypal"><xar:mlstring>Accept payments through PayPal:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($acceptpaypal)">
+                        <input type="checkbox" name="acceptpaypal" id="acceptpaypal" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="acceptpaypal" id="acceptpaypal"/>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="acceptcredit"><xar:mlstring>Accept payments by credit card:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($acceptcredit)">
+                        <input type="checkbox" name="acceptcredit" id="acceptcredit" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="acceptcredit" id="acceptcredit" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="acceptbill"><xar:mlstring>Accept payments by check or money order:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($acceptbill)">
+                        <input type="checkbox" name="acceptbill" id="acceptbill" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="acceptbill" id="acceptbill" />
+                    </xar:if>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Items</xar:mlstring>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="displaylowstock"><xar:mlstring>Display "low stock" message:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($displaylowstock)">
+                        <input type="checkbox" name="displaylowstock" id="displaylowstock" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="displaylowstock" id="displaylowstock" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="lowstock"><xar:mlstring>Low Stock Threshold:</xar:mlstring></label></td>
+                <td colspan="2"><input type="text" name="lowstock" id="lowstock" size="3" value="#$lowstock#" /></td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="itemsperpage"><xar:mlstring>Items to display per page:</xar:mlstring></label></td>
+                <td width="15%"><input type="text" name="itemsperpage" id="itemsperpage" size="3" value="#$itemsperpage#" /> (admin)</td>
+                <td><input type="text" name="useritemsperpage" id="useritemsperpage" size="3" value="#$useritemsperpage#" /> (user)</td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Recommendations</xar:mlstring>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="userecommendations"><xar:mlstring>Allow user recomendations:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($userecommendations)">
+                        <input type="checkbox" name="userecommendations" id="userecommendations" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="userecommendations" id="userecommendations" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="recosperpage"><xar:mlstring>Recomendations to display per page:</xar:mlstring></label></td>
+                <td width="15%"><input type="text" name="recosperpage" id="recosperpage" size="3" value="#$recosperpage#" /> (admin)</td>
+                <td><input type="text" name="userrecosperpage" id="userrecosperpage" size="3" value="#$userrecosperpage#" /> (user)</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Hooks</xar:mlstring>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="usecategories"><xar:mlstring>Use categories:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($usecategories)">
+                        <input type="checkbox" name="usecategories" id="usecategories" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="usecategories" id="usecategories" />
+                    </xar:if>
+                </td>
+            </tr>
+
+            <xar:if condition="isset($featurecat)">
+                <tr>
+                    <td width="35%"><label for="featurecat"><xar:mlstring>Featured category:</xar:mlstring></label></td>
+                    <td colspan="2">#$featurecat#</td>
+                </tr>
+            </xar:if>
+
+            <tr>
+                <td width="35%"><label for="usecomments"><xar:mlstring>Use comments:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($usecomments)">
+                        <input type="checkbox" name="usecomments" id="usecomments" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="usecomments" id="usecomments" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="useratings"><xar:mlstring>Use ratings:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($useratings)">
+                        <input type="checkbox" name="useratings" id="useratings" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="useratings" id="useratings" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td width="35%"><label for="usehitcount"><xar:mlstring>Use hitcount:</xar:mlstring></label></td>
+                <td colspan="2">
+                    <xar:if condition="!empty($usehitcount)">
+                        <input type="checkbox" name="usehitcount" id="usehitcount" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="usehitcount" id="usehitcount" />
+                    </xar:if>
+                </td>
+            </tr>
+
+            <xar:if condition="!empty($hooks)">
+                <tr>
+                    <td colspan="3">
+                        <xar:foreach in="$hooks" key="$hookmodule">
+                            #$hooks[$hookmodule]#
+                        </xar:foreach>
+                    </td>
+                </tr>
+            </xar:if>
+
+            <tr>
+                <td colspan="3" align="center">
+                    <input type="reset" id="resetconfig" value="#$resetlabel#" />&nbsp;&nbsp;
+                    <input type="submit" id="updateconfig" value="#$submitlabel#" />
+                </td>
+            </tr>
+        </table>
+        </form>
+
+    <xar:else />
+
+        <form action="&xar-modurl-shopping-admin-updateconfig;" method="post">
+        <input type="hidden" name="phase" id="phase" value="#$phase#" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        
+        <table border="0" cellspacing="0" cellpadding="5" width="100%">
+            <tr>
+                <td colspan="3">
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Confirmation Emails for Users</xar:mlstring>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="sendsubmit"><xar:mlstring>Order submitted</xar:mlstring></label>
+                    <xar:if condition="!empty($sendsubmit)">
+                        <input type="checkbox" name="sendsubmit" id="sendsubmit" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="sendsubmit" id="sendsubmit" />
+                    </xar:if>
+                </td>
+                <td>
+                    <label for="sendreview"><xar:mlstring>Order reviewed</xar:mlstring></label>
+                    <xar:if condition="!empty($sendreview)">
+                        <input type="checkbox" name="sendreview" id="sendreview" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="sendreview" id="sendreview" />
+                    </xar:if>
+                </td>
+                <td>
+                    <label for="sendpaid"><xar:mlstring>Payment recieved</xar:mlstring></label>
+                    <xar:if condition="!empty($sendpaid)">
+                        <input type="checkbox" name="sendpaid" id="sendpaid" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="sendpaid" id="sendpaid" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="sendship"><xar:mlstring>Order shipped</xar:mlstring></label>
+                    <xar:if condition="!empty($sendship)">
+                        <input type="checkbox" name="sendship" id="sendship" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="sendship" id="sendship" />
+                    </xar:if>
+                </td>
+                <td>
+                    <label for="sendmod"><xar:mlstring>Order modified</xar:mlstring></label>
+                    <xar:if condition="!empty($sendmod)">
+                        <input type="checkbox" name="sendmod" id="sendmod" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="sendmod" id="sendmod" />
+                    </xar:if>
+                </td>
+                <td>
+                    <label for="senddel"><xar:mlstring>Order Cancelled</xar:mlstring></label>
+                    <xar:if condition="!empty($senddel)">
+                        <input type="checkbox" name="senddel" id="senddel" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="senddel" id="senddel" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Confirmation Emails for Admin</xar:mlstring>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="adminsendsubmit"><xar:mlstring>Order submitted</xar:mlstring></label>
+                    <xar:if condition="!empty($adminsendsubmit)">
+                        <input type="checkbox" name="adminsendsubmit" id="adminsendsubmit" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="adminsendsubmit" id="adminsendsubmit" />
+                    </xar:if>
+                </td>
+                <td>
+                    <label for="adminsendmod"><xar:mlstring>Order modified</xar:mlstring></label>
+                    <xar:if condition="!empty($adminsendmod)">
+                        <input type="checkbox" name="adminsendmod" id="adminsendmod" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="adminsendmod" id="adminsendmod" />
+                    </xar:if>
+                </td>
+                <td>
+                    <label for="adminsenddel"><xar:mlstring>Order Cancelled</xar:mlstring></label>
+                    <xar:if condition="!empty($adminsenddel)">
+                        <input type="checkbox" name="adminsenddel" id="adminsenddel" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="adminsenddel" id="adminsenddel" />
+                    </xar:if>
+                </td>
+            </tr>
+        </table>
+        <br /><hr /><br />
+        <table border="0" cellspacing="0" cellpadding="5" width="100%">
+            <tr>
+                <td width="50%" colspan="2">
+                    <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+                        <xar:mlstring>Variables Allowed in Emails</xar:mlstring>
+                    </span>
+                </td>
+                <td width="50%" colspan="2">
+                    &nbsp;
+                </td>
+            </tr>
+      <tr>
+        <td><xar:mlstring>%%sitename%%</xar:mlstring></td>
+        <td>The name of your site</td>
+        <td> <xar:mlstring>%%admin%%</xar:mlstring></td>
+        <td>The administrator of your site</td>
+      </tr>
+      <tr>
+        <td><xar:mlstring>%%ordernumber%%</xar:mlstring></td>
+        <td>The order number of the order</td>
+        <td><xar:mlstring>%%username%%</xar:mlstring></td>
+        <td>The user who placed the order</td>
+      </tr>
+      <tr>
+        <td><xar:mlstring>%%orderdetails%%</xar:mlstring></td>
+        <td>The details of the order</td>
+        <td><xar:mlstring>%%modurl%%</xar:mlstring></td>
+        <td>The URL to modify the order</td>
+      </tr>
+      <tr>
+        <td><xar:mlstring>%%orderdate%%</xar:mlstring></td>
+        <td>The date the order was placed</td>
+        <td><xar:mlstring>%%deleteurl%%</xar:mlstring></td>
+        <td>The URL to cancel the order</td>
+      </tr>
+    </table>
+    <br /><hr /><br />
+    <table border="0" cellspacing="0" cellpadding="5" width="100%">
+      <tr>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Submission Email for Users</xar:mlstring>
+          </span>
+        </td>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Review Email for Users</xar:mlstring>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="mailsubmittitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="mailsubmittitle" id="mailsubmittitle" value="#$mailsubmittitle#" /></td>
+        <td><label for="mailreviewtitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="mailreviewtitle" id="mailreviewtitle" value="#$mailreviewtitle#" /></td>
+      </tr>
+      <tr>
+        <td valign="top"><label for="mailsubmit"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="mailsubmit" id="mailsubmit">#$mailsubmit#</textarea></td>
+        <td valign="top"><label for="mailreview"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="mailreview" id="mailreview">#$mailreview#</textarea></td>
+      </tr>
+    </table>
+    <br />
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%">
+      <tr>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Payment Email for Users</xar:mlstring>
+          </span>
+        </td>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Shipped Email for Users</xar:mlstring>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="mailpaidtitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="mailpaidtitle" id="mailpaidtitle" value="#$mailpaidtitle#" /></td>
+        <td><label for="mailshiptitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="mailshiptitle" id="mailshiptitle" value="#$mailshiptitle#" /></td>
+      </tr>
+      <tr>
+        <td valign="top"><label for="mailpaid"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="mailpaid" id="mailpaid">#$mailpaid#</textarea></td>
+        <td valign="top"><label for="mailship"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="mailship" id="mailship">#$mailship#</textarea></td>
+      </tr>
+    </table>
+    <br />
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%">
+      <tr>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Modified Email for Users</xar:mlstring>
+          </span>
+        </td>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Cancelled Email for Users</xar:mlstring>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="mailmodtitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="mailmodtitle" id="mailmodtitle" value="#$mailmodtitle#" /></td>
+        <td><label for="maildeltitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="maildeltitle" id="maildeltitle" value="#$maildeltitle#" /></td>
+      </tr>
+      <tr>
+        <td valign="top"><label for="mailmod"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="mailmod" id="mailmod">#$mailmod#</textarea></td>
+        <td valign="top"><label for="maildel"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="maildel" id="maildel">#$maildel#</textarea></td>
+      </tr>
+    </table>
+    <br /><hr /><br />
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%">
+      <tr>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Submitted Email for Admin</xar:mlstring>
+          </span>
+        </td>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Modified Email for Admin</xar:mlstring>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="adminmailsubmittitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="adminmailsubmittitle" id="adminmailsubmittitle" value="#$adminmailsubmittitle#" /></td>
+        <td><label for="adminmailmodtitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="adminmailmodtitle" id="adminmailmodtitle" value="#$adminmailmodtitle#" /></td>
+      </tr>
+      <tr>
+        <td valign="top"><label for="adminmailsubmit"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="adminmailsubmit" id="adminmailsubmit">#$adminmailsubmit#</textarea></td>
+        <td valign="top"><label for="adminmailmod"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="adminmailmod" id="adminmailmod">#$adminmailmod#</textarea></td>
+      </tr>
+    </table>
+    <br />
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%">
+      <tr>
+        <td width="50%" colspan="2">
+          <span style="border-bottom: 1px dotted #000000; font-weight: bold;">
+            <xar:mlstring>Cancelled Email for Admin</xar:mlstring>
+          </span>
+        </td>
+        <td width="50%" colspan="2">
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td><label for="adminmaildeltitle"><xar:mlstring>Subject:</xar:mlstring></label></td>
+        <td><input type="text" size="35" name="adminmaildeltitle" id="adminmaildeltitle" value="#$adminmaildeltitle#" /></td>
+      </tr>
+      <tr>
+        <td valign="top"><label for="adminmaildel"><xar:mlstring>Message:</xar:mlstring></label></td>
+        <td><textarea rows="10" cols="40" name="adminmaildel" id="adminmaildel">#$adminmaildel#</textarea></td>
+      </tr>
+    </table>
+    <br />
+    <div style="text-align: center;">
+      <input type="reset" name="resetconfig" id="resetconfig" value="#$resetlabel#" />&nbsp;&nbsp;
+      <input type="submit" name="updateconfig" id="updateconfig" value="#$submitlabel#" />
+    </div>
+
+    </form>
+  </xar:if>
+</div>

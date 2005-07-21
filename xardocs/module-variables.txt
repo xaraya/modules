@@ -1,0 +1,58 @@
+Xaraya Shopping Module
+Module Variables
+
+Variable
+Default
+spolicy
+The administrator of this website has not defined a shipping policy.
+rpolicy
+The administrator of this website has not defined a return policy
+cartperpage
+20
+wishperpage
+10
+allowcomments
+true
+allowratings
+true
+allowrecommendations
+true
+acceptpaypal
+true
+acceptcredit
+false
+acceptbill
+true
+sendsubmit
+true
+sendreview
+false
+sendpaid
+true
+sendship
+true
+sendmod
+true
+sendadminsubmit
+true
+sendadminmod
+true
+sendadmindel
+true
+mailsubmit
+Thank you for your recent order with %%yoursitename%%.  Your order number is %%ordernumber%%.  Below are the details of this order.  %%orderdetails%%.  You can modify or cancel this order until it has been paid for.  Please visit %%modifyurl%% or %%deleteurl%% Respectively to do so.  Thank You, %%administrator%% 
+mailreview
+Your order: %%ordernumber%% has been reviewed.  Once we receive payment, your order will be shipped.  Thank You, %%administrator%%
+mailpaid
+Your order: %%ordernumber%% has been paid for.  You can no longer modify or cancel this order.  It will be shipping soon.  Thank You, %%administrator%%
+mailship
+Your order: %%ordernumber%% has been shipped.  This completes the transaction.  Thank you for your business, %%administrator%%
+mailmod
+Your order: %%ordernumber%% has been successfully modified.  Below are the new details of this order.  %%orderdetails%%.  You can modify or cancel this order until it has been paid for.  Please visit %%modifyurl%% or %%deleteurl%% respectively to do so.  Thank You, %%administrator%%
+adminmailsubmit
+Order number %%ordernumber%% has been submitted by %%user%%.  Please review this order as soon as possible.
+adminmailmod
+Order number %%ordernumber%% has been modified by %%user%%.  Please review this order as soon as possible
+adminmaildel
+Order number %%ordernumber%% has been canceled by %%user%%.  
+

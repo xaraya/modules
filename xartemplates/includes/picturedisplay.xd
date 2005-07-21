@@ -1,0 +1,27 @@
+<table border="0">
+  <tr>
+    <td colspan="2">
+      <img src="#$pic#" style="border: 1; width: 100px" alt="Picture" />
+    </td>
+  </tr>
+
+  <xar:if condition="xarSecurityCheck('DeleteShoppingItems', 0)">
+  <tr>
+    <td>
+      <a href="&xar-modurl-shopping-admin-deletepic;&amp;iid=#$iid#&amp;ipic=#$pic#">
+        <img src="&xar-baseurl;modules/shopping/xarimages/delete.gif" />
+      </a>
+    </td>
+    <td>&xar-modurl-roles-user-terms;
+      <a href="&xar-modurl-shopping-admin-deletepic;&amp;iid=#$iid#&amp;ipic=#$pic#">
+        <xar:mlstring>Delete</xar:mlstring>
+      </a>
+    </td>
+  </tr>
+  </xar:if>
+
+</table>
+
+
+
+
