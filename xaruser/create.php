@@ -98,6 +98,76 @@ function helpdesk_user_create($args)
         $data['return_val'] = $return_val;
     }
 
+    /**
+        Send an e-mail to user with details
+        @author MichelV.
+        $mail needs to be set
+    */
+    $usernew = 'usernew';
+    $mail =xarModFunc('helpdesk','user','sendmail',
+        array(
+            'userid'      => $userid,
+            'name'        => $name,
+            'whosubmit'   => $whosubmit,
+            'phone'       => $phone,
+            'email'       => $email,
+            'subject'     => $subject,
+            'domain'      => $domain,
+            'source'      => $source,
+            'priority'    => $priority,
+            'status'      => $status,
+            'openedby'    => $openedby,
+            'assignedto'  => $assignedto,
+            'closedby'    => $closedby,
+            'issue'       => $issue,
+            'notes'       => $notes,
+            'tid'         => $return_val,
+            'mailaction'  => $usernew 
+        )
+    );
+    
+    // Check if the email has been sent.
+    if ($mail === false) {
+        $msg = xarML('Email to user was not sent!');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        new SystemException($msg));
+    }
+    
+    /**
+    * Send an e-mail to assignedto
+    * @author MichelV.
+    * $mail needs to be set
+    */
+    $assignednew = 'assignednew';
+    $assignedmail =xarModFunc('helpdesk','user','sendmail',
+        array(
+            'userid'      => $userid,
+            'name'        => $name,
+            'whosubmit'   => $whosubmit,
+            'phone'       => $phone,
+            'email'       => $email,
+            'subject'     => $subject,
+            'domain'      => $domain,
+            'source'      => $source,
+            'priority'    => $priority,
+            'status'      => $status,
+            'openedby'    => $openedby,
+            'assignedto'  => $assignedto,
+            'closedby'    => $closedby,
+            'issue'       => $issue,
+            'notes'       => $notes,
+            'tid'         => $return_val,
+            'mailaction'  => $assignednew
+        )
+    );
+    
+    // Check if the email has been sent.
+    if ($assignedmail === false) {
+        $msg = xarML('Email to assigned-to was not sent!');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        new SystemException($msg));
+    }
+
     // Adds the Issue                                      
     $pid = 0; // parent id
     $itemid = $return_val; // id of ticket just created

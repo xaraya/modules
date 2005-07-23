@@ -90,6 +90,23 @@ function helpdesk_userapi_update($args)
     // appropriate error message and return
     if ($dbconn->ErrorNo() != 0) { return false; }
     
+    /**
+        Send an e-mail to user when the ticket is closed
+        @author MichelV.
+        $mail needs to be set
+	*/
+    if ($statusid == '3'){
+        $mailaction = 'closed';
+        $mail =xarModFunc('helpdesk','user','sendmail',
+array('mailaction'  => $mailaction));
+    
+        // Check if the email has been sent.
+        if ($mail === false) {
+            $msg = xarML('Email to user was not sent!');
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        }
+    }   // End if($statusid == '3')
+    
     return true;
 }
 ?>
