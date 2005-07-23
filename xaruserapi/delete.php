@@ -20,6 +20,6 @@ function helpdesk_userapi_deleteticket($args)
     if (!$result) return;
     $result->Close();
 
-    xarResponseRedirect(xarModURL('helpdesk', 'user', 'main'));
+    return true;
 }
 ?>
