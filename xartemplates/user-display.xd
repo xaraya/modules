@@ -58,10 +58,8 @@
     <tr class="">
         <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
         <td colspan="3">
-            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a>
-            <xar:comment>
+            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> |
             <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
-            </xar:comment>
         </td>
     </tr>
     <xar:if condition="xarModIsHooked('dynamicdata','helpdesk',1)">

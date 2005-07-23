@@ -1,12 +1,13 @@
 <?php
-//=========================================================================
-// Deletes the ticket 
-//=========================================================================
-function helpdesk_userapi_deleteticket($args)
+/**
+    Deletes the ticket 
+*/
+function helpdesk_userapi_delete($args)
 {
     extract($args);
-    
-    xarVarFetch('ticket_id', 'id', $ticket_id, null);
+        
+    if( empty($tid) )
+        return false;
     
     // Database information
     $dbconn =& xarDBGetConn();
@@ -16,7 +17,7 @@ function helpdesk_userapi_deleteticket($args)
     $sql = "DELETE FROM  $helpdesktable 
                    WHERE xar_id = ?";
 
-    $result = $dbconn->Execute($sql, array($ticket_id));
+    $result = $dbconn->Execute($sql, array($tid));
     if (!$result) return;
     $result->Close();
 
