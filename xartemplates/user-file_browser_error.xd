@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>#$error['message']#</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <base href="http://localhost:9000/index.php" />
+    <script>
+        function uploads_browser_error() {
+            alert('#$error['message']#');
+            history.back();
+        }
+    </script>
+</head>
+<body onLoad="uploads_browser_error()">
+    <h4 style="color: red;">
+        #$error['message']#
+    </h1>
+    <p>
+        <xar:mlstring>
+            If you have javascript enabled, you will be automatically returned to the previous page after clicking 'ok' 
+            to the alert. Otherwise, please press your back button to return to the previous page...
+        </xar:mlstring>
+    </p>
+</body>
+</html>

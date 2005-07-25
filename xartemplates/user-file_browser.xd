@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="#xarServerGetBaseURL()#/modules/base/xarstyles/navtabs.css"/>
+
+    <title>Tree Test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <base href="#xarServerGetBaseURL()#" />
+    <style type="text/css">
+        @import url(modules/uploads/xarstyles/tree.css);
+    </style>
+    <script type="text/javascript" src="modules/uploads/xartemplates/includes/functions.js"></script>
+</head>
+<body class="uploads-browser-body">
+
+<form action="#xarModURL('uploads', 'user', 'file_selector')#" method="get">
+    <input id="uploads-browser-filepath" name="vpath" type="text" value="#$path#" />
+    <input type="hidden" name="module" value="uploads" />
+    <input type="hidden" name="func" value="file_selector" />
+</form>
+
+<div id="uploads-browser-treepane">
+    <div id="uploads-browser-tree">
+        <ul id="uploads-browser-treeroot" class="uploads-browser-folder-open">
+            <li class="uploads-browser-folder-closed"><a id="a_0" href="#xarServerGetBaseURL()#index.php/uploads/fsroot"><img src="#xarTplGetImage('system.png', 'uploads')#" width="18" height="18" id="img_0" alt="folder" />Xaraya File System</a>
+                <xar:foreach in="$dirList" value="$branch">
+                    <xar:if condition="count($branch['children'])">
+                        #xarModAPIFunc('uploads', 'user', 'dir_branch_descend', array('tree' =&gt; $branch['children']))#
+                    </xar:if>
+                </xar:foreach>
+            </li>
+        </ul>
+    </div>
+    <div id="uploads-browser-fileinfo">
+    <h4>File Info</h4>
+    <xar:if condition="isset($fileInfo) AND !empty($fileInfo)">
+        <p>
+            <strong>Name:</strong> #$fileInfo['name']#<br />
+            <strong>Date:</strong> #xarLocaleFormatDate("%b %d. %Y %H:%M:%S %Z", $fileInfo['date'])#<br />
+            <strong>Size:</strong> #$fileInfo['size']#<br />
+        </p>
+        <xar:if condition="stristr($fileInfo['type'], 'image')">
+            <p>
+                Preview:<br />
+                <br />
+                <xar:image-resize src="$fileInfo[id]" width="100px" constrain="1" height="100px" label="$fileInfo[name]" />
+            </p>
+        </xar:if>
+    <xar:else />
+        <xar:mlstring>No file selected..</xar:mlstring>
+    </xar:if>
+    </div>
+
+</div>
+
+<xar:if condition="!isset($fileList) OR empty($fileList)">
+    <div class="uploads-browser-filelist">
+        &nbsp;&nbsp;<xar:mlstring>No Files</xar:mlstring>
+    </div>
+<xar:else />
+    <div class="uploads-browser-filelist">
+        <table class="uploads-browser-filetable" border="1" style="font-size: 10pt;">
+            <tr>
+
+                <th>File</th>
+            </tr>
+            <tbody id="uploads-browser-filetablebody">
+            <xar:foreach in="$fileList" value="$item">
+                <xar:if condition="isseT($fileInfo) AND !empty($fileInfo) AND ($fileInfo['id'] eq $item['id'])">
+                    <tr class="uploads-browser-selectedfile">
+                        <td>
+                            <a href="#$item['link']#" title="#$item['name']#">
+                                <img src="#xarServerGetBaseURL()#/#$item['type-image']#" height="18" width="18" />
+                                &nbsp;&nbsp;#$item['name']#
+                            </a>
+                        </td>
+                    </tr>
+                <xar:else />
+                    <tr>
+                        <td>
+                            <a href="#$item['link']#" title="#$item['name']#">
+                                <img src="#xarServerGetBaseURL()#/#$item['type-image']#" height="18" width="18" />
+                                &nbsp;&nbsp;#$item['name']#
+                            </a>
+                        </td>
+                    </tr>
+                </xar:if>
+            </xar:foreach>
+        </table>
+    </div>
+</xar:if>
+
+</body>
+</html>
+

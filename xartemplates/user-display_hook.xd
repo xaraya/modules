@@ -1,0 +1,6 @@
+
+<ul>
+<xar:foreach in="$attached_items" value="$itemArray" key="$itemId">
+    <li>#$itemArray['link']['link']#(#$itemArray['size']['text']['short']#)</li>
+</xar:foreach>
+</ul>

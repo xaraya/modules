@@ -1,0 +1,5 @@
+<?php
+
+xarModAPILoad('uploads','user');
+
+?>

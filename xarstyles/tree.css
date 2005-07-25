@@ -1,0 +1,103 @@
+body {
+    background-color: #fff;
+    color: #000;
+    font-family: sans-serif;
+    font-size: 10pt;
+}
+#uploads-browser-treepane {
+    float: left;
+}
+#uploads-browser-tree {
+    margin-bottom: 5px;
+    border: 2px inset;
+    width: 15em;
+    height: 225px;
+    overflow: auto;
+}
+#uploads-browser-fileinfo {
+    border: 2px inset;
+    width: 15em;
+    height: 275px;
+    overflow: auto;
+}
+
+#uploads-browser-fileinfo img {
+    margin-left: 25px
+}
+
+#uploads-browser-filepath {
+    margin-bottom: 0px;
+    border: 2px inset;
+    overflow: auto;
+    width: 100%;
+}
+.uploads-browser-filelist {
+    margin-left: 5px;
+    border: 2px inset;
+    width: 475px;
+    overflow: auto;
+    height: 508px;
+    overflow: scroll;
+}
+
+.uploads-browser-selectlist {
+    margin-left: 5px;
+    border: 2px inset;
+    width: 100%;
+    overflow: auto;
+    height: 200px;
+    overflow: scroll;
+}
+#uploads-browser-fileinfo h4 {
+    margin-top: 0;
+}
+#uploads-browser-treeroot {
+    display: block !important;
+    margin-top: 0;
+    margin-left: -16px;
+    padding-left: 0;
+}
+#uploads-browser-treeroot li {
+    margin-top: 0;
+    padding-left: 18px;
+    list-style-type: none;
+}
+
+#uploads-browser-treeroot ul {
+    padding-left: 0;
+    margin-left: 0;
+}
+.uploads-browser-filetable, .uploads-browser-selecttable {
+    width: 100%;
+    border-collapse: collapse;
+}
+.uploads-browser-filetable th, .uploads-browser-filetable td, .uploads-browser-selecttable th, .uploads-browser-selecttable td {
+    text-align: left;
+    padding: 1px 4px;
+    white-space: nowrap;
+}
+.uploads-browser-filetable td.uploads-browser-file-right, .uploads-browser-filetable th.uploads-browser-file-right {
+    text-align: right;
+}
+#uploads-browser-treeroot li a, .uploads-browser-filetable a {
+    color: #000;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 0 5px;
+}
+#uploads-browser-treeroot a img, .uploads-browser-filetable a img, .uploads-browser-selecttable a img {
+    border: 0;
+    vertical-align: text-bottom;
+    margin-right: 5px;
+}
+#uploads-browser-treeroot a.uploads-browser-current {
+    background-color: #eee;
+}
+
+#uploads-browser-filetablebody tr:hover {
+    background-color: lightblue;
+}
+
+.uploads-browser-selectedfile {
+    background-color: lightgreen;
+}

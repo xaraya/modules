@@ -1,0 +1,50 @@
+<link rel="stylesheet" type="text/css" href="#xarServerGetBaseURL()#/modules/base/xarstyles/navtabs.css"/>
+
+<div>
+    <dl class="xar-tabs">
+        <dt class="help">
+            <xar:mlstring>Actions</xar:mlstring>
+            :
+        </dt>
+
+        <xar:foreach in="$tabsarray" value="$tabprintvalue" key="$tabformvalue">
+            <xar:if condition="$tabformvalue eq 'help'">
+                <xar:if condition="$tab eq $tabformvalue">
+                    <dd class="active" style="float: right;">
+                        <a href="#xarModURL('uploads', 'admin', 'modifyconfig', array('tab' => $tabformvalue))#">
+                            #$tabprintvalue#
+                        </a>
+                    </dd>
+                <xar:else />
+                    <dd style="float: right;">
+                        <a href="#xarModURL('uploads', 'admin', 'modifyconfig', array('tab' => $tabformvalue))#">
+                            #$tabprintvalue#
+                        </a>
+                    </dd>
+                </xar:if>
+            <xar:else />
+                <xar:if condition="$tab eq $tabformvalue">
+                    <dd class="active">
+                        <a href="#xarModURL('uploads', 'admin', 'modifyconfig', array('tab' => $tabformvalue))#">
+                            #$tabprintvalue#
+                        </a>
+                    </dd>
+                <xar:else />
+                    <dd>
+                        <a href="#xarModURL('uploads', 'admin', 'modifyconfig', array('tab' => $tabformvalue))#">
+                            #$tabprintvalue#
+                        </a>
+                    </dd>
+                </xar:if>
+            </xar:if>
+        </xar:foreach>
+    </dl>
+</div>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Uploads Administration</xar:mlstring>
+    </span>
+</div>
+
+<xar:template file="modify_config_$tab" type="module" />

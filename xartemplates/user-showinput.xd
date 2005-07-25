@@ -1,0 +1,32 @@
+    <xar:base-include-javascript filename="functions.js" />
+
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; text-align: right; ">
+            <span class="help" title="Manage files attached to this item.">
+                <xar:mlstring>
+                    Attachments:
+                </xar:mlstring>
+            </span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:mlstring>
+                 Total:
+            </xar:mlstring>
+        
+            <span id="#$prefix#uploads_attachment_total">#$totalAttachments#</span>
+
+            <xar:if condition="isset($prefix) AND !empty($prefix)">
+                <input type="hidden" style="display: hidden;" id="#$prefix#uploads_attachment_list" name="#$prefix#attachment_list" value="#$attachment_list#" />
+            <xar:else />
+                <input type="hidden" style="display: hidden;" id="uploads_attachment_list" name="attachment_list" value="#$attachment_list#" />
+            </xar:if>
+            
+            <a href="#$destination_url#" onclick="uploads_popup('#$destination_url#');return false;" style="margin-left: 50px;">
+                <xar:mlstring>Modify Attachment List</xar:mlstring>
+            </a>
+            
+            <a href="#$destination_url#" onclick="uploads_test('#$prefix#');return false;" style="margin-left: 50px;">
+                <xar:mlstring>Test</xar:mlstring>
+            </a>
+        </span>
+    </div>

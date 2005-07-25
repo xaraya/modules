@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="#xarServerGetBaseURL()#/modules/base/xarstyles/navtabs.css"/>
+
+    <title>Tree Test</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <base href="#xarServerGetBaseURL()#" />
+    <style type="text/css">
+        @import url(modules/uploads/xarstyles/tree.css);
+    </style>
+    <script type="text/javascript" src="modules/uploads/xartemplates/includes/functions.js"></script>
+</head>
+<body class="uploads-browser-body">
+<div>
+    <dl class="xar-tabs">
+        <dt class="help">
+            <xar:mlstring>Attachment Manager</xar:mlstring>
+            :
+        </dt>
+
+        <xar:foreach in="$tabs" key="$tabtype" value="$tabInfo">
+            <xar:if condition="$tab eq $tabtype">
+                <dd class="active">
+                    <a href="#$tabInfo['link']#">
+                         #$tabInfo['label']#
+                    </a>
+                </dd>
+            <xar:else />
+                <dd>
+                    <a href="#$tabInfo['link']#">
+                         #$tabInfo['label']#
+                    </a>
+                </dd>
+            </xar:if>
+        </xar:foreach>
+
+        <xar:if condition="$tab eq 'browser'">
+            <dd style="float: right;">
+                <xar:if condition="isset($prefix) AND !empty($prefix)">
+                    <a href="#$finished#"  onclick="uploads_update_selected('#$prefix#');return false;">
+                        Finish and Close
+                    </a>
+                <xar:else />
+                    <a href="#$finished#"  onclick="uploads_update_selected('');return false;">
+                        Finished and Close
+                    </a>
+                </xar:if>
+            </dd>
+        </xar:if>
+        
+</div>
+#$taboutput#
+</body>
+</html>

@@ -1,0 +1,31 @@
+    <ul class="uploads-browser-folder-open">
+        <xar:foreach in="$tree" value="$node">
+
+            <xar:if condition="isset($node['selected']) AND $node['selected']">
+                <xar:set name="class">
+                    'uploads-browser-folder-open'
+                </xar:set>
+                <xar:set name="image">
+                    'folderopen.gif'
+                </xar:set>
+            <xar:else />
+                <xar:set name="class">
+                    'uploads-browser-folder-closed'
+                </xar:set>
+                <xar:set name="image">
+                    'folder.gif'
+                </xar:set>
+            </xar:if>
+
+            <xar:if condition="count($node['children'])">
+                <li class="#$class#"><a id="a_public_files" href="#$node['link']#"><img src="#xarTplGetImage($image, 'uploads')#" width="18" height="18" id="img_public_files" alt="folder" />#$node['name']#</a>
+                    <xar:if condition="count($node['children']) gt 0">
+                        #xarModAPIFunc('uploads', 'user', 'dir_branch_descend', array('tree' => $node['children']))#
+                    </xar:if>
+                </li>
+            <xar:else />
+                <li class="#$class#"><a id="a_public_files" href="#$node['link']#"><img src="#xarTplGetImage($image, 'uploads')#" width="18" height="18" id="img_public_files" alt="folder" />#$node['name']#</a></li>
+            </xar:if>
+
+        </xar:foreach>
+    </ul>

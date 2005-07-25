@@ -1,0 +1,27 @@
+
+<form name="upload_form" id="upload_form" action="#$upload_post_url#" method="post" enctype="multipart/form-data">
+    <table summary="Files" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline" style="font-size: 10pt;">
+        <tr>
+            <td  class="xar-norm" align="right"><xar:mlstring>Select File:</xar:mlstring></td>
+            <td class="xar-norm"  >
+                <input type="file" name="upload" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" ><xar:mlstring>Save To:</xar:mlstring></td>
+            <td class="xar-norm"  >
+                <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> Database<br/>
+                <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  /> Filesystem
+            </td>
+        </tr>
+        <tr>
+            <td class="xar-norm"  colspan="2" align="center">
+                <input type="submit" name="button" id="button" value="#xarML('Upload')#" />
+                <input type="hidden" name="action" id="action" value="1" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#" />
+            </td>
+        </tr>
+    </table>
+    <br />                    
+</form>

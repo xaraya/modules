@@ -1,0 +1,71 @@
+
+
+
+
+
+<table summary="Attachments" width="100%" border="0" cellpadding="2" cellspacing="1">
+    <tr>
+        <th colspan="2" style="text-align: center;"><xar:mlstring>Upload Attachments</xar:mlstring></th>
+    </tr>
+
+    <tr>
+        <td class="xar-norm" align="right"><xar:mlstring>Allowed Mime Types</xar:mlstring>:</td>
+        <td class="xar-norm">
+            <!--
+            <select name="mimetype" id="mimetype">
+                <xar:foreach in="$mimetypeList" key="$mimetypevalue" value="$mimetypeName">
+                    <xar:if condition="isset($displayvalue)">
+                        <option value="#$mimetypevalue#" selected="selected">
+                    <xar:else />
+                        <option value="#$mimetypevalue#">
+                    </xar:if>
+                    #$mimetypeName# </option>
+                </xar:foreach>
+            </select>
+            <input type="textbox" name="mimesubtype" maxlength="128" size="15" value="#$mimesubtype#" />
+            -->
+                <select name="mimetype" id="mimetype" onchange="this.form.submit();">
+                  <xar:foreach in="$mimetypeList" key="$key" value="$type">
+                      <xar:if condition="isset($type['selected'])">
+                          <option value="#$type['typeId']#" selected="selected">#$type['typeName']# </option>
+                      <xar:else />
+                          <option value="#$type['typeId']#">#$type['typeName']# </option>
+                      </xar:if>
+                  </xar:foreach>
+                </select>
+
+                <select name="mimesubtype" id="subtypes">
+                  <xar:foreach in="$submimetypeList" key="$key" value="$subtype">
+                      <xar:if condition="isset($subtype['selected'])">
+                          <option value="#$subtype['subtypeId']#" selected="selected">#$subtype['subtypeName']# </option>
+                      <xar:else />
+                          <option value="#$subtype['subtypeId']#">#$subtype['subtypeName']# </option>
+                      </xar:if>
+                  </xar:foreach>
+                </select>
+          </td>
+    </tr>
+    <tr>
+        <td class="xar-norm" align="right"><xar:mlstring>File Names With</xar:mlstring>:</td>
+        <td class="xar-norm"><input type="textbox" name="filenamewith" maxlength="128" size="30" value="#$filenamewith#" /></td>
+    </tr>
+    <tr>
+        <td class="xar-norm" align="right"><xar:mlstring>Max Attachments per Item</xar:mlstring>:</td>
+        <td class="xar-norm"><input type="textbox" name="maxattachmnts" maxlength="128" size="5" value="#$maxattachmnts#" /></td>
+    </tr>
+    <tr>
+        <td class="xar-norm" align="right"><xar:mlstring>Display As</xar:mlstring>:</td>
+        <td class="xar-norm">
+            <select name="displayas" id="displayas">
+                <xar:foreach in="$displayasList" key="$displayvalue" value="$displayName">
+                    <xar:if condition="$displayas eq $displayvalue">
+                        <option value="#$displayvalue#" selected="selected">#$displayName# </option>
+                    <xar:else />
+                        <option value="#$displayvalue#">#$displayName# </option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </td>
+    </tr>
+</table>
+    

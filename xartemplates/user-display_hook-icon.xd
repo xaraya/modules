@@ -1,0 +1,7 @@
+
+ICON
+<ul>
+<xar:foreach in="$attached_items" value="$itemArray" key="$itemId">
+    <li><img src="#xarServerGetBaseURL()#/#$itemArray['mimetype']['imagepath']#" border="0" align="middle"/>#$itemArray['link']['link']#(#$itemArray['size']['text']['short']#)</li>
+</xar:foreach>
+</ul>

@@ -1,0 +1,28 @@
+
+<form name="external_import_form" id="external_import_form" action="#$external_import_post_url#" method="post">
+    <table summary="Files" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline" style="font-size: 10pt;">
+        <tr>
+            <td align="right" ><xar:mlstring>External URL:</xar:mlstring></td>
+        
+            <td class="xar-norm" >
+                <input type="text" name="import" value="" size="40" id="import" maxlength="128" />
+            </td>
+        </tr>
+            
+        <tr>
+            <td align="right" ><xar:mlstring>Save To:</xar:mlstring></td>
+            <td class="xar-norm" >
+                <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> Database<br/>
+                <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  /> Filesystem
+            </td>
+        </tr>
+        <tr>
+            <td class="xar-norm"  colspan="2" align="center">
+                <input type="submit" name="button" id="button" value="#xarML('Import')#" />
+                <input type="hidden" name="action" id="action" value="2" />
+                <input type="hidden" name="authid" value="#$authid#" />
+            </td>
+        </tr>
+    </table>
+    <br />
+</form>
