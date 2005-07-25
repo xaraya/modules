@@ -3,5 +3,10 @@ things can be tried out without disturbing too much
 
 New xmlrpc attempt with external poster
 First change
+Inserted line on concurrent change
 Second change
-Third change
+Another inserted line on concurrent change
+Third (this should conflit) change
+Appending some stuff here, so i'm sure to get
+a conflict on pushing this first and then 
+pulling that into something else
