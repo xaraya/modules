@@ -1,6 +1,12 @@
 This file is a placeholder file in the sandbox branch, so there is an area where
 things can be tried out without disturbing too much
 
+Trying again
+and againi
+Inserting some text here to force merge
+and again
+a change
+Appending some test here to force merge
 New xmlrpc attempt with external poster
 First change
 Inserted line on concurrent change
@@ -10,3 +16,4 @@ Third (this should conflit) change
 Appending some stuff here, so i'm sure to get
 a conflict on pushing this first and then 
 pulling that into something else
+Took both, inserted this as extra during the merge
