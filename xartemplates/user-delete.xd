@@ -1,0 +1,24 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+        <xar:mlstring>#(1) - Delete Ticket</xar:mlstring>
+        <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <p class="xar-align-center">
+        Are you sure you want to delete this ticket?
+    </p>
+
+    <div class="xar-align-center" style="text-align: center;">
+        <form action="#xarModURL('helpdesk', 'user', 'delete')#" method="POST">
+            <input type="hidden" name="tid" value="#$tid#" />
+            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+        </form>
+    
+        <br />
+            <a href="#xarModURL('helpdesk', 'user', 'view')#"><xar:mlstring>Cancel</xar:mlstring></a>
+    </div>
+</div>
