@@ -156,19 +156,22 @@ ul.xar-julian-catlist li {
 }
 ul.xar-julian-eventlist li {
     text-align: left;
-    margin-left: -40px;
+    margin-left: -20px; /* was -40px*/
 }
 .xar-julian-list-icons {
     float: left;
-     padding-right: 2px;
+    padding-right: 2px;
     padding-top: 3px;
     display:block;
 }
 /* block element inside li to overrule color */
-div.xar-julian-list-contents {
+div.xar-julian-list-contents li{
     color: black;
 }
 
+div.xar-julian-block-calevent li{ 
+    margin-left: 0px;
+}
 /* hyperlink to event with overlib layer */
 a.xar-julian-event {
     text-decoration: underline;
