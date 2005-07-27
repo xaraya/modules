@@ -24,13 +24,11 @@ function ie7_eventapi_OnServerRequest()
 
         /* load the required javascript */
         xarTplAddJavaScript('head', 'src', 
-                xarServerGetBaseURL().
                 'modules/ie7/xarincludes/ie7/ie7-standard.js');
 
         /* other config options */
         if (xarModGetVar('ie7', 'css3')) {
-            xarTplAddJavaScript('head', 'src', 
-                xarServerGetBaseURL().
+            xarTplAddJavaScript('head', 'src',
                 'modules/ie7/xarincludes/ie7/ie7-css3.js');
         }
     }

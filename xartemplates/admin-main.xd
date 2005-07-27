@@ -10,9 +10,8 @@ site</a>
 
 <h3>How to use it?</h3>
 <p>First, check your theme to make sure your head javascript appears before any
-css is loaded, <i>and</i> before the <tt>&lt;base&gt;</tt> tag is declared! 
-This is vital - if you don't do it you will get 'Operation
-Failed' errors in IE and the page will fail to load at all.</p>
+css is loaded. eg the tag <code>&lt;xar:base-render-javascript position="head" /&gt;</code> should appear before any css in your main page templates.
+</p>
 
 <p>Second, enable IE7 in the <a href="#xarModURL('ie7', 'admin', 'modifyconfig')#">
 modify config</a> pages.</p>
