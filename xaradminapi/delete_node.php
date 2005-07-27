@@ -34,6 +34,13 @@ function comments_adminapi_delete_node( $args )
     $itemtype = $comments[0]['xar_itemtype'];
     $objectid = $comments[0]['xar_objectid'];
 
+    // Call delete hooks for categories, hitcount etc.
+    $args['module'] = 'comments';
+    $args['itemtype'] = $itemtype;
+    $args['itemid'] = $node;
+    xarModCallHooks('item', 'delete', $node, $args);
+    
+    //Now delete the item ....
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -74,10 +81,7 @@ function comments_adminapi_delete_node( $args )
                                                        'itemtype'   => $itemtype,
                                                        'gapsize'    => 2));
 
-    // Call delete hooks for categories, hitcount etc.
-    $args['module'] = 'comments';
-    $args['itemid'] = $node;
-    xarModCallHooks('item', 'delete', $node, $args);
+
 
     return $dbconn->Affected_Rows();
 }
