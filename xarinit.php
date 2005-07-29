@@ -384,6 +384,8 @@ function julian_init()
         xarModSetVar('julian','BulletForm','bull');
         //default alert supscriptions;none. Users can configure this
         xarModSetVar('julian','alerts','a:0:{}');
+        //default number of items per page
+        xarModSetVar('julian','numitems','10');
                 
 //TODO::Register the Module Variables
     //xarModSetVar('calendar','allowUserCalendars',false);
@@ -735,6 +737,8 @@ function julian_upgrade($oldversion)
 
             return julian_upgrade('0.2.2');
                 case '0.2.2':
+        //default number of items per page
+        xarModSetVar('julian','numitems','10');
  }
          return true;
 }

@@ -60,7 +60,7 @@ function julian_userapi_countevents($args)
                   FROM  $event_table
                   WHERE $event_table.event_id = ? 
                   AND   $event_table.event_id != 0";
-        $bindvars[] = (int) $event_id;
+        $bindvars[] = array((int) $event_id);
     } else {
         // Get all Events
         $query = "SELECT COUNT(1) FROM $event_table
@@ -75,16 +75,16 @@ function julian_userapi_countevents($args)
 */
 
     $result =& $dbconn->Execute($query, $bindvars);
-
+    $noresult = 0;
     // Check for an error
-    if (!$result) return;
+    if (!$result) return $noresult;
 
     // Obtain the number of items
     list($numitems) = $result->fields;
-
     // Close result set
     $result->Close();
-
+    // bug 4833: Turn result into Integer 
+    $numitems = (INT)$numitems;
     // Return the number of items
     return $numitems;
 }

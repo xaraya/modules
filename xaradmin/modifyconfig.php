@@ -53,7 +53,7 @@ function julian_admin_modifyconfig($args)
     
     //xarModSetVar('julian', 'BulletForm', 'bull');
     $data['BulletForm'] = xarModGetVar('julian', 'BulletForm');
-    
+    $data['numitems'] = xarModGetVar('julian','numitems');
     // Hooks calling
     $hooks = xarModCallHooks('module', 'modifyconfig', 'julian', array('module' => 'julian'));
     if (empty($hooks)) {

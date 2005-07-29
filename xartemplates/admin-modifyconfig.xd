@@ -73,6 +73,16 @@
                         </xar:if>
                     </select>
                 </p>
+                    <p class="param">
+                        <label for="numitems" class="required">
+                            <span class="help" title="#xarML('Number of items per page.')#">
+                            <xar:mlstring>
+                                Number of items per page (in eventslist):
+                            </xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="numitems" type="15" value="$numitems" />
+                    </p>
                 <p class="param">
                     <label for="dateformat">
                         <span class="help" title="#xarML('Choose the date format.')#">

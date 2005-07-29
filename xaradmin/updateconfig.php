@@ -30,7 +30,7 @@ function julian_admin_updateconfig($args)
     if (!xarVarFetch('BulletForm', 'str', $BulletForm, false, XARVAR_DONT_REUSE)) return;
     if (!xarVarFetch('dateformat', 'str', $dateformat, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('timeform', 'str', $timeform, false, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('numitems', 'int', $numitems, 10, XARVAR_NOT_REQUIRED)) return;
     
     xarModSetVar('julian','ical_links',$ical_links);
     xarModSetVar('julian','share_group',$share_group);
@@ -41,6 +41,7 @@ function julian_admin_updateconfig($args)
     xarModSetVar('julian','BulletForm',$BulletForm);
     xarModSetVar('julian','dateformat',$dateformat);
     xarModSetVar('julian','timeform',$timeform);
+    xarModSetVar('julian','numitems',$numitems);
 
     xarModCallHooks('module','updateconfig','julian', array('module' => 'julian')); //Call hooks
 
