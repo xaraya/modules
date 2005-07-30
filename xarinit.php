@@ -531,6 +531,7 @@ function courses_delete()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
+    
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['courses']);
     if (empty($query)) return; // throw back
@@ -552,10 +553,10 @@ function courses_delete()
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     // Delete any module variables
     xarModDelAllVars('courses');
-    
+
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
             'admin',

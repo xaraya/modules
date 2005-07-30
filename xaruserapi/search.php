@@ -45,7 +45,7 @@ function courses_userapi_search($args)
     }
     $join = '';
     if ($shortdesc == 1){
-    // Why have a join here?
+	// Why have a join here?
         $join = "LEFT JOIN $planningtable ON $coursestable.xar_courseid = $planningtable.xar_courseid";
         $where[] = "$coursestable.xar_shortdesc LIKE '%$q%'";
     }
@@ -53,7 +53,7 @@ function courses_userapi_search($args)
         $join = "LEFT JOIN $planningtable ON $coursestable.xar_courseid = $planningtable.xar_courseid";
         $where[] = "$planningtable.xar_longdesc LIKE '%$q%'";
     }
-    
+	
     if(count($where) > 1){
         $clause = join($where, ' OR ');
     }

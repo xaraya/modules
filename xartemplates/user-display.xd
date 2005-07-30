@@ -1,7 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="xarTplAddStyleLink('courses', 'xarform')"></xar:if>
 <xar:if condition="xarTplAddStyleLink('courses', 'courses')"></xar:if>
-<div class="xar-courses xar-courses-newcourse">
+<div class="xar-courses xar-courses-display">
+
+    <xar:template file="header" />
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Course details for </xar:mlstring>#$item['name']#&nbsp;#$item['number']#</span>
