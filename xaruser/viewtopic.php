@@ -101,6 +101,10 @@ function xarbb_user_viewtopic($args)
                                                        $data['ttitle']),
                                                        'xarbb',
                                                        $data['fid']);
+    // Bug 4836
+    $data['transformedtitle'] = str_replace("<p>", "", $data['transformedtitle']);
+    $data['transformedtitle'] = str_replace("</p>", "", $data['transformedtitle']);
+    // End
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
     // The user API function is called
