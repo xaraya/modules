@@ -53,8 +53,9 @@ function categories_userapi_getcatbyname($args)
 
     $SQLquery = "SELECT xar_cid
                  FROM $categoriestable
-                 WHERE xar_name = '". $name ."'";
-    $result = $dbconn->Execute($SQLquery);
+                 WHERE xar_name = ?";
+    $bindvars = array($name);
+    $result = $dbconn->Execute($SQLquery,$bindvars);
     if (!$result) return;
 
     // Check for no rows found
