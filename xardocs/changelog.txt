@@ -36,3 +36,5 @@ Version 3.0 2005-03-20
 Version 3.1 2005-04-15
    - added "top countries" logging and zoomable map links
    - changed geoflags data pak to use country codes
+Version 3.11 2005-07-25
+   - added sanitizeSysString() function for local exec ops

@@ -279,7 +279,7 @@ function netquery_user_main()
     else if ($data['querytype'] == 'ping')
     {
         $png = '';
-        $target = $data['host'];
+        $target = sanitizeSysString($data['host']);
         $tpoints = $data['maxp'];
         $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if ($data['winsys']) {$PN=$data['pingexec_local'].' -n '.$tpoints.' '.$target;}
@@ -301,7 +301,7 @@ function netquery_user_main()
     else if ($data['querytype'] == 'trace')
     {
         $rt = '';
-        $target = $data['host'];
+        $target = sanitizeSysString($data['host']);
         $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if ($data['winsys']) {$TR=$data['traceexec_local'].' '.$target;}
         else {$TR=$data['traceexec_local'].' '.$target;}

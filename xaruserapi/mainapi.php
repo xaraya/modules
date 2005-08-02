@@ -163,6 +163,16 @@ function netquery_userapi_mainapi()
     }
     return $data;
 }
+function sanitizeSysString($string, $min = '', $max = '')
+{
+  $pattern = '/(;|\||`|>|<|&|^|"|'."\n|\r|'".'|{|}|[|]|\)|\()/i';
+  $string = preg_replace($pattern, '', $string);
+  $string = '"'.preg_replace('/\$/', '\\\$', $string).'"';
+  $len = strlen($string);
+  if((($min != '') && ($len < $min)) || (($max != '') && ($len > $max)))
+    return FALSE;
+  return $string;
+}
 if (!function_exists('checkdnsrr'))
 {
   function checkdnsrr($host, $type = '')

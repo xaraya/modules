@@ -2,6 +2,12 @@
 include_once ("modules/netquery/xarinitdata.php");
 function netquery_init()
 {
+    $varLogsDir = xarCoreGetVarDirPath() . '/logs';
+    if (!is_writable($varLogsDir)) {
+        $msg = xarML('Netquery module installation has failed. Please make #(1) writable by the web server process.', $varLogsDir);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));
+        return false;
+    }
     if (DIRECTORY_SEPARATOR == '\\') {
       $digexec = 'nslookup.exe';
       $traceexec = 'tracert.exe';
@@ -58,6 +64,12 @@ function netquery_init()
 }
 function netquery_upgrade($oldversion)
 {
+    $varLogsDir = xarCoreGetVarDirPath() . '/logs';
+    if (!is_writable($varLogsDir)) {
+        $msg = xarML('Netquery module upgrade has failed. Please make #(1) writable by the web server process.', $varLogsDir);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));
+        return false;
+    }
     if (DIRECTORY_SEPARATOR == '\\') {
       $digexec = 'nslookup.exe';
       $traceexec = 'tracert.exe';
