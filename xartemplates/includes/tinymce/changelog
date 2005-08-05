@@ -1,4 +1,12 @@
-Version 1.45 (2005-06-xx)
+Version 1.46RC1 (2005-08-xx)
+	Added new link dialog with tab interface and lots of new fields and options.
+	Added new image dialog with tab interface and lots of new fields and options.
+	Added new about dialog with tab interface, this one replaces the old help dialog.
+	Added new utils directory in tiny_mce script dir. This directory contains various utility classes.
+	Moved all theme CSS files to a css directory within the theme. [BREAKS COMPATIBLITY].
+	Removed the default theme since simple the advanced theme can be configured to be the same. [BREAKS COMPATIBLITY].
+	Removed the auto resize window functionality. Better to use relative window sizes when opening the dialog.
+Version 1.45 (2005-06-23)
 	Fixed so the newdocument button shows again, was removed by accident in RC2.
 	Fixed so styles drop down in link dialog gets hidden if no classes are defined.
 	Fixed bug where Paste command in context menu wasn't working.
@@ -8,6 +16,12 @@ Version 1.45 (2005-06-xx)
 	Added a alert box is a popup is blocked by a popup blocker.
 	Added updated dutch language pack, contributed by Fred Stuurman.
 	Added a confirm dialog for the newdocument action.
+	Added mceContentBody class to the iframe document body.
+	Added allowtransparency attribute to iframe.
+	Added fix where some HTML content produced runtime error in MSIE.
+	Added a lot better Safari support, but many things are still very buggy.
+	Added flash_wmode, flash_quality and flash_menu options for the flash plugin.
+	Added new dialog_type option, this enables you to switch back to modal dialogs in MSIE.
 	Updated Canadian French table language pack contributed by Virtuelcom.
 	Fixed some minor issues with Simplified Chinese language pack.
 	Re-added Tahoma font to font drop list, was removed in previous version.
@@ -26,7 +40,7 @@ Version 1.45 RC2 (2005-06-15)
 	Added new browsers option that enables you to specify what browsers is to be WYSIWYG enabled or not.
 	Added partial Catalan translation contributed by Marc Bria Ramírez.
 	Added portuguese Brazil translation contributed by João Borges.
-	Added updated Simplified Chinese language pack contributed by yang huixiong/cube316.
+	Added updated Simplified Chinese language pack contributed by cube316.
 	Added beforeunload handler for fullscreen plugin so contents gets updated when the window is closed.
 	Added a new fullscreen_settings option for the fullscreen plugin contributed by David Glick.
 	Added new insert table command to context menu when user clicks within a table.

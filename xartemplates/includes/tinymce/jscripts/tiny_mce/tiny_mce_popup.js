@@ -35,8 +35,8 @@ function TinyMCEPlugin_onLoad() {
 		document.body.innerHTML = tinyMCE.applyTemplate(document.body.innerHTML, tinyMCE.windowArgs);
 
 	// Auto resize window
-	if (tinyMCE.getWindowArg('mce_windowresize', true))
-		TinyMCEPopup_autoResize();
+//	if (tinyMCE.getWindowArg('mce_windowresize', true))
+//		TinyMCEPopup_autoResize();
 
 	if (tinyMCE.settings["dialog_type"] == "window")
 		window.focus();

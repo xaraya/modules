@@ -865,8 +865,8 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 							var sp = getColRowSpan(tdElm);
 
 							template['file'] = '../../plugins/table/merge_cells.htm';
-							template['width'] = 160;
-							template['height'] = 220;
+							template['width'] = 230;
+							template['height'] = 150;
 
 							// Open window
 							tinyMCE.openWindow(template, {editor_id : inst.editorId, action : "update", numcols : sp.colspan, numrows : sp.rowspan});
