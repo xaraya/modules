@@ -23,15 +23,15 @@ function tinymce_admin_updateconfig()
     switch ($data['tab']) {
         case 'basic':
             if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinymode','str:1:',$tinymode,'textareas',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyloadmode','str:1:',$tinyloadmode,'auto',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinymode','str:1:',$tinymode,'specific_textareas',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyloadmode','str:1:',$tinyloadmode,'manual',XARVAR_NOT_REQUIRED)) return;
                 xarModSetVar('base','editor', $defaulteditor);
                 xarModSetVar('tinymce', 'tinymode', $tinymode);
                 xarModSetVar('tinymce', 'tinyloadmode', $tinyloadmode);
 
             break;
         case 'general':
-            if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'default',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'advanced',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyask','str:1:',$tinyask,'true',XARVAR_NOT_REQUIRED)) return;
             // We have fancy validation rules to avoid writing the same code over and over
             // This one: treats the string as a comma-separeted list of tokens. Each token
