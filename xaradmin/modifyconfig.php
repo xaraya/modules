@@ -64,6 +64,7 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('topicsortby', 'str:1:', $topicsortby, 'time', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsortorder', 'str:1:', $topicsortorder, 'DESC', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('supportshorturls','checkbox', $supportshorturls,false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
@@ -76,9 +77,12 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('cookiename', 'str:1:', $cookiename, 'xarbb', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cookiepath', 'str:1:', $cookiepath, '/', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('xarbbtitle', 'str:1:', $xarbbtitle, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
 
             // Update module variables
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
+            xarModSetVar('xarbb', 'useModuleAlias', $modulealias);
+            xarModSetVar('xarbb', 'aliasname', $aliasname);
             xarModSetVar('xarbb', 'cookiename', $cookiename);
             xarModSetVar('xarbb', 'cookiepath', $cookiepath);
             xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);            
@@ -104,7 +108,23 @@ function xarbb_admin_modifyconfig()
 
             //Set default settings
             xarModSetVar('xarbb', 'settings', serialize($settings));
+ 
+            // Module alias for short URLs
 
+            $useAliasName = xarModGetVar('xarbb', 'useModuleAlias');
+            $aliasname = xarModGetVar('xarbb','aliasname');
+            if (($useAliasName) && isset($aliasname)){
+               $usealias = true;
+            } else{
+               $usealias = false;
+            }
+
+
+            if ($usealias) {
+                xarModSetAlias($aliasname,'xarbb');
+            } else {
+                xarModDelAlias($aliasname,'xarbb');
+            }
             // call modifyconfig hooks with module
             $hooks = xarModCallHooks('module', 'updateconfig', 'xarbb', array('module' => 'xarbb'));
             if (empty($hooks)) {
@@ -112,7 +132,8 @@ function xarbb_admin_modifyconfig()
             } else {
               $data['hooks'] = $hooks;
             }
-            xarResponseRedirect(xarModURL('xarbb', 'admin', 'modifyconfig')); 
+
+            xarResponseRedirect(xarModURL('xarbb', 'admin', 'modifyconfig'));
             return true;
             break;
     }
