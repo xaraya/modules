@@ -97,17 +97,17 @@ function xarbb_userapi_decode_shorturl($params)
        $args['tid'] = $id;
        $func = 'updatetopic';
     }
-    // topic
+    // viewtopic
     if (preg_match('/^topic|^viewtopic/i', $params[0]) && !empty($id)) {
        $args['tid'] = $id;
        $func = 'viewtopic';
     }
-    // topic
+    // subscribe
     if (preg_match('/^subscribe/i', $params[0]) && !empty($id)) {
        $args['tid'] = $id;
        $func = 'subscribe';
     }
-    // topic
+    // unsubscribe
     if (preg_match('/^unsubscribe/i', $params[0]) && !empty($id)) {
        $args['tid'] = $id;
        $func = 'unsubscribe';
