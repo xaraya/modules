@@ -113,14 +113,15 @@ function xarbb_admin_modifyconfig()
 
             $useAliasName = xarModGetVar('xarbb', 'useModuleAlias');
             $aliasname = xarModGetVar('xarbb','aliasname');
-            if (($useAliasName) && isset($aliasname)){
+            if (($useAliasName==1) && isset($aliasname)){
                $usealias = true;
             } else{
                $usealias = false;
+               $aliasname='';
             }
 
 
-            if ($usealias) {
+            if ($usealias == 1) {
                 xarModSetAlias($aliasname,'xarbb');
             } else {
                 xarModDelAlias($aliasname,'xarbb');
