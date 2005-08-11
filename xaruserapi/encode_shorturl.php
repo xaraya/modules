@@ -69,7 +69,19 @@ function xarbb_userapi_encode_shorturl($args)
     // Check if we have something to work with
     if (!isset($func)) {
         return;
-    } 
+    }
+   // Coming from categories etc.
+    if (!empty($objectid)) {
+        $fid = $objectid;
+    }
+
+    $aliasisset = xarModGetVar('xarbb', 'useModuleAlias');
+    $aliasname = xarModGetVar('xarbb','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
     // Note : make sure you don't pass the following variables as arguments in
     // your module too - adapt here if necessary
     // default path is empty -> no short URL
@@ -77,15 +89,27 @@ function xarbb_userapi_encode_shorturl($args)
     // if we want to add some common arguments as URL parameters below
     $join = '?'; 
     // we can't rely on xarModGetName() here -> you must specify the modname !
-    $module = 'xarbb'; 
+    $module = 'xarbb';
+
+    $alias = xarModGetAlias($module);
+
     // specify some short URLs relevant to your module
     if ($func == 'main') {
-        $path = '/' . $module . '/'; 
+        if (($module == $alias) && ($usealias)){
+        // OK, we can use a 'fake' module name here
+            $path = '/' . $aliasname . '/';
+        } else{
+            $path = '/' . $module . '/';
+        }
         // Note : if your main function calls some other function by default,
         // you should set the path to directly to that other function
     } elseif ($func == 'viewforum') {
         if (isset($fid) && is_numeric($fid)) {
-            $path = '/' . $module . '/forum/' . $fid; 
+            if (($module == $alias) && ($usealias)){
+                $path = '/' . $aliasname . '/forum/' . $fid;
+            } else {
+                $path = '/' . $module . '/forum/' . $fid;
+            }
         // we'll add the optional $startnum parameter below, as a regular
         // URL parameter
         // you might have some additional parameter that you want to use to
@@ -127,21 +151,83 @@ function xarbb_userapi_encode_shorturl($args)
     } elseif ($func == 'viewtopic') {
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
-            $path = '/' . $module . '/topic/' . $tid; 
-            // you might have some additional parameter that you want to use to
-            // create different virtual paths here - for example a category name
-            // See above for an example...
+          if (($module == $alias) && ($usealias)){
+                 $path = '/' . $aliasname . '/topic/' . $tid;
+            } else {
+                $path = '/' . $module . '/topic/' . $tid;
+            }
         } else {
             // we don't know how to handle that -> don't create a path here
-            // Note : this generally means that someone tried to create a
-            // link to your module, but used invalid parameters for xarModURL
-            // -> you might want to provide a default path to return to
-            // $path = '/' . $module . '/list.html';
-        } 
+
+        }
+    } elseif ($func == 'newtopic') {
+        // check for required parameters
+        if (isset($fid) && is_numeric($fid)) {
+          if (($module == $alias) && ($usealias)){
+                 $path = '/' . $aliasname . '/newtopic/' . $fid;
+            } else {
+                $path = '/' . $module . '/newtopic/' . $fid;
+            }
+        } else {
+       }
+   } elseif ($func == 'newreply') {
+        // check for required parameters
+        if (isset($tid) && is_numeric($tid)) {
+          if (($module == $alias) && ($usealias)){
+                 $path = '/' . $aliasname . '/newreply/' . $tid;
+            } else {
+                $path = '/' . $module . '/newreply/' . $tid;
+            }
+        } else {
+         }
+  } elseif ($func == 'updatetopic') {
+        // check for required parameters
+        if (isset($tid) && is_numeric($tid)) {
+          if (($module == $alias) && ($usealias)){
+                 $path = '/' . $aliasname . '/updatetopic/' . $tid;
+            } else {
+                $path = '/' . $module . '/updatetopic/' . $tid;
+            }
+         } else {
+            // we don't know how to handle that -> don't create a path here
+        }
+ } elseif ($func == 'subscribe') {
+        // check for required parameters
+        if (isset($tid) && is_numeric($tid)) {
+          if (($module == $alias) && ($usealias)){
+                 $path = '/' . $aliasname . '/subscribe/' . $tid;
+            } else {
+                $path = '/' . $module . '/subscribe/' . $tid;
+            }
+        } else {
+            // we don't know how to handle that -> don't create a path here
+        }
+ } elseif ($func == 'unsubscribe') {
+        // check for required parameters
+        if (isset($tid) && is_numeric($tid)) {
+          if (($module == $alias) && ($usealias)){
+                 $path = '/' . $aliasname . '/unsubscribe/' . $tid;
+            } else {
+                $path = '/' . $module . '/unsubscribe/' . $tid;
+            }
+        } else {
+            // we don't know how to handle that -> don't create a path here
+        }
+ } elseif ($func == 'printtopic') {
+        // check for required parameters
+        if (isset($tid) && is_numeric($tid)) {
+          if (($module == $alias) && ($usealias)){
+                 $path = '/' . $aliasname . '/printtopic/' . $tid.'?theme=print';
+            } else {
+                $path = '/' . $module . '/printtopic/' . $tid.'?theme=print';
+            }
+        } else {
+            // we don't know how to handle that -> don't create a path here
+        }
     } else {
         // anything else that you haven't defined a short URL equivalent for
         // -> don't create a path here
-    } 
+    }
     // add some other module arguments as standard URL parameters
     if (!empty($path)) {
         if (isset($startnum) && $startnum != 1) {

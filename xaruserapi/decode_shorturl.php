@@ -42,10 +42,24 @@ function xarbb_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();
+    $aliasisset = xarModGetVar('xarbb', 'useModuleAlias');
+    $aliasname = xarModGetVar('xarbb','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
+
+    $module = 'xarbb';
+    if ($params[0] != $module) { //it's possibly some type of alias
+        $aliasname = xarModGetVar('xarbb','aliasname');
+    }
+
+    
 
     // Shift the alias out if it is equal to the module name.
     // This allows us to use, say, 'topics' or 'forum' as the module alias.
-    if (strtolower($params[0]) == 'xarbb') {
+    if ((strtolower($params[0]) == 'xarbb') || (strtolower($params[0] == $aliasname))) {
         array_shift($params);
     }
 
@@ -58,6 +72,7 @@ function xarbb_userapi_decode_shorturl($params)
     $func = 'main';
 
     // Decode the ID, if present.
+
     if (!empty($params[1]) && preg_match('/^(\d+)/', $params[1], $matches)) {
         $id = $matches[1];
     }
@@ -67,13 +82,41 @@ function xarbb_userapi_decode_shorturl($params)
        $args['fid'] = $id;
        $func = 'viewforum';
     }
-
+    // newtopic
+    if (preg_match('/^newtopic/i', $params[0]) && !empty($id)) {
+       $args['fid'] = $id;
+       $func = 'newtopic';
+    }
+   // newreply
+    if (preg_match('/^newreply/i', $params[0]) && !empty($id)) {
+       $args['tid'] = $id;
+       $func = 'newreply';
+    }
+  // updatetopic
+    if (preg_match('/^updatetopic/i', $params[0]) && !empty($id)) {
+       $args['tid'] = $id;
+       $func = 'updatetopic';
+    }
     // topic
     if (preg_match('/^topic|^viewtopic/i', $params[0]) && !empty($id)) {
        $args['tid'] = $id;
        $func = 'viewtopic';
     }
-
+    // topic
+    if (preg_match('/^subscribe/i', $params[0]) && !empty($id)) {
+       $args['tid'] = $id;
+       $func = 'subscribe';
+    }
+    // topic
+    if (preg_match('/^unsubscribe/i', $params[0]) && !empty($id)) {
+       $args['tid'] = $id;
+       $func = 'unsubscribe';
+    }
+    // topic
+    if (preg_match('/^printtopic/i', $params[0]) && !empty($id)) {
+       $args['tid'] = $id;
+       $func = 'printtopic';
+    }
     // category
     if (preg_match('/^category/i', $params[0]) && !empty($id)) {
        $args['catid'] = $id;
