@@ -104,9 +104,9 @@ function articles_user_search($args)
         }
     }
     $seenstatus = array();
-    foreach ($status as $this) {
-        if (empty($this) || !is_numeric($this)) continue;
-        $seenstatus[$this] = 1;
+    foreach ($status as $that) {
+        if (empty($that) || !is_numeric($that)) continue;
+        $seenstatus[$that] = 1;
     }
     $status = array_keys($seenstatus);
     if (count($status) != 2 || !in_array(2,$status) || !in_array(3,$status)) {
