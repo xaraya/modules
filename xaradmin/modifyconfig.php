@@ -118,7 +118,6 @@ function xarbb_admin_modifyconfig()
                $usealias = true;
             } else{
                $usealias = false;
-               $aliasname='';
             }
 
 
