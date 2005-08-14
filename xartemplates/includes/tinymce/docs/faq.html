@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Frequently Asked Questions</title>
 <link href="css/screen.css" rel="stylesheet" type="text/css" />
@@ -43,6 +43,13 @@
 	<h2>Can I use TinyMCE in my commercial application?</h2>
 	<div class="section">
 		<p>Yes you can, the LGPL license is a Free Software License. You can read the whole license <a href="license.html">here</a> or visit Free Software Foundation web site <a href="http://www.fsf.org/" target="_blank">here</a></p>
+	</div>
+
+	<div class="separator"></div>
+
+	<h2>TinyMCE stops working when placed in tabs or hidden divs?</h2>
+	<div class="section">
+		<p>Since Gecko based browsers Mozilla/Firefox has a bug where it looses designMode on iframes that are hidden a special option is needed that re-enables the design mode when reappearing after being hidden. Enable this option to resolve the issue: &quot;<a href="option_auto_reset_designmode.html">auto_reset_designmode</a>&quot;.</p>
 	</div>
 
 	<div class="separator"></div>

@@ -157,10 +157,9 @@ select { }
     text-decoration: none;
 }
 
-.subhead {
-    font-weight: bold;
-    color: #60a9f0;
-    text-decoration: none;
-}
+.xar-form-textareamedium {
+   height: auto; /* overrides set height in the original core class */
+    width: 90%;
+    overflow:auto;
 
 

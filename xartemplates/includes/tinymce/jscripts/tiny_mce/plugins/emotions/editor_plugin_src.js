@@ -23,10 +23,10 @@ function TinyMCE_emotions_execCommand(editor_id, element, command, user_interfac
 			var template = new Array();
 
 			template['file'] = '../../plugins/emotions/emotions.htm'; // Relative to theme
-			template['width'] = 150;
+			template['width'] = 160;
 			template['height'] = 180;
 
-			tinyMCE.openWindow(template, {editor_id : editor_id});
+			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
 
 			return true;
 	}

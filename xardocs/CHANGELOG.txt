@@ -1,3 +1,13 @@
+* Version 0.7.0 10 Aug 05
+- Default theme removed - not required as Advanced can be configured
+  BREAKS BACKWARD COMPATIBLITY
+- New image and link in dialogs
+- new utils directory in tiny_mce script dir
+- All theme CSS files moved to a css directory within the theme
+- auto resize window functionality removed
+- various bug fixes and file cleanups
+- simplified interface, changed default install options
+
 * Version 0.6.2 16 June 05
 - include bug fixes from tinymce 1.45rc2
 - move the xartinymce property to the module!

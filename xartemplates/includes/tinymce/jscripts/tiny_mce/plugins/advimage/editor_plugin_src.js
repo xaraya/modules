@@ -4,7 +4,7 @@ tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,p
 function TinyMCE_advimage_getControlHTML(control_name) {
 	switch (control_name) {
 		case "image":
-			return '<img id="{$editor_id}_advimage" src="{$themeurl}/images/image.gif" title="{$lang_image_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvImage\');" />';
+			return '<img id="{$editor_id}_advimage" src="{$themeurl}/images/image.gif" title="{$lang_image_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onmouseup="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvImage\');" />';
 	}
 
 	return "";
@@ -23,7 +23,7 @@ function TinyMCE_advimage_execCommand(editor_id, element, command, user_interfac
 			template['width']  += tinyMCE.getLang('lang_insert_image_delta_width', 0);
 			template['height'] += tinyMCE.getLang('lang_insert_image_delta_height', 0);
 
-			tinyMCE.openWindow(template, {editor_id : editor_id});
+			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
 
 			return true;
 	}
@@ -71,4 +71,18 @@ function TinyMCE_advimage_cleanup(type, content) {
 	}
 
 	return content;
+}
+
+function TinyMCE_advimage_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
+	tinyMCE.switchClassSticky(editor_id + '_advimage', 'mceButtonNormal');
+
+	if (node == null)
+		return;
+
+	do {
+		if (node.nodeName == "IMG" && tinyMCE.getAttrib(node, 'name').indexOf('mce_') == -1)
+			tinyMCE.switchClassSticky(editor_id + '_advimage', 'mceButtonSelected');
+	} while ((node = node.parentNode));
+
+	return true;
 }

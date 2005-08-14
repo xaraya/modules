@@ -6,13 +6,13 @@ tinyMCE.importPluginLanguagePack('paste', 'en,sv,cs,zh_cn,fr_ca');
 function TinyMCE_paste_getControlHTML(control_name) { 
 	switch (control_name) { 
 		case "pastetext": 
-			return '<img id="{$editor_id}pastetext" src="{$pluginurl}/images/pastetext.gif" title="{$lang_paste_text_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteText\');" />'; 
+			return '<img id="{$editor_id}pastetext" src="{$pluginurl}/images/pastetext.gif" title="{$lang_paste_text_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteText\', true);" />'; 
 
 		case "pasteword": 
-			return '<img id="{$editor_id}pasteword" src="{$pluginurl}/images/pasteword.gif" title="{$lang_paste_word_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteWord\');" />'; 
+			return '<img id="{$editor_id}pasteword" src="{$pluginurl}/images/pasteword.gif" title="{$lang_paste_word_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteWord\', true);" />'; 
 
 		case "selectall": 
-			return '<img id="{$editor_id}selectall" src="{$pluginurl}/images/selectall.gif" title="{$lang_selectall_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSelectAll\');" />';
+			return '<img id="{$editor_id}selectall" src="{$pluginurl}/images/selectall.gif" title="{$lang_selectall_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSelectAll\');" />';
 	} 
 
 	return ''; 
@@ -21,33 +21,39 @@ function TinyMCE_paste_getControlHTML(control_name) {
 function TinyMCE_paste_execCommand(editor_id, element, command, user_interface, value) { 
 	switch (command) { 
 		case "mcePasteText": 
-			if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false))
-				TinyMCE_paste__insertText(clipboardData.getData("Text"), true); 
-			else { 
-				var template = new Array(); 
-				template['file']	= '../../plugins/paste/pastetext.htm'; // Relative to theme 
-				template['width']  = 450; 
-				template['height'] = 400; 
-				var plain_text = ""; 
-				tinyMCE.openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", mceDo : 'insert'}); 
-			}
+			if (user_interface) {
+				if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false))
+					TinyMCE_paste__insertText(clipboardData.getData("Text"), true); 
+				else { 
+					var template = new Array(); 
+					template['file']	= '../../plugins/paste/pastetext.htm'; // Relative to theme 
+					template['width']  = 450; 
+					template['height'] = 400; 
+					var plain_text = ""; 
+					tinyMCE.openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", inline : "yes", mceDo : 'insert'}); 
+				}
+			} else
+				TinyMCE_paste__insertText(value['html'], value['linebreaks']);
 
 			return true;
 
 		case "mcePasteWord": 
-			if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false)) {
-				var html = TinyMCE_paste__clipboardHTML();
+			if (user_interface) {
+				if (tinyMCE.isMSIE && !tinyMCE.getParam('paste_use_dialog', false)) {
+					var html = TinyMCE_paste__clipboardHTML();
 
-				if (html && html.length > 0)
-					TinyMCE_paste__insertWordContent(html);
-			} else { 
-				var template = new Array(); 
-				template['file']	= '../../plugins/paste/pasteword.htm'; // Relative to theme 
-				template['width']  = 450; 
-				template['height'] = 400; 
-				var plain_text = ""; 
-				tinyMCE.openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", mceDo : 'insert'});
-			}
+					if (html && html.length > 0)
+						TinyMCE_paste__insertWordContent(html);
+				} else { 
+					var template = new Array(); 
+					template['file']	= '../../plugins/paste/pasteword.htm'; // Relative to theme 
+					template['width']  = 450; 
+					template['height'] = 400; 
+					var plain_text = ""; 
+					tinyMCE.openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", inline : "yes", mceDo : 'insert'});
+				}
+			} else
+				TinyMCE_paste__insertWordContent(value);
 
 		 	return true;
 
@@ -62,7 +68,6 @@ function TinyMCE_paste_execCommand(editor_id, element, command, user_interface, 
 } 
 
 function TinyMCE_paste__insertText(content, bLinebreaks) { 
-
 	if (content && content.length > 0) {
 		if (bLinebreaks) { 
 			// Special paragraph treatment 
@@ -113,7 +118,6 @@ function TinyMCE_paste__insertText(content, bLinebreaks) {
 }
 
 function TinyMCE_paste__insertWordContent(content) { 
-
 	if (content && content.length > 0) {
 		// Cleanup Word content
 		content = content.replace(new RegExp('<(!--)([^>]*)(--)>', 'g'), "");  // Word comments
@@ -170,4 +174,3 @@ function TinyMCE_paste__clipboardHTML() {
 	div.innerHTML = '';
 	return html;
 }
-

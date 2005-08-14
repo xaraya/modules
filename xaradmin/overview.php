@@ -21,7 +21,7 @@ function tinymce_admin_overview()
     // success
     $data=array();
     $data['ddflushurl']=xarModURL('dynamicdata','admin','modifyconfig');
-    return xarTplModule('tinymce', 'admin', 'main',$data,'main');
+    return xarTplModule('tinymce', 'admin', 'main', $data,'main');
 }
 
 ?>

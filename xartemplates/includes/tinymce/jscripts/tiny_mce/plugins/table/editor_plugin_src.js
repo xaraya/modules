@@ -13,7 +13,7 @@ function TinyMCE_table_mouseDownHandler(e) {
 	var focusElm = tinyMCE.selectedInstance.getFocusElement();
 
 	// If press on special Mozilla create TD/TR thingie
-	if (elm.nodeName == "BODY" && (focusElm.nodeName == "TD" || (focusElm.parentNode && focusElm.parentNode.nodeName == "TD"))) {
+	if (elm.nodeName == "BODY" && (focusElm.nodeName == "TD" || focusElm.nodeName == "TH" || (focusElm.parentNode && focusElm.parentNode.nodeName == "TD") ||(focusElm.parentNode && focusElm.parentNode.nodeName == "TH") )) {
 		window.setTimeout(function() {
 			var tableElm = tinyMCE.getParentElement(focusElm, "table");
 			tinyMCE.handleVisualAid(tableElm, true, tinyMCE.settings['visual']);
@@ -82,10 +82,39 @@ function TinyMCE_table_getControlHTML(control_name) {
  * Executes the table commands.
  */
 function TinyMCE_table_execCommand(editor_id, element, command, user_interface, value) {
+	// Is table command
+	switch (command) {
+		case "mceInsertTable":
+		case "mceTableRowProps":
+		case "mceTableCellProps":
+		case "mceTableSplitCells":
+		case "mceTableMergeCells":
+		case "mceTableInsertRowBefore":
+		case "mceTableInsertRowAfter":
+		case "mceTableDeleteRow":
+		case "mceTableInsertColBefore":
+		case "mceTableInsertColAfter":
+		case "mceTableDeleteCol":
+		case "mceTableCutRow":
+		case "mceTableCopyRow":
+		case "mceTablePasteRowBefore":
+		case "mceTablePasteRowAfter":
+			TinyMCE_table_doExecCommand(editor_id, element, command, user_interface, value);
+			return true;
+	}
+
+	// Pass to next handler in chain
+	return false;
+}
+
+/**
+ * Executes the table commands.
+ */
+function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface, value) {
 	var inst = tinyMCE.getInstanceById(editor_id);
 	var focusElm = inst.getFocusElement();
 	var trElm = tinyMCE.getParentElement(focusElm, "tr");
-	var tdElm = tinyMCE.getParentElement(focusElm, "td");
+	var tdElm = tinyMCE.getParentElement(focusElm, "td,th");
 	var tableElm = tinyMCE.getParentElement(focusElm, "table");
 	var doc = inst.contentWindow.document;
 	var tableBorder = tableElm ? tableElm.getAttribute("border") : "";
@@ -209,10 +238,15 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 		return null;
 	}
 
-	function nextElm(node, name) {
+	function nextElm(node, names) {
+
+        var namesAr = names.split(',');
+
 		while ((node = node.nextSibling) != null) {
-			if (node.nodeName == name)
-				return node;
+            for (var i=0; i<namesAr.length; i++) {
+                if (node.nodeName.toLowerCase() == namesAr[i].toLowerCase() )
+                    return node;
+            }
 		}
 
 		return null;
@@ -236,7 +270,7 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 			var td = tr.cells[0];
 			if (td.cells > 1) {
 				do {
-					var nexttd = nextElm(td, "TD");
+					var nexttd = nextElm(td, "TD,TH");
 
 					if (td._delete)
 						td.parentNode.removeChild(td);
@@ -315,16 +349,56 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 
 				if (tinyMCE.settings['table_color_fields']) {
 					template['width'] = 400;
-					template['height'] = 220;
+					template['height'] = 250;
 				} else {
-					template['width'] = 340;
-					template['height'] = 220;
+					template['width'] = 350;
+					template['height'] = 250;
 				}
 
+				var rowtype = trElm.parentNode.nodeName;
+				rowtype = rowtype.toLowerCase();
+
 				// Open window
-				tinyMCE.openWindow(template, {editor_id : inst.editorId, align : tinyMCE.getAttrib(trElm, 'align'), valign : tinyMCE.getAttrib(trElm, 'valign'), height : tinyMCE.getAttrib(trElm, 'height'), className : tinyMCE.getVisualAidClass(tinyMCE.getAttrib(trElm, 'class'), false), bordercolor : tinyMCE.getAttrib(trElm, 'bordercolor'), bgcolor : tinyMCE.getAttrib(trElm, 'bgcolor')});
+				tinyMCE.openWindow(template, {editor_id : inst.editorId, inline : "yes", rowtype : rowtype, align : tinyMCE.getAttrib(trElm, 'align'), valign : tinyMCE.getAttrib(trElm, 'valign'), height : tinyMCE.getAttrib(trElm, 'height'), className : tinyMCE.getVisualAidClass(tinyMCE.getAttrib(trElm, 'class'), false), bordercolor : tinyMCE.getAttrib(trElm, 'bordercolor'), bgcolor : tinyMCE.getAttrib(trElm, 'bgcolor')});
 			} else {
 				inst.execCommand("mceAddUndoLevel");
+
+				var rowtype = trElm.parentNode.nodeName;
+				rowtype = rowtype.toLowerCase();
+
+        // new logic - if the rowtype has changed, then we need to be very very clever indeed
+        // Added by ApTest 2005.07.12 (www.aptest.com)
+        if (value['rowtype'] != rowtype) {
+          // first, clone the node we are working on
+
+          var newRow = trElm.cloneNode(1) ;
+
+          // next, find the parent of its new destination (creating it if necessary)
+
+          var theTable = tinyMCE.getParentElement(trElm, "table") ;
+          var dest = value['rowtype'];
+          var newParent = null ;
+          for (var i = 0; i < theTable.childNodes.length; i++) {
+            if (theTable.childNodes[i].nodeName.toLowerCase() == dest) {
+              newParent = theTable.childNodes[i];
+            }
+          }
+          if (newParent == null) {
+            newParent = doc.createElement(dest) ;
+            theTable.appendChild( newParent) ;
+          }
+
+          // append the row to the new parent
+          newParent.appendChild( newRow ) ;
+
+          // remove the original
+
+          trElm.parentNode.removeChild(trElm) ;
+
+          // set trElm to the new node
+          trElm = newRow ;
+
+        }
 
 				trElm.setAttribute('align', value['align']);
 				trElm.setAttribute('vAlign', value['valign']);
@@ -352,17 +426,37 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 
 				if (tinyMCE.settings['table_color_fields']) {
 					template['width'] = 400;
-					template['height'] = 240;
+					template['height'] = 300;
 				} else {
-					template['width'] = 340;
-					template['height'] = 220;
+					template['width'] = 400;
+					template['height'] = 250;
 				}
+                var cellType = tdElm.nodeName.toLowerCase() ;
 
 				// Open window
-				tinyMCE.openWindow(template, {editor_id : inst.editorId, align : tinyMCE.getAttrib(tdElm, 'align'), valign : tinyMCE.getAttrib(tdElm, 'valign'), width : tinyMCE.getAttrib(tdElm, 'width'), height : tinyMCE.getAttrib(tdElm, 'height'), className : tinyMCE.getVisualAidClass(tinyMCE.getAttrib(tdElm, 'class'), false), bordercolor : tinyMCE.getAttrib(tdElm, 'bordercolor'), bgcolor : tinyMCE.getAttrib(tdElm, 'bgcolor')});
+				tinyMCE.openWindow(template, {editor_id : inst.editorId, inline : "yes", cellType: cellType, align : tinyMCE.getAttrib(tdElm, 'align'), valign : tinyMCE.getAttrib(tdElm, 'valign'), width : tinyMCE.getAttrib(tdElm, 'width'), height : tinyMCE.getAttrib(tdElm, 'height'), className : tinyMCE.getVisualAidClass(tinyMCE.getAttrib(tdElm, 'class'), false), bordercolor : tinyMCE.getAttrib(tdElm, 'bordercolor'), bgcolor : tinyMCE.getAttrib(tdElm, 'bgcolor')});
 			} else {
 				inst.execCommand("mceAddUndoLevel");
 
+                // Changed to support node type change - ApTest 2005.07.04  (www.aptest.com)
+                //
+                // Strategy is to check cellType against nodeName - if changed, create
+                // the other node type and copy everything - then update the properties
+                // from the passed values as per original
+
+                if (value['cellType'].toLowerCase() != tdElm.nodeName.toLowerCase()) {
+                    // changing to a different node type
+                    var newCell = doc.createElement(value['cellType']);
+                    for ( var c = 0; c < tdElm.childNodes.length; c++ ) {
+                        newCell.appendChild ( tdElm.childNodes[c].cloneNode( 1 ) );
+                    }
+                    for ( var a = 0; a < tdElm.attributes.length; a++ ) {
+                        var attr = tdElm.attributes[a];
+                        newCell.setAttribute( attr.name, attr.value );
+                    }
+                    tdElm.parentNode.replaceChild(newCell, tdElm) ;
+                    tdElm = newCell;
+                }
 				tdElm.setAttribute('align', value['align']);
 				tdElm.setAttribute('vAlign', value['valign']);
 				tdElm.setAttribute('width', value['width']);
@@ -416,20 +510,15 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 				var template = new Array();
 
 				template['file'] = '../../plugins/table/table.htm';
-				if (tinyMCE.settings['table_color_fields']) {
-					template['width'] = 400;
-					template['height'] = 240;
-				} else {
-					template['width'] = 340;
-					template['height'] = 220;
-				}
+				template['width'] = 380;
+				template['height'] = 300;
 
 				// Language specific width and height addons
 				template['width'] += tinyMCE.getLang('lang_insert_table_delta_width', 0);
 				template['height'] += tinyMCE.getLang('lang_insert_table_delta_height', 0);
 
 				// Open window
-				tinyMCE.openWindow(template, {editor_id : inst.editorId, cols : cols, rows : rows, border : border, cellpadding : cellpadding, cellspacing : cellspacing, align : align, width : width, height : height, bordercolor : bordercolor, bgcolor : bgcolor, action : action, className : className});
+				tinyMCE.openWindow(template, {editor_id : inst.editorId, inline : "yes", cols : cols, rows : rows, border : border, cellpadding : cellpadding, cellspacing : cellspacing, align : align, width : width, height : height, bordercolor : bordercolor, bgcolor : bgcolor, action : action, className : className});
 			} else {
 				var html = '';
 				var cols = 2, rows = 2, border = 0, cellpadding = -1, cellspacing = -1, align, width, height, className, action;
@@ -546,8 +635,11 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 				return true;
 
 			// Table has a tbody use that reference
-			if (tableElm.firstChild && tableElm.firstChild.nodeName.toLowerCase() == "tbody")
-				tableElm = tableElm.firstChild;
+      // Changed logic by ApTest 2005.07.12 (www.aptest.com)
+      // Now lookk at the focused element and take its parentNode.  That will be a tbody or a table.
+      if (tableElm != trElm.parentNode) {
+        tableElm = trElm.parentNode ;
+      }
 
 			if (tableElm && trElm) {
 				switch (command) {
@@ -865,11 +957,11 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 							var sp = getColRowSpan(tdElm);
 
 							template['file'] = '../../plugins/table/merge_cells.htm';
-							template['width'] = 230;
-							template['height'] = 150;
+							template['width'] = 250;
+							template['height'] = 110;
 
 							// Open window
-							tinyMCE.openWindow(template, {editor_id : inst.editorId, action : "update", numcols : sp.colspan, numrows : sp.rowspan});
+							tinyMCE.openWindow(template, {editor_id : inst.editorId, inline : "yes", action : "update", numcols : sp.colspan, numrows : sp.rowspan});
 
 							return true;
 						} else {
@@ -1115,7 +1207,7 @@ function TinyMCE_table_handleNodeChange(editor_id, node, undo_index, undo_levels
 		tinyMCE.switchClassSticky(editor_id + '_row_props', 'mceButtonSelected', false);
 
 	// Within a td element
-	if (tdElm = tinyMCE.getParentElement(node, "td")) {
+	if (tdElm = tinyMCE.getParentElement(node, "td,th")) {
 		tinyMCE.switchClassSticky(editor_id + '_cell_props', 'mceButtonSelected', false);
 		tinyMCE.switchClassSticky(editor_id + '_row_before', 'mceButtonNormal', false);
 		tinyMCE.switchClassSticky(editor_id + '_row_after', 'mceButtonNormal', false);

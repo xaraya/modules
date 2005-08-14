@@ -3,7 +3,7 @@ tinyMCE.importPluginLanguagePack('flash', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_b
 
 function TinyMCE_flash_initInstance(inst) {
 	if (!tinyMCE.settings['flash_skip_plugin_css'])
-		tinyMCE.importCSS(inst.getDoc(), tinyMCE.baseURL + "/plugins/flash/flash.css");
+		tinyMCE.importCSS(inst.getDoc(), tinyMCE.baseURL + "/plugins/flash/css/flash.css");
 }
 
 function TinyMCE_flash_getControlHTML(control_name) {
@@ -77,6 +77,9 @@ function TinyMCE_flash_execCommand(editor_id, element, command, user_interface, 
             template['width']  = 400;
             template['height'] = 195;
 
+			if (tinyMCE.getParam("flash_external_list_url", false))
+				template['height'] += 20;
+
 			// Is selection a image
             if (focusElm != null && focusElm.nodeName.toLowerCase() == "img") {
 				name = getAttrib(focusElm, 'name');
@@ -92,7 +95,7 @@ function TinyMCE_flash_execCommand(editor_id, element, command, user_interface, 
 				action = "update";
             }
 
-            tinyMCE.openWindow(template, {editor_id : editor_id, swffile : swffile, swfwidth : swfwidth, swfheight : swfheight, action : action});
+            tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes", swffile : swffile, swfwidth : swfwidth, swfheight : swfheight, action : action});
 		return true;
    }
 

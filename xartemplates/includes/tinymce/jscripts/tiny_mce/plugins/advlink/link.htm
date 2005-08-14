@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>{$lang_insert_link_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
@@ -7,7 +8,7 @@
 	<link href="css/advlink.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="init();">
-    <form onsubmit="insertAction();return false;">
+    <form onsubmit="insertAction();return false;" action="#">
 		<div class="tabs">
 			<ul>
 				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">General</a></span></li>
@@ -27,52 +28,22 @@
 						  <td nowrap="nowrap"><label for="href">{$lang_insert_link_url}:</label></td>
 						  <td><table border="0" cellspacing="0" cellpadding="0">
 								<tr>
-								  <td><input id="href" name="href" type="text" value="" style="width: 280px;" /></td>
-								  <td id="browser1"><script language="javascript" type="text/javascript">renderLinkBrowser('hrefbrowser','href');</script></td>
+								  <td><input id="href" name="href" type="text" value="" style="width: 280px;" onchange="selectByValue(this.form,'linklisthref',this.value);" /></td>
+								  <td><script language="javascript" type="text/javascript">renderLinkBrowser('hrefbrowser','href');</script></td>
 								</tr>
 							  </table></td>
 						</tr>
 						<script language="javascript" type="text/javascript">renderLinkList('linklisthref','href');</script>
 						<script language="javascript" type="text/javascript">renderAnchorList('anchorlist','href');</script>
 						<tr>
-							<td nowrap="nowrap">{$lang_theme_insert_link_titlefield}:</td>
+							<td><label for="targetlist">{$lang_insert_link_target}:</label></td>
+							<td><script language="javascript" type="text/javascript">renderTargetList('targetlist','target');</script></td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><label for="title">{$lang_theme_insert_link_titlefield}:</label></td>
 							<td><input id="title" name="title" type="text" value="" style="width: 280px;" /></td>
 						</tr>
 						<script language="javascript" type="text/javascript">renderClassesList('class');</script>
-						<tr>
-							<td valign="top">{$lang_insert_link_target}:<input type="hidden" name="target" id="target" value="" /></td>
-							<td>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td><input type="radio" id="self" name="target" class="radio" onclick="setTarget(this.value);" checked="checked" value="_self" /></td>
-										<td nowrap="nowrap"><label for="self">_self</label></td>
-										<td nowrap="nowrap">&nbsp;({$lang_insert_link_target_same})</td>
-									</tr>
-									<tr>
-										<td><input type="radio" id="parent" name="target" class="radio" onclick="setTarget(this.value);" value="_parent" /></td>
-										<td nowrap="nowrap"><label for="parent">_parent</label></td>
-										<td nowrap="nowrap">&nbsp;({$lang_insert_link_target_parent})</td>
-									</tr>
-									<tr>
-										<td><input type="radio" id="top" name="target" class="radio" onclick="setTarget(this.value);" value="_top" /></td>
-										<td nowrap="nowrap"><label for="top">_top</label></td>
-										<td nowrap="nowrap">&nbsp;({$lang_insert_link_target_top})</td>
-									</tr>
-									<tr>
-										<td><input type="radio" id="blank" name="target" class="radio" onclick="setTarget(this.value);" value="_blank" /></td>
-										<td nowrap="nowrap"><label for="blank">_blank</label></td>
-										<td nowrap="nowrap">&nbsp;({$lang_insert_link_target_blank})</td>
-									</tr>
-								</table>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td><input type="radio" id="named" name="target" class="radio" value="" onclick="setTarget(this.value);" /></td>
-										<td nowrap="nowrap"><label for="named">{$lang_insert_link_target_named}:</label>&nbsp;</td>
-										<td nowrap="nowrap"><input type="text" id="framename" name="framename" value="" style="width: 120px; vertical-align: middle;"  maxlength="50" /></td>
-									</tr>
-								</table>
-							</td>
-						</tr>
 					</table>
 				</fieldset>
 			</div>
@@ -160,15 +131,25 @@
 						</tr>
 
 						<tr>
-							<td><label for="type">Style:</label></td>
+							<td><label for="style">Style:</label></td>
 							<td><input type="text" id="style" name="style" value="" style="width: 200px;" /></td>
+						</tr>
+
+						<tr>
+							<td><label for="classes">Classes:</label></td>
+							<td><input type="text" id="classes" name="classes" value="" style="width: 200px;" onchange="selectByValue(this.form,'class',this.value);" /></td>
+						</tr>
+
+						<tr>
+							<td><label for="target">Target name:</label></td>
+							<td><input type="text" id="target" name="target" value="" style="width: 200px;" onchange="selectByValue(this.form,'targetlist',this.value);" /></td>
 						</tr>
 
 						<tr>
 							<td class="column1"><label for="dir">Language direction:</label></td> 
 							<td>
 								<select id="dir" name="dir" style="width: 200px" onchange="changeAppearance();"> 
-										<option value="">---</option> 
+										<option value="">{$lang_not_set}</option> 
 										<option value="ltr">Left to right</option> 
 										<option value="rtl">Right to left</option> 
 								</select>
@@ -199,8 +180,8 @@
 
 						<tr>
 							<td><label for="rel">Relationship page to target:</label></td>
-							<td><select name="rel" style="width: 200px"> 
-									<option value="">{$lang_insert_image_align_default}</option> 
+							<td><select id="rel" name="rel" style="width: 200px"> 
+									<option value="">{$lang_not_set}</option> 
 									<option value="alternate">Alternate</option> 
 									<option value="designates">Designates</option> 
 									<option value="stylesheet">Stylesheet</option> 
@@ -222,8 +203,8 @@
 
 						<tr>
 							<td><label for="rev">Relationship target to page:</label></td>
-							<td><select name="rev" style="width: 200px"> 
-									<option value="">{$lang_insert_image_align_default}</option> 
+							<td><select id="rev" name="rev" style="width: 200px"> 
+									<option value="">{$lang_not_set}</option> 
 									<option value="alternate">Alternate</option> 
 									<option value="designates">Designates</option> 
 									<option value="stylesheet">Stylesheet</option> 
@@ -244,12 +225,12 @@
 						</tr>
 
 						<tr>
-							<td><label for="type">Tabindex:</label></td>
+							<td><label for="tabindex">Tabindex:</label></td>
 							<td><input type="text" id="tabindex" name="tabindex" value="" style="width: 200px;" /></td>
 						</tr>
 
 						<tr>
-							<td><label for="type">Accesskey:</label></td>
+							<td><label for="accesskey">Accesskey:</label></td>
 							<td><input type="text" id="accesskey" name="accesskey" value="" style="width: 200px;" /></td>
 						</tr>
 					</table>

@@ -1,11 +1,40 @@
 Version 1.46RC1 (2005-08-xx)
+	Renamed CSS classes mcePathTop,mcePathBottom,mcePath to mceStatusbarTop,mceStatusbarBottom,mceStatusbar. [BREAKS COMPATIBLITY].
+	Moved all theme CSS files to a css directory within the theme. [BREAKS COMPATIBLITY].
+	Removed the default theme since the advanced theme can be configured to be as the default theme. [BREAKS COMPATIBLITY].
+	Removed closeDialog method from TinyMCE use tinyMCEPopup.close(); instead of tinyMCE.closeDialog();. [BREAKS COMPATIBLITY].
 	Added new link dialog with tab interface and lots of new fields and options.
 	Added new image dialog with tab interface and lots of new fields and options.
 	Added new about dialog with tab interface, this one replaces the old help dialog.
+	Added new table dialogs with tab interface and lots of new fileds and options.
 	Added new utils directory in tiny_mce script dir. This directory contains various utility classes.
-	Moved all theme CSS files to a css directory within the theme. [BREAKS COMPATIBLITY].
-	Removed the default theme since simple the advanced theme can be configured to be the same. [BREAKS COMPATIBLITY].
-	Removed the auto resize window functionality. Better to use relative window sizes when opening the dialog.
+	Added new TinyMCEPopup class to tiny_mce_popup.js, used for common popup logic.
+	Added new inlinepopups plugin, this makes the popup windows to open as DHTML windows (divs).
+	Added new version info constants to TinyMCE (majorVersion, minorVersion, releaseDate).
+	Added new resizing functionality to the advanced theme, the editor instance can now be resized.
+	Added new theme_advanced_resizing option, enables/disables the new resizing functionality.
+	Added new theme_advanced_resize_horizontal option, enables/disables the horizontal resizing.
+	Added new theme_advanced_path option, enables/disables the element path functionality in statusbar.
+	Added new more compressed icons, contributed by Jozef.
+	Added new center support of images, images are now wrapped in a div with alignment.
+	Added new - character to the valid_elements/extended_valid_elements options this feature removes empty elements.
+	Added new setup_content_dom and submit_content types to custom cleanup callbacks.
+	Added new inst parameter to custom cleanup callbacks, this is a reference to the editor instance.
+	Added new mceColorPicker command to the advanced theme, enables the possibility invoke the color picker.
+	Added missing entities eactute,iacute,oacute,uacute,Aacute,Eacute,Iacute,Oacute,Uacute,Yacute,Aacute.
+	Renamed the theme_advanced_path_location to theme_advanced_statusbar_location.
+	Moved all popup javascript logic into external .js files, inorder to separate presentation and logic.
+	Removed the automatic resizing of popups. Better to use relative window sizes for each language when opening a dialog.
+	Fixed issue where the character map dialog lost focus when inserting a char.
+	Fixed issue where the attribute values where not XML encoded correctly. For example: & will be &amp;.
+	Fixed bug where visual aid class where presented in element path.
+	Fixed bug where HR elements with a id set to "null" produced runtime error in MSIE.
+	Fixed bug where isDirty wasn't working due to the same function name and variable name.
+	Fixed bug where undo/redo of text wasn't working correctly in Mozilla/FF.
+	Fixed performance issue with the table plugin, it was executing logic even when it was inactive.
+	Fixed so the directionality gets inherited by all popups/dialogs.
+	Fixed bug where return/enter key sometimes produced empty elements in MSIE.
+	Fixed bug where link list was generated twice in the advanced themes link dialog.
 Version 1.45 (2005-06-23)
 	Fixed so the newdocument button shows again, was removed by accident in RC2.
 	Fixed so styles drop down in link dialog gets hidden if no classes are defined.

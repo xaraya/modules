@@ -1,7 +1,7 @@
 /* Import plugin specific language pack */
 //tinyMCE.importPluginLanguagePack('contextmenu', 'en,zh_cn,cs,fa,fr_ca,fr,de');
 if (!tinyMCE.settings['contextmenu_skip_plugin_css'])
-	tinyMCE.loadCSS(tinyMCE.baseURL + "/plugins/contextmenu/contextmenu.css");
+	tinyMCE.loadCSS(tinyMCE.baseURL + "/plugins/contextmenu/css/contextmenu.css");
 
 // Global contextmenu class instance
 var TinyMCE_contextmenu_contextMenu = null;
@@ -200,7 +200,7 @@ function ContextMenu(settings) {
 		this.pop = window.createPopup();
 		doc = this.pop.document;
 		doc.open();
-		doc.write('<html><head><link href="' + tinyMCE.baseURL + '/plugins/contextmenu/contextmenu.css" rel="stylesheet" type="text/css" /></head><body unselectable="yes" class="contextMenuIEPopup"></body></html>');
+		doc.write('<html><head><link href="' + tinyMCE.baseURL + '/plugins/contextmenu/css/contextmenu.css" rel="stylesheet" type="text/css" /></head><body unselectable="yes" class="contextMenuIEPopup"></body></html>');
 		doc.close();
 	}
 };

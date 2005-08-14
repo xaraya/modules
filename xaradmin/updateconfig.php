@@ -5,11 +5,11 @@
  * Update configuration parameters of the module with information passed back by the modification form
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2004 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
-  * @subpackage Realms
+  * @subpackage xartinymce
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 /**
@@ -23,15 +23,15 @@ function tinymce_admin_updateconfig()
     switch ($data['tab']) {
         case 'basic':
             if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinymode','str:1:',$tinymode,'specific_textareas',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyloadmode','str:1:',$tinyloadmode,'manual',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinymode','str:1:',$tinymode,'textareas',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyloadmode','str:1:',$tinyloadmode,'auto',XARVAR_NOT_REQUIRED)) return;
                 xarModSetVar('base','editor', $defaulteditor);
                 xarModSetVar('tinymce', 'tinymode', $tinymode);
                 xarModSetVar('tinymce', 'tinyloadmode', $tinyloadmode);
 
             break;
         case 'general':
-            if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'advanced',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'default',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyask','str:1:',$tinyask,'true',XARVAR_NOT_REQUIRED)) return;
             // We have fancy validation rules to avoid writing the same code over and over
             // This one: treats the string as a comma-separeted list of tokens. Each token
@@ -47,7 +47,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinypara','str:1:',$tinypara,'false',XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('tinytilemap','str:1:',$tinytilemap,'true',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', $tinyask);
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
@@ -61,6 +61,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinynowrap', $tinynowrap);
                xarModSetVar('tinymce', 'usebutton', $usebutton);
                xarModSetVar('tinymce', 'tinybrowsers', $tinybrowsers);
+               xarModSetVar('tinymce', 'tinytilemap', $tinytilemap);
 
             break;
         case 'cssplug':
@@ -82,7 +83,7 @@ function tinymce_admin_updateconfig()
                 xarModSetVar('tinymce','tinydate', $tinydate);
                 xarModSetVar('tinymce','tinytime', $tinytime);
                 xarModSetVar('tinymce','tinyinvalid', $tinyinvalid);
-                xarModSetVar('tinymce', 'useibrowser', $useibrowser);
+                //xarModSetVar('tinymce', 'useibrowser', $useibrowser);
                xarModSetVar('tinymce', 'tinyeditorcss', $editorcss);
 
             break;
@@ -98,6 +99,9 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinybuild3','str:1:',$tinybuild3,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyadvformat','str:1:',$tinyadvformat,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyshowpath','str:1:',$tinyshowpath,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyadvresize','str:1:',$tinyadvresize,'true',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyresizehorizontal','str:1:',$tinyresizehorizontal,'false',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyenablepath','str:1:',$tinyenablepath,'true',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinyexstyle', $tinyexstyle); //not used at this stage
                xarModSetVar('tinymce', 'tinytoolbar', $tinytoolbar);
                xarModSetVar('tinymce', 'tinybuttons', $tinybuttons);
@@ -109,7 +113,9 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinyadvformat', $tinyadvformat);
                xarModSetVar('tinymce', 'tinyshowpath', $tinyshowpath);
                xarModSetVar('tinymce', 'tinybuttonsremove', $tinybuttonsremove);
-
+               xarModSetVar('tinymce','tinyadvresize', $tinyadvresize);
+               xarModSetVar('tinymce','tinyenablepath', $tinyenablepath);
+               xarModSetVar('tinymce','tinyresizehorizontal', $tinyresizehorizontal);
            break;
     case 'customconfig':
            if (!xarVarFetch('tinycustom','str:1:',$tinycustom,'',XARVAR_NOT_REQUIRED)) return;
@@ -132,7 +138,8 @@ function tinymce_admin_updateconfig()
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
    
     //use the image browser? Check configuration
-   $useibrowser=xarModGetVar('tinymce','useibrowser');
+    /* Remove this - it complicates things
+    $useibrowser=xarModGetVar('tinymce','useibrowser');
     if ($useibrowser == 1) { //autoset
         //theme
         xarModSetVar('tinymce', 'tinytheme', 'advanced');
@@ -184,14 +191,15 @@ function tinymce_admin_updateconfig()
              $currentbutton2=str_replace(array('ibrowser,',',ibrowser','ibrowser'),'',$currentbutton2);
         }
          xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
-    
+
     } else {
             xarModSetVar('tinymce','iusebrowse',0);
     }
+    */
+
 
     //Turn our settings into javascript for insert into template
-    //Let's call the variable jstext 
-
+    //Let's call the variable jstext
 
     //start the string
     $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
@@ -218,9 +226,6 @@ function tinymce_admin_updateconfig()
     }else{
        $jstext .='browsers : "'.xarModGetVar('tinymce','tinybrowsers').'", ';
     }
-    if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
-        $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
-    }
 
     if (xarModGetVar('tinymce','tinyask')=='true'){
         $jstext .='ask : "true",';
@@ -237,6 +242,11 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinynowrap')=='true'){
         $jstext .='nowrap: "true",';
     }
+    if (xarModGetVar('tinymce','tinytilemap')=='true'){
+        $jstext .='button_tile_map : "true",';
+    }
+
+    
     if (xarModGetVar('tinymce','tinypara')=='true'){
         $jstext .='force_p_newlines: "true",';
     }
@@ -249,11 +259,28 @@ function tinymce_admin_updateconfig()
     if (trim(xarModGetVar('tinymce','tinytime')) <> '') {
           $jstext .='plugin_insertdate_timeFormat  : "'.trim(xarModGetVar('tinymce','tinytime')).'", ';
     }
-    if (xarModGetVar('tinymce','tinytheme') =='advanced') {
-    //set a few advanced theme options
-        $jstext .='theme_advanced_toolbar_location : "'.xarModGetVar('tinymce','tinytoolbar').'", ';
-        $jstext .='theme_advanced_path_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
+    if (xarModGetVar('tinymce','tinytheme') <>'simple') {
+        
+         $jstext .='theme_advanced_toolbar_location: "'.xarModGetVar('tinymce','tinytoolbar').'", ';
 
+
+        if (xarModGetVar('tinymce','tinyenablepath')==0){
+            $jstext .='theme_advanced_path: "false", ';
+        } else { //if not false set the status path location and resizing
+            $jstext .='theme_advanced_statusbar_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
+         
+            if (xarModGetVar('tinymce','tinyadvresize')==1 ){
+                $jstext .='theme_advanced_resizing : "true", ';
+            }
+            if (xarModGetVar('tinymce','tinyresizehorizontal')==1 ){
+                $jstext .='theme_advanced_resize_horizontal : "true", ';
+            }
+
+
+        }
+        if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
+            $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
+        }
      // $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",';
 
         if (trim(xarModGetVar('tinymce','tinybuttonsremove')) <> '') {
@@ -281,15 +308,17 @@ function tinymce_admin_updateconfig()
         if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
           $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'", ';
         }
+        
+        if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
+            $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
+        }
+
    }
 
     //Setup for 'exact' mode - we only want to replace areas that match for id or name
     if ((xarModGetVar('tinymce','tinymode') =='exact') and (trim(xarModGetVar('tinymce','tinyinstances')) <> '')){
       $elementlist=explode(',',xarModGetVar('tinymce','tinyinstances'));
             $jstext .='elements : "'.xarModGetVar('tinymce','tinyinstances').'", ';
-    }
-    if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
-        $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
     }
 
     if (xarModGetVar('tinymce','tinyencode')){

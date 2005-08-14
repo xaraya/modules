@@ -22,15 +22,15 @@
 function tinymce_init()
 {
 //Set default module vars
-   xarModSetVar('tinymce', 'tinytheme', 'default');
+   xarModSetVar('tinymce', 'tinytheme', 'advanced');
    xarModSetVar('tinymce', 'tinylang', 'en');
-   xarModSetVar('tinymce', 'tinymode', 'textareas');
+   xarModSetVar('tinymce', 'tinymode', 'specific_textareas');
    xarModSetVar('tinymce', 'tinyask', 'true');
    xarModSetVar('tinymce', 'tinybuttonsremove', '');
    xarModSetVar('tinymce', 'tinyexstyle', 'heading 1=head1,heading 2=head2,heading 3=head3,heading 4=head4');
    xarModSetVar('tinymce', 'tinyextended', 'span[*],p[style|id|name],code,pre,blockquote/quote,a[*],img[*]');
    xarModSetVar('tinymce', 'tinyinstances','summary,body');
-   xarModSetVar('tinymce', 'tinycsslist','modules/tinymce/xarstyles/editor.css');
+   xarModSetVar('tinymce', 'tinycsslist','');
    xarModSetVar('tinymce', 'tinytoolbar','top');
    xarModSetVar('tinymce', 'tinyshowpath','bottom');
    xarModSetVar('tinymce', 'tinywidth','');
@@ -39,10 +39,10 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyencode','');
    xarModSetVar('tinymce', 'tinyinlinestyle','true');
    xarModSetVar('tinymce', 'tinyundolevel',10);
-   xarModSetVar('tinymce', 'tinyplugins', 'emotions,zoom,preview,searchreplace,print,table');
+   xarModSetVar('tinymce', 'tinyplugins', 'zoom,preview,searchreplace,print,table,paste,fullscreen');
    xarModSetVar('tinymce', 'tinybuttons', 'search,replace');
-   xarModSetVar('tinymce', 'tinybuttons2','preview,zoom,print');
-   xarModSetVar('tinymce', 'tinybuttons3','tablecontrols,emotions');
+   xarModSetVar('tinymce', 'tinybuttons2','preview,zoom,print,fullscreen');
+   xarModSetVar('tinymce', 'tinybuttons3','tablecontrols');
    xarModSetVar('tinymce', 'tinybuild1', '');
    xarModSetVar('tinymce', 'tinybuild2', '');
    xarModSetVar('tinymce', 'tinybuild3', '');
@@ -52,12 +52,16 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinypara', 'true');
     xarModSetVar('tinymce', 'tinyinvalid', '');    
     xarModSetVar('tinymce', 'tinyadvformat', '');
-    xarModSetVar('tinymce', 'useibrowser', 0);
+    //xarModSetVar('tinymce', 'useibrowser', 0);
     xarModSetVar('tinymce', 'tinyeditorcss','');
     xarModSetVar('tinymce', 'tinynowrap','false');
-    xarModSetVar('tinymce', 'tinyloadmode','auto');    
+    xarModSetVar('tinymce', 'tinyloadmode','manual');
     xarModSetVar('tinymce', 'multiconfig','');
     xarModSetVar('tinymce', 'usemulticonfig',0);
+    xarModSetVar('tinymce', 'tinyadvresize',1);
+    xarModSetVar('tinymce', 'tinytilemap',true);
+    xarModSetVar('tinymce', 'tinyenablepath',true);
+    xarModSetVar('tinymce', 'tinyresizehorizontal',false);    
 //Set masks
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -101,7 +105,7 @@ function tinymce_upgrade($oldversion)
    case '0.0.2':
     // Set up new module vars
          xarModSetVar('tinymce', 'tinytoolbar', 'bottom');
-         xarModSetVar('tinymce', 'tinylang', 'uk'); 
+         xarModSetVar('tinymce', 'tinylang', 'en');
          xarModSetVar('tinymce', 'tinywidth','');
         return tinymce_upgrade('0.1.0');         
     break;
@@ -117,9 +121,10 @@ function tinymce_upgrade($oldversion)
     xarModSetVar('tinymce', 'tinyencode','');
     return tinymce_upgrade('0.1.1');
     //Set up new module vars
-    xarModSetVar('tinymce', 'tinyplugins', 'emotions,zoom,preview');
-    xarModSetVar('tinymce', 'tinybuttons2','preview,zoom');
-    xarModSetVar('tinymce', 'tinybuttons3','emotions');
+    xarModSetVar('tinymce', 'tinyplugins', 'zoom,preview,searchreplace,print,table,paste,fullscreen');
+    xarModSetVar('tinymce', 'tinybuttons2','preview,zoom,print,fullscreen');
+    xarModSetVar('tinymce', 'tinybuttons', 'search,replace');
+    xarModSetVar('tinymce', 'tinybuttons3','tablecontrols');
     xarModSetVar('tinymce', 'tinybuild1', '');
     xarModSetVar('tinymce', 'tinybuild2', '');
     xarModSetVar('tinymce', 'tinybuild3', '');
@@ -135,7 +140,7 @@ function tinymce_upgrade($oldversion)
     break;
     case '0.1.3':
     xarModSetVar('tinymce', 'tinyheight','');
-    xarModSetVar('tinymce', 'useibrowser', 0);
+    //xarModSetVar('tinymce', 'useibrowser', 0);
     return tinymce_upgrade('0.2.0');
     case '0.2.0':
     return tinymce_upgrade('0.2.1');
@@ -177,7 +182,7 @@ function tinymce_upgrade($oldversion)
     break;
 
     case '0.4.1':
-    xarModSetVar('tinymce', 'tinyloadmode','auto');
+    xarModSetVar('tinymce', 'tinyloadmode','manual');
     return tinymce_upgrade('0.5.0');
     break;
 
@@ -195,11 +200,19 @@ function tinymce_upgrade($oldversion)
 
     return tinymce_upgrade('0.6.2');
     break;
-    
+
     case '0.6.2':
-
-
+ 
+    return tinymce_upgrade('0.7.0');
     break;
+
+    case '0.7.0':
+    xarModSetVar('tinymce', 'tinyadvresize',1);
+    xarModSetVar('tinymce', 'tinytilemap',true);
+    xarModSetVar('tinymce', 'tinyenablepath',true);
+    xarModSetVar('tinymce', 'tinyresizehorizontal',false);    
+    break;
+
     }
     return true;
 }

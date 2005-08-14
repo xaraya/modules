@@ -17,9 +17,11 @@ function TinyMCE_advhr_execCommand(editor_id, element, command, user_interface, 
     switch (command) {
         case "mceAdvancedHr":
             var template = new Array();
+
             template['file']   = '../../plugins/advhr/rule.htm'; // Relative to theme
             template['width']  = 270;
             template['height'] = 180;
+
             var size = "", width = "", noshade = "";
             if (tinyMCE.selectedElement != null && tinyMCE.selectedElement.nodeName.toLowerCase() == "hr"){
                 tinyMCE.hrElement = tinyMCE.selectedElement;
@@ -33,7 +35,7 @@ function TinyMCE_advhr_execCommand(editor_id, element, command, user_interface, 
                 if (tinyMCE.isMSIE) {
                     tinyMCE.execInstanceCommand(editor_id, 'mceInsertContent', false,'<hr />');
                 } else {
-                    tinyMCE.openWindow(template, {editor_id : editor_id, size : size, width : width, noshade : noshade, mceDo : 'insert'});
+                    tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes", size : size, width : width, noshade : noshade, mceDo : 'insert'});
                 }
             }
                     

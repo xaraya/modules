@@ -266,10 +266,9 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
-               <xar:mlstring>See </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/themes.htm">theme instructions</a><xar:mlstring> to code your own.</xar:mlstring>
+               <xar:mlstring>See </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/customization_themes.html">theme instructions</a><xar:mlstring> to code your own.</xar:mlstring>
            </p>
 
-        
         <xar:comment> Remove until supported
             <p class="param">
                 <label for="tinyinstances">
@@ -319,6 +318,23 @@
             <xar:else />
                 <xar:set name="usebutton">0</xar:set>
             </xar:if>
+          <p class="param">
+                <label for="tinytilemap">
+                <span class="help" title="#xarML('Use tiled images instead of individual for faster loading.')#">
+                    <label for="tinytilemap"><xar:mlstring>Use icon map for faster loading?</xar:mlstring></label>
+                </span>
+                </label>
+                <select name="tinytilemap" id="tinytilemap" size="1" onchange=submit();>
+                <xar:if condition="$tinytilemap eq 'false'">
+                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
+                <xar:elseif condition="$tinytilemap eq 'true'" />
+                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                </xar:if>
+                </select>
+                <xar:mlstring>May not work with some DOCTYPE declarations.</xar:mlstring>
+            </p>
             <p class="param">
                 <label for="tinywidth">
                 <span class="help" title="#xarML('Defaults to width of individual textareas if left blank')#">
@@ -326,7 +342,7 @@
                 </span>
                 </label>
                 <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="8" maxlength="8" />
-                <xar:mlstring>Eg "110%" or "450px". </xar:mlstring>
+                <xar:mlstring>Eg "110%" or "450" for px. </xar:mlstring>
             </p>
             <p class="param">
                 <label for="tinyheight">
@@ -335,7 +351,7 @@
                 </span>
             </label>
                 <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="8" maxlength="8" />
-                <xar:mlstring>Eg "110%" or "450px". </xar:mlstring>
+                <xar:mlstring>Eg "110%" or "450" for px. </xar:mlstring>
            </p>
 
             <p class="param">
@@ -478,8 +494,9 @@
             <legend>
                 <strong><xar:mlstring>Plugin Options</xar:mlstring></strong>
             </legend>
-
+            <p>To use a plugin first list it's name in the <strong>Plugins to Load</strong> field below. For some plugins you must also add the name of the plugin button to the Exta Button list in the Custom Advanced Theme Tab.</p>
           <p class="param">
+
                 <label for="tinyplugins">
                 <span class="help" title="#xarML('Add names of any extra plugins you wish to load here.')#">
                     <label for="tinyplugins"><xar:mlstring>Names of plugins to load:</xar:mlstring></label>
@@ -487,6 +504,7 @@
                 </label>
                <input type="text"name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="65" maxlength="240" >
             </p>
+
             <p class="xar:norm;" style="margin-bottom:10px;">
                     <xar:mlstring><strong>Available plugins:</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
                      advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, contextmenu, lorem, dictionary, paste, fullscreen, directionality</xar:mlstring>
@@ -518,7 +536,7 @@
                     <xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring>
             </p>
         </xar:if>
-
+<!-- IBROWSER AUTO
            <p class="param">
                <label for="useibrowser">
                    <span class="help" title="#xarML('Automatically add the image browser to use with xarTinyMCE')#">
@@ -546,11 +564,16 @@
                 the Image button.</xar:mlstring>
 
             </p>
-
+-->
          <p class="xar-norm">
-            <xar:mlstring><strong>TO USE IMAGE BROWSER YOU MUST:</strong> Update the <a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file
-            at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a> for the IBrowser Plugin - then chmod 444
+            <xar:mlstring><strong>To Use the IBROWSER image browser plugin:</strong></xar:mlstring>
+            <ul style="clear:left;">
+            <li><xar:mlstring>Add <strong>ibrowser</strong> to the plugins to load list above</xar:mlstring></li>
+            <li><xar:mlstring>Add <strong>ibrowser</strong> to the button list in Custom Advanced Theme tab.</xar:mlstring></li>
+            <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file
+            at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a><xar:mlstring> for the IBrowser Plugin - then chmod 444
             for added security. </xar:mlstring>
+            </li>
          </p>
          </fieldset>
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
@@ -583,10 +606,22 @@
                 </xar:if>
                 </select>
            </p>
+           <p class="param">
+               <label for="tinyenablepath">
+                   <span class="help" title="#xarML('Enable or disable the status bar path')#">
+                       <xar:mlstring>Display status bar path?</xar:mlstring>
+                   </span>
+               </label>
+               <xar:if condition="xarModGetVar('tinymce','tinyenablepath') eq 1">
+                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" checked="checked" />
+               <xar:else />
+                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" />
+               </xar:if>
+           </p>
             <p class="param">
                 <label for="tinyshowpath">
-               <span class="help" title="#xarML('Position of the style path display  at top or bottom of text input area')#">
-                   <xar:mlstring>Path display position:</xar:mlstring>
+               <span class="help" title="#xarML('Position of the status bar')#">
+                   <xar:mlstring>Status bar display position:</xar:mlstring>
                </span>
                </label>
 
@@ -600,7 +635,30 @@
                 </xar:if>
                 </select>
             </p>
-
+           <p class="param">
+               <label for="tinyadvresize">
+                   <span class="help" title="#xarML('Enable vertical resizing of editor?')#">
+                       <xar:mlstring>Vertical resizing of editor?</xar:mlstring>
+                   </span>
+               </label>
+               <xar:if condition="xarModGetVar('tinymce','tinyadvresize') ne 0">
+                   <input type="checkbox" name="tinyadvresize" id="tinyadvresize" value="1" checked="checked" />
+               <xar:else />
+                   <input type="checkbox" name="tinyadvresize" id="tinyadvresize" value="1" />
+               </xar:if>
+           </p>
+           <p class="param">
+               <label for="tinyresizehorizontal">
+                   <span class="help" title="#xarML('Enable horizontal resizing of editor?')#">
+                       <xar:mlstring>Horizontal resizing of editor?</xar:mlstring>
+                   </span>
+               </label>
+               <xar:if condition="xarModGetVar('tinymce','tinyresizehorizontal') ne 0">
+                   <input type="checkbox" name="tinyresizehorizontal" id="tinyresizehorizontal" value="1" checked="checked" />
+               <xar:else />
+                   <input type="checkbox" name="tinyresizehorizontal" id="tinyresizehorizontal" value="1" />
+               </xar:if>
+           </p>
         <xar:comment>jojodee - Fix this when i get time
             <p class="param">
                 <label for="tinyexstyle">

@@ -4,7 +4,7 @@ tinyMCE.importPluginLanguagePack('advlink', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt
 function TinyMCE_advlink_getControlHTML(control_name) {
 	switch (control_name) {
 		case "link":
-			return '<img id="{$editor_id}_advimage" src="{$themeurl}/images/link.gif" title="{$lang_link_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvLink\');" />';
+			return '<img id="{$editor_id}_advlink" src="{$themeurl}/images/link.gif" title="{$lang_link_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onmouseup="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvLink\');" />';
 	}
 
 	return "";
@@ -17,16 +17,30 @@ function TinyMCE_advlink_execCommand(editor_id, element, command, user_interface
 
 			template['file']   = '../../plugins/advlink/link.htm';
 			template['width']  = 480;
-			template['height'] = 430 - (tinyMCE.isMSIE ? 30 : 0);
+			template['height'] = 450 - (tinyMCE.isMSIE ? 30 : 0);
 
 			// Language specific width and height addons
 			template['width']  += tinyMCE.getLang('lang_insert_link_delta_width', 0);
 			template['height'] += tinyMCE.getLang('lang_insert_link_delta_height', 0);
 
-			tinyMCE.openWindow(template, {editor_id : editor_id});
+			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
 
 			return true;
 	}
 
 	return false;
+}
+
+function TinyMCE_advlink_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
+	tinyMCE.switchClassSticky(editor_id + '_advlink', 'mceButtonNormal');
+
+	if (node == null)
+		return;
+
+	do {
+		if (node.nodeName == "A" && tinyMCE.getAttrib(node, 'href') != "")
+			tinyMCE.switchClassSticky(editor_id + '_advlink', 'mceButtonSelected');
+	} while ((node = node.parentNode));
+
+	return true;
 }

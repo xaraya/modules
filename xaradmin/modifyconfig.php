@@ -56,7 +56,7 @@ function tinymce_admin_modifyconfig()
     $data['tinypara'] = xarModGetVar('tinymce','tinypara');
     $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');
     $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');
-    $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser');
+    //$data['useibrowser']=xarModGetVar('tinymce', 'useibrowser');
     $data['editorcss']=xarModGetVar('tinymce', 'tinyeditorcss');
     $data['tinynowrap']=xarModGetVar('tinymce', 'tinynowrap');
     $data['tinyloadmode']=xarModGetVar('tinymce', 'tinyloadmode');
@@ -66,12 +66,15 @@ function tinymce_admin_modifyconfig()
     $data['dousemulticonfig'] = xarModGetVar('tinymce', 'usemulticonfig');
     $data['usebutton'] = xarModGetVar('tinymce', 'usebutton');
     $data['tinybrowsers'] = xarModGetVar('tinymce', 'tinybrowsers');
-    
+    $data['tinytilemap'] = xarModGetVar('tinymce', 'tinytilemap');
+    $data['tinyadvresize'] = xarModGetVar('tinymce', 'tinyadvresize');
+    $data['tinyenablepath'] = xarModGetVar('tinymce', 'tinyenablepath');
+    $data['tinyresizehorizontal'] = xarModGetVar('tinymce', 'tinyresizehorizontal');    
     if (!isset($data['tinybrowsers'])){
         $data['tinybrowsers']='msie,gecko,safari';
     }
 
-    if (!isset($data['usebutton']) || $data['tinymode']=='textareas'){
+    if (!isset($data['usebutton']) || ($data['tinymode']=='textareas') || $data['userbutton']==0){
         $data['usebutton']=0;
     }
     

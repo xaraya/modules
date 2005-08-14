@@ -67,6 +67,7 @@ function TinyMCE_searchreplace_execCommand(editor_id, element, command,	user_int
 	defValue("backwards", false);
 	defValue("wrap", false);
 	defValue("wholeword", false);
+	defValue("inline", "yes");
 
 	// Handle commands
 	switch (command) {
@@ -81,12 +82,12 @@ function TinyMCE_searchreplace_execCommand(editor_id, element, command,	user_int
 
 				if (value['replacestring'] != null) {
 					template['file'] = '../../plugins/searchreplace/replace.htm'; // Relative to theme
-					template['width'] = 310;
-					template['height'] = 180;
+					template['width'] = 340;
+					template['height'] = 120;
 				} else {
 					template['file'] = '../../plugins/searchreplace/search.htm'; // Relative to theme
-					template['width'] = 280;
-					template['height'] = 180;
+					template['width'] = 310;
+					template['height'] = 110;
 				}
 
 				tinyMCE.openWindow(template, value);

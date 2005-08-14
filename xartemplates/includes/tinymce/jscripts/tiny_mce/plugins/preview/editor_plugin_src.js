@@ -32,7 +32,7 @@ function TinyMCE_preview_execCommand(editor_id, element, command, user_interface
 				template['width'] = previewWidth;
 				template['height'] = previewHeight;
 
-				tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "yes", content : tinyMCE.getContent(), content_css : tinyMCE.getParam("content_css")});
+				tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "yes", inline : "yes", content : tinyMCE.getContent(), content_css : tinyMCE.getParam("content_css")});
 			} else {
 				var win = window.open("", "mcePreview", "menubar=no,toolbar=no,scrollbars=yes,resizable=yes,left=20,top=20,width=" + previewWidth + ",height="  + previewHeight);
 				var html = "";
@@ -57,6 +57,5 @@ function TinyMCE_preview_execCommand(editor_id, element, command, user_interface
 			return true;
 	}
 
-	// Pass to next handler in chain
 	return false;
 }

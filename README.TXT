@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.6.2
+INSTALLATION AND USE - XarTinyMCE Version 0.7.0
 
-UPGRADES to 0.6.2:
+UPGRADES to 0.7.0:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -97,8 +97,9 @@ Alternatively - cut and paste the image to your WYSIWYG editor from word or a su
 
 ******************************
 
-To UPGRADE to Version 0.6.2
-This version moves the Dynamic Data property to the module so follow the instructions carefully:
+To UPGRADE to Version 0.7.0
+This version moves includes the Dynamic Data property  that is moved to the module and some 
+changes that BREAK BACKWARD COMPATIBILITY so follow the instructions carefully:
 
 1. Remove all files in the tinymce module directory and all files in it and
    replace with the upgrade module and files
@@ -110,7 +111,9 @@ This version moves the Dynamic Data property to the module so follow the instruc
 4. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
 
 5. Go to Administration -> XarTinyMCE -> Modify Config
-   Check any new or upgraded options are filled in. Click Submit button on EACH screen to confirm.
+   Go to each TAB and ensure the values are as required.
+   Make sure you check any new or upgraded options are filled in. 
+   Click Submit button on EACH screen to confirm.
 
 6. If you are upgrading from Versions less than 0.4.0 please make sure you note the new
    activation methods. If you have added the snippet at the top of your templates you

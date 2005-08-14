@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>{$lang_insert_image_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
@@ -7,7 +8,7 @@
 	<link href="css/advimage.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="init();">
-    <form onsubmit="insertAction();return false;"> 
+    <form onsubmit="insertAction();return false;" action="#"> 
 		<div class="tabs">
 			<ul>
 				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">General</a></span></li>
@@ -45,7 +46,7 @@
 
 				<fieldset>
 					<legend>Preview</legend>
-					<div id="prev" name="prev" style="margin:0px; border: 1px solid black; width: 99%; height:150px; overflow: auto;"></div>
+					<div id="prev" style="margin:0px; border: 1px solid black; width: 99%; height:150px; overflow: auto;"></div>
 				</fieldset>
 			</div>
 
@@ -131,7 +132,7 @@
 
 					<table border="0" cellpadding="4" cellspacing="0" width="100%">
 							<tr>
-								<td class="column1" id="showInput1"><label for="onmouseoversrc">{$lang_insert_image_mouseover}:</label></td> 
+								<td class="column1"><label for="onmouseoversrc">{$lang_insert_image_mouseover}:</label></td> 
 								<td><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
 									  <td><input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" style="width: 240px" /></td> 
@@ -141,7 +142,7 @@
 							</tr>
 							<script language="javascript" type="text/javascript">renderImageList('imagelistover','onmouseoversrc');</script>
 							<tr> 
-								<td class="column1" id="showInput2"><label for="onmouseoutsrc">{$lang_insert_image_mouseout}:</label></td> 
+								<td class="column1"><label for="onmouseoutsrc">{$lang_insert_image_mouseout}:</label></td> 
 								<td class="column2"><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
 									  <td><input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value=""  style="width: 240px" /></td> 
@@ -166,7 +167,7 @@
 							<td class="column1"><label for="dir">Language direction:</label></td> 
 							<td>
 								<select id="dir" name="dir" style="width: 150px" onchange="changeAppearance();"> 
-										<option value="">---</option> 
+										<option value="">{$lang_not_set}</option> 
 										<option value="ltr">Left to right</option> 
 										<option value="rtl">Right to left</option> 
 								</select>
@@ -181,15 +182,20 @@
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="imagemap">Image map:</label></td> 
+							<td class="column1"><label for="usemap">Image map:</label></td> 
 							<td>
-								<input id="imagemap" name="imagemap" type="text" value="" style="width: 150px" />
+								<input id="usemap" name="usemap" type="text" value="" style="width: 150px" />
 							</td> 
 						</tr>
 
 						<tr>
 							<td class="column1"><label for="longdesc">Long description link:</label></td>
-							<td><input id="longdesc" name="longdesc" type="text" value="" style="width: 230px" /></td> 
+							<td><table border="0" cellspacing="0" cellpadding="0">
+									<tr>
+									  <td><input id="longdesc" name="longdesc" type="text" value="" style="width: 230px" /></td>
+									  <td><script language="javascript" type="text/javascript">renderLinkBrowser('longdescbrowser','longdesc');</script></td>
+									</tr>
+								</table></td> 
 						</tr>
 					</table>
 				</fieldset>
