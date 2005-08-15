@@ -25,5 +25,5 @@ pre {
 }
 
 .mceVisualAid {
-	border: 1px dashed #BBBBBB;
+	border: 1px dashed #BBBBBB !important;
 }

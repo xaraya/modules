@@ -38,6 +38,15 @@ function getImageSrc(str) {
 	return "";
 }
 
+function getStyle(elm, st, attrib, style) {
+	var val = tinyMCE.getAttrib(elm, attrib);
+
+	if (typeof(style) == 'undefined')
+		style = attrib;
+
+	return val == '' ? (st[style] ? st[style].replace('px', '') : '') : val;
+}
+
 function init() {
 	var formObj = document.forms[0];
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
@@ -75,14 +84,15 @@ function init() {
 			onmouseoutsrc = convertURL(onmouseoutsrc, elm, true);
 
 		// Setup form data
+		var style = tinyMCE.parseStyle(elm.style.cssText);
 		formObj.src.value    = src;
 		formObj.alt.value    = tinyMCE.getAttrib(elm, 'alt');
 		formObj.title.value  = tinyMCE.getAttrib(elm, 'title');
-		formObj.border.value = tinyMCE.getAttrib(elm, 'border');
+		formObj.border.value = getStyle(elm, style, 'border', 'border-width');
 		formObj.vspace.value = tinyMCE.getAttrib(elm, 'vspace');
 		formObj.hspace.value = tinyMCE.getAttrib(elm, 'hspace');
-		formObj.width.value  = tinyMCE.getAttrib(elm, 'width');
-		formObj.height.value = tinyMCE.getAttrib(elm, 'height');
+		formObj.width.value  = getStyle(elm, style, 'width');
+		formObj.height.value = getStyle(elm, style, 'height');
 		formObj.onmouseoversrc.value = onmouseoversrc;
 		formObj.onmouseoutsrc.value  = onmouseoutsrc;
 		formObj.id.value  = tinyMCE.getAttrib(elm, 'id');
@@ -90,16 +100,21 @@ function init() {
 		formObj.lang.value  = tinyMCE.getAttrib(elm, 'lang');
 		formObj.longdesc.value  = tinyMCE.getAttrib(elm, 'longdesc');
 		formObj.usemap.value  = tinyMCE.getAttrib(elm, 'usemap');
-		formObj.style.value  = elm.style.cssText.toLowerCase();
+		formObj.style.value  = tinyMCE.serializeStyle(style);
 
 		// Select by the values
-		selectByValue(formObj, 'align', tinyMCE.getAttrib(elm, 'align'));
+		if (tinyMCE.isMSIE)
+			selectByValue(formObj, 'align', getStyle(elm, 'align', 'styleFloat'));
+		else
+			selectByValue(formObj, 'align', getStyle(elm, 'align', 'cssFloat'));
+
 		selectByValue(formObj, 'class', tinyMCE.getAttrib(elm, 'class'));
 		selectByValue(formObj, 'imagelistsrc', src);
 		selectByValue(formObj, 'imagelistover', onmouseoversrc);
 		selectByValue(formObj, 'imagelistout', onmouseoutsrc);
 
-		showPreviewImage(src);
+		updateStyleDimentions();
+		//showPreviewImage(src);
 		changeAppearance();
 
 		window.focus();
@@ -288,24 +303,54 @@ function changeMouseMove() {
 	setSwapImageDisabled(!formObj.onmousemovecheck.checked);
 }
 
+function updateStyleDimentions() {
+	var formObj = document.forms[0];
+	var st = tinyMCE.parseStyle(formObj.style.value);
+
+	if (tinyMCE.getParam('inline_styles', false)) {
+		st['width'] = formObj.width.value + "px";
+		st['height'] = formObj.height.value + "px";
+	} else
+		st['width'] = st['height'] = null;
+
+	formObj.style.value = tinyMCE.serializeStyle(st);
+}
+
+function styleUpdated() {
+	var formObj = document.forms[0];
+	var st = tinyMCE.parseStyle(formObj.style.value);
+
+	if (st['width'])
+		formObj.width.value = st['width'].replace('px', '');
+
+	if (st['height'])
+		formObj.height.value = st['height'].replace('px', '');
+}
+
 function changeHeight() {
 	var formObj = document.forms[0];
 
-	if (!formObj.constrain.checked || !preloadImg)
+	if (!formObj.constrain.checked || !preloadImg) {
+		updateStyleDimentions();
 		return;
+	}
 
 	var temp = (formObj.width.value / preloadImg.width) * preloadImg.height;
 	formObj.height.value = temp.toFixed(0);
+	updateStyleDimentions();
 }
 
 function changeWidth() {
 	var formObj = document.forms[0];
 
-	if (!formObj.constrain.checked || !preloadImg)
+	if (!formObj.constrain.checked || !preloadImg) {
+		updateStyleDimentions();
 		return;
+	}
 
 	var temp = (formObj.height.value / preloadImg.height) * preloadImg.width;
 	formObj.width.value = temp.toFixed(0);
+	updateStyleDimentions();
 }
 
 function onSelectMainImage(target_form_element, name, value) {
@@ -349,6 +394,8 @@ function updateImageData() {
 
 	if (formObj.height.value == "")
 		formObj.height.value = preloadImg.height;
+
+	updateStyleDimentions();
 }
 
 function resetImageData() {
