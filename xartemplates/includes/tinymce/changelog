@@ -15,7 +15,7 @@ Version 1.46RC1 (2005-08-xx)
 	Added new theme_advanced_resizing option, enables/disables the new resizing functionality.
 	Added new theme_advanced_resize_horizontal option, enables/disables the horizontal resizing.
 	Added new theme_advanced_path option, enables/disables the element path functionality in statusbar.
-	Added new more compressed icons, contributed by Jozef.
+	Added new compressed icons about 1/3 of the original size, contributed by Jozef.
 	Added new center support of images, images are now wrapped in a div with alignment.
 	Added new - character to the valid_elements/extended_valid_elements options this feature removes empty elements.
 	Added new setup_content_dom and submit_content types to custom cleanup callbacks.
