@@ -1,0 +1,25 @@
+/* CSS file for advimage plugin popup */
+
+.mceImageList {
+	width: 280px;
+}
+
+.mceActionPanel {
+	margin-top: 7px;
+}
+
+.alignPreview {
+	border: 1px solid black;
+	width: 140px;
+	height: 140px;
+	overflow: hidden;
+	padding: 5px;
+}
+
+.checkbox {
+	border: 0px;
+}
+
+.panel_wrapper div.current {
+	height: 305px;
+}

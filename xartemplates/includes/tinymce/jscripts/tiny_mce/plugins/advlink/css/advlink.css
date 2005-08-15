@@ -1,0 +1,13 @@
+/* CSS file for advimage plugin popup */
+
+.mceLinkList, .mceAnchorList, #targetlist {
+	width: 280px;
+}
+
+.mceActionPanel {
+	margin-top: 7px;
+}
+
+.panel_wrapper div.current {
+	height: 320px;
+}

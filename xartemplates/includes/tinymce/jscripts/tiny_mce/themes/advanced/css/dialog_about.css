@@ -1,0 +1,6 @@
+/* This file contains the CSS data for the about TinyMCE dialog */
+
+#license {
+	height: 300px;
+	overflow: auto;
+}
