@@ -199,7 +199,10 @@ function release_init()
     // Enable categories hooks for release
     xarModAPIFunc('modules','admin','enablehooks',
           array('callerModName' => 'release', 'hookModName' => 'categories'));        
-
+    // search hook
+    if (!xarModRegisterHook('item', 'search', 'GUI', 'release', 'user', 'search')) {
+        return false;
+    }
     // Register Masks
     xarRegisterMask('OverviewRelease','All','release','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadRelease', 'All', 'release', 'All', 'All', 'ACCESS_READ');
@@ -478,10 +481,10 @@ function release_upgrade($oldversion)
             return release_upgrade('0.0.12');
         case '0.0.12':
 
-     if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
+        if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
                            'release', 'admin', 'waitingcontent')) {
-        return false;
-    }
+            return false;
+        }
         break;
         case '0.1.0':
             xarModAPIFunc('modules','admin','add_module_alias', array(
@@ -490,6 +493,13 @@ function release_upgrade($oldversion)
             return true;
         break;
         case '0.1.1':
+           // search hook
+           if (!xarModRegisterHook('item', 'search', 'GUI', 'release', 'user', 'search')) {
+               return false;
+           }
+        break; //fall thru
+
+        case '0.1.2':
         return false;
     }
 
