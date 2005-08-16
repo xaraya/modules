@@ -1,0 +1,96 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+
+<h2>
+    <xar:mlstring>
+        Search in Release
+    </xar:mlstring>
+</h2>
+<xar:if condition="!empty($release) and count($release) gt 0">
+    <h4>
+        <xar:mlstring>
+            Releases Found
+        </xar:mlstring>
+        :
+    </h4>
+    <ul>
+        <xar:foreach in="$release" key="$key" value="$extension">
+            <li>
+                <a href="#xarModURL('release', 'user', 'display', array('rid' => $extension['rid']))#">
+                    ID #$extension['rid']#  #$extension['displname']#
+                </a>
+                <xar:mlstring> by </xar:mlstring>
+                <a href="#xarModURL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>
+            </li>
+        </xar:foreach>
+    </ul>
+<xar:else/>
+    <xar:if condition="!empty($status)">
+        <p>
+            #$status#
+        </p>
+    </xar:if>
+</xar:if>
+<p>
+    <xar:mlstring>
+        Search in
+    </xar:mlstring>
+    :
+</p>
+<p>
+    <xar:mlstring>
+        Release ID
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$rid eq 1">
+    <input type="checkbox" name="rid" id="rid" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="rid" id="rid" value="1" />
+    </xar:if>
+</p>
+
+<p>
+    <xar:mlstring>
+        Release Registered Name
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$regname eq 1">
+    <input type="checkbox" name="regname" id="regname" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="regname" id="regname" value="1" />
+    </xar:if>
+</p>
+<p>
+    <xar:mlstring>
+        Release Display Name
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$displname eq 1">
+    <input type="checkbox" name="displname" id="displname" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="displname" id="displname" value="1" />
+    </xar:if>
+</p>
+<p>
+    <xar:mlstring>
+        Release Description
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$desc eq 1">
+    <input type="checkbox" name="desc" id="desc" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="desc" id="desc" value="1" />
+    </xar:if>
+</p>
+<p>
+    <xar:mlstring>
+        Release Author
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$authorsearch eq 1">
+    <input type="checkbox" name="authorsearch" id="authorsearch" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />
+    </xar:if>
+</p>
