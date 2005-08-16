@@ -26,7 +26,7 @@ function release_user_search()
     if (!xarVarFetch('regname',   'str:0:', $regname,  '',   XARVAR_DONT_SET)) return;
     if (!xarVarFetch('displname', 'str:0:', $displname,'',   XARVAR_DONT_SET)) return;
     if (!xarVarFetch('desc',      'str:0:', $desc,     '',   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('rid',       'id',     $rid,      NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('rid',       'id',     $rid,      0,    XARVAR_DONT_SET)) return;
     if (!xarVarFetch('uid',       'id',     $uid,      NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('author',     'isset',  $author,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('authorsearch','isset',  $authorsearch,   NULL, XARVAR_DONT_SET)) {return;}
@@ -39,6 +39,9 @@ function release_user_search()
             $search['author']=$author;
             $data['authorsearch']=1;
         }
+    } else {
+        $search['author']='';
+        $data['authorsearch']=1;
     }
 
      if($q == ''){
@@ -56,24 +59,28 @@ function release_user_search()
         $data['rid']=1;
     } else {
         $data['rid']=0;
+        $rid=0;
     }
     if (isset($regname)) {
         $search['regname'] = $q;
         $data['regname']=1;
     } else {
         $data['regname']=0;
+        $regname='';
     }
     if (isset($displname)) {
         $data['displname']=1;
         $search['displname'] = $q;
     } else {
         $data['displname']=0;
+        $displayname='';
     }
     if (isset($desc)) {
          $search['desc'] = $q;
          $data['desc'] = 1;
     } else {
         $data['desc']=0;
+        $desc='';
     }
 
 
@@ -100,7 +107,7 @@ function release_user_search()
         $search['author']='';
     }
     $search['q']=$q;
-    $search['modid']= xarModGetIDFromName('release');
+    $seach['modid']= xarModGetIDFromName('release');
     // Search course information
     $data['release'] = xarModAPIFunc('release','user','search',$search);
 

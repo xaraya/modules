@@ -43,7 +43,7 @@
         Release ID
     </xar:mlstring>
     :&nbsp;&nbsp;
-    <xar:if condition="$rid eq 1">
+    <xar:if condition="isset($rid) && $rid eq '1'">
     <input type="checkbox" name="rid" id="rid" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="rid" id="rid" value="1" />
@@ -55,7 +55,7 @@
         Release Registered Name
     </xar:mlstring>
     :&nbsp;&nbsp;
-    <xar:if condition="$regname eq 1">
+    <xar:if condition="isset($regname) && $regname eq '1'">
     <input type="checkbox" name="regname" id="regname" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="regname" id="regname" value="1" />
@@ -66,7 +66,7 @@
         Release Display Name
     </xar:mlstring>
     :&nbsp;&nbsp;
-    <xar:if condition="$displname eq 1">
+    <xar:if condition="isset($displname) and $displname eq '1'">
     <input type="checkbox" name="displname" id="displname" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="displname" id="displname" value="1" />
@@ -77,7 +77,7 @@
         Release Description
     </xar:mlstring>
     :&nbsp;&nbsp;
-    <xar:if condition="$desc eq 1">
+    <xar:if condition="isset($desc) and $desc eq '1'">
     <input type="checkbox" name="desc" id="desc" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="desc" id="desc" value="1" />
@@ -88,7 +88,7 @@
         Release Author
     </xar:mlstring>
     :&nbsp;&nbsp;
-    <xar:if condition="$authorsearch eq 1">
+    <xar:if condition="isset($authorsearch) && $authorsearch eq 1">
     <input type="checkbox" name="authorsearch" id="authorsearch" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />

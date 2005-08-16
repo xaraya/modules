@@ -88,7 +88,7 @@ function release_userapi_search($args)
         return array();
     }
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $author) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc) = $result->fields;
         if (xarSecurityCheck('ReadRelease', 0)) {
             $releases[] = array('rid' => $rid,
                                 'uid' => $uid,
