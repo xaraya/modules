@@ -100,7 +100,7 @@ function release_user_search()
         $search['author']='';
     }
     $search['q']=$q;
-    $seach['modid']= xarModGetIDFromName('release');
+    $search['modid']= xarModGetIDFromName('release');
     // Search course information
     $data['release'] = xarModAPIFunc('release','user','search',$search);
 
