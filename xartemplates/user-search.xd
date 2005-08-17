@@ -18,7 +18,7 @@
         <xar:foreach in="$release" key="$key" value="$extension">
             <li>
                 <a href="#xarModURL('release', 'user', 'display', array('rid' => $extension['rid']))#">
-                    ID #$extension['rid']#  #$extension['displname']#
+                    #$extension['exttype']# - ID #$extension['rid']#  #$extension['displname']#
                 </a>
                 <xar:mlstring> by </xar:mlstring>
                 <a href="#xarModURL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>
@@ -45,7 +45,7 @@
         <input type="checkbox" name="rid" id="rid" value="1" />
     </xar:if>
      <xar:mlstring>
-        Release ID
+        Extension ID
     </xar:mlstring>
 </p>
 
@@ -57,7 +57,7 @@
     <input type="checkbox" name="regname" id="regname" value="1" />
     </xar:if>
     <xar:mlstring>
-        Release Registered Name
+        Registered Name
     </xar:mlstring>
 
 </p>
@@ -69,7 +69,7 @@
     <input type="checkbox" name="displname" id="displname" value="1" />
     </xar:if>
     <xar:mlstring>
-        Release Display Name
+        Display Name
     </xar:mlstring>
 
 </p>
@@ -81,7 +81,7 @@
     <input type="checkbox" name="desc" id="desc" value="1" />
     </xar:if>
     <xar:mlstring>
-        Release Description
+        Extension Description
     </xar:mlstring>
 
 </p>
@@ -93,7 +93,7 @@
     <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />
     </xar:if>
    <xar:mlstring>
-        Release Author
+        Extension Author
     </xar:mlstring>
 
 </p>

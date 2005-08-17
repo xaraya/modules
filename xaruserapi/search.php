@@ -38,7 +38,8 @@ function release_userapi_search($args)
                     xar_uid,
                     xar_regname,
                     xar_displname,
-                    xar_desc
+                    xar_desc,
+                    xar_type
               FROM  $releasetable
               WHERE  (";
 
@@ -88,14 +89,16 @@ function release_userapi_search($args)
         return array();
     }
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $exttype) = $result->fields;
+        $exttype = $exttype == 0? xarML('Module') : xarML('Theme');
         if (xarSecurityCheck('ReadRelease', 0)) {
             $releases[] = array('rid' => $rid,
                                 'uid' => $uid,
-                               'regname' => $regname,
-                               'displname' => $displname,
-							   'desc' => $desc,
-                               'author' => xarUserGetVar('name',$uid));
+                                'regname' => $regname,
+                                'displname' => $displname,
+							    'desc' => $desc,
+                                'author' => xarUserGetVar('name',$uid),
+                                'exttype' => $exttype );
         }
     }
     $result->Close();
