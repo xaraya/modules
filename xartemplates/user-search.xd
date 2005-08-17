@@ -4,13 +4,13 @@
 
 <h2>
     <xar:mlstring>
-        Search in Release
+        Search for Registered Extensions
     </xar:mlstring>
 </h2>
 <xar:if condition="!empty($release) and count($release) gt 0">
     <h4>
         <xar:mlstring>
-            Releases Found
+            Registered Extensions Found
         </xar:mlstring>
         :
     </h4>
@@ -39,58 +39,61 @@
     :
 </p>
 <p>
-    <xar:mlstring>
+    <xar:if condition="isset($rid) && $rid eq '1'">
+        <input type="checkbox" name="rid" id="rid" value="1" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="rid" id="rid" value="1" />
+    </xar:if>
+     <xar:mlstring>
         Release ID
     </xar:mlstring>
-    :&nbsp;&nbsp;
-    <xar:if condition="isset($rid) && $rid eq '1'">
-    <input type="checkbox" name="rid" id="rid" value="1" checked="checked" />
-    <xar:else />
-    <input type="checkbox" name="rid" id="rid" value="1" />
-    </xar:if>
 </p>
 
 <p>
-    <xar:mlstring>
-        Release Registered Name
-    </xar:mlstring>
-    :&nbsp;&nbsp;
+
     <xar:if condition="isset($regname) && $regname eq '1'">
     <input type="checkbox" name="regname" id="regname" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="regname" id="regname" value="1" />
     </xar:if>
+    <xar:mlstring>
+        Release Registered Name
+    </xar:mlstring>
+
 </p>
 <p>
-    <xar:mlstring>
-        Release Display Name
-    </xar:mlstring>
-    :&nbsp;&nbsp;
+
     <xar:if condition="isset($displname) and $displname eq '1'">
     <input type="checkbox" name="displname" id="displname" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="displname" id="displname" value="1" />
     </xar:if>
+    <xar:mlstring>
+        Release Display Name
+    </xar:mlstring>
+
 </p>
 <p>
-    <xar:mlstring>
-        Release Description
-    </xar:mlstring>
-    :&nbsp;&nbsp;
+
     <xar:if condition="isset($desc) and $desc eq '1'">
     <input type="checkbox" name="desc" id="desc" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="desc" id="desc" value="1" />
     </xar:if>
+    <xar:mlstring>
+        Release Description
+    </xar:mlstring>
+
 </p>
 <p>
-    <xar:mlstring>
-        Release Author
-    </xar:mlstring>
-    :&nbsp;&nbsp;
+
     <xar:if condition="isset($authorsearch) && $authorsearch eq 1">
     <input type="checkbox" name="authorsearch" id="authorsearch" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />
     </xar:if>
+   <xar:mlstring>
+        Release Author
+    </xar:mlstring>
+
 </p>
