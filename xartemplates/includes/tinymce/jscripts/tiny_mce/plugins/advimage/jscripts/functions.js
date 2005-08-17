@@ -104,17 +104,17 @@ function init() {
 
 		// Select by the values
 		if (tinyMCE.isMSIE)
-			selectByValue(formObj, 'align', getStyle(elm, 'align', 'styleFloat'));
+			selectByValue(formObj, 'align', getStyle(elm, style, 'align', 'styleFloat'));
 		else
-			selectByValue(formObj, 'align', getStyle(elm, 'align', 'cssFloat'));
+			selectByValue(formObj, 'align', getStyle(elm, style, 'align', 'cssFloat'));
 
 		selectByValue(formObj, 'class', tinyMCE.getAttrib(elm, 'class'));
 		selectByValue(formObj, 'imagelistsrc', src);
 		selectByValue(formObj, 'imagelistover', onmouseoversrc);
 		selectByValue(formObj, 'imagelistout', onmouseoutsrc);
 
-		updateStyleDimentions();
-		//showPreviewImage(src);
+		updateStyle();
+		showPreviewImage(src);
 		changeAppearance();
 
 		window.focus();
@@ -303,15 +303,27 @@ function changeMouseMove() {
 	setSwapImageDisabled(!formObj.onmousemovecheck.checked);
 }
 
-function updateStyleDimentions() {
+function updateStyle() {
 	var formObj = document.forms[0];
 	var st = tinyMCE.parseStyle(formObj.style.value);
 
 	if (tinyMCE.getParam('inline_styles', false)) {
-		st['width'] = formObj.width.value + "px";
-		st['height'] = formObj.height.value + "px";
-	} else
-		st['width'] = st['height'] = null;
+		st['width'] = formObj.width.value == '' ? '' : formObj.width.value + "px";
+		st['height'] = formObj.height.value == '' ? '' : formObj.height.value + "px";
+		st['border-width'] = formObj.border.value == '' ? '' : formObj.border.value + "px";
+		st['margin-top'] = formObj.vspace.value == '' ? '' : formObj.vspace.value + "px";
+		st['margin-bottom'] = formObj.vspace.value == '' ? '' : formObj.vspace.value + "px";
+		st['margin-left'] = formObj.hspace.value == '' ? '' : formObj.hspace.value + "px";
+		st['margin-right'] = formObj.hspace.value == '' ? '' : formObj.hspace.value + "px";
+	} else {
+		st['width'] = st['height'] = st['border-width'] = null;
+
+		if (st['margin-top'] == st['margin-bottom'])
+			st['margin-top'] = st['margin-bottom'] = null;
+
+		if (st['margin-left'] == st['margin-right'])
+			st['margin-left'] = st['margin-right'] = null;
+	}
 
 	formObj.style.value = tinyMCE.serializeStyle(st);
 }
@@ -325,32 +337,41 @@ function styleUpdated() {
 
 	if (st['height'])
 		formObj.height.value = st['height'].replace('px', '');
+
+	if (st['margin-top'] && st['margin-top'] == st['margin-bottom'])
+		formObj.vspace.value = st['margin-top'].replace('px', '');
+
+	if (st['margin-left'] && st['margin-left'] == st['margin-right'])
+		formObj.hspace.value = st['margin-left'].replace('px', '');
+
+	if (st['border-width'])
+		formObj.border.value = st['border-width'].replace('px', '');
 }
 
 function changeHeight() {
 	var formObj = document.forms[0];
 
 	if (!formObj.constrain.checked || !preloadImg) {
-		updateStyleDimentions();
+		updateStyle();
 		return;
 	}
 
 	var temp = (formObj.width.value / preloadImg.width) * preloadImg.height;
 	formObj.height.value = temp.toFixed(0);
-	updateStyleDimentions();
+	updateStyle();
 }
 
 function changeWidth() {
 	var formObj = document.forms[0];
 
 	if (!formObj.constrain.checked || !preloadImg) {
-		updateStyleDimentions();
+		updateStyle();
 		return;
 	}
 
 	var temp = (formObj.height.value / preloadImg.height) * preloadImg.width;
 	formObj.width.value = temp.toFixed(0);
-	updateStyleDimentions();
+	updateStyle();
 }
 
 function onSelectMainImage(target_form_element, name, value) {
@@ -395,7 +416,7 @@ function updateImageData() {
 	if (formObj.height.value == "")
 		formObj.height.value = preloadImg.height;
 
-	updateStyleDimentions();
+	updateStyle();
 }
 
 function resetImageData() {

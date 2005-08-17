@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.222 $
- * $Date: 2005/08/15 16:39:10 $
+ * $Revision: 1.223 $
+ * $Date: 2005/08/16 07:44:22 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -84,7 +84,7 @@ TinyMCE.prototype.init = function(settings) {
 	this.defParam("docs_language", this.settings['language']);
 	this.defParam("elements", "");
 	this.defParam("textarea_trigger", "mce_editable");
-	this.defParam("valid_elements", "+a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/b[class],-em/i[class],-strike[class],-u[class],+p[dir|class|align],-ol[class],-ul[class],-li[class],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border=0|alt|title|hspace|vspace|width|height|align],-sub[class],-sup[class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign],caption[id|lang|dir|class|style],-div[dir|class|align|style],-span[class|align],-pre[class|align],address[class|align],-h1[dir|class|align],-h2[dir|class|align],-h3[dir|class|align],-h4[dir|class|align],-h5[dir|class|align],-h6[dir|class|align],hr[class]");
+	this.defParam("valid_elements", "+a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/b[class],-em/i[class],-strike[class],-u[class],+p[dir|class|align],-ol[class],-ul[class],-li[class],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border=0|alt|title|hspace|vspace|width|height|align],-sub[class],-sup[class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign],caption[id|lang|dir|class|style],-div[dir|class|align|style],-span[class|align],-pre[class|align],address[class|align],-h1[dir|class|align],-h2[dir|class|align],-h3[dir|class|align],-h4[dir|class|align],-h5[dir|class|align],-h6[dir|class|align],hr[class]");
 	this.defParam("extended_valid_elements", "");
 	this.defParam("invalid_elements", "");
 	this.defParam("encoding", "");
@@ -1566,23 +1566,11 @@ TinyMCE.prototype._cleanupAttribute = function(valid_attributes, element_name, a
 				attribValue = element_node.color;
 			break;
 
-		case "width":
-			// MSIE 5.5 issue
-			if (tinyMCE.isMSIE)
-				attribValue = element_node.width;
-			break;
-
-		case "height":
-			// MSIE 5.5 issue
-			if (tinyMCE.isMSIE)
-				attribValue = element_node.height;
-			break;
-
-		case "border":
+/*		case "border":
 			// MSIE 5.5 issue
 			if (tinyMCE.isMSIE)
 				attribValue = element_node.border;
-			break;
+			break;*/
 
 //		case "className":
 		case "class":
@@ -1601,7 +1589,7 @@ TinyMCE.prototype._cleanupAttribute = function(valid_attributes, element_name, a
 			break;
 
 		case "style":
-			attribValue = tinyMCE.isMSIE ? tinyMCE.serializeStyle(tinyMCE.parseStyle(element_node.style.cssText)) : attribValue;
+			attribValue = tinyMCE.serializeStyle(tinyMCE.parseStyle(element_node.style.cssText));
 			break;
 
 		// Handle onclick
@@ -1698,7 +1686,7 @@ TinyMCE.prototype.parseStyle = function(str) {
 	return ar;
 };
 
-TinyMCE.prototype.compressStyle = function(ar, pr, sf) {
+TinyMCE.prototype.compressStyle = function(ar, pr, sf, res) {
 	var box = new Array();
 
 	box[0] = ar[pr + '-top' + sf];
@@ -1717,7 +1705,7 @@ TinyMCE.prototype.compressStyle = function(ar, pr, sf) {
 	}
 
 	// They are all the same
-	ar[pr] = box[0];
+	ar[res] = box[0];
 	ar[pr + '-top' + sf] = null;
 	ar[pr + '-left' + sf] = null;
 	ar[pr + '-right' + sf] = null;
@@ -1728,8 +1716,9 @@ TinyMCE.prototype.serializeStyle = function(ar) {
 	var str = "";
 
 	// Compress box
-	tinyMCE.compressStyle(ar, "border", "");
-	tinyMCE.compressStyle(ar, "border", "-width");
+	tinyMCE.compressStyle(ar, "border", "", "border");
+	tinyMCE.compressStyle(ar, "border", "-width", "border-width");
+	tinyMCE.compressStyle(ar, "border", "-color", "border-color");
 
 	for (var key in ar) {
 		var val = ar[key];
@@ -1839,6 +1828,9 @@ TinyMCE.prototype.cleanupNode = function(node) {
 				tinyMCE._moveStyle(node, '', 'vspace');
 				tinyMCE._moveStyle(node, '', 'hspace');
 				tinyMCE._moveStyle(node, 'textAlign', 'align');
+				tinyMCE._moveStyle(node, 'backgroundColor', 'bgcolor');
+				tinyMCE._moveStyle(node, 'borderColor', 'bordercolor');
+				tinyMCE._moveStyle(node, 'backgroundImage', 'background');
 			} else if (tinyMCE.isBlockElement(node))
 				tinyMCE._moveStyle(node, 'textAlign', 'align');
 
@@ -1910,17 +1902,6 @@ TinyMCE.prototype.cleanupNode = function(node) {
 			// Remove empty tables
 			if (elementName == "table" && !node.hasChildNodes())
 				return "";
-
-			// Fix width/height attributes if the styles is specified
-			if (tinyMCE.isGecko && elementName == "img") {
-				var w = node.style.width;
-				if (w != null && w != "")
-					node.setAttribute("width", w);
-
-				var h = node.style.height;
-				if (h != null && h != "")
-					node.setAttribute("height", h);
-			}
 
 			// Handle element attributes
 			if (node.attributes.length > 0) {

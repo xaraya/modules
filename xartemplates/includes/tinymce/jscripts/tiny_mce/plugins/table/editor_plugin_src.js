@@ -511,7 +511,7 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 
 				template['file'] = '../../plugins/table/table.htm';
 				template['width'] = 380;
-				template['height'] = 300;
+				template['height'] = 310;
 
 				// Language specific width and height addons
 				template['width'] += tinyMCE.getLang('lang_insert_table_delta_width', 0);

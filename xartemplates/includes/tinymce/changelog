@@ -22,6 +22,7 @@ Version 1.46RC1 (2005-08-xx)
 	Added new inst parameter to custom cleanup callbacks, this is a reference to the editor instance.
 	Added new mceColorPicker command to the advanced theme, enables the possibility invoke the color picker.
 	Added missing entities eactute,iacute,oacute,uacute,Aacute,Eacute,Iacute,Oacute,Uacute,Yacute,Aacute.
+	Added updated Hebrew language pack contributed by Liron Newman.
 	Renamed the theme_advanced_path_location to theme_advanced_statusbar_location.
 	Moved all popup javascript logic into external .js files, inorder to separate presentation and logic.
 	Removed the automatic resizing of popups. Better to use relative window sizes for each language when opening a dialog.
@@ -35,6 +36,9 @@ Version 1.46RC1 (2005-08-xx)
 	Fixed so the directionality gets inherited by all popups/dialogs.
 	Fixed bug where return/enter key sometimes produced empty elements in MSIE.
 	Fixed bug where link list was generated twice in the advanced themes link dialog.
+	Fixed bug issue where embed was converted in to ibed due to some invalid regexps.
+	Fixed bug where summary attribute on tables got lost in MSIE.
+	Fixed better inline styles support for images and tables.
 Version 1.45 (2005-06-23)
 	Fixed so the newdocument button shows again, was removed by accident in RC2.
 	Fixed so styles drop down in link dialog gets hidden if no classes are defined.

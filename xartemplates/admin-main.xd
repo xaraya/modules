@@ -65,7 +65,7 @@
 
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
-                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated when mode is set to "All Textareas". You do not have to add any template snippets.</xar:mlstring></li>
+                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated when mode is set to "All Textareas". You do not have to add any template snippets. This is also true when you use the TinyMCE DD property instead of a textarea. It is automatically activated. You do not need extra snippets in your templates.</xar:mlstring></li>
 
                          <li style="margin-top:20px;">
                          <xar:mlstring>Choose <strong>Manual Override</strong> if you wish to turn off automatic activation (xarTinyMCE DD properties are still auto activated).
@@ -82,7 +82,7 @@
         &lt;/xar:if&gt;
                 </pre>
 
-                <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/index.htm"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
+                <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/index.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring></p>
 
     </div>
     <br />
@@ -90,16 +90,26 @@
      <xar:mlstring>About the Dynamic Data Property</xar:mlstring>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The xarTinyMCE Dynamic Data WYSIWYG textarea is available and works automatically with All Textareas or
-            Special Labelled text area mode. To use this, add a XarTinyMCE GUI Dynamic Data field to your publication type (or other module) in the usual way. You <em><strong>do not add </strong></em>a template snippet
-             to your template to activate it.</xar:mlstring>
-            </p>
-           <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
-            If you can't see the xarTinyMCE GUI DD property in your DD list then</xar:mlstring>
-             <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>. <xar:mlstring>This causes a re-read of all DD properties available to Xaraya</xar:mlstring>.
-            </p>
+
+        <p style="margin-left:20px; margin-top:20px;">
+                <xar:mlstring>The xarTinyMCE Dynamic Data WYSIWYG textarea is available and works automatically with mode set to All Textareas or
+                Special Labelled Textareas. If you are only using the TinyMCE wysiwyg properties then set your mode to Special Labelled to ensure the javascript only loads when it is needed.</xar:mlstring>
+                </p>
+                 <ol>
+                <li style="margin-top:20px;">            
+                <xar:mlstring>Add a XarTinyMCE GUI Dynamic Data field to your publication type (or other module) in the usual way. For example, choose the TinyMCE property to replace your Textarea properties in your Article Publication types or xarPages page types. You <em><strong>do not add </strong></em>a template snippet
+             to your template to activate it. If you can't see the xarTinyMCE GUI DD property in your DD list then</xar:mlstring>
+                </li>
+
+                <li style="margin-top:20px;">
+            <xar:mlstring>The prompt for the Wysiwyg editor is a popup dialog box, by default. From the configuration area you can set this to an On/Off button to activate the wysiwyg area.</xar:mlstring>
+                </li>
+
+                <li style="margin-top:20px;">
+            <xar:mlstring>The size of the xarTinyMCE wysiwyg field automatically takes on the size of the existing textarea. However you can adjust this in a number of ways. You can set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
+            You can also allow resizing of the tinyMCE wysiwyg from the config settings of the TinyMCE module, or add the <strong>FullScreen</strong> toggle plugin to your tinymce plugin and button layout.</xar:mlstring>
+            </li>
+            </ol>
         </div>
         <br />
       <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
@@ -196,7 +206,7 @@ tinyMCE.init({
          </ul>
          </div>
         <div style="float:right;margin-left: 1em; margin-right: 1em; text-align:left;" class="xar-sub">
-         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.7&nbsp; 2005-06-16 jojodee
+         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.8&nbsp; 2005-08-16 jojodee
          </p>
          </div>
          <div style="clear:both;"><!-- --></div>
