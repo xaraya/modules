@@ -3,10 +3,11 @@
 	<title>{$lang_insert_image_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/form_utils.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/functions.js"></script>
 	<link href="css/advimage.css" rel="stylesheet" type="text/css" />
 </head>
-<body onload="init();">
+<body id="advimage" onload="init();">
     <form onsubmit="insertAction();return false;" action="#"> 
 		<div class="tabs">
 			<ul>
@@ -23,21 +24,21 @@
 
 						<table class="properties">
 							<tr>
-								<td class="column1"><label for="src">{$lang_insert_image_src}:</label></td>
+								<td class="column1"><label id="srclabel" for="src">{$lang_insert_image_src}:</label></td>
 								<td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
 									<tr> 
 									  <td><input name="src" type="text" id="src" value="" style="width: 280px" onchange="showPreviewImage(this.value);" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderImageBrowser('srcbrowser','src');</script></td>
+									  <td><script language="javascript" type="text/javascript">renderBrowser('srcbrowser','src','image');</script></td>
 									</tr>
 								  </table></td>
 							</tr>
 							<script language="javascript" type="text/javascript">renderImageList('imagelistsrc','src','onSelectMainImage');</script>
 							<tr> 
-								<td class="column1"><label for="alt">{$lang_insert_image_alt}:</label></td> 
+								<td class="column1"><label id="altlabel" for="alt">{$lang_insert_image_alt}:</label></td> 
 								<td colspan="2"><input id="alt" name="alt" type="text" value="" style="width: 280px" /></td> 
 							</tr> 
 							<tr> 
-								<td class="column1"><label for="title">{$lang_insert_image_alt2}:</label></td> 
+								<td class="column1"><label id="titlelabel" for="title">{$lang_insert_image_alt2}:</label></td> 
 								<td colspan="2"><input id="title" name="title" type="text" value="" style="width: 280px" /></td> 
 							</tr>
 						</table>
@@ -55,7 +56,7 @@
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr> 
-							<td class="column1"><label for="align">{$lang_insert_image_align}:</label></td> 
+							<td class="column1"><label id="alignlabel" for="align">{$lang_insert_image_align}:</label></td> 
 							<td><select id="align" name="align" style="width: 150px" onchange="changeAppearance();"> 
 									<option value="">{$lang_insert_image_align_default}</option> 
 									<option value="baseline">{$lang_insert_image_align_baseline}</option> 
@@ -81,7 +82,7 @@
 						</tr>
 						<script language="javascript" type="text/javascript">renderClassesList('class');</script>
 						<tr>
-							<td class="column1"><label for="width">{$lang_insert_image_dimensions}:</label></td>
+							<td class="column1"><label id="widthlabel" for="width">{$lang_insert_image_dimensions}:</label></td>
 							<td nowrap="nowrap">
 								<input name="width" type="text" id="width" value="" size="5" maxlength="5" style="vertical-align: middle; width: 50px; text-align: center;" onchange="changeHeight();" /> x 
 								<input name="height" type="text" id="height" value="" size="5" maxlength="5" style="vertical-align: middle; width: 50px; text-align: center;" onchange="changeWidth();" /> px
@@ -93,29 +94,29 @@
 							<td><table border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input id="constrain" type="checkbox" name="constrain" class="checkbox" /></td>
-										<td><label for="constrain">Constrain proportions</label></td>
+										<td><label id="constrainlabel" for="constrain">Constrain proportions</label></td>
 									</tr>
 								</table></td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="vspace">{$lang_insert_image_vspace}:</label></td> 
+							<td class="column1"><label id="vspacelabel" for="vspace">{$lang_insert_image_vspace}:</label></td> 
 							<td><input name="vspace" type="text" id="vspace" value="" size="3" maxlength="3" style="vertical-align: middle; width: 30px; text-align: center;" onchange="changeAppearance();updateStyle();" />
 							</td>
 						</tr>
 
 						<tr> 
-							<td class="column1"><label for="hspace">{$lang_insert_image_hspace}:</label></td> 
+							<td class="column1"><label id="hspacelabel" for="hspace">{$lang_insert_image_hspace}:</label></td> 
 							<td><input name="hspace" type="text" id="hspace" value="" size="3" maxlength="3" style="vertical-align: middle; width: 30px; text-align: center;" onchange="changeAppearance();updateStyle();" /></td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="border">{$lang_insert_image_border}:</label></td> 
+							<td class="column1"><label id="borderlabel" for="border">{$lang_insert_image_border}:</label></td> 
 							<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" style="vertical-align: middle; width: 30px; text-align: center;" onchange="changeAppearance();updateStyle();" /></td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="style">Style</label></td> 
+							<td class="column1"><label id="stylelabel" for="style">Style</label></td> 
 							<td colspan="2"><input id="style" name="style" type="text" value="" style="width: 280px" onchange="styleUpdated();" /></td> 
 						</tr>
 					</table>
@@ -127,25 +128,25 @@
 					<legend>Swap image</legend>
 
 					<input type="checkbox" id="onmousemovecheck" name="onmousemovecheck" class="checkbox" onclick="changeMouseMove();" />
-					<label for="onmousemovecheck">{$lang_insert_image_onmousemove}</label>
+					<label id="onmousemovechecklabel" for="onmousemovecheck">{$lang_insert_image_onmousemove}</label>
 
 					<table border="0" cellpadding="4" cellspacing="0" width="100%">
 							<tr>
-								<td class="column1"><label for="onmouseoversrc">{$lang_insert_image_mouseover}:</label></td> 
+								<td class="column1"><label id="onmouseoversrclabel" for="onmouseoversrc">{$lang_insert_image_mouseover}:</label></td> 
 								<td><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
 									  <td><input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" style="width: 240px" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderImageBrowser('overbrowser','onmouseoversrc');</script></td>
+									  <td><script language="javascript" type="text/javascript">renderBrowser('overbrowser','onmouseoversrc','image');</script></td>
 									</tr>
 								  </table></td>
 							</tr>
 							<script language="javascript" type="text/javascript">renderImageList('imagelistover','onmouseoversrc');</script>
 							<tr> 
-								<td class="column1"><label for="onmouseoutsrc">{$lang_insert_image_mouseout}:</label></td> 
+								<td class="column1"><label id="onmouseoutsrclabel" for="onmouseoutsrc">{$lang_insert_image_mouseout}:</label></td> 
 								<td class="column2"><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
 									  <td><input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value=""  style="width: 240px" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderImageBrowser('outbrowser','onmouseoutsrc');</script></td>
+									  <td><script language="javascript" type="text/javascript">renderBrowser('outbrowser','onmouseoutsrc','image');</script></td>
 									</tr> 
 								  </table></td> 
 							</tr>
@@ -158,12 +159,12 @@
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr>
-							<td class="column1"><label for="id">Id</label></td> 
+							<td class="column1"><label id="idlabel" for="id">Id</label></td> 
 							<td><input id="id" name="id" type="text" value="" style="width: 150px" /></td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="dir">Language direction:</label></td> 
+							<td class="column1"><label id="dirlabel" for="dir">Language direction:</label></td> 
 							<td>
 								<select id="dir" name="dir" style="width: 150px" onchange="changeAppearance();"> 
 										<option value="">{$lang_not_set}</option> 
@@ -174,25 +175,25 @@
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="lang">Language code:</label></td> 
+							<td class="column1"><label id="langlabel" for="lang">Language code:</label></td> 
 							<td>
 								<input id="lang" name="lang" type="text" value="" style="width: 150px" />
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="usemap">Image map:</label></td> 
+							<td class="column1"><label id="usemaplabel" for="usemap">Image map:</label></td> 
 							<td>
 								<input id="usemap" name="usemap" type="text" value="" style="width: 150px" />
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="longdesc">Long description link:</label></td>
+							<td class="column1"><label id="longdesclabel" for="longdesc">Long description link:</label></td>
 							<td><table border="0" cellspacing="0" cellpadding="0">
 									<tr>
 									  <td><input id="longdesc" name="longdesc" type="text" value="" style="width: 230px" /></td>
-									  <td><script language="javascript" type="text/javascript">renderLinkBrowser('longdescbrowser','longdesc');</script></td>
+									  <td><script language="javascript" type="text/javascript">renderBrowser('longdescbrowser','longdesc','file');</script></td>
 									</tr>
 								</table></td> 
 						</tr>
@@ -203,11 +204,11 @@
 
 		<div class="mceActionPanel">
 			<div style="float: left">
-				<input type="button" name="insert" value="{$lang_insert}" onclick="insertAction();" id="insert" />
+				<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertAction();" />
 			</div>
 
 			<div style="float: right">
-				<input type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();" id="cancel" />
+				<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="cancelAction();" />
 			</div>
 		</div>
     </form>

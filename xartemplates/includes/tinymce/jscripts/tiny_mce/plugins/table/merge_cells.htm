@@ -2,6 +2,7 @@
 <head>
 	<title>{$lang_table_merge_cells_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/merge_cells.js"></script>
 </head>
 <body onload="init();" style="margin: 8px">
@@ -23,11 +24,11 @@
 
 	<div class="mceActionPanel">
 		<div style="float: left">
-			<input type="button" name="insert" value="{$lang_update}" onclick="mergeCells();" id="insert" />
+			<input type="button" id="insert" name="insert" value="{$lang_update}" onclick="mergeCells();" />
 		</div>
 
 		<div style="float: right">
-			<input type="button" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" id="cancel" />
+			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
 		</div>
 	</div>
 </form>

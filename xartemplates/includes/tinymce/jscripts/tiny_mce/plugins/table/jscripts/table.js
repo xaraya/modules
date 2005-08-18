@@ -1,49 +1,176 @@
 var action;
 
 function insertTable() {
-	var args = new Array();
+	var formObj = document.forms[0];
+	var inst = tinyMCE.selectedInstance;
+	var cols = 2, rows = 2, border = 0, cellpadding = -1, cellspacing = -1, align, width, height, className;
+	var html = '';
+	var elm = tinyMCE.tableElm;
 
-	args["cols"] = document.forms[0].cols.value;
-	args["rows"] = document.forms[0].rows.value;
-	args["border"] = document.forms[0].border.value;
-	args["cellpadding"] = document.forms[0].cellpadding.value;
-	args["cellspacing"] = document.forms[0].cellspacing.value;
-	args["width"] = document.forms[0].width.value;
-	args["height"] = document.forms[0].height.value;
-	args["bordercolor"] =	document.forms[0].bordercolor.value;
-	args["bgcolor"] =	document.forms[0].bgcolor.value;
-	args["align"] = document.forms[0].align.options[document.forms[0].align.selectedIndex].value;
-	args["className"] = document.forms[0].styleSelect.options[document.forms[0].styleSelect.selectedIndex].value;
-	args["action"] = action;
+	// Get form data
+	cols = formObj.elements['cols'].value;
+	rows = formObj.elements['rows'].value;
+	border = formObj.elements['border'].value != "" ? formObj.elements['border'].value  : 0;
+	cellpadding = formObj.elements['cellpadding'].value != "" ? formObj.elements['cellpadding'].value : "";
+	cellspacing = formObj.elements['cellspacing'].value != "" ? formObj.elements['cellspacing'].value : "";
+	align = formObj.elements['align'].options[formObj.elements['align'].selectedIndex].value;
+	width = formObj.elements['width'].value;
+	height = formObj.elements['height'].value;
+	bordercolor = formObj.elements['bordercolor'].value;
+	bgcolor = formObj.elements['bgcolor'].value;
+	className = formObj.elements['class'].options[formObj.elements['class'].selectedIndex].value;
+	id = formObj.elements['id'].value;
+	summary = formObj.elements['summary'].value;
+	style = formObj.elements['style'].value;
+	dir = formObj.elements['dir'].value;
+	lang = formObj.elements['lang'].value;
+	background = formObj.elements['backgroundimage'].value;
 
-	tinyMCEPopup.execCommand("mceInsertTable", false, args);
+	// Update table
+	if (action == "update") {
+		inst.execCommand("mceAddUndoLevel");
+
+		tinyMCE.setAttrib(elm, 'cellPadding', cellpadding, true);
+		tinyMCE.setAttrib(elm, 'cellSpacing', cellspacing, true);
+		tinyMCE.setAttrib(elm, 'border', border, true);
+		tinyMCE.setAttrib(elm, 'width', width, true);
+		tinyMCE.setAttrib(elm, 'height', height, true);
+		tinyMCE.setAttrib(elm, 'borderColor', bordercolor);
+		tinyMCE.setAttrib(elm, 'bgColor', bgcolor);
+		tinyMCE.setAttrib(elm, 'align', align);
+		tinyMCE.setAttrib(elm, 'class', className);
+		tinyMCE.setAttrib(elm, 'style', style);
+		tinyMCE.setAttrib(elm, 'id', id);
+		tinyMCE.setAttrib(elm, 'summary', summary);
+		tinyMCE.setAttrib(elm, 'dir', dir);
+		tinyMCE.setAttrib(elm, 'lang', lang);
+
+		if (background != '')
+			elm.style.backgroundImage = "url('" + background + "')";
+
+		tinyMCE.handleVisualAid(tinyMCE.tableElm, false, inst.visualAid);
+
+		// Fix for stange MSIE align bug
+		tinyMCE.tableElm.outerHTML = tinyMCE.tableElm.outerHTML;
+
+		tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid);
+		tinyMCE.triggerNodeChange();
+		tinyMCEPopup.close();
+		return true;
+	}
+
+	// Create new table
+	html += '<table';
+
+	html += makeAttrib('id', id);
+	html += makeAttrib('border', border);
+	html += makeAttrib('cellpadding', cellpadding);
+	html += makeAttrib('cellspacing', cellspacing);
+	html += makeAttrib('width', width);
+	html += makeAttrib('height', height);
+	html += makeAttrib('bordercolor', bordercolor);
+	html += makeAttrib('bgcolor', bgcolor);
+	html += makeAttrib('align', align);
+	html += makeAttrib('class', tinyMCE.getVisualAidClass(className, border == 0));
+	html += makeAttrib('style', style);
+	html += makeAttrib('summary', summary);
+	html += makeAttrib('dir', dir);
+	html += makeAttrib('lang', lang);
+
+	html += '>';
+
+	for (var y=0; y<rows; y++) {
+		html += "<tr>";
+
+		for (var x=0; x<cols; x++)
+			html += '<td>&nbsp;</td>';
+
+		html += "</tr>";
+	}
+
+	html += "</table>";
+
+	inst.execCommand('mceInsertContent', false, html);
+	tinyMCE.handleVisualAid(inst.getBody(), true, tinyMCE.settings['visual']);
 	tinyMCEPopup.close();
 }
 
-function renderColorPicker(id, target_form_element) {
-	var html = "";
 
-	html += '<img id="' + id + '" src="images/color.gif"';
-	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-	html += ' onmouseout="tinyMCE.restoreClass(this);"';
-	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-	html += ' onclick="return tinyMCEPopup.pickColor(event,\'' + target_form_element +'\');"';
-	html += ' width="20" height="16" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+function makeAttrib(attrib, value) {
+	var formObj = document.forms[0];
+	var valueElm = formObj.elements[attrib];
 
-	document.write(html);
+	if (typeof(value) == "undefined" || value == null) {
+		value = "";
+
+		if (valueElm)
+			value = valueElm.value;
+	}
+
+	if (value == "")
+		return "";
+
+	// XML encode it
+	value = value.replace(/&/g, '&amp;');
+	value = value.replace(/\"/g, '&quot;');
+	value = value.replace(/</g, '&lt;');
+	value = value.replace(/>/g, '&gr;');
+
+	return ' ' + attrib + '="' + value + '"';
+}
+
+function getStyle(elm, st, attrib, style) {
+	var val = tinyMCE.getAttrib(elm, attrib);
+
+	if (typeof(style) == 'undefined')
+		style = attrib;
+
+	return val == '' ? (st[style] ? st[style].replace('px', '') : '') : val;
 }
 
 function init() {
+	var cols = 2, rows = 2, border = 0, cellpadding = "", cellspacing = "";
+	var align = "", width = "", height = "", bordercolor = "", bgcolor = "", className = "";
+	var id = "", summary = "", style = "", dir = "", lang = "", background = "", bgcolor = "", bordercolor = "";
+	var inst = tinyMCE.selectedInstance;
+	var formObj = document.forms[0];
+	var elm = tinyMCE.getParentElement(inst.getFocusElement(), "table");
+
+	tinyMCE.tableElm = elm;
 	action = tinyMCE.getWindowArg('action');
 
-	for (var i=0; i<document.forms[0].align.options.length; i++) {
-		if (document.forms[0].align.options[i].value == tinyMCE.getWindowArg('align'))
-			document.forms[0].align.options.selectedIndex = i;
+	if (tinyMCE.tableElm && action != "insert") {
+		var rowsAr = tinyMCE.tableElm.rows;
+		var cols = 0;
+		for (var i=0; i<rowsAr.length; i++)
+			if (rowsAr[i].cells.length > cols)
+				cols = rowsAr[i].cells.length;
+
+		cols = cols;
+		rows = rowsAr.length;
+
+		st = tinyMCE.parseStyle(tinyMCE.tableElm.style.cssText);
+		border = getStyle(elm, st, 'border', 'border-width');
+		cellpadding = tinyMCE.getAttrib(tinyMCE.tableElm, 'cellpadding', "");
+		cellspacing = tinyMCE.getAttrib(tinyMCE.tableElm, 'cellspacing', "");
+		width = getStyle(elm, st, 'width');
+		height = getStyle(elm, st, 'height');
+		bordercolor = getStyle(elm, st, 'bordercolor', 'border-color');
+		bgcolor = getStyle(elm, st, 'bgcolor', 'background-color');
+		align = tinyMCE.getAttrib(tinyMCE.tableElm, 'align', align);
+		className = tinyMCE.getVisualAidClass(tinyMCE.getAttrib(tinyMCE.tableElm, 'class'), false);
+		id = tinyMCE.getAttrib(tinyMCE.tableElm, 'id');
+		summary = tinyMCE.getAttrib(tinyMCE.tableElm, 'summary');
+		style = tinyMCE.serializeStyle(st);
+		dir = tinyMCE.getAttrib(tinyMCE.tableElm, 'dir');
+		lang = tinyMCE.getAttrib(tinyMCE.tableElm, 'lang');
+		background = getStyle(elm, st, 'background', 'background-image').replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1");
+
+		action = "update";
 	}
 
-	var className = tinyMCE.getWindowArg('className');
-	var styleSelectElm = document.forms[0].styleSelect;
+	var className = className;
+	var styleSelectElm = document.forms[0].elements['class'];
 	var stylesAr = tinyMCE.getParam('theme_advanced_styles', false);
 	if (stylesAr) {
 		stylesAr = stylesAr.split(';');
@@ -67,62 +194,55 @@ function init() {
 		}
 	}
 
-	if (tinyMCE.getWindowArg('action') == "update") {
-		document.forms[0].cols.disabled = true;
-		document.forms[0].rows.disabled = true;
-	}
-
-	var formObj = document.forms[0];
-	formObj.cols.value = tinyMCE.getWindowArg('cols');
-	formObj.rows.value = tinyMCE.getWindowArg('rows');
-	formObj.border.value = tinyMCE.getWindowArg('border');
-	formObj.cellpadding.value = tinyMCE.getWindowArg('cellpadding');
-	formObj.cellspacing.value = tinyMCE.getWindowArg('cellspacing');
-	formObj.width.value = tinyMCE.getWindowArg('width');
-	formObj.height.value = tinyMCE.getWindowArg('height');
-	formObj.bordercolor.value = tinyMCE.getWindowArg('bordercolor');
-	formObj.bgcolor.value = tinyMCE.getWindowArg('bgcolor');
+	// Update form
+	selectByValue(formObj, 'align', align);
+	selectByValue(formObj, 'class', className);
+	formObj.cols.value = cols;
+	formObj.rows.value = rows;
+	formObj.border.value = border;
+	formObj.cellpadding.value = cellpadding;
+	formObj.cellspacing.value = cellspacing;
+	formObj.width.value = width;
+	formObj.height.value = height;
+	formObj.bordercolor.value = bordercolor;
+	formObj.bgcolor.value = bgcolor;
+	formObj.id.value = id;
+	formObj.summary.value = summary;
+	formObj.style.value = style;
+	formObj.dir.value = dir;
+	formObj.lang.value = lang;
+	formObj.backgroundimage.value = background;
 	formObj.insert.value = tinyMCE.getLang('lang_' + action, 'Insert', true); 
-
-	document.getElementById('bordercolor_pick').style.backgroundColor = formObj.bordercolor.value;
-	document.getElementById('bgcolor_pick').style.backgroundColor = formObj.bgcolor.value;
 
 	updateColor('bordercolor_pick', 'bordercolor');
 	updateColor('bgcolor_pick', 'bgcolor');
 
 	// Resize some elements
-	if (tinyMCE.getParam("file_browser_callback") != null) {
+	if (tinyMCE.getParam("file_browser_callback") != null)
 		document.getElementById('backgroundimage').style.width = '180px';
+
+	// Disable some fields in update mode
+	if (action == "update") {
+		formObj.cols.disabled = true;
+		formObj.rows.disabled = true;
 	}
 }
 
-function updateColor(img_id, form_element_id) {
-	document.getElementById(img_id).style.backgroundColor = document.forms[0].elements[form_element_id].value;
+function changedBackgroundImage() {
+	var formObj = document.forms[0];
+	var st = tinyMCE.parseStyle(formObj.style.value);
+
+	st['background-image'] = "url('" + formObj.backgroundimage.value + "')";
+
+	formObj.style.value = tinyMCE.serializeStyle(st);
 }
 
-function renderImageBrowser(id, target_form_element) {
-	if (tinyMCE.getParam("file_browser_callback") == null)
-		return;
+function changedStyle() {
+	var formObj = document.forms[0];
+	var st = tinyMCE.parseStyle(formObj.style.value);
 
-	var html = "";
-
-	html += '<img id="' + id + '" src="../../themes/advanced/images/browse.gif"';
-	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-	html += ' onmouseout="tinyMCE.restoreClass(this);"';
-	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-	html += ' onclick="openImageBrower(this, \'' + target_form_element + '\');"';
-	html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
-
-	document.write(html);
-}
-
-function openImageBrower(img, target_form_element) {
-	if (img.className != "mceButtonDisabled")
-		tinyMCE.openFileBrowser(target_form_element, document.forms[0].elements[target_form_element].value, 'image', window);
-}
-
-function cancelAction() {
-	// Close the dialog
-	tinyMCEPopup.close();
+	if (st['background-image'])
+		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1");
+	else
+		formObj.backgroundimage.value = '';
 }

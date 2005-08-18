@@ -80,7 +80,7 @@ function TinyMCE_advimage_handleNodeChange(editor_id, node, undo_index, undo_lev
 		return;
 
 	do {
-		if (node.nodeName == "IMG" && tinyMCE.getAttrib(node, 'name').indexOf('mce_') == -1)
+		if (node.nodeName == "IMG" && tinyMCE.getAttrib(node, 'class').indexOf('mceItem') == -1)
 			tinyMCE.switchClassSticky(editor_id + '_advimage', 'mceButtonSelected');
 	} while ((node = node.parentNode));
 

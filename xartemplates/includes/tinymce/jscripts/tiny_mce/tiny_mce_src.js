@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.223 $
- * $Date: 2005/08/16 07:44:22 $
+ * $Revision: 1.227 $
+ * $Date: 2005/08/17 15:37:21 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -84,7 +84,7 @@ TinyMCE.prototype.init = function(settings) {
 	this.defParam("docs_language", this.settings['language']);
 	this.defParam("elements", "");
 	this.defParam("textarea_trigger", "mce_editable");
-	this.defParam("valid_elements", "+a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/b[class],-em/i[class],-strike[class],-u[class],+p[dir|class|align],-ol[class],-ul[class],-li[class],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border=0|alt|title|hspace|vspace|width|height|align],-sub[class],-sup[class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign],caption[id|lang|dir|class|style],-div[dir|class|align|style],-span[class|align],-pre[class|align],address[class|align],-h1[dir|class|align],-h2[dir|class|align],-h3[dir|class|align],-h4[dir|class|align],-h5[dir|class|align],-h6[dir|class|align],hr[class]");
+	this.defParam("valid_elements", "+a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/b[class],-em/i[class],-strike[class],-u[class],+p[dir|class|align],-ol[class],-ul[class],-li[class],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border=0|alt|title|hspace|vspace|width|height|align],-sub[class],-sup[class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style],caption[id|lang|dir|class|style],-div[id|dir|class|align|style],-span[class|align],-pre[class|align],address[class|align],-h1[dir|class|align],-h2[dir|class|align],-h3[dir|class|align],-h4[dir|class|align],-h5[dir|class|align],-h6[dir|class|align],hr[class]");
 	this.defParam("extended_valid_elements", "");
 	this.defParam("invalid_elements", "");
 	this.defParam("encoding", "");
@@ -209,7 +209,7 @@ TinyMCE.prototype.init = function(settings) {
 	// Only do this once
 	if (this.configs.length == 0) {
 		// Is Safari enabled
-		if (this.isSafari)
+		if (this.isSafari && this.getParam('safari_warning', true))
 			alert("Safari support is very limited and should be considered experimental.\nSo there is no need to even submit bugreports on this early version.");
 
 		tinyMCE.addEvent(window, "load", TinyMCE.prototype.onLoad);
@@ -722,7 +722,7 @@ TinyMCE.prototype.handleEvent = function(e) {
 	if (typeof(tinyMCE) == "undefined")
 		return true;
 
-	//debug(e.type + " " + e.target.nodeName + " " + (e.relatedTarget ? e.relatedTarget.nodeName : ""));
+	//tinyMCE.debug(e.type + " " + e.target.nodeName + " " + (e.relatedTarget ? e.relatedTarget.nodeName : ""));
 
 	switch (e.type) {
 		case "submit":
@@ -1426,9 +1426,21 @@ TinyMCE.prototype._moveStyle = function(elm, style, attrib) {
 			val = '' + val;
 
 			switch (attrib) {
+				case "background":
+					val = "url('" + val + "');";
+					break;
+
+				case "bordercolor":
+					if (elm.style.borderStyle == '' || elm.style.borderStyle == 'none')
+						elm.style.borderStyle = 'solid';
+					break;
+
 				case "border":
 				case "width":
 				case "height":
+					if (attrib == "border" && elm.style.borderWidth > 0)
+						return;
+
 					if (val.indexOf('%') == -1)
 						val += 'px';
 					break;
@@ -1466,6 +1478,17 @@ TinyMCE.prototype._moveStyle = function(elm, style, attrib) {
 		val = val == null ? '' : '' + val;
 
 		switch (attrib) {
+			// Always move background to style
+			case "background":
+				if (val.indexOf('url') == -1 && val != '')
+					val = "url('" + val + "');";
+
+				if (val != '') {
+					elm.style.backgroundImage = val;
+					elm.removeAttribute(attrib);
+				}
+				return;
+
 			case "border":
 			case "width":
 			case "height":
@@ -1488,6 +1511,7 @@ TinyMCE.prototype._moveStyle = function(elm, style, attrib) {
 		}
 
 		if (val != '') {
+			elm.removeAttribute(attrib);
 			elm.setAttribute(attrib, val);
 			eval('elm.style.' + style + ' = "";');
 		}
@@ -1677,8 +1701,8 @@ TinyMCE.prototype.parseStyle = function(str) {
 			continue;
 
 		var re = new RegExp('^\\W*(.*):\\W*(.*)\\W*$');
-		var pa = st[i].replace(re, '$1,$2').split(',');
-
+		var pa = st[i].replace(re, '$1||$2').split('||');
+//tinyMCE.debug(pa[0] + "=" + pa[1]);
 		if (pa.length == 2)
 			ar[pa[0].toLowerCase()] = pa[1];
 	}
@@ -1726,7 +1750,9 @@ TinyMCE.prototype.serializeStyle = function(ar) {
 		if (val != null && val != '') {
 			// Fix style URL
 			val = val.replace(new RegExp("url\\(\\'?([^\\']*)\\'?\\)", 'gi'), "url('$1')");
-			str += key.toLowerCase() + ": " + val + "; ";
+
+			if (val != "url('')")
+				str += key.toLowerCase() + ": " + val + "; ";
 		}
 	}
 
@@ -1820,7 +1846,7 @@ TinyMCE.prototype.cleanupNode = function(node) {
 			}
 
 			// Handle inline/outline styles
-			var re = new RegExp("^(table|td|tr|img|hr)$", "gi");
+			var re = new RegExp("^(TABLE|TD|TR|IMG|HR)$");
 			if (re.test(node.nodeName)) {
 				tinyMCE._moveStyle(node, 'width', 'width');
 				tinyMCE._moveStyle(node, 'height', 'height');
@@ -1828,8 +1854,8 @@ TinyMCE.prototype.cleanupNode = function(node) {
 				tinyMCE._moveStyle(node, '', 'vspace');
 				tinyMCE._moveStyle(node, '', 'hspace');
 				tinyMCE._moveStyle(node, 'textAlign', 'align');
-				tinyMCE._moveStyle(node, 'backgroundColor', 'bgcolor');
-				tinyMCE._moveStyle(node, 'borderColor', 'bordercolor');
+				tinyMCE._moveStyle(node, 'backgroundColor', 'bgColor');
+				tinyMCE._moveStyle(node, 'borderColor', 'borderColor');
 				tinyMCE._moveStyle(node, 'backgroundImage', 'background');
 			} else if (tinyMCE.isBlockElement(node))
 				tinyMCE._moveStyle(node, 'textAlign', 'align');
@@ -1907,6 +1933,7 @@ TinyMCE.prototype.cleanupNode = function(node) {
 			if (node.attributes.length > 0) {
 				for (var i=0; i<node.attributes.length; i++) {
 					if (node.attributes[i].specified) {
+						// tinyMCE.debug(node.attributes[i].nodeName + "=" + node.attributes[i].nodeValue);
 						var attrib = tinyMCE._cleanupAttribute(elementValidAttribs, elementName, node.attributes[i], node);
 						if (attrib && attrib.value != "")
 							elementAttribs += " " + attrib.name + "=" + '"' + this.convertStringToXML("" + attrib.value) + '"';
@@ -2204,23 +2231,6 @@ TinyMCE.prototype._cleanupHTML = function(inst, doc, config, element, visual, on
 		return "<pre>" + html + "</pre>";
 
 	return html;
-};
-
-TinyMCE.prototype.setAttrib = function(element, name, value, no_fix_value) {
-	if (!no_fix_value && value != null) {
-		var re = new RegExp('[^0-9%]', 'g');
-		value = value.replace(re, '');
-	}
-
-	if (value != null && value != "")
-		element.setAttribute(name, value);
-	else
-		element.removeAttribute(name);
-
-	if (value != null && value != "")
-		element.setAttribute(name, value);
-	else
-		element.removeAttribute(name);
 };
 
 TinyMCE.prototype.insertLink = function(href, target, title, onclick, style_class) {
@@ -2871,8 +2881,8 @@ TinyMCE.prototype.openWindow = function(template, args) {
 
 	// Add to height in M$ due to SP2 WHY DON'T YOU GUYS IMPLEMENT innerWidth of windows!!
 	if (tinyMCE.isMSIE)
-		height += 30;
-	else
+		height += 40;
+	else if (!tinyMCE.isMac)
 		height += 20;
 
 	x = parseInt(screen.width / 2.0) - (width / 2.0);
@@ -2929,7 +2939,7 @@ TinyMCE.prototype.openWindow = function(template, args) {
 			// Make it bigger if statusbar is forced
 			if (tinyMCE.isGecko) {
 				if (win.document.defaultView.statusbar.visible)
-					win.resizeBy(0, 24);
+					win.resizeBy(0, tinyMCE.isMac ? 10 : 24);
 			}
 
 			win.focus();
@@ -3038,6 +3048,9 @@ TinyMCE.prototype.setAttrib = function(element, name, value, fix_value) {
 		var re = new RegExp('[^0-9%]', 'g');
 		value = value.replace(re, '');
 	}
+
+	if (name == "style")
+		element.style.cssText = value;
 
 	if (name == "class")
 		element.className = value;
@@ -3444,8 +3457,7 @@ TinyMCE.prototype.debug = function() {
 		debugDiv.className = "debugger";
 		debugDiv.innerHTML = '\
 			Debug output:\
-			<textarea id="tinymce_debug" style="width: 100%; height: 300px">\
-			</textarea>';
+			<textarea id="tinymce_debug" style="width: 100%; height: 300px"></textarea>';
 
 		document.body.appendChild(debugDiv);
 		elm = document.getElementById("tinymce_debug");
@@ -4679,10 +4691,17 @@ TinyMCEControl.prototype.execCommand = function(command, user_interface, value) 
 			// Insert marker key
 			this.execCommand('mceInsertContent', false, key);
 
+			// Store away scroll pos
+			var scrollX = this.getDoc().body.scrollLeft + this.getDoc().documentElement.scrollLeft;
+			var scrollY = this.getDoc().body.scrollTop + this.getDoc().documentElement.scrollTop;
+
 			// Find marker and replace with RAW HTML
 			var html = this.getBody().innerHTML;
 			if ((pos = html.indexOf(key)) != -1)
 				this.getBody().innerHTML = html.substring(0, pos) + value + html.substring(pos + key.length);
+
+			// Restore scoll pos
+			this.contentWindow.scrollTo(scrollX, scrollY);
 
 			break;
 
@@ -4837,7 +4856,15 @@ TinyMCEControl.prototype.execCommand = function(command, user_interface, value) 
 				try {
 					win.focus();
 					var rng = doc.selection.createRange();
+					//rng.execCommand('FormatBlock', false, '');
 					rng.execCommand("RemoveFormat", false, null);
+
+					// If all element contents is selected, move selection around element
+					if (rng.text == rng.parentElement().innerText) {
+						rng.moveToElementText(rng.parentElement());
+						rng.select();
+					}
+
 					rng.pasteHTML(rng.text);
 				} catch (e) {
 					// Do nothing

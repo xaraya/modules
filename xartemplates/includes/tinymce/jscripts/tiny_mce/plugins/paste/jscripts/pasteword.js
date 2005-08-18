@@ -16,7 +16,7 @@ function onLoadInit() {
 }
 
 function createIFrame() {
-	document.getElementById('iframecontainer').innerHTML = '<iframe id="frmData" name="frmData" src="blank.htm" height="280" width="400" style="background-color:#FFFFFF; width:100%;" dir="ltr" wrap="soft"></iframe>';
+	document.getElementById('iframecontainer').innerHTML = '<iframe id="frmData" name="frmData" class="sourceIframe" src="blank.htm" height="280" width="400" frameborder="0" style="background-color:#FFFFFF; width:100%;" dir="ltr" wrap="soft"></iframe>';
 }
 
 var wHeight=0, wWidth=0, owHeight=0, owWidth=0;
@@ -30,11 +30,10 @@ function initIframe(doc) {
 function resizeInputs() {
 	if (!tinyMCE.isMSIE) {
 		wHeight = self.innerHeight - 80;
-		wWidth = self.innerWidth - 25;
-	}
-	else {
+		wWidth = self.innerWidth - 18;
+	} else {
 		wHeight = document.body.clientHeight - 80;
-		wWidth = document.body.clientWidth - 25;
+		wWidth = document.body.clientWidth - 18;
 	}
 
 	document.getElementById('frmData').style.height = Math.abs(wHeight) + 'px';

@@ -219,7 +219,7 @@ input.checkbox {
 	display: block;
 	width: 100%;
 	height: 300px;
-	overflow: auto;
+	overflow: visible; /* Should be auto but that breaks Safari */
 }
 
 .panel_wrapper {
@@ -277,3 +277,17 @@ h1, h2, h3, h4 {
 h3 {
 	font-size: 14px;
 }
+
+/* Disables the advanced tab in the table plugin. */
+/*
+#table #advanced_tab {
+	display: none;
+}
+*/
+
+/* Disables the border input field and label in the table plugin. */
+/*
+#table #border, #table #borderlabel {
+	display: none;
+}
+*/

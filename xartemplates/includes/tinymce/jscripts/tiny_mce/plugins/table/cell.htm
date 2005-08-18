@@ -2,72 +2,168 @@
 <head>
 	<title>{$lang_table_cell_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/form_utils.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/cell.js"></script>
+	<link href="css/cell.css" rel="stylesheet" type="text/css" />
 </head>
-<body onload="init(); pkrInit();">
-<form onsubmit="insertTable();return false;">
-  <table border="0" cellpadding="0" cellspacing="0" width="200">
-    <tr>
-      <td align="center" valign="middle"><table border="0" cellpadding="4" cellspacing="0">
-          <tr>
-            <td colspan="4" class="title">{$lang_table_cell_title}</td>
-          </tr>
-          <tr>
-            <td>{$lang_insert_table_align}:</td>
-            <td><select name="align">
-                <option value="">{$lang_not_set}</option>
-                <option value="center">{$lang_insert_table_align_middle}</option>
-                <option value="left">{$lang_insert_table_align_left}</option>
-                <option value="right">{$lang_insert_table_align_right}</option>
-              </select></td>
-            <td>{$lang_table_cell_type}:</td>
-            <td><select name="cellType">
-            <option value="td">Data</option>
-            <option value="th">Header</option>
-            </select>
-            </td>
-          </tr>
-          <tr>
-            <td>{$lang_insert_table_valign}:</td>
-            <td><select name="valign">
-                <option value="">{$lang_not_set}</option>
-                <option value="top">{$lang_insert_table_align_top}</option>
-                <option value="middle">{$lang_insert_table_align_middle}</option>
-                <option value="bottom">{$lang_insert_table_align_bottom}</option>
-            </select></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>{$lang_insert_table_width}:</td>
-            <td><input name="width" type="text" id="width" value="" size="4" maxlength="4"></td>
-            <td>{$lang_insert_table_height}: </td>
-            <td><input name="height" type="text" id="height" value="" size="4" maxlength="4"></td>
-          </tr>
-          <tr id="colors" style="display: none">
-            <td>{$lang_table_bordercolor}:</td>
-            <td nowrap><input id="bordercolor" name="bordercolor" type="text" value="" size="9" maxlength="7"><a onclick="return tinyMCEPopup.pickColor(event,'bordercolor');" href="#"><img src="images/forecolor.gif" width="20" height="20" border="0" align="top" /></a>
-                </td>
-            <td>{$lang_table_bgcolor}:</td>
-            <td nowrap><input id="bgcolor" name="bgcolor" type="text"value="" size="9" maxlength="7"><a onclick="return tinyMCEPopup.pickColor(event,'bgcolor');" href="#"><img src="images/forecolor.gif" width="20" height="20" border="0" align="top" /></a>
-            </td>
-          </tr>
-          <tr>
-            <td>{$lang_insert_table_class}:</td>
-            <td colspan="3"><select name="styleSelect">
-                <option value="" selected="selected">{$lang_not_set}</option>
-            </select></td>
-          </tr>
-          <tr>
-            <td><input type="button" id="insert" name="insert" value="{$lang_update}" onclick="insertTable();"></td>
-            <td align="right">&nbsp;</td>
-            <td align="right">&nbsp;</td>
-            <td align="right"><input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();"></td>
-          </tr>
-        </table></td>
-    </tr>
-  </table>
-</form>
+<body id="tablecell" onload="init();">
+	<form onsubmit="updateAction();return false;">
+		<div class="tabs">
+			<ul>
+				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">General</a></span></li>
+				<li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">Advanced</a></span></li>
+			</ul>
+		</div>
+	
+		<div class="panel_wrapper">
+			<div id="general_panel" class="panel current">
+				<fieldset>
+					<legend>General properties</legend>
 
+					<table border="0" cellpadding="4" cellspacing="0">
+						<tr>
+							<td><label for="align">{$lang_insert_table_align}:</label></td>
+							<td>
+								<select id="align" name="align">
+									<option value="">{$lang_not_set}</option>
+									<option value="center">{$lang_insert_table_align_middle}</option>
+									<option value="left">{$lang_insert_table_align_left}</option>
+									<option value="right">{$lang_insert_table_align_right}</option>
+								</select>
+							</td>
+		
+							<td><label for="celltype">{$lang_table_cell_type}:</label></td>
+							<td>
+								<select id="celltype" name="celltype">
+									<option value="td">Data</option>
+									<option value="th">Header</option>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
+							<td><label for="valign">{$lang_insert_table_valign}:</label></td>
+							<td colspan="2">
+								<select id="valign" name="valign">
+									<option value="">{$lang_not_set}</option>
+									<option value="top">{$lang_insert_table_align_top}</option>
+									<option value="middle">{$lang_insert_table_align_middle}</option>
+									<option value="bottom">{$lang_insert_table_align_bottom}</option>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
+							<td>{$lang_insert_table_width}:</td>
+							<td><input id="width" name="width" type="text" value="" size="4" maxlength="4" /></td>
+
+							<td>{$lang_insert_table_height}:</td>
+							<td><input id="height" name="height" type="text" value="" size="4" maxlength="4" /></td>
+						</tr>
+
+						<tr>
+							<td><label for="class">{$lang_insert_table_class}:</label></td>
+							<td colspan="2">
+								<select id="class" name="class">
+									<option value="" selected="selected">{$lang_not_set}</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</div>
+
+			<div id="advanced_panel" class="panel">
+				<fieldset>
+					<legend>Advanced properties</legend>
+
+					<table border="0" cellpadding="0" cellspacing="4">
+						<tr>
+							<td class="column1"><label for="id">Id</label></td> 
+							<td><input id="id" name="id" type="text" value="" style="width: 200px" /></td> 
+						</tr>
+
+						<tr>
+							<td><label for="style">Style:</label></td>
+							<td><input type="text" id="style" name="style" value="" style="width: 200px;" onchange="changedStyle();" /></td>
+						</tr>
+
+						<tr>
+							<td class="column1"><label for="dir">Language direction:</label></td> 
+							<td>
+								<select id="dir" name="dir" style="width: 200px"> 
+										<option value="">{$lang_not_set}</option> 
+										<option value="ltr">Left to right</option> 
+										<option value="rtl">Right to left</option> 
+								</select>
+							</td> 
+						</tr>
+
+						<tr>
+							<td class="column1"><label for="lang">Language code:</label></td> 
+							<td>
+								<input id="lang" name="lang" type="text" value="" style="width: 200px" />
+							</td> 
+						</tr>
+
+						<tr>
+							<td class="column1"><label for="backgroundimage">Background image:</label></td> 
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" style="width: 200px" onchange="changedBackgroundImage();" /></td>
+										<td><script language="javascript" type="text/javascript">renderBrowser('backgroundimagebrowser','backgroundimage','image');</script></td>
+									</tr>
+								</table>
+							</td> 
+						</tr>
+
+						<tr>
+							<td class="column1"><label for="bordercolor">{$lang_table_bordercolor}:</label></td> 
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td><input id="bordercolor" name="bordercolor" type="text" value="" size="9" onchange="updateColor('bordercolor_pick','bordercolor');" /></td>
+										<td><script language="javascript" type="text/javascript">renderColorPicker('bordercolor_pick','bordercolor');</script></td>
+									</tr>
+								</table>
+							</td> 
+						</tr>
+
+						<tr>
+							<td class="column1"><label for="bgcolor">{$lang_table_bgcolor}:</label></td> 
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');" /></td>
+										<td><script language="javascript" type="text/javascript">renderColorPicker('bgcolor_pick','bgcolor');</script></td>
+									</tr>
+								</table>
+							</td> 
+						</tr>
+					</table>
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="mceActionPanel">
+			<div>
+				<select id="action" name="action">
+					<option value="cell">Update current cell</option>
+					<option value="row">Update all cells in row</option>
+					<option value="all">Update all cells in table</option>
+				</select>
+			</div>
+
+			<div style="float: left">
+				<div><input type="button" id="insert" name="insert" value="{$lang_update}" onclick="updateAction();" /></div>
+			</div>
+
+			<div style="float: right">
+				<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+			</div>
+		</div>
+	</form>
 </body>
 </html>

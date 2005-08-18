@@ -21,6 +21,7 @@ Version 1.46RC1 (2005-08-xx)
 	Added new setup_content_dom and submit_content types to custom cleanup callbacks.
 	Added new inst parameter to custom cleanup callbacks, this is a reference to the editor instance.
 	Added new mceColorPicker command to the advanced theme, enables the possibility invoke the color picker.
+	Added new safari_warning option, this enables you to disable the alert that gets presented when running on Safari.
 	Added missing entities eactute,iacute,oacute,uacute,Aacute,Eacute,Iacute,Oacute,Uacute,Yacute,Aacute.
 	Added updated Hebrew language pack contributed by Liron Newman.
 	Renamed the theme_advanced_path_location to theme_advanced_statusbar_location.
@@ -38,7 +39,12 @@ Version 1.46RC1 (2005-08-xx)
 	Fixed bug where link list was generated twice in the advanced themes link dialog.
 	Fixed bug issue where embed was converted in to ibed due to some invalid regexps.
 	Fixed bug where summary attribute on tables got lost in MSIE.
+	Fixed bug where the editor scrolled to the top of content when the pasting text with the paste plugin.
 	Fixed better inline styles support for images and tables.
+	Fixed duplicate IDs on advanced theme with external toolbar, contributed by Miguel Fortea.
+	Fixed bug where external toolbar wasn't translated, contributed by Miguel Fortea.
+	Fixed bug where the editor had a incorrect height, contributed by Miguel Fortea.
+	Fixed issue with remove formatting under MSIE, if all contents of a element is selected the element is also selected.
 Version 1.45 (2005-06-23)
 	Fixed so the newdocument button shows again, was removed by accident in RC2.
 	Fixed so styles drop down in link dialog gets hidden if no classes are defined.

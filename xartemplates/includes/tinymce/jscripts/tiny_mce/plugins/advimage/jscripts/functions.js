@@ -424,22 +424,6 @@ function resetImageData() {
 	formObj.width.value = formObj.height.value = "";	
 }
 
-function selectByValue(form_obj, field_name, value) {
-	if (!form_obj || !form_obj.elements[field_name])
-		return;
-
-	for (var i=0; i<form_obj.elements[field_name].options.length; i++) {
-		var option = form_obj.elements[field_name].options[i];
-
-		if (option.value == value)
-			option.selected = true;
-		else
-			option.selected = false;
-	}
-
-	return false;
-}
-
 function getSelectValue(form_obj, field_name) {
 	var elm = form_obj.elements[field_name];
 
@@ -447,50 +431,6 @@ function getSelectValue(form_obj, field_name) {
 		return "";
 
 	return elm.options[elm.selectedIndex].value;
-}
-
-function renderImageBrowser(id, target_form_element) {
-	if (tinyMCE.getParam("file_browser_callback") == null)
-		return;
-
-	var html = "";
-
-	html += '<img id="' + id + '" src="../../themes/advanced/images/browse.gif"';
-	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-	html += ' onmouseout="tinyMCE.restoreClass(this);"';
-	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-	html += ' onclick="openImageBrower(this, \'' + target_form_element + '\');"';
-	html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
-
-	document.write(html);
-}
-
-function openImageBrower(img, target_form_element) {
-	if (img.className != "mceButtonDisabled")
-		tinyMCE.openFileBrowser(target_form_element, document.forms[0].elements[target_form_element].value, 'image', window);
-}
-
-function renderLinkBrowser(id, target_form_element) {
-	if (tinyMCE.getParam("file_browser_callback") == null)
-		return;
-
-	var html = "";
-
-	html += '<img id="' + id + '" src="../../themes/advanced/images/browse.gif"';
-	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-	html += ' onmouseout="tinyMCE.restoreClass(this);"';
-	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-	html += ' onclick="openLinkBrower(this, \'' + target_form_element + '\');"';
-	html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
-
-	document.write(html);
-}
-
-function openLinkBrower(img, target_form_element) {
-	if (img.className != "mceButtonDisabled")
-		tinyMCE.openFileBrowser(target_form_element, document.forms[0].elements[target_form_element].value, 'file', window);
 }
 
 function renderImageList(elm_id, target_form_element, onchange_func) {

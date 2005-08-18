@@ -70,7 +70,7 @@ function insertFlash() {
 	html += ''
 		+ '<img src="' + (tinyMCE.getParam("theme_href") + "/images/spacer.gif") + '" '
 		+ 'width="' + width + '" height="' + height + '" '
-		+ 'border="0" alt="' + file + '" title="' + file + '" class="mce_plugin_flash" name="mce_plugin_flash" />';
+		+ 'border="0" alt="' + file + '" title="' + file + '" class="mceItemFlash" />';
 
 	tinyMCEPopup.execCommand("mceInsertContent", true, html);
 	tinyMCE.selectedInstance.repaint();

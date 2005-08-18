@@ -40,7 +40,7 @@ function TinyMCE_flash_parseAttributes(attribute_string) {
 			if (pos != -1)
 				attributeName = attributeName.substring(pos+1);
 
-			attributes[attributeName.toLowerCase()] = attributeValue.substring(1).toLowerCase();
+			attributes[attributeName.toLowerCase()] = attributeValue.substring(1);
 
 			attributeName = "";
 			attributeValue = "";
@@ -61,10 +61,6 @@ function TinyMCE_flash_parseAttributes(attribute_string) {
 }
 
 function TinyMCE_flash_execCommand(editor_id, element, command, user_interface, value) {
-	function getAttrib(elm, name) {
-		return elm.getAttribute(name) ? elm.getAttribute(name) : "";
-	}
-
     // Handle commands
     switch (command) {
         case "mceFlash":
@@ -82,16 +78,16 @@ function TinyMCE_flash_execCommand(editor_id, element, command, user_interface, 
 
 			// Is selection a image
             if (focusElm != null && focusElm.nodeName.toLowerCase() == "img") {
-				name = getAttrib(focusElm, 'name');
+				name = tinyMCE.getAttrib(focusElm, 'class');
 
-				if (name != 'mce_plugin_flash') // Not a Flash
+				if (name.indexOf('mceItemFlash') == -1) // Not a Flash
 					return true;
 
 				// Get rest of Flash items
-				swffile = getAttrib(focusElm, 'alt');
+				swffile = tinyMCE.getAttrib(focusElm, 'alt');
 				swffile = eval(tinyMCE.settings['urlconverter_callback'] + "(swffile, null, true);");
-				swfwidth = getAttrib(focusElm, 'width');
-				swfheight = getAttrib(focusElm, 'height');
+				swfwidth = tinyMCE.getAttrib(focusElm, 'width');
+				swfheight = tinyMCE.getAttrib(focusElm, 'height');
 				action = "update";
             }
 
@@ -108,7 +104,7 @@ function TinyMCE_flash_cleanup(type, content) {
 		case "insert_to_editor_dom":
 			var imgs = content.getElementsByTagName("img");
 			for (var i=0; i<imgs.length; i++) {
-				if (tinyMCE.getAttrib(imgs[i], "name") == "mce_plugin_flash") {
+				if (tinyMCE.getAttrib(imgs[i], "class") == "mceItemFlash") {
 					var src = tinyMCE.getAttrib(imgs[i], "alt");
 
 					src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], src);
@@ -121,7 +117,7 @@ function TinyMCE_flash_cleanup(type, content) {
 		case "get_from_editor_dom":
 			var imgs = content.getElementsByTagName("img");
 			for (var i=0; i<imgs.length; i++) {
-				if (tinyMCE.getAttrib(imgs[i], "name") == "mce_plugin_flash") {
+				if (tinyMCE.getAttrib(imgs[i], "class") == "mceItemFlash") {
 					var src = tinyMCE.getAttrib(imgs[i], "alt");
 
 					src = eval(tinyMCE.settings['urlconverter_callback'] + "(src, null, true);");
@@ -163,9 +159,9 @@ function TinyMCE_flash_cleanup(type, content) {
 				// Insert image
 				var contentAfter = content.substring(endPos);
 				content = content.substring(0, startPos);
-				content += '<img name="mce_plugin_flash" width="' + attribs["width"] + '" height="' + attribs["height"] + '"';
+				content += '<img width="' + attribs["width"] + '" height="' + attribs["height"] + '"';
 				content += ' src="' + (tinyMCE.getParam("theme_href") + '/images/spacer.gif') + '" title="' + attribs["src"] + '"';
-				content += ' alt="' + attribs["src"] + '" class="mce_plugin_flash" />' + content.substring(endPos);
+				content += ' alt="' + attribs["src"] + '" class="mceItemFlash" />' + content.substring(endPos);
 				content += contentAfter;
 				index++;
 
@@ -181,7 +177,7 @@ function TinyMCE_flash_cleanup(type, content) {
 				var attribs = TinyMCE_flash_parseAttributes(content.substring(startPos + 4, endPos));
 
 				// Is not flash, skip it
-				if (attribs['name'] != "mce_plugin_flash")
+				if (attribs['class'] != "mceItemFlash")
 					continue;
 
 				endPos += 2;
@@ -214,17 +210,13 @@ function TinyMCE_flash_cleanup(type, content) {
 }
 
 function TinyMCE_flash_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
-	function getAttrib(elm, name) {
-		return elm.getAttribute(name) ? elm.getAttribute(name) : "";
-	}
-
 	tinyMCE.switchClassSticky(editor_id + '_flash', 'mceButtonNormal');
 
 	if (node == null)
 		return;
 
 	do {
-		if (node.nodeName.toLowerCase() == "img" && getAttrib(node, 'name').indexOf('mce_plugin_flash') == 0)
+		if (node.nodeName.toLowerCase() == "img" && tinyMCE.getAttrib(node, 'class').indexOf('mceItemFlash') == 0)
 			tinyMCE.switchClassSticky(editor_id + '_flash', 'mceButtonSelected');
 	} while ((node = node.parentNode));
 

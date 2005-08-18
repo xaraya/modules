@@ -3,10 +3,11 @@
 	<title>{$lang_insert_link_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/form_utils.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/functions.js"></script>
 	<link href="css/advlink.css" rel="stylesheet" type="text/css" />
 </head>
-<body onload="init();">
+<body id="advlink" onload="init();">
     <form onsubmit="insertAction();return false;" action="#">
 		<div class="tabs">
 			<ul>
@@ -24,22 +25,22 @@
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr>
-						  <td nowrap="nowrap"><label for="href">{$lang_insert_link_url}:</label></td>
+						  <td nowrap="nowrap"><label id="hreflabel" for="href">{$lang_insert_link_url}:</label></td>
 						  <td><table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 								  <td><input id="href" name="href" type="text" value="" style="width: 280px;" onchange="selectByValue(this.form,'linklisthref',this.value);" /></td>
-								  <td><script language="javascript" type="text/javascript">renderLinkBrowser('hrefbrowser','href');</script></td>
+								  <td><script language="javascript" type="text/javascript">renderBrowser('hrefbrowser','href','file');</script></td>
 								</tr>
 							  </table></td>
 						</tr>
 						<script language="javascript" type="text/javascript">renderLinkList('linklisthref','href');</script>
 						<script language="javascript" type="text/javascript">renderAnchorList('anchorlist','href');</script>
 						<tr>
-							<td><label for="targetlist">{$lang_insert_link_target}:</label></td>
+							<td><label id="targetlistlabel" for="targetlist">{$lang_insert_link_target}:</label></td>
 							<td><script language="javascript" type="text/javascript">renderTargetList('targetlist','target');</script></td>
 						</tr>
 						<tr>
-							<td nowrap="nowrap"><label for="title">{$lang_theme_insert_link_titlefield}:</label></td>
+							<td nowrap="nowrap"><label id="titlelabel" for="title">{$lang_theme_insert_link_titlefield}:</label></td>
 							<td><input id="title" name="title" type="text" value="" style="width: 280px;" /></td>
 						</tr>
 						<script language="javascript" type="text/javascript">renderClassesList('class');</script>
@@ -52,7 +53,7 @@
 					<legend>Popup properties</legend>
 
 					<input type="checkbox" id="ispopup" name="ispopup" class="radio" onclick="setPopupControlsDisabled(!this.checked);buildOnClick();" />
-					<label for="ispopup">{$lang_insert_link_popup}</label>
+					<label id="ispopuplabel" for="ispopup">{$lang_insert_link_popup}</label>
 
 					<table border="0" cellpadding="0" cellspacing="4">
 						<tr>
@@ -92,27 +93,27 @@
 						<table border="0" cellpadding="0" cellspacing="4">
 							<tr>
 								<td><input type="checkbox" id="popuplocation" name="popuplocation" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popuplocation">{$lang_insert_link_popup_location}</label></td>
+								<td nowrap="nowrap"><label id="popuplocationlabel" for="popuplocation">{$lang_insert_link_popup_location}</label></td>
 								<td><input type="checkbox" id="popupscrollbars" name="popupscrollbars" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popupscrollbars">{$lang_insert_link_popup_scrollbars}</label></td>
+								<td nowrap="nowrap"><label id="popupscrollbarslabel" for="popupscrollbars">{$lang_insert_link_popup_scrollbars}</label></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox" id="popupmenubar" name="popupmenubar" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popupmenubar">{$lang_insert_link_popup_menubar}</label></td>
+								<td nowrap="nowrap"><label id="popupmenubarlabel" for="popupmenubar">{$lang_insert_link_popup_menubar}</label></td>
 								<td><input type="checkbox" id="popupresizable" name="popupresizable" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popupresizable">{$lang_insert_link_popup_resizable}</label></td>
+								<td nowrap="nowrap"><label id="popupresizablelabel" for="popupresizable">{$lang_insert_link_popup_resizable}</label></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox" id="popuptoolbar" name="popuptoolbar" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popuptoolbar">{$lang_insert_link_popup_toolbar}</label></td>
+								<td nowrap="nowrap"><label id="popuptoolbarlabel" for="popuptoolbar">{$lang_insert_link_popup_toolbar}</label></td>
 								<td><input type="checkbox" id="popupdependent" name="popupdependent" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popupdependent">Dependent (Mozilla/Firefox only)</label></td>
+								<td nowrap="nowrap"><label id="popupdependentlabel" for="popupdependent">Dependent (Mozilla/Firefox only)</label></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox" id="popupstatus" name="popupstatus" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popupstatus">{$lang_insert_link_popup_statusbar}</label></td>
+								<td nowrap="nowrap"><label id="popupstatuslabel" for="popupstatus">{$lang_insert_link_popup_statusbar}</label></td>
 								<td><input type="checkbox" id="popupreturn" name="popupreturn" class="checkbox" onchange="buildOnClick();" /></td>
-								<td nowrap="nowrap"><label for="popupreturn">{$lang_insert_link_popup_return}</label></td>
+								<td nowrap="nowrap"><label id="popupreturnlabel" for="popupreturn">{$lang_insert_link_popup_return}</label></td>
 							</tr>
 						</table>
 					</fieldset>
@@ -125,27 +126,27 @@
 
 					<table border="0" cellpadding="0" cellspacing="4">
 						<tr>
-							<td class="column1"><label for="id">Id</label></td> 
+							<td class="column1"><label id="idlabel" for="id">Id</label></td> 
 							<td><input id="id" name="id" type="text" value="" style="width: 200px" /></td> 
 						</tr>
 
 						<tr>
-							<td><label for="style">Style:</label></td>
+							<td><label id="stylelabel" for="style">Style:</label></td>
 							<td><input type="text" id="style" name="style" value="" style="width: 200px;" /></td>
 						</tr>
 
 						<tr>
-							<td><label for="classes">Classes:</label></td>
+							<td><label id="classeslabel" for="classes">Classes:</label></td>
 							<td><input type="text" id="classes" name="classes" value="" style="width: 200px;" onchange="selectByValue(this.form,'class',this.value);" /></td>
 						</tr>
 
 						<tr>
-							<td><label for="target">Target name:</label></td>
+							<td><label id="targetlabel" for="target">Target name:</label></td>
 							<td><input type="text" id="target" name="target" value="" style="width: 200px;" onchange="selectByValue(this.form,'targetlist',this.value);" /></td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="dir">Language direction:</label></td> 
+							<td class="column1"><label id="dirlabel" for="dir">Language direction:</label></td> 
 							<td>
 								<select id="dir" name="dir" style="width: 200px" onchange="changeAppearance();"> 
 										<option value="">{$lang_not_set}</option> 
@@ -156,29 +157,29 @@
 						</tr>
 
 						<tr>
-							<td><label for="hreflang">Target language:</label></td>
+							<td><label id="hreflanglabel" for="hreflang">Target language:</label></td>
 							<td><input type="text" id="hreflang" name="hreflang" value="" style="width: 200px;" /></td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="lang">Language code:</label></td> 
+							<td class="column1"><label id="langlabel" for="lang">Language code:</label></td> 
 							<td>
 								<input id="lang" name="lang" type="text" value="" style="width: 200px" />
 							</td> 
 						</tr>
 
 						<tr>
-							<td><label for="charset">Target character encoding:</label></td>
+							<td><label id="charsetlabel" for="charset">Target character encoding:</label></td>
 							<td><input type="text" id="charset" name="charset" value="" style="width: 200px;" /></td>
 						</tr>
 
 						<tr>
-							<td><label for="type">Target MIME type:</label></td>
+							<td><label id="typelabel" for="type">Target MIME type:</label></td>
 							<td><input type="text" id="type" name="type" value="" style="width: 200px;" /></td>
 						</tr>
 
 						<tr>
-							<td><label for="rel">Relationship page to target:</label></td>
+							<td><label id="rellabel" for="rel">Relationship page to target:</label></td>
 							<td><select id="rel" name="rel" style="width: 200px"> 
 									<option value="">{$lang_not_set}</option> 
 									<option value="alternate">Alternate</option> 
@@ -201,7 +202,7 @@
 						</tr>
 
 						<tr>
-							<td><label for="rev">Relationship target to page:</label></td>
+							<td><label id="revlabel" for="rev">Relationship target to page:</label></td>
 							<td><select id="rev" name="rev" style="width: 200px"> 
 									<option value="">{$lang_not_set}</option> 
 									<option value="alternate">Alternate</option> 
@@ -224,12 +225,12 @@
 						</tr>
 
 						<tr>
-							<td><label for="tabindex">Tabindex:</label></td>
+							<td><label id="tabindexlabel" for="tabindex">Tabindex:</label></td>
 							<td><input type="text" id="tabindex" name="tabindex" value="" style="width: 200px;" /></td>
 						</tr>
 
 						<tr>
-							<td><label for="accesskey">Accesskey:</label></td>
+							<td><label id="accesskeylabel" for="accesskey">Accesskey:</label></td>
 							<td><input type="text" id="accesskey" name="accesskey" value="" style="width: 200px;" /></td>
 						</tr>
 					</table>
@@ -307,11 +308,11 @@
 
 		<div class="mceActionPanel">
 			<div style="float: left">
-				<input type="button" name="insert" value="{$lang_insert}" onclick="insertAction();" id="insert" />
+				<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertAction();" />
 			</div>
 
 			<div style="float: right">
-				<input type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();" id="cancel" />
+				<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
 			</div>
 		</div>
     </form>
