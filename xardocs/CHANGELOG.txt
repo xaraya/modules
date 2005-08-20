@@ -1,3 +1,12 @@
+* Version 0.9.0 21 Aug 05
+- deprecate textareas_trigger! Now uses activation and deactivation classes
+  set by editor_selector and editor_deselector. Use these for custom config
+  for w3c standards. BREAKS BACKWARD COMPATIBILITY
+- clean up files
+- Better support for table css
+- Custom css now loads after the default - so it is added rather than replaces default.
+- For other changes and bug fixes see the tinymce changelog
+
 * Version 0.7.0 10 Aug 05
 - Default theme removed - not required as Advanced can be configured
   BREAKS BACKWARD COMPATIBLITY

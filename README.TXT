@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.7.0
+INSTALLATION AND USE - XarTinyMCE Version 0.9.0
 
-UPGRADES to 0.7.0:
+UPGRADES to 0.9.0:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -97,28 +97,42 @@ Alternatively - cut and paste the image to your WYSIWYG editor from word or a su
 
 ******************************
 
-To UPGRADE to Version 0.7.0
-This version moves includes the Dynamic Data property  that is moved to the module and some 
-changes that BREAK BACKWARD COMPATIBILITY so follow the instructions carefully:
+To UPGRADE to Version 0.9.0
+There has been a number of changes in tinymce that could BREAK COMPTIBILITY.
+Please check the following to ensure xartinymce continues to work for you.
+
+In Version 6.2 the Dynamic Data property and its template is moved to the tinymce module.
+Make sure you have removed the file in includes/properties/Dynamic_TinyMCE_Property.php
+It should now be located in modules/tinymce/xarproperties
+
+In Version 0.9.0 the textarea_trigger setting for mceEditable = [true|false] is deprecated 
+in favour of using classes to activate or inactivate the editor. Please use
+editor_selector (default to mceEditor) and editor_deselector (default to mceNoEditor) to
+set the class used to activate or deactivate your textareas in custom configurations.
+This is recommended for w3c standards support.
+
+When you are ready to upgrade your tinymce files:
 
 1. Remove all files in the tinymce module directory and all files in it and
    replace with the upgrade module and files
-2. Make sure you have removed the file in includes/properties/Dynamic_TinyMCE_Property.php
-   It should now be located in modules/tinymce/xarproperties
-3. Go to your Administration -> Modules ->View All
+2. Go to your Administration -> Modules ->View All
    Click Upgrade
    Click Activate
-4. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
+3. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
 
-5. Go to Administration -> XarTinyMCE -> Modify Config
+4. Go to Administration -> XarTinyMCE -> Modify Config
    Go to each TAB and ensure the values are as required.
-   Make sure you check any new or upgraded options are filled in. 
+   Make sure you check any new or upgraded options are filled in.
    Click Submit button on EACH screen to confirm.
 
-6. If you are upgrading from Versions less than 0.4.0 please make sure you note the new
+5. If you are upgrading from Versions less than 0.4.0 please make sure you note the new
    activation methods. If you have added the snippet at the top of your templates you
    MUST set the Mode to Manual.
 
+   If you have custom configurations you must use All Textareas and Auto loading.
+   
+   
+   
    That's it!
 ******************************
 
