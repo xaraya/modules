@@ -677,7 +677,7 @@
                     <xar:mlstring>List of block formats:</xar:mlstring>
                 </span>
                 </label>
-                <textarea class="MyEditorConfig" name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" >#$tinyadvformat#</textarea>
+                <textarea class="mceNoEditor" name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" >#$tinyadvformat#</textarea>
            </p>
            <p class="xar-norm">
            <xar:mlstring>These default to p, address, pre, h1, h2, h3, h4, h5 and h6 if left blank.</xar:mlstring>
