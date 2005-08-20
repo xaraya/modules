@@ -30,7 +30,7 @@
     </div>
     <xar:else />
     <div class="xar-form-container-after">
-    <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" mce_editable="true" tabindex="#$tabindex#">#$value#</textarea>
+    <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
 </xar:if>
 <xar:if condition="!empty($invalid)">

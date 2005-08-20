@@ -1,62 +1,64 @@
 // Greek lang variables by Jacaranda Bill
 
-tinyMCELang['lang_theme_style_select'] = 'Θέματα';
-tinyMCELang['lang_theme_code_desc'] = 'Επεξεργασία HTML κώδικα';
-tinyMCELang['lang_theme_code_title'] = 'Επεξεργαστής HTML';
-tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
-tinyMCELang['lang_theme_sub_desc'] = 'Δείκτης';
-tinyMCELang['lang_theme_sup_desc'] = 'Εκθέτης';
-tinyMCELang['lang_theme_hr_desc'] = 'Εισαγωγή οριζόντιας γραμμής';
-tinyMCELang['lang_theme_removeformat_desc'] = 'Απαλοιφή μορφοποίησης';
-tinyMCELang['lang_theme_custom1_desc'] = 'Περιγραφή';
-tinyMCELang['lang_insert_image_border'] = 'Περίγραμμα';
-tinyMCELang['lang_insert_image_dimensions'] = 'Διαστάσεις';
-tinyMCELang['lang_insert_image_vspace'] = 'Κάθ. περιθώριο';
-tinyMCELang['lang_insert_image_hspace'] = 'Οριζ. περιθώριο';
-tinyMCELang['lang_insert_image_align'] = 'Στοίχιση';
-tinyMCELang['lang_insert_image_align_default'] = 'Προκαθορισμένη';
-tinyMCELang['lang_insert_image_align_baseline'] = 'Σε ευθυγράμμιση με το κείμενο';
-tinyMCELang['lang_insert_image_align_top'] = 'Πάνω';
-tinyMCELang['lang_insert_image_align_middle'] = 'Στο κέντρο';
-tinyMCELang['lang_insert_image_align_bottom'] = 'Κάτω';
-tinyMCELang['lang_insert_image_align_texttop'] = 'Το κείμενο πάνω';
-tinyMCELang['lang_insert_image_align_absmiddle'] = 'Απόλυτα στο κέντρο';
-tinyMCELang['lang_insert_image_align_absbottom'] = 'Απόλυτα κάτω';
-tinyMCELang['lang_insert_image_align_left'] = 'Αριστερά';
-tinyMCELang['lang_insert_image_align_right'] = 'Δεξιά';
-tinyMCELang['lang_theme_font_size'] = '-- Font size --';
-tinyMCELang['lang_theme_fontdefault'] = '-- Font family --';
-tinyMCELang['lang_theme_block'] = '-- Format --';
-tinyMCELang['lang_theme_paragraph'] = 'Παράγραφος';
-tinyMCELang['lang_theme_div'] = 'Div';
-tinyMCELang['lang_theme_address'] = 'Διεύθυνση';
-tinyMCELang['lang_theme_pre'] = 'Preformatted';
-tinyMCELang['lang_theme_h1'] = 'Επικεφαλίδα 1';
-tinyMCELang['lang_theme_h2'] = 'Επικεφαλίδα 2';
-tinyMCELang['lang_theme_h3'] = 'Επικεφαλίδα 3';
-tinyMCELang['lang_theme_h4'] = 'Επικεφαλίδα 4';
-tinyMCELang['lang_theme_h5'] = 'Επικεφαλίδα 5';
-tinyMCELang['lang_theme_h6'] = 'Επικεφαλίδα 6';
-tinyMCELang['lang_theme_colorpicker_title'] = 'Χρώματα';
-tinyMCELang['lang_theme_colorpicker_apply'] = 'Εφαρμογή';
-tinyMCELang['lang_theme_forecolor_desc'] = 'Επιλογή χρώματος γραμματοσειράς';
-tinyMCELang['lang_theme_backcolor_desc'] = 'Select background color';
-tinyMCELang['lang_theme_charmap_title'] = 'Επιλογή ειδικού χαρακτήρα';
-tinyMCELang['lang_theme_charmap_desc'] = 'Εισαγωγή ειδικού χαρακτήρα';
-tinyMCELang['lang_theme_visualaid_desc'] = 'Εμφάνιση/Απόκρυψη γραμμών';
-tinyMCELang['lang_insert_anchor_title'] = 'Εισαγωγή/Διόρθωση άγκυρας';
-tinyMCELang['lang_insert_anchor_name'] = 'Ονομασία άγκυρας';
-tinyMCELang['lang_theme_anchor_desc'] = 'Εισαγωγή/Διόρθωση άγκυρας';
-tinyMCELang['lang_theme_insert_link_titlefield'] = 'Τίτλος';
-tinyMCELang['lang_theme_clipboard_msg'] = 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?';
-tinyMCELang['lang_theme_path'] = 'Path';
-tinyMCELang['lang_cut_desc'] = 'Cut';
-tinyMCELang['lang_copy_desc'] = 'Copy';
-tinyMCELang['lang_paste_desc'] = 'Paste';
-tinyMCELang['lang_link_list'] = 'Link list';
-tinyMCELang['lang_image_list'] = 'Image list';
-tinyMCELang['lang_browse'] = 'Browse';
-tinyMCELang['lang_image_props_desc'] = 'Image properties';
-tinyMCELang['lang_newdocument_desc'] = 'New document';
-tinyMCELang['lang_class'] = 'Κλάση'; 
-tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';
+tinyMCE.addToLang({
+theme_style_select : 'Θέματα',
+theme_code_desc : 'Επεξεργασία HTML κώδικα',
+theme_code_title : 'Επεξεργαστής HTML',
+theme_code_wordwrap : 'Word wrap',
+theme_sub_desc : 'Δείκτης',
+theme_sup_desc : 'Εκθέτης',
+theme_hr_desc : 'Εισαγωγή οριζόντιας γραμμής',
+theme_removeformat_desc : 'Απαλοιφή μορφοποίησης',
+theme_custom1_desc : 'Περιγραφή',
+insert_image_border : 'Περίγραμμα',
+insert_image_dimensions : 'Διαστάσεις',
+insert_image_vspace : 'Κάθ. περιθώριο',
+insert_image_hspace : 'Οριζ. περιθώριο',
+insert_image_align : 'Στοίχιση',
+insert_image_align_default : 'Προκαθορισμένη',
+insert_image_align_baseline : 'Σε ευθυγράμμιση με το κείμενο',
+insert_image_align_top : 'Πάνω',
+insert_image_align_middle : 'Στο κέντρο',
+insert_image_align_bottom : 'Κάτω',
+insert_image_align_texttop : 'Το κείμενο πάνω',
+insert_image_align_absmiddle : 'Απόλυτα στο κέντρο',
+insert_image_align_absbottom : 'Απόλυτα κάτω',
+insert_image_align_left : 'Αριστερά',
+insert_image_align_right : 'Δεξιά',
+theme_font_size : '-- Font size --',
+theme_fontdefault : '-- Font family --',
+theme_block : '-- Format --',
+theme_paragraph : 'Παράγραφος',
+theme_div : 'Div',
+theme_address : 'Διεύθυνση',
+theme_pre : 'Preformatted',
+theme_h1 : 'Επικεφαλίδα 1',
+theme_h2 : 'Επικεφαλίδα 2',
+theme_h3 : 'Επικεφαλίδα 3',
+theme_h4 : 'Επικεφαλίδα 4',
+theme_h5 : 'Επικεφαλίδα 5',
+theme_h6 : 'Επικεφαλίδα 6',
+theme_colorpicker_title : 'Χρώματα',
+theme_colorpicker_apply : 'Εφαρμογή',
+theme_forecolor_desc : 'Επιλογή χρώματος γραμματοσειράς',
+theme_backcolor_desc : 'Select background color',
+theme_charmap_title : 'Επιλογή ειδικού χαρακτήρα',
+theme_charmap_desc : 'Εισαγωγή ειδικού χαρακτήρα',
+theme_visualaid_desc : 'Εμφάνιση/Απόκρυψη γραμμών',
+insert_anchor_title : 'Εισαγωγή/Διόρθωση άγκυρας',
+insert_anchor_name : 'Ονομασία άγκυρας',
+theme_anchor_desc : 'Εισαγωγή/Διόρθωση άγκυρας',
+theme_insert_link_titlefield : 'Τίτλος',
+theme_clipboard_msg : 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?',
+theme_path : 'Path',
+cut_desc : 'Cut',
+copy_desc : 'Copy',
+paste_desc : 'Paste',
+link_list : 'Link list',
+image_list : 'Image list',
+browse : 'Browse',
+image_props_desc : 'Image properties',
+newdocument_desc : 'New document',
+class_name : 'Κλάση', 
+newdocument : 'Are you sure you want clear all contents?'
+});

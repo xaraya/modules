@@ -1,3 +1,5 @@
 // UK lang variables
 
-tinyMCELang['lang_save_desc'] = 'Uložit'; 
+tinyMCE.addToLang({
+save_desc : 'Uložit'
+});

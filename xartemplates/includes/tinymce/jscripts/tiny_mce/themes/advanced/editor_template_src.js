@@ -4,7 +4,6 @@ tinyMCE.importThemeLanguagePack('advanced');
 // Variable declarations
 var TinyMCE_advanced_autoImportCSSClasses = true;
 var TinyMCE_advanced_foreColor = "#000000";
-var TinyMCE_advanced_anchorName = "";
 var TinyMCE_advanced_resizer = new Object();
 var TinyMCE_advanced_buttons = [
 	// Control id, button img, button title, command, user_interface, value
@@ -259,7 +258,7 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 			template['width'] = 320;
 			template['height'] = 110;
 
-			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes", name : TinyMCE_advanced_anchorName, action : (TinyMCE_advanced_anchorName == "" ? "insert" : "update")});
+			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
 		return true;
 
 		case "mceNewDocument":
@@ -348,55 +347,31 @@ function TinyMCE_advanced_getEditorTemplate(settings, editorId)
 			var toolbarAlign = tinyMCE.getParam("theme_advanced_toolbar_align", "center");
 			var pathLocation = tinyMCE.getParam("theme_advanced_path_location", "none"); // Compatiblity
 			var statusbarLocation = tinyMCE.getParam("theme_advanced_statusbar_location", pathLocation);
+			var defVals = {
+				theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,styleselect,formatselect",
+				theme_advanced_buttons2 : "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,link,unlink,anchor,image,cleanup,help,code",
+				theme_advanced_buttons3 : "hr,removeformat,visualaid,separator,sub,sup,separator,charmap"
+			};
 
-			// Render row 1
-			var buttonNamesRow1 = tinyMCE.getParam("theme_advanced_buttons1", "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,styleselect,formatselect", true, ',');
-			buttonNamesRow1 = removeFromArray(buttonNamesRow1, tinyMCE.getParam("theme_advanced_disable", "", true, ','));
-			buttonNamesRow1 = addToArray(buttonNamesRow1, tinyMCE.getParam("theme_advanced_buttons1_add", "", true, ','));
-			buttonNamesRow1 = addToArray(tinyMCE.getParam("theme_advanced_buttons1_add_before", "", true, ','), buttonNamesRow1);
+			// Render rows
+			for (var i=1; i<100; i++) {
+				var def = defVals["theme_advanced_buttons" + i];
 
-			for (var i=0; i<buttonNamesRow1.length; i++)
-			{
-				toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow1[i]);
-			}
+				buttons = tinyMCE.getParam("theme_advanced_buttons" + i, def == null ? '' : def, true, ',');
+				if (buttons.length == 0)
+					break;
 
-			if (buttonNamesRow1.length > 0)
-			{
-				toolbarHTML += "<br />";
-				deltaHeight -= 23;
-			}
+				buttons = removeFromArray(buttons, tinyMCE.getParam("theme_advanced_disable", "", true, ','));
+				buttons = addToArray(buttons, tinyMCE.getParam("theme_advanced_buttons" + i + "_add", "", true, ','));
+				buttons = addToArray(tinyMCE.getParam("theme_advanced_buttons" + i + "_add_before", "", true, ','), buttons);
 
-			// Render row 2
-			var buttonNamesRow2 = tinyMCE.getParam("theme_advanced_buttons2", "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,link,unlink,anchor,image,cleanup,help,code", true, ',');
-			buttonNamesRow2 = removeFromArray(buttonNamesRow2, tinyMCE.getParam("theme_advanced_disable", "", true, ','));
-			buttonNamesRow2 = addToArray(buttonNamesRow2, tinyMCE.getParam("theme_advanced_buttons2_add", "", true, ','));
-			buttonNamesRow2 = addToArray(tinyMCE.getParam("theme_advanced_buttons2_add_before", "", true, ','), buttonNamesRow2);
+				for (var b=0; b<buttons.length; b++)
+					toolbarHTML += tinyMCE.getControlHTML(buttons[b]);
 
-			for (var i=0; i<buttonNamesRow2.length; i++)
-			{
-				toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow2[i]);
-			}
-
-			if (buttonNamesRow2.length > 0)
-			{
-				toolbarHTML += "<br />";
-				deltaHeight -= 23;
-			}
-
-			// Render row 3
-			var buttonNamesRow3 = tinyMCE.getParam("theme_advanced_buttons3", "hr,removeformat,visualaid,separator,sub,sup,separator,charmap", true, ',');
-			buttonNamesRow3 = removeFromArray(buttonNamesRow3, tinyMCE.getParam("theme_advanced_disable", "", true, ','));
-			buttonNamesRow3 = addToArray(buttonNamesRow3, tinyMCE.getParam("theme_advanced_buttons3_add", "", true, ','));
-			buttonNamesRow3 = addToArray(tinyMCE.getParam("theme_advanced_buttons3_add_before", "", true, ','), buttonNamesRow3);
-			
-			for (var i=0; i<buttonNamesRow3.length; i++)
-			{
-				toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow3[i]);
-			}
-
-			if (buttonNamesRow3.length > 0)
-			{
-				deltaHeight -= 20;
+				if (buttons.length > 0) {
+					toolbarHTML += "<br />";
+					deltaHeight -= 23;
+				}
 			}
 
 			// Setup template html
@@ -418,9 +393,8 @@ function TinyMCE_advanced_getEditorTemplate(settings, editorId)
 			if (toolbarLocation == "bottom")
 			{
 				template['html'] += '<tr><td class="mceToolbarBottom" align="' + toolbarAlign + '" height="1">' + toolbarHTML + '</td></tr>';
-				deltaHeight -= 23;
 			}
-			
+
 			// External toolbar changes
 			if (toolbarLocation == "external")
 			{
@@ -600,7 +574,7 @@ function TinyMCE_advanced_setResizing(e, editor_id, state) {
 		resizer.height = parseInt(resizeBox.style.height);
 		resizer.editorId = editor_id;
 		resizer.resizeBox = resizeBox;
-		resizer.horizontal = tinyMCE.getParam("theme_advanced_resize_horizontal", false);
+		resizer.horizontal = tinyMCE.getParam("theme_advanced_resize_horizontal", true);
 	} else {
 		resizer.resizing = false;
 		resizeBox.style.display = "none";
@@ -823,9 +797,16 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index,
 				nodeData += "href: " + path[i].getAttribute('href') + " ";
 			}
 
-			if (nodeName == "img" && tinyMCE.getAttrib(path[i], 'class').indexOf('mceItem') != -1)
+			if (nodeName == "img" && tinyMCE.getAttrib(path[i], "class").indexOf('mceItemFlash') != -1)
 			{
 				nodeName = "flash";
+				nodeData = "";
+			}
+
+			if (nodeName == "a" && (anchor = tinyMCE.getAttrib(path[i], "name")) != "")
+			{
+				nodeName = "a";
+				nodeName += "#" + anchor;
 				nodeData = "";
 			}
 
@@ -881,23 +862,15 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index,
 	tinyMCE.switchClassSticky(editor_id + '_link', 'mceButtonDisabled', true);
 	tinyMCE.switchClassSticky(editor_id + '_unlink', 'mceButtonDisabled', true);
 	tinyMCE.switchClassSticky(editor_id + '_outdent', 'mceButtonDisabled', true);
-   tinyMCE.switchClassSticky(editor_id + '_image', 'mceButtonNormal');
-   tinyMCE.switchClassSticky(editor_id + '_hr', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_image', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_hr', 'mceButtonNormal');
 
-	// Get anchor name
-	var anchorName = tinyMCE.getParentElement(node, "a", "name");
-	
-	TinyMCE_advanced_anchorName = "";
-	
-	if (anchorName)
-	{
-		TinyMCE_advanced_anchorName = anchorName.getAttribute("name");
+	if (node.nodeName == "IMG" && tinyMCE.getAttrib(node, "class").indexOf('mceItemAnchor') != -1)
 		tinyMCE.switchClassSticky(editor_id + '_anchor', 'mceButtonSelected');
-	}
 
 	// Get link
 	var anchorLink = tinyMCE.getParentElement(node, "a", "href");
-	
+
 	if (anchorLink || any_selection)
 	{
 		tinyMCE.switchClassSticky(editor_id + '_link', anchorLink ? 'mceButtonSelected' : 'mceButtonNormal', false);

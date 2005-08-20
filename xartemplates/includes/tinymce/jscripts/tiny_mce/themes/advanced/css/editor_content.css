@@ -1,4 +1,5 @@
 /* This file contains the CSS data for the editable area(iframe) of TinyMCE */
+/* You can extend this CSS by adding your own CSS file with the the content_css option */
 
 body {
 	background-color: #FFFFFF;
@@ -27,3 +28,28 @@ pre {
 .mceVisualAid {
 	border: 1px dashed #BBBBBB !important;
 }
+
+.mceItemAnchor {
+	width: 12px;
+	line-height: 6px;
+	overflow: hidden;
+	padding-left: 12px;
+	background-image: url('../images/anchor_symbol.gif');
+	background-position: bottom;
+	background-repeat: no-repeat;
+}
+
+/* Fix for MS Office style paragraphs (MsoNormal) */
+/*
+p {
+	margin: 0px;
+	padding: 0px;
+}
+*/
+
+/* Important is needed in Gecko browsers inorder to style links */
+/*
+a {
+	color: green !important;
+}
+*/

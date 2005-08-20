@@ -1,6 +1,8 @@
-﻿// PL lang variables
+// PL lang variables
 
-tinyMCELang['lang_insert_advhr_desc']    = 'Wstaw/Edytuj poziomą linię'
-tinyMCELang['lang_insert_advhr_width']   = 'Szerokość';
-tinyMCELang['lang_insert_advhr_size']    = 'Wysokość';
-tinyMCELang['lang_insert_advhr_noshade'] = 'Brak cienia';
+tinyMCE.addToLang({
+insert_advhr_desc : 'Wstaw/Edytuj pozioma linie',
+insert_advhr_width : 'Szerokosc',
+insert_advhr_size : 'Wysokosc',
+insert_advhr_noshade : 'Brak cienia'
+});

@@ -49,14 +49,3 @@ th {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 }
-
-.mceVisualAid {
-	border: 1px dashed #BBBBBB;
-}
-
-.mceItemAnchor {
-	background-image: url('../images/anchor.gif');
-	border: 1px solid red;
-	padding-left: 10px;
-	line-height: 20px;
-}

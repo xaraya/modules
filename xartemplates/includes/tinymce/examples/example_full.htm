@@ -20,17 +20,17 @@
 		theme_advanced_toolbar_align : "left",
 		theme_advanced_statusbar_location : "bottom",
 		content_css : "example_full.css",
-	    plugin_insertdate_dateFormat : "%Y-%m-%d",
-	    plugin_insertdate_timeFormat : "%H:%M:%S",
+	    plugi2n_insertdate_dateFormat : "%Y-%m-%d",
+	    plugi2n_insertdate_timeFormat : "%H:%M:%S",
 		extended_valid_elements : "hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
 		external_link_list_url : "example_link_list.js",
 		external_image_list_url : "example_image_list.js",
 		flash_external_list_url : "example_flash_list.js",
 		file_browser_callback : "fileBrowserCallBack",
-		paste_use_dialog : true,
+		paste_use_dialog : false,
 		theme_advanced_resizing : true,
-		theme_advanced_link_targets : "_something=My somthing;_something2=My somthing2;_something3=My somthing3;",
-		inlin2e_styles : true
+		theme_advanced_resize_horizontal : false,
+		theme_advanced_link_targets : "_something=My somthing;_something2=My somthing2;_something3=My somthing3;"
 	});
 
 	function fileBrowserCallBack(field_name, url, type, win) {
@@ -42,7 +42,6 @@
 	}
 </script>
 <!-- /TinyMCE -->
-
 </head>
 <body>
 
@@ -51,11 +50,13 @@
 <form method="post" action="http://tinymce.moxiecode.com/dump.php?example=true">
 	<h3>Full featured example</h3>
 	This page shows all available plugins that are included in the TinyMCE distribution. Some of these plugins will only be visible on MSIE due to the lack of some support in FF. For more details on the various options on TinyMCE check the <a href="../docs/index.html">manual</a> or for more third party plugins check the plugin section.<br /><br />
-
 	<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 100%">
-
-<span class="mceItemAnchor" contenteditable="false" unselectable="on"></span>
-
+	&lt;span class=&quot;example1&quot;&gt;Test header 1&lt;/span&gt;&lt;br /&gt;
+	&lt;span class=&quot;example2&quot;&gt;Test header 2&lt;/span&gt;&lt;br /&gt;
+	&lt;span class=&quot;example3&quot;&gt;Test header 3&lt;/span&gt;&lt;br /&gt;
+	Some &lt;b&gt;element&lt;/b&gt;, this is to be editor 1. &lt;br /&gt; This editor instance has a 100% width to it.
+	&lt;p&gt;Some paragraph. &lt;a href=&quot;http://www.sourceforge.net&quot; onclick=&quot;alert('onclick test');&quot; &gt;Some link&lt;/a&gt;&lt;/p&gt;
+	&lt;img src=&quot;logo.jpg&quot;&gt;
 	</textarea>
 	<br />
 	<input type="submit" name="save" value="Submit" />

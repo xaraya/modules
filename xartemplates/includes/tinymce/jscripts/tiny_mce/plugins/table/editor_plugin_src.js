@@ -16,7 +16,7 @@ function TinyMCE_table_mouseDownHandler(e) {
 	if (elm.nodeName == "BODY" && (focusElm.nodeName == "TD" || focusElm.nodeName == "TH" || (focusElm.parentNode && focusElm.parentNode.nodeName == "TD") ||(focusElm.parentNode && focusElm.parentNode.nodeName == "TH") )) {
 		window.setTimeout(function() {
 			var tableElm = tinyMCE.getParentElement(focusElm, "table");
-			tinyMCE.handleVisualAid(tableElm, true, tinyMCE.settings['visual']);
+			tinyMCE.handleVisualAid(tableElm, true, tinyMCE.settings['visual'], tinyMCE.selectedInstance);
 		}, 10);
 	}
 }
@@ -955,7 +955,7 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 				}
 
 				tableElm = tinyMCE.getParentElement(inst.getFocusElement(), "table");
-				tinyMCE.handleVisualAid(tableElm, true, tinyMCE.settings['visual']);
+				tinyMCE.handleVisualAid(tableElm, true, tinyMCE.settings['visual'], tinyMCE.selectedInstance);
 				tinyMCE.triggerNodeChange();
 				inst.repaint();
 			}

@@ -2,31 +2,18 @@
 <head>
 	<title>{$lang_insert_flash}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script language="javascript" type="text/javascript">
-		var url = tinyMCE.getParam("flash_external_list_url");
-		if (url != null) {
-			// Fix relative
-			if (url.charAt(0) != '/')
-				url = tinyMCE.documentBasePath + "/" + url;
-
-			document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + url + '"></sc'+'ript>');
-		}
-	</script>
 	<script language="javascript" type="text/javascript" src="jscripts/flash.js"></script>
 </head>
 <body onload="init();">
     <form onsubmit="insertFlash();return false;" action="#">
-        <table border="0" cellpadding="0" cellspacing="4" width="350">
-            <tr>
-                <td class="title">{$lang_insert_flash}</td>
-            </tr>
-            <tr>
-                <td><hr size="1" noshade="noshade" /></td>
-            </tr>
-            <tr>
-                <td align="center" valign="middle"><table border="0" cellpadding="4" cellspacing="0">
+		<div class="title">{$lang_insert_flash}</div>
+
+		<fieldset>
+			<legend>General</legend>
+
+		<table border="0" cellpadding="4" cellspacing="0">
                     <tr>
-                        <td align="right" nowrap="nowrap">{$lang_insert_flash_file}:</td>
+					<td nowrap="nowrap">{$lang_insert_flash_file}:</td>
                       <td nowrap="nowrap">
                             <table border="0" cellspacing="0" cellpadding="0">
                               <tr>
@@ -41,7 +28,7 @@
 					if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
 						var html = "";
 
-						html += '<tr><td  align="right">{$lang_insert_flash_list}:</td>';
+						html += '<tr><td >{$lang_insert_flash_list}:</td>';
 						html += '<td><select name="link_list" style="width: 250px" onchange="this.form.file.value=this.options[this.selectedIndex].value;">';
 						html += '<option value="">---</option>';
 
@@ -55,7 +42,7 @@
 				  </script>
 				  <!-- /Link list -->
                     <tr>
-                        <td align="right" nowrap="nowrap">{$lang_insert_flash_size}:</td>
+                        <td nowrap="nowrap">{$lang_insert_flash_size}:</td>
                         <td nowrap="nowrap">
                             <input name="width" type="text" id="width" value="" onfocus="this.select();" style="width: 50px; vertical-align: middle;" />
                             <select name="width2" id="width2" style="width: 50px; vertical-align: middle;">
@@ -68,16 +55,18 @@
                             </select>
                         </td>
                     </tr>
-                </table></td>
-            <tr>
-                <td><hr size="1" noshade="noshade" /></td>
-            </tr>
-            <tr>
-                <td nowrap="nowrap" align="left">
-                    <input style="float:left" type="button" name="insert" value="{$lang_insert}" onclick="insertFlash();" id="insert" /><input style="float:right"  type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();" id="cancel" />
-                </td>
-            </tr>
-        </table>
-    </form>
+                </table>
+		</fieldset>
+
+		<div class="mceActionPanel">
+			<div style="float: left">
+				<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertFlash();" />
+			</div>
+
+			<div style="float: right">
+				<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+			</div>
+		</div>
+	</form>
 </body>
 </html>

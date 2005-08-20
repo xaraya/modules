@@ -1,4 +1,6 @@
-﻿// PL lang variables
+// PL lang variables
 
-tinyMCELang['lang_iespell_desc'] = 'Uruchom sprawdzanie pisowni';
-tinyMCELang['lang_iespell_download'] = "Nie wykryto pluginu, kliknij aby przejść do strony z pluginami."
+tinyMCE.addToLang({
+iespell_desc : 'Uruchom sprawdzanie pisowni',
+iespell_download : "Nie wykryto pluginu, kliknij aby przejsc do strony z pluginami."
+});

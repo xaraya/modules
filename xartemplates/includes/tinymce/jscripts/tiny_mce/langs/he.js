@@ -1,39 +1,41 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCELang['lang_bold_desc'] = 'מודגש';
-tinyMCELang['lang_italic_desc'] = 'נטוי';
-tinyMCELang['lang_underline_desc'] = 'קו תחתי';
-tinyMCELang['lang_striketrough_desc'] = 'קו חוצה';
-tinyMCELang['lang_justifyleft_desc'] = 'ישר לשמאל';
-tinyMCELang['lang_justifycenter_desc'] = 'ישר למרכז';
-tinyMCELang['lang_justifyright_desc'] = 'ישר לימין';
-tinyMCELang['lang_justifyfull_desc'] = 'ישר לשני הצדדים';
-tinyMCELang['lang_bullist_desc'] = 'רשימה חסרת סדר';
-tinyMCELang['lang_numlist_desc'] = 'רשימה מסודרת';
-tinyMCELang['lang_outdent_desc'] = 'הקטן כניסה';
-tinyMCELang['lang_indent_desc'] = 'הגדל כניסה';
-tinyMCELang['lang_undo_desc'] = 'בטל';
-tinyMCELang['lang_redo_desc'] = 'בצע שוב';
-tinyMCELang['lang_link_desc'] = 'הכנס/ערוך קישור';
-tinyMCELang['lang_unlink_desc'] = 'בטל קישור';
-tinyMCELang['lang_image_desc'] = 'הכנס/ערוך תמונה';
-tinyMCELang['lang_cleanup_desc'] = 'נקה קוד מבולגן';
-tinyMCELang['lang_focus_alert'] = 'יש לבחור בשדה עריכה לפני שניתן להשתמש בפקודה זו.';
-tinyMCELang['lang_edit_confirm'] = 'האם ברצונך להשתמש במצב עריכה עשירה (WYSIWYG) עבור שדה טקסט זה?';
-tinyMCELang['lang_insert_link_title'] = 'הכנס/ערוך קישור';
-tinyMCELang['lang_insert'] = 'הכנס';
-tinyMCELang['lang_update'] = 'עדכן';
-tinyMCELang['lang_cancel'] = 'בטל';
-tinyMCELang['lang_insert_link_url'] = 'כתובת (URL) הקישור';
-tinyMCELang['lang_insert_link_target'] = 'יעד';
-tinyMCELang['lang_insert_link_target_same'] = 'פתח את הקישור באותו חלון';
-tinyMCELang['lang_insert_link_target_blank'] = 'פתח את הקישור בחלון חדש';
-tinyMCELang['lang_insert_image_title'] = 'הכנס/ערוך תמונה';
-tinyMCELang['lang_insert_image_src'] = 'כתובת (URL) התמונה';
-tinyMCELang['lang_insert_image_alt'] = 'תיאור התמונה';
-tinyMCELang['lang_help_desc'] = 'עזרה';
-tinyMCELang['lang_bold_img'] = "bold.gif";
-tinyMCELang['lang_italic_img'] = "italic.gif";
-tinyMCELang['lang_underline_img'] = "underline.gif";
-tinyMCELang['lang_clipboard_msg'] = 'פעולות העתקה/גזירה/הדבקה אינן נתמכות תחת Mozilla ו-Firefox.\nהאם ברצונך לקבל מידע נוסף אודות נושא זה?';
-tinyMCELang['lang_popup_blocked'] = 'סליחה, אך שמנו לב כי חוסם החלונות הקופצים שלך חסם חלון שמהווה חלק מהיישום. תצטרך לבטל את חסימת החלונות הקופצים באתר זה כדי לנצל כלי זה במלואו.';
+tinyMCE.addToLang({
+bold_desc : 'מודגש',
+italic_desc : 'נטוי',
+underline_desc : 'קו תחתי',
+striketrough_desc : 'קו חוצה',
+justifyleft_desc : 'ישר לשמאל',
+justifycenter_desc : 'ישר למרכז',
+justifyright_desc : 'ישר לימין',
+justifyfull_desc : 'ישר לשני הצדדים',
+bullist_desc : 'רשימה חסרת סדר',
+numlist_desc : 'רשימה מסודרת',
+outdent_desc : 'הקטן כניסה',
+indent_desc : 'הגדל כניסה',
+undo_desc : 'בטל',
+redo_desc : 'בצע שוב',
+link_desc : 'הכנס/ערוך קישור',
+unlink_desc : 'בטל קישור',
+image_desc : 'הכנס/ערוך תמונה',
+cleanup_desc : 'נקה קוד מבולגן',
+focus_alert : 'יש לבחור בשדה עריכה לפני שניתן להשתמש בפקודה זו.',
+edit_confirm : 'האם ברצונך להשתמש במצב עריכה עשירה (WYSIWYG) עבור שדה טקסט זה?',
+insert_link_title : 'הכנס/ערוך קישור',
+insert : 'הכנס',
+update : 'עדכן',
+cancel : 'בטל',
+insert_link_url : 'כתובת (URL) הקישור',
+insert_link_target : 'יעד',
+insert_link_target_same : 'פתח את הקישור באותו חלון',
+insert_link_target_blank : 'פתח את הקישור בחלון חדש',
+insert_image_title : 'הכנס/ערוך תמונה',
+insert_image_src : 'כתובת (URL) התמונה',
+insert_image_alt : 'תיאור התמונה',
+help_desc : 'עזרה',
+bold_img : "bold.gif",
+italic_img : "italic.gif",
+underline_img : "underline.gif",
+clipboard_msg : 'פעולות העתקה/גזירה/הדבקה אינן נתמכות תחת Mozilla ו-Firefox.\nהאם ברצונך לקבל מידע נוסף אודות נושא זה?',
+popup_blocked : 'סליחה, אך שמנו לב כי חוסם החלונות הקופצים שלך חסם חלון שמהווה חלק מהיישום. תצטרך לבטל את חסימת החלונות הקופצים באתר זה כדי לנצל כלי זה במלואו.'
+});

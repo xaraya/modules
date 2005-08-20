@@ -1,61 +1,63 @@
 // CZ lang variables thanks to "Pavel Novák", repaired by Josef Klimosz
 
-tinyMCELang['lang_theme_style_select'] = 'Styly';
-tinyMCELang['lang_theme_code_desc'] = 'Zobrazit HTML';
-tinyMCELang['lang_theme_code_title'] = 'Editace HTML';
-tinyMCELang['lang_theme_code_wordwrap'] = 'Bez dìlení slov';
-tinyMCELang['lang_theme_sub_desc'] = 'Dolní index';
-tinyMCELang['lang_theme_sup_desc'] = 'Horní index';
-tinyMCELang['lang_theme_hr_desc'] = 'Vložit vodorovný oddìlovaè';
-tinyMCELang['lang_theme_removeformat_desc'] = 'Zrušit formátování';
-tinyMCELang['lang_theme_custom1_desc'] = 'Libovolný popisek';
-tinyMCELang['lang_insert_image_border'] = 'Rámeèek';
-tinyMCELang['lang_insert_image_dimensions'] = 'Rozmìry';
-tinyMCELang['lang_insert_image_vspace'] = 'Vertikální okraj';
-tinyMCELang['lang_insert_image_hspace'] = 'Horizontální okraj';
-tinyMCELang['lang_insert_image_align'] = 'Zarovnání';
-tinyMCELang['lang_insert_image_align_default'] = 'Výchozí';
-tinyMCELang['lang_insert_image_align_baseline'] = 'Na úèaøí';
-tinyMCELang['lang_insert_image_align_top'] = 'Nahoru';
-tinyMCELang['lang_insert_image_align_middle'] = 'Na støed';
-tinyMCELang['lang_insert_image_align_bottom'] = 'Dolù';
-tinyMCELang['lang_insert_image_align_texttop'] = 'Nejvyšší bod textu';
-tinyMCELang['lang_insert_image_align_absmiddle'] = 'Støed øádku';
-tinyMCELang['lang_insert_image_align_absbottom'] = 'Spodek øádku';
-tinyMCELang['lang_insert_image_align_left'] = 'Vlevo';
-tinyMCELang['lang_insert_image_align_right'] = 'Vpravo';
-tinyMCELang['lang_theme_font_size'] = '-- Font size --';
-tinyMCELang['lang_theme_fontdefault'] = '-- Font family --';
-tinyMCELang['lang_theme_block'] = '-- Format --';
-tinyMCELang['lang_theme_paragraph'] = 'Odstavec';
-tinyMCELang['lang_theme_div'] = 'Div';
-tinyMCELang['lang_theme_address'] = 'Adresa';
-tinyMCELang['lang_theme_pre'] = 'Pøedformát';
-tinyMCELang['lang_theme_h1'] = 'Nadpis 1';
-tinyMCELang['lang_theme_h2'] = 'Nadpis 2';
-tinyMCELang['lang_theme_h3'] = 'Nadpis 3';
-tinyMCELang['lang_theme_h4'] = 'Nadpis 4';
-tinyMCELang['lang_theme_h5'] = 'Nadpis 5';
-tinyMCELang['lang_theme_h6'] = 'Nadpis 6';
-tinyMCELang['lang_theme_colorpicker_title'] = 'Výbìr barvy';
-tinyMCELang['lang_theme_colorpicker_apply'] = 'Vybrat';
-tinyMCELang['lang_theme_forecolor_desc'] = 'Barva popøedí';
-tinyMCELang['lang_theme_backcolor_desc'] = 'Barva pozadí';
-tinyMCELang['lang_theme_charmap_title'] = 'Výbìr uživ. znaku';
-tinyMCELang['lang_theme_charmap_desc'] = 'Vložit znak';
-tinyMCELang['lang_theme_visualaid_desc'] = 'Zapnout znaèky/neviditelné prvky';
-tinyMCELang['lang_insert_anchor_title'] = 'Vložení/editace záložky';
-tinyMCELang['lang_insert_anchor_name'] = 'Název';
-tinyMCELang['lang_theme_anchor_desc'] = 'Vložit/editovat záložku';
-tinyMCELang['lang_theme_insert_link_titlefield'] = 'Název';
-tinyMCELang['lang_theme_clipboard_msg'] = 'Copy/Cut/Paste není použitelné v Mozille a Firefoxu.\nChcete více informací o tomto problému?';
-tinyMCELang['lang_theme_path'] = 'Cesta';
-tinyMCELang['lang_cut_desc'] = 'Vyjmout';
-tinyMCELang['lang_copy_desc'] = 'Kopírovat';
-tinyMCELang['lang_paste_desc'] = 'Vložit';
-tinyMCELang['lang_link_list'] = 'Seznam';
-tinyMCELang['lang_image_list'] = 'Seznam';
-tinyMCELang['lang_browse'] = 'Browse';
-tinyMCELang['lang_image_props_desc'] = 'Vlastnosti obrázku';
-tinyMCELang['lang_newdocument_desc'] = 'Nový dokument';
-tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';
+tinyMCE.addToLang({
+theme_style_select : 'Styly',
+theme_code_desc : 'Zobrazit HTML',
+theme_code_title : 'Editace HTML',
+theme_code_wordwrap : 'Bez dìlení slov',
+theme_sub_desc : 'Dolní index',
+theme_sup_desc : 'Horní index',
+theme_hr_desc : 'Vložit vodorovný oddìlovaè',
+theme_removeformat_desc : 'Zrušit formátování',
+theme_custom1_desc : 'Libovolný popisek',
+insert_image_border : 'Rámeèek',
+insert_image_dimensions : 'Rozmìry',
+insert_image_vspace : 'Vertikální okraj',
+insert_image_hspace : 'Horizontální okraj',
+insert_image_align : 'Zarovnání',
+insert_image_align_default : 'Výchozí',
+insert_image_align_baseline : 'Na úèaøí',
+insert_image_align_top : 'Nahoru',
+insert_image_align_middle : 'Na støed',
+insert_image_align_bottom : 'Dolù',
+insert_image_align_texttop : 'Nejvyšší bod textu',
+insert_image_align_absmiddle : 'Støed øádku',
+insert_image_align_absbottom : 'Spodek øádku',
+insert_image_align_left : 'Vlevo',
+insert_image_align_right : 'Vpravo',
+theme_font_size : '-- Font size --',
+theme_fontdefault : '-- Font family --',
+theme_block : '-- Format --',
+theme_paragraph : 'Odstavec',
+theme_div : 'Div',
+theme_address : 'Adresa',
+theme_pre : 'Pøedformát',
+theme_h1 : 'Nadpis 1',
+theme_h2 : 'Nadpis 2',
+theme_h3 : 'Nadpis 3',
+theme_h4 : 'Nadpis 4',
+theme_h5 : 'Nadpis 5',
+theme_h6 : 'Nadpis 6',
+theme_colorpicker_title : 'Výbìr barvy',
+theme_colorpicker_apply : 'Vybrat',
+theme_forecolor_desc : 'Barva popøedí',
+theme_backcolor_desc : 'Barva pozadí',
+theme_charmap_title : 'Výbìr uživ. znaku',
+theme_charmap_desc : 'Vložit znak',
+theme_visualaid_desc : 'Zapnout znaèky/neviditelné prvky',
+insert_anchor_title : 'Vložení/editace záložky',
+insert_anchor_name : 'Název',
+theme_anchor_desc : 'Vložit/editovat záložku',
+theme_insert_link_titlefield : 'Název',
+theme_clipboard_msg : 'Copy/Cut/Paste není použitelné v Mozille a Firefoxu.\nChcete více informací o tomto problému?',
+theme_path : 'Cesta',
+cut_desc : 'Vyjmout',
+copy_desc : 'Kopírovat',
+paste_desc : 'Vložit',
+link_list : 'Seznam',
+image_list : 'Seznam',
+browse : 'Browse',
+image_props_desc : 'Vlastnosti obrázku',
+newdocument_desc : 'Nový dokument',
+newdocument : 'Are you sure you want clear all contents?'
+});

@@ -61,7 +61,10 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinyadvresize',1);
     xarModSetVar('tinymce', 'tinytilemap',true);
     xarModSetVar('tinymce', 'tinyenablepath',true);
-    xarModSetVar('tinymce', 'tinyresizehorizontal',false);    
+    xarModSetVar('tinymce', 'tinyresizehorizontal',false);
+    xarModSetVar('tinymce', 'tinyeditorselector','mceEditor');
+    xarModSetVar('tinymce', 'tinyeditordeselector','');
+        
 //Set masks
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -211,8 +214,13 @@ function tinymce_upgrade($oldversion)
     xarModSetVar('tinymce', 'tinytilemap',true);
     xarModSetVar('tinymce', 'tinyenablepath',true);
     xarModSetVar('tinymce', 'tinyresizehorizontal',false);    
+    return tinymce_upgrade('0.9.0');
     break;
 
+    case '0.9.0':
+    xarModSetVar('tinymce', 'tinyeditorselector','mceEditor');
+    xarModSetVar('tinymce', 'tinyeditordeselector','');
+    break;
     }
     return true;
 }

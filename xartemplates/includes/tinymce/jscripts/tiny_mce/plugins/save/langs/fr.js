@@ -1,3 +1,5 @@
 // French lang variables by Laurent Dran
 
-tinyMCELang['lang_save_desc'] = 'Sauver'; 
+tinyMCE.addToLang({
+save_desc : 'Sauver'
+});

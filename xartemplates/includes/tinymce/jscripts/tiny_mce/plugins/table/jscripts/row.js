@@ -45,10 +45,11 @@ function updateAction() {
 	var trElm = tinyMCE.getParentElement(inst.getFocusElement(), "tr");
 	var tableElm = tinyMCE.getParentElement(inst.getFocusElement(), "table");
 	var formObj = document.forms[0];
+	var action = getSelectValue(formObj, 'action');
 
 	inst.execCommand("mceAddUndoLevel");
 
-	switch (getSelectValue(formObj, 'action')) {
+	switch (action) {
 		case "row":
 			updateRow(trElm);
 			break;
@@ -60,14 +61,25 @@ function updateAction() {
 				updateRow(rows[i], true);
 
 			break;
+
+		case "odd":
+		case "even":
+			var rows = tableElm.getElementsByTagName("tr");
+
+			for (var i=0; i<rows.length; i++) {
+				if ((i % 2 == 0 && action == "odd") || (i % 2 != 0 && action == "even"))
+					updateRow(rows[i], true, true);
+			}
+
+			break;
 	}
 
-	tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid);
+	tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid, inst);
 	tinyMCE.triggerNodeChange();
 	tinyMCEPopup.close();
 }
 
-function updateRow(tr_elm, skip_id) {
+function updateRow(tr_elm, skip_id, skip_parent) {
 	var inst = tinyMCE.selectedInstance;
 	var formObj = document.forms[0];
 	var curRowType = tr_elm.parentNode.nodeName.toLowerCase();
@@ -89,9 +101,7 @@ function updateRow(tr_elm, skip_id) {
 	tinyMCE.setAttrib(tr_elm, 'class', getSelectValue(formObj, 'class'));
 
 	// Setup new rowtype
-	if (curRowType != rowtype) {
-		tinyMCE.debug(curRowType + rowtype + "rowtype");
-
+	if (curRowType != rowtype && !skip_parent) {
 		// first, clone the node we are working on
 		var newRow = tr_elm.cloneNode(1);
 
@@ -106,7 +116,11 @@ function updateRow(tr_elm, skip_id) {
 
 		if (newParent == null) {
 			newParent = doc.createElement(dest);
-			theTable.appendChild( newParent);
+
+			if (dest == "thead")
+				theTable.insertBefore(newParent, theTable.firstChild);
+			else
+				theTable.appendChild(newParent);
 		}
 
 		// append the row to the new parent

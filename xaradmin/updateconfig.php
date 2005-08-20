@@ -136,66 +136,6 @@ function tinymce_admin_updateconfig()
 
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
-   
-    //use the image browser? Check configuration
-    /* Remove this - it complicates things
-    $useibrowser=xarModGetVar('tinymce','useibrowser');
-    if ($useibrowser == 1) { //autoset
-        //theme
-        xarModSetVar('tinymce', 'tinytheme', 'advanced');
-        //plugins
-       $currentplugs = xarModGetVar('tinymce', 'tinyplugins');
-        if (trim($currentplugs)=='')  {
-             $currentplugs= 'ibrowser';
-        }elseif (strstr($currentplugs,'ibrowser')==false) {
-             $currentplugs='ibrowser,'.$currentplugs;
-        }
-        xarModSetVar('tinymce','tinyplugins', $currentplugs);
-
-        //remove image button
-        $currentremove=  xarModGetVar('tinymce', 'tinybuttonsremove');
-        if (trim($currentremove)=='') {
-             $currentremove= 'image';
-        }elseif (strstr($currentremove,'image')==false) {
-             $currentremove='image,'.$currentremove;
-        }
-        xarModSetVar('tinymce', 'tinybuttonsremove', $currentremove);
-       //add ibrowser button
-         $currentbutton2=xarModGetVar('tinymce', 'tinybuttons2');
-        if (trim($currentbutton2)=='') {
-             $currentbutton2= 'ibrowser';
-        }elseif (strstr($currentbutton2,'ibrowser')==false) {
-             $currentbutton2='ibrowser,'.$currentbutton2;
-        }
-         xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
-
-    }elseif ($useibrowser ==2) {
-       //theme - leave as is
-        //xarModSetVar('tinymce', 'tinytheme', 'Default');
-        //remove plugin
-        $currentplugs = xarModGetVar('tinymce', 'tinyplugins');
-        if ((trim($currentplugs)<>'') && (strstr($currentplugs,'ibrowser')==true))  {
-             $currentplugs= str_replace(array(',ibrowser','ibrowser,','ibrowser'),'',$currentplugs);
-        }
-        xarModSetVar('tinymce','tinyplugins', $currentplugs);
-
-        //add back image button
-        $currentremove=  xarModGetVar('tinymce', 'tinybuttonsremove');
-        if ((trim($currentremove)<>'') && (strstr($currentremove,'image')==true)) {
-             $currentremove=str_replace(array('image',',image','image,'),'',$currentremove);
-        }
-        xarModSetVar('tinymce', 'tinybuttonsremove', $currentremove);
-       //remove ibrowser button
-         $currentbutton2=xarModGetVar('tinymce', 'tinybuttons2');
-        if ((trim($currentbutton2)<>'') && (strstr($currentbutton2,'ibrowser')==true)) {
-             $currentbutton2=str_replace(array('ibrowser,',',ibrowser','ibrowser'),'',$currentbutton2);
-        }
-         xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
-
-    } else {
-            xarModSetVar('tinymce','iusebrowse',0);
-    }
-    */
 
 
     //Turn our settings into javascript for insert into template

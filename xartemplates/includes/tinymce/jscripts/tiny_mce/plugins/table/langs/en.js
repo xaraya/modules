@@ -1,43 +1,45 @@
 // UK lang variables
 
-tinyMCELang['lang_table_desc'] = 'Inserts a new table';
-tinyMCELang['lang_table_insert_row_before_desc'] = 'Insert row before';
-tinyMCELang['lang_table_insert_row_after_desc'] = 'Insert row after';
-tinyMCELang['lang_table_delete_row_desc'] = 'Delete row';
-tinyMCELang['lang_table_insert_col_before_desc'] = 'Insert column before';
-tinyMCELang['lang_table_insert_col_after_desc'] = 'Insert column after';
-tinyMCELang['lang_table_delete_col_desc'] = 'Remove col';
-tinyMCELang['lang_table_rowtype'] = 'Row in table part';
-tinyMCELang['lang_insert_table_title'] = 'Insert/Modify table';
-tinyMCELang['lang_insert_table_width'] = 'Width';
-tinyMCELang['lang_insert_table_height'] = 'Height';
-tinyMCELang['lang_insert_table_cols'] = 'Columns';
-tinyMCELang['lang_insert_table_rows'] = 'Rows';
-tinyMCELang['lang_insert_table_cellspacing'] = 'Cellspacing';
-tinyMCELang['lang_insert_table_cellpadding'] = 'Cellpadding';
-tinyMCELang['lang_insert_table_border'] = 'Border';
-tinyMCELang['lang_insert_table_align'] = 'Alignment';
-tinyMCELang['lang_insert_table_align_default'] = 'Default';
-tinyMCELang['lang_insert_table_align_left'] = 'Left';
-tinyMCELang['lang_insert_table_align_right'] = 'Right';
-tinyMCELang['lang_insert_table_align_middle'] = 'Center';
-tinyMCELang['lang_insert_table_class'] = 'Class';
-tinyMCELang['lang_table_row_title'] = 'Table row properties';
-tinyMCELang['lang_table_cell_title'] = 'Table cell properties';
-tinyMCELang['lang_table_cell_type'] = 'Cell type';
-tinyMCELang['lang_table_row_desc'] = 'Table row properties';
-tinyMCELang['lang_table_cell_desc'] = 'Table cell properties';
-tinyMCELang['lang_insert_table_valign'] = 'Vertical alignment';
-tinyMCELang['lang_insert_table_align_top'] = 'Top';
-tinyMCELang['lang_insert_table_align_bottom'] = 'Bottom';
-tinyMCELang['lang_table_props_desc'] = 'Table properties';
-tinyMCELang['lang_table_bordercolor'] = 'Border color';
-tinyMCELang['lang_table_bgcolor'] = 'Background color';
-tinyMCELang['lang_table_merge_cells_title'] = 'Merge table cells';
-tinyMCELang['lang_table_split_cells_desc'] = 'Split table cells';
-tinyMCELang['lang_table_merge_cells_desc'] = 'Merge table cells';
-tinyMCELang['lang_table_cut_row_desc'] = 'Cut table row';
-tinyMCELang['lang_table_copy_row_desc'] = 'Copy table row';
-tinyMCELang['lang_table_paste_row_before_desc'] = 'Paste table row before';
-tinyMCELang['lang_table_paste_row_after_desc'] = 'Paste table row after';
-tinyMCELang['lang_table_insert_desc'] = 'Insert a new table';
+tinyMCE.addToLang({
+table_desc : 'Inserts a new table',
+table_insert_row_before_desc : 'Insert row before',
+table_insert_row_after_desc : 'Insert row after',
+table_delete_row_desc : 'Delete row',
+table_insert_col_before_desc : 'Insert column before',
+table_insert_col_after_desc : 'Insert column after',
+table_delete_col_desc : 'Remove col',
+table_rowtype : 'Row in table part',
+insert_table_title : 'Insert/Modify table',
+insert_table_width : 'Width',
+insert_table_height : 'Height',
+insert_table_cols : 'Columns',
+insert_table_rows : 'Rows',
+insert_table_cellspacing : 'Cellspacing',
+insert_table_cellpadding : 'Cellpadding',
+insert_table_border : 'Border',
+insert_table_align : 'Alignment',
+insert_table_align_default : 'Default',
+insert_table_align_left : 'Left',
+insert_table_align_right : 'Right',
+insert_table_align_middle : 'Center',
+insert_table_class : 'Class',
+table_row_title : 'Table row properties',
+table_cell_title : 'Table cell properties',
+table_cell_type : 'Cell type',
+table_row_desc : 'Table row properties',
+table_cell_desc : 'Table cell properties',
+insert_table_valign : 'Vertical alignment',
+insert_table_align_top : 'Top',
+insert_table_align_bottom : 'Bottom',
+table_props_desc : 'Table properties',
+table_bordercolor : 'Border color',
+table_bgcolor : 'Background color',
+table_merge_cells_title : 'Merge table cells',
+table_split_cells_desc : 'Split table cells',
+table_merge_cells_desc : 'Merge table cells',
+table_cut_row_desc : 'Cut table row',
+table_copy_row_desc : 'Copy table row',
+table_paste_row_before_desc : 'Paste table row before',
+table_paste_row_after_desc : 'Paste table row after',
+table_insert_desc : 'Insert a new table'
+});

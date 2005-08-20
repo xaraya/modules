@@ -1,62 +1,64 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCELang['lang_theme_style_select'] = '-- סיגנונות --';
-tinyMCELang['lang_theme_code_desc'] = 'ערוך את קוד ה-HTML';
-tinyMCELang['lang_theme_code_title'] = 'עורך קוד HTML';
-tinyMCELang['lang_theme_code_wordwrap'] = 'גלישת שורות';
-tinyMCELang['lang_theme_sub_desc'] = 'כתב תחתי';
-tinyMCELang['lang_theme_sup_desc'] = 'כתב עילי';
-tinyMCELang['lang_theme_hr_desc'] = 'הכנס קו אופקי';
-tinyMCELang['lang_theme_removeformat_desc'] = 'הסר עיצוב';
-tinyMCELang['lang_theme_custom1_desc'] = 'התיאור שלך כאן';
-tinyMCELang['lang_insert_image_border'] = 'גבול';
-tinyMCELang['lang_insert_image_dimensions'] = 'מימדים';
-tinyMCELang['lang_insert_image_vspace'] = 'חלל אנכי';
-tinyMCELang['lang_insert_image_hspace'] = 'חלל אופקי';
-tinyMCELang['lang_insert_image_align'] = 'יישור';
-tinyMCELang['lang_insert_image_align_default'] = 'ברירת מחדל';
-tinyMCELang['lang_insert_image_align_baseline'] = 'לקו הבסיס';
-tinyMCELang['lang_insert_image_align_top'] = 'למעלה';
-tinyMCELang['lang_insert_image_align_middle'] = 'לאמצע';
-tinyMCELang['lang_insert_image_align_bottom'] = 'למטה';
-tinyMCELang['lang_insert_image_align_texttop'] = 'לראש הטקסט';
-tinyMCELang['lang_insert_image_align_absmiddle'] = 'לאמצע מוחלט';
-tinyMCELang['lang_insert_image_align_absbottom'] = 'לקצה תחתון מוחלט';
-tinyMCELang['lang_insert_image_align_left'] = 'לשמאל';
-tinyMCELang['lang_insert_image_align_right'] = 'לימין';
-tinyMCELang['lang_theme_font_size'] = 'גודל גופן';
-tinyMCELang['lang_theme_fontdefault'] = '-- משפחת גופנים --';
-tinyMCELang['lang_theme_block'] = '-- עיצוב --';
-tinyMCELang['lang_theme_paragraph'] = 'פסקה';
-tinyMCELang['lang_theme_div'] = 'קטע';
-tinyMCELang['lang_theme_address'] = 'כתובת';
-tinyMCELang['lang_theme_pre'] = 'מעוצב מראש';
-tinyMCELang['lang_theme_h1'] = 'כותרת 1';
-tinyMCELang['lang_theme_h2'] = 'כותרת 2';
-tinyMCELang['lang_theme_h3'] = 'כותרת 3';
-tinyMCELang['lang_theme_h4'] = 'כותרת 4';
-tinyMCELang['lang_theme_h5'] = 'כותרת 5';
-tinyMCELang['lang_theme_h6'] = 'כותרת 6';
-tinyMCELang['lang_theme_colorpicker_title'] = 'בחר צבע';
-tinyMCELang['lang_theme_colorpicker_apply'] = 'החל';
-tinyMCELang['lang_theme_forecolor_desc'] = 'בחר צבע טקסט';
-tinyMCELang['lang_theme_backcolor_desc'] = 'בחר צבע רקע';
-tinyMCELang['lang_theme_charmap_title'] = 'בחר תו מיוחד';
-tinyMCELang['lang_theme_charmap_desc'] = 'הכנס תו מיוחד';
-tinyMCELang['lang_theme_visualaid_desc'] = 'החלף מצב קווים מנחים/רכיבים בלתי-נראים';
-tinyMCELang['lang_insert_anchor_title'] = 'הכנס/ערוך עוגן';
-tinyMCELang['lang_insert_anchor_name'] = 'שם העוגן';
-tinyMCELang['lang_theme_anchor_desc'] = 'הכנס/ערוך עוגן';
-tinyMCELang['lang_theme_insert_link_titlefield'] = 'כותרת';
-tinyMCELang['lang_theme_clipboard_msg'] = 'פעולות העתקה/גזירה/הדבקה אינן נתמכות תחת Mozilla ו-Firefox.\nהאם ברצונך לקבל מידע נוסף אודות נושא זה?';
-tinyMCELang['lang_theme_path'] = 'נתיב';
-tinyMCELang['lang_cut_desc'] = 'גזור';
-tinyMCELang['lang_copy_desc'] = 'העתק';
-tinyMCELang['lang_paste_desc'] = 'הדבק';
-tinyMCELang['lang_link_list'] = 'רשימת קישורים';
-tinyMCELang['lang_image_list'] = 'רשימת תמונות';
-tinyMCELang['lang_browse'] = 'סייר';
-tinyMCELang['lang_image_props_desc'] = 'מאפייני תמונה';
-tinyMCELang['lang_newdocument_desc'] = 'מסמך חדש';
-tinyMCELang['lang_class'] = 'מחלקה';
-tinyMCELang['lang_newdocument'] = 'האם אתה בטוח שברצונך לנקות את כל התוכן?';
+tinyMCE.addToLang({
+theme_style_select : '-- סיגנונות --',
+theme_code_desc : 'ערוך את קוד ה-HTML',
+theme_code_title : 'עורך קוד HTML',
+theme_code_wordwrap : 'גלישת שורות',
+theme_sub_desc : 'כתב תחתי',
+theme_sup_desc : 'כתב עילי',
+theme_hr_desc : 'הכנס קו אופקי',
+theme_removeformat_desc : 'הסר עיצוב',
+theme_custom1_desc : 'התיאור שלך כאן',
+insert_image_border : 'גבול',
+insert_image_dimensions : 'מימדים',
+insert_image_vspace : 'חלל אנכי',
+insert_image_hspace : 'חלל אופקי',
+insert_image_align : 'יישור',
+insert_image_align_default : 'ברירת מחדל',
+insert_image_align_baseline : 'לקו הבסיס',
+insert_image_align_top : 'למעלה',
+insert_image_align_middle : 'לאמצע',
+insert_image_align_bottom : 'למטה',
+insert_image_align_texttop : 'לראש הטקסט',
+insert_image_align_absmiddle : 'לאמצע מוחלט',
+insert_image_align_absbottom : 'לקצה תחתון מוחלט',
+insert_image_align_left : 'לשמאל',
+insert_image_align_right : 'לימין',
+theme_font_size : 'גודל גופן',
+theme_fontdefault : '-- משפחת גופנים --',
+theme_block : '-- עיצוב --',
+theme_paragraph : 'פסקה',
+theme_div : 'קטע',
+theme_address : 'כתובת',
+theme_pre : 'מעוצב מראש',
+theme_h1 : 'כותרת 1',
+theme_h2 : 'כותרת 2',
+theme_h3 : 'כותרת 3',
+theme_h4 : 'כותרת 4',
+theme_h5 : 'כותרת 5',
+theme_h6 : 'כותרת 6',
+theme_colorpicker_title : 'בחר צבע',
+theme_colorpicker_apply : 'החל',
+theme_forecolor_desc : 'בחר צבע טקסט',
+theme_backcolor_desc : 'בחר צבע רקע',
+theme_charmap_title : 'בחר תו מיוחד',
+theme_charmap_desc : 'הכנס תו מיוחד',
+theme_visualaid_desc : 'החלף מצב קווים מנחים/רכיבים בלתי-נראים',
+insert_anchor_title : 'הכנס/ערוך עוגן',
+insert_anchor_name : 'שם העוגן',
+theme_anchor_desc : 'הכנס/ערוך עוגן',
+theme_insert_link_titlefield : 'כותרת',
+theme_clipboard_msg : 'פעולות העתקה/גזירה/הדבקה אינן נתמכות תחת Mozilla ו-Firefox.\nהאם ברצונך לקבל מידע נוסף אודות נושא זה?',
+theme_path : 'נתיב',
+cut_desc : 'גזור',
+copy_desc : 'העתק',
+paste_desc : 'הדבק',
+link_list : 'רשימת קישורים',
+image_list : 'רשימת תמונות',
+browse : 'סייר',
+image_props_desc : 'מאפייני תמונה',
+newdocument_desc : 'מסמך חדש',
+class_name : 'מחלקה',
+newdocument : 'האם אתה בטוח שברצונך לנקות את כל התוכן?'
+});

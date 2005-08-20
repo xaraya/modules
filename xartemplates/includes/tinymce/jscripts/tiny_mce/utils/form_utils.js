@@ -1,7 +1,7 @@
 /**
  * $RCSfile: form_utils.js,v $
- * $Revision: 1.1 $
- * $Date: 2005/08/16 21:27:43 $
+ * $Revision: 1.2 $
+ * $Date: 2005/08/18 16:50:53 $
  *
  * Various form utilitiy functions.
  *
@@ -49,7 +49,7 @@ function openBrower(img, target_form_element, type) {
 		tinyMCE.openFileBrowser(target_form_element, document.forms[0].elements[target_form_element].value, type, window);
 }
 
-function selectByValue(form_obj, field_name, value) {
+function selectByValue(form_obj, field_name, value, add_custom) {
 	if (!form_obj || !form_obj.elements[field_name])
 		return;
 
@@ -66,7 +66,7 @@ function selectByValue(form_obj, field_name, value) {
 			option.selected = false;
 	}
 
-	if (!found) {
+	if (!found && add_custom && value != '') {
 		var option = new Option('Value: ' + value, value);
 		option.selected = true;
 		sel.options[sel.options.length] = option;

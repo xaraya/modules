@@ -1,7 +1,9 @@
 // pt_BR lang variables
 
-tinyMCELang['lang_insert_flash']      = 'Inserir / editar Arquivo Flash';
-tinyMCELang['lang_insert_flash_file'] = 'Arquivo Flash (.swf)';
-tinyMCELang['lang_insert_flash_size'] = 'Tamanho';
-tinyMCELang['lang_insert_flash_list'] = 'Lista de arquivos Flash';
-tinyMCELang['lang_flash_props'] = 'Propriedades Flash';
+tinyMCE.addToLang({
+insert_flash : 'Inserir / editar Arquivo Flash',
+insert_flash_file : 'Arquivo Flash (.swf)',
+insert_flash_size : 'Tamanho',
+insert_flash_list : 'Lista de arquivos Flash',
+flash_props : 'Propriedades Flash'
+});

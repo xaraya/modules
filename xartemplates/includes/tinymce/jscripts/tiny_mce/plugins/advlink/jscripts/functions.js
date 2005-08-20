@@ -337,6 +337,9 @@ function setAttrib(elm, attrib, value) {
 		if (attrib == "href")
 			elm.setAttribute("mce_real_href", value);
 
+		if (attrib.substring(0, 2) == 'on')
+			value = 'return true;' + value;
+
 		if (attrib == "class")
 			attrib = "className";
 
@@ -422,9 +425,9 @@ function setAllAttribs(elm) {
 	setAttrib(elm, 'onkeydown');
 	setAttrib(elm, 'onkeyup');
 
-	// Refresh tabindex and accesskey
-//	if (tinyMCE.isMSIE)
-//		elm.outerHTML = elm.outerHTML;
+	// Refresh in old MSIE
+	if (tinyMCE.isMSIE5)
+		elm.outerHTML = elm.outerHTML;
 }
 
 function getSelectValue(form_obj, field_name) {

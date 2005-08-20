@@ -1,3 +1,5 @@
 // pt_BR lang variables
 
-tinyMCELang['lang_print_desc'] = 'Imprimir';
+tinyMCE.addToLang({
+print_desc : 'Imprimir'
+});

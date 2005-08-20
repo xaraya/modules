@@ -1,6 +1,8 @@
-﻿// PL lang variables
+// PL lang variables
 
-tinyMCELang['lang_insert_image_alt2'] = 'Tytuł obrazka';
-tinyMCELang['lang_insert_image_onmousemove'] = 'Obrazek zastępczy'
-tinyMCELang['lang_insert_image_mouseover'] = 'po najechaniu myszy';
-tinyMCELang['lang_insert_image_mouseout'] = 'po odjechaniu myszy';
+tinyMCE.addToLang({
+insert_image_alt2 : 'Tytul obrazka',
+insert_image_onmousemove : 'Obrazek zastepczy',
+insert_image_mouseover : 'po najechaniu myszy',
+insert_image_mouseout : 'po odjechaniu myszy'
+});

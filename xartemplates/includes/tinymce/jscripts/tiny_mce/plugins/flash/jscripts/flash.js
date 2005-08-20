@@ -1,10 +1,18 @@
+var url = tinyMCE.getParam("flash_external_list_url");
+if (url != null) {
+	// Fix relative
+	if (url.charAt(0) != '/')
+		url = tinyMCE.documentBasePath + "/" + url;
+}
+
+document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + url + '"></sc'+'ript>');
+
 function init() {
-// modified 2004-11-10 by Michael Keck (me@michaelkeck.de)
-// supporting onclick event to open pop windows
 	var formObj = document.forms[0];
 	var swffile   = tinyMCE.getWindowArg('swffile');
 	var swfwidth  = '' + tinyMCE.getWindowArg('swfwidth');
 	var swfheight = '' + tinyMCE.getWindowArg('swfheight');
+
 	if (swfwidth.indexOf('%')!=-1) {
 		formObj.width2.value = "%";
 		formObj.width.value  = swfwidth.substring(0,swfwidth.length-1);
@@ -12,6 +20,7 @@ function init() {
 		formObj.width2.value = "px";
 		formObj.width.value  = swfwidth;
 	}
+
 	if (swfheight.indexOf('%')!=-1) {
 		formObj.height2.value = "%";
 		formObj.height.value  = swfheight.substring(0,swfheight.length-1);
@@ -19,6 +28,7 @@ function init() {
 		formObj.height2.value = "px";
 		formObj.height.value  = swfheight;
 	}
+
 	formObj.file.value = swffile;
 	formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true);
 
@@ -75,9 +85,5 @@ function insertFlash() {
 	tinyMCEPopup.execCommand("mceInsertContent", true, html);
 	tinyMCE.selectedInstance.repaint();
 
-	tinyMCEPopup.close();
-}
-
-function cancelAction() {
 	tinyMCEPopup.close();
 }

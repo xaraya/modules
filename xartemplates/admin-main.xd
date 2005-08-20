@@ -22,6 +22,7 @@
             xarTinyMCE further with plugins!</xar:mlstring>
         </p>
         </div>
+            <br />
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
             <xar:mlstring>How to use it?</xar:mlstring>
         </div>
@@ -49,12 +50,12 @@
                 <br />
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
-                             <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage.</xar:mlstring>
+                             <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage. Alternatively turn off WYSIWYG in a specific textarea by adding the special reserved class <strong><code>class="mceNoEditor"</code></strong> to the textarea. This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring>
                          </li>
                          <li style="margin-top:20px;"><xar:mlstring>Choose the Mode of <strong>Special Labelled Only</strong> in the configuration options.
                             Then add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
-                            This DD Property automatically marks the div or textarea of the field with the attribute <code>mce_editable="true"</code> and this acts as a marker for the WYSIWYG conversion.
-                            You can also do this manually by adding the <code>mce_editable="true"</code> attribute to any textarea or div such as the textareas in xarbb templates.
+                            This DD Property automatically marks the div or textarea of the field with a special class trigger of <strong><code>class="mceEditor"</code></strong> and this acts as a marker for the WYSIWYG conversion.
+                            You can also do this manually by adding the class as <strong><code>class="mceEditor"</code></strong> to any textarea or div such as the textareas in xarbb templates.
                             You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
                             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring><a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
                         </li>
@@ -65,12 +66,12 @@
 
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
-                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated when mode is set to "All Textareas". You do not have to add any template snippets. This is also true when you use the TinyMCE DD property instead of a textarea. It is automatically activated. You do not need extra snippets in your templates.</xar:mlstring></li>
+                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated. This is required when mode is set to "All Textareas" or you are using multiple custom configurations. You <strong>do not</strong> have to add any template snippets to your Xaraya templates as the WYSIWYG areas are automatically activated with this setting.</xar:mlstring></li>
 
                          <li style="margin-top:20px;">
-                         <xar:mlstring>Choose <strong>Manual Override</strong> if you wish to turn off automatic activation (xarTinyMCE DD properties are still auto activated).
-                         You can then manually override the loading of the WYSIWYG by adding your specific template snippet code below to your page or other specific templates.
-                         All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
+                         <xar:mlstring>Choose <strong>Manual Override</strong> if you wish to turn off automatic activation OR you are using a xarTinyMCE DD properties which are still automatically activated.
+                         In this instance either use a tinymce Dynamic Data Property to replace your textareas, or add the following specific template snippet code to your page or other specific templates.
+                         When you add the template snippet, all textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
                          Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring></li>
                     </ol>
                 </li>
@@ -161,12 +162,12 @@
                 <pre>
 tinyMCE.init({
     mode : "specific_textareas",
-    textarea_trigger : "mce_editable2",
+    editor_selector : "mceEditor2",
     theme : "default"
     });
                 </pre>
-                <xar:mlstring>To activate your custom configuration, add the textarea trigger attribute and value to a textarea eg </xar:mlstring><code> mce_editable2="true"</code><br />
-                <xar:mlstring><strong>DO NOT</strong> use <strong>mce_editable</strong> as a trigger as it is reserved.</xar:mlstring><br /></li>
+                <xar:mlstring>To activate your custom configuration, add the textarea trigger class to a textarea eg </xar:mlstring><strong><code>class="mceEditor2"</code></strong><br />
+                <xar:mlstring><strong>DO NOT</strong> use <strong>mceEditor</strong> as the class attribute trigger as it is reserved.</xar:mlstring><br /></li>
 
                 <li><xar:mlstring><strong>Custom Configuration</strong> now allows you to add your own custom configuration values to the <strong>existing</strong> default tinymce configuration. Make sure you check your resulting tinymce code in the displayed final configuration code on this page before using.</xar:mlstring></li>
             </ol>
@@ -189,8 +190,16 @@ tinyMCE.init({
             <p><xar:mlstring>There are no included hooks</xar:mlstring></p>
         </div>
         <br />
-
+     <br />
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Special Notes</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The text_area trigger <strong>mce_editable=[true|false]</strong> is deprecated from Version 0.9.0. Please use the trigger classes to activate or deactivate wysiwyg textareas. eg class="mceEditor" to activate a textarea, or class="mceNoEditor" to deactivate a textarea.</xar:mlstring></p>
+        </div>
+        <br />
+        <br />
+           <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
             <xar:mlstring>Further Information</xar:mlstring>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
@@ -206,7 +215,7 @@ tinyMCE.init({
          </ul>
          </div>
         <div style="float:right;margin-left: 1em; margin-right: 1em; text-align:left;" class="xar-sub">
-         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.8&nbsp; 2005-08-16 jojodee
+         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.9&nbsp; 2005-08-21 jojodee
          </p>
          </div>
          <div style="clear:both;"><!-- --></div>

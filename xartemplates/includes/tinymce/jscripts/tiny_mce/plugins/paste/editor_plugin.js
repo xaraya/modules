@@ -5,20 +5,20 @@
 		content = content.replace(/<(\w[^>]*) lang=([^ |>]*)([^>]*)/gi, "<$1$3");
 		content = content.replace(/<\\?\?xml[^>]*>/gi, "");
 		content = content.replace(/<\/?\w+:[^>]*>/gi, "");
-		content = content.replace(/\/?&nbsp;*/gi, "");
-		content = content.replace('<p>&nbsp;</p>', '' ,'g');
+//		content = content.replace(/\/?&nbsp;*/gi, ""); &nbsp;
+//		content = content.replace(/<p>&nbsp;<\/p>/gi, '');
 
 		if (!tinyMCE.settings['force_p_newlines']) {
 			content = content.replace('', '' ,'gi');
 			content = content.replace('</p>', '<br /><br />' ,'gi');
 		}
-	
+
 		if (!tinyMCE.isMSIE && !tinyMCE.settings['force_p_newlines']) {
 			content = content.replace(/<\/?p[^>]*>/gi, "");
 		}
-	
+
 		content = content.replace(/<\/?div[^>]*>/gi, "");
-	
+
 		// Insert cleaned content
 		tinyMCE.execCommand("mceAddUndoLevel");
 		tinyMCE.execCommand("mceInsertContent",false,content);}}function TinyMCE_paste__clipboardHTML(){var div=document.getElementById('_TinyMCE_clipboardHTML');if(!div){var div=document.createElement('DIV');div.id='_TinyMCE_clipboardHTML';with(div.style){visibility='hidden';overflow='hidden';position='absolute';width=1;height=1;}document.body.appendChild(div);}div.innerHTML='';var rng=document.body.createTextRange();rng.moveToElementText(div);rng.execCommand('Paste');var html=div.innerHTML;div.innerHTML='';return html;}

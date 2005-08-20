@@ -1,4 +1,5 @@
-﻿// PL lang variables
+// PL lang variables
 
-
-tinyMCELang['lang_preview_desc'] = 'Podgląd';
+tinyMCE.addToLang({
+preview_desc : 'Podglad'
+});

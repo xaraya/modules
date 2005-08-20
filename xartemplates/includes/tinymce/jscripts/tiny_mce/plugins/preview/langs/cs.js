@@ -1,3 +1,5 @@
 // UK lang variables
 
-tinyMCELang['lang_preview_desc'] = 'Náhled';
+tinyMCE.addToLang({
+preview_desc : 'Náhled'
+});

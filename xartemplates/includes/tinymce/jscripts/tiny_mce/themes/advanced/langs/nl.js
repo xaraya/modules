@@ -1,64 +1,66 @@
 // NL lang variables
 
-tinyMCELang['lang_theme_style_select'] = 'Stijlen';
-tinyMCELang['lang_theme_code_desc'] = 'Toon/bewerk HTML broncode';
-tinyMCELang['lang_theme_code_title'] = 'HTML broncode editor';
-tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
-tinyMCELang['lang_theme_sub_desc'] = 'Subscript';
-tinyMCELang['lang_theme_sup_desc'] = 'Superscript';
-tinyMCELang['lang_theme_hr_desc'] = 'Invoegen horizontale lijn';
-tinyMCELang['lang_theme_removeformat_desc'] = 'Verwijder opmaak';
-tinyMCELang['lang_theme_custom1_desc'] = 'Uw eigen omschrijving hier';
-tinyMCELang['lang_insert_image_border'] = 'Omranding (pixels)';
-tinyMCELang['lang_insert_image_dimensions'] = 'Afmetingen (Leeg: Originele afm.)';
-tinyMCELang['lang_insert_image_vspace'] = 'Verticale marge (pixels)';
-tinyMCELang['lang_insert_image_hspace'] = 'Horizontale marge (pixels)';
-tinyMCELang['lang_insert_image_align'] = 'Uitlijning';
-tinyMCELang['lang_insert_image_align_default'] = 'Standaard';
-tinyMCELang['lang_insert_image_align_baseline'] = 'Basislijn';
-tinyMCELang['lang_insert_image_align_top'] = 'Boven';
-tinyMCELang['lang_insert_image_align_middle'] = 'Midden';
-tinyMCELang['lang_insert_image_align_bottom'] = 'Onder';
-tinyMCELang['lang_insert_image_align_texttop'] = 'TextTop';
-tinyMCELang['lang_insert_image_align_absmiddle'] = 'Absoluut Midden';
-tinyMCELang['lang_insert_image_align_absbottom'] = 'Absoluut Onder';
-tinyMCELang['lang_insert_image_align_left'] = 'Links';
-tinyMCELang['lang_insert_image_align_right'] = 'Rechts';
-tinyMCELang['lang_insert_image_delta_height'] = 0;
-tinyMCELang['lang_theme_font_size'] = '-- Font size --';
-tinyMCELang['lang_theme_fontdefault'] = '-- Font family --';
-tinyMCELang['lang_theme_block'] = '-- Format --';
-tinyMCELang['lang_theme_paragraph'] = 'Paragraaf';
-tinyMCELang['lang_theme_div'] = 'Div';
-tinyMCELang['lang_theme_address'] = 'Adres';
-tinyMCELang['lang_theme_pre'] = 'voorgeformatteerd';
-tinyMCELang['lang_theme_h1'] = 'Titel 1';
-tinyMCELang['lang_theme_h2'] = 'Titel 2';
-tinyMCELang['lang_theme_h3'] = 'Titel 3';
-tinyMCELang['lang_theme_h4'] = 'Titel 4';
-tinyMCELang['lang_theme_h5'] = 'Titel 5';
-tinyMCELang['lang_theme_h6'] = 'Titel 6';
-tinyMCELang['lang_theme_colorpicker_title'] = 'Kies een kleur';
-tinyMCELang['lang_theme_colorpicker_apply'] = 'Toepassen';
-tinyMCELang['lang_theme_forecolor_desc'] = 'Selecteer voorgrondkleur';
-tinyMCELang['lang_theme_backcolor_desc'] = 'Select background color';
-tinyMCELang['lang_theme_charmap_title'] = 'Kies een bijzonder karakter';
-tinyMCELang['lang_theme_charmap_desc'] = 'Voeg een bijzonder karakter in';
-tinyMCELang['lang_theme_preview_desc'] = 'Toon de pagina in een nieuw venster';
-tinyMCELang['lang_theme_visualaid_desc'] = 'Toon/verberg hulplijnen';
-tinyMCELang['lang_insert_anchor_title'] = 'Anker toevoegen/wijzigen';
-tinyMCELang['lang_insert_anchor_name'] = 'Anker naam';
-tinyMCELang['lang_theme_anchor_desc'] = 'Anker toevoegen/wijzigen';
-tinyMCELang['lang_theme_insert_link_titlefield'] = 'Titel';
-tinyMCELang['lang_theme_clipboard_msg'] = 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?';
-tinyMCELang['lang_theme_path'] = 'Path';
-tinyMCELang['lang_cut_desc'] = 'Cut';
-tinyMCELang['lang_copy_desc'] = 'Copy';
-tinyMCELang['lang_paste_desc'] = 'Paste';
-tinyMCELang['lang_link_list'] = 'Link list';
-tinyMCELang['lang_image_list'] = 'Image list';
-tinyMCELang['lang_browse'] = 'Browse';
-tinyMCELang['lang_image_props_desc'] = 'Image properties';
-tinyMCELang['lang_newdocument_desc'] = 'New document';
-tinyMCELang['lang_class'] = 'CSS-Stijl';
-tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';
+tinyMCE.addToLang({
+theme_style_select : 'Stijlen',
+theme_code_desc : 'Toon/bewerk HTML broncode',
+theme_code_title : 'HTML broncode editor',
+theme_code_wordwrap : 'Word wrap',
+theme_sub_desc : 'Subscript',
+theme_sup_desc : 'Superscript',
+theme_hr_desc : 'Invoegen horizontale lijn',
+theme_removeformat_desc : 'Verwijder opmaak',
+theme_custom1_desc : 'Uw eigen omschrijving hier',
+insert_image_border : 'Omranding (pixels)',
+insert_image_dimensions : 'Afmetingen (Leeg: Originele afm.)',
+insert_image_vspace : 'Verticale marge (pixels)',
+insert_image_hspace : 'Horizontale marge (pixels)',
+insert_image_align : 'Uitlijning',
+insert_image_align_default : 'Standaard',
+insert_image_align_baseline : 'Basislijn',
+insert_image_align_top : 'Boven',
+insert_image_align_middle : 'Midden',
+insert_image_align_bottom : 'Onder',
+insert_image_align_texttop : 'TextTop',
+insert_image_align_absmiddle : 'Absoluut Midden',
+insert_image_align_absbottom : 'Absoluut Onder',
+insert_image_align_left : 'Links',
+insert_image_align_right : 'Rechts',
+insert_image_delta_height'] = 0;
+theme_font_size : '-- Font size --',
+theme_fontdefault : '-- Font family --',
+theme_block : '-- Format --',
+theme_paragraph : 'Paragraaf',
+theme_div : 'Div',
+theme_address : 'Adres',
+theme_pre : 'voorgeformatteerd',
+theme_h1 : 'Titel 1',
+theme_h2 : 'Titel 2',
+theme_h3 : 'Titel 3',
+theme_h4 : 'Titel 4',
+theme_h5 : 'Titel 5',
+theme_h6 : 'Titel 6',
+theme_colorpicker_title : 'Kies een kleur',
+theme_colorpicker_apply : 'Toepassen',
+theme_forecolor_desc : 'Selecteer voorgrondkleur',
+theme_backcolor_desc : 'Select background color',
+theme_charmap_title : 'Kies een bijzonder karakter',
+theme_charmap_desc : 'Voeg een bijzonder karakter in',
+theme_preview_desc : 'Toon de pagina in een nieuw venster',
+theme_visualaid_desc : 'Toon/verberg hulplijnen',
+insert_anchor_title : 'Anker toevoegen/wijzigen',
+insert_anchor_name : 'Anker naam',
+theme_anchor_desc : 'Anker toevoegen/wijzigen',
+theme_insert_link_titlefield : 'Titel',
+theme_clipboard_msg : 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?',
+theme_path : 'Path',
+cut_desc : 'Cut',
+copy_desc : 'Copy',
+paste_desc : 'Paste',
+link_list : 'Link list',
+image_list : 'Image list',
+browse : 'Browse',
+image_props_desc : 'Image properties',
+newdocument_desc : 'New document',
+class_name : 'CSS-Stijl',
+newdocument : 'Are you sure you want clear all contents?'
+});

@@ -1,4 +1,4 @@
-Version 1.46RC1 (2005-08-xx)
+Version 2.0RC1 (2005-08-xx)
 	Renamed CSS classes mcePathTop,mcePathBottom,mcePath to mceStatusbarTop,mceStatusbarBottom,mceStatusbar. [BREAKS COMPATIBLITY].
 	Moved all theme CSS files to a css directory within the theme. [BREAKS COMPATIBLITY].
 	Removed the default theme since the advanced theme can be configured to be as the default theme. [BREAKS COMPATIBLITY].
@@ -22,29 +22,37 @@ Version 1.46RC1 (2005-08-xx)
 	Added new inst parameter to custom cleanup callbacks, this is a reference to the editor instance.
 	Added new mceColorPicker command to the advanced theme, enables the possibility invoke the color picker.
 	Added new safari_warning option, this enables you to disable the alert that gets presented when running on Safari.
+	Added new editor_selector/editor_deselector options that enables you to specify a include/exclude from convertion class.
+	Added new tinyMCE.addToLang function to reduce the overall size of the language files.
 	Added missing entities eactute,iacute,oacute,uacute,Aacute,Eacute,Iacute,Oacute,Uacute,Yacute,Aacute.
 	Added updated Hebrew language pack contributed by Liron Newman.
+	Added visual aid icon for invisible anchors elements.
 	Renamed the theme_advanced_path_location to theme_advanced_statusbar_location.
 	Moved all popup javascript logic into external .js files, inorder to separate presentation and logic.
 	Removed the automatic resizing of popups. Better to use relative window sizes for each language when opening a dialog.
 	Fixed issue where the character map dialog lost focus when inserting a char.
 	Fixed issue where the attribute values where not XML encoded correctly. For example: & will be &amp;.
-	Fixed bug where visual aid class where presented in element path.
-	Fixed bug where HR elements with a id set to "null" produced runtime error in MSIE.
-	Fixed bug where isDirty wasn't working due to the same function name and variable name.
-	Fixed bug where undo/redo of text wasn't working correctly in Mozilla/FF.
 	Fixed performance issue with the table plugin, it was executing logic even when it was inactive.
 	Fixed so the directionality gets inherited by all popups/dialogs.
+	Fixed so the CSS file content_css loads after the theme content CSS, user specific CSS extends theme CSS.
+	Fixed so more than 3 toolbar rows may be added in when using the default simple layout.
+	Fixed so the insertdatetime plugin polls it's default date formats from the language pack.
+	Fixed better inline styles support for images and tables.
+	Fixed duplicate IDs on advanced theme with external toolbar, contributed by Miguel Fortea.
+	Fixed issue with remove formatting under MSIE, if all contents of a element is selected the element is also selected.
+	Fixed issue with visual aids not being removed from content when cleanup is disabled. But it's NOT recommended to disable the cleanup.
 	Fixed bug where return/enter key sometimes produced empty elements in MSIE.
 	Fixed bug where link list was generated twice in the advanced themes link dialog.
 	Fixed bug issue where embed was converted in to ibed due to some invalid regexps.
 	Fixed bug where summary attribute on tables got lost in MSIE.
 	Fixed bug where the editor scrolled to the top of content when the pasting text with the paste plugin.
-	Fixed better inline styles support for images and tables.
-	Fixed duplicate IDs on advanced theme with external toolbar, contributed by Miguel Fortea.
 	Fixed bug where external toolbar wasn't translated, contributed by Miguel Fortea.
 	Fixed bug where the editor had a incorrect height, contributed by Miguel Fortea.
-	Fixed issue with remove formatting under MSIE, if all contents of a element is selected the element is also selected.
+	Fixed bug where visual aid class where presented in element path.
+	Fixed bug where HR elements with a id set to "null" produced runtime error in MSIE.
+	Fixed bug where isDirty wasn't working due to the same function name and variable name.
+	Fixed bug where undo/redo of text wasn't working correctly in Mozilla/FF.
+	Fixed bug where events like onclick wasn't removed/stored correctly in old MSIE.
 Version 1.45 (2005-06-23)
 	Fixed so the newdocument button shows again, was removed by accident in RC2.
 	Fixed so styles drop down in link dialog gets hidden if no classes are defined.

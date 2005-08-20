@@ -62,11 +62,11 @@ function TinyMCE_insertdatetime_execCommand(editor_id, element, command, user_in
 	// Handle commands
 	switch (command) {
 		case "mceInsertDate":
-			tinyMCE.execInstanceCommand(editor_id, 'mceInsertContent', false, getDateTime(new Date(), tinyMCE.getParam("plugin_insertdate_dateFormat", "%Y-%m-%d")));
+			tinyMCE.execInstanceCommand(editor_id, 'mceInsertContent', false, getDateTime(new Date(), tinyMCE.getParam("plugin_insertdate_dateFormat", tinyMCE.getLang('lang_insertdate_def_fmt'))));
 			return true;
 
 		case "mceInsertTime":
-			tinyMCE.execInstanceCommand(editor_id, 'mceInsertContent', false, getDateTime(new Date(), tinyMCE.getParam("plugin_insertdate_timeFormat", "%H:%M:%S")));
+			tinyMCE.execInstanceCommand(editor_id, 'mceInsertContent', false, getDateTime(new Date(), tinyMCE.getParam("plugin_insertdate_timeFormat", tinyMCE.getLang('lang_inserttime_def_fmt'))));
 			return true;
 	}
 

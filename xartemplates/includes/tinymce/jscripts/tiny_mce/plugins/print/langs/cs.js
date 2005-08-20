@@ -1,3 +1,5 @@
 // CS lang variables 
 
-tinyMCELang['lang_print_desc'] = 'Tisk';
+tinyMCE.addToLang({
+print_desc : 'Tisk'
+});

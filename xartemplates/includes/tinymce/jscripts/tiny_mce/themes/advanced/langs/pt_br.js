@@ -1,62 +1,64 @@
 // pt_BR lang variables
 
-tinyMCELang['lang_theme_style_select'] = 'Estilos';
-tinyMCELang['lang_theme_code_desc'] = 'Editar Código HTML';
-tinyMCELang['lang_theme_code_title'] = 'Editor de Código HTML';
-tinyMCELang['lang_theme_code_wordwrap'] = 'Quebrar Linhas';
-tinyMCELang['lang_theme_sub_desc'] = 'Subscrito';
-tinyMCELang['lang_theme_sup_desc'] = 'Subrescrito';
-tinyMCELang['lang_theme_hr_desc'] = 'Inserir linha horizontal';
-tinyMCELang['lang_theme_removeformat_desc'] = 'Remover formatação';
-tinyMCELang['lang_theme_custom1_desc'] = 'Sua descrição personalizada aqui';
-tinyMCELang['lang_insert_image_border'] = 'Borda';
-tinyMCELang['lang_insert_image_dimensions'] = 'Dimensões';
-tinyMCELang['lang_insert_image_vspace'] = 'Espaço Vertical';
-tinyMCELang['lang_insert_image_hspace'] = 'Espaço Horizontal';
-tinyMCELang['lang_insert_image_align'] = 'Alinhamento';
-tinyMCELang['lang_insert_image_align_default'] = 'Padrão';
-tinyMCELang['lang_insert_image_align_baseline'] = 'Linha base';
-tinyMCELang['lang_insert_image_align_top'] = 'Topo';
-tinyMCELang['lang_insert_image_align_middle'] = 'Centro';
-tinyMCELang['lang_insert_image_align_bottom'] = 'Fundo';
-tinyMCELang['lang_insert_image_align_texttop'] = 'Texto ao Topo';
-tinyMCELang['lang_insert_image_align_absmiddle'] = 'Centro Absoluto';
-tinyMCELang['lang_insert_image_align_absbottom'] = 'Fundo Absoluto';
-tinyMCELang['lang_insert_image_align_left'] = 'Esquerda';
-tinyMCELang['lang_insert_image_align_right'] = 'Direita';
-tinyMCELang['lang_theme_font_size'] = '-- Font size --';
-tinyMCELang['lang_theme_fontdefault'] = '-- Font family --';
-tinyMCELang['lang_theme_block'] = '-- Format --';
-tinyMCELang['lang_theme_paragraph'] = 'Parágrafo';
-tinyMCELang['lang_theme_div'] = 'Div';
-tinyMCELang['lang_theme_address'] = 'Endereço';
-tinyMCELang['lang_theme_pre'] = 'Pré-formatado';
-tinyMCELang['lang_theme_h1'] = 'Cabeçalho 1';
-tinyMCELang['lang_theme_h2'] = 'Cabeçalho 2';
-tinyMCELang['lang_theme_h3'] = 'Cabeçalho 3';
-tinyMCELang['lang_theme_h4'] = 'Cabeçalho 4';
-tinyMCELang['lang_theme_h5'] = 'Cabeçalho 5';
-tinyMCELang['lang_theme_h6'] = 'Cabeçalho 6';
-tinyMCELang['lang_theme_colorpicker_title'] = 'Selecionar cor';
-tinyMCELang['lang_theme_colorpicker_apply'] = 'Aplicar';
-tinyMCELang['lang_theme_forecolor_desc'] = 'Selecionar cor do texto';
-tinyMCELang['lang_theme_backcolor_desc'] = 'Selecionar cor de fundo';
-tinyMCELang['lang_theme_charmap_title'] = 'Selecionar caractere especial';
-tinyMCELang['lang_theme_charmap_desc'] = 'Inserir caractere especial';
-tinyMCELang['lang_theme_visualaid_desc'] = 'Tornar linhas visíveis/invisíveis';
-tinyMCELang['lang_insert_anchor_title'] = 'Inserir/editar âncora';
-tinyMCELang['lang_insert_anchor_name'] = 'Nome da âncora';
-tinyMCELang['lang_theme_anchor_desc'] = 'Inserir/editar âncora';
-tinyMCELang['lang_theme_insert_link_titlefield'] = 'Título';
-tinyMCELang['lang_theme_clipboard_msg'] = 'Copiar/Recortar/Colar não é permitido no Mozilla e Firefox.\nQuer mais informações sobre isso?';
-tinyMCELang['lang_theme_path'] = 'Caminho';
-tinyMCELang['lang_cut_desc'] = 'Recortar';
-tinyMCELang['lang_copy_desc'] = 'Copiar';
-tinyMCELang['lang_paste_desc'] = 'Colar';
-tinyMCELang['lang_link_list'] = 'Lista de Links';
-tinyMCELang['lang_image_list'] = 'Lista de Imagens';
-tinyMCELang['lang_browse'] = 'Navegar';
-tinyMCELang['lang_image_props_desc'] = 'Propriedades da Imagem';
-tinyMCELang['lang_newdocument_desc'] = 'New document';
-tinyMCELang['lang_class'] = 'Class';
-tinyMCELang['lang_newdocument'] = 'Are you sure you want clear all contents?';
+tinyMCE.addToLang({
+theme_style_select : 'Estilos',
+theme_code_desc : 'Editar Código HTML',
+theme_code_title : 'Editor de Código HTML',
+theme_code_wordwrap : 'Quebrar Linhas',
+theme_sub_desc : 'Subscrito',
+theme_sup_desc : 'Subrescrito',
+theme_hr_desc : 'Inserir linha horizontal',
+theme_removeformat_desc : 'Remover formatação',
+theme_custom1_desc : 'Sua descrição personalizada aqui',
+insert_image_border : 'Borda',
+insert_image_dimensions : 'Dimensões',
+insert_image_vspace : 'Espaço Vertical',
+insert_image_hspace : 'Espaço Horizontal',
+insert_image_align : 'Alinhamento',
+insert_image_align_default : 'Padrão',
+insert_image_align_baseline : 'Linha base',
+insert_image_align_top : 'Topo',
+insert_image_align_middle : 'Centro',
+insert_image_align_bottom : 'Fundo',
+insert_image_align_texttop : 'Texto ao Topo',
+insert_image_align_absmiddle : 'Centro Absoluto',
+insert_image_align_absbottom : 'Fundo Absoluto',
+insert_image_align_left : 'Esquerda',
+insert_image_align_right : 'Direita',
+theme_font_size : '-- Font size --',
+theme_fontdefault : '-- Font family --',
+theme_block : '-- Format --',
+theme_paragraph : 'Parágrafo',
+theme_div : 'Div',
+theme_address : 'Endereço',
+theme_pre : 'Pré-formatado',
+theme_h1 : 'Cabeçalho 1',
+theme_h2 : 'Cabeçalho 2',
+theme_h3 : 'Cabeçalho 3',
+theme_h4 : 'Cabeçalho 4',
+theme_h5 : 'Cabeçalho 5',
+theme_h6 : 'Cabeçalho 6',
+theme_colorpicker_title : 'Selecionar cor',
+theme_colorpicker_apply : 'Aplicar',
+theme_forecolor_desc : 'Selecionar cor do texto',
+theme_backcolor_desc : 'Selecionar cor de fundo',
+theme_charmap_title : 'Selecionar caractere especial',
+theme_charmap_desc : 'Inserir caractere especial',
+theme_visualaid_desc : 'Tornar linhas visíveis/invisíveis',
+insert_anchor_title : 'Inserir/editar âncora',
+insert_anchor_name : 'Nome da âncora',
+theme_anchor_desc : 'Inserir/editar âncora',
+theme_insert_link_titlefield : 'Título',
+theme_clipboard_msg : 'Copiar/Recortar/Colar não é permitido no Mozilla e Firefox.\nQuer mais informações sobre isso?',
+theme_path : 'Caminho',
+cut_desc : 'Recortar',
+copy_desc : 'Copiar',
+paste_desc : 'Colar',
+link_list : 'Lista de Links',
+image_list : 'Lista de Imagens',
+browse : 'Navegar',
+image_props_desc : 'Propriedades da Imagem',
+newdocument_desc : 'New document',
+class_name : 'Class',
+newdocument : 'Are you sure you want clear all contents?'
+});

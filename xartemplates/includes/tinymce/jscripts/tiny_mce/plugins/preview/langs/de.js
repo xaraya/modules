@@ -1,3 +1,5 @@
 // DE lang variables by Tobias Heer
 
-tinyMCELang['lang_preview_desc'] = 'Vorschau';
+tinyMCE.addToLang({
+preview_desc : 'Vorschau'
+});

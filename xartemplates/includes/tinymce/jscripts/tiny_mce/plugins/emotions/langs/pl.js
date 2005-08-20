@@ -1,4 +1,6 @@
-﻿// PL lang variables
+// PL lang variables
 
-tinyMCELang['lang_insert_emotions_title'] = 'Wstaw emtoiconę';
-tinyMCELang['lang_emotions_desc'] = 'Emtoicony';
+tinyMCE.addToLang({
+insert_emotions_title : 'Wstaw emtoicone',
+emotions_desc : 'Emtoicony'
+});

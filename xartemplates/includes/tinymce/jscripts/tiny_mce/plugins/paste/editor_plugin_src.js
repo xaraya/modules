@@ -75,13 +75,13 @@ function TinyMCE_paste__insertText(content, bLinebreaks) {
 				content = tinyMCE.regexpReplace(content, "\r\n\r\n", "</p><p>", "gi"); 
 				content = tinyMCE.regexpReplace(content, "\r\r", "</p><p>", "gi"); 
 				content = tinyMCE.regexpReplace(content, "\n\n", "</p><p>", "gi"); 
-	
+
 				// Has paragraphs 
 				if ((pos = content.indexOf('</p><p>')) != -1) { 
 					tinyMCE.execCommand("Delete"); 
-	
+
 					var node = tinyMCE.selectedInstance.getFocusElement(); 
-	
+
 					// Get list of elements to break 
 					var breakElms = new Array(); 
 
@@ -94,20 +94,20 @@ function TinyMCE_paste__insertText(content, bLinebreaks) {
 							breakElms[breakElms.length] = node; 
 						} 
 					} while(node = node.parentNode); 
-	
+
 					var before = "", after = "</p>"; 
 					before += content.substring(0, pos); 
-	
+
 					for (var i=0; i<breakElms.length; i++) { 
 						before += "</" + breakElms[i].nodeName + ">"; 
 						after += "<" + breakElms[(breakElms.length-1)-i].nodeName + ">"; 
 					} 
-	
+
 					before += "<p>"; 
 					content = before + content.substring(pos+7) + after; 
 				} 
 			} 
-	
+
 			content = tinyMCE.regexpReplace(content, "\r\n", "<br />", "gi"); 
 			content = tinyMCE.regexpReplace(content, "\r", "<br />", "gi"); 
 			content = tinyMCE.regexpReplace(content, "\n", "<br />", "gi"); 
@@ -128,20 +128,20 @@ function TinyMCE_paste__insertWordContent(content) {
 		content = content.replace(/<(\w[^>]*) lang=([^ |>]*)([^>]*)/gi, "<$1$3");
 		content = content.replace(/<\\?\?xml[^>]*>/gi, "");
 		content = content.replace(/<\/?\w+:[^>]*>/gi, "");
-		content = content.replace(/\/?&nbsp;*/gi, "");
-		content = content.replace('<p>&nbsp;</p>', '' ,'g');
+//		content = content.replace(/\/?&nbsp;*/gi, ""); &nbsp;
+//		content = content.replace(/<p>&nbsp;<\/p>/gi, '');
 
 		if (!tinyMCE.settings['force_p_newlines']) {
 			content = content.replace('', '' ,'gi');
 			content = content.replace('</p>', '<br /><br />' ,'gi');
 		}
-	
+
 		if (!tinyMCE.isMSIE && !tinyMCE.settings['force_p_newlines']) {
 			content = content.replace(/<\/?p[^>]*>/gi, "");
 		}
-	
+
 		content = content.replace(/<\/?div[^>]*>/gi, "");
-	
+
 		// Insert cleaned content
 		tinyMCE.execCommand("mceAddUndoLevel");
 		tinyMCE.execCommand("mceInsertContent", false, content);

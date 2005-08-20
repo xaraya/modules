@@ -1,4 +1,6 @@
 // NL lang variables
 
-tinyMCELang['lang_insert_emotions_title'] = 'Emotion invoegen';
-tinyMCELang['lang_emotions_desc'] = 'Smilie';
+tinyMCE.addToLang({
+insert_emotions_title : 'Emotion invoegen',
+emotions_desc : 'Smilie'
+});

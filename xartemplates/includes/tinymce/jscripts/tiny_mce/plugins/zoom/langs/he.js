@@ -1,3 +1,5 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCELang['lang_zoom_prefix'] = 'жен';
+tinyMCE.addToLang({
+zoom_prefix : 'жен'
+});

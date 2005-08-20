@@ -57,30 +57,40 @@ function updateAction() {
 			break;
 
 		case "row":
-			var cells = trElm.getElementsByTagName("td");
+			var cell = trElm.firstChild;
 
-			for (var i=0; i<cells.length; i++)
-				updateCell(cells[i], true);
+			do {
+				cell = updateCell(cell, true);
+			} while ((cell = nextCell(cell)));
 
 			break;
 
 		case "all":
-			var cells = tableElm.getElementsByTagName("td");
+			var rows = tableElm.getElementsByTagName("tr");
 
-			for (var i=0; i<cells.length; i++)
-				updateCell(cells[i], true);
+			for (var i=0; i<rows.length; i++) {
+				var cell = rows[i].firstChild;
 
-			cells = tableElm.getElementsByTagName("th");
-
-			for (var i=0; i<cells.length; i++)
-				updateCell(cells[i], true);
+				do {
+					cell = updateCell(cell, true);
+				} while ((cell = nextCell(cell)));
+			}
 
 			break;
 	}
 
-	tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid);
+	tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid, inst);
 	tinyMCE.triggerNodeChange();
 	tinyMCEPopup.close();
+}
+
+function nextCell(elm) {
+	while ((elm = elm.nextSibling)) {
+		if (elm.nodeName == "TD" || elm.nodeName == "TH")
+			return elm;
+	}
+
+	return null;
 }
 
 function updateCell(td, skip_id) {
@@ -119,7 +129,11 @@ function updateCell(td, skip_id) {
 
 		td.parentNode.replaceChild(newCell, td);
 		td = newCell;
+
+		return newCell;
 	}
+
+	return td;
 }
 
 function getStyle(elm, st, attrib, style) {

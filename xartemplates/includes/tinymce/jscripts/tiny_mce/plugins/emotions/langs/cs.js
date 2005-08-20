@@ -1,4 +1,6 @@
 // UK lang variables
 
-tinyMCELang['lang_insert_emotions_title'] = 'Vložit emotikon';
-tinyMCELang['lang_emotions_desc'] = 'Emotikony';
+tinyMCE.addToLang({
+insert_emotions_title : 'Vložit emotikon',
+emotions_desc : 'Emotikony'
+});

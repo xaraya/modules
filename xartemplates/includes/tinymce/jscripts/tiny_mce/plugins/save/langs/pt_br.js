@@ -1,3 +1,5 @@
 // pt_BR lang variables
 
-tinyMCELang['lang_save_desc'] = 'Salvar'; 
+tinyMCE.addToLang({
+save_desc : 'Salvar'
+});

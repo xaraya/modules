@@ -147,10 +147,10 @@
 
         <ol style="list-style-type:lower-alpha; ">
           <li>
-                <xar:mlstring><strong>All Text Areas Mode</strong>: every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage, or turn off WYSIWYG in a specific textarea by adding the attribute <code>mce_editable="false"</code> to the textarea. This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring>
+                <xar:mlstring><strong>All Text Areas Mode</strong>: every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage, or turn off WYSIWYG in a specific textarea by adding the special reserved class <strong><code>class="mceNoEditor"</code></strong> to the textarea. This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring>
           </li>
-          <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the <code>mce_editable="true"</code> are activated. You can do this manually by adding the attribute to any textarea in your templates, or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
-            This DD Property automatically marks the div or textarea of the field with the attribute <code>mce_editable="true"</code> and acts as the marker for the WYSIWYG conversion.
+          <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the specific trigger class eg <strong><code>class="mceEditor"</code></strong> are activated. You can do this manually by adding the attribute to any textarea in your templates, or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
+            This DD Property automatically marks the div or textarea of the field with the special trigger class <strong><code>class="mceEditor"</code></strong> that acts as the marker for the WYSIWYG conversion.
             You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
           <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>
@@ -304,7 +304,7 @@
                 </span>
                 </label>
                 <select name="usebutton" id="usebutton" size="1" >
-                <xar:if condition="$usebutton eq 'false'">
+                <xar:if condition="$usebutton ne 'true'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
                 <xar:elseif condition="$usebutton eq 'true'" />
@@ -325,7 +325,7 @@
                 </span>
                 </label>
                 <select name="tinytilemap" id="tinytilemap" size="1" onchange=submit();>
-                <xar:if condition="$tinytilemap eq 'false'">
+                <xar:if condition="$tinytilemap ne 'true'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
                 <xar:elseif condition="$tinytilemap eq 'true'" />
@@ -677,7 +677,7 @@
                     <xar:mlstring>List of block formats:</xar:mlstring>
                 </span>
                 </label>
-                <textarea name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" mce_editable="false" >#$tinyadvformat#</textarea>
+                <textarea class="MyEditorConfig" name="tinyadvformat" id="tinyadvformat" cols="50" rows="3" >#$tinyadvformat#</textarea>
            </p>
            <p class="xar-norm">
            <xar:mlstring>These default to p, address, pre, h1, h2, h3, h4, h5 and h6 if left blank.</xar:mlstring>
@@ -806,9 +806,9 @@
             <p>
                 <xar:mlstring>Enter code for multiple configuration instances of tinymce.
                 In each configuration you must have at least</xar:mlstring>
-                <br /><code>mode : "specific_textareas",
-                   textarea_trigger : "yourtriggername",</code><br />
-                   <xar:mlstring>The text_area trigger can be any name but <strong>do not</strong> use the default <strong>mce_editable</strong>. You can set multiple instances, but code will only take effect when the checkbox above is checked. To use a specific configuration add the trigger attribute name and value to your textarea eg</xar:mlstring> <code>mce_editable2="true"</code>
+                <br /><code>mode : "textareas",
+                   editor_selector : "yourtriggerclassname",</code><br />
+                   <xar:mlstring>The textarea trigger class can be any name but <strong>do not</strong> use the default <strong><code>class="mceEditor"</code></strong>. You can set multiple instances, but code will only take effect when the checkbox above is checked. To use a specific configuration add the trigger class name to your textarea eg</xar:mlstring> <strong><code>class="MyEditorConfig"</code></strong>
                    <xar:mlstring>Please <strong>check the final tinymce config code</strong> in the code display at the end of this screen before use!</xar:mlstring>
             </p>
             <p class="param">
@@ -817,7 +817,7 @@
                         <xar:mlstring>Custom Config options:</xar:mlstring>
                     </span>
                 </label>
-                <textarea mce_editable="false" name="multiconfig" id="multiconfig" cols="50" rows="10" mce_editable="false" >#$multiconfig#</textarea>
+                <textarea class="mceNoEditor" name="multiconfig" id="multiconfig" cols="50" rows="10" >#$multiconfig#</textarea>
            </p>
 
           </fieldset>
@@ -839,7 +839,7 @@
                         <xar:mlstring>Custom Config options:</xar:mlstring>
                     </span>
                 </label>
-                <textarea mce_editable="false" name="tinycustom" id="tinycustom" cols="50" rows="10" mce_editable="false" >#$tinycustom#</textarea>
+                <textarea class="mceNoEditor"  name="tinycustom" id="tinycustom" cols="50" rows="10" >#$tinycustom#</textarea>
            </p>
            <p class="param">
             <xar:mlstring>Current wysiwyg configuration:</xar:mlstring>

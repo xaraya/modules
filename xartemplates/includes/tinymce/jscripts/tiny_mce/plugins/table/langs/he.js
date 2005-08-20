@@ -1,41 +1,43 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCELang['lang_table_desc'] = 'מכניס טבלה חדשה';
-tinyMCELang['lang_table_insert_row_before_desc'] = 'הכנס שורה לפני';
-tinyMCELang['lang_table_insert_row_after_desc'] = 'הכנס שורה אחרי';
-tinyMCELang['lang_table_delete_row_desc'] = 'מחק שורה';
-tinyMCELang['lang_table_insert_col_before_desc'] = 'הכנס טור לפני';
-tinyMCELang['lang_table_insert_col_after_desc'] = 'הכנס טור אחרי';
-tinyMCELang['lang_table_delete_col_desc'] = 'הסר טור';
-tinyMCELang['lang_insert_table_title'] = 'הכנס/שנה טבלה';
-tinyMCELang['lang_insert_table_width'] = 'רוחב';
-tinyMCELang['lang_insert_table_height'] = 'גובה';
-tinyMCELang['lang_insert_table_cols'] = 'טורים';
-tinyMCELang['lang_insert_table_rows'] = 'שורות';
-tinyMCELang['lang_insert_table_cellspacing'] = 'ריווח בין תאים';
-tinyMCELang['lang_insert_table_cellpadding'] = 'ריפוד תאים';
-tinyMCELang['lang_insert_table_border'] = 'גבול';
-tinyMCELang['lang_insert_table_align'] = 'יישור';
-tinyMCELang['lang_insert_table_align_default'] = 'ברירת מחדל';
-tinyMCELang['lang_insert_table_align_left'] = 'שמאל';
-tinyMCELang['lang_insert_table_align_right'] = 'ימין';
-tinyMCELang['lang_insert_table_align_middle'] = 'מרכז';
-tinyMCELang['lang_insert_table_class'] = 'מחלקה';
-tinyMCELang['lang_table_row_title'] = 'מאפייני שורת טבלה';
-tinyMCELang['lang_table_cell_title'] = 'מאפייני תא טבלה';
-tinyMCELang['lang_table_row_desc'] = 'מאפייני שורת טבלה';
-tinyMCELang['lang_table_cell_desc'] = 'מאפייני תא טבלה';
-tinyMCELang['lang_insert_table_valign'] = 'יישור אנכי';
-tinyMCELang['lang_insert_table_align_top'] = 'למעלה';
-tinyMCELang['lang_insert_table_align_bottom'] = 'למטה';
-tinyMCELang['lang_table_props_desc'] = 'מאפייני טבלה';
-tinyMCELang['lang_table_bordercolor'] = 'צבע גבול';
-tinyMCELang['lang_table_bgcolor'] = 'צבע רקע';
-tinyMCELang['lang_table_merge_cells_title'] = 'מזג תאים בטבלה';
-tinyMCELang['lang_table_split_cells_desc'] = 'פצל תאים בטבלה';
-tinyMCELang['lang_table_merge_cells_desc'] = 'מזג תאים בטבלה';
-tinyMCELang['lang_table_cut_row_desc'] = 'גזור שורה מהטבלה';
-tinyMCELang['lang_table_copy_row_desc'] = 'העתק שורה מהטבלה';
-tinyMCELang['lang_table_paste_row_before_desc'] = 'הדבק שורה לטבלה לפני';
-tinyMCELang['lang_table_paste_row_after_desc'] = 'הדבק שורה לטבלה אחרי';
-tinyMCELang['lang_table_insert_desc'] = 'הכנס טבלה חדשה';
+tinyMCE.addToLang({
+table_desc : 'מכניס טבלה חדשה',
+table_insert_row_before_desc : 'הכנס שורה לפני',
+table_insert_row_after_desc : 'הכנס שורה אחרי',
+table_delete_row_desc : 'מחק שורה',
+table_insert_col_before_desc : 'הכנס טור לפני',
+table_insert_col_after_desc : 'הכנס טור אחרי',
+table_delete_col_desc : 'הסר טור',
+insert_table_title : 'הכנס/שנה טבלה',
+insert_table_width : 'רוחב',
+insert_table_height : 'גובה',
+insert_table_cols : 'טורים',
+insert_table_rows : 'שורות',
+insert_table_cellspacing : 'ריווח בין תאים',
+insert_table_cellpadding : 'ריפוד תאים',
+insert_table_border : 'גבול',
+insert_table_align : 'יישור',
+insert_table_align_default : 'ברירת מחדל',
+insert_table_align_left : 'שמאל',
+insert_table_align_right : 'ימין',
+insert_table_align_middle : 'מרכז',
+insert_table_class : 'מחלקה',
+table_row_title : 'מאפייני שורת טבלה',
+table_cell_title : 'מאפייני תא טבלה',
+table_row_desc : 'מאפייני שורת טבלה',
+table_cell_desc : 'מאפייני תא טבלה',
+insert_table_valign : 'יישור אנכי',
+insert_table_align_top : 'למעלה',
+insert_table_align_bottom : 'למטה',
+table_props_desc : 'מאפייני טבלה',
+table_bordercolor : 'צבע גבול',
+table_bgcolor : 'צבע רקע',
+table_merge_cells_title : 'מזג תאים בטבלה',
+table_split_cells_desc : 'פצל תאים בטבלה',
+table_merge_cells_desc : 'מזג תאים בטבלה',
+table_cut_row_desc : 'גזור שורה מהטבלה',
+table_copy_row_desc : 'העתק שורה מהטבלה',
+table_paste_row_before_desc : 'הדבק שורה לטבלה לפני',
+table_paste_row_after_desc : 'הדבק שורה לטבלה אחרי',
+table_insert_desc : 'הכנס טבלה חדשה'
+});

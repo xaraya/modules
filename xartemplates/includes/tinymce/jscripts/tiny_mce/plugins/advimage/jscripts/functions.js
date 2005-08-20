@@ -251,7 +251,12 @@ function insertAction() {
 		setAttrib(elm, 'style');
 		setAttrib(elm, 'class', getSelectValue(formObj, 'class'));
 		setAttrib(elm, 'align', getSelectValue(formObj, 'align'));
+
 		tinyMCEPopup.execCommand("mceRepaint");
+
+		// Refresh in old MSIE
+		if (tinyMCE.isMSIE5)
+			elm.outerHTML = elm.outerHTML;
 	} else {
 		var html = "<img";
 

@@ -79,10 +79,10 @@ function tinymce_admin_modifyconfig()
     }
     
     $examplestring='tinyMCE.init({
-        mode : "specific_textareas",
-        textarea_trigger : "mce_editable2",
+        mode : "textareas",
+        editor_selector : "MyEditorConfig",
         height: "100px",
-        theme : "default"
+        theme : "simple"
     });';
     //prepare multiconfig for display
     $data['multiconfig']=trim($data['multiconfig']);

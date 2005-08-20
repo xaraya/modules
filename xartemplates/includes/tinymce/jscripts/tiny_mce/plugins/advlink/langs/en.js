@@ -1,20 +1,22 @@
 // UK lang variables
 
-tinyMCELang['lang_insert_link_target_same'] = 'Open in this window / frame';
-tinyMCELang['lang_insert_link_target_parent'] = 'Open in parent window / frame';
-tinyMCELang['lang_insert_link_target_top'] = 'Open in top frame (replaces all frames)';
-tinyMCELang['lang_insert_link_target_blank'] = 'Open in new window';
-tinyMCELang['lang_insert_link_target_named'] = 'Open in the window';
-tinyMCELang['lang_insert_link_popup'] = 'Javascript popup';
-tinyMCELang['lang_insert_link_popup_url'] = 'Popup URL';
-tinyMCELang['lang_insert_link_popup_name'] = 'Window name';
-tinyMCELang['lang_insert_link_popup_return'] = 'Insert \'return false\'';
-tinyMCELang['lang_insert_link_popup_scrollbars'] = 'Show scrollbars';
-tinyMCELang['lang_insert_link_popup_statusbar'] = 'Show statusbar';
-tinyMCELang['lang_insert_link_popup_toolbar'] = 'Show toolbars';
-tinyMCELang['lang_insert_link_popup_menubar'] = 'Show menubar';
-tinyMCELang['lang_insert_link_popup_location'] = 'Show locationbar';
-tinyMCELang['lang_insert_link_popup_resizable'] = 'Make window resizable';
-tinyMCELang['lang_insert_link_popup_size'] = 'Size';
-tinyMCELang['lang_insert_link_popup_position'] = 'Position (X/Y)';
-tinyMCELang['lang_insert_link_popup_missingtarget'] = 'Please insert a name for the target or choose another option.';
+tinyMCE.addToLang({
+insert_link_target_same : 'Open in this window / frame',
+insert_link_target_parent : 'Open in parent window / frame',
+insert_link_target_top : 'Open in top frame (replaces all frames)',
+insert_link_target_blank : 'Open in new window',
+insert_link_target_named : 'Open in the window',
+insert_link_popup : 'Javascript popup',
+insert_link_popup_url : 'Popup URL',
+insert_link_popup_name : 'Window name',
+insert_link_popup_return : 'Insert \'return false\'',
+insert_link_popup_scrollbars : 'Show scrollbars',
+insert_link_popup_statusbar : 'Show statusbar',
+insert_link_popup_toolbar : 'Show toolbars',
+insert_link_popup_menubar : 'Show menubar',
+insert_link_popup_location : 'Show locationbar',
+insert_link_popup_resizable : 'Make window resizable',
+insert_link_popup_size : 'Size',
+insert_link_popup_position : 'Position (X/Y)',
+insert_link_popup_missingtarget : 'Please insert a name for the target or choose another option.'
+});

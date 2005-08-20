@@ -48,12 +48,12 @@ function insertTable() {
 		if (background != '')
 			elm.style.backgroundImage = "url('" + background + "')";
 
-		tinyMCE.handleVisualAid(tinyMCE.tableElm, false, inst.visualAid);
+		tinyMCE.handleVisualAid(tinyMCE.tableElm, false, inst.visualAid, inst);
 
 		// Fix for stange MSIE align bug
 		tinyMCE.tableElm.outerHTML = tinyMCE.tableElm.outerHTML;
 
-		tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid);
+		tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid, inst);
 		tinyMCE.triggerNodeChange();
 		tinyMCEPopup.close();
 		return true;

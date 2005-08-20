@@ -1,19 +1,21 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCELang['lang_searchreplace_search_desc'] = 'חפש';
-tinyMCELang['lang_searchreplace_searchnext_desc'] = 'חפש שוב';
-tinyMCELang['lang_searchreplace_replace_desc'] = 'חפש/החלף';
-tinyMCELang['lang_searchreplace_notfound'] = 'החיפוש הושלם. מחרוזת החיפוש לא נמצאה.';
-tinyMCELang['lang_searchreplace_search_title'] = 'חפש';
-tinyMCELang['lang_searchreplace_replace_title'] = 'חפש/החלף';
-tinyMCELang['lang_searchreplace_allreplaced'] = 'מחרוזת החיפוש הוחלפה בכל מקום בו היא נמצאה.';
-tinyMCELang['lang_searchreplace_findwhat'] = 'מה לחפש';
-tinyMCELang['lang_searchreplace_replacewith'] = 'להחליף ב-';
-tinyMCELang['lang_searchreplace_direction'] = 'כיוון';
-tinyMCELang['lang_searchreplace_up'] = 'למעלה';
-tinyMCELang['lang_searchreplace_down'] = 'למטה';
-tinyMCELang['lang_searchreplace_case'] = 'התאם גודל אותיות';
-tinyMCELang['lang_searchreplace_findnext'] = 'מצא&nbsp;את&nbsp;הבא';
-tinyMCELang['lang_searchreplace_replace'] = 'החלף';
-tinyMCELang['lang_searchreplace_replaceall'] = 'החלף&nbsp;הכל';
-tinyMCELang['lang_searchreplace_cancel'] = 'בטל';
+tinyMCE.addToLang({
+searchreplace_search_desc : 'חפש',
+searchreplace_searchnext_desc : 'חפש שוב',
+searchreplace_replace_desc : 'חפש/החלף',
+searchreplace_notfound : 'החיפוש הושלם. מחרוזת החיפוש לא נמצאה.',
+searchreplace_search_title : 'חפש',
+searchreplace_replace_title : 'חפש/החלף',
+searchreplace_allreplaced : 'מחרוזת החיפוש הוחלפה בכל מקום בו היא נמצאה.',
+searchreplace_findwhat : 'מה לחפש',
+searchreplace_replacewith : 'להחליף ב-',
+searchreplace_direction : 'כיוון',
+searchreplace_up : 'למעלה',
+searchreplace_down : 'למטה',
+searchreplace_case : 'התאם גודל אותיות',
+searchreplace_findnext : 'מצא&nbsp;את&nbsp;הבא',
+searchreplace_replace : 'החלף',
+searchreplace_replaceall : 'החלף&nbsp;הכל',
+searchreplace_cancel : 'בטל'
+});
