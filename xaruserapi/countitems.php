@@ -25,7 +25,7 @@ function release_userapi_countitems($args)
     extract($args);
 
     if (!isset($idtypes)) {
-        $idtypes = 1;
+        $idtypes = 1; //All items
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

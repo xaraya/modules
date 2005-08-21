@@ -1,7 +1,9 @@
 <?php
 
 /**
- * get all extensions
+ * @author Jo Dalle Nogare
+ * @description Get ll extensions by specific sort or other criteria
+ * @params $startnum, $numitems, $idtype (0 module, 1 theme ..), $sort (sort field)
  * @returns array
  * @return array of extensions, or false on failure
  */
@@ -40,9 +42,9 @@ function release_userapi_getallrids($args)
     $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_id'];
-
+    $rolestable = $xartable['roles'];
     //Joins on Catids
-    if(!empty($catid))
+    if(!empty($catid) )
     {
         $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
                               array('modid'    => 773,
@@ -52,16 +54,19 @@ function release_userapi_getallrids($args)
     }
 
     $query = "SELECT DISTINCT xar_rid,
-                     xar_uid,
-                     xar_regname,
-                     xar_displname,
-                     xar_desc,
-                     xar_type,
-                     xar_class,
-                     xar_certified,
-                     xar_approved,
-                     xar_rstate
-            FROM $releasetable ";
+                     $releasetable.xar_uid,
+                     $releasetable.xar_regname,
+                     $releasetable.xar_displname,
+                     $releasetable.xar_desc,
+                     $releasetable.xar_type,
+                     $releasetable.xar_class,
+                     $releasetable.xar_certified,
+                     $releasetable.xar_approved,
+                     $releasetable.xar_rstate,
+                     $rolestable.xar_uname
+            FROM $releasetable 
+            LEFT JOIN $rolestable
+            ON $releasetable.xar_uid = $rolestable.xar_uid";
     $bindvars = array();
 
     $from ='';
@@ -114,7 +119,8 @@ function release_userapi_getallrids($args)
             if ($criteria == 'id') {
                 $sortparts[] = ' xar_rid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'author') {
-                $sortparts[] = ' xar_uid ' . (!empty($sortorder) ? $sortorder : 'DESC');
+
+                $sortparts[] = ' xar_uname ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'name') {
                 $sortparts[] = ' xar_regname ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } else {
@@ -127,7 +133,6 @@ function release_userapi_getallrids($args)
         $query .= ' ORDER BY  xar_rid ASC';
     }
 
-
     //  $query .= " ORDER BY xar_rid";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
@@ -135,7 +140,7 @@ function release_userapi_getallrids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved,$rstate) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved,$rstate,$uname) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
@@ -146,10 +151,10 @@ function release_userapi_getallrids($args)
                                    'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
-                                   'rstate'     => $rstate);
+                                   'rstate'     => $rstate,
+                                   'author'     => $uname);
         }
     }
-
     $result->Close();
 
     // Return the users

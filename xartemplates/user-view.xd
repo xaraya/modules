@@ -1,6 +1,32 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span></div>
+<xar:if condition="xarTplAddStyleLink('release', 'release-layout')">
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Registered Extension List</xar:mlstring>
+    </span>
+</div>
+<xar:set name="searchlink">
+    xarModURL('search','user','main')
+</xar:set>
 <xar:set name="addextension">
-    xarModURL('release','user','addid')
+    xarModURL('release','user','addid') 
+</xar:set>
+<xar:set name="releaseoverview">
+    xarModURL('release','user','main')
+</xar:set>
+<xar:set name="extlisturl">
+    xarModURL('release','user','view') 
+</xar:set>
+<xar:set name="extreleaseurl">
+    xarModURL('release','user','viewnotes')
+</xar:set>
+<xar:set name="extdocsurldev">
+    xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87')) 
+</xar:set>
+<xar:set name="extdocsurladm">
+    xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93')) 
+</xar:set>
+<xar:set name="extdocsurlthm">
+    xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82')) 
 </xar:set>
 <xar:set name="commenthook">
     xarModIsHooked('comments')
@@ -8,64 +34,81 @@
 <xar:set name="hithook">
     xarModIsHooked('hitcount')
 </xar:set>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-    <div style="clear:both;width:98%;">
-        <span style="float:left; text-align:right;">
-            <xar:if condition="xarUserIsLoggedIn()">
-                <h2>[<a href="#$addextension#"><xar:mlstring>Add Extension</xar:mlstring></a>]</h2>
-            <xar:else />
-                <h2><xar:mlstring>Please Log In to Add an Extension</xar:mlstring></h2>
-            </xar:if>
-         </span>
-    </div>
-    <div style="clear:both;width:98%;">
-       <span style="float:left; text-align:left; ">
-           <form action="#xarModURL('release', 'user', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
-           <xar:if condition="!empty($catid)">
-               <input type="hidden" name="catid" value="#$catid#" />
-           </xar:if>
-           <xar:comment> jojodee: Don't think we need this with Categories now - complicates it
-            <input type="radio" name="phase" id="phase" value="themes"  />
-             <xar:mlstring>Themes</xar:mlstring>
-           &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="modules"  />
-           <xar:mlstring>Modules</xar:mlstring>
-           &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="all"  />
-           <xar:mlstring>All</xar:mlstring>
-           &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
-           </xar:comment>
-           </form>
-       </span>
-           <xar:comment>
-           <span style="float:right; text-align:right; width:20%;">
-               <xar:if condition="xarUserIsLoggedIn()">
-                   <a href="#$addextension#"><xar:mlstring>[Add Extension]</xar:mlstring></a>
-               </xar:if>
-           </span>
-           </xar:comment>
-    </div>
+<div class="xar-mod-body" style="width:95%;">
+    <xar:if condition="xarUserIsLoggedIn()">
+         <h2 class="fc-half">
+            [ 
+            <a href="#$addextension#">
+                <xar:mlstring>
+                    Register an Extension
+                </xar:mlstring>
+            </a>
+            ]
+        </h2>
+        <xar:else />
+        <h2 class="fc-half">
+            <xar:mlstring>
+                Log In to Add an Extension
+            </xar:mlstring>
+        </h2>
+    </xar:if>
+   <h2 class="fc-half" style="clear:left;">
+        [
+        <a href="#$searchlink#">
+            <xar:mlstring>
+                Search: Registered Extensions
+            </xar:mlstring>
+        </a>
+        ]
+        </h2>
+    <h2 class="fc-half fc-text-r">
+        [ 
+        <a href="#$releaseoverview#">
+            <xar:mlstring>
+                Help: Extensions &amp; Releases 
+            </xar:mlstring>
+        </a>
+        ] 
+    </h2>
+   <form class="fc-full" action="#xarModURL('release', 'user', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
+        <xar:if condition="!empty($catid)">
+            <input type="hidden" name="catid" value="#$catid#" />
+        </xar:if>
+    </form>
     <xar:if condition="!isset($phase) or empty($phase)">
-        <xar:set name="displayphase"><xar:mlstring>All</xar:mlstring></xar:set>
-    <xar:else />
-        <xar:set name="displayphase">ucfirst($phase)</xar:set>
-        <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
+        <xar:set name="displayphase">
+            <xar:mlstring>
+                All 
+            </xar:mlstring>
+        </xar:set>
+        <xar:else />
+        <xar:set name="displayphase">
+            ucfirst($phase) 
+        </xar:set>
+        <div class="fc-clear">
             <xar:ml>
-                <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
-                <xar:mlvar>#$displayphase#</xar:mlvar>
+                <xar:mlstring>
+                    Currently displaying filtered by: 
+                    <b>
+                        #(1) 
+                    </b>
+                </xar:mlstring>
+                <xar:mlvar>
+                    #$displayphase# 
+                </xar:mlvar>
             </xar:ml>
         </div>
     </xar:if>
-    <div style="clear:both;">
-       <span style="float:left; text-align:left; width:98%;">
-        <xar:if condition="!empty($catid)">
+   <div  style="clear:both;">
+       <span style="float:left; text-align:left; ">
+        <xar:if condition="!empty($catid) and ($catid ne '10')">
             <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="1" showempty="1" />
-        <xar:else />
-            <xar:categories-navigation layout="trails"  showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="1" showempty="1" />
+            <xar:else />
+            <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="11" showcatcount="1" showempty="1" />
         </xar:if>
-       </span>
+        </span>
     </div>
     <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
-
     <xar:if condition="$numitems lt '1'">
         <xar:mlstring>There are no extensions to display</xar:mlstring>
     <xar:else />
@@ -79,7 +122,7 @@
                 <a href="#xarModURL('release','user','view',array('sort'=>'name'))#"><xar:mlstring>Name (regname sort)</xar:mlstring></a>
             </th>
             <th width="25%" align="left">
-                <a href="#xarModURL('release','user','view',array('sort'=>'author'))#"><xar:mlstring>Author (uid sort)</xar:mlstring></a>
+                <a href="#xarModURL('release','user','view',array('sort'=>'author'))#"><xar:mlstring>Author (uname)</xar:mlstring></a>
             </th>
             <th width="5%">
                 <xar:mlstring>Release</xar:mlstring>

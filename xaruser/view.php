@@ -1,7 +1,10 @@
 <?php
 /**
- * jojodee: added pager ability
- * param $idtypes: 1- all, 2-themes, 3-modules
+ * @author niceguyeddie
+ * @author jojodee
+ * @param $idtypes: 1- all, 2-themes, 3-modules
+ * @param sort - sort criteria
+ * TODO : sort ok but need to make sticky over categories etc ...and vice versa
  */
 function release_user_view()
 {
@@ -9,7 +12,10 @@ function release_user_view()
     if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid', 'int', $catid, null,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
-
+   // Default parameters
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
@@ -31,7 +37,7 @@ function release_user_view()
     if (empty($sort)) {
         $sort = 'id';
     }
-    //jojodee: I've put all this into one function now userapi getallrids.
+    //<jojodee> I've put all this into one function now userapi getallrids.
 
     /*
      switch(strtolower($phase)) {
@@ -92,8 +98,8 @@ function release_user_view()
                              'numitems' => xarModGetUserVar('release',
                                                             'itemsperpage',$uid),
                               ));
-
     //Add common definition of the extension state array
+    //TODO <jojodee> This needs to be extensible ..not hard coded here ...
     $stateoptions=array();
     $stateoptions[0] = xarML('Planning');
     $stateoptions[1] = xarML('Alpha');
@@ -103,22 +109,23 @@ function release_user_view()
     $stateoptions[5] = xarML('Inactive');
 
     $numitems = count($items);
+
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < ($numitems); $i++) {
         $item = $items[$i];
-
+        $items[$i]['author'] = xarVarPrepForDisplay($item['author']);
         // Basic Information
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
         $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
-
+        /* use the xarUserGetVar func as we only want name */
         $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
                                   array('uid' => $item['uid']));
 
         // Author Name and Contact URL
-        $items[$i]['author'] = $getuser['name'];
+
         $items[$i]['contacturl'] = xarModURL('roles',
                                              'user',
                                              'display',
@@ -209,14 +216,15 @@ function release_user_view()
               $items[$i]['extstate']=$stateoptions[$key];
            }
        }
-
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid)),
-        xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase,'catid'=>$catid, 'sort'=>$sort)),
+       
+       $allitems=  xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid));
+     $data['pager'] = xarTplGetPager($startnum,
+        $allitems,
+        xarModURL('release', 'user', 'view', array('startnum' => '%%','idtypes'=>$idtypes,'catid'=>$catid, 'sort'=>$sort)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
     }
     $data['sort'] = $sort;
-    $data['numitems']=$numitems;
+    $data['numitems']=$allitems;
     $data['phase']=$phase;
     $data['catid'] = $catid;
     // Add the array of items to the template variables
