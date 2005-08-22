@@ -25,24 +25,38 @@
 function sitecontact_userapi_decode_shorturl($params)
 { 
     // Initialise the argument list we will return
-    $args = array(); 
-    // Analyse the different parts of the virtual path
-    // $params[1] contains the first part after index.php/example
-    // In general, you should be strict in encoding URLs, but as liberal
-    // as possible in trying to decode them...
-    if (empty($params[1])) {
+    $args = array();
+    $aliasisset = xarModGetVar('sitecontact', 'useModuleAlias');
+    $aliasname = xarModGetVar('sitecontact','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
+    $module = 'sitecontact';
+    if ($params[0] != $module) { //it's possibly some type of alias
+        $aliasname = xarModGetVar('xarbb','aliasname');
+    }
+    if ((strtolower($params[0]) == 'sitecontact') || (strtolower($params[0] == $aliasname))) {
+        array_shift($params);
+    }
+    // If no path components then return.
+    if (empty($params)) {
+        return;
+    }
+    if (empty($params[0])) {
         // nothing specified -> we'll go to the main function
         return array('main', $args);
-    } elseif (preg_match('/^index/i', $params[1])) {
+    } elseif (preg_match('/^index/i', $params[0])) {
         // some search engine/someone tried using index.html (or similar)
         // -> we'll go to the main function
         return array('main', $args);
-    } elseif (preg_match('/^contactus/i', $params[1])) {
+    } elseif (preg_match('/^contactus/i', $params[0])) {
         // something that starts with 'list' is probably for the view function
         // Note : make sure your encoding/decoding is consistent ! :-)
         return array('contactus', $args);
-    } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
-         $messageid = $matches[1];
+    } elseif (preg_match('/^(\d+)/', $params[0], $matches)) {
+         $messageid = $matches[0];
         $args['message'] = $messageid;
         return array('main', $args);
     } else {

@@ -5,7 +5,7 @@
  * Support for short URLs (user functions)
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -32,22 +32,46 @@ function sitecontact_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     } 
+    
+    $aliasisset = xarModGetVar('sitecontact', 'useModuleAlias');
+    $aliasname = xarModGetVar('sitecontact','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
     $path = '';
     // if we want to add some common arguments as URL parameters below
     $join = '?';
     // we can't rely on xarModGetName() here -> you must specify the modname !
     $module = 'sitecontact';
+    $alias = xarModGetAlias($module);
     // specify some short URLs relevant to your module
     if ($func == 'main') {
-        $path = '/' . $module . '/';
-        if (isset($message) && is_numeric($message)) {
-            $path = '/' . $module . '/' . $message;
+        if (($module == $alias) && ($usealias)){
+        // OK, we can use a 'fake' module name here
+            $path = '/' . $aliasname . '/';
+           if (isset($message) && is_numeric($message)) {
+                $path = '/' . $aliasname . '/' . $message;
+            }
+        }else {
+            $path = '/' . $module . '/';
+            if (isset($message) && is_numeric($message)) {
+                $path = '/' . $module . '/' . $message;
+            }
         }
     } elseif ($func == 'contactus') {
-        $path = '/' . $module . '/contactus';
-        if (isset($message) && is_numeric($message)) {
-            $path = '/' . $module . '/contactus/' . $message;
-        }
+          if (($module == $alias) && ($usealias)){
+              $path = '/' . $aliasname . '/contactus';
+              if (isset($message) && is_numeric($message)) {
+                  $path = '/' .$aliasname  . '/contactus/' . $message;
+              }
+          }else{
+              $path = '/' . $module . '/contactus';
+              if (isset($message) && is_numeric($message)) {
+                  $path = '/' . $module . '/contactus/' . $message;
+              }
+          }
     }
     // add some other module arguments as standard URL parameters
     if (!empty($path)) {

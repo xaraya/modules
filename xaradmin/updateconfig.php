@@ -28,6 +28,8 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('usehtmlemail', 'checkbox', $usehtmlemail, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scdefaultemail', 'str:1:', $scdefaultemail,'', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scdefaultname', 'str:1:', $scdefaultname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
     xarModSetVar('sitecontact', 'customtext', $customtext);
@@ -39,8 +41,15 @@ function sitecontact_admin_updateconfig()
     xarModSetVar('sitecontact', 'webconfirmtext', $webconfirmtext);
     xarModSetVar('sitecontact', 'notetouser', $notetouser);
     xarModSetVar('sitecontact', 'scdefaultemail', $scdefaultemail);
-    xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);    
+    xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
+    if (isset($aliasname) && trim($aliasname)<>'') {
+        xarModSetVar('sitecontact', 'aliasname', $aliasname);
+        xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
+    } else{
+        xarModSetVar('sitecontact', 'aliasname', '');
+        xarModSetVar('sitecontact', 'useModuleAlias', 0);
 
+    }
     $scdefaultemail=trim($scdefaultemail);
     if ((!isset($scdefaultemail)) || $scdefaultemail=='') {
        $scdefaultemail=xarModGetVar('mail','adminmail');
@@ -53,7 +62,20 @@ function sitecontact_admin_updateconfig()
        $scdefaultname=xarModGetVar('mail','adminname');
     }
 
-   xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
+    xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
+
+    $useAliasName = xarModGetVar('sitecontact', 'useModuleAlias');
+    $aliasname = trim(xarModGetVar('sitecontact','aliasname'));
+
+    if (($useAliasName==1) && !empty($aliasname)){
+        $usealias = 1;
+        xarModSetAlias($aliasname,'sitecontact');
+    } elseif (($useAliasName==0) && !empty($aliasname)) {
+        $usealias = 0;
+        xarModDelAlias($aliasname,'sitecontact');
+    } else {
+        $usealias=0;
+    }
 
     xarModCallHooks('module','updateconfig','sitecontact',
               array('module' => 'sitecontact'));

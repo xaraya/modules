@@ -22,7 +22,9 @@ function sitecontact_init()
 {
     xarModSetVar('sitecontact', 'itemsperpage', 10);
     xarModSetVar('sitecontact', 'SupportShortURLs', 0);
-    xarModSetVar('sitecontact', 'usehtmlemail', 0);
+    xarModSetVar('sitecontact', 'useModuleAlias',0);
+    xarModSetVar('sitecontact', 'aliasname','');
+   xarModSetVar('sitecontact', 'usehtmlemail', 0);
     xarModSetVar('sitecontact', 'allowcopy', 1);
     xarModSetVar('sitecontact', 'customtitle','Contact and Feedback');
     xarModSetVar('sitecontact', 'customtext',
@@ -107,10 +109,20 @@ function sitecontact_upgrade($oldversion)
             return sitecontact_upgrade('0.0.2');
         case '0.0.2':
             // Code to upgrade from version 1.0 goes here
+           return sitecontact_upgrade('0.2.0');
             break;
-        case '2.0.0':
+       case '0.2.0':
+           return sitecontact_upgrade('0.3.0');
+            break;
+        case '0.0.3':
+           xarModSetVar('sitecontact', 'useModuleAlias',0);
+           xarModSetVar('sitecontact', 'aliasname','');
+
+             break;
+        case '1.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
+
     }
     // Update successful
     return true;
