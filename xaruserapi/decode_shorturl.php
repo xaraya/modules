@@ -35,16 +35,13 @@ function sitecontact_userapi_decode_shorturl($params)
     }
     $module = 'sitecontact';
     if ($params[0] != $module) { //it's possibly some type of alias
-        $aliasname = xarModGetVar('xarbb','aliasname');
+        $aliasname = xarModGetVar('sitecontact','aliasname');
     }
     if ((strtolower($params[0]) == 'sitecontact') || (strtolower($params[0] == $aliasname))) {
         array_shift($params);
     }
     // If no path components then return.
-    if (empty($params)) {
-        return;
-    }
-    if (empty($params[0])) {
+   if (empty($params[0])) {
         // nothing specified -> we'll go to the main function
         return array('main', $args);
     } elseif (preg_match('/^index/i', $params[0])) {
