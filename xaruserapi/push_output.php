@@ -46,7 +46,8 @@ function reports_userapi_push_output($args)
     }
 
     // Push the contents of the output to the users client
-    $hOut = fopen($output, "rb"); $disposition="inline"; $bytesSent=0; $bufSize="2048";
+    // Make the disposition an attachment till we have it configurable
+    $hOut = fopen($output, "rb"); $disposition="attachment"; $bytesSent=0; $bufSize="2048";
     if($hOut) {
         header("Pragma: ");
         header("Cache-Control: ");
