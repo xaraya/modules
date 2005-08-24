@@ -11,7 +11,7 @@ function security_adminapi_create($args)
     $groupLevelTable = $xartable['security_group_levels'];
    
     // Default Sec levels
-    $userLevel  = SECURITY_OVERVIEW+SECURITY_READ+SECURITY_WRITE;
+    $userLevel  = SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN;
     $groupLevel = SECURITY_OVERVIEW+SECURITY_READ;
     $worldLevel = SECURITY_OVERVIEW+SECURITY_READ;
 

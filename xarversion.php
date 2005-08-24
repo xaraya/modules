@@ -13,7 +13,7 @@
 
 $modversion['name'] = 'Security';
 $modversion['id'] = '270';
-$modversion['version'] = '0.1.1';
+$modversion['version'] = '0.5.0';
 $modversion['description'] = 'Security';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

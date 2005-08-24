@@ -33,6 +33,9 @@ function security_userapi_leftjoin($args)
                      $xartable['security_group_levels'] . ', ' .
                      $xartable['owner'] . ' ';
 
+    $info['iid'] = "{$xartable['security']}.xar_itemid";
+
+       
     $secTable = $xartable['security'];
     $secGroupLevelTable = $xartable['security_group_levels'];
     $ownerTable = $xartable['owner'];

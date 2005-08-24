@@ -4,13 +4,15 @@ function security_admin_changesecurity($args)
 {
     extract($args);
 
+    if( xarRequestGetVar('type') == 'admin' ) return '';
+    
     // Setup xaraya item variables
     if( !empty($extrainfo['module']) )
         $modid = xarModGetIdFromName($extrainfo['module']);
 
     $itemtype = '';
     if( !empty($extrainfo['itemtype']) )
-        $itemtype = xarModGetIdFromName($extrainfo['itemtype']);
+        $itemtype = $extrainfo['itemtype'];
         
     $itemid = '';
     if( !empty($objectid) )

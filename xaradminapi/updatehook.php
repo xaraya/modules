@@ -16,7 +16,7 @@ function security_adminapi_updatehook($args)
 
     $itemtype = '';    
     if( !empty($extrainfo['itemtype']) )
-        $itemtype = xarModGetIdFromName($extrainfo['itemtype']);
+        $itemtype = $extrainfo['itemtype'];
         
     $itemid = '';    
     if( !empty($objectid) )

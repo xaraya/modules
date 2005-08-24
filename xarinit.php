@@ -1,37 +1,21 @@
 <?php
 
+require( "modules/base/xarclass/adodb-xmlschema.inc.php" );
+
 /**
  * Initialize the module
  */
 function security_init()
 {
-    // Get database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $dict =& xarDBNewDataDict($dbconn);
-    $pre = xarDBGetSiteTablePrefix();
+    $schemaFile = 'modules/security/xardata/tables.xml';
+    $schema = new adoSchema( $dbconn );
+    $schema->setPrefix( xarDBGetSiteTablePrefix() . '_' );
+    $sql = $schema->ParseSchema( $schemaFile );
+    $result = $schema->ExecuteSchema();  
+    xarErrorFree();
 
-    $table = "
-        xar_modid I NOTNULL,
-        xar_itemtype I,
-        xar_itemid I,
-        xar_userlevel I,
-        xar_grouplevel I,
-        xar_worldlevel I
-    ";
-    $result = $dict->createTable($xartable['security'], $table);
-    if( !$result ) return false;
-    
-    $table = "
-        xar_modid I NOTNULL,
-        xar_itemtype I,
-        xar_itemid I,
-        xar_gid I,
-        xar_level I
-    ";
-    $result = $dict->createTable($xartable['security_group_levels'], $table);
-    if( !$result ) return false;
-    
     // Set up module hooks
     if (!xarModRegisterHook('item', 'display', 'GUI',
             'security', 'admin', 'changesecurity')) {
@@ -69,26 +53,22 @@ function security_init()
  */
 function security_upgrade($oldversion)
 {
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $schemaFile = 'modules/security/xardata/tables.xml';
+    
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.1.0':
-            // fall through to the next upgrade
-            // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $dict =& xarDBNewDataDict($dbconn);
-            $pre = xarDBGetSiteTablePrefix();
-            
-            $table = "
-                xar_modid I NOTNULL,
-                xar_itemtype I,
-                xar_itemid I,
-                xar_gid I,
-                xar_level I
-            ";
-            $result = $dict->createTable($xartable['security_group_levels'], $table);
-            if( !$result ) return false;
+        case '0.1.1':
+            // Code to upgrade from version 1.1.0 goes here
+            $schema = new adoSchema( $dbconn );
+            $schema->setPrefix( xarDBGetSiteTablePrefix() . '_' );
+            $sql = $schema->ParseSchema( $schemaFile );
+            $result = $schema->ExecuteSchema();  
+            xarErrorFree();
 
+            
         case '1.1.0':
             // Code to upgrade from version 1.1.0 goes here
             break;
@@ -108,13 +88,13 @@ function security_upgrade($oldversion)
  */
 function security_delete()
 {
-    // Get database information
+    // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $dict =& xarDBNewDataDict($dbconn);
-    $pre = xarDBGetSiteTablePrefix();
-
-    $dict->dropTable($xartable['security']);
+    $schemaFile = 'modules/security/xardata/tables.xml';
+    $schema = new adoSchema( $dbconn );
+    $sql = $schema->RemoveSchema( $schemaFile );
+    $result = $schema->ExecuteSchema();  
     
     //
     xarModDelAllVars('security');

@@ -4,6 +4,7 @@ function security_admin_enablemodulesecurity($args)
     if( !xarSecurityCheck('AdminSecurity') ) return false;
     
     xarVarFetch('mod',      'str', $module,   'categories', XARVAR_NOT_REQUIRED);
+    xarVarFetch('table',    'str', $table,   $module, XARVAR_NOT_REQUIRED);
     xarVarFetch('itemtype', 'int', $itemtype, 0,    XARVAR_NOT_REQUIRED);
     xarVarFetch('uud',      'str', $uid,      null, XARVAR_NOT_REQUIRED);
     xarVarFetch('submit',   'str', $submit,   null, XARVAR_NOT_REQUIRED);
@@ -21,7 +22,7 @@ function security_admin_enablemodulesecurity($args)
         $dict =& xarDBNewDataDict($dbconn);
         $pre = xarDBGetSiteTablePrefix();
         
-        $table = $xartable[$module];
+        $table = $xartable[$table];
         
         $cols = $dict->getColumns($table);
         $itemIdCol = '';

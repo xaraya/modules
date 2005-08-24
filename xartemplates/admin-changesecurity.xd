@@ -1,7 +1,7 @@
-<div  style="margin-top: 2px;">
-    <h2>Change Security Levels</h2>
+<fieldset>
+    <legend>Change Security Levels</legend>
     
-    <div style="float: left; width: 49%;">
+    <div style="float: left; width: 48%;">
     <form name="" action="#xarModURL('security', 'admin', 'updatesecurity')#" method="POST">
     <table border="1" style="margin-right: auto; margin-left: auto; text-align: center;">
         <tr>
@@ -70,7 +70,7 @@
     </div>
     
     
-    <div style="float: right; width: 49%;">
+    <div style="float: right; width: 40%;">
     <xar:if condition="!empty($groups)">
     <span style="margin-right: auto; margin-left: auto;">
     <form name="addgroup" action="#$action#" method="POST">
@@ -88,4 +88,4 @@
     </span>
     </xar:if>
     </div>
-</div>
+</fieldset>
