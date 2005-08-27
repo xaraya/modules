@@ -3,8 +3,7 @@
 function security_admin_changesecurity($args)
 {
     extract($args);
-
-    if( xarRequestGetVar('type') == 'admin' ) return '';
+    if( xarRequestGetVar('type') == 'admin' || xarRequestGetVar('func') == 'modify' ) return '';
     
     // Setup xaraya item variables
     if( !empty($extrainfo['module']) )

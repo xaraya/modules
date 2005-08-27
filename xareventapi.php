@@ -9,6 +9,9 @@ function security_eventapi_OnServerRequest($args)
     $itemid = xarRequestGetVar('itemid');
     $catid = xarRequestGetVar('catid');
     
+    if( empty($module) )
+        $module = xarModGetName();
+    
     $modid = xarModGetIdFromName($module);
     
     if( !empty($catid) && empty($itemid) && xarModIsHooked('security', 'categories') )
