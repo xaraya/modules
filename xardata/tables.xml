@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<schema version="0.2">
+    <table name="security">
+        <desc>Security</desc>
+		<field name="xar_modid" type="I" default="0"></field>
+		<field name="xar_itemtype" type="I" default="0"></field>
+		<field name="xar_itemid" type="I" default="0"></field>
+		<field name="xar_userlevel" type="I" default="0"></field>
+		<field name="xar_grouplevel" type="I" default="0"></field>
+		<field name="xar_worldlevel" type="I" default="0"></field>
+
+		<index name="i_security_combo">
+            <col>xar_modid</col>
+            <col>xar_itemtype</col>
+            <col>xar_itemid</col>
+        </index>
+    </table>
+    <table name="security_group_levels">
+        <desc>Security</desc>
+		<field name="xar_modid" type="I" default="0"></field>
+		<field name="xar_itemtype" type="I" default="0"></field>
+		<field name="xar_itemid" type="I" default="0"></field>
+		<field name="xar_gid" type="I" default="0"></field>
+		<field name="xar_level" type="I" default="0"></field>
+
+		<index name="i_security_group_level_combo">
+            <col>xar_modid</col>
+            <col>xar_itemtype</col>
+            <col>xar_itemid</col>
+        </index>
+    </table>
+</schema>
