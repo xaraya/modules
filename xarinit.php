@@ -25,7 +25,7 @@
  */
 function example_init()
 {
-    // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
+    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
     // return arrays but we handle them differently.  For xarDBGetConn()
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
