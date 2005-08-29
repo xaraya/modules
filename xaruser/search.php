@@ -33,7 +33,7 @@ function courses_user_search()
     $data['number'] = $number;
     $data['shortdesc'] = $shortdesc;
     $data['longdesc'] = $longdesc;
-	
+    
     if($q == ''){
         return $data;
     }
@@ -44,8 +44,8 @@ function courses_user_search()
                           'search',
                            array('name' => $name,
                                  'number' => $number,
-								 'shortdesc' => $shortdesc,
-								 'longdesc' => $longdesc,
+                                 'shortdesc' => $shortdesc,
+                                 'longdesc' => $longdesc,
                                  'q' => $q));
 
     if (empty($data['courses'])){

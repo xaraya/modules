@@ -8,7 +8,11 @@
 <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
 
 
-<!-- the specific template for the current admin function comes here -->
+
+<xar:if condition="xarModIsHooked('categories','courses')">
+  <xar:categories-navigation layout="trails" showchildren="1" 
+  module="courses" catid="$catid" />
+</xar:if>
 
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>

@@ -67,12 +67,12 @@ function courses_admin_updateplanned($args)
     // We don't make an invalid here... so why need it?
     $invalid = array();
     // Check requirements
-	if (isset($minparticipants) || isset($maxparticipants)) {
-	    if ($minparticipants > $maxparticipants) {
-		  $invalid['minparticipants'] = $minparticipants;
-		  }
+    if (isset($minparticipants) || isset($maxparticipants)) {
+        if ($minparticipants > $maxparticipants) {
+          $invalid['minparticipants'] = $minparticipants;
+          }
     }
-	
+    
     if (empty($nameid)) {
         $data['name'] = '';
     } else {
@@ -132,31 +132,31 @@ function courses_admin_updateplanned($args)
                           array('name' => $name,
                                 'number' => $number,
                                 'year' => $year,
-								'credits' => $credits,
-								'creditdsmin' => $creditsmin,
-								'creditsmax' => $creditsmax,
-								'startdate' => $startdate,
-								'enddate' => $enddate,
-								'prerequisites' => $prerequisites,
-								'aim' => $aim,
-								'method' => $method,
-								'longdesc' => $longdesc,
+                                'credits' => $credits,
+                                'creditdsmin' => $creditsmin,
+                                'creditsmax' => $creditsmax,
+                                'startdate' => $startdate,
+                                'enddate' => $enddate,
+                                'prerequisites' => $prerequisites,
+                                'aim' => $aim,
+                                'method' => $method,
+                                'longdesc' => $longdesc,
                                 'costs' => $costs,
-								'committee' => $committee,
-								'coordinators' => $coordinators,
-								'lecturers' => $lecturers,
-								'location' => $location,
-								'material' => $material,
-								'info' => $info,
-								'program' => $program,
-								'minparticipants' => $minparticipants, 
-					            'maxparticipants' => $maxparticipants,
-								'closedate' => $closedate,
-								'hideplanning' => $hideplanning,
-								'last_modified' => $last_modified,
+                                'committee' => $committee,
+                                'coordinators' => $coordinators,
+                                'lecturers' => $lecturers,
+                                'location' => $location,
+                                'material' => $material,
+                                'info' => $info,
+                                'program' => $program,
+                                'minparticipants' => $minparticipants, 
+                                'maxparticipants' => $maxparticipants,
+                                'closedate' => $closedate,
+                                'hideplanning' => $hideplanning,
+                                'last_modified' => $last_modified,
                                 'invalid' => $invalid));
     }
-	$last_modified = '';
+    $last_modified = '';
     $last_modified = date("Y-m-d H:i:s");
     // The API function is called.
     if (!xarModAPIFunc('courses',
@@ -165,28 +165,28 @@ function courses_admin_updateplanned($args)
                        array(   'name' => $name,
                                 'number' => $number,
                                 'year' => $year,
-								'credits' => $credits,
-								'creditdsmin' => $creditsmin,
-								'creditsmax' => $creditsmax,
-								'startdate' => $startdate,
-								'enddate' => $enddate,
-								'prerequisites' => $prerequisites,
-								'aim' => $aim,
-								'method' => $method,
-								'longdesc' => $longdesc,
+                                'credits' => $credits,
+                                'creditdsmin' => $creditsmin,
+                                'creditsmax' => $creditsmax,
+                                'startdate' => $startdate,
+                                'enddate' => $enddate,
+                                'prerequisites' => $prerequisites,
+                                'aim' => $aim,
+                                'method' => $method,
+                                'longdesc' => $longdesc,
                                 'costs' => $costs,
-								'committee' => $committee,
-								'coordinators' => $coordinators,
-								'lecturers' => $lecturers,
-								'location' => $location,
-								'material' => $material,
-								'info' => $info,
-								'program' => $program,
-								'minparticipants' => $minparticipants, 
-					            'maxparticipants' => $maxparticipants,
-								'closedate' => $closedate,
-								'last_modified' => $last_modified,
-								'hideplanning' => $hideplanning))) {
+                                'committee' => $committee,
+                                'coordinators' => $coordinators,
+                                'lecturers' => $lecturers,
+                                'location' => $location,
+                                'material' => $material,
+                                'info' => $info,
+                                'program' => $program,
+                                'minparticipants' => $minparticipants, 
+                                'maxparticipants' => $maxparticipants,
+                                'closedate' => $closedate,
+                                'last_modified' => $last_modified,
+                                'hideplanning' => $hideplanning))) {
         return; // throw back
     } 
     xarSessionSetVar('statusmsg', xarML('Planned Course Was Successfully Updated!'));

@@ -56,7 +56,7 @@ function courses_user_viewcourses()
     foreach ($items as $item) {
         $name = $item['name'];
         $courseid = $item['courseid'];
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$name:All:$courseid")) {
+        if xarSecurityCheck('ReadCourses', 0, 'Course', "$name:All:$courseid")) {
             $item['link'] = xarModURL('courses',
                 'user',
                 'display',

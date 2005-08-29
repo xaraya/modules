@@ -19,11 +19,9 @@
  */
 function courses_user_view()
 {
-    // Security check
-    if (!xarSecurityCheck('ViewCourses', 0)) {
-        return $data['error'] = xarML('You must be a registered user to view courses...');
-    }
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'isset',  $catid,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'name')) return;
 
     $data = xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
@@ -59,9 +57,9 @@ function courses_user_view()
         'user',
         'getall',
         array('startnum' => $startnum,
-              'numitems' => xarModGetUserVar('courses',
-              'itemsperpage',
-              $uid)));
+              'numitems' => xarModGetUserVar('courses','itemsperpage',$uid),
+              'sortby' => $sortby,
+              'catid' => $catid));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Loop through each item and display it.
@@ -85,10 +83,42 @@ function courses_user_view()
         $data['items'][] = $item;
     }
 
+    // Create sort by URLs
+    if ($sortby != 'name' ) {
+        $data['snamelink'] = xarModURL('courses',
+                                       'user',
+                                       'view',
+                                       array('startnum' => 1,
+                                             'sortby' => 'name',
+                                             'catid' => $catid));
+    } else {
+        $data['snamelink'] = '';
+    }
+    if ($sortby != 'shortdesc' ) {
+        $data['sdesclink'] = xarModURL('courses',
+                                       'user',
+                                       'view',
+                                       array('startnum' => 1,
+                                             'sortby' => 'shortdesc',
+                                             'catid' => $catid));
+    } else {
+        $data['sdesclink'] = '';
+    }
+    if ($sortby != 'number' ) {
+        $data['snumberlink'] = xarModURL('courses',
+                                       'user',
+                                       'view',
+                                       array('startnum' => 1,
+                                             'sortby' => 'number',
+                                             'catid' => $catid));
+    } else {
+        $data['snumberlink'] = '';
+    }
+
     // Pager
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('courses', 'user', 'countitems'),
-        xarModURL('courses', 'user', 'view', array('startnum' => '%%')),
+        xarModAPIFunc('courses', 'user', 'countitems', array('catid' => $catid)),
+        xarModURL('courses', 'user', 'view', array('startnum' => '%%','sortby' => $sortby, 'catid' => $catid)),
         xarModGetUserVar('courses', 'itemsperpage', $uid));
 
     // Changing the name of the page

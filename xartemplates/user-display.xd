@@ -16,6 +16,10 @@
         #$status#
     <xar:else />
     
+    <xar:if condition="xarModIsHooked('categories','courses')">
+      <xar:categories-navigation layout="" itemid="$courseid" module="courses" />
+    </xar:if>
+    
     <form method="post" class="xar-form"
           action="#xarModUrl('courses', 'user', 'enroll')#">
           <fieldset class="xar-norm">

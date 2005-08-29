@@ -1,6 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- This is a standard template for the module overview  -->
-<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Courses</xar:mlstring></span></div>
 <div class="xar-mod-body" style="display:block;">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
@@ -16,9 +15,11 @@
             <em><xar:mlstring>Courses is the documented Xaraya Courses Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
-                <li><xar:mlstring>Gives examples of code commented in plain terms.</xar:mlstring></li>
-                <li><xar:mlstring>Gives examples of templates.</xar:mlstring></li>
-                <li><xar:mlstring>Gives examples of hooks.</xar:mlstring></li>
+                <li><xar:mlstring>Manages the course offerings to students.</xar:mlstring></li>
+                <li><xar:mlstring>Users can enroll into courses.</xar:mlstring></li>
+                <li><xar:mlstring>Produces overviews of courses, participants and the planning.</xar:mlstring></li>
+                <li><xar:mlstring>Sends out registration emails.</xar:mlstring></li>
+                <li><xar:mlstring>Allow teachers to be attached to a course, so they can manage their own course.</xar:mlstring></li>
             </ul>
         </div>
         <br />
@@ -27,7 +28,9 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>This module is intended as a reference for other modules to use.  Its output is just a basic non-usable output in many cases.</xar:mlstring>
+            <xar:mlstring>To set up the course offerings you will need to understand the way courses are setup.</xar:mlstring>
+            <xar:mlstring>Courses are single entities that are present in the system. The information regarding a course is rather fixed. Courses are offered to users in Xaraya, this means they are planned.</xar:mlstring>
+            <xar:mlstring>Once the course is planned, you can attach more information to the planned course like a start date, maximum number of participants, location etc.</xar:mlstring>
 
         </div>
         <br />
@@ -37,8 +40,8 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ul>
-                <li><xar:mlstring>new</xar:mlstring></li>
-                <li><xar:mlstring>others</xar:mlstring></li>
+                <li><xar:mlstring>None at the moment</xar:mlstring></li>
+                <li><xar:mlstring>We plan to offer blocks for Upcoming Courses and an Admin Block with short term information</xar:mlstring></li>
             </ul>
         </div>
         <br />

@@ -15,19 +15,21 @@
  
 /**
  * Admin view of all courses
+ * @param ['catid'] ID of category , defaults to NULL
  */
 function courses_admin_viewcourses()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'isset',  $catid,    NULL,  XARVAR_DONT_SET))     return;
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
     // doesn't need to be adapted in case of errors
     $data['items'] = array();
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('courses', 'user', 'countitems'),
-        xarModURL('courses', 'admin', 'viewcourses', array('startnum' => '%%')),
+        xarModAPIFunc('courses', 'user', 'countitems', array('catid' => $catid)),
+        xarModURL('courses', 'admin', 'viewcourses', array('startnum' => '%%', 'catid' => $catid)),
         xarModGetVar('courses', 'itemsperpage'));
 
     // Security check - important to do this as early as possible to avoid
@@ -39,8 +41,8 @@ function courses_admin_viewcourses()
         'user',
         'getall',
         array('startnum' => $startnum,
-            'numitems' => xarModGetVar('courses',
-                'itemsperpage')));
+              'numitems' => xarModGetVar('courses','itemsperpage'),
+              'catid'    => $catid));
     // Check for exceptions
 //    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
@@ -93,6 +95,7 @@ function courses_admin_viewcourses()
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
     $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Course Options'));
+    $data['catid'] = $catid;
     // Return the template variables defined in this function
     return $data;
 }

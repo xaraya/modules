@@ -1,45 +1,52 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common user menu for this module - remove link to the current function -->
+
 <div class="xar-courses xar-courses-user-view">
     <xar:template file="header" />
     
     <div class="xar-courses-contents">
 
-		<h1>#$menutitle#</h1>
-	
-		<xar:if condition="!empty($status)">
-			#$status#
-		</xar:if>
-		
-		<table border="1" cellpadding="5" cellspacing="0">
-			<tr>
-				<th> #$namelabel# </th>
-		
-				<th> #$shortdesclabel# </th>
-		
-				<th> #$numberlabel# </th>
-			</tr>
-		
-			<xar:foreach in="$items" value="$item">
-			<tr align="center"><td>
-		
-				<!-- we only show a link if the item link variable is not empty -->
-		
-				<xar:if condition="empty($item['link'])">
-					#$item['name']#
-				<xar:else />
-					<a href="#$item['link']#">#$item['name']#</a>
-				</xar:if>
-				 </td>
-				 <td>#$item['shortdesc']#</td>
-				  <td>#$item['number']#</td>
-		   </tr>
-			</xar:foreach>
-		
-		</table>
-		<br />
-		
-		<!-- add the pager here -->
-		#$pager#
-	</div>
+        <h1>#$menutitle#</h1>
+    
+        <xar:if condition="!empty($status)">
+            #$status#
+        </xar:if>
+   <xar:categories-navigation layout="trails" showchildren="1" module="courses" showcatcount="0" showempty="1" />
+           <table>
+            <tr>
+                <xar:if condition="$snamelink != ''">
+                    <th><a href="#$snamelink#">#$namelabel#</a></th>
+                <xar:else />
+                    <th>#$namelabel#</th>
+                </xar:if>
+                <xar:if condition="$sdesclink != ''">
+                    <th><a href="#$sdesclink#">#$shortdesclabel#</a></th>
+                <xar:else />
+                    <th>#$shortdesclabel#</th>
+                </xar:if>
+                <xar:if condition="$snumberlink != ''">
+                    <th><a href="#$snumberlink#">#$numberlabel#</a></th>
+                <xar:else />
+                    <th>#$numberlabel#</th>
+                </xar:if>
+            </tr>
+        
+            <xar:foreach in="$items" value="$item">
+                <tr>
+                <td>
+                    <xar:if condition="empty($item['link'])">
+                        #$item['name']#
+                    <xar:else />
+                        <a href="#$item['link']#">#$item['name']#</a>
+                    </xar:if>
+                 </td>
+                 <td>#$item['shortdesc']#</td>
+                 <td>#$item['number']#</td>
+               </tr>
+           </xar:foreach>
+    
+        </table>
+        <br />
+
+        #$pager#
+    </div>
 </div>

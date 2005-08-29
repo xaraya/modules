@@ -71,7 +71,7 @@ function courses_adminapi_updateplanned($args)
     // Update the item
     $query = "UPDATE $planningtable
                        SET xar_planningid =?,
-					       xar_courseid =?,
+                           xar_courseid =?,
                            xar_courseyear =?,
                            xar_credits =?,
                            xar_creditsmin =?,
@@ -94,12 +94,12 @@ function courses_adminapi_updateplanned($args)
                            xar_maxparticipants =?,
                            xar_closedate =?,
                            xar_hideplanning =?,
-						   xar_last_modified =?
-						WHERE xar_planningid = $planningid";
+                           xar_last_modified =?
+                        WHERE xar_planningid = $planningid";
             
     $bindvars = array($planningid, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
                       $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants, 
-					  $maxparticipants, $closedate, $hideplanning, $last_modified);
+                      $maxparticipants, $closedate, $hideplanning, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

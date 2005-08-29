@@ -9,35 +9,60 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 /**
  * utility function to count the number of items held by this module
  * 
- * @author the Example module development team 
+ * @author the Courses module development team 
+ * @param $catid Category id.
  * @returns integer
  * @return number of items held by this module
  * @raise DATABASE_ERROR
  */
-function courses_userapi_countitems()
+function courses_userapi_countitems($args)
 {
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
+    extract ($args);
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $coursestable = $xartable['courses'];
-    // Get item - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the Execute() command allows for simpler debug operation
-    // if it is ever needed
-    $query = "SELECT COUNT(1)
-            FROM $coursestable";
+    
+    // Set to be able to see all courses or only non-hidden ones
+    if (xarSecurityCheck('AdminCourses', 0)) {
+    $where = "0, 1";
+    } else {
+    $where = "0";
+    }
+
+    $query = "SELECT COUNT(*) ";
+            
+    // TODO: how to select by cat ids (automatically) when needed ???
+    // My try at it...
+    if (!empty($catid) && xarModIsHooked('categories','courses')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid' => xarModGetIDFromName('courses'),
+                                             'catid' => $catid));
+        if (!empty($categoriesdef)) {
+            $query .= " FROM ($coursestable
+                        LEFT JOIN $categoriesdef[table]
+                        ON $categoriesdef[field] = xar_courseid )
+                        $categoriesdef[more]
+                        WHERE $categoriesdef[where] 
+                        AND xar_hidecourse in ($where)";
+            } else {
+                $query .= " FROM $coursestable 
+                            WHERE xar_hidecourse in ($where)";
+            }
+     } else {
+        $query .= " FROM $coursestable 
+                    WHERE xar_hidecourse in ($where)";
+     }
+            
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

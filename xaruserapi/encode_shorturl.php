@@ -139,6 +139,10 @@ function courses_userapi_encode_shorturl($args)
             $path .= $join . 'startnum=' . $startnum;
             $join = '&';
         }
+        if (isset($sortby)) {
+            $path .= $join . 'sortby=' . $sortby;
+            $join = '&';
+        }
         if (!empty($catid)) {
             $path .= $join . 'catid=' . $catid;
             $join = '&';

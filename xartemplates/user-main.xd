@@ -5,10 +5,10 @@
     
     <div class="xar-courses-contents">
 
-	<h1>#$menutitle#</h1>
-	<a href="#$menulink_view#">#$menulabel_view#</a>
-	
-	<div align="center"> #$welcome#</div>
+    <h1>#$menutitle#</h1>
+    <a href="#$menulink_view#">#$menulabel_view#</a>
+    
+    <div align="center"> #$welcome#</div>
 
     </div>
 </div>

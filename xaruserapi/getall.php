@@ -18,6 +18,7 @@
  * @author the Courses module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
+ * @param sortby $ the parameter to sort by (default name)
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -27,28 +28,26 @@ function courses_userapi_getall($args)
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, '1', XARVAR_NOT_REQUIRED)) return;
+    // Argument check
+    $valid = array('name','shortdesc','number');
+    if (!isset($sortby) || !in_array($sortby,$valid)) {
+        $sortby = 'name';
+    }
 
     $items = array();
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
     if (!xarSecurityCheck('ViewCourses')) return;
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table definitions you are
-    // using - $table doesn't cut it in more complex modules
     $coursestable = $xartable['courses'];
-    // TODO: how to select by cat ids (automatically) when needed ???
-    
     // Set to be able to see all courses or only non-hidden ones
     if (xarSecurityCheck('AdminCourses', 0)) {
     $where = "0, 1";
     } else {
     $where = "0";
     }
-    // Get items
     $query = "SELECT xar_courseid,
-                   xar_name,
+                   $coursestable.xar_name,
                    xar_number,
                    xar_type,
                    xar_level,
@@ -57,10 +56,32 @@ function courses_userapi_getall($args)
                    xar_freq,
                    xar_contact,
                    xar_hidecourse,
-                   xar_last_modified
-            FROM $coursestable
-            WHERE xar_hidecourse in ($where)
-            ORDER BY xar_number";
+                   xar_last_modified";
+    
+    // TODO: how to select by cat ids (automatically) when needed ???
+    // My try at it...
+    if (!empty($catid) && xarModIsHooked('categories','courses')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid' => xarModGetIDFromName('courses'),
+                                             'catid' => $catid));
+        if (!empty($categoriesdef)) {
+            $query .= " FROM ($coursestable
+                        LEFT JOIN $categoriesdef[table]
+                        ON $categoriesdef[field] = xar_courseid )
+                        $categoriesdef[more]
+                        WHERE $categoriesdef[where] 
+                        AND xar_hidecourse in ($where)";
+            } else {
+                $query .= " FROM $coursestable 
+                            WHERE xar_hidecourse in ($where)";
+            }
+     } else {
+        $query .= " FROM $coursestable 
+                    WHERE xar_hidecourse in ($where)";
+     }
+
+    $query .= " ORDER BY $coursestable.xar_" . $sortby;
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
