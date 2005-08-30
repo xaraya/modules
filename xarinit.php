@@ -28,13 +28,14 @@ function courses_init()
     $coursestable = $xartable['courses'];
     xarDBLoadTableMaintenanceAPI();
     $fields = array('xar_courseid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_name' => array('type' => 'varchar', 'size' => 55, 'null' => false),
+        'xar_name' => array('type' => 'varchar', 'size' => 100, 'null' => false),
         'xar_number' => array('type' => 'varchar', 'size' => 5, 'null' => false),
         'xar_type' => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
         'xar_level' => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_shortdesc'=>array('null'=>FALSE, 'type'=>'text'),
         'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_freq' =>array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
+        'xar_contactuid' => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
         'xar_contact' => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
         'xar_hidecourse' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
         'xar_last_modified'=>array('type'=>'datetime','null'=>FALSE)
@@ -191,6 +192,7 @@ function courses_init()
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('courses', 'SupportShortURLs', 0);
+    
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -203,6 +205,7 @@ function courses_init()
             'register_block_type',
             array('modName' => 'courses',
                 'blockType' => 'new'))) return;
+    
     // Register our hooks that we are providing to other modules.  The course
     // module shows ahook in the form of the user menu that shows the user the courses
     // he or she is enrolled in.
@@ -233,14 +236,6 @@ function courses_init()
             'hookModName'       => 'search'
             ,'callerModName'    => 'courses'));
             
-    // Hook for module comments
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
-            'hookModName'       => 'comments'
-            ,'callerModName'    => 'courses'));
      // Hook for Categories
     xarModAPIFunc(
         'modules'
@@ -272,7 +267,7 @@ function courses_init()
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_levels_data.xml'));
 
     if (empty($objectid)) return;
-*/
+    */
 
     /**
      * Define instances for this module
@@ -290,11 +285,12 @@ function courses_init()
     // (limit) which defines the maximum number of rows a dropdown can have. If the number of
     // instances is greater than the limit (e.g. registered users), the UI instead presents an
     // input field for manual input, which is then checked for validity.
-    $query1 = "SELECT DISTINCT xar_name FROM " . $coursestable;
-    $query2 = "SELECT DISTINCT xar_number FROM " . $coursestable;
-    $query3 = "SELECT DISTINCT xar_courseid FROM " . $coursestable;
+    $query1 = "SELECT DISTINCT xar_courseid FROM " . $coursestable; // Check for the courseid
+    $query2 = "SELECT DISTINCT xar_number FROM " . $coursestable; // Make a readable course selection
+    $query3 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning; // Make a planned course selectable
+    $query4 = "SELECT DISTINCT xar_yearid FROM " . $courses_years; // Specify per year
     $instances = array(
-        array('header' => 'Course Name:',
+        array('header' => 'Course ID:',
             'query' => $query1,
             'limit' => 20
             ),
@@ -302,31 +298,16 @@ function courses_init()
             'query' => $query2,
             'limit' => 20
             ),
-        array('header' => 'Course ID:',
+        array('header' => 'Planning ID:',
             'query' => $query3,
+            'limit' => 20
+            )
+        array('header' => 'Year ID:',
+            'query' => $query4,
             'limit' => 20
             )
         );
     xarDefineInstance('Courses', 'Course', $instances);
-    //For the planning of courses
-    $query1 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning;
-    $query2 = "SELECT DISTINCT xar_userid FROM " . $courses_teachers;
-    $query3 = "SELECT DISTINCT xar_courseid FROM " . $courses_planning;
-    $instances = array(
-        array('header' => 'Planning ID:',
-            'query' => $query1,
-            'limit' => 20
-            ),
-        array('header' => 'UserID of teacher:',
-            'query' => $query2,
-            'limit' => 20
-            ),
-        array('header' => 'Course ID:',
-            'query' => $query3,
-            'limit' => 20
-            )
-        );
-    xarDefineInstance('Courses', 'Planning', $instances);
     
     //Blocks
     $instancestable = $xartable['block_instances'];
@@ -348,22 +329,13 @@ function courses_init()
     // The block will be maybe be used
     // The courses themselves need to be adminable
     xarRegisterMask('ReadCoursesBlock', 'All', 'courses', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADMIN');
-    //Planning
-    xarRegisterMask('ViewPlanning', 'All', 'courses', 'Planning', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadPlanning', 'All', 'courses', 'Planning', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditPlanning', 'All', 'courses', 'Planning', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddPlanning', 'All', 'courses', 'Planning', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeletePlanning', 'All', 'courses', 'Planning', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminPlanning', 'All', 'courses', 'Planning', 'All:All:All', 'ACCESS_ADMIN');
-
+    xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
-     xarRegisterPrivilege('PlanningForTeacher','All','courses','Planning','All','ACCESS_EDIT',xarML('Teacher access'));
     return true;
 }
 
@@ -497,7 +469,7 @@ function courses_upgrade($oldversion)
             $result = $datadict->addColumn($planningtable, 'xar_last_modified datetime');
             if (!$result) return;
             
-            // Add last modified column to coursestable 
+            // Add last modified column to studentstable 
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
@@ -514,7 +486,73 @@ function courses_upgrade($oldversion)
        case '0.0.8':
             // Set the always receive e-mail
             xarModSetVar('courses', 'AlwaysNotify', 'webmaster@yoursite.com');
-       break;
+            return courses_upgrade('0.0.9');
+            // Remove Masks and Instances
+            // these functions remove all the registered masks and instances of a module
+            // from the database. This is not strictly necessary, but it's good housekeeping.
+            xarRemoveMasks('courses');
+            xarRemoveInstances('courses');
+            xarRemovePrivileges('courses');
+            
+            //Create new masks and privileges.
+            $query1 = "SELECT DISTINCT xar_courseid FROM " . $coursestable; // Check for the courseid
+            $query2 = "SELECT DISTINCT xar_number FROM " . $coursestable; // Make a readable course selection
+            $query3 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning; // Make a planned course selectable
+            $query4 = "SELECT DISTINCT xar_yearid FROM " . $courses_years; // Specify per year
+            $instances = array(
+                array('header' => 'Course ID:',
+                    'query' => $query1,
+                    'limit' => 20
+                    ),
+                array('header' => 'Course Number:',
+                    'query' => $query2,
+                    'limit' => 20
+                    ),
+                array('header' => 'Planning ID:',
+                    'query' => $query3,
+                    'limit' => 20
+                    )
+                array('header' => 'Year ID:',
+                    'query' => $query4,
+                    'limit' => 20
+                    )
+                );
+            xarDefineInstance('Courses', 'Course', $instances);
+
+            // Create new masks
+            xarRegisterMask('ReadCoursesBlock', 'All', 'courses', 'Block', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADMIN');
+
+       //Change table layout
+            // Add contactuid to coursestable 
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $coursestable = $xartable['courses'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($coursestable, 'xar_contactuid integer(medium) null default(NULL)');
+            if (!$result) return;
+
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Using the Datadict method to be up to date ;)
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $coursestable = $xartable['courses'];
+            // Apply changes
+                        xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($juliantable, 'email varchar(70) Null');
+            if (!$result) return;
+    //!!!!!   TODO
+               'xar_name' => array('type' => 'varchar', 'size' => 100, 'null' => false),
+
+       case '0.0.9':
+            break;
     }
     // Update successful
     return true;
