@@ -33,6 +33,7 @@ function courses_admin_createcourse($args)
     if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid', 'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     // Argument check
     $item = array();
@@ -70,6 +71,7 @@ function courses_admin_createcourse($args)
                                 'language' => $language,
                                 'freq' => $freq,
                                 'contact' => $contact,
+								'contactuid' => $contactuid,
                                 'hidecourse' => $hidecourse,
                                 'invalid' => $invalid));
     }
@@ -87,6 +89,7 @@ function courses_admin_createcourse($args)
                                 'language' => $language,
                                 'freq' => $freq,
                                 'contact' => $contact,
+								'contactuid' => $contactuid,
                                 'hidecourse' => $hidecourse,
                                 'last_modified' => $last_modified));
     // The return value of the function is checked here, and if the function

@@ -14,12 +14,12 @@
  */
 
 /**
- * Enroll a user into a course and update database
+ * Combine a teacher (Xar user) with a planned course and update database
  * @author Michel V.
  *
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args an array of arguments (if called by other modules)
- * @param  $args ['objectid'] a generic object id (if called by other modules)
+ * @param  $args ['userid'] the uid of the role to be treated as a teacher
  * @param  $args ['planningid'] the planned course ID that the user will enroll to
  */
 function courses_admin_newteacher($args)

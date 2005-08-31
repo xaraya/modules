@@ -27,6 +27,7 @@ function courses_admin_newcourse($args)
     if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid', 'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     //if (!xarVarFetch('level', 'isset::', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'array', $invalid, '', XARVAR_NOT_REQUIRED)) return;
@@ -48,6 +49,7 @@ function courses_admin_newcourse($args)
     $data['languagelabel'] = xarVarPrepForDisplay(xarML('Language'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Frequency'));
     $data['contactlabel'] = xarVarPrepForDisplay(xarML('Contact details'));
+    $data['contactuidlabel'] = xarVarPrepForDisplay(xarML('User or role to serve as contact for course'));
     $data['hidecourselabel'] = xarVarPrepForDisplay(xarML('Hide Course'));
     $data['addcoursebutton'] = xarVarPrepForDisplay(xarML('Add Course'));
     $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));
@@ -108,6 +110,11 @@ function courses_admin_newcourse($args)
         $data['contact'] = '';
     } else {
         $data['contact'] = $contact;
+    }
+    if (empty($contactuid)) {
+        $data['contactuid'] = '';
+    } else {
+        $data['contactuid'] = $contactuid;
     }
     if (empty($hidecourse)) {
         $data['hidecourse'] = '';

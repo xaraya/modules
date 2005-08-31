@@ -43,7 +43,7 @@ function courses_admin_modifycourse($args)
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $name = $coursedata['name'];
     // Security check
-    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$name:All:$courseid")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
         return;
     }
     // Get menu variables

@@ -54,7 +54,7 @@ function courses_adminapi_updatecourse($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$name:All:$courseid")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
         return;
     }
     // Get database setup

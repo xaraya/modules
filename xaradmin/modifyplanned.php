@@ -40,7 +40,7 @@ function courses_admin_modifyplanned($args)
     if (!isset($planneddata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:All")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:$planningid:All")) {
         return;
     }
     // Coursedata

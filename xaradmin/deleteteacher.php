@@ -43,7 +43,7 @@ function courses_admin_deleteteacher($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('AdminPlanning', 1, 'Planning', "$planningid:All:All")) { //Need the planningID here
+    if (!xarSecurityCheck('AdminCourses', 1, 'Course', "All:$planningid:All")) { // Need the yearID here?
         return;
     }
     // Check for confirmation.

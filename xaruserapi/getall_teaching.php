@@ -58,7 +58,7 @@ function courses_userapi_getall_teaching($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($name, $courseid, $planningid, $startdate, $type) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:$uid:$courseid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[] = array('name'       => $name,
                              'courseid'   => $courseid,
                              'planningid' => $planningid,

@@ -2,7 +2,7 @@
 /**
  * File: $Id:
  *
- * Create a new example item
+ * Create a new participant item
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -50,7 +50,7 @@ function courses_adminapi_updateparticipant($args)
     }
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:All")) { //Correct?
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:$planningid:All")) { //Correct?
         return;
     }
     $dbconn =& xarDBGetConn();
@@ -68,12 +68,8 @@ function courses_adminapi_updateparticipant($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Let any hooks know that we have created a new item.  As this is a
-    // create hook we're passing 'exid' as the extra info, which is the
-    // argument that all of the other functions use to reference this
-    // item
+    // Let any hooks know that we have created a new item.
     // TODO: evaluate
-    // xarModCallHooks('item', 'create', $exid, 'exid');
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $sid;

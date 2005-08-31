@@ -2,7 +2,7 @@
 /**
  * File: $Id:
  * 
- * Update an example item
+ * Update an item
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -61,7 +61,7 @@ function courses_adminapi_updateplanned($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $courseid = $item['courseid'];
     // Security check
-    if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:$courseid")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:$planningid:All")) {
         return;
     }
     // Get database setup

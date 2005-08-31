@@ -30,7 +30,7 @@ function courses_adminapi_getallparticipants($args)
     if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
 
     $items = array();
-    if (!xarSecurityCheck('EditPlanning')) return;
+    if (!xarSecurityCheck('EditCourses', '1', 'Course', "All:$planningid:All")) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -52,7 +52,7 @@ function courses_adminapi_getallparticipants($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $status, $regdate) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:All")) { //TODO
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) { 
             $items[] = array('sid'        => $sid,
                              'userid'     => $userid,
                              'planningid' => $planningid,

@@ -36,7 +36,7 @@ function courses_userapi_getplanned($args)
     $items = array();
     
     // Security check
-    if (!xarSecurityCheck('ViewPlanning')) return;
+    if (!xarSecurityCheck('ReadCourses', '0', 'Course', "All:$planningid:All")) return;
     
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -83,7 +83,7 @@ function courses_userapi_getplanned($args)
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $item = array(
             'planningid' => $planningid,
             'courseid'   => $courseid,

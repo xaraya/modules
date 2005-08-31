@@ -73,6 +73,7 @@ function courses_user_display($args)
     $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
     $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
+    $data['contactuidlabel'] = xarVarPrepForDisplay(xarML('Contact'));
     $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
     $data['infolabel'] = xarVarPrepForDisplay(xarML('Other Course info'));
     $data['enrollbutton'] = xarVarPrepForDisplay(xarML('Enroll'));
@@ -108,7 +109,7 @@ function courses_user_display($args)
                                 array('userid' => $uid,
                                       'planningid' => $planningid));
         // With a result, the teacher can see the menu, or when there is an appropriate priv
-        if (count($check)!=0 || xarSecurityCheck('EditPlanning', 0, 'Planning', "$planningid:$uid:$courseid")) {
+        if (count($check)!=0 || xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[$i]['participantsurl'] = xarModURL('courses',
                 'admin',
                 'participants',
@@ -118,7 +119,7 @@ function courses_user_display($args)
         }
         $items[$i]['participantstitle'] = xarML('Participants');
         
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:$courseid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:All:All")) {
 
             // Add check for already enrolled
             $enrolled = xarModAPIFunc('courses',
@@ -142,7 +143,7 @@ function courses_user_display($args)
             }
         }
        
-        if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[$i]['detailsurl'] = xarModURL('courses',
                 'user',
                 'displayplanned',

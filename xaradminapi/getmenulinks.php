@@ -35,7 +35,7 @@ function courses_adminapi_getmenulinks()
             'title' => xarML('Adds a new course to system.'),
             'label' => xarML('Add Course'));
     }
-    if (xarSecurityCheck('ViewPlanning', 0)) {
+    if (xarSecurityCheck('ReadCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
                 'viewallplanned'),

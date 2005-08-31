@@ -41,7 +41,7 @@ function courses_userapi_getteacher($args)
     }
 
     $item = array();
-    if (!xarSecurityCheck('ViewPlanning')) return;
+    if (!xarSecurityCheck('ReadCourses')) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -67,7 +67,7 @@ function courses_userapi_getteacher($args)
     // Put item into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $type) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:All")) { //TODO
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) { //TODO
             $item = array('tid' => $tid,
                 'userid'        => $userid,
                 'planningid'    => $planningid,

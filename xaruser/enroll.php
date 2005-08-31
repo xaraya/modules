@@ -26,7 +26,7 @@
 function courses_user_enroll($args)
 {
  // User must be logged in and have privilege
- if (!xarSecurityCheck('ReadPlanning', 0) ||!xarUserIsLoggedIn()) {
+ if (!xarSecurityCheck('ReadCourses', 0) ||!xarUserIsLoggedIn()) {
         return $data['error'] = xarML('You must be a registered user to enroll in this course.');
     }
 

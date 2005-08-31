@@ -35,7 +35,7 @@ function courses_admin_participants()
         xarModGetVar('courses', 'itemsperpage'));
     
     // Security check
-    if (!xarSecurityCheck('EditPlanning')) return;
+    if (!xarSecurityCheck('EditCourses')) return;
 
     $items = xarModAPIFunc('courses',
         'admin',
@@ -51,7 +51,7 @@ function courses_admin_participants()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         
-        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "$planningid:All:All")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
             $items[$i]['changestatusurl'] = xarModURL('courses',
                 'admin',
                 'changestatus',
@@ -64,7 +64,7 @@ function courses_admin_participants()
                                       array('status' => $item['status']));
         $items[$i]['selected']='';
         
-        if (xarSecurityCheck('AdminPlanning', 0, 'Planning', "$planningid:All:All")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deleteparticipant',

@@ -7,9 +7,9 @@
     -Enroll (done)
     -Check enrolled (done)
     -Historic view (Done via usermenu)
-    -Search function in course descriptions (Started with basic support)
+    -Search function in course descriptions (Done for some fields, needs improvements)
 5. Think about payment options (We at SENSE don't need them)
-6. Finish course planning interface
+6. Finish course planning interface (Partly done)
 7. Link to calendar
 8. Deadlines for enrolling (Partly done, need closing of enroll function)
 9. Block for upcoming courses and their deadlines
@@ -19,4 +19,4 @@
 13. Link course coordinators to courses
 14. Check all security functions
 15. Short URLs.
-16. Integration with categories(?)
+16. Integration with categories(done, needs checking)

@@ -62,7 +62,7 @@ function courses_userapi_getcourseid($args)
 
     // Security checks 
     // For this function, the user must *at least* have READ access to this item
-    if (!xarSecurityCheck('ReadCourses', 1, 'Course', "All:All:$courseid")) {
+    if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$courseid:All:All")) {
         return;
         }
     $item = array('courseid' => $courseid,

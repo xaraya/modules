@@ -2,15 +2,15 @@
 /**
  * File: $Id:
  *
- * Create a new example item
+ * Create a new courses item
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team
+ * @subpackage courses
+ * @author Courses module development team
  */
 /**
  * create a new course item
@@ -24,16 +24,9 @@
  */
 function courses_adminapi_create($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other
-    // places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // Get arguments from argument array
     extract($args);
-    // Argument check - make sure that all required arguments are present
-    // and in the right format, if not then set an appropriate error
-    // message and return
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
+    // Argument check
     $invalid = array();
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';

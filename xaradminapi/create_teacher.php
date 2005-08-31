@@ -32,7 +32,7 @@ function courses_adminapi_create_teacher($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('EditPlanning', 1, 'Planning', "$planningid:All:All")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:$planningid:All")) {
         return;
     }
     $dbconn =& xarDBGetConn();

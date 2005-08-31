@@ -13,6 +13,11 @@
    <xar:categories-navigation layout="trails" showchildren="1" module="courses" showcatcount="0" showempty="1" />
            <table>
             <tr>
+                <xar:if condition="$snumberlink != ''">
+                    <th><a href="#$snumberlink#">#$numberlabel#</a></th>
+                <xar:else />
+                    <th>#$numberlabel#</th>
+                </xar:if>
                 <xar:if condition="$snamelink != ''">
                     <th><a href="#$snamelink#">#$namelabel#</a></th>
                 <xar:else />
@@ -23,15 +28,11 @@
                 <xar:else />
                     <th>#$shortdesclabel#</th>
                 </xar:if>
-                <xar:if condition="$snumberlink != ''">
-                    <th><a href="#$snumberlink#">#$numberlabel#</a></th>
-                <xar:else />
-                    <th>#$numberlabel#</th>
-                </xar:if>
             </tr>
         
             <xar:foreach in="$items" value="$item">
                 <tr>
+                <td>#$item['number']#</td>
                 <td>
                     <xar:if condition="empty($item['link'])">
                         #$item['name']#
@@ -40,13 +41,11 @@
                     </xar:if>
                  </td>
                  <td>#$item['shortdesc']#</td>
-                 <td>#$item['number']#</td>
                </tr>
            </xar:foreach>
     
         </table>
         <br />
-
         #$pager#
     </div>
 </div>

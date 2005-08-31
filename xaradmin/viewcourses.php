@@ -51,7 +51,7 @@ function courses_admin_viewcourses()
         $item = $items[$i];
         $courseid = $item['courseid'];
         $name = $item['name'];
-        if (xarSecurityCheck('AddPlanning', 0, 'Planning', "All:All:$courseid")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['planurl'] = xarModURL('courses',
                 'admin',
                 'plancourse',
@@ -60,7 +60,7 @@ function courses_admin_viewcourses()
             $items[$i]['planurl'] = '';
         }
         $items[$i]['plantitle'] = xarML('Plan');
-        if (xarSecurityCheck('EditCourses', 0, 'Course', "$name:All:$courseid")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['editurl'] = xarModURL('courses',
                 'admin',
                 'modifycourse',
@@ -70,7 +70,7 @@ function courses_admin_viewcourses()
         }
         $items[$i]['edittitle'] = xarML('Edit');
         
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$name:All:$courseid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['displayurl'] = xarModURL('courses',
                 'user',
                 'display',
@@ -79,7 +79,7 @@ function courses_admin_viewcourses()
             $items[$i]['displayurl'] = '';
         }
         
-        if (xarSecurityCheck('DeleteCourses', 0, 'Course', "$name:All:$courseid")) {
+        if (xarSecurityCheck('DeleteCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deletecourse',

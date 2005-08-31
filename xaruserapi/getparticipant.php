@@ -27,7 +27,7 @@ function courses_userapi_getparticipant($args)
     if (!xarVarFetch('sid', 'int:1:', $sid)) return;
 
     $item = array();
-    if (!xarSecurityCheck('EditPlanning')) return;
+    if (!xarSecurityCheck('EditCourses')) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -54,7 +54,7 @@ function courses_userapi_getparticipant($args)
     // Put item into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $status, $regdate) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:All")) { //TODO
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) { //TODO
             $item = array('sid'        => $sid,
                           'userid'     => $userid,
                           'planningid' => $planningid,

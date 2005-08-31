@@ -57,11 +57,7 @@ function courses_admin_delete($args)
     $newid = $object->getItem();
     if (!isset($newid) || $newid != $itemid) return;
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing.  However,
-    // in this case we had to wait until we could obtain the item name to
-    // complete the instance information so this is the first chance we get to
-    // do the check
+    // Security check
     if (!xarSecurityCheck('AdminCourses')) return;
 
     $data['menu']      = xarModFunc('courses','admin','menu');

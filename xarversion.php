@@ -14,7 +14,7 @@
  */
 $modversion['name']           = 'Courses';
 $modversion['id']             = '179';
-$modversion['version']        = '0.0.8';
+$modversion['version']        = '0.0.9';
 $modversion['displayname']    = xarML('Courses');
 $modversion['description']    = 'Course Offerings and Registration';
 $modversion['credits']        = 'xardocs/credits.txt';

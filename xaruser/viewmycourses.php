@@ -60,8 +60,8 @@ function courses_user_viewmycourses()
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
     foreach ($items as $item) {
-
-        if (xarSecurityCheck('ReadPlanning', 0, 'Item', "$item[name]:All:$item[planningid]")) {
+        $planningid = $item['planningid'];
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) {
             $item['link'] = xarModURL('courses',
                 'user',
                 'displayplanned',

@@ -77,7 +77,7 @@ function courses_userapi_search($args)
     // Put polls into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($courseid, $name, $number) = $result->fields;
-        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$name,$number,$courseid")) {
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
             $courses[] = array('courseid' => $courseid,
                                'name' => $name,
                                'number' => $number);

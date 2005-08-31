@@ -29,7 +29,7 @@ function courses_adminapi_createplanning($args)
     // Argument check TODO
     
     // Security check
-    if (!xarSecurityCheck('AddPlanning', 1, 'Planning', "All:All:All")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
         return;
     }
     // Get database setup

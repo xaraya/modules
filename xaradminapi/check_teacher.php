@@ -42,7 +42,7 @@ function courses_adminapi_check_teacher($args)
     else {
     for (; !$result->EOF; $result->MoveNext()) {
         list($userid, $planningid) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:All")) {
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:$planningid:All")) {
             $items[] = array('userid' => $userid,
                             'planningid' => $planningid);
         }

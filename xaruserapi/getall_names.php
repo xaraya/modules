@@ -24,27 +24,15 @@
  */
 function courses_userapi_getall_names($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other places
-    // such as the environment is not allowed, as that makes assumptions that
-    // will not hold in future versions of Xaraya
     extract($args);
-
     // Optional arguments.
-    // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
-    // replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
-    // if (!isset($startnum)) {
     if (!isset($startnum)) {
         $startnum = 1;
     }
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    // Argument check - make sure that all required arguments are present and
-    // in the right format, if not then set an appropriate error message
-    // and return
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
+    // Argument check
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
@@ -60,22 +48,13 @@ function courses_userapi_getall_names($args)
             new SystemException($msg));
         return;
     }
-   $names = array();
-   //$items2 = array();
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
+    $names = array();
     if (!xarSecurityCheck('ViewCourses')) return;
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table definitions you are
-    // using - $table doesn't cut it in more complex modules
-   $coursestable = $xartable['courses'];
-     $uid = xarUserGetVar('uid');
+    $coursestable = $xartable['courses'];
+    $uid = xarUserGetVar('uid');
     // TODO: how to select by cat ids (automatically) when needed ???
     // Get items - the formatting here is not mandatory, but it does make the
     // SQL statement relatively easy to read.  Also, separating out the sql
@@ -88,18 +67,13 @@ function courses_userapi_getall_names($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Put items into result array.  Note that each item is checked
-    // individually to ensure that the user is allowed *at least* OVERVIEW
-    // access to it before it is added to the results array.
-    // If more severe restrictions apply, e.g. for READ access to display
-    // the details of the item, this *must* be verified by your function.
+    // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($name) = $result->fields;
-        if (xarSecurityCheck('ViewCourses', 0, 'Item', "All:All:$name")) {
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
             $items[] = array('name' => $name);
        }
     }
-
 
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with

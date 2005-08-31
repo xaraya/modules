@@ -30,7 +30,7 @@ function courses_userapi_getallplanned($args)
 
     $items = array();
     // Security check
-    if (!xarSecurityCheck('ViewPlanning')) return;
+    if (!xarSecurityCheck('ReadCourses')) return;
     
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -39,7 +39,7 @@ function courses_userapi_getallplanned($args)
     // TODO: how to select by cat ids (automatically) when needed ???
 
     // Set to be able to see all courses or only non-hidden ones
-    if (xarSecurityCheck('EditPlanning', 0)) {
+    if (xarSecurityCheck('EditCourses', 0)) {
     $where = "0, 1";
     } else {
     $where = "0";
@@ -83,7 +83,7 @@ function courses_userapi_getallplanned($args)
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "$planningid:All:$courseid")){
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")){
 
             $items[] = array(
             'planningid' => $planningid,

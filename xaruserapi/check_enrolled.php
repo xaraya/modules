@@ -36,7 +36,7 @@ function courses_userapi_check_enrolled($args)
 
     $items = array();
     // Security check
-    if (!xarSecurityCheck('ViewPlanning')) return;
+    if (!xarSecurityCheck('ReadCourses')) return;
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -54,7 +54,7 @@ function courses_userapi_check_enrolled($args)
     else {
     for (; !$result->EOF; $result->MoveNext()) {
         list($userid, $planningid) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "All:All:$planningid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) {
             $items[] = array('userid' => $userid,
                              'planningid' => $planningid);
         }

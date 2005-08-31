@@ -51,7 +51,7 @@ function courses_userapi_create_enroll($args)
     }
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('ViewPlanning', 1, 'Planning', "$planningid:All:All")) {
+    if (!xarSecurityCheck('ReadCourses', 1, 'Course', "All:$planningid:All")) {
         return;
     }
     $dbconn =& xarDBGetConn();

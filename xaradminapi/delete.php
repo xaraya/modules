@@ -41,7 +41,7 @@ function courses_adminapi_delete($args)
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('DeleteCourses', 1, 'Course', "All:All:$courseid")) {
+    if (!xarSecurityCheck('DeleteCourses', 1, 'Course', '$courseid:All:All')) {
         return;
     }
     // Get database setup

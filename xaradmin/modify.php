@@ -36,7 +36,7 @@ function courses_admin_modify($args)
         return $msg;
     }
 
-    if (!xarSecurityCheck('edithelpdesk',1,'item',$itemid)) return;
+    if (!xarSecurityCheck('EditCourses',1)) return;
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object =& xarModAPIFunc('dynamicdata','user','getobject',
@@ -59,7 +59,7 @@ function courses_admin_modify($args)
 
     // Take care of hooks
     $item = array();
-    $item['module']   = 'helpdesk';
+    $item['module']   = 'courses';
     $item['itemid']   = $itemid;
     $item['itemtype'] = $itemtype;
     $hooks = xarModCallHooks('item','modify',$itemid,$item);

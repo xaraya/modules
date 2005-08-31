@@ -61,11 +61,12 @@ function courses_adminapi_createcourse($args)
               xar_language,
               xar_freq,
               xar_contact,
+			  xar_contacuid,
               xar_hidecourse,
               xar_last_modified)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             
-    $bindvars = array((int)$nextId, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse, $last_modified);
+    $bindvars = array((int)$nextId, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid, $hidecourse, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

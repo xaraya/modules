@@ -42,7 +42,7 @@ function courses_userapi_getmenulinks()
             'title' => xarML('Search for a course'),
             'label' => xarML('Search'));
     }
-    if (xarSecurityCheck('Viewplanning', 0)) {
+    if (xarSecurityCheck('ReadCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('roles',
                 'user',
                 'account', array('moduleload' => 'courses')),

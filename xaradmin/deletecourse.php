@@ -37,7 +37,7 @@ function courses_admin_deletecourse($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('DeleteCourses', 1, 'Course', "All:All:$courseid")) {
+    if (!xarSecurityCheck('DeleteCourses', 1, 'Course', "$courseid:All:All")) {
         return;
     }
     // Check for confirmation.

@@ -44,7 +44,7 @@ function courses_adminapi_deleteparticipant($args)
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('AdminPlanning', 1, 'Item', "All:All:All")) { //TODO rewrite
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:All:All")) { //TODO rewrite
         return;
     }
     $dbconn =& xarDBGetConn();

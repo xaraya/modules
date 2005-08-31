@@ -14,13 +14,12 @@
  */
  
 /**
- * view courses
+ * view course parameters
  */
 function courses_admin_view()
 {
     // Get Vars
     xarVarFetch('itemtype', 'int', $itemtype,  3, XARVAR_NOT_REQUIRED);
-    //Helpdesk: xarVarFetch('startnum', 'int', $data['startnum'],  NULL, XARVAR_NOT_REQUIRED);
 
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
 

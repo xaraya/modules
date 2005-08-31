@@ -55,6 +55,7 @@ function courses_userapi_getall($args)
                    xar_language,
                    xar_freq,
                    xar_contact,
+				   xar_contactuid,
                    xar_hidecourse,
                    xar_last_modified";
     
@@ -88,8 +89,8 @@ function courses_userapi_getall($args)
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($courseid, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse, $last_modified) = $result->fields;
-        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$name:All:$courseid")) {
+        list($courseid, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid, $hidecourse, $last_modified) = $result->fields;
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
             $items[] = array('courseid' => $courseid,
                 'name' => $name,
                 'number' => $number,
@@ -99,6 +100,7 @@ function courses_userapi_getall($args)
                 'language' => $language,
                 'freq' => $freq,
                 'contact' => $contact,
+				'contactuid' => $contactuid,
                 'hidecourse' => $hidecourse,
                 'last_modified' => $last_modified);
         }

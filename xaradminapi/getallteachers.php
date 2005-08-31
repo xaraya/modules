@@ -59,7 +59,7 @@ function courses_adminapi_getallteachers($args)
     }
 
     $items = array();
-    if (!xarSecurityCheck('EditPlanning')) return;
+    if (!xarSecurityCheck('EditCourses', '0', 'Course', "All:$planningid:All")) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -80,7 +80,7 @@ function courses_adminapi_getallteachers($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $userid, $planningid, $type) = $result->fields;
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "All:All:All")) { //TODO
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) { //TODO
             $items[] = array('tid' => $tid,
                 'userid'           => $userid,
                 'planningid'       => $planningid,

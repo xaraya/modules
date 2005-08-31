@@ -64,7 +64,7 @@ function courses_user_usermenu($args)
          // Transform display
          // TODO define SecCheck
              foreach ($items as $item) {
-                if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "All:All:All")) { 
+                if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) { 
                     $item['link'] = xarModURL('courses',
                         'user',
                         'displayplanned',
@@ -97,7 +97,7 @@ function courses_user_usermenu($args)
              // Transform display
              // TODO define SecCheck
              foreach ($titems as $item) {
-                if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "All:All:All")) { 
+                if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) { 
                     $item['tlink'] = xarModURL('courses',
                         'user',
                         'displayplanned',

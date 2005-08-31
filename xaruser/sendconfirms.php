@@ -43,11 +43,11 @@ function courses_user_sendconfirms($args)
 
     $name = $course['name'];
     // Check to see if coordinator exists
-    $coordinators = $planitem['coordinators'];
+    $coordinators = $course['contactuid'];
     // Without coordinator, send mail to AlwaysNotify
-    if (!isset($planitem['coordinators']) || !is_numeric($planitem['coordinators'])) {
+    if (!isset($course['contactuid']) || !is_numeric($course['contactuid'])) {
         $recipients = xarModGetVar('courses', 'AlwaysNotify'); 
-    } elseif (isset($planitem['coordinators']) && is_numeric($planitem['coordinators'])) {
+    } elseif (isset($course['contactuid']) && is_numeric($course['contactuid'])) {
         $recipients = xarUserGetVar('email', $coordinators).','.xarModGetVar('courses', 'AlwaysNotify');    
     } else {
         $msg = xarML('Wrong arguments to courses_enroll', join(', ', $invalid), 'user', 'enroll', 'Courses');
@@ -124,13 +124,13 @@ function courses_user_sendconfirms($args)
     if(isset($studentmail)) {
         $uid = xarUserGetVar('uid');
         $studentname = xarUserGetVar('name');
-        $coordinators = $planitem['coordinators'];
+        $coordinators = $course['contactuid'];
         $fromname = xarUserGetVar('name', $coordinators);
         $fromemail = xarUserGetVar('email', $coordinators); 
         $viewcourse = xarModUrl('courses', 'user', 'displayplanned', array('planningid' => $planningid));
         $viewaccount = xarModUrl('roles', 'user', 'account', array('moduleload' => 'courses'));
         // Check the coordinator name/e-mail; otherwise default to webmaster
-            if (!isset($planitem['coordinators']) || !is_numeric($planitem['coordinators'])) { //Or use contact address?
+            if (!isset($course['contactuid']) || !is_numeric($course['contactuid'])) { //Or use contact address?
                 $fromname = xarML('Webmaster');
                 $fromemail = xarUserGetVar('mail', 'adminmail');
             }

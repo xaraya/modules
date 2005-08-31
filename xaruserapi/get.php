@@ -50,6 +50,7 @@ function courses_userapi_get($args)
                    xar_language,
                    xar_freq,
                    xar_contact,
+				   xar_contactuid,
                    xar_hidecourse,
                    xar_last_modified
             FROM $coursestable
@@ -65,12 +66,12 @@ function courses_userapi_get($args)
         return;
     }
     // Extract fields
-    list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $hidecourse, $last_modified) = $result->fields;
+    list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid, $hidecourse, $last_modified) = $result->fields;
     $result->Close();
 
     // Security checks 
     // For this function, the user must *at least* have READ access to this item
-    if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$name:All:$courseid")) {
+    if (!xarSecurityCheck('ViewCourses', 1, 'Course', "$courseid:All:All")) {
         return;
         }
     $item = array('courseid' => $courseid,
@@ -82,6 +83,7 @@ function courses_userapi_get($args)
         'language' => $language,
         'freq' => $freq,
         'contact' => $contact,
+		'contactuid' => $contactuid,
         'hidecourse' => $hidecourse,
         'last_modified' => $last_modified);
     // Return the item array

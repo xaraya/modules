@@ -13,7 +13,7 @@
  * @author Courses module development team 
  */
 /**
- * add new planning for a course
+ * Add new planning for a course
  * This is a standard function that is called whenever an administrator
  * wishes to create a new planning for a specified course
  *
@@ -53,7 +53,7 @@ function courses_admin_plancourse($args)
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Security check
-    if (!xarSecurityCheck('AddPlanning')) return;
+    if (!xarSecurityCheck('EditCourses', 0, 'Course', '$courseid:All:All')) return;
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;

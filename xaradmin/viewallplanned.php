@@ -56,44 +56,45 @@ function courses_admin_viewallplanned()
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-        if (xarSecurityCheck('EditPlanning', 0, 'Planning',"All:All:All")) { //Why did the appointment of $item['courseid'] not work here?
+		$planningid = $item['planningid'];
+        if (xarSecurityCheck('EditCourses', 0, 'Course',"All:$planningid:All")) { //Why did the appointment of $item['courseid'] not work here?
             $items[$i]['editurl'] = xarModURL('courses',
                 'admin',
                 'modifyplanned',
-                array('planningid' => $item['planningid']));
+                array('planningid' => $planningid));
         } else {
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
         
-        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "$item[planningid]:All:$item[courseid]")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
             $items[$i]['participantsurl'] = xarModURL('courses',
                 'admin',
                 'participants',
-                array('planningid' => $item['planningid']));
+                array('planningid' => $planningid));
         } else {
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participants'] = xarModAPIFunc('courses', 
                                                    'user',
                                                    'countparticipants',
-                                                    array('planningid' => $item['planningid'])
+                                                    array('planningid' => $planningid)
                                                     );
 
-        if (xarSecurityCheck('ViewPlanning', 0, 'Planning', "All:All:All")) {
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:$planningid:All")) {
             $items[$i]['displayurl'] = xarModURL('courses',
                 'user',
                 'displayplanned',
-                array('planningid' => $item['planningid']));
+                array('planningid' => $planningid));
         } else {
             $items[$i]['displayurl'] = '';
         }
         
-        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "All:All:$item[courseid]")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
             $items[$i]['teachersurl'] = xarModURL('courses',
                 'admin',
                 'teachers',
-                array('planningid' => $item['planningid']));
+                array('planningid' => $planningid));
         } else {
             $items[$i]['teachersurl'] = '';
         }

@@ -273,37 +273,25 @@ function courses_init()
      * Define instances for this module
      * Format is
      * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
+     * CourseID: Per course
+	 * PlanningID: Per Planned Course
+	 * YearID: per year. In combination with courses
      */
-    // Instance definitions serve two purposes:
-    // 1. The define "filters" that are added to masks at runtime, allowing us to set
-    // security checks over single objects or groups of objects
-    // 2. They generate dropdowns the UI uses to present the user with choices when
-    // defining or modifying privileges.
-    // For each component we need to tell the system how to generate
-    // a list (dropdown) of all the component's instances.
-    // In addition, we add a header which will be displayed for greater clarity, and a number
-    // (limit) which defines the maximum number of rows a dropdown can have. If the number of
-    // instances is greater than the limit (e.g. registered users), the UI instead presents an
-    // input field for manual input, which is then checked for validity.
+
     $query1 = "SELECT DISTINCT xar_courseid FROM " . $coursestable; // Check for the courseid
-    $query2 = "SELECT DISTINCT xar_number FROM " . $coursestable; // Make a readable course selection
-    $query3 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning; // Make a planned course selectable
-    $query4 = "SELECT DISTINCT xar_yearid FROM " . $courses_years; // Specify per year
+    $query2 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning; // Make a planned course selectable
+    $query3 = "SELECT DISTINCT xar_yearid FROM " . $courses_years; // Specify per year
     $instances = array(
         array('header' => 'Course ID:',
             'query' => $query1,
             'limit' => 20
             ),
-        array('header' => 'Course Number:',
+        array('header' => 'Planning ID:',
             'query' => $query2,
             'limit' => 20
             ),
-        array('header' => 'Planning ID:',
-            'query' => $query3,
-            'limit' => 20
-            )
         array('header' => 'Year ID:',
-            'query' => $query4,
+            'query' => $query3,
             'limit' => 20
             )
         );
@@ -329,12 +317,12 @@ function courses_init()
     // The block will be maybe be used
     // The courses themselves need to be adminable
     xarRegisterMask('ReadCoursesBlock', 'All', 'courses', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
 }
@@ -486,34 +474,34 @@ function courses_upgrade($oldversion)
        case '0.0.8':
             // Set the always receive e-mail
             xarModSetVar('courses', 'AlwaysNotify', 'webmaster@yoursite.com');
-            return courses_upgrade('0.0.9');
             // Remove Masks and Instances
             // these functions remove all the registered masks and instances of a module
             // from the database. This is not strictly necessary, but it's good housekeeping.
             xarRemoveMasks('courses');
             xarRemoveInstances('courses');
             xarRemovePrivileges('courses');
-            
+			// New Privileges
+			$dbconn =& xarDBGetConn();
+			$xartable =& xarDBGetTables();
+			// The courses table
+			$coursestable = $xartable['courses'];
+			$courses_planning = $xartable['courses_planning'];
+			$courses_years = $xartable['courses_years'];
             //Create new masks and privileges.
             $query1 = "SELECT DISTINCT xar_courseid FROM " . $coursestable; // Check for the courseid
-            $query2 = "SELECT DISTINCT xar_number FROM " . $coursestable; // Make a readable course selection
-            $query3 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning; // Make a planned course selectable
-            $query4 = "SELECT DISTINCT xar_yearid FROM " . $courses_years; // Specify per year
+            $query2 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning; // Make a planned course selectable
+            $query3 = "SELECT DISTINCT xar_yearid FROM " . $courses_years; // Specify per year
             $instances = array(
                 array('header' => 'Course ID:',
                     'query' => $query1,
                     'limit' => 20
                     ),
-                array('header' => 'Course Number:',
+                array('header' => 'Planning ID:',
                     'query' => $query2,
                     'limit' => 20
                     ),
-                array('header' => 'Planning ID:',
-                    'query' => $query3,
-                    'limit' => 20
-                    )
                 array('header' => 'Year ID:',
-                    'query' => $query4,
+                    'query' => $query3,
                     'limit' => 20
                     )
                 );
@@ -521,12 +509,12 @@ function courses_upgrade($oldversion)
 
             // Create new masks
             xarRegisterMask('ReadCoursesBlock', 'All', 'courses', 'Block', 'All', 'ACCESS_OVERVIEW');
-            xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_OVERVIEW');
-            xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_READ');
-            xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_EDIT');
-            xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADD');
-            xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_DELETE');
-            xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All:All', 'ACCESS_ADMIN');
+            xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADMIN');
 
        //Change table layout
             // Add contactuid to coursestable 
@@ -545,11 +533,11 @@ function courses_upgrade($oldversion)
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
             $coursestable = $xartable['courses'];
             // Apply changes
-                        xarDBLoadTableMaintenanceAPI();
-            $result = $datadict->alterColumn($juliantable, 'email varchar(70) Null');
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($coursestable, 'xar_name varchar(100) NOT Null');
             if (!$result) return;
-    //!!!!!   TODO
-               'xar_name' => array('type' => 'varchar', 'size' => 100, 'null' => false),
+			
+            return courses_upgrade('0.0.9');
 
        case '0.0.9':
             break;
