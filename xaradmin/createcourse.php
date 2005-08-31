@@ -71,7 +71,7 @@ function courses_admin_createcourse($args)
                                 'language' => $language,
                                 'freq' => $freq,
                                 'contact' => $contact,
-								'contactuid' => $contactuid,
+                                'contactuid' => $contactuid,
                                 'hidecourse' => $hidecourse,
                                 'invalid' => $invalid));
     }
@@ -89,7 +89,7 @@ function courses_admin_createcourse($args)
                                 'language' => $language,
                                 'freq' => $freq,
                                 'contact' => $contact,
-								'contactuid' => $contactuid,
+                                'contactuid' => $contactuid,
                                 'hidecourse' => $hidecourse,
                                 'last_modified' => $last_modified));
     // The return value of the function is checked here, and if the function

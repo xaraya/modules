@@ -61,7 +61,7 @@ function courses_adminapi_createcourse($args)
               xar_language,
               xar_freq,
               xar_contact,
-			  xar_contacuid,
+              xar_contacuid,
               xar_hidecourse,
               xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";

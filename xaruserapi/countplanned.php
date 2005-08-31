@@ -13,7 +13,7 @@
  * @author Courses module development team 
  */
 /**
- * utility function to count the number of items held by this module
+ * utility function to count the number of planned courses
  * 
  * @author the Courses module development team 
  * @param $catid Category id.
@@ -21,7 +21,7 @@
  * @return number of items held by this module
  * @raise DATABASE_ERROR
  */
-function courses_userapi_countitems($args)
+function courses_userapi_countplanned($args)
 {
     extract ($args);
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_DONT_SET)) return;
@@ -30,7 +30,7 @@ function courses_userapi_countitems($args)
     $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
-    $coursestable = $xartable['courses'];
+    $planningtable = $xartable['courses_planning'];
     
     // Set to be able to see all courses or only non-hidden ones
     if (xarSecurityCheck('AdminCourses', 0)) {
@@ -40,40 +40,34 @@ function courses_userapi_countitems($args)
     }
 
     $query = "SELECT COUNT(*) ";
-            
-    // TODO: how to select by cat ids (automatically) when needed ???
-    // My try at it...
+    // Include category navigation possibility            
     if (!empty($catid) && xarModIsHooked('categories','courses')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('modid' => xarModGetIDFromName('courses'),
                                              'catid' => $catid));
         if (!empty($categoriesdef)) {
-            $query .= " FROM ($coursestable
+            $query .= " FROM ($planningtable
                         LEFT JOIN $categoriesdef[table]
-                        ON $categoriesdef[field] = xar_courseid )
+                        ON $categoriesdef[field] = xar_planningid )
                         $categoriesdef[more]
                         WHERE $categoriesdef[where] 
-                        AND xar_hidecourse in ($where)";
+                        AND xar_hideplanning in ($where)";
             } else {
-                $query .= " FROM $coursestable 
-                            WHERE xar_hidecourse in ($where)";
+                $query .= " FROM $planningtable 
+                            WHERE xar_hideplanning in ($where)";
             }
      } else {
-        $query .= " FROM $coursestable 
-                    WHERE xar_hidecourse in ($where)";
+        $query .= " FROM $planningtable 
+                    WHERE xar_hideplanning in ($where)";
      }
             
     $result = &$dbconn->Execute($query);
-    // Check for an error with the database code, adodb has already raised
-    // the exception so we just return
     if (!$result) return;
-    // Obtain the number of items
+
     list($numitems) = $result->fields;
-    // All successful database queries produce a result set, and that result
-    // set should be closed when it has been finished with
     $result->Close();
-    // Return the number of items
+
     return $numitems;
 }
 

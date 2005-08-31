@@ -55,8 +55,8 @@ function courses_init()
         'xar_creditsmin' => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
         'xar_creditsmax' => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
         'xar_courseyear' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_startdate'=>array('type'=>'datetime'),
-        'xar_enddate'=>array('type'=>'datetime'),
+        'xar_startdate'=>array('type'=>'date', 'default' => '00-00-0000','null'=>FALSE),
+        'xar_enddate'=>array('type'=>'date','default' => '00-00-0000','null'=>FALSE),
         'xar_prerequisites'=>array('null'=>FALSE, 'type'=>'text'),
         'xar_aim'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_method'=>array('null'=>TRUE, 'type'=>'text'),
@@ -73,7 +73,7 @@ function courses_init()
         'xar_minparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_maxparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_closedate'=>array('type'=>'date'),
-        'xar_last_modified'=>array('type'=>'datetime','null'=>FALSE,)
+        'xar_last_modified'=>array('type'=>'datetime','null'=>FALSE)
         );
 
      $query = xarDBCreateTable($courses_planning, $fields);
@@ -274,8 +274,8 @@ function courses_init()
      * Format is
      * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
      * CourseID: Per course
-	 * PlanningID: Per Planned Course
-	 * YearID: per year. In combination with courses
+     * PlanningID: Per Planned Course
+     * YearID: per year. In combination with courses
      */
 
     $query1 = "SELECT DISTINCT xar_courseid FROM " . $coursestable; // Check for the courseid
@@ -480,13 +480,13 @@ function courses_upgrade($oldversion)
             xarRemoveMasks('courses');
             xarRemoveInstances('courses');
             xarRemovePrivileges('courses');
-			// New Privileges
-			$dbconn =& xarDBGetConn();
-			$xartable =& xarDBGetTables();
-			// The courses table
-			$coursestable = $xartable['courses'];
-			$courses_planning = $xartable['courses_planning'];
-			$courses_years = $xartable['courses_years'];
+            // New Privileges
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // The courses table
+            $coursestable = $xartable['courses'];
+            $courses_planning = $xartable['courses_planning'];
+            $courses_years = $xartable['courses_years'];
             //Create new masks and privileges.
             $query1 = "SELECT DISTINCT xar_courseid FROM " . $coursestable; // Check for the courseid
             $query2 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning; // Make a planned course selectable
@@ -534,12 +534,28 @@ function courses_upgrade($oldversion)
             $coursestable = $xartable['courses'];
             // Apply changes
             xarDBLoadTableMaintenanceAPI();
-            $result = $datadict->alterColumn($coursestable, 'xar_name varchar(100) NOT Null');
+            $result = $datadict->alterColumn($coursestable, 'xar_name varchar(100) NOTNUll');
             if (!$result) return;
-			
+            
             return courses_upgrade('0.0.9');
-
        case '0.0.9':
+            
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Using the Datadict method to be up to date ;)
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $planningtable = $xartable['courses_planning'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($planningtable, 'xar_startdate date NOTNULL 00-00-0000');
+            if (!$result) return;
+
+            $result = $datadict->alterColumn($planningtable, 'xar_enddate date NOTNULL 00-00-0000');
+            if (!$result) return;
+            
+            return courses_upgrade('0.1.0');
+        case '0.1.0':
+        
             break;
     }
     // Update successful

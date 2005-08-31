@@ -32,8 +32,8 @@ function courses_admin_viewallplanned()
 
     // TODO Counter
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('courses', 'user', 'countitems'),
-        xarModURL('courses', 'admin', 'viewcourses', array('startnum' => '%%')),
+        xarModAPIFunc('courses', 'user', 'countplanned'),
+        xarModURL('courses', 'admin', 'viewallplanned', array('startnum' => '%%')),
         xarModGetVar('courses', 'itemsperpage'));
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -56,7 +56,7 @@ function courses_admin_viewallplanned()
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-		$planningid = $item['planningid'];
+        $planningid = $item['planningid'];
         if (xarSecurityCheck('EditCourses', 0, 'Course',"All:$planningid:All")) { //Why did the appointment of $item['courseid'] not work here?
             $items[$i]['editurl'] = xarModURL('courses',
                 'admin',
@@ -102,6 +102,8 @@ function courses_admin_viewallplanned()
         
         $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
         $items[$i]['name'] = xarVarPrepForDisplay($course['name']);
+        $items[$i]['startdate'] = xarVarPrepForDisplay(xarLocaleGetFormattedDate('short',$item['startdate']));
+        $items[$i]['enddate'] = xarVarPrepForDisplay(xarLocaleGetFormattedDate('short',$item['enddate']));
     // End for()
     }
     

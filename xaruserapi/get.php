@@ -50,7 +50,7 @@ function courses_userapi_get($args)
                    xar_language,
                    xar_freq,
                    xar_contact,
-				   xar_contactuid,
+                   xar_contactuid,
                    xar_hidecourse,
                    xar_last_modified
             FROM $coursestable
@@ -83,7 +83,7 @@ function courses_userapi_get($args)
         'language' => $language,
         'freq' => $freq,
         'contact' => $contact,
-		'contactuid' => $contactuid,
+        'contactuid' => $contactuid,
         'hidecourse' => $hidecourse,
         'last_modified' => $last_modified);
     // Return the item array

@@ -55,7 +55,7 @@ function courses_userapi_getall($args)
                    xar_language,
                    xar_freq,
                    xar_contact,
-				   xar_contactuid,
+                   xar_contactuid,
                    xar_hidecourse,
                    xar_last_modified";
     
@@ -100,7 +100,7 @@ function courses_userapi_getall($args)
                 'language' => $language,
                 'freq' => $freq,
                 'contact' => $contact,
-				'contactuid' => $contactuid,
+                'contactuid' => $contactuid,
                 'hidecourse' => $hidecourse,
                 'last_modified' => $last_modified);
         }

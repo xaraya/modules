@@ -57,7 +57,7 @@ function courses_userapi_getcoursename($args)
     list($name) = $result->fields;
     $result->Close();
     $item = array('courseid' => $courseid,
-	              'name' => $name);
+                  'name' => $name);
 
     return $item;
 }
