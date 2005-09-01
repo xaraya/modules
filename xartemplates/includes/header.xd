@@ -1,5 +1,5 @@
 #xarModAPIFunc('overlib','user','init')#
-<xar:if condition="xarTplAddStyleLink('julian', 'xartabs')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
 
 <script type="text/javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>

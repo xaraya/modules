@@ -144,7 +144,7 @@
                             <textarea class="fullright" name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40"></textarea>
                         </span>
                     </p>
-                    <p class="param">
+                    <!--<p class="param">-->
                     #$hooks['categories']#
                         <!--<label for="category">
                             <span class="help" title="#xarML('Event Category.')#">
@@ -152,7 +152,7 @@
                             </span>
                         </label>
                         <select name="category" id="category"></select>#$cat_options#!-->
-                    </p>
+                    <!--</p>-->
                     
                     <p class="param">
                         <label for="month" class="required">

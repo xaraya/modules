@@ -1,9 +1,17 @@
+<xar:comment>
+These calls don't seem to work:
 #xarModAPIFunc('overlib','user','init')#
-
-<!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
-<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>-->
+<xar:overlib-init />
+When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
+<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+</xar:comment>
 <link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css">
 <script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>
+
+<xar:comment>Direct call to the java-script, normally performed by the overlib tag</xar:comment>
+<script type="text/javascript" src="modules/overlib/config.inc.js"></script>
+<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+<script src="modules/overlib/overlib_mini.js" type="text/javascript"></script>
 
 <div class="xar-julian xar-julian-block-calmonth">
 
@@ -44,7 +52,7 @@
                                 <xar:overlib-popup-close name="$olclose" />
                                 <xar:set name="$event">'
                                  onmouseover="return overlib(\''.$text.'\',CAPTION,\''.xarLocaleFormatDate('%m/%d/%Y',strtotime($date)).'\')" 
-                                 onmouseout="'.$olclose.'"
+								 onmouseout="return nd()"
                                  class="xar-julian-event"'</xar:set>
                             <xar:else />
                                 <xar:set name="$event">''</xar:set>
