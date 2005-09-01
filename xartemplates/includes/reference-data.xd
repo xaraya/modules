@@ -6,7 +6,7 @@
     <!-- If there is a grouping filter, use it -->
     <xar:if condition="isset($use_grouping) and $use_grouping==true">
         <div class="display"">
-            <label><xar:mlstring>Show items in group:</xar:mlstring>
+            <label><xar:mlstring>Show items in group:</xar:mlstring></label>
         </div>
         <xar:if condition="!isset($group_value)">
             <xar:set name="group_value">""</xar:set>
@@ -26,13 +26,13 @@
     
 
     <!-- The left side contains a list of items -->
-    <div style="width: 50%; float: left;">
+    <div style="width: 48%; float: left;">
         <xar:if condition="!isset($where)"><xar:set name="where">""</xar:set></xar:if>
         <xar:data-view module="$moduleid" itemtype="$itemtype" fieldlist="$fieldlist" numitems="$itemsperpage" count="yes" template="ice" where="$where"/>
     </div>
     
     <!-- The right side contains detail on the current item -->
-    <div style="width: 50%; float: right;">
+    <div style="width: auto; float: right;">
         <xar:data-display module="$moduleid" itemtype="$itemtype" itemid="$itemid" template="ice"/>
     </div>
     
