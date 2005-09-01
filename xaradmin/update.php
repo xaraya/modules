@@ -80,24 +80,11 @@ function courses_admin_update($args)
     // update the item
     $itemid = $object->updateItem();
     if (empty($itemid)) return; // throw back
-                // Let's take care of the hooks
-    $item = array();
-    $item['module']   = 'courses';
-    $item['itemid']   = $itemid;
-    $item['itemtype'] = $itemtype;
-    $item['returnurl'] = xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype));
-    $hooks = xarModCallHooks('item','update',$itemid,$item);
-    if (empty($hooks)) {
-    $data['hooks'] = array();
-    }else {
-    $data['hooks'] = $hooks;
-    }
-    
     // let's go back to the admin view
     // Why does this one not work correct?
-    // xarResponseRedirect(xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype)));
+    xarResponseRedirect(xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype)));
 
     // Return
-    return xarResponseRedirect(xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype)));//true;
+    return true;
 }
 ?>

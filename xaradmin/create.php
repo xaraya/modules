@@ -19,9 +19,9 @@ function courses_admin_create($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, null, XARVAR_GET_OR_POST)) return;
-    if (!xarVarFetch('itemid',   'int:1:', $itemid,'', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('preview',  'isset',  $preview,  null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, NULL, XARVAR_GET_OR_POST)) return;
+    if (!xarVarFetch('itemid',   'int:1:', $itemid,   '',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('preview',  'isset',  $preview,  NULL, XARVAR_NOT_REQUIRED)) return;
 
     if (empty($itemtype)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -40,7 +40,7 @@ function courses_admin_create($args)
     if (!isset($object)) return;  // throw back
 
     // check the input values for this object
-    // TODO: is this e a correct way of dealing with a check?
+    // TODO: is this a correct way of dealing with a check?
     $isvalid = $object->checkInput();
 
     // if we're in preview mode, or if there is some invalid input, show the form again

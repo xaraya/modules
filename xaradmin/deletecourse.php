@@ -60,6 +60,9 @@ function courses_admin_deletecourse($args)
     }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
+	
+	// TODO: Check for existing links with participants and planned courses. Only allow delete when none are present.
+	
     // Call API to do the delete
     if (!xarModAPIFunc('courses',
             'admin',

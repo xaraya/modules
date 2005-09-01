@@ -5,7 +5,7 @@
  * Standard function to view courses and their planning
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,28 +15,16 @@
  
 /**
  * view course parameters
+ * Parameters are derived from Dynamic Data
  */
 function courses_admin_view()
 {
     // Get Vars
-    xarVarFetch('itemtype', 'int', $itemtype,  3, XARVAR_NOT_REQUIRED);
-
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, '3', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
 
     $data = xarModAPIFunc('courses', 'admin', 'menu');
-
     $data['items'] = array();
-    // Call the xarTPL helper function to produce a pager in case of there
-    // being many items to display.
-
-    // Note that this function includes another user API function.  The
-    // function returns a simple count of the total number of items in the item
-    // table so that the pager function can do its job properly
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('courses', 'user', 'countitems'),
-        xarModURL('courses', 'admin', 'view', array('startnum' => '%%')),
-        xarModGetVar('courses', 'itemsperpage'));
-
     $data['itemsperpage'] = xarModGetVar('courses','itemsperpage');
     $data['itemtype'] = $itemtype;
     $data['startnum'] = $startnum;

@@ -34,7 +34,7 @@ function courses_admin_createcourse($args)
     if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactuid', 'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hidecourse', 'str:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     // Argument check
     $item = array();
     // Check for duplicate name and/or number
@@ -43,7 +43,6 @@ function courses_admin_createcourse($args)
                           'validatecourse',
                           array('name' => $name,
                                 'number' => $number));
-    
     // Argument check
     $invalid = array();
     if (!isset($name) || !is_string($name)) {
@@ -52,10 +51,10 @@ function courses_admin_createcourse($args)
     if (!isset($number) || !is_string($number)) {
         $invalid[] = 'number';
     }
-    if ((!empty($name) && strcmp($item['name'], $name)) ||isset($item['name'])) {
+    if (in_array ($name, $item)) {
         $invalid['duplicatename'] = 1;
     }
-    if ((!empty($number) && strcmp($item['number'], $number)) || isset($item['number'])) {
+    if (in_array($number, $item)) {
         $invalid['duplicatenumber'] = 1;
     }
 

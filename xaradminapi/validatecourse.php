@@ -2,7 +2,7 @@
 /**
  * File: $Id:
  * 
- * Validate a course: name and number should be unique
+ * Validate a course: retrieve an array based on the name and number supplied
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -25,21 +25,19 @@ function courses_adminapi_validatecourse($args)
     // Get item
     $query = "SELECT xar_name, xar_number
             FROM $coursestable
-            WHERE xar_name = ? OR xar_number = ? 
-            ";
+            WHERE xar_name = ? OR xar_number = ?";
     $result = &$dbconn->Execute($query, array($name, $number));
     // Obtain the item information from the result set
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
-    if (!$result) {return;
-    } else {
-    list($name, $number) = $result->fields;
+    if (!$result) return;
+	// List results
+    list($foundname, $foundnumber) = $result->fields;
     $result->Close();
-    }
-
+	
     // Create the item array
-    $item = array('name' => $name,
-                  'number' => $number);
+    $item = array('foundname' => $foundname,
+                  'foundnumber' => $foundnumber);
     // Return the item array
     return $item;
 }

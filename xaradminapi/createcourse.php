@@ -61,21 +61,18 @@ function courses_adminapi_createcourse($args)
               xar_language,
               xar_freq,
               xar_contact,
-              xar_contacuid,
+              xar_contactuid,
               xar_hidecourse,
               xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             
     $bindvars = array((int)$nextId, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid, $hidecourse, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
-    // Check for an error with the database code, adodb has already raised
-    // the exception so we just return
     if (!$result) return;
+
     // Get the ID of the item that we inserted.
     $courseid = $dbconn->PO_Insert_ID($coursestable, 'xar_courseid');
     // Let any hooks know that we have created a new item.
-    // TODO: evaluate
-    // xarModCallHooks('item', 'create', $courseid, 'courseid');
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $courseid;
