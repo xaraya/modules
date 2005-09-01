@@ -150,6 +150,8 @@ function bbcode_transform($text)
         $bbcode->setRootParagraphHandling(true);
     }
     $text = $bbcode->parse($text);
+    $text = str_replace('<p><blockquote>', '<blockquote><p>', $text);
+    $text = str_replace('</blockquote></p>', '</p></blockquote>', $text);
     return $text;
 }
 
