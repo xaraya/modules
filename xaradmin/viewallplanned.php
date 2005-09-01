@@ -27,16 +27,12 @@ function courses_admin_viewallplanned()
     // Initialise the variable that will hold the items, so that the template
     // doesn't need to be adapted in case of errors
     $data['items'] = array();
-    // Call the xarTPL helper function to produce a pager in case of there
-    // being many items to display.
-
-    // TODO Counter
+    // Call the xarTPL helper function to produce a pager in case
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('courses', 'user', 'countplanned'),
         xarModURL('courses', 'admin', 'viewallplanned', array('startnum' => '%%')),
         xarModGetVar('courses', 'itemsperpage'));
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
+    // Security check - High level because we are nearly admin here
     if (!xarSecurityCheck('EditCourses')) return;
     
     // Get all planned courses 
@@ -57,7 +53,7 @@ function courses_admin_viewallplanned()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         $planningid = $item['planningid'];
-        if (xarSecurityCheck('EditCourses', 0, 'Course',"All:$planningid:All")) { //Why did the appointment of $item['courseid'] not work here?
+        if (xarSecurityCheck('EditCourses', 0, 'Course',"All:$planningid:All")) { 
             $items[$i]['editurl'] = xarModURL('courses',
                 'admin',
                 'modifyplanned',
@@ -102,8 +98,8 @@ function courses_admin_viewallplanned()
         
         $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
         $items[$i]['name'] = xarVarPrepForDisplay($course['name']);
-        $items[$i]['startdate'] = xarVarPrepForDisplay(xarLocaleGetFormattedDate('short',$item['startdate']));
-        $items[$i]['enddate'] = xarVarPrepForDisplay(xarLocaleGetFormattedDate('short',$item['enddate']));
+        $items[$i]['startdate'] = xarVarPrepForDisplay(xarLocaleFormatDate($items[$i]['startdate']));
+        $items[$i]['enddate'] = xarVarPrepForDisplay(xarLocaleFormatDate($items[$i]['enddate']));
     // End for()
     }
     

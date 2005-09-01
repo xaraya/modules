@@ -125,7 +125,7 @@ function courses_user_displayplanned($args)
 
     for ($i = 0; $i < count($items); $i++) {
         $planitem = $items[$i];
-        if (xarSecurityCheck('EditPlanning', 0, 'Planning', "All:All:$courseid")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:All:All")) {
         $planningid = $planitem['planningid'];
 
             $items[$i]['participantsurl'] = xarModURL('courses',
@@ -137,7 +137,7 @@ function courses_user_displayplanned($args)
         }
         $items[$i]['participantstitle'] = xarML('Participants');
         
-        if (xarSecurityCheck('ReadPlanning', 0, 'Planning', "$planningid:All:$courseid")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             // Add check for already enrolled
             $enrolled = xarModAPIFunc('courses',
                           'user',
@@ -160,7 +160,7 @@ function courses_user_displayplanned($args)
             }
         }
         
-        if (xarSecurityCheck('DeletePlanning', 0, 'Planning', "$planningid:All:$courseid")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deleteplanned',
