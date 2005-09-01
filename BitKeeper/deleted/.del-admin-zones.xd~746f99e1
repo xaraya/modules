@@ -1,5 +1,0 @@
-<xar:template file="application_top" type="module"/>
-<xar:template file="adminheader" type="module"/>
-
-<!-- Everything below is pretty much generically applicable to any object -->
-<xar:template file="reference-data" />

@@ -1,3 +1,0 @@
-<?php $_config_vars = array (
-  'heading_text' => 'New Products',
-); return true; ?>
