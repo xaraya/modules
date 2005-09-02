@@ -117,7 +117,7 @@ class Event
       $postedby="Posted By: ".addslashes(xarUserGetVar('name',$event_obj->organizer));
       $postedon=" on ".date($dateformat).' '.date('h:s a',strtotime($event_obj->created));
       //multiple event in a day popup
-       $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
+      $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
       //single event popup
       $event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description) . "<br>".$postedby.$postedon;
       //$event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description);
@@ -131,18 +131,18 @@ class Event
      
     function setLinkedEventData(&$event_data,$event_date,$event_obj)
     {
-    //Get variables
-       $dateformat=xarModGetVar('julian', 'dateformat');
+      //Get variables
+      $dateformat=xarModGetVar('julian', 'dateformat');
         
-        $event_obj->event_id .= "_link";
+      $event_obj->event_id .= "_link";
     
-        // Generate unique id for event that allows for time/date-based sorting.
+      // Generate unique id for event that allows for time/date-based sorting.
       $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
       
-        // Default color: black.
+      // Default color: black.
       $color = "#000000";
 
-        $event_data[$event_date][$index] = array();
+      $event_data[$event_date][$index] = array();
         
       //Set the data for the event
       $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
@@ -159,9 +159,9 @@ class Event
       // Get additional event information for hooking module.
       $event_data[$event_date][$index] = xarModAPIFunc('julian', 'user', 'geteventinfo',
                                                          array('event'   => $event_data[$event_date][$index],
-                                                                  'iid'     => $event_obj->hook_iid,
-                                                                 'itemtype'=> $event_obj->hook_itemtype,
-                                                                 'modid'   => $event_obj->hook_modid));
+                                                               'iid'     => $event_obj->hook_iid,
+                                                               'itemtype'=> $event_obj->hook_itemtype,
+                                                               'modid'   => $event_obj->hook_modid));
 
       //popover posted information
 
