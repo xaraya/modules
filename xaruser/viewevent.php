@@ -6,24 +6,34 @@
 * Views an event.
 *
 * @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
+* @copyright (C) 2005 by Metrostat Technologies, Inc.
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.metrostat.net
-*
+* @author  Julian Development Team
 * @subpackage julian
 * initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
+* 
 */
-
+/**
+ * View an event
+ *
+ * 
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @access  public 
+ * @param   ID $event_id for the event to display
+ * @param   $cal_date
+ * @return  array
+ * @todo    MichelV. <#> Make this the display function and move queries to API
+ */
 function julian_user_viewevent()
 {
    //get post/get vars
    if (!xarVarFetch('event_id','str',$event_id)) return;
    if (!xarVarFetch('cal_date','int',$cal_date)) return;
    
-   // Security check - important to do this as early as possible to avoid
-   // potential security holes or just too much wasted processing
-   if (!xarSecurityCheck('Viewjulian')) return; 
+   // Security check
+   if (!xarSecurityCheck('ViewJulian')) return; 
     
    //establish a db connection
     $dbconn =& xarDBGetConn();

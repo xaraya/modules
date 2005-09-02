@@ -1,7 +1,21 @@
 <?php
 /**
+ * File: $Id$
+ *
+ * Factory method that allows the creation of new objects
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+
+/**
  *  Factory method that allows the creation of new objects
- *  @version $Id: factory.php,v 1.2 2005/01/26 08:45:26 michelv01 Exp $
  *  @param string $class the name of the object to create
  *  @return object the created object
  */

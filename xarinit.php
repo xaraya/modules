@@ -304,112 +304,19 @@ function julian_init()
     if (empty($sql)) return; // throw back
     if (!$dbconn->Execute($sql)) return;*/
     
-                 // Create new table for category-to-color linkage
-                 $category_properties_table = $xartable['julian_category_properties'];
-                 $category_properties_fields = array(
-                          // The category id (conforming to the 'categories' module.
-                          'cid'=>array('type'=>'integer','null'=>false),
-                          
-                          //The category color for giving a visual to the user of the type of event
-                          'color'=>array('type'=>'varchar','size'=>'15','null'=>false,'default'=>''),
-                 );
-                 $sql = xarDBCreateTable($category_properties_table,$category_properties_fields);
-                 if (empty($sql)) return; // throw back
-                 if (!$dbconn->Execute($sql)) return;
+	 // Create new table for category-to-color linkage
+	 $category_properties_table = $xartable['julian_category_properties'];
+	 $category_properties_fields = array(
+			  // The category id (conforming to the 'categories' module.
+			  'cid'=>array('type'=>'integer','null'=>false),
+			  
+			  //The category color for giving a visual to the user of the type of event
+			  'color'=>array('type'=>'varchar','size'=>'15','null'=>false,'default'=>''),
+	 );
+	 $sql = xarDBCreateTable($category_properties_table,$category_properties_fields);
+	 if (empty($sql)) return; // throw back
+	 if (!$dbconn->Execute($sql)) return;
 
-
-                 // Create the master category for Julian (in the categories module that will be hooked)
-                 $mastercid = xarModAPIFunc('categories', 'admin', 'create',
-                                                                                         array('name' => 'Julian',
-                                                                                                         'description' => 'Main Julian Calendar categories',
-                                                                                                         'parent_id' => 0));
-
-                 // Store info on the master category in the Julian module.
-                 xarModSetVar('julian', 'number_of_categories', 1);
-                 xarModSetVar('julian', 'mastercids', $mastercid);
-                         
-                 // Enable hooks to the 'categories' module for Julian
-                 xarModAPIFunc('modules','admin','enablehooks', array('callerModName' => 'julian', 'hookModName' => 'categories'));
-
-    /*
-    // Create alerts table
-    $alerts_table = $xartable['julian_alerts'];
-    $alerts_fields = array(
-        // ID::the alert id, auto-increment
-        'id'=>array('type'=>'integer','size'=>'11','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        
-        // UID::user id
-        'uid'=>array('type'=>'integer','size'=>'11','null'=>FALSE,'default'=>'0'),
-        
-        // UID::a serialized string of all the type events (events assoc. w/specific categories) the user wants to be alerted about via email
-        'subscriptions'=>array('type'=>'varchar','size'=>'255','null'=>FALSE)
-    );
-    $sql = xarDBCreateTable($alerts_table,$alerts_fields);
-    if (empty($sql)) return; // throw back
-    if (!$dbconn->Execute($sql)) return;
-    */
-
-    
-    // Register blocks
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'julian',
-                'blockType' => 'calevent'))) return;
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'julian',
-                'blockType' => 'calmonth'))) return;
-    
-    
-    // Register the Module Variables                  
-    //Show ical links by default          
-    xarModSetVar('julian','ical_links',1);
-    //Set default share group to "Users"
-    xarModSetVar('julian','share_group',5);
-     //Set default name for from address for calendar alerts
-    xarModSetVar('julian','from_name','Xaraya_Site');
-    //Set default from email address for calendar alerts
-    xarModSetVar('julian','from_email','Julian_Calendar@yoursite.com');
-        //Set default starting day of week
-        xarModSetVar('julian','startDayOfWeek','1');
-        //Set type of telephone field
-        xarModSetVar('julian','TelFieldType','US');
-        //Set the format for the date to display
-        xarModSetVar('julian','dateformat','m/d/Y');
-        //Set the format for the time to display
-        xarModSetVar('julian','timeformat','h:i a');
-        //Set the standard symbol for event categories
-        xarModSetVar('julian','BulletForm','bull');
-        //default alert supscriptions;none. Users can configure this
-        xarModSetVar('julian','alerts','a:0:{}');
-        //default number of items per page
-        xarModSetVar('julian','numitems','10');
-                
-//TODO::Register the Module Variables
-    //xarModSetVar('calendar','allowUserCalendars',false);
-    //xarModSetVar('calendar','eventsOpenNewWindow',false);
-    //xarModSetVar('calendar','adminNotify',false);
-    //xarModSetVar('calendar','adminEmail','none@none.org');
-
-//TODO::Figure out all the permissions stuff
-    // allow users to see the calendar w/ events
-    xarRegisterMask('Viewjulian','All','julian','All','All','ACCESS_READ');
-    // allows users to add events, but not categories
-    xarRegisterMask('Editjulian','All','julian','All','All','ACCESS_EDIT');
-    // allow full admin of the calendar
-    xarRegisterMask('Adminjulian','All','julian','All','All','ACCESS_ADMIN');
-
-         // Register hooks: julian can couple a date+time to any item from any module, provided
-         // the module in question calls (Julian's) hooks when editing items.
-    if (!xarModRegisterHook('item', 'new',    'GUI', 'julian', 'user', 'newhook'))    return false;
-    if (!xarModRegisterHook('item', 'create', 'API', 'julian', 'user', 'createhook')) return false;
-    if (!xarModRegisterHook('item', 'modify', 'GUI', 'julian', 'user', 'modifyhook')) return false;
-    if (!xarModRegisterHook('item', 'update', 'API', 'julian', 'user', 'updatehook')) return false;
-    if (!xarModRegisterHook('item', 'delete', 'API', 'julian', 'user', 'deletehook')) return false;
-    if (!xarModRegisterHook('item', 'display','GUI', 'julian', 'user', 'displayhook')) return false;
-         
          // Create separate table to store event information (date, time, etc.) for external (hooked) items.
     $event_linkage_table = $xartable['julian_events_linkage'];
     $event_linkage_fields = array(
@@ -469,6 +376,93 @@ function julian_init()
     $sql = xarDBCreateTable($event_linkage_table,$event_linkage_fields);
     if (empty($sql)) return; // throw back
     if (!$dbconn->Execute($sql)) return;
+
+	 // Create the master category for Julian (in the categories module that will be hooked)
+	 $mastercid = xarModAPIFunc('categories', 'admin', 'create',
+								 array('name' => 'Julian',
+												 'description' => 'Main Julian Calendar categories',
+												 'parent_id' => 0));
+
+	 // Store info on the master category in the Julian module.
+	 xarModSetVar('julian', 'number_of_categories', 1);
+	 xarModSetVar('julian', 'mastercids', $mastercid);
+			 
+	 // Enable hooks to the 'categories' module for Julian
+	 xarModAPIFunc('modules','admin','enablehooks', array('callerModName' => 'julian', 'hookModName' => 'categories'));
+
+    /*
+    // Create alerts table
+    $alerts_table = $xartable['julian_alerts'];
+    $alerts_fields = array(
+        // ID::the alert id, auto-increment
+        'id'=>array('type'=>'integer','size'=>'11','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        
+        // UID::user id
+        'uid'=>array('type'=>'integer','size'=>'11','null'=>FALSE,'default'=>'0'),
+        
+        // UID::a serialized string of all the type events (events assoc. w/specific categories) the user wants to be alerted about via email
+        'subscriptions'=>array('type'=>'varchar','size'=>'255','null'=>FALSE)
+    );
+    $sql = xarDBCreateTable($alerts_table,$alerts_fields);
+    if (empty($sql)) return; // throw back
+    if (!$dbconn->Execute($sql)) return;
+    */
+    
+    // Register blocks
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'julian',
+                'blockType' => 'calevent'))) return;
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'julian',
+                'blockType' => 'calmonth'))) return;
+    
+    // Register the Module Variables                  
+    //Show ical links by default          
+    xarModSetVar('julian','ical_links',1);
+    //Set default share group to "Users"
+    xarModSetVar('julian','share_group',5);
+     //Set default name for from address for calendar alerts
+    xarModSetVar('julian','from_name','Xaraya_Site');
+    //Set default from email address for calendar alerts
+    xarModSetVar('julian','from_email','Julian_Calendar@yoursite.com');
+	//Set default starting day of week
+	xarModSetVar('julian','startDayOfWeek','1');
+	//Set type of telephone field
+	xarModSetVar('julian','TelFieldType','US');
+	//Set the format for the date to display
+	xarModSetVar('julian','dateformat','m/d/Y');
+	//Set the format for the time to display
+	xarModSetVar('julian','timeformat','h:i a');
+	//Set the standard symbol for event categories
+	xarModSetVar('julian','BulletForm','bull');
+	//default alert supscriptions;none. Users can configure this
+	xarModSetVar('julian','alerts','a:0:{}');
+	//default number of items per page
+	xarModSetVar('julian','numitems','10');
+                
+
+//TODO::Figure out all the permissions stuff
+// Should be based in event id , catid, and...
+
+    // allow users to see the calendar w/ events
+    xarRegisterMask('Viewjulian','All','julian','All','All','ACCESS_READ');
+    // allows users to add events, but not categories
+    xarRegisterMask('Editjulian','All','julian','All','All','ACCESS_EDIT');
+    // allow full admin of the calendar
+    xarRegisterMask('Adminjulian','All','julian','All','All','ACCESS_ADMIN');
+
+	 // Register hooks: julian can couple a date+time to any item from any module, provided
+	 // the module in question calls (Julian's) hooks when editing items.
+    if (!xarModRegisterHook('item', 'new',    'GUI', 'julian', 'user', 'newhook'))    return false;
+    if (!xarModRegisterHook('item', 'create', 'API', 'julian', 'user', 'createhook')) return false;
+    if (!xarModRegisterHook('item', 'modify', 'GUI', 'julian', 'user', 'modifyhook')) return false;
+    if (!xarModRegisterHook('item', 'update', 'API', 'julian', 'user', 'updatehook')) return false;
+    if (!xarModRegisterHook('item', 'delete', 'API', 'julian', 'user', 'deletehook')) return false;
+    if (!xarModRegisterHook('item', 'display','GUI', 'julian', 'user', 'displayhook')) return false;
          
     return true;
 }
@@ -478,7 +472,6 @@ function julian_init()
  */
 function julian_upgrade($oldversion)
 {
-        
         switch ($oldversion) {
         case '0.1.0':
             // Version 0.1.0 (0.1.1) had a smaller email field, we need to upgrade to VARCHAR(70)
@@ -513,8 +506,8 @@ function julian_upgrade($oldversion)
             if (!$result) return;
             return julian_upgrade('0.1.2');
                         
-                case '0.1.2':
-                    return julian_upgrade('0.1.3');
+            case '0.1.2':
+               return julian_upgrade('0.1.3');
 
             case '0.1.3':
                                 //Set default starting day of week
@@ -605,9 +598,9 @@ function julian_upgrade($oldversion)
                                   
                                   // Create new category as child of master category.
                                   $newcid = xarModAPIFunc('categories', 'admin', 'create',
-                                                                                                  array('name' => $cat_name,
-                                                                                                                  'description' => $cat_name,
-                                                                                                                  'parent_id' => $mastercid));
+															  array('name' => $cat_name,
+																			  'description' => $cat_name,
+																			  'parent_id' => $mastercid));
 
                                  // Link existing color to newly migrated category.
                                  $query = "INSERT INTO $category_properties_table (`cid`,`color`) VALUES ($newcid,'$color')";
@@ -674,72 +667,72 @@ function julian_upgrade($oldversion)
                 $dbconn =& xarDBGetConn();
                 $xartable =& xarDBGetTables();
 
-                                 // Create separate table to store event information (date, time, etc.) for external (hooked) items.
-                                 $event_linkage_table = $xartable['julian_events_linkage'];
-                                 $event_linkage_fields = array(
-                                          // UID::the linked-event id, auto-increment
-                                          'event_id'=>array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-                                          
-                                          // Hooked item details:
-                                          // - ID of external module
-                                          // - type of external item (one module can harbour different item types)
-                                          // - ID of external item
-                                          'hook_modid'   =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-                                          'hook_itemtype'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-                                          'hook_iid'     =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-                                          
-                                          // DTSTART::event start date/time
-                                          'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
-                        
-                                          // DURATION::how long the event lasts
-                                          'duration'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
-                                          
-                                          // ISALLDAY::boolean flag indicating if event is all day
-                                          'isallday'=>array('type'=>'integer','size'=>'tiny','default'=>'0'),
-                        
-                                          // RRULE::event recurrence rule
-                                          // 0 = NO REPEATING
-                                          // 1 = CAL_RECUR_FREQ_DAILY
-                                          // 2 = CAL_RECUR_FREQ_WEEKLY
-                                          // 3 = CAL_RECUR_FREQ_MONTHLY
-                                          // 4 = CAL_RECUR_FREQ_YEARLY
-                                          'rrule'=>array('type'=>'text','null'=>TRUE),
-                                          
-                                          // RECUR_FREQ::how often to repeat rule
-                                          'recur_freq'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-                                          
-                                          // COUNT::Recurrence Count
-                                          // Can not exist if UNTIL is not null
-                                          // 0 = NO REPEATING
-                                          // 1 = SUNDAY
-                                          // ...
-                                          // 7 = SATURDAY
-                                          'recur_count'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-                                          
-                                          // INTERVAL::Recurrence Interval
-                                          // 0 = NO REPEATING
-                                          // 1 = FIRST
-                                          // 2 = SECOND
-                                          // 3 = THIRD
-                                          // 4 = FOURTH
-                                          // 5 = LAST
-                                          'recur_interval'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-                                          
-                                          // UNTIL::Recurrence End Date (YYYYMMDDHHMMSS)
-                                          // This should always be stored as UTC
-                                          // Can not exist if COUNT is not null
-                                          'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
-                                 );
-                                 $sql = xarDBCreateTable($event_linkage_table,$event_linkage_fields);
-                                 if (empty($sql)) return; // throw back
-                                 if (!$dbconn->Execute($sql)) return;
+					 // Create separate table to store event information (date, time, etc.) for external (hooked) items.
+					 $event_linkage_table = $xartable['julian_events_linkage'];
+					 $event_linkage_fields = array(
+							  // UID::the linked-event id, auto-increment
+							  'event_id'=>array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+							  
+							  // Hooked item details:
+							  // - ID of external module
+							  // - type of external item (one module can harbour different item types)
+							  // - ID of external item
+							  'hook_modid'   =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+							  'hook_itemtype'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+							  'hook_iid'     =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+							  
+							  // DTSTART::event start date/time
+							  'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+			
+							  // DURATION::how long the event lasts
+							  'duration'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
+							  
+							  // ISALLDAY::boolean flag indicating if event is all day
+							  'isallday'=>array('type'=>'integer','size'=>'tiny','default'=>'0'),
+			
+							  // RRULE::event recurrence rule
+							  // 0 = NO REPEATING
+							  // 1 = CAL_RECUR_FREQ_DAILY
+							  // 2 = CAL_RECUR_FREQ_WEEKLY
+							  // 3 = CAL_RECUR_FREQ_MONTHLY
+							  // 4 = CAL_RECUR_FREQ_YEARLY
+							  'rrule'=>array('type'=>'text','null'=>TRUE),
+							  
+							  // RECUR_FREQ::how often to repeat rule
+							  'recur_freq'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
+							  
+							  // COUNT::Recurrence Count
+							  // Can not exist if UNTIL is not null
+							  // 0 = NO REPEATING
+							  // 1 = SUNDAY
+							  // ...
+							  // 7 = SATURDAY
+							  'recur_count'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
+							  
+							  // INTERVAL::Recurrence Interval
+							  // 0 = NO REPEATING
+							  // 1 = FIRST
+							  // 2 = SECOND
+							  // 3 = THIRD
+							  // 4 = FOURTH
+							  // 5 = LAST
+							  'recur_interval'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
+							  
+							  // UNTIL::Recurrence End Date (YYYYMMDDHHMMSS)
+							  // This should always be stored as UTC
+							  // Can not exist if COUNT is not null
+							  'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+					 );
+					 $sql = xarDBCreateTable($event_linkage_table,$event_linkage_fields);
+					 if (empty($sql)) return; // throw back
+					 if (!$dbconn->Execute($sql)) return;
 
 
             return julian_upgrade('0.2.2');
                 case '0.2.2':
         //default number of items per page
         xarModSetVar('julian','numitems','10');
- }
+        }
          return true;
 }
 

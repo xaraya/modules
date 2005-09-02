@@ -1,4 +1,18 @@
 <?php
+/**
+ * File: $Id$
+ *
+ * Decode the short URLs for Julian
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
 
 /**
  * utility function pass individual menu items to the main menu

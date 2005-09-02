@@ -6,7 +6,7 @@
 * Inserts/Updates an event.
 *
 * @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
+* @copyright (C) 2005 by Metrostat Technologies, Inc.
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.metrostat.net
 *
@@ -19,13 +19,6 @@ function julian_user_updateevent()
 {
    //This prevents users from viewing something they are not suppose to.
    if (!xarSecurityCheck('Editjulian')) return;
-  
-   // Load up database
-   $dbconn =& xarDBGetConn();
-   //get db tables
-   $xartable = xarDBGetTables();
-   //set events table
-   $event_table = $xartable['julian_events'];
    if (!xarVarFetch('cancel','str',$cancel,'')) return;
    //If Cancel was pressed, go back to previous page
    if (strcmp($cancel,''))
@@ -136,7 +129,15 @@ function julian_user_updateevent()
        $phone = $phone1;
        }
     }
-          
+   // TODO: move this to API
+   // Load up database
+   $dbconn =& xarDBGetConn();
+   //get db tables
+   $xartable = xarDBGetTables();
+   //set events table
+   $event_table = $xartable['julian_events'];
+
+
    if(strcmp($id,""))
       {
       $now = "now()";

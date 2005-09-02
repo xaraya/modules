@@ -1,7 +1,29 @@
 <?php
-
 /**
+ * File: $Id$
+ *
+ * Delete and item via a hook
+ *
+ * @package unassigned
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+ 
+/**
+ * Delete an item via a hook
+ *
  * process deletion of item - hook for ('item','delete','API')
+ *
+ * @author  Jorn, MichelV. <michelv@xarayahosting.nl>
+ * @access  public 
+ * @param   array $extrainfo Whatever you need
+ * @param   ID objectid ID of the item to delete
+ * @return  array ExtraInfo
  */
 function julian_userapi_deletehook($args)
 {

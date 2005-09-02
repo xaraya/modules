@@ -1,4 +1,5 @@
-#xarModAPIFunc('overlib','user','init')#
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:overlib-init />
 <xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
 
 <div class="xar-julian xar-julian-user-day">

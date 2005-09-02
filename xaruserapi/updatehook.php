@@ -1,7 +1,23 @@
 <?php
-
 /**
+ * File: $Id$
+ *
  * process date/time for the modified item - hook for ('item','update','API')
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+/**
+ * 
+ * process date/time for the modified item - hook for ('item','update','API')
+ *
+ * @author Jorn
  */
 function julian_userapi_updatehook($args)
 {

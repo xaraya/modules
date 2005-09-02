@@ -1,7 +1,29 @@
 <?php
-
 /**
+ * File: $Id$
+ *
+ * New event hook
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+ 
+/**
+ * Provide GUI for new hook
+ *
  * enter date/time for a new item - hook for ('item','new','GUI')
+ *
+ * @author  Julian Development Team, JornB MichelV. <michelv@xarayahosting.nl>
+ * @access  public 
+ * @param   $extrainfo
+ * @return  array tplinfo
+ * @todo    MichelV. <#> 
  */
 function julian_user_newhook($args)
 {

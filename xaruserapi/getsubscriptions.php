@@ -4,7 +4,7 @@
  * recieve alerts for.
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *

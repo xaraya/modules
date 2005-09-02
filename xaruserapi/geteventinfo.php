@@ -1,8 +1,23 @@
 <?php
+/**
+ * File: $Id$
+ *
+ * Decode the short URLs for Julian
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
 
 /**
  * Get information on linked event. Currently assumes linking module = articles
  *
+ * @author Jorn, MichelV. michelv@xarayahosting.nl
  * arguments:
  *
  *   iid:      id of hooked item (in hooking module, e.g. an article id)

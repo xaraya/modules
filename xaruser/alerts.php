@@ -26,29 +26,8 @@ function julian_user_alerts()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('Viewjulian')) return; 
 
-    /*// not neccecary
-    // Load up database
-    $dbconn =& xarDBGetConn();
-    //get db tables
-    $xartable = xarDBGetTables();
-    $categories_table = $xartable['julian_categories'];
-    $alerts_table     = $xartable['julian_alerts'];
-    */
-   
     //store the categories the user has selected for alerts
     if (!strcmp($action,'update')) {
-        /*// use an API function for this
-        $sql = "DELETE FROM " . $alerts_table . " WHERE uid = '".xarUserGetVar('uid')."';";
-        $rs = $dbconn->Execute($sql);
-        //only add an entry to the alerts table if the user has not unsubscribed to all alerts
-        if (!empty($cats)) {
-            $uid = xarUserGetVar('uid');
-              $subscriptions = serialize($cats);
-            $sql = "INSERT INTO " . $alerts_table . " SET uid= ?, subscriptions= ? ;";
-            $bindvars = array ($uid, $subscriptions);
-            $rs = $dbconn->Execute($sql, $bindvars);
-        }
-        */
         // need to check data?
         $subscriptions = $cats;
         // store updated configuration

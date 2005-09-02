@@ -1,18 +1,18 @@
 <?php
-   /**
-      * File: $Id: edit.php,v 1.4 2005/03/27 13:52:53 michelv01 Exp $
-      *
-      * Generates a form for editing an existing event.
-      *
-      * @package Xaraya eXtensible Management System
-      * @copyright (C) 2004 by Metrostat Technologies, Inc.
-      * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-      * @link http://www.metrostat.net
-      *
-      * @subpackage julian
-      * initial template: Roger Raymond
-      * @author Jodie Razdrh/John Kevlin/David St.Clair
-   */
+/**
+  * File: $Id: edit.php,v 1.4 2005/03/27 13:52:53 michelv01 Exp $
+  *
+  * Generates a form for editing an existing event.
+  *
+  * @package Xaraya eXtensible Management System
+  * @copyright (C) 2005 by Metrostat Technologies, Inc.
+  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+  * @link http://www.metrostat.net
+  *
+  * @subpackage julian
+  * initial template: Roger Raymond
+  * @author Jodie Razdrh/John Kevlin/David St.Clair
+  */
   function julian_user_edit()
   {  
    //This prevents users from viewing something they are not suppose to.
@@ -27,6 +27,7 @@
     //set the selected date parts and timestamp in the data array
    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
    
+   // TODO: move this to a get function
    // establish db connection      
    $dbconn =& xarDBGetConn();
    //get db tables

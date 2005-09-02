@@ -1,4 +1,4 @@
-#xarModAPIFunc('overlib','user','init')#
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
 <xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
 

@@ -1,3 +1,5 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
 <xar:comment>Show the date (i.e. Today is June 21, 2004)</xar:comment>
 
 <div class="xar-julian-footer">

@@ -20,8 +20,8 @@ $modversion['dependency']     = array(4, 147); //Making overlib and categories m
 $modversion['securityschema'] = array('julian::event'     => 'Event Title::Event ID',
                                       'julian::category'  => 'Category Name::Category ID',
                                       'julian::topic'     => 'Topic Name::Topic ID',
-                                      'julian::user'         => 'User Name::User ID',
-                                      'julian::sharing'     => 'User Name::User ID',
-                                      'julian::'              => '::');
+                                      'julian::user'      => 'User Name::User ID',
+                                      'julian::sharing'   => 'User Name::User ID',
+                                      'julian::'          => '::');
 
 ?>

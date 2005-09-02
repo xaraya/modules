@@ -1,17 +1,35 @@
 <?php
 /**
- *  calendar_userapi_getYearLink
- *  Create a valid link to a particluar year
- *  @version $Id: getyearlink.php,v 1.2 2005/01/26 08:45:26 michelv01 Exp $
+ * File: $Id$
+ *
+ * Create a valid link to a particluar week
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+
+/**
+ *  
+ *  Create a valid link to a particular year
+ *  
  *  @author Roger Raymond
  *  @access public
  *  @param string $date YYYYMMDD date to provide link to
  *  @return string a valid link based on xarModURL()
  *  @todo add necessary get vars to the resulting URL
+ *  @todo MichelV: deprecate?
  */
 function julian_userapi_getYearLink($date=null)
 {
-    if(!isset($date)) $date = date('Ymd');
+    if(!isset($date)) {
+	$date = date('Ymd');
+	}
     $year = substr($date,0,4);
     $month = substr($date,4,2);
     $day = substr($date,6,2);

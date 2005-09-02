@@ -1,7 +1,28 @@
 <?php
-
 /**
+ * File: $Id$
+ *
+ * Display hook
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+/**
+ * Display hook
+ *
  * show date/time/schedule for an item - hook for ('item','display','GUI')
+ *
+ * @author  Julian Development Team, Jorn MichelV. <michelv@xarayahosting.nl>
+ * @access  public 
+ * @param   array $extrainfo
+ * @return  array
+ * @todo    MichelV. <#> Split into queries
  */
 function julian_user_displayhook($args)
 {

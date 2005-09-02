@@ -1,5 +1,33 @@
 <?php
-
+/**
+ * File: $Id$
+ *
+ * Create a valid link to a particluar week
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+/**
+ * Short description of the function: ??
+ *
+ * A somewhat longer description of the function: No idea ;)
+ *
+ * @author  Author Name <author@email>
+ * @deprec  date since deprecated <insert this if function is deprecated>
+ * @access  public / private / protected
+ * @param   type param1 Description of parameter 1
+ * @param   type param2 Description of parameter 2
+ * @return  type to return description
+ * @throws  list of exception identifiers which can be thrown
+ * @todo    MichelV. <#> What is this?
+ */
+          
 function julian_userapi_init() 
 {
     //=================================================================

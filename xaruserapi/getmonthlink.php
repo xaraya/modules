@@ -1,8 +1,23 @@
 <?php
 /**
+ * File: $Id$
+ *
+ * Decode the short URLs for Julian
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+
+
+/**
  *  calendar_userapi_getMonthLink
  *  Create a valid link to a particluar month
- *  @version $Id: getmonthlink.php,v 1.2 2005/01/26 08:45:26 michelv01 Exp $
  *  @author Roger Raymond
  *  @access public
  *  @param string $date YYYYMMDD date to provide link to

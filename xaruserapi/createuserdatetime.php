@@ -6,7 +6,7 @@
  *  @author Roger Raymond
  *  @param string $format valid date/time format using php's date() function
  *  @return string valid date/time
- *  @todo user timezone modifications
+ *  @todo user Xaraya function
  */
 function &julian_userapi_createUserDateTime($format='Ymd')
 {

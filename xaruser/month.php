@@ -16,8 +16,7 @@
 */
 function julian_user_month()
 {
-   // Security check - important to do this as early as possible to avoid
-   // potential security holes or just too much wasted processing
+   // Security check
    if (!xarSecurityCheck('Viewjulian')) return; 
 
    //get post/get vars
@@ -37,7 +36,8 @@ function julian_user_month()
    $bl_data['cal_sdow'] = $c->getStartDayOfWeek();
    $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);
    //get the events for the selected month
-   $bl_data['event_array']=$c->getEvents($startdate,$enddate);
+   //$bl_data['event_array']=$c->getEvents($startdate,$enddate);
+   $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
    $bl_data['calendar']=$c;
    $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
    //set the url to this page in session as the last page viewed

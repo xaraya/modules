@@ -1,5 +1,30 @@
 <?php
-//$Id: encode_shorturl.php,v 1.3 2005/06/24 11:26:01 michelv01 Exp $
+/**
+ * File: $Id$
+ *
+ * Encode the short URLs for Julian
+ *
+ * @package unassigned
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+ 
+/**
+ * Encode the short URLs in Julian
+ *
+ * The parameters are taken from the URL and coupled to functions
+ *
+ * @author  Julian Development Team, <michelv@xarayahosting.nl>
+ * @access  public 
+ * @param   func 
+ * @return  URL
+ * @todo    MichelV. <#> Check this function and it functioning. Include Categories
+ */
 
 function julian_userapi_encode_shorturl($args) 
 {

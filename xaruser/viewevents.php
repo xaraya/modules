@@ -52,7 +52,8 @@ function julian_user_viewevents($args)
     // Set the end date to the last month and last day of the selected year.
     $enddate=$bl_data['selected_year']."-12-31";
     // Get the events for the selected year.
-    $bl_data['event_array']=$c->getEvents($startdate,$enddate);
+    //$bl_data['event_array']=$c->getEvents($startdate,$enddate);
+    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
     // Set the url to this page in session as the last page viewed.
     $lastview=xarModURL('julian','user','year',array('cal_date'=>$bl_data['cal_date']));
     xarSessionSetVar('lastview',$lastview);

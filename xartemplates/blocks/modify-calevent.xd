@@ -1,6 +1,4 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
-</xar:comment>
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>
     We know that xarform.css file is already included, so no need to do it twice 
 </xar:comment>

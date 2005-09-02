@@ -6,15 +6,25 @@
 * This function manages the calendar categories.
 *
 * @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
+* @copyright (C) 2005 by Metrostat Technologies, Inc.
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.metrostat.net
 *
 * @subpackage julian
 * initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair/Michel Vorenhout/Jorn Bruggeman
+* 
 */
-
+/**
+ * Manage categories properties
+ *
+ *
+ * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @author Jodie Razdrh/John Kevlin/David St.Clair/Michel Vorenhout/Jorn Bruggeman@
+ * @access  protected 
+ * @param   
+ * @return  array
+ * @todo    MichelV. <#> Make admin function
+ */
 function julian_user_addcat()
 {
    //This prevents users from viewing something they are not suppose to.
@@ -44,7 +54,7 @@ function julian_user_addcat()
    $dbconn =& xarDBGetConn();
    //get db tables
    $xartable = xarDBGetTables();
-    // Julian category_properties table.
+   // Julian category_properties table.
    $category_properties_table = $xartable['julian_category_properties'];
 
    //add and add cancel actions

@@ -21,10 +21,9 @@ function julian_user_view()
    if (!xarVarFetch('event_id','int',$event_id)) return;
    if (!xarVarFetch('cal_date','int',$cal_date)) return;
    
-   // Security check - important to do this as early as possible to avoid
-   // potential security holes or just too much wasted processing
+   // Security check
    if (!xarSecurityCheck('Viewjulian')) return; 
-
+   // TODO: move this to get API
    //establish a db connection
     $dbconn =& xarDBGetConn();
    //get db tables

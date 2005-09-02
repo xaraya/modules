@@ -25,7 +25,7 @@ function julian_userapi_updatesubscriptions($categories, $uid = NULL)
     
     if (xarModSetUserVar('julian', 'alerts', $categories, $uid) !== false) {
         return true;
-    }else {
+    } else {
         return;
     }
 }

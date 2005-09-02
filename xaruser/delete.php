@@ -14,7 +14,17 @@
 * initial template: Roger Raymond
 * @author Jodie Razdrh/John Kevlin/David St.Clair
 */
-
+/**
+ * Delete an item
+ *
+ * Delete an item from the events table
+ *
+ * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @access  public 
+ * @param   id of the item
+ * @return  array
+ * @todo    MichelV. <#> Turn into admin api function
+ */
   function julian_user_delete()
   {  
    //This prevents users from viewing something they are not suppose to.

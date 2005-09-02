@@ -89,7 +89,8 @@ function julian_calmonthblock_display($blockinfo)
     //set the end date to the last day of the selected month
     $enddate = $year."-".$month."-".$numdays;
     //get the events for the current month
-    $args['event_array']=$c->getEvents($startdate,$enddate);
+//    $args['event_array']=$c->getEvents($startdate,$enddate);
+	$args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
         
     if (empty($blockinfo['template'])) {
         $template = 'calmonth';

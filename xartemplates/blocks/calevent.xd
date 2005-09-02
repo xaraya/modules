@@ -1,3 +1,4 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
 <xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>-->
 <link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css">

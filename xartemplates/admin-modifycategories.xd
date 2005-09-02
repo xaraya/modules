@@ -1,5 +1,5 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script language="JavaScript" src="modules/julian/xarjavascript/picker.js"></script>
-<!--<script language="JavaScript" src="modules/julian/xarjavascript/validatecat.js"></script>-->
 <xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
 <xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
 <xar:set name="$modifylabel"><xar:mlstring>Modify</xar:mlstring></xar:set>

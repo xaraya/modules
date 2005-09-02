@@ -1,5 +1,31 @@
 <?php
-// $Id: getuserdatetimeinfo.php,v 1.2 2005/01/26 08:45:26 michelv01 Exp $
+/**
+ * File: $Id$
+ *
+ * Format a date for a user
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+ 
+/**
+ * Format a date for users
+ *
+ * This function should make a nice viewable date. Can be deprecated soon?
+ *
+ * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @access  public 
+ * @deprec  date since deprecated <insert this if function is deprecated>
+ * @param   the date
+ * @return  array $bl_data
+ * @todo    MichelV. <#> Deprecate
+ */
 
 function julian_userapi_getUserDateTimeInfo()
 {

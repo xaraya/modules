@@ -86,11 +86,13 @@ function julian_caleventblock_display($blockinfo)
    $today=date('Y-m-d');
    $tomorrow=date("Y-m-d",strtotime("tomorrow"));
    $endweek=date("Y-m-d",strtotime("+$EventBlockDays days"));
-   //get today's events
-   $args['todaysevents']=$c->getEvents($today);
+   // get today's events: start and enddate are the same
+   // $args['todaysevents']=$c->getEvents($today);
+   
+   $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today));
    //get the events for the next $EventBlockDays days
-   $args['upcomingevents'] =$c->getEvents($tomorrow,$endweek);
-      
+   //$args['upcomingevents'] =$c->getEvents($tomorrow,$endweek);
+   $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek));
    //set the required block data
    if (empty($blockinfo['title'])) {
        $blockinfo['title'] = xarML('Events');

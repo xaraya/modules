@@ -17,8 +17,7 @@
 
 function julian_user_day()
 {
-   // Security check - important to do this as early as possible to avoid
-   // potential security holes or just too much wasted processing
+   // Security check
    if (!xarSecurityCheck('Viewjulian')) return; 
 
    //get post/get vars
@@ -35,7 +34,8 @@ function julian_user_day()
    //set the start date 
    $startdate = $bl_data['selected_year']."-".$bl_data['selected_month']."-".$bl_data['selected_day'];
    //get the events for the selected day
-   $bl_data['event_array']=$c->getEvents($startdate); 
+   //$bl_data['event_array']=$c->getEvents($startdate); 
+   $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
    //the next two variables help determine which color is displayed for this day depending on whether
    //it is a weekend or the current day
    $bl_data['daydate']=date('Ymd',strtotime($startdate));

@@ -1,9 +1,26 @@
 <?php
-
-  /*
-   *  Calculates the new date for the next view. The view or "cal_type" is incremented by
-   *  an interval of "cal_interval" starting from "cal_date".
-   */
+/**
+ * File: $Id$
+ *
+ * Calculates the new date for the next view.
+ *
+ * @package julian
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+/*
+ *  Calculates the new date for the next view. The view or "cal_type" is incremented by
+ *  an interval of "cal_interval" starting from "cal_date".
+ *
+ * @Param INT $args['cal_sdow'] 
+ * @param str $args['func'] the function of this moment
+ * @return URL
+ */
 
 function julian_userapi_next($args=array())
 {
