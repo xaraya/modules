@@ -18,6 +18,14 @@ function security_userapi_leftjoin($args)
     
     $info = array();
 
+    /*
+        Admin's always have access to everything
+    */
+    if( xarSecurityCheck('AdminPanel', 0) )
+    {        
+        return $info;
+    }
+    
     xarModAPILoad('owner', 'user');
     
     if( !isset($level) )

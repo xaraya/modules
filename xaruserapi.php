@@ -1,11 +1,11 @@
 <?php
 
 define('SECURITY_NONE', 0);
-define('SECURITY_OVERVIEW', 32); // Used with left joins
-define('SECURITY_READ', 16); // Used when displaying 
-define('SECURITY_COMMENT', 8); // Link
-define('SECURITY_WRITE', 4); // Change / Modify
-define('SECURITY_ADMIN',1);
+define('SECURITY_OVERVIEW', 32);  // Used with left joins in getalls by deafult
+define('SECURITY_READ', 16);      // Used when displaying 
+define('SECURITY_COMMENT', 8);    // Link
+define('SECURITY_WRITE', 4);      // Change / Modify / Delete
+define('SECURITY_ADMIN',1);       // Change who can access an object (future)
 
 /**
 Xaraya Security Levels

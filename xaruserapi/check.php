@@ -13,6 +13,8 @@ function security_userapi_check($args)
 {
     extract($args);
     
+    if( xarSecurityCheck('AdminPanel', 0) ){ return true; }
+    
     // Make sure the need module API's are loaded
     xarModAPILoad('owner', 'user');
 
