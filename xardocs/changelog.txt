@@ -8,3 +8,9 @@
 -Moved page user_addcat to admin_modifycategories
 -Renamed user_view to user_viewevent
 -Renamed user_delete to user_deleteevent
+0.2.2 Started to clean up
+-Deprecate many files
++User addcat
++Color picker (taken now from Xaraya DD property tcolorpicker)
+-Started move of functions out of the class
+-starting to create userapi and adminapi functions Xaraya-wise

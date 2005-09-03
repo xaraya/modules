@@ -1,12 +1,19 @@
 /*this function determines whether to give another field focus based on whether
   the current field has reached its max length (i.e phone number part 1 has
-  reached max length of 3 so focus is given to phone number part 2, etc.*/
+  reached max length of 3 so focus is given to phone number part 2, etc.
+ *
+ * TODO: Michel V: keep this
+ */
 function checkNumberLen(field,maxLength,focusField){
    if(field.value.length==maxLength)
       focusField.focus();
 
 }
-/*this function checks a value to be sure it is numeric*/
+/*
+ *
+ * this function checks a value to be sure it is numeric
+ * @deprec MichelV: handled by xarvarfetch()
+ */
 function checkNumericy(field) {
    if(field.value=="." && field.value.length==1)
       field.value="0"+field.value;
@@ -39,6 +46,8 @@ function checkNumericy(field) {
  * the field that you would like the fieldNames array to be 
  * populated with. Use the buildFieldMap function to build the 
  * fieldMap.
+ *
+ * @deprec MichelV: can be replaced by base java function
  */
 function isFilledExcept(form, exceptionFields, fieldNames) {
    if (typeof(fieldNames) == "object") {
@@ -121,6 +130,8 @@ function isElementChecked(elementObj, form) {
 
 /*
  * Returns true if the string is in the array.
+ *
+ * @deprec MichelV: Can be handled by PHP in_array()
  */
 function inArray(string, array) {
    for (var i = 0; i < array.length; i++) {
@@ -139,7 +150,10 @@ function buildFieldMap(fieldNames, fieldDescriptions) {
    }  
 }
 
-//fieldNames is produced by the isFilledExcept function. (assuming it's called with a fieldNames parameter)
+/*
+ * fieldNames is produced by the isFilledExcept function. (assuming it's called with a fieldNames parameter)
+ *
+ */
 function errorHandler(condition){
   var output = "";
   if(!condition)
@@ -275,8 +289,11 @@ function getSelectedRadioValue(buttonGroup) {
       }
    }
 }
-/*this function determines if an email address appears to be in the correct format (i.e. has @ and . contained in the string)
-  true or false is returned*/
+/*
+ * this function determines if an email address appears to be in the correct format (i.e. has @ and . contained in the string)
+ * @return true or false
+ * @deprec MichelV: TO be replaced by xarvarfetch () email
+ */
 function isEmailAddr(email)
 {
   var result = false
