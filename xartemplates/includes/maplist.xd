@@ -1,6 +1,6 @@
 <div>
-  <h3><xar:mlstring>List of mappings</xar:mlstring></h3>
-  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+  <fieldset>
+    <legend><xar:mlstring>List of mappings</xar:mlstring></legend>
     <form action="&xar-modurl-workflow-admin-roles;" method="post">
       <input type="hidden" name="pid" value="#$pid#" />
       <input type="hidden" name="offset" value="#$offset#" />
@@ -73,8 +73,7 @@
         </xar:if>
       </table>
     </form>
-
-    <!-- Show the pager -->
-    <xar:template file="pager"/>
-  </div>
+  </fieldset>
+  <!-- Show the pager -->
+  <xar:template file="pager"/>
 </div>

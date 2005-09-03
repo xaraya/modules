@@ -1,3 +1,4 @@
+<div class="xar-mod-body">
 <!-- This is the default template for the user instances function
      it's parts are also used as the default layout parts for the 
      xar:workflow-instances custom tag.
@@ -11,18 +12,18 @@
 <xar:template file="help"/>
    
 <!-- Construct the list of instances for this user -->
-<h3><xar:mlstring>List of instances</xar:mlstring> (#$cant#)</h3>
-<div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+<fieldset>
+  <legend><xar:mlstring>List of instances</xar:mlstring> (#$cant#)</legend>
   <!-- Show a filter on the instances -->
   <xar:template file="instancefilter"/>
 
   <!-- Show the actual list -->
   <xar:template file="instancelist"/>
-
+  
   <!-- Show a page on the list -->
   <xar:template file="pager"/>
-</div>
+</fieldset>
 
 <!-- Show a courtesy footer -->
 <xar:template file="galaxfooter"/>
-
+</div>

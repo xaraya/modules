@@ -1,12 +1,12 @@
 <div>
-  <h3>
-    <xar:if condition="$activityId gt 0">
-      <xar:mlstring>Activity details</xar:mlstring>
-    <xar:else/>
+  <fieldset>
+    <legend>
+      <xar:if condition="$activityId gt 0">
+        <xar:mlstring>Activity details</xar:mlstring>
+        <xar:else/>
       <xar:mlstring>Add new activity</xar:mlstring>
-    </xar:if>
-  </h3>
-  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; width: 100%">
+      </xar:if>
+    </legend>
     <form action="&xar-modurl-workflow-admin-activities;" method="post">
       <input type="hidden" name="pid" value="#$pid#" />
       <input type="hidden" name="activityId" value="#$info['activityId']#" />
@@ -165,8 +165,7 @@
           </td>
           <td>&nbsp;</td>
         </tr>
-        
       </table>
     </form>
-  </div>
-  </div>
+  </fieldset>
+</div>

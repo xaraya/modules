@@ -1,9 +1,9 @@
-<!-- Show the navigation bar -->
-<xar:template file="proc_bar"/>
-
 <div class="xar-mod-body">
-    <!-- Show some help if we enabled that feature -->
-    <xar:template file="help"/>
+  <!-- Show the navigation bar -->
+  <xar:template file="proc_bar"/>
+
+  <!-- Show some help if we enabled that feature -->
+  <xar:template file="help"/>
 
   <div style="margin: auto;">
     <xar:if condition="!empty($info['graph'])">

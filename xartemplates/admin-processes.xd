@@ -1,24 +1,22 @@
-<!-- Show the navigation bar -->
-<xar:template file="proc_bar"/>
-
 <div class="xar-mod-body">
+  <!-- Show the navigation bar -->
+  <xar:template file="proc_bar"/>
 
   <!-- Show some help if we enabled that feature -->
   <xar:template file="help"/>
 
   <div style="margin: auto;">
-    
     <xar:if condition="$pid eq 0">
       <!-- Show the list of processes -->
       <xar:template file="processlist"/>
-
+      
       <!-- Show the pager -->
       <xar:template file="pager"/>
     </xar:if>
-
+    
     <!-- Show the form for a process -->
     <xar:template file="processform"/>
-       
+    
     <!-- Show a courtesy footer -->
     <xar:template file="galaxfooter"/>
   </div>

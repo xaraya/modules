@@ -72,9 +72,6 @@
   <xar:if condition="$pid gt 0">
     <h2>#$proc_info['name']#: version #$proc_info['version']#</h2>
   
-    <!-- Show a one line saying whether the process is valid or not -->
-    <xar:template file="isprocessvalid"/>
-
     <!-- Show a list of errors, if any, to complete this process -->
     <xar:template file="processerrors"/>
 </xar:if>

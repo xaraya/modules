@@ -1,26 +1,24 @@
-<!-- Show the navigation bar -->
-<xar:template file="proc_bar"/>
-
 <div class="xar-mod-body">
+
+  <!-- Show the navigation bar -->
+  <xar:template file="proc_bar"/>
   
   <!-- Show some help if we enabled that feature -->
   <xar:template file="help"/>
-
+  
   <div style="margin: auto;">
-
     <xar:if condition="$activityId eq 0">
       <!-- Show the list of activities -->
       <xar:template file="activitylist"/>
     </xar:if>
-
+    
     <!-- Show the activity form -->
     <xar:template file="activityform"/>
-
+    
     <!-- Show the list of transitions -->
     <xar:template file="transitionlist"/>
     
     <!-- Show a courtesy footer -->
     <xar:template file="galaxfooter"/>
-    
   </div>
 </div>

@@ -1,13 +1,13 @@
-<!-- Include the monitoring navigation -->
-<xar:template file="monitor_bar" type="module"/>
-
 <div class="xar-mod-body">
+  <!-- Include the monitoring navigation -->
+  <xar:template file="monitor_bar" type="module"/>
+
     <!-- Show some help if we enabled the feature -->
     <xar:template file="help"/>
 
     <div style="margin: auto;">
-      <h3><xar:mlstring>List of processes</xar:mlstring> (#$cant#)</h3>
-      <div class="xar-norm-outline">
+      <fieldset>
+        <legend><xar:mlstring>List of processes</xar:mlstring> (#$cant#)</legend>
         <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_processes;" method="post">
           <input type="hidden" name="offset" value="#$offset#" />
           <input type="hidden" name="sort_mode" value="#$sort_mode#" />
@@ -25,13 +25,13 @@
                 <select name="filter_process">
                   <xar:if condition="'' eq $filter_process">
                     <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
-                  <xar:else/>
+                    <xar:else/>
                     <option value=""><xar:mlstring>All</xar:mlstring></option>
                   </xar:if>
                   <xar:foreach in="$all_procs" key="$ix">
                     <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
                       <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
-                    <xar:else/>
+                      <xar:else/>
                       <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
                     </xar:if>
                   </xar:foreach>
@@ -107,15 +107,15 @@
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isActive'] eq 'y'">
                       <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#" />
-                        <xar:else/>
-                        &nbsp;
+                      <xar:else/>
+                      &nbsp;
                     </xar:if>
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isValid'] eq 'n'">
                       <img src="modules/workflow/lib/Galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
-                        <xar:else/>
-                        <img src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
+                      <xar:else/>
+                      <img src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
                     </xar:if>
                     
                   </td>
@@ -150,12 +150,11 @@
             </xar:if>
           </table>
         </form>
-      </div>
-
+      </fieldset>
+      
       <xar:template file="pager"/>
       <xar:template file="monitor_stats" type="module"/>
       <xar:template file="galaxfooter"/>
-      
     </div>
-  </div>
+</div>
   

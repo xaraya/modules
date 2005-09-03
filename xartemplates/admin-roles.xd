@@ -1,13 +1,11 @@
-<!-- Show the navigation bar -->
-<xar:template file="proc_bar"/>
-
 <div class="xar-mod-body">
+  <!-- Show the navigation bar -->
+  <xar:template file="proc_bar"/>
 
   <!-- Show some help if we enabled that feature -->
   <xar:template file="help"/>
 
   <div style="margin: auto;">
- 
     <xar:if condition="$roleId eq 0">
       <!-- Show the list of roles -->
       <xar:template file="roleslist"/>
@@ -23,7 +21,7 @@
       <!-- Map groups to roles -->
       <xar:template file="mapgroups"/>
     <xar:else/>
-      <h3><xar:mlstring>Warning</xar:mlstring></h3>
+      <h4><xar:mlstring>Warning</xar:mlstring></h4>
       <xar:mlstring>No roles are defined yet so no roles can be mapped</xar:mlstring><br />
     </xar:if>
     

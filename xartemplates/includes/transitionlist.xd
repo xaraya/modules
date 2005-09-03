@@ -1,6 +1,6 @@
 <div>
-    <h3><xar:mlstring>Process Transitions</xar:mlstring></h3>
-    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; width: 100%">
+    <fieldset>
+      <legend><xar:mlstring>Process Transitions</xar:mlstring></legend>
 
       <!-- Filter form -->
       <form action="&xar-modurl-workflow-admin-activities;" method="post" id='filtran'>
@@ -88,8 +88,10 @@
           </xar:if>
         </table>
       </form>
+    </fieldset>
 
-      <h3><xar:mlstring>Add a transition</xar:mlstring></h3>
+    <fieldset>
+      <legend><xar:mlstring>Add a transition</xar:mlstring></legend>
       <form action="&xar-modurl-workflow-admin-activities;" method="post">
         <input type="hidden" name="pid" value="#$pid#" />
         <input type="hidden" name="activityId" value="#$info['activityId']#" />
@@ -125,5 +127,5 @@
           </tr>
         </table>
       </form>
-    </div>
+    </fieldset>
 </div>
