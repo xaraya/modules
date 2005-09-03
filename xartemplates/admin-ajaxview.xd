@@ -1,0 +1,13 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div id="referer_id">
+    <ul>
+        <xar:loop name="$items">
+            <li style="list-style-type: none; margin: 1em 0;">
+                <a href="#$loop:item['url']#">
+                    #$loop:item['urldisplay']#
+                </a>
+                &nbsp; ( #$loop:item['frequency']# )
+            </li>
+        </xar:loop>
+    </ul>
+</div>

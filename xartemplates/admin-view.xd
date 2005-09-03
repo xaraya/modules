@@ -15,16 +15,18 @@
     </h2>
     <xar:if condition="!empty($items)">
         <xar:template file="navtabs" type="module" />
-            <ul>
-                <xar:loop name="$items">
-                    <li style="list-style-type: none; margin: 1em 0;">
-                        <a href="#$loop:item['url']#">
-                            #$loop:item['urldisplay']#
-                        </a>
-                        &nbsp; ( #$loop:item['frequency']# )
-                    </li>
-                </xar:loop>
-            </ul>
+            <div id="referer_id">
+                <ul>
+                    <xar:loop name="$items">
+                        <li style="list-style-type: none; margin: 1em 0;">
+                            <a href="#$loop:item['url']#">
+                                #$loop:item['urldisplay']#
+                            </a>
+                            &nbsp; ( #$loop:item['frequency']# )
+                        </li>
+                    </xar:loop>
+                </ul>
+            </div>
         <div style="text-align: center;">#$pager#</div>
     <xar:else />
         <xar:mlstring>

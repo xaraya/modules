@@ -1,5 +1,5 @@
-<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-</xar:if>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:base-include-javascript position="body" module="base" filename="xmlhttprequest.js" />
 <dl class="xar-tabs">
     <dt class="help" title="#xarML('Click on tab to perform desired action')#">
         <xar:mlstring>
@@ -7,40 +7,20 @@
         </xar:mlstring>
         : 
     </dt>
-    <xar:if condition="$sort eq 1"> 
-        <dd class="active">
-            <a href="#xarModUrl('referer', 'admin', 'view')#">
-                <xar:mlstring>
-                    Sort by Frequency
-                </xar:mlstring>
-            </a>
-        </dd>
-    <xar:else />
-        <dd>
-            <a href="#xarModUrl('referer', 'admin', 'view')#">
-                <xar:mlstring>
-                    Sort by Frequency
-                </xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
-    <xar:if condition="$sort eq 2"> 
-        <dd class="active">
-            <a href="#xarModUrl('referer', 'admin', 'view', array('sort' => 2))#">
-                <xar:mlstring>
-                    Sort by Most Recent
-                </xar:mlstring>
-            </a>
-        </dd>
-    <xar:else />
-        <dd>
-            <a href="#xarModUrl('referer', 'admin', 'view', array('sort' => 2))#">
-                <xar:mlstring>
-                    Sort by Most Recent
-                </xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
+    <dd>
+        <a href="#xarModUrl('referer', 'admin', 'ajaxview')#" onclick="return loadContent(this.href,'referer_id')">
+            <xar:mlstring>
+                Sort by Frequency
+            </xar:mlstring>
+        </a>
+    </dd>
+    <dd>
+        <a href="#xarModUrl('referer', 'admin', 'ajaxview', array('sort' => 2))#" onclick="return loadContent(this.href,'referer_id')">
+            <xar:mlstring>
+                Sort by Most Recent
+            </xar:mlstring>
+        </a>
+    </dd>
     <dd>
         <a href="#$deleteurl#" onClick="#$javascript#">
             <xar:mlstring>
