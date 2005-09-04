@@ -1,7 +1,17 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Workflow Module</xar:mlstring>
+  </span>
+</div>
+
+<div class="xar-mod-body">
   <xar:template file="user_bar" type="module"/>
   <div style="margin: auto;">
     
-    <p>See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction and user manual of Galaxia</a> for more details on what this module is all about, and how to use it.</p>
+    <p>
+      See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction and user 
+        manual of Galaxia</a> for more details on what this module is all about, and how to use it.
+    </p>
     
     <!-- Show the status of the processes that the user started -->
     <xar:workflow-status/>
@@ -11,3 +21,4 @@
     
     <xar:template file="galaxfooter"/>
   </div>
+</div>

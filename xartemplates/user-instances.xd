@@ -1,3 +1,8 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Workflow Module</xar:mlstring>
+  </span>
+</div>
 <div class="xar-mod-body">
 <!-- This is the default template for the user instances function
      it's parts are also used as the default layout parts for the 

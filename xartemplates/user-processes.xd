@@ -1,3 +1,10 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Workflow Module</xar:mlstring>
+  </span>
+</div>
+
+<div class="xar-mod-body">
 <xar:template file="user_bar" type="module"/>
 <xar:template file="help"/>
 
@@ -61,4 +68,5 @@
   </fieldset>  
   <xar:template file="pager"/>
   <xar:template file="galaxfooter"/>
+</div>
 </div>
