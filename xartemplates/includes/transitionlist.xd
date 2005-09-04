@@ -9,22 +9,24 @@
         <input type="hidden" name="find" value="#$find2#" />
         <input type="hidden" name="where" value="#$where2#" />
         <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-        <xar:mlstring>From:</xar:mlstring>
-        <select name="filter_tran_name" onChange="javascript:document.getElementById('filtran').submit();">
-          <xar:if condition="$filter_tran_name eq ''">
-            <option value="" selected="selected"><xar:mlstring>All</xar:mlstring></option>
-            <xar:else/>
-            <option value=""><xar:mlstring>All</xar:mlstring></option>
-          </xar:if>
-          <xar:foreach in="$items" key="$ix">
-            <xar:if condition="$filter_tran_name eq $items[$ix]['activityId']">
-              <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
+        <div class="xar-form-input-wrapper">
+          <label class="xar-form-label"><xar:mlstring>From:</xar:mlstring></label>
+          <select name="filter_tran_name" onChange="javascript:document.getElementById('filtran').submit();">
+            <xar:if condition="$filter_tran_name eq ''">
+              <option value="" selected="selected"><xar:mlstring>All</xar:mlstring></option>
               <xar:else/>
-              <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+              <option value=""><xar:mlstring>All</xar:mlstring></option>
             </xar:if>
-          </xar:foreach>
-        </select>
-        <input type="submit" name="filter_tran" value="#xarML('Filter')#" />
+            <xar:foreach in="$items" key="$ix">
+              <xar:if condition="$filter_tran_name eq $items[$ix]['activityId']">
+                <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
+                <xar:else/>
+                <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+              </xar:if>
+            </xar:foreach>
+          </select>
+          <input type="submit" name="filter_tran" value="#xarML('Filter')#" />
+        </div>
       </form>
       <!-- End filter form -->
     
@@ -100,32 +102,25 @@
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
         <input type="hidden" name="where2" value="#$where2#" />
         <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-        <table>
-          <tr>
-            <td><xar:mlstring>From:</xar:mlstring></td>
-            <td>
-              <select name="actFromId">
-                <xar:foreach in="$items" key="$ix">
-                  <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
-                </xar:foreach>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td><xar:mlstring>To:</xar:mlstring></td>
-            <td>
-              <select name="actToId">
-                <xar:foreach in="$items" key="$ix">
-                  <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
-                </xar:foreach>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td><input type="submit" name="add_trans" value="#xarML('Add transition')#" /></td>
-            <td>&nbsp;</td>
-          </tr>
-        </table>
+        <div class="xar-form-input-wrapper">
+          <label class="xar-form-label"><xar:mlstring>From:</xar:mlstring></label>
+          <select name="actFromId">
+            <xar:foreach in="$items" key="$ix">
+              <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+            </xar:foreach>
+          </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+          <label class="xar-form-label"><xar:mlstring>To:</xar:mlstring></label>
+          <select name="actToId">
+            <xar:foreach in="$items" key="$ix">
+              <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+            </xar:foreach>
+          </select>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+          <input type="submit" name="add_trans" value="#xarML('Add transition')#" />
+        </div>
       </form>
     </fieldset>
 </div>

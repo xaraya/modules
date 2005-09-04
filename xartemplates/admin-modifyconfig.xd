@@ -6,20 +6,28 @@
 
     <fieldset>
       <legend><xar:mlstring>Global Configuration</xar:mlstring></legend>
-      <xar:if condition="!empty($isalias)">
-        <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
-        <xar:else/>
-        <input type="checkbox" name="isalias" id="isalias" value="1" />
-      </xar:if>
-      <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label><br/>
-      <label for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>
-      <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
-     </fieldset>
+      <div class="xar-form-input-wrapper-after">
+        <xar:if condition="!empty($isalias)">
+          <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
+          <xar:else/>
+          <input type="checkbox" name="isalias" id="isalias" value="1" />
+        </xar:if>
+        <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>
+        <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
+      </div>
+    </fieldset>
     
     <fieldset>
       <legend><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></legend>
-      <p><xar:mlstring><b>Description:</b> first enable workflow hooks for a particular module+itemtype,
-          then specify here which workflow process should be started when a particular hook is called by that module+itemtype. Only non-interactive start activities can be used here...</xar:mlstring></p>
+      <p>
+        <xar:mlstring><b>Description:</b> first enable workflow hooks for a particular module+itemtype,
+          then specify here which workflow process should be started when a particular hook is called 
+          by that module+itemtype. Only non-interactive start activities can be used here...</xar:mlstring>
+      </p>
+
       <table border="0" cellpadding="8" cellspacing="0">
         <xar:foreach in="$settings" key="$modname" value="$config">
           <tr>
