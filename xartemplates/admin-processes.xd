@@ -1,3 +1,9 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Workflow Administration</xar:mlstring>
+  </span>
+</div>
+
 <div class="xar-mod-body">
   <!-- Show the navigation bar -->
   <xar:template file="proc_bar"/>

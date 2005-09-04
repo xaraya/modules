@@ -1,4 +1,11 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Workflow Administration</xar:mlstring>
+  </span>
+</div>
+
 <div class="xar-mod-body">
+
   <xar:template file="monitor_bar" type="module"/>
   
   <xar:template file="help"/>

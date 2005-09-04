@@ -4,7 +4,16 @@
         <th><xar:mlstring>Process</xar:mlstring></th>
         <th><xar:mlstring>Version</xar:mlstring></th>
         <th><xar:mlstring>Start</xar:mlstring></th>
-        <th><xar:mlstring>Status</xar:mlstring></th>
+        <th><xar:mlstring>Status</xar:mlstring></th>  <tr>
+          <td>
+            <select name="user[]" multiple="multiple" size="10">
+              <option value="">"<xar:mlstring>Anonymous</xar:mlstring>"</option>
+              <xar:foreach in="$users" key="$ix">
+                <xar:if condition="$users[$ix]['uname'] eq $users[$ix]['name']">
+                  <option value="#$users[$ix]['uid']#">#$users[$ix]['name']#</option>
+                  <xar:else/>
+                  <option value="#$users[$ix]['uid']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
+    
         <th><xar:mlstring>Current Activity</xar:mlstring></th>
         <th><xar:mlstring>Assigned To</xar:mlstring></th>
         <th><xar:mlstring>Run</xar:mlstring></th>
