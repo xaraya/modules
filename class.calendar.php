@@ -1,9 +1,18 @@
 <?php
 /**
- *    $Id: class.calendar.php,v 1.4 2005/06/24 09:28:24 michelv01 Exp $
- *  xarCalendar
- *    Class to gather data for a specific calendar view
- */
+  * File: $Id$
+  *
+  * Class to gather data for a specific calendar view
+  *
+  * @package Xaraya eXtensible Management System
+  * @copyright (C) 2005 by Metrostat Technologies, Inc.
+  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+  * @link http://www.metrostat.net
+  *
+  * @subpackage julian
+  * initial template: Roger Raymond
+  * @author Julian development Team   
+  */
 
 class Calendar
 {

@@ -1,6 +1,6 @@
 <?php
 /**
-  * File: $Id: edit.php,v 1.4 2005/03/27 13:52:53 michelv01 Exp $
+  * File: $Id$
   *
   * Generates a form for editing an existing event.
   *
@@ -10,10 +10,25 @@
   * @link http://www.metrostat.net
   *
   * @subpackage julian
+  * @author Julian development Team 
   * initial template: Roger Raymond
-  * @author Jodie Razdrh/John Kevlin/David St.Clair
   */
-  function julian_user_edit()
+  
+/**
+ * Edit a single event
+ *
+ * Get a single event from the events table 
+ * Then offer a form that will allow the user to edit the event
+ *  
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author  MichelV (Michelv@xarayahosting.nl)
+ * @access  public
+ * @param   int $event_id ID of the event to get
+ * @return  array $item
+ * @throws  BAD_PARAM list of exception identifiers which can be thrown
+ * @todo    Michel V. <#> Clean-up and Implement in Julian.
+ */
+function julian_user_edit()
   {  
    //This prevents users from viewing something they are not suppose to.
    if (!xarSecurityCheck('Editjulian')) return;  
@@ -38,7 +53,8 @@
    $query = "SELECT *,if(recur_until LIKE '0000%',0,1) as hasRecurDate FROM " . $event_table . " WHERE `event_id`='".$id."'";
    $result = $dbconn->Execute($query);
    $edit_obj = $result->FetchObject(false);
-   //determine the end date for a recurring event
+   // determine the end date for a recurring event
+   // TODO: With the new get.php this should be rewritten
    list($event_endyear,$event_endmonth,$event_endday) = explode("-",$edit_obj->recur_until);
    
    //setting start date time variables
@@ -255,5 +271,5 @@
         $bl_data['hooks'] = $hooks;
     }
    return $bl_data;
-  }  
+}  
 ?>
