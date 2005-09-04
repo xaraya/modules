@@ -74,7 +74,7 @@ function julian_calmonthblock_display($blockinfo)
     //load the calendar class
     $c =& xarModAPIFunc('julian','user','factory','calendar');
     $args['month2'] = $c->getCalendarMonth(date("Ym"));
-    $args['cal_sdow'] = $c->getStartDayOfWeek();
+    $args['cal_sdow'] = xarModGetVar('julian','startDayOfWeek'); //$c->getStartDayOfWeek();
     $args['shortDayNames'] = $c->getShortDayNames($args['cal_sdow']);
     $args['calendar'] =& $c;
     //determine today and the month that today is in. The current month is the month that will be displayed

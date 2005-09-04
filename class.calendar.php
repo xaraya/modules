@@ -374,8 +374,9 @@ class Calendar
 
     /**
      *  Sets the day the calendar starts on (0=Sunday through 6=Saturday)
+	 * @deprec asp
      *  @param int $d day of week the calendar should start on
-     */
+
     function setStartDayOfWeek($d)
     {
         // validate the input
@@ -386,15 +387,16 @@ class Calendar
         $this->startDayOfWeek =& $d;
         return true;
     }
-    
+     */    
     /**
      *  Returns the day the calendar starts on (0=Sunday through 6=Saturday)
      *  @return int day of week the calendar starts on
-     */
+	 *  @deprec MichelV: ASP
     function &getStartDayOfWeek()
     {
         return $this->startDayOfWeek;
     }
+     */
     
     /**
      *  Returns the day the calendar starts on (0=Sunday through 6=Saturday)

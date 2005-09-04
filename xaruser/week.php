@@ -24,13 +24,13 @@ function julian_user_week()
    $cal_sdow = xarModGetVar('julian','startDayOfWeek');
    //load the calendar class 
    $c =& xarModAPIFunc('julian','user','factory','calendar');
-   $c->setStartDayOfWeek($cal_sdow);//
+   //$c->setStartDayOfWeek($cal_sdow);//
    // set the selected date parts,timestamp, and cal_date in the data array
    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
    // Week is an array with an index of 0 - 6 indicating the days of the week. (starting with Sunday = 0) The values are the dates in the
    // format of YYYYMMDD
    $bl_data['week'] = $c->getCalendarWeek($bl_data['selected_year'].$bl_data['selected_month'].$bl_data['selected_day']);  
-   $bl_data['longDayNames'] = $c->getLongDayNames($c->getStartDayOfWeek());
+   $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);//$c->getStartDayOfWeek());
    $bl_data['calendar'] = $c;   
    
    //set the start date to the first day of this week

@@ -31,9 +31,9 @@ function julian_user_month()
    $enddate = $bl_data['selected_year']."-".$bl_data['selected_month']."-".$numdays;
    //load the calendar class
    $c = xarModAPIFunc('julian','user','factory','calendar');
-   $c->setStartDayOfWeek($cal_sdow); 
+   //$c->setStartDayOfWeek($cal_sdow); 
    $bl_data['month'] = $c->getCalendarMonth($bl_data['selected_year'].$bl_data['selected_month']);
-   $bl_data['cal_sdow'] = $c->getStartDayOfWeek();
+   $bl_data['cal_sdow'] = $cal_sdow;//$c->getStartDayOfWeek();
    $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);
    //get the events for the selected month
    //$bl_data['event_array']=$c->getEvents($startdate,$enddate);

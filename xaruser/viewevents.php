@@ -41,11 +41,11 @@ function julian_user_viewevents($args)
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     // Load the calendar class
     $c =& xarModAPIFunc('julian','user','factory','calendar');
-    $c->setStartDayOfWeek($cal_sdow);
+    //$c->setStartDayOfWeek($cal_sdow);
     // Set the selected date parts,timestamp, and cal_date in the data array.
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     $bl_data['year'] =& $c->getCalendarYear($bl_data['selected_year']);
-    $bl_data['shortDayNames'] =& $c->getShortDayNames($c->getStartDayOfWeek());
+    $bl_data['shortDayNames'] =& $c->getShortDayNames($cal_sdow);//$c->getStartDayOfWeek());
     $bl_data['calendar'] =& $c;
     // Set the start day to the first month and day of the selected year.
     $startdate=$bl_data['selected_year']."-01-01";
