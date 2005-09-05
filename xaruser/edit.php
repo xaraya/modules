@@ -35,11 +35,9 @@ function julian_user_edit()
    //get post/get vars
    if(!xarVarFetch('id','isset',$id)) return;
    // This is the var to set the first day of the week
-   //if(!xarVarFetch('cal_sdow','int:0:6',$cal_sdow,xarModGetVar('julian','startDayOfWeek'))) return;
    if(!xarVarFetch('cal_date','int::',$cal_date,0)) return;
    //load the calendar class
    $c = xarModAPIFunc('julian','user','factory','calendar');
-   //$c->setStartDayOfWeek($cal_sdow);
     //set the selected date parts and timestamp in the data array
    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
    

@@ -18,15 +18,14 @@ function julian_user_year()
 {
    // Security check
    if (!xarSecurityCheck('Viewjulian')) return; 
-   
+   // Starting day of the week   
    $cal_sdow = xarModGetVar('julian','startDayOfWeek');
    //load the calendar class
    $c =& xarModAPIFunc('julian','user','factory','calendar');
-   //$c->setStartDayOfWeek($cal_sdow);
    //set the selected date parts,timestamp, and cal_date in the data array
    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
    $bl_data['year'] =& $c->getCalendarYear($bl_data['selected_year']);
-   $bl_data['shortDayNames'] =& $c->getShortDayNames($cal_sdow);//$c->getStartDayOfWeek());
+   $bl_data['shortDayNames'] =& $c->getShortDayNames($cal_sdow);
    $bl_data['calendar'] =& $c;
    
    //set the start day to the first month and day of the selected year  
@@ -34,7 +33,6 @@ function julian_user_year()
    //set the end date to the last month and last day of the selected year
    $enddate=$bl_data['selected_year']."-12-31";
    //get the events for the selected year
-   //$bl_data['event_array']=$c->getEvents($startdate,$enddate);
    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
    //set the url to this page in session as the last page viewed
    $lastview=xarModURL('julian','user','year',array('cal_date'=>$bl_data['cal_date']));

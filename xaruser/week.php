@@ -24,7 +24,6 @@ function julian_user_week()
    $cal_sdow = xarModGetVar('julian','startDayOfWeek');
    //load the calendar class 
    $c =& xarModAPIFunc('julian','user','factory','calendar');
-   //$c->setStartDayOfWeek($cal_sdow);//
    // set the selected date parts,timestamp, and cal_date in the data array
    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
    // Week is an array with an index of 0 - 6 indicating the days of the week. (starting with Sunday = 0) The values are the dates in the
@@ -39,7 +38,6 @@ function julian_user_week()
    $enddate = date("Y-m-d",strtotime($bl_data['week'][6]));
    
    //get the events for the selected week
-   //$bl_data['event_array']=$c->getEvents($startdate,$enddate);
    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
    $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';   
    

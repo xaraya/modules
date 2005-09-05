@@ -31,12 +31,11 @@ function julian_user_month()
    $enddate = $bl_data['selected_year']."-".$bl_data['selected_month']."-".$numdays;
    //load the calendar class
    $c = xarModAPIFunc('julian','user','factory','calendar');
-   //$c->setStartDayOfWeek($cal_sdow); 
    $bl_data['month'] = $c->getCalendarMonth($bl_data['selected_year'].$bl_data['selected_month']);
-   $bl_data['cal_sdow'] = $cal_sdow;//$c->getStartDayOfWeek();
+   // Starting day of the week
+   $bl_data['cal_sdow'] = $cal_sdow;
    $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);
    //get the events for the selected month
-   //$bl_data['event_array']=$c->getEvents($startdate,$enddate);
    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
    $bl_data['calendar']=$c;
    $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';

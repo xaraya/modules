@@ -71,7 +71,7 @@
                         <xar:mlstring>Color:</xar:mlstring>
                     </span>
                 </label>
-				<xar:data-input name="color" type="tcolorpicker" value="$categories[$cat_id]['color']" readonly="readonly"/>
+				<xar:data-input name="color" type="tcolorpicker"  readonly="readonly"/>
 			</p>
             <input name="addaction" type="submit" value="Add" />
             <input name="addaction" type="submit" value="Cancel" onclick="isCancel=true" />
