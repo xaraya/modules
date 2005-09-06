@@ -30,8 +30,8 @@ function courses_admin_participants()
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('courses', 'user', 'countitems'),
-        xarModURL('courses', 'admin', 'participants', array('startnum' => '%%')),
+        xarModAPIFunc('courses', 'user', 'countparticipants', array('planningid'=>$planningid)),
+        xarModURL('courses', 'admin', 'participants', array('startnum' => '%%', 'planningid'=>$planningid)),
         xarModGetVar('courses', 'itemsperpage'));
     
     // Security check

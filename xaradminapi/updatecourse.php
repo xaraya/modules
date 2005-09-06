@@ -2,10 +2,10 @@
 /**
  * File: $Id:
  * 
- * Update an example item
+ * Update a course item
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,6 +24,22 @@
 function courses_adminapi_updatecourse($args)
 {
     extract($args);
+    
+    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
+    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str:1:', $name)) return;
+    if (!xarVarFetch('number', 'str:1:', $number)) return;
+    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid', 'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('last_modified', 'str:1:', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
+    
+    
     // Argument check - make sure that all required arguments are present
     // and in the right format, if not then set an appropriate error
     // message and return
@@ -71,11 +87,12 @@ function courses_adminapi_updatecourse($args)
                 xar_language = ?,
                 xar_freq = ?,
                 xar_contact = ?,
+                xar_contactuid =?,
                 xar_hidecourse = ?,
                 xar_last_modified = ?
               WHERE xar_courseid = ?";
 
-    $bindvars = array($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact,
+    $bindvars = array($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid,
                       $hidecourse, $courseid, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
@@ -87,6 +104,13 @@ function courses_adminapi_updatecourse($args)
     $item['itemid'] = $courseid;
     $item['name'] = $name;
     $item['number'] = $number;
+    $item['level'] =$level;
+    $item['shortdesc'] = $shortdesc;
+    $item['freq'] = $freq;
+    $item['contact'] = $contact;
+    $item['contactuid'] = $contactuid;
+    $item['hidecourse'] = $hidecourse;
+    $item['last_modified'] =$last_modified;
     xarModCallHooks('item', 'update', $courseid, $item);
     // Let the calling process know that we have finished successfully
     return true;

@@ -41,7 +41,7 @@ function courses_admin_modifycourse($args)
                           array('courseid' => $courseid));
     // Check for exceptions
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    $name = $coursedata['name'];
+
     // Security check
     if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
         return;
@@ -62,7 +62,7 @@ function courses_admin_modifycourse($args)
                  'menutitle'    => xarVarPrepForDisplay(xarML('Edit a course')),
                  'courseid'     => $courseid,
                  'namelabel'    => xarVarPrepForDisplay(xarML('Course Name')),
-                 'lastmodilabel' => xarVarPrepForDisplay(xarML('Last Modified')),
+                 'lastmodilabel'=> xarVarPrepForDisplay(xarML('Last Modified')),
                  'numberlabel'  => xarVarPrepForDisplay(xarML('Course Number')),
                  'freqlabel'    => xarVarPrepForDisplay(xarML('Course frequency')),
                  'coursetypelabel'  => xarVarPrepForDisplay(xarML('Course Type (Category)')),
@@ -70,12 +70,15 @@ function courses_admin_modifycourse($args)
                  'languagelabel' => xarVarPrepForDisplay(xarML('Language')),
                  'shortdesclabel'  => xarVarPrepForDisplay(xarML('Short Description')),
                  'contactlabel' => xarVarPrepForDisplay(xarML('Course Contact details')),
+                 'contactuidlabel' => xarVarPrepForDisplay(xarML('Course Coordinator uid')),                 
                  'invalid'      => $invalid,
                  'hidecourselabel' => xarVarPrepForDisplay(xarML('Hide Course')),
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update Course')),
                  'cancelbutton' => xarVarPrepForDisplay(xarML('Cancel')),
                  'hooks'        => $hooks,
                  'coursedata'   => $coursedata,
+                 'name'         => $coursedata['name'],
+                 'contactuid'   => $coursedata['contactuid'],
                  'levels'       => $levels);
 }
 
